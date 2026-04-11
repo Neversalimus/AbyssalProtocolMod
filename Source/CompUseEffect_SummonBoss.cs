@@ -85,10 +85,10 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
 
-AbyssalBossScreenFXGameComponent fxComp =
-    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
+            AbyssalBossScreenFXGameComponent fxComp =
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
 
-fxComp?.RegisterBoss(pawn);
+            fxComp?.RegisterBoss(pawn);
 
             LordJob lordJob = new LordJob_AssaultColony(
                 faction,
