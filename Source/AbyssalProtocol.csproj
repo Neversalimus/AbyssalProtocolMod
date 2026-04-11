@@ -29,5 +29,27 @@
     <Reference Include="System.Core" />
   </ItemGroup>
 
+<ItemGroup>
+  <Reference Include="Assembly-CSharp">
+    <HintPath>..\Libraries\Assembly-CSharp.dll</HintPath>
+    <Private>false</Private>
+  </Reference>
+  <Reference Include="UnityEngine.CoreModule">
+    <HintPath>..\Libraries\UnityEngine.CoreModule.dll</HintPath>
+    <Private>false</Private>
+  </Reference>
+  <Reference Include="UnityEngine">
+    <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Private>false</Private>
+  </Reference>
+  <Reference Include="0Harmony">
+    <HintPath>..\Libraries\0Harmony.dll</HintPath>
+    <Private>false</Private>
+  </Reference>
+  <Reference Include="mscorlib" />
+  <Reference Include="System" />
+  <Reference Include="System.Core" />
+</ItemGroup>
+
 
 </Project>
