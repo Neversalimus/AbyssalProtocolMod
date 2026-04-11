@@ -37,6 +37,7 @@
       <herdAnimal>false</herdAnimal>
       <predator>true</predator>
       <foodType>CarnivoreAnimal</foodType>
+      <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropUltraPlasmaRifle</deathActionWorkerClass>
     </race>
 
     <statBases>
