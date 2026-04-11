@@ -16,28 +16,34 @@
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
 
+    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropUltraPlasmaRifle</deathActionWorkerClass>
+
     <race>
+      <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
       <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
+      <bloodDef>Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
       <body>QuadrupedAnimal</body>
       <baseBodySize>3.2</baseBodySize>
       <baseHealthScale>4.8</baseHealthScale>
       <baseHungerRate>1.2</baseHungerRate>
-      <bloodDef>Blood</bloodDef>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
-      <trainability>None</trainability>
-      <wildness>1</wildness>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
-      <meatLabel>archon beast flesh</meatLabel>
-      <meatAmount>220</meatAmount>
-      <leatherAmount>0</leatherAmount>
       <lifeExpectancy>400</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
       <predator>true</predator>
       <foodType>CarnivoreAnimal</foodType>
-      <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropUltraPlasmaRifle</deathActionWorkerClass>
     </race>
 
     <statBases>
