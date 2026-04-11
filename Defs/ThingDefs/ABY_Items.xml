@@ -43,7 +43,7 @@
         <useLabel>invoke archon</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
-        <pawnKindDefName>SpaceSoldier</pawnKindDefName>
+        <pawnKindDefName>ABY_ArchonOfRupture</pawnKindDefName>
         <bossLabel>Archon of Rupture</bossLabel>
         <spawnPoints>650</spawnPoints>
       </li>
