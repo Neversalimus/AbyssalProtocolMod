@@ -41,6 +41,7 @@
           <MoveSpeed>0.45</MoveSpeed>
           <MeleeHitChance>0.18</MeleeHitChance>
           <ArmorRating_Heat>0.35</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
         </statOffsets>
       </li>
 
@@ -51,6 +52,7 @@
           <MoveSpeed>0.60</MoveSpeed>
           <MeleeHitChance>0.24</MeleeHitChance>
           <ArmorRating_Heat>0.50</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
         </statOffsets>
       </li>
 
@@ -61,6 +63,7 @@
           <MoveSpeed>0.85</MoveSpeed>
           <MeleeHitChance>0.32</MeleeHitChance>
           <ArmorRating_Heat>0.70</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
         </statOffsets>
       </li>
     </stages>
