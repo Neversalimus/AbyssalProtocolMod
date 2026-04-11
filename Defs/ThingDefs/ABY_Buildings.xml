@@ -38,11 +38,6 @@
     <fillPercent>0.2</fillPercent>
     <interactionCellOffset>(0,0,-1)</interactionCellOffset>
 
-    <recipes>
-      <li>ABY_CraftResidue</li>
-      <li>ABY_CraftArchonSigil</li>
-    </recipes>
-
     <researchPrerequisites>
       <li>ABY_AbyssalSignalTheory</li>
     </researchPrerequisites>
