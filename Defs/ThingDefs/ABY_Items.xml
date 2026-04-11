@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_AbyssalResidue</defName>
+    <label>abyssal residue</label>
+    <description>Condensed techno-occult slag. It is inert in storage, but resonates violently inside the summoning circle.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_AbyssalResidue</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <color>(255,80,80)</color>
+    <tradeability>Buyable</tradeability>
+    <stackLimit>75</stackLimit>
+    <statBases>
+      <MarketValue>12</MarketValue>
+      <Mass>0.08</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ArchonSigil</defName>
+    <label>archon sigil</label>
+    <description>A stabilized infernal key. Use it on the map to tear open a breach and call down the first techno-demonic boss.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_ArchonSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>320</MarketValue>
+      <Mass>0.3</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>UseItem</useJob>
+        <useLabel>invoke archon</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <pawnKindDefName>SpaceSoldier</pawnKindDefName>
+        <bossLabel>Archon of Rupture</bossLabel>
+        <spawnPoints>650</spawnPoints>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="TechHediff">
+    <defName>ABY_InfernalEye</defName>
+    <label>infernal eye</label>
+    <description>A red-black ocular implant with abyssal target prediction routines.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_InfernalEye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories>
+      <li>BodyParts</li>
+    </thingCategories>
+    <techHediffs>
+      <li>ABY_InfernalEye_Implant</li>
+    </techHediffs>
+    <statBases>
+      <Mass>0.15</Mass>
+      <MarketValue>900</MarketValue>
+    </statBases>
+    <recipeMaker>
+      <researchPrerequisite>ABY_AbyssalAugmentation</researchPrerequisite>
+      <recipeUsers>
+        <li>ABY_SummoningCircle</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedTechHediff</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Steel>30</Steel>
+    </costList>
+  </ThingDef>
+
+</Defs>

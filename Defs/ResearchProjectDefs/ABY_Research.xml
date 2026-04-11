@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ABY_AbyssalSignalTheory</defName>
+    <label>abyssal signal theory</label>
+    <description>Controlled interaction with extra-dimensional hostile signatures through machine-assisted ritual geometry.</description>
+    <baseCost>1200</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <tab>Spacer</tab>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_AbyssalArmaments</defName>
+    <label>abyssal armaments</label>
+    <description>Weaponized containment of breach-energy.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+      <li>Fabrication</li>
+    </prerequisites>
+    <tab>Spacer</tab>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_AbyssalAugmentation</defName>
+    <label>abyssal augmentation</label>
+    <description>Military implants based on stabilized infernal tissues and predictive optics.</description>
+    <baseCost>2200</baseCost>
+    <techLevel>Spacer</techLevel>
+    <prerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+      <li>Bionics</li>
+    </prerequisites>
+    <tab>Spacer</tab>
+  </ResearchProjectDef>
+
+</Defs>

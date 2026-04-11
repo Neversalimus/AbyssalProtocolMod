@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_RiftCarbine</defName>
+    <label>rift carbine</label>
+    <description>Compact techno-demonic carbine firing condensed breach shards.</description>
+    <graphicData>
+      <texPath>Things/Weapon/ABY_RiftCarbine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+    <recipeMaker>
+      <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+      <Plasteel>35</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <statBases>
+      <WorkToMake>18000</WorkToMake>
+      <Mass>2.8</Mass>
+      <MarketValue>1850</MarketValue>
+      <AccuracyTouch>0.84</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.68</AccuracyMedium>
+      <AccuracyLong>0.54</AccuracyLong>
+      <RangedWeapon_Cooldown>1.4</RangedWeapon_Cooldown>
+      <BurstShotCount>3</BurstShotCount>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>Bullet_ChargeBlaster</defaultProjectile>
+        <warmupTime>1.05</warmupTime>
+        <range>28.9</range>
+        <soundCast>ShotChargeBlaster</soundCast>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableSword">
+    <defName>ABY_RiftBlade</defName>
+    <label>rift blade</label>
+    <description>A monomolecular blade caged in an infernal field. It bites through armor better than its size suggests.</description>
+    <graphicData>
+      <texPath>Things/Weapon/ABY_RiftBlade</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <recipeMaker>
+      <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Plasteel>25</Plasteel>
+      <Steel>20</Steel>
+    </costList>
+    <tools>
+      <li>
+        <label>blade</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>24</power>
+        <cooldownTime>1.65</cooldownTime>
+        <armorPenetration>0.34</armorPenetration>
+      </li>
+    </tools>
+    <statBases>
+      <WorkToMake>11000</WorkToMake>
+      <Mass>1.9</Mass>
+      <MarketValue>980</MarketValue>
+    </statBases>
+  </ThingDef>
+
+</Defs>

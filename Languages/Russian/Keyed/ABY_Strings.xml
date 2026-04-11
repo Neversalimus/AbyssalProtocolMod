@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_BossSummonSuccessLabel>Инфернальный разлом открыт</ABY_BossSummonSuccessLabel>
+  <ABY_BossSummonSuccessDesc>{0} откликнулся на сигил. На карте появился враждебный разломный босс.</ABY_BossSummonSuccessDesc>
+  <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
+  <ABY_BossSummonFail_NoEdge>Не удалось найти подходящую точку прорыва у края карты.</ABY_BossSummonFail_NoEdge>
+  <ABY_BossName>Архон Разрыва</ABY_BossName>
+</LanguageData>

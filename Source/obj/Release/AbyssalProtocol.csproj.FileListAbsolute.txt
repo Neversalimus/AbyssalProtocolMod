@@ -1,0 +1,7 @@
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Assemblies\AbyssalProtocol.dll
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Assemblies\AbyssalProtocol.pdb
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Source\obj\Release\AbyssalProtocol.csproj.AssemblyReference.cache
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Source\obj\Release\AbyssalProtocol.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Source\obj\Release\AbyssalProtocol.csproj.CoreCompileInputs.cache
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Source\obj\Release\AbyssalProtocol.dll
+C:\Users\Алексейц\Downloads\AbyssalProtocol_starter_pack\AbyssalProtocol\Source\obj\Release\AbyssalProtocol.pdb

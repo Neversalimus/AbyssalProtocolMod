@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_BossSummonSuccessLabel>Infernal breach opened</ABY_BossSummonSuccessLabel>
+  <ABY_BossSummonSuccessDesc>{0} answers the sigil. A hostile breach signature has entered the map.</ABY_BossSummonSuccessDesc>
+  <ABY_BossSummonFail_NoMap>This sigil can only be used while the pawn is standing on an active map.</ABY_BossSummonFail_NoMap>
+  <ABY_BossSummonFail_NoEdge>No valid breach point was found near the map edge.</ABY_BossSummonFail_NoEdge>
+  <ABY_BossName>Archon of Rupture</ABY_BossName>
+</LanguageData>

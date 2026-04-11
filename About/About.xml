@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ModMetaData>
+  <name>Abyssal Protocol</name>
+  <author>OpenAI / ChatGPT</author>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <packageId>openai.abyssalprotocol</packageId>
+  <description>
+    Starter framework for a techno-demonic RimWorld mod. Includes:
+    - Abyssal Summoning Circle worktable
+    - Abyssal residue resource
+    - Archon Sigil item with custom C# use effect
+    - Starter boss summon pipeline
+    - Two starter weapons
+    - One starter implant
+    - EN/RU keyed strings
+    - Placeholder sprites
+  </description>
+</ModMetaData>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftResidue</defName>
+    <label>condense abyssal residue</label>
+    <description>Industrial ritual process that converts metal, components and power into inert abyssal residue.</description>
+    <jobString>Condensing abyssal residue.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Recipe_Machining</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <products>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+    </products>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <recipeUsers>
+      <li>ABY_SummoningCircle</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftArchonSigil</defName>
+    <label>forge archon sigil</label>
+    <description>Compress residue into a stable breach-key used to summon the first boss.</description>
+    <jobString>Forging archon sigil.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Recipe_Machining</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <products>
+      <ABY_ArchonSigil>1</ABY_ArchonSigil>
+    </products>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <recipeUsers>
+      <li>ABY_SummoningCircle</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>
