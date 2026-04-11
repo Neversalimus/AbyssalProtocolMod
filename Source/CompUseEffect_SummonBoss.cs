@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
-using Verse.AI;
 using Verse.AI.Group;
-using UnityEngine;
 
 namespace AbyssalProtocol
 {
@@ -29,15 +27,25 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // SpaceSoldier не существует в PawnKindDefOf — берём из DefDatabase
-            PawnKindDef kindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(Props.pawnKindDefName)
-                                  ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ArchonOfRupture");
+            PawnKindDef kindDef =
+                DefDatabase<PawnKindDef>.GetNamedSilentFail(Props.pawnKindDefName)
+                ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ArchonBeast");
 
-            Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.AncientsHostile)
-                              ?? Find.FactionManager.RandomEnemyFaction(false, false, false, TechLevel.Spacer);
+            if (kindDef == null)
+            {
+                Messages.Message("Missing boss PawnKindDef.", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            Faction faction =
+                Find.FactionManager.FirstFactionOfDef(FactionDefOf.AncientsHostile)
+                ?? Find.FactionManager.RandomEnemyFaction(false, false, false, TechLevel.Spacer)
+                ?? Find.FactionManager.FirstFactionOfDef(FactionDefOf.Pirate);
+
             if (faction == null)
             {
-                faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.Pirate);
+                Messages.Message("No valid hostile faction found.", MessageTypeDefOf.RejectInput, false);
+                return;
             }
 
             PawnGenerationRequest request = new PawnGenerationRequest(
@@ -51,8 +59,8 @@ namespace AbyssalProtocol
                 canGeneratePawnRelations: false,
                 mustBeCapableOfViolence: true,
                 colonistRelationChanceFactor: 0f,
-                forceAddFreeWarmLayerIfNeeded: true,
-                allowGay: true,
+                forceAddFreeWarmLayerIfNeeded: false,
+                allowGay: false,
                 allowPregnant: false,
                 allowFood: false,
                 inhabitant: false,
@@ -81,17 +89,26 @@ namespace AbyssalProtocol
             }
 
             PrepareBoss(pawn);
+
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
 
-            // LordJob живёт в Verse.AI.Group
-            LordJob lordJob = new LordJob_AssaultColony(faction, canKidnap: false, canTimeoutOrFlee: false, sappers: true, useAvoidGridSmart: true, canSteal: false);
+            LordJob lordJob = new LordJob_AssaultColony(
+                faction,
+                canKidnap: false,
+                canTimeoutOrFlee: false,
+                sappers: true,
+                useAvoidGridSmart: true,
+                canSteal: false
+            );
+
             LordMaker.MakeNewLord(faction, lordJob, map, new List<Pawn> { pawn });
 
             Find.LetterStack.ReceiveLetter(
                 "ABY_BossSummonSuccessLabel".Translate(),
                 "ABY_BossSummonSuccessDesc".Translate(Props.bossLabel),
                 LetterDefOf.ThreatBig,
-                new TargetInfo(spawnCell, map));
+                new TargetInfo(spawnCell, map)
+            );
 
             parent.SplitOff(1).Destroy();
         }
@@ -99,37 +116,61 @@ namespace AbyssalProtocol
         private void PrepareBoss(Pawn pawn)
         {
             pawn.Name = new NameSingle("ABY_BossName".Translate());
-            pawn.story.title = Props.bossLabel;
 
+            if (pawn.story != null)
+            {
+                pawn.story.title = Props.bossLabel;
+            }
+
+            if (pawn.RaceProps != null && pawn.RaceProps.Humanlike)
+            {
+                PrepareHumanlikeBoss(pawn);
+            }
+            else
+            {
+                PrepareMonsterBoss(pawn);
+            }
+        }
+
+        private void PrepareHumanlikeBoss(Pawn pawn)
+        {
             ThingDef weaponDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_RiftCarbine");
-            if (weaponDef != null)
+            if (weaponDef != null && pawn.equipment != null)
             {
                 Thing weapon = ThingMaker.MakeThing(weaponDef);
-                pawn.equipment?.AddEquipment((ThingWithComps)weapon);
+                if (weapon is ThingWithComps twc)
+                {
+                    pawn.equipment.AddEquipment(twc);
+                }
             }
 
             HediffDef eyeDef = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_InfernalEye_Implant");
             if (eyeDef != null)
             {
-                // GetNotMissingParts() возвращает IEnumerable — нужен .FirstOrDefault() из System.Linq
                 BodyPartRecord eyePart = pawn.health?.hediffSet?.GetNotMissingParts()
-                    .FirstOrDefault(p => p.def == BodyPartDefOf.Eye);
+                    ?.FirstOrDefault(p => p.def == BodyPartDefOf.Eye);
+
                 if (eyePart != null)
                 {
                     pawn.health.AddHediff(eyeDef, eyePart);
                 }
             }
+        }
 
-            // HediffDefOf.DrugDesire не существует — берём из DefDatabase
-            HediffDef drugDesire = DefDatabase<HediffDef>.GetNamedSilentFail("DrugDesire");
-            if (drugDesire != null)
+        private void PrepareMonsterBoss(Pawn pawn)
+        {
+            HediffDef core = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_ArchonCore");
+            HediffDef carapace = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_ArchonCarapace");
+
+            if (core != null)
             {
-                pawn.health?.AddHediff(drugDesire);
+                pawn.health?.AddHediff(core);
             }
 
-            pawn.skills?.GetSkill(SkillDefOf.Shooting)?.Learn(16f, direct: true);
-            pawn.skills?.GetSkill(SkillDefOf.Melee)?.Learn(12f, direct: true);
-            pawn.skills?.GetSkill(SkillDefOf.Intellectual)?.Learn(8f, direct: true);
+            if (carapace != null)
+            {
+                pawn.health?.AddHediff(carapace);
+            }
         }
 
         private bool TryFindSpawnCell(Map map, out IntVec3 cell)
