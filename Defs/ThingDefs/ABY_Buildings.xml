@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef ParentName="BenchBase">
+  <ThingDef ParentName="TableMachining">
     <defName>ABY_SummoningCircle</defName>
     <label>abyssal summoning circle</label>
-    <description>Debug worktable version of the abyssal summoning circle.</description>
-
-    <thingClass>Building_WorkTable</thingClass>
+    <description>A ritualized industrial worktable that condenses steel, components and void residue into controlled infernal summon sigils.</description>
 
     <graphicData>
       <texPath>Things/Building/ABY_SummoningCircle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.0,1.0)</drawSize>
+      <drawSize>(2.0,2.0)</drawSize>
     </graphicData>
 
-    <altitudeLayer>Building</altitudeLayer>
-    <size>(1,1)</size>
-    <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
-
+    <size>(2,2)</size>
     <costList>
       <Steel>180</Steel>
       <Plasteel>40</Plasteel>
@@ -30,23 +24,17 @@
       <MaxHitPoints>220</MaxHitPoints>
       <Flammability>0.2</Flammability>
       <Beauty>-5</Beauty>
-      <WorkTableWorkSpeedFactor>1.0</WorkTableWorkSpeedFactor>
     </statBases>
 
     <designationCategory>Production</designationCategory>
     <uiOrder>6120</uiOrder>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
 
-    <passability>PassThroughOnly</passability>
-    <fillPercent>0.2</fillPercent>
-
     <researchPrerequisites>
       <li>ABY_AbyssalSignalTheory</li>
     </researchPrerequisites>
 
-    <inspectorTabs>
-      <li>ITab_Bills</li>
-    </inspectorTabs>
+    <recipes Inherit="False" />
   </ThingDef>
 
 </Defs>
