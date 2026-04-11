@@ -10,7 +10,6 @@
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <tab>Spacer</tab>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -23,7 +22,6 @@
       <li>ABY_AbyssalSignalTheory</li>
       <li>Fabrication</li>
     </prerequisites>
-    <tab>Spacer</tab>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
@@ -36,7 +34,6 @@
       <li>ABY_AbyssalSignalTheory</li>
       <li>Bionics</li>
     </prerequisites>
-    <tab>Spacer</tab>
   </ResearchProjectDef>
 
 </Defs>
