@@ -16,7 +16,7 @@
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
 
-   <race>
+  <race>
   <renderTree>Animal</renderTree>
   <thinkTreeMain>Animal</thinkTreeMain>
   <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
@@ -43,8 +43,14 @@
   <herdAnimal>false</herdAnimal>
   <predator>true</predator>
   <foodType>CarnivoreAnimal</foodType>
-</race>
 
+  <lifeStageAges>
+    <li>
+      <def>AnimalAdult</def>
+      <minAge>0</minAge>
+    </li>
+  </lifeStageAges>
+</race>
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
       <MoveSpeed>5.2</MoveSpeed>
