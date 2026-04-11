@@ -200,7 +200,6 @@ namespace AbyssalProtocol
             ClampHediffSeverity(pawn, HediffDefOf.Heatstroke, Props.emergencyHeatstrokeClamp);
             HealWorstInjury(pawn, Props.emergencyHealInjurySeverity);
 
-            pawn.health.forceIncap = false;
             pawn.health.hediffSet.DirtyCache();
             pawn.health.CheckForStateChange(null, null);
         }
@@ -395,7 +394,7 @@ namespace AbyssalProtocol
 
                 if (Rand.Chance(Props.dashInfernalFireChance))
                 {
-                    FireUtility.TryStartFireIn(cell, map, 0.15f);
+                    FireUtility.TryStartFireIn(cell, map, 0.15f, null, null);
                 }
             }
         }
