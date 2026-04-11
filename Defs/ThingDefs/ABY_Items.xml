@@ -44,7 +44,7 @@
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
-        <bossLabel>Archon of Rupture</bossLabel>
+        <bossLabel>Archon Beast</bossLabel>
         <spawnPoints>900</spawnPoints>
       </li>
     </comps>
