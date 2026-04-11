@@ -1,8 +1,13 @@
-<PawnKindDef ParentName="AnimalKindBase">
-  <defName>ABY_ArchonBeast</defName>
-  <label>archon beast</label>
-  <race>ABY_ArchonBeast</race>
-  <combatPower>900</combatPower>
-  <ecoSystemWeight>0</ecoSystemWeight>
-  <canArriveManhunter>false</canArriveManhunter>
-</PawnKindDef>
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_ArchonBeast</defName>
+    <label>archon beast</label>
+    <race>ABY_ArchonBeast</race>
+    <combatPower>900</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+  </PawnKindDef>
+
+</Defs>
