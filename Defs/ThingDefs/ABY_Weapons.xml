@@ -19,6 +19,12 @@
       <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
       <recipeUsers Inherit="False">
   <li>ABY_SummoningCircle</li>
+        <recipeMaker>
+  <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
+  <recipeUsers Inherit="False">
+    <li>ABY_SummoningCircle</li>
+  </recipeUsers>
+</recipeMaker>
 </recipeUsers>
     </recipeMaker>
     <costList>
@@ -35,19 +41,20 @@
       <AccuracyMedium>0.68</AccuracyMedium>
       <AccuracyLong>0.54</AccuracyLong>
       <RangedWeapon_Cooldown>1.4</RangedWeapon_Cooldown>
-      <BurstShotCount>3</BurstShotCount>
     </statBases>
-    <verbs>
-      <li>
-        <verbClass>Verb_Shoot</verbClass>
-        <hasStandardCommand>true</hasStandardCommand>
-        <defaultProjectile>Bullet_ChargeBlaster</defaultProjectile>
-        <warmupTime>1.05</warmupTime>
-        <range>28.9</range>
-        <soundCast>ShotChargeBlaster</soundCast>
-        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
-      </li>
-    </verbs>
+<verbs>
+  <li>
+    <verbClass>Verb_Shoot</verbClass>
+    <hasStandardCommand>true</hasStandardCommand>
+    <defaultProjectile>Bullet_ChargeBlaster</defaultProjectile>
+    <warmupTime>1.05</warmupTime>
+    <range>28.9</range>
+    <burstShotCount>3</burstShotCount>
+    <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+    <soundCast>ShotChargeBlaster</soundCast>
+    <muzzleFlashScale>10</muzzleFlashScale>
+  </li>
+</verbs>
   </ThingDef>
 
   <ThingDef ParentName="BaseHumanMakeableSword">
