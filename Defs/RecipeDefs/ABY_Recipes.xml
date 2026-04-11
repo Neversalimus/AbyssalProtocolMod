@@ -13,9 +13,9 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
 
-    <recipeUsers>
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
+<recipeUsers>
+  <li>TableMachining</li>
+</recipeUsers>
 
     <ingredients>
       <li>
@@ -53,9 +53,9 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
 
-    <recipeUsers>
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
+<recipeUsers>
+  <li>TableMachining</li>
+</recipeUsers>
 
     <ingredients>
       <li>
@@ -101,9 +101,9 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
 
-    <recipeUsers>
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
+<recipeUsers>
+  <li>TableMachining</li>
+</recipeUsers>
 
     <ingredients>
       <li>
