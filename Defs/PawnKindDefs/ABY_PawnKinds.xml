@@ -1,70 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<Defs>
-
-  <PawnKindDef ParentName="HumanlikeBase">
-    <defName>ABY_ArchonOfRupture</defName>
-    <label>archon of rupture</label>
-    <race>Human</race>
-
-    <combatPower>650</combatPower>
-    <gearHealthRange>(0.85,1.0)</gearHealthRange>
-    <canArriveManhunter>false</canArriveManhunter>
-    <canBeSapper>true</canBeSapper>
-    <canBeUsedInCaravan>false</canBeUsedInCaravan>
-    <ecoSystemWeight>0</ecoSystemWeight>
-
-    <itemQuality>Excellent</itemQuality>
-    <weaponMoney>
-      <min>1800</min>
-      <max>2200</max>
-    </weaponMoney>
-    <apparelMoney>
-      <min>1200</min>
-      <max>1800</max>
-    </apparelMoney>
-
-    <baseRecruitDifficulty>1</baseRecruitDifficulty>
-    <baseMarketValue>4200</baseMarketValue>
-
-    <skills>
-      <li>
-        <skill>Shooting</skill>
-        <minLevel>14</minLevel>
-        <maxLevel>18</maxLevel>
-      </li>
-      <li>
-        <skill>Melee</skill>
-        <minLevel>10</minLevel>
-        <maxLevel>14</maxLevel>
-      </li>
-      <li>
-        <skill>Intellectual</skill>
-        <minLevel>6</minLevel>
-        <maxLevel>10</maxLevel>
-      </li>
-    </skills>
-
-    <requiredWorkTags>
-      <li>Violent</li>
-    </requiredWorkTags>
-
-    <apparelRequired>
-      <li>ArmorVest</li>
-      <li>SimpleHelmet</li>
-    </apparelRequired>
-
-    <weaponTags>
-      <li>Gun</li>
-      <li>RangedHeavy</li>
-    </weaponTags>
-
-    <backstoryCategories>
-      <li>Mercenary</li>
-      <li>Soldier</li>
-    </backstoryCategories>
-
-    <chemicalAddictionChance>0</chemicalAddictionChance>
-    <trader>false</trader>
-  </PawnKindDef>
-
-</Defs>
+<PawnKindDef ParentName="AnimalKindBase">
+  <defName>ABY_ArchonBeast</defName>
+  <label>archon beast</label>
+  <race>ABY_ArchonBeast</race>
+  <combatPower>900</combatPower>
+  <ecoSystemWeight>0</ecoSystemWeight>
+  <canArriveManhunter>false</canArriveManhunter>
+</PawnKindDef>
