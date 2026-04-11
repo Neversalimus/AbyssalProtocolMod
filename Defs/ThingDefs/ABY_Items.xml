@@ -5,11 +5,11 @@
     <defName>ABY_AbyssalResidue</defName>
     <label>abyssal residue</label>
     <description>Condensed techno-occult slag. It is inert in storage, but resonates violently inside the summoning circle.</description>
-<graphicData>
-  <texPath>Things/Item/ABY_AbyssalResidue</texPath>
-  <graphicClass>Graphic_Single</graphicClass>
-  <color>(255,80,80)</color>
-</graphicData>
+    <graphicData>
+      <texPath>Things/Item/ABY_AbyssalResidue</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(255,80,80)</color>
+    </graphicData>
     <tradeability>Buyable</tradeability>
     <stackLimit>75</stackLimit>
     <statBases>
@@ -51,37 +51,33 @@
   </ThingDef>
 
   <ThingDef ParentName="BodyPartBionicBase">
-  <defName>ABY_InfernalEye</defName>
-  <label>infernal eye</label>
-  <description>A red-black ocular implant with abyssal target prediction routines.</description>
-
-  <graphicData>
-    <texPath>Things/Implant/ABY_InfernalEye</texPath>
-    <graphicClass>Graphic_Single</graphicClass>
-  </graphicData>
-
-  <statBases>
-    <Mass>0.15</Mass>
-    <WorkToMake>26000</WorkToMake>
-    <MarketValue>900</MarketValue>
-  </statBases>
-
-  <recipeMaker>
-    <researchPrerequisite>ABY_AbyssalAugmentation</researchPrerequisite>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
-    <recipeUsers Inherit="False">
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
-    <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
-  </recipeMaker>
-
-  <costList>
-    <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
-    <ComponentIndustrial>2</ComponentIndustrial>
-    <Steel>30</Steel>
-  </costList>
-</ThingDef>
+    <defName>ABY_InfernalEye</defName>
+    <label>infernal eye</label>
+    <description>A red-black ocular implant with abyssal target prediction routines.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_InfernalEye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <Mass>0.15</Mass>
+      <WorkToMake>26000</WorkToMake>
+      <MarketValue>900</MarketValue>
+    </statBases>
+    <recipeMaker>
+      <researchPrerequisite>ABY_AbyssalAugmentation</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_SummoningCircle</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Steel>30</Steel>
+    </costList>
+  </ThingDef>
 
 </Defs>
