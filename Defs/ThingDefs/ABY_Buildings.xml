@@ -2,50 +2,51 @@
 <Defs>
 
   <ThingDef ParentName="BenchBase">
-  <defName>ABY_SummoningCircle</defName>
-  <label>abyssal summoning circle</label>
-  <description>A ritualized industrial worktable that condenses steel, components and void residue into controlled infernal summon sigils.</description>
+    <defName>ABY_SummoningCircle</defName>
+    <label>abyssal summoning circle</label>
+    <description>A ritualized industrial worktable that condenses steel, components and void residue into controlled infernal summon sigils.</description>
 
-  <thingClass>Building_WorkTable</thingClass>
+    <thingClass>Building_WorkTable</thingClass>
 
-  <graphicData>
-    <texPath>Things/Building/ABY_SummoningCircle</texPath>
-    <graphicClass>Graphic_Single</graphicClass>
-    <drawSize>(2.0,2.0)</drawSize>
-  </graphicData>
+    <graphicData>
+      <texPath>Things/Building/ABY_SummoningCircle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.0,2.0)</drawSize>
+    </graphicData>
 
-  <altitudeLayer>Building</altitudeLayer>
-  <size>(2,2)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <size>(2,2)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
 
-  <costList>
-    <Steel>180</Steel>
-    <Plasteel>40</Plasteel>
-    <ComponentIndustrial>6</ComponentIndustrial>
-  </costList>
+    <costList>
+      <Steel>180</Steel>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+    </costList>
 
-  <statBases>
-    <WorkToBuild>14000</WorkToBuild>
-    <MaxHitPoints>220</MaxHitPoints>
-    <Flammability>0.2</Flammability>
-    <Beauty>-5</Beauty>
-  </statBases>
+    <statBases>
+      <WorkToBuild>14000</WorkToBuild>
+      <MaxHitPoints>220</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <Beauty>-5</Beauty>
+      <WorkTableWorkSpeedFactor>1.0</WorkTableWorkSpeedFactor>
+    </statBases>
 
-  <designationCategory>Production</designationCategory>
-  <uiOrder>6120</uiOrder>
-  <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <designationCategory>Production</designationCategory>
+    <uiOrder>6120</uiOrder>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
 
-  <passability>PassThroughOnly</passability>
-  <fillPercent>0.2</fillPercent>
-  <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.2</fillPercent>
 
-  <researchPrerequisites>
-    <li>ABY_AbyssalSignalTheory</li>
-  </researchPrerequisites>
+    <researchPrerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </researchPrerequisites>
 
-  <inspectorTabs>
-    <li>ITab_Bills</li>
-  </inspectorTabs>
-
-</ThingDef>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+  </ThingDef>
 
 </Defs>
