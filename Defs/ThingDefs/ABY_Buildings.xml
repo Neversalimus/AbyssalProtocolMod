@@ -4,18 +4,18 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_SummoningCircle</defName>
     <label>abyssal summoning circle</label>
-    <description>A ritualized industrial worktable that condenses steel, components and void residue into controlled infernal summon sigils.</description>
+    <description>Debug worktable version of the abyssal summoning circle.</description>
 
     <thingClass>Building_WorkTable</thingClass>
 
     <graphicData>
       <texPath>Things/Building/ABY_SummoningCircle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.0,2.0)</drawSize>
+      <drawSize>(1.0,1.0)</drawSize>
     </graphicData>
 
     <altitudeLayer>Building</altitudeLayer>
-    <size>(2,2)</size>
+    <size>(1,1)</size>
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(0,0,-1)</interactionCellOffset>
 
