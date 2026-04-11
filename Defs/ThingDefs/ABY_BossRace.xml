@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_ArchonBeast</defName>
+    <label>archon beast</label>
+    <description>A colossal infernal war-beast of black carapace, reactor heat and abyssal rage.</description>
+
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+
+    <graphicData>
+      <texPath>Pawn/ArchonBeast/ArchonBeast</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.2,3.2)</drawSize>
+    </graphicData>
+
+    <race>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <body>QuadrupedAnimal</body>
+      <baseBodySize>3.2</baseBodySize>
+      <baseHealthScale>4.8</baseHealthScale>
+      <baseHungerRate>1.2</baseHungerRate>
+      <bloodDef>Blood</bloodDef>
+      <fleshType>Normal</fleshType>
+      <intelligence>Animal</intelligence>
+      <trainability>None</trainability>
+      <wildness>1</wildness>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <meatLabel>archon beast flesh</meatLabel>
+      <meatAmount>220</meatAmount>
+      <leatherAmount>0</leatherAmount>
+      <lifeExpectancy>400</lifeExpectancy>
+      <herdAnimal>false</herdAnimal>
+      <predator>true</predator>
+      <foodType>CarnivoreAnimal</foodType>
+    </race>
+
+    <statBases>
+      <MaxHitPoints>1800</MaxHitPoints>
+      <MoveSpeed>5.2</MoveSpeed>
+      <MeleeHitChance>0.92</MeleeHitChance>
+      <MeleeDPS>38</MeleeDPS>
+      <ArmorRating_Sharp>1.1</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.95</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.4</ArmorRating_Heat>
+      <ComfyTemperatureMin>-40</ComfyTemperatureMin>
+      <ComfyTemperatureMax>220</ComfyTemperatureMax>
+      <Flammability>0</Flammability>
+      <ToxicResistance>1</ToxicResistance>
+      <PsychicSensitivity>0</PsychicSensitivity>
+      <MarketValue>6000</MarketValue>
+      <Mass>4.5</Mass>
+    </statBases>
+
+    <tools>
+      <li>
+        <label>infernal claw</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Scratch</li>
+        </capacities>
+        <power>42</power>
+        <cooldownTime>1.8</cooldownTime>
+        <chanceFactor>1.4</chanceFactor>
+        <armorPenetration>0.38</armorPenetration>
+      </li>
+      <li>
+        <label>maw</label>
+        <capacities>
+          <li>Bite</li>
+          <li>Blunt</li>
+        </capacities>
+        <power>52</power>
+        <cooldownTime>2.6</cooldownTime>
+        <chanceFactor>0.9</chanceFactor>
+        <armorPenetration>0.44</armorPenetration>
+      </li>
+      <li>
+        <label>crushing forelimb</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>65</power>
+        <cooldownTime>3.4</cooldownTime>
+        <chanceFactor>0.65</chanceFactor>
+        <armorPenetration>0.5</armorPenetration>
+      </li>
+    </tools>
+  </ThingDef>
+
+</Defs>
