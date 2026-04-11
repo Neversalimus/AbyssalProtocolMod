@@ -46,7 +46,7 @@
   <li>
     <verbClass>Verb_Shoot</verbClass>
     <hasStandardCommand>true</hasStandardCommand>
-    <defaultProjectile>Bullet_ChargeBlaster</defaultProjectile>
+    <defaultProjectile>ABY_UltraPlasmaBolt</defaultProjectile>
     <warmupTime>1.05</warmupTime>
     <range>28.9</range>
     <burstShotCount>3</burstShotCount>
