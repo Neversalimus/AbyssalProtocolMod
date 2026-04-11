@@ -1,0 +1,28 @@
+# Visual Studio / IDE
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.rsuser
+*.sln.docstates
+
+# Build output
+[Bb]in/
+[Oo]bj/
+Source/**/bin/
+Source/**/obj/
+
+# Debug / cache
+*.cache
+*.tmp
+*.log
+
+# Local RimWorld references - do not commit game DLLs
+Libraries/
+Reference/
+References/
+
+# Optional debug symbols
+Assemblies/*.pdb
