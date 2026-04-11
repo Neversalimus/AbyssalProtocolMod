@@ -8,8 +8,9 @@
     <jobString>Condensing abyssal residue.</jobString>
     <workAmount>900</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <effectWorking>Recipe_Machining</effectWorking>
-    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>ABY_SummoningCircle</li>
+    </recipeUsers>
     <products>
       <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
     </products>
@@ -31,9 +32,6 @@
         <count>1</count>
       </li>
     </ingredients>
-    <recipeUsers>
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
   </RecipeDef>
 
   <RecipeDef>
@@ -43,8 +41,9 @@
     <jobString>Forging archon sigil.</jobString>
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <effectWorking>Recipe_Machining</effectWorking>
-    <soundWorking>Recipe_Machining</soundWorking>
+    <recipeUsers>
+      <li>ABY_SummoningCircle</li>
+    </recipeUsers>
     <products>
       <ABY_ArchonSigil>1</ABY_ArchonSigil>
     </products>
@@ -74,9 +73,6 @@
         <count>2</count>
       </li>
     </ingredients>
-    <recipeUsers>
-      <li>ABY_SummoningCircle</li>
-    </recipeUsers>
   </RecipeDef>
 
 </Defs>
