@@ -46,14 +46,6 @@
     <li>ITab_Bills</li>
   </inspectorTabs>
 
-  <comps>
-    <li Class="CompProperties_Power">
-      <compClass>CompPowerTrader</compClass>
-      <basePowerConsumption>750</basePowerConsumption>
-      <shortCircuitInRain>true</shortCircuitInRain>
-    </li>
-    <li Class="CompProperties_Flickable" />
-  </comps>
 </ThingDef>
 
 </Defs>
