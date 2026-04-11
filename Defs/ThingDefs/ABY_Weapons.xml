@@ -51,7 +51,7 @@
     <range>28.9</range>
     <burstShotCount>3</burstShotCount>
     <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
-    <soundCast>ShotChargeBlaster</soundCast>
+    <soundCast>Shot_ChargeRifle</soundCast>
     <muzzleFlashScale>10</muzzleFlashScale>
   </li>
 </verbs>
