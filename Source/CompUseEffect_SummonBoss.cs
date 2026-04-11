@@ -31,7 +31,7 @@ namespace AbyssalProtocol
 
             // SpaceSoldier не существует в PawnKindDefOf — берём из DefDatabase
             PawnKindDef kindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(Props.pawnKindDefName)
-                                  ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("SpaceSoldier");
+                                  ?? DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ArchonOfRupture");
 
             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.AncientsHostile)
                               ?? Find.FactionManager.RandomEnemyFaction(false, false, false, TechLevel.Spacer);
