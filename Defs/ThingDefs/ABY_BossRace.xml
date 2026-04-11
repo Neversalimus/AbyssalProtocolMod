@@ -14,43 +14,47 @@
       <texPath>Pawn/ArchonBeast/ArchonBeast</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3.2,3.2)</drawSize>
+      <shadowData>
+        <volume>(2.0, 0.55, 1.15)</volume>
+        <offset>(0, 0, -0.2)</offset>
+      </shadowData>
     </graphicData>
 
-  <race>
-  <renderTree>Animal</renderTree>
-  <thinkTreeMain>Animal</thinkTreeMain>
-  <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
-  <hasGenders>true</hasGenders>
-  <nameGenerator>NamerAnimalGenericMale</nameGenerator>
-  <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
-  <trainability>None</trainability>
-  <bloodDef>Filth_Blood</bloodDef>
-  <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
-  <canBecomeShambler>true</canBecomeShambler>
-  <hediffGiverSets>
-    <li>OrganicStandard</li>
-  </hediffGiverSets>
-  <body>QuadrupedAnimalWithHooves</body>
-  <baseBodySize>3.2</baseBodySize>
-  <baseHealthScale>4.8</baseHealthScale>
-  <baseHungerRate>1.2</baseHungerRate>
-  <fleshType>Normal</fleshType>
-  <intelligence>Animal</intelligence>
-  <manhunterOnDamageChance>0</manhunterOnDamageChance>
-  <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
-  <gestationPeriodDays>12</gestationPeriodDays>
-  <lifeExpectancy>400</lifeExpectancy>
-  <herdAnimal>false</herdAnimal>
-  <predator>true</predator>
-  <foodType>CarnivoreAnimal</foodType>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>QuadrupedAnimalWithHooves</body>
+      <baseBodySize>3.2</baseBodySize>
+      <baseHealthScale>4.8</baseHealthScale>
+      <baseHungerRate>1.2</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>Animal</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>12</gestationPeriodDays>
+      <lifeExpectancy>400</lifeExpectancy>
+      <herdAnimal>false</herdAnimal>
+      <predator>true</predator>
+      <foodType>CarnivoreAnimal</foodType>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
 
-  <lifeStageAges>
-    <li>
-      <def>AnimalAdult</def>
-      <minAge>0</minAge>
-    </li>
-  </lifeStageAges>
-</race>
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
       <MoveSpeed>5.2</MoveSpeed>
