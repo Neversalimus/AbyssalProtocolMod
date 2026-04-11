@@ -130,11 +130,6 @@ namespace AbyssalProtocol
             pawn.skills?.GetSkill(SkillDefOf.Shooting)?.Learn(16f, direct: true);
             pawn.skills?.GetSkill(SkillDefOf.Melee)?.Learn(12f, direct: true);
             pawn.skills?.GetSkill(SkillDefOf.Intellectual)?.Learn(8f, direct: true);
-
-            if (pawn.kindDef != null)
-            {
-                pawn.kindDef.combatPower = Mathf.Max(pawn.kindDef.combatPower, Props.spawnPoints);
-            }
         }
 
         private bool TryFindSpawnCell(Map map, out IntVec3 cell)
