@@ -17,32 +17,32 @@
     </graphicData>
 
     <race>
-      <renderTree>Animal</renderTree>
-      <thinkTreeMain>Animal</thinkTreeMain>
-      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
-      <hasGenders>true</hasGenders>
-      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
-      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
-      <trainability>None</trainability>
-      <bloodDef>Filth_Blood</bloodDef>
-      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
-      <canBecomeShambler>true</canBecomeShambler>
-      <hediffGiverSets>
-        <li>OrganicStandard</li>
-      </hediffGiverSets>
-      <body>QuadrupedAnimal</body>
-      <baseBodySize>3.2</baseBodySize>
-      <baseHealthScale>4.8</baseHealthScale>
-      <baseHungerRate>1.2</baseHungerRate>
-      <fleshType>Normal</fleshType>
-      <intelligence>Animal</intelligence>
-      <manhunterOnDamageChance>0</manhunterOnDamageChance>
-      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
-      <lifeExpectancy>400</lifeExpectancy>
-      <herdAnimal>false</herdAnimal>
-      <predator>true</predator>
-      <foodType>CarnivoreAnimal</foodType>
-    </race>
+  <renderTree>Animal</renderTree>
+  <thinkTreeMain>Animal</thinkTreeMain>
+  <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+  <hasGenders>true</hasGenders>
+  <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+  <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+  <trainability>None</trainability>
+  <bloodDef>Filth_Blood</bloodDef>
+  <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+  <canBecomeShambler>true</canBecomeShambler>
+  <hediffGiverSets>
+    <li>OrganicStandard</li>
+  </hediffGiverSets>
+  <body>QuadrupedAnimalNoHooves</body>
+  <baseBodySize>3.2</baseBodySize>
+  <baseHealthScale>4.8</baseHealthScale>
+  <baseHungerRate>1.2</baseHungerRate>
+  <fleshType>Normal</fleshType>
+  <intelligence>Animal</intelligence>
+  <manhunterOnDamageChance>0</manhunterOnDamageChance>
+  <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+  <lifeExpectancy>400</lifeExpectancy>
+  <herdAnimal>false</herdAnimal>
+  <predator>true</predator>
+  <foodType>CarnivoreAnimal</foodType>
+</race>
 
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
