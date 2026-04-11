@@ -23,6 +23,13 @@
         <phase3HeatstrokeSeverity>0.0090</phase3HeatstrokeSeverity>
 
         <auraIntervalTicks>60</auraIntervalTicks>
+
+        <dashPhase>3</dashPhase>
+        <dashCooldownTicks>780</dashCooldownTicks>
+        <dashSearchIntervalTicks>30</dashSearchIntervalTicks>
+        <dashMinRange>7.0</dashMinRange>
+        <dashMaxRange>24.0</dashMaxRange>
+        <dashLandingRadius>1.9</dashLandingRadius>
       </li>
     </comps>
 
