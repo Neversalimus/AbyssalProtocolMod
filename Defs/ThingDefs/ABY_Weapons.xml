@@ -17,6 +17,9 @@
     </weaponTags>
     <recipeMaker>
       <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
+      <recipeUsers Inherit="False">
+  <li>ABY_SummoningCircle</li>
+</recipeUsers>
     </recipeMaker>
     <costList>
       <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
