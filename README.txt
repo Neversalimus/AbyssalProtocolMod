@@ -1,30 +1,59 @@
-# Abyssal Protocol — starter RimWorld mod scaffold
+# Abyssal Protocol
 
-This archive contains a first-pass playable framework for the mod idea:
+Abyssal Protocol is a RimWorld mod prototype focused on infernal ultra-tech progression through controlled summoning.
+
+## Current features
+
 - custom summoning circle workbench
-- craftable residue
+- craftable Infernal Residue
 - craftable Archon Sigil
-- C# use-effect that spawns a hostile boss pawn on the current map
-- starter weapons
-- starter implant
-- placeholder art
+- C# use-effect that summons a hostile boss on the current map
+- custom monster boss race: Archon Beast
+- directional boss sprites for north / south / east / west
+- custom boss race definition with oversized draw size
+- custom boss buff hediffs:
+  - ABY_ArchonCore
+  - ABY_ArchonCarapace
+- starter weapon content
+- starter implant content
+- English and Russian localization
+- placeholder / prototype art pipeline for rapid iteration
 
-## Build
-1. Put the mod folder inside `RimWorld/Mods/`.
-2. Open `Source/AbyssalProtocol.csproj` in Visual Studio.
-3. Fix the `HintPath` values so they point to your local RimWorld managed DLL folder.
-4. Build in Release or Debug; the DLL is configured to output to `Assemblies/`.
-5. Enable the mod in RimWorld.
+## Current boss pipeline
 
-## What is intentionally simple in this starter pack
-- Boss spawn uses a hostile vanilla humanlike pawnkind (`SpaceSoldier`) and then customizes its gear.
-- No custom boss phases yet.
-- No custom faction yet.
-- Art is placeholder style, made for rapid prototyping.
+1. Research the starting abyssal technologies.
+2. Build the Summoning Circle.
+3. Craft the Archon Sigil.
+4. Use the sigil on the map.
+5. The sigil triggers a custom C# use-effect.
+6. A hostile summoned boss is generated and spawned at the map edge.
+7. The sigil is consumed on use.
 
-## Best next steps
-- swap `pawnKindDefName` to a dedicated custom pawnkind
-- add a boss apparel set
-- add 2-3 more sigils
-- move boss tuning into Defs or ModSettings
-- add an IncidentWorker if you want storyteller integration later
+## Current boss design
+
+The first boss is the **Archon Beast**:
+- non-humanlike monster boss
+- quadruped infernal war-beast
+- oversized visual presence through drawSize
+- natural melee attacks instead of human equipment-based combat
+- enhanced by custom abyssal buff hediffs
+
+## Prototype status
+
+This project is still an early prototype.
+The current focus is:
+- summoning loop
+- boss identity
+- content structure
+- art pipeline
+- transitioning from placeholder systems to dedicated custom content
+
+## Planned next steps
+
+- add unique boss drops
+- add additional summon sigils
+- add more infernal monsters and elites
+- add boss-specific sound and visual effects
+- add dedicated boss death rewards
+- add more abyssal weapons, armor, and implants
+- expand progression beyond the first boss
