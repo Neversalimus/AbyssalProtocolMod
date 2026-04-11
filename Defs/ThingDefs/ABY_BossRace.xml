@@ -16,8 +16,6 @@
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
 
-    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropUltraPlasmaRifle</deathActionWorkerClass>
-
     <race>
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
