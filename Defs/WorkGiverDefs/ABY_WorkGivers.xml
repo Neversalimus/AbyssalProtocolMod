@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>ABY_DoBillsSummoningCircle</defName>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>95</priorityInType>
+    <verb>craft at</verb>
+    <gerund>crafting at</gerund>
+
+    <fixedBillGiverDefs>
+      <li>ABY_SummoningCircle</li>
+    </fixedBillGiverDefs>
+
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>
