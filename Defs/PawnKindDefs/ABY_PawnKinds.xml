@@ -12,7 +12,7 @@
     <lifeStages>
       <li>
         <bodyGraphicData>
-          <texPath>Pawn/ArchonBeast/ArchonBeast</texPath>
+          <texPath>Things/Pawn/ArchonBeastRebuilt/ArchonBeastRebuilt</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
           <drawSize>(3.2,3.2)</drawSize>
           <shadowData>
