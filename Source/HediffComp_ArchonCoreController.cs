@@ -27,6 +27,9 @@ namespace AbyssalProtocol
         public float dashMaxRange = 24f;
         public float dashLandingRadius = 1.9f;
 
+        public int bloodStabilizeIntervalTicks = 30;
+        public float bloodLossReductionPerPulse = 0.025f;
+
         public HediffCompProperties_ArchonCoreController()
         {
             compClass = typeof(HediffComp_ArchonCoreController);
@@ -61,6 +64,11 @@ namespace AbyssalProtocol
             if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
             {
                 ApplyHeatAura();
+            }
+
+            if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
+            {
+                StabilizeBloodLoss();
             }
 
             if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
@@ -148,6 +156,19 @@ namespace AbyssalProtocol
                     ApplyHeatstroke(target, severityPerPulse);
                 }
             }
+        }
+
+        private void StabilizeBloodLoss()
+        {
+            Pawn pawn = Pawn;
+            if (pawn == null || pawn.health == null)
+                return;
+
+            Hediff bloodLoss = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
+            if (bloodLoss == null)
+                return;
+
+            bloodLoss.Severity = Mathf.Max(0f, bloodLoss.Severity - Props.bloodLossReductionPerPulse);
         }
 
         private void TryDash()
