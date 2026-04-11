@@ -8,6 +8,9 @@
     <jobString>Condensing abyssal residue.</jobString>
     <workAmount>900</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
     <recipeUsers>
       <li>ABY_SummoningCircle</li>
     </recipeUsers>
@@ -41,6 +44,9 @@
     <jobString>Forging archon sigil.</jobString>
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
     <recipeUsers>
       <li>ABY_SummoningCircle</li>
     </recipeUsers>
