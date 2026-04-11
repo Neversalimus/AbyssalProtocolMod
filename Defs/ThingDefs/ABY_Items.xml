@@ -5,10 +5,11 @@
     <defName>ABY_AbyssalResidue</defName>
     <label>abyssal residue</label>
     <description>Condensed techno-occult slag. It is inert in storage, but resonates violently inside the summoning circle.</description>
-    <graphicData>
-      <texPath>Things/Item/ABY_AbyssalResidue</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-    </graphicData>
+<graphicData>
+  <texPath>Things/Item/ABY_AbyssalResidue</texPath>
+  <graphicClass>Graphic_Single</graphicClass>
+  <color>(255,80,80)</color>
+</graphicData>
     <color>(1,0.31,0.31)</color>
     <tradeability>Buyable</tradeability>
     <stackLimit>75</stackLimit>
