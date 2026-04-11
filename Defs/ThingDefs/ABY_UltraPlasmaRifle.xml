@@ -96,7 +96,6 @@
       <stoppingPower>1.9</stoppingPower>
       <speed>85</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
-      <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
     </projectile>
   </ThingDef>
 
