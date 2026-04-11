@@ -4,19 +4,19 @@
   <RecipeDef>
     <defName>ABY_CraftResidue</defName>
     <label>condense abyssal residue</label>
-    <description>Industrial ritual process that converts metal, components and power into inert abyssal residue.</description>
+    <description>Industrial ritual process that converts metal and components into inert abyssal residue.</description>
     <jobString>Condensing abyssal residue.</jobString>
+
     <workAmount>900</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+
     <recipeUsers>
       <li>ABY_SummoningCircle</li>
     </recipeUsers>
-    <products>
-      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
-    </products>
+
     <ingredients>
       <li>
         <filter>
@@ -35,6 +35,10 @@
         <count>1</count>
       </li>
     </ingredients>
+
+    <products>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+    </products>
   </RecipeDef>
 
   <RecipeDef>
@@ -42,17 +46,17 @@
     <label>forge archon sigil</label>
     <description>Compress residue into a stable breach-key used to summon the first boss.</description>
     <jobString>Forging archon sigil.</jobString>
+
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+
     <recipeUsers>
       <li>ABY_SummoningCircle</li>
     </recipeUsers>
-    <products>
-      <ABY_ArchonSigil>1</ABY_ArchonSigil>
-    </products>
+
     <ingredients>
       <li>
         <filter>
@@ -79,6 +83,58 @@
         <count>2</count>
       </li>
     </ingredients>
+
+    <products>
+      <ABY_ArchonSigil>1</ABY_ArchonSigil>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftInfernalEye</defName>
+    <label>make infernal eye</label>
+    <description>Create an infernal ocular implant using residue, steel and components.</description>
+    <jobString>Making infernal eye.</jobString>
+
+    <workAmount>2600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+
+    <recipeUsers>
+      <li>ABY_SummoningCircle</li>
+    </recipeUsers>
+
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+    </ingredients>
+
+    <products>
+      <ABY_InfernalEye>1</ABY_InfernalEye>
+    </products>
   </RecipeDef>
 
 </Defs>
