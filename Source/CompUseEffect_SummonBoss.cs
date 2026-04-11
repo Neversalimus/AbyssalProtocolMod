@@ -85,6 +85,11 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
 
+            AbyssalBossScreenFXGameComponent fxComp =
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
+
+            fxComp?.RegisterBoss(pawn);
+
             LordJob lordJob = new LordJob_AssaultColony(
                 faction,
                 canKidnap: false,
@@ -103,7 +108,8 @@ namespace AbyssalProtocol
                 new TargetInfo(spawnCell, map)
             );
 
-            parent.SplitOff(1).Destroy();
+            Thing splitThing = parent.SplitOff(1);
+            splitThing?.Destroy();
         }
 
         private static Faction ResolveHostileFaction()
@@ -169,13 +175,16 @@ namespace AbyssalProtocol
             if (pawn.skills != null)
             {
                 SkillRecord shooting = pawn.skills.GetSkill(SkillDefOf.Shooting);
-                if (shooting != null) shooting.Level = 16;
+                if (shooting != null)
+                    shooting.Level = 16;
 
                 SkillRecord melee = pawn.skills.GetSkill(SkillDefOf.Melee);
-                if (melee != null) melee.Level = 12;
+                if (melee != null)
+                    melee.Level = 12;
 
                 SkillRecord intellectual = pawn.skills.GetSkill(SkillDefOf.Intellectual);
-                if (intellectual != null) intellectual.Level = 8;
+                if (intellectual != null)
+                    intellectual.Level = 8;
             }
         }
 
