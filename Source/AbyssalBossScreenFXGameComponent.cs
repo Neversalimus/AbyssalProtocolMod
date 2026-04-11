@@ -121,19 +121,45 @@ namespace AbyssalProtocol
                 currentStrength * (0.05f + pulseB * 0.04f)
             );
 
-            DrawEdgeFrame(outerX, outerY, edgeDark, screenW, screenH);
-            DrawEdgeFrame(innerX, innerY, edgeHot, screenW, screenH);
+            DrawSoftEdgeFrame(outerX, outerY, edgeDark, screenW, screenH, 6);
+            DrawSoftEdgeFrame(innerX, innerY, edgeHot, screenW, screenH, 5);
         }
 
-        private static void DrawEdgeFrame(float thicknessX, float thicknessY, Color color, float screenW, float screenH)
+        private static void DrawSoftEdgeFrame(
+            float thicknessX,
+            float thicknessY,
+            Color color,
+            float screenW,
+            float screenH,
+            int layers)
         {
-            if (thicknessX <= 0f || thicknessY <= 0f)
+            if (thicknessX <= 0f || thicknessY <= 0f || layers <= 0)
                 return;
 
-            Widgets.DrawBoxSolid(new Rect(0f, 0f, screenW, thicknessY), color);
-            Widgets.DrawBoxSolid(new Rect(0f, screenH - thicknessY, screenW, thicknessY), color);
-            Widgets.DrawBoxSolid(new Rect(0f, thicknessY, thicknessX, screenH - thicknessY * 2f), color);
-            Widgets.DrawBoxSolid(new Rect(screenW - thicknessX, thicknessY, thicknessX, screenH - thicknessY * 2f), color);
+            for (int i = 0; i < layers; i++)
+            {
+                float t = (float)(i + 1) / layers;
+
+                float layerThicknessX = Mathf.Lerp(thicknessX, 2f, t);
+                float layerThicknessY = Mathf.Lerp(thicknessY, 2f, t);
+
+                Color layerColor = color;
+                layerColor.a *= (1f - t) * 0.85f;
+
+                if (layerColor.a <= 0.001f)
+                    continue;
+
+                Widgets.DrawBoxSolid(new Rect(0f, 0f, screenW, layerThicknessY), layerColor);
+                Widgets.DrawBoxSolid(new Rect(0f, screenH - layerThicknessY, screenW, layerThicknessY), layerColor);
+                Widgets.DrawBoxSolid(
+                    new Rect(0f, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f),
+                    layerColor
+                );
+                Widgets.DrawBoxSolid(
+                    new Rect(screenW - layerThicknessX, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f),
+                    layerColor
+                );
+            }
         }
 
         private bool BossAlive()
