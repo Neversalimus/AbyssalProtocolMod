@@ -16,7 +16,7 @@
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
 
-    <race>
+   <race>
   <renderTree>Animal</renderTree>
   <thinkTreeMain>Animal</thinkTreeMain>
   <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
@@ -30,7 +30,7 @@
   <hediffGiverSets>
     <li>OrganicStandard</li>
   </hediffGiverSets>
-  <body>QuadrupedAnimalNoHooves</body>
+  <body>QuadrupedAnimalWithHooves</body>
   <baseBodySize>3.2</baseBodySize>
   <baseHealthScale>4.8</baseHealthScale>
   <baseHungerRate>1.2</baseHungerRate>
@@ -38,6 +38,7 @@
   <intelligence>Animal</intelligence>
   <manhunterOnDamageChance>0</manhunterOnDamageChance>
   <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+  <gestationPeriodDays>12</gestationPeriodDays>
   <lifeExpectancy>400</lifeExpectancy>
   <herdAnimal>false</herdAnimal>
   <predator>true</predator>
