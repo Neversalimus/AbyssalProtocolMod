@@ -46,8 +46,9 @@
     </race>
 
     <statBases>
-      <MaxHitPoints>1800</MaxHitPoints>
-      <MoveSpeed>5.2</MoveSpeed>
+     <MaxHitPoints>2250</MaxHitPoints>
+<PainShockThreshold>999</PainShockThreshold>
+      <MoveSpeed>5.3</MoveSpeed>
       <MeleeHitChance>0.92</MeleeHitChance>
       <MeleeDPS>38</MeleeDPS>
       <ArmorRating_Sharp>1.1</ArmorRating_Sharp>
