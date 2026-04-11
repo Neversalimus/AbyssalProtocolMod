@@ -24,7 +24,7 @@
       <nameGenerator>NamerAnimalGenericMale</nameGenerator>
       <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
       <trainability>None</trainability>
-      <bloodDef>Blood</bloodDef>
+      <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
       <canBecomeShambler>true</canBecomeShambler>
       <hediffGiverSets>
