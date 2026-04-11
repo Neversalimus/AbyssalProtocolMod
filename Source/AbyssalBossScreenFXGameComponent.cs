@@ -62,8 +62,17 @@ namespace AbyssalProtocol
             }
         }
 
-        public void DrawOverlay()
+        public override void GameComponentOnGUI()
         {
+            base.GameComponentOnGUI();
+            DrawOverlay();
+        }
+
+        private void DrawOverlay()
+        {
+            if (Current.ProgramState != ProgramState.Playing)
+                return;
+
             if (currentStrength <= 0.001f)
                 return;
 
@@ -164,7 +173,7 @@ namespace AbyssalProtocol
 
                     float alpha = Mathf.InverseLerp(0.45f, 1.0f, dist);
                     alpha = Mathf.Clamp01(alpha);
-                    alpha = alpha * alpha;
+                    alpha *= alpha;
 
                     tex.SetPixel(x, y, new Color(1f, 1f, 1f, alpha));
                 }
