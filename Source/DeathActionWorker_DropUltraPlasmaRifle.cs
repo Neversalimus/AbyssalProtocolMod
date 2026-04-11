@@ -1,14 +1,13 @@
 using RimWorld;
 using Verse;
+using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
     public class DeathActionWorker_DropUltraPlasmaRifle : DeathActionWorker
     {
-        public override void PawnDied(Corpse corpse)
+        public override void PawnDied(Corpse corpse, Lord prevLord)
         {
-            base.PawnDied(corpse);
-
             if (corpse == null || corpse.Map == null)
                 return;
 
