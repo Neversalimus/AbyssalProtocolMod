@@ -29,6 +29,17 @@ namespace AbyssalProtocol
 
         public int bloodStabilizeIntervalTicks = 30;
         public float bloodLossReductionPerPulse = 0.025f;
+        public float heatstrokeReductionPerPulse = 0.020f;
+
+        public int downedRecoveryIntervalTicks = 15;
+        public float emergencyBloodLossClamp = 0.12f;
+        public float emergencyHeatstrokeClamp = 0.10f;
+        public float emergencyHealInjurySeverity = 0.35f;
+
+        public float dashInfernalRadius = 1.5f;
+        public float dashInfernalFireChance = 0.22f;
+        public int dashInfernalAshCountDeparture = 2;
+        public int dashInfernalAshCountArrival = 3;
 
         public HediffCompProperties_ArchonCoreController()
         {
@@ -68,8 +79,17 @@ namespace AbyssalProtocol
 
             if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
             {
-                StabilizeBloodLoss();
+                StabilizeCriticalHediffs();
             }
+
+            if (pawn.Downed && pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
+            {
+                RecoverFromDowned();
+                return;
+            }
+
+            if (pawn.Downed)
+                return;
 
             if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
             {
@@ -158,23 +178,88 @@ namespace AbyssalProtocol
             }
         }
 
-        private void StabilizeBloodLoss()
+        private void StabilizeCriticalHediffs()
         {
             Pawn pawn = Pawn;
             if (pawn == null || pawn.health == null)
                 return;
 
-            Hediff bloodLoss = pawn.health.hediffSet.GetFirstHediffOfDef(HediffDefOf.BloodLoss);
-            if (bloodLoss == null)
+            ReduceHediffSeverity(pawn, HediffDefOf.BloodLoss, Props.bloodLossReductionPerPulse);
+            ReduceHediffSeverity(pawn, HediffDefOf.Heatstroke, Props.heatstrokeReductionPerPulse);
+        }
+
+        private void RecoverFromDowned()
+        {
+            Pawn pawn = Pawn;
+            if (pawn == null || pawn.health == null)
                 return;
 
-            bloodLoss.Severity = Mathf.Max(0f, bloodLoss.Severity - Props.bloodLossReductionPerPulse);
+            StabilizeCriticalHediffs();
+
+            ClampHediffSeverity(pawn, HediffDefOf.BloodLoss, Props.emergencyBloodLossClamp);
+            ClampHediffSeverity(pawn, HediffDefOf.Heatstroke, Props.emergencyHeatstrokeClamp);
+            HealWorstInjury(pawn, Props.emergencyHealInjurySeverity);
+
+            pawn.health.forceIncap = false;
+            pawn.health.hediffSet.DirtyCache();
+            pawn.health.CheckForStateChange(null, null);
+        }
+
+        private static void ReduceHediffSeverity(Pawn pawn, HediffDef def, float amount)
+        {
+            if (pawn == null || pawn.health == null || def == null || amount <= 0f)
+                return;
+
+            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+            if (hediff == null)
+                return;
+
+            hediff.Severity = Mathf.Max(0f, hediff.Severity - amount);
+        }
+
+        private static void ClampHediffSeverity(Pawn pawn, HediffDef def, float maxSeverity)
+        {
+            if (pawn == null || pawn.health == null || def == null)
+                return;
+
+            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(def);
+            if (hediff == null)
+                return;
+
+            hediff.Severity = Mathf.Min(hediff.Severity, maxSeverity);
+        }
+
+        private static void HealWorstInjury(Pawn pawn, float amount)
+        {
+            if (pawn == null || pawn.health == null || amount <= 0f)
+                return;
+
+            Hediff_Injury worstInjury = null;
+            float worstSeverity = 0f;
+
+            foreach (Hediff hediff in pawn.health.hediffSet.hediffs)
+            {
+                Hediff_Injury injury = hediff as Hediff_Injury;
+                if (injury == null || injury.IsPermanent())
+                    continue;
+
+                if (injury.Severity > worstSeverity)
+                {
+                    worstSeverity = injury.Severity;
+                    worstInjury = injury;
+                }
+            }
+
+            if (worstInjury != null)
+            {
+                worstInjury.Heal(amount);
+            }
         }
 
         private void TryDash()
         {
             Pawn source = Pawn;
-            if (source == null || source.MapHeld == null || !source.Spawned)
+            if (source == null || source.MapHeld == null || !source.Spawned || source.Downed)
                 return;
 
             int ticksGame = Find.TickManager.TicksGame;
@@ -271,6 +356,10 @@ namespace AbyssalProtocol
             if (map == null || !dashCell.IsValid)
                 return;
 
+            IntVec3 origin = source.Position;
+
+            SpawnDashInfernalEffect(map, origin, Props.dashInfernalAshCountDeparture);
+
             if (source.Spawned)
             {
                 source.DeSpawn();
@@ -278,9 +367,36 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
 
+            SpawnDashInfernalEffect(map, dashCell, Props.dashInfernalAshCountArrival);
+
             if (source.pather != null && target != null && target.Spawned && !target.Dead)
             {
                 source.pather.StartPath(target, PathEndMode.Touch);
+            }
+        }
+
+        private void SpawnDashInfernalEffect(Map map, IntVec3 center, int ashCount)
+        {
+            if (map == null || !center.IsValid)
+                return;
+
+            if (ashCount > 0)
+            {
+                FilthMaker.TryMakeFilth(center, map, ThingDefOf.Filth_Ash, ashCount);
+            }
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, Props.dashInfernalRadius, true))
+            {
+                if (!cell.InBounds(map))
+                    continue;
+
+                if (!cell.Standable(map))
+                    continue;
+
+                if (Rand.Chance(Props.dashInfernalFireChance))
+                {
+                    FireUtility.TryStartFireIn(cell, map, 0.15f);
+                }
             }
         }
 
