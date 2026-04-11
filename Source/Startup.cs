@@ -1,3 +1,4 @@
+using HarmonyLib;
 using Verse;
 
 namespace AbyssalProtocol
@@ -7,7 +8,9 @@ namespace AbyssalProtocol
     {
         static Startup()
         {
-            Log.Message("[Abyssal Protocol] Loaded source assembly.");
+            var harmony = new Harmony("neversalimus.abyssalprotocol");
+            harmony.PatchAll();
+            Log.Message("[Abyssal Protocol] Loaded source assembly and applied Harmony patches.");
         }
     }
 }
