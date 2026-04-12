@@ -106,7 +106,7 @@ namespace AbyssalProtocol
             return base.Available() && CrownComp != null;
         }
 
-        protected override bool TryCastShot()
+        public override bool TryStartCastOn(LocalTargetInfo castTarg, LocalTargetInfo destTarg, bool surpriseAttack = false, bool canHitNonTargetPawns = true, bool preventFriendlyFire = false, bool nonInterruptingSelfCast = false)
         {
             CompRuptureCrown crown = CrownComp;
             if (crown == null)
@@ -121,6 +121,17 @@ namespace AbyssalProtocol
                     Messages.Message(reason, CasterPawn, MessageTypeDefOf.RejectInput, false);
                 }
 
+                return false;
+            }
+
+            return base.TryStartCastOn(castTarg, destTarg, surpriseAttack, canHitNonTargetPawns, preventFriendlyFire, nonInterruptingSelfCast);
+        }
+
+        protected override bool TryCastShot()
+        {
+            CompRuptureCrown crown = CrownComp;
+            if (crown == null)
+            {
                 return false;
             }
 

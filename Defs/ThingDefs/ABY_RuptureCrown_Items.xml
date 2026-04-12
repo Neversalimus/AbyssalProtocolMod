@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownOfRupture</defName>
     <label>crown of rupture</label>
-    <description>A collapsed crown-reactor torn from the hidden archon. It stores a single verdict charge. Once fired, it must condense a new charge for a full in-game day. While equipped it sharpens motion, aim and evasive timing, and projects a living infernal halo above the wielder.</description>
+    <description>A collapsed crown-reactor torn from the hidden archon. It stores a single verdict charge. Once fired, it condenses a new charge over one full in-game day without locking the wielder in place. While equipped it sharpens motion, aim and evasive timing, and projects a living infernal halo above the wearer.</description>
     <techLevel>Ultra</techLevel>
     <thingCategories Inherit="False">
       <li>WeaponsRanged</li>

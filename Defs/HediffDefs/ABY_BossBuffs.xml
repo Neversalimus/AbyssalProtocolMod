@@ -446,37 +446,4 @@
     </stages>
   </HediffDef>
 
-
-  <HediffDef>
-    <defName>ABY_RuptureSentenceMark</defName>
-    <label>rupture sentence</label>
-    <description>The secret archon's mark collapses movement, prediction and armor harmonics. For a few seconds the target is easier to hit, slower to retaliate and far more vulnerable to concentrated fire.</description>
-    <hediffClass>HediffWithComps</hediffClass>
-    <isBad>true</isBad>
-    <scenarioCanAdd>false</scenarioCanAdd>
-    <comps>
-      <li Class="HediffCompProperties_Disappears">
-        <showRemainingTime>true</showRemainingTime>
-        <disappearsAfterTicks>1080</disappearsAfterTicks>
-      </li>
-      <li Class="HediffCompProperties_DisappearsOnDeath" />
-    </comps>
-    <stages>
-      <li>
-        <statOffsets>
-          <MoveSpeed>-0.35</MoveSpeed>
-          <MeleeHitChance>-0.20</MeleeHitChance>
-          <MeleeDodgeChance>-0.12</MeleeDodgeChance>
-          <ShootingAccuracyPawn>-0.15</ShootingAccuracyPawn>
-          <ArmorRating_Sharp>-0.25</ArmorRating_Sharp>
-          <ArmorRating_Blunt>-0.25</ArmorRating_Blunt>
-          <ArmorRating_Heat>-0.25</ArmorRating_Heat>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>1.20</AimingDelayFactor>
-        </statFactors>
-      </li>
-    </stages>
-  </HediffDef>
-
 </Defs>
