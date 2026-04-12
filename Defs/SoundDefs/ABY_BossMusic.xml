@@ -3,11 +3,12 @@
 
   <SoundDef>
     <defName>ABY_ArchonBossBattleTheme</defName>
-    <context>MapOnly</context>
+    <context>Any</context>
     <maxVoices>1</maxVoices>
     <maxSimultaneous>1</maxSimultaneous>
     <subSounds>
       <li>
+        <onCamera>true</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
             <clipPath>ABY/Archon_BossBattleTheme</clipPath>
