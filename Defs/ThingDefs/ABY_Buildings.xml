@@ -8,6 +8,7 @@
 
     <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
 
     <graphicData>
       <texPath>Things/Building/ABY_SummoningCircle</texPath>
