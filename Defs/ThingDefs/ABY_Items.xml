@@ -22,7 +22,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Use it on the map to tear open a breach and call down the first techno-demonic boss.</description>
+    <description>A stabilized infernal key. A pawn will carry it to an available summoning circle and invoke the first techno-demonic boss there.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -41,7 +41,7 @@
     </statBases>
     <comps>
       <li Class="CompProperties_Usable">
-        <useJob>UseItem</useJob>
+        <useJob>ABY_CarrySigilToCircle</useJob>
         <useLabel>invoke archon</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
