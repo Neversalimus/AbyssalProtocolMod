@@ -252,11 +252,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            TargetInfo asTargetInfo = new TargetInfo(target.Cell, target.Map, false);
-            if (target.HasThing)
-            {
-                asTargetInfo = new TargetInfo(target.Thing);
-            }
+            TargetInfo asTargetInfo = target.HasThing
+                ? new TargetInfo(target.Thing)
+                : new TargetInfo(target.Cell, wearer.MapHeld, false);
 
             return IsValidTarget(wearer, asTargetInfo);
         }
