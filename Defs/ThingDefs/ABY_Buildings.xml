@@ -15,32 +15,32 @@
     </graphicData>
 
     <castEdgeShadows>false</castEdgeShadows>
-    <staticSunShadowHeight>0.05</staticSunShadowHeight>
+    <staticSunShadowHeight>0.03</staticSunShadowHeight>
     <constructEffect>ConstructMetal</constructEffect>
 
     <costList>
-      <Steel>320</Steel>
-      <Plasteel>80</Plasteel>
+      <Steel>340</Steel>
+      <Plasteel>90</Plasteel>
       <ComponentIndustrial>12</ComponentIndustrial>
-      <ComponentSpacer>3</ComponentSpacer>
+      <ComponentSpacer>4</ComponentSpacer>
     </costList>
 
     <altitudeLayer>Building</altitudeLayer>
-    <fillPercent>0.05</fillPercent>
+    <fillPercent>0.03</fillPercent>
     <useHitPoints>True</useHitPoints>
 
     <statBases>
-      <WorkToBuild>7000</WorkToBuild>
-      <MaxHitPoints>500</MaxHitPoints>
-      <Flammability>0.4</Flammability>
-      <Cleanliness>-4</Cleanliness>
+      <WorkToBuild>8200</WorkToBuild>
+      <MaxHitPoints>650</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <Cleanliness>-5</Cleanliness>
     </statBases>
 
     <size>(9,9)</size>
     <designationCategory>Production</designationCategory>
     <uiOrder>2520</uiOrder>
     <passability>PassThroughOnly</passability>
-    <pathCost>15</pathCost>
+    <pathCost>8</pathCost>
     <hasInteractionCell>True</hasInteractionCell>
     <interactionCellOffset>(0,0,-5)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
@@ -56,7 +56,7 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <shortCircuitInRain>true</shortCircuitInRain>
-        <basePowerConsumption>1200</basePowerConsumption>
+        <basePowerConsumption>1400</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">

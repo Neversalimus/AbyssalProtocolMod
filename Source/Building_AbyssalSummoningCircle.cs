@@ -18,6 +18,12 @@ namespace AbyssalProtocol
             Vector2.one,
             Color.white);
 
+        private static readonly Graphic EnergyArcsGraphic = GraphicDatabase.Get<Graphic_Single>(
+            "Things/Building/ABY_SummoningCircle_EnergyArcs",
+            ShaderDatabase.TransparentPostLight,
+            Vector2.one,
+            Color.white);
+
         private static readonly Graphic CoreGlowGraphic = GraphicDatabase.Get<Graphic_Single>(
             "Things/Building/ABY_SummoningCircle_CoreGlow",
             ShaderDatabase.TransparentPostLight,
@@ -30,10 +36,11 @@ namespace AbyssalProtocol
             Vector2.one,
             Color.white);
 
-        private static readonly Vector2 OuterRingSize = new Vector2(9.65f, 9.65f);
-        private static readonly Vector2 InnerGlyphSize = new Vector2(6.40f, 6.40f);
-        private static readonly Vector2 CoreGlowSize = new Vector2(2.85f, 2.85f);
-        private static readonly Vector2 IdleGlowSize = new Vector2(9.20f, 9.20f);
+        private static readonly Vector2 OuterRingSize = new Vector2(9.45f, 9.45f);
+        private static readonly Vector2 InnerGlyphSize = new Vector2(8.15f, 8.15f);
+        private static readonly Vector2 EnergyArcsSize = new Vector2(5.35f, 5.35f);
+        private static readonly Vector2 CoreGlowSize = new Vector2(3.10f, 3.10f);
+        private static readonly Vector2 IdleGlowSize = new Vector2(9.10f, 9.10f);
 
         private bool Powered => GetComp<CompPowerTrader>()?.PowerOn ?? true;
 
@@ -46,13 +53,18 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float ticks = Find.TickManager?.TicksGame ?? 0f;
-            float pulse = 1f + Mathf.Sin(ticks * 0.030f) * 0.035f;
-            float outerAngle = (ticks * 0.085f) % 360f;
-            float innerAngle = 360f - ((ticks * 0.140f) % 360f);
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            float pulseA = 1f + Mathf.Sin(ticks * 0.055f) * 0.055f;
+            float pulseB = 1f + Mathf.Sin((ticks * 0.095f) + 1.35f) * 0.080f;
+            float pulseC = 1f + Mathf.Sin((ticks * 0.140f) + 2.10f) * 0.120f;
+
+            float outerAngle = (ticks * 0.20f) % 360f;
+            float innerAngle = 360f - ((ticks * 0.38f) % 360f);
+            float energyAngle = (ticks * 0.72f) % 360f;
+
             Vector3 center = drawLoc;
 
-            DrawLayer(IdleGlowGraphic, center, IdleGlowSize, 0f, 0.004f);
+            DrawLayer(IdleGlowGraphic, center, IdleGlowSize * pulseA, 0f, 0.004f);
 
             if (!Powered)
             {
@@ -62,23 +74,30 @@ namespace AbyssalProtocol
             DrawLayer(
                 OuterRingGraphic,
                 center,
-                OuterRingSize * (1f + (pulse - 1f) * 0.75f),
+                OuterRingSize * (1f + (pulseA - 1f) * 0.55f),
                 outerAngle,
                 0.010f);
 
             DrawLayer(
                 InnerGlyphGraphic,
                 center,
-                InnerGlyphSize * (1f - (pulse - 1f) * 0.35f),
+                InnerGlyphSize * (1f + (pulseB - 1f) * 0.30f),
                 innerAngle,
                 0.015f);
 
             DrawLayer(
+                EnergyArcsGraphic,
+                center,
+                EnergyArcsSize * pulseC,
+                energyAngle,
+                0.020f);
+
+            DrawLayer(
                 CoreGlowGraphic,
                 center,
-                CoreGlowSize * (1f + (pulse - 1f) * 1.80f),
+                CoreGlowSize * (1f + (pulseC - 1f) * 1.25f),
                 0f,
-                0.020f);
+                0.025f);
         }
 
         private static void DrawLayer(Graphic graphic, Vector3 center, Vector2 drawSize, float angle, float yOffset)
@@ -91,7 +110,7 @@ namespace AbyssalProtocol
             Vector3 drawPos = center;
             drawPos.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + yOffset;
 
-            Matrix4x4 matrix = default;
+            Matrix4x4 matrix = default(Matrix4x4);
             matrix.SetTRS(
                 drawPos,
                 Quaternion.AngleAxis(angle, Vector3.up),
