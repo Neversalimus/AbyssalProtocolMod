@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_ArchonCore</defName>
+    <label>archon core</label>
+    <description>A bound reactor-heart pumping infernal energy through the beast. As the beast weakens, the core destabilizes and floods the battlefield with heat.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+
+    <comps>
+      <li Class="AbyssalProtocol.HediffCompProperties_ArchonCoreController">
+        <phase2HealthPct>0.70</phase2HealthPct>
+        <phase3HealthPct>0.35</phase3HealthPct>
+
+        <phase1AuraRadius>6.0</phase1AuraRadius>
+        <phase2AuraRadius>7.0</phase2AuraRadius>
+        <phase3AuraRadius>8.0</phase3AuraRadius>
+
+        <phase1HeatstrokeSeverity>0.0035</phase1HeatstrokeSeverity>
+        <phase2HeatstrokeSeverity>0.0060</phase2HeatstrokeSeverity>
+        <phase3HeatstrokeSeverity>0.0090</phase3HeatstrokeSeverity>
+
+        <auraIntervalTicks>60</auraIntervalTicks>
+
+        <dashPhase>3</dashPhase>
+        <dashCooldownTicks>780</dashCooldownTicks>
+        <dashSearchIntervalTicks>30</dashSearchIntervalTicks>
+        <dashMinRange>7.0</dashMinRange>
+        <dashMaxRange>24.0</dashMaxRange>
+        <dashLandingRadius>1.9</dashLandingRadius>
+
+        <bloodStabilizeIntervalTicks>30</bloodStabilizeIntervalTicks>
+        <bloodLossReductionPerPulse>0.025</bloodLossReductionPerPulse>
+        <heatstrokeReductionPerPulse>0.020</heatstrokeReductionPerPulse>
+
+        <downedRecoveryIntervalTicks>15</downedRecoveryIntervalTicks>
+        <emergencyBloodLossClamp>0.12</emergencyBloodLossClamp>
+        <emergencyHeatstrokeClamp>0.10</emergencyHeatstrokeClamp>
+        <emergencyHealInjurySeverity>0.35</emergencyHealInjurySeverity>
+
+        <dashInfernalRadius>1.5</dashInfernalRadius>
+        <dashInfernalFireChance>0.22</dashInfernalFireChance>
+        <dashInfernalAshCountDeparture>2</dashInfernalAshCountDeparture>
+        <dashInfernalAshCountArrival>3</dashInfernalAshCountArrival>
+
+        <phase2PortalEventDurationTicks>900</phase2PortalEventDurationTicks>
+        <phase2PortalWarmupTicks>42</phase2PortalWarmupTicks>
+        <phase2PortalImpSpawnIntervalTicks>18</phase2PortalImpSpawnIntervalTicks>
+        <phase2PortalLingerTicks>180</phase2PortalLingerTicks>
+        <phase2PortalImpsPerColonist>3</phase2PortalImpsPerColonist>
+        <phase2PortalMaxImpsPerPortal>3</phase2PortalMaxImpsPerPortal>
+        <phase2RetreatMaintainIntervalTicks>45</phase2RetreatMaintainIntervalTicks>
+      </li>
+    </comps>
+
+    <stages>
+      <li>
+        <minSeverity>0.0</minSeverity>
+        <label>archon core - phase 1</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.60</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.80</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.30</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.45</MoveSpeed>
+          <MeleeHitChance>0.18</MeleeHitChance>
+          <ArmorRating_Heat>0.35</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>1.0</minSeverity>
+        <label>archon core - phase 2</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.90</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.10</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.45</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.60</MoveSpeed>
+          <MeleeHitChance>0.24</MeleeHitChance>
+          <ArmorRating_Heat>0.50</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>2.0</minSeverity>
+        <label>archon core - phase 3</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>1.20</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.35</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.60</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.85</MoveSpeed>
+          <MeleeHitChance>0.32</MeleeHitChance>
+          <ArmorRating_Heat>0.70</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_ArchonCarapace</defName>
+    <label>archon carapace</label>
+    <description>Layered abyssal plates that absorb impact and heat.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.45</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.35</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.25</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_RuptureCore</defName>
+    <label>rupture core</label>
+    <description>A crown-reactor wrapped around a null singularity. The first seconds are almost inviolable, then the core opens into increasingly violent execution phases before one final false death.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+
+    <comps>
+      <li Class="AbyssalProtocol.HediffCompProperties_RuptureCoreController">
+        <phase2HealthPct>0.75</phase2HealthPct>
+        <phase3HealthPct>0.45</phase3HealthPct>
+        <finalFrenzyHealthPct>0.20</finalFrenzyHealthPct>
+
+        <spawnShieldTicks>360</spawnShieldTicks>
+
+        <phase1AuraRadius>7.0</phase1AuraRadius>
+        <phase2AuraRadius>8.6</phase2AuraRadius>
+        <phase3AuraRadius>10.0</phase3AuraRadius>
+        <phase4AuraRadius>11.0</phase4AuraRadius>
+
+        <phase1HeatstrokeSeverity>0.0045</phase1HeatstrokeSeverity>
+        <phase2HeatstrokeSeverity>0.0075</phase2HeatstrokeSeverity>
+        <phase3HeatstrokeSeverity>0.0105</phase3HeatstrokeSeverity>
+        <phase4HeatstrokeSeverity>0.0135</phase4HeatstrokeSeverity>
+
+        <auraIntervalTicks>60</auraIntervalTicks>
+        <dashCooldownTicks>420</dashCooldownTicks>
+        <dashSearchIntervalTicks>20</dashSearchIntervalTicks>
+        <dashMinRange>6.0</dashMinRange>
+        <dashMaxRange>32.0</dashMaxRange>
+        <dashLandingRadius>2.6</dashLandingRadius>
+        <dashInfernalRadius>2.4</dashInfernalRadius>
+        <dashInfernalFireChance>0.48</dashInfernalFireChance>
+        <dashInfernalAshCountDeparture>5</dashInfernalAshCountDeparture>
+        <dashInfernalAshCountArrival>8</dashInfernalAshCountArrival>
+        <dashTrailSteps>8</dashTrailSteps>
+        <dashEntryScale>2.8</dashEntryScale>
+        <dashExitScale>3.6</dashExitScale>
+        <dashTrailScale>1.8</dashTrailScale>
+
+        <portalWarmupTicks>48</portalWarmupTicks>
+        <portalImpSpawnIntervalTicks>14</portalImpSpawnIntervalTicks>
+        <portalLingerTicks>240</portalLingerTicks>
+        <phase2TransitionImps>4</phase2TransitionImps>
+        <phase3TransitionImps>6</phase3TransitionImps>
+        <rebirthTransitionImps>8</rebirthTransitionImps>
+        <recurringPortalIntervalTicks>900</recurringPortalIntervalTicks>
+        <recurringPortalImps>4</recurringPortalImps>
+
+        <rebirthRecoveryIntervalTicks>15</rebirthRecoveryIntervalTicks>
+        <rebirthBloodLossClamp>0.08</rebirthBloodLossClamp>
+        <rebirthHeatstrokeClamp>0.06</rebirthHeatstrokeClamp>
+        <rebirthHealInjurySeverity>0.85</rebirthHealInjurySeverity>
+      </li>
+    </comps>
+
+    <stages>
+      <li>
+        <minSeverity>0.0</minSeverity>
+        <label>rupture core - emergence barrier</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.65</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.75</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.30</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.40</MoveSpeed>
+          <MeleeHitChance>0.10</MeleeHitChance>
+          <ArmorRating_Sharp>8.00</ArmorRating_Sharp>
+          <ArmorRating_Blunt>8.00</ArmorRating_Blunt>
+          <ArmorRating_Heat>8.00</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>1.0</minSeverity>
+        <label>rupture core - judgment</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.95</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.00</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.45</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.70</MoveSpeed>
+          <MeleeHitChance>0.24</MeleeHitChance>
+          <ArmorRating_Sharp>0.55</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.40</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.70</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>2.0</minSeverity>
+        <label>rupture core - execution run</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>1.20</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.35</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.65</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.95</MoveSpeed>
+          <MeleeHitChance>0.34</MeleeHitChance>
+          <ArmorRating_Sharp>0.85</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.70</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.95</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>3.0</minSeverity>
+        <label>rupture core - null crown open</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>1.45</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.60</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.90</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>1.25</MoveSpeed>
+          <MeleeHitChance>0.42</MeleeHitChance>
+          <ArmorRating_Sharp>1.00</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.85</ArmorRating_Blunt>
+          <ArmorRating_Heat>1.15</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+
+      <li>
+        <minSeverity>4.0</minSeverity>
+        <label>rupture core - false death frenzy</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>1.80</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>1.90</offset>
+          </li>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>1.10</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>1.55</MoveSpeed>
+          <MeleeHitChance>0.55</MeleeHitChance>
+          <ArmorRating_Sharp>1.30</ArmorRating_Sharp>
+          <ArmorRating_Blunt>1.05</ArmorRating_Blunt>
+          <ArmorRating_Heat>1.45</ArmorRating_Heat>
+          <PainShockThreshold>999</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_RuptureCarapace</defName>
+    <label>rupture carapace</label>
+    <description>Layered null-metal plates and crown vanes that spread impact through the entire body frame.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.75</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.55</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.55</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_ArchonOverrideSurge</defName>
+    <label>archon override</label>
+    <description>A controlled first-boss combat ampoule. The stolen archon routines hit in two phases: first a short surge of aim and locomotion, then a mild feedback slump as the routines burn out.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+        <disappearsAfterTicks>10500</disappearsAfterTicks>
+      </li>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-5.714286</severityPerDay>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath" />
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.0</minSeverity>
+        <label>archon override feedback</label>
+        <restFallFactorOffset>0.10</restFallFactorOffset>
+        <statOffsets>
+          <MoveSpeed>-0.03</MoveSpeed>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.857143</minSeverity>
+        <label>archon override surge</label>
+        <painFactor>0.65</painFactor>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.08</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.12</offset>
+          </li>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>0.05</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.12</MoveSpeed>
+          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+          <MeleeHitChance>0.05</MeleeHitChance>
+          <MeleeDodgeChance>0.06</MeleeDodgeChance>
+        </statOffsets>
+        <statFactors>
+          <AimingDelayFactor>0.88</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_ArchonOverrideFeedback</defName>
+    <label>archon override feedback (legacy)</label>
+    <description>Legacy placeholder. The feedback phase is now handled inside ABY_ArchonOverrideSurge so the downside starts only after the short positive window ends.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+        <disappearsAfterTicks>1</disappearsAfterTicks>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath" />
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>0.0</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+
+  <HediffDef>
+    <defName>ABY_RuptureSentenceMark</defName>
+    <label>rupture sentence</label>
+    <description>The secret archon's mark collapses movement, prediction and armor harmonics. For a few seconds the target is easier to hit, slower to retaliate and far more vulnerable to concentrated fire.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+        <disappearsAfterTicks>1080</disappearsAfterTicks>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath" />
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>-0.35</MoveSpeed>
+          <MeleeHitChance>-0.20</MeleeHitChance>
+          <MeleeDodgeChance>-0.12</MeleeDodgeChance>
+          <ShootingAccuracyPawn>-0.15</ShootingAccuracyPawn>
+          <ArmorRating_Sharp>-0.25</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.25</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.25</ArmorRating_Heat>
+        </statOffsets>
+        <statFactors>
+          <AimingDelayFactor>1.20</AimingDelayFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>
