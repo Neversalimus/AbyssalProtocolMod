@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_ArchonBossBattleTheme</defName>
+    <context>MapOnly</context>
+    <maxVoices>1</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Archon_BossBattleTheme</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>7.6</min>
+          <max>8.4</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.0</min>
+          <max>1.0</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -12,6 +13,11 @@ namespace AbyssalProtocol
 
         private Map ritualPulseMap;
         private float ritualPulseStrength;
+
+        private int nextBossMusicTick = -1;
+
+        private const string BossMusicDefName = "ABY_ArchonBossBattleTheme";
+        private const int BossMusicLoopTicks = 1800;
 
         public AbyssalBossScreenFXGameComponent(Game game)
         {
@@ -26,6 +32,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
+            Scribe_Values.Look(ref nextBossMusicTick, "nextBossMusicTick", -1);
         }
 
         public void RegisterBoss(Pawn boss)
@@ -40,6 +47,7 @@ namespace AbyssalProtocol
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
+            nextBossMusicTick = Find.TickManager != null ? Find.TickManager.TicksGame + 12 : -1;
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -68,10 +76,13 @@ namespace AbyssalProtocol
                 ritualPulseMap = null;
             }
 
+            HandleBossMusic(bossAlive);
+
             if (!bossAlive && currentStrength <= 0.001f)
             {
                 activeBoss = null;
                 effectMap = null;
+                nextBossMusicTick = -1;
             }
         }
 
@@ -79,6 +90,56 @@ namespace AbyssalProtocol
         {
             base.GameComponentOnGUI();
             DrawOverlay();
+        }
+
+
+        private void HandleBossMusic(bool bossAlive)
+        {
+            if (Current.ProgramState != ProgramState.Playing)
+            {
+                return;
+            }
+
+            if (!bossAlive || effectMap == null)
+            {
+                nextBossMusicTick = -1;
+                return;
+            }
+
+            if (Find.CurrentMap != effectMap)
+            {
+                return;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (nextBossMusicTick < 0)
+            {
+                nextBossMusicTick = ticksGame + 12;
+            }
+
+            if (ticksGame < nextBossMusicTick)
+            {
+                return;
+            }
+
+            PlayBossBattleTheme(effectMap);
+            nextBossMusicTick = ticksGame + BossMusicLoopTicks;
+        }
+
+        private static void PlayBossBattleTheme(Map map)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(BossMusicDefName);
+            if (soundDef == null)
+            {
+                return;
+            }
+
+            SoundStarter.PlayOneShotOnCamera(soundDef, map);
         }
 
         private void DrawOverlay()
