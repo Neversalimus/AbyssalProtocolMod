@@ -7,7 +7,7 @@
     <reportString>performing an abyssal summoning ritual.</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
-    <checkOverrideOnDamage>true</checkOverrideOnDamage>
+    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
   </JobDef>
 
 </Defs>

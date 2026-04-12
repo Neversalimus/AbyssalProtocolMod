@@ -5,6 +5,7 @@ using Verse;
 
 namespace AbyssalProtocol
 {
+    [StaticConstructorOnStartup]
     public class Building_AbyssalSummoningCircle : Building_WorkTable
     {
         private enum RitualPhase
