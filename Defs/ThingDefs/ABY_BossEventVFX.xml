@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonSummonRing</defName>
+    <label>archon summon ring</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonEvent/ArchonSummonRing</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(4.6,4.6)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.02</fadeInTime>
+      <solidTime>0.12</solidTime>
+      <fadeOutTime>0.35</fadeOutTime>
+      <growthRate>4.8</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonSummonBurst</defName>
+    <label>archon summon burst</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonEvent/ArchonSummonBurst</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(3.8,3.8)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.01</fadeInTime>
+      <solidTime>0.08</solidTime>
+      <fadeOutTime>0.24</fadeOutTime>
+      <growthRate>6.4</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonDeathRing</defName>
+    <label>archon death ring</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonEvent/ArchonDeathRing</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(5.2,5.2)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.01</fadeInTime>
+      <solidTime>0.10</solidTime>
+      <fadeOutTime>0.38</fadeOutTime>
+      <growthRate>6.8</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonDeathBurst</defName>
+    <label>archon death burst</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonEvent/ArchonDeathBurst</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(4.2,4.2)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.01</fadeInTime>
+      <solidTime>0.06</solidTime>
+      <fadeOutTime>0.30</fadeOutTime>
+      <growthRate>7.8</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
