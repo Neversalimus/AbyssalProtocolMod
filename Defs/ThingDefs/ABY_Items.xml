@@ -137,6 +137,14 @@
     </graphicData>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <tradeability>Sellable</tradeability>
+    <smeltable>false</smeltable>
+    <recipeMaker Inherit="False">
+      <recipeUsers Inherit="False">
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <Steel>1</Steel>
+    </costList>
     <weaponTags>
       <li>SpacerGun</li>
       <li>Gun</li>
