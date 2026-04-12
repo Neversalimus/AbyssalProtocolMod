@@ -1,6 +1,8 @@
+using System;
+using System.Reflection;
+using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -16,8 +18,8 @@ namespace AbyssalProtocol
 
         private int nextBossMusicTick = -1;
 
-        private const string BossMusicDefName = "ABY_ArchonBossBattleTheme";
-        private const int BossMusicLoopTicks = 1800;
+        private const string BossSongDefName = "ABY_ArchonBossBattleTheme";
+        private const int BossMusicCheckTicks = 90;
 
         public AbyssalBossScreenFXGameComponent(Game game)
         {
@@ -47,7 +49,7 @@ namespace AbyssalProtocol
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
-            nextBossMusicTick = Find.TickManager != null ? Find.TickManager.TicksGame + 12 : -1;
+            nextBossMusicTick = Find.TickManager != null ? Find.TickManager.TicksGame + 5 : -1;
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -114,7 +116,7 @@ namespace AbyssalProtocol
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             if (nextBossMusicTick < 0)
             {
-                nextBossMusicTick = ticksGame + 12;
+                nextBossMusicTick = ticksGame + 5;
             }
 
             if (ticksGame < nextBossMusicTick)
@@ -122,24 +124,113 @@ namespace AbyssalProtocol
                 return;
             }
 
-            PlayBossBattleTheme(effectMap);
-            nextBossMusicTick = ticksGame + BossMusicLoopTicks;
+            EnsureBossSongPlaying();
+            nextBossMusicTick = ticksGame + BossMusicCheckTicks;
         }
 
-        private static void PlayBossBattleTheme(Map map)
+        private static void EnsureBossSongPlaying()
         {
-            if (map == null)
+            MusicManagerPlay music = Find.MusicManagerPlay;
+            if (music == null)
             {
                 return;
             }
 
-            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(BossMusicDefName);
-            if (soundDef == null)
+            SongDef song = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
+            if (song == null)
             {
                 return;
             }
 
-            SoundStarter.PlayOneShotOnCamera(soundDef, map);
+            if (IsBossSongAlreadyPlaying(music, song))
+            {
+                return;
+            }
+
+            music.ForceStartSong(song, false);
+        }
+
+        private static bool IsBossSongAlreadyPlaying(MusicManagerPlay music, SongDef targetSong)
+        {
+            if (music == null || targetSong == null)
+            {
+                return false;
+            }
+
+            Type type = music.GetType();
+            if (TryMatchMember(type.GetField("curSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
+            {
+                return true;
+            }
+
+            if (TryMatchMember(type.GetProperty("CurSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
+            {
+                return true;
+            }
+
+            if (TryMatchMember(type.GetProperty("curSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool TryMatchMember(MemberInfo member, object instance, SongDef targetSong)
+        {
+            if (member == null || instance == null || targetSong == null)
+            {
+                return false;
+            }
+
+            object value = null;
+
+            if (member is FieldInfo field)
+            {
+                value = field.GetValue(instance);
+            }
+            else if (member is PropertyInfo prop && prop.CanRead)
+            {
+                value = prop.GetValue(instance, null);
+            }
+
+            return ValueMatchesSong(value, targetSong);
+        }
+
+        private static bool ValueMatchesSong(object value, SongDef targetSong)
+        {
+            if (value == null || targetSong == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(value, targetSong))
+            {
+                return true;
+            }
+
+            if (value is SongDef songDef)
+            {
+                return songDef == targetSong || songDef.defName == targetSong.defName;
+            }
+
+            Type valueType = value.GetType();
+            foreach (string memberName in new[] { "def", "Def", "songDef", "SongDef" })
+            {
+                FieldInfo field = valueType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (field != null && ValueMatchesSong(field.GetValue(value), targetSong))
+                {
+                    return true;
+                }
+
+                PropertyInfo prop = valueType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (prop != null && prop.CanRead && ValueMatchesSong(prop.GetValue(value, null), targetSong))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void DrawOverlay()
