@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_RiftImp</defName>
+    <label>rift imp</label>
+    <race>ABY_RiftImp</race>
+    <combatPower>180</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/RiftImp/ABY_RiftImp</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(1.35,1.35)</drawSize>
+          <shadowData>
+            <volume>(0.55, 0.25, 0.55)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

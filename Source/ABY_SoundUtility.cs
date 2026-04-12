@@ -18,35 +18,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (Find.CurrentMap == map && HasOnCameraSubSound(soundDef))
-            {
-                SoundStarter.PlayOneShotOnCamera(soundDef, map);
-                return;
-            }
-
             soundDef.PlayOneShot(
                 SoundInfo.InMap(
                     new TargetInfo(cell, map, false),
                     MaintenanceType.None));
-        }
-
-        private static bool HasOnCameraSubSound(SoundDef soundDef)
-        {
-            if (soundDef == null || soundDef.subSounds == null)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < soundDef.subSounds.Count; i++)
-            {
-                SubSoundDef subSound = soundDef.subSounds[i];
-                if (subSound != null && subSound.onCamera)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

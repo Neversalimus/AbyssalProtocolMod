@@ -48,6 +48,14 @@ namespace AbyssalProtocol
 
         public int combatReengageIntervalTicks = 90;
 
+        public int phase2PortalEventDurationTicks = 900;
+        public int phase2PortalWarmupTicks = 42;
+        public int phase2PortalImpSpawnIntervalTicks = 18;
+        public int phase2PortalLingerTicks = 180;
+        public int phase2PortalImpsPerColonist = 3;
+        public int phase2PortalMaxImpsPerPortal = 3;
+        public int phase2RetreatMaintainIntervalTicks = 45;
+
         public HediffCompProperties_ArchonCoreController()
         {
             compClass = typeof(HediffComp_ArchonCoreController);
@@ -61,6 +69,15 @@ namespace AbyssalProtocol
         private int lastReengageTick = -999999;
         private bool deathVfxTriggered;
 
+        private bool phase2PortalTriggered;
+        private bool phase2PortalActive;
+        private int phase2PortalEventEndTick = -1;
+        private int phase2NextPortalTick = -1;
+        private int phase2RemainingImps;
+        private int phase2PortalSpawnIntervalActive = 90;
+        private IntVec3 phase2RetreatCell = IntVec3.Invalid;
+        private int lastPhase2MaintainTick = -999999;
+
         public HediffCompProperties_ArchonCoreController Props =>
             (HediffCompProperties_ArchonCoreController)props;
 
@@ -71,6 +88,14 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref lastDashTick, "lastDashTick", -999999);
             Scribe_Values.Look(ref lastReengageTick, "lastReengageTick", -999999);
             Scribe_Values.Look(ref deathVfxTriggered, "deathVfxTriggered", false);
+            Scribe_Values.Look(ref phase2PortalTriggered, "phase2PortalTriggered", false);
+            Scribe_Values.Look(ref phase2PortalActive, "phase2PortalActive", false);
+            Scribe_Values.Look(ref phase2PortalEventEndTick, "phase2PortalEventEndTick", -1);
+            Scribe_Values.Look(ref phase2NextPortalTick, "phase2NextPortalTick", -1);
+            Scribe_Values.Look(ref phase2RemainingImps, "phase2RemainingImps", 0);
+            Scribe_Values.Look(ref phase2PortalSpawnIntervalActive, "phase2PortalSpawnIntervalActive", 90);
+            Scribe_Values.Look(ref phase2RetreatCell, "phase2RetreatCell");
+            Scribe_Values.Look(ref lastPhase2MaintainTick, "lastPhase2MaintainTick", -999999);
         }
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
@@ -84,14 +109,10 @@ namespace AbyssalProtocol
             base.CompPostTick(ref severityAdjustment);
 
             Pawn pawn = Pawn;
-            if (pawn == null)
+            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
+            {
                 return;
-
-            if (pawn.Dead)
-                return;
-
-            if (!pawn.Spawned || pawn.MapHeld == null)
-                return;
+            }
 
             UpdatePhase();
 
@@ -115,13 +136,21 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (phase2PortalActive)
+            {
+                TickPhase2PortalEvent(pawn);
+                return;
+            }
+
             if (pawn.IsHashIntervalTick(Props.combatReengageIntervalTicks) && NeedsCombatReengage(pawn))
             {
                 TryForceReengageCombat(pawn);
             }
 
             if (!CanUseDash(pawn))
+            {
                 return;
+            }
 
             if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
             {
@@ -134,10 +163,7 @@ namespace AbyssalProtocol
             if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
                 return false;
 
-            if (pawn.Downed)
-                return false;
-
-            if (!pawn.Awake())
+            if (pawn.Downed || !pawn.Awake())
                 return false;
 
             if (pawn.health == null || pawn.health.capacities == null)
@@ -180,6 +206,11 @@ namespace AbyssalProtocol
             if (newPhase > previousPhase && pawn.MapHeld != null && pawn.PositionHeld.IsValid)
             {
                 ABY_SoundUtility.PlayAt("ABY_ArchonPhaseShift", pawn.PositionHeld, pawn.MapHeld);
+
+                if (newPhase == 2 && !phase2PortalTriggered)
+                {
+                    StartPhase2PortalEvent(pawn);
+                }
             }
 
             switch (currentPhase)
@@ -194,6 +225,119 @@ namespace AbyssalProtocol
                     parent.Severity = 2.10f;
                     break;
             }
+        }
+
+        private void StartPhase2PortalEvent(Pawn pawn)
+        {
+            phase2PortalTriggered = true;
+
+            if (pawn == null || pawn.MapHeld == null || !pawn.Spawned)
+            {
+                return;
+            }
+
+            if (!ABY_Phase2PortalUtility.TryFindRetreatEdgeCell(pawn.MapHeld, out IntVec3 retreatCell))
+            {
+                return;
+            }
+
+            int colonistCount = Mathf.Max(1, ABY_Phase2PortalUtility.CountActivePlayerColonists(pawn.MapHeld));
+            int totalImps = Mathf.Max(1, colonistCount * Mathf.Max(1, Props.phase2PortalImpsPerColonist));
+            int totalPortals = Mathf.Max(1, Mathf.CeilToInt(totalImps / (float)Mathf.Max(1, Props.phase2PortalMaxImpsPerPortal)));
+            int interval = Mathf.Max(25, Props.phase2PortalEventDurationTicks / totalPortals);
+
+            phase2PortalActive = true;
+            phase2PortalEventEndTick = Find.TickManager.TicksGame + Mathf.Max(180, Props.phase2PortalEventDurationTicks);
+            phase2NextPortalTick = Find.TickManager.TicksGame + 20;
+            phase2RemainingImps = totalImps;
+            phase2PortalSpawnIntervalActive = interval;
+            phase2RetreatCell = retreatCell;
+            lastPhase2MaintainTick = -999999;
+            lastDashTick = Find.TickManager.TicksGame;
+
+            DoDash(pawn, null, retreatCell);
+            StopCombat(pawn);
+        }
+
+        private void TickPhase2PortalEvent(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
+            {
+                phase2PortalActive = false;
+                return;
+            }
+
+            int ticksGame = Find.TickManager.TicksGame;
+
+            if (ticksGame - lastPhase2MaintainTick >= Props.phase2RetreatMaintainIntervalTicks)
+            {
+                MaintainPhase2Retreat(pawn);
+                lastPhase2MaintainTick = ticksGame;
+            }
+
+            if (phase2RemainingImps > 0 && ticksGame >= phase2NextPortalTick)
+            {
+                int impsThisPortal = Mathf.Min(Mathf.Max(1, Props.phase2PortalMaxImpsPerPortal), phase2RemainingImps);
+                if (ABY_Phase2PortalUtility.TrySpawnImpPortal(
+                        pawn.MapHeld,
+                        pawn.Faction,
+                        impsThisPortal,
+                        Props.phase2PortalWarmupTicks,
+                        Props.phase2PortalImpSpawnIntervalTicks,
+                        Props.phase2PortalLingerTicks,
+                        out Building_AbyssalImpPortal _))
+                {
+                    phase2RemainingImps -= impsThisPortal;
+                }
+
+                phase2NextPortalTick = ticksGame + phase2PortalSpawnIntervalActive;
+            }
+
+            if (ticksGame >= phase2PortalEventEndTick)
+            {
+                phase2PortalActive = false;
+                phase2RemainingImps = 0;
+                phase2RetreatCell = IntVec3.Invalid;
+                TryForceReengageCombat(pawn, true);
+            }
+        }
+
+        private static void StopCombat(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            pawn.pather?.StopDead();
+            if (pawn.jobs != null && pawn.CurJob != null)
+            {
+                pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            }
+        }
+
+        private void MaintainPhase2Retreat(Pawn pawn)
+        {
+            if (pawn == null || !phase2RetreatCell.IsValid)
+            {
+                return;
+            }
+
+            if (pawn.Position == phase2RetreatCell)
+            {
+                StopCombat(pawn);
+                return;
+            }
+
+            if (pawn.Position.DistanceToSquared(phase2RetreatCell) > 16f)
+            {
+                DoDash(pawn, null, phase2RetreatCell);
+                StopCombat(pawn);
+                return;
+            }
+
+            FaceCellNow(pawn, phase2RetreatCell);
+            pawn.pather?.StartPath(phase2RetreatCell, PathEndMode.OnCell);
         }
 
         private void ApplyHeatAura()
@@ -387,10 +531,7 @@ namespace AbyssalProtocol
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(target.Position, Props.dashLandingRadius, true))
             {
-                if (!cell.InBounds(map))
-                    continue;
-
-                if (!cell.Standable(map))
+                if (!cell.InBounds(map) || !cell.Standable(map))
                     continue;
 
                 Pawn occupant = cell.GetFirstPawn(map);
@@ -435,11 +576,7 @@ namespace AbyssalProtocol
                 : dashCell + (dashCell - origin);
 
             FaceCellNow(source, faceCell);
-
-            if (source.pather != null)
-            {
-                source.pather.StopDead();
-            }
+            source.pather?.StopDead();
 
             if (source.jobs != null && source.CurJob != null)
             {
@@ -456,11 +593,7 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
             FaceCellNow(source, faceCell);
-
-            if (source.pather != null)
-            {
-                source.pather.StopDead();
-            }
+            source.pather?.StopDead();
 
             SpawnDashArrivalEffect(map, dashCell);
             ABY_SoundUtility.PlayAt("ABY_ArchonDash", dashCell, map);
@@ -469,7 +602,7 @@ namespace AbyssalProtocol
             {
                 ForceMeleeAttackImmediate(source, target);
             }
-            else
+            else if (!phase2PortalActive)
             {
                 TryForceReengageCombat(source, true);
             }
@@ -669,10 +802,7 @@ namespace AbyssalProtocol
 
         private static bool IsValidAuraTarget(Pawn source, Pawn target)
         {
-            if (source == null || target == null)
-                return false;
-
-            if (target == source)
+            if (source == null || target == null || target == source)
                 return false;
 
             if (target.Dead || !target.Spawned)
@@ -689,10 +819,7 @@ namespace AbyssalProtocol
 
         private static bool IsValidDashTarget(Pawn source, Pawn target)
         {
-            if (source == null || target == null)
-                return false;
-
-            if (target == source)
+            if (source == null || target == null || target == source)
                 return false;
 
             if (target.Dead || !target.Spawned)

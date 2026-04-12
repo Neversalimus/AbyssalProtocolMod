@@ -21,6 +21,7 @@ namespace AbyssalProtocol
         private float bossSongExpectedEndRealtime = -1f;
         private float nextBossSongProbeRealtime = -1f;
         private int missingBossSongChecks;
+        private bool vanillaSongRestoreQueued;
 
         private const string BossSongDefName = "ABY_ArchonBossBattleTheme";
         private const float BossSongLengthSeconds = 30.0f;
@@ -42,6 +43,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
+            Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
         }
 
         public void RegisterBoss(Pawn boss)
@@ -57,6 +59,7 @@ namespace AbyssalProtocol
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
             ScheduleBossSongStart(0.05f);
+            vanillaSongRestoreQueued = false;
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -83,6 +86,11 @@ namespace AbyssalProtocol
             if (ritualPulseStrength <= 0.001f)
             {
                 ritualPulseMap = null;
+            }
+
+            if (!bossAlive)
+            {
+                TryRestoreVanillaMusicIfNeeded();
             }
 
             if (!bossAlive && currentStrength <= 0.001f)
@@ -151,7 +159,7 @@ namespace AbyssalProtocol
 
             if (nextBossSongProbeRealtime > 0f && now >= nextBossSongProbeRealtime)
             {
-                if (IsBossSongAlreadyPlaying(music, song))
+                if (IsSongAlreadyPlaying(music, song))
                 {
                     missingBossSongChecks = 0;
                     nextBossSongProbeRealtime = now + BossSongProbeIntervalSeconds;
@@ -202,11 +210,82 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            vanillaSongRestoreQueued = true;
             nextBossMusicRealtime = now + BossSongLengthSeconds - BossSongRestartLeadSeconds;
             bossSongExpectedEndRealtime = now + BossSongLengthSeconds;
             nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
             missingBossSongChecks = 0;
             return true;
+        }
+
+        private void TryRestoreVanillaMusicIfNeeded()
+        {
+            if (!vanillaSongRestoreQueued)
+            {
+                return;
+            }
+
+            MusicManagerPlay music = Find.MusicManagerPlay;
+            if (music == null)
+            {
+                return;
+            }
+
+            SongDef bossSong = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
+            if (bossSong == null)
+            {
+                vanillaSongRestoreQueued = false;
+                return;
+            }
+
+            if (!IsSongAlreadyPlaying(music, bossSong))
+            {
+                vanillaSongRestoreQueued = false;
+                return;
+            }
+
+            bool started = TryInvokeNoArgSongMethod(music, "StartNewSong")
+                || TryInvokeNoArgSongMethod(music, "ChooseNextSong");
+
+            if (started)
+            {
+                vanillaSongRestoreQueued = false;
+            }
+        }
+
+        private static bool TryInvokeNoArgSongMethod(MusicManagerPlay music, string methodName)
+        {
+            if (music == null || string.IsNullOrEmpty(methodName))
+            {
+                return false;
+            }
+
+            MethodInfo[] methods = music.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            for (int i = 0; i < methods.Length; i++)
+            {
+                MethodInfo method = methods[i];
+                if (method == null || method.Name != methodName)
+                {
+                    continue;
+                }
+
+                ParameterInfo[] parameters = method.GetParameters();
+                if (parameters.Length != 0)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    method.Invoke(music, null);
+                    return true;
+                }
+                catch
+                {
+                }
+            }
+
+            return false;
         }
 
         private static bool TryInvokeSongMethod(MusicManagerPlay music, string methodName, SongDef song, bool interrupting)
@@ -250,7 +329,7 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private static bool IsBossSongAlreadyPlaying(MusicManagerPlay music, SongDef targetSong)
+        private static bool IsSongAlreadyPlaying(MusicManagerPlay music, SongDef targetSong)
         {
             if (music == null || targetSong == null)
             {

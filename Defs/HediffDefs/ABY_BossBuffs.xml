@@ -44,6 +44,14 @@
         <dashInfernalFireChance>0.22</dashInfernalFireChance>
         <dashInfernalAshCountDeparture>2</dashInfernalAshCountDeparture>
         <dashInfernalAshCountArrival>3</dashInfernalAshCountArrival>
+
+        <phase2PortalEventDurationTicks>900</phase2PortalEventDurationTicks>
+        <phase2PortalWarmupTicks>42</phase2PortalWarmupTicks>
+        <phase2PortalImpSpawnIntervalTicks>18</phase2PortalImpSpawnIntervalTicks>
+        <phase2PortalLingerTicks>180</phase2PortalLingerTicks>
+        <phase2PortalImpsPerColonist>3</phase2PortalImpsPerColonist>
+        <phase2PortalMaxImpsPerPortal>3</phase2PortalMaxImpsPerPortal>
+        <phase2RetreatMaintainIntervalTicks>45</phase2RetreatMaintainIntervalTicks>
       </li>
     </comps>
 
