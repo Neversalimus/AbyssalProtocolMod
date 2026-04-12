@@ -38,11 +38,11 @@ namespace AbyssalProtocol
                     }
                 }
 
-                TryStartUseJob(myPawn, new LocalTargetInfo(circle));
+                StartValidatedUseJob(myPawn, new LocalTargetInfo(circle));
             });
         }
 
-        public override void TryStartUseJob(Pawn pawn, LocalTargetInfo extraTarget)
+        private void StartValidatedUseJob(Pawn pawn, LocalTargetInfo extraTarget)
         {
             if (!TryValidateUse(pawn, out Building_AbyssalSummoningCircle circle, out string failReason, true, extraTarget))
             {
