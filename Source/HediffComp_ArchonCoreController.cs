@@ -417,6 +417,16 @@ namespace AbyssalProtocol
 
             IntVec3 origin = source.Position;
 
+            if (source.pather != null)
+            {
+                source.pather.StopDead();
+            }
+
+            if (source.jobs != null && source.CurJob != null)
+            {
+                source.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            }
+
             SpawnDashDepartureEffect(map, origin);
             SpawnDashTrail(map, origin, dashCell);
 
@@ -427,11 +437,16 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
 
+            if (source.pather != null)
+            {
+                source.pather.StopDead();
+            }
+
             SpawnDashArrivalEffect(map, dashCell);
 
-            if (target != null && target.Spawned && !target.Dead)
+            if (target != null && target.Spawned && !target.Dead && target.MapHeld == map)
             {
-                ForceMeleeAttack(source, target);
+                ForceMeleeAttackImmediate(source, target);
             }
             else
             {
@@ -610,6 +625,19 @@ namespace AbyssalProtocol
             Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
             job.expiryInterval = 300;
             job.checkOverrideOnExpire = true;
+            attacker.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+        }
+
+        private static void ForceMeleeAttackImmediate(Pawn attacker, Pawn target)
+        {
+            if (attacker == null || target == null || attacker.jobs == null)
+                return;
+
+            Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
+            job.expiryInterval = 500;
+            job.checkOverrideOnExpire = true;
+            job.collideWithPawns = true;
+
             attacker.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
