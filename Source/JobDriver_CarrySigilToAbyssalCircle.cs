@@ -80,6 +80,7 @@ namespace AbyssalProtocol
                 if (Circle != null && actor.rotationTracker != null)
                 {
                     actor.rotationTracker.FaceCell(Circle.Position);
+                    ABY_SoundUtility.PlayAt("ABY_SigilActivate", Circle.RitualFocusCell, actor.MapHeld);
                 }
             };
             placeSigil.defaultCompleteMode = ToilCompleteMode.Instant;
@@ -88,6 +89,19 @@ namespace AbyssalProtocol
             Toil warmup = Toils_General.Wait(GetWarmupTicks());
             warmup.FailOn(() => Circle == null || Circle.Destroyed || !Circle.Spawned || Circle.RitualActive || !Circle.IsPoweredForRitual);
             warmup.WithProgressBarToilDelay(CircleInd);
+            warmup.tickAction = () =>
+            {
+                Pawn actor = warmup.actor;
+                if (actor == null || Circle == null || actor.MapHeld == null)
+                {
+                    return;
+                }
+
+                if ((actor.IsHashIntervalTick(30) || actor.jobs.curDriver.ticksLeftThisToil == GetWarmupTicks() - 1) && Circle.IsPoweredForRitual)
+                {
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Circle.RitualFocusCell, actor.MapHeld);
+                }
+            };
             yield return warmup;
 
             Toil invoke = new Toil();

@@ -22,7 +22,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. A pawn will carry it to an available summoning circle and invoke the first techno-demonic boss there.</description>
+    <description>A stabilized infernal key. Carry it to an abyssal summoning circle to charge the sigil and tear open a breach for the first techno-demonic boss.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>

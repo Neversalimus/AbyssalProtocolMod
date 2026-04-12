@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_SigilActivate</defName>
+    <context>MapOnly</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Sigil_Activate</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>25</min>
+          <max>29</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.97</min>
+          <max>1.03</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_SigilChargePulse</defName>
+    <context>MapOnly</context>
+    <maxVoices>3</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Sigil_ChargePulse</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>22</min>
+          <max>26</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.94</min>
+          <max>1.06</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_SigilSpawnImpulse</defName>
+    <context>MapOnly</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Sigil_SpawnImpulse</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>36</min>
+          <max>40</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

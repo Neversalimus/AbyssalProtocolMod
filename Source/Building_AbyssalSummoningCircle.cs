@@ -166,6 +166,7 @@ namespace AbyssalProtocol
             StartPhase(RitualPhase.Charging, 120);
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
             SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.95f);
+            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
 
             return true;
         }
@@ -297,6 +298,11 @@ namespace AbyssalProtocol
                     {
                         fxComp?.RegisterRitualPulse(Map, 0.06f + progress * 0.08f);
                     }
+
+                    if (ShouldDoHashInterval(26))
+                    {
+                        ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
+                    }
                     break;
 
                 case RitualPhase.Surge:
@@ -308,6 +314,11 @@ namespace AbyssalProtocol
                     if (ShouldDoHashInterval(8))
                     {
                         fxComp?.RegisterRitualPulse(Map, 0.12f + progress * 0.16f);
+                    }
+
+                    if (ShouldDoHashInterval(14))
+                    {
+                        ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
                     }
                     break;
 
@@ -340,12 +351,14 @@ namespace AbyssalProtocol
                     StartPhase(RitualPhase.Surge, 90);
                     SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.40f);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
                     break;
 
                 case RitualPhase.Surge:
                     StartPhase(RitualPhase.Breach, 30);
                     ArchonInfernalVFXUtility.DoSummonVFX(Map, RitualFocusCell);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.36f);
+                    ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
                     break;
 
                 case RitualPhase.Breach:
