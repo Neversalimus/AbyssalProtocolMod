@@ -167,7 +167,7 @@ namespace AbyssalProtocol
                 defaultLabel = "Rupture Sentence",
                 defaultDesc = "Condemn a single visible hostile with the hidden archon's verdict. The target becomes slower, less accurate and more vulnerable for a short time.\n\n" + CompInspectStringExtra(),
                 icon = CommandIcon,
-                order = 220f,
+                Order = 220f,
                 hotKey = KeyBindingDefOf.Misc1
             };
 
