@@ -5,4 +5,6 @@
   <ABY_BossSummonFail_NoMap>This sigil can only be used while the pawn is standing on an active map.</ABY_BossSummonFail_NoMap>
   <ABY_BossSummonFail_NoEdge>No valid breach point was found near the map edge.</ABY_BossSummonFail_NoEdge>
   <ABY_BossName>Archon of Rupture</ABY_BossName>
+  <ABY_SecretBossRevealLabel>The true archon answers</ABY_SecretBossRevealLabel>
+  <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
 </LanguageData>

@@ -68,6 +68,8 @@ namespace AbyssalProtocol
         private int lastDashTick = -999999;
         private int lastReengageTick = -999999;
         private bool deathVfxTriggered;
+        private bool everReachedPhase2;
+        private bool secretBossTriggered;
 
         private bool phase2PortalTriggered;
         private bool phase2PortalActive;
@@ -88,6 +90,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref lastDashTick, "lastDashTick", -999999);
             Scribe_Values.Look(ref lastReengageTick, "lastReengageTick", -999999);
             Scribe_Values.Look(ref deathVfxTriggered, "deathVfxTriggered", false);
+            Scribe_Values.Look(ref everReachedPhase2, "everReachedPhase2", false);
+            Scribe_Values.Look(ref secretBossTriggered, "secretBossTriggered", false);
             Scribe_Values.Look(ref phase2PortalTriggered, "phase2PortalTriggered", false);
             Scribe_Values.Look(ref phase2PortalActive, "phase2PortalActive", false);
             Scribe_Values.Look(ref phase2PortalEventEndTick, "phase2PortalEventEndTick", -1);
@@ -102,6 +106,7 @@ namespace AbyssalProtocol
         {
             base.Notify_PawnDied(dinfo, culprit);
             TryTriggerDeathVFX();
+            TryTriggerSecretBoss();
         }
 
         public override void CompPostTick(ref float severityAdjustment)
@@ -203,6 +208,11 @@ namespace AbyssalProtocol
             int previousPhase = currentPhase;
             currentPhase = newPhase;
 
+            if (newPhase >= 2)
+            {
+                everReachedPhase2 = true;
+            }
+
             if (newPhase > previousPhase && pawn.MapHeld != null && pawn.PositionHeld.IsValid)
             {
                 ABY_SoundUtility.PlayAt("ABY_ArchonPhaseShift", pawn.PositionHeld, pawn.MapHeld);
@@ -225,6 +235,30 @@ namespace AbyssalProtocol
                     parent.Severity = 2.10f;
                     break;
             }
+        }
+
+        private void TryTriggerSecretBoss()
+        {
+            if (secretBossTriggered || everReachedPhase2)
+            {
+                return;
+            }
+
+            Pawn pawn = Pawn;
+            if (pawn == null)
+            {
+                return;
+            }
+
+            Map map = pawn.Corpse?.Map ?? pawn.MapHeld;
+            IntVec3 cell = pawn.Corpse?.Position ?? pawn.PositionHeld;
+            if (map == null || !cell.IsValid)
+            {
+                return;
+            }
+
+            secretBossTriggered = true;
+            AbyssalSecretBossUtility.TrySpawnRupturePortal(map, cell, pawn.Faction);
         }
 
         private void StartPhase2PortalEvent(Pawn pawn)

@@ -24,7 +24,7 @@ namespace AbyssalProtocol
         private bool vanillaSongRestoreQueued;
 
         private const string BossSongDefName = "ABY_ArchonBossBattleTheme";
-        private const float BossSongLengthSeconds = 30.0f;
+        private const float BossSongLengthSeconds = 115.9f;
         private const float BossSongRestartLeadSeconds = 0.12f;
         private const float BossSongProbeDelaySeconds = 2.2f;
         private const float BossSongProbeIntervalSeconds = 0.65f;

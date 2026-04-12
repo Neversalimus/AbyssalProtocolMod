@@ -5,4 +5,6 @@
   <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
   <ABY_BossSummonFail_NoEdge>Не удалось найти подходящую точку прорыва у края карты.</ABY_BossSummonFail_NoEdge>
   <ABY_BossName>Архон Разрыва</ABY_BossName>
+  <ABY_SecretBossRevealLabel>Ответил истинный архонт</ABY_SecretBossRevealLabel>
+  <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
 </LanguageData>

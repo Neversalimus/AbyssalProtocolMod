@@ -24,4 +24,27 @@
     </lifeStages>
   </PawnKindDef>
 
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_ArchonOfRupture</defName>
+    <label>archon of rupture</label>
+    <race>ABY_ArchonOfRupture</race>
+    <combatPower>9000</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/ArchonOfRupture/ArchonOfRupture</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(10.2,10.2)</drawSize>
+          <shadowData>
+            <volume>(5.8, 1.45, 3.0)</volume>
+            <offset>(0, 0, -0.50)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
 </Defs>

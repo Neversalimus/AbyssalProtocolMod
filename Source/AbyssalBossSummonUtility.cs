@@ -133,7 +133,8 @@ namespace AbyssalProtocol
             Faction faction,
             Map map,
             IntVec3 spawnCell,
-            string bossLabel)
+            string bossLabel,
+            string arrivalSoundDefName = "ABY_ArchonBossArrive")
         {
             if (pawn == null || faction == null || map == null || !spawnCell.IsValid)
             {
@@ -142,7 +143,7 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
             ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
-            ABY_SoundUtility.PlayAt("ABY_ArchonBossArrive", spawnCell, map);
+            ABY_SoundUtility.PlayAt(arrivalSoundDefName, spawnCell, map);
 
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
             fxComp?.RegisterBoss(pawn);
@@ -254,7 +255,12 @@ namespace AbyssalProtocol
 
         private static void PrepareBoss(Pawn pawn, string bossLabel)
         {
-            pawn.Name = new NameSingle("ABY_BossName".Translate());
+            if (pawn == null)
+            {
+                return;
+            }
+
+            pawn.Name = new NameSingle(bossLabel);
 
             if (pawn.story != null)
             {
@@ -322,8 +328,17 @@ namespace AbyssalProtocol
 
         private static void PrepareMonsterBoss(Pawn pawn)
         {
-            HediffDef core = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_ArchonCore");
-            HediffDef carapace = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_ArchonCarapace");
+            if (pawn == null)
+            {
+                return;
+            }
+
+            string raceDefName = pawn.def?.defName;
+            string coreDefName = raceDefName == "ABY_ArchonOfRupture" ? "ABY_RuptureCore" : "ABY_ArchonCore";
+            string carapaceDefName = raceDefName == "ABY_ArchonOfRupture" ? "ABY_RuptureCarapace" : "ABY_ArchonCarapace";
+
+            HediffDef core = DefDatabase<HediffDef>.GetNamedSilentFail(coreDefName);
+            HediffDef carapace = DefDatabase<HediffDef>.GetNamedSilentFail(carapaceDefName);
 
             if (core != null)
             {

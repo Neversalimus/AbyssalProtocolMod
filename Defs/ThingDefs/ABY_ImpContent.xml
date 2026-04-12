@@ -4,7 +4,7 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_RiftImp</defName>
     <label>rift imp</label>
-    <description>A lesser infernal predator extruded from an abyssal breach. It is smaller than the Archon Beast, but still fast, vicious, and unnervingly hot to the touch.</description>
+    <description>A lesser infernal predator extruded from an abyssal breach. It is smaller than the archon herald, but still fast, vicious, and unnervingly hot to the touch.</description>
 
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
@@ -95,7 +95,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_ImpPortal</defName>
     <label>abyssal imp portal</label>
-    <description>A temporary infernal breach used by the Archon Beast to vomit lesser hunters into reality.</description>
+    <description>A temporary infernal breach used by abyssal heralds to vomit lesser hunters into reality.</description>
     <thingClass>AbyssalProtocol.Building_AbyssalImpPortal</thingClass>
     <category>Building</category>
     <drawerType>RealtimeOnly</drawerType>
@@ -116,6 +116,40 @@
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
       <drawSize>(3.6,3.6)</drawSize>
+    </graphicData>
+
+    <statBases>
+      <MaxHitPoints>1</MaxHitPoints>
+      <Mass>0.01</Mass>
+    </statBases>
+
+    <size>(1,1)</size>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_RupturePortal</defName>
+    <label>rupture portal</label>
+    <description>A massive crown-rift that opens only when the beast is destroyed before its ritual cycle can complete. The true archon emerges from within.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalRupturePortal</thingClass>
+    <category>Building</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <fillPercent>0.01</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <selectable>false</selectable>
+    <neverMultiSelect>true</neverMultiSelect>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+
+    <graphicData>
+      <texPath>Things/VFX/RupturePortal/ABY_RupturePortal_Ring</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(7.8,7.8)</drawSize>
     </graphicData>
 
     <statBases>

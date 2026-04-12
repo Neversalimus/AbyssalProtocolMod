@@ -101,4 +101,129 @@
     </subSounds>
   </SoundDef>
 
+  <SoundDef>
+    <defName>ABY_RupturePortalOpen</defName>
+    <context>Any</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_PortalOpen</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>34</min>
+          <max>40</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RuptureArrive</defName>
+    <context>Any</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Arrive</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>42</min>
+          <max>48</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.01</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RuptureImpact</defName>
+    <context>Any</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>33</min>
+          <max>38</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RuptureVerdict</defName>
+    <context>Any</context>
+    <maxVoices>3</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Verdict</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>29</min>
+          <max>34</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RuptureDeath</defName>
+    <context>Any</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Death</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>44</min>
+          <max>50</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.01</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
 </Defs>
