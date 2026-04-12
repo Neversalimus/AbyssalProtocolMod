@@ -71,7 +71,7 @@ namespace AbyssalProtocol
 
         public HediffCompProperties_RuptureCoreController Props => (HediffCompProperties_RuptureCoreController)props;
 
-        private Pawn Pawn => parent?.pawn;
+        private Pawn ControlledPawn => parent?.pawn;
 
         public override void CompExposeData()
         {
@@ -96,7 +96,7 @@ namespace AbyssalProtocol
         {
             base.CompPostTick(ref severityAdjustment);
 
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
             {
                 return;
@@ -143,7 +143,7 @@ namespace AbyssalProtocol
 
         private void UpdatePhase()
         {
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null)
             {
                 return;
@@ -204,7 +204,7 @@ namespace AbyssalProtocol
 
         private bool ShouldTriggerRecurringPortals()
         {
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null || pawn.MapHeld == null || currentPhase < 2)
             {
                 return false;
@@ -216,7 +216,7 @@ namespace AbyssalProtocol
 
         private void TriggerPortalVolley(int impCount)
         {
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null || pawn.MapHeld == null || impCount <= 0)
             {
                 return;
@@ -234,7 +234,7 @@ namespace AbyssalProtocol
 
         private void TryExecuteRebirth()
         {
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null || pawn.health == null)
             {
                 return;
@@ -557,7 +557,7 @@ namespace AbyssalProtocol
                 return;
 
             deathVfxTriggered = true;
-            Pawn pawn = Pawn;
+            Pawn pawn = ControlledPawn;
             if (pawn == null)
                 return;
 

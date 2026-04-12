@@ -126,7 +126,7 @@ namespace AbyssalProtocol
             return "Rupture charge recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
         }
 
-        public override IEnumerable SpecialDisplayStats()
+        public override IEnumerable<StatDrawEntry> SpecialDisplayStats()
         {
             foreach (StatDrawEntry entry in base.SpecialDisplayStats())
             {
@@ -136,7 +136,7 @@ namespace AbyssalProtocol
             yield return new StatDrawEntry(StatCategoryDefOf.BasicsNonPawnImportant, "Rupture recharge", GenDate.ToStringTicksToDays(Props.rechargeTicks), "Time needed to condense another verdict charge after firing.", 1000);
         }
 
-        public override IEnumerable CompGetGizmosExtra()
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             foreach (Gizmo gizmo in GetSharedGizmos())
             {
@@ -144,7 +144,7 @@ namespace AbyssalProtocol
             }
         }
 
-        public override IEnumerable CompGetWornGizmosExtra()
+        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
             foreach (Gizmo gizmo in GetSharedGizmos())
             {
