@@ -198,29 +198,74 @@ namespace AbyssalProtocol
                 canTargetPawns = true,
                 canTargetBuildings = false,
                 canTargetItems = false,
-                canTargetLocations = false,
+                canTargetLocations = true,
+                canTargetSelf = false,
+                mapObjectTargetsMustBeAutoAttackable = false,
                 validator = delegate(TargetInfo target)
                 {
-                    return IsValidTarget(wearer, target);
+                    Pawn resolved = ResolveTargetPawn(wearer, target);
+                    return resolved != null;
                 }
             };
 
             return targetingParameters;
         }
 
-        private bool IsValidTarget(Pawn wearer, TargetInfo target)
+        private Pawn ResolveTargetPawn(Pawn wearer, TargetInfo target)
+        {
+            if (wearer == null || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
+            {
+                return null;
+            }
+
+            if (target.HasThing)
+            {
+                Pawn directPawn = target.Thing as Pawn;
+                if (IsValidPawnTarget(wearer, directPawn))
+                {
+                    return directPawn;
+                }
+            }
+
+            if (!target.Cell.IsValid || wearer.MapHeld == null)
+            {
+                return null;
+            }
+
+            List<Thing> things = target.Cell.GetThingList(wearer.MapHeld);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Pawn pawn = things[i] as Pawn;
+                if (IsValidPawnTarget(wearer, pawn))
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
+        }
+
+        private Pawn ResolveTargetPawn(Pawn wearer, LocalTargetInfo target)
+        {
+            if (!target.IsValid)
+            {
+                return null;
+            }
+
+            TargetInfo asTargetInfo = target.HasThing
+                ? new TargetInfo(target.Thing)
+                : new TargetInfo(target.Cell, wearer.MapHeld, false);
+
+            return ResolveTargetPawn(wearer, asTargetInfo);
+        }
+
+        private bool IsValidPawnTarget(Pawn wearer, Pawn targetPawn)
         {
             if (wearer == null || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
             {
                 return false;
             }
 
-            if (!target.HasThing)
-            {
-                return false;
-            }
-
-            Pawn targetPawn = target.Thing as Pawn;
             if (targetPawn == null || targetPawn.Dead || !targetPawn.Spawned || targetPawn.MapHeld != wearer.MapHeld)
             {
                 return false;
@@ -244,21 +289,6 @@ namespace AbyssalProtocol
             return true;
         }
 
-
-        private bool IsValidTarget(Pawn wearer, LocalTargetInfo target)
-        {
-            if (!target.IsValid)
-            {
-                return false;
-            }
-
-            TargetInfo asTargetInfo = target.HasThing
-                ? new TargetInfo(target.Thing)
-                : new TargetInfo(target.Cell, wearer.MapHeld, false);
-
-            return IsValidTarget(wearer, asTargetInfo);
-        }
-
         private void TryUseOn(Pawn wearer, LocalTargetInfo target)
         {
             if (!CanUseNow(wearer, out string reason))
@@ -271,13 +301,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!IsValidTarget(wearer, target))
-            {
-                Messages.Message("No valid hostile pawn in line of sight.", wearer, MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Pawn targetPawn = target.Thing as Pawn;
+            Pawn targetPawn = ResolveTargetPawn(wearer, target);
             if (targetPawn == null)
             {
                 Messages.Message("No valid hostile pawn in line of sight.", wearer, MessageTypeDefOf.RejectInput, false);
