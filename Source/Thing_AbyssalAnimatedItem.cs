@@ -15,7 +15,7 @@ namespace AbyssalProtocol
         private const float InnerRotationPerTick = -0.70f;
         private const float OverlayAltitude = 0.036f;
 
-        public override void DrawAt(Vector3 drawLoc, bool flip = false)
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
 
