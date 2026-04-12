@@ -4,46 +4,47 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_SummoningCircle</defName>
     <label>abyssal summoning circle</label>
-    <description>A ritualized industrial worktable that condenses steel, components and void residue into controlled infernal summon sigils.</description>
+    <description>A colossal infernal-industrial ritual platform that condenses steel, components and void residue into controlled abyssal summon sigils.</description>
 
-    <thingClass>Building_WorkTable</thingClass>
+    <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
 
     <graphicData>
       <texPath>Things/Building/ABY_SummoningCircle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.5,1.5)</drawSize>
+      <drawSize>(9.0,9.0)</drawSize>
     </graphicData>
 
-    <castEdgeShadows>true</castEdgeShadows>
-    <staticSunShadowHeight>0.20</staticSunShadowHeight>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0.05</staticSunShadowHeight>
     <constructEffect>ConstructMetal</constructEffect>
 
     <costList>
-      <Steel>180</Steel>
-      <Plasteel>40</Plasteel>
-      <ComponentIndustrial>6</ComponentIndustrial>
+      <Steel>320</Steel>
+      <Plasteel>80</Plasteel>
+      <ComponentIndustrial>12</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
     </costList>
 
     <altitudeLayer>Building</altitudeLayer>
-    <fillPercent>0.5</fillPercent>
+    <fillPercent>0.05</fillPercent>
     <useHitPoints>True</useHitPoints>
 
     <statBases>
-      <WorkToBuild>3000</WorkToBuild>
-      <MaxHitPoints>180</MaxHitPoints>
-      <Flammability>1.0</Flammability>
-      <Cleanliness>-2</Cleanliness>
+      <WorkToBuild>7000</WorkToBuild>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Flammability>0.4</Flammability>
+      <Cleanliness>-4</Cleanliness>
     </statBases>
 
-    <size>(3,1)</size>
+    <size>(9,9)</size>
     <designationCategory>Production</designationCategory>
     <uiOrder>2520</uiOrder>
     <passability>PassThroughOnly</passability>
-    <pathCost>50</pathCost>
+    <pathCost>15</pathCost>
     <hasInteractionCell>True</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-5)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
-    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
 
     <recipes Inherit="False" />
 
@@ -55,12 +56,12 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <shortCircuitInRain>true</shortCircuitInRain>
-        <basePowerConsumption>350</basePowerConsumption>
+        <basePowerConsumption>1200</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">
-        <glowRadius>5</glowRadius>
-        <glowColor>(73,123,138,0)</glowColor>
+        <glowRadius>8</glowRadius>
+        <glowColor>(255,92,38,0)</glowColor>
       </li>
       <li Class="CompProperties_AffectedByFacilities">
         <linkableFacilities>
