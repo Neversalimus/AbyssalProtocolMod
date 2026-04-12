@@ -209,6 +209,10 @@
         <armorPenetration>1.12</armorPenetration>
       </li>
     </tools>
+
+    <killedLeavings Inherit="False">
+      <ABY_CrownOfRupture>1</ABY_CrownOfRupture>
+    </killedLeavings>
   </ThingDef>
 
 </Defs>

@@ -122,4 +122,99 @@
     </ingestible>
   </ThingDef>
 
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_CrownOfRupture</defName>
+    <label>crown of rupture</label>
+    <description>A collapsed crown-reactor torn from the hidden archon. It stores exactly one execution verdict at a time. Once fired, the crown needs a full in-game day to condense another charge. While equipped it slightly sharpens movement, aim and evasive timing, but its true value is the once-per-day Rupture Sentence.</description>
+    <techLevel>Ultra</techLevel>
+    <thingCategories Inherit="False">
+      <li>WeaponsRanged</li>
+    </thingCategories>
+    <graphicData>
+      <texPath>Things/Item/ABY_CrownOfRupture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <weaponTags>
+      <li>SpacerGun</li>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+    <equippedStatOffsets>
+      <MoveSpeed>0.08</MoveSpeed>
+      <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+      <MeleeDodgeChance>0.10</MeleeDodgeChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>50000</WorkToMake>
+      <Mass>1.7</Mass>
+      <MarketValue>6800</MarketValue>
+      <AccuracyTouch>0.95</AccuracyTouch>
+      <AccuracyShort>0.92</AccuracyShort>
+      <AccuracyMedium>0.88</AccuracyMedium>
+      <AccuracyLong>0.84</AccuracyLong>
+      <RangedWeapon_Cooldown>1000.0</RangedWeapon_Cooldown>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_RuptureSentenceBolt</defaultProjectile>
+        <warmupTime>1.65</warmupTime>
+        <range>35.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
+        <soundCast>ABY_RuptureVerdict</soundCast>
+        <muzzleFlashScale>12</muzzleFlashScale>
+      </li>
+    </verbs>
+    <tools>
+      <li>
+        <label>crown edge</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+    </tools>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_RuptureSentenceBolt</defName>
+    <label>rupture sentence bolt</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/UltraPlasmaBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.30,1.30)</drawSize>
+      <color>(255,70,70)</color>
+    </graphicData>
+    <projectile>
+      <damageDef>ABY_RuptureSentence</damageDef>
+      <damageAmountBase>48</damageAmountBase>
+      <armorPenetrationBase>2.25</armorPenetrationBase>
+      <stoppingPower>5.5</stoppingPower>
+      <speed>90</speed>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <DamageDef ParentName="CutBase">
+    <defName>ABY_RuptureSentence</defName>
+    <label>rupture sentence</label>
+    <externalViolence>true</externalViolence>
+    <deathMessage>{0} was sentenced by a rupture crown.</deathMessage>
+    <defaultDamage>48</defaultDamage>
+    <additionalHediffs>
+      <li>
+        <hediff>ABY_RuptureSentenceMark</hediff>
+        <severityPerDamageDealt>0.010</severityPerDamageDealt>
+      </li>
+    </additionalHediffs>
+  </DamageDef>
+
+
 </Defs>
