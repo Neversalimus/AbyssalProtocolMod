@@ -37,9 +37,9 @@ namespace AbyssalProtocol
 
         private bool Powered => GetComp<CompPowerTrader>()?.PowerOn ?? true;
 
-        public override void Draw()
+        public override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            base.Draw();
+            base.DrawAt(drawLoc, flip);
 
             if (Map == null)
             {
@@ -50,7 +50,7 @@ namespace AbyssalProtocol
             float pulse = 1f + Mathf.Sin(ticks * 0.030f) * 0.035f;
             float outerAngle = (ticks * 0.085f) % 360f;
             float innerAngle = 360f - ((ticks * 0.140f) % 360f);
-            Vector3 center = DrawPos;
+            Vector3 center = drawLoc;
 
             DrawLayer(IdleGlowGraphic, center, IdleGlowSize, 0f, 0.004f);
 
