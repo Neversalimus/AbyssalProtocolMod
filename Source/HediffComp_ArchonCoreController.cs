@@ -55,7 +55,30 @@ namespace AbyssalProtocol
     public class HediffComp_ArchonCoreController : HediffComp
     {
         private int currentPhase = 1;
+        private bool deathVfxTriggered;
         private int lastDashTick = -999999;
+private void TryTriggerDeathVFX()
+{
+    if (deathVfxTriggered)
+        return;
+
+    deathVfxTriggered = true;
+
+    Pawn pawn = Pawn;
+    if (pawn == null)
+        return;
+
+    if (pawn.Corpse != null && pawn.Corpse.Spawned && pawn.Corpse.Map != null)
+    {
+        ArchonInfernalVFXUtility.DoDeathVFX(pawn.Corpse.Map, pawn.Corpse.Position);
+        return;
+    }
+
+    if (pawn.MapHeld != null && pawn.PositionHeld.IsValid)
+    {
+        ArchonInfernalVFXUtility.DoDeathVFX(pawn.MapHeld, pawn.PositionHeld);
+    }
+}
 
         public HediffCompProperties_ArchonCoreController Props =>
             (HediffCompProperties_ArchonCoreController)props;
@@ -63,44 +86,54 @@ namespace AbyssalProtocol
         public override void CompExposeData()
         {
             base.CompExposeData();
+            Scribe_Values.Look(ref deathVfxTriggered, "deathVfxTriggered", false);
             Scribe_Values.Look(ref currentPhase, "currentPhase", 1);
             Scribe_Values.Look(ref lastDashTick, "lastDashTick", -999999);
         }
 
         public override void CompPostTick(ref float severityAdjustment)
-        {
-            base.CompPostTick(ref severityAdjustment);
+{
+    base.CompPostTick(ref severityAdjustment);
 
-            Pawn pawn = Pawn;
-            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
-                return;
+    Pawn pawn = Pawn;
+    if (pawn == null)
+        return;
 
-            UpdatePhase();
+    if (pawn.Dead)
+    {
+        TryTriggerDeathVFX();
+        return;
+    }
 
-            if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
-            {
-                ApplyHeatAura();
-            }
+    if (!pawn.Spawned || pawn.MapHeld == null)
+        return;
 
-            if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
-            {
-                StabilizeCriticalHediffs();
-            }
+    UpdatePhase();
 
-            if (pawn.Downed && pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
-            {
-                RecoverFromDowned();
-                return;
-            }
+    if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
+    {
+        ApplyHeatAura();
+    }
 
-            if (!CanUseDash(pawn))
-                return;
+    if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
+    {
+        StabilizeCriticalHediffs();
+    }
 
-            if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
-            {
-                TryDash();
-            }
-        }
+    if (pawn.Downed && pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
+    {
+        RecoverFromDowned();
+        return;
+    }
+
+    if (!CanUseDash(pawn))
+        return;
+
+    if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
+    {
+        TryDash();
+    }
+}
 
         private bool CanUseDash(Pawn pawn)
         {
