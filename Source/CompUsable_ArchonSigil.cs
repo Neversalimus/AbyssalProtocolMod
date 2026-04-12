@@ -30,7 +30,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                foreach (CompUseEffect comp in parent.GetComps().OfType<CompUseEffect>())
+                foreach (CompUseEffect comp in parent.AllComps.OfType<CompUseEffect>())
                 {
                     if (comp.SelectedUseOption(myPawn))
                     {
@@ -55,7 +55,7 @@ namespace AbyssalProtocol
             }
 
             StringBuilder confirmBuilder = new StringBuilder();
-            foreach (CompUseEffect comp in parent.GetComps().OfType<CompUseEffect>())
+            foreach (CompUseEffect comp in parent.AllComps.OfType<CompUseEffect>())
             {
                 TaggedString tagged = comp.ConfirmMessage(pawn);
                 if (!tagged.NullOrEmpty())
@@ -159,8 +159,9 @@ namespace AbyssalProtocol
             List<ThingComp> comps = parent.AllComps;
             for (int i = 0; i < comps.Count; i++)
             {
-                if (comps[i] is CompUseEffect useEffect && !useEffect.CanBeUsedBy(pawn, out failReason))
+                if (comps[i] is CompUseEffect useEffect && !useEffect.CanBeUsedBy(pawn))
                 {
+                    failReason = "Cannot use now.";
                     return false;
                 }
             }
