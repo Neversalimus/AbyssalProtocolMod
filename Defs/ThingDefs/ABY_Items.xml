@@ -22,7 +22,9 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Activating it orders a pawn to carry the sigil to the abyssal circle and perform the awakening ritual there.</description>
+    <description>A stabilized infernal key. Use it on the map to tear open a breach and call down the first techno-demonic boss.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
     <graphicData>
       <texPath>Things/Item/ABY_ArchonSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -39,14 +41,13 @@
     </statBases>
     <comps>
       <li Class="CompProperties_Usable">
-        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useJob>UseItem</useJob>
         <useLabel>invoke archon</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
         <bossLabel>Archon Beast</bossLabel>
         <spawnPoints>900</spawnPoints>
-        <ritualWarmupTicks>180</ritualWarmupTicks>
       </li>
     </comps>
   </ThingDef>
