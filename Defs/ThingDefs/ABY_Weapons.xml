@@ -22,7 +22,7 @@
     <recipeMaker>
       <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
       <recipeUsers Inherit="False">
-        <li>ABY_SummoningCircle</li>
+        <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
 
@@ -71,7 +71,7 @@
     <recipeMaker>
       <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
       <recipeUsers Inherit="False">
-        <li>ABY_SummoningCircle</li>
+        <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
 

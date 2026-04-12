@@ -30,7 +30,7 @@
         <Crafting>10</Crafting>
       </skillRequirements>
       <recipeUsers Inherit="False">
-        <li>TableMachining</li>
+        <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
 

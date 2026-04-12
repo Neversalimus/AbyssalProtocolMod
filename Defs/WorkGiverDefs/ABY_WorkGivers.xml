@@ -10,7 +10,7 @@
     <gerund>crafting at</gerund>
 
     <fixedBillGiverDefs>
-      <li>ABY_SummoningCircle</li>
+      <li>ABY_AbyssalForge</li>
     </fixedBillGiverDefs>
 
     <requiredCapacities>

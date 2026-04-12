@@ -2,18 +2,17 @@
 <Defs>
 
   <ThingDef ParentName="BenchBase">
-    <defName>ABY_SummoningCircle</defName>
-    <label>abyssal summoning circle</label>
-    <description>A colossal infernal-industrial ritual platform used only to invoke contained abyssal breaches. Feed it prepared sigils and let the forge handle the fabrication work.</description>
+    <defName>ABY_AbyssalForge</defName>
+    <label>abyssal forge</label>
+    <description>A living techno-demonic fabrication altar. The forge distills residue, brands summon sigils, and assembles abyssal weapons and implants around a pulsing infernal reactor-heart.</description>
 
-    <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
+    <thingClass>AbyssalProtocol.Building_AbyssalForge</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
-    <tickerType>Normal</tickerType>
 
     <graphicData>
-      <texPath>Things/Building/ABY_SummoningCircle</texPath>
+      <texPath>Things/Building/ABY_AbyssalForge</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(9.0,9.0)</drawSize>
+      <drawSize>(3.22,1.18)</drawSize>
     </graphicData>
 
     <castEdgeShadows>false</castEdgeShadows>
@@ -21,44 +20,46 @@
     <constructEffect>ConstructMetal</constructEffect>
 
     <costList>
-      <Steel>340</Steel>
-      <Plasteel>90</Plasteel>
-      <ComponentIndustrial>12</ComponentIndustrial>
-      <ComponentSpacer>4</ComponentSpacer>
+      <Steel>180</Steel>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
     </costList>
 
     <altitudeLayer>Building</altitudeLayer>
-    <fillPercent>0.03</fillPercent>
+    <fillPercent>0.18</fillPercent>
     <useHitPoints>True</useHitPoints>
 
     <statBases>
-      <WorkToBuild>8200</WorkToBuild>
-      <MaxHitPoints>650</MaxHitPoints>
-      <Flammability>0.2</Flammability>
-      <Cleanliness>-5</Cleanliness>
+      <WorkToBuild>7200</WorkToBuild>
+      <MaxHitPoints>320</MaxHitPoints>
+      <Flammability>0.08</Flammability>
+      <Cleanliness>-1.5</Cleanliness>
     </statBases>
 
-    <size>(9,9)</size>
+    <size>(3,1)</size>
     <designationCategory>Production</designationCategory>
-    <uiOrder>2520</uiOrder>
+    <uiOrder>2521</uiOrder>
     <passability>PassThroughOnly</passability>
-    <pathCost>8</pathCost>
+    <pathCost>28</pathCost>
     <hasInteractionCell>True</hasInteractionCell>
-    <interactionCellOffset>(0,0,-5)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
 
-    <recipes Inherit="False" />
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
 
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <shortCircuitInRain>true</shortCircuitInRain>
-        <basePowerConsumption>1400</basePowerConsumption>
+        <basePowerConsumption>950</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">
-        <glowRadius>8</glowRadius>
+        <glowRadius>4.1</glowRadius>
         <glowColor>(255,92,38,0)</glowColor>
       </li>
       <li Class="CompProperties_AffectedByFacilities">
