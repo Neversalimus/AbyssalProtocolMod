@@ -93,10 +93,6 @@ namespace AbyssalProtocol
             if (!pawn.Spawned || pawn.MapHeld == null)
                 return;
 
-            // Дешёвый sync направления каждый тик.
-            // Дорогой fallback-поиск ближайшей цели включаем только периодически.
-            SyncFacing(pawn, pawn.IsHashIntervalTick(12));
-
             UpdatePhase();
 
             if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
@@ -319,80 +315,6 @@ namespace AbyssalProtocol
             }
         }
 
-        private static void FaceCellNow(Pawn pawn, IntVec3 cell)
-        {
-            if (pawn == null || pawn.rotationTracker == null || !cell.IsValid || cell == pawn.Position)
-                return;
-
-            pawn.rotationTracker.FaceCell(cell);
-        }
-
-        private static IntVec3 GetImmediateFacingCell(Pawn pawn)
-        {
-            if (pawn == null)
-                return IntVec3.Invalid;
-
-            if (pawn.pather != null && pawn.pather.MovingNow)
-            {
-                LocalTargetInfo destination = pawn.pather.Destination;
-
-                if (destination.IsValid)
-                {
-                    if (destination.Thing != null && destination.Thing.Spawned)
-                    {
-                        return destination.Thing.Position;
-                    }
-
-                    if (destination.Cell.IsValid)
-                    {
-                        return destination.Cell;
-                    }
-                }
-            }
-
-            if (pawn.CurJob != null)
-            {
-                LocalTargetInfo targetA = pawn.CurJob.targetA;
-
-                if (targetA.IsValid)
-                {
-                    if (targetA.Thing != null && targetA.Thing.Spawned)
-                    {
-                        return targetA.Thing.Position;
-                    }
-
-                    if (targetA.Cell.IsValid)
-                    {
-                        return targetA.Cell;
-                    }
-                }
-            }
-
-            return IntVec3.Invalid;
-        }
-
-        private static void SyncFacing(Pawn pawn, bool allowExpensiveFallback)
-        {
-            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
-                return;
-
-            IntVec3 faceCell = GetImmediateFacingCell(pawn);
-
-            if (!faceCell.IsValid && allowExpensiveFallback)
-            {
-                Pawn nearest = FindNearestHostilePawn(pawn);
-                if (nearest != null)
-                {
-                    faceCell = nearest.Position;
-                }
-            }
-
-            if (faceCell.IsValid)
-            {
-                FaceCellNow(pawn, faceCell);
-            }
-        }
-
         private void TryDash()
         {
             Pawn source = Pawn;
@@ -487,6 +409,14 @@ namespace AbyssalProtocol
             return bestCell.IsValid;
         }
 
+        private static void FaceCellNow(Pawn pawn, IntVec3 cell)
+        {
+            if (pawn == null || !cell.IsValid || pawn.rotationTracker == null)
+                return;
+
+            pawn.rotationTracker.FaceCell(cell);
+        }
+
         private void DoDash(Pawn source, Pawn target, IntVec3 dashCell)
         {
             Map map = source.MapHeld;
@@ -496,7 +426,7 @@ namespace AbyssalProtocol
             IntVec3 origin = source.Position;
             IntVec3 faceCell = (target != null && target.Spawned && target.MapHeld == map)
                 ? target.Position
-                : dashCell;
+                : dashCell + (dashCell - origin);
 
             FaceCellNow(source, faceCell);
 
@@ -519,7 +449,6 @@ namespace AbyssalProtocol
             }
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
-
             FaceCellNow(source, faceCell);
 
             if (source.pather != null)
@@ -578,8 +507,7 @@ namespace AbyssalProtocol
                 map,
                 center.ToVector3Shifted() + new Vector3(0f, 0f, 0.15f),
                 "ABY_Mote_ArchonDashEntry",
-                Props.dashEntryScale * 0.7f
-            );
+                Props.dashEntryScale * 0.7f);
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, Props.dashInfernalRadius, true))
             {

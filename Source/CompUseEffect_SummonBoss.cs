@@ -1,5 +1,6 @@
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace AbyssalProtocol
 {
@@ -18,14 +19,18 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
-                    map,
-                    usedBy.PositionHeld,
-                    out Building_AbyssalSummoningCircle circle,
-                    out string findFailReason))
+            Building_AbyssalSummoningCircle circle = TryGetPreferredCircle(usedBy);
+            if (circle == null)
             {
-                Messages.Message(findFailReason, MessageTypeDefOf.RejectInput, false);
-                return;
+                if (!AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
+                        map,
+                        usedBy.PositionHeld,
+                        out circle,
+                        out string findFailReason))
+                {
+                    Messages.Message(findFailReason, MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
             }
 
             if (!circle.TryStartBossSummonSequence(usedBy, Props, out string startFailReason))
@@ -40,6 +45,28 @@ namespace AbyssalProtocol
                 "The abyssal circle begins to awaken.",
                 MessageTypeDefOf.PositiveEvent,
                 false);
+        }
+
+        private Building_AbyssalSummoningCircle TryGetPreferredCircle(Pawn usedBy)
+        {
+            if (usedBy?.CurJob == null)
+            {
+                return null;
+            }
+
+            LocalTargetInfo targetB = usedBy.CurJob.GetTarget(TargetIndex.B);
+            Building_AbyssalSummoningCircle circle = targetB.Thing as Building_AbyssalSummoningCircle;
+            if (circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld != usedBy.MapHeld)
+            {
+                return null;
+            }
+
+            if (circle.RitualActive || !circle.IsPoweredForRitual)
+            {
+                return null;
+            }
+
+            return circle;
         }
 
         private void ConsumeOneUse()

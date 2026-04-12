@@ -143,8 +143,7 @@ namespace AbyssalProtocol
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
             ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
 
-            AbyssalBossScreenFXGameComponent fxComp =
-                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
+            AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
             fxComp?.RegisterBoss(pawn);
 
             LordJob lordJob = new LordJob_AssaultColony(
@@ -190,6 +189,8 @@ namespace AbyssalProtocol
             Building_AbyssalSummoningCircle best = null;
             float bestDistance = float.MaxValue;
             bool foundAny = false;
+            bool foundBusy = false;
+            bool foundUnpowered = false;
 
             foreach (Thing thing in circles)
             {
@@ -202,6 +203,13 @@ namespace AbyssalProtocol
 
                 if (candidate.RitualActive)
                 {
+                    foundBusy = true;
+                    continue;
+                }
+
+                if (!candidate.IsPoweredForRitual)
+                {
+                    foundUnpowered = true;
                     continue;
                 }
 
@@ -215,9 +223,27 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                failReason = foundAny
-                    ? "All abyssal circles on this map are already occupied by another ritual."
-                    : "Build an Abyssal Summoning Circle before using the sigil.";
+                if (!foundAny)
+                {
+                    failReason = "Build an Abyssal Summoning Circle before using the sigil.";
+                }
+                else if (foundBusy && foundUnpowered)
+                {
+                    failReason = "All abyssal circles are either busy or unpowered.";
+                }
+                else if (foundBusy)
+                {
+                    failReason = "All abyssal circles on this map are already occupied by another ritual.";
+                }
+                else if (foundUnpowered)
+                {
+                    failReason = "All abyssal circles on this map are unpowered.";
+                }
+                else
+                {
+                    failReason = "No available abyssal circle was found.";
+                }
+
                 return false;
             }
 
@@ -264,9 +290,7 @@ namespace AbyssalProtocol
             HediffDef eyeDef = DefDatabase<HediffDef>.GetNamedSilentFail("ABY_InfernalEye_Implant");
             if (eyeDef != null)
             {
-                BodyPartRecord eyePart = pawn.health?.hediffSet?.GetNotMissingParts()
-                    ?.FirstOrDefault(part => part.def == BodyPartDefOf.Eye);
-
+                BodyPartRecord eyePart = pawn.health?.hediffSet?.GetNotMissingParts()?.FirstOrDefault(part => part.def == BodyPartDefOf.Eye);
                 if (eyePart != null)
                 {
                     pawn.health.AddHediff(eyeDef, eyePart);

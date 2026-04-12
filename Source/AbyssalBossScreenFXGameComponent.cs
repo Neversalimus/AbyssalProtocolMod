@@ -131,13 +131,7 @@ namespace AbyssalProtocol
             DrawSoftEdgeFrame(innerX, innerY, edgeHot, screenW, screenH, 5);
         }
 
-        private static void DrawSoftEdgeFrame(
-            float thicknessX,
-            float thicknessY,
-            Color color,
-            float screenW,
-            float screenH,
-            int layers)
+        private static void DrawSoftEdgeFrame(float thicknessX, float thicknessY, Color color, float screenW, float screenH, int layers)
         {
             if (thicknessX <= 0f || thicknessY <= 0f || layers <= 0)
             {
@@ -159,12 +153,8 @@ namespace AbyssalProtocol
 
                 Widgets.DrawBoxSolid(new Rect(0f, 0f, screenW, layerThicknessY), layerColor);
                 Widgets.DrawBoxSolid(new Rect(0f, screenH - layerThicknessY, screenW, layerThicknessY), layerColor);
-                Widgets.DrawBoxSolid(
-                    new Rect(0f, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f),
-                    layerColor);
-                Widgets.DrawBoxSolid(
-                    new Rect(screenW - layerThicknessX, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f),
-                    layerColor);
+                Widgets.DrawBoxSolid(new Rect(0f, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f), layerColor);
+                Widgets.DrawBoxSolid(new Rect(screenW - layerThicknessX, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f), layerColor);
             }
         }
 

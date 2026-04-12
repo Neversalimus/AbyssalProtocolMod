@@ -71,8 +71,8 @@ namespace AbyssalProtocol
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
-        private bool Powered => GetComp<CompPowerTrader>()?.PowerOn ?? true;
-        private IntVec3 RitualCenterCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
+        public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
+        public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
 
         public override void ExposeData()
         {
@@ -96,12 +96,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!Powered)
+            if (!IsPoweredForRitual)
             {
                 if (ShouldDoHashInterval(60))
                 {
-                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()
-                        ?.RegisterRitualPulse(Map, 0.05f);
+                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.05f);
                 }
 
                 return;
@@ -134,7 +133,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!Powered)
+            if (!IsPoweredForRitual)
             {
                 failReason = "The abyssal circle has no power.";
                 return false;
@@ -164,8 +163,7 @@ namespace AbyssalProtocol
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
 
             StartPhase(RitualPhase.Charging, 120);
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()
-                ?.RegisterRitualPulse(Map, 0.12f);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
             SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.95f);
 
             return true;
@@ -183,7 +181,7 @@ namespace AbyssalProtocol
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float seedPhase = (ritualSeed == 0 ? thingIDNumber : ritualSeed) * 0.0137f;
             float ritualIntensity = GetRitualIntensity();
-            float powerFactor = Powered ? 1f : 0.20f;
+            float powerFactor = IsPoweredForRitual ? 1f : 0.20f;
             float activity = powerFactor * (1f + ritualIntensity * 2.6f);
 
             float pulseA = 1f + Mathf.Sin(ticks * 0.045f + seedPhase) * (0.045f + ritualIntensity * 0.060f);
@@ -206,7 +204,7 @@ namespace AbyssalProtocol
 
             DrawLayer(IdleGlowGraphic, center, IdleGlowSize * (pulseA + ritualIntensity * 0.08f), 0f, 0.004f);
 
-            if (!Powered)
+            if (!IsPoweredForRitual)
             {
                 return;
             }
@@ -259,7 +257,7 @@ namespace AbyssalProtocol
                 sb.Append(Mathf.RoundToInt(GetPhaseProgress() * 100f));
                 sb.Append("%)");
 
-                if (!Powered)
+                if (!IsPoweredForRitual)
                 {
                     sb.AppendLine();
                     sb.Append("Ritual is stalled: no power.");
@@ -268,7 +266,6 @@ namespace AbyssalProtocol
 
             return sb.ToString();
         }
-
 
         private bool ShouldDoHashInterval(int interval)
         {
@@ -341,15 +338,13 @@ namespace AbyssalProtocol
                 case RitualPhase.Charging:
                     StartPhase(RitualPhase.Surge, 90);
                     SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.40f);
-                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()
-                        ?.RegisterRitualPulse(Map, 0.18f);
+                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
                     break;
 
                 case RitualPhase.Surge:
                     StartPhase(RitualPhase.Breach, 30);
-                    ArchonInfernalVFXUtility.DoSummonVFX(Map, RitualCenterCell);
-                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()
-                        ?.RegisterRitualPulse(Map, 0.36f);
+                    ArchonInfernalVFXUtility.DoSummonVFX(Map, RitualFocusCell);
+                    Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.36f);
                     break;
 
                 case RitualPhase.Breach:
@@ -463,7 +458,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Vector3 pos = RitualCenterCell.ToVector3Shifted();
+            Vector3 pos = RitualFocusCell.ToVector3Shifted();
             float tick = Find.TickManager != null ? Find.TickManager.TicksGame : 0f;
             float angle = tick * 0.08f + ritualSeed * 0.017f;
             float radius = ritualPhase == RitualPhase.Breach ? 1.15f : 0.55f;
