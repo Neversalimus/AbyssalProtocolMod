@@ -11,36 +11,14 @@
       <texPath>Things/VFX/RuptureHalo/RuptureHaloRing</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.76,0.76)</drawSize>
+      <drawSize>(0.92,0.92)</drawSize>
     </graphicData>
     <mote>
       <attachedToHead>true</attachedToHead>
-      <attachedDrawOffset>(0,0,0.08)</attachedDrawOffset>
-      <fadeInTime>0.02</fadeInTime>
-      <solidTime>0.24</solidTime>
-      <fadeOutTime>0.08</fadeOutTime>
-      <growthRate>0.00</growthRate>
-    </mote>
-  </ThingDef>
-
-  <ThingDef ParentName="MoteBase">
-    <defName>ABY_Mote_RuptureHaloCore</defName>
-    <label>rupture halo core</label>
-    <thingClass>MoteAttached</thingClass>
-    <altitudeLayer>MoteOverhead</altitudeLayer>
-    <drawOffscreen>true</drawOffscreen>
-    <graphicData>
-      <texPath>Things/VFX/RuptureHalo/RuptureHaloCore</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.34,0.34)</drawSize>
-    </graphicData>
-    <mote>
-      <attachedToHead>true</attachedToHead>
-      <attachedDrawOffset>(0,0,0.08)</attachedDrawOffset>
-      <fadeInTime>0.02</fadeInTime>
-      <solidTime>0.18</solidTime>
-      <fadeOutTime>0.06</fadeOutTime>
+      <attachedDrawOffset>(0,0,0.30)</attachedDrawOffset>
+      <fadeInTime>0.06</fadeInTime>
+      <solidTime>3.20</solidTime>
+      <fadeOutTime>0.18</fadeOutTime>
       <growthRate>0.00</growthRate>
     </mote>
   </ThingDef>

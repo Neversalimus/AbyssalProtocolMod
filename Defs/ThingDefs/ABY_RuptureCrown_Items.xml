@@ -12,6 +12,7 @@
     <graphicData>
       <texPath>Things/Item/ABY_CrownOfRupture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.62,0.62)</drawSize>
     </graphicData>
     <tradeability>Sellable</tradeability>
     <soundInteract>Interact_ChargeRifle</soundInteract>
@@ -43,7 +44,7 @@
     <verbs>
       <li>
         <verbClass>AbyssalProtocol.Verb_RuptureSentence</verbClass>
-        <hasStandardCommand>false</hasStandardCommand>
+        <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_RuptureSentenceBolt</defaultProjectile>
         <warmupTime>1.30</warmupTime>
         <range>35.9</range>
@@ -56,7 +57,7 @@
           <canTargetBuildings>false</canTargetBuildings>
           <canTargetItems>false</canTargetItems>
         </targetParams>
-        <muzzleFlashScale>1.25</muzzleFlashScale>
+        <muzzleFlashScale>1.10</muzzleFlashScale>
       </li>
     </verbs>
     <tools>

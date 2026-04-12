@@ -1,5 +1,4 @@
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
@@ -25,12 +24,6 @@ namespace AbyssalProtocol
             if (map != null)
             {
                 ABY_SoundUtility.PlayAt("ABY_RuptureImpact", cell, map);
-
-                ThingDef mote = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_Mote_RuptureHaloCore");
-                if (mote != null)
-                {
-                    MoteMaker.MakeStaticMote(ExactPosition + new Vector3(0f, 0f, 0.05f), map, mote, 0.70f);
-                }
             }
 
             Destroy(DestroyMode.Vanish);

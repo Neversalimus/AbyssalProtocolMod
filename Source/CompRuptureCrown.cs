@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -9,6 +8,7 @@ namespace AbyssalProtocol
     public static class RuptureCrownUtility
     {
         public const string MarkDefName = "ABY_RuptureSentenceMark";
+        public const int MarkTicks = 1080;
 
         public static bool TryApplyMark(Pawn pawn)
         {
@@ -34,7 +34,7 @@ namespace AbyssalProtocol
             HediffComp_Disappears disappears = existing.TryGetComp<HediffComp_Disappears>();
             if (disappears != null)
             {
-                disappears.ticksToDisappear = Mathf.Max(disappears.ticksToDisappear, 1080);
+                disappears.ticksToDisappear = MarkTicks;
             }
 
             pawn.health.hediffSet.DirtyCache();
@@ -45,8 +45,6 @@ namespace AbyssalProtocol
     public class CompProperties_RuptureCrown : CompProperties
     {
         public int rechargeTicks = GenDate.TicksPerDay;
-        public string ringMoteDef = "ABY_Mote_RuptureHaloRing";
-        public string coreMoteDef = "ABY_Mote_RuptureHaloCore";
 
         public CompProperties_RuptureCrown()
         {
@@ -57,11 +55,8 @@ namespace AbyssalProtocol
     public class CompRuptureCrown : ThingComp
     {
         private int lastUseTick = -999999;
-        private static Texture2D cachedCommandIcon;
 
         public CompProperties_RuptureCrown Props => (CompProperties_RuptureCrown)props;
-
-        private static Texture2D CommandIcon => cachedCommandIcon ??= ContentFinder<Texture2D>.Get("Things/Item/ABY_CrownOfRupture", true);
 
         public bool IsRecharged
         {
@@ -133,94 +128,12 @@ namespace AbyssalProtocol
                 yield return entry;
             }
 
-            yield return new StatDrawEntry(StatCategoryDefOf.BasicsNonPawnImportant, "Rupture recharge", GenDate.ToStringTicksToDays(Props.rechargeTicks), "Time needed to condense another verdict charge after firing.", 1000);
-        }
-
-        public override IEnumerable<Gizmo> CompGetGizmosExtra()
-        {
-            foreach (Gizmo gizmo in GetSharedGizmos())
-            {
-                yield return gizmo;
-            }
-        }
-
-        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
-        {
-            foreach (Gizmo gizmo in GetSharedGizmos())
-            {
-                yield return gizmo;
-            }
-        }
-
-        private IEnumerable<Gizmo> GetSharedGizmos()
-        {
-            CompEquippable equippable = parent.TryGetComp<CompEquippable>();
-            Verb_RuptureSentence verb = equippable?.PrimaryVerb as Verb_RuptureSentence;
-            Pawn casterPawn = verb?.CasterPawn;
-            if (verb == null || casterPawn == null || casterPawn.Faction != Faction.OfPlayer)
-            {
-                yield break;
-            }
-
-            Command_RuptureSentence command = new Command_RuptureSentence(this, verb)
-            {
-                defaultLabel = "Rupture Sentence",
-                defaultDesc = "Condemn a single visible hostile with the hidden archon's verdict. The target becomes slower, less accurate and more vulnerable for a short time.\n\n" + CompInspectStringExtra(),
-                icon = CommandIcon,
-                Order = 220f,
-                hotKey = KeyBindingDefOf.Misc1
-            };
-
-            if (!CanUseNow(out string reason))
-            {
-                command.Disable(reason);
-            }
-
-            yield return command;
-        }
-    }
-
-    public class Command_RuptureSentence : Command_VerbTarget
-    {
-        private readonly CompRuptureCrown crown;
-
-        public Command_RuptureSentence(CompRuptureCrown crown, Verb_RuptureSentence verb)
-        {
-            this.crown = crown;
-            this.verb = verb;
-        }
-
-        public override string TopRightLabel
-        {
-            get
-            {
-                if (crown == null)
-                {
-                    return null;
-                }
-
-                if (crown.IsRecharged)
-                {
-                    return "RDY";
-                }
-
-                int hours = Mathf.Max(1, Mathf.CeilToInt(crown.TicksUntilRecharged / 2500f));
-                return hours + "h";
-            }
-        }
-
-        public override string Desc
-        {
-            get
-            {
-                string baseDesc = base.Desc;
-                if (crown == null)
-                {
-                    return baseDesc;
-                }
-
-                return baseDesc + "\n\n" + crown.CompInspectStringExtra();
-            }
+            yield return new StatDrawEntry(
+                StatCategoryDefOf.BasicsNonPawnImportant,
+                "Rupture recharge",
+                GenDate.ToStringTicksToDays(Props.rechargeTicks),
+                "Time needed to condense another verdict charge after firing.",
+                1000);
         }
     }
 
@@ -262,15 +175,21 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            Pawn markedPawn = null;
+            if (currentTarget.IsValid && currentTarget.HasThing)
+            {
+                markedPawn = currentTarget.Thing as Pawn;
+            }
+
             bool result = base.TryCastShot();
             if (!result)
             {
                 return false;
             }
 
-            if (currentTarget.IsValid && currentTarget.HasThing && currentTarget.Thing is Pawn pawn)
+            if (markedPawn != null)
             {
-                RuptureCrownUtility.TryApplyMark(pawn);
+                RuptureCrownUtility.TryApplyMark(markedPawn);
             }
 
             crown.NotifyFired(CasterPawn);
