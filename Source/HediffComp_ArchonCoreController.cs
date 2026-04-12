@@ -409,6 +409,14 @@ namespace AbyssalProtocol
             return bestCell.IsValid;
         }
 
+        private static void FaceCellNow(Pawn pawn, IntVec3 cell)
+        {
+            if (pawn == null || !cell.IsValid || pawn.rotationTracker == null)
+                return;
+
+            pawn.rotationTracker.FaceCell(cell);
+        }
+
         private void DoDash(Pawn source, Pawn target, IntVec3 dashCell)
         {
             Map map = source.MapHeld;
@@ -416,6 +424,11 @@ namespace AbyssalProtocol
                 return;
 
             IntVec3 origin = source.Position;
+            IntVec3 faceCell = (target != null && target.Spawned && target.MapHeld == map)
+                ? target.Position
+                : dashCell + (dashCell - origin);
+
+            FaceCellNow(source, faceCell);
 
             if (source.pather != null)
             {
@@ -436,6 +449,7 @@ namespace AbyssalProtocol
             }
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
+            FaceCellNow(source, faceCell);
 
             if (source.pather != null)
             {
@@ -589,6 +603,7 @@ namespace AbyssalProtocol
             if (target == null)
                 return;
 
+            FaceCellNow(pawn, target.Position);
             ForceMeleeAttack(pawn, target);
             lastReengageTick = ticksGame;
         }
@@ -622,6 +637,8 @@ namespace AbyssalProtocol
             if (attacker == null || target == null || attacker.jobs == null)
                 return;
 
+            FaceCellNow(attacker, target.Position);
+
             Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
             job.expiryInterval = 300;
             job.checkOverrideOnExpire = true;
@@ -632,6 +649,8 @@ namespace AbyssalProtocol
         {
             if (attacker == null || target == null || attacker.jobs == null)
                 return;
+
+            FaceCellNow(attacker, target.Position);
 
             Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
             job.expiryInterval = 500;
