@@ -98,6 +98,12 @@
       <MarketValue>260</MarketValue>
       <Mass>0.06</Mass>
     </statBases>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <listOrder>2100</listOrder>
+        <isCombatEnhancingDrug>true</isCombatEnhancingDrug>
+      </li>
+    </comps>
     <ingestible>
       <drugCategory>Medical</drugCategory>
       <foodType>Processed, Fluid</foodType>
