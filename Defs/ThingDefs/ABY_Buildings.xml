@@ -7,6 +7,7 @@
     <description>A colossal infernal-industrial ritual platform that condenses steel, components and void residue into controlled abyssal summon sigils.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
 
     <graphicData>
       <texPath>Things/Building/ABY_SummoningCircle</texPath>

@@ -24,6 +24,12 @@ namespace AbyssalProtocol
             Vector2.one,
             Color.white);
 
+        private static readonly Graphic DataLatticeGraphic = GraphicDatabase.Get<Graphic_Single>(
+            "Things/Building/ABY_SummoningCircle_DataLattice",
+            ShaderDatabase.TransparentPostLight,
+            Vector2.one,
+            Color.white);
+
         private static readonly Graphic CoreGlowGraphic = GraphicDatabase.Get<Graphic_Single>(
             "Things/Building/ABY_SummoningCircle_CoreGlow",
             ShaderDatabase.TransparentPostLight,
@@ -36,11 +42,12 @@ namespace AbyssalProtocol
             Vector2.one,
             Color.white);
 
-        private static readonly Vector2 OuterRingSize = new Vector2(9.45f, 9.45f);
-        private static readonly Vector2 InnerGlyphSize = new Vector2(8.15f, 8.15f);
-        private static readonly Vector2 EnergyArcsSize = new Vector2(5.35f, 5.35f);
-        private static readonly Vector2 CoreGlowSize = new Vector2(3.10f, 3.10f);
-        private static readonly Vector2 IdleGlowSize = new Vector2(9.10f, 9.10f);
+        private static readonly Vector2 OuterRingSize = new Vector2(9.38f, 9.38f);
+        private static readonly Vector2 InnerGlyphSize = new Vector2(8.72f, 8.72f);
+        private static readonly Vector2 EnergyArcsSize = new Vector2(8.36f, 8.36f);
+        private static readonly Vector2 DataLatticeSize = new Vector2(7.52f, 7.52f);
+        private static readonly Vector2 CoreGlowSize = new Vector2(2.84f, 2.84f);
+        private static readonly Vector2 IdleGlowSize = new Vector2(9.20f, 9.20f);
 
         private bool Powered => GetComp<CompPowerTrader>()?.PowerOn ?? true;
 
@@ -54,17 +61,18 @@ namespace AbyssalProtocol
             }
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            float pulseA = 1f + Mathf.Sin(ticks * 0.055f) * 0.055f;
-            float pulseB = 1f + Mathf.Sin((ticks * 0.095f) + 1.35f) * 0.080f;
-            float pulseC = 1f + Mathf.Sin((ticks * 0.140f) + 2.10f) * 0.120f;
+            float phase = (thingIDNumber % 997) * 0.031f;
 
-            float outerAngle = (ticks * 0.20f) % 360f;
-            float innerAngle = 360f - ((ticks * 0.38f) % 360f);
-            float energyAngle = (ticks * 0.72f) % 360f;
+            float pulseA = 1f + Mathf.Sin((ticks * 0.045f) + phase) * 0.045f;
+            float pulseB = 1f + Mathf.Sin((ticks * 0.080f) + 1.35f + phase) * 0.060f;
+            float pulseC = 1f + Mathf.Sin((ticks * 0.135f) + 2.15f + phase) * 0.090f;
 
-            Vector3 center = drawLoc;
+            float outerAngle = (ticks * 0.18f) % 360f;
+            float innerAngle = 360f - ((ticks * 0.34f) % 360f);
+            float energyAngle = (ticks * 0.95f) % 360f;
+            float latticeAngle = 360f - ((ticks * 0.56f) % 360f);
 
-            DrawLayer(IdleGlowGraphic, center, IdleGlowSize * pulseA, 0f, 0.004f);
+            DrawLayer(IdleGlowGraphic, drawLoc, IdleGlowSize * pulseA, 0f, 0.004f);
 
             if (!Powered)
             {
@@ -73,29 +81,36 @@ namespace AbyssalProtocol
 
             DrawLayer(
                 OuterRingGraphic,
-                center,
-                OuterRingSize * (1f + (pulseA - 1f) * 0.55f),
+                drawLoc,
+                OuterRingSize * (1f + (pulseA - 1f) * 0.45f),
                 outerAngle,
                 0.010f);
 
             DrawLayer(
                 InnerGlyphGraphic,
-                center,
-                InnerGlyphSize * (1f + (pulseB - 1f) * 0.30f),
+                drawLoc,
+                InnerGlyphSize * (1f + (pulseB - 1f) * 0.26f),
                 innerAngle,
-                0.015f);
+                0.014f);
 
             DrawLayer(
                 EnergyArcsGraphic,
-                center,
-                EnergyArcsSize * pulseC,
+                drawLoc,
+                EnergyArcsSize * (1f + (pulseC - 1f) * 0.55f),
                 energyAngle,
-                0.020f);
+                0.018f);
+
+            DrawLayer(
+                DataLatticeGraphic,
+                drawLoc,
+                DataLatticeSize * (1f + (pulseB - 1f) * 0.22f),
+                latticeAngle,
+                0.021f);
 
             DrawLayer(
                 CoreGlowGraphic,
-                center,
-                CoreGlowSize * (1f + (pulseC - 1f) * 1.25f),
+                drawLoc,
+                CoreGlowSize * (1f + (pulseC - 1f) * 1.10f),
                 0f,
                 0.025f);
         }
