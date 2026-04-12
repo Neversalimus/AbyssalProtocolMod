@@ -2,9 +2,9 @@ namespace AbyssalProtocol
 {
     public enum ArchonEncounterState
     {
-        Idle = 0,
+        Spawning = 0,
         Engaging = 1,
-        PhaseTransition = 2,
+        Transitioning = 2,
         Retreating = 3,
         Recovering = 4,
         Reengaging = 5,
