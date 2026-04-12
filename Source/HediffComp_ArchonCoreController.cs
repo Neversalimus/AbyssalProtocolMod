@@ -270,7 +270,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!ABY_Phase2PortalUtility.TryFindRetreatEdgeCell(pawn.MapHeld, out IntVec3 retreatCell))
+            if (!ABY_Phase2PortalUtility.TryFindRetreatEdgeCell(pawn.MapHeld, pawn.Position, out IntVec3 retreatCell))
             {
                 return;
             }
@@ -352,9 +352,19 @@ namespace AbyssalProtocol
 
         private void MaintainPhase2Retreat(Pawn pawn)
         {
-            if (pawn == null || !phase2RetreatCell.IsValid)
+            if (pawn == null)
             {
                 return;
+            }
+
+            if (!phase2RetreatCell.IsValid || phase2RetreatCell.Fogged(pawn.MapHeld) || (pawn.MapHeld?.reachability != null && !pawn.MapHeld.reachability.CanReach(pawn.Position, phase2RetreatCell, PathEndMode.OnCell, TraverseMode.PassDoors, Danger.Deadly)))
+            {
+                if (!ABY_Phase2PortalUtility.TryFindRetreatEdgeCell(pawn.MapHeld, pawn.Position, out phase2RetreatCell))
+                {
+                    phase2PortalActive = false;
+                    TryForceReengageCombat(pawn, true);
+                    return;
+                }
             }
 
             if (pawn.Position == phase2RetreatCell)
@@ -565,7 +575,7 @@ namespace AbyssalProtocol
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(target.Position, Props.dashLandingRadius, true))
             {
-                if (!cell.InBounds(map) || !cell.Standable(map))
+                if (!cell.InBounds(map) || !cell.Standable(map) || cell.Fogged(map))
                     continue;
 
                 Pawn occupant = cell.GetFirstPawn(map);

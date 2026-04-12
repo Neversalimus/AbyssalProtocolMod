@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
+using Verse.AI;
 using Verse.AI.Group;
 
 namespace AbyssalProtocol
@@ -74,7 +75,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        public static bool TryFindRetreatEdgeCell(Map map, out IntVec3 cell)
+        public static bool TryFindRetreatEdgeCell(Map map, IntVec3 fromCell, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
             if (map == null)
@@ -82,15 +83,20 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            for (int i = 0; i < 120; i++)
+            for (int i = 0; i < 180; i++)
             {
                 IntVec3 candidate = RandomEdgeCell(map);
-                if (!candidate.InBounds(map) || !candidate.Standable(map))
+                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
                 {
                     continue;
                 }
 
                 if (candidate.GetFirstPawn(map) != null)
+                {
+                    continue;
+                }
+
+                if (fromCell.IsValid && map.reachability != null && !map.reachability.CanReach(fromCell, candidate, PathEndMode.OnCell, TraverseMode.PassDoors, Danger.Deadly))
                 {
                     continue;
                 }

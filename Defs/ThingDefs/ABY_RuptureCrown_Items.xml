@@ -43,13 +43,19 @@
     <verbs>
       <li>
         <verbClass>AbyssalProtocol.Verb_RuptureSentence</verbClass>
-        <hasStandardCommand>true</hasStandardCommand>
+        <hasStandardCommand>false</hasStandardCommand>
         <defaultProjectile>ABY_RuptureSentenceBolt</defaultProjectile>
         <warmupTime>1.30</warmupTime>
         <range>35.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <soundCast>ABY_RuptureVerdict</soundCast>
+        <targetParams>
+          <canTargetLocations>false</canTargetLocations>
+          <canTargetPawns>true</canTargetPawns>
+          <canTargetBuildings>false</canTargetBuildings>
+          <canTargetItems>false</canTargetItems>
+        </targetParams>
         <muzzleFlashScale>1.25</muzzleFlashScale>
       </li>
     </verbs>
