@@ -98,7 +98,7 @@ namespace AbyssalProtocol
 
             if (!Powered)
             {
-                if (IsHashIntervalTick(60))
+                if (ShouldDoHashInterval(60))
                 {
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()
                         ?.RegisterRitualPulse(Map, 0.05f);
@@ -269,6 +269,19 @@ namespace AbyssalProtocol
             return sb.ToString();
         }
 
+
+        private bool ShouldDoHashInterval(int interval)
+        {
+            if (interval <= 0)
+            {
+                return true;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int hashOffset = thingIDNumber >= 0 ? thingIDNumber : 0;
+            return (ticksGame + hashOffset) % interval == 0;
+        }
+
         private void TickRitualEffects()
         {
             float progress = GetPhaseProgress();
@@ -277,43 +290,43 @@ namespace AbyssalProtocol
             switch (ritualPhase)
             {
                 case RitualPhase.Charging:
-                    if (IsHashIntervalTick(24))
+                    if (ShouldDoHashInterval(24))
                     {
                         SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.85f + progress * 0.35f);
                     }
 
-                    if (IsHashIntervalTick(18))
+                    if (ShouldDoHashInterval(18))
                     {
                         fxComp?.RegisterRitualPulse(Map, 0.06f + progress * 0.08f);
                     }
                     break;
 
                 case RitualPhase.Surge:
-                    if (IsHashIntervalTick(10))
+                    if (ShouldDoHashInterval(10))
                     {
                         SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.05f + progress * 0.45f);
                     }
 
-                    if (IsHashIntervalTick(8))
+                    if (ShouldDoHashInterval(8))
                     {
                         fxComp?.RegisterRitualPulse(Map, 0.12f + progress * 0.16f);
                     }
                     break;
 
                 case RitualPhase.Breach:
-                    if (IsHashIntervalTick(5))
+                    if (ShouldDoHashInterval(5))
                     {
                         SpawnMinorMote("ABY_Mote_ArchonDashExit", 1.50f + progress * 0.75f);
                     }
 
-                    if (IsHashIntervalTick(4))
+                    if (ShouldDoHashInterval(4))
                     {
                         fxComp?.RegisterRitualPulse(Map, 0.22f + progress * 0.28f);
                     }
                     break;
 
                 case RitualPhase.Cooldown:
-                    if (IsHashIntervalTick(20))
+                    if (ShouldDoHashInterval(20))
                     {
                         SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.70f + (1f - progress) * 0.15f);
                     }
