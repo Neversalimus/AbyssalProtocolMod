@@ -103,6 +103,10 @@
         <armorPenetration>0.5</armorPenetration>
       </li>
     </tools>
+
+    <killedLeavings Inherit="False">
+      <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
+    </killedLeavings>
   </ThingDef>
 
   <ThingDef ParentName="AnimalThingBase">

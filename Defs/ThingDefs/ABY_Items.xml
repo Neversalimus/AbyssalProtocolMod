@@ -82,4 +82,42 @@
     </costList>
   </ThingDef>
 
+  <ThingDef ParentName="DrugBase">
+    <defName>ABY_ArchonOverrideAmpoule</defName>
+    <label>archon override ampoule</label>
+    <description>A captured combat ampoule distilled from the slain herald's abyssal core. It is intentionally tuned as the reward for the first boss only: a small, immediate combat edge rather than a permanent power spike. Injecting it floods a pawn with stolen archon targeting and locomotion routines, then leaves behind mild neural strain.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_ArchonOverrideAmpoule</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <stackLimit>10</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Ultra</techLevel>
+    <statBases>
+      <MarketValue>260</MarketValue>
+      <Mass>0.06</Mass>
+    </statBases>
+    <ingestible>
+      <drugCategory>Medical</drugCategory>
+      <foodType>Processed, Fluid</foodType>
+      <baseIngestTicks>90</baseIngestTicks>
+      <ingestSound>Ingest_Inject</ingestSound>
+      <ingestCommandString>Inject {0}</ingestCommandString>
+      <ingestReportString>Injecting {0}.</ingestReportString>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <chairSearchRadius>0</chairSearchRadius>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>ABY_ArchonOverrideSurge</hediffDef>
+          <severity>1.0</severity>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>ABY_ArchonOverrideFeedback</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
+  </ThingDef>
+
 </Defs>
