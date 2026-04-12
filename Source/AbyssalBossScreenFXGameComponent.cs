@@ -147,7 +147,58 @@ namespace AbyssalProtocol
                 return;
             }
 
-            music.ForceStartSong(song, false);
+            if (TryInvokeSongMethod(music, "ForceStartSong", song, false))
+            {
+                return;
+            }
+
+            if (TryInvokeSongMethod(music, "ForcePlaySong", song, false))
+            {
+                return;
+            }
+
+            TryInvokeSongMethod(music, "StartNewSong", song, false);
+        }
+
+        private static bool TryInvokeSongMethod(MusicManagerPlay music, string methodName, SongDef song, bool interrupting)
+        {
+            if (music == null || song == null || string.IsNullOrEmpty(methodName))
+            {
+                return false;
+            }
+
+            MethodInfo[] methods = music.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            for (int i = 0; i < methods.Length; i++)
+            {
+                MethodInfo method = methods[i];
+                if (method == null || method.Name != methodName)
+                {
+                    continue;
+                }
+
+                ParameterInfo[] parameters = method.GetParameters();
+                try
+                {
+                    if (parameters.Length == 1 && typeof(SongDef).IsAssignableFrom(parameters[0].ParameterType))
+                    {
+                        method.Invoke(music, new object[] { song });
+                        return true;
+                    }
+
+                    if (parameters.Length == 2 &&
+                        typeof(SongDef).IsAssignableFrom(parameters[0].ParameterType) &&
+                        parameters[1].ParameterType == typeof(bool))
+                    {
+                        method.Invoke(music, new object[] { song, interrupting });
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            return false;
         }
 
         private static bool IsBossSongAlreadyPlaying(MusicManagerPlay music, SongDef targetSong)
