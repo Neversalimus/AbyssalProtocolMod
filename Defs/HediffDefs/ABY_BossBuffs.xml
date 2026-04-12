@@ -368,20 +368,33 @@
 
   <HediffDef>
     <defName>ABY_ArchonOverrideSurge</defName>
-    <label>archon override surge</label>
-    <description>Borrowed archon combat routines are temporarily overclocking this pawn's perception, movement, and firing rhythm.</description>
+    <label>archon override</label>
+    <description>A controlled first-boss combat ampoule. The stolen archon routines hit in two phases: first a short surge of aim and locomotion, then a mild feedback slump as the routines burn out.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
     <comps>
       <li Class="HediffCompProperties_Disappears">
         <showRemainingTime>true</showRemainingTime>
-        <disappearsAfterTicks>1500</disappearsAfterTicks>
+        <disappearsAfterTicks>10500</disappearsAfterTicks>
+      </li>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-5.714286</severityPerDay>
       </li>
       <li Class="HediffCompProperties_DisappearsOnDeath" />
     </comps>
     <stages>
       <li>
+        <minSeverity>0.0</minSeverity>
+        <label>archon override feedback</label>
+        <restFallFactorOffset>0.10</restFallFactorOffset>
+        <statOffsets>
+          <MoveSpeed>-0.03</MoveSpeed>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.857143</minSeverity>
+        <label>archon override surge</label>
         <painFactor>0.65</painFactor>
         <capMods>
           <li>
@@ -412,23 +425,22 @@
 
   <HediffDef>
     <defName>ABY_ArchonOverrideFeedback</defName>
-    <label>archon override feedback</label>
-    <description>Residual feedback from the stolen archon routines is causing mild fatigue and a short drop in rhythm after the surge.</description>
+    <label>archon override feedback (legacy)</label>
+    <description>Legacy placeholder. The feedback phase is now handled inside ABY_ArchonOverrideSurge so the downside starts only after the short positive window ends.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>true</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
     <comps>
       <li Class="HediffCompProperties_Disappears">
         <showRemainingTime>true</showRemainingTime>
-        <disappearsAfterTicks>9000</disappearsAfterTicks>
+        <disappearsAfterTicks>1</disappearsAfterTicks>
       </li>
       <li Class="HediffCompProperties_DisappearsOnDeath" />
     </comps>
     <stages>
       <li>
-        <restFallFactorOffset>0.10</restFallFactorOffset>
         <statOffsets>
-          <MoveSpeed>-0.03</MoveSpeed>
+          <MoveSpeed>0.0</MoveSpeed>
         </statOffsets>
       </li>
     </stages>

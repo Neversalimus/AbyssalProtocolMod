@@ -118,10 +118,6 @@
           <hediffDef>ABY_ArchonOverrideSurge</hediffDef>
           <severity>1.0</severity>
         </li>
-        <li Class="IngestionOutcomeDoer_GiveHediff">
-          <hediffDef>ABY_ArchonOverrideFeedback</hediffDef>
-          <severity>1.0</severity>
-        </li>
       </outcomeDoers>
     </ingestible>
   </ThingDef>
