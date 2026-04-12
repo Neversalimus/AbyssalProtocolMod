@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using RimWorld;
 using UnityEngine;
@@ -16,10 +17,17 @@ namespace AbyssalProtocol
         private Map ritualPulseMap;
         private float ritualPulseStrength;
 
-        private int nextBossMusicTick = -1;
+        private float nextBossMusicRealtime = -1f;
+        private float bossSongExpectedEndRealtime = -1f;
+        private float nextBossSongProbeRealtime = -1f;
+        private int missingBossSongChecks;
 
         private const string BossSongDefName = "ABY_ArchonBossBattleTheme";
-        private const int BossMusicCheckTicks = 90;
+        private const float BossSongLengthSeconds = 30.0f;
+        private const float BossSongRestartLeadSeconds = 0.12f;
+        private const float BossSongProbeDelaySeconds = 2.2f;
+        private const float BossSongProbeIntervalSeconds = 0.65f;
+        private const float BossSongRetryDelaySeconds = 1.0f;
 
         public AbyssalBossScreenFXGameComponent(Game game)
         {
@@ -34,7 +42,6 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
-            Scribe_Values.Look(ref nextBossMusicTick, "nextBossMusicTick", -1);
         }
 
         public void RegisterBoss(Pawn boss)
@@ -49,7 +56,7 @@ namespace AbyssalProtocol
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
-            nextBossMusicTick = Find.TickManager != null ? Find.TickManager.TicksGame + 5 : -1;
+            ScheduleBossSongStart(0.05f);
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -78,33 +85,31 @@ namespace AbyssalProtocol
                 ritualPulseMap = null;
             }
 
-            HandleBossMusic(bossAlive);
-
             if (!bossAlive && currentStrength <= 0.001f)
             {
                 activeBoss = null;
                 effectMap = null;
-                nextBossMusicTick = -1;
+                ResetBossMusicState();
             }
         }
 
         public override void GameComponentOnGUI()
         {
             base.GameComponentOnGUI();
+            HandleBossMusicRealtime();
             DrawOverlay();
         }
 
-
-        private void HandleBossMusic(bool bossAlive)
+        private void HandleBossMusicRealtime()
         {
             if (Current.ProgramState != ProgramState.Playing)
             {
                 return;
             }
 
-            if (!bossAlive || effectMap == null)
+            if (!BossAlive() || effectMap == null)
             {
-                nextBossMusicTick = -1;
+                ResetBossMusicState();
                 return;
             }
 
@@ -113,51 +118,95 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (nextBossMusicTick < 0)
-            {
-                nextBossMusicTick = ticksGame + 5;
-            }
-
-            if (ticksGame < nextBossMusicTick)
+            SongDef song = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
+            MusicManagerPlay music = Find.MusicManagerPlay;
+            if (song == null || music == null)
             {
                 return;
             }
 
-            EnsureBossSongPlaying();
-            nextBossMusicTick = ticksGame + BossMusicCheckTicks;
+            float now = Time.realtimeSinceStartup;
+            if (nextBossMusicRealtime < 0f)
+            {
+                ScheduleBossSongStart(0.05f);
+            }
+
+            if (now >= nextBossMusicRealtime)
+            {
+                if (TryStartBossSong(music, song, now))
+                {
+                    return;
+                }
+
+                nextBossMusicRealtime = now + BossSongRetryDelaySeconds;
+                nextBossSongProbeRealtime = now + BossSongRetryDelaySeconds;
+                return;
+            }
+
+            if (bossSongExpectedEndRealtime > 0f && now >= bossSongExpectedEndRealtime - BossSongRestartLeadSeconds)
+            {
+                TryStartBossSong(music, song, now);
+                return;
+            }
+
+            if (nextBossSongProbeRealtime > 0f && now >= nextBossSongProbeRealtime)
+            {
+                if (IsBossSongAlreadyPlaying(music, song))
+                {
+                    missingBossSongChecks = 0;
+                    nextBossSongProbeRealtime = now + BossSongProbeIntervalSeconds;
+                    return;
+                }
+
+                missingBossSongChecks++;
+                if (missingBossSongChecks >= 2)
+                {
+                    TryStartBossSong(music, song, now);
+                    return;
+                }
+
+                nextBossSongProbeRealtime = now + 0.35f;
+            }
         }
 
-        private static void EnsureBossSongPlaying()
+        private void ScheduleBossSongStart(float delaySeconds)
         {
-            MusicManagerPlay music = Find.MusicManagerPlay;
-            if (music == null)
+            float now = Time.realtimeSinceStartup;
+            nextBossMusicRealtime = now + Mathf.Max(0f, delaySeconds);
+            bossSongExpectedEndRealtime = -1f;
+            nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
+            missingBossSongChecks = 0;
+        }
+
+        private void ResetBossMusicState()
+        {
+            nextBossMusicRealtime = -1f;
+            bossSongExpectedEndRealtime = -1f;
+            nextBossSongProbeRealtime = -1f;
+            missingBossSongChecks = 0;
+        }
+
+        private bool TryStartBossSong(MusicManagerPlay music, SongDef song, float now)
+        {
+            if (music == null || song == null)
             {
-                return;
+                return false;
             }
 
-            SongDef song = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
-            if (song == null)
+            bool started = TryInvokeSongMethod(music, "ForceStartSong", song, false)
+                || TryInvokeSongMethod(music, "ForcePlaySong", song, false)
+                || TryInvokeSongMethod(music, "StartNewSong", song, false);
+
+            if (!started)
             {
-                return;
+                return false;
             }
 
-            if (IsBossSongAlreadyPlaying(music, song))
-            {
-                return;
-            }
-
-            if (TryInvokeSongMethod(music, "ForceStartSong", song, false))
-            {
-                return;
-            }
-
-            if (TryInvokeSongMethod(music, "ForcePlaySong", song, false))
-            {
-                return;
-            }
-
-            TryInvokeSongMethod(music, "StartNewSong", song, false);
+            nextBossMusicRealtime = now + BossSongLengthSeconds - BossSongRestartLeadSeconds;
+            bossSongExpectedEndRealtime = now + BossSongLengthSeconds;
+            nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
+            missingBossSongChecks = 0;
+            return true;
         }
 
         private static bool TryInvokeSongMethod(MusicManagerPlay music, string methodName, SongDef song, bool interrupting)
@@ -208,49 +257,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Type type = music.GetType();
-            if (TryMatchMember(type.GetField("curSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
-            {
-                return true;
-            }
-
-            if (TryMatchMember(type.GetProperty("CurSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
-            {
-                return true;
-            }
-
-            if (TryMatchMember(type.GetProperty("curSong", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic), music, targetSong))
-            {
-                return true;
-            }
-
-            return false;
+            List<object> visited = new List<object>();
+            return ValueMatchesSongRecursive(music, targetSong, 0, visited);
         }
 
-        private static bool TryMatchMember(MemberInfo member, object instance, SongDef targetSong)
+        private static bool ValueMatchesSongRecursive(object value, SongDef targetSong, int depth, List<object> visited)
         {
-            if (member == null || instance == null || targetSong == null)
-            {
-                return false;
-            }
-
-            object value = null;
-
-            if (member is FieldInfo field)
-            {
-                value = field.GetValue(instance);
-            }
-            else if (member is PropertyInfo prop && prop.CanRead)
-            {
-                value = prop.GetValue(instance, null);
-            }
-
-            return ValueMatchesSong(value, targetSong);
-        }
-
-        private static bool ValueMatchesSong(object value, SongDef targetSong)
-        {
-            if (value == null || targetSong == null)
+            if (value == null || targetSong == null || depth > 4)
             {
                 return false;
             }
@@ -260,22 +273,77 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            if (value is SongDef songDef)
+            if (value is SongDef directSong)
             {
-                return songDef == targetSong || songDef.defName == targetSong.defName;
+                return directSong == targetSong || directSong.defName == targetSong.defName;
             }
 
             Type valueType = value.GetType();
-            foreach (string memberName in new[] { "def", "Def", "songDef", "SongDef" })
+            if (valueType.IsPrimitive || valueType.IsEnum || value is string)
             {
-                FieldInfo field = valueType.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (field != null && ValueMatchesSong(field.GetValue(value), targetSong))
+                return false;
+            }
+
+            if (!valueType.IsValueType)
+            {
+                for (int i = 0; i < visited.Count; i++)
+                {
+                    if (ReferenceEquals(visited[i], value))
+                    {
+                        return false;
+                    }
+                }
+
+                visited.Add(value);
+            }
+
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            FieldInfo[] fields = valueType.GetFields(flags);
+            for (int i = 0; i < fields.Length; i++)
+            {
+                FieldInfo field = fields[i];
+                if (field == null)
+                {
+                    continue;
+                }
+
+                object fieldValue;
+                try
+                {
+                    fieldValue = field.GetValue(value);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                if (ValueMatchesSongRecursive(fieldValue, targetSong, depth + 1, visited))
                 {
                     return true;
                 }
+            }
 
-                PropertyInfo prop = valueType.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (prop != null && prop.CanRead && ValueMatchesSong(prop.GetValue(value, null), targetSong))
+            PropertyInfo[] properties = valueType.GetProperties(flags);
+            for (int i = 0; i < properties.Length; i++)
+            {
+                PropertyInfo property = properties[i];
+                if (property == null || !property.CanRead || property.GetIndexParameters().Length != 0)
+                {
+                    continue;
+                }
+
+                object propertyValue;
+                try
+                {
+                    propertyValue = property.GetValue(value, null);
+                }
+                catch
+                {
+                    continue;
+                }
+
+                if (ValueMatchesSongRecursive(propertyValue, targetSong, depth + 1, visited))
                 {
                     return true;
                 }
