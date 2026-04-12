@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonDashEntry</defName>
+    <label>archon dash entry</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonDash/ArchonDash_Entry</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.02</fadeInTime>
+      <solidTime>0.05</solidTime>
+      <fadeOutTime>0.20</fadeOutTime>
+      <growthRate>6.0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonDashExit</defName>
+    <label>archon dash exit</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonDash/ArchonDash_Exit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(2.8,2.8)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.02</fadeInTime>
+      <solidTime>0.07</solidTime>
+      <fadeOutTime>0.28</fadeOutTime>
+      <growthRate>7.5</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_ArchonDashTrail</defName>
+    <label>archon dash trail</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ArchonDash/ArchonDash_Trail</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(2.0,2.0)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.03</solidTime>
+      <fadeOutTime>0.18</fadeOutTime>
+      <growthRate>3.5</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
