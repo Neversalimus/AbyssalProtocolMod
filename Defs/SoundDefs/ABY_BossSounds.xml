@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_ArchonBossArrive</defName>
+    <context>MapOnly</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Archon_BossArrive</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>34</min>
+          <max>38</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ArchonPhaseShift</defName>
+    <context>MapOnly</context>
+    <maxVoices>3</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Archon_PhaseShift</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>28</min>
+          <max>32</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.97</min>
+          <max>1.03</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ArchonDash</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Archon_Dash</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>24</min>
+          <max>28</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ArchonDeath</defName>
+    <context>MapOnly</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Archon_Death</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>38</min>
+          <max>44</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.98</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

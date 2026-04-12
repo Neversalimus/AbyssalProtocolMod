@@ -142,6 +142,7 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
             ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
+            ABY_SoundUtility.PlayAt("ABY_ArchonBossArrive", spawnCell, map);
 
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
             fxComp?.RegisterBoss(pawn);

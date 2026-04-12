@@ -174,7 +174,13 @@ namespace AbyssalProtocol
                 newPhase = 1;
             }
 
+            int previousPhase = currentPhase;
             currentPhase = newPhase;
+
+            if (newPhase > previousPhase && pawn.MapHeld != null && pawn.PositionHeld.IsValid)
+            {
+                ABY_SoundUtility.PlayAt("ABY_ArchonPhaseShift", pawn.PositionHeld, pawn.MapHeld);
+            }
 
             switch (currentPhase)
             {
@@ -457,6 +463,7 @@ namespace AbyssalProtocol
             }
 
             SpawnDashArrivalEffect(map, dashCell);
+            ABY_SoundUtility.PlayAt("ABY_ArchonDash", dashCell, map);
 
             if (target != null && target.Spawned && !target.Dead && target.MapHeld == map)
             {
@@ -563,12 +570,14 @@ namespace AbyssalProtocol
 
             if (pawn.Corpse != null && pawn.Corpse.Spawned && pawn.Corpse.Map != null)
             {
+                ABY_SoundUtility.PlayAt("ABY_ArchonDeath", pawn.Corpse.Position, pawn.Corpse.Map);
                 ArchonInfernalVFXUtility.DoDeathVFX(pawn.Corpse.Map, pawn.Corpse.Position);
                 return;
             }
 
             if (pawn.MapHeld != null && pawn.PositionHeld.IsValid)
             {
+                ABY_SoundUtility.PlayAt("ABY_ArchonDeath", pawn.PositionHeld, pawn.MapHeld);
                 ArchonInfernalVFXUtility.DoDeathVFX(pawn.MapHeld, pawn.PositionHeld);
             }
         }
