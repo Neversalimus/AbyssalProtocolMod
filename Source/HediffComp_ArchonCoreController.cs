@@ -36,10 +36,15 @@ namespace AbyssalProtocol
         public float emergencyHeatstrokeClamp = 0.10f;
         public float emergencyHealInjurySeverity = 0.35f;
 
-        public float dashInfernalRadius = 1.5f;
-        public float dashInfernalFireChance = 0.22f;
-        public int dashInfernalAshCountDeparture = 2;
-        public int dashInfernalAshCountArrival = 3;
+        public float dashInfernalRadius = 1.7f;
+        public float dashInfernalFireChance = 0.32f;
+        public int dashInfernalAshCountDeparture = 4;
+        public int dashInfernalAshCountArrival = 6;
+
+        public int dashTrailSteps = 5;
+        public float dashEntryScale = 1.9f;
+        public float dashExitScale = 2.4f;
+        public float dashTrailScale = 1.3f;
 
         public HediffCompProperties_ArchonCoreController()
         {
@@ -88,13 +93,33 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (pawn.Downed)
+            if (!CanUseDash(pawn))
                 return;
 
             if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
             {
                 TryDash();
             }
+        }
+
+        private bool CanUseDash(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
+                return false;
+
+            if (pawn.Downed)
+                return false;
+
+            if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Consciousness))
+                return false;
+
+            if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Moving))
+                return false;
+
+            if (!pawn.Awake())
+                return false;
+
+            return true;
         }
 
         private void UpdatePhase()
@@ -258,7 +283,7 @@ namespace AbyssalProtocol
         private void TryDash()
         {
             Pawn source = Pawn;
-            if (source == null || source.MapHeld == null || !source.Spawned || source.Downed)
+            if (!CanUseDash(source))
                 return;
 
             int ticksGame = Find.TickManager.TicksGame;
@@ -357,7 +382,8 @@ namespace AbyssalProtocol
 
             IntVec3 origin = source.Position;
 
-            SpawnDashInfernalEffect(map, origin, Props.dashInfernalAshCountDeparture);
+            SpawnDashDepartureEffect(map, origin);
+            SpawnDashTrail(map, origin, dashCell);
 
             if (source.Spawned)
             {
@@ -366,7 +392,7 @@ namespace AbyssalProtocol
 
             GenSpawn.Spawn(source, dashCell, map, source.Rotation);
 
-            SpawnDashInfernalEffect(map, dashCell, Props.dashInfernalAshCountArrival);
+            SpawnDashArrivalEffect(map, dashCell);
 
             if (source.pather != null && target != null && target.Spawned && !target.Dead)
             {
@@ -374,29 +400,82 @@ namespace AbyssalProtocol
             }
         }
 
-        private void SpawnDashInfernalEffect(Map map, IntVec3 center, int ashCount)
+        private void SpawnDashDepartureEffect(Map map, IntVec3 center)
         {
             if (map == null || !center.IsValid)
                 return;
 
-            if (ashCount > 0)
+            if (Props.dashInfernalAshCountDeparture > 0)
             {
-                FilthMaker.TryMakeFilth(center, map, ThingDefOf.Filth_Ash, ashCount);
+                FilthMaker.TryMakeFilth(center, map, ThingDefOf.Filth_Ash, Props.dashInfernalAshCountDeparture);
             }
+
+            TrySpawnDashMote(map, center.ToVector3Shifted(), "ABY_Mote_ArchonDashEntry", Props.dashEntryScale);
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, Props.dashInfernalRadius, true))
             {
-                if (!cell.InBounds(map))
+                if (!cell.InBounds(map) || !cell.Standable(map))
                     continue;
 
-                if (!cell.Standable(map))
+                if (Rand.Chance(Props.dashInfernalFireChance * 0.55f))
+                {
+                    FireUtility.TryStartFireIn(cell, map, 0.22f, null, null);
+                }
+            }
+        }
+
+        private void SpawnDashArrivalEffect(Map map, IntVec3 center)
+        {
+            if (map == null || !center.IsValid)
+                return;
+
+            if (Props.dashInfernalAshCountArrival > 0)
+            {
+                FilthMaker.TryMakeFilth(center, map, ThingDefOf.Filth_Ash, Props.dashInfernalAshCountArrival);
+            }
+
+            TrySpawnDashMote(map, center.ToVector3Shifted(), "ABY_Mote_ArchonDashExit", Props.dashExitScale);
+            TrySpawnDashMote(map, center.ToVector3Shifted() + new Vector3(0f, 0f, 0.15f), "ABY_Mote_ArchonDashEntry", Props.dashEntryScale * 0.7f);
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, Props.dashInfernalRadius, true))
+            {
+                if (!cell.InBounds(map) || !cell.Standable(map))
                     continue;
 
                 if (Rand.Chance(Props.dashInfernalFireChance))
                 {
-                    FireUtility.TryStartFireIn(cell, map, 0.15f, null, null);
+                    FireUtility.TryStartFireIn(cell, map, 0.28f, null, null);
                 }
             }
+        }
+
+        private void SpawnDashTrail(Map map, IntVec3 from, IntVec3 to)
+        {
+            if (map == null || !from.IsValid || !to.IsValid || Props.dashTrailSteps <= 0)
+                return;
+
+            Vector3 start = from.ToVector3Shifted();
+            Vector3 end = to.ToVector3Shifted();
+
+            for (int i = 1; i <= Props.dashTrailSteps; i++)
+            {
+                float t = (float)i / (Props.dashTrailSteps + 1);
+                Vector3 pos = Vector3.Lerp(start, end, t);
+                float scale = Mathf.Lerp(Props.dashTrailScale, Props.dashTrailScale * 0.55f, t);
+                TrySpawnDashMote(map, pos, "ABY_Mote_ArchonDashTrail", scale);
+            }
+        }
+
+        private static void TrySpawnDashMote(Map map, Vector3 pos, string defName, float scale)
+        {
+            if (map == null || string.IsNullOrEmpty(defName))
+                return;
+
+            ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (moteDef == null)
+                return;
+
+            MoteMaker.MakeStaticMote(pos, map, moteDef, scale);
         }
 
         private static bool IsValidAuraTarget(Pawn source, Pawn target)
