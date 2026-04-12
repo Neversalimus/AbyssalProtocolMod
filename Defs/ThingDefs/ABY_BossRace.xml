@@ -140,6 +140,7 @@
       <intelligence>Animal</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
       <lifeExpectancy>1000</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
       <predator>true</predator>
