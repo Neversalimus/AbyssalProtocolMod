@@ -51,7 +51,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref seed, "seed", 0);
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 
