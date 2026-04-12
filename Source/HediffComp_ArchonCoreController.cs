@@ -47,6 +47,8 @@ namespace AbyssalProtocol
         public float dashTrailScale = 1.3f;
 
         public int combatReengageIntervalTicks = 90;
+        public int reengageRetryTicks = 30;
+        public int phaseTransitionLockTicks = 75;
 
         public int phase2PortalEventDurationTicks = 900;
         public int phase2PortalWarmupTicks = 42;
@@ -80,6 +82,7 @@ namespace AbyssalProtocol
         private IntVec3 phase2RetreatCell = IntVec3.Invalid;
         private int lastPhase2MaintainTick = -999999;
         private ArchonEncounterState encounterState = ArchonEncounterState.Idle;
+        private int phaseLockedUntilTick = -1;
 
         public HediffCompProperties_ArchonCoreController Props =>
             (HediffCompProperties_ArchonCoreController)props;
@@ -102,6 +105,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref phase2RetreatCell, "phase2RetreatCell");
             Scribe_Values.Look(ref lastPhase2MaintainTick, "lastPhase2MaintainTick", -999999);
             Scribe_Values.Look(ref encounterState, "encounterState", ArchonEncounterState.Idle);
+            Scribe_Values.Look(ref phaseLockedUntilTick, "phaseLockedUntilTick", -1);
         }
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
@@ -125,7 +129,7 @@ namespace AbyssalProtocol
 
             if (encounterState == ArchonEncounterState.Idle)
             {
-                encounterState = ArchonEncounterState.Engaging;
+                SetEncounterState(ArchonEncounterState.Engaging);
             }
 
             UpdatePhase();
@@ -142,7 +146,8 @@ namespace AbyssalProtocol
 
             if (pawn.Downed)
             {
-                encounterState = ArchonEncounterState.Recovering;
+                SetEncounterState(ArchonEncounterState.Recovering);
+                StopCombat(pawn);
                 if (pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
                 {
                     RecoverFromDowned();
@@ -153,15 +158,20 @@ namespace AbyssalProtocol
 
             if (phase2PortalActive)
             {
-                encounterState = ArchonEncounterState.Retreating;
+                SetEncounterState(ArchonEncounterState.Retreating);
                 TickPhase2PortalEvent(pawn);
                 return;
             }
 
             if (pawn.IsHashIntervalTick(Props.combatReengageIntervalTicks) && NeedsCombatReengage(pawn))
             {
-                encounterState = ArchonEncounterState.Reengaging;
+                SetEncounterState(ArchonEncounterState.Reengaging);
                 TryForceReengageCombat(pawn);
+            }
+
+            if (encounterState == ArchonEncounterState.Reengaging && pawn.IsHashIntervalTick(Props.reengageRetryTicks))
+            {
+                TryForceReengageCombat(pawn, true);
             }
 
             if (!CanRunCombatActions(pawn))
@@ -195,6 +205,9 @@ namespace AbyssalProtocol
             if (encounterState == ArchonEncounterState.Dead || encounterState == ArchonEncounterState.PhaseTransition || encounterState == ArchonEncounterState.Retreating || encounterState == ArchonEncounterState.Recovering)
                 return false;
 
+            if (Find.TickManager != null && Find.TickManager.TicksGame < phaseLockedUntilTick)
+                return false;
+
             return true;
         }
 
@@ -205,7 +218,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            encounterState = newState;
+            if (encounterState != newState)
+            {
+                encounterState = newState;
+            }
         }
 
         private void UpdatePhase()
@@ -245,6 +261,7 @@ namespace AbyssalProtocol
                 if (newPhase == 2 && !phase2PortalTriggered)
                 {
                     SetEncounterState(ArchonEncounterState.PhaseTransition);
+                    phaseLockedUntilTick = Find.TickManager != null ? Find.TickManager.TicksGame + Props.phaseTransitionLockTicks : Props.phaseTransitionLockTicks;
                     StartPhase2PortalEvent(pawn);
                 }
             }
@@ -359,6 +376,7 @@ namespace AbyssalProtocol
                 phase2PortalActive = false;
                 phase2RemainingImps = 0;
                 phase2RetreatCell = IntVec3.Invalid;
+                phaseLockedUntilTick = -1;
                 SetEncounterState(ArchonEncounterState.Reengaging);
                 TryForceReengageCombat(pawn, true);
             }
@@ -483,6 +501,7 @@ namespace AbyssalProtocol
 
             if (!pawn.Downed)
             {
+                phaseLockedUntilTick = Find.TickManager != null ? Find.TickManager.TicksGame + 30 : 30;
                 SetEncounterState(ArchonEncounterState.Reengaging);
                 TryForceReengageCombat(pawn, true);
             }
@@ -803,6 +822,9 @@ namespace AbyssalProtocol
             if (phase2PortalActive || encounterState == ArchonEncounterState.PhaseTransition || encounterState == ArchonEncounterState.Retreating || encounterState == ArchonEncounterState.Recovering)
                 return false;
 
+            if (HasValidCombatJob(pawn))
+                return false;
+
             Job curJob = pawn.CurJob;
             if (curJob == null || curJob.def == null)
                 return true;
@@ -811,7 +833,7 @@ namespace AbyssalProtocol
             if (defName == "GotoWander" || defName == "Wait_Wander" || defName == "Wait")
                 return true;
 
-            return false;
+            return true;
         }
 
         private void TryForceReengageCombat(Pawn pawn, bool forceNow = false)
@@ -823,14 +845,48 @@ namespace AbyssalProtocol
             if (!forceNow && ticksGame - lastReengageTick < 45)
                 return;
 
+            if (HasValidCombatJob(pawn))
+            {
+                lastReengageTick = ticksGame;
+                SetEncounterState(ArchonEncounterState.Engaging);
+                return;
+            }
+
             Pawn target = FindNearestHostilePawn(pawn);
             if (target == null)
                 return;
 
+            StopCombat(pawn);
             FaceCellNow(pawn, target.Position);
             ForceMeleeAttack(pawn, target);
             lastReengageTick = ticksGame;
             SetEncounterState(ArchonEncounterState.Engaging);
+        }
+
+        private static bool HasValidCombatJob(Pawn pawn)
+        {
+            if (pawn == null || pawn.jobs == null || pawn.CurJob == null || pawn.CurJob.def == null)
+            {
+                return false;
+            }
+
+            if (pawn.CurJob.def != JobDefOf.AttackMelee)
+            {
+                return false;
+            }
+
+            Pawn targetPawn = pawn.CurJob.targetA.Thing as Pawn;
+            if (targetPawn == null || targetPawn.Dead || !targetPawn.Spawned)
+            {
+                return false;
+            }
+
+            if (!targetPawn.HostileTo(pawn))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static Pawn FindNearestHostilePawn(Pawn source)

@@ -88,7 +88,22 @@ namespace AbyssalProtocol
 
         private static bool HasCrownEquipped(Pawn pawn)
         {
-            return pawn?.Spawned == true && pawn.equipment?.Primary != null && pawn.equipment.Primary.def?.defName == CrownDefName;
+            if (pawn?.Spawned != true || pawn.apparel == null)
+            {
+                return false;
+            }
+
+            List<Apparel> worn = pawn.apparel.WornApparel;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                Apparel apparel = worn[i];
+                if (apparel != null && apparel.def != null && apparel.def.defName == CrownDefName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void RefreshHaloFor(Pawn pawn, int ticksGame)

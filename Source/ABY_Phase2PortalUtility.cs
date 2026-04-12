@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
-using Verse.AI;
 using Verse.AI.Group;
 
 namespace AbyssalProtocol
@@ -75,6 +74,11 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TryFindRetreatEdgeCell(Map map, out IntVec3 cell)
+        {
+            return TryFindRetreatEdgeCell(map, map != null ? map.Center : IntVec3.Invalid, out cell);
+        }
+
         public static bool TryFindRetreatEdgeCell(Map map, IntVec3 fromCell, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
@@ -83,29 +87,35 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            for (int i = 0; i < 180; i++)
+            float bestScore = float.MinValue;
+            IntVec3 bestCell = IntVec3.Invalid;
+            IntVec3 origin = fromCell.IsValid ? fromCell : map.Center;
+
+            for (int i = 0; i < 240; i++)
             {
                 IntVec3 candidate = RandomEdgeCell(map);
-                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
+                if (!IsValidRetreatCell(map, origin, candidate))
                 {
                     continue;
                 }
 
-                if (candidate.GetFirstPawn(map) != null)
-                {
-                    continue;
-                }
+                float score = origin.DistanceToSquared(candidate);
+                score -= GetHomeAreaPenalty(map, candidate);
 
-                if (fromCell.IsValid && map.reachability != null && !map.reachability.CanReach(fromCell, candidate, PathEndMode.OnCell, TraverseMode.PassDoors, Danger.Deadly))
+                if (score > bestScore)
                 {
-                    continue;
+                    bestScore = score;
+                    bestCell = candidate;
                 }
-
-                cell = candidate;
-                return true;
             }
 
-            return false;
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
         }
 
         public static bool TryFindPortalSpawnCell(Map map, out IntVec3 cell)
@@ -119,7 +129,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < 300; i++)
             {
                 IntVec3 candidate = new IntVec3(Rand.Range(3, map.Size.x - 3), 0, Rand.Range(3, map.Size.z - 3));
-                if (!candidate.InBounds(map) || !candidate.Standable(map))
+                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
                 {
                     continue;
                 }
@@ -203,6 +213,55 @@ namespace AbyssalProtocol
             LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.MapHeld, new List<Pawn> { pawn });
         }
 
+        private static bool IsValidRetreatCell(Map map, IntVec3 origin, IntVec3 candidate)
+        {
+            if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
+            {
+                return false;
+            }
+
+            if (candidate.GetFirstPawn(map) != null)
+            {
+                return false;
+            }
+
+            if (map.reachability != null && origin.IsValid && !map.reachability.CanReach(origin, candidate, Verse.AI.PathEndMode.OnCell, TraverseMode.PassDoors, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (map.areaManager?.Home != null && map.areaManager.Home[candidate])
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static float GetHomeAreaPenalty(Map map, IntVec3 candidate)
+        {
+            if (map.areaManager?.Home == null)
+            {
+                return 0f;
+            }
+
+            float penalty = 0f;
+            foreach (IntVec3 near in GenRadial.RadialCellsAround(candidate, 8f, true))
+            {
+                if (!near.InBounds(map))
+                {
+                    continue;
+                }
+
+                if (map.areaManager.Home[near])
+                {
+                    penalty += 40f;
+                }
+            }
+
+            return penalty;
+        }
+
         private static IntVec3 RandomEdgeCell(Map map)
         {
             int edge = Rand.RangeInclusive(0, 3);
@@ -247,7 +306,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    if (thing.Faction == Faction.OfPlayer && thing.def != null && thing.def.category == ThingCategory.Building)
+                    if (thing.Faction == Faction.OfPlayer)
                     {
                         return true;
                     }

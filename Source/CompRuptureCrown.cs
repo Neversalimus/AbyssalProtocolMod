@@ -8,7 +8,7 @@ namespace AbyssalProtocol
     public static class RuptureCrownUtility
     {
         public const string MarkDefName = "ABY_RuptureSentenceMark";
-        public const int MarkTicks = 1080;
+        public const int MarkTicks = 4320;
 
         public static bool TryApplyMark(Pawn pawn)
         {
@@ -45,6 +45,7 @@ namespace AbyssalProtocol
     public class CompProperties_RuptureCrown : CompProperties
     {
         public int rechargeTicks = GenDate.TicksPerDay;
+        public float sentenceRange = 35.9f;
 
         public CompProperties_RuptureCrown()
         {
@@ -54,6 +55,10 @@ namespace AbyssalProtocol
 
     public class CompRuptureCrown : ThingComp
     {
+        private const string CommandLabel = "Rupture Sentence";
+        private const string CommandDescReady = "Condemn one visible hostile pawn. The verdict sharply slows the target and collapses its combat efficiency for a long duration.";
+        private static Texture2D cachedIcon;
+
         private int lastUseTick = -999999;
 
         public CompProperties_RuptureCrown Props => (CompProperties_RuptureCrown)props;
@@ -84,31 +89,23 @@ namespace AbyssalProtocol
             }
         }
 
+        private static Texture2D CommandIcon
+        {
+            get
+            {
+                if (cachedIcon == null)
+                {
+                    cachedIcon = ContentFinder<Texture2D>.Get("Things/Item/ABY_CrownOfRupture", true);
+                }
+
+                return cachedIcon;
+            }
+        }
+
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref lastUseTick, "lastUseTick", -999999);
-        }
-
-        public bool CanUseNow(out string reason)
-        {
-            if (IsRecharged)
-            {
-                reason = null;
-                return true;
-            }
-
-            reason = "Crown of Rupture is recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
-            return false;
-        }
-
-        public void NotifyFired(Pawn wielder)
-        {
-            lastUseTick = Find.TickManager?.TicksGame ?? 0;
-            if (wielder != null && wielder.Faction == Faction.OfPlayer)
-            {
-                Messages.Message("Rupture Sentence discharged. Crown recharge started.", wielder, MessageTypeDefOf.NeutralEvent, false);
-            }
         }
 
         public override string CompInspectStringExtra()
@@ -134,65 +131,202 @@ namespace AbyssalProtocol
                 GenDate.ToStringTicksToDays(Props.rechargeTicks),
                 "Time needed to condense another verdict charge after firing.",
                 1000);
-        }
-    }
 
-    public class Verb_RuptureSentence : Verb_Shoot
-    {
-        private CompRuptureCrown CrownComp => EquipmentSource?.GetComp<CompRuptureCrown>();
-
-        public override bool Available()
-        {
-            return base.Available() && CrownComp != null && CrownComp.IsRecharged;
+            yield return new StatDrawEntry(
+                StatCategoryDefOf.BasicsNonPawnImportant,
+                "Rupture range",
+                Props.sentenceRange.ToString("F1"),
+                "Maximum range of the crown verdict command.",
+                999);
         }
 
-        public override bool TryStartCastOn(LocalTargetInfo castTarg, LocalTargetInfo destTarg, bool surpriseAttack = false, bool canHitNonTargetPawns = true, bool preventFriendlyFire = false, bool nonInterruptingSelfCast = false)
+        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
-            CompRuptureCrown crown = CrownComp;
-            if (crown == null)
+            foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
             {
-                return false;
+                yield return gizmo;
             }
 
-            if (!crown.CanUseNow(out string reason))
+            Apparel apparel = parent as Apparel;
+            Pawn wearer = apparel?.Wearer;
+            if (wearer == null || wearer.Faction != Faction.OfPlayer)
             {
-                if (CasterPawn != null && CasterPawn.Faction == Faction.OfPlayer)
+                yield break;
+            }
+
+            Command_Action command = new Command_Action
+            {
+                defaultLabel = CommandLabel,
+                defaultDesc = IsRecharged ? CommandDescReady : ("Recharging: " + TicksUntilRecharged.ToStringTicksToPeriod()),
+                icon = CommandIcon,
+                action = delegate { BeginTargeting(wearer); },
+                Order = 220f,
+                hotKey = KeyBindingDefOf.Misc1,
+                activateSound = SoundDef.Named("ABY_RuptureVerdict")
+            };
+
+            if (!IsRecharged)
+            {
+                command.Disable("Recharging: " + TicksUntilRecharged.ToStringTicksToPeriod());
+            }
+
+            yield return command;
+        }
+
+        private void BeginTargeting(Pawn wearer)
+        {
+            if (!CanUseNow(wearer, out string reason))
+            {
+                if (!reason.NullOrEmpty())
                 {
-                    Messages.Message(reason, CasterPawn, MessageTypeDefOf.RejectInput, false);
+                    Messages.Message(reason, wearer, MessageTypeDefOf.RejectInput, false);
                 }
 
-                return false;
+                return;
             }
 
-            return base.TryStartCastOn(castTarg, destTarg, surpriseAttack, canHitNonTargetPawns, preventFriendlyFire, nonInterruptingSelfCast);
+            Find.Targeter.BeginTargeting(BuildTargetingParameters(wearer), delegate(LocalTargetInfo target)
+            {
+                TryUseOn(wearer, target);
+            });
         }
 
-        protected override bool TryCastShot()
+        private TargetingParameters BuildTargetingParameters(Pawn wearer)
         {
-            CompRuptureCrown crown = CrownComp;
-            if (crown == null)
+            TargetingParameters targetingParameters = new TargetingParameters
+            {
+                canTargetPawns = true,
+                canTargetBuildings = false,
+                canTargetItems = false,
+                canTargetLocations = false,
+                validator = delegate(TargetInfo target)
+                {
+                    return IsValidTarget(wearer, target);
+                }
+            };
+
+            return targetingParameters;
+        }
+
+        private bool IsValidTarget(Pawn wearer, TargetInfo target)
+        {
+            if (wearer == null || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
             {
                 return false;
             }
 
-            Pawn markedPawn = null;
-            if (currentTarget.IsValid && currentTarget.HasThing)
-            {
-                markedPawn = currentTarget.Thing as Pawn;
-            }
-
-            bool result = base.TryCastShot();
-            if (!result)
+            if (!target.HasThing)
             {
                 return false;
             }
 
-            if (markedPawn != null)
+            Pawn targetPawn = target.Thing as Pawn;
+            if (targetPawn == null || targetPawn.Dead || !targetPawn.Spawned || targetPawn.MapHeld != wearer.MapHeld)
             {
-                RuptureCrownUtility.TryApplyMark(markedPawn);
+                return false;
             }
 
-            crown.NotifyFired(CasterPawn);
+            if (!targetPawn.HostileTo(wearer))
+            {
+                return false;
+            }
+
+            if (wearer.Position.DistanceTo(targetPawn.Position) > Props.sentenceRange)
+            {
+                return false;
+            }
+
+            if (!GenSight.LineOfSight(wearer.Position, targetPawn.Position, wearer.MapHeld))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private bool IsValidTarget(Pawn wearer, LocalTargetInfo target)
+        {
+            if (!target.IsValid)
+            {
+                return false;
+            }
+
+            TargetInfo asTargetInfo = new TargetInfo(target.Cell, target.Map, false);
+            if (target.HasThing)
+            {
+                asTargetInfo = new TargetInfo(target.Thing);
+            }
+
+            return IsValidTarget(wearer, asTargetInfo);
+        }
+
+        private void TryUseOn(Pawn wearer, LocalTargetInfo target)
+        {
+            if (!CanUseNow(wearer, out string reason))
+            {
+                if (!reason.NullOrEmpty())
+                {
+                    Messages.Message(reason, wearer, MessageTypeDefOf.RejectInput, false);
+                }
+
+                return;
+            }
+
+            if (!IsValidTarget(wearer, target))
+            {
+                Messages.Message("No valid hostile pawn in line of sight.", wearer, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            Pawn targetPawn = target.Thing as Pawn;
+            if (targetPawn == null)
+            {
+                Messages.Message("No valid hostile pawn in line of sight.", wearer, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!RuptureCrownUtility.TryApplyMark(targetPawn))
+            {
+                Messages.Message("Rupture Sentence failed to resolve on target.", wearer, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            lastUseTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+
+            if (wearer.MapHeld != null)
+            {
+                ABY_SoundUtility.PlayAt("ABY_RuptureVerdict", wearer.PositionHeld, wearer.MapHeld);
+                ABY_SoundUtility.PlayAt("ABY_RuptureImpact", targetPawn.PositionHeld, targetPawn.MapHeld);
+            }
+
+            if (wearer.Faction == Faction.OfPlayer)
+            {
+                Messages.Message("Rupture Sentence discharged. Crown recharge started.", wearer, MessageTypeDefOf.NeutralEvent, false);
+            }
+        }
+
+        public bool CanUseNow(Pawn wearer, out string reason)
+        {
+            if (wearer == null || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
+            {
+                reason = "The wearer must be spawned on a map.";
+                return false;
+            }
+
+            if (wearer.Downed)
+            {
+                reason = "The wearer cannot activate the crown while downed.";
+                return false;
+            }
+
+            if (!IsRecharged)
+            {
+                reason = "Crown of Rupture is recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
+                return false;
+            }
+
+            reason = null;
             return true;
         }
     }

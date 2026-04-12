@@ -4,14 +4,14 @@
   <HediffDef>
     <defName>ABY_RuptureSentenceMark</defName>
     <label>rupture sentence</label>
-    <description>The hidden archon's verdict collapses motion, prediction and armor harmonics. For a short time the target is slower, easier to pin and far more vulnerable to focused fire.</description>
+    <description>The hidden archon's verdict collapses motion, prediction and armor harmonics. For a long time the target is slower, easier to pin and far more vulnerable to focused fire.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>true</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
     <comps>
       <li Class="HediffCompProperties_Disappears">
         <showRemainingTime>true</showRemainingTime>
-        <disappearsAfterTicks>1080</disappearsAfterTicks>
+        <disappearsAfterTicks>4320</disappearsAfterTicks>
       </li>
       <li Class="HediffCompProperties_DisappearsOnDeath" />
     </comps>
