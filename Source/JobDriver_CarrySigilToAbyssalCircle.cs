@@ -32,11 +32,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
-                    map,
-                    pawn.PositionHeld,
-                    out Building_AbyssalSummoningCircle circle,
-                    out string failReason))
+            Building_AbyssalSummoningCircle circle = ResolveCircle(map, out string failReason);
+            if (circle == null)
             {
                 if (!failReason.NullOrEmpty())
                 {
@@ -47,6 +44,16 @@ namespace AbyssalProtocol
             }
 
             job.targetB = circle;
+
+            if (!pawn.CanReserveAndReach(sigil, PathEndMode.Touch, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
+            {
+                return false;
+            }
 
             if (!pawn.Reserve(sigil, job, 1, -1, null, errorOnFailed))
             {
@@ -121,6 +128,37 @@ namespace AbyssalProtocol
             };
             invoke.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return invoke;
+        }
+
+        private Building_AbyssalSummoningCircle ResolveCircle(Map map, out string failReason)
+        {
+            Building_AbyssalSummoningCircle existing = Circle;
+            if (IsValidCircle(existing, map))
+            {
+                failReason = null;
+                return existing;
+            }
+
+            if (AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
+                    map,
+                    pawn.PositionHeld,
+                    out Building_AbyssalSummoningCircle found,
+                    out failReason))
+            {
+                return found;
+            }
+
+            return null;
+        }
+
+        private bool IsValidCircle(Building_AbyssalSummoningCircle circle, Map map)
+        {
+            return circle != null
+                && !circle.Destroyed
+                && circle.Spawned
+                && circle.MapHeld == map
+                && !circle.RitualActive
+                && circle.IsPoweredForRitual;
         }
 
         private int GetWarmupTicks()

@@ -40,7 +40,7 @@
       <Flammability>0</Flammability>
     </statBases>
     <comps>
-      <li Class="CompProperties_Usable">
+      <li Class="AbyssalProtocol.CompProperties_UsableArchonSigil">
         <useJob>ABY_CarrySigilToCircle</useJob>
         <useLabel>invoke archon</useLabel>
       </li>
