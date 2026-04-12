@@ -84,7 +84,8 @@ namespace AbyssalProtocol
             PrepareBoss(pawn);
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
-
+    ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
+    
             AbyssalBossScreenFXGameComponent fxComp =
                 Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
 
