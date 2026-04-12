@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="ABY_ArchonOfRupture" and not(killedLeavings)]</xpath>
+    <value>
+      <killedLeavings />
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="ABY_ArchonOfRupture"]/killedLeavings[not(ABY_CrownOfRupture)]</xpath>
+    <value>
+      <ABY_CrownOfRupture>1</ABY_CrownOfRupture>
+    </value>
+  </Operation>
+
+</Patch>
