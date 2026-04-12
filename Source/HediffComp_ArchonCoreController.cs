@@ -46,6 +46,8 @@ namespace AbyssalProtocol
         public float dashExitScale = 2.4f;
         public float dashTrailScale = 1.3f;
 
+        public int combatReengageIntervalTicks = 90;
+
         public HediffCompProperties_ArchonCoreController()
         {
             compClass = typeof(HediffComp_ArchonCoreController);
@@ -55,30 +57,9 @@ namespace AbyssalProtocol
     public class HediffComp_ArchonCoreController : HediffComp
     {
         private int currentPhase = 1;
-        private bool deathVfxTriggered;
         private int lastDashTick = -999999;
-private void TryTriggerDeathVFX()
-{
-    if (deathVfxTriggered)
-        return;
-
-    deathVfxTriggered = true;
-
-    Pawn pawn = Pawn;
-    if (pawn == null)
-        return;
-
-    if (pawn.Corpse != null && pawn.Corpse.Spawned && pawn.Corpse.Map != null)
-    {
-        ArchonInfernalVFXUtility.DoDeathVFX(pawn.Corpse.Map, pawn.Corpse.Position);
-        return;
-    }
-
-    if (pawn.MapHeld != null && pawn.PositionHeld.IsValid)
-    {
-        ArchonInfernalVFXUtility.DoDeathVFX(pawn.MapHeld, pawn.PositionHeld);
-    }
-}
+        private int lastReengageTick = -999999;
+        private bool deathVfxTriggered;
 
         public HediffCompProperties_ArchonCoreController Props =>
             (HediffCompProperties_ArchonCoreController)props;
@@ -86,54 +67,67 @@ private void TryTriggerDeathVFX()
         public override void CompExposeData()
         {
             base.CompExposeData();
-            Scribe_Values.Look(ref deathVfxTriggered, "deathVfxTriggered", false);
             Scribe_Values.Look(ref currentPhase, "currentPhase", 1);
             Scribe_Values.Look(ref lastDashTick, "lastDashTick", -999999);
+            Scribe_Values.Look(ref lastReengageTick, "lastReengageTick", -999999);
+            Scribe_Values.Look(ref deathVfxTriggered, "deathVfxTriggered", false);
+        }
+
+        public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
+        {
+            base.Notify_PawnDied(dinfo, culprit);
+            TryTriggerDeathVFX();
         }
 
         public override void CompPostTick(ref float severityAdjustment)
-{
-    base.CompPostTick(ref severityAdjustment);
+        {
+            base.CompPostTick(ref severityAdjustment);
 
-    Pawn pawn = Pawn;
-    if (pawn == null)
-        return;
+            Pawn pawn = Pawn;
+            if (pawn == null)
+                return;
 
-    if (pawn.Dead)
-    {
-        TryTriggerDeathVFX();
-        return;
-    }
+            if (pawn.Dead)
+                return;
 
-    if (!pawn.Spawned || pawn.MapHeld == null)
-        return;
+            if (!pawn.Spawned || pawn.MapHeld == null)
+                return;
 
-    UpdatePhase();
+            UpdatePhase();
 
-    if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
-    {
-        ApplyHeatAura();
-    }
+            if (pawn.IsHashIntervalTick(Props.auraIntervalTicks))
+            {
+                ApplyHeatAura();
+            }
 
-    if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
-    {
-        StabilizeCriticalHediffs();
-    }
+            if (pawn.IsHashIntervalTick(Props.bloodStabilizeIntervalTicks))
+            {
+                StabilizeCriticalHediffs();
+            }
 
-    if (pawn.Downed && pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
-    {
-        RecoverFromDowned();
-        return;
-    }
+            if (pawn.Downed)
+            {
+                if (pawn.IsHashIntervalTick(Props.downedRecoveryIntervalTicks))
+                {
+                    RecoverFromDowned();
+                }
 
-    if (!CanUseDash(pawn))
-        return;
+                return;
+            }
 
-    if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
-    {
-        TryDash();
-    }
-}
+            if (pawn.IsHashIntervalTick(Props.combatReengageIntervalTicks) && NeedsCombatReengage(pawn))
+            {
+                TryForceReengageCombat(pawn);
+            }
+
+            if (!CanUseDash(pawn))
+                return;
+
+            if (currentPhase >= Props.dashPhase && pawn.IsHashIntervalTick(Props.dashSearchIntervalTicks))
+            {
+                TryDash();
+            }
+        }
 
         private bool CanUseDash(Pawn pawn)
         {
@@ -143,13 +137,16 @@ private void TryTriggerDeathVFX()
             if (pawn.Downed)
                 return false;
 
+            if (!pawn.Awake())
+                return false;
+
+            if (pawn.health == null || pawn.health.capacities == null)
+                return false;
+
             if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Consciousness))
                 return false;
 
             if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Moving))
-                return false;
-
-            if (!pawn.Awake())
                 return false;
 
             return true;
@@ -260,6 +257,11 @@ private void TryTriggerDeathVFX()
 
             pawn.health.hediffSet.DirtyCache();
             pawn.health.CheckForStateChange(null, null);
+
+            if (!pawn.Downed)
+            {
+                TryForceReengageCombat(pawn, true);
+            }
         }
 
         private static void ReduceHediffSeverity(Pawn pawn, HediffDef def, float amount)
@@ -427,9 +429,13 @@ private void TryTriggerDeathVFX()
 
             SpawnDashArrivalEffect(map, dashCell);
 
-            if (source.pather != null && target != null && target.Spawned && !target.Dead)
+            if (target != null && target.Spawned && !target.Dead)
             {
-                source.pather.StartPath(target, PathEndMode.Touch);
+                ForceMeleeAttack(source, target);
+            }
+            else
+            {
+                TryForceReengageCombat(source, true);
             }
         }
 
@@ -468,7 +474,12 @@ private void TryTriggerDeathVFX()
             }
 
             TrySpawnDashMote(map, center.ToVector3Shifted(), "ABY_Mote_ArchonDashExit", Props.dashExitScale);
-            TrySpawnDashMote(map, center.ToVector3Shifted() + new Vector3(0f, 0f, 0.15f), "ABY_Mote_ArchonDashEntry", Props.dashEntryScale * 0.7f);
+            TrySpawnDashMote(
+                map,
+                center.ToVector3Shifted() + new Vector3(0f, 0f, 0.15f),
+                "ABY_Mote_ArchonDashEntry",
+                Props.dashEntryScale * 0.7f
+            );
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, Props.dashInfernalRadius, true))
             {
@@ -509,6 +520,97 @@ private void TryTriggerDeathVFX()
                 return;
 
             MoteMaker.MakeStaticMote(pos, map, moteDef, scale);
+        }
+
+        private void TryTriggerDeathVFX()
+        {
+            if (deathVfxTriggered)
+                return;
+
+            deathVfxTriggered = true;
+
+            Pawn pawn = Pawn;
+            if (pawn == null)
+                return;
+
+            if (pawn.Corpse != null && pawn.Corpse.Spawned && pawn.Corpse.Map != null)
+            {
+                ArchonInfernalVFXUtility.DoDeathVFX(pawn.Corpse.Map, pawn.Corpse.Position);
+                return;
+            }
+
+            if (pawn.MapHeld != null && pawn.PositionHeld.IsValid)
+            {
+                ArchonInfernalVFXUtility.DoDeathVFX(pawn.MapHeld, pawn.PositionHeld);
+            }
+        }
+
+        private bool NeedsCombatReengage(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || pawn.Downed || pawn.jobs == null)
+                return false;
+
+            Job curJob = pawn.CurJob;
+            if (curJob == null || curJob.def == null)
+                return true;
+
+            string defName = curJob.def.defName;
+            if (defName == "GotoWander" || defName == "Wait_Wander" || defName == "Wait")
+                return true;
+
+            return false;
+        }
+
+        private void TryForceReengageCombat(Pawn pawn, bool forceNow = false)
+        {
+            if (pawn == null || pawn.Dead || pawn.Downed || pawn.MapHeld == null || pawn.jobs == null)
+                return;
+
+            int ticksGame = Find.TickManager.TicksGame;
+            if (!forceNow && ticksGame - lastReengageTick < 45)
+                return;
+
+            Pawn target = FindNearestHostilePawn(pawn);
+            if (target == null)
+                return;
+
+            ForceMeleeAttack(pawn, target);
+            lastReengageTick = ticksGame;
+        }
+
+        private static Pawn FindNearestHostilePawn(Pawn source)
+        {
+            if (source == null || source.MapHeld == null)
+                return null;
+
+            Pawn bestTarget = null;
+            float bestDist = float.MaxValue;
+
+            foreach (Pawn candidate in source.MapHeld.mapPawns.AllPawnsSpawned)
+            {
+                if (!IsValidDashTarget(source, candidate))
+                    continue;
+
+                float dist = source.Position.DistanceToSquared(candidate.Position);
+                if (dist < bestDist)
+                {
+                    bestDist = dist;
+                    bestTarget = candidate;
+                }
+            }
+
+            return bestTarget;
+        }
+
+        private static void ForceMeleeAttack(Pawn attacker, Pawn target)
+        {
+            if (attacker == null || target == null || attacker.jobs == null)
+                return;
+
+            Job job = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
+            job.expiryInterval = 300;
+            job.checkOverrideOnExpire = true;
+            attacker.jobs.TryTakeOrderedJob(job, JobTag.Misc);
         }
 
         private static bool IsValidAuraTarget(Pawn source, Pawn target)
