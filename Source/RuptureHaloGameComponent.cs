@@ -7,7 +7,6 @@ namespace AbyssalProtocol
 {
     public class RuptureHaloGameComponent : GameComponent
     {
-        private const string CrownDefName = "ABY_CrownOfRupture";
         private readonly Dictionary<int, int> nextHaloRefreshTickByPawn = new Dictionary<int, int>();
         private ThingDef ringDef;
 
@@ -29,7 +28,9 @@ namespace AbyssalProtocol
             }
 
             ringDef ??= DefDatabase<ThingDef>.GetNamedSilentFail("ABY_Mote_RuptureHaloRing");
-            if (ringDef == null)
+            HediffDef bearerDef = RuptureCrownUtility.BearerHediffDef;
+            AbilityDef abilityDef = RuptureCrownUtility.AbilityDef;
+            if (ringDef == null || bearerDef == null || abilityDef == null)
             {
                 return;
             }
@@ -39,71 +40,104 @@ namespace AbyssalProtocol
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (map == null || map.mapPawns == null)
+                if (map?.mapPawns == null)
                 {
                     continue;
                 }
 
-                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                List<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                for (int j = 0; j < pawns.Count; j++)
                 {
-                    if (!HasCrownEquipped(pawn))
+                    Pawn pawn = pawns[j];
+                    if (pawn == null || pawn.health == null)
                     {
                         continue;
                     }
 
-                    int id = pawn.thingIDNumber;
-                    activePawnIds.Add(id);
-
-                    if (nextHaloRefreshTickByPawn.TryGetValue(id, out int nextTick) && ticksGame < nextTick)
+                    CompRuptureCrown crownComp = RuptureCrownUtility.GetWornCrownComp(pawn);
+                    if (crownComp != null)
                     {
-                        continue;
-                    }
+                        activePawnIds.Add(pawn.thingIDNumber);
+                        EnsureBearerHediff(pawn, bearerDef);
+                        SyncCooldownFromCrown(pawn, crownComp);
 
-                    RefreshHaloFor(pawn, ticksGame);
-                    nextHaloRefreshTickByPawn[id] = ticksGame + 150;
+                        if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextTick) || ticksGame >= nextTick)
+                        {
+                            RefreshHaloFor(pawn, ticksGame);
+                            nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + 150;
+                        }
+                    }
+                    else
+                    {
+                        RemoveBearerHediff(pawn, bearerDef);
+                    }
                 }
             }
 
             if (nextHaloRefreshTickByPawn.Count > 0)
             {
-                List<int> stale = null;
+                List<int> stalePawnIds = null;
                 foreach (KeyValuePair<int, int> pair in nextHaloRefreshTickByPawn)
                 {
                     if (!activePawnIds.Contains(pair.Key))
                     {
-                        stale ??= new List<int>();
-                        stale.Add(pair.Key);
+                        stalePawnIds ??= new List<int>();
+                        stalePawnIds.Add(pair.Key);
                     }
                 }
 
-                if (stale != null)
+                if (stalePawnIds != null)
                 {
-                    for (int i = 0; i < stale.Count; i++)
+                    for (int i = 0; i < stalePawnIds.Count; i++)
                     {
-                        nextHaloRefreshTickByPawn.Remove(stale[i]);
+                        nextHaloRefreshTickByPawn.Remove(stalePawnIds[i]);
                     }
                 }
             }
         }
 
-        private static bool HasCrownEquipped(Pawn pawn)
+        private static void EnsureBearerHediff(Pawn pawn, HediffDef bearerDef)
         {
-            if (pawn?.Spawned != true || pawn.apparel == null)
+            Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(bearerDef);
+            if (existing == null)
             {
-                return false;
+                existing = HediffMaker.MakeHediff(bearerDef, pawn);
+                pawn.health.AddHediff(existing);
             }
 
-            List<Apparel> worn = pawn.apparel.WornApparel;
-            for (int i = 0; i < worn.Count; i++)
+            existing?.SetVisible(false);
+        }
+
+        private static void RemoveBearerHediff(Pawn pawn, HediffDef bearerDef)
+        {
+            Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(bearerDef);
+            if (existing != null)
             {
-                Apparel apparel = worn[i];
-                if (apparel != null && apparel.def != null && apparel.def.defName == CrownDefName)
+                pawn.health.RemoveHediff(existing);
+            }
+        }
+
+        private static void SyncCooldownFromCrown(Pawn pawn, CompRuptureCrown crownComp)
+        {
+            Ability ability = RuptureCrownUtility.GetGrantedAbility(pawn);
+            if (ability == null)
+            {
+                return;
+            }
+
+            int remaining = crownComp.TicksUntilRecharged;
+            if (remaining > 0)
+            {
+                int abilityRemaining = ability.CooldownTicksRemaining;
+                if (abilityRemaining <= 0 || Mathf.Abs(abilityRemaining - remaining) > 120)
                 {
-                    return true;
+                    ability.StartCooldown(remaining);
                 }
             }
-
-            return false;
+            else if (ability.OnCooldown)
+            {
+                ability.ResetCooldown();
+            }
         }
 
         private void RefreshHaloFor(Pawn pawn, int ticksGame)

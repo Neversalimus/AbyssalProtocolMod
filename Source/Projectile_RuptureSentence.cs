@@ -1,32 +1,8 @@
-using RimWorld;
-using Verse;
-
 namespace AbyssalProtocol
 {
-    public class Projectile_RuptureSentence : Bullet
+    // Legacy file intentionally kept as a harmless placeholder.
+    // Rupture Sentence now uses the vanilla ability pipeline instead of a custom projectile.
+    internal static class Projectile_RuptureSentence_LegacyPlaceholder
     {
-        protected override void Impact(Thing hitThing, bool blockedByShield = false)
-        {
-            Map map = Map;
-            IntVec3 cell = Position;
-            Pawn pawn = hitThing as Pawn;
-
-            if (pawn == null && map != null && cell.IsValid && cell.InBounds(map))
-            {
-                pawn = cell.GetFirstPawn(map);
-            }
-
-            if (pawn != null)
-            {
-                RuptureCrownUtility.TryApplyMark(pawn);
-            }
-
-            if (map != null)
-            {
-                ABY_SoundUtility.PlayAt("ABY_RuptureImpact", cell, map);
-            }
-
-            Destroy(DestroyMode.Vanish);
-        }
     }
 }

@@ -2,6 +2,20 @@
 <Defs>
 
   <HediffDef>
+    <defName>ABY_RuptureCrownBearer</defName>
+    <label>rupture crown bond</label>
+    <description>The crown is bonded to this pawn.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="Verse.HediffCompProperties_GiveAbility">
+        <abilityDef>ABY_RuptureSentence</abilityDef>
+      </li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef>
     <defName>ABY_RuptureSentenceMark</defName>
     <label>rupture sentence</label>
     <description>The hidden archon's verdict collapses motion, prediction and armor harmonics. For a long time the target is slower, easier to pin and far more vulnerable to focused fire.</description>

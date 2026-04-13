@@ -5,7 +5,7 @@
     <defName>ABY_CrownOfRupture</defName>
     <thingClass>Apparel</thingClass>
     <label>crown of rupture</label>
-    <description>A collapsed crown-reactor torn from the hidden archon. It stores a single verdict charge and can be worn alongside normal weapons. Once discharged, it condenses a new charge over one full in-game day while projecting a living infernal halo above the wearer.</description>
+    <description>A collapsed crown-reactor torn from the hidden archon. While worn, it grants Rupture Sentence as a true pawn ability. The crown stores only one verdict charge and regenerates it over one full in-game day.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/ABY_CrownOfRupture</texPath>
@@ -23,7 +23,6 @@
       <countsAsClothingForNudity>false</countsAsClothingForNudity>
     </apparel>
     <tradeability>Sellable</tradeability>
-    <soundInteract>Interact_ChargeRifle</soundInteract>
     <smeltable>false</smeltable>
     <equippedStatOffsets>
       <MoveSpeed>0.08</MoveSpeed>
@@ -42,7 +41,6 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_RuptureCrown">
         <rechargeTicks>60000</rechargeTicks>
-        <sentenceRange>35.9</sentenceRange>
       </li>
     </comps>
   </ThingDef>
