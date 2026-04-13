@@ -3,24 +3,25 @@
   <Operation Class="PatchOperationSequence">
     <operations>
       <li Class="PatchOperationAdd">
-        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]</xpath>
+        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade" and not(modExtensions)]</xpath>
         <value>
           <modExtensions />
         </value>
       </li>
 
       <li Class="PatchOperationAdd">
-        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/modExtensions</xpath>
+        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/modExtensions[not(li[@Class="AbyssalProtocol.RiftDashWeaponExtension"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.RiftDashWeaponExtension">
             <maxRange>10</maxRange>
             <cooldownTicks>240</cooldownTicks>
-            <entryMoteDef>ABY_Mote_ArchonDashEntry</entryMoteDef>
-            <exitMoteDef>ABY_Mote_ArchonDashExit</exitMoteDef>
-            <trailMoteDef>ABY_Mote_ArchonDashTrail</trailMoteDef>
-            <entryMoteScale>0.95</entryMoteScale>
-            <exitMoteScale>1.10</exitMoteScale>
-            <trailMoteScale>0.75</trailMoteScale>
+            <entryMoteDef>ABY_Mote_RiftBladeDashEntry</entryMoteDef>
+            <exitMoteDef>ABY_Mote_RiftBladeDashExit</exitMoteDef>
+            <trailMoteDef>ABY_Mote_RiftBladeDashTrail</trailMoteDef>
+            <soundDef>ABY_RiftBladeDash</soundDef>
+            <entryMoteScale>0.92</entryMoteScale>
+            <exitMoteScale>1.02</exitMoteScale>
+            <trailMoteScale>0.78</trailMoteScale>
             <trailSteps>5</trailSteps>
             <requireLineOfSight>true</requireLineOfSight>
           </li>

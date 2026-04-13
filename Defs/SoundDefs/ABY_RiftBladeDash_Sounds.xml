@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_RiftBladeDash</defName>
+    <context>MapOnly</context>
+    <maxSimultaneousSounds>6</maxSimultaneousSounds>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_RiftBladeDash</clipPath>
+          </li>
+        </grains>
+        <volumeRange>10~12</volumeRange>
+        <distRange>6~18</distRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

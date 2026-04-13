@@ -4,6 +4,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -77,19 +78,17 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    Thing target;
-                    if (!TryGetCurrentAttackTarget(pawn, extension, out target))
+                    if (!TryGetCurrentAttackTarget(pawn, extension, out Thing target))
                     {
                         continue;
                     }
 
-                    IntVec3 destination;
-                    if (!TryFindDashDestination(pawn, target, extension, out destination))
+                    if (!TryFindDashDestination(pawn, target, extension, out IntVec3 destination))
                     {
                         continue;
                     }
 
-                    ExecuteDash(pawn, target, destination, extension, ticksGame);
+                    ExecuteDash(pawn, destination, extension, ticksGame);
                 }
             }
         }
@@ -97,6 +96,11 @@ namespace AbyssalProtocol
         private bool CanPawnAttemptDash(Pawn pawn, int ticksGame)
         {
             if (pawn == null || pawn.Dead || pawn.Downed || !pawn.Spawned || pawn.MapHeld == null)
+            {
+                return false;
+            }
+
+            if (pawn.stances?.stunner?.Stunned == true)
             {
                 return false;
             }
@@ -235,7 +239,7 @@ namespace AbyssalProtocol
             return bestCell.IsValid;
         }
 
-        private void ExecuteDash(Pawn pawn, Thing target, IntVec3 destination, RiftDashWeaponExtension extension, int ticksGame)
+        private void ExecuteDash(Pawn pawn, IntVec3 destination, RiftDashWeaponExtension extension, int ticksGame)
         {
             Map map = pawn.MapHeld;
             if (map == null)
@@ -245,7 +249,7 @@ namespace AbyssalProtocol
 
             IntVec3 start = pawn.Position;
 
-            SpawnDashMotes(map, start, destination, extension);
+            SpawnDashEffects(map, start, destination, extension);
 
             if (pawn.pather != null)
             {
@@ -262,7 +266,7 @@ namespace AbyssalProtocol
             nextDashTickByPawn[pawn.thingIDNumber] = ticksGame + Math.Max(1, extension.cooldownTicks);
         }
 
-        private void SpawnDashMotes(Map map, IntVec3 start, IntVec3 end, RiftDashWeaponExtension extension)
+        private void SpawnDashEffects(Map map, IntVec3 start, IntVec3 end, RiftDashWeaponExtension extension)
         {
             if (map == null)
             {
@@ -286,6 +290,7 @@ namespace AbyssalProtocol
             }
 
             TrySpawnMote(map, extension.exitMoteDef, endPos, extension.exitMoteScale);
+            TryPlaySound(map, end, extension.soundDef);
         }
 
         private static void TrySpawnMote(Map map, string defName, Vector3 pos, float scale)
@@ -302,6 +307,22 @@ namespace AbyssalProtocol
             }
 
             MoteMaker.MakeStaticMote(pos, map, moteDef, scale);
+        }
+
+        private static void TryPlaySound(Map map, IntVec3 cell, string defName)
+        {
+            if (map == null || !cell.IsValid || string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(defName);
+            if (soundDef == null)
+            {
+                return;
+            }
+
+            soundDef.PlayOneShot(new TargetInfo(cell, map));
         }
 
         private static bool IsAdjacentOrSame(IntVec3 a, IntVec3 b)
