@@ -13,10 +13,12 @@ namespace AbyssalProtocol
         public const string MarkHediffDefName = "ABY_RuptureSentenceMark";
         public const float DefaultVerdictRadius = 30f;
         public const int DefaultMarkTicks = 4320;
+        public const string CrownIconPath = "Things/Item/ABY_CrownOfRupture";
 
         private static AbilityDef cachedAbilityDef;
         private static HediffDef cachedBearerHediffDef;
         private static HediffDef cachedMarkHediffDef;
+        private static Texture2D cachedCommandIcon;
 
         public static AbilityDef AbilityDef
         {
@@ -54,6 +56,19 @@ namespace AbyssalProtocol
                 }
 
                 return cachedMarkHediffDef;
+            }
+        }
+
+        public static Texture2D CommandIcon
+        {
+            get
+            {
+                if (cachedCommandIcon == null)
+                {
+                    cachedCommandIcon = ContentFinder<Texture2D>.Get(CrownIconPath, false) ?? BaseContent.BadTex;
+                }
+
+                return cachedCommandIcon;
             }
         }
 
@@ -106,8 +121,8 @@ namespace AbyssalProtocol
                 return 0;
             }
 
+            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int count = 0;
-            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 if (IsEligibleVerdictTarget(caster, pawns[i], radius))
@@ -126,8 +141,8 @@ namespace AbyssalProtocol
                 return 0;
             }
 
+            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int affectedCount = 0;
-            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn targetPawn = pawns[i];
@@ -170,12 +185,37 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (targetPawn.IsPlayerControlled || targetPawn.IsPrisonerOfColony || targetPawn.IsSlaveOfColony)
+            if (BelongsToPlayerColony(targetPawn))
             {
                 return false;
             }
 
             return true;
+        }
+
+        private static bool BelongsToPlayerColony(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            if (pawn.Faction == Faction.OfPlayer)
+            {
+                return true;
+            }
+
+            if (pawn.HostFaction == Faction.OfPlayer)
+            {
+                return true;
+            }
+
+            if (pawn.IsPlayerControlled || pawn.IsPrisonerOfColony || pawn.IsSlaveOfColony)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static void ApplyMark(Pawn targetPawn, int markTicks)
@@ -300,6 +340,9 @@ namespace AbyssalProtocol
             {
                 defaultLabel = Props.commandLabel,
                 defaultDesc = Props.commandDesc + "\n\nRadius: " + Mathf.RoundToInt(Props.effectRadius) + " cells.",
+                icon = RuptureCrownUtility.CommandIcon,
+                iconDrawScale = 1f,
+                defaultIconColor = Color.white,
                 action = delegate
                 {
                     TryDischargeVerdict(wearer);
