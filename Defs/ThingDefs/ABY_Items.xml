@@ -68,6 +68,7 @@
       <Flammability>0</Flammability>
     </statBases>
     <ingestible>
+      <foodType>Fluid, Processed</foodType>
       <baseIngestTicks>90</baseIngestTicks>
       <ingestCommandString>Inject {0}</ingestCommandString>
       <ingestReportString>Injecting {0}.</ingestReportString>
