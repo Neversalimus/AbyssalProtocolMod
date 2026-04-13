@@ -4,7 +4,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_SummoningCircle</defName>
     <label>abyssal summoning circle</label>
-    <description>A colossal infernal-industrial ritual platform used only to invoke contained abyssal breaches. Prepared sigils must be forged first, then carried here and charged to open the first controlled boss breach.</description>
+    <description>A colossal infernal-industrial ritual platform used only to invoke contained abyssal breaches. Feed it prepared sigils and let the forge handle the fabrication work.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -50,7 +50,7 @@
 
     <recipes Inherit="False" />
 
-    <comps>
+    <comps Inherit="False">
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <shortCircuitInRain>true</shortCircuitInRain>
@@ -60,11 +60,6 @@
       <li Class="CompProperties_Glower">
         <glowRadius>8</glowRadius>
         <glowColor>(255,92,38,0)</glowColor>
-      </li>
-      <li Class="CompProperties_AffectedByFacilities">
-        <linkableFacilities>
-          <li>ToolCabinet</li>
-        </linkableFacilities>
       </li>
       <li Class="CompProperties_Breakdownable" />
     </comps>
