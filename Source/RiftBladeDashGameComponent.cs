@@ -190,7 +190,6 @@ namespace AbyssalProtocol
             Map map = pawn.MapHeld;
             IntVec3 targetPos = target.Position;
             IntVec3 pawnPos = pawn.Position;
-
             int bestScore = int.MaxValue;
 
             for (int i = 0; i < AdjacentOffsets.Length; i++)
@@ -248,7 +247,6 @@ namespace AbyssalProtocol
             }
 
             IntVec3 start = pawn.Position;
-
             SpawnDashEffects(map, start, destination, extension);
 
             if (pawn.pather != null)
@@ -275,22 +273,60 @@ namespace AbyssalProtocol
 
             Vector3 startPos = start.ToVector3Shifted();
             Vector3 endPos = end.ToVector3Shifted();
+            Vector3 direction = endPos - startPos;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < 0.0001f)
+            {
+                direction = new Vector3(1f, 0f, 0f);
+            }
+            else
+            {
+                direction.Normalize();
+            }
+
+            Vector3 perpendicular = new Vector3(-direction.z, 0f, direction.x);
 
             TrySpawnMote(map, extension.entryMoteDef, startPos, extension.entryMoteScale);
+            SpawnParticleBurst(map, startPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale, extension.endpointParticleBurst, extension.particleJitter * 1.20f, 0.18f);
+            SpawnParticleBurst(map, startPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale, Math.Max(1, extension.endpointParticleBurst / 3), extension.particleJitter * 0.90f, 0.14f);
 
             int steps = Math.Max(0, extension.trailSteps);
-            if (steps > 0)
+            for (int i = 1; i <= steps; i++)
             {
-                for (int i = 1; i <= steps; i++)
+                float t = (float)i / (steps + 1);
+                Vector3 pos = Vector3.Lerp(startPos, endPos, t);
+                Vector3 offsetPos = pos + (perpendicular * Rand.Range(-extension.particleJitter * 0.35f, extension.particleJitter * 0.35f));
+
+                TrySpawnMote(map, extension.trailMoteDef, offsetPos, extension.trailMoteScale * Rand.Range(0.92f, 1.08f));
+                SpawnParticleBurst(map, offsetPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale, extension.trailParticleBurst, extension.particleJitter * 0.72f, 0.10f);
+
+                if (i % 2 == 0 || i == steps)
                 {
-                    float t = (float)i / (steps + 1);
-                    Vector3 pos = Vector3.Lerp(startPos, endPos, t);
-                    TrySpawnMote(map, extension.trailMoteDef, pos, extension.trailMoteScale);
+                    SpawnParticleBurst(map, offsetPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale * 0.92f, Math.Max(1, extension.trailParticleBurst - 1), extension.particleJitter * 0.58f, 0.08f);
                 }
             }
 
             TrySpawnMote(map, extension.exitMoteDef, endPos, extension.exitMoteScale);
+            SpawnParticleBurst(map, endPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale * 1.08f, extension.endpointParticleBurst + 1, extension.particleJitter * 1.25f, 0.20f);
+            SpawnParticleBurst(map, endPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale * 1.05f, Math.Max(2, extension.endpointParticleBurst / 2), extension.particleJitter, 0.16f);
             TryPlaySound(map, end, extension.soundDef);
+        }
+
+        private static void SpawnParticleBurst(Map map, Vector3 center, Vector3 direction, Vector3 perpendicular, string defName, float scale, int count, float lateralJitter, float forwardJitter)
+        {
+            if (map == null || string.IsNullOrEmpty(defName) || count <= 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                float along = Rand.Range(-forwardJitter, forwardJitter);
+                float lateral = Rand.Range(-lateralJitter, lateralJitter);
+                Vector3 pos = center + (direction * along) + (perpendicular * lateral);
+                TrySpawnMote(map, defName, pos, scale * Rand.Range(0.78f, 1.18f));
+            }
         }
 
         private static void TrySpawnMote(Map map, string defName, Vector3 pos, float scale)

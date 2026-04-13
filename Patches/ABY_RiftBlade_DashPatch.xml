@@ -18,11 +18,18 @@
             <entryMoteDef>ABY_Mote_RiftBladeDashEntry</entryMoteDef>
             <exitMoteDef>ABY_Mote_RiftBladeDashExit</exitMoteDef>
             <trailMoteDef>ABY_Mote_RiftBladeDashTrail</trailMoteDef>
+            <sparkMoteDef>ABY_Mote_RiftBladeDashSpark</sparkMoteDef>
+            <shardMoteDef>ABY_Mote_RiftBladeDashShard</shardMoteDef>
             <soundDef>ABY_RiftBladeDash</soundDef>
-            <entryMoteScale>0.92</entryMoteScale>
-            <exitMoteScale>1.02</exitMoteScale>
-            <trailMoteScale>0.78</trailMoteScale>
-            <trailSteps>5</trailSteps>
+            <entryMoteScale>0.84</entryMoteScale>
+            <exitMoteScale>0.96</exitMoteScale>
+            <trailMoteScale>0.68</trailMoteScale>
+            <sparkMoteScale>0.46</sparkMoteScale>
+            <shardMoteScale>0.54</shardMoteScale>
+            <trailSteps>4</trailSteps>
+            <trailParticleBurst>2</trailParticleBurst>
+            <endpointParticleBurst>5</endpointParticleBurst>
+            <particleJitter>0.18</particleJitter>
             <requireLineOfSight>true</requireLineOfSight>
           </li>
         </value>
