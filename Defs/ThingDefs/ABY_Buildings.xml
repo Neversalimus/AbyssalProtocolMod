@@ -47,6 +47,7 @@
     <interactionCellOffset>(0,0,-5)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <minifiedDef IsNull="True" />
 
     <recipes Inherit="False" />
 

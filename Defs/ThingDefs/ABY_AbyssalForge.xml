@@ -46,6 +46,7 @@
     <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <minifiedDef IsNull="True" />
 
     <inspectorTabs>
       <li>ITab_Bills</li>
