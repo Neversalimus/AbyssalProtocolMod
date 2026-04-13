@@ -98,4 +98,30 @@
   <ABY_ForgeInspectAllKnown>All currently defined forge patterns are unlocked on this map.</ABY_ForgeInspectAllKnown>
   <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
 
+  <ABY_ForgeOverviewSubtitle>Map-wide residue communion, pattern unlocking, and colony attunement control.</ABY_ForgeOverviewSubtitle>
+  <ABY_ForgeOverviewHint>Open the full console for pattern browsing and bill management.</ABY_ForgeOverviewHint>
+  <ABY_ForgeOpenConsole>Open communion console</ABY_ForgeOpenConsole>
+  <ABY_ForgeOpenConsoleLabel>Communion console</ABY_ForgeOpenConsoleLabel>
+  <ABY_ForgeOpenConsoleDesc>Open the stylized forge control console with residue offerings, pattern browser, and bill management.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeConsoleTitle>Infernal communion console</ABY_ForgeConsoleTitle>
+  <ABY_ForgeConsoleSubtitle>Ritual-industrial control surface for residue intake, attunement shaping, and pattern deployment.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeStatusHeader>Communion state</ABY_ForgeStatusHeader>
+  <ABY_ForgeOfferHeader>Offering well</ABY_ForgeOfferHeader>
+  <ABY_ForgeOfferHintShort>Map-wide intake. Patterns stay unlocked for this map.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeNextHeader>Pattern telemetry</ABY_ForgeNextHeader>
+  <ABY_ForgePreviewHint>Switch categories to narrow the channel. Locked patterns remain visible here so progression is easy to read.</ABY_ForgePreviewHint>
+  <ABY_ForgeConsolePatternsHeader>Pattern browser</ABY_ForgeConsolePatternsHeader>
+  <ABY_ForgeConsoleBillsHeader>Queued fabrication</ABY_ForgeConsoleBillsHeader>
+  <ABY_ForgeProgressBand>{0} residue attuned • current band {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeMetricResidue>Residue attuned</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Residue on map</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricAttunement>Colony attunement</ABY_ForgeMetricAttunement>
+  <ABY_ForgeMetricPower>Reactor state</ABY_ForgeMetricPower>
+  <ABY_ForgePowerOnlineShort>online</ABY_ForgePowerOnlineShort>
+  <ABY_ForgePowerOfflineShort>offline</ABY_ForgePowerOfflineShort>
+  <ABY_ForgePatternUnlockedAt>Unlocked at {0} residue</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Locks until {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternAddBill>Add bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
+
 </LanguageData>

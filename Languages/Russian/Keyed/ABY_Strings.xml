@@ -98,4 +98,30 @@
   <ABY_ForgeInspectAllKnown>Все текущие forge-шаблоны на этой карте уже открыты.</ABY_ForgeInspectAllKnown>
   <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
 
+  <ABY_ForgeOverviewSubtitle>Общая для карты communion-система residue, открытия шаблонов и управления attunement колонии.</ABY_ForgeOverviewSubtitle>
+  <ABY_ForgeOverviewHint>Открой полный консольный интерфейс для просмотра шаблонов и управления bill.</ABY_ForgeOverviewHint>
+  <ABY_ForgeOpenConsole>Открыть консоль communion</ABY_ForgeOpenConsole>
+  <ABY_ForgeOpenConsoleLabel>Консоль communion</ABY_ForgeOpenConsoleLabel>
+  <ABY_ForgeOpenConsoleDesc>Открывает стилизованную консоль forge с внесением residue, браузером шаблонов и управлением bill.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeConsoleTitle>Инфернально-технологическая консоль communion</ABY_ForgeConsoleTitle>
+  <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная панель управления для intake residue, настройки attunement и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeStatusHeader>Состояние communion</ABY_ForgeStatusHeader>
+  <ABY_ForgeOfferHeader>Колодец подношений</ABY_ForgeOfferHeader>
+  <ABY_ForgeOfferHintShort>Внесение общее для всей карты. Открытые шаблоны сохраняются для этой карты.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeNextHeader>Телеметрия шаблонов</ABY_ForgeNextHeader>
+  <ABY_ForgePreviewHint>Переключай категории, чтобы сузить канал. Заблокированные шаблоны здесь тоже видны, поэтому прогресс читается сразу.</ABY_ForgePreviewHint>
+  <ABY_ForgeConsolePatternsHeader>Браузер шаблонов</ABY_ForgeConsolePatternsHeader>
+  <ABY_ForgeConsoleBillsHeader>Очередь производства</ABY_ForgeConsoleBillsHeader>
+  <ABY_ForgeProgressBand>Настроено residue: {0} • текущий диапазон {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeMetricResidue>Настроено residue</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Residue на карте</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricAttunement>Attunement колонии</ABY_ForgeMetricAttunement>
+  <ABY_ForgeMetricPower>Состояние реактора</ABY_ForgeMetricPower>
+  <ABY_ForgePowerOnlineShort>онлайн</ABY_ForgePowerOnlineShort>
+  <ABY_ForgePowerOfflineShort>оффлайн</ABY_ForgePowerOfflineShort>
+  <ABY_ForgePatternUnlockedAt>Открыто на {0} residue</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Заблокировано до {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternAddBill>Добавить bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
+
 </LanguageData>

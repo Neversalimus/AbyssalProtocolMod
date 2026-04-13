@@ -57,6 +57,17 @@ namespace AbyssalProtocol
 
             yield return new Command_Action
             {
+                defaultLabel = "ABY_ForgeOpenConsoleLabel".Translate(),
+                defaultDesc = "ABY_ForgeOpenConsoleDesc".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/AbyssalForge/ABY_Category_Core"),
+                action = delegate
+                {
+                    Find.WindowStack.Add(new Window_AbyssalForgeConsole(this));
+                }
+            };
+
+            yield return new Command_Action
+            {
                 defaultLabel = "ABY_ForgeGizmoOfferLabel".Translate(),
                 defaultDesc = "ABY_ForgeGizmoOfferDesc".Translate(),
                 icon = ContentFinder<Texture2D>.Get("Things/Item/ABY_AbyssalResidue"),
