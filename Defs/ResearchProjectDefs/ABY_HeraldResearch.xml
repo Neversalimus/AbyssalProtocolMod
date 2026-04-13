@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
   <ResearchProjectDef>
     <defName>ABY_HeraldFragmentAnalysis</defName>
     <label>herald fragment analysis</label>
-    <description>Herald core fragments cannot be decoded through ordinary research data alone. Study one at a hi-tech research bench to complete this analysis and unlock Herald-tier weapon and implant research. This project is intended to be completed by analysis, not by ordinary research progress.</description>
-    <baseCost>999999</baseCost>
+    <description>Herald core fragments are meant to be decoded through the dedicated hi-tech bench analysis recipe, not through a placeholder million-point research sink. Once a recovered fragment is analyzed, this project completes and unlocks the Herald weapon and implant branches.</description>
+    <baseCost>2600</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
     <researchViewX>4.35</researchViewX>

@@ -4,6 +4,12 @@
   <ABY_BossSummonSuccessDesc>{0} откликнулся на сигил. На карте появился враждебный разломный босс.</ABY_BossSummonSuccessDesc>
   <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
   <ABY_BossSummonFail_NoEdge>Не удалось найти подходящую точку прорыва у края карты.</ABY_BossSummonFail_NoEdge>
+  <ABY_BossSummonFail_EncounterActive>На этой карте уже активна бездновая встреча.</ABY_BossSummonFail_EncounterActive>
+  <ABY_BossSummonFail_NoCircle>На этой карте нет доступного abyssal summoning circle.</ABY_BossSummonFail_NoCircle>
+  <ABY_BossSummonFail_AllBusy>Все abyssal summoning circle сейчас заняты.</ABY_BossSummonFail_AllBusy>
+  <ABY_BossSummonFail_AllUnpowered>Все abyssal summoning circle сейчас без питания.</ABY_BossSummonFail_AllUnpowered>
+  <ABY_BossSummonFail_AllBlocked>Все abyssal summoning circle сейчас заблокированы.</ABY_BossSummonFail_AllBlocked>
+  <ABY_BossSummonFail_NoCircleAvailable>Сейчас нет ни одного abyssal summoning circle, готового к активации.</ABY_BossSummonFail_NoCircleAvailable>
   <ABY_BossName>Архон Разрыва</ABY_BossName>
   <ABY_SecretBossRevealLabel>Ответил истинный архонт</ABY_SecretBossRevealLabel>
   <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
@@ -11,4 +17,25 @@
   <ABY_HeraldAnalysisCompleteDesc>Добытый фрагмент успешно расшифрован на высокотехнологичном исследовательском столе. Теперь через вкладку исследований Abyssal Protocol доступны {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
   <ABY_HeraldAnalysisAlreadyKnown>Анализ фрагмента вестника уже завершён. Фрагмент был возвращён.</ABY_HeraldAnalysisAlreadyKnown>
   <ABY_HeraldAnalysisFailedMissingProject>Не удалось завершить анализ фрагмента вестника: отсутствует нужный исследовательский проект. Фрагмент был возвращён.</ABY_HeraldAnalysisFailedMissingProject>
+  <ABY_SigilPlacementFailed>Не удалось разместить сигил на бездновом круге призыва.</ABY_SigilPlacementFailed>
+  <ABY_SigilActivationStarted>Активация сигила началась</ABY_SigilActivationStarted>
+  <ABY_CircleFail_NoHostileFaction>Не удалось подобрать подходящую враждебную фракцию для безднового проявления.</ABY_CircleFail_NoHostileFaction>
+  <ABY_CircleFail_NoBossArrival>Не удалось определить корректный режим прибытия босса.</ABY_CircleFail_NoBossArrival>
+  <ABY_CircleInspect_Phase>Фаза ритуала: {0} ({1}%)</ABY_CircleInspect_Phase>
+  <ABY_CircleInspect_StalledNoPower>Ритуал остановлен: круг без питания.</ABY_CircleInspect_StalledNoPower>
+  <ABY_CircleInspect_Ready>Готов к активации сигила.</ABY_CircleInspect_Ready>
+  <ABY_CircleInspect_NotReady>Не готов: {0}</ABY_CircleInspect_NotReady>
+  <ABY_CircleFail_NotPlaced>Круг должен быть размещён на карте.</ABY_CircleFail_NotPlaced>
+  <ABY_CircleFail_Busy>Круг уже занят активным ритуалом.</ABY_CircleFail_Busy>
+  <ABY_CircleFail_NoPower>Для активации сигила кругу требуется питание.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_InteractionBlocked>Клетка взаимодействия заблокирована.</ABY_CircleFail_InteractionBlocked>
+  <ABY_CircleFail_FocusBlocked>Фокусная клетка ритуала заблокирована.</ABY_CircleFail_FocusBlocked>
+  <ABY_FirstBossKillLabel>Фрагмент вестника получен</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>Первый архон-зверь уничтожен. Теперь выпавший herald core fragment можно проанализировать на высокотехнологичном исследовательском столе, чтобы открыть Herald-tier ветки исследований.</ABY_FirstBossKillDesc>
+  <ABY_HeraldIntegrationUnlockedLabel>Исследование имплантов вестника открыто</ABY_HeraldIntegrationUnlockedLabel>
+  <ABY_HeraldIntegrationUnlockedDesc>Так как abyssal augmentation уже было завершено, интеграция имплантов вестника автоматически разблокирована.</ABY_HeraldIntegrationUnlockedDesc>
+  <ABY_SignalTheoryGuidanceLabel>Abyssal Protocol инициализирован</ABY_SignalTheoryGuidanceLabel>
+  <ABY_SignalTheoryGuidanceDesc>Исследование abyssal signal theory завершено. Построй Abyssal Forge, чтобы изготовить первые сигилы и начать контролируемые разломные ритуалы.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_FirstSigilGuidanceLabel>Первый сигил готов</ABY_FirstSigilGuidanceLabel>
+  <ABY_FirstSigilGuidanceDesc>Первый archon sigil уже создан. Отнеси его к запитанному abyssal summoning circle со свободной фокусной клеткой, чтобы начать встречу.</ABY_FirstSigilGuidanceDesc>
 </LanguageData>
