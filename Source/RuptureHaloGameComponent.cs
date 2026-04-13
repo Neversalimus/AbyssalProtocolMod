@@ -33,8 +33,7 @@ namespace AbyssalProtocol
             }
 
             HediffDef bearerDef = RuptureCrownUtility.BearerHediffDef;
-            AbilityDef abilityDef = RuptureCrownUtility.AbilityDef;
-            if (bearerDef == null || abilityDef == null)
+            if (bearerDef == null)
             {
                 return;
             }
