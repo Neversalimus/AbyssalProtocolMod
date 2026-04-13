@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HeraldCoreFragment</defName>
     <label>herald core fragment</label>
-    <description>A jagged vertebral reactor-shard carved out of the first boss. Its chained archon routines can be analyzed like a progression key item, making it the gate to Herald-tier weapon and implant research.</description>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and can be studied at a hi-tech research bench to unlock Herald-tier weapon and implant research.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -17,13 +17,6 @@
       <Mass>0.18</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <comps>
-      <li Class="CompProperties_CompAnalyzableUnlockResearch">
-        <analysisID>ABY_HeraldCoreFragment</analysisID>
-        <requiresMechanitor>false</requiresMechanitor>
-        <destroyedOnAnalyzed>false</destroyedOnAnalyzed>
-      </li>
-    </comps>
   </ThingDef>
 
   <ThingDef ParentName="BodyPartBionicBase">

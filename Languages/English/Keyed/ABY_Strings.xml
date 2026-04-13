@@ -3,39 +3,52 @@
   <ABY_BossSummonSuccessLabel>Infernal breach opened</ABY_BossSummonSuccessLabel>
   <ABY_BossSummonSuccessDesc>{0} answers the sigil. A hostile breach signature has entered the map.</ABY_BossSummonSuccessDesc>
   <ABY_BossSummonFail_NoMap>This sigil can only be used while the pawn is standing on an active map.</ABY_BossSummonFail_NoMap>
-  <ABY_BossSummonFail_NoEdge>No valid breach point was found near the map edge.</ABY_BossSummonFail_NoEdge>
   <ABY_BossSummonFail_EncounterActive>An abyssal encounter is already active on this map.</ABY_BossSummonFail_EncounterActive>
-  <ABY_BossSummonFail_NoCircle>No abyssal summoning circle is available on this map.</ABY_BossSummonFail_NoCircle>
+  <ABY_BossSummonFail_NoCircle>No powered abyssal summoning circle is available.</ABY_BossSummonFail_NoCircle>
   <ABY_BossSummonFail_AllBusy>All abyssal summoning circles are currently busy.</ABY_BossSummonFail_AllBusy>
   <ABY_BossSummonFail_AllUnpowered>All abyssal summoning circles are unpowered.</ABY_BossSummonFail_AllUnpowered>
   <ABY_BossSummonFail_AllBlocked>All abyssal summoning circles are blocked.</ABY_BossSummonFail_AllBlocked>
-  <ABY_BossSummonFail_NoCircleAvailable>No abyssal summoning circle is currently ready.</ABY_BossSummonFail_NoCircleAvailable>
+  <ABY_BossSummonFail_NoCircleAvailable>No valid abyssal summoning circle is available right now.</ABY_BossSummonFail_NoCircleAvailable>
+  <ABY_BossSummonFail_NoEdge>No valid breach point was found near the map edge.</ABY_BossSummonFail_NoEdge>
+
   <ABY_BossName>Archon of Rupture</ABY_BossName>
   <ABY_SecretBossRevealLabel>The true archon answers</ABY_SecretBossRevealLabel>
   <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
+
+  <ABY_FirstBossKillLabel>First boss destroyed</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald fragment analysis is now available, and the Abyssal Protocol loop can advance into Herald-grade integration.</ABY_FirstBossKillDesc>
+  <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
+  <ABY_HeraldIntegrationUnlockedDesc>The fragment analysis path has been opened. Decode a recovered herald core fragment at a hi-tech research bench to unlock Herald weapon and implant research.</ABY_HeraldIntegrationUnlockedDesc>
+
+  <ABY_SignalTheoryGuidanceLabel>Abyssal signal theory unlocked</ABY_SignalTheoryGuidanceLabel>
+  <ABY_SignalTheoryGuidanceDesc>Research Abyssal Signal Theory to begin the summon loop and unlock the first abyssal infrastructure.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_FirstSigilGuidanceLabel>First sigil ready</ABY_FirstSigilGuidanceLabel>
+  <ABY_FirstSigilGuidanceDesc>Forge an archon sigil at the Abyssal Forge, then activate it at a powered abyssal summoning circle to call the first boss.</ABY_FirstSigilGuidanceDesc>
+
   <ABY_HeraldAnalysisCompleteLabel>Herald fragment analysis complete</ABY_HeraldAnalysisCompleteLabel>
   <ABY_HeraldAnalysisCompleteDesc>The recovered fragment has been successfully decoded at a hi-tech research bench. {0} and {1} are now accessible through the Abyssal Protocol research tab.</ABY_HeraldAnalysisCompleteDesc>
   <ABY_HeraldAnalysisAlreadyKnown>Herald fragment analysis is already complete. The fragment was returned.</ABY_HeraldAnalysisAlreadyKnown>
   <ABY_HeraldAnalysisFailedMissingProject>Herald fragment analysis could not be resolved because the required research project was missing. The fragment was returned.</ABY_HeraldAnalysisFailedMissingProject>
-  <ABY_SigilPlacementFailed>Failed to place the sigil on the abyssal circle.</ABY_SigilPlacementFailed>
-  <ABY_SigilActivationStarted>Sigil activation started</ABY_SigilActivationStarted>
-  <ABY_CircleFail_NoHostileFaction>No valid hostile faction was available for abyssal manifestation.</ABY_CircleFail_NoHostileFaction>
-  <ABY_CircleFail_NoBossArrival>No valid boss arrival mode could be resolved.</ABY_CircleFail_NoBossArrival>
-  <ABY_CircleInspect_Phase>Ritual phase: {0} ({1}%)</ABY_CircleInspect_Phase>
-  <ABY_CircleInspect_StalledNoPower>Ritual stalled: the circle has no power.</ABY_CircleInspect_StalledNoPower>
-  <ABY_CircleInspect_Ready>Ready for sigil activation.</ABY_CircleInspect_Ready>
+
+  <ABY_CircleFail_NoHostileFaction>No hostile abyssal faction could be resolved for this summon.</ABY_CircleFail_NoHostileFaction>
+  <ABY_CircleFail_NoBossArrival>No valid abyssal boss arrival point could be found.</ABY_CircleFail_NoBossArrival>
+  <ABY_CircleFail_NotPlaced>The summoning circle must be placed before it can be used.</ABY_CircleFail_NotPlaced>
+  <ABY_CircleFail_Busy>The summoning circle is already processing another activation.</ABY_CircleFail_Busy>
+  <ABY_CircleFail_NoPower>The summoning circle is not powered.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_InteractionBlocked>The interaction cell for the summoning circle is blocked.</ABY_CircleFail_InteractionBlocked>
+  <ABY_CircleFail_FocusBlocked>The ritual focus area is blocked.</ABY_CircleFail_FocusBlocked>
+
+  <ABY_CircleInspect_Phase>Phase: {0} ({1}%)</ABY_CircleInspect_Phase>
+  <ABY_CircleInspect_StalledNoPower>Stalled: no power.</ABY_CircleInspect_StalledNoPower>
+  <ABY_CircleInspect_Ready>Ready for activation.</ABY_CircleInspect_Ready>
   <ABY_CircleInspect_NotReady>Not ready: {0}</ABY_CircleInspect_NotReady>
-  <ABY_CircleFail_NotPlaced>The circle must be placed on a map first.</ABY_CircleFail_NotPlaced>
-  <ABY_CircleFail_Busy>The circle is already running an active ritual.</ABY_CircleFail_Busy>
-  <ABY_CircleFail_NoPower>The circle requires power before a sigil can be activated.</ABY_CircleFail_NoPower>
-  <ABY_CircleFail_InteractionBlocked>The interaction cell is blocked.</ABY_CircleFail_InteractionBlocked>
-  <ABY_CircleFail_FocusBlocked>The ritual focus cell is blocked.</ABY_CircleFail_FocusBlocked>
-  <ABY_FirstBossKillLabel>Herald fragment recovered</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>The first archon beast has been destroyed. A herald core fragment can now be analyzed at a hi-tech research bench to unlock Herald-grade research paths.</ABY_FirstBossKillDesc>
-  <ABY_HeraldIntegrationUnlockedLabel>Herald implant research unlocked</ABY_HeraldIntegrationUnlockedLabel>
-  <ABY_HeraldIntegrationUnlockedDesc>Abyssal augmentation was already complete, so herald implant integration has been finalized automatically.</ABY_HeraldIntegrationUnlockedDesc>
-  <ABY_SignalTheoryGuidanceLabel>Abyssal Protocol initialized</ABY_SignalTheoryGuidanceLabel>
-  <ABY_SignalTheoryGuidanceDesc>Abyssal signal theory is complete. Build an Abyssal Forge to produce the first sigils and begin controlled breach work.</ABY_SignalTheoryGuidanceDesc>
-  <ABY_FirstSigilGuidanceLabel>First sigil ready</ABY_FirstSigilGuidanceLabel>
-  <ABY_FirstSigilGuidanceDesc>A crafted archon sigil is now available. Bring it to a powered abyssal summoning circle with a clear focus cell to begin the encounter.</ABY_FirstSigilGuidanceDesc>
+
+  <ABY_CirclePhase_Idle>idle</ABY_CirclePhase_Idle>
+  <ABY_CirclePhase_Charging>charging</ABY_CirclePhase_Charging>
+  <ABY_CirclePhase_Surge>surge</ABY_CirclePhase_Surge>
+  <ABY_CirclePhase_Breach>breach</ABY_CirclePhase_Breach>
+  <ABY_CirclePhase_Cooldown>cooldown</ABY_CirclePhase_Cooldown>
+
+  <ABY_SigilActivationStarted>Sigil activation started.</ABY_SigilActivationStarted>
+  <ABY_SigilPlacementFailed>The sigil could not find a valid summoning circle.</ABY_SigilPlacementFailed>
 </LanguageData>
