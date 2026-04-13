@@ -4,7 +4,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_SummoningCircle</defName>
     <label>abyssal summoning circle</label>
-    <description>A colossal infernal-industrial ritual platform used only to invoke contained abyssal breaches. Feed it prepared sigils, keep the center clear, and let the forge handle fabrication while the circle anchors the breach itself.</description>
+    <description>A colossal infernal-industrial ritual platform used only to invoke contained abyssal breaches. Feed it prepared sigils and let the forge handle the fabrication work.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalSummoningCircle</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -48,6 +48,7 @@
     <surfaceType>Item</surfaceType>
     <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
     <minifiedDef IsNull="True" />
+    <thingCategories Inherit="False" />
 
     <recipes Inherit="False" />
 
