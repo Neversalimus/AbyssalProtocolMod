@@ -9,9 +9,9 @@ namespace AbyssalProtocol
     {
         private const int DefaultMarkTicks = 4320;
 
-        protected override void Impact(Thing hitThing)
+        protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
-            Pawn caster = launcher as Pawn;
+            Pawn caster = Launcher as Pawn;
             Pawn impactPawn = ResolveImpactPawn(hitThing);
 
             if (impactPawn != null && IsValidPawnTarget(caster, impactPawn))
@@ -42,7 +42,7 @@ namespace AbyssalProtocol
                     false);
             }
 
-            base.Impact(hitThing);
+            base.Impact(hitThing, blockedByShield);
         }
 
         private static bool IsValidPawnTarget(Pawn caster, Pawn targetPawn)
