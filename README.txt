@@ -9,7 +9,7 @@ research forbidden technologies, construct infernal infrastructure, craft ritual
 
 ## Current Project State
 
-**Stage:** Pre-Alpha / First Vertical Slice
+**Stage:** Pre-Alpha / First Vertical Slice (first-loop closure testing)
 
 Abyssal Protocol is already past the pure concept phase.
 
@@ -17,6 +17,7 @@ The current public repository contains a playable early foundation of the mod’
 - a summon-driven progression structure
 - custom abyssal infrastructure
 - early research and ritual crafting
+- guided first-loop UX prompts
 - a working first boss encounter flow
 - hostile portal-based escalation content
 - early custom weapons and implants
@@ -123,13 +124,14 @@ The intended tone is closer to **forbidden ultra-tech ritual warfare** than to t
 Right now, development is focused on locking in the first strong gameplay pillar of the mod:
 
 - a reliable summon pipeline
+- first-loop closure testing and reward gating polish
 - a memorable first boss encounter
 - portal / rupture escalation logic
 - stronger audiovisual identity
 - early abyssal rewards, weapons, and implants
 - a stable content base to expand from
 
-In other words, the current version is about proving the core loop works in-game with real repository-backed systems — not just on paper.
+In other words, the current version is about proving the first real loop works in-game with real repository-backed systems: research -> forge -> sigil -> summon -> first boss -> reward gate.
 
 ---
 

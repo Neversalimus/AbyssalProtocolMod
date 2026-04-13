@@ -8,12 +8,13 @@
   </supportedVersions>
   <description>A techno-demonic RimWorld endgame mod built around controlled summoning, abyssal progression, and boss-oriented encounter content.
 
-Current public state: Pre-Alpha / First Vertical Slice.
+Current public state: Pre-Alpha / First Vertical Slice, now moving into first-loop closure and reward-gating polish.
 
 Already implemented in the current public repository:
 - abyssal summoning infrastructure
 - Abyssal Summoning Circle and Abyssal Forge
 - early research, ritual crafting, and reward pipeline
+- guided first-loop UX letters and progression prompts
 - Archon Sigil / Abyssal Residue progression foundation
 - custom hostile abyssal entities and portal-based escalation
 - first boss vertical slice with Archon Beast encounter logic
@@ -23,7 +24,7 @@ Already implemented in the current public repository:
 - Rupture Crown content, abilities, hediffs, and related presentation systems
 - custom code, textures, VFX-style assets, sounds, patches, and EN/RU localization
 
-This is already a real playable vertical slice with dedicated systems and repository-backed content, not just a framework or concept mockup.
+This is already a real playable vertical slice with dedicated systems and repository-backed content, not just a framework or concept mockup. Current testing is focused on locking in a reliable first summon loop, first boss reward gating, and cleaner progression readability.
 
 The mod is not content-complete yet: broader progression, more rituals, more enemies, more bosses, more gear tiers, and wider endgame reward structure are still in active development.</description>
 </ModMetaData>
