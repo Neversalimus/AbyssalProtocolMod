@@ -5,7 +5,7 @@
     <defName>ABY_CrownOfRupture</defName>
     <thingClass>Apparel</thingClass>
     <label>crown of rupture</label>
-    <description>A collapsed crown-reactor torn from the hidden archon. While worn, it grants Rupture Sentence as a true pawn ability. The crown stores only one verdict charge and regenerates it over one full in-game day.</description>
+    <description>A collapsed crown-reactor torn from the hidden archon. While worn, it grants a rupture verdict command instead of a targeted cast. When discharged, the crown marks all hostile and neutral non-colony pawns within 30 cells without provoking aggression, then regenerates one new charge over a full in-game day.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/ABY_CrownOfRupture</texPath>
@@ -41,6 +41,8 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_RuptureCrown">
         <rechargeTicks>60000</rechargeTicks>
+        <effectRadius>30</effectRadius>
+        <markTicks>4320</markTicks>
       </li>
     </comps>
   </ThingDef>
