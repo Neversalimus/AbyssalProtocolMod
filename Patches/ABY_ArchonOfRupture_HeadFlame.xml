@@ -21,25 +21,25 @@
             <frameCount>4</frameCount>
             <ticksPerFrame>5</ticksPerFrame>
 
-            <southWidth>1.28</southWidth>
-            <southHeight>1.36</southHeight>
-            <northWidth>1.22</northWidth>
-            <northHeight>1.30</northHeight>
-            <eastWidth>1.12</eastWidth>
-            <eastHeight>1.22</eastHeight>
+            <southWidth>1.78</southWidth>
+            <southHeight>2.02</southHeight>
+            <northWidth>1.70</northWidth>
+            <northHeight>1.92</northHeight>
+            <eastWidth>1.52</eastWidth>
+            <eastHeight>1.78</eastHeight>
 
             <southOffsetX>0.00</southOffsetX>
-            <southOffsetZ>1.56</southOffsetZ>
+            <southOffsetZ>2.16</southOffsetZ>
             <northOffsetX>0.00</northOffsetX>
-            <northOffsetZ>1.46</northOffsetZ>
-            <eastOffsetX>0.18</eastOffsetX>
-            <eastOffsetZ>1.50</eastOffsetZ>
+            <northOffsetZ>2.04</northOffsetZ>
+            <eastOffsetX>0.22</eastOffsetX>
+            <eastOffsetZ>2.08</eastOffsetZ>
 
             <emberIntervalMinTicks>22</emberIntervalMinTicks>
             <emberIntervalMaxTicks>48</emberIntervalMaxTicks>
-            <emberScatterRadius>0.12</emberScatterRadius>
-            <emberScaleMin>0.14</emberScaleMin>
-            <emberScaleMax>0.26</emberScaleMax>
+            <emberScatterRadius>0.16</emberScatterRadius>
+            <emberScaleMin>0.18</emberScaleMin>
+            <emberScaleMax>0.34</emberScaleMax>
             <emberMoteDefName>ABY_Mote_ArchonHeadEmber</emberMoteDefName>
 
             <disableWhenDead>true</disableWhenDead>
