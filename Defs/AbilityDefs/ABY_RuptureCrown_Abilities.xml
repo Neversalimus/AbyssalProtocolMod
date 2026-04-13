@@ -27,7 +27,7 @@
         <canTargetPawns>true</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
         <canTargetItems>false</canTargetItems>
-        <canTargetLocations>true</canTargetLocations>
+        <canTargetLocations>false</canTargetLocations>
       </targetParams>
     </verbProperties>
     <comps>

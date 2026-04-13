@@ -20,19 +20,9 @@ namespace AbyssalProtocol
     {
         public new CompProperties_AbilityEffect_RuptureSentence Props => (CompProperties_AbilityEffect_RuptureSentence)props;
 
-        public override bool CanApplyOn(LocalTargetInfo target)
-        {
-            return CanApplyInternal(target);
-        }
-
         public override bool CanApplyOn(LocalTargetInfo target, LocalTargetInfo dest)
         {
             return CanApplyInternal(target);
-        }
-
-        public override void Apply(LocalTargetInfo target)
-        {
-            ApplyInternal(target);
         }
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
@@ -99,7 +89,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            base.Apply(new LocalTargetInfo(targetPawn));
+            base.Apply(new LocalTargetInfo(targetPawn), LocalTargetInfo.Invalid);
 
             Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
             if (mark == null)
@@ -156,21 +146,6 @@ namespace AbyssalProtocol
             if (directPawn != null)
             {
                 return directPawn;
-            }
-
-            if (!target.Cell.IsValid)
-            {
-                return null;
-            }
-
-            var thingList = target.Cell.GetThingList(caster.MapHeld);
-            for (int i = 0; i < thingList.Count; i++)
-            {
-                Pawn pawn = thingList[i] as Pawn;
-                if (pawn != null)
-                {
-                    return pawn;
-                }
             }
 
             return null;
