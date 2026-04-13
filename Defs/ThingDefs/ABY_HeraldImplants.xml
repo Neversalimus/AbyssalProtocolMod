@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
 
   <ThingDef ParentName="ResourceBase">
@@ -19,7 +19,7 @@
     </statBases>
     <comps>
       <li Class="CompProperties_CompAnalyzableUnlockResearch">
-        <analysisID>ABY_HeraldCoreFragmentAnalysis</analysisID>
+        <analysisID>ABY_HeraldCoreFragment</analysisID>
         <requiresMechanitor>false</requiresMechanitor>
         <analysisDurationHours>0.5</analysisDurationHours>
         <destroyedOnAnalyzed>false</destroyedOnAnalyzed>
