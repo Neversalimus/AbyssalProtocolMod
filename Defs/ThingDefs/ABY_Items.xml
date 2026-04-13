@@ -10,9 +10,6 @@
       <graphicClass>Graphic_Single</graphicClass>
       <color>(255,80,80)</color>
     </graphicData>
-    <thingCategories Inherit="False">
-      <li>Manufactured</li>
-    </thingCategories>
     <tradeability>Buyable</tradeability>
     <stackLimit>75</stackLimit>
     <statBases>
@@ -25,7 +22,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Forge it from condensed residue, then carry it to a powered Abyssal Summoning Circle, keep the ritual focus clear, and activate the sigil to tear open the first controlled techno-demonic breach.</description>
+    <description>A stabilized infernal key. Carry it to an abyssal summoning circle to charge the sigil and tear open a breach for the first techno-demonic boss.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -33,7 +30,7 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories Inherit="False">
+    <thingCategories>
       <li>Manufactured</li>
     </thingCategories>
     <tradeability>Sellable</tradeability>
@@ -43,9 +40,9 @@
       <Flammability>0</Flammability>
     </statBases>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_UsableArchonSigil">
+      <li Class="CompProperties_Usable">
         <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>activate at abyssal circle</useLabel>
+        <useLabel>invoke archon</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
@@ -55,24 +52,35 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="DrugBase">
     <defName>ABY_ArchonOverrideAmpoule</defName>
     <label>archon override ampoule</label>
-    <description>A sealed combat ampoule recovered from the first boss. The reactor-serum inside is stable enough to survive storage, trade and field transport without destabilizing.</description>
+    <description>A controlled first-boss combat stimulant. Injecting it forces a brief archon-grade surge of aim and locomotion before the captured routines burn out into a mild feedback slump.</description>
     <graphicData>
       <texPath>Things/Item/ABY_ArchonOverrideAmpoule</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <thingCategories Inherit="False">
-      <li>Manufactured</li>
-    </thingCategories>
-    <tradeability>Sellable</tradeability>
     <stackLimit>10</stackLimit>
+    <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>260</MarketValue>
       <Mass>0.12</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <ingestible>
+      <baseIngestTicks>90</baseIngestTicks>
+      <ingestCommandString>Inject {0}</ingestCommandString>
+      <ingestReportString>Injecting {0}.</ingestReportString>
+      <ingestReportStringEat>Injecting {0}.</ingestReportStringEat>
+      <ingestHoldUsesTable>false</ingestHoldUsesTable>
+      <useEatingSpeedStat>false</useEatingSpeedStat>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>ABY_ArchonOverrideSurge</hediffDef>
+          <severity>1.0</severity>
+        </li>
+      </outcomeDoers>
+    </ingestible>
   </ThingDef>
 
 </Defs>
