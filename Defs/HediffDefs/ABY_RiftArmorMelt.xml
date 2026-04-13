@@ -9,7 +9,6 @@
     <isBad>true</isBad>
     <tendable>false</tendable>
     <scenarioCanAdd>false</scenarioCanAdd>
-    <showOnCharacterCard>false</showOnCharacterCard>
     <defaultLabelColor>(0.95, 0.32, 0.10)</defaultLabelColor>
     <comps>
       <li Class="HediffCompProperties_Disappears">
@@ -33,7 +32,7 @@
           <ArmorRating_Sharp>-0.12</ArmorRating_Sharp>
           <ArmorRating_Blunt>-0.04</ArmorRating_Blunt>
           <ArmorRating_Heat>-0.16</ArmorRating_Heat>
-          <Moving>-0.04</Moving>
+          <MoveSpeed>-0.10</MoveSpeed>
         </statOffsets>
       </li>
       <li>
@@ -43,7 +42,7 @@
           <ArmorRating_Sharp>-0.20</ArmorRating_Sharp>
           <ArmorRating_Blunt>-0.08</ArmorRating_Blunt>
           <ArmorRating_Heat>-0.28</ArmorRating_Heat>
-          <Moving>-0.08</Moving>
+          <MoveSpeed>-0.20</MoveSpeed>
         </statOffsets>
       </li>
     </stages>

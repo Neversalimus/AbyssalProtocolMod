@@ -5,9 +5,9 @@
     <defName>ABY_RiftCarbineCharge</defName>
     <sustain>true</sustain>
     <context>MapOnly</context>
-    <maxSimultaneousSoundsOnMap>4</maxSimultaneousSoundsOnMap>
+    <maxSimultaneous>4</maxSimultaneous>
     <maxVoices>2</maxVoices>
-    <sustainerScope>PrioritizeNearest</sustainerScope>
+    <priorityMode>PrioritizeNearest</priorityMode>
     <sustainFadeoutTime>0.08</sustainFadeoutTime>
     <subSounds>
       <li>
@@ -25,8 +25,9 @@
   <SoundDef>
     <defName>ABY_RiftCarbineFire</defName>
     <context>MapOnly</context>
-    <maxSimultaneousSoundsOnMap>6</maxSimultaneousSoundsOnMap>
+    <maxSimultaneous>6</maxSimultaneous>
     <maxVoices>3</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
     <subSounds>
       <li>
         <grains>
@@ -43,8 +44,9 @@
   <SoundDef>
     <defName>ABY_RiftCarbineTail</defName>
     <context>MapOnly</context>
-    <maxSimultaneousSoundsOnMap>6</maxSimultaneousSoundsOnMap>
+    <maxSimultaneous>6</maxSimultaneous>
     <maxVoices>3</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
     <subSounds>
       <li>
         <onCamera>true</onCamera>
