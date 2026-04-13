@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -269,11 +270,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            GlobalTargetInfo globalTarget = target.HasThing
-                ? new GlobalTargetInfo(target.Thing)
-                : new GlobalTargetInfo(target.Cell, ability.pawn.MapHeld);
-
-            ability.QueueCastingJob(globalTarget);
+            ability.QueueCastingJob(target);
             lastAutoCastTick = Find.TickManager != null ? Find.TickManager.TicksGame : NeverTick;
             return true;
         }
