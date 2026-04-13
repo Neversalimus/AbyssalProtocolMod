@@ -241,11 +241,8 @@ namespace AbyssalProtocol
                     MenuOptionPriority.Default,
                     null,
                     null,
-                    29f,
-                    delegate(Rect infoRect)
-                    {
-                        Widgets.InfoCardButton(infoRect.x + 5f, infoRect.y + (infoRect.height - 24f) / 2f, capturedRecipe);
-                    },
+                    0f,
+                    null,
                     null));
             }
 
