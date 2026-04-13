@@ -124,4 +124,9 @@
   <ABY_ForgePatternAddBill>Добавить bill</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
 
+  <ABY_ForgeOverviewSubtitleShort>Общая для карты communion-система residue и управления шаблонами.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewHintCompact>Открой полную консоль, чтобы видеть шаблоны, ресурсы и управлять bill.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
+  <ABY_ForgePatternNoMaterialData>Данные о материальных затратах недоступны.</ABY_ForgePatternNoMaterialData>
+
 </LanguageData>

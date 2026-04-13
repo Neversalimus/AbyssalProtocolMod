@@ -50,12 +50,12 @@ namespace AbyssalProtocol
 
             AbyssalForgeConsoleArt.DrawBackground(inRect);
 
-            Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 66f);
-            Rect statusRect = new Rect(inRect.x, headerRect.yMax + 10f, 430f, 164f);
-            Rect offerRect = new Rect(statusRect.xMax + 10f, headerRect.yMax + 10f, 250f, 164f);
-            Rect nextRect = new Rect(offerRect.xMax + 10f, headerRect.yMax + 10f, inRect.width - offerRect.xMax - 10f, 164f);
+            Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 70f);
+            Rect statusRect = new Rect(inRect.x, headerRect.yMax + 10f, 430f, 170f);
+            Rect offerRect = new Rect(statusRect.xMax + 10f, headerRect.yMax + 10f, 250f, 170f);
+            Rect nextRect = new Rect(offerRect.xMax + 10f, headerRect.yMax + 10f, inRect.width - offerRect.xMax - 10f, 170f);
             Rect categoryRect = new Rect(inRect.x, statusRect.yMax + 10f, inRect.width, 40f);
-            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 650f, inRect.height - categoryRect.yMax - 10f);
+            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 660f, inRect.height - categoryRect.yMax - 10f);
             Rect billsRect = new Rect(patternsRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - patternsRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
 
             DrawHeader(headerRect);
@@ -104,9 +104,9 @@ namespace AbyssalProtocol
             }
 
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeStatusHeader".Translate());
-            AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 22f), fill, progressLabel);
+            AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 24f), fill, progressLabel);
 
-            float metricY = inner.y + 58f;
+            float metricY = inner.y + 60f;
             float metricWidth = (inner.width - 10f) / 2f;
 
             AbyssalForgeConsoleArt.DrawMetric(
@@ -157,7 +157,7 @@ namespace AbyssalProtocol
             GUI.enabled = oldEnabled;
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 136f, inner.width, 20f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            Widgets.Label(new Rect(inner.x, inner.y + 136f, inner.width, 24f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 
@@ -167,13 +167,8 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(12f);
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeNextHeader".Translate());
 
-            List<RecipeDef> recipes = AbyssalForgeProgressUtility.GetForgeRecipes()
-                .Where(recipe => AbyssalForgeProgressUtility.RecipeMatchesCategory(recipe, selectedCategory))
-                .Take(3)
-                .ToList();
             List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(3).ToList();
-
-            float leftWidth = inner.width * 0.46f;
+            float leftWidth = inner.width * 0.54f;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeUpcomingPatterns".Translate());
             GUI.color = Color.white;
@@ -187,9 +182,8 @@ namespace AbyssalProtocol
                 for (int i = 0; i < locked.Count; i++)
                 {
                     RecipeDef recipe = locked[i];
-                    Widgets.Label(
-                        new Rect(inner.x, inner.y + 52f + i * 28f, leftWidth, 26f),
-                        "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe);
+                    Widgets.Label(new Rect(inner.x, inner.y + 52f + i * 28f, leftWidth, 24f), line);
                 }
             }
 
@@ -199,7 +193,9 @@ namespace AbyssalProtocol
                 progress.GetUnlockedRecipes(selectedCategory).Count,
                 progress.GetUnlockedRecipes(selectedCategory).Count + progress.GetLockedRecipes(selectedCategory).Count,
                 categoryLabel);
-            Widgets.Label(rightRect, summary + "\n\n" + "ABY_ForgePreviewHint".Translate());
+            Widgets.Label(rightRect, summary + "
+
+" + "ABY_ForgePreviewHint".Translate());
         }
 
         private void DrawCategoryRow(Rect rect)
@@ -234,7 +230,7 @@ namespace AbyssalProtocol
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             float cardWidth = (outRect.width - 12f) / 2f;
-            float cardHeight = 96f;
+            float cardHeight = 126f;
             int rows = Mathf.CeilToInt(recipes.Count / 2f);
             float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
@@ -254,6 +250,7 @@ namespace AbyssalProtocol
         private void DrawPatternCard(Rect rect, RecipeDef recipe, bool unlocked)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
+            AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked);
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             Texture2D icon = product != null ? product.uiIcon : null;
@@ -281,14 +278,16 @@ namespace AbyssalProtocol
             Widgets.Label(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 60f, rect.y + 32f, rect.width - 70f, 20f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+            Widgets.Label(new Rect(rect.x + 60f, rect.y + 30f, rect.width - 70f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 58f, rect.width - 20f, 34f), AbyssalForgeProgressUtility.GetRecipeIngredientSummary(recipe, 3));
             GUI.color = Color.white;
 
             string unlockLine = unlocked
                 ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe))
                 : "ABY_ForgePatternLockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe));
             GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 58f, rect.width - 20f, 20f), unlockLine);
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 92f, rect.width - 126f, 20f), unlockLine);
             GUI.color = Color.white;
 
             Rect buttonRect = new Rect(rect.x + rect.width - 112f, rect.y + rect.height - 32f, 100f, 24f);
@@ -307,9 +306,20 @@ namespace AbyssalProtocol
             }
 
             string description = product != null && !product.description.NullOrEmpty() ? product.description : recipe.description;
-            if (!description.NullOrEmpty())
+            string tooltip = description;
+            string costBlock = AbyssalForgeProgressUtility.GetRecipeIngredientTooltip(recipe);
+            if (!costBlock.NullOrEmpty())
             {
-                TooltipHandler.TipRegion(rect, description);
+                if (!tooltip.NullOrEmpty())
+                {
+                    tooltip += "\n\n";
+                }
+                tooltip += "ABY_ForgePatternRequirementsLabel".Translate() + "\n" + costBlock;
+            }
+
+            if (!tooltip.NullOrEmpty())
+            {
+                TooltipHandler.TipRegion(rect, tooltip);
             }
         }
 

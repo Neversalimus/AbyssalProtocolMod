@@ -7,7 +7,7 @@ namespace AbyssalProtocol
 {
     public class ITab_AbyssalForgeBills : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(640f, 260f);
+        private static readonly Vector2 WinSize = new Vector2(648f, 278f);
 
         protected Building_AbyssalForge SelForge => (Building_AbyssalForge)SelThing;
 
@@ -22,10 +22,10 @@ namespace AbyssalProtocol
         {
             PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.BillsTab, KnowledgeAmount.FrameDisplayed);
 
-            Rect canvas = new Rect(0f, 0f, size.x, size.y).ContractedBy(10f);
-            Rect headerRect = new Rect(canvas.x, canvas.y, canvas.width, 56f);
-            Rect statusRect = new Rect(canvas.x, headerRect.yMax + 8f, 365f, 126f);
-            Rect offerRect = new Rect(statusRect.xMax + 8f, headerRect.yMax + 8f, canvas.width - statusRect.width - 8f, 126f);
+            Rect canvas = new Rect(0f, 0f, size.x, size.y).ContractedBy(8f);
+            Rect headerRect = new Rect(canvas.x, canvas.y, canvas.width, 64f);
+            Rect statusRect = new Rect(canvas.x, headerRect.yMax + 8f, 372f, 142f);
+            Rect offerRect = new Rect(statusRect.xMax + 8f, headerRect.yMax + 8f, canvas.width - statusRect.width - 8f, 142f);
             Rect openRect = new Rect(canvas.x, statusRect.yMax + 10f, canvas.width, 46f);
 
             MapComponent_AbyssalForgeProgress progress = SelForge.ProgressComponent;
@@ -35,11 +35,11 @@ namespace AbyssalProtocol
             }
 
             AbyssalForgeConsoleArt.DrawBackground(canvas);
-            AbyssalForgeConsoleArt.DrawHeader(headerRect, "ABY_ForgePanelHeader".Translate(), "ABY_ForgeOverviewSubtitle".Translate());
+            AbyssalForgeConsoleArt.DrawHeader(headerRect, "ABY_ForgePanelHeader".Translate(), "ABY_ForgeOverviewSubtitleShort".Translate());
             DrawStatusPanel(statusRect, progress);
             DrawOfferPanel(offerRect, progress);
 
-            AbyssalForgeConsoleArt.DrawPanel(openRect, true);
+            AbyssalForgeConsoleArt.DrawActionButtonFrame(openRect, true);
             if (Widgets.ButtonText(openRect.ContractedBy(10f), "ABY_ForgeOpenConsole".Translate()))
             {
                 Find.WindowStack.Add(new Window_AbyssalForgeConsole(SelForge));
@@ -51,19 +51,21 @@ namespace AbyssalProtocol
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(12f);
+            float metricWidth = (inner.width - 16f) / 2f;
             int nextUnlock = progress.GetNextUnlockResidue();
             RecipeDef nextRecipe = progress.GetNextUnlockRecipe();
             string nextLine = nextUnlock > 0
                 ? "ABY_ForgeNextPattern".Translate(nextUnlock, nextRecipe != null ? AbyssalForgeProgressUtility.GetRecipeDisplayLabel(nextRecipe) : "?")
                 : "ABY_ForgeNextPatternDone".Translate();
 
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x, inner.y, inner.width * 0.48f, 42f), "ABY_ForgeMetricResidue".Translate(), progress.TotalResidueOffered.ToString());
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x + inner.width * 0.52f, inner.y, inner.width * 0.48f, 42f), "ABY_ForgeMetricAvailable".Translate(), progress.CountAvailableResidue().ToString());
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x, inner.y + 46f, inner.width * 0.48f, 42f), "ABY_ForgeMetricAttunement".Translate(), ("ABY_AttunementTier_" + progress.GetCurrentAttunementTier(false)).Translate());
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x + inner.width * 0.52f, inner.y + 46f, inner.width * 0.48f, 42f), "ABY_ForgeMetricPower".Translate(), SelForge.IsPowerActive ? "ABY_ForgePowerOnlineShort".Translate() : "ABY_ForgePowerOfflineShort".Translate());
+            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x, inner.y, metricWidth, 42f), "ABY_ForgeMetricResidue".Translate(), progress.TotalResidueOffered.ToString());
+            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x + metricWidth + 16f, inner.y, metricWidth, 42f), "ABY_ForgeMetricAvailable".Translate(), progress.CountAvailableResidue().ToString());
+            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x, inner.y + 48f, metricWidth, 42f), "ABY_ForgeMetricAttunement".Translate(), ("ABY_AttunementTier_" + progress.GetCurrentAttunementTier(false)).Translate());
+            AbyssalForgeConsoleArt.DrawMetric(new Rect(inner.x + metricWidth + 16f, inner.y + 48f, metricWidth, 42f), "ABY_ForgeMetricPower".Translate(), SelForge.IsPowerActive ? "ABY_ForgePowerOnlineShort".Translate() : "ABY_ForgePowerOfflineShort".Translate());
 
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 92f, inner.width, 24f), nextLine);
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            Rect nextRect = new Rect(inner.x, inner.y + 96f, inner.width, inner.height - 96f);
+            Widgets.Label(nextRect, nextLine);
             GUI.color = Color.white;
         }
 
@@ -73,7 +75,7 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(12f);
             int availableResidue = progress.CountAvailableResidue();
 
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            GUI.color = Color.white;
             Widgets.Label(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeOfferHeader".Translate());
             GUI.color = Color.white;
 
@@ -82,24 +84,24 @@ namespace AbyssalProtocol
             GUI.enabled = enabled;
 
             float buttonWidth = (inner.width - 8f) / 2f;
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 26f, buttonWidth, 28f), "ABY_ForgeOfferAmount".Translate(10)))
+            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(10)))
             {
                 TryOfferResidue(10);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x + buttonWidth + 8f, inner.y + 26f, buttonWidth, 28f), "ABY_ForgeOfferAmount".Translate(50)))
+            if (Widgets.ButtonText(new Rect(inner.x + buttonWidth + 8f, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(50)))
             {
                 TryOfferResidue(50);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 60f, inner.width, 30f), "ABY_ForgeOfferAll".Translate(availableResidue)))
+            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 66f, inner.width, 32f), "ABY_ForgeOfferAll".Translate(availableResidue)))
             {
                 TryOfferResidue(availableResidue);
             }
 
             GUI.enabled = oldEnabled;
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 94f, inner.width, 22f), enabled ? "ABY_ForgeOverviewHint".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 104f, inner.width, inner.height - 104f), enabled ? "ABY_ForgeOverviewHintCompact".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 

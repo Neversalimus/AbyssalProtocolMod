@@ -124,4 +124,9 @@
   <ABY_ForgePatternAddBill>Add bill</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
 
+  <ABY_ForgeOverviewSubtitleShort>Map-wide residue communion and pattern control.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewHintCompact>Open the full console for pattern browsing, costs, and bill control.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgePatternRequirementsLabel>Requirements</ABY_ForgePatternRequirementsLabel>
+  <ABY_ForgePatternNoMaterialData>No material cost data available.</ABY_ForgePatternNoMaterialData>
+
 </LanguageData>

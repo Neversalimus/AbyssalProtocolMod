@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
@@ -36,7 +38,11 @@ namespace AbyssalProtocol
 
         public static List<RecipeDef> GetForgeRecipes(ThingDef forgeDef = null)
         {
-            forgeDef ??= ForgeDef;
+            if (forgeDef == null)
+            {
+                forgeDef = ForgeDef;
+            }
+
             if (forgeDef?.AllRecipes == null)
             {
                 return new List<RecipeDef>();
@@ -121,6 +127,70 @@ namespace AbyssalProtocol
             }
 
             return recipe.LabelCap;
+        }
+
+        public static string GetRecipeIngredientSummary(RecipeDef recipe, int maxEntries)
+        {
+            if (recipe?.ingredients == null || recipe.ingredients.Count == 0)
+            {
+                return "ABY_ForgePatternNoMaterialData".Translate();
+            }
+
+            List<string> parts = new List<string>();
+            int limit = Math.Max(1, maxEntries);
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                IngredientCount ingredient = recipe.ingredients[i];
+                if (ingredient == null)
+                {
+                    continue;
+                }
+
+                string label = GetIngredientLabel(ingredient);
+                int count = Mathf.CeilToInt(ingredient.GetBaseCount());
+                parts.Add(count + " " + label);
+
+                if (parts.Count >= limit)
+                {
+                    break;
+                }
+            }
+
+            if (parts.Count == 0)
+            {
+                return "ABY_ForgePatternNoMaterialData".Translate();
+            }
+
+            if (recipe.ingredients.Count > limit)
+            {
+                parts.Add("…");
+            }
+
+            return string.Join(" • ", parts.ToArray());
+        }
+
+        public static string GetRecipeIngredientTooltip(RecipeDef recipe)
+        {
+            if (recipe?.ingredients == null || recipe.ingredients.Count == 0)
+            {
+                return "ABY_ForgePatternNoMaterialData".Translate();
+            }
+
+            List<string> parts = new List<string>();
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                IngredientCount ingredient = recipe.ingredients[i];
+                if (ingredient == null)
+                {
+                    continue;
+                }
+
+                string label = GetIngredientLabel(ingredient);
+                int count = Mathf.CeilToInt(ingredient.GetBaseCount());
+                parts.Add("• " + count + " " + label);
+            }
+
+            return string.Join("\n", parts.ToArray());
         }
 
         public static bool RecipeMatchesCategory(RecipeDef recipe, string category)
@@ -213,6 +283,30 @@ namespace AbyssalProtocol
         {
             int index = CategoryOrder.IndexOf(category);
             return index >= 0 ? index : CategoryOrder.Count;
+        }
+
+        private static string GetIngredientLabel(IngredientCount ingredient)
+        {
+            ThingFilter filter = ingredient.filter;
+            if (filter == null)
+            {
+                return "ingredient";
+            }
+
+            IEnumerable<ThingDef> allowedDefs = filter.AllowedThingDefs;
+            List<ThingDef> allowed = allowedDefs != null ? allowedDefs.ToList() : new List<ThingDef>();
+            if (allowed.Count == 1 && allowed[0] != null)
+            {
+                return allowed[0].label;
+            }
+
+            string summary = filter.Summary;
+            if (!summary.NullOrEmpty())
+            {
+                return summary;
+            }
+
+            return "ingredient";
         }
     }
 }
