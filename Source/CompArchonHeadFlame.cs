@@ -14,27 +14,27 @@ namespace AbyssalProtocol
         public int frameCount = 4;
         public int ticksPerFrame = 5;
 
-        public float southWidth = 2.35f;
-        public float southHeight = 2.15f;
-        public float northWidth = 2.25f;
-        public float northHeight = 2.05f;
-        public float eastWidth = 2.10f;
-        public float eastHeight = 1.95f;
+        public float southWidth = 1.28f;
+        public float southHeight = 1.36f;
+        public float northWidth = 1.22f;
+        public float northHeight = 1.30f;
+        public float eastWidth = 1.12f;
+        public float eastHeight = 1.22f;
 
         public float southOffsetX = 0f;
-        public float southOffsetZ = 0.66f;
+        public float southOffsetZ = 1.56f;
 
         public float northOffsetX = 0f;
-        public float northOffsetZ = 0.58f;
+        public float northOffsetZ = 1.46f;
 
-        public float eastOffsetX = 0.10f;
-        public float eastOffsetZ = 0.62f;
+        public float eastOffsetX = 0.18f;
+        public float eastOffsetZ = 1.50f;
 
         public int emberIntervalMinTicks = 22;
         public int emberIntervalMaxTicks = 48;
-        public float emberScatterRadius = 0.20f;
-        public float emberScaleMin = 0.22f;
-        public float emberScaleMax = 0.42f;
+        public float emberScatterRadius = 0.12f;
+        public float emberScaleMin = 0.14f;
+        public float emberScaleMax = 0.26f;
         public string emberMoteDefName = "ABY_Mote_ArchonHeadEmber";
 
         public bool disableWhenDead = true;
