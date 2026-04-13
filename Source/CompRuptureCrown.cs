@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -10,9 +11,12 @@ namespace AbyssalProtocol
         public const string AbilityDefName = "ABY_RuptureSentence";
         public const string BearerHediffDefName = "ABY_RuptureCrownBearer";
         public const string MarkHediffDefName = "ABY_RuptureSentenceMark";
+        public const float DefaultVerdictRadius = 30f;
+        public const int DefaultMarkTicks = 4320;
 
         private static AbilityDef cachedAbilityDef;
         private static HediffDef cachedBearerHediffDef;
+        private static HediffDef cachedMarkHediffDef;
 
         public static AbilityDef AbilityDef
         {
@@ -37,6 +41,19 @@ namespace AbyssalProtocol
                 }
 
                 return cachedBearerHediffDef;
+            }
+        }
+
+        public static HediffDef MarkHediffDef
+        {
+            get
+            {
+                if (cachedMarkHediffDef == null)
+                {
+                    cachedMarkHediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(MarkHediffDefName);
+                }
+
+                return cachedMarkHediffDef;
             }
         }
 
@@ -81,11 +98,120 @@ namespace AbyssalProtocol
 
             return pawn.abilities.GetAbility(abilityDef, false);
         }
+
+        public static int CountEligibleTargets(Pawn caster, float radius)
+        {
+            if (!CanScanTargets(caster))
+            {
+                return 0;
+            }
+
+            int count = 0;
+            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (IsEligibleVerdictTarget(caster, pawns[i], radius))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public static int ApplyVerdictWave(Pawn caster, float radius, int markTicks)
+        {
+            if (!CanScanTargets(caster))
+            {
+                return 0;
+            }
+
+            int affectedCount = 0;
+            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn targetPawn = pawns[i];
+                if (!IsEligibleVerdictTarget(caster, targetPawn, radius))
+                {
+                    continue;
+                }
+
+                ApplyMark(targetPawn, markTicks);
+                affectedCount++;
+
+                if (targetPawn.MapHeld != null)
+                {
+                    FleckMaker.ThrowLightningGlow(targetPawn.DrawPos, targetPawn.MapHeld, 1.4f);
+                }
+            }
+
+            return affectedCount;
+        }
+
+        private static bool CanScanTargets(Pawn caster)
+        {
+            return caster != null && !caster.Dead && caster.Spawned && caster.MapHeld != null && caster.health != null;
+        }
+
+        private static bool IsEligibleVerdictTarget(Pawn caster, Pawn targetPawn, float radius)
+        {
+            if (!CanScanTargets(caster))
+            {
+                return false;
+            }
+
+            if (targetPawn == null || targetPawn == caster || targetPawn.Dead || !targetPawn.Spawned || targetPawn.MapHeld != caster.MapHeld)
+            {
+                return false;
+            }
+
+            if (!targetPawn.PositionHeld.InHorDistOf(caster.PositionHeld, radius))
+            {
+                return false;
+            }
+
+            if (targetPawn.IsPlayerControlled || targetPawn.IsPrisonerOfColony || targetPawn.IsSlaveOfColony)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static void ApplyMark(Pawn targetPawn, int markTicks)
+        {
+            HediffDef markDef = MarkHediffDef;
+            if (markDef == null || targetPawn?.health == null)
+            {
+                return;
+            }
+
+            Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
+            if (mark == null)
+            {
+                mark = HediffMaker.MakeHediff(markDef, targetPawn);
+                targetPawn.health.AddHediff(mark);
+            }
+
+            mark.Severity = Mathf.Max(mark.Severity, 1f);
+
+            HediffComp_Disappears disappears = mark.TryGetComp<HediffComp_Disappears>();
+            if (disappears != null)
+            {
+                disappears.ticksToDisappear = Mathf.Max(1, markTicks);
+            }
+
+            targetPawn.health.hediffSet.DirtyCache();
+        }
     }
 
     public class CompProperties_RuptureCrown : CompProperties
     {
         public int rechargeTicks = GenDate.TicksPerDay;
+        public float effectRadius = RuptureCrownUtility.DefaultVerdictRadius;
+        public int markTicks = RuptureCrownUtility.DefaultMarkTicks;
+        public string commandLabel = "Rupture Verdict";
+        public string commandDesc = "Discharge the crown in a silent rupture wave. All hostile and neutral non-colony pawns within range are marked without provoking aggression.";
 
         public CompProperties_RuptureCrown()
         {
@@ -141,7 +267,7 @@ namespace AbyssalProtocol
             return "Rupture charge recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
         }
 
-        public override System.Collections.Generic.IEnumerable<StatDrawEntry> SpecialDisplayStats()
+        public override IEnumerable<StatDrawEntry> SpecialDisplayStats()
         {
             foreach (StatDrawEntry entry in base.SpecialDisplayStats())
             {
@@ -154,6 +280,104 @@ namespace AbyssalProtocol
                 GenDate.ToStringTicksToDays(Props.rechargeTicks),
                 "The crown condenses one new verdict charge over a full in-game day.",
                 1000);
+        }
+
+        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
+            {
+                yield return gizmo;
+            }
+
+            Apparel apparel = parent as Apparel;
+            Pawn wearer = apparel?.Wearer;
+            if (wearer == null || !wearer.IsColonistPlayerControlled || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
+            {
+                yield break;
+            }
+
+            Command_Action command = new Command_Action
+            {
+                defaultLabel = Props.commandLabel,
+                defaultDesc = Props.commandDesc + "\n\nRadius: " + Mathf.RoundToInt(Props.effectRadius) + " cells.",
+                action = delegate
+                {
+                    TryDischargeVerdict(wearer);
+                }
+            };
+
+            if (!IsReady)
+            {
+                command.Disable("Crown charge is still recharging: " + TicksUntilRecharged.ToStringTicksToPeriod());
+            }
+            else if (RuptureCrownUtility.CountEligibleTargets(wearer, Props.effectRadius) <= 0)
+            {
+                command.Disable("No hostile or neutral non-colony pawns are within rupture radius.");
+            }
+
+            yield return command;
+        }
+
+        public bool TryDischargeVerdict(Pawn wearer)
+        {
+            if (wearer == null || wearer.Dead || !wearer.Spawned || wearer.MapHeld == null)
+            {
+                return false;
+            }
+
+            if (!IsReady)
+            {
+                if (wearer.Faction == Faction.OfPlayer)
+                {
+                    Messages.Message(
+                        "Rupture Verdict is still recharging.",
+                        wearer,
+                        MessageTypeDefOf.RejectInput,
+                        false);
+                }
+
+                return false;
+            }
+
+            int affectedCount = RuptureCrownUtility.ApplyVerdictWave(wearer, Props.effectRadius, Props.markTicks);
+            if (affectedCount <= 0)
+            {
+                if (wearer.Faction == Faction.OfPlayer)
+                {
+                    Messages.Message(
+                        "No hostile or neutral non-colony pawns are within rupture radius.",
+                        wearer,
+                        MessageTypeDefOf.RejectInput,
+                        false);
+                }
+
+                return false;
+            }
+
+            NotifyUsed();
+
+            Ability grantedAbility = RuptureCrownUtility.GetGrantedAbility(wearer);
+            if (grantedAbility != null)
+            {
+                grantedAbility.StartCooldown(Props.rechargeTicks);
+            }
+
+            if (wearer.MapHeld != null)
+            {
+                ABY_SoundUtility.PlayAt("ABY_RuptureVerdict", wearer.PositionHeld, wearer.MapHeld);
+                FleckMaker.ThrowLightningGlow(wearer.DrawPos, wearer.MapHeld, 2.4f);
+            }
+
+            if (wearer.Faction == Faction.OfPlayer)
+            {
+                Messages.Message(
+                    "Rupture Verdict collapsed " + affectedCount + " target(s).",
+                    new LookTargets(wearer),
+                    MessageTypeDefOf.NeutralEvent,
+                    false);
+            }
+
+            return true;
         }
     }
 }
