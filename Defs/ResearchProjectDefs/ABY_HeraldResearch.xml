@@ -4,8 +4,8 @@
   <ResearchProjectDef>
     <defName>ABY_HeraldFragmentAnalysis</defName>
     <label>herald fragment analysis</label>
-    <description>Recovered herald core fragments must first be analyzed before this research can begin. Once one has been decoded, your researchers can turn that data into stable Herald-tier weapon and implant theory.</description>
-    <baseCost>2600</baseCost>
+    <description>Herald core fragments cannot be decoded through ordinary research data alone. Study one at a hi-tech research bench to complete this analysis and unlock Herald-tier weapon and implant research. This project is intended to be completed by analysis, not by ordinary research progress.</description>
+    <baseCost>999999</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
     <researchViewX>4.35</researchViewX>
@@ -17,9 +17,6 @@
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
-    <requiredAnalyzed>
-      <li>ABY_HeraldCoreFragment</li>
-    </requiredAnalyzed>
   </ResearchProjectDef>
 
   <ResearchProjectDef>

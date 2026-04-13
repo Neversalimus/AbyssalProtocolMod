@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HeraldCoreFragment</defName>
     <label>herald core fragment</label>
-    <description>A jagged vertebral reactor-shard carved out of the first boss. Its chained archon routines can be analyzed like a progression key item, making it the gate to Herald-tier weapon and implant research.</description>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. Its chained archon routines are too unstable for ordinary theory work and must be decoded on a hi-tech research bench before Herald integration research becomes available.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -17,31 +17,6 @@
       <Mass>0.18</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <comps>
-      <li Class="CompProperties_CompAnalyzableUnlockResearch">
-        <analysisID>ABY_HeraldCoreFragment</analysisID>
-        <requiresMechanitor>false</requiresMechanitor>
-        <analysisDurationHours>0.5</analysisDurationHours>
-        <destroyedOnAnalyzed>false</destroyedOnAnalyzed>
-        <completedLetterLabel>Herald core fragment analyzed: {RESEARCH} unlocked</completedLetterLabel>
-        <completedLetter>By analyzing the {PARENT_label}, {STUDIER_labelShort} has acquired the insight needed for the research project(s) {RESEARCH}.
-
-Your researchers can now use research benches to begin the actual Herald integration work.</completedLetter>
-        <completedLetterDef>PositiveEvent</completedLetterDef>
-        <activateTexPath>UI/Icons/Study</activateTexPath>
-        <activateLabelString>Analyze...</activateLabelString>
-        <activateDescString>Analyze the herald core fragment</activateDescString>
-        <jobString>Analyzing the herald core fragment</jobString>
-        <guiLabelString>Choose who should analyze this</guiLabelString>
-        <inspectString>Can be analyzed by a colonist.</inspectString>
-        <targetingParameters>
-          <canTargetBuildings>false</canTargetBuildings>
-          <canTargetAnimals>false</canTargetAnimals>
-          <canTargetMechs>false</canTargetMechs>
-          <onlyTargetControlledPawns>true</onlyTargetControlledPawns>
-        </targetingParameters>
-      </li>
-    </comps>
   </ThingDef>
 
   <ThingDef ParentName="BodyPartBionicBase">
