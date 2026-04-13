@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -307,22 +306,7 @@ namespace AbyssalProtocol
             return "Rupture charge recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
         }
 
-        public override IEnumerable<StatDrawEntry> SpecialDisplayStats()
-        {
-            foreach (StatDrawEntry entry in base.SpecialDisplayStats())
-            {
-                yield return entry;
-            }
-
-            yield return new StatDrawEntry(
-                StatCategoryDefOf.BasicsNonPawnImportant,
-                "Rupture recharge",
-                GenDate.ToStringTicksToDays(Props.rechargeTicks),
-                "The crown condenses one new verdict charge over a full in-game day.",
-                1000);
-        }
-
-        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
+        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
             foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
             {
