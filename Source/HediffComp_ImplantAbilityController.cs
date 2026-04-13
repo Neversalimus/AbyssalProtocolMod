@@ -269,7 +269,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ability.QueueCastingJob(target);
+            GlobalTargetInfo globalTarget = target.HasThing
+                ? new GlobalTargetInfo(target.Thing)
+                : new GlobalTargetInfo(target.Cell, ability.pawn.MapHeld);
+
+            ability.QueueCastingJob(globalTarget);
             lastAutoCastTick = Find.TickManager != null ? Find.TickManager.TicksGame : NeverTick;
             return true;
         }
@@ -418,7 +422,7 @@ namespace AbyssalProtocol
             Pawn bestTarget = null;
             float bestScore = float.MinValue;
 
-            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn candidate = pawns[i];
@@ -491,7 +495,7 @@ namespace AbyssalProtocol
             }
 
             float radiusSquared = Props.avoidFriendlyRadius * Props.avoidFriendlyRadius;
-            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];
