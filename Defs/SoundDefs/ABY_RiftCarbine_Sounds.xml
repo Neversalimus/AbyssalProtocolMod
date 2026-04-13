@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_RiftCarbineCharge</defName>
+    <sustain>true</sustain>
+    <context>MapOnly</context>
+    <maxSimultaneousSoundsOnMap>4</maxSimultaneousSoundsOnMap>
+    <maxVoices>2</maxVoices>
+    <sustainerScope>PrioritizeNearest</sustainerScope>
+    <sustainFadeoutTime>0.08</sustainFadeoutTime>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/RiftCarbine_Charge</clipPath>
+          </li>
+        </grains>
+        <volumeRange>28~32</volumeRange>
+        <pitchRange>0.98~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RiftCarbineFire</defName>
+    <context>MapOnly</context>
+    <maxSimultaneousSoundsOnMap>6</maxSimultaneousSoundsOnMap>
+    <maxVoices>3</maxVoices>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/RiftCarbine_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>34~38</volumeRange>
+        <pitchRange>0.98~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_RiftCarbineTail</defName>
+    <context>MapOnly</context>
+    <maxSimultaneousSoundsOnMap>6</maxSimultaneousSoundsOnMap>
+    <maxVoices>3</maxVoices>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/RiftCarbine_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>20~24</volumeRange>
+        <pitchRange>0.98~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

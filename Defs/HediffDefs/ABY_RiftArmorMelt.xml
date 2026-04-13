@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_RiftArmorMelt</defName>
+    <label>rift armor melt</label>
+    <description>Infernal beam residue is still eating through armor seams and cooking structural layers from the inside.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <showOnCharacterCard>false</showOnCharacterCard>
+    <defaultLabelColor>(0.95, 0.32, 0.10)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>360</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <label>softened</label>
+        <statOffsets>
+          <ArmorRating_Sharp>-0.06</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.02</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.08</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.35</minSeverity>
+        <label>melting</label>
+        <statOffsets>
+          <ArmorRating_Sharp>-0.12</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.04</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.16</ArmorRating_Heat>
+          <Moving>-0.04</Moving>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.70</minSeverity>
+        <label>breached</label>
+        <statOffsets>
+          <ArmorRating_Sharp>-0.20</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.08</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.28</ArmorRating_Heat>
+          <Moving>-0.08</Moving>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

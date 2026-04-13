@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_RiftCarbineBeamBurst</defName>
+    <label>rift beam burst</label>
+    <thingClass>AbyssalProtocol.Projectile_RiftCarbineBurst</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_RiftCarbineBeam_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,2.75)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>20</damageAmountBase>
+      <armorPenetrationBase>1.25</armorPenetrationBase>
+      <speed>46</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
