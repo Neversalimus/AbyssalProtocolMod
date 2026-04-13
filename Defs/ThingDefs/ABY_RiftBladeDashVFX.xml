@@ -14,10 +14,9 @@
       <drawSize>(1.80,1.80)</drawSize>
     </graphicData>
     <mote>
-      <solidTime>0.02</solidTime>
+      <solidTime>4.81</solidTime>
       <fadeInTime>0.03</fadeInTime>
       <fadeOutTime>0.16</fadeOutTime>
-      <lifespan>5.0</lifespan>
     </mote>
   </ThingDef>
 
@@ -34,10 +33,9 @@
       <drawSize>(2.15,2.15)</drawSize>
     </graphicData>
     <mote>
-      <solidTime>0.02</solidTime>
+      <solidTime>5.95</solidTime>
       <fadeInTime>0.05</fadeInTime>
       <fadeOutTime>0.20</fadeOutTime>
-      <lifespan>6.2</lifespan>
     </mote>
   </ThingDef>
 
@@ -54,10 +52,9 @@
       <drawSize>(2.30,0.86)</drawSize>
     </graphicData>
     <mote>
-      <solidTime>0.00</solidTime>
+      <solidTime>3.42</solidTime>
       <fadeInTime>0.02</fadeInTime>
       <fadeOutTime>0.16</fadeOutTime>
-      <lifespan>3.6</lifespan>
     </mote>
   </ThingDef>
 
