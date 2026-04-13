@@ -28,7 +28,7 @@ namespace AbyssalProtocol
             }
 
             Pawn caster = parent?.pawn;
-            Pawn targetPawn = target.Thing as Pawn;
+            Pawn targetPawn = ResolveTargetPawn(caster, target);
             if (caster == null || targetPawn == null)
             {
                 return false;
@@ -54,10 +54,8 @@ namespace AbyssalProtocol
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
-
             Pawn caster = parent?.pawn;
-            Pawn targetPawn = target.Thing as Pawn;
+            Pawn targetPawn = ResolveTargetPawn(caster, target);
             if (caster == null || targetPawn == null || targetPawn.health == null)
             {
                 return;
@@ -68,6 +66,8 @@ namespace AbyssalProtocol
             {
                 return;
             }
+
+            base.Apply(target, dest);
 
             Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
             if (mark == null)
@@ -110,6 +110,37 @@ namespace AbyssalProtocol
             {
                 Messages.Message("Rupture Sentence discharged.", caster, MessageTypeDefOf.NeutralEvent, false);
             }
+        }
+
+        private static Pawn ResolveTargetPawn(Pawn caster, LocalTargetInfo target)
+        {
+            if (caster?.MapHeld == null || !target.IsValid)
+            {
+                return null;
+            }
+
+            Pawn directPawn = target.Thing as Pawn;
+            if (directPawn != null)
+            {
+                return directPawn;
+            }
+
+            if (!target.Cell.IsValid)
+            {
+                return null;
+            }
+
+            var thingList = target.Cell.GetThingList(caster.MapHeld);
+            for (int i = 0; i < thingList.Count; i++)
+            {
+                Pawn pawn = thingList[i] as Pawn;
+                if (pawn != null)
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
         }
     }
 }
