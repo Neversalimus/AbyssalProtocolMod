@@ -3,32 +3,35 @@
   <ABY_BossSummonSuccessLabel>Infernal breach opened</ABY_BossSummonSuccessLabel>
   <ABY_BossSummonSuccessDesc>{0} answers the sigil. A hostile breach signature has entered the map.</ABY_BossSummonSuccessDesc>
   <ABY_BossSummonFail_NoMap>This sigil can only be used while the pawn is standing on an active map.</ABY_BossSummonFail_NoMap>
-  <ABY_BossSummonFail_NoEdge>No valid breach point was found near the map edge.</ABY_BossSummonFail_NoEdge>
-  <ABY_BossSummonFail_NoCircle>Build and power an Abyssal Summoning Circle before using the sigil.</ABY_BossSummonFail_NoCircle>
+  <ABY_BossSummonFail_NoCircle>Build an Abyssal Summoning Circle before using the sigil.</ABY_BossSummonFail_NoCircle>
   <ABY_BossSummonFail_AllBusy>All abyssal circles on this map are already occupied by another ritual.</ABY_BossSummonFail_AllBusy>
   <ABY_BossSummonFail_AllUnpowered>All abyssal circles on this map are unpowered.</ABY_BossSummonFail_AllUnpowered>
-  <ABY_BossSummonFail_AllBlocked>No abyssal circle on this map is ready to accept a sigil.</ABY_BossSummonFail_AllBlocked>
+  <ABY_BossSummonFail_AllBlocked>All abyssal circles on this map are blocked or cluttered.</ABY_BossSummonFail_AllBlocked>
   <ABY_BossSummonFail_NoCircleAvailable>No available abyssal circle was found.</ABY_BossSummonFail_NoCircleAvailable>
   <ABY_BossSummonFail_EncounterActive>An abyssal encounter is already active on this map.</ABY_BossSummonFail_EncounterActive>
-  <ABY_BossName>Archon of Rupture</ABY_BossName>
-  <ABY_SecretBossRevealLabel>The true archon answers</ABY_SecretBossRevealLabel>
-  <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
-  <ABY_SigilActivationStarted>The abyssal circle begins to awaken.</ABY_SigilActivationStarted>
-  <ABY_SigilPlacementFailed>The sigil could not be placed onto the ritual focus.</ABY_SigilPlacementFailed>
   <ABY_CircleFail_NotPlaced>The abyssal circle must be placed on an active map.</ABY_CircleFail_NotPlaced>
   <ABY_CircleFail_Busy>This abyssal circle is already running a ritual.</ABY_CircleFail_Busy>
-  <ABY_CircleFail_NoPower>This abyssal circle has no power.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_NoPower>The abyssal circle has no power.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_InteractionBlocked>The activation side of the abyssal circle is blocked.</ABY_CircleFail_InteractionBlocked>
+  <ABY_CircleFail_FocusBlocked>The ritual focus at the center of the circle is obstructed.</ABY_CircleFail_FocusBlocked>
   <ABY_CircleFail_NoHostileFaction>No hostile faction could be resolved for the ritual.</ABY_CircleFail_NoHostileFaction>
-  <ABY_CircleFail_NoBossArrival>No valid map-edge cell was found for the summoned boss.</ABY_CircleFail_NoBossArrival>
-  <ABY_CircleFail_InteractionBlocked>The circle's interaction edge is blocked.</ABY_CircleFail_InteractionBlocked>
-  <ABY_CircleFail_FocusBlocked>The circle's ritual focus must be cleared before a sigil can be charged.</ABY_CircleFail_FocusBlocked>
-  <ABY_CircleInspect_Ready>Status: ready for sigil charging.</ABY_CircleInspect_Ready>
-  <ABY_CircleInspect_NotReady>Status: not ready ({0})</ABY_CircleInspect_NotReady>
+  <ABY_CircleFail_NoBossArrival>No valid breach point was found near the map edge.</ABY_CircleFail_NoBossArrival>
   <ABY_CircleInspect_Phase>Ritual phase: {0} ({1}%)</ABY_CircleInspect_Phase>
   <ABY_CircleInspect_StalledNoPower>Ritual is stalled: no power.</ABY_CircleInspect_StalledNoPower>
+  <ABY_CircleInspect_Ready>Ready for an archon sigil.</ABY_CircleInspect_Ready>
+  <ABY_CircleInspect_NotReady>Not ready: {0}</ABY_CircleInspect_NotReady>
   <ABY_CirclePhase_Idle>Idle</ABY_CirclePhase_Idle>
   <ABY_CirclePhase_Charging>Charging</ABY_CirclePhase_Charging>
   <ABY_CirclePhase_Surge>Surging</ABY_CirclePhase_Surge>
   <ABY_CirclePhase_Breach>Breaching</ABY_CirclePhase_Breach>
   <ABY_CirclePhase_Cooldown>Cooldown</ABY_CirclePhase_Cooldown>
+  <ABY_SigilActivationStarted>The abyssal circle begins to awaken.</ABY_SigilActivationStarted>
+  <ABY_SigilPlacementFailed>The sigil could not be stabilized on the ritual focus.</ABY_SigilPlacementFailed>
+  <ABY_BossName>Archon of Rupture</ABY_BossName>
+  <ABY_SecretBossRevealLabel>The true archon answers</ABY_SecretBossRevealLabel>
+  <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
+  <ABY_FirstBossKillLabel>Herald remains secured</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>The first archon beast has been brought down. Herald fragments and a recovered override ampoule can now feed the first real post-boss reward tier.</ABY_FirstBossKillDesc>
+  <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
+  <ABY_HeraldIntegrationUnlockedDesc>Herald Implant Integration has been completed automatically. The Abyssal Forge can now assemble the first boss-gated herald implants.</ABY_HeraldIntegrationUnlockedDesc>
 </LanguageData>

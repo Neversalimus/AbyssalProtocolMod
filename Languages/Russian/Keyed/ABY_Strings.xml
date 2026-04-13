@@ -3,32 +3,35 @@
   <ABY_BossSummonSuccessLabel>Инфернальный разлом открыт</ABY_BossSummonSuccessLabel>
   <ABY_BossSummonSuccessDesc>{0} откликнулся на сигил. На карте появился враждебный разломный босс.</ABY_BossSummonSuccessDesc>
   <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
-  <ABY_BossSummonFail_NoEdge>Не удалось найти подходящую точку прорыва у края карты.</ABY_BossSummonFail_NoEdge>
-  <ABY_BossSummonFail_NoCircle>Перед использованием сигила построй и запитай Круг Призыва Бездны.</ABY_BossSummonFail_NoCircle>
+  <ABY_BossSummonFail_NoCircle>Сначала построй Круг Призыва Бездны.</ABY_BossSummonFail_NoCircle>
   <ABY_BossSummonFail_AllBusy>Все круги бездны на этой карте уже заняты другим ритуалом.</ABY_BossSummonFail_AllBusy>
   <ABY_BossSummonFail_AllUnpowered>Все круги бездны на этой карте обесточены.</ABY_BossSummonFail_AllUnpowered>
-  <ABY_BossSummonFail_AllBlocked>На этой карте нет ни одного круга бездны, готового принять сигил.</ABY_BossSummonFail_AllBlocked>
+  <ABY_BossSummonFail_AllBlocked>Все круги бездны на этой карте заблокированы или захламлены.</ABY_BossSummonFail_AllBlocked>
   <ABY_BossSummonFail_NoCircleAvailable>Не удалось найти доступный круг бездны.</ABY_BossSummonFail_NoCircleAvailable>
-  <ABY_BossSummonFail_EncounterActive>На этой карте уже идёт активная бездна-встреча.</ABY_BossSummonFail_EncounterActive>
+  <ABY_BossSummonFail_EncounterActive>На этой карте уже активна бездонная встреча.</ABY_BossSummonFail_EncounterActive>
+  <ABY_CircleFail_NotPlaced>Круг бездны должен быть установлен на активной карте.</ABY_CircleFail_NotPlaced>
+  <ABY_CircleFail_Busy>Этот круг бездны уже проводит ритуал.</ABY_CircleFail_Busy>
+  <ABY_CircleFail_NoPower>У круга бездны нет питания.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_InteractionBlocked>Сторона активации круга бездны заблокирована.</ABY_CircleFail_InteractionBlocked>
+  <ABY_CircleFail_FocusBlocked>Ритуальный фокус в центре круга чем-то перекрыт.</ABY_CircleFail_FocusBlocked>
+  <ABY_CircleFail_NoHostileFaction>Для ритуала не удалось определить враждебную фракцию.</ABY_CircleFail_NoHostileFaction>
+  <ABY_CircleFail_NoBossArrival>Не удалось найти подходящую точку прорыва у края карты.</ABY_CircleFail_NoBossArrival>
+  <ABY_CircleInspect_Phase>Фаза ритуала: {0} ({1}%)</ABY_CircleInspect_Phase>
+  <ABY_CircleInspect_StalledNoPower>Ритуал остановлен: нет питания.</ABY_CircleInspect_StalledNoPower>
+  <ABY_CircleInspect_Ready>Готов к активации архон-сигилом.</ABY_CircleInspect_Ready>
+  <ABY_CircleInspect_NotReady>Не готов: {0}</ABY_CircleInspect_NotReady>
+  <ABY_CirclePhase_Idle>Ожидание</ABY_CirclePhase_Idle>
+  <ABY_CirclePhase_Charging>Накопление</ABY_CirclePhase_Charging>
+  <ABY_CirclePhase_Surge>Всплеск</ABY_CirclePhase_Surge>
+  <ABY_CirclePhase_Breach>Прорыв</ABY_CirclePhase_Breach>
+  <ABY_CirclePhase_Cooldown>Откат</ABY_CirclePhase_Cooldown>
+  <ABY_SigilActivationStarted>Круг бездны начинает пробуждаться.</ABY_SigilActivationStarted>
+  <ABY_SigilPlacementFailed>Не удалось стабилизировать сигил на ритуальном фокусе.</ABY_SigilPlacementFailed>
   <ABY_BossName>Архон Разрыва</ABY_BossName>
   <ABY_SecretBossRevealLabel>Ответил истинный архонт</ABY_SecretBossRevealLabel>
   <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
-  <ABY_SigilActivationStarted>Круг Бездны начинает пробуждаться.</ABY_SigilActivationStarted>
-  <ABY_SigilPlacementFailed>Не удалось положить сигил на ритуальный фокус.</ABY_SigilPlacementFailed>
-  <ABY_CircleFail_NotPlaced>Круг Бездны должен быть установлен на активной карте.</ABY_CircleFail_NotPlaced>
-  <ABY_CircleFail_Busy>Этот круг бездны уже выполняет ритуал.</ABY_CircleFail_Busy>
-  <ABY_CircleFail_NoPower>У этого круга бездны нет питания.</ABY_CircleFail_NoPower>
-  <ABY_CircleFail_NoHostileFaction>Не удалось определить враждебную фракцию для ритуала.</ABY_CircleFail_NoHostileFaction>
-  <ABY_CircleFail_NoBossArrival>Не удалось найти подходящую точку у края карты для появления босса.</ABY_CircleFail_NoBossArrival>
-  <ABY_CircleFail_InteractionBlocked>Подход к краю круга, где выполняется активация, заблокирован.</ABY_CircleFail_InteractionBlocked>
-  <ABY_CircleFail_FocusBlocked>Перед зарядкой сигила нужно очистить ритуальный фокус круга.</ABY_CircleFail_FocusBlocked>
-  <ABY_CircleInspect_Ready>Статус: готов к зарядке сигила.</ABY_CircleInspect_Ready>
-  <ABY_CircleInspect_NotReady>Статус: не готов ({0})</ABY_CircleInspect_NotReady>
-  <ABY_CircleInspect_Phase>Фаза ритуала: {0} ({1}%)</ABY_CircleInspect_Phase>
-  <ABY_CircleInspect_StalledNoPower>Ритуал остановлен: нет питания.</ABY_CircleInspect_StalledNoPower>
-  <ABY_CirclePhase_Idle>Ожидание</ABY_CirclePhase_Idle>
-  <ABY_CirclePhase_Charging>Зарядка</ABY_CirclePhase_Charging>
-  <ABY_CirclePhase_Surge>Перегрузка</ABY_CirclePhase_Surge>
-  <ABY_CirclePhase_Breach>Прорыв</ABY_CirclePhase_Breach>
-  <ABY_CirclePhase_Cooldown>Остывание</ABY_CirclePhase_Cooldown>
+  <ABY_FirstBossKillLabel>Останки герольда захвачены</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>Первый архон-зверь повержен. Фрагменты герольда и добытая ампула перехвата теперь питают первый настоящий постбоссовый тир наград.</ABY_FirstBossKillDesc>
+  <ABY_HeraldIntegrationUnlockedLabel>Открыта интеграция герольда</ABY_HeraldIntegrationUnlockedLabel>
+  <ABY_HeraldIntegrationUnlockedDesc>Исследование интеграции герольда завершено автоматически. Кузня Бездны теперь может собирать первые импланты, жёстко привязанные к награде за босса.</ABY_HeraldIntegrationUnlockedDesc>
 </LanguageData>
