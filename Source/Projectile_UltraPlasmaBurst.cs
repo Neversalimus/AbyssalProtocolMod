@@ -21,7 +21,7 @@ namespace AbyssalProtocol
         private Vector3 lastExactPosition;
         private bool lastPositionInitialized;
 
-        public override void Tick()
+        protected override void Tick()
         {
             Vector3 previousPosition = ExactPosition;
             base.Tick();
