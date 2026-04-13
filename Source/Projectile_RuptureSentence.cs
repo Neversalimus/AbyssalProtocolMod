@@ -5,7 +5,7 @@ using Verse;
 
 namespace AbyssalProtocol
 {
-    public class Projectile_RuptureSentence : Projectile
+    public class Projectile_RuptureSentence : Bullet
     {
         private const int DefaultMarkTicks = 4320;
 
@@ -42,8 +42,7 @@ namespace AbyssalProtocol
                     false);
             }
 
-            GenClamor.DoClamor(this, 2.1f, ClamorDefOf.Impact);
-            Destroy(DestroyMode.Vanish);
+            base.Impact(hitThing);
         }
 
         private static bool IsValidPawnTarget(Pawn caster, Pawn targetPawn)
