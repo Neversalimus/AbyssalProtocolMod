@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -34,39 +35,21 @@ namespace AbyssalProtocol
         {
             Pawn caster = parent?.pawn;
             Pawn targetPawn = ResolveTargetPawn(caster, target);
-            if (caster == null || targetPawn == null)
-            {
-                return false;
-            }
-
-            if (caster == targetPawn || caster.Dead || targetPawn.Dead)
-            {
-                return false;
-            }
-
-            if (!caster.Spawned || !targetPawn.Spawned || caster.MapHeld == null || targetPawn.MapHeld != caster.MapHeld)
-            {
-                return false;
-            }
-
-            if (!targetPawn.HostileTo(caster))
-            {
-                return false;
-            }
-
-            return GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld);
+            return IsValidPawnTarget(caster, targetPawn);
         }
 
         private void ApplyInternal(LocalTargetInfo target)
         {
             Pawn caster = parent?.pawn;
             Pawn targetPawn = ResolveTargetPawn(caster, target);
+
             if (caster == null || targetPawn == null || targetPawn.health == null)
             {
                 if (caster != null && caster.Faction == Faction.OfPlayer)
                 {
                     Messages.Message("Rupture Sentence failed: no valid hostile pawn in the selected target.", caster, MessageTypeDefOf.RejectInput, false);
                 }
+
                 return;
             }
 
@@ -77,15 +60,17 @@ namespace AbyssalProtocol
                 {
                     Messages.Message("Rupture Sentence failed: mark hediff is missing.", caster, MessageTypeDefOf.RejectInput, false);
                 }
+
                 return;
             }
 
-            if (!CanApplyInternal(target))
+            if (!IsValidPawnTarget(caster, targetPawn))
             {
                 if (caster.Faction == Faction.OfPlayer)
                 {
                     Messages.Message("Rupture Sentence failed: target is invalid.", caster, MessageTypeDefOf.RejectInput, false);
                 }
+
                 return;
             }
 
@@ -99,6 +84,7 @@ namespace AbyssalProtocol
             }
 
             mark.Severity = Mathf.Max(mark.Severity, 1f);
+
             HediffComp_Disappears disappears = mark.TryGetComp<HediffComp_Disappears>();
             if (disappears != null)
             {
@@ -135,6 +121,26 @@ namespace AbyssalProtocol
             }
         }
 
+        private static bool IsValidPawnTarget(Pawn caster, Pawn targetPawn)
+        {
+            if (caster == null || caster.Dead || !caster.Spawned || caster.MapHeld == null)
+            {
+                return false;
+            }
+
+            if (targetPawn == null || targetPawn == caster || targetPawn.Dead || !targetPawn.Spawned || targetPawn.MapHeld != caster.MapHeld)
+            {
+                return false;
+            }
+
+            if (!targetPawn.HostileTo(caster))
+            {
+                return false;
+            }
+
+            return GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld);
+        }
+
         private static Pawn ResolveTargetPawn(Pawn caster, LocalTargetInfo target)
         {
             if (caster?.MapHeld == null || !target.IsValid)
@@ -146,6 +152,21 @@ namespace AbyssalProtocol
             if (directPawn != null)
             {
                 return directPawn;
+            }
+
+            if (!target.Cell.IsValid)
+            {
+                return null;
+            }
+
+            List<Thing> things = target.Cell.GetThingList(caster.MapHeld);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Pawn pawn = things[i] as Pawn;
+                if (pawn != null)
+                {
+                    return pawn;
+                }
             }
 
             return null;
