@@ -34,4 +34,8 @@
   <ABY_FirstBossKillDesc>The first archon beast has been brought down. Herald fragments and a recovered override ampoule can now feed the first real post-boss reward tier.</ABY_FirstBossKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Herald Implant Integration has been completed automatically. The Abyssal Forge can now assemble the first boss-gated herald implants.</ABY_HeraldIntegrationUnlockedDesc>
+  <ABY_SignalTheoryGuidanceLabel>Abyssal contact stabilized</ABY_SignalTheoryGuidanceLabel>
+  <ABY_SignalTheoryGuidanceDesc>Abyssal Signal Theory is complete. Build an Abyssal Forge to condense residue and an Abyssal Summoning Circle to anchor the first controlled breach.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_FirstSigilGuidanceLabel>First archon sigil forged</ABY_FirstSigilGuidanceLabel>
+  <ABY_FirstSigilGuidanceDesc>The first Archon Sigil is ready. Carry it to a powered Abyssal Summoning Circle, keep the ritual focus clear, and activate it to begin the first controlled breach.</ABY_FirstSigilGuidanceDesc>
 </LanguageData>

@@ -34,4 +34,8 @@
   <ABY_FirstBossKillDesc>Первый архон-зверь повержен. Фрагменты герольда и добытая ампула перехвата теперь питают первый настоящий постбоссовый тир наград.</ABY_FirstBossKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Открыта интеграция герольда</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Исследование интеграции герольда завершено автоматически. Кузня Бездны теперь может собирать первые импланты, жёстко привязанные к награде за босса.</ABY_HeraldIntegrationUnlockedDesc>
+  <ABY_SignalTheoryGuidanceLabel>Контакт с Бездной стабилизирован</ABY_SignalTheoryGuidanceLabel>
+  <ABY_SignalTheoryGuidanceDesc>Исследование теории бездонного сигнала завершено. Построй Кузню Бездны, чтобы конденсировать residue, и Круг Призыва Бездны, чтобы заякорить первый контролируемый прорыв.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_FirstSigilGuidanceLabel>Первый архон-сигил выкован</ABY_FirstSigilGuidanceLabel>
+  <ABY_FirstSigilGuidanceDesc>Первый архон-сигил готов. Отнеси его к запитанному Кругу Призыва Бездны, держи ритуальный фокус свободным и активируй сигил, чтобы начать первый контролируемый прорыв.</ABY_FirstSigilGuidanceDesc>
 </LanguageData>
