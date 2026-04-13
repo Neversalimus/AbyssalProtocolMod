@@ -121,7 +121,7 @@ namespace AbyssalProtocol
                 return 0;
             }
 
-            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int count = 0;
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -141,7 +141,7 @@ namespace AbyssalProtocol
                 return 0;
             }
 
-            List<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int affectedCount = 0;
             for (int i = 0; i < pawns.Count; i++)
             {
