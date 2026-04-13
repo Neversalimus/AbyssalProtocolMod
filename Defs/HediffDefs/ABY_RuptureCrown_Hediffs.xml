@@ -8,11 +8,6 @@
     <hediffClass>HediffWithComps</hediffClass>
     <scenarioCanAdd>false</scenarioCanAdd>
     <isBad>false</isBad>
-    <comps>
-      <li Class="Verse.HediffCompProperties_GiveAbility">
-        <abilityDef>ABY_RuptureSentence</abilityDef>
-      </li>
-    </comps>
   </HediffDef>
 
   <HediffDef>
