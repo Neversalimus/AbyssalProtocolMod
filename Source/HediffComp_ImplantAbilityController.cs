@@ -270,7 +270,17 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ability.QueueCastingJob(target);
+            Map map = target.HasThing ? target.Thing.MapHeld : Pawn?.MapHeld;
+            if (map == null)
+            {
+                return false;
+            }
+
+            GlobalTargetInfo globalTarget = target.HasThing
+                ? new GlobalTargetInfo(target.Thing)
+                : new GlobalTargetInfo(target.Cell, map);
+
+            ability.QueueCastingJob(globalTarget);
             lastAutoCastTick = Find.TickManager != null ? Find.TickManager.TicksGame : NeverTick;
             return true;
         }
