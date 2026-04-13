@@ -2,14 +2,62 @@
 <Defs>
 
   <ResearchProjectDef>
+    <defName>ABY_HeraldFragmentAnalysis</defName>
+    <label>herald fragment analysis</label>
+    <description>Herald core fragments cannot be decoded through ordinary research data alone. Study one at a hi-tech research bench to complete this analysis and unlock Herald-tier weapon and implant research. This project is intended to be completed by analysis, not by ordinary research progress.</description>
+    <baseCost>999999</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>4.35</researchViewX>
+    <researchViewY>0.00</researchViewY>
+    <prerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_HeraldWeaponIntegration</defName>
+    <label>herald weapon integration</label>
+    <description>Convert herald core telemetry into stable weapon architecture. Unlocks the first Herald-derived heavy weapon patterns for the Abyssal Forge.</description>
+    <baseCost>3000</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>6.55</researchViewX>
+    <researchViewY>-0.95</researchViewY>
+    <prerequisites>
+      <li>ABY_HeraldFragmentAnalysis</li>
+      <li>ABY_AbyssalArmaments</li>
+    </prerequisites>
+    <hiddenPrerequisites>
+      <li>ChargedShot</li>
+    </hiddenPrerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
     <defName>ABY_HeraldImplantIntegration</defName>
     <label>herald implant integration</label>
-    <description>Reverse-engineer the first boss into controlled combat augmentation. Once the first beast is slain and augmentation theory is already finished, this project completes automatically and unlocks the first true boss-gated infernal implants for the Abyssal Forge.</description>
+    <description>Reverse-engineer the first boss into controlled combat augmentation. Unlocks the first true Herald-grade infernal implants for the Abyssal Forge once a recovered fragment has been properly analyzed.</description>
     <baseCost>3200</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>6.55</researchViewX>
+    <researchViewY>0.95</researchViewY>
     <prerequisites>
+      <li>ABY_HeraldFragmentAnalysis</li>
       <li>ABY_AbyssalAugmentation</li>
     </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
   </ResearchProjectDef>
 
 </Defs>

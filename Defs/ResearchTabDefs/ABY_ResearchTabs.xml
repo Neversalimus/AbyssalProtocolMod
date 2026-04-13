@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchTabDef>
+    <defName>ABY_AbyssalProtocolTab</defName>
+    <label>Abyssal Protocol</label>
+    <generalTitle>Abyssal Protocol</generalTitle>
+    <generalDescription>Infernal industrial research derived from controlled breaches, herald fragment analysis, and boss-gated reverse engineering.</generalDescription>
+  </ResearchTabDef>
+
+</Defs>

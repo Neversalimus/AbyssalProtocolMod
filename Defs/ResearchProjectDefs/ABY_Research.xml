@@ -4,9 +4,12 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalSignalTheory</defName>
     <label>abyssal signal theory</label>
-    <description>Controlled interaction with extra-dimensional hostile signatures through machine-assisted ritual geometry. Unlocks the Abyssal Forge and Abyssal Summoning Circle.</description>
+    <description>Controlled interaction with extra-dimensional hostile signatures through machine-assisted ritual geometry. Establishes the first Abyssal Protocol research foothold and unlocks the infrastructure needed for breach work.</description>
     <baseCost>1200</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>0.00</researchViewX>
+    <researchViewY>0.00</researchViewY>
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
@@ -15,9 +18,12 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalArmaments</defName>
     <label>abyssal armaments</label>
-    <description>Weaponized containment of breach-energy for early abyssal firearms and melee gear.</description>
+    <description>Weaponized containment of breach-energy. Unlocks the first practical infernal weapons and serves as the conventional foundation for later Herald-grade weapon research.</description>
     <baseCost>1800</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>2.10</researchViewX>
+    <researchViewY>-0.95</researchViewY>
     <prerequisites>
       <li>ABY_AbyssalSignalTheory</li>
       <li>Fabrication</li>
@@ -27,9 +33,12 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalAugmentation</defName>
     <label>abyssal augmentation</label>
-    <description>Military infernal augmentation theory, laying the groundwork for the first boss-derived implant tier.</description>
+    <description>Military infernal augmentation theory, laying the groundwork for advanced boss-derived implants and later Herald-grade reverse engineering.</description>
     <baseCost>2200</baseCost>
     <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>2.10</researchViewX>
+    <researchViewY>0.95</researchViewY>
     <prerequisites>
       <li>ABY_AbyssalSignalTheory</li>
       <li>Bionics</li>

@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HeraldCoreFragment</defName>
     <label>herald core fragment</label>
-    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and is stable enough to anchor only one high-grade infernal implant project per kill.</description>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and can be studied at a hi-tech research bench to unlock Herald-tier weapon and implant research.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_HeraldAnalysisPacket</defName>
+    <label>herald analysis packet</label>
+    <description>An ephemeral bundle of decoded herald telemetry generated on a hi-tech research bench. It is consumed the moment the fragment analysis cycle resolves.</description>
+    <thingClass>AbyssalProtocol.Thing_HeraldAnalysisPacket</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(255,170,120)</color>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>None</tradeability>
+    <statBases>
+      <MarketValue>1</MarketValue>
+      <Mass>0.02</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

@@ -83,4 +83,31 @@
     </products>
   </RecipeDef>
 
+  <RecipeDef>
+    <defName>ABY_AnalyzeHeraldCoreFragment</defName>
+    <label>analyze herald core fragment</label>
+    <description>Study a recovered herald core fragment on a hi-tech research bench. Completing the analysis unlocks Herald-tier research paths for advanced weapons and implants.</description>
+    <jobString>Analyzing herald core fragment.</jobString>
+    <workAmount>2600</workAmount>
+    <workSpeedStat>ResearchSpeed</workSpeedStat>
+    <workSkill>Intellectual</workSkill>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
+    <recipeUsers>
+      <li>HiTechResearchBench</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_HeraldCoreFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_HeraldAnalysisPacket>1</ABY_HeraldAnalysisPacket>
+    </products>
+  </RecipeDef>
+
 </Defs>
