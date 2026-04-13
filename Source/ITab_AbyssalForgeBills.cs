@@ -4,6 +4,7 @@ using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -12,8 +13,8 @@ namespace AbyssalProtocol
         private static readonly Vector2 WinSize = new Vector2(640f, 620f);
         private static readonly Dictionary<int, string> SelectedCategoryByThingId = new Dictionary<int, string>();
 
-        private Vector2 scrollPosition;
-        private float viewHeight;
+        private Vector2 scrollPosition = default(Vector2);
+        private float viewHeight = 1000f;
         private Bill mouseoverBill;
 
         protected Building_AbyssalForge SelForge => (Building_AbyssalForge)SelThing;
@@ -61,9 +62,7 @@ namespace AbyssalProtocol
             int nextUnlock = progress?.GetNextUnlockResidue(GetSelectedCategory()) ?? -1;
             RecipeDef nextRecipe = progress?.GetNextUnlockRecipe(GetSelectedCategory());
             int currentTier = progress?.GetCurrentAttunementTier(false) ?? 0;
-            float fillPercent = nextUnlock > 0
-                ? Mathf.Clamp01(totalOffered / (float)nextUnlock)
-                : 1f;
+            float fillPercent = nextUnlock > 0 ? Mathf.Clamp01(totalOffered / (float)nextUnlock) : 1f;
 
             Text.Font = GameFont.Medium;
             Widgets.Label(new Rect(inner.x, inner.y, inner.width, 30f), "ABY_ForgePanelHeader".Translate());
@@ -192,7 +191,7 @@ namespace AbyssalProtocol
                     lines.Add("• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
                 }
 
-                previewText = "ABY_ForgeUpcomingPatterns".Translate() + "\n" + string.Join("\n", lines);
+                previewText = "ABY_ForgeUpcomingPatterns".Translate() + "\n" + string.Join("\n", lines.ToArray());
             }
 
             Widgets.Label(rightRect, previewText);
@@ -237,8 +236,12 @@ namespace AbyssalProtocol
                         {
                             PlayerKnowledgeDatabase.KnowledgeDemonstrated(capturedRecipe.conceptLearned, KnowledgeAmount.Total);
                         }
+
+                        if (TutorSystem.TutorialMode)
+                        {
+                            TutorSystem.Notify_Event("AddBill-" + capturedRecipe.LabelCap);
+                        }
                     },
-                    capturedRecipe.UIIconThing,
                     MenuOptionPriority.Default,
                     null,
                     null,
@@ -246,12 +249,14 @@ namespace AbyssalProtocol
                     delegate(Rect infoRect)
                     {
                         Widgets.InfoCardButton(infoRect.x + 5f, infoRect.y + (infoRect.height - 24f) / 2f, capturedRecipe);
-                    }));
+                        return false;
+                    },
+                    null));
             }
 
             if (!options.Any())
             {
-                options.Add(new FloatMenuOption("ABY_ForgeNoUnlockedRecipes".Translate(), null));
+                options.Add(new FloatMenuOption("ABY_ForgeNoUnlockedRecipes".Translate(), null, MenuOptionPriority.Default, null, null, 0f, null, null));
             }
 
             return options;
@@ -292,7 +297,7 @@ namespace AbyssalProtocol
                 Bill bill = BillUtility.Clipboard.Clone();
                 bill.InitializeAfterClone();
                 SelForge.BillStack.AddBill(bill);
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
             }
 
             TooltipHandler.TipRegionByKey(rect, "PasteBillTip");
@@ -313,7 +318,7 @@ namespace AbyssalProtocol
             int consumed = SelForge.OfferResidue(requestedAmount);
             if (consumed > 0)
             {
-                SoundDefOf.Tick_High.PlayOneShotOnCamera();
+                SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
             }
             else
             {

@@ -36,6 +36,16 @@
       <Private>false</Private>
     </Reference>
 
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\Libraries\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\Libraries\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
