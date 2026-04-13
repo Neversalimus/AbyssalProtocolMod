@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-  <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/ThingDef[defName="ABY_RiftBlade" and not(modExtensions)]</xpath>
-    <value>
-      <modExtensions />
-    </value>
-  </Operation>
-
-  <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/modExtensions[not(li[@Class="AbyssalProtocol.RiftDashWeaponExtension"])]</xpath>
-    <value>
-      <li Class="AbyssalProtocol.RiftDashWeaponExtension">
-        <maxRange>10</maxRange>
-        <cooldownTicks>240</cooldownTicks>
-        <entryMoteDef>ABY_Mote_RiftBladeDashEntry</entryMoteDef>
-        <exitMoteDef>ABY_Mote_RiftBladeDashExit</exitMoteDef>
-        <trailMoteDef>ABY_Mote_RiftBladeDashTrail</trailMoteDef>
-        <sparkMoteDef>ABY_Mote_RiftBladeDashSpark</sparkMoteDef>
-        <shardMoteDef>ABY_Mote_RiftBladeDashShard</shardMoteDef>
-        <soundDef>ABY_RiftBladeDash</soundDef>
-        <entryMoteScale>0.84</entryMoteScale>
-        <exitMoteScale>0.96</exitMoteScale>
-        <trailMoteScale>0.68</trailMoteScale>
-        <sparkMoteScale>0.46</sparkMoteScale>
-        <shardMoteScale>0.54</shardMoteScale>
-        <trailSteps>2</trailSteps>
-        <trailParticleBurst>1</trailParticleBurst>
-        <endpointParticleBurst>2</endpointParticleBurst>
-        <particleJitter>0.12</particleJitter>
-        <requireLineOfSight>true</requireLineOfSight>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade" and not(modExtensions)]</xpath>
+        <value>
+          <modExtensions />
+        </value>
       </li>
-    </value>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"]/modExtensions[not(li[@Class="AbyssalProtocol.RiftDashWeaponExtension"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.RiftDashWeaponExtension">
+            <maxRange>10</maxRange>
+            <cooldownTicks>240</cooldownTicks>
+            <entryMoteDef>ABY_Mote_RiftBladeDashEntry</entryMoteDef>
+            <exitMoteDef>ABY_Mote_RiftBladeDashExit</exitMoteDef>
+            <trailMoteDef>ABY_Mote_RiftBladeDashTrail</trailMoteDef>
+            <sparkMoteDef>ABY_Mote_RiftBladeDashSpark</sparkMoteDef>
+            <shardMoteDef>ABY_Mote_RiftBladeDashShard</shardMoteDef>
+            <soundDef>ABY_RiftBladeDash</soundDef>
+            <entryMoteScale>0.84</entryMoteScale>
+            <exitMoteScale>0.96</exitMoteScale>
+            <trailMoteScale>0.68</trailMoteScale>
+            <sparkMoteScale>0.46</sparkMoteScale>
+            <shardMoteScale>0.54</shardMoteScale>
+            <trailSteps>2</trailSteps>
+            <trailParticleBurst>1</trailParticleBurst>
+            <endpointParticleBurst>2</endpointParticleBurst>
+            <particleJitter>0.12</particleJitter>
+            <requireLineOfSight>true</requireLineOfSight>
+          </li>
+        </value>
+      </li>
+    </operations>
   </Operation>
 
 </Patch>
