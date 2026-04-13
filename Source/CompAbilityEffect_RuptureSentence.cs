@@ -20,13 +20,28 @@ namespace AbyssalProtocol
     {
         public new CompProperties_AbilityEffect_RuptureSentence Props => (CompProperties_AbilityEffect_RuptureSentence)props;
 
+        public override bool CanApplyOn(LocalTargetInfo target)
+        {
+            return CanApplyInternal(target);
+        }
+
         public override bool CanApplyOn(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            if (!base.CanApplyOn(target, dest))
-            {
-                return false;
-            }
+            return CanApplyInternal(target);
+        }
 
+        public override void Apply(LocalTargetInfo target)
+        {
+            ApplyInternal(target);
+        }
+
+        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        {
+            ApplyInternal(target);
+        }
+
+        private bool CanApplyInternal(LocalTargetInfo target)
+        {
             Pawn caster = parent?.pawn;
             Pawn targetPawn = ResolveTargetPawn(caster, target);
             if (caster == null || targetPawn == null)
@@ -49,44 +64,42 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld))
-            {
-                return false;
-            }
-
-            CompRuptureCrown crownComp = RuptureCrownUtility.GetWornCrownComp(caster);
-            if (crownComp != null && !crownComp.IsReady)
-            {
-                return false;
-            }
-
-            return true;
+            return GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld);
         }
 
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        private void ApplyInternal(LocalTargetInfo target)
         {
             Pawn caster = parent?.pawn;
             Pawn targetPawn = ResolveTargetPawn(caster, target);
             if (caster == null || targetPawn == null || targetPawn.health == null)
             {
-                NotifyPlayerFailure(caster, "Rupture Sentence failed: no valid hostile pawn was resolved from the selected target.");
-                return;
-            }
-
-            if (!CanApplyOn(target, dest))
-            {
-                NotifyPlayerFailure(caster, "Rupture Sentence failed: target became invalid before cast resolution.");
+                if (caster != null && caster.Faction == Faction.OfPlayer)
+                {
+                    Messages.Message("Rupture Sentence failed: no valid hostile pawn in the selected target.", caster, MessageTypeDefOf.RejectInput, false);
+                }
                 return;
             }
 
             HediffDef markDef = DefDatabase<HediffDef>.GetNamedSilentFail(Props.markHediffDef);
             if (markDef == null)
             {
-                NotifyPlayerFailure(caster, "Rupture Sentence failed: mark hediff def is missing.");
+                if (caster.Faction == Faction.OfPlayer)
+                {
+                    Messages.Message("Rupture Sentence failed: mark hediff is missing.", caster, MessageTypeDefOf.RejectInput, false);
+                }
                 return;
             }
 
-            base.Apply(target, dest);
+            if (!CanApplyInternal(target))
+            {
+                if (caster.Faction == Faction.OfPlayer)
+                {
+                    Messages.Message("Rupture Sentence failed: target is invalid.", caster, MessageTypeDefOf.RejectInput, false);
+                }
+                return;
+            }
+
+            base.Apply(new LocalTargetInfo(targetPawn));
 
             Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
             if (mark == null)
@@ -123,11 +136,12 @@ namespace AbyssalProtocol
             if (targetPawn.MapHeld != null)
             {
                 ABY_SoundUtility.PlayAt("ABY_RuptureImpact", targetPawn.PositionHeld, targetPawn.MapHeld);
+                FleckMaker.ThrowLightningGlow(targetPawn.DrawPos, targetPawn.MapHeld, 1.8f);
             }
 
             if (caster.Faction == Faction.OfPlayer)
             {
-                Messages.Message("Rupture Sentence discharged.", caster, MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message("Rupture Sentence discharged.", new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent, false);
             }
         }
 
@@ -149,10 +163,10 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            var things = target.Cell.GetThingList(caster.MapHeld);
-            for (int i = 0; i < things.Count; i++)
+            var thingList = target.Cell.GetThingList(caster.MapHeld);
+            for (int i = 0; i < thingList.Count; i++)
             {
-                Pawn pawn = things[i] as Pawn;
+                Pawn pawn = thingList[i] as Pawn;
                 if (pawn != null)
                 {
                     return pawn;
@@ -160,14 +174,6 @@ namespace AbyssalProtocol
             }
 
             return null;
-        }
-
-        private static void NotifyPlayerFailure(Pawn caster, string text)
-        {
-            if (caster != null && caster.Faction == Faction.OfPlayer)
-            {
-                Messages.Message(text, caster, MessageTypeDefOf.RejectInput, false);
-            }
         }
     }
 }
