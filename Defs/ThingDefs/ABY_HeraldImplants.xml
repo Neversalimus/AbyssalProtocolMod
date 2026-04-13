@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HeraldCoreFragment</defName>
     <label>herald core fragment</label>
-    <description>A jagged vertebral reactor-shard carved out of the first boss. Its chained archon routines are too unstable for ordinary theory work and must be decoded on a hi-tech research bench before Herald integration research becomes available.</description>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. Its chained archon routines are too unstable for ordinary theory work and instead become useful once the forge has been sufficiently fed and attuned.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -37,7 +37,6 @@
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
-      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
       <skillRequirements>
         <Crafting>10</Crafting>
       </skillRequirements>
@@ -53,6 +52,12 @@
       <Plasteel>15</Plasteel>
       <Steel>30</Steel>
     </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>200</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="BodyPartBionicBase">
@@ -73,7 +78,6 @@
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
-      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
       <skillRequirements>
         <Crafting>11</Crafting>
       </skillRequirements>
@@ -89,6 +93,12 @@
       <Plasteel>20</Plasteel>
       <Steel>40</Steel>
     </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>250</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="BodyPartBionicBase">
@@ -109,7 +119,6 @@
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
-      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
       <skillRequirements>
         <Crafting>10</Crafting>
       </skillRequirements>
@@ -125,6 +134,12 @@
       <Plasteel>25</Plasteel>
       <Steel>20</Steel>
     </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>300</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

@@ -4,7 +4,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_AbyssalForge</defName>
     <label>abyssal forge</label>
-    <description>A living techno-demonic fabrication altar. The forge distills residue, brands summon sigils, and assembles abyssal weapons and implants around a pulsing infernal reactor-heart.</description>
+    <description>A living techno-demonic fabrication altar. The forge now doubles as a communion core: feed it abyssal residue to deepen map-wide attunement, unlock harsher fabrication patterns, and sustain a low infernal resonance across the colony while it remains active.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalForge</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -50,7 +50,7 @@
     <thingCategories Inherit="False" />
 
     <inspectorTabs>
-      <li>ITab_Bills</li>
+      <li>AbyssalProtocol.ITab_AbyssalForgeBills</li>
     </inspectorTabs>
 
     <comps Inherit="False">

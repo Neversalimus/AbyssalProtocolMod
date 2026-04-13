@@ -20,7 +20,6 @@
     </weaponTags>
 
     <recipeMaker>
-      <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
       <recipeUsers Inherit="False">
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
@@ -56,6 +55,13 @@
         <muzzleFlashScale>10</muzzleFlashScale>
       </li>
     </verbs>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
@@ -69,7 +75,6 @@
     </graphicData>
 
     <recipeMaker>
-      <researchPrerequisite>ABY_AbyssalArmaments</researchPrerequisite>
       <recipeUsers Inherit="False">
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
@@ -98,6 +103,13 @@
       <Mass>1.9</Mass>
       <MarketValue>980</MarketValue>
     </statBases>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>100</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
 </Defs>

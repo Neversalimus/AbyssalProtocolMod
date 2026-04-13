@@ -4,14 +4,13 @@
   <RecipeDef>
     <defName>ABY_CraftResidue</defName>
     <label>condense abyssal residue</label>
-    <description>Industrial ritual process that converts metal and components into inert abyssal residue. This is the first material step of the summon loop and the foundation for sigils and early herald fabrication.</description>
+    <description>Industrial ritual process that converts metal and components into inert abyssal residue. This is the first material step of the summon loop and the fuel for forge communion.</description>
     <jobString>Condensing abyssal residue.</jobString>
     <workAmount>1000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -36,19 +35,24 @@
     <products>
       <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
     </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>0</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
 
   <RecipeDef>
     <defName>ABY_CraftArchonSigil</defName>
     <label>forge archon sigil</label>
-    <description>Compress residue into a stable breach-key used to summon the first boss. Use the finished sigil at a powered Abyssal Summoning Circle with a clear ritual focus.</description>
+    <description>Compress residue into a stable breach-key used to summon the first boss. Once the forge has tasted enough residue, it can print the first true archon invocation sigil.</description>
     <jobString>Forging archon sigil.</jobString>
     <workAmount>2200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -81,33 +85,12 @@
     <products>
       <ABY_ArchonSigil>1</ABY_ArchonSigil>
     </products>
-  </RecipeDef>
-
-  <RecipeDef>
-    <defName>ABY_AnalyzeHeraldCoreFragment</defName>
-    <label>analyze herald core fragment</label>
-    <description>Study a recovered herald core fragment on a hi-tech research bench. Completing the analysis unlocks Herald-tier research paths for advanced weapons and implants.</description>
-    <jobString>Analyzing herald core fragment.</jobString>
-    <workAmount>2600</workAmount>
-    <workSpeedStat>ResearchSpeed</workSpeedStat>
-    <workSkill>Intellectual</workSkill>
-    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
-    <recipeUsers>
-      <li>HiTechResearchBench</li>
-    </recipeUsers>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ABY_HeraldCoreFragment</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>50</requiredResidue>
+        <category>Ritual</category>
       </li>
-    </ingredients>
-    <products>
-      <ABY_HeraldAnalysisPacket>1</ABY_HeraldAnalysisPacket>
-    </products>
+    </modExtensions>
   </RecipeDef>
 
 </Defs>

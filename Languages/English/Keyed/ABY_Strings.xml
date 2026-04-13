@@ -16,7 +16,7 @@
   <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
 
   <ABY_FirstBossKillLabel>First boss destroyed</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald fragment analysis is now available, and the Abyssal Protocol loop can advance into Herald-grade integration.</ABY_FirstBossKillDesc>
+  
   <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>The fragment analysis path has been opened. Decode a recovered herald core fragment at a hi-tech research bench to unlock Herald weapon and implant research.</ABY_HeraldIntegrationUnlockedDesc>
 
@@ -51,4 +51,51 @@
 
   <ABY_SigilActivationStarted>Sigil activation started.</ABY_SigilActivationStarted>
   <ABY_SigilPlacementFailed>The sigil could not find a valid summoning circle.</ABY_SigilPlacementFailed>
+
+  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald-grade salvage is now flowing into your stockpiles. Keep feeding residue into an Abyssal Forge to deepen communion and unlock harsher patterns.</ABY_FirstBossKillDesc>
+
+  <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
+  <ABY_ForgePanelHeader>Infernal communion lattice</ABY_ForgePanelHeader>
+  <ABY_ForgeProgressBar>{0} residue offered / next pattern at {1}</ABY_ForgeProgressBar>
+  <ABY_ForgeProgressComplete>{0} residue offered / all current patterns unlocked</ABY_ForgeProgressComplete>
+  <ABY_ForgeResidueAvailable>Residue available on map: {0}</ABY_ForgeResidueAvailable>
+  <ABY_ForgeAttunementState>Colony attunement: {0}</ABY_ForgeAttunementState>
+  <ABY_ForgeNextPattern>Next pattern at {0}: {1}</ABY_ForgeNextPattern>
+  <ABY_ForgeNextPatternDone>No further forge-gated patterns remain on this map.</ABY_ForgeNextPatternDone>
+  <ABY_ForgePowerOnline>Forge reactor: online</ABY_ForgePowerOnline>
+  <ABY_ForgePowerOffline>Forge reactor: offline — colony attunement is suspended</ABY_ForgePowerOffline>
+  <ABY_ForgeOfferTip>The forge consumes residue directly from spawned stacks anywhere on this map.</ABY_ForgeOfferTip>
+  <ABY_ForgeOfferHint>Offering residue is map-wide. Every threshold permanently unlocks new forge patterns for this map.</ABY_ForgeOfferHint>
+  <ABY_ForgeOfferAmount>Offer {0}</ABY_ForgeOfferAmount>
+  <ABY_ForgeOfferAll>Offer all ({0})</ABY_ForgeOfferAll>
+  <ABY_ForgeOfferNoneAvailable>No abyssal residue is currently available on this map.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>Offered {0} abyssal residue to the forge. Communion total: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeUnlockLetterLabel>Forge communion deepened ({0})</ABY_ForgeUnlockLetterLabel>
+  <ABY_ForgeUnlockLetterDesc>The Abyssal Forge has stabilized a deeper communion tier. Current attunement state: {1}. Newly unlocked patterns:
+
+{2}</ABY_ForgeUnlockLetterDesc>
+  <ABY_ForgeUnlockedSummary>{0} / {1} patterns unlocked in {2}</ABY_ForgeUnlockedSummary>
+  <ABY_ForgeUpcomingPatterns>Upcoming patterns</ABY_ForgeUpcomingPatterns>
+  <ABY_ForgeAllPatternsUnlocked>All currently defined patterns in this channel are unlocked.</ABY_ForgeAllPatternsUnlocked>
+  <ABY_ForgeNoUnlockedRecipes>No unlocked forge patterns are available in this category yet.</ABY_ForgeNoUnlockedRecipes>
+  <ABY_ForgeClipboardLocked>This bill cannot be pasted here yet. Its pattern is still locked by forge communion.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeNoFurtherUnlocks>all current patterns unlocked</ABY_ForgeNoFurtherUnlocks>
+  <ABY_ForgeCategory_All>All</ABY_ForgeCategory_All>
+  <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>
+  <ABY_ForgeCategory_Implants>Implants</ABY_ForgeCategory_Implants>
+  <ABY_ForgeCategory_Ritual>Ritual</ABY_ForgeCategory_Ritual>
+  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
+  <ABY_AttunementTier_0>dormant</ABY_AttunementTier_0>
+  <ABY_AttunementTier_1>faint attunement</ABY_AttunementTier_1>
+  <ABY_AttunementTier_2>stable attunement</ABY_AttunementTier_2>
+  <ABY_AttunementTier_3>deep attunement</ABY_AttunementTier_3>
+  <ABY_AttunementTier_4>crowned attunement</ABY_AttunementTier_4>
+  <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Feed abyssal residue into the forge to unlock new patterns and sustain colony attunement.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeInspectResidue>Forge communion: {0} offered / {1} available on map</ABY_ForgeInspectResidue>
+  <ABY_ForgeInspectNextUnlock>Next pattern at {0}: {1}</ABY_ForgeInspectNextUnlock>
+  <ABY_ForgeInspectAllKnown>All currently defined forge patterns are unlocked on this map.</ABY_ForgeInspectAllKnown>
+  <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
+
 </LanguageData>

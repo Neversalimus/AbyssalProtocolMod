@@ -16,7 +16,7 @@
   <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
 
   <ABY_FirstBossKillLabel>Первый босс уничтожен</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>Первый abyssal-босс уничтожен. Теперь доступен анализ фрагмента вестника, а цикл Abyssal Protocol может перейти к Herald-уровню интеграции.</ABY_FirstBossKillDesc>
+  
   <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый herald core fragment на высокотехнологичном исследовательском столе, чтобы открыть Herald-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
 
@@ -51,4 +51,51 @@
 
   <ABY_SigilActivationStarted>Активация сигила началась.</ABY_SigilActivationStarted>
   <ABY_SigilPlacementFailed>Сигил не смог найти подходящий круг призыва.</ABY_SigilPlacementFailed>
+
+  <ABY_FirstBossKillDesc>Первый abyssal-босс уничтожен. Теперь в колонию начинает поступать herald-добыча. Продолжай кормить Abyssal Forge residue, чтобы углублять communion и открывать новые шаблоны.</ABY_FirstBossKillDesc>
+
+  <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
+  <ABY_ForgePanelHeader>Инфернально-технологическая матрица communion</ABY_ForgePanelHeader>
+  <ABY_ForgeProgressBar>Внесено residue: {0} / следующий шаблон на {1}</ABY_ForgeProgressBar>
+  <ABY_ForgeProgressComplete>Внесено residue: {0} / все текущие шаблоны уже открыты</ABY_ForgeProgressComplete>
+  <ABY_ForgeResidueAvailable>Residue на карте: {0}</ABY_ForgeResidueAvailable>
+  <ABY_ForgeAttunementState>Состояние attunement колонии: {0}</ABY_ForgeAttunementState>
+  <ABY_ForgeNextPattern>Следующий шаблон на {0}: {1}</ABY_ForgeNextPattern>
+  <ABY_ForgeNextPatternDone>На этой карте больше нет forge-гейтов для текущих шаблонов.</ABY_ForgeNextPatternDone>
+  <ABY_ForgePowerOnline>Реактор forge: онлайн</ABY_ForgePowerOnline>
+  <ABY_ForgePowerOffline>Реактор forge: оффлайн — attunement колонии приостановлен</ABY_ForgePowerOffline>
+  <ABY_ForgeOfferTip>Forge поглощает residue напрямую из размещённых на этой карте стаков.</ABY_ForgeOfferTip>
+  <ABY_ForgeOfferHint>Внесение residue общее для всей карты. Каждый порог навсегда открывает новые шаблоны forge для этой карты.</ABY_ForgeOfferHint>
+  <ABY_ForgeOfferAmount>Внести {0}</ABY_ForgeOfferAmount>
+  <ABY_ForgeOfferAll>Внести всё ({0})</ABY_ForgeOfferAll>
+  <ABY_ForgeOfferNoneAvailable>На этой карте сейчас нет abyssal residue.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>В forge внесено {0} abyssal residue. Общий communion: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeUnlockLetterLabel>Communion forge углублён ({0})</ABY_ForgeUnlockLetterLabel>
+  <ABY_ForgeUnlockLetterDesc>Abyssal Forge стабилизировал более глубокий tier communion. Текущее состояние attunement: {1}. Новые открытые шаблоны:
+
+{2}</ABY_ForgeUnlockLetterDesc>
+  <ABY_ForgeUnlockedSummary>Открыто {0} / {1} шаблонов в категории {2}</ABY_ForgeUnlockedSummary>
+  <ABY_ForgeUpcomingPatterns>Ближайшие шаблоны</ABY_ForgeUpcomingPatterns>
+  <ABY_ForgeAllPatternsUnlocked>Все текущие шаблоны в этом канале уже открыты.</ABY_ForgeAllPatternsUnlocked>
+  <ABY_ForgeNoUnlockedRecipes>В этой категории пока нет открытых forge-шаблонов.</ABY_ForgeNoUnlockedRecipes>
+  <ABY_ForgeClipboardLocked>Этот bill пока нельзя вставить: его шаблон ещё заблокирован forge communion.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeNoFurtherUnlocks>все текущие шаблоны открыты</ABY_ForgeNoFurtherUnlocks>
+  <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
+  <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>
+  <ABY_ForgeCategory_Implants>Implants</ABY_ForgeCategory_Implants>
+  <ABY_ForgeCategory_Ritual>Ritual</ABY_ForgeCategory_Ritual>
+  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
+  <ABY_AttunementTier_0>дремлющий</ABY_AttunementTier_0>
+  <ABY_AttunementTier_1>слабый attunement</ABY_AttunementTier_1>
+  <ABY_AttunementTier_2>стабильный attunement</ABY_AttunementTier_2>
+  <ABY_AttunementTier_3>глубокий attunement</ABY_AttunementTier_3>
+  <ABY_AttunementTier_4>коронованный attunement</ABY_AttunementTier_4>
+  <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Кормит forge abyssal residue, открывает новые шаблоны и поддерживает attunement колонии.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeInspectResidue>Communion forge: внесено {0} / доступно на карте {1}</ABY_ForgeInspectResidue>
+  <ABY_ForgeInspectNextUnlock>Следующий шаблон на {0}: {1}</ABY_ForgeInspectNextUnlock>
+  <ABY_ForgeInspectAllKnown>Все текущие forge-шаблоны на этой карте уже открыты.</ABY_ForgeInspectAllKnown>
+  <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
+
 </LanguageData>

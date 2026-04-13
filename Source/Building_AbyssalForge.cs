@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -20,6 +21,14 @@ namespace AbyssalProtocol
         private static readonly Vector2 CoreSize = new Vector2(1.12f, 1.12f);
         private static readonly Vector2 GlowSize = new Vector2(1.70f, 1.32f);
 
+        public MapComponent_AbyssalForgeProgress ProgressComponent => Map?.GetComponent<MapComponent_AbyssalForgeProgress>();
+        public bool IsPowerActive => GetComp<CompPowerTrader>()?.PowerOn ?? true;
+
+        public int OfferResidue(int requestedAmount)
+        {
+            return ProgressComponent?.OfferResidue(this, requestedAmount) ?? 0;
+        }
+
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
@@ -32,11 +41,97 @@ namespace AbyssalProtocol
             DrawAnimatedCore(drawLoc);
         }
 
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+
+            if (!Spawned || Map == null)
+            {
+                yield break;
+            }
+
+            int availableResidue = ProgressComponent?.CountAvailableResidue() ?? 0;
+
+            yield return new Command_Action
+            {
+                defaultLabel = "ABY_ForgeGizmoOfferLabel".Translate(),
+                defaultDesc = "ABY_ForgeGizmoOfferDesc".Translate(),
+                icon = ContentFinder<Texture2D>.Get("Things/Item/ABY_AbyssalResidue"),
+                action = delegate
+                {
+                    List<FloatMenuOption> options = new List<FloatMenuOption>();
+                    AddOfferOption(options, 10, availableResidue);
+                    AddOfferOption(options, 50, availableResidue);
+                    AddOfferOption(options, 100, availableResidue);
+                    if (availableResidue > 0)
+                    {
+                        options.Add(new FloatMenuOption("ABY_ForgeOfferAll".Translate(availableResidue), delegate
+                        {
+                            OfferResidue(availableResidue);
+                        }));
+                    }
+                    else
+                    {
+                        options.Add(new FloatMenuOption("ABY_ForgeOfferNoneAvailable".Translate(), null));
+                    }
+
+                    Find.WindowStack.Add(new FloatMenu(options));
+                }
+            };
+        }
+
+        public override string GetInspectString()
+        {
+            string baseString = base.GetInspectString();
+            List<string> lines = new List<string>();
+            if (!string.IsNullOrWhiteSpace(baseString))
+            {
+                lines.Add(baseString.TrimEnd(new char[] { '\r', '\n' }));
+            }
+
+            MapComponent_AbyssalForgeProgress progress = ProgressComponent;
+            if (progress != null)
+            {
+                lines.Add("ABY_ForgeInspectResidue".Translate(progress.TotalResidueOffered, progress.CountAvailableResidue()));
+                int nextUnlock = progress.GetNextUnlockResidue();
+                if (nextUnlock > 0)
+                {
+                    RecipeDef nextRecipe = progress.GetNextUnlockRecipe();
+                    lines.Add("ABY_ForgeInspectNextUnlock".Translate(nextUnlock, nextRecipe != null ? AbyssalForgeProgressUtility.GetRecipeDisplayLabel(nextRecipe) : "?"));
+                }
+                else
+                {
+                    lines.Add("ABY_ForgeInspectAllKnown".Translate());
+                }
+
+                lines.Add("ABY_ForgeInspectAttunement".Translate(("ABY_AttunementTier_" + progress.GetCurrentAttunementTier(false)).Translate()));
+            }
+
+            return string.Join("\n", lines);
+        }
+
+        private void AddOfferOption(List<FloatMenuOption> options, int requestedAmount, int availableResidue)
+        {
+            if (availableResidue <= 0)
+            {
+                return;
+            }
+
+            int amount = Mathf.Min(requestedAmount, availableResidue);
+            options.Add(new FloatMenuOption("ABY_ForgeOfferAmount".Translate(amount), delegate
+            {
+                OfferResidue(amount);
+            }));
+        }
+
         private void DrawAnimatedCore(Vector3 drawLoc)
         {
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float seed = thingIDNumber * 0.01429f;
-            bool powered = GetComp<CompPowerTrader>()?.PowerOn ?? true;
+            bool powered = IsPowerActive;
             float workBoost = (BillStack != null && BillStack.Bills != null && BillStack.Bills.Count > 0) ? 0.08f : 0f;
             float powerFactor = powered ? 1f : 0.22f;
 

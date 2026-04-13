@@ -25,7 +25,6 @@
     </statBases>
 
     <recipeMaker>
-      <researchPrerequisite>ABY_HeraldWeaponIntegration</researchPrerequisite>
       <skillRequirements>
         <Crafting>10</Crafting>
       </skillRequirements>
@@ -79,6 +78,13 @@
         <cooldownTime>2</cooldownTime>
       </li>
     </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>350</requiredResidue>
+        <category>Herald</category>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="BaseBullet">
