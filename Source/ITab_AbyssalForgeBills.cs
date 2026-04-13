@@ -237,10 +237,6 @@ namespace AbyssalProtocol
                             PlayerKnowledgeDatabase.KnowledgeDemonstrated(capturedRecipe.conceptLearned, KnowledgeAmount.Total);
                         }
 
-                        if (TutorSystem.TutorialMode)
-                        {
-                            TutorSystem.Notify_Event("AddBill-" + capturedRecipe.LabelCap);
-                        }
                     },
                     MenuOptionPriority.Default,
                     null,
@@ -249,7 +245,6 @@ namespace AbyssalProtocol
                     delegate(Rect infoRect)
                     {
                         Widgets.InfoCardButton(infoRect.x + 5f, infoRect.y + (infoRect.height - 24f) / 2f, capturedRecipe);
-                        return false;
                     },
                     null));
             }
