@@ -27,7 +27,7 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalAugmentation</defName>
     <label>abyssal augmentation</label>
-    <description>Military implants based on stabilized infernal tissues and predictive optics.</description>
+    <description>Military augmentation theory based on stabilized infernal tissues, combat-grade interfaces and controlled organ integration.</description>
     <baseCost>2200</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>
