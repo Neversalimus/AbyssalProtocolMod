@@ -22,7 +22,7 @@
             <li>Steel</li>
           </thingDefs>
         </filter>
-        <count>45</count>
+        <count>80</count>
       </li>
       <li>
         <filter>
@@ -30,7 +30,7 @@
             <li>ComponentIndustrial</li>
           </thingDefs>
         </filter>
-        <count>1</count>
+        <count>2</count>
       </li>
     </ingredients>
     <products>

@@ -10,6 +10,9 @@
       <graphicClass>Graphic_Single</graphicClass>
       <color>(255,102,72)</color>
     </graphicData>
+    <thingCategories Inherit="False">
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <stackLimit>10</stackLimit>
     <statBases>
@@ -27,6 +30,9 @@
       <texPath>Things/Implant/ABY_HeraldEye</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <thingCategories Inherit="False">
+      <li>BodyParts</li>
+    </thingCategories>
     <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
@@ -63,6 +69,9 @@
       <texPath>Things/Implant/ABY_ArchonTendonSpine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <thingCategories Inherit="False">
+      <li>BodyParts</li>
+    </thingCategories>
     <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
@@ -99,6 +108,9 @@
       <texPath>Things/Implant/ABY_HeraldCarapaceMesh</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
+    <thingCategories Inherit="False">
+      <li>BodyParts</li>
+    </thingCategories>
     <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
