@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>ABY_HeraldImplantIntegration</defName>
     <label>herald implant integration</label>
-    <description>Reverse-engineer the first boss into controlled combat augmentation. Once the first beast is actually slain and its override ampoule recovered, this project is completed automatically and unlocks the first true boss-gated infernal implants for the Abyssal Forge.</description>
+    <description>Reverse-engineer the first boss into controlled combat augmentation. Once the first beast is slain and augmentation theory is already finished, this project completes automatically and unlocks the first true boss-gated infernal implants for the Abyssal Forge.</description>
     <baseCost>3200</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>

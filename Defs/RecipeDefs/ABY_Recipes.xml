@@ -4,7 +4,7 @@
   <RecipeDef>
     <defName>ABY_CraftResidue</defName>
     <label>condense abyssal residue</label>
-    <description>Industrial ritual process that converts metal and components into inert abyssal residue.</description>
+    <description>Industrial ritual process that converts metal and components into inert abyssal residue. This is the first material step of the summon loop and the foundation for sigils and early herald fabrication.</description>
     <jobString>Condensing abyssal residue.</jobString>
     <workAmount>1000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -41,7 +41,7 @@
   <RecipeDef>
     <defName>ABY_CraftArchonSigil</defName>
     <label>forge archon sigil</label>
-    <description>Compress residue into a stable breach-key used to summon the first boss.</description>
+    <description>Compress residue into a stable breach-key used to summon the first boss. Use the finished sigil at a powered Abyssal Summoning Circle with a clear ritual focus.</description>
     <jobString>Forging archon sigil.</jobString>
     <workAmount>2200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>

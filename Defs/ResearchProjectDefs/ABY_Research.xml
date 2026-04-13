@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalSignalTheory</defName>
     <label>abyssal signal theory</label>
-    <description>Controlled interaction with extra-dimensional hostile signatures through machine-assisted ritual geometry. Unlocks the Abyssal Forge, the Abyssal Summoning Circle, residue condensation, and the first sigil-production loop.</description>
+    <description>Controlled interaction with extra-dimensional hostile signatures through machine-assisted ritual geometry. Unlocks the Abyssal Forge and Abyssal Summoning Circle.</description>
     <baseCost>1200</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>
@@ -15,7 +15,7 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalArmaments</defName>
     <label>abyssal armaments</label>
-    <description>Weaponized containment of breach-energy refined after first-contact ritual production.</description>
+    <description>Weaponized containment of breach-energy for early abyssal firearms and melee gear.</description>
     <baseCost>1800</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>
@@ -27,7 +27,7 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalAugmentation</defName>
     <label>abyssal augmentation</label>
-    <description>Military infernal augmentation theory built around controlled abyssal materials and future boss-derived implants.</description>
+    <description>Military infernal augmentation theory, laying the groundwork for the first boss-derived implant tier.</description>
     <baseCost>2200</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>

@@ -25,7 +25,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Forge it from condensed residue, then carry it to a powered abyssal summoning circle to charge the sigil and tear open the first controlled techno-demonic breach.</description>
+    <description>A stabilized infernal key. Forge it from condensed residue, then carry it to a powered Abyssal Summoning Circle, keep the ritual focus clear, and activate the sigil to tear open the first controlled techno-demonic breach.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
