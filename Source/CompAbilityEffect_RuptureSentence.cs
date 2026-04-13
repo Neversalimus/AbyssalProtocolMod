@@ -88,6 +88,7 @@ namespace AbyssalProtocol
                 new LocalTargetInfo(targetPawn),
                 new LocalTargetInfo(targetPawn),
                 LaunchHitFlags,
+                false,
                 null,
                 null);
 

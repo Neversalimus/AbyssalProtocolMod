@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_Projectile_RuptureSentence</defName>
-    <label>rupture verdict</label>
+    <label>rupture sentence projectile</label>
     <thingClass>AbyssalProtocol.Projectile_RuptureSentence</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Bullet_Small</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.25,0.25)</drawSize>
+    </graphicData>
     <projectile>
-      <damageDef>EMP</damageDef>
+      <damageDef>Stun</damageDef>
       <damageAmountBase>0</damageAmountBase>
-      <speed>65</speed>
+      <speed>42</speed>
     </projectile>
+    <thingCategories Inherit="False" />
+    <selectable>false</selectable>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Projectile</altitudeLayer>
   </ThingDef>
-
 </Defs>

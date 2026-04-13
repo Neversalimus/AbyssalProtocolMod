@@ -49,7 +49,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                List<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                var pawns = map.mapPawns.AllPawnsSpawned;
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn pawn = pawns[j];
