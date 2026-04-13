@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_HeraldCoreFragment</defName>
+    <label>herald core fragment</label>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and is stable enough to anchor only one high-grade infernal implant project per kill.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(255,102,72)</color>
+    </graphicData>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>10</stackLimit>
+    <statBases>
+      <MarketValue>380</MarketValue>
+      <Mass>0.18</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HeraldEye</defName>
+    <label>herald eye</label>
+    <description>A boss-grade infernal ocular implant assembled around a stabilized herald fragment. It pushes aiming noticeably beyond standard bionics, but stops short of true archotech territory.</description>
+        <graphicData>
+      <texPath>Things/Implant/ABY_HeraldEye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.16</Mass>
+      <WorkToMake>30000</WorkToMake>
+      <MarketValue>1450</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>15</Plasteel>
+      <Steel>30</Steel>
+    </costList>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ArchonTendonSpine</defName>
+    <label>archon tendon spine</label>
+    <description>A reinforced infernal spinal lattice spun from boss tendons, abyssal conductors and plasteel anchors. It is tuned for assault movement rather than raw consciousness snowballing.</description>
+        <graphicData>
+      <texPath>Things/Implant/ABY_ArchonTendonSpine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.42</Mass>
+      <WorkToMake>36000</WorkToMake>
+      <MarketValue>1750</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <Plasteel>20</Plasteel>
+      <Steel>40</Steel>
+    </costList>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HeraldCarapaceMesh</defName>
+    <label>herald carapace mesh</label>
+    <description>A folded subdermal abyssal mesh plated from herald chitin and infernal alloy. It grants light built-in armor and heat shielding with only a small movement and beauty penalty.</description>
+        <graphicData>
+      <texPath>Things/Implant/ABY_HeraldCarapaceMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.24</Mass>
+      <WorkToMake>34000</WorkToMake>
+      <MarketValue>1650</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <researchPrerequisite>ABY_HeraldImplantIntegration</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <Plasteel>25</Plasteel>
+      <Steel>20</Steel>
+    </costList>
+  </ThingDef>
+
+</Defs>

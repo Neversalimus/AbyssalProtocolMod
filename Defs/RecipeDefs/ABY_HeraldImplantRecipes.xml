@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallHeraldEye</defName>
+    <label>install herald eye</label>
+    <description>Install a herald eye.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_HeraldEye</ThingDef>
+      <HediffDef>ABY_HeraldEye</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing herald eye.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_HeraldEye</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Eye</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_HeraldEye</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallArchonTendonSpine</defName>
+    <label>install archon tendon spine</label>
+    <description>Install an archon tendon spine.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_ArchonTendonSpine</ThingDef>
+      <HediffDef>ABY_ArchonTendonSpine</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing archon tendon spine.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_ArchonTendonSpine</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Spine</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_ArchonTendonSpine</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>ABY_InstallHeraldCarapaceMesh</defName>
+    <label>install herald carapace mesh</label>
+    <description>Install a herald carapace mesh.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_HeraldCarapaceMesh</ThingDef>
+      <HediffDef>ABY_HeraldCarapaceMesh</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing herald carapace mesh.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_HeraldCarapaceMesh</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Torso</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_HeraldCarapaceMesh</addsHediff>
+    <incompatibleWithHediffTags>
+      <li>ArmorGland</li>
+    </incompatibleWithHediffTags>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>

@@ -106,6 +106,7 @@
 
     <killedLeavings Inherit="False">
       <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
+      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
     </killedLeavings>
   </ThingDef>
 
