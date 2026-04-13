@@ -49,7 +49,18 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld);
+            if (!GenSight.LineOfSight(caster.PositionHeld, targetPawn.PositionHeld, caster.MapHeld))
+            {
+                return false;
+            }
+
+            CompRuptureCrown crownComp = RuptureCrownUtility.GetWornCrownComp(caster);
+            if (crownComp != null && !crownComp.IsReady)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
@@ -58,12 +69,20 @@ namespace AbyssalProtocol
             Pawn targetPawn = ResolveTargetPawn(caster, target);
             if (caster == null || targetPawn == null || targetPawn.health == null)
             {
+                NotifyPlayerFailure(caster, "Rupture Sentence failed: no valid hostile pawn was resolved from the selected target.");
+                return;
+            }
+
+            if (!CanApplyOn(target, dest))
+            {
+                NotifyPlayerFailure(caster, "Rupture Sentence failed: target became invalid before cast resolution.");
                 return;
             }
 
             HediffDef markDef = DefDatabase<HediffDef>.GetNamedSilentFail(Props.markHediffDef);
             if (markDef == null)
             {
+                NotifyPlayerFailure(caster, "Rupture Sentence failed: mark hediff def is missing.");
                 return;
             }
 
@@ -130,10 +149,10 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            var thingList = target.Cell.GetThingList(caster.MapHeld);
-            for (int i = 0; i < thingList.Count; i++)
+            var things = target.Cell.GetThingList(caster.MapHeld);
+            for (int i = 0; i < things.Count; i++)
             {
-                Pawn pawn = thingList[i] as Pawn;
+                Pawn pawn = things[i] as Pawn;
                 if (pawn != null)
                 {
                     return pawn;
@@ -141,6 +160,14 @@ namespace AbyssalProtocol
             }
 
             return null;
+        }
+
+        private static void NotifyPlayerFailure(Pawn caster, string text)
+        {
+            if (caster != null && caster.Faction == Faction.OfPlayer)
+            {
+                Messages.Message(text, caster, MessageTypeDefOf.RejectInput, false);
+            }
         }
     }
 }
