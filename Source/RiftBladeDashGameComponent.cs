@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI;
 using Verse.Sound;
 
 namespace AbyssalProtocol
@@ -14,14 +13,14 @@ namespace AbyssalProtocol
 
         private static readonly IntVec3[] AdjacentOffsets =
         {
-            new IntVec3( 1, 0,  0),
-            new IntVec3(-1, 0,  0),
-            new IntVec3( 0, 0,  1),
-            new IntVec3( 0, 0, -1),
-            new IntVec3( 1, 0,  1),
-            new IntVec3( 1, 0, -1),
-            new IntVec3(-1, 0,  1),
-            new IntVec3(-1, 0, -1)
+            new IntVec3( 1, 0, 0),
+            new IntVec3(-1, 0, 0),
+            new IntVec3( 0, 0, 1),
+            new IntVec3( 0, 0,-1),
+            new IntVec3( 1, 0, 1),
+            new IntVec3( 1, 0,-1),
+            new IntVec3(-1, 0, 1),
+            new IntVec3(-1, 0,-1)
         };
 
         private Dictionary<int, int> nextDashTickByPawn = new Dictionary<int, int>();
@@ -34,6 +33,7 @@ namespace AbyssalProtocol
         {
             base.ExposeData();
             Scribe_Collections.Look(ref nextDashTickByPawn, "nextDashTickByPawn", LookMode.Value, LookMode.Value);
+
             if (Scribe.mode == LoadSaveMode.PostLoadInit && nextDashTickByPawn == null)
             {
                 nextDashTickByPawn = new Dictionary<int, int>();
@@ -115,8 +115,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            int nextDashTick;
-            if (nextDashTickByPawn.TryGetValue(pawn.thingIDNumber, out nextDashTick) && ticksGame < nextDashTick)
+            if (nextDashTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextDashTick) && ticksGame < nextDashTick)
             {
                 return false;
             }
@@ -164,7 +163,6 @@ namespace AbyssalProtocol
 
             IntVec3 pawnPos = pawn.Position;
             IntVec3 targetPos = target.Position;
-
             if (IsAdjacentOrSame(pawnPos, targetPos))
             {
                 return false;
@@ -249,17 +247,9 @@ namespace AbyssalProtocol
             IntVec3 start = pawn.Position;
             SpawnDashEffects(map, start, destination, extension);
 
-            if (pawn.pather != null)
-            {
-                pawn.pather.StopDead();
-            }
-
+            pawn.pather?.StopDead();
             pawn.Position = destination;
-
-            if (pawn.pather != null)
-            {
-                pawn.pather.StopDead();
-            }
+            pawn.pather?.StopDead();
 
             nextDashTickByPawn[pawn.thingIDNumber] = ticksGame + Math.Max(1, extension.cooldownTicks);
         }
@@ -288,32 +278,76 @@ namespace AbyssalProtocol
             Vector3 perpendicular = new Vector3(-direction.z, 0f, direction.x);
 
             TrySpawnMote(map, extension.entryMoteDef, startPos, extension.entryMoteScale);
-            SpawnParticleBurst(map, startPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale, extension.endpointParticleBurst, extension.particleJitter * 1.20f, 0.18f);
-            SpawnParticleBurst(map, startPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale, Math.Max(1, extension.endpointParticleBurst / 3), extension.particleJitter * 0.90f, 0.14f);
+            SpawnParticleBurst(
+                map,
+                startPos,
+                direction,
+                perpendicular,
+                extension.sparkMoteDef,
+                extension.sparkMoteScale,
+                Math.Max(1, extension.endpointParticleBurst - 1),
+                extension.particleJitter * 0.70f,
+                0.10f);
 
             int steps = Math.Max(0, extension.trailSteps);
             for (int i = 1; i <= steps; i++)
             {
                 float t = (float)i / (steps + 1);
                 Vector3 pos = Vector3.Lerp(startPos, endPos, t);
-                Vector3 offsetPos = pos + (perpendicular * Rand.Range(-extension.particleJitter * 0.35f, extension.particleJitter * 0.35f));
+                Vector3 offsetPos = pos + (perpendicular * Rand.Range(-extension.particleJitter * 0.16f, extension.particleJitter * 0.16f));
 
-                TrySpawnMote(map, extension.trailMoteDef, offsetPos, extension.trailMoteScale * Rand.Range(0.92f, 1.08f));
-                SpawnParticleBurst(map, offsetPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale, extension.trailParticleBurst, extension.particleJitter * 0.72f, 0.10f);
+                TrySpawnMote(map, extension.trailMoteDef, offsetPos, extension.trailMoteScale * Rand.Range(0.94f, 1.04f));
 
-                if (i % 2 == 0 || i == steps)
+                if (extension.trailParticleBurst > 0)
                 {
-                    SpawnParticleBurst(map, offsetPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale * 0.92f, Math.Max(1, extension.trailParticleBurst - 1), extension.particleJitter * 0.58f, 0.08f);
+                    SpawnParticleBurst(
+                        map,
+                        offsetPos,
+                        direction,
+                        perpendicular,
+                        extension.sparkMoteDef,
+                        extension.sparkMoteScale,
+                        1,
+                        extension.particleJitter * 0.28f,
+                        0.05f);
                 }
             }
 
             TrySpawnMote(map, extension.exitMoteDef, endPos, extension.exitMoteScale);
-            SpawnParticleBurst(map, endPos, direction, perpendicular, extension.sparkMoteDef, extension.sparkMoteScale * 1.08f, extension.endpointParticleBurst + 1, extension.particleJitter * 1.25f, 0.20f);
-            SpawnParticleBurst(map, endPos, direction, perpendicular, extension.shardMoteDef, extension.shardMoteScale * 1.05f, Math.Max(2, extension.endpointParticleBurst / 2), extension.particleJitter, 0.16f);
+            SpawnParticleBurst(
+                map,
+                endPos,
+                direction,
+                perpendicular,
+                extension.sparkMoteDef,
+                extension.sparkMoteScale,
+                Math.Max(1, extension.endpointParticleBurst),
+                extension.particleJitter * 0.85f,
+                0.12f);
+            SpawnParticleBurst(
+                map,
+                endPos,
+                direction,
+                perpendicular,
+                extension.shardMoteDef,
+                extension.shardMoteScale,
+                Math.Max(1, extension.endpointParticleBurst - 1),
+                extension.particleJitter * 0.55f,
+                0.08f);
+
             TryPlaySound(map, end, extension.soundDef);
         }
 
-        private static void SpawnParticleBurst(Map map, Vector3 center, Vector3 direction, Vector3 perpendicular, string defName, float scale, int count, float lateralJitter, float forwardJitter)
+        private static void SpawnParticleBurst(
+            Map map,
+            Vector3 center,
+            Vector3 direction,
+            Vector3 perpendicular,
+            string defName,
+            float scale,
+            int count,
+            float lateralJitter,
+            float forwardJitter)
         {
             if (map == null || string.IsNullOrEmpty(defName) || count <= 0)
             {
@@ -325,7 +359,7 @@ namespace AbyssalProtocol
                 float along = Rand.Range(-forwardJitter, forwardJitter);
                 float lateral = Rand.Range(-lateralJitter, lateralJitter);
                 Vector3 pos = center + (direction * along) + (perpendicular * lateral);
-                TrySpawnMote(map, defName, pos, scale * Rand.Range(0.78f, 1.18f));
+                TrySpawnMote(map, defName, pos, scale * Rand.Range(0.82f, 1.10f));
             }
         }
 
