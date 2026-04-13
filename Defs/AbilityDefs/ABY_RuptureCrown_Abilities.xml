@@ -3,38 +3,45 @@
 
   <AbilityDef>
     <defName>ABY_RuptureSentence</defName>
-    <label>rupture sentence</label>
-    <description>Condemn one visible hostile pawn. The verdict sharply slows the target and collapses its combat efficiency for a long duration.</description>
+    <label>rupture verdict</label>
+    <description>Discharge the crown in a silent rupture wave. All hostile and neutral non-colony pawns within 30 cells are marked without provoking aggression.</description>
+
     <iconPath>Things/Item/ABY_CrownOfRupture</iconPath>
-    <hostile>true</hostile>
+
+    <hostile>false</hostile>
     <targetRequired>true</targetRequired>
-    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+
     <showWhenDrafted>true</showWhenDrafted>
     <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
     <showOnCharacterCard>true</showOnCharacterCard>
     <hotKey>Misc1</hotKey>
+
     <jobDef>CastAbilityOnThing</jobDef>
+
     <cooldownTicksRange>
       <min>60000</min>
       <max>60000</max>
     </cooldownTicksRange>
+
     <verbProperties>
       <verbClass>RimWorld.Verb_CastAbility</verbClass>
       <range>35.9</range>
       <warmupTime>0.20</warmupTime>
-      <requireLineOfSight>true</requireLineOfSight>
+      <requireLineOfSight>false</requireLineOfSight>
       <targetParams>
         <canTargetPawns>true</canTargetPawns>
         <canTargetBuildings>false</canTargetBuildings>
         <canTargetItems>false</canTargetItems>
-        <canTargetLocations>false</canTargetLocations>
+        <canTargetLocations>true</canTargetLocations>
       </targetParams>
     </verbProperties>
+
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbilityEffect_RuptureSentence">
-        <markHediffDef>ABY_RuptureSentenceMark</markHediffDef>
         <markTicks>4320</markTicks>
         <fallbackCooldownTicks>60000</fallbackCooldownTicks>
+        <effectRadius>30</effectRadius>
       </li>
     </comps>
   </AbilityDef>
