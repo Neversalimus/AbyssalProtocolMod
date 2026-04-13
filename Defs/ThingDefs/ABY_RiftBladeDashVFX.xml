@@ -5,7 +5,7 @@
     <defName>ABY_Mote_RiftBladeDashEntry</defName>
     <label>rift blade dash entry</label>
     <thingClass>MoteThrown</thingClass>
-    <drawerType>MoteOverhead</drawerType>
+    <drawerType>RealtimeOnly</drawerType>
     <rotatable>true</rotatable>
     <graphicData>
       <texPath>Things/VFX/RiftBladeDash/RiftBladeDash_Entry</texPath>
@@ -25,7 +25,7 @@
     <defName>ABY_Mote_RiftBladeDashExit</defName>
     <label>rift blade dash exit</label>
     <thingClass>MoteThrown</thingClass>
-    <drawerType>MoteOverhead</drawerType>
+    <drawerType>RealtimeOnly</drawerType>
     <rotatable>true</rotatable>
     <graphicData>
       <texPath>Things/VFX/RiftBladeDash/RiftBladeDash_Exit</texPath>
@@ -45,7 +45,7 @@
     <defName>ABY_Mote_RiftBladeDashTrail</defName>
     <label>rift blade dash trail</label>
     <thingClass>MoteThrown</thingClass>
-    <drawerType>MoteOverhead</drawerType>
+    <drawerType>RealtimeOnly</drawerType>
     <rotatable>true</rotatable>
     <graphicData>
       <texPath>Things/VFX/RiftBladeDash/RiftBladeDash_Trail</texPath>

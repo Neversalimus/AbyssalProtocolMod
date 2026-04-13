@@ -4,7 +4,6 @@
   <SoundDef>
     <defName>ABY_RiftBladeDash</defName>
     <context>MapOnly</context>
-    <maxSimultaneousSounds>6</maxSimultaneousSounds>
     <subSounds>
       <li>
         <grains>

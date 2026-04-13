@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <OutputType>Library</OutputType>
@@ -10,42 +11,34 @@
     <OutputPath>..\Assemblies\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DefineConstants>TRACE;RELEASE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <!-- DLLs copied from RimWorld install into mod's Libraries/ folder (not distributed with mod) -->
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Libraries\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\Libraries\UnityEngine.CoreModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="UnityEngine">
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
+
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
-
-<ItemGroup>
-  <Reference Include="Assembly-CSharp">
-    <HintPath>..\Libraries\Assembly-CSharp.dll</HintPath>
-    <Private>false</Private>
-  </Reference>
-  <Reference Include="UnityEngine.CoreModule">
-    <HintPath>..\Libraries\UnityEngine.CoreModule.dll</HintPath>
-    <Private>false</Private>
-  </Reference>
-  <Reference Include="UnityEngine">
-    <HintPath>..\Libraries\UnityEngine.dll</HintPath>
-    <Private>false</Private>
-  </Reference>
-  <Reference Include="mscorlib" />
-  <Reference Include="System" />
-  <Reference Include="System.Core" />
-</ItemGroup>
-
 
 </Project>

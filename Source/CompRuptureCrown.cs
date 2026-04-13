@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
 {
+    [StaticConstructorOnStartup]
     public static class RuptureCrownUtility
     {
         public const string CrownDefName = "ABY_CrownOfRupture";
@@ -122,6 +124,7 @@ namespace AbyssalProtocol
 
             var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int count = 0;
+
             for (int i = 0; i < pawns.Count; i++)
             {
                 if (IsEligibleVerdictTarget(caster, pawns[i], radius))
@@ -142,6 +145,7 @@ namespace AbyssalProtocol
 
             var pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
             int affectedCount = 0;
+
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn targetPawn = pawns[i];
@@ -250,7 +254,7 @@ namespace AbyssalProtocol
         public float effectRadius = RuptureCrownUtility.DefaultVerdictRadius;
         public int markTicks = RuptureCrownUtility.DefaultMarkTicks;
         public string commandLabel = "Rupture Verdict";
-        public string commandDesc = "Discharge the crown in a silent rupture wave. All hostile and neutral non-colony pawns within range are marked without provoking aggression.";
+        public string commandDesc = "Discharge the crown in a silent rupture wave.\nAll hostile and neutral non-colony pawns within range are marked without provoking aggression.";
 
         public CompProperties_RuptureCrown()
         {
@@ -306,7 +310,7 @@ namespace AbyssalProtocol
             return "Rupture charge recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
         }
 
-        public override System.Collections.Generic.IEnumerable<Gizmo> CompGetWornGizmosExtra()
+        public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
         {
             foreach (Gizmo gizmo in base.CompGetWornGizmosExtra())
             {
@@ -356,11 +360,7 @@ namespace AbyssalProtocol
             {
                 if (wearer.Faction == Faction.OfPlayer)
                 {
-                    Messages.Message(
-                        "Rupture Verdict is still recharging.",
-                        wearer,
-                        MessageTypeDefOf.RejectInput,
-                        false);
+                    Messages.Message("Rupture Verdict is still recharging.", wearer, MessageTypeDefOf.RejectInput, false);
                 }
 
                 return false;
@@ -371,11 +371,7 @@ namespace AbyssalProtocol
             {
                 if (wearer.Faction == Faction.OfPlayer)
                 {
-                    Messages.Message(
-                        "No hostile or neutral non-colony pawns are within rupture radius.",
-                        wearer,
-                        MessageTypeDefOf.RejectInput,
-                        false);
+                    Messages.Message("No hostile or neutral non-colony pawns are within rupture radius.", wearer, MessageTypeDefOf.RejectInput, false);
                 }
 
                 return false;
@@ -397,11 +393,7 @@ namespace AbyssalProtocol
 
             if (wearer.Faction == Faction.OfPlayer)
             {
-                Messages.Message(
-                    "Rupture Verdict collapsed " + affectedCount + " target(s).",
-                    new LookTargets(wearer),
-                    MessageTypeDefOf.NeutralEvent,
-                    false);
+                Messages.Message("Rupture Verdict collapsed " + affectedCount + " target(s).", new LookTargets(wearer), MessageTypeDefOf.NeutralEvent, false);
             }
 
             return true;
