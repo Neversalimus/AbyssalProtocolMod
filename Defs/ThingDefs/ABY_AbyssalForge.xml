@@ -4,7 +4,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_AbyssalForge</defName>
     <label>abyssal forge</label>
-    <description>A living techno-demonic fabrication altar. The forge distills residue, brands summon sigils, and assembles abyssal weapons and implants around a pulsing infernal reactor-heart.</description>
+    <description>A living techno-demonic fabrication altar. The forge anchors the first abyssal production loop: condense residue here, brand archon sigils here, then feed those sigils into an Abyssal Summoning Circle.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalForge</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>

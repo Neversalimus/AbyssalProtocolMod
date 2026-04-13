@@ -42,7 +42,7 @@ namespace AbyssalProtocol
             ConsumeOneUse();
 
             Messages.Message(
-                "The abyssal circle begins to awaken.",
+                "ABY_SigilActivationStarted".Translate(),
                 MessageTypeDefOf.PositiveEvent,
                 false);
         }
@@ -61,7 +61,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            if (circle.RitualActive || !circle.IsPoweredForRitual)
+            if (!circle.IsReadyForSigil(out _))
             {
                 return null;
             }

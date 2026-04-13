@@ -43,6 +43,16 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (!circle.IsReadyForSigil(out failReason))
+            {
+                if (!failReason.NullOrEmpty())
+                {
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                }
+
+                return false;
+            }
+
             job.targetB = circle;
 
             if (!pawn.CanReserveAndReach(sigil, PathEndMode.Touch, Danger.Deadly))
@@ -72,7 +82,7 @@ namespace AbyssalProtocol
         {
             this.FailOnDestroyedOrNull(SigilInd);
             this.FailOnDestroyedOrNull(CircleInd);
-            this.FailOn(() => Circle == null || Circle.Destroyed || !Circle.Spawned || Circle.RitualActive || !Circle.IsPoweredForRitual);
+            this.FailOn(() => Circle == null || !Circle.IsReadyForSigil(out _));
 
             yield return Toils_Goto.GotoThing(SigilInd, PathEndMode.ClosestTouch);
             yield return Toils_Haul.StartCarryThing(SigilInd);
@@ -82,7 +92,12 @@ namespace AbyssalProtocol
             placeSigil.initAction = () =>
             {
                 Pawn actor = placeSigil.actor;
-                TryPlaceSigilOnCircle(actor, Circle);
+                if (!TryPlaceSigilOnCircle(actor, Circle))
+                {
+                    Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
+                    actor.jobs.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
 
                 if (Circle != null && actor.rotationTracker != null)
                 {
@@ -173,17 +188,17 @@ namespace AbyssalProtocol
             return 180;
         }
 
-        private void TryPlaceSigilOnCircle(Pawn actor, Building_AbyssalSummoningCircle circle)
+        private bool TryPlaceSigilOnCircle(Pawn actor, Building_AbyssalSummoningCircle circle)
         {
             if (actor?.carryTracker?.CarriedThing == null || circle == null || circle.MapHeld != actor.MapHeld)
             {
-                return;
+                return false;
             }
 
             IntVec3 focusCell = circle.RitualFocusCell;
             if (!focusCell.IsValid || !focusCell.InBounds(actor.MapHeld))
             {
-                return;
+                return false;
             }
 
             Thing droppedThing;
@@ -193,8 +208,11 @@ namespace AbyssalProtocol
                 if (droppedThing != null)
                 {
                     job.targetA = droppedThing;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private Thing ResolveUsableSigil(Pawn actor)

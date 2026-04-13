@@ -139,6 +139,11 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (!circle.IsReadyForSigil(out failReason))
+            {
+                return false;
+            }
+
             if (!pawn.CanReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
             {
                 failReason = "NoPath".Translate();
@@ -196,8 +201,7 @@ namespace AbyssalProtocol
                 && !circle.Destroyed
                 && circle.Spawned
                 && circle.MapHeld == pawn?.MapHeld
-                && !circle.RitualActive
-                && circle.IsPoweredForRitual;
+                && circle.IsReadyForSigil(out _);
         }
     }
 }

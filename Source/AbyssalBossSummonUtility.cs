@@ -8,6 +8,10 @@ namespace AbyssalProtocol
 {
     public static class AbyssalBossSummonUtility
     {
+        private const string ArchonBeastRaceDefName = "ABY_ArchonBeast";
+        private const string ArchonOfRuptureRaceDefName = "ABY_ArchonOfRupture";
+        private const string RupturePortalDefName = "ABY_RupturePortal";
+
         public static Faction ResolveHostileFaction()
         {
             FactionDef ancientsHostileDef = DefDatabase<FactionDef>.GetNamedSilentFail("AncientsHostile");
@@ -180,6 +184,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (HasActiveAbyssalEncounter(map))
+            {
+                failReason = "ABY_BossSummonFail_EncounterActive".Translate();
+                return false;
+            }
+
             ThingDef circleDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_SummoningCircle");
             if (circleDef == null)
             {
@@ -193,6 +203,7 @@ namespace AbyssalProtocol
             bool foundAny = false;
             bool foundBusy = false;
             bool foundUnpowered = false;
+            bool foundBlocked = false;
 
             foreach (Thing thing in circles)
             {
@@ -215,6 +226,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                if (!candidate.HasValidInteractionCell(out _) || !candidate.HasClearRitualFocus(out _))
+                {
+                    foundBlocked = true;
+                    continue;
+                }
+
                 float distance = candidate.Position.DistanceToSquared(origin);
                 if (distance < bestDistance)
                 {
@@ -227,23 +244,23 @@ namespace AbyssalProtocol
             {
                 if (!foundAny)
                 {
-                    failReason = "Build an Abyssal Summoning Circle before using the sigil.";
+                    failReason = "ABY_BossSummonFail_NoCircle".Translate();
                 }
-                else if (foundBusy && foundUnpowered)
+                else if (foundBusy && !foundUnpowered && !foundBlocked)
                 {
-                    failReason = "All abyssal circles are either busy or unpowered.";
+                    failReason = "ABY_BossSummonFail_AllBusy".Translate();
                 }
-                else if (foundBusy)
+                else if (foundUnpowered && !foundBusy && !foundBlocked)
                 {
-                    failReason = "All abyssal circles on this map are already occupied by another ritual.";
+                    failReason = "ABY_BossSummonFail_AllUnpowered".Translate();
                 }
-                else if (foundUnpowered)
+                else if (foundBlocked && !foundBusy && !foundUnpowered)
                 {
-                    failReason = "All abyssal circles on this map are unpowered.";
+                    failReason = "ABY_BossSummonFail_AllBlocked".Translate();
                 }
                 else
                 {
-                    failReason = "No available abyssal circle was found.";
+                    failReason = "ABY_BossSummonFail_NoCircleAvailable".Translate();
                 }
 
                 return false;
@@ -251,6 +268,50 @@ namespace AbyssalProtocol
 
             circle = best;
             return true;
+        }
+
+        public static bool HasActiveAbyssalEncounter(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            if (map.mapPawns != null)
+            {
+                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                {
+                    if (pawn == null || pawn.Destroyed || pawn.Dead)
+                    {
+                        continue;
+                    }
+
+                    string defName = pawn.def?.defName;
+                    if (defName == ArchonBeastRaceDefName || defName == ArchonOfRuptureRaceDefName)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            ThingDef rupturePortalDef = DefDatabase<ThingDef>.GetNamedSilentFail(RupturePortalDefName);
+            if (rupturePortalDef != null)
+            {
+                List<Thing> portals = map.listerThings.ThingsOfDef(rupturePortalDef);
+                if (portals != null)
+                {
+                    for (int i = 0; i < portals.Count; i++)
+                    {
+                        Thing portal = portals[i];
+                        if (portal != null && portal.Spawned && !portal.Destroyed)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static void PrepareBoss(Pawn pawn, string bossLabel)

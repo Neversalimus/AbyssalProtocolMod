@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_AbyssalResidue</defName>
     <label>abyssal residue</label>
@@ -7,7 +8,7 @@
     <graphicData>
       <texPath>Things/Item/ABY_AbyssalResidue</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <color>(255,255,255)</color>
+      <color>(255,80,80)</color>
     </graphicData>
     <tradeability>Buyable</tradeability>
     <stackLimit>75</stackLimit>
@@ -21,7 +22,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Carry it to an abyssal summoning circle to charge the sigil and tear open a breach for the first techno-demonic boss.</description>
+    <description>A stabilized infernal key. Forge it from condensed residue, then carry it to a powered abyssal summoning circle to charge the sigil and tear open the first controlled techno-demonic breach.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -39,9 +40,9 @@
       <Flammability>0</Flammability>
     </statBases>
     <comps>
-      <li Class="CompProperties_Usable">
+      <li Class="AbyssalProtocol.CompProperties_UsableArchonSigil">
         <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>invoke archon</useLabel>
+        <useLabel>activate at abyssal circle</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
@@ -50,4 +51,5 @@
       </li>
     </comps>
   </ThingDef>
+
 </Defs>

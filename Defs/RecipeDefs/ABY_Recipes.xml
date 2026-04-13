@@ -6,11 +6,12 @@
     <label>condense abyssal residue</label>
     <description>Industrial ritual process that converts metal and components into inert abyssal residue.</description>
     <jobString>Condensing abyssal residue.</jobString>
-    <workAmount>900</workAmount>
+    <workAmount>1000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -21,7 +22,7 @@
             <li>Steel</li>
           </thingDefs>
         </filter>
-        <count>40</count>
+        <count>45</count>
       </li>
       <li>
         <filter>
@@ -33,7 +34,7 @@
       </li>
     </ingredients>
     <products>
-      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
 
@@ -42,11 +43,12 @@
     <label>forge archon sigil</label>
     <description>Compress residue into a stable breach-key used to summon the first boss.</description>
     <jobString>Forging archon sigil.</jobString>
-    <workAmount>1600</workAmount>
+    <workAmount>2200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -57,7 +59,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>18</count>
+        <count>20</count>
       </li>
       <li>
         <filter>
@@ -65,7 +67,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>25</count>
+        <count>30</count>
       </li>
       <li>
         <filter>

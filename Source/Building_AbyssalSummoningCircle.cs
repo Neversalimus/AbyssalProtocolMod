@@ -122,21 +122,8 @@ namespace AbyssalProtocol
         {
             failReason = null;
 
-            if (RitualActive)
+            if (!IsReadyForSigil(out failReason))
             {
-                failReason = "This abyssal circle is already running a ritual.";
-                return false;
-            }
-
-            if (!Spawned || Map == null)
-            {
-                failReason = "The abyssal circle must be placed on a map.";
-                return false;
-            }
-
-            if (!IsPoweredForRitual)
-            {
-                failReason = "The abyssal circle has no power.";
                 return false;
             }
 
@@ -150,13 +137,13 @@ namespace AbyssalProtocol
             pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
             if (pendingFaction == null)
             {
-                failReason = "No hostile faction could be resolved for the ritual.";
+                failReason = "ABY_CircleFail_NoHostileFaction".Translate();
                 return false;
             }
 
             if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
             {
-                failReason = "No valid map-edge cell found for the summoned boss.";
+                failReason = "ABY_CircleFail_NoBossArrival".Translate();
                 return false;
             }
 
@@ -246,27 +233,119 @@ namespace AbyssalProtocol
                 sb.Append(baseText);
             }
 
+            if (sb.Length > 0)
+            {
+                sb.AppendLine();
+            }
+
             if (RitualActive)
             {
-                if (sb.Length > 0)
-                {
-                    sb.AppendLine();
-                }
-
-                sb.Append("Ritual phase: ");
-                sb.Append(GetPhaseLabel());
-                sb.Append(" (");
-                sb.Append(Mathf.RoundToInt(GetPhaseProgress() * 100f));
-                sb.Append("%)");
+                sb.Append("ABY_CircleInspect_Phase".Translate(GetPhaseLabel().Translate(), Mathf.RoundToInt(GetPhaseProgress() * 100f)));
 
                 if (!IsPoweredForRitual)
                 {
                     sb.AppendLine();
-                    sb.Append("Ritual is stalled: no power.");
+                    sb.Append("ABY_CircleInspect_StalledNoPower".Translate());
                 }
+            }
+            else if (IsReadyForSigil(out string failReason))
+            {
+                sb.Append("ABY_CircleInspect_Ready".Translate());
+            }
+            else
+            {
+                sb.Append("ABY_CircleInspect_NotReady".Translate(failReason));
             }
 
             return sb.ToString();
+        }
+
+        public bool IsReadyForSigil(out string failReason)
+        {
+            failReason = null;
+
+            if (!Spawned || Destroyed || Map == null)
+            {
+                failReason = "ABY_CircleFail_NotPlaced".Translate();
+                return false;
+            }
+
+            if (RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+
+            if (!IsPoweredForRitual)
+            {
+                failReason = "ABY_CircleFail_NoPower".Translate();
+                return false;
+            }
+
+            if (!HasValidInteractionCell(out failReason))
+            {
+                return false;
+            }
+
+            if (!HasClearRitualFocus(out failReason))
+            {
+                return false;
+            }
+
+            if (AbyssalBossSummonUtility.HasActiveAbyssalEncounter(Map))
+            {
+                failReason = "ABY_BossSummonFail_EncounterActive".Translate();
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool HasValidInteractionCell(out string failReason)
+        {
+            failReason = null;
+            IntVec3 interactionCell = InteractionCell;
+            if (!interactionCell.IsValid || !interactionCell.InBounds(Map) || !interactionCell.Standable(Map))
+            {
+                failReason = "ABY_CircleFail_InteractionBlocked".Translate();
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool HasClearRitualFocus(out string failReason)
+        {
+            failReason = null;
+            IntVec3 focusCell = RitualFocusCell;
+            if (!focusCell.IsValid || !focusCell.InBounds(Map))
+            {
+                failReason = "ABY_CircleFail_FocusBlocked".Translate();
+                return false;
+            }
+
+            foreach (Thing thing in focusCell.GetThingList(Map))
+            {
+                if (thing == null || thing == this || thing.Destroyed)
+                {
+                    continue;
+                }
+
+                if (thing is Mote || thing is Filth)
+                {
+                    continue;
+                }
+
+                if (thing.def != null && thing.def.defName == "ABY_ArchonSigil")
+                {
+                    continue;
+                }
+
+                failReason = "ABY_CircleFail_FocusBlocked".Translate();
+                return false;
+            }
+
+            return true;
         }
 
         private bool ShouldDoHashInterval(int interval)
@@ -447,15 +526,15 @@ namespace AbyssalProtocol
             switch (ritualPhase)
             {
                 case RitualPhase.Charging:
-                    return "Charging";
+                    return "ABY_CirclePhase_Charging";
                 case RitualPhase.Surge:
-                    return "Surging";
+                    return "ABY_CirclePhase_Surge";
                 case RitualPhase.Breach:
-                    return "Breaching";
+                    return "ABY_CirclePhase_Breach";
                 case RitualPhase.Cooldown:
-                    return "Cooldown";
+                    return "ABY_CirclePhase_Cooldown";
                 default:
-                    return "Idle";
+                    return "ABY_CirclePhase_Idle";
             }
         }
 
