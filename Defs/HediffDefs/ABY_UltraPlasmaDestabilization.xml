@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_UltraPlasmaDestabilization</defName>
+    <label>plasma destabilization</label>
+    <description>Residual ultra-plasma is still reacting inside the target. Movement and handling degrade until the charge burns out or collapses into a brief overload.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(0.30, 0.95, 1.00)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>300</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <label>ionized</label>
+        <statOffsets>
+          <MoveSpeed>-0.05</MoveSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.05</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.04</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <minSeverity>0.35</minSeverity>
+        <label>destabilized</label>
+        <statOffsets>
+          <MoveSpeed>-0.10</MoveSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.10</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.08</offset>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <minSeverity>0.70</minSeverity>
+        <label>critical</label>
+        <statOffsets>
+          <MoveSpeed>-0.16</MoveSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.16</offset>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.12</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_UltraPlasmaRifle</defName>
     <label>ultra plasma rifle</label>
-    <description>An ultra-tech plasma rifle with a reinforced triple long barrel and four thermal tubes. It fires custom cyan plasma bolts with extreme armor penetration.</description>
+    <description>An ultra-tech plasma rifle with a reinforced triple long barrel and four thermal tubes. It fires custom cyan plasma bolts with extreme armor penetration. Repeated hits destabilize the target into a short-lived plasma overload.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
@@ -103,7 +103,7 @@
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_UltraPlasmaBeamBurst</defName>
     <label>ultra plasma beam</label>
-    <thingClass>Bullet</thingClass>
+    <thingClass>AbyssalProtocol.Projectile_UltraPlasmaBurst</thingClass>
     <graphicData>
       <texPath>Things/Projectile/ABY_UltraPlasmaBeam_Long</texPath>
       <graphicClass>Graphic_Single</graphicClass>
