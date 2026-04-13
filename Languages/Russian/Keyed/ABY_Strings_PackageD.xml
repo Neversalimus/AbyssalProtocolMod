@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_HeraldAnalysisCompleteLabel>Анализ Herald Fragment завершён</ABY_HeraldAnalysisCompleteLabel>
+  <ABY_HeraldAnalysisCompleteDesc>Извлечённый фрагмент расшифрован. Теперь в вкладке Abyssal Protocol доступны исследования {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
+  <ABY_HeraldAnalysisAlreadyKnown>Анализ Herald Fragment уже завершён.</ABY_HeraldAnalysisAlreadyKnown>
+  <ABY_HeraldAnalysisFailedMissingProject>Не удалось завершить анализ Herald Fragment: целевой исследовательский проект не найден.</ABY_HeraldAnalysisFailedMissingProject>
+</LanguageData>
