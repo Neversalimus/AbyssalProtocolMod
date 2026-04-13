@@ -3,24 +3,27 @@
   <name>Abyssal Protocol</name>
   <author>Neversalimus</author>
   <packageId>neversalimus.abyssalprotocol</packageId>
-
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
+  <description>A techno-demonic RimWorld endgame mod built around controlled summoning, abyssal progression, and boss-oriented encounter content.
 
-  <description>A techno-demonic RimWorld endgame mod built around controlled summoning, abyssal progression, and custom boss encounters.
+Current public state: Pre-Alpha / First Vertical Slice.
 
-Current state: Pre-Alpha / First Vertical Slice.
-
-Already implemented in the current repository:
+Already implemented in the current public repository:
 - abyssal summoning infrastructure
-- early research and ritual crafting
-- custom hostile abyssal entities
-- a working first boss encounter
-- portal-based escalation content
-- early custom weapons and implant rewards
-- custom code, textures, sounds, and EN/RU localization
+- Abyssal Summoning Circle and Abyssal Forge
+- early research, ritual crafting, and reward pipeline
+- Archon Sigil / Abyssal Residue progression foundation
+- custom hostile abyssal entities and portal-based escalation
+- first boss vertical slice with Archon Beast encounter logic
+- Rift Imp, Abyssal Imp Portal, and Rupture Portal content
+- early custom weapons and implant content
+- Herald progression content
+- Rupture Crown content, abilities, hediffs, and related presentation systems
+- custom code, textures, VFX-style assets, sounds, patches, and EN/RU localization
 
-This is already a playable vertical slice, not just a framework or concept mockup.
-The mod is not content-complete yet: broader progression, more rituals, more enemies, more bosses, and wider endgame reward structure are still in active development.</description>
+This is already a real playable vertical slice with dedicated systems and repository-backed content, not just a framework or concept mockup.
+
+The mod is not content-complete yet: broader progression, more rituals, more enemies, more bosses, more gear tiers, and wider endgame reward structure are still in active development.</description>
 </ModMetaData>
