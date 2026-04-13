@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[graphicData/texPath="Pawn/ArchonOfRupture/ArchonOfRupture" and not(comps)]</xpath>
+        <value>
+          <comps />
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[graphicData/texPath="Pawn/ArchonOfRupture/ArchonOfRupture"]/comps[not(li[@Class="AbyssalProtocol.CompProperties_ArchonHeadFlame"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.CompProperties_ArchonHeadFlame">
+            <southTexPath>Effects/ArchonHeadFlame/ArchonHeadFlame_south</southTexPath>
+            <northTexPath>Effects/ArchonHeadFlame/ArchonHeadFlame_north</northTexPath>
+            <eastTexPath>Effects/ArchonHeadFlame/ArchonHeadFlame_east</eastTexPath>
+
+            <frameCount>4</frameCount>
+            <ticksPerFrame>5</ticksPerFrame>
+
+            <southWidth>2.35</southWidth>
+            <southHeight>2.15</southHeight>
+            <northWidth>2.25</northWidth>
+            <northHeight>2.05</northHeight>
+            <eastWidth>2.10</eastWidth>
+            <eastHeight>1.95</eastHeight>
+
+            <southOffsetX>0.00</southOffsetX>
+            <southOffsetZ>0.66</southOffsetZ>
+            <northOffsetX>0.00</northOffsetX>
+            <northOffsetZ>0.58</northOffsetZ>
+            <eastOffsetX>0.10</eastOffsetX>
+            <eastOffsetZ>0.62</eastOffsetZ>
+
+            <emberIntervalMinTicks>22</emberIntervalMinTicks>
+            <emberIntervalMaxTicks>48</emberIntervalMaxTicks>
+            <emberScatterRadius>0.20</emberScatterRadius>
+            <emberScaleMin>0.22</emberScaleMin>
+            <emberScaleMax>0.42</emberScaleMax>
+            <emberMoteDefName>ABY_Mote_ArchonHeadEmber</emberMoteDefName>
+
+            <disableWhenDead>true</disableWhenDead>
+            <disableWhenDowned>false</disableWhenDowned>
+          </li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
