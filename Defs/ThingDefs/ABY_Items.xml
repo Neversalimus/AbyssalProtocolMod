@@ -55,4 +55,24 @@
     </comps>
   </ThingDef>
 
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ArchonOverrideAmpoule</defName>
+    <label>archon override ampoule</label>
+    <description>A sealed combat ampoule recovered from the first boss. The reactor-serum inside is stable enough to survive storage, trade and field transport without destabilizing.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_ArchonOverrideAmpoule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories Inherit="False">
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>10</stackLimit>
+    <statBases>
+      <MarketValue>260</MarketValue>
+      <Mass>0.12</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
 </Defs>

@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HeraldCoreFragment</defName>
     <label>herald core fragment</label>
-    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and is stable enough to anchor only one high-grade infernal implant project per kill.</description>
+    <description>A jagged vertebral reactor-shard carved out of the first boss. It still pulses with chained archon routines and works as the core lattice for herald-grade implant projects once paired with an override ampoule recovered from the same beast.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -25,7 +25,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HeraldEye</defName>
     <label>herald eye</label>
-    <description>A boss-grade infernal ocular implant assembled around a stabilized herald fragment. It pushes aiming noticeably beyond standard bionics, but stops short of true archotech territory.</description>
+    <description>A boss-grade infernal ocular implant assembled around a stabilized herald fragment and an override ampoule. It pushes aiming noticeably beyond standard bionics, but stops short of true archotech territory.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_HeraldEye</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -64,7 +64,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ArchonTendonSpine</defName>
     <label>archon tendon spine</label>
-    <description>A reinforced infernal spinal lattice spun from boss tendons, abyssal conductors and plasteel anchors. It is tuned for assault movement rather than raw consciousness snowballing.</description>
+    <description>A reinforced infernal spinal lattice spun from boss tendons, a herald fragment and an override ampoule. It is tuned for assault movement rather than raw consciousness snowballing.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_ArchonTendonSpine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -103,7 +103,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HeraldCarapaceMesh</defName>
     <label>herald carapace mesh</label>
-    <description>A folded subdermal abyssal mesh plated from herald chitin and infernal alloy. It grants light built-in armor and heat shielding with only a small movement and beauty penalty.</description>
+    <description>A folded subdermal abyssal mesh plated from herald chitin, infernal alloy and an override ampoule. It grants light built-in armor and heat shielding with only a small movement and beauty penalty.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_HeraldCarapaceMesh</texPath>
       <graphicClass>Graphic_Single</graphicClass>
