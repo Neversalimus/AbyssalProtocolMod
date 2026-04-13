@@ -20,7 +20,6 @@
       <fadeInTime>0.04</fadeInTime>
       <fadeOutTime>0.20</fadeOutTime>
       <growthRate>0.10</growthRate>
-      <rotationRate>0.0</rotationRate>
     </mote>
   </ThingDef>
 </Defs>
