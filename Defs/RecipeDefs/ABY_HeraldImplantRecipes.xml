@@ -7,7 +7,7 @@
     <description>Install a herald eye.</description>
     <descriptionHyperlinks>
       <ThingDef>ABY_HeraldEye</ThingDef>
-      <HediffDef>ABY_HeraldEye</HediffDef>
+      <HediffDef>ABY_HeraldEye_Implant</HediffDef>
     </descriptionHyperlinks>
     <jobString>Installing herald eye.</jobString>
     <ingredients>
@@ -31,7 +31,7 @@
     <appliedOnFixedBodyParts>
       <li>Eye</li>
     </appliedOnFixedBodyParts>
-    <addsHediff>ABY_HeraldEye</addsHediff>
+    <addsHediff>ABY_HeraldEye_Implant</addsHediff>
     <recipeUsers Inherit="False">
       <li>Human</li>
       <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
@@ -44,7 +44,7 @@
     <description>Install an archon tendon spine.</description>
     <descriptionHyperlinks>
       <ThingDef>ABY_ArchonTendonSpine</ThingDef>
-      <HediffDef>ABY_ArchonTendonSpine</HediffDef>
+      <HediffDef>ABY_ArchonTendonSpine_Implant</HediffDef>
     </descriptionHyperlinks>
     <jobString>Installing archon tendon spine.</jobString>
     <ingredients>
@@ -68,7 +68,7 @@
     <appliedOnFixedBodyParts>
       <li>Spine</li>
     </appliedOnFixedBodyParts>
-    <addsHediff>ABY_ArchonTendonSpine</addsHediff>
+    <addsHediff>ABY_ArchonTendonSpine_Implant</addsHediff>
     <recipeUsers Inherit="False">
       <li>Human</li>
       <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
@@ -81,7 +81,7 @@
     <description>Install a herald carapace mesh.</description>
     <descriptionHyperlinks>
       <ThingDef>ABY_HeraldCarapaceMesh</ThingDef>
-      <HediffDef>ABY_HeraldCarapaceMesh</HediffDef>
+      <HediffDef>ABY_HeraldCarapaceMesh_Implant</HediffDef>
     </descriptionHyperlinks>
     <jobString>Installing herald carapace mesh.</jobString>
     <ingredients>
@@ -105,7 +105,7 @@
     <appliedOnFixedBodyParts>
       <li>Torso</li>
     </appliedOnFixedBodyParts>
-    <addsHediff>ABY_HeraldCarapaceMesh</addsHediff>
+    <addsHediff>ABY_HeraldCarapaceMesh_Implant</addsHediff>
     <incompatibleWithHediffTags>
       <li>ArmorGland</li>
     </incompatibleWithHediffTags>

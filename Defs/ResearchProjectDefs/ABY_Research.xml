@@ -27,7 +27,7 @@
   <ResearchProjectDef>
     <defName>ABY_AbyssalAugmentation</defName>
     <label>abyssal augmentation</label>
-    <description>Military augmentation theory based on stabilized infernal tissues, combat-grade interfaces and controlled organ integration.</description>
+    <description>Military infernal augmentation theory, laying the groundwork for advanced boss-derived implants.</description>
     <baseCost>2200</baseCost>
     <techLevel>Spacer</techLevel>
     <prerequisites>

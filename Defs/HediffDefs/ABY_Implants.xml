@@ -2,24 +2,80 @@
 <Defs>
 
   <HediffDef ParentName="AddedBodyPartBase">
-    <defName>ABY_InfernalEye_Implant</defName>
-    <label>infernal eye</label>
-    <description>Improves sight and target acquisition.</description>
+    <defName>ABY_HeraldEye_Implant</defName>
+    <label>herald eye</label>
+    <description>A boss-grade infernal ocular implant that improves sight and target acquisition beyond standard bionics.</description>
     <hediffClass>Hediff_AddedPart</hediffClass>
     <addedPartProps>
       <solid>true</solid>
       <betterThanNatural>true</betterThanNatural>
-      <partEfficiency>1.35</partEfficiency>
+      <partEfficiency>1.30</partEfficiency>
     </addedPartProps>
-    <spawnThingOnRemoved>ABY_InfernalEye</spawnThingOnRemoved>
+    <spawnThingOnRemoved>ABY_HeraldEye</spawnThingOnRemoved>
     <stages>
       <li>
         <capMods>
           <li>
             <capacity>Sight</capacity>
-            <offset>0.35</offset>
+            <offset>0.30</offset>
           </li>
         </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+          <MeleeHitChance>0.03</MeleeHitChance>
+          <MeleeDodgeChance>0.02</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ArchonTendonSpine_Implant</defName>
+    <label>archon tendon spine</label>
+    <description>A reinforced infernal spinal lattice tuned for assault movement and battlefield stability.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.10</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ArchonTendonSpine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.12</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.12</MoveSpeed>
+          <MeleeDodgeChance>0.03</MeleeDodgeChance>
+          <PainShockThreshold>0.08</PainShockThreshold>
+          <CarryingCapacity>12</CarryingCapacity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_HeraldCarapaceMesh_Implant</defName>
+    <label>herald carapace mesh</label>
+    <description>A folded subdermal abyssal mesh that provides light built-in armor and heat shielding.</description>
+    <spawnThingOnRemoved>ABY_HeraldCarapaceMesh</spawnThingOnRemoved>
+    <tags>
+      <li>ArmorGland</li>
+    </tags>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.18</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.20</ArmorRating_Heat>
+          <PawnBeauty>-0.40</PawnBeauty>
+          <MoveSpeed>-0.02</MoveSpeed>
+        </statOffsets>
+        <totalBleedFactor>0.90</totalBleedFactor>
       </li>
     </stages>
   </HediffDef>
