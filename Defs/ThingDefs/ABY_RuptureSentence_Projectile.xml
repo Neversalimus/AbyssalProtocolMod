@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_Projectile_RuptureSentence</defName>
+    <label>rupture verdict</label>
+    <thingClass>AbyssalProtocol.Projectile_RuptureSentence</thingClass>
+    <projectile>
+      <damageDef>EMP</damageDef>
+      <damageAmountBase>0</damageAmountBase>
+      <speed>65</speed>
+    </projectile>
+  </ThingDef>
+
+</Defs>

@@ -34,7 +34,7 @@ namespace AbyssalProtocol
 
             HediffDef bearerDef = RuptureCrownUtility.BearerHediffDef;
             AbilityDef abilityDef = RuptureCrownUtility.AbilityDef;
-            if (ringDef == null || bearerDef == null || abilityDef == null)
+            if (bearerDef == null || abilityDef == null)
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                var pawns = map.mapPawns.AllPawnsSpawned;
+                List<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn pawn = pawns[j];
@@ -65,11 +65,13 @@ namespace AbyssalProtocol
                         EnsureBearerHediff(pawn, bearerDef);
                         SyncCooldownFromCrown(pawn, crownComp);
 
-                        int nextTick;
-                        if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out nextTick) || ticksGame >= nextTick)
+                        if (ringDef != null)
                         {
-                            RefreshHaloFor(pawn, ticksGame);
-                            nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + 150;
+                            if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextTick) || ticksGame >= nextTick)
+                            {
+                                RefreshHaloFor(pawn, ticksGame);
+                                nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + 150;
+                            }
                         }
                     }
                     else
@@ -79,29 +81,33 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (nextHaloRefreshTickByPawn.Count > 0)
+            if (nextHaloRefreshTickByPawn.Count <= 0)
             {
-                List<int> stalePawnIds = null;
-                foreach (KeyValuePair<int, int> pair in nextHaloRefreshTickByPawn)
-                {
-                    if (!activePawnIds.Contains(pair.Key))
-                    {
-                        if (stalePawnIds == null)
-                        {
-                            stalePawnIds = new List<int>();
-                        }
+                return;
+            }
 
-                        stalePawnIds.Add(pair.Key);
-                    }
-                }
-
-                if (stalePawnIds != null)
+            List<int> stalePawnIds = null;
+            foreach (KeyValuePair<int, int> pair in nextHaloRefreshTickByPawn)
+            {
+                if (!activePawnIds.Contains(pair.Key))
                 {
-                    for (int i = 0; i < stalePawnIds.Count; i++)
+                    if (stalePawnIds == null)
                     {
-                        nextHaloRefreshTickByPawn.Remove(stalePawnIds[i]);
+                        stalePawnIds = new List<int>();
                     }
+
+                    stalePawnIds.Add(pair.Key);
                 }
+            }
+
+            if (stalePawnIds == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < stalePawnIds.Count; i++)
+            {
+                nextHaloRefreshTickByPawn.Remove(stalePawnIds[i]);
             }
         }
 
@@ -149,6 +155,11 @@ namespace AbyssalProtocol
 
         private void RefreshHaloFor(Pawn pawn, int ticksGame)
         {
+            if (ringDef == null)
+            {
+                return;
+            }
+
             float pulse = (Mathf.Sin((ticksGame + pawn.thingIDNumber) * 0.03f) + 1f) * 0.5f;
             float scale = Mathf.Lerp(0.92f, 1.02f, pulse);
             MoteMaker.MakeAttachedOverlay(pawn, ringDef, Vector3.zero, scale, 3.20f);

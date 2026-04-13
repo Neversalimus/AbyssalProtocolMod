@@ -10,6 +10,7 @@ namespace AbyssalProtocol
         public string markHediffDef = RuptureCrownUtility.MarkHediffDefName;
         public int markTicks = 4320;
         public int fallbackCooldownTicks = GenDate.TicksPerDay;
+        public string projectileDefName = "ABY_Projectile_RuptureSentence";
 
         public CompProperties_AbilityEffect_RuptureSentence()
         {
@@ -19,7 +20,13 @@ namespace AbyssalProtocol
 
     public class CompAbilityEffect_RuptureSentence : CompAbilityEffect
     {
-        public new CompProperties_AbilityEffect_RuptureSentence Props => (CompProperties_AbilityEffect_RuptureSentence)props;
+        private const ProjectileHitFlags LaunchHitFlags =
+            ProjectileHitFlags.IntendedTarget |
+            ProjectileHitFlags.NonTargetPawns |
+            ProjectileHitFlags.NonTargetWorld;
+
+        public new CompProperties_AbilityEffect_RuptureSentence Props =>
+            (CompProperties_AbilityEffect_RuptureSentence)props;
 
         public override bool CanApplyOn(LocalTargetInfo target, LocalTargetInfo dest)
         {
@@ -45,53 +52,44 @@ namespace AbyssalProtocol
 
             if (caster == null || targetPawn == null || targetPawn.health == null)
             {
-                if (caster != null && caster.Faction == Faction.OfPlayer)
-                {
-                    Messages.Message("Rupture Sentence failed: no valid hostile pawn in the selected target.", caster, MessageTypeDefOf.RejectInput, false);
-                }
-
-                return;
-            }
-
-            HediffDef markDef = DefDatabase<HediffDef>.GetNamedSilentFail(Props.markHediffDef);
-            if (markDef == null)
-            {
-                if (caster.Faction == Faction.OfPlayer)
-                {
-                    Messages.Message("Rupture Sentence failed: mark hediff is missing.", caster, MessageTypeDefOf.RejectInput, false);
-                }
-
+                Reject(caster, "Rupture Sentence failed: no valid hostile pawn in the selected target.");
                 return;
             }
 
             if (!IsValidPawnTarget(caster, targetPawn))
             {
-                if (caster.Faction == Faction.OfPlayer)
-                {
-                    Messages.Message("Rupture Sentence failed: target is invalid.", caster, MessageTypeDefOf.RejectInput, false);
-                }
+                Reject(caster, "Rupture Sentence failed: target is invalid.");
+                return;
+            }
 
+            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.projectileDefName);
+            if (projectileDef == null)
+            {
+                Reject(caster, "Rupture Sentence failed: projectile def is missing.");
                 return;
             }
 
             base.Apply(new LocalTargetInfo(targetPawn), LocalTargetInfo.Invalid);
 
-            Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
-            if (mark == null)
+            Projectile projectile = GenSpawn.Spawn(
+                ThingMaker.MakeThing(projectileDef),
+                caster.PositionHeld,
+                caster.MapHeld) as Projectile;
+
+            if (projectile == null)
             {
-                mark = HediffMaker.MakeHediff(markDef, targetPawn);
-                targetPawn.health.AddHediff(mark);
+                Reject(caster, "Rupture Sentence failed: projectile could not be spawned.");
+                return;
             }
 
-            mark.Severity = Mathf.Max(mark.Severity, 1f);
-
-            HediffComp_Disappears disappears = mark.TryGetComp<HediffComp_Disappears>();
-            if (disappears != null)
-            {
-                disappears.ticksToDisappear = Props.markTicks;
-            }
-
-            targetPawn.health.hediffSet.DirtyCache();
+            projectile.Launch(
+                caster,
+                caster.DrawPos,
+                new LocalTargetInfo(targetPawn),
+                new LocalTargetInfo(targetPawn),
+                LaunchHitFlags,
+                null,
+                null);
 
             CompRuptureCrown crownComp = RuptureCrownUtility.GetWornCrownComp(caster);
             if (crownComp != null)
@@ -109,15 +107,21 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt("ABY_RuptureVerdict", caster.PositionHeld, caster.MapHeld);
             }
 
-            if (targetPawn.MapHeld != null)
-            {
-                ABY_SoundUtility.PlayAt("ABY_RuptureImpact", targetPawn.PositionHeld, targetPawn.MapHeld);
-                FleckMaker.ThrowLightningGlow(targetPawn.DrawPos, targetPawn.MapHeld, 1.8f);
-            }
-
             if (caster.Faction == Faction.OfPlayer)
             {
-                Messages.Message("Rupture Sentence discharged.", new LookTargets(targetPawn), MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message(
+                    "Rupture Sentence launched.",
+                    new LookTargets(targetPawn),
+                    MessageTypeDefOf.NeutralEvent,
+                    false);
+            }
+        }
+
+        private static void Reject(Pawn caster, string message)
+        {
+            if (caster != null && caster.Faction == Faction.OfPlayer)
+            {
+                Messages.Message(message, caster, MessageTypeDefOf.RejectInput, false);
             }
         }
 
