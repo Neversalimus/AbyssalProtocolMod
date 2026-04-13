@@ -18,7 +18,7 @@ namespace AbyssalProtocol
 
     public class CompAbilityEffect_RuptureSentence : CompAbilityEffect
     {
-        public CompProperties_AbilityEffect_RuptureSentence Props => (CompProperties_AbilityEffect_RuptureSentence)props;
+        public new CompProperties_AbilityEffect_RuptureSentence Props => (CompProperties_AbilityEffect_RuptureSentence)props;
 
         public override bool CanApplyOn(LocalTargetInfo target, LocalTargetInfo dest)
         {

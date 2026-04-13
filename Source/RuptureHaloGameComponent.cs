@@ -27,7 +27,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ringDef ??= DefDatabase<ThingDef>.GetNamedSilentFail("ABY_Mote_RuptureHaloRing");
+            if (ringDef == null)
+            {
+                ringDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_Mote_RuptureHaloRing");
+            }
+
             HediffDef bearerDef = RuptureCrownUtility.BearerHediffDef;
             AbilityDef abilityDef = RuptureCrownUtility.AbilityDef;
             if (ringDef == null || bearerDef == null || abilityDef == null)
@@ -45,7 +49,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                List<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                var pawns = map.mapPawns.AllPawnsSpawned;
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn pawn = pawns[j];
@@ -61,7 +65,8 @@ namespace AbyssalProtocol
                         EnsureBearerHediff(pawn, bearerDef);
                         SyncCooldownFromCrown(pawn, crownComp);
 
-                        if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextTick) || ticksGame >= nextTick)
+                        int nextTick;
+                        if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out nextTick) || ticksGame >= nextTick)
                         {
                             RefreshHaloFor(pawn, ticksGame);
                             nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + 150;
@@ -81,7 +86,11 @@ namespace AbyssalProtocol
                 {
                     if (!activePawnIds.Contains(pair.Key))
                     {
-                        stalePawnIds ??= new List<int>();
+                        if (stalePawnIds == null)
+                        {
+                            stalePawnIds = new List<int>();
+                        }
+
                         stalePawnIds.Add(pair.Key);
                     }
                 }
@@ -104,8 +113,6 @@ namespace AbyssalProtocol
                 existing = HediffMaker.MakeHediff(bearerDef, pawn);
                 pawn.health.AddHediff(existing);
             }
-
-            existing?.SetVisible(false);
         }
 
         private static void RemoveBearerHediff(Pawn pawn, HediffDef bearerDef)
