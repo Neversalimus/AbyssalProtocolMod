@@ -53,7 +53,8 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
+      <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
       <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
       <ComponentIndustrial>2</ComponentIndustrial>
       <Plasteel>15</Plasteel>
@@ -92,7 +93,8 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
+      <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
       <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <Plasteel>20</Plasteel>
@@ -131,7 +133,8 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
+      <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
+      <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
       <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <Plasteel>25</Plasteel>
