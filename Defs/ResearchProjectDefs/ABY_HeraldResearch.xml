@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
 
   <ResearchProjectDef>
@@ -9,7 +9,7 @@
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
     <researchViewX>4.35</researchViewX>
-    <researchViewY>0.00</researchViewY>
+    <researchViewY>0.95</researchViewY>
     <prerequisites>
       <li>ABY_AbyssalSignalTheory</li>
     </prerequisites>
@@ -27,7 +27,7 @@
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
     <researchViewX>6.55</researchViewX>
-    <researchViewY>-0.95</researchViewY>
+    <researchViewY>0.00</researchViewY>
     <prerequisites>
       <li>ABY_HeraldFragmentAnalysis</li>
       <li>ABY_AbyssalArmaments</li>
@@ -49,7 +49,7 @@
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
     <researchViewX>6.55</researchViewX>
-    <researchViewY>0.95</researchViewY>
+    <researchViewY>1.90</researchViewY>
     <prerequisites>
       <li>ABY_HeraldFragmentAnalysis</li>
       <li>ABY_AbyssalAugmentation</li>
