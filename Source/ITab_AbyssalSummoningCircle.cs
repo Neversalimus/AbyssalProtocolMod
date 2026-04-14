@@ -34,7 +34,7 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = AbyssalSummoningConsoleUtility.GetDefaultRitual();
             Rect leftRect = new Rect(rect.x, headerRect.yMax + 10f, rect.width * 0.54f, 156f);
             Rect rightRect = new Rect(leftRect.xMax + 8f, headerRect.yMax + 10f, rect.width - leftRect.width - 8f, 156f);
-            Rect bottomRect = new Rect(rect.x, leftRect.yMax + 8f, rect.width, 42f);
+            Rect bottomRect = new Rect(rect.x, leftRect.yMax + 8f, rect.width, 50f);
 
             AbyssalSummoningConsoleArt.DrawPanel(leftRect, false);
             Rect leftInner = leftRect.ContractedBy(10f);
@@ -69,7 +69,11 @@ namespace AbyssalProtocol
             }
 
             AbyssalSummoningConsoleArt.DrawPanel(bottomRect, false);
-            Widgets.Label(bottomRect.ContractedBy(10f), AbyssalSummoningConsoleUtility.GetCompactFooter() + "   •   " + AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
+            Rect bottomInner = bottomRect.ContractedBy(10f);
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(bottomInner.x, bottomInner.y, bottomInner.width, 16f), AbyssalSummoningConsoleUtility.GetCompactFooter());
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(bottomInner.x, bottomInner.y + 16f, bottomInner.width, 18f), AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(circle));
         }
 
         private static void TryAssign(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

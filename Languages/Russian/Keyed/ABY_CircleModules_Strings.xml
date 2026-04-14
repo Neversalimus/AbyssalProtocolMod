@@ -47,4 +47,20 @@
   <ABY_CircleStabilizerResidueValue>-{0}%</ABY_CircleStabilizerResidueValue>
   <ABY_CircleStabilizerAnomalyValue>-{0}%</ABY_CircleStabilizerAnomalyValue>
 
+
+  <ABY_CircleStabilizerPatternDetail_Open>Решётка стабилизаторов не собрана. Круг держится только на базовом контуре.</ABY_CircleStabilizerPatternDetail_Open>
+  <ABY_CircleStabilizerPatternDetail_Partial>Часть маршрутизации уже есть, но решётка ещё открыта и продолжает стравливать давление.</ABY_CircleStabilizerPatternDetail_Partial>
+  <ABY_CircleStabilizerPatternDetail_Paired>Противоположные края синхронизированы. Это особенно выгодно до сборки полного кольца.</ABY_CircleStabilizerPatternDetail_Paired>
+  <ABY_CircleStabilizerPatternDetail_FullRing>Все четыре края заняты. Круг заметно ровнее держит нагрузку ритуала.</ABY_CircleStabilizerPatternDetail_FullRing>
+  <ABY_CircleStabilizerPatternDetail_Symmetry>Полное кольцо одного тира. Лучшая защита от срывов и самая чистая геометрия разлома.</ABY_CircleStabilizerPatternDetail_Symmetry>
+
+  <ABY_CircleStabilizerMiniSummary>{0} • {1} • {2}</ABY_CircleStabilizerMiniSummary>
+  <ABY_CircleStabilizerInspectSummary>Контур {0} • Нагрев {1} • Осадок {2} • Срывы {3}</ABY_CircleStabilizerInspectSummary>
+
+  <ABY_CircleModuleTooltip_Empty>{0}: слот пуст. Установи стабилизатор, чтобы усилить контур и снизить давление ритуала.</ABY_CircleModuleTooltip_Empty>
+  <ABY_CircleModuleTooltip_Installed>{0}: {1} ({2})
+Базовый контур: +{3}%
+Гашение нагрева: -{4}%
+Подавление осадка: -{5}%</ABY_CircleModuleTooltip_Installed>
+
 </LanguageData>

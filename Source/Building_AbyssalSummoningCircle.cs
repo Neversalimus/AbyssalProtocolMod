@@ -527,7 +527,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float socketPulse = 1f + (IsPoweredForRitual ? ritualIntensity * 0.025f : -0.015f);
+            float poweredFactor = IsPoweredForRitual ? 1f : 0f;
+            float socketPulse = 1f + (poweredFactor > 0f ? ritualIntensity * 0.025f : -0.015f);
             float socketSize = AbyssalCircleModuleUtility.GetSocketDrawScaleValue() * socketPulse;
             float yBase = 0.0294f;
 
@@ -545,15 +546,28 @@ namespace AbyssalProtocol
                 }
 
                 ThingDef installedDef = slot.InstalledThingDef;
+                DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(installedDef);
                 Graphic mountedGraphic = AbyssalCircleModuleUtility.GetMountedGraphic(installedDef);
                 if (mountedGraphic == null)
                 {
                     continue;
                 }
 
-                float microPulse = 1f + Mathf.Sin(ticks * 0.055f + seedPhase + (int)edge * 0.9f) * 0.012f;
-                float activeScale = 1f + ritualIntensity * 0.040f;
+                float tierPulse = 0.012f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.005f;
+                float microPulse = 1f + Mathf.Sin(ticks * 0.055f + seedPhase + (int)edge * 0.9f) * tierPulse;
+                float activeScale = 1f + ritualIntensity * (0.040f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.010f);
                 float drawScale = AbyssalCircleModuleUtility.GetMountedDrawScale(installedDef) * microPulse * activeScale;
+
+                if (poweredFactor > 0f)
+                {
+                    Graphic glowGraphic = AbyssalCircleModuleUtility.GetGlowGraphic(installedDef);
+                    if (glowGraphic != null)
+                    {
+                        float glowPulse = 1f + Mathf.Sin(ticks * 0.090f + seedPhase + (int)edge * 0.72f) * 0.020f;
+                        float glowScale = AbyssalCircleModuleUtility.GetGlowDrawScale(installedDef) * (1f + ritualIntensity * 0.085f) * glowPulse;
+                        DrawLayer(glowGraphic, moduleCenter, new Vector2(glowScale, glowScale), angle, yBase + 0.0008f);
+                    }
+                }
 
                 DrawLayer(mountedGraphic, moduleCenter, new Vector2(drawScale, drawScale), angle, yBase + 0.0012f);
             }
@@ -608,6 +622,8 @@ namespace AbyssalProtocol
             sb.Append("ABY_CircleInspect_Stabilizers".Translate(InstalledStabilizerCount, moduleSlots.Count));
             sb.AppendLine();
             sb.Append(AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(this));
+            sb.AppendLine();
+            sb.Append(AbyssalSummoningConsoleUtility.GetStabilizerInspectSummary(this));
 
             return sb.ToString();
         }
@@ -1130,11 +1146,11 @@ namespace AbyssalProtocol
             float chance = 0f;
             if (instabilityHeat + contamination * 0.35f >= 0.82f)
             {
-                chance = 0.40f + contamination * 0.10f;
+                chance = 0.36f + contamination * 0.08f;
             }
             else if (instabilityHeat + contamination * 0.25f >= 0.58f)
             {
-                chance = 0.22f + contamination * 0.08f;
+                chance = 0.20f + contamination * 0.06f;
             }
 
             chance *= AbyssalCircleInstabilityUtility.GetInstabilityEventChanceMultiplier(this);
@@ -1144,7 +1160,7 @@ namespace AbyssalProtocol
             }
 
             lastInstabilityEventTick = ticksGame;
-            if (instabilityHeat >= 0.82f && Rand.Chance(0.45f) && TrySpawnInstabilityImpSpill())
+            if (instabilityHeat >= 0.82f && Rand.Chance(Mathf.Lerp(0.34f, 0.44f, Mathf.InverseLerp(0.82f, 1f, instabilityHeat))) && TrySpawnInstabilityImpSpill())
             {
                 instabilityHeat = Mathf.Clamp01(instabilityHeat + 0.05f);
                 return;
@@ -1155,7 +1171,7 @@ namespace AbyssalProtocol
 
         private void DoContainmentLash()
         {
-            float damageAmount = Mathf.Lerp(8f, 18f, Mathf.InverseLerp(0.58f, 1f, instabilityHeat + ResidualContamination * 0.20f));
+            float damageAmount = Mathf.Lerp(7f, 16f, Mathf.InverseLerp(0.58f, 1f, instabilityHeat + ResidualContamination * 0.20f));
             damageAmount *= AbyssalCircleInstabilityUtility.GetInstabilityEventSeverityMultiplier(this);
             TakeDamage(new DamageInfo(DamageDefOf.Flame, damageAmount));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.10f);
@@ -1172,7 +1188,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            int count = instabilityHeat >= 0.92f ? 2 : 1;
+            int count = Mathf.Max(1, AbyssalCircleInstabilityUtility.GetProjectedImpSpillCount(this, AbyssalSummoningConsoleUtility.GetRitualById(pendingRitualId)));
             List<Pawn> spawned = new List<Pawn>();
             for (int i = 0; i < count; i++)
             {

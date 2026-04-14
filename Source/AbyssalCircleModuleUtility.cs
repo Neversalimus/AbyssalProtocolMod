@@ -19,6 +19,7 @@ namespace AbyssalProtocol
         };
 
         private static readonly Dictionary<string, Graphic> MountedGraphicCache = new Dictionary<string, Graphic>();
+        private static readonly Dictionary<string, Graphic> GlowGraphicCache = new Dictionary<string, Graphic>();
 
         private static readonly Graphic SocketGraphic = GraphicDatabase.Get<Graphic_Single>(
             "Things/Building/Modules/ABY_CircleModuleSocket",
@@ -144,6 +145,34 @@ namespace AbyssalProtocol
             return graphic;
         }
 
+        public static Graphic GetGlowGraphic(ThingDef thingDef)
+        {
+            if (thingDef == null)
+            {
+                return null;
+            }
+
+            DefModExtension_AbyssalCircleModule ext = GetModuleExtension(thingDef);
+            if (ext == null || ext.glowTexPath.NullOrEmpty())
+            {
+                return null;
+            }
+
+            if (GlowGraphicCache.TryGetValue(ext.glowTexPath, out Graphic cachedGraphic))
+            {
+                return cachedGraphic;
+            }
+
+            Graphic graphic = GraphicDatabase.Get<Graphic_Single>(
+                ext.glowTexPath,
+                ShaderDatabase.TransparentPostLight,
+                Vector2.one,
+                Color.white);
+
+            GlowGraphicCache[ext.glowTexPath] = graphic;
+            return graphic;
+        }
+
         public static float GetMountedDrawScale(ThingDef thingDef)
         {
             DefModExtension_AbyssalCircleModule ext = GetModuleExtension(thingDef);
@@ -153,6 +182,17 @@ namespace AbyssalProtocol
             }
 
             return Mathf.Max(0.75f, ext.mountedDrawScale);
+        }
+
+        public static float GetGlowDrawScale(ThingDef thingDef)
+        {
+            DefModExtension_AbyssalCircleModule ext = GetModuleExtension(thingDef);
+            if (ext == null)
+            {
+                return SocketDrawScale * 1.12f;
+            }
+
+            return Mathf.Max(0.90f, ext.glowDrawScale);
         }
 
         public static float GetSocketDrawScaleValue()
@@ -262,11 +302,11 @@ namespace AbyssalProtocol
                 summary.InstalledCount++;
                 summary.HighestTier = Mathf.Max(summary.HighestTier, ext.tier);
                 summary.LowestTier = Mathf.Min(summary.LowestTier, ext.tier);
-                summary.ContainmentBonus += Mathf.Max(0f, ext.containmentBonus) * 0.25f;
-                summary.HeatMultiplier *= Mathf.Clamp(ext.ritualHeatMultiplier, 0.82f, 1f);
-                summary.ContaminationMultiplier *= Mathf.Clamp(ext.contaminationMultiplier, 0.76f, 1f);
-                summary.PurgeEfficiencyMultiplier *= 1f + Mathf.Max(0, ext.tier - 1) * 0.015f;
-                summary.VentEfficiencyMultiplier *= 1f + ext.tier * 0.02f;
+                summary.ContainmentBonus += Mathf.Max(0f, ext.containmentBonus) * 0.22f;
+                summary.HeatMultiplier *= Mathf.Clamp(ext.ritualHeatMultiplier, 0.86f, 1f);
+                summary.ContaminationMultiplier *= Mathf.Clamp(ext.contaminationMultiplier, 0.82f, 1f);
+                summary.PurgeEfficiencyMultiplier *= 1f + Mathf.Max(0, ext.tier - 1) * 0.012f;
+                summary.VentEfficiencyMultiplier *= 1f + ext.tier * 0.015f;
 
                 switch (slot.Edge)
                 {
@@ -306,47 +346,50 @@ namespace AbyssalProtocol
 
             if (summary.OpposingPairs > 0)
             {
-                summary.ContainmentBonus += 0.015f * summary.OpposingPairs;
-                summary.HeatMultiplier *= Mathf.Pow(0.97f, summary.OpposingPairs);
-                summary.ContaminationMultiplier *= Mathf.Pow(0.96f, summary.OpposingPairs);
-                summary.ContaminationPenaltyMultiplier *= Mathf.Pow(0.95f, summary.OpposingPairs);
-                summary.EventChanceMultiplier *= Mathf.Pow(0.94f, summary.OpposingPairs);
-                summary.EventSeverityMultiplier *= Mathf.Pow(0.95f, summary.OpposingPairs);
+                summary.ContainmentBonus += 0.020f * summary.OpposingPairs;
+                summary.HeatMultiplier *= Mathf.Pow(0.965f, summary.OpposingPairs);
+                summary.ContaminationMultiplier *= Mathf.Pow(0.95f, summary.OpposingPairs);
+                summary.ContaminationPenaltyMultiplier *= Mathf.Pow(0.94f, summary.OpposingPairs);
+                summary.EventChanceMultiplier *= Mathf.Pow(0.92f, summary.OpposingPairs);
+                summary.EventSeverityMultiplier *= Mathf.Pow(0.94f, summary.OpposingPairs);
+                summary.PurgeEfficiencyMultiplier *= Mathf.Pow(1.03f, summary.OpposingPairs);
+                summary.VentEfficiencyMultiplier *= Mathf.Pow(1.04f, summary.OpposingPairs);
             }
 
             if (summary.FullRing)
             {
-                summary.ContainmentBonus += 0.03f;
-                summary.HeatMultiplier *= 0.95f;
-                summary.ContaminationMultiplier *= 0.92f;
-                summary.ContaminationPenaltyMultiplier *= 0.90f;
-                summary.EventChanceMultiplier *= 0.90f;
-                summary.EventSeverityMultiplier *= 0.92f;
-                summary.PurgeEfficiencyMultiplier *= 1.06f;
-                summary.VentEfficiencyMultiplier *= 1.08f;
+                summary.ContainmentBonus += 0.022f;
+                summary.HeatMultiplier *= 0.96f;
+                summary.ContaminationMultiplier *= 0.93f;
+                summary.ContaminationPenaltyMultiplier *= 0.91f;
+                summary.EventChanceMultiplier *= 0.91f;
+                summary.EventSeverityMultiplier *= 0.93f;
+                summary.PurgeEfficiencyMultiplier *= 1.05f;
+                summary.VentEfficiencyMultiplier *= 1.06f;
             }
 
             if (summary.UniformTier)
             {
                 float tierFactor = summary.HighestTier;
-                summary.ContainmentBonus += 0.015f + tierFactor * 0.006f;
-                summary.HeatMultiplier *= Mathf.Lerp(0.985f, 0.93f, (tierFactor - 1f) / 2f);
-                summary.ContaminationMultiplier *= Mathf.Lerp(0.97f, 0.86f, (tierFactor - 1f) / 2f);
-                summary.ContaminationPenaltyMultiplier *= Mathf.Lerp(0.96f, 0.82f, (tierFactor - 1f) / 2f);
-                summary.EventChanceMultiplier *= Mathf.Lerp(0.96f, 0.84f, (tierFactor - 1f) / 2f);
-                summary.EventSeverityMultiplier *= Mathf.Lerp(0.97f, 0.85f, (tierFactor - 1f) / 2f);
-                summary.PurgeEfficiencyMultiplier *= 1f + tierFactor * 0.03f;
-                summary.VentEfficiencyMultiplier *= 1f + tierFactor * 0.04f;
+                float tierLerp = Mathf.Clamp01((tierFactor - 1f) / 2f);
+                summary.ContainmentBonus += 0.008f + tierFactor * 0.005f;
+                summary.HeatMultiplier *= Mathf.Lerp(0.99f, 0.945f, tierLerp);
+                summary.ContaminationMultiplier *= Mathf.Lerp(0.985f, 0.90f, tierLerp);
+                summary.ContaminationPenaltyMultiplier *= Mathf.Lerp(0.975f, 0.86f, tierLerp);
+                summary.EventChanceMultiplier *= Mathf.Lerp(0.975f, 0.88f, tierLerp);
+                summary.EventSeverityMultiplier *= Mathf.Lerp(0.98f, 0.90f, tierLerp);
+                summary.PurgeEfficiencyMultiplier *= 1f + tierFactor * 0.025f;
+                summary.VentEfficiencyMultiplier *= 1f + tierFactor * 0.03f;
             }
 
-            summary.ContainmentBonus = Mathf.Clamp(summary.ContainmentBonus, 0f, 0.34f);
-            summary.HeatMultiplier = Mathf.Clamp(summary.HeatMultiplier, 0.60f, 1f);
-            summary.ContaminationMultiplier = Mathf.Clamp(summary.ContaminationMultiplier, 0.50f, 1f);
-            summary.ContaminationPenaltyMultiplier = Mathf.Clamp(summary.ContaminationPenaltyMultiplier, 0.50f, 1f);
-            summary.EventChanceMultiplier = Mathf.Clamp(summary.EventChanceMultiplier, 0.58f, 1f);
-            summary.EventSeverityMultiplier = Mathf.Clamp(summary.EventSeverityMultiplier, 0.70f, 1f);
-            summary.PurgeEfficiencyMultiplier = Mathf.Clamp(summary.PurgeEfficiencyMultiplier, 1f, 1.28f);
-            summary.VentEfficiencyMultiplier = Mathf.Clamp(summary.VentEfficiencyMultiplier, 1f, 1.34f);
+            summary.ContainmentBonus = Mathf.Clamp(summary.ContainmentBonus, 0f, 0.28f);
+            summary.HeatMultiplier = Mathf.Clamp(summary.HeatMultiplier, 0.68f, 1f);
+            summary.ContaminationMultiplier = Mathf.Clamp(summary.ContaminationMultiplier, 0.60f, 1f);
+            summary.ContaminationPenaltyMultiplier = Mathf.Clamp(summary.ContaminationPenaltyMultiplier, 0.60f, 1f);
+            summary.EventChanceMultiplier = Mathf.Clamp(summary.EventChanceMultiplier, 0.62f, 1f);
+            summary.EventSeverityMultiplier = Mathf.Clamp(summary.EventSeverityMultiplier, 0.75f, 1f);
+            summary.PurgeEfficiencyMultiplier = Mathf.Clamp(summary.PurgeEfficiencyMultiplier, 1f, 1.24f);
+            summary.VentEfficiencyMultiplier = Mathf.Clamp(summary.VentEfficiencyMultiplier, 1f, 1.28f);
             return summary;
         }
 

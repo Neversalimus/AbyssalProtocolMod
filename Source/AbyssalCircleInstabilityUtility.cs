@@ -29,7 +29,7 @@ namespace AbyssalProtocol
             float attunementContribution = AbyssalForgeProgressUtility.GetSummoningInstabilityReduction(circle.Map);
             AbyssalCircleStabilizerBonusSummary moduleSummary = circle.GetStabilizerBonusSummary();
             float containment = poweredContribution + healthContribution + attunementContribution + moduleSummary.ContainmentBonus;
-            return Mathf.Clamp(containment, 0f, 0.54f);
+            return Mathf.Clamp(containment, 0f, 0.50f);
         }
 
         public static float GetEffectiveContainment(Building_AbyssalSummoningCircle circle, float rawContainment)
@@ -42,7 +42,7 @@ namespace AbyssalProtocol
                 penalty += 0.02f;
             }
 
-            return Mathf.Clamp(rawContainment - penalty, 0f, 0.50f);
+            return Mathf.Clamp(rawContainment - penalty, 0f, 0.46f);
         }
 
         public static float GetProjectedHeatGain(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -57,7 +57,7 @@ namespace AbyssalProtocol
             {
                 gain *= moduleSummary.HeatMultiplier;
             }
-            return Mathf.Clamp(gain, 0.03f, 0.55f);
+            return Mathf.Clamp(gain, 0.04f, 0.52f);
         }
 
         public static float GetProjectedPostInvokeHeat(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -80,7 +80,7 @@ namespace AbyssalProtocol
             {
                 gain *= moduleSummary.ContaminationMultiplier;
             }
-            return Mathf.Clamp(gain, 0.02f, 0.28f);
+            return Mathf.Clamp(gain, 0.02f, 0.24f);
         }
 
         public static float GetIdleDecayPerTick(Building_AbyssalSummoningCircle circle)
@@ -126,7 +126,7 @@ namespace AbyssalProtocol
             {
                 amount *= moduleSummary.ContaminationMultiplier;
             }
-            return Mathf.Clamp(amount, 0.002f, 0.03f);
+            return Mathf.Clamp(amount, 0.002f, 0.024f);
         }
 
         public static float GetPurgeRemovedHeat(Building_AbyssalSummoningCircle circle)
@@ -138,7 +138,7 @@ namespace AbyssalProtocol
             {
                 removed *= moduleSummary.PurgeEfficiencyMultiplier;
             }
-            return Mathf.Clamp(removed, 0.18f, 0.40f);
+            return Mathf.Clamp(removed, 0.18f, 0.38f);
         }
 
         public static float GetPurgeBackwash(float removedHeat)
@@ -155,7 +155,7 @@ namespace AbyssalProtocol
             {
                 removed *= moduleSummary.VentEfficiencyMultiplier;
             }
-            return Mathf.Clamp(removed, 0.12f, 0.42f);
+            return Mathf.Clamp(removed, 0.12f, 0.38f);
         }
 
         public static float GetVentHeatKick(Building_AbyssalSummoningCircle circle)
@@ -175,6 +175,23 @@ namespace AbyssalProtocol
         {
             AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
             return moduleSummary.AnyInstalled ? moduleSummary.EventSeverityMultiplier : 1f;
+        }
+
+        public static int GetProjectedImpSpillCount(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            float projectedHeat = GetProjectedPostInvokeHeat(circle, ritual);
+            float severity = GetInstabilityEventSeverityMultiplier(circle);
+            if (projectedHeat >= 0.96f && severity > 0.92f)
+            {
+                return 2;
+            }
+
+            if (projectedHeat >= 0.82f)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         public static float GetRiskValue(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

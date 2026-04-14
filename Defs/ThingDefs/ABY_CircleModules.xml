@@ -28,6 +28,8 @@
         <contaminationMultiplier>0.98</contaminationMultiplier>
         <mountedTexPath>Things/Building/Modules/ABY_CircleStabilizer_Crude_Mounted</mountedTexPath>
         <mountedDrawScale>1.14</mountedDrawScale>
+        <glowTexPath>Things/Building/Modules/ABY_CircleStabilizer_Crude_Glow</glowTexPath>
+        <glowDrawScale>1.28</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -59,6 +61,8 @@
         <contaminationMultiplier>0.90</contaminationMultiplier>
         <mountedTexPath>Things/Building/Modules/ABY_CircleStabilizer_Resonant_Mounted</mountedTexPath>
         <mountedDrawScale>1.16</mountedDrawScale>
+        <glowTexPath>Things/Building/Modules/ABY_CircleStabilizer_Resonant_Glow</glowTexPath>
+        <glowDrawScale>1.32</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -90,6 +94,8 @@
         <contaminationMultiplier>0.82</contaminationMultiplier>
         <mountedTexPath>Things/Building/Modules/ABY_CircleStabilizer_Crown_Mounted</mountedTexPath>
         <mountedDrawScale>1.20</mountedDrawScale>
+        <glowTexPath>Things/Building/Modules/ABY_CircleStabilizer_Crown_Glow</glowTexPath>
+        <glowDrawScale>1.38</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>

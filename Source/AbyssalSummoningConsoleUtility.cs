@@ -862,14 +862,15 @@ namespace AbyssalProtocol
         {
             float projectedHeat = AbyssalCircleInstabilityUtility.GetProjectedPostInvokeHeat(circle, ritual);
             float contamination = circle?.ResidualContamination ?? 0f;
+            int projectedSpillCount = AbyssalCircleInstabilityUtility.GetProjectedImpSpillCount(circle, ritual);
             string key;
             string fallback;
-            if (projectedHeat + contamination * 0.40f >= 0.88f)
+            if (projectedSpillCount >= 2 || projectedHeat + contamination * 0.40f >= 0.92f)
             {
                 key = "ABY_CircleAnomaly_ImpSpill";
                 fallback = "Likely anomaly: containment lash or imp spill";
             }
-            else if (projectedHeat + contamination * 0.25f >= 0.58f)
+            else if (projectedSpillCount >= 1 || projectedHeat + contamination * 0.25f >= 0.58f)
             {
                 key = "ABY_CircleAnomaly_Lash";
                 fallback = "Likely anomaly: containment lash";
@@ -964,6 +965,70 @@ namespace AbyssalProtocol
             AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
             int percent = Mathf.RoundToInt((1f - summary.EventChanceMultiplier) * 100f);
             return TranslateOrFallback("ABY_CircleStabilizerAnomalyValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerPatternDetail(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            string key = AbyssalCircleModuleUtility.GetPatternKey(summary);
+            switch (key)
+            {
+                case "ABY_CircleStabilizerPattern_Symmetry":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Symmetry", "Uniform full ring. Best anomaly shielding and the cleanest breach geometry.");
+                case "ABY_CircleStabilizerPattern_FullRing":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_FullRing", "All four edge sockets are occupied. The circle holds pressure more evenly.");
+                case "ABY_CircleStabilizerPattern_Paired":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Paired", "Opposing edges are synchronized. Strong value before the ring is fully completed.");
+                case "ABY_CircleStabilizerPattern_Partial":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Partial", "Some routing is present, but the lattice is still open and bleeds pressure.");
+                default:
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Open", "No stabilizer lattice is installed. The circle relies on raw containment only.");
+            }
+        }
+
+        public static string GetStabilizerMiniSummary(Building_AbyssalSummoningCircle circle)
+        {
+            return TranslateOrFallback(
+                "ABY_CircleStabilizerMiniSummary",
+                "{0} • {1} • {2}",
+                GetStabilizerPatternSummary(circle),
+                GetStabilizerContainmentBonusDisplay(circle),
+                GetStabilizerHeatDampingDisplay(circle));
+        }
+
+        public static string GetStabilizerInspectSummary(Building_AbyssalSummoningCircle circle)
+        {
+            return TranslateOrFallback(
+                "ABY_CircleStabilizerInspectSummary",
+                "Containment {0} • Heat {1} • Residue {2} • Anomalies {3}",
+                GetStabilizerContainmentBonusDisplay(circle),
+                GetStabilizerHeatDampingDisplay(circle),
+                GetStabilizerResidueSuppressionDisplay(circle),
+                GetStabilizerAnomalyShieldingDisplay(circle));
+        }
+
+        public static string GetModuleSlotTooltip(Building_AbyssalSummoningCircle circle, AbyssalCircleModuleEdge edge)
+        {
+            AbyssalCircleModuleSlot slot = circle?.GetModuleSlot(edge);
+            string edgeLabel = AbyssalCircleModuleUtility.GetEdgeLabel(edge);
+            if (slot == null || !slot.Occupied || slot.InstalledThingDef == null)
+            {
+                return TranslateOrFallback("ABY_CircleModuleTooltip_Empty", "{0}: empty socket. Install a stabilizer module to improve containment and reduce ritual pressure.", edgeLabel);
+            }
+
+            DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(slot.InstalledThingDef);
+            int containmentPercent = Mathf.RoundToInt(Mathf.Max(0f, (ext?.containmentBonus ?? 0f) * 22f));
+            int heatPercent = Mathf.RoundToInt(Mathf.Max(0f, (1f - (ext?.ritualHeatMultiplier ?? 1f)) * 100f));
+            int residuePercent = Mathf.RoundToInt(Mathf.Max(0f, (1f - (ext?.contaminationMultiplier ?? 1f)) * 100f));
+            return TranslateOrFallback(
+                "ABY_CircleModuleTooltip_Installed",
+                "{0}: {1} ({2})\nBase containment: +{3}%\nHeat damping: -{4}%\nResidue suppression: -{5}%",
+                edgeLabel,
+                slot.InstalledThingDef.label.CapitalizeFirst(),
+                AbyssalCircleModuleUtility.GetTierLabel(slot.InstalledThingDef),
+                containmentPercent,
+                heatPercent,
+                residuePercent);
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

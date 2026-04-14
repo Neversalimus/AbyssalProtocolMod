@@ -290,11 +290,12 @@ namespace AbyssalProtocol
             float summaryY = rowsY + rowIndex * (rowHeight + 2f) + 2f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 14f, rect.width, 30f), AbyssalSummoningConsoleUtility.GetStabilizerPatternDetail(circle));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x, summaryY + 16f, rect.width * 0.5f, 16f), "ABY_CircleModulesContainment".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerContainmentBonusDisplay(circle));
-            Widgets.Label(new Rect(rect.x + rect.width * 0.52f, summaryY + 16f, rect.width * 0.48f, 16f), "ABY_CircleModulesHeatDamping".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerHeatDampingDisplay(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 32f, rect.width * 0.5f, 16f), "ABY_CircleModulesResidue".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerResidueSuppressionDisplay(circle));
-            Widgets.Label(new Rect(rect.x + rect.width * 0.52f, summaryY + 32f, rect.width * 0.48f, 16f), "ABY_CircleModulesAnomaly".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerAnomalyShieldingDisplay(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 40f, rect.width * 0.5f, 16f), "ABY_CircleModulesContainment".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerContainmentBonusDisplay(circle));
+            Widgets.Label(new Rect(rect.x + rect.width * 0.52f, summaryY + 40f, rect.width * 0.48f, 16f), "ABY_CircleModulesHeatDamping".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerHeatDampingDisplay(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 56f, rect.width * 0.5f, 16f), "ABY_CircleModulesResidue".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerResidueSuppressionDisplay(circle));
+            Widgets.Label(new Rect(rect.x + rect.width * 0.52f, summaryY + 56f, rect.width * 0.48f, 16f), "ABY_CircleModulesAnomaly".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerAnomalyShieldingDisplay(circle));
         }
 
         private void DrawModuleSlotRow(Rect rect, AbyssalCircleModuleEdge edge)
@@ -306,9 +307,11 @@ namespace AbyssalProtocol
                 ? "ABY_CircleModuleSlotEmpty".Translate(edgeLabel)
                 : "ABY_CircleModuleSlotInstalled".Translate(edgeLabel, installedDef.label.CapitalizeFirst(), AbyssalCircleModuleUtility.GetTierLabel(installedDef));
 
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 138f, rect.height);
             GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
-            Widgets.Label(new Rect(rect.x, rect.y, rect.width - 138f, rect.height), slotLabel);
+            Widgets.Label(labelRect, slotLabel);
             GUI.color = Color.white;
+            TooltipHandler.TipRegion(rect, AbyssalSummoningConsoleUtility.GetModuleSlotTooltip(circle, edge));
 
             if (installedDef == null)
             {

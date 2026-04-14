@@ -13,5 +13,7 @@ namespace AbyssalProtocol
         public float contaminationMultiplier = 1f;
         public string mountedTexPath;
         public float mountedDrawScale = 1.18f;
+        public string glowTexPath;
+        public float glowDrawScale = 1.34f;
     }
 }
