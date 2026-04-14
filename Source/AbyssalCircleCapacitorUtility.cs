@@ -257,14 +257,15 @@ namespace AbyssalProtocol
                 return GetSlotRowText(slot, bay);
             }
 
-            return TranslateOrFallback(
+                        return TranslateOrFallback(
                 "ABY_CapacitorBayTooltip_Filled",
-                "{0}\nTier: {1}\nCapacity: {2}\nThroughput: {3}\nCharge rate: {4}/s",
+                "{0}\nTier: {1}\nCapacity: {2}\nThroughput: {3}\nCharge rate: {4}/s\nSurge tolerance: {5}%",
                 GetSlotRowText(slot, bay),
                 GetTierLabel(slot.InstalledThingDef),
                 Mathf.RoundToInt(ext.chargeCapacity),
                 Mathf.RoundToInt(ext.throughput),
-                ext.chargeRatePerSecond.ToString("0.0"));
+                ext.chargeRatePerSecond.ToString("0.0"),
+                Mathf.RoundToInt(ext.surgeTolerance * 100f));
         }
 
         private static string GetSlotDisplay(AbyssalCircleCapacitorSlot slot, string fallbackLabel)

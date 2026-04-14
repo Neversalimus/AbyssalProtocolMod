@@ -112,12 +112,19 @@ namespace AbyssalProtocol
         private float pendingCapacitorThroughputRequired;
         private int capacitorRecoveryTicksRemaining;
         private int capacitorRecoveryDurationTicks;
+        private bool capacitorOverchannelEnabled;
+        private bool capacitorEmergencyDumpEnabled = true;
+        private bool pendingCapacitorForcedStart;
+        private bool pendingCapacitorEmergencyDumpUsed;
+        private float pendingCapacitorBacklashSeverity;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
         public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
         public bool ReducedConsoleEffects => reducedConsoleEffects;
         public float RitualProgress => RitualActive ? GetPhaseProgress() : 0f;
+        public bool CapacitorOverchannelEnabled => capacitorOverchannelEnabled;
+        public bool CapacitorEmergencyDumpEnabled => capacitorEmergencyDumpEnabled;
 
         public ConsoleRitualPhase CurrentRitualPhase
         {
@@ -168,6 +175,11 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCapacitorThroughputRequired, "pendingCapacitorThroughputRequired", 0f);
             Scribe_Values.Look(ref capacitorRecoveryTicksRemaining, "capacitorRecoveryTicksRemaining", 0);
             Scribe_Values.Look(ref capacitorRecoveryDurationTicks, "capacitorRecoveryDurationTicks", 0);
+            Scribe_Values.Look(ref capacitorOverchannelEnabled, "capacitorOverchannelEnabled", false);
+            Scribe_Values.Look(ref capacitorEmergencyDumpEnabled, "capacitorEmergencyDumpEnabled", true);
+            Scribe_Values.Look(ref pendingCapacitorForcedStart, "pendingCapacitorForcedStart", false);
+            Scribe_Values.Look(ref pendingCapacitorEmergencyDumpUsed, "pendingCapacitorEmergencyDumpUsed", false);
+            Scribe_Values.Look(ref pendingCapacitorBacklashSeverity, "pendingCapacitorBacklashSeverity", 0f);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -179,6 +191,16 @@ namespace AbyssalProtocol
         public void SetReducedConsoleEffects(bool value)
         {
             reducedConsoleEffects = value;
+        }
+
+        public void SetCapacitorOverchannelEnabled(bool value)
+        {
+            capacitorOverchannelEnabled = value;
+        }
+
+        public void SetCapacitorEmergencyDumpEnabled(bool value)
+        {
+            capacitorEmergencyDumpEnabled = value;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -251,16 +273,22 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalCircleCapacitorRitualUtility.CanSupportRitual(this, summonProps, out failReason))
+            if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(this, summonProps, capacitorOverchannelEnabled, out AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport, out bool forcedStart, out failReason))
             {
                 return false;
             }
 
-            AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(this, summonProps);
-            pendingCapacitorStartupCost = capacitorReport.Profile != null ? capacitorReport.EffectiveStartupRequired : 0f;
-            pendingCapacitorReserveRequired = capacitorReport.Profile != null ? capacitorReport.EffectiveTotalRequired : 0f;
+            pendingCapacitorForcedStart = forcedStart;
+            pendingCapacitorEmergencyDumpUsed = false;
+            pendingCapacitorBacklashSeverity = forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelBacklashSeverity(capacitorReport) : 0f;
+            pendingCapacitorStartupCost = capacitorReport.Profile != null
+                ? (forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelStartupCost(capacitorReport) : capacitorReport.EffectiveStartupRequired)
+                : 0f;
+            pendingCapacitorReserveRequired = capacitorReport.Profile != null
+                ? (forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelReserveCommitment(capacitorReport) : capacitorReport.EffectiveTotalRequired)
+                : 0f;
             pendingCapacitorThroughputRequired = capacitorReport.Profile != null ? capacitorReport.EffectiveThroughputRequired : 0f;
-            pendingCapacitorSustainDrainPerSecond = AbyssalCircleCapacitorRitualUtility.GetSustainDrainPerSecond(capacitorReport);
+            pendingCapacitorSustainDrainPerSecond = AbyssalCircleCapacitorRitualUtility.GetSustainDrainPerSecond(capacitorReport, forcedStart);
 
             pendingRitualId = summonProps.ritualId;
             pendingSummonMode = summonProps.summonMode ?? "Boss";
@@ -309,6 +337,11 @@ namespace AbyssalProtocol
             if (pendingCapacitorStartupCost > 0.001f)
             {
                 storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - pendingCapacitorStartupCost);
+            }
+
+            if (pendingCapacitorForcedStart)
+            {
+                Messages.Message("ABY_CapacitorForcedStart_Queued".Translate(), MessageTypeDefOf.NeutralEvent, false);
             }
 
             StartPhase(RitualPhase.Charging, 120);
@@ -462,6 +495,10 @@ namespace AbyssalProtocol
             sb.Append(AbyssalCircleCapacitorUtility.GetInstalledSummary(this));
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetChargeReadout(this));
+            sb.AppendLine();
+            sb.Append("ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()));
+            sb.AppendLine();
+            sb.Append("ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(this));
             sb.AppendLine();
             AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(this, AbyssalSummoningConsoleUtility.GetDefaultRitual());
             sb.Append("ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(capacitorReport));
@@ -750,7 +787,17 @@ namespace AbyssalProtocol
                 drain *= 1f - smoothing * 0.08f;
             }
 
+            if (pendingCapacitorForcedStart && capacitorEmergencyDumpEnabled && !pendingCapacitorEmergencyDumpUsed && storedCapacitorCharge <= Mathf.Max(4f, drain * 1.15f))
+            {
+                TriggerCapacitorEmergencyDump();
+                return;
+            }
+
             storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - drain);
+            if (pendingCapacitorForcedStart && storedCapacitorCharge <= 0.01f)
+            {
+                pendingCapacitorBacklashSeverity = Mathf.Clamp01(pendingCapacitorBacklashSeverity + 0.06f);
+            }
         }
 
         private void ClampStoredCapacitorCharge()
@@ -774,9 +821,61 @@ namespace AbyssalProtocol
             float normalized = Mathf.Clamp01(reserve / Mathf.Max(1f, capacity));
             int duration = Mathf.RoundToInt(Mathf.Lerp(240f, 780f, normalized));
             duration = Mathf.RoundToInt(duration * (1f - smoothing * 0.28f));
+            if (pendingCapacitorForcedStart)
+            {
+                duration = Mathf.RoundToInt(duration * AbyssalCircleCapacitorRitualUtility.GetOverchannelRecoveryMultiplier(pendingCapacitorBacklashSeverity, pendingCapacitorEmergencyDumpUsed));
+            }
+
             duration = Mathf.Max(180, duration);
             capacitorRecoveryDurationTicks = duration;
             capacitorRecoveryTicksRemaining = duration;
+        }
+
+        private void TriggerCapacitorEmergencyDump()
+        {
+            if (pendingCapacitorEmergencyDumpUsed || Map == null)
+            {
+                return;
+            }
+
+            pendingCapacitorEmergencyDumpUsed = true;
+            pendingCapacitorBacklashSeverity = Mathf.Max(0f, pendingCapacitorBacklashSeverity - AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpMitigation(this));
+            pendingCapacitorSustainDrainPerSecond *= 0.60f;
+            storedCapacitorCharge = 0f;
+            Messages.Message("ABY_CapacitorEmergencyDump_Message".Translate(), MessageTypeDefOf.NeutralEvent, false);
+            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.08f);
+        }
+
+        private void ResolveCapacitorAftermath()
+        {
+            if (!pendingCapacitorForcedStart)
+            {
+                return;
+            }
+
+            if (pendingCapacitorEmergencyDumpUsed)
+            {
+                Messages.Message("ABY_CapacitorEmergencyDump_Aftermath".Translate(), MessageTypeDefOf.NeutralEvent, false);
+            }
+
+            float severity = Mathf.Clamp01(pendingCapacitorBacklashSeverity);
+            if (severity <= 0.04f)
+            {
+                return;
+            }
+
+            int damage = Mathf.RoundToInt(Mathf.Lerp(4f, 20f, severity));
+            if (damage > 0)
+            {
+                TakeDamage(new DamageInfo(DamageDefOf.Blunt, damage, 0f, -1f, null, null, null));
+            }
+
+            if (Map != null)
+            {
+                Messages.Message("ABY_CapacitorBacklash_Message".Translate(Mathf.RoundToInt(severity * 100f)), MessageTypeDefOf.NegativeEvent, false);
+                ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
+            }
         }
 
         private void MarkCircleVisualsDirty()
@@ -1115,6 +1214,7 @@ namespace AbyssalProtocol
 
         private void ResetRitual()
         {
+            ResolveCapacitorAftermath();
             BeginCapacitorRecovery();
             ritualPhase = RitualPhase.Idle;
             phaseTicksRemaining = 0;
@@ -1135,6 +1235,9 @@ namespace AbyssalProtocol
             pendingCapacitorSustainDrainPerSecond = 0f;
             pendingCapacitorReserveRequired = 0f;
             pendingCapacitorThroughputRequired = 0f;
+            pendingCapacitorForcedStart = false;
+            pendingCapacitorEmergencyDumpUsed = false;
+            pendingCapacitorBacklashSeverity = 0f;
         }
 
         private float GetRitualIntensity()

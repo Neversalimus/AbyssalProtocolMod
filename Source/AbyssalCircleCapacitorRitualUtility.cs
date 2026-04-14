@@ -181,38 +181,84 @@ namespace AbyssalProtocol
 
         public static bool CanSupportRitual(Building_AbyssalSummoningCircle circle, RitualProfile profile, out string failReason)
         {
+            return TryAuthorizeRitualStart(circle, profile, false, out _, out _, out failReason);
+        }
+
+        public static bool TryAuthorizeRitualStart(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual, bool allowOverchannel, out CapacitorReadinessReport report, out bool forcedStart, out string failReason)
+        {
+            return TryAuthorizeRitualStart(circle, GetProfile(ritual), allowOverchannel, out report, out forcedStart, out failReason);
+        }
+
+        public static bool TryAuthorizeRitualStart(Building_AbyssalSummoningCircle circle, CompProperties_UseEffectSummonBoss summonProps, bool allowOverchannel, out CapacitorReadinessReport report, out bool forcedStart, out string failReason)
+        {
+            return TryAuthorizeRitualStart(circle, GetProfile(summonProps), allowOverchannel, out report, out forcedStart, out failReason);
+        }
+
+        public static bool TryAuthorizeRitualStart(Building_AbyssalSummoningCircle circle, RitualProfile profile, bool allowOverchannel, out CapacitorReadinessReport report, out bool forcedStart, out string failReason)
+        {
+            report = CreateReadinessReport(circle, profile);
+            forcedStart = false;
             failReason = null;
+
             if (profile == null)
             {
                 return true;
             }
 
-            CapacitorReadinessReport report = CreateReadinessReport(circle, profile);
             if (!report.HasLattice)
             {
                 failReason = TranslateOrFallback("ABY_CapacitorFail_NoLattice", "This ritual requires an installed capacitor lattice.");
                 return false;
             }
 
+            if (report.FullySatisfied)
+            {
+                return true;
+            }
+
+            if (allowOverchannel && CanForceStart(report))
+            {
+                forcedStart = true;
+                return true;
+            }
+
+            failReason = GetStrictFailureReason(report);
+            if (allowOverchannel && report.StartupSatisfied && !CanForceStart(report))
+            {
+                failReason = TranslateOrFallback("ABY_CapacitorFail_OverchannelBlocked", "Overchannel could not stabilize this lattice. Charge, reserve or feed margin are still too low.");
+            }
+
+            return false;
+        }
+
+        public static string GetStrictFailureReason(CapacitorReadinessReport report)
+        {
+            if (report == null || report.Profile == null)
+            {
+                return null;
+            }
+
+            if (!report.HasLattice)
+            {
+                return TranslateOrFallback("ABY_CapacitorFail_NoLattice", "This ritual requires an installed capacitor lattice.");
+            }
+
             if (!report.StartupSatisfied)
             {
-                failReason = TranslateOrFallback("ABY_CapacitorFail_Startup", "Insufficient startup buffer: {0} / {1}", Mathf.RoundToInt(report.AvailableCharge), Mathf.RoundToInt(report.EffectiveStartupRequired));
-                return false;
+                return TranslateOrFallback("ABY_CapacitorFail_Startup", "Insufficient startup buffer: {0} / {1}", Mathf.RoundToInt(report.AvailableCharge), Mathf.RoundToInt(report.EffectiveStartupRequired));
             }
 
             if (!report.ReserveSatisfied)
             {
-                failReason = TranslateOrFallback("ABY_CapacitorFail_Reserve", "Insufficient charge reserve: {0} / {1}", Mathf.RoundToInt(report.AvailableCharge), Mathf.RoundToInt(report.EffectiveTotalRequired));
-                return false;
+                return TranslateOrFallback("ABY_CapacitorFail_Reserve", "Insufficient charge reserve: {0} / {1}", Mathf.RoundToInt(report.AvailableCharge), Mathf.RoundToInt(report.EffectiveTotalRequired));
             }
 
             if (!report.ThroughputSatisfied)
             {
-                failReason = TranslateOrFallback("ABY_CapacitorFail_Throughput", "Insufficient capacitor throughput: {0} / {1}", Mathf.RoundToInt(report.Throughput), Mathf.RoundToInt(report.EffectiveThroughputRequired));
-                return false;
+                return TranslateOrFallback("ABY_CapacitorFail_Throughput", "Insufficient capacitor throughput: {0} / {1}", Mathf.RoundToInt(report.Throughput), Mathf.RoundToInt(report.EffectiveThroughputRequired));
             }
 
-            return true;
+            return null;
         }
 
         public static float GetGridSmoothing(Building_AbyssalSummoningCircle circle)
@@ -231,6 +277,134 @@ namespace AbyssalProtocol
             return Mathf.Clamp01(totalTolerance * 0.5f);
         }
 
+        public static float GetStartupCoverage(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null || report.EffectiveStartupRequired <= 0.01f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp01(report.AvailableCharge / report.EffectiveStartupRequired);
+        }
+
+        public static float GetReserveCoverage(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null || report.EffectiveTotalRequired <= 0.01f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp01(report.AvailableCharge / report.EffectiveTotalRequired);
+        }
+
+        public static float GetThroughputCoverage(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null || report.EffectiveThroughputRequired <= 0.01f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp01(report.Throughput / report.EffectiveThroughputRequired);
+        }
+
+        public static bool CanForceStart(CapacitorReadinessReport report)
+        {
+            if (report == null || report.Profile == null || !report.HasLattice || report.FullySatisfied)
+            {
+                return false;
+            }
+
+            float smoothingBonus = report.GridSmoothing * 0.10f;
+            float startupCoverage = GetStartupCoverage(report);
+            float reserveCoverage = GetReserveCoverage(report);
+            float throughputCoverage = GetThroughputCoverage(report);
+
+            if (startupCoverage < 0.84f - smoothingBonus)
+            {
+                return false;
+            }
+
+            if (reserveCoverage < 0.58f - smoothingBonus)
+            {
+                return false;
+            }
+
+            if (throughputCoverage < 0.82f - smoothingBonus)
+            {
+                return false;
+            }
+
+            if (report.RecoveryTicksRemaining > 0 && reserveCoverage < 0.68f - smoothingBonus * 0.5f)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool WouldForceStart(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            CapacitorReadinessReport report = CreateReadinessReport(circle, ritual);
+            return CanForceStart(report);
+        }
+
+        public static float GetOverchannelBacklashSeverity(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null)
+            {
+                return 0f;
+            }
+
+            float startupShortfall = Mathf.Max(0f, 1f - GetStartupCoverage(report));
+            float reserveShortfall = Mathf.Max(0f, 1f - GetReserveCoverage(report));
+            float throughputShortfall = Mathf.Max(0f, 1f - GetThroughputCoverage(report));
+            float severity = reserveShortfall * 0.60f + throughputShortfall * 0.52f + startupShortfall * 0.28f + (1f - report.GridSmoothing) * 0.14f;
+            if (report.RecoveryTicksRemaining > 0)
+            {
+                severity += 0.08f;
+            }
+
+            return Mathf.Clamp01(severity);
+        }
+
+        public static float GetOverchannelStartupCost(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null)
+            {
+                return 0f;
+            }
+
+            float severity = GetOverchannelBacklashSeverity(report);
+            return report.EffectiveStartupRequired * (1.06f + severity * 0.16f);
+        }
+
+        public static float GetOverchannelReserveCommitment(CapacitorReadinessReport report)
+        {
+            if (report?.Profile == null)
+            {
+                return 0f;
+            }
+
+            float severity = GetOverchannelBacklashSeverity(report);
+            return Mathf.Max(GetOverchannelStartupCost(report), report.EffectiveTotalRequired * (1.02f + severity * 0.08f));
+        }
+
+        public static float GetEmergencyDumpMitigation(Building_AbyssalSummoningCircle circle)
+        {
+            return 0.24f + GetGridSmoothing(circle) * 0.22f;
+        }
+
+        public static float GetOverchannelRecoveryMultiplier(float backlashSeverity, bool emergencyDumpUsed)
+        {
+            float multiplier = 1.18f + Mathf.Clamp01(backlashSeverity) * 0.52f;
+            if (emergencyDumpUsed)
+            {
+                multiplier += 0.16f;
+            }
+
+            return multiplier;
+        }
+
         public static CapacitorSupportState GetSupportState(CapacitorReadinessReport report)
         {
             if (report == null || report.Profile == null)
@@ -246,7 +420,7 @@ namespace AbyssalProtocol
             bool recoveringAndShort = report.RecoveryTicksRemaining > 0 && !report.FullySatisfied;
             if (!report.StartupSatisfied)
             {
-                float startupFill = report.EffectiveStartupRequired <= 0.01f ? 0f : report.AvailableCharge / report.EffectiveStartupRequired;
+                float startupFill = GetStartupCoverage(report);
                 return startupFill < 0.60f ? CapacitorSupportState.Priming : (recoveringAndShort ? CapacitorSupportState.Recovering : CapacitorSupportState.Undercharged);
             }
 
@@ -289,6 +463,17 @@ namespace AbyssalProtocol
             }
         }
 
+        public static string GetSupportStatusForConsole(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            CapacitorReadinessReport report = CreateReadinessReport(circle, ritual);
+            if (circle != null && circle.CapacitorOverchannelEnabled && CanForceStart(report))
+            {
+                return TranslateOrFallback("ABY_CapacitorSupport_ForcedReady", "forced start ready");
+            }
+
+            return GetSupportStateLabel(report);
+        }
+
         public static string GetSupportDetailText(CapacitorReadinessReport report)
         {
             CapacitorSupportState state = GetSupportState(report);
@@ -309,6 +494,37 @@ namespace AbyssalProtocol
                 default:
                     return TranslateOrFallback("ABY_CapacitorModeHint_NotRequired", "No capacitor gate is defined for this ritual.");
             }
+        }
+
+        public static string GetOperationalModeSummary(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CapacitorMode_Standard", "standard");
+            }
+
+            CapacitorReadinessReport report = CreateReadinessReport(circle, ritual);
+            if (!circle.CapacitorOverchannelEnabled)
+            {
+                return TranslateOrFallback("ABY_CapacitorMode_Standard", "standard");
+            }
+
+            if (CanForceStart(report))
+            {
+                return TranslateOrFallback("ABY_CapacitorMode_ForceReady", "forced-start window");
+            }
+
+            return TranslateOrFallback("ABY_CapacitorMode_Armed", "overchannel armed");
+        }
+
+        public static string GetEmergencyDumpStatusLabel(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null || !circle.CapacitorEmergencyDumpEnabled)
+            {
+                return TranslateOrFallback("ABY_CapacitorDump_Off", "safe release off");
+            }
+
+            return TranslateOrFallback("ABY_CapacitorDump_Armed", "dump armed");
         }
 
         public static string GetReadyEtaLabel(CapacitorReadinessReport report)
@@ -364,6 +580,11 @@ namespace AbyssalProtocol
                 return 0f;
             }
 
+            if (circle != null && circle.CapacitorOverchannelEnabled && CanForceStart(report) && !report.FullySatisfied)
+            {
+                return 0f;
+            }
+
             float fill = report.ChargeFill;
             float throughputHeadroom = report.EffectiveThroughputRequired <= 0.01f
                 ? 0f
@@ -378,7 +599,7 @@ namespace AbyssalProtocol
             return reduction;
         }
 
-        public static float GetSustainDrainPerSecond(CapacitorReadinessReport report)
+        public static float GetSustainDrainPerSecond(CapacitorReadinessReport report, bool forcedStart = false)
         {
             if (report?.Profile == null)
             {
@@ -389,6 +610,11 @@ namespace AbyssalProtocol
             if (report.GridSmoothing > 0.001f)
             {
                 drain *= 1f - report.GridSmoothing * 0.08f;
+            }
+
+            if (forcedStart)
+            {
+                drain *= 1.16f + GetOverchannelBacklashSeverity(report) * 0.18f;
             }
 
             return drain;

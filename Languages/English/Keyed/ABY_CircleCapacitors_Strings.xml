@@ -103,4 +103,25 @@ Surge tolerance: {5}%</ABY_CapacitorBayTooltip_Filled>
 
   <ABY_CapacitorDemandSummary_None>No capacitor gate is defined for this ritual.</ABY_CapacitorDemandSummary_None>
   <ABY_CapacitorDemandSummary>Startup {0} • reserve {1} • throughput {2}</ABY_CapacitorDemandSummary>
+
+  <ABY_CapacitorSupport_ForcedReady>forced start ready</ABY_CapacitorSupport_ForcedReady>
+  <ABY_CapacitorFail_OverchannelBlocked>Overchannel could not stabilize this lattice. Charge, reserve or feed margin are still too low.</ABY_CapacitorFail_OverchannelBlocked>
+  <ABY_CapacitorPanel_Mode>Mode</ABY_CapacitorPanel_Mode>
+  <ABY_CapacitorPanel_Dump>Dump</ABY_CapacitorPanel_Dump>
+  <ABY_CapacitorMode_Standard>standard</ABY_CapacitorMode_Standard>
+  <ABY_CapacitorMode_Armed>overchannel armed</ABY_CapacitorMode_Armed>
+  <ABY_CapacitorMode_ForceReady>forced-start window</ABY_CapacitorMode_ForceReady>
+  <ABY_CapacitorDump_Off>safe release off</ABY_CapacitorDump_Off>
+  <ABY_CapacitorDump_Armed>dump armed</ABY_CapacitorDump_Armed>
+  <ABY_CapacitorControl_Overchannel>Arm overchannel</ABY_CapacitorControl_Overchannel>
+  <ABY_CapacitorControl_OverchannelDesc>Allows borderline lattices to force-start a ritual before full reserve is restored. This raises backlash risk and weakens capacitor-side safety.</ABY_CapacitorControl_OverchannelDesc>
+  <ABY_CapacitorControl_Dump>Arm emergency dump</ABY_CapacitorControl_Dump>
+  <ABY_CapacitorControl_DumpDesc>Lets the lattice vent its remaining charge to soften a dirty overchannel. This reduces backlash, but lengthens recovery.</ABY_CapacitorControl_DumpDesc>
+  <ABY_CapacitorCommand_ForceInvoke>Force-start with overchannel</ABY_CapacitorCommand_ForceInvoke>
+  <ABY_CapacitorConfirm_ForcedInvocation>Assign a prepared sigil and force-start {0} through an overchannel window? This can trigger capacitor backlash and a longer recovery cycle.</ABY_CapacitorConfirm_ForcedInvocation>
+  <ABY_CapacitorForcedStart_Queued>Overchannel armed. The circle will force-start this ritual through capacitor stress.</ABY_CapacitorForcedStart_Queued>
+  <ABY_CapacitorEmergencyDump_Message>Emergency dump engaged. The lattice vents its remaining hostile charge into the breach channel.</ABY_CapacitorEmergencyDump_Message>
+  <ABY_CapacitorEmergencyDump_Aftermath>Emergency dump completed. The lattice is safe, but recovery will take longer.</ABY_CapacitorEmergencyDump_Aftermath>
+  <ABY_CapacitorBacklash_Message>Capacitor backlash lashes the circle. Structural stress severity: {0}%.</ABY_CapacitorBacklash_Message>
+
 </LanguageData>

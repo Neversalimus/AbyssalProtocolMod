@@ -172,14 +172,39 @@ namespace AbyssalProtocol
             }
             TooltipHandler.TipRegion(reducedRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."));
 
-            Rect openRect = new Rect(inner.x, inner.y + 148f, inner.width, 30f);
-            Rect invokeRect = new Rect(inner.x, inner.y + 186f, inner.width, 34f);
+            bool overchannel = circle.CapacitorOverchannelEnabled;
+            bool newOverchannel = overchannel;
+            Rect overchannelRect = new Rect(inner.x, inner.y + 128f, inner.width, 24f);
+            Widgets.CheckboxLabeled(overchannelRect, "ABY_CapacitorControl_Overchannel".Translate(), ref newOverchannel, false, null, null, false);
+            if (newOverchannel != overchannel)
+            {
+                circle.SetCapacitorOverchannelEnabled(newOverchannel);
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
+            TooltipHandler.TipRegion(overchannelRect, "ABY_CapacitorControl_OverchannelDesc".Translate());
+
+            bool dump = circle.CapacitorEmergencyDumpEnabled;
+            bool newDump = dump;
+            Rect dumpRect = new Rect(inner.x, inner.y + 148f, inner.width, 24f);
+            Widgets.CheckboxLabeled(dumpRect, "ABY_CapacitorControl_Dump".Translate(), ref newDump, false, null, null, false);
+            if (newDump != dump)
+            {
+                circle.SetCapacitorEmergencyDumpEnabled(newDump);
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
+            TooltipHandler.TipRegion(dumpRect, "ABY_CapacitorControl_DumpDesc".Translate());
+
+            Rect openRect = new Rect(inner.x, inner.y + 174f, inner.width, 22f);
+            Rect invokeRect = new Rect(inner.x, inner.y + 200f, inner.width, 24f);
             if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
             {
                 JumpToSigil(ritual);
             }
 
-            if (AbyssalStyledWidgets.TextButton(invokeRect, AbyssalSummoningConsoleUtility.GetAssignSigilLabel(), !circle.RitualActive, true))
+            string invokeLabel = circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                ? "ABY_CapacitorCommand_ForceInvoke".Translate()
+                : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
+            if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, !circle.RitualActive, true))
             {
                 ConfirmAndAssign(ritual);
             }
@@ -258,9 +283,11 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x, summaryY + 92f, rect.width, 16f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
             Widgets.Label(new Rect(rect.x, summaryY + 108f, rect.width, 16f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
             Widgets.Label(new Rect(rect.x, summaryY + 124f, rect.width, 16f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 140f, rect.width, 16f), "ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(circle, ritual));
+            Widgets.Label(new Rect(rect.x, summaryY + 156f, rect.width, 16f), "ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(circle));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY + 144f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
-            Widgets.Label(new Rect(rect.x, summaryY + 172f, rect.width, rect.height - (summaryY - rect.y) - 172f), "ABY_CapacitorPanel_Hint".Translate());
+            Widgets.Label(new Rect(rect.x, summaryY + 176f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
+            Widgets.Label(new Rect(rect.x, summaryY + 204f, rect.width, rect.height - (summaryY - rect.y) - 204f), "ABY_CapacitorPanel_Hint".Translate());
             GUI.color = Color.white;
         }
 
@@ -349,7 +376,9 @@ namespace AbyssalProtocol
 
         private void ConfirmAndAssign(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
-            string confirmText = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleConfirmInvocation", "Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.", AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+            string confirmText = circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                ? "ABY_CapacitorConfirm_ForcedInvocation".Translate(AbyssalSummoningConsoleUtility.GetRitualLabel(ritual))
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleConfirmInvocation", "Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.", AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
             Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(confirmText, delegate
             {
                 if (AbyssalSummoningConsoleUtility.TryAssignInvocation(circle, ritual, out string failReason))

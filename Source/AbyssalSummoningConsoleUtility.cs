@@ -396,7 +396,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalCircleCapacitorRitualUtility.CanSupportRitual(circle, ritual, out failReason))
+            if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(circle, ritual, circle.CapacitorOverchannelEnabled, out _, out _, out failReason))
             {
                 return false;
             }
@@ -758,11 +758,12 @@ namespace AbyssalProtocol
             if (ritual != null)
             {
                 AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport report = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
+                bool forceable = circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.CanForceStart(report);
                 entries.Add(new StatusEntry
                 {
                     Label = TranslateOrFallback("ABY_CapacitorStatus_Support", "Capacitors"),
-                    Value = AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report),
-                    Satisfied = report.FullySatisfied
+                    Value = AbyssalCircleCapacitorRitualUtility.GetSupportStatusForConsole(circle, ritual),
+                    Satisfied = report.FullySatisfied || forceable
                 });
             }
 
@@ -832,7 +833,8 @@ namespace AbyssalProtocol
             float baseRisk = ritual != null ? ritual.BaseRisk : 0.25f;
             int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
             float capacitorRiskReduction = ritual != null ? AbyssalCircleCapacitorRitualUtility.GetRiskReduction(circle, ritual) : 0f;
-            float risk = baseRisk + missing * 0.08f - instabilityReduction - capacitorRiskReduction;
+            float overchannelRisk = (ritual != null && circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)) ? 0.12f : 0f;
+            float risk = baseRisk + missing * 0.08f + overchannelRisk - instabilityReduction - capacitorRiskReduction;
             return Mathf.Clamp(risk, 0.05f, 1f);
         }
 

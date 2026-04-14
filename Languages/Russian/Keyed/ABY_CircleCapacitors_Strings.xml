@@ -103,4 +103,25 @@
 
   <ABY_CapacitorDemandSummary_None>Для этого ритуала не задано требование к конденсаторам.</ABY_CapacitorDemandSummary_None>
   <ABY_CapacitorDemandSummary>Старт {0} • резерв {1} • пропускная способность {2}</ABY_CapacitorDemandSummary>
+
+  <ABY_CapacitorSupport_ForcedReady>форс-старт готов</ABY_CapacitorSupport_ForcedReady>
+  <ABY_CapacitorFail_OverchannelBlocked>Оверченнел не смог стабилизировать эту решётку. Запас заряда, резерва или подачи всё ещё слишком низкий.</ABY_CapacitorFail_OverchannelBlocked>
+  <ABY_CapacitorPanel_Mode>Режим</ABY_CapacitorPanel_Mode>
+  <ABY_CapacitorPanel_Dump>Сброс</ABY_CapacitorPanel_Dump>
+  <ABY_CapacitorMode_Standard>стандарт</ABY_CapacitorMode_Standard>
+  <ABY_CapacitorMode_Armed>оверченнел взведён</ABY_CapacitorMode_Armed>
+  <ABY_CapacitorMode_ForceReady>окно форс-старта</ABY_CapacitorMode_ForceReady>
+  <ABY_CapacitorDump_Off>защитный сброс выкл.</ABY_CapacitorDump_Off>
+  <ABY_CapacitorDump_Armed>сброс взведён</ABY_CapacitorDump_Armed>
+  <ABY_CapacitorControl_Overchannel>Взвести оверченнел</ABY_CapacitorControl_Overchannel>
+  <ABY_CapacitorControl_OverchannelDesc>Позволяет пограничным решёткам форсировать старт ритуала до полного восстановления резерва. Это повышает риск обратного удара и ослабляет защиту конденсаторов.</ABY_CapacitorControl_OverchannelDesc>
+  <ABY_CapacitorControl_Dump>Взвести аварийный сброс</ABY_CapacitorControl_Dump>
+  <ABY_CapacitorControl_DumpDesc>Позволяет решётке сбросить остаток заряда в канал разлома, чтобы смягчить грязный оверченнел. Это уменьшает обратный удар, но удлиняет восстановление.</ABY_CapacitorControl_DumpDesc>
+  <ABY_CapacitorCommand_ForceInvoke>Форс-старт через оверченнел</ABY_CapacitorCommand_ForceInvoke>
+  <ABY_CapacitorConfirm_ForcedInvocation>Назначить подготовленный сигил и форсировать старт {0} через окно оверченнела? Это может вызвать обратный удар конденсаторов и более долгий цикл восстановления.</ABY_CapacitorConfirm_ForcedInvocation>
+  <ABY_CapacitorForcedStart_Queued>Оверченнел взведён. Круг попытается форсировать этот ритуал через перегрузку конденсаторов.</ABY_CapacitorForcedStart_Queued>
+  <ABY_CapacitorEmergencyDump_Message>Аварийный сброс активирован. Решётка стравливает остаток враждебного заряда прямо в канал разлома.</ABY_CapacitorEmergencyDump_Message>
+  <ABY_CapacitorEmergencyDump_Aftermath>Аварийный сброс завершён. Решётка спасена, но восстановление займёт больше времени.</ABY_CapacitorEmergencyDump_Aftermath>
+  <ABY_CapacitorBacklash_Message>Обратный удар конденсаторов бьёт по кругу. Тяжесть структурного стресса: {0}%.</ABY_CapacitorBacklash_Message>
+
 </LanguageData>
