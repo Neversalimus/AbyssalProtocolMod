@@ -125,7 +125,7 @@ namespace AbyssalProtocol
 
         public static float GetForgeBillSpeedCapstoneBonusForTier(int tier)
         {
-            return tier >= MaxAttunementTier ? 0.50f : 0f;
+            return 0f;
         }
 
         public static string GetAttunementBandLabel(int tier)
