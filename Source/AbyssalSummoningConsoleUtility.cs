@@ -22,6 +22,8 @@ namespace AbyssalProtocol
             public string RewardHintKey;
             public string SideEffectHintKey;
             public float BaseRisk;
+            public float InstabilityGain;
+            public float ContaminationGain;
             public int SpawnPoints;
         }
 
@@ -54,6 +56,8 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
+                InstabilityGain = 0.12f,
+                ContaminationGain = 0.05f,
                 SpawnPoints = 180
             },
             new RitualDefinition
@@ -68,6 +72,8 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Archon_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
+                InstabilityGain = 0.24f,
+                ContaminationGain = 0.10f,
                 SpawnPoints = 900
             }
         };
@@ -870,6 +876,39 @@ namespace AbyssalProtocol
                 default:
                     return TranslateOrFallback("ABY_CircleRisk_Stable", "stable");
             }
+        }
+
+        public static string FormatTicksShort(int ticks)
+        {
+            if (ticks <= 0)
+            {
+                return "0s";
+            }
+
+            int seconds = Mathf.CeilToInt(ticks / 60f);
+            int days = seconds / 86400;
+            seconds -= days * 86400;
+            int hours = seconds / 3600;
+            seconds -= hours * 3600;
+            int minutes = seconds / 60;
+            seconds -= minutes * 60;
+
+            if (days > 0)
+            {
+                return hours > 0 ? $"{days}d {hours}h" : $"{days}d";
+            }
+
+            if (hours > 0)
+            {
+                return minutes > 0 ? $"{hours}h {minutes}m" : $"{hours}h";
+            }
+
+            if (minutes > 0)
+            {
+                return seconds > 0 ? $"{minutes}m {seconds}s" : $"{minutes}m";
+            }
+
+            return $"{seconds}s";
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

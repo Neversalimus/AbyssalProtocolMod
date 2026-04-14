@@ -34,13 +34,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (impactTarget != null && !impactTarget.Destroyed)
+            if (impactTarget is Pawn pawnTarget && !pawnTarget.Destroyed)
             {
-                component.TryStartStream(launcherPawn, impactTarget, impactPosition);
+                component.TryStartStream(launcherPawn, pawnTarget, impactPosition);
                 return;
             }
 
-            component.TryStartStreamToPoint(launcherPawn, impactPosition, blockedByShield);
+            Vector3 pointTarget = impactTarget != null && !impactTarget.Destroyed ? impactTarget.DrawPos : impactPosition;
+            component.TryStartStreamToPoint(launcherPawn, pointTarget, blockedByShield);
         }
 
         private Thing ResolveImpactThing(Thing hitThing, Pawn launcherPawn, Vector3 impactPosition, float searchRadius)
