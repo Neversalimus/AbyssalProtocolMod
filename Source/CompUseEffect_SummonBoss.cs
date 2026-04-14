@@ -33,7 +33,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (!circle.TryStartBossSummonSequence(usedBy, Props, out string startFailReason))
+            if (!circle.TryStartSummonSequence(usedBy, Props, out string startFailReason))
             {
                 Messages.Message(startFailReason, MessageTypeDefOf.RejectInput, false);
                 return;

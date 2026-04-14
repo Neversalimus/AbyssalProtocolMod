@@ -109,11 +109,13 @@ namespace AbyssalProtocol
 
         public static void DrawMetric(Rect rect, string label, string value)
         {
-            Text.Font = GameFont.Small;
+            Text.Font = GameFont.Tiny;
             GUI.color = TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 18f), label);
+            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 14f), label);
+
+            Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x, rect.y + 18f, rect.width, rect.height - 18f), value);
+            Widgets.Label(new Rect(rect.x, rect.y + 14f, rect.width, rect.height - 14f), value);
             GUI.color = Color.white;
         }
 

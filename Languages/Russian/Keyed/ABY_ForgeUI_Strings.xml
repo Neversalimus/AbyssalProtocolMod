@@ -2,10 +2,10 @@
 <LanguageData>
   <ABY_ForgeTabLabel>сопряжение</ABY_ForgeTabLabel>
   <ABY_ForgePanelHeader>Инфернальная решётка сопряжения</ABY_ForgePanelHeader>
-  <ABY_ForgeOverviewSubtitleShort>Общекартное сопряжение residue и контроль шаблонов.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewSubtitleShort>Внесение residue, attunement и контроль шаблонов.</ABY_ForgeOverviewSubtitleShort>
   <ABY_ForgeOpenConsole>Открыть консоль сопряжения</ABY_ForgeOpenConsole>
   <ABY_ForgeOpenConsoleLabel>Консоль сопряжения</ABY_ForgeOpenConsoleLabel>
-  <ABY_ForgeOpenConsoleDesc>Открыть полную консоль сопряжения для шаблонов, внесения residue и отслеживания attunement.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeOpenConsoleDesc>Открыть полную консоль сопряжения для шаблонов, требований и отслеживания attunement.</ABY_ForgeOpenConsoleDesc>
   <ABY_ForgeStatusHeader>Состояние сопряжения</ABY_ForgeStatusHeader>
   <ABY_ForgeMetricResidue>Настроено residue</ABY_ForgeMetricResidue>
   <ABY_ForgeMetricAvailable>Residue на карте</ABY_ForgeMetricAvailable>
@@ -35,7 +35,7 @@
   <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
   <ABY_ForgePatternRequirementsState>Материалы на карте</ABY_ForgePatternRequirementsState>
   <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
-  <ABY_ForgePatternAddBill>Добавить bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternAddBill>В очередь</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
   <ABY_ForgePatternNoMaterialData>Нет данных о материалах.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
@@ -51,7 +51,7 @@
   <ABY_ForgeReducedEffectsOn>Эффекты: снижены</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
   <ABY_ForgeReducedEffectsToggle>Сниженные эффекты</ABY_ForgeReducedEffectsToggle>
-  <ABY_ForgeReducedEffectsDesc>Смягчает sweep в шапке, пульсацию и другие анимированные акценты внутри forge-консоли.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeReducedEffectsDesc>Смягчает анимированные акценты внутри forge-консоли.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
   <ABY_ForgeCategory_Core>Ядро forge</ABY_ForgeCategory_Core>
   <ABY_ForgeCategory_Weapons>Оружие</ABY_ForgeCategory_Weapons>

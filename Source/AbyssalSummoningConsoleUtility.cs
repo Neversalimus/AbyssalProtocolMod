@@ -44,6 +44,20 @@ namespace AbyssalProtocol
         {
             new RitualDefinition
             {
+                Id = "unstable_breach",
+                LabelKey = "ABY_CircleRitual_Unstable_Label",
+                SubtitleKey = "ABY_CircleRitual_Unstable_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_Unstable_Desc",
+                BossLabel = "Rift imp breach",
+                SigilThingDefName = "ABY_UnstableBreachSigil",
+                PawnKindDefName = "ABY_RiftImp",
+                RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
+                BaseRisk = 0.38f,
+                SpawnPoints = 180
+            },
+            new RitualDefinition
+            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -206,6 +220,11 @@ namespace AbyssalProtocol
                 return "Unknown ritual";
             }
 
+            if (ritual.Id == "unstable_breach")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Open unstable breach");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -219,6 +238,11 @@ namespace AbyssalProtocol
             if (ritual == null)
             {
                 return string.Empty;
+            }
+
+            if (ritual.Id == "unstable_breach")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Pre-boss hostile breach pattern");
             }
 
             if (ritual.Id == "archon_beast")
@@ -236,6 +260,11 @@ namespace AbyssalProtocol
                 return string.Empty;
             }
 
+            if (ritual.Id == "unstable_breach")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.");
@@ -251,9 +280,18 @@ namespace AbyssalProtocol
                 return string.Empty;
             }
 
+            if (ritual.Id == "unstable_breach")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Early hostile summoning rehearsal
+• Smaller breach pressure before the first boss
+• A cleaner bridge between the circle and the Archon Beast fight");
+            }
+
             if (ritual.Id == "archon_beast")
             {
-                return TranslateOrFallback(ritual.RewardHintKey, "• First-loop boss progression\n• Archon-linked drops and unlock gating\n• Early abyssal loot and boss-side material gating");
+                return TranslateOrFallback(ritual.RewardHintKey, @"• First-loop boss progression
+• Archon-linked drops and unlock gating
+• Early abyssal loot and boss-side material gating");
             }
 
             return TranslateOrFallback(ritual.RewardHintKey, ritual.Id);
@@ -266,9 +304,18 @@ namespace AbyssalProtocol
                 return string.Empty;
             }
 
+            if (ritual.Id == "unstable_breach")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
+• Still counts as an active abyssal encounter while the breach is live
+• Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
+            }
+
             if (ritual.Id == "archon_beast")
             {
-                return TranslateOrFallback(ritual.SideEffectHintKey, "• Opens a hostile breach on the current map\n• Can trigger escalation pressure if the colony is underprepared\n• Ritual phases intensify visuals, sound, and encounter pressure");
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Opens a hostile breach on the current map
+• Can trigger escalation pressure if the colony is underprepared
+• Ritual phases intensify visuals, sound, and encounter pressure");
             }
 
             return TranslateOrFallback(ritual.SideEffectHintKey, ritual.Id);
@@ -411,7 +458,8 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSigil", "No prepared archon sigil was found on the current map.");
+                string sigilLabel = sigilDef.label ?? ritual?.SigilThingDefName ?? TranslateOrFallback("ABY_CircleConsoleFail_NoSigilFallback", "prepared sigil");
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSpecificSigil", "No prepared {0} was found on the current map.", sigilLabel);
             }
 
             return best;

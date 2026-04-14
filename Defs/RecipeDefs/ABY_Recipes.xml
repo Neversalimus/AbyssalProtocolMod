@@ -44,6 +44,56 @@
   </RecipeDef>
 
   <RecipeDef>
+    <defName>ABY_CraftUnstableBreachSigil</defName>
+    <label>forge unstable breach sigil</label>
+    <description>Compress a smaller, less-stable summoning key used to prototype hostile breach content before the first boss tier. It is cheaper than a true archon sigil, but still opens a dangerous hostile event.</description>
+    <jobString>Forging unstable breach sigil.</jobString>
+    <workAmount>1500</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_UnstableBreachSigil>1</ABY_UnstableBreachSigil>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>15</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
     <defName>ABY_CraftArchonSigil</defName>
     <label>forge archon sigil</label>
     <description>Compress residue into a stable breach-key used to summon the first boss. Once the forge has tasted enough residue, it can print the first true archon invocation sigil.</description>

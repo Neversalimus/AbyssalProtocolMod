@@ -97,6 +97,18 @@
   <ABY_CircleReducedEffects>Сниженные эффекты</ABY_CircleReducedEffects>
   <ABY_CircleReducedEffectsDesc>Ослабляет sweep-линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
 
+  <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
+  <ABY_CircleUnstableBreachLetterLabel>Открыт нестабильный разлом</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл меньший враждебный разлом. Из нестабильного портала на карту выходят rift imp.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleRitual_Unstable_Label>Открыть нестабильный разлом</ABY_CircleRitual_Unstable_Label>
+  <ABY_CircleRitual_Unstable_Subtitle>Довражеский шаблон до первого босса</ABY_CircleRitual_Unstable_Subtitle>
+  <ABY_CircleRitual_Unstable_Desc>Расходует один unstable breach sigil, направляет колониста к кругу и вскрывает меньший враждебный рифт для раннего abyssal-столкновения до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
+  <ABY_CircleRitual_Unstable_Rewards>• Ранняя репетиция враждебного призыва
+• Меньшее давление разлома до первого босса
+• Более плавный мост между кругом и боем с Archon Beast</ABY_CircleRitual_Unstable_Rewards>
+  <ABY_CircleRitual_Unstable_SideEffects>• Спавнит враждебный разлом rift imp, связанный с кругом
+• Пока разлом активен, он считается текущим abyssal-столкновением
+• Угроза ниже, чем у Archon Beast, но всё ещё давит неподготовленную колонию</ABY_CircleRitual_Unstable_SideEffects>
   <ABY_CircleRitual_Archon_Label>Призвать Archon Beast</ABY_CircleRitual_Archon_Label>
   <ABY_CircleRitual_Archon_Subtitle>Шаблон первого босса</ABY_CircleRitual_Archon_Subtitle>
   <ABY_CircleRitual_Archon_Desc>Расходует один подготовленный archon sigil, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
@@ -116,6 +128,8 @@
 
   <ABY_CircleConsoleFail_NoCircle>Для управления через консоль нет подходящего круга призыва.</ABY_CircleConsoleFail_NoCircle>
   <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одного подготовленного archon sigil.</ABY_CircleConsoleFail_NoSigil>
+  <ABY_CircleConsoleFail_NoSpecificSigil>На текущей карте не найден подготовленный предмет: {0}.</ABY_CircleConsoleFail_NoSpecificSigil>
+  <ABY_CircleConsoleFail_NoSigilFallback>подготовленный sigil</ABY_CircleConsoleFail_NoSigilFallback>
   <ABY_CircleConsoleFail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил к кругу.</ABY_CircleConsoleFail_NoOperator>
   <ABY_CircleConsoleFail_JobStart>Не удалось запустить приказ на призыв.</ABY_CircleConsoleFail_JobStart>
 

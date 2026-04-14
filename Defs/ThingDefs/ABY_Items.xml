@@ -45,9 +45,52 @@
         <useLabel>invoke archon</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>archon_beast</ritualId>
+        <summonMode>Boss</summonMode>
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
         <bossLabel>Archon Beast</bossLabel>
         <spawnPoints>900</spawnPoints>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_UnstableBreachSigil</defName>
+    <label>unstable breach sigil</label>
+    <description>A volatile infernal key for lesser hostile breaches. Carry it to an abyssal summoning circle to tear open a smaller pre-boss rift that disgorges abyssal imps.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_ArchonSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>180</MarketValue>
+      <Mass>0.24</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>open unstable breach</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>unstable_breach</ritualId>
+        <summonMode>ImpPortal</summonMode>
+        <bossLabel>rift imp breach</bossLabel>
+        <spawnPoints>180</spawnPoints>
+        <ritualWarmupTicks>150</ritualWarmupTicks>
+        <impCount>3</impCount>
+        <impPortalWarmupTicks>90</impPortalWarmupTicks>
+        <impSpawnIntervalTicks>75</impSpawnIntervalTicks>
+        <impPortalLingerTicks>1800</impPortalLingerTicks>
+        <completionLetterLabelKey>ABY_CircleUnstableBreachLetterLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_CircleUnstableBreachLetterDesc</completionLetterDescKey>
       </li>
     </comps>
   </ThingDef>

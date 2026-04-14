@@ -17,4 +17,8 @@
   <ABY_ForgeAttunementTooltipSuspended>Эффект приостановлен, пока на этой карте нет хотя бы одной запитанной Abyssal Forge.</ABY_ForgeAttunementTooltipSuspended>
   <ABY_ForgeAttunementInstability>Нестабильность призыва</ABY_ForgeAttunementInstability>
   <ABY_ForgeAttunementForgeBillSpeed>Скорость заказов forge</ABY_ForgeAttunementForgeBillSpeed>
+  <ABY_ForgeAttunementCurrentTier>Текущий тир: {0}/50</ABY_ForgeAttunementCurrentTier>
+  <ABY_ForgeAttunementResidueRemaining>До следующего тира: {0}</ABY_ForgeAttunementResidueRemaining>
+  <ABY_ForgeAttunementActive>Статус: активно на этой карте</ABY_ForgeAttunementActive>
+  <ABY_ForgeAttunementInactive>Статус: приостановлено на этой карте</ABY_ForgeAttunementInactive>
 </LanguageData>

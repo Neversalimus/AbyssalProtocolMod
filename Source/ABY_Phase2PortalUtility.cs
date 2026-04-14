@@ -76,6 +76,112 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TrySpawnImpPortalNear(
+            Map map,
+            Faction faction,
+            IntVec3 origin,
+            float minRadius,
+            float maxRadius,
+            int impCount,
+            int warmupTicks,
+            int impSpawnIntervalTicks,
+            int lingerTicks,
+            out Building_AbyssalImpPortal portal)
+        {
+            portal = null;
+
+            if (map == null || impCount <= 0 || !origin.IsValid)
+            {
+                return false;
+            }
+
+            if (!TryFindPortalSpawnCellNear(map, origin, minRadius, maxRadius, out IntVec3 cell))
+            {
+                return false;
+            }
+
+            ThingDef portalDef = DefDatabase<ThingDef>.GetNamedSilentFail(PortalDefName);
+            PawnKindDef impKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(ImpPawnKindDefName);
+            if (portalDef == null || impKindDef == null)
+            {
+                return false;
+            }
+
+            Building_AbyssalImpPortal madePortal = ThingMaker.MakeThing(portalDef) as Building_AbyssalImpPortal;
+            if (madePortal == null)
+            {
+                return false;
+            }
+
+            GenSpawn.Spawn(madePortal, cell, map, Rot4.Random);
+            madePortal.Initialize(faction, impKindDef, impCount, warmupTicks, impSpawnIntervalTicks, lingerTicks);
+            portal = madePortal;
+            return true;
+        }
+
+        public static bool TryFindPortalSpawnCellNear(Map map, IntVec3 origin, float minRadius, float maxRadius, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+            float preferredRadius = (minRadius + maxRadius) * 0.5f;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, maxRadius, true))
+            {
+                if (!candidate.InBounds(map) || candidate.Fogged(map) || !candidate.Standable(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(origin);
+                if (distance < minRadius || distance > maxRadius)
+                {
+                    continue;
+                }
+
+                if (candidate.GetFirstPawn(map) != null)
+                {
+                    continue;
+                }
+
+                if (candidate.GetEdifice(map) != null)
+                {
+                    continue;
+                }
+
+                if (HasBlockingPlayerBuildingNearby(map, candidate, 2.9f))
+                {
+                    continue;
+                }
+
+                float score = -Mathf.Abs(distance - preferredRadius);
+                if (!candidate.Roofed(map))
+                {
+                    score += 0.35f;
+                }
+
+                score += CountAdjacentStandableCells(map, candidate) * 0.08f;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
         public static bool TryFindRetreatEdgeCell(Map map, Pawn pawn, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
@@ -424,6 +530,34 @@ namespace AbyssalProtocol
             }
 
             return count;
+        }
+
+        private static bool HasBlockingPlayerBuildingNearby(Map map, IntVec3 center, float radius)
+        {
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, true))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing thing = things[i];
+                    if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
+                    {
+                        continue;
+                    }
+
+                    if (thing.def != null && thing.def.category == ThingCategory.Building)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static bool IsUnsafePortalCell(Map map, IntVec3 cell)

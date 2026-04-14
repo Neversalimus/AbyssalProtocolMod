@@ -2,10 +2,10 @@
 <LanguageData>
   <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
   <ABY_ForgePanelHeader>Infernal communion lattice</ABY_ForgePanelHeader>
-  <ABY_ForgeOverviewSubtitleShort>Map-wide residue communion and pattern control.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewSubtitleShort>Residue intake, attunement, and pattern control.</ABY_ForgeOverviewSubtitleShort>
   <ABY_ForgeOpenConsole>Open communion console</ABY_ForgeOpenConsole>
   <ABY_ForgeOpenConsoleLabel>Communion console</ABY_ForgeOpenConsoleLabel>
-  <ABY_ForgeOpenConsoleDesc>Open the full communion console for pattern browsing, offering, and attunement tracking.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeOpenConsoleDesc>Open the full communion console for pattern browsing, requirement checks, and attunement tracking.</ABY_ForgeOpenConsoleDesc>
   <ABY_ForgeStatusHeader>Communion state</ABY_ForgeStatusHeader>
   <ABY_ForgeMetricResidue>Residue attuned</ABY_ForgeMetricResidue>
   <ABY_ForgeMetricAvailable>Residue on map</ABY_ForgeMetricAvailable>
@@ -35,7 +35,7 @@
   <ABY_ForgePatternRequirementsLabel>Requirements</ABY_ForgePatternRequirementsLabel>
   <ABY_ForgePatternRequirementsState>Materials on map</ABY_ForgePatternRequirementsState>
   <ABY_ForgePatternMoreRequirements>+{0} more requirements</ABY_ForgePatternMoreRequirements>
-  <ABY_ForgePatternAddBill>Add bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternAddBill>Queue</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
   <ABY_ForgePatternNoMaterialData>No material data available.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgeNoUnlockedRecipes>No unlocked patterns are available.</ABY_ForgeNoUnlockedRecipes>
@@ -51,7 +51,7 @@
   <ABY_ForgeReducedEffectsOn>Effects: reduced</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Effects: full</ABY_ForgeReducedEffectsOff>
   <ABY_ForgeReducedEffectsToggle>Reduced effects</ABY_ForgeReducedEffectsToggle>
-  <ABY_ForgeReducedEffectsDesc>Softens header sweeps, pulse accents, and other animated flourishes inside the forge console.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeReducedEffectsDesc>Softens animated accents inside the forge console.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>All</ABY_ForgeCategory_All>
   <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
   <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>

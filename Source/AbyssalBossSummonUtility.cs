@@ -10,7 +10,9 @@ namespace AbyssalProtocol
     {
         private const string ArchonBeastRaceDefName = "ABY_ArchonBeast";
         private const string ArchonOfRuptureRaceDefName = "ABY_ArchonOfRupture";
+        private const string RiftImpRaceDefName = "ABY_RiftImp";
         private const string RupturePortalDefName = "ABY_RupturePortal";
+        private const string ImpPortalDefName = "ABY_ImpPortal";
 
         public static Faction ResolveHostileFaction()
         {
@@ -287,7 +289,7 @@ namespace AbyssalProtocol
                     }
 
                     string defName = pawn.def?.defName;
-                    if (defName == ArchonBeastRaceDefName || defName == ArchonOfRuptureRaceDefName)
+                    if (defName == ArchonBeastRaceDefName || defName == ArchonOfRuptureRaceDefName || defName == RiftImpRaceDefName)
                     {
                         return true;
                     }
@@ -298,6 +300,23 @@ namespace AbyssalProtocol
             if (rupturePortalDef != null)
             {
                 List<Thing> portals = map.listerThings.ThingsOfDef(rupturePortalDef);
+                if (portals != null)
+                {
+                    for (int i = 0; i < portals.Count; i++)
+                    {
+                        Thing portal = portals[i];
+                        if (portal != null && portal.Spawned && !portal.Destroyed)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            ThingDef impPortalDef = DefDatabase<ThingDef>.GetNamedSilentFail(ImpPortalDefName);
+            if (impPortalDef != null)
+            {
+                List<Thing> portals = map.listerThings.ThingsOfDef(impPortalDef);
                 if (portals != null)
                 {
                     for (int i = 0; i < portals.Count; i++)

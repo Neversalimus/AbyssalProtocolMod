@@ -81,8 +81,16 @@ namespace AbyssalProtocol
 
         private PawnKindDef pendingPawnKindDef;
         private string pendingBossLabel;
+        private string pendingRitualId;
+        private string pendingSummonMode;
+        private string pendingCompletionLetterLabelKey;
+        private string pendingCompletionLetterDescKey;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
+        private int pendingImpCount;
+        private int pendingImpPortalWarmupTicks;
+        private int pendingImpSpawnIntervalTicks;
+        private int pendingImpPortalLingerTicks;
         private bool reducedConsoleEffects;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
@@ -120,8 +128,16 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref ritualSeed, "ritualSeed", 0);
             Scribe_Defs.Look(ref pendingPawnKindDef, "pendingPawnKindDef");
             Scribe_Values.Look(ref pendingBossLabel, "pendingBossLabel");
+            Scribe_Values.Look(ref pendingRitualId, "pendingRitualId");
+            Scribe_Values.Look(ref pendingSummonMode, "pendingSummonMode");
+            Scribe_Values.Look(ref pendingCompletionLetterLabelKey, "pendingCompletionLetterLabelKey");
+            Scribe_Values.Look(ref pendingCompletionLetterDescKey, "pendingCompletionLetterDescKey");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
+            Scribe_Values.Look(ref pendingImpCount, "pendingImpCount", 0);
+            Scribe_Values.Look(ref pendingImpPortalWarmupTicks, "pendingImpPortalWarmupTicks", 0);
+            Scribe_Values.Look(ref pendingImpSpawnIntervalTicks, "pendingImpSpawnIntervalTicks", 0);
+            Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
         }
 
@@ -180,22 +196,26 @@ namespace AbyssalProtocol
             AdvancePhase();
         }
 
-        public bool TryStartBossSummonSequence(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, out string failReason)
+        public bool TryStartSummonSequence(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, out string failReason)
         {
             failReason = null;
+
+            if (summonProps == null)
+            {
+                failReason = "Missing summon properties.";
+                return false;
+            }
 
             if (!IsReadyForSigil(out failReason))
             {
                 return false;
             }
 
-            pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.pawnKindDefName);
-            if (pendingPawnKindDef == null)
-            {
-                failReason = "Missing PawnKindDef: " + summonProps.pawnKindDefName;
-                return false;
-            }
-
+            pendingRitualId = summonProps.ritualId;
+            pendingSummonMode = summonProps.summonMode ?? "Boss";
+            pendingBossLabel = summonProps.bossLabel;
+            pendingCompletionLetterLabelKey = summonProps.completionLetterLabelKey;
+            pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
             pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
             if (pendingFaction == null)
             {
@@ -203,13 +223,36 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+            pendingPawnKindDef = null;
+            pendingSpawnCell = RitualFocusCell;
+            pendingImpCount = 0;
+            pendingImpPortalWarmupTicks = 0;
+            pendingImpSpawnIntervalTicks = 0;
+            pendingImpPortalLingerTicks = 0;
+
+            if (IsImpPortalSummonMode(pendingSummonMode))
             {
-                failReason = "ABY_CircleFail_NoBossArrival".Translate();
-                return false;
+                pendingImpCount = Mathf.Max(1, summonProps.impCount);
+                pendingImpPortalWarmupTicks = Mathf.Max(30, summonProps.impPortalWarmupTicks);
+                pendingImpSpawnIntervalTicks = Mathf.Max(30, summonProps.impSpawnIntervalTicks);
+                pendingImpPortalLingerTicks = Mathf.Max(600, summonProps.impPortalLingerTicks);
+            }
+            else
+            {
+                pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.pawnKindDefName);
+                if (pendingPawnKindDef == null)
+                {
+                    failReason = "Missing PawnKindDef: " + summonProps.pawnKindDefName;
+                    return false;
+                }
+
+                if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+                {
+                    failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                    return false;
+                }
             }
 
-            pendingBossLabel = summonProps.bossLabel;
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
 
             StartPhase(RitualPhase.Charging, 120);
@@ -218,6 +261,11 @@ namespace AbyssalProtocol
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
 
             return true;
+        }
+
+        public bool TryStartBossSummonSequence(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, out string failReason)
+        {
+            return TryStartSummonSequence(activator, summonProps, out failReason);
         }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
@@ -522,6 +570,12 @@ namespace AbyssalProtocol
 
         private void CompleteSummon()
         {
+            if (IsImpPortalSummonMode(pendingSummonMode))
+            {
+                CompleteImpPortalSummon();
+                return;
+            }
+
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -543,6 +597,99 @@ namespace AbyssalProtocol
                 pendingBossLabel);
         }
 
+        private void CompleteImpPortalSummon()
+        {
+            if (Map == null)
+            {
+                ResetRitual();
+                return;
+            }
+
+            if (pendingFaction == null)
+            {
+                pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            }
+
+            if (pendingFaction == null)
+            {
+                ResetRitual();
+                Messages.Message("ABY_CircleFail_NoHostileFaction".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            bool spawned = ABY_Phase2PortalUtility.TrySpawnImpPortalNear(
+                Map,
+                pendingFaction,
+                pendingSpawnCell.IsValid ? pendingSpawnCell : RitualFocusCell,
+                5.9f,
+                14.9f,
+                Mathf.Max(1, pendingImpCount),
+                Mathf.Max(30, pendingImpPortalWarmupTicks),
+                Mathf.Max(30, pendingImpSpawnIntervalTicks),
+                Mathf.Max(600, pendingImpPortalLingerTicks),
+                out Building_AbyssalImpPortal portal);
+
+            if (!spawned)
+            {
+                spawned = ABY_Phase2PortalUtility.TrySpawnImpPortal(
+                    Map,
+                    pendingFaction,
+                    Mathf.Max(1, pendingImpCount),
+                    Mathf.Max(30, pendingImpPortalWarmupTicks),
+                    Mathf.Max(30, pendingImpSpawnIntervalTicks),
+                    Mathf.Max(600, pendingImpPortalLingerTicks),
+                    out portal);
+            }
+
+            if (!spawned || portal == null)
+            {
+                ResetRitual();
+                Messages.Message("ABY_CircleFail_NoPortalSpawn".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
+            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
+            Find.LetterStack.ReceiveLetter(
+                GetCompletionLetterLabel(),
+                GetCompletionLetterDesc(),
+                LetterDefOf.ThreatSmall,
+                new TargetInfo(portal.Position, Map));
+        }
+
+        private bool IsImpPortalSummonMode(string summonMode)
+        {
+            return string.Equals(summonMode, "ImpPortal", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private string GetCompletionLetterLabel()
+        {
+            if (!pendingCompletionLetterLabelKey.NullOrEmpty())
+            {
+                string translated = pendingCompletionLetterLabelKey.Translate();
+                if (translated != pendingCompletionLetterLabelKey)
+                {
+                    return translated;
+                }
+            }
+
+            return "ABY_BossSummonSuccessLabel".Translate();
+        }
+
+        private string GetCompletionLetterDesc()
+        {
+            if (!pendingCompletionLetterDescKey.NullOrEmpty())
+            {
+                string translated = pendingCompletionLetterDescKey.Translate(pendingImpCount);
+                if (translated != pendingCompletionLetterDescKey)
+                {
+                    return translated;
+                }
+            }
+
+            return "ABY_BossSummonSuccessDesc".Translate(pendingBossLabel ?? "breach");
+        }
+
         private void StartPhase(RitualPhase phase, int duration)
         {
             ritualPhase = phase;
@@ -557,8 +704,16 @@ namespace AbyssalProtocol
             phaseDuration = 0;
             pendingPawnKindDef = null;
             pendingBossLabel = null;
+            pendingRitualId = null;
+            pendingSummonMode = null;
+            pendingCompletionLetterLabelKey = null;
+            pendingCompletionLetterDescKey = null;
             pendingFaction = null;
             pendingSpawnCell = IntVec3.Invalid;
+            pendingImpCount = 0;
+            pendingImpPortalWarmupTicks = 0;
+            pendingImpSpawnIntervalTicks = 0;
+            pendingImpPortalLingerTicks = 0;
         }
 
         private float GetRitualIntensity()

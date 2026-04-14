@@ -17,4 +17,8 @@
   <ABY_ForgeAttunementTooltipSuspended>Suspended until at least one Abyssal Forge on this map is powered.</ABY_ForgeAttunementTooltipSuspended>
   <ABY_ForgeAttunementInstability>Summoning instability</ABY_ForgeAttunementInstability>
   <ABY_ForgeAttunementForgeBillSpeed>Forge bill speed</ABY_ForgeAttunementForgeBillSpeed>
+  <ABY_ForgeAttunementCurrentTier>Current tier: {0}/50</ABY_ForgeAttunementCurrentTier>
+  <ABY_ForgeAttunementResidueRemaining>Remaining to next tier: {0}</ABY_ForgeAttunementResidueRemaining>
+  <ABY_ForgeAttunementActive>Status: active on this map</ABY_ForgeAttunementActive>
+  <ABY_ForgeAttunementInactive>Status: suspended on this map</ABY_ForgeAttunementInactive>
 </LanguageData>

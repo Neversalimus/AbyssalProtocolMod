@@ -10,12 +10,13 @@ namespace AbyssalProtocol
     public class Window_AbyssalSummoningConsole : Window
     {
         private readonly Building_AbyssalSummoningCircle circle;
-        private string selectedRitualId = "archon_beast";
+        private string selectedRitualId;
         private Vector2 ritualScrollPosition = Vector2.zero;
 
         public Window_AbyssalSummoningConsole(Building_AbyssalSummoningCircle circle)
         {
             this.circle = circle;
+            selectedRitualId = AbyssalSummoningConsoleUtility.GetDefaultRitual()?.Id;
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
             doCloseX = true;

@@ -31,7 +31,7 @@ namespace AbyssalProtocol
             resizeable = false;
         }
 
-        public override Vector2 InitialSize => new Vector2(1200f, 800f);
+        public override Vector2 InitialSize => new Vector2(1228f, 812f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -52,11 +52,11 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawBackground(inRect);
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
-            Rect statusRect = new Rect(inRect.x, headerRect.yMax + 10f, 476f, 206f);
-            Rect offerRect = new Rect(statusRect.xMax + 10f, headerRect.yMax + 10f, 272f, 206f);
-            Rect nextRect = new Rect(offerRect.xMax + 10f, headerRect.yMax + 10f, inRect.width - offerRect.xMax - 10f, 206f);
+            Rect statusRect = new Rect(inRect.x, headerRect.yMax + 10f, 492f, 210f);
+            Rect offerRect = new Rect(statusRect.xMax + 10f, headerRect.yMax + 10f, 248f, 210f);
+            Rect nextRect = new Rect(offerRect.xMax + 10f, headerRect.yMax + 10f, inRect.width - offerRect.xMax - 10f, 210f);
             Rect categoryRect = new Rect(inRect.x, statusRect.yMax + 10f, inRect.width, 40f);
-            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 760f, inRect.height - categoryRect.yMax - 10f);
+            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 804f, inRect.height - categoryRect.yMax - 10f);
             Rect billsRect = new Rect(patternsRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - patternsRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
 
             DrawHeader(headerRect, progress);
@@ -109,23 +109,23 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 24f), fill, progressLabel, progress.HasRecentUnlocks);
 
             int attunementTier = progress.GetCurrentAttunementTier(false);
-            Rect attunementBarRect = new Rect(inner.x, inner.y + 56f, inner.width, 20f);
+            Rect attunementBarRect = new Rect(inner.x, inner.y + 58f, inner.width, 22f);
             AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false);
 
-            float metricY = inner.y + 84f;
+            float metricY = inner.y + 90f;
             float metricWidth = (inner.width - 10f) / 2f;
 
-            Rect residueRect = new Rect(inner.x, metricY, metricWidth, 44f);
-            Rect availableRect = new Rect(inner.x + metricWidth + 10f, metricY, metricWidth, 44f);
-            Rect attunementRect = new Rect(inner.x, metricY + 50f, metricWidth, 44f);
-            Rect powerRect = new Rect(inner.x + metricWidth + 10f, metricY + 50f, metricWidth, 44f);
+            Rect residueRect = new Rect(inner.x, metricY, metricWidth, 42f);
+            Rect availableRect = new Rect(inner.x + metricWidth + 10f, metricY, metricWidth, 42f);
+            Rect attunementRect = new Rect(inner.x, metricY + 46f, metricWidth, 42f);
+            Rect powerRect = new Rect(inner.x + metricWidth + 10f, metricY + 46f, metricWidth, 42f);
 
             AbyssalForgeConsoleArt.DrawMetric(residueRect, "ABY_ForgeMetricResidue".Translate(), progress.TotalResidueOffered.ToString());
             AbyssalForgeConsoleArt.DrawMetric(availableRect, "ABY_ForgeMetricAvailable".Translate(), progress.CountAvailableResidue().ToString());
             AbyssalForgeConsoleArt.DrawMetric(attunementRect, "ABY_ForgeMetricAttunement".Translate(), AbyssalForgeProgressUtility.GetAttunementMetricLabel(attunementTier));
             AbyssalForgeConsoleArt.DrawMetric(powerRect, "ABY_ForgeMetricPower".Translate(), forge.IsPowerActive ? "ABY_ForgePowerOnlineShort".Translate() : "ABY_ForgePowerOfflineShort".Translate());
 
-            TooltipHandler.TipRegion(new Rect(attunementBarRect.x, attunementBarRect.y, attunementBarRect.width, attunementBarRect.height + 94f), AbyssalForgeProgressUtility.GetAttunementTooltip(attunementTier, progress.TotalResidueOffered, progress.HasPoweredForge()));
+            TooltipHandler.TipRegion(new Rect(attunementBarRect.x, attunementBarRect.y, attunementBarRect.width, attunementBarRect.height + 88f), AbyssalForgeProgressUtility.GetAttunementTooltip(attunementTier, progress.TotalResidueOffered, progress.HasPoweredForge()));
 
             if (progress.HasRecentUnlocks)
             {
@@ -154,14 +154,13 @@ namespace AbyssalProtocol
                 TryOfferResidue(50);
             }
 
-            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 102f, inner.width, 30f), "ABY_ForgeOfferAll".Translate(availableResidue), enabled))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 102f, inner.width, 32f), "ABY_ForgeOfferAll".Translate(availableResidue), enabled))
             {
                 TryOfferResidue(availableResidue);
             }
 
-
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 138f, inner.width, inner.height - 138f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            Widgets.Label(new Rect(inner.x, inner.y + 142f, inner.width, inner.height - 142f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 
@@ -172,7 +171,7 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeNextHeader".Translate());
 
             List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(3).ToList();
-            float leftWidth = inner.width * 0.50f;
+            float leftWidth = inner.width * 0.54f;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeUpcomingPatterns".Translate());
             GUI.color = Color.white;
@@ -197,12 +196,16 @@ namespace AbyssalProtocol
             List<RecipeDef> lockedAll = progress.GetLockedRecipes(selectedCategory);
             string summary = "ABY_ForgeUnlockedSummary".Translate(unlocked.Count, unlocked.Count + lockedAll.Count, categoryLabel);
 
-            Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 48f);
+            Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 52f);
             Widgets.Label(summaryRect, summary);
+
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 20f), "ABY_ForgeReducedEffectsDesc".Translate());
+            GUI.color = Color.white;
 
             bool reduced = progress.ReducedVisualEffects;
             bool newReduced = reduced;
-            Rect checkboxRect = new Rect(rightRect.x, rightRect.yMax - 26f, Mathf.Min(176f, rightRect.width), 24f);
+            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 82f, Mathf.Min(186f, rightRect.width), 24f);
             Widgets.CheckboxLabeled(checkboxRect, "ABY_ForgeReducedEffectsToggle".Translate(), ref newReduced, false, null, null, false);
             if (newReduced != reduced)
             {
@@ -243,7 +246,7 @@ namespace AbyssalProtocol
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             float cardWidth = (outRect.width - 12f) / 2f;
-            float cardHeight = 176f;
+            float cardHeight = 180f;
             int rows = Mathf.CeilToInt(recipes.Count / 2f);
             float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
@@ -293,13 +296,13 @@ namespace AbyssalProtocol
                 AbyssalForgeConsoleArt.DrawTag(newRect, "ABY_ForgePatternNew".Translate(), true);
             }
 
-            Rect labelRect = new Rect(rect.x + 60f, rect.y + 10f, rect.width - 132f, 22f);
+            Rect labelRect = new Rect(rect.x + 60f, rect.y + 10f, rect.width - 136f, 22f);
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             Widgets.Label(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 78f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 84f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
             GUI.color = Color.white;
 
             string unlockLine = unlocked
@@ -327,7 +330,7 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            Rect buttonRect = new Rect(rect.x + rect.width - 114f, rect.y + rect.height - 34f, 102f, 28f);
+            Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
             if (unlocked && recipe.AvailableNow && recipe.AvailableOnNow(forge))
             {
                 if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternAddBill".Translate()))

@@ -97,6 +97,18 @@
   <ABY_CircleReducedEffects>Reduced effects</ABY_CircleReducedEffects>
   <ABY_CircleReducedEffectsDesc>Softens header sweeps, seal rotation, and other animated accents inside the summoning console.</ABY_CircleReducedEffectsDesc>
 
+  <ABY_CircleFail_NoPortalSpawn>No valid breach point could be opened near the summoning circle.</ABY_CircleFail_NoPortalSpawn>
+  <ABY_CircleUnstableBreachLetterLabel>Unstable breach opened</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>The circle tears open a smaller hostile breach. Rift imps are spilling onto the map from the unstable portal.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleRitual_Unstable_Label>Open unstable breach</ABY_CircleRitual_Unstable_Label>
+  <ABY_CircleRitual_Unstable_Subtitle>Pre-boss hostile breach pattern</ABY_CircleRitual_Unstable_Subtitle>
+  <ABY_CircleRitual_Unstable_Desc>Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.</ABY_CircleRitual_Unstable_Desc>
+  <ABY_CircleRitual_Unstable_Rewards>• Early hostile summoning rehearsal
+• Smaller breach pressure before the first boss
+• A cleaner bridge between the circle and the Archon Beast fight</ABY_CircleRitual_Unstable_Rewards>
+  <ABY_CircleRitual_Unstable_SideEffects>• Spawns a hostile rift imp breach tied to the circle
+• Still counts as an active abyssal encounter while the breach is live
+• Lower threat than the Archon Beast, but meant to pressure unprepared colonies</ABY_CircleRitual_Unstable_SideEffects>
   <ABY_CircleRitual_Archon_Label>Invoke Archon Beast</ABY_CircleRitual_Archon_Label>
   <ABY_CircleRitual_Archon_Subtitle>First boss breach pattern</ABY_CircleRitual_Archon_Subtitle>
   <ABY_CircleRitual_Archon_Desc>Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.</ABY_CircleRitual_Archon_Desc>
@@ -116,6 +128,8 @@
 
   <ABY_CircleConsoleFail_NoCircle>No valid summoning circle is available for console control.</ABY_CircleConsoleFail_NoCircle>
   <ABY_CircleConsoleFail_NoSigil>No prepared archon sigil was found on the current map.</ABY_CircleConsoleFail_NoSigil>
+  <ABY_CircleConsoleFail_NoSpecificSigil>No prepared {0} was found on the current map.</ABY_CircleConsoleFail_NoSpecificSigil>
+  <ABY_CircleConsoleFail_NoSigilFallback>prepared sigil</ABY_CircleConsoleFail_NoSigilFallback>
   <ABY_CircleConsoleFail_NoOperator>No suitable colonist is currently available to carry a sigil to the circle.</ABY_CircleConsoleFail_NoOperator>
   <ABY_CircleConsoleFail_JobStart>The invocation order could not be started.</ABY_CircleConsoleFail_JobStart>
 
