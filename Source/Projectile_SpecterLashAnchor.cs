@@ -36,7 +36,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SpecterLashStreamGameComponent component = Find.Game?.GetComponent<SpecterLashStreamGameComponent>();
+            SpecterLashStreamGameComponent component = Current.Game?.GetComponent<SpecterLashStreamGameComponent>();
             component?.TryStartStream(launcherPawn, impactPawn);
         }
 

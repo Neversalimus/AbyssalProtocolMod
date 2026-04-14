@@ -117,11 +117,6 @@ namespace AbyssalProtocol
                 return 0f;
             }
 
-            if (MaxAttunementTier <= 1)
-            {
-                return 1f;
-            }
-
             float normalized = Mathf.Clamp01((tier - 1f) / (MaxAttunementTier - 1f));
             return Mathf.Lerp(0.04f, 1f, normalized);
         }
