@@ -14,6 +14,7 @@
   <ABY_CapacitorInspect_ChargeNoLattice>Charge: no capacitor lattice</ABY_CapacitorInspect_ChargeNoLattice>
   <ABY_CapacitorInspect_Charge>Charge: {0} ({1} / {2})</ABY_CapacitorInspect_Charge>
   <ABY_CapacitorInspect_Throughput>Throughput: {0}</ABY_CapacitorInspect_Throughput>
+  <ABY_CapacitorInspect_ChargeRate>Charge rate: {0}/s</ABY_CapacitorInspect_ChargeRate>
 
   <ABY_CapacitorChargeState_NoLattice>no lattice</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>dormant</ABY_CapacitorChargeState_Dormant>
@@ -23,4 +24,33 @@
 
   <ABY_CapacitorCompact>Capacitors: no lattice</ABY_CapacitorCompact>
   <ABY_CapacitorCompactActive>Capacitors: {0} fitted • {1}</ABY_CapacitorCompactActive>
+
+  <ABY_CapacitorPanel_Header>Capacitor lattice</ABY_CapacitorPanel_Header>
+  <ABY_CapacitorPanel_State>State</ABY_CapacitorPanel_State>
+  <ABY_CapacitorPanel_Hint>Install capacitor modules here to give the circle a real charge reserve before the deeper power-routing package is wired in.</ABY_CapacitorPanel_Hint>
+
+  <ABY_CapacitorCommand_Install>Install</ABY_CapacitorCommand_Install>
+  <ABY_CapacitorCommand_Remove>Remove</ABY_CapacitorCommand_Remove>
+  <ABY_CapacitorMenuOption>{0} • {1} tier • available: {2}</ABY_CapacitorMenuOption>
+  <ABY_CapacitorInstallQueued>{0} queued for installation into {1}.</ABY_CapacitorInstallQueued>
+  <ABY_CapacitorRemoveQueued>Removal of the capacitor in {0} has been queued.</ABY_CapacitorRemoveQueued>
+  <ABY_CapacitorInstallSuccess>{0} installed into {1}.</ABY_CapacitorInstallSuccess>
+  <ABY_CapacitorRemoveSuccess>{0} removed from {1}.</ABY_CapacitorRemoveSuccess>
+
+  <ABY_CapacitorFail_NoAvailable>No compatible capacitor module is currently available on this map.</ABY_CapacitorFail_NoAvailable>
+  <ABY_CapacitorFail_NoTechnician>No suitable colonist is currently available to service the circle.</ABY_CapacitorFail_NoTechnician>
+  <ABY_CapacitorFail_NotModule>That item is not a valid abyssal capacitor module.</ABY_CapacitorFail_NotModule>
+  <ABY_CapacitorFail_BayMismatch>This module cannot be installed into {0}.</ABY_CapacitorFail_BayMismatch>
+  <ABY_CapacitorFail_NoBay>The summoning circle does not expose a valid capacitor bay.</ABY_CapacitorFail_NoBay>
+  <ABY_CapacitorFail_BayOccupied>{0} is already occupied.</ABY_CapacitorFail_BayOccupied>
+  <ABY_CapacitorFail_NoInstalled>{0} has no installed capacitor.</ABY_CapacitorFail_NoInstalled>
+
+  <ABY_CapacitorSlotRow_Empty>{0}: empty</ABY_CapacitorSlotRow_Empty>
+  <ABY_CapacitorSlotRow_Installed>{0}: {1} • {2}</ABY_CapacitorSlotRow_Installed>
+  <ABY_CapacitorBayTooltip_Empty>{0} is empty. Install a capacitor module here to add charge capacity, throughput and recharge rate.</ABY_CapacitorBayTooltip_Empty>
+  <ABY_CapacitorBayTooltip_Filled>{0}
+Tier: {1}
+Capacity: {2}
+Throughput: {3}
+Charge rate: {4}/s</ABY_CapacitorBayTooltip_Filled>
 </LanguageData>

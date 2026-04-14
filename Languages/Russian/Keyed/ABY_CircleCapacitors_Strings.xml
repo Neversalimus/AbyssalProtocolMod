@@ -14,6 +14,7 @@
   <ABY_CapacitorInspect_ChargeNoLattice>Заряд: нет конденсаторной решётки</ABY_CapacitorInspect_ChargeNoLattice>
   <ABY_CapacitorInspect_Charge>Заряд: {0} ({1} / {2})</ABY_CapacitorInspect_Charge>
   <ABY_CapacitorInspect_Throughput>Пропускная способность: {0}</ABY_CapacitorInspect_Throughput>
+  <ABY_CapacitorInspect_ChargeRate>Скорость зарядки: {0}/с</ABY_CapacitorInspect_ChargeRate>
 
   <ABY_CapacitorChargeState_NoLattice>нет решётки</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>покой</ABY_CapacitorChargeState_Dormant>
@@ -23,4 +24,33 @@
 
   <ABY_CapacitorCompact>Конденсаторы: решётка отсутствует</ABY_CapacitorCompact>
   <ABY_CapacitorCompactActive>Конденсаторы: {0} установлено • {1}</ABY_CapacitorCompactActive>
+
+  <ABY_CapacitorPanel_Header>Конденсаторная решётка</ABY_CapacitorPanel_Header>
+  <ABY_CapacitorPanel_State>Состояние</ABY_CapacitorPanel_State>
+  <ABY_CapacitorPanel_Hint>Устанавливай сюда конденсаторные модули, чтобы круг получил реальный запас заряда ещё до внедрения полного энергетического пакета.</ABY_CapacitorPanel_Hint>
+
+  <ABY_CapacitorCommand_Install>Вставить</ABY_CapacitorCommand_Install>
+  <ABY_CapacitorCommand_Remove>Снять</ABY_CapacitorCommand_Remove>
+  <ABY_CapacitorMenuOption>{0} • тир {1} • доступно: {2}</ABY_CapacitorMenuOption>
+  <ABY_CapacitorInstallQueued>{0} поставлен в очередь на установку в {1}.</ABY_CapacitorInstallQueued>
+  <ABY_CapacitorRemoveQueued>Снятие конденсатора из {0} поставлено в очередь.</ABY_CapacitorRemoveQueued>
+  <ABY_CapacitorInstallSuccess>{0} установлен в {1}.</ABY_CapacitorInstallSuccess>
+  <ABY_CapacitorRemoveSuccess>{0} снят из {1}.</ABY_CapacitorRemoveSuccess>
+
+  <ABY_CapacitorFail_NoAvailable>Подходящий конденсаторный модуль сейчас недоступен на этой карте.</ABY_CapacitorFail_NoAvailable>
+  <ABY_CapacitorFail_NoTechnician>Сейчас нет подходящего колониста, который может обслужить круг.</ABY_CapacitorFail_NoTechnician>
+  <ABY_CapacitorFail_NotModule>Этот предмет не является допустимым абиссальным конденсаторным модулем.</ABY_CapacitorFail_NotModule>
+  <ABY_CapacitorFail_BayMismatch>Этот модуль нельзя установить в слот {0}.</ABY_CapacitorFail_BayMismatch>
+  <ABY_CapacitorFail_NoBay>У круга нет подходящего слота под конденсатор.</ABY_CapacitorFail_NoBay>
+  <ABY_CapacitorFail_BayOccupied>Слот {0} уже занят.</ABY_CapacitorFail_BayOccupied>
+  <ABY_CapacitorFail_NoInstalled>В слоте {0} нет установленного конденсатора.</ABY_CapacitorFail_NoInstalled>
+
+  <ABY_CapacitorSlotRow_Empty>{0}: пусто</ABY_CapacitorSlotRow_Empty>
+  <ABY_CapacitorSlotRow_Installed>{0}: {1} • {2}</ABY_CapacitorSlotRow_Installed>
+  <ABY_CapacitorBayTooltip_Empty>{0} пуст. Установи сюда конденсаторный модуль, чтобы добавить ёмкость, пропускную способность и скорость зарядки.</ABY_CapacitorBayTooltip_Empty>
+  <ABY_CapacitorBayTooltip_Filled>{0}
+Тир: {1}
+Ёмкость: {2}
+Пропускная способность: {3}
+Скорость зарядки: {4}/с</ABY_CapacitorBayTooltip_Filled>
 </LanguageData>

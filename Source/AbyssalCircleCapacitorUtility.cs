@@ -14,6 +14,12 @@ namespace AbyssalProtocol
         public const string CoreBayLabelKey = "ABY_CapacitorBay_Core";
         public const string AuxiliaryBayLabelKey = "ABY_CapacitorBay_Auxiliary";
 
+        private static readonly AbyssalCircleCapacitorBay[] OrderedBays =
+        {
+            AbyssalCircleCapacitorBay.Core,
+            AbyssalCircleCapacitorBay.Auxiliary
+        };
+
         private static List<ThingDef> cachedCapacitorDefs;
         private static readonly Dictionary<string, Graphic> cachedMountedGraphics = new Dictionary<string, Graphic>();
 
@@ -41,6 +47,36 @@ namespace AbyssalProtocol
             }
         }
 
+        public static IEnumerable<AbyssalCircleCapacitorBay> GetOrderedBays()
+        {
+            for (int i = 0; i < OrderedBays.Length; i++)
+            {
+                yield return OrderedBays[i];
+            }
+        }
+
+        public static string GetBaySlotId(AbyssalCircleCapacitorBay bay)
+        {
+            return bay == AbyssalCircleCapacitorBay.Auxiliary ? AuxiliaryBayId : CoreBayId;
+        }
+
+        public static string GetBayLabelKey(AbyssalCircleCapacitorBay bay)
+        {
+            return bay == AbyssalCircleCapacitorBay.Auxiliary ? AuxiliaryBayLabelKey : CoreBayLabelKey;
+        }
+
+        public static string GetBayLabel(AbyssalCircleCapacitorBay bay)
+        {
+            return TranslateOrFallback(GetBayLabelKey(bay), bay == AbyssalCircleCapacitorBay.Auxiliary ? "auxiliary bay" : "core bay");
+        }
+
+        public static AbyssalCircleCapacitorBay GetBayFromSlotId(string slotId)
+        {
+            return string.Equals(slotId, AuxiliaryBayId, StringComparison.OrdinalIgnoreCase)
+                ? AbyssalCircleCapacitorBay.Auxiliary
+                : AbyssalCircleCapacitorBay.Core;
+        }
+
         public static void EnsureSlot(AbyssalCircleCapacitorSlot slot, string slotId, string labelKey)
         {
             if (slot == null)
@@ -57,6 +93,25 @@ namespace AbyssalProtocol
             {
                 slot.labelKey = labelKey;
             }
+        }
+
+        public static AbyssalCircleCapacitorSlot GetSlot(IEnumerable<AbyssalCircleCapacitorSlot> slots, AbyssalCircleCapacitorBay bay)
+        {
+            if (slots == null)
+            {
+                return null;
+            }
+
+            string slotId = GetBaySlotId(bay);
+            foreach (AbyssalCircleCapacitorSlot slot in slots)
+            {
+                if (slot != null && string.Equals(slot.slotId, slotId, StringComparison.OrdinalIgnoreCase))
+                {
+                    return slot;
+                }
+            }
+
+            return null;
         }
 
         public static List<ThingDef> GetCapacitorDefs()
@@ -77,6 +132,17 @@ namespace AbyssalProtocol
         public static bool IsCapacitorThing(ThingDef def)
         {
             return def?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>() != null;
+        }
+
+        public static bool AllowsBay(ThingDef def, AbyssalCircleCapacitorBay bay)
+        {
+            DefModExtension_AbyssalCircleCapacitor ext = def?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>();
+            if (ext == null)
+            {
+                return false;
+            }
+
+            return bay == AbyssalCircleCapacitorBay.Auxiliary ? ext.allowAuxiliaryBay : ext.allowCoreBay;
         }
 
         public static float GetTotalCapacity(IEnumerable<AbyssalCircleCapacitorSlot> slots)
@@ -160,9 +226,45 @@ namespace AbyssalProtocol
             }
 
             List<AbyssalCircleCapacitorSlot> slots = circle.GetCapacitorSlots().ToList();
-            string core = GetSlotDisplay(slots.FirstOrDefault(slot => slot != null && slot.slotId == CoreBayId), TranslateOrFallback(CoreBayLabelKey, "core bay"));
-            string auxiliary = GetSlotDisplay(slots.FirstOrDefault(slot => slot != null && slot.slotId == AuxiliaryBayId), TranslateOrFallback(AuxiliaryBayLabelKey, "auxiliary bay"));
+            string core = GetSlotDisplay(GetSlot(slots, AbyssalCircleCapacitorBay.Core), GetBayLabel(AbyssalCircleCapacitorBay.Core));
+            string auxiliary = GetSlotDisplay(GetSlot(slots, AbyssalCircleCapacitorBay.Auxiliary), GetBayLabel(AbyssalCircleCapacitorBay.Auxiliary));
             return TranslateOrFallback("ABY_CapacitorInspect_Bays", "Bays: {0} • {1}", core, auxiliary);
+        }
+
+        public static string GetSlotRowText(AbyssalCircleCapacitorSlot slot, AbyssalCircleCapacitorBay bay)
+        {
+            ThingDef installedDef = slot?.InstalledThingDef;
+            string bayLabel = GetBayLabel(bay);
+            if (installedDef == null)
+            {
+                return TranslateOrFallback("ABY_CapacitorSlotRow_Empty", "{0}: empty", bayLabel);
+            }
+
+            return TranslateOrFallback("ABY_CapacitorSlotRow_Installed", "{0}: {1} • {2}", bayLabel, installedDef.label.CapitalizeFirst(), GetTierLabel(installedDef));
+        }
+
+        public static string GetBayTooltip(Building_AbyssalSummoningCircle circle, AbyssalCircleCapacitorBay bay)
+        {
+            AbyssalCircleCapacitorSlot slot = circle?.GetCapacitorSlot(bay);
+            if (slot == null || slot.IsEmpty)
+            {
+                return TranslateOrFallback("ABY_CapacitorBayTooltip_Empty", "{0} is empty. Install a capacitor module here to add charge capacity, throughput and recharge rate.", GetBayLabel(bay));
+            }
+
+            DefModExtension_AbyssalCircleCapacitor ext = slot.InstalledExtension;
+            if (ext == null)
+            {
+                return GetSlotRowText(slot, bay);
+            }
+
+            return TranslateOrFallback(
+                "ABY_CapacitorBayTooltip_Filled",
+                "{0}\nTier: {1}\nCapacity: {2}\nThroughput: {3}\nCharge rate: {4}/s",
+                GetSlotRowText(slot, bay),
+                GetTierLabel(slot.InstalledThingDef),
+                Mathf.RoundToInt(ext.chargeCapacity),
+                Mathf.RoundToInt(ext.throughput),
+                ext.chargeRatePerSecond.ToString("0.0"));
         }
 
         private static string GetSlotDisplay(AbyssalCircleCapacitorSlot slot, string fallbackLabel)
@@ -244,6 +346,16 @@ namespace AbyssalProtocol
             return TranslateOrFallback("ABY_CapacitorInspect_Throughput", "Throughput: {0}", Mathf.RoundToInt(circle.GetCapacitorThroughput()));
         }
 
+        public static string GetChargeRateReadout(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CapacitorInspect_ChargeRate", "Charge rate: 0/s");
+            }
+
+            return TranslateOrFallback("ABY_CapacitorInspect_ChargeRate", "Charge rate: {0}/s", circle.GetCapacitorChargeRatePerSecond().ToString("0.0"));
+        }
+
         public static float GetMountedDrawScale(ThingDef def, float fallback = 1f)
         {
             return def?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>()?.mountedDrawScale ?? fallback;
@@ -269,23 +381,124 @@ namespace AbyssalProtocol
             return graphic;
         }
 
+        public static List<Thing> GetBestAvailableCapacitorCandidates(Building_AbyssalSummoningCircle circle, AbyssalCircleCapacitorBay bay)
+        {
+            List<Thing> candidates = new List<Thing>();
+            if (circle?.Map == null)
+            {
+                return candidates;
+            }
+
+            List<ThingDef> defs = GetCapacitorDefs();
+            for (int i = 0; i < defs.Count; i++)
+            {
+                ThingDef def = defs[i];
+                if (!AllowsBay(def, bay))
+                {
+                    continue;
+                }
+
+                Thing bestThing = FindBestAvailableThingOfDef(circle, def);
+                if (bestThing != null)
+                {
+                    candidates.Add(bestThing);
+                }
+            }
+
+            candidates.Sort(delegate(Thing a, Thing b)
+            {
+                DefModExtension_AbyssalCircleCapacitor extA = a.def.GetModExtension<DefModExtension_AbyssalCircleCapacitor>();
+                DefModExtension_AbyssalCircleCapacitor extB = b.def.GetModExtension<DefModExtension_AbyssalCircleCapacitor>();
+                int tierCompare = (extB?.tier ?? 0).CompareTo(extA?.tier ?? 0);
+                if (tierCompare != 0)
+                {
+                    return tierCompare;
+                }
+
+                float distA = a.PositionHeld.IsValid ? a.PositionHeld.DistanceToSquared(circle.PositionHeld) : float.MaxValue;
+                float distB = b.PositionHeld.IsValid ? b.PositionHeld.DistanceToSquared(circle.PositionHeld) : float.MaxValue;
+                int distCompare = distA.CompareTo(distB);
+                if (distCompare != 0)
+                {
+                    return distCompare;
+                }
+
+                return string.Compare(a.LabelCap, b.LabelCap, StringComparison.OrdinalIgnoreCase);
+            });
+
+            return candidates;
+        }
+
+        public static int CountAvailableCapacitors(Map map, ThingDef def)
+        {
+            if (map == null || def == null)
+            {
+                return 0;
+            }
+
+            List<Thing> things = map.listerThings.ThingsOfDef(def);
+            int count = 0;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned || thing.MapHeld != map)
+                {
+                    continue;
+                }
+
+                if (thing.IsForbidden(Faction.OfPlayerSilentFail))
+                {
+                    continue;
+                }
+
+                count += Mathf.Max(1, thing.stackCount);
+            }
+
+            return count;
+        }
+
         public static string GetCompactSummary(Building_AbyssalSummoningCircle circle)
         {
-            if (circle == null)
+            if (circle == null || circle.GetInstalledCapacitorCount() <= 0)
             {
                 return TranslateOrFallback("ABY_CapacitorCompact", "Capacitors: no lattice");
             }
 
-            if (circle.GetInstalledCapacitorCount() <= 0)
+            return TranslateOrFallback("ABY_CapacitorCompactActive", "Capacitors: {0} fitted • {1}", circle.GetInstalledCapacitorCount(), GetChargeReadout(circle));
+        }
+
+        private static Thing FindBestAvailableThingOfDef(Building_AbyssalSummoningCircle circle, ThingDef def)
+        {
+            if (circle?.Map == null || def == null)
             {
-                return TranslateOrFallback("ABY_CapacitorCompact", "Capacitors: no lattice");
+                return null;
             }
 
-            return TranslateOrFallback(
-                "ABY_CapacitorCompactActive",
-                "Capacitors: {0} fitted • {1}",
-                circle.GetInstalledCapacitorCount(),
-                GetChargeReadout(circle));
+            List<Thing> things = circle.Map.listerThings.ThingsOfDef(def);
+            Thing best = null;
+            float bestScore = float.MaxValue;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned || thing.MapHeld != circle.Map)
+                {
+                    continue;
+                }
+
+                if (thing.IsForbidden(Faction.OfPlayerSilentFail))
+                {
+                    continue;
+                }
+
+                float score = thing.PositionHeld.DistanceToSquared(circle.PositionHeld);
+                if (score < bestScore)
+                {
+                    best = thing;
+                    bestScore = score;
+                }
+            }
+
+            return best;
         }
     }
 }

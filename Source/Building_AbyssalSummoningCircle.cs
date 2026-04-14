@@ -446,6 +446,12 @@ namespace AbyssalProtocol
             yield return auxiliaryCapacitorSlot;
         }
 
+        public AbyssalCircleCapacitorSlot GetCapacitorSlot(AbyssalCircleCapacitorBay bay)
+        {
+            EnsureCapacitorSlotsInitialized();
+            return bay == AbyssalCircleCapacitorBay.Auxiliary ? auxiliaryCapacitorSlot : coreCapacitorSlot;
+        }
+
         public int GetCapacitorSlotCount()
         {
             return 2;
@@ -471,6 +477,108 @@ namespace AbyssalProtocol
         public float GetCapacitorChargeRatePerSecond()
         {
             return AbyssalCircleCapacitorUtility.GetTotalChargeRate(GetCapacitorSlots());
+        }
+
+        public bool CanInstallCapacitor(ThingDef capacitorDef, AbyssalCircleCapacitorBay bay, out string failReason)
+        {
+            failReason = null;
+            EnsureCapacitorSlotsInitialized();
+
+            if (!Spawned || Destroyed || Map == null)
+            {
+                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                return false;
+            }
+
+            if (RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+
+            if (!AbyssalCircleCapacitorUtility.IsCapacitorThing(capacitorDef))
+            {
+                failReason = "ABY_CapacitorFail_NotModule".Translate();
+                return false;
+            }
+
+            if (!AbyssalCircleCapacitorUtility.AllowsBay(capacitorDef, bay))
+            {
+                failReason = "ABY_CapacitorFail_BayMismatch".Translate(AbyssalCircleCapacitorUtility.GetBayLabel(bay));
+                return false;
+            }
+
+            AbyssalCircleCapacitorSlot slot = GetCapacitorSlot(bay);
+            if (slot == null)
+            {
+                failReason = "ABY_CapacitorFail_NoBay".Translate();
+                return false;
+            }
+
+            if (!slot.IsEmpty)
+            {
+                failReason = "ABY_CapacitorFail_BayOccupied".Translate(AbyssalCircleCapacitorUtility.GetBayLabel(bay));
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool TryInstallCapacitorDirect(ThingDef capacitorDef, AbyssalCircleCapacitorBay bay, out string failReason)
+        {
+            if (!CanInstallCapacitor(capacitorDef, bay, out failReason))
+            {
+                return false;
+            }
+
+            AbyssalCircleCapacitorSlot slot = GetCapacitorSlot(bay);
+            slot.SetInstalledThingDef(capacitorDef);
+            ClampStoredCapacitorCharge();
+            MarkCircleVisualsDirty();
+            return true;
+        }
+
+        public bool CanRemoveInstalledCapacitor(AbyssalCircleCapacitorBay bay, out string failReason)
+        {
+            failReason = null;
+            EnsureCapacitorSlotsInitialized();
+
+            if (!Spawned || Destroyed || Map == null)
+            {
+                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                return false;
+            }
+
+            if (RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+
+            AbyssalCircleCapacitorSlot slot = GetCapacitorSlot(bay);
+            if (slot == null || slot.IsEmpty)
+            {
+                failReason = "ABY_CapacitorFail_NoInstalled".Translate(AbyssalCircleCapacitorUtility.GetBayLabel(bay));
+                return false;
+            }
+
+            return true;
+        }
+
+        public ThingDef RemoveInstalledCapacitor(AbyssalCircleCapacitorBay bay)
+        {
+            EnsureCapacitorSlotsInitialized();
+            AbyssalCircleCapacitorSlot slot = GetCapacitorSlot(bay);
+            ThingDef removedDef = slot?.InstalledThingDef;
+            if (removedDef == null)
+            {
+                return null;
+            }
+
+            slot.SetInstalledThingDef(null);
+            ClampStoredCapacitorCharge();
+            MarkCircleVisualsDirty();
+            return removedDef;
         }
 
         private void EnsureCapacitorSlotsInitialized()
@@ -523,6 +631,20 @@ namespace AbyssalProtocol
         {
             float capacity = GetCapacitorCapacity();
             storedCapacitorCharge = Mathf.Clamp(storedCapacitorCharge, 0f, Mathf.Max(0f, capacity));
+        }
+
+        private void MarkCircleVisualsDirty()
+        {
+            if (Map == null)
+            {
+                return;
+            }
+
+            Notify_ColorChanged();
+            foreach (IntVec3 cell in GenAdj.OccupiedRect(Position, Rotation, def.Size))
+            {
+                Map.mapDrawer.MapMeshDirty(cell, MapMeshFlagDefOf.Things);
+            }
         }
 
         public bool IsReadyForSigil(out string failReason)
