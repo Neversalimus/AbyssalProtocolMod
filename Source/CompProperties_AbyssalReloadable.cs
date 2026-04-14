@@ -100,9 +100,9 @@ namespace AbyssalProtocol
             return noun.CapitalizeFirst() + "s: " + RemainingCharges + " / " + MaxCharges;
         }
 
-        public override IEnumerable<Gizmo> CompGetEquippedGizmosExtra()
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            foreach (Gizmo gizmo in base.CompGetEquippedGizmosExtra())
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
             {
                 yield return gizmo;
             }
