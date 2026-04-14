@@ -193,9 +193,7 @@ namespace AbyssalProtocol
                 progress.GetUnlockedRecipes(selectedCategory).Count,
                 progress.GetUnlockedRecipes(selectedCategory).Count + progress.GetLockedRecipes(selectedCategory).Count,
                 categoryLabel);
-            Widgets.Label(rightRect, summary + "
-
-" + "ABY_ForgePreviewHint".Translate());
+            Widgets.Label(rightRect, summary + "\n\n" + "ABY_ForgePreviewHint".Translate());
         }
 
         private void DrawCategoryRow(Rect rect)
