@@ -9,7 +9,7 @@ namespace AbyssalProtocol
     {
         private const float ImpactGlowSize = 0.86f;
         private const float ShieldImpactGlowSize = 0.66f;
-        private const float TargetSnapRadius = 1.85f;
+        private const float TargetSnapRadius = 2.25f;
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
@@ -93,18 +93,18 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float priorityBias = 0.8f;
+                float priorityBias = 0.7f;
                 if (thing is Pawn)
                 {
                     priorityBias = 0f;
                 }
                 else if (thing.def != null && thing.def.category == ThingCategory.Building)
                 {
-                    priorityBias = 0.15f;
+                    priorityBias = 0.12f;
                 }
                 else if (thing.def != null && thing.def.mineable)
                 {
-                    priorityBias = 0.3f;
+                    priorityBias = 0.24f;
                 }
 
                 float score = distSq + priorityBias;

@@ -23,7 +23,7 @@
       <AccuracyShort>0.79</AccuracyShort>
       <AccuracyMedium>0.71</AccuracyMedium>
       <AccuracyLong>0.58</AccuracyLong>
-      <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.40</RangedWeapon_Cooldown>
     </statBases>
 
     <recipeMaker>
@@ -52,7 +52,7 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_SpecterLashAnchor</defaultProjectile>
-        <warmupTime>1.22</warmupTime>
+        <warmupTime>1.16</warmupTime>
         <range>28.9</range>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <burstShotCount>1</burstShotCount>
@@ -93,8 +93,8 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>6</damageAmountBase>
-      <armorPenetrationBase>1.10</armorPenetrationBase>
+      <damageAmountBase>8</damageAmountBase>
+      <armorPenetrationBase>1.20</armorPenetrationBase>
       <stoppingPower>0.45</stoppingPower>
       <speed>120</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

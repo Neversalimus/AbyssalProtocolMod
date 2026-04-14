@@ -16,10 +16,10 @@ namespace AbyssalProtocol
 
         private const int VisualIntervalTicks = 1;
         private const int DamageIntervalTicks = 10;
-        private const int PawnStreamDurationTicks = 78;
+        private const int TargetStreamDurationTicks = 84;
         private const int PointStreamDurationTicks = 20;
-        private const float PulseDamage = 7f;
-        private const float PulseArmorPenetration = 1.40f;
+        private const float PulseDamage = 8f;
+        private const float PulseArmorPenetration = 1.45f;
         private const float MaxStreamRange = 28.9f;
         private const float EndpointInset = 0.34f;
         private const float BaseAmplitude = 0.20f;
@@ -34,27 +34,28 @@ namespace AbyssalProtocol
         {
             public int mapId;
             public int sourcePawnId;
-            public int targetPawnId = -1;
+            public int targetThingId = -1;
             public int expireTick;
             public int nextDamageTick;
             public int seed;
             public bool damageEnabled;
             public Vector3 staticTargetPos;
+            public Vector3 targetOffset;
         }
 
         public SpecterLashStreamGameComponent(Game game)
         {
         }
 
-        public void TryStartStream(Pawn source, Pawn target, Vector3 fallbackTargetPos)
+        public void TryStartStream(Pawn source, Thing target, Vector3 impactPos)
         {
-            if (!CanStartSourceStream(source))
+            if (!CanStartSourceStream(source) || target == null || target.Destroyed)
             {
                 return;
             }
 
-            Vector3 targetPos = target != null ? target.DrawPos : fallbackTargetPos;
-            if (!CanUseTargetPos(source, targetPos))
+            Vector3 anchoredTargetPos = GetAnchoredTargetPos(target, impactPos, out Vector3 targetOffset);
+            if (!CanUseTargetPos(source, anchoredTargetPos))
             {
                 return;
             }
@@ -66,19 +67,21 @@ namespace AbyssalProtocol
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
-                targetPawnId = target?.thingIDNumber ?? -1,
-                expireTick = ticksGame + PawnStreamDurationTicks,
+                targetThingId = target.thingIDNumber,
+                expireTick = ticksGame + TargetStreamDurationTicks,
                 nextDamageTick = ticksGame,
-                seed = source.thingIDNumber * 397 ^ (target?.thingIDNumber ?? fallbackTargetPos.GetHashCode()) * 17,
-                damageEnabled = target != null && GenHostility.HostileTo(source, target),
-                staticTargetPos = targetPos
+                seed = source.thingIDNumber * 397 ^ target.thingIDNumber * 17,
+                damageEnabled = true,
+                staticTargetPos = anchoredTargetPos,
+                targetOffset = targetOffset
             });
 
             if (source.MapHeld != null)
             {
-                ABY_SoundUtility.PlayAt(PulseSoundDefName, targetPos.ToIntVec3(), source.MapHeld);
-                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, 1.10f);
-                FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
+                ABY_SoundUtility.PlayAt(PulseSoundDefName, anchoredTargetPos.ToIntVec3(), source.MapHeld);
+                FleckMaker.ThrowLightningGlow(anchoredTargetPos, source.MapHeld, 1.10f);
+                FleckMaker.ThrowMicroSparks(anchoredTargetPos, source.MapHeld);
+                FleckMaker.ThrowMicroSparks(anchoredTargetPos, source.MapHeld);
             }
         }
 
@@ -96,12 +99,13 @@ namespace AbyssalProtocol
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
-                targetPawnId = -1,
+                targetThingId = -1,
                 expireTick = ticksGame + PointStreamDurationTicks,
                 nextDamageTick = ticksGame + DamageIntervalTicks,
                 seed = source.thingIDNumber * 397 ^ targetPos.GetHashCode() * 17,
                 damageEnabled = false,
-                staticTargetPos = targetPos
+                staticTargetPos = targetPos,
+                targetOffset = Vector3.zero
             });
 
             if (source.MapHeld != null)
@@ -133,17 +137,16 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                Pawn target = FindPawn(map, stream.targetPawnId);
-                if (target != null && CanUseTrackedTarget(source, target))
+                Thing targetThing = FindThing(map, stream.targetThingId);
+                if (targetThing != null && CanUseTrackedTarget(source, targetThing))
                 {
-                    stream.staticTargetPos = target.DrawPos;
-                    stream.damageEnabled = GenHostility.HostileTo(source, target);
+                    stream.staticTargetPos = targetThing.DrawPos + stream.targetOffset;
+                    stream.damageEnabled = true;
                 }
-                else
+                else if (stream.targetThingId >= 0)
                 {
-                    stream.targetPawnId = -1;
+                    stream.targetThingId = -1;
                     stream.damageEnabled = false;
-                    target = null;
                 }
 
                 if (!CanUseTargetPos(source, stream.staticTargetPos))
@@ -155,12 +158,12 @@ namespace AbyssalProtocol
 
                 if (ticksGame % VisualIntervalTicks == 0)
                 {
-                    SpawnBeamVisuals(map, source, stream.staticTargetPos, stream.seed, ticksGame, target != null);
+                    SpawnBeamVisuals(map, source, stream.staticTargetPos, stream.seed, ticksGame, targetThing != null);
                 }
 
-                if (target != null && stream.damageEnabled && ticksGame >= stream.nextDamageTick)
+                if (targetThing != null && stream.damageEnabled && ticksGame >= stream.nextDamageTick)
                 {
-                    ApplyPulseDamage(source, target);
+                    ApplyPulseDamage(source, targetThing);
                     stream.nextDamageTick = ticksGame + DamageIntervalTicks;
                 }
             }
@@ -210,14 +213,14 @@ namespace AbyssalProtocol
             return CanUseTargetPos(source, targetPos);
         }
 
-        private static bool CanUseTrackedTarget(Pawn source, Pawn target)
+        private static bool CanUseTrackedTarget(Pawn source, Thing target)
         {
-            if (source == null || target == null || target.Dead || !target.Spawned)
+            if (source == null || target == null || target.Destroyed || !target.Spawned || target.MapHeld != source.MapHeld)
             {
                 return false;
             }
 
-            if (target.MapHeld != source.MapHeld)
+            if (target is Pawn pawn && pawn.Dead)
             {
                 return false;
             }
@@ -250,10 +253,15 @@ namespace AbyssalProtocol
             return GenSight.LineOfSight(sourceCell, targetCell, source.MapHeld);
         }
 
-        private void ApplyPulseDamage(Pawn source, Pawn target)
+        private void ApplyPulseDamage(Pawn source, Thing target)
         {
             Map map = source.MapHeld;
-            if (map == null || target == null || target.Dead)
+            if (map == null || target == null || target.Destroyed)
+            {
+                return;
+            }
+
+            if (target is Pawn pawn && pawn.Dead)
             {
                 return;
             }
@@ -270,13 +278,16 @@ namespace AbyssalProtocol
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
             target.TakeDamage(damageInfo);
-            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.88f);
-            FleckMaker.ThrowMicroSparks(target.DrawPos, map);
-            FleckMaker.ThrowMicroSparks(target.DrawPos, map);
-            ABY_SoundUtility.PlayAt(PulseSoundDefName, target.PositionHeld, map);
+            Vector3 hitPos = target.DrawPos;
+            FleckMaker.ThrowLightningGlow(hitPos, map, 0.88f);
+            FleckMaker.ThrowMicroSparks(hitPos, map);
+            FleckMaker.ThrowMicroSparks(hitPos, map);
+
+            IntVec3 soundCell = target.PositionHeld.IsValid ? target.PositionHeld : hitPos.ToIntVec3();
+            ABY_SoundUtility.PlayAt(PulseSoundDefName, soundCell, map);
         }
 
-        private void SpawnBeamVisuals(Map map, Pawn source, Vector3 rawTargetPos, int seed, int ticksGame, bool isTrackingPawn)
+        private void SpawnBeamVisuals(Map map, Pawn source, Vector3 rawTargetPos, int seed, int ticksGame, bool isTrackingThing)
         {
             if (map == null || blobMoteDef == null || coreMoteDef == null)
             {
@@ -327,8 +338,8 @@ namespace AbyssalProtocol
                 }
             }
 
-            FleckMaker.ThrowLightningGlow(sourcePos, map, isTrackingPawn ? 0.46f : 0.34f);
-            FleckMaker.ThrowLightningGlow(targetPos, map, isTrackingPawn ? 0.62f : 0.42f);
+            FleckMaker.ThrowLightningGlow(sourcePos, map, isTrackingThing ? 0.46f : 0.34f);
+            FleckMaker.ThrowLightningGlow(targetPos, map, isTrackingThing ? 0.62f : 0.42f);
         }
 
         private static Vector3 GetMuzzleSourcePos(Pawn source, Vector3 targetPos)
@@ -346,6 +357,37 @@ namespace AbyssalProtocol
             }
 
             return sourcePos;
+        }
+
+        private static Vector3 GetAnchoredTargetPos(Thing target, Vector3 impactPos, out Vector3 targetOffset)
+        {
+            Vector3 drawPos = target.DrawPos;
+            targetOffset = impactPos - drawPos;
+            targetOffset.y = 0f;
+
+            float maxOffset = GetMaxAttachOffset(target);
+            if (targetOffset.sqrMagnitude > maxOffset * maxOffset)
+            {
+                targetOffset = targetOffset.normalized * maxOffset;
+            }
+
+            return drawPos + targetOffset;
+        }
+
+        private static float GetMaxAttachOffset(Thing target)
+        {
+            IntVec2 size = target.def != null ? target.def.size : new IntVec2(1, 1);
+            float radius = Mathf.Sqrt(size.x * size.x + size.z * size.z) * 0.30f;
+            if (target is Pawn)
+            {
+                radius = Mathf.Max(radius, 0.42f);
+            }
+            else
+            {
+                radius = Mathf.Max(radius, 0.55f);
+            }
+
+            return radius;
         }
 
         private void RemoveExistingStreamFor(Pawn source)
@@ -387,6 +429,26 @@ namespace AbyssalProtocol
                 if (pawn != null && pawn.thingIDNumber == pawnId)
                 {
                     return pawn;
+                }
+            }
+
+            return null;
+        }
+
+        private static Thing FindThing(Map map, int thingId)
+        {
+            if (thingId < 0 || map?.listerThings == null)
+            {
+                return null;
+            }
+
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing != null && thing.thingIDNumber == thingId)
+                {
+                    return thing;
                 }
             }
 
