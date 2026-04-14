@@ -48,7 +48,7 @@
 
     <verbs>
       <li>
-        <verbClass>Verb_Shoot</verbClass>
+        <verbClass>AbyssalProtocol.Verb_ShootAbyssalReloadable</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_OblivionChoirCoreProjectile</defaultProjectile>
         <warmupTime>2.80</warmupTime>
@@ -83,7 +83,7 @@
     </tools>
 
     <comps>
-      <li Class="RimWorld.CompProperties_Reloadable">
+      <li Class="AbyssalProtocol.CompProperties_AbyssalReloadable">
         <maxCharges>4</maxCharges>
         <ammoDef>ABY_OblivionChoirCell</ammoDef>
         <ammoCountPerCharge>1</ammoCountPerCharge>
