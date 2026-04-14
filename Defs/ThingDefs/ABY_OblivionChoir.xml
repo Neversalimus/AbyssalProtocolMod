@@ -83,7 +83,7 @@
     </tools>
 
     <comps>
-      <li Class="CompProperties_Reloadable">
+      <li Class="RimWorld.CompProperties_Reloadable">
         <maxCharges>4</maxCharges>
         <ammoDef>ABY_OblivionChoirCell</ammoDef>
         <ammoCountPerCharge>1</ammoCountPerCharge>
