@@ -69,6 +69,7 @@
     <priorityMode>PrioritizeNewest</priorityMode>
     <subSounds>
       <li>
+        <onCamera>true</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
             <clipPath>ABY/SpecterLash_Tail</clipPath>
