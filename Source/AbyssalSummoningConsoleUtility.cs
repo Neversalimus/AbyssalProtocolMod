@@ -396,6 +396,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (!AbyssalCircleCapacitorRitualUtility.CanSupportRitual(circle, ritual, out failReason))
+            {
+                return false;
+            }
+
             Thing sigil = FindBestSigil(circle, ritual, out failReason);
             if (sigil == null)
             {
@@ -750,6 +755,17 @@ namespace AbyssalProtocol
                 Satisfied = encounterClear
             });
 
+            if (ritual != null)
+            {
+                AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport report = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CapacitorStatus_Support", "Capacitors"),
+                    Value = AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report),
+                    Satisfied = report.FullySatisfied
+                });
+            }
+
             return entries;
         }
 
@@ -815,7 +831,8 @@ namespace AbyssalProtocol
 
             float baseRisk = ritual != null ? ritual.BaseRisk : 0.25f;
             int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
-            float risk = baseRisk + missing * 0.08f - instabilityReduction;
+            float capacitorRiskReduction = ritual != null ? AbyssalCircleCapacitorRitualUtility.GetRiskReduction(circle, ritual) : 0f;
+            float risk = baseRisk + missing * 0.08f - instabilityReduction - capacitorRiskReduction;
             return Mathf.Clamp(risk, 0.05f, 1f);
         }
 
@@ -855,8 +872,9 @@ namespace AbyssalProtocol
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            int ready = GetStatusEntries(circle, ritual).Count(entry => entry.Satisfied);
-            return TranslateOrFallback("ABY_CircleReadinessSummary", "{0} / {1} gates clear", ready, 6);
+            List<StatusEntry> entries = GetStatusEntries(circle, ritual);
+            int ready = entries.Count(entry => entry.Satisfied);
+            return TranslateOrFallback("ABY_CircleReadinessSummary", "{0} / {1} gates clear", ready, entries.Count);
         }
     }
 }

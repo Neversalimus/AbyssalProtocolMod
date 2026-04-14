@@ -27,7 +27,7 @@
 
   <ABY_CapacitorPanel_Header>Capacitor lattice</ABY_CapacitorPanel_Header>
   <ABY_CapacitorPanel_State>State</ABY_CapacitorPanel_State>
-  <ABY_CapacitorPanel_Hint>Install capacitor modules here to give the circle a real charge reserve before the deeper power-routing package is wired in.</ABY_CapacitorPanel_Hint>
+    <ABY_CapacitorPanel_Hint>Capacitors now gate ritual startup buffer, total reserve and throughput. Stronger lattices charge faster, smooth grid spikes and reduce the chance that a supported ritual slips into a dirty power state.</ABY_CapacitorPanel_Hint>
 
   <ABY_CapacitorCommand_Install>Install</ABY_CapacitorCommand_Install>
   <ABY_CapacitorCommand_Remove>Remove</ABY_CapacitorCommand_Remove>
@@ -53,4 +53,32 @@ Tier: {1}
 Capacity: {2}
 Throughput: {3}
 Charge rate: {4}/s</ABY_CapacitorBayTooltip_Filled>
+  <ABY_CapacitorPanel_Startup>Startup</ABY_CapacitorPanel_Startup>
+  <ABY_CapacitorPanel_Reserve>Reserve</ABY_CapacitorPanel_Reserve>
+  <ABY_CapacitorPanel_Feed>Feed</ABY_CapacitorPanel_Feed>
+  <ABY_CapacitorPanel_Grid>Grid smoothing</ABY_CapacitorPanel_Grid>
+
+  <ABY_CapacitorStatus_Support>Capacitors</ABY_CapacitorStatus_Support>
+  <ABY_CapacitorStatus_Reserve>Reserve</ABY_CapacitorStatus_Reserve>
+  <ABY_CapacitorStatus_Feed>Feed</ABY_CapacitorStatus_Feed>
+
+  <ABY_CapacitorSupport_NotRequired>not required</ABY_CapacitorSupport_NotRequired>
+  <ABY_CapacitorSupport_NoLattice>no lattice</ABY_CapacitorSupport_NoLattice>
+  <ABY_CapacitorSupport_Undercharged>undercharged</ABY_CapacitorSupport_Undercharged>
+  <ABY_CapacitorSupport_ThroughputLimited>throughput-limited</ABY_CapacitorSupport_ThroughputLimited>
+  <ABY_CapacitorSupport_Ready>ready</ABY_CapacitorSupport_Ready>
+
+  <ABY_CapacitorReadout_NotRequired>not required</ABY_CapacitorReadout_NotRequired>
+  <ABY_CapacitorReadout_Startup>{0} / {1}</ABY_CapacitorReadout_Startup>
+  <ABY_CapacitorReadout_Reserve>{0} / {1}</ABY_CapacitorReadout_Reserve>
+  <ABY_CapacitorReadout_Throughput>{0} / {1}</ABY_CapacitorReadout_Throughput>
+  <ABY_CapacitorReadout_GridSmoothing>{0}%</ABY_CapacitorReadout_GridSmoothing>
+
+  <ABY_CapacitorDemandSummary_None>No capacitor gate is defined for this ritual.</ABY_CapacitorDemandSummary_None>
+  <ABY_CapacitorDemandSummary>Startup {0} • reserve {1} • throughput {2}</ABY_CapacitorDemandSummary>
+
+  <ABY_CapacitorFail_NoLattice>This ritual requires an installed capacitor lattice.</ABY_CapacitorFail_NoLattice>
+  <ABY_CapacitorFail_Startup>Insufficient startup buffer: {0} / {1}</ABY_CapacitorFail_Startup>
+  <ABY_CapacitorFail_Reserve>Insufficient charge reserve: {0} / {1}</ABY_CapacitorFail_Reserve>
+  <ABY_CapacitorFail_Throughput>Insufficient capacitor throughput: {0} / {1}</ABY_CapacitorFail_Throughput>
 </LanguageData>

@@ -106,6 +106,10 @@ namespace AbyssalProtocol
         private AbyssalCircleCapacitorSlot coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
         private AbyssalCircleCapacitorSlot auxiliaryCapacitorSlot = new AbyssalCircleCapacitorSlot();
         private float storedCapacitorCharge;
+        private float pendingCapacitorStartupCost;
+        private float pendingCapacitorSustainDrainPerSecond;
+        private float pendingCapacitorReserveRequired;
+        private float pendingCapacitorThroughputRequired;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
@@ -156,6 +160,10 @@ namespace AbyssalProtocol
             Scribe_Deep.Look(ref coreCapacitorSlot, "coreCapacitorSlot");
             Scribe_Deep.Look(ref auxiliaryCapacitorSlot, "auxiliaryCapacitorSlot");
             Scribe_Values.Look(ref storedCapacitorCharge, "storedCapacitorCharge", 0f);
+            Scribe_Values.Look(ref pendingCapacitorStartupCost, "pendingCapacitorStartupCost", 0f);
+            Scribe_Values.Look(ref pendingCapacitorSustainDrainPerSecond, "pendingCapacitorSustainDrainPerSecond", 0f);
+            Scribe_Values.Look(ref pendingCapacitorReserveRequired, "pendingCapacitorReserveRequired", 0f);
+            Scribe_Values.Look(ref pendingCapacitorThroughputRequired, "pendingCapacitorThroughputRequired", 0f);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -195,6 +203,7 @@ namespace AbyssalProtocol
 
             EnsureCapacitorSlotsInitialized();
             TickCapacitorCharge();
+            TickCapacitorRitualFeed();
 
             if (!RitualActive || Map == null)
             {
@@ -236,6 +245,17 @@ namespace AbyssalProtocol
             {
                 return false;
             }
+
+            if (!AbyssalCircleCapacitorRitualUtility.CanSupportRitual(this, summonProps, out failReason))
+            {
+                return false;
+            }
+
+            AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(this, summonProps);
+            pendingCapacitorStartupCost = capacitorReport.Profile != null ? capacitorReport.EffectiveStartupRequired : 0f;
+            pendingCapacitorReserveRequired = capacitorReport.Profile != null ? capacitorReport.EffectiveTotalRequired : 0f;
+            pendingCapacitorThroughputRequired = capacitorReport.Profile != null ? capacitorReport.EffectiveThroughputRequired : 0f;
+            pendingCapacitorSustainDrainPerSecond = AbyssalCircleCapacitorRitualUtility.GetSustainDrainPerSecond(capacitorReport);
 
             pendingRitualId = summonProps.ritualId;
             pendingSummonMode = summonProps.summonMode ?? "Boss";
@@ -280,6 +300,11 @@ namespace AbyssalProtocol
             }
 
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
+
+            if (pendingCapacitorStartupCost > 0.001f)
+            {
+                storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - pendingCapacitorStartupCost);
+            }
 
             StartPhase(RitualPhase.Charging, 120);
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
@@ -433,6 +458,8 @@ namespace AbyssalProtocol
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetChargeReadout(this));
             sb.AppendLine();
+            sb.Append("ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(this));
+            sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetBaySummary(this));
 
             return sb.ToString();
@@ -477,6 +504,26 @@ namespace AbyssalProtocol
         public float GetCapacitorChargeRatePerSecond()
         {
             return AbyssalCircleCapacitorUtility.GetTotalChargeRate(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorGridSmoothing()
+        {
+            return AbyssalCircleCapacitorRitualUtility.GetGridSmoothing(this);
+        }
+
+        public float GetPendingCapacitorStartupCost()
+        {
+            return pendingCapacitorStartupCost;
+        }
+
+        public float GetPendingCapacitorReserveRequired()
+        {
+            return pendingCapacitorReserveRequired;
+        }
+
+        public float GetPendingCapacitorThroughputRequired()
+        {
+            return pendingCapacitorThroughputRequired;
         }
 
         public bool CanInstallCapacitor(ThingDef capacitorDef, AbyssalCircleCapacitorBay bay, out string failReason)
@@ -625,6 +672,26 @@ namespace AbyssalProtocol
             }
 
             storedCapacitorCharge = Mathf.Clamp(storedCapacitorCharge + rate, 0f, capacity);
+        }
+
+        private void TickCapacitorRitualFeed()
+        {
+            if (!RitualActive || pendingCapacitorSustainDrainPerSecond <= 0.001f)
+            {
+                return;
+            }
+
+            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
+            {
+                return;
+            }
+
+            if (!ShouldDoHashInterval(60))
+            {
+                return;
+            }
+
+            storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - pendingCapacitorSustainDrainPerSecond);
         }
 
         private void ClampStoredCapacitorCharge()
@@ -984,6 +1051,10 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
+            pendingCapacitorStartupCost = 0f;
+            pendingCapacitorSustainDrainPerSecond = 0f;
+            pendingCapacitorReserveRequired = 0f;
+            pendingCapacitorThroughputRequired = 0f;
         }
 
         private float GetRitualIntensity()
