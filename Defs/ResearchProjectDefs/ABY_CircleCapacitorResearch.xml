@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ABY_AshboundCapacitance</defName>
+    <label>ashbound capacitance</label>
+    <description>Primitive infernal buffering. These first-generation capacitor housings let the circle hold a controlled reserve of hostile charge instead of depending entirely on raw grid spikes.</description>
+    <baseCost>900</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>0.52</researchViewX>
+    <researchViewY>0.82</researchViewY>
+    <prerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_RiftCapacitanceMatrices</defName>
+    <label>rift capacitance matrices</label>
+    <description>Interlocking phase-matrices and constrained rift chambers dramatically increase capacitor throughput, allowing the circle to feed heavier ritual loads without immediate collapse.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>1.06</researchViewX>
+    <researchViewY>0.82</researchViewY>
+    <prerequisites>
+      <li>ABY_AshboundCapacitance</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_CrownCondensationArrays</defName>
+    <label>crown condensation arrays</label>
+    <description>Late-stage abyssal condenser architecture built around crown lattices, pressure shunts and hardened infernal collars. This is the first capacitor class that truly feels boss-ready.</description>
+    <baseCost>3200</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>1.62</researchViewX>
+    <researchViewY>0.82</researchViewY>
+    <prerequisites>
+      <li>ABY_RiftCapacitanceMatrices</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+</Defs>

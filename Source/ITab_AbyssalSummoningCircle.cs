@@ -11,7 +11,7 @@ namespace AbyssalProtocol
 
         public ITab_AbyssalSummoningCircle()
         {
-            size = new Vector2(470f, 304f);
+            size = new Vector2(470f, 332f);
             labelKey = "ABY_CircleTab_Label";
         }
 
@@ -32,9 +32,9 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleArt.DrawHeader(headerRect, AbyssalSummoningConsoleUtility.GetConsoleTitle(), AbyssalSummoningConsoleUtility.GetCompactSubtitle(), circle.RitualActive);
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = AbyssalSummoningConsoleUtility.GetDefaultRitual();
-            Rect leftRect = new Rect(rect.x, headerRect.yMax + 10f, rect.width * 0.54f, 156f);
-            Rect rightRect = new Rect(leftRect.xMax + 8f, headerRect.yMax + 10f, rect.width - leftRect.width - 8f, 156f);
-            Rect bottomRect = new Rect(rect.x, leftRect.yMax + 8f, rect.width, 50f);
+            Rect leftRect = new Rect(rect.x, headerRect.yMax + 10f, rect.width * 0.54f, 184f);
+            Rect rightRect = new Rect(leftRect.xMax + 8f, headerRect.yMax + 10f, rect.width - leftRect.width - 8f, 184f);
+            Rect bottomRect = new Rect(rect.x, leftRect.yMax + 8f, rect.width, 42f);
 
             AbyssalSummoningConsoleArt.DrawPanel(leftRect, false);
             Rect leftInner = leftRect.ContractedBy(10f);
@@ -43,13 +43,11 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 40f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 60f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(circle, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 80f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual))));
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 100f, leftInner.width * 0.52f, 18f), AbyssalSummoningConsoleUtility.GetInspectHeatText(AbyssalSummoningConsoleUtility.GetHeatDisplay(circle)));
-            Widgets.Label(new Rect(leftInner.x + leftInner.width * 0.54f, leftInner.y + 100f, leftInner.width * 0.46f, 18f), AbyssalSummoningConsoleUtility.GetInspectContainmentText(AbyssalSummoningConsoleUtility.GetContainmentDisplay(circle)));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 116f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectContaminationText(AbyssalSummoningConsoleUtility.GetContaminationDisplay(circle)));
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 132f, leftInner.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 104f, leftInner.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 124f, leftInner.width, 18f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
             GUI.color = Color.white;
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 146f, leftInner.width, 28f), AbyssalSummoningConsoleUtility.GetCompactHint());
 
             AbyssalSummoningConsoleArt.DrawPanel(rightRect, true);
             Rect rightInner = rightRect.ContractedBy(10f);
@@ -69,11 +67,7 @@ namespace AbyssalProtocol
             }
 
             AbyssalSummoningConsoleArt.DrawPanel(bottomRect, false);
-            Rect bottomInner = bottomRect.ContractedBy(10f);
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(bottomInner.x, bottomInner.y, bottomInner.width, 16f), AbyssalSummoningConsoleUtility.GetCompactFooter());
-            GUI.color = Color.white;
-            Widgets.Label(new Rect(bottomInner.x, bottomInner.y + 16f, bottomInner.width, 18f), AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(circle));
+            Widgets.Label(bottomRect.ContractedBy(10f), AbyssalSummoningConsoleUtility.GetCompactFooter());
         }
 
         private static void TryAssign(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CapacitorBay_Core>основной слот</ABY_CapacitorBay_Core>
+  <ABY_CapacitorBay_Auxiliary>вспомогательный слот</ABY_CapacitorBay_Auxiliary>
+  <ABY_CapacitorTier_None>нет</ABY_CapacitorTier_None>
+  <ABY_CapacitorTier_Ashbound>ashbound</ABY_CapacitorTier_Ashbound>
+  <ABY_CapacitorTier_Rift>rift</ABY_CapacitorTier_Rift>
+  <ABY_CapacitorTier_Crown>crown</ABY_CapacitorTier_Crown>
+  <ABY_CapacitorSlot_Empty>пусто</ABY_CapacitorSlot_Empty>
+
+  <ABY_CapacitorInspect_Slots>Конденсаторы: {0} / {1} установлено</ABY_CapacitorInspect_Slots>
+  <ABY_CapacitorInspect_SlotsTier>Конденсаторы: {0} / {1} установлено • высший тир: {2}</ABY_CapacitorInspect_SlotsTier>
+  <ABY_CapacitorInspect_Bays>Слоты: {0} • {1}</ABY_CapacitorInspect_Bays>
+  <ABY_CapacitorInspect_ChargeNoLattice>Заряд: нет конденсаторной решётки</ABY_CapacitorInspect_ChargeNoLattice>
+  <ABY_CapacitorInspect_Charge>Заряд: {0} ({1} / {2})</ABY_CapacitorInspect_Charge>
+  <ABY_CapacitorInspect_Throughput>Пропускная способность: {0}</ABY_CapacitorInspect_Throughput>
+
+  <ABY_CapacitorChargeState_NoLattice>нет решётки</ABY_CapacitorChargeState_NoLattice>
+  <ABY_CapacitorChargeState_Dormant>покой</ABY_CapacitorChargeState_Dormant>
+  <ABY_CapacitorChargeState_Priming>накачка</ABY_CapacitorChargeState_Priming>
+  <ABY_CapacitorChargeState_Charged>заряжен</ABY_CapacitorChargeState_Charged>
+  <ABY_CapacitorChargeState_Saturated>насыщен</ABY_CapacitorChargeState_Saturated>
+
+  <ABY_CapacitorCompact>Конденсаторы: решётка отсутствует</ABY_CapacitorCompact>
+  <ABY_CapacitorCompactActive>Конденсаторы: {0} установлено • {1}</ABY_CapacitorCompactActive>
+</LanguageData>

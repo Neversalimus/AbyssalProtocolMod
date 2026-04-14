@@ -92,45 +92,16 @@ namespace AbyssalProtocol
         private int pendingImpSpawnIntervalTicks;
         private int pendingImpPortalLingerTicks;
         private bool reducedConsoleEffects;
-        private float instabilityHeat;
-        private float cachedContainment;
-        private int nextContainmentRefreshTick;
-        private int lastInstabilityEventTick = -999999;
-        private int purgeCooldownUntilTick;
-        private int nextAmbientBleedTick;
-        private List<AbyssalCircleModuleSlot> moduleSlots = new List<AbyssalCircleModuleSlot>();
+
+        private AbyssalCircleCapacitorSlot coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
+        private AbyssalCircleCapacitorSlot auxiliaryCapacitorSlot = new AbyssalCircleCapacitorSlot();
+        private float storedCapacitorCharge;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
         public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
         public bool ReducedConsoleEffects => reducedConsoleEffects;
         public float RitualProgress => RitualActive ? GetPhaseProgress() : 0f;
-        public float InstabilityHeat => instabilityHeat;
-        public float RawContainmentRating => cachedContainment;
-        public float ResidualContamination => GetInstabilityMapComponent()?.ResidualContamination ?? 0f;
-        public int PurgeCooldownTicksRemaining
-        {
-            get
-            {
-                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-                return Mathf.Max(0, purgeCooldownUntilTick - ticksGame);
-            }
-        }
-
-        public int VentCooldownTicksRemaining => GetInstabilityMapComponent()?.TicksUntilVentReady ?? 0;
-
-        public float ContainmentRating
-        {
-            get
-            {
-                RefreshContainmentCache(false);
-                return AbyssalCircleInstabilityUtility.GetEffectiveContainment(this, cachedContainment);
-            }
-        }
-
-        public IReadOnlyList<AbyssalCircleModuleSlot> ModuleSlots => moduleSlots;
-        public int InstalledModuleCount => AbyssalCircleModuleUtility.CountInstalledModules(moduleSlots);
-        public int InstalledStabilizerCount => AbyssalCircleModuleUtility.CountInstalledModules(moduleSlots, DefModExtension_AbyssalCircleModule.StabilizerFamily);
 
         public ConsoleRitualPhase CurrentRitualPhase
         {
@@ -172,152 +143,20 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpSpawnIntervalTicks, "pendingImpSpawnIntervalTicks", 0);
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
-            Scribe_Values.Look(ref instabilityHeat, "instabilityHeat", 0f);
-            Scribe_Values.Look(ref cachedContainment, "cachedContainment", 0f);
-            Scribe_Values.Look(ref nextContainmentRefreshTick, "nextContainmentRefreshTick", 0);
-            Scribe_Values.Look(ref lastInstabilityEventTick, "lastInstabilityEventTick", -999999);
-            Scribe_Values.Look(ref purgeCooldownUntilTick, "purgeCooldownUntilTick", 0);
-            Scribe_Values.Look(ref nextAmbientBleedTick, "nextAmbientBleedTick", 0);
-            Scribe_Collections.Look(ref moduleSlots, "moduleSlots", LookMode.Deep);
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
+            Scribe_Deep.Look(ref coreCapacitorSlot, "coreCapacitorSlot");
+            Scribe_Deep.Look(ref auxiliaryCapacitorSlot, "auxiliaryCapacitorSlot");
+            Scribe_Values.Look(ref storedCapacitorCharge, "storedCapacitorCharge", 0f);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                EnsureCapacitorSlotsInitialized();
+                ClampStoredCapacitorCharge();
+            }
         }
 
         public void SetReducedConsoleEffects(bool value)
         {
             reducedConsoleEffects = value;
-        }
-
-        public override void PostMake()
-        {
-            base.PostMake();
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-        }
-
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-        {
-            base.SpawnSetup(map, respawningAfterLoad);
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            RefreshContainmentCache(true);
-        }
-
-        public AbyssalCircleModuleSlot GetModuleSlot(AbyssalCircleModuleEdge edge)
-        {
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            return AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-        }
-
-        public AbyssalCircleStabilizerBonusSummary GetStabilizerBonusSummary()
-        {
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            return AbyssalCircleModuleUtility.GetStabilizerBonusSummary(moduleSlots);
-        }
-
-        public bool CanInstallModule(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            failReason = null;
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-
-            if (Destroyed || Map == null || !Spawned)
-            {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CircleModuleFail_Busy".Translate();
-                return false;
-            }
-
-            if (moduleDef == null)
-            {
-                failReason = "ABY_CircleModuleFail_NoModuleDef".Translate();
-                return false;
-            }
-
-            DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(moduleDef);
-            if (ext == null)
-            {
-                failReason = "ABY_CircleModuleFail_NotAModule".Translate(moduleDef.LabelCap);
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-            if (slot == null)
-            {
-                failReason = "ABY_CircleModuleFail_NoSlot".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            if (slot.Occupied)
-            {
-                failReason = "ABY_CircleModuleFail_SlotOccupied".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryInstallModuleDirect(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            if (!CanInstallModule(moduleDef, edge, out failReason))
-            {
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-            slot.SetInstalledThingDef(moduleDef);
-            NotifyModuleConfigurationChanged();
-            return true;
-        }
-
-        public bool CanRemoveInstalledModule(AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            failReason = null;
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-
-            if (Destroyed || Map == null || !Spawned)
-            {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CircleModuleFail_Busy".Translate();
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-            if (slot == null || !slot.Occupied)
-            {
-                failReason = "ABY_CircleModuleFail_SlotEmpty".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            return true;
-        }
-
-        public ThingDef RemoveInstalledModule(AbyssalCircleModuleEdge edge)
-        {
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-            if (slot == null || !slot.Occupied)
-            {
-                return null;
-            }
-
-            ThingDef removed = slot.InstalledThingDef;
-            slot.Clear();
-            NotifyModuleConfigurationChanged();
-            return removed;
-        }
-
-        public void NotifyModuleConfigurationChanged()
-        {
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            RefreshContainmentCache(true);
-            nextAmbientBleedTick = Find.TickManager != null ? Find.TickManager.TicksGame + AbyssalCircleInstabilityUtility.AmbientBleedInterval : 0;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -344,14 +183,10 @@ namespace AbyssalProtocol
         {
             base.Tick();
 
-            if (Map == null)
-            {
-                return;
-            }
+            EnsureCapacitorSlotsInitialized();
+            TickCapacitorCharge();
 
-            TickInstabilityPassive();
-
-            if (!RitualActive)
+            if (!RitualActive || Map == null)
             {
                 return;
             }
@@ -435,7 +270,6 @@ namespace AbyssalProtocol
             }
 
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
-            ApplyRitualHeat(AbyssalSummoningConsoleUtility.GetRitualById(summonProps.ritualId));
 
             StartPhase(RitualPhase.Charging, 120);
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
@@ -514,63 +348,6 @@ namespace AbyssalProtocol
                 DrawLayer(IdleGlowGraphic, center, BreachSize * breachPulse, breachAngle * -0.65f, 0.027f);
                 DrawLayer(CoreGlowGraphic, center, BreachSize * (0.65f + ritualIntensity * 0.22f), breachAngle * 1.35f, 0.028f);
             }
-
-            DrawModuleVisuals(center, ritualIntensity, ticks, seedPhase);
-        }
-
-        private void DrawModuleVisuals(Vector3 center, float ritualIntensity, int ticks, float seedPhase)
-        {
-            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
-            Graphic socketGraphic = AbyssalCircleModuleUtility.GetSocketGraphic();
-            if (socketGraphic == null)
-            {
-                return;
-            }
-
-            float poweredFactor = IsPoweredForRitual ? 1f : 0f;
-            float socketPulse = 1f + (poweredFactor > 0f ? ritualIntensity * 0.025f : -0.015f);
-            float socketSize = AbyssalCircleModuleUtility.GetSocketDrawScaleValue() * socketPulse;
-            float yBase = 0.0294f;
-
-            foreach (AbyssalCircleModuleEdge edge in AbyssalCircleModuleUtility.GetOrderedEdges())
-            {
-                Vector3 moduleCenter = center + AbyssalCircleModuleUtility.GetEdgeOffset(edge);
-                float angle = AbyssalCircleModuleUtility.GetEdgeAngle(edge);
-
-                DrawLayer(socketGraphic, moduleCenter, new Vector2(socketSize, socketSize), angle, yBase);
-
-                AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
-                if (slot == null || !slot.Occupied)
-                {
-                    continue;
-                }
-
-                ThingDef installedDef = slot.InstalledThingDef;
-                DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(installedDef);
-                Graphic mountedGraphic = AbyssalCircleModuleUtility.GetMountedGraphic(installedDef);
-                if (mountedGraphic == null)
-                {
-                    continue;
-                }
-
-                float tierPulse = 0.012f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.005f;
-                float microPulse = 1f + Mathf.Sin(ticks * 0.055f + seedPhase + (int)edge * 0.9f) * tierPulse;
-                float activeScale = 1f + ritualIntensity * (0.040f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.010f);
-                float drawScale = AbyssalCircleModuleUtility.GetMountedDrawScale(installedDef) * microPulse * activeScale;
-
-                if (poweredFactor > 0f)
-                {
-                    Graphic glowGraphic = AbyssalCircleModuleUtility.GetGlowGraphic(installedDef);
-                    if (glowGraphic != null)
-                    {
-                        float glowPulse = 1f + Mathf.Sin(ticks * 0.090f + seedPhase + (int)edge * 0.72f) * 0.020f;
-                        float glowScale = AbyssalCircleModuleUtility.GetGlowDrawScale(installedDef) * (1f + ritualIntensity * 0.085f) * glowPulse;
-                        DrawLayer(glowGraphic, moduleCenter, new Vector2(glowScale, glowScale), angle, yBase + 0.0008f);
-                    }
-                }
-
-                DrawLayer(mountedGraphic, moduleCenter, new Vector2(drawScale, drawScale), angle, yBase + 0.0012f);
-            }
         }
 
         public override string GetInspectString()
@@ -613,19 +390,100 @@ namespace AbyssalProtocol
             sb.AppendLine();
             sb.Append(AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()))));
             sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetInspectHeatText(AbyssalSummoningConsoleUtility.GetHeatDisplay(this)));
+            sb.Append(AbyssalCircleCapacitorUtility.GetInstalledSummary(this));
             sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetInspectContainmentText(AbyssalSummoningConsoleUtility.GetContainmentDisplay(this)));
+            sb.Append(AbyssalCircleCapacitorUtility.GetChargeReadout(this));
             sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetInspectContaminationText(AbyssalSummoningConsoleUtility.GetContaminationDisplay(this)));
-            sb.AppendLine();
-            sb.Append("ABY_CircleInspect_Stabilizers".Translate(InstalledStabilizerCount, moduleSlots.Count));
-            sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(this));
-            sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetStabilizerInspectSummary(this));
+            sb.Append(AbyssalCircleCapacitorUtility.GetBaySummary(this));
 
             return sb.ToString();
+        }
+
+
+        public IEnumerable<AbyssalCircleCapacitorSlot> GetCapacitorSlots()
+        {
+            EnsureCapacitorSlotsInitialized();
+            yield return coreCapacitorSlot;
+            yield return auxiliaryCapacitorSlot;
+        }
+
+        public int GetCapacitorSlotCount()
+        {
+            return 2;
+        }
+
+        public int GetInstalledCapacitorCount()
+        {
+            return AbyssalCircleCapacitorUtility.GetInstalledCount(GetCapacitorSlots());
+        }
+
+        public float StoredCapacitorCharge => storedCapacitorCharge;
+
+        public float GetCapacitorCapacity()
+        {
+            return AbyssalCircleCapacitorUtility.GetTotalCapacity(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorThroughput()
+        {
+            return AbyssalCircleCapacitorUtility.GetTotalThroughput(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorChargeRatePerSecond()
+        {
+            return AbyssalCircleCapacitorUtility.GetTotalChargeRate(GetCapacitorSlots());
+        }
+
+        private void EnsureCapacitorSlotsInitialized()
+        {
+            if (coreCapacitorSlot == null)
+            {
+                coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
+            }
+
+            if (auxiliaryCapacitorSlot == null)
+            {
+                auxiliaryCapacitorSlot = new AbyssalCircleCapacitorSlot();
+            }
+
+            AbyssalCircleCapacitorUtility.EnsureSlot(coreCapacitorSlot, AbyssalCircleCapacitorUtility.CoreBayId, AbyssalCircleCapacitorUtility.CoreBayLabelKey);
+            AbyssalCircleCapacitorUtility.EnsureSlot(auxiliaryCapacitorSlot, AbyssalCircleCapacitorUtility.AuxiliaryBayId, AbyssalCircleCapacitorUtility.AuxiliaryBayLabelKey);
+        }
+
+        private void TickCapacitorCharge()
+        {
+            float capacity = GetCapacitorCapacity();
+            if (capacity <= 0.01f)
+            {
+                storedCapacitorCharge = 0f;
+                return;
+            }
+
+            ClampStoredCapacitorCharge();
+
+            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
+            {
+                return;
+            }
+
+            if (!ShouldDoHashInterval(60))
+            {
+                return;
+            }
+
+            float rate = GetCapacitorChargeRatePerSecond();
+            if (rate <= 0.001f)
+            {
+                return;
+            }
+
+            storedCapacitorCharge = Mathf.Clamp(storedCapacitorCharge + rate, 0f, capacity);
+        }
+
+        private void ClampStoredCapacitorCharge()
+        {
+            float capacity = GetCapacitorCapacity();
+            storedCapacitorCharge = Mathf.Clamp(storedCapacitorCharge, 0f, Mathf.Max(0f, capacity));
         }
 
         public bool IsReadyForSigil(out string failReason)
@@ -846,9 +704,6 @@ namespace AbyssalProtocol
                 Map,
                 pendingSpawnCell,
                 pendingBossLabel);
-
-            RegisterRitualCompletion(AbyssalSummoningConsoleUtility.GetRitualById(pendingRitualId));
-            TryTriggerInstabilityEvent();
         }
 
         private void CompleteImpPortalSummon()
@@ -909,9 +764,6 @@ namespace AbyssalProtocol
                 GetCompletionLetterDesc(),
                 LetterDefOf.ThreatSmall,
                 new TargetInfo(portal.Position, Map));
-
-            RegisterRitualCompletion(AbyssalSummoningConsoleUtility.GetRitualById(pendingRitualId));
-            TryTriggerInstabilityEvent();
         }
 
         private bool IsImpPortalSummonMode(string summonMode)
@@ -952,270 +804,6 @@ namespace AbyssalProtocol
             ritualPhase = phase;
             phaseDuration = duration;
             phaseTicksRemaining = duration;
-        }
-
-        public float GetProjectedInstabilityHeat(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
-        {
-            return AbyssalCircleInstabilityUtility.GetProjectedPostInvokeHeat(this, ritual);
-        }
-
-        private void TickInstabilityPassive()
-        {
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (!ShouldDoHashInterval(AbyssalCircleInstabilityUtility.HeatTickInterval))
-            {
-                return;
-            }
-
-            RefreshContainmentCache(false);
-
-            if (instabilityHeat > 0f)
-            {
-                float decay = ritualPhase == RitualPhase.Cooldown
-                    ? AbyssalCircleInstabilityUtility.GetCooldownDecayPerTick(this)
-                    : RitualActive
-                        ? 0f
-                        : AbyssalCircleInstabilityUtility.GetIdleDecayPerTick(this);
-
-                if (decay > 0f)
-                {
-                    instabilityHeat = Mathf.Max(0f, instabilityHeat - decay);
-                }
-            }
-            else
-            {
-                instabilityHeat = 0f;
-            }
-
-            if (!RitualActive && ticksGame >= nextAmbientBleedTick)
-            {
-                float bleedAmount = AbyssalCircleInstabilityUtility.GetAmbientBleedAmount(this);
-                if (bleedAmount > 0f)
-                {
-                    GetInstabilityMapComponent()?.AddContamination(bleedAmount);
-                }
-
-                nextAmbientBleedTick = ticksGame + AbyssalCircleInstabilityUtility.AmbientBleedInterval;
-            }
-        }
-
-        private void RefreshContainmentCache(bool force)
-        {
-            if (Map == null)
-            {
-                cachedContainment = 0f;
-                return;
-            }
-
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (!force && ticksGame < nextContainmentRefreshTick)
-            {
-                return;
-            }
-
-            cachedContainment = AbyssalCircleInstabilityUtility.CalculateContainment(this);
-            nextContainmentRefreshTick = ticksGame + AbyssalCircleInstabilityUtility.ContainmentRefreshInterval;
-        }
-
-        private void ApplyRitualHeat(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
-        {
-            RefreshContainmentCache(true);
-            instabilityHeat = Mathf.Clamp01(instabilityHeat + AbyssalCircleInstabilityUtility.GetProjectedHeatGain(this, ritual));
-        }
-
-        private void RegisterRitualCompletion(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
-        {
-            MapComponent_AbyssalCircleInstability instability = GetInstabilityMapComponent();
-            if (instability == null)
-            {
-                return;
-            }
-
-            instability.AddContamination(AbyssalCircleInstabilityUtility.GetProjectedContaminationGain(this, ritual));
-            nextAmbientBleedTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + AbyssalCircleInstabilityUtility.AmbientBleedInterval;
-        }
-
-        public bool CanPurgeHeat(out string failReason)
-        {
-            failReason = null;
-            if (Map == null || Destroyed)
-            {
-                failReason = "ABY_CirclePurgeFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CirclePurgeFail_Busy".Translate();
-                return false;
-            }
-
-            if (!IsPoweredForRitual)
-            {
-                failReason = "ABY_CircleFail_NoPower".Translate();
-                return false;
-            }
-
-            if (instabilityHeat < 0.08f)
-            {
-                failReason = "ABY_CirclePurgeFail_LowHeat".Translate();
-                return false;
-            }
-
-            if (PurgeCooldownTicksRemaining > 0)
-            {
-                failReason = "ABY_CirclePurgeFail_Cooldown".Translate(AbyssalSummoningConsoleUtility.FormatTicksShort(PurgeCooldownTicksRemaining));
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryPurgeHeat(out string failReason)
-        {
-            if (!CanPurgeHeat(out failReason))
-            {
-                return false;
-            }
-
-            float removed = Mathf.Min(instabilityHeat, AbyssalCircleInstabilityUtility.GetPurgeRemovedHeat(this));
-            instabilityHeat = Mathf.Max(0f, instabilityHeat - removed);
-            purgeCooldownUntilTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + AbyssalCircleInstabilityUtility.PurgeCooldownTicks;
-            GetInstabilityMapComponent()?.AddContamination(AbyssalCircleInstabilityUtility.GetPurgeBackwash(removed));
-            RefreshContainmentCache(true);
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.08f);
-            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
-            Messages.Message("ABY_CirclePurgeSuccess".Translate(Mathf.RoundToInt(removed * 100f)), this, MessageTypeDefOf.TaskCompletion, false);
-            failReason = null;
-            return true;
-        }
-
-        public bool CanVentContamination(out string failReason)
-        {
-            MapComponent_AbyssalCircleInstability instability = GetInstabilityMapComponent();
-            if (instability == null)
-            {
-                failReason = "ABY_CircleVentFail_NoCircle".Translate();
-                return false;
-            }
-
-            return instability.CanVent(this, out failReason);
-        }
-
-        public bool TryVentContamination(out string failReason)
-        {
-            MapComponent_AbyssalCircleInstability instability = GetInstabilityMapComponent();
-            if (instability == null)
-            {
-                failReason = "ABY_CircleVentFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (!instability.TryVent(this, out float removed, out failReason))
-            {
-                return false;
-            }
-
-            instabilityHeat = Mathf.Clamp01(instabilityHeat + AbyssalCircleInstabilityUtility.GetVentHeatKick(this));
-            RefreshContainmentCache(true);
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.11f);
-            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
-            Messages.Message("ABY_CircleVentSuccess".Translate(Mathf.RoundToInt(removed * 100f)), this, MessageTypeDefOf.TaskCompletion, false);
-            return true;
-        }
-
-        private MapComponent_AbyssalCircleInstability GetInstabilityMapComponent()
-        {
-            return Map?.GetComponent<MapComponent_AbyssalCircleInstability>();
-        }
-
-        private void TryTriggerInstabilityEvent()
-        {
-            if (Map == null)
-            {
-                return;
-            }
-
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (ticksGame - lastInstabilityEventTick < 2500)
-            {
-                return;
-            }
-
-            float contamination = ResidualContamination;
-            float chance = 0f;
-            if (instabilityHeat + contamination * 0.35f >= 0.82f)
-            {
-                chance = 0.36f + contamination * 0.08f;
-            }
-            else if (instabilityHeat + contamination * 0.25f >= 0.58f)
-            {
-                chance = 0.20f + contamination * 0.06f;
-            }
-
-            chance *= AbyssalCircleInstabilityUtility.GetInstabilityEventChanceMultiplier(this);
-            if (chance <= 0f || !Rand.Chance(chance))
-            {
-                return;
-            }
-
-            lastInstabilityEventTick = ticksGame;
-            if (instabilityHeat >= 0.82f && Rand.Chance(Mathf.Lerp(0.34f, 0.44f, Mathf.InverseLerp(0.82f, 1f, instabilityHeat))) && TrySpawnInstabilityImpSpill())
-            {
-                instabilityHeat = Mathf.Clamp01(instabilityHeat + 0.05f);
-                return;
-            }
-
-            DoContainmentLash();
-        }
-
-        private void DoContainmentLash()
-        {
-            float damageAmount = Mathf.Lerp(7f, 16f, Mathf.InverseLerp(0.58f, 1f, instabilityHeat + ResidualContamination * 0.20f));
-            damageAmount *= AbyssalCircleInstabilityUtility.GetInstabilityEventSeverityMultiplier(this);
-            TakeDamage(new DamageInfo(DamageDefOf.Flame, damageAmount));
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.10f);
-            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
-            Messages.Message("ABY_CircleInstability_Lash".Translate(Mathf.RoundToInt(damageAmount)), this, MessageTypeDefOf.NegativeHealthEvent, false);
-        }
-
-        private bool TrySpawnInstabilityImpSpill()
-        {
-            PawnKindDef impKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
-            Faction faction = pendingFaction ?? AbyssalBossSummonUtility.ResolveHostileFaction();
-            if (impKindDef == null || faction == null)
-            {
-                return false;
-            }
-
-            int count = Mathf.Max(1, AbyssalCircleInstabilityUtility.GetProjectedImpSpillCount(this, AbyssalSummoningConsoleUtility.GetRitualById(pendingRitualId)));
-            List<Pawn> spawned = new List<Pawn>();
-            for (int i = 0; i < count; i++)
-            {
-                if (!CellFinder.TryFindRandomCellNear(RitualFocusCell, Map, 6, c => c.Standable(Map) && !c.Fogged(Map), out IntVec3 cell))
-                {
-                    continue;
-                }
-
-                if (!ABY_Phase2PortalUtility.TryGenerateImp(impKindDef, faction, Map, out Pawn imp))
-                {
-                    continue;
-                }
-
-                GenSpawn.Spawn(imp, cell, Map, Rot4.Random);
-                spawned.Add(imp);
-                ABY_Phase2PortalUtility.GiveAssaultLord(imp);
-            }
-
-            if (spawned.Count == 0)
-            {
-                return false;
-            }
-
-            ArchonInfernalVFXUtility.DoSummonVFX(Map, spawned[0].Position);
-            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", spawned[0].Position, Map);
-            Messages.Message("ABY_CircleInstability_ImpSpill".Translate(spawned.Count), this, MessageTypeDefOf.ThreatSmall, false);
-            return true;
         }
 
         private void ResetRitual()

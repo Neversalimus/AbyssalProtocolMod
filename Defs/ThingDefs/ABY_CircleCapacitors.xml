@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_AshboundCapacitorModule</defName>
+    <label>ashbound capacitor module</label>
+    <description>A crude furnace-hearted abyssal capacitor wrapped in black alloy clamps and insulated rune fins. It provides the first stable charge buffer for a summoning circle and is intended for early priming rather than true overchannel work.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_AshboundCapacitorModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>5</stackLimit>
+    <statBases>
+      <MarketValue>210</MarketValue>
+      <Mass>1.10</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
+        <tier>1</tier>
+        <chargeCapacity>60</chargeCapacity>
+        <throughput>18</throughput>
+        <chargeRatePerSecond>0.80</chargeRatePerSecond>
+        <surgeTolerance>0.20</surgeTolerance>
+        <passiveLeakage>0.00</passiveLeakage>
+        <allowCoreBay>true</allowCoreBay>
+        <allowAuxiliaryBay>true</allowAuxiliaryBay>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>35</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_RiftCapacitorModule</defName>
+    <label>rift capacitor module</label>
+    <description>An interlocked phase-capacitor with nested infernal coils and a restrained rift chamber. It holds more charge than ashbound hardware and can feed sustained summon loads without immediately collapsing into raw overdraw.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_RiftCapacitorModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>5</stackLimit>
+    <statBases>
+      <MarketValue>440</MarketValue>
+      <Mass>1.35</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
+        <tier>2</tier>
+        <chargeCapacity>120</chargeCapacity>
+        <throughput>34</throughput>
+        <chargeRatePerSecond>1.35</chargeRatePerSecond>
+        <surgeTolerance>0.42</surgeTolerance>
+        <passiveLeakage>0.03</passiveLeakage>
+        <allowCoreBay>true</allowCoreBay>
+        <allowAuxiliaryBay>true</allowAuxiliaryBay>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>80</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_CrownCondenserModule</defName>
+    <label>crown condenser module</label>
+    <description>A high-tier abyssal condenser built around a crown lattice, pressure-shunted cooling plates, and a tightly collared infernal core. It is meant for boss-grade ritual throughput and stores enough hostile charge to make the circle feel truly armed.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_CrownCondenserModule</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>5</stackLimit>
+    <statBases>
+      <MarketValue>820</MarketValue>
+      <Mass>1.55</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
+        <tier>3</tier>
+        <chargeCapacity>220</chargeCapacity>
+        <throughput>58</throughput>
+        <chargeRatePerSecond>1.90</chargeRatePerSecond>
+        <surgeTolerance>0.70</surgeTolerance>
+        <passiveLeakage>0.08</passiveLeakage>
+        <allowCoreBay>true</allowCoreBay>
+        <allowAuxiliaryBay>true</allowAuxiliaryBay>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>145</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
