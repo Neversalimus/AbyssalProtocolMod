@@ -8,18 +8,30 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public class Building_AbyssalForge : Building_WorkTable
     {
-        private const string CoreTexPath = "Things/Building/ABY_AbyssalForge_CoreOverlay";
+        private const string ReactorTexPath = "Things/Building/ABY_AbyssalForge_CoreOverlay";
         private const string GlowTexPath = "Things/Building/ABY_AbyssalForge_GlowOverlay";
+        private const string RuneSweepTexPath = "Things/Building/ABY_AbyssalForge_RuneSweepOverlay";
+        private const string VentGlowTexPath = "Things/Building/ABY_AbyssalForge_VentGlowOverlay";
+        private const string SparkTexPath = "Things/Building/ABY_AbyssalForge_SparkOverlay";
 
-        private const float CoreAltitude = 0.031f;
-        private const float GlowAltitude = 0.029f;
-        private const float HoverAmplitude = 0.0105f;
-        private const float HoverSpeed = 0.036f;
-        private const float PulseSpeed = 0.064f;
-        private const float SecondaryPulseSpeed = 0.111f;
+        private const float ReactorAltitude = 0.036f;
+        private const float GlowAltitude = 0.031f;
+        private const float RuneAltitude = 0.043f;
+        private const float VentAltitude = 0.0335f;
+        private const float SparkAltitude = 0.0445f;
 
-        private static readonly Vector2 CoreSize = new Vector2(1.12f, 1.12f);
-        private static readonly Vector2 GlowSize = new Vector2(1.70f, 1.32f);
+        private const float HoverAmplitude = 0.012f;
+        private const float HoverSpeed = 0.032f;
+        private const float ReactorPulseSpeed = 0.061f;
+        private const float SecondaryPulseSpeed = 0.109f;
+        private const float SweepSpeed = 0.0175f;
+        private const float SparkSpeed = 0.083f;
+
+        private static readonly Vector2 ReactorSize = new Vector2(2.24f, 1.98f);
+        private static readonly Vector2 GlowSize = new Vector2(5.20f, 2.34f);
+        private static readonly Vector2 RuneSize = new Vector2(4.28f, 0.82f);
+        private static readonly Vector2 VentSize = new Vector2(6.06f, 1.62f);
+        private static readonly Vector2 SparkSize = new Vector2(2.90f, 1.16f);
 
         public MapComponent_AbyssalForgeProgress ProgressComponent => Map?.GetComponent<MapComponent_AbyssalForgeProgress>();
         public bool IsPowerActive => GetComp<CompPowerTrader>()?.PowerOn ?? true;
@@ -38,7 +50,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            DrawAnimatedCore(drawLoc);
+            DrawAnimatedSuperstructure(drawLoc);
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -100,7 +112,7 @@ namespace AbyssalProtocol
             List<string> lines = new List<string>();
             if (!string.IsNullOrWhiteSpace(baseString))
             {
-                lines.Add(baseString.TrimEnd(new char[] { '\r', '\n' }));
+                lines.Add(baseString.TrimEnd('\r', '\n'));
             }
 
             MapComponent_AbyssalForgeProgress progress = ProgressComponent;
@@ -138,51 +150,80 @@ namespace AbyssalProtocol
             }));
         }
 
-        private void DrawAnimatedCore(Vector3 drawLoc)
+        private void DrawAnimatedSuperstructure(Vector3 drawLoc)
         {
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float seed = thingIDNumber * 0.01429f;
             bool powered = IsPowerActive;
-            float workBoost = (BillStack != null && BillStack.Bills != null && BillStack.Bills.Count > 0) ? 0.08f : 0f;
-            float powerFactor = powered ? 1f : 0.22f;
+            bool activeBills = BillStack != null && BillStack.Bills != null && BillStack.Bills.Count > 0;
+            float workBoost = activeBills ? 0.12f : 0f;
+            float powerFactor = powered ? 1f : 0.18f;
+            float attunementFactor = Mathf.Clamp01((ProgressComponent?.GetCurrentAttunementTier(false) ?? 0) / 50f);
 
-            float pulse = (Mathf.Sin(ticks * PulseSpeed + seed) + 1f) * 0.5f;
-            float secondary = (Mathf.Sin(ticks * SecondaryPulseSpeed + 0.9f + seed) + 1f) * 0.5f;
+            float reactorPulse = (Mathf.Sin(ticks * ReactorPulseSpeed + seed) + 1f) * 0.5f;
+            float secondary = (Mathf.Sin(ticks * SecondaryPulseSpeed + seed + 0.8f) + 1f) * 0.5f;
             float hover = Mathf.Sin(ticks * HoverSpeed + seed) * HoverAmplitude;
+            float sweep = Mathf.Sin(ticks * SweepSpeed + seed) * 0.11f;
+            float sparkPulse = (Mathf.Sin(ticks * SparkSpeed + seed + 1.7f) + 1f) * 0.5f;
 
-            float coreScale = Mathf.Lerp(0.94f, 1.08f + workBoost, pulse) * powerFactor;
-            float glowScale = Mathf.Lerp(0.92f, 1.20f + workBoost, secondary) * powerFactor;
-            float rotation = Mathf.Sin(ticks * 0.012f + seed) * 3.4f;
-            float inverseRotation = -rotation * 0.55f;
+            float reactorScale = Mathf.Lerp(0.94f, 1.16f + workBoost + attunementFactor * 0.08f, reactorPulse) * powerFactor;
+            float glowScale = Mathf.Lerp(0.94f, 1.12f + workBoost + attunementFactor * 0.06f, secondary) * powerFactor;
+            float ventScale = Mathf.Lerp(0.98f, 1.06f + workBoost * 0.5f, reactorPulse) * powerFactor;
+            float runeScale = Mathf.Lerp(0.98f, 1.04f + attunementFactor * 0.04f, secondary) * powerFactor;
+            float sparkScale = Mathf.Lerp(0.94f, 1.06f + workBoost, sparkPulse) * powerFactor;
 
             Vector3 center = drawLoc;
-            center.z += 0.010f;
+            center.z += 0.014f;
             center.y += hover;
+
+            DrawLayer(
+                VentGlowTexPath,
+                new Vector3(center.x, center.y + VentAltitude, center.z),
+                VentSize * ventScale,
+                Mathf.Sin(ticks * 0.011f + seed) * 0.6f,
+                new Color(1f, 0.34f, 0.11f, Mathf.Lerp(0.12f, 0.26f, reactorPulse) * powerFactor),
+                true);
 
             DrawLayer(
                 GlowTexPath,
                 new Vector3(center.x, center.y + GlowAltitude, center.z),
                 GlowSize * glowScale,
-                inverseRotation,
-                new Color(1f, 0.43f, 0.17f, Mathf.Lerp(0.18f, 0.42f, secondary) * powerFactor),
+                Mathf.Sin(ticks * 0.009f + seed) * 0.8f,
+                new Color(1f, 0.38f, 0.13f, Mathf.Lerp(0.18f, 0.34f, secondary) * powerFactor),
                 true);
 
             DrawLayer(
-                CoreTexPath,
-                new Vector3(center.x, center.y + CoreAltitude, center.z),
-                CoreSize * coreScale,
-                rotation,
-                new Color(1f, 0.80f, 0.62f, Mathf.Lerp(0.62f, 0.96f, pulse) * powerFactor),
+                ReactorTexPath,
+                new Vector3(center.x, center.y + ReactorAltitude, center.z),
+                ReactorSize * reactorScale,
+                Mathf.Sin(ticks * 0.014f + seed) * 4.6f,
+                new Color(1f, 0.83f, 0.64f, Mathf.Lerp(0.60f, 0.98f, reactorPulse) * powerFactor),
+                true);
+
+            DrawLayer(
+                RuneSweepTexPath,
+                new Vector3(center.x + sweep, center.y + RuneAltitude, center.z),
+                RuneSize * runeScale,
+                Mathf.Sin(ticks * 0.0075f + seed) * 1.2f,
+                new Color(1f, 0.60f, 0.22f, Mathf.Lerp(0.12f, 0.32f, secondary) * powerFactor),
                 true);
 
             if (powered)
             {
                 DrawLayer(
+                    SparkTexPath,
+                    new Vector3(center.x + sweep * 0.35f, center.y + SparkAltitude, center.z),
+                    SparkSize * sparkScale,
+                    Mathf.Sin(ticks * 0.018f + seed) * 3.2f,
+                    new Color(1f, 0.74f, 0.46f, Mathf.Lerp(0.06f, 0.20f, sparkPulse)),
+                    true);
+
+                DrawLayer(
                     GlowTexPath,
-                    new Vector3(center.x, center.y + GlowAltitude + 0.001f, center.z),
-                    GlowSize * (glowScale * 0.86f),
-                    rotation * 1.4f,
-                    new Color(1f, 0.25f, 0.08f, Mathf.Lerp(0.10f, 0.24f, pulse)),
+                    new Vector3(center.x, center.y + GlowAltitude + 0.002f, center.z),
+                    GlowSize * (glowScale * 0.82f),
+                    -Mathf.Sin(ticks * 0.013f + seed) * 1.1f,
+                    new Color(1f, 0.22f, 0.07f, Mathf.Lerp(0.08f, 0.18f, reactorPulse + attunementFactor * 0.2f)),
                     true);
             }
         }
@@ -194,11 +235,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(
-                texPath,
-                postLight ? ShaderDatabase.TransparentPostLight : ShaderDatabase.Transparent,
-                color);
-
+            Material material = MaterialPool.MatFrom(texPath, postLight ? ShaderDatabase.TransparentPostLight : ShaderDatabase.Transparent, color);
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(size.x, 1f, size.y));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

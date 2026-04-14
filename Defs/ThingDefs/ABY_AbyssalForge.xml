@@ -4,7 +4,7 @@
   <ThingDef ParentName="BenchBase">
     <defName>ABY_AbyssalForge</defName>
     <label>abyssal forge</label>
-    <description>A living techno-demonic fabrication altar. The forge now doubles as a communion core: feed it abyssal residue to deepen map-wide attunement, unlock harsher fabrication patterns, and sustain a low infernal resonance across the colony while it remains active.</description>
+    <description>A cathedral-scale techno-demonic fabrication engine. The expanded forge houses an overclocked infernal reactor lattice, side crucibles, and abyssal conduit banks for residue communion, pattern unlocking, and late-tier weaponsmithing.</description>
 
     <thingClass>AbyssalProtocol.Building_AbyssalForge</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -12,40 +12,40 @@
     <graphicData>
       <texPath>Things/Building/ABY_AbyssalForge</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.22,1.18)</drawSize>
+      <drawSize>(6.20,2.22)</drawSize>
     </graphicData>
 
     <castEdgeShadows>false</castEdgeShadows>
-    <staticSunShadowHeight>0.03</staticSunShadowHeight>
+    <staticSunShadowHeight>0.05</staticSunShadowHeight>
     <constructEffect>ConstructMetal</constructEffect>
 
     <costList>
-      <Steel>180</Steel>
-      <Plasteel>55</Plasteel>
-      <ComponentIndustrial>4</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
+      <Steel>360</Steel>
+      <Plasteel>120</Plasteel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentSpacer>4</ComponentSpacer>
     </costList>
 
     <altitudeLayer>Building</altitudeLayer>
-    <fillPercent>0.18</fillPercent>
+    <fillPercent>0.24</fillPercent>
     <useHitPoints>True</useHitPoints>
 
     <statBases>
-      <WorkToBuild>7200</WorkToBuild>
-      <MaxHitPoints>320</MaxHitPoints>
-      <Flammability>0.08</Flammability>
-      <Cleanliness>-1.5</Cleanliness>
+      <WorkToBuild>15000</WorkToBuild>
+      <MaxHitPoints>520</MaxHitPoints>
+      <Flammability>0.06</Flammability>
+      <Cleanliness>-2.5</Cleanliness>
     </statBases>
 
-    <size>(3,1)</size>
+    <size>(6,2)</size>
     <designationCategory>Production</designationCategory>
     <uiOrder>2521</uiOrder>
     <passability>PassThroughOnly</passability>
-    <pathCost>28</pathCost>
+    <pathCost>36</pathCost>
     <hasInteractionCell>True</hasInteractionCell>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
-    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
     <minifiedDef IsNull="True" />
     <thingCategories Inherit="False" />
 
@@ -57,11 +57,11 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <shortCircuitInRain>true</shortCircuitInRain>
-        <basePowerConsumption>950</basePowerConsumption>
+        <basePowerConsumption>1650</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">
-        <glowRadius>4.1</glowRadius>
+        <glowRadius>6.1</glowRadius>
         <glowColor>(255,92,38,0)</glowColor>
       </li>
       <li Class="CompProperties_AffectedByFacilities">
