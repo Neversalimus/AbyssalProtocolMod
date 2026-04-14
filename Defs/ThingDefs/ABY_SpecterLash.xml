@@ -4,12 +4,13 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_SpecterLashProjector</defName>
     <label>specter lash projector</label>
-    <description>A residue-fed tether projector that binds an impact point into a writhing containment stream. Instead of a straight beam, the lash keeps lurching side to side and chews through a hostile target in repeated burn pulses.</description>
+    <description>A residue-fed tether projector that snaps an impact point into a writhing containment lash. On a solid hit the stream clings to the victim, weaving from side to side and burning through the target in repeated pulses instead of a single straight beam.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/ABY_SpecterLashProjector</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,0.46)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
@@ -18,11 +19,11 @@
       <WorkToMake>48000</WorkToMake>
       <Mass>4.7</Mass>
       <MarketValue>2850</MarketValue>
-      <AccuracyTouch>0.81</AccuracyTouch>
-      <AccuracyShort>0.77</AccuracyShort>
-      <AccuracyMedium>0.69</AccuracyMedium>
-      <AccuracyLong>0.56</AccuracyLong>
-      <RangedWeapon_Cooldown>2.65</RangedWeapon_Cooldown>
+      <AccuracyTouch>0.83</AccuracyTouch>
+      <AccuracyShort>0.79</AccuracyShort>
+      <AccuracyMedium>0.71</AccuracyMedium>
+      <AccuracyLong>0.58</AccuracyLong>
+      <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
     </statBases>
 
     <recipeMaker>
@@ -51,14 +52,14 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_SpecterLashAnchor</defaultProjectile>
-        <warmupTime>1.30</warmupTime>
+        <warmupTime>1.22</warmupTime>
         <range>28.9</range>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <burstShotCount>1</burstShotCount>
         <soundAiming>ABY_SpecterLashCharge</soundAiming>
         <soundCast>ABY_SpecterLashFire</soundCast>
         <soundCastTail>ABY_SpecterLashTail</soundCastTail>
-        <muzzleFlashScale>9.5</muzzleFlashScale>
+        <muzzleFlashScale>12.4</muzzleFlashScale>
       </li>
     </verbs>
 
@@ -88,14 +89,14 @@
     <graphicData>
       <texPath>Things/Projectile/ABY_SpecterLashAnchor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.26,0.56)</drawSize>
+      <drawSize>(0.14,0.26)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>8</damageAmountBase>
+      <damageAmountBase>6</damageAmountBase>
       <armorPenetrationBase>1.10</armorPenetrationBase>
-      <stoppingPower>0.55</stoppingPower>
-      <speed>80</speed>
+      <stoppingPower>0.45</stoppingPower>
+      <speed>120</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
