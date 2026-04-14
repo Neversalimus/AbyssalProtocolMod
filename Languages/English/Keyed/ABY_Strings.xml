@@ -16,7 +16,7 @@
   <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
 
   <ABY_FirstBossKillLabel>First boss destroyed</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald fragment analysis is now available, and the Abyssal Protocol loop can advance into Herald-grade integration.</ABY_FirstBossKillDesc>
+  
   <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>The fragment analysis path has been opened. Decode a recovered herald core fragment at a hi-tech research bench to unlock Herald weapon and implant research.</ABY_HeraldIntegrationUnlockedDesc>
 
@@ -52,71 +52,92 @@
   <ABY_SigilActivationStarted>Sigil activation started.</ABY_SigilActivationStarted>
   <ABY_SigilPlacementFailed>The sigil could not find a valid summoning circle.</ABY_SigilPlacementFailed>
 
-  <ABY_CircleTab_Label>console</ABY_CircleTab_Label>
-  <ABY_CircleConsoleTitle>infernal communion console</ABY_CircleConsoleTitle>
-  <ABY_CircleConsoleSubtitle>Threat-calibrated breach routing. Arm a prepared sigil, validate the circle, then let a colonist perform the invocation sequence.</ABY_CircleConsoleSubtitle>
-  <ABY_CircleConsoleSubtitleActive>Ritual active. Current phase: {0}.</ABY_CircleConsoleSubtitleActive>
-  <ABY_CircleTab_Subtitle>Compact ritual status and direct console access.</ABY_CircleTab_Subtitle>
-  <ABY_CircleTab_Hint>Use the main console for full ritual preview, readiness checks, and automated sigil assignment.</ABY_CircleTab_Hint>
-  <ABY_CircleTab_Footer>The circle remains a hostile endgame trigger. This console improves readability and control; it does not reduce ritual danger.</ABY_CircleTab_Footer>
+  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald-grade salvage is now flowing into your stockpiles. Keep feeding residue into an Abyssal Forge to deepen communion and unlock harsher patterns.</ABY_FirstBossKillDesc>
 
-  <ABY_CircleCommand_OpenConsole>Open summoning console</ABY_CircleCommand_OpenConsole>
-  <ABY_CircleCommand_OpenConsoleDesc>Open the full command console for ritual readiness, threat preview, and sigil assignment.</ABY_CircleCommand_OpenConsoleDesc>
-  <ABY_CircleCommand_AssignSigil>Assign sigil and begin invocation</ABY_CircleCommand_AssignSigil>
-  <ABY_CircleCommand_JumpToSigil>Jump to nearest sigil</ABY_CircleCommand_JumpToSigil>
+  <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
+  <ABY_ForgePanelHeader>Infernal communion lattice</ABY_ForgePanelHeader>
+  <ABY_ForgeProgressBar>{0} residue offered / next pattern at {1}</ABY_ForgeProgressBar>
+  <ABY_ForgeProgressComplete>{0} residue offered / all current patterns unlocked</ABY_ForgeProgressComplete>
+  <ABY_ForgeResidueAvailable>Residue available on map: {0}</ABY_ForgeResidueAvailable>
+  <ABY_ForgeAttunementState>Colony attunement: {0}</ABY_ForgeAttunementState>
+  <ABY_ForgeNextPattern>Next pattern at {0}: {1}</ABY_ForgeNextPattern>
+  <ABY_ForgeNextPatternDone>No further forge-gated patterns remain on this map.</ABY_ForgeNextPatternDone>
+  <ABY_ForgePowerOnline>Forge reactor: online</ABY_ForgePowerOnline>
+  <ABY_ForgePowerOffline>Forge reactor: offline — colony attunement is suspended</ABY_ForgePowerOffline>
+  <ABY_ForgeOfferTip>The forge consumes residue directly from spawned stacks anywhere on this map.</ABY_ForgeOfferTip>
+  <ABY_ForgeOfferHint>Offering residue is map-wide. Every threshold permanently unlocks new forge patterns for this map.</ABY_ForgeOfferHint>
+  <ABY_ForgeOfferAmount>Offer {0}</ABY_ForgeOfferAmount>
+  <ABY_ForgeOfferAll>Offer all ({0})</ABY_ForgeOfferAll>
+  <ABY_ForgeOfferNoneAvailable>No abyssal residue is available on this map right now.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>Offered {0} abyssal residue to the forge. Communion total: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeUnlockLetterLabel>Forge communion deepened ({0})</ABY_ForgeUnlockLetterLabel>
+  <ABY_ForgeUnlockLetterDesc>The Abyssal Forge has stabilized a deeper communion tier. Current attunement state: {1}. Newly unlocked patterns:
 
-  <ABY_CircleInspect_Sigils>Sigils on map: {0}</ABY_CircleInspect_Sigils>
-  <ABY_CircleInspect_Readiness>Readiness: {0}</ABY_CircleInspect_Readiness>
-  <ABY_CircleInspect_Risk>Risk: {0}</ABY_CircleInspect_Risk>
+{2}</ABY_ForgeUnlockLetterDesc>
+  <ABY_ForgeUnlockedSummary>{0} / {1} patterns unlocked in {2}</ABY_ForgeUnlockedSummary>
+  <ABY_ForgeUpcomingPatterns>Upcoming patterns</ABY_ForgeUpcomingPatterns>
+  <ABY_ForgeAllPatternsUnlocked>All currently defined patterns in this channel are unlocked.</ABY_ForgeAllPatternsUnlocked>
+  <ABY_ForgeNoUnlockedRecipes>No unlocked forge patterns are available in this category yet.</ABY_ForgeNoUnlockedRecipes>
+  <ABY_ForgeClipboardLocked>This bill cannot be pasted here yet. Its pattern is still locked by forge communion.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeNoFurtherUnlocks>all current patterns unlocked</ABY_ForgeNoFurtherUnlocks>
+  <ABY_ForgeCategory_All>All</ABY_ForgeCategory_All>
+  <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>
+  <ABY_ForgeCategory_Implants>Implants</ABY_ForgeCategory_Implants>
+  <ABY_ForgeCategory_Ritual>Ritual</ABY_ForgeCategory_Ritual>
+  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
+  <ABY_AttunementTier_0>dormant</ABY_AttunementTier_0>
+  <ABY_AttunementTier_1>faint attunement</ABY_AttunementTier_1>
+  <ABY_AttunementTier_2>stable attunement</ABY_AttunementTier_2>
+  <ABY_AttunementTier_3>deep attunement</ABY_AttunementTier_3>
+  <ABY_AttunementTier_4>crowned attunement</ABY_AttunementTier_4>
+  <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Feed abyssal residue into the forge to unlock new patterns and sustain colony attunement.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeInspectResidue>Forge communion: {0} offered / {1} available on map</ABY_ForgeInspectResidue>
+  <ABY_ForgeInspectNextUnlock>Next pattern at {0}: {1}</ABY_ForgeInspectNextUnlock>
+  <ABY_ForgeInspectAllKnown>All currently defined forge patterns are unlocked on this map.</ABY_ForgeInspectAllKnown>
+  <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
 
-  <ABY_CircleStatus_Power>Power</ABY_CircleStatus_Power>
-  <ABY_CircleStatus_Focus>Focus</ABY_CircleStatus_Focus>
-  <ABY_CircleStatus_Interaction>Access</ABY_CircleStatus_Interaction>
-  <ABY_CircleStatus_Sigils>Sigils</ABY_CircleStatus_Sigils>
-  <ABY_CircleStatus_Operators>Operators</ABY_CircleStatus_Operators>
-  <ABY_CircleStatus_Encounter>Encounter</ABY_CircleStatus_Encounter>
-  <ABY_CircleStatus_Online>online</ABY_CircleStatus_Online>
-  <ABY_CircleStatus_Offline>offline</ABY_CircleStatus_Offline>
-  <ABY_CircleStatus_Clear>clear</ABY_CircleStatus_Clear>
+  <ABY_ForgeOverviewSubtitle>Map-wide residue communion, pattern unlocking, and colony attunement control.</ABY_ForgeOverviewSubtitle>
+  <ABY_ForgeOverviewHint>Open the full console for pattern browsing and bill management.</ABY_ForgeOverviewHint>
+  <ABY_ForgeOpenConsole>Open communion console</ABY_ForgeOpenConsole>
+  <ABY_ForgeOpenConsoleLabel>Communion console</ABY_ForgeOpenConsoleLabel>
+  <ABY_ForgeOpenConsoleDesc>Open the stylized forge control console with residue offerings, pattern browser, and bill management.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeConsoleTitle>Infernal communion console</ABY_ForgeConsoleTitle>
+  <ABY_ForgeConsoleSubtitle>Ritual-industrial control surface for residue intake, attunement shaping, and pattern deployment.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeStatusHeader>Communion state</ABY_ForgeStatusHeader>
+  <ABY_ForgeOfferHeader>Offering well</ABY_ForgeOfferHeader>
+  <ABY_ForgeOfferHintShort>Map-wide intake. Patterns stay unlocked for this map.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeNextHeader>Pattern telemetry</ABY_ForgeNextHeader>
+  <ABY_ForgePreviewHint>Switch categories to narrow the channel. Locked patterns remain visible here so progression is easy to read.</ABY_ForgePreviewHint>
+  <ABY_ForgePreviewHintShort>Switch categories to narrow the channel. Locked patterns remain visible here for readability.</ABY_ForgePreviewHintShort>
+  <ABY_ForgeConsolePatternsHeader>Pattern browser</ABY_ForgeConsolePatternsHeader>
+  <ABY_ForgeConsoleBillsHeader>Queued fabrication</ABY_ForgeConsoleBillsHeader>
+  <ABY_ForgeProgressBand>{0} residue attuned • current band {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeMetricResidue>Residue attuned</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Residue on map</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricAttunement>Colony attunement</ABY_ForgeMetricAttunement>
+  <ABY_ForgeMetricPower>Reactor state</ABY_ForgeMetricPower>
+  <ABY_ForgePowerOnlineShort>online</ABY_ForgePowerOnlineShort>
+  <ABY_ForgePowerOfflineShort>offline</ABY_ForgePowerOfflineShort>
+  <ABY_ForgePatternUnlockedAt>Unlocked at {0} residue</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Locks until {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternAddBill>Add bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
 
-  <ABY_CircleRisk_Stable>stable</ABY_CircleRisk_Stable>
-  <ABY_CircleRisk_Strained>strained</ABY_CircleRisk_Strained>
-  <ABY_CircleRisk_Volatile>volatile</ABY_CircleRisk_Volatile>
-  <ABY_CircleRisk_Catastrophic>catastrophic</ABY_CircleRisk_Catastrophic>
-  <ABY_CircleReadinessSummary>{0} / {1} gates clear</ABY_CircleReadinessSummary>
-
-  <ABY_CirclePatternsHeader>Invocation patterns</ABY_CirclePatternsHeader>
-  <ABY_CircleControlHeader>Invocation control</ABY_CircleControlHeader>
-  <ABY_CircleControlState>Live breach state</ABY_CircleControlState>
-  <ABY_CircleStatusHeaderLong>Readiness breakdown</ABY_CircleStatusHeaderLong>
-  <ABY_CirclePreviewHeader>Ritual preview</ABY_CirclePreviewHeader>
-  <ABY_CirclePreviewHost>Likely host: {0}</ABY_CirclePreviewHost>
-  <ABY_CircleRewardsHeader>Reward vector</ABY_CircleRewardsHeader>
-  <ABY_CircleConsequencesHeader>Consequences and side effects</ABY_CircleConsequencesHeader>
-
-  <ABY_CircleReducedEffects>Reduced effects</ABY_CircleReducedEffects>
-  <ABY_CircleReducedEffectsDesc>Softens header sweeps, seal rotation, and other animated accents inside the summoning console.</ABY_CircleReducedEffectsDesc>
-
-  <ABY_CircleRitual_Archon_Label>Invoke Archon Beast</ABY_CircleRitual_Archon_Label>
-  <ABY_CircleRitual_Archon_Subtitle>First boss breach pattern</ABY_CircleRitual_Archon_Subtitle>
-  <ABY_CircleRitual_Archon_Desc>Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.</ABY_CircleRitual_Archon_Desc>
-  <ABY_CircleRitual_Archon_Rewards>• First-loop boss progression
-• Herald-grade follow-up access
-• Early abyssal loot and boss-side material gating</ABY_CircleRitual_Archon_Rewards>
-  <ABY_CircleRitual_Archon_SideEffects>• Opens a hostile breach on the current map
-• Can only proceed while the circle is powered and clear
-• Ritual phases intensify visuals, sound, and encounter pressure</ABY_CircleRitual_Archon_SideEffects>
-  <ABY_CircleRitualMeta>Sigils on map: {0}   •   Threat budget: {1}</ABY_CircleRitualMeta>
-
-  <ABY_CircleSelect>Select</ABY_CircleSelect>
-  <ABY_CircleSelected>Selected</ABY_CircleSelected>
-
-  <ABY_CircleConfirmInvocation>Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.</ABY_CircleConfirmInvocation>
-  <ABY_CircleAssignStarted>Invocation sequence assigned. A colonist is moving a sigil to the circle.</ABY_CircleAssignStarted>
-
-  <ABY_CircleConsoleFail_NoCircle>No valid summoning circle is available for console control.</ABY_CircleConsoleFail_NoCircle>
-  <ABY_CircleConsoleFail_NoSigil>No prepared archon sigil was found on the current map.</ABY_CircleConsoleFail_NoSigil>
-  <ABY_CircleConsoleFail_NoOperator>No suitable colonist is currently available to carry a sigil to the circle.</ABY_CircleConsoleFail_NoOperator>
-  <ABY_CircleConsoleFail_JobStart>The invocation order could not be started.</ABY_CircleConsoleFail_JobStart>
+  <ABY_ForgeOverviewSubtitleShort>Map-wide residue communion and pattern control.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewHintCompact>Open the full console for pattern browsing, costs, and bill control.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgePatternRequirementsLabel>Requirements</ABY_ForgePatternRequirementsLabel>
+  <ABY_ForgePatternNoMaterialData>No material cost data available.</ABY_ForgePatternNoMaterialData>
+  <ABY_ForgePatternRequirementsState>Materials on map</ABY_ForgePatternRequirementsState>
+  <ABY_ForgePatternMoreRequirements>+{0} more requirements</ABY_ForgePatternMoreRequirements>
+  <ABY_ForgePatternNew>NEW</ABY_ForgePatternNew>
+  <ABY_ForgeUnlockToast>New forge pattern stabilized: {0}</ABY_ForgeUnlockToast>
+  <ABY_ForgeReducedEffects>Reduced effects</ABY_ForgeReducedEffects>
+  <ABY_ForgeReducedEffectsDesc>Reduce sweep-lines, pulse intensity, and animated glow in the communion interface.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeReducedEffectsOn>Effects: reduced</ABY_ForgeReducedEffectsOn>
+  <ABY_ForgeReducedEffectsOff>Effects: full</ABY_ForgeReducedEffectsOff>
+  <ABY_ForgeAttunementEffectsHeader>Current colony attunement effects</ABY_ForgeAttunementEffectsHeader>
+  <ABY_ForgeAttunementTooltipSuspended>Attunement benefits are suspended while no powered Abyssal Forge is active.</ABY_ForgeAttunementTooltipSuspended>
 
 </LanguageData>
