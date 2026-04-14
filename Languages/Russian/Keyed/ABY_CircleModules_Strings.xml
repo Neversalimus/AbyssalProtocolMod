@@ -3,14 +3,48 @@
 
   <ABY_CircleInspect_Stabilizers>Кольцо стабилизаторов: занято слотов {0} / {1}</ABY_CircleInspect_Stabilizers>
 
-  <ABY_CircleModuleEdge_North>северный край</ABY_CircleModuleEdge_North>
-  <ABY_CircleModuleEdge_East>восточный край</ABY_CircleModuleEdge_East>
-  <ABY_CircleModuleEdge_South>южный край</ABY_CircleModuleEdge_South>
-  <ABY_CircleModuleEdge_West>западный край</ABY_CircleModuleEdge_West>
+  <ABY_CircleModuleEdge_North>северном краю</ABY_CircleModuleEdge_North>
+  <ABY_CircleModuleEdge_East>восточном краю</ABY_CircleModuleEdge_East>
+  <ABY_CircleModuleEdge_South>южном краю</ABY_CircleModuleEdge_South>
+  <ABY_CircleModuleEdge_West>западном краю</ABY_CircleModuleEdge_West>
 
-  <ABY_CircleModuleFail_NoModuleDef>Не передано определение модуля круга.</ABY_CircleModuleFail_NoModuleDef>
-  <ABY_CircleModuleFail_NotAModule>{0} не является допустимым модулем круга.</ABY_CircleModuleFail_NotAModule>
-  <ABY_CircleModuleFail_NoSlot>На стороне «{0}» нет слота для модуля.</ABY_CircleModuleFail_NoSlot>
-  <ABY_CircleModuleFail_SlotOccupied>На стороне «{0}» уже установлен модуль.</ABY_CircleModuleFail_SlotOccupied>
+  <ABY_CircleModulesHeader>Кольцо стабилизаторов</ABY_CircleModulesHeader>
+  <ABY_CircleModulesContainment>Контур</ABY_CircleModulesContainment>
+  <ABY_CircleModulesHeatDamping>Гашение нагрева</ABY_CircleModulesHeatDamping>
+  <ABY_CircleModulesResidue>Подавление осадка</ABY_CircleModulesResidue>
+  <ABY_CircleModulesAnomaly>Защита от срывов</ABY_CircleModulesAnomaly>
+
+  <ABY_CircleModuleTierLabel>Т{0}</ABY_CircleModuleTierLabel>
+  <ABY_CircleModuleSlotEmpty>{0}: слот пуст</ABY_CircleModuleSlotEmpty>
+  <ABY_CircleModuleSlotInstalled>{0}: {1} ({2})</ABY_CircleModuleSlotInstalled>
+
+  <ABY_CircleModuleCommand_Install>Вставить</ABY_CircleModuleCommand_Install>
+  <ABY_CircleModuleCommand_Remove>Снять</ABY_CircleModuleCommand_Remove>
+
+  <ABY_CircleModuleMenuOption>{0}  •  {1}  •  на карте: {2}</ABY_CircleModuleMenuOption>
+  <ABY_CircleModuleInstallQueued>{0} назначен в {1}.</ABY_CircleModuleInstallQueued>
+  <ABY_CircleModuleRemoveQueued>Снятие назначено для {0}.</ABY_CircleModuleRemoveQueued>
+  <ABY_CircleModuleInstallSuccess>{0} установлен на {1}.</ABY_CircleModuleInstallSuccess>
+  <ABY_CircleModuleRemoveSuccess>{0} снят с {1}.</ABY_CircleModuleRemoveSuccess>
+
+  <ABY_CircleModuleFail_NoModuleDef>Не передан корректный деф модуля круга.</ABY_CircleModuleFail_NoModuleDef>
+  <ABY_CircleModuleFail_NotAModule>{0} не является модулем круга.</ABY_CircleModuleFail_NotAModule>
+  <ABY_CircleModuleFail_NoSlot>На {0} нет слота для модуля.</ABY_CircleModuleFail_NoSlot>
+  <ABY_CircleModuleFail_SlotOccupied>{0} уже занят модулем.</ABY_CircleModuleFail_SlotOccupied>
+  <ABY_CircleModuleFail_SlotEmpty>{0} сейчас пуст.</ABY_CircleModuleFail_SlotEmpty>
+  <ABY_CircleModuleFail_Busy>Круг нельзя модифицировать во время активного ритуала.</ABY_CircleModuleFail_Busy>
+  <ABY_CircleModuleFail_NoAvailableModules>На карте не найдено ни одного стабилизатора.</ABY_CircleModuleFail_NoAvailableModules>
+  <ABY_CircleModuleFail_NoModuleThing>Нет доступного стабилизатора для установки.</ABY_CircleModuleFail_NoModuleThing>
+
+  <ABY_CircleStabilizerPattern_Open>Схема: кольцо открыто</ABY_CircleStabilizerPattern_Open>
+  <ABY_CircleStabilizerPattern_Partial>Схема: частичная решётка</ABY_CircleStabilizerPattern_Partial>
+  <ABY_CircleStabilizerPattern_Paired>Схема: парная решётка</ABY_CircleStabilizerPattern_Paired>
+  <ABY_CircleStabilizerPattern_FullRing>Схема: полное кольцо</ABY_CircleStabilizerPattern_FullRing>
+  <ABY_CircleStabilizerPattern_Symmetry>Схема: симметричное кольцо</ABY_CircleStabilizerPattern_Symmetry>
+
+  <ABY_CircleStabilizerContainmentValue>+{0}%</ABY_CircleStabilizerContainmentValue>
+  <ABY_CircleStabilizerHeatDampingValue>-{0}%</ABY_CircleStabilizerHeatDampingValue>
+  <ABY_CircleStabilizerResidueValue>-{0}%</ABY_CircleStabilizerResidueValue>
+  <ABY_CircleStabilizerAnomalyValue>-{0}%</ABY_CircleStabilizerAnomalyValue>
 
 </LanguageData>

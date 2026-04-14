@@ -10,4 +10,23 @@
     <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
   </JobDef>
 
+
+  <JobDef>
+    <defName>ABY_InstallCircleModule</defName>
+    <driverClass>AbyssalProtocol.JobDriver_InstallCircleModule</driverClass>
+    <reportString>installing a stabilizer module.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
+  </JobDef>
+
+  <JobDef>
+    <defName>ABY_RemoveCircleModule</defName>
+    <driverClass>AbyssalProtocol.JobDriver_RemoveCircleModule</driverClass>
+    <reportString>removing a stabilizer module.</reportString>
+    <casualInterruptible>true</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
+  </JobDef>
+
 </Defs>

@@ -453,6 +453,73 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TryAssignModuleInstall(Building_AbyssalSummoningCircle circle, Thing moduleThing, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            if (circle == null || moduleThing == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleModuleFail_NoModuleThing", "No valid stabilizer module is available for installation.");
+                return false;
+            }
+
+            if (!circle.CanInstallModule(moduleThing.def, edge, out failReason))
+            {
+                return false;
+            }
+
+            Pawn pawn = FindBestModuleOperator(circle, moduleThing, out failReason);
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            JobDef jobDef = DefDatabase<JobDef>.GetNamedSilentFail("ABY_InstallCircleModule");
+            if (jobDef == null)
+            {
+                failReason = "Missing JobDef: ABY_InstallCircleModule";
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(jobDef, moduleThing, circle);
+            job.count = 1;
+            job.targetC = new LocalTargetInfo(new IntVec3((int)edge, 0, 0));
+            pawn.jobs.TryTakeOrderedJob(job);
+            return true;
+        }
+
+        public static bool TryAssignModuleRemove(Building_AbyssalSummoningCircle circle, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            if (circle == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+                return false;
+            }
+
+            if (!circle.CanRemoveInstalledModule(edge, out failReason))
+            {
+                return false;
+            }
+
+            Pawn pawn = FindBestModuleOperator(circle, null, out failReason);
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            JobDef jobDef = DefDatabase<JobDef>.GetNamedSilentFail("ABY_RemoveCircleModule");
+            if (jobDef == null)
+            {
+                failReason = "Missing JobDef: ABY_RemoveCircleModule";
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(jobDef, circle);
+            job.targetC = new LocalTargetInfo(new IntVec3((int)edge, 0, 0));
+            pawn.jobs.TryTakeOrderedJob(job);
+            return true;
+        }
+
         public static Thing FindBestSigil(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
         {
             failReason = null;
@@ -528,6 +595,65 @@ namespace AbyssalProtocol
                 }
 
                 float score = pawn.PositionHeld.DistanceToSquared(sigil.PositionHeld);
+                if (pawn.Drafted)
+                {
+                    score += 4000f;
+                }
+                if (score < bestScore)
+                {
+                    best = pawn;
+                    bestScore = score;
+                }
+            }
+
+            if (best == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
+            }
+
+            return best;
+        }
+
+        public static Pawn FindBestModuleOperator(Building_AbyssalSummoningCircle circle, Thing moduleThing, out string failReason)
+        {
+            failReason = null;
+            if (circle?.Map == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
+                return null;
+            }
+
+            Pawn best = null;
+            float bestScore = float.MaxValue;
+            List<Pawn> pawns = circle.Map.mapPawns.FreeColonistsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.MapHeld != circle.Map || pawn.Dead || pawn.Downed || pawn.InMentalState)
+                {
+                    continue;
+                }
+
+                if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
+                {
+                    continue;
+                }
+
+                if (moduleThing != null && !pawn.CanReserveAndReach(moduleThing, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float score = pawn.PositionHeld.DistanceToSquared(circle.PositionHeld) * 0.25f;
+                if (moduleThing != null)
+                {
+                    score += pawn.PositionHeld.DistanceToSquared(moduleThing.PositionHeld);
+                }
                 if (pawn.Drafted)
                 {
                     score += 4000f;
@@ -783,6 +909,61 @@ namespace AbyssalProtocol
             }
 
             return TranslateOrFallback("ABY_CircleCooldownMinutesSeconds", "{0}m {1}s", minutes, remainder);
+        }
+
+        public static string GetStabilizerPatternSummary(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            string key = AbyssalCircleModuleUtility.GetPatternKey(summary);
+            string fallback;
+            switch (key)
+            {
+                case "ABY_CircleStabilizerPattern_Symmetry":
+                    fallback = "Pattern: symmetric ring";
+                    break;
+                case "ABY_CircleStabilizerPattern_FullRing":
+                    fallback = "Pattern: full ring";
+                    break;
+                case "ABY_CircleStabilizerPattern_Paired":
+                    fallback = "Pattern: paired lattice";
+                    break;
+                case "ABY_CircleStabilizerPattern_Partial":
+                    fallback = "Pattern: partial lattice";
+                    break;
+                default:
+                    fallback = "Pattern: open ring";
+                    break;
+            }
+
+            return TranslateOrFallback(key, fallback);
+        }
+
+        public static string GetStabilizerContainmentBonusDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt(summary.ContainmentBonus * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerContainmentValue", "+{0}%", percent);
+        }
+
+        public static string GetStabilizerHeatDampingDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.HeatMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerHeatDampingValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerResidueSuppressionDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.ContaminationMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerResidueValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerAnomalyShieldingDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.EventChanceMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerAnomalyValue", "-{0}%", percent);
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

@@ -8,9 +8,43 @@
   <ABY_CircleModuleEdge_South>south edge</ABY_CircleModuleEdge_South>
   <ABY_CircleModuleEdge_West>west edge</ABY_CircleModuleEdge_West>
 
+  <ABY_CircleModulesHeader>Stabilizer ring</ABY_CircleModulesHeader>
+  <ABY_CircleModulesContainment>Containment</ABY_CircleModulesContainment>
+  <ABY_CircleModulesHeatDamping>Heat damping</ABY_CircleModulesHeatDamping>
+  <ABY_CircleModulesResidue>Residue suppression</ABY_CircleModulesResidue>
+  <ABY_CircleModulesAnomaly>Anomaly shielding</ABY_CircleModulesAnomaly>
+
+  <ABY_CircleModuleTierLabel>T{0}</ABY_CircleModuleTierLabel>
+  <ABY_CircleModuleSlotEmpty>{0}: empty socket</ABY_CircleModuleSlotEmpty>
+  <ABY_CircleModuleSlotInstalled>{0}: {1} ({2})</ABY_CircleModuleSlotInstalled>
+
+  <ABY_CircleModuleCommand_Install>Install</ABY_CircleModuleCommand_Install>
+  <ABY_CircleModuleCommand_Remove>Remove</ABY_CircleModuleCommand_Remove>
+
+  <ABY_CircleModuleMenuOption>{0}  •  {1}  •  on map: {2}</ABY_CircleModuleMenuOption>
+  <ABY_CircleModuleInstallQueued>{0} assigned to the {1}.</ABY_CircleModuleInstallQueued>
+  <ABY_CircleModuleRemoveQueued>Removal assigned for the {0}.</ABY_CircleModuleRemoveQueued>
+  <ABY_CircleModuleInstallSuccess>{0} installed on the {1}.</ABY_CircleModuleInstallSuccess>
+  <ABY_CircleModuleRemoveSuccess>{0} removed from the {1}.</ABY_CircleModuleRemoveSuccess>
+
   <ABY_CircleModuleFail_NoModuleDef>No circle module definition was supplied.</ABY_CircleModuleFail_NoModuleDef>
   <ABY_CircleModuleFail_NotAModule>{0} is not a valid circle module.</ABY_CircleModuleFail_NotAModule>
   <ABY_CircleModuleFail_NoSlot>No module slot exists on the {0}.</ABY_CircleModuleFail_NoSlot>
   <ABY_CircleModuleFail_SlotOccupied>The {0} already has a module installed.</ABY_CircleModuleFail_SlotOccupied>
+  <ABY_CircleModuleFail_SlotEmpty>The {0} is empty.</ABY_CircleModuleFail_SlotEmpty>
+  <ABY_CircleModuleFail_Busy>The circle cannot be modified during an active ritual.</ABY_CircleModuleFail_Busy>
+  <ABY_CircleModuleFail_NoAvailableModules>No stabilizer modules were found on this map.</ABY_CircleModuleFail_NoAvailableModules>
+  <ABY_CircleModuleFail_NoModuleThing>No valid stabilizer module is available for installation.</ABY_CircleModuleFail_NoModuleThing>
+
+  <ABY_CircleStabilizerPattern_Open>Pattern: open ring</ABY_CircleStabilizerPattern_Open>
+  <ABY_CircleStabilizerPattern_Partial>Pattern: partial lattice</ABY_CircleStabilizerPattern_Partial>
+  <ABY_CircleStabilizerPattern_Paired>Pattern: paired lattice</ABY_CircleStabilizerPattern_Paired>
+  <ABY_CircleStabilizerPattern_FullRing>Pattern: full ring</ABY_CircleStabilizerPattern_FullRing>
+  <ABY_CircleStabilizerPattern_Symmetry>Pattern: symmetric ring</ABY_CircleStabilizerPattern_Symmetry>
+
+  <ABY_CircleStabilizerContainmentValue>+{0}%</ABY_CircleStabilizerContainmentValue>
+  <ABY_CircleStabilizerHeatDampingValue>-{0}%</ABY_CircleStabilizerHeatDampingValue>
+  <ABY_CircleStabilizerResidueValue>-{0}%</ABY_CircleStabilizerResidueValue>
+  <ABY_CircleStabilizerAnomalyValue>-{0}%</ABY_CircleStabilizerAnomalyValue>
 
 </LanguageData>

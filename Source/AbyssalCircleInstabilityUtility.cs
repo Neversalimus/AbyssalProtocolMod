@@ -27,19 +27,22 @@ namespace AbyssalProtocol
             }
 
             float attunementContribution = AbyssalForgeProgressUtility.GetSummoningInstabilityReduction(circle.Map);
-            return Mathf.Clamp(poweredContribution + healthContribution + attunementContribution, 0f, 0.32f);
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle.GetStabilizerBonusSummary();
+            float containment = poweredContribution + healthContribution + attunementContribution + moduleSummary.ContainmentBonus;
+            return Mathf.Clamp(containment, 0f, 0.54f);
         }
 
         public static float GetEffectiveContainment(Building_AbyssalSummoningCircle circle, float rawContainment)
         {
             float contamination = circle?.ResidualContamination ?? 0f;
-            float penalty = contamination * 0.12f;
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            float penalty = contamination * 0.12f * (moduleSummary.AnyInstalled ? moduleSummary.ContaminationPenaltyMultiplier : 1f);
             if (circle != null && circle.RitualActive)
             {
                 penalty += 0.02f;
             }
 
-            return Mathf.Clamp(rawContainment - penalty, 0f, 0.32f);
+            return Mathf.Clamp(rawContainment - penalty, 0f, 0.50f);
         }
 
         public static float GetProjectedHeatGain(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -48,8 +51,13 @@ namespace AbyssalProtocol
             float existingPressure = (circle?.InstabilityHeat ?? 0f) * 0.30f;
             float contaminationPressure = (circle?.ResidualContamination ?? 0f) * 0.12f;
             float containmentMitigation = (circle?.ContainmentRating ?? 0f) * 0.55f;
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
             float gain = baseGain + existingPressure + contaminationPressure - containmentMitigation;
-            return Mathf.Clamp(gain, 0.04f, 0.55f);
+            if (moduleSummary.AnyInstalled)
+            {
+                gain *= moduleSummary.HeatMultiplier;
+            }
+            return Mathf.Clamp(gain, 0.03f, 0.55f);
         }
 
         public static float GetProjectedPostInvokeHeat(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -66,7 +74,13 @@ namespace AbyssalProtocol
         {
             float baseGain = ritual?.ContaminationGain ?? 0.05f;
             float heatPressure = Mathf.Max(0f, (circle?.InstabilityHeat ?? 0f) - 0.35f) * 0.10f;
-            return Mathf.Clamp(baseGain + heatPressure, 0.03f, 0.28f);
+            float gain = baseGain + heatPressure;
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            if (moduleSummary.AnyInstalled)
+            {
+                gain *= moduleSummary.ContaminationMultiplier;
+            }
+            return Mathf.Clamp(gain, 0.02f, 0.28f);
         }
 
         public static float GetIdleDecayPerTick(Building_AbyssalSummoningCircle circle)
@@ -106,13 +120,25 @@ namespace AbyssalProtocol
                 return 0f;
             }
 
-            return Mathf.Clamp(0.004f + (heat - 0.42f) * 0.05f, 0.004f, 0.03f);
+            float amount = Mathf.Clamp(0.004f + (heat - 0.42f) * 0.05f, 0.004f, 0.03f);
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            if (moduleSummary.AnyInstalled)
+            {
+                amount *= moduleSummary.ContaminationMultiplier;
+            }
+            return Mathf.Clamp(amount, 0.002f, 0.03f);
         }
 
         public static float GetPurgeRemovedHeat(Building_AbyssalSummoningCircle circle)
         {
             float containment = circle?.ContainmentRating ?? 0f;
-            return Mathf.Clamp(0.18f + containment * 0.35f, 0.18f, 0.32f);
+            float removed = Mathf.Clamp(0.18f + containment * 0.35f, 0.18f, 0.32f);
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            if (moduleSummary.AnyInstalled)
+            {
+                removed *= moduleSummary.PurgeEfficiencyMultiplier;
+            }
+            return Mathf.Clamp(removed, 0.18f, 0.40f);
         }
 
         public static float GetPurgeBackwash(float removedHeat)
@@ -123,13 +149,32 @@ namespace AbyssalProtocol
         public static float GetVentRemovedContamination(Building_AbyssalSummoningCircle circle)
         {
             float contamination = circle?.ResidualContamination ?? 0f;
-            return Mathf.Clamp(0.16f + contamination * 0.18f, 0.12f, 0.32f);
+            float removed = Mathf.Clamp(0.16f + contamination * 0.18f, 0.12f, 0.32f);
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            if (moduleSummary.AnyInstalled)
+            {
+                removed *= moduleSummary.VentEfficiencyMultiplier;
+            }
+            return Mathf.Clamp(removed, 0.12f, 0.42f);
         }
 
         public static float GetVentHeatKick(Building_AbyssalSummoningCircle circle)
         {
             float contamination = circle?.ResidualContamination ?? 0f;
             return Mathf.Clamp(0.04f + contamination * 0.08f, 0.04f, 0.12f);
+        }
+
+
+        public static float GetInstabilityEventChanceMultiplier(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            return moduleSummary.AnyInstalled ? moduleSummary.EventChanceMultiplier : 1f;
+        }
+
+        public static float GetInstabilityEventSeverityMultiplier(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary moduleSummary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            return moduleSummary.AnyInstalled ? moduleSummary.EventSeverityMultiplier : 1f;
         }
 
         public static float GetRiskValue(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

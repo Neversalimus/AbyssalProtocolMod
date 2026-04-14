@@ -39,7 +39,7 @@ namespace AbyssalProtocol
             return normalized;
         }
 
-        public static AbyssalCircleModuleSlot GetSlot(List<AbyssalCircleModuleSlot> slots, AbyssalCircleModuleEdge edge)
+        public static AbyssalCircleModuleSlot GetSlot(IReadOnlyList<AbyssalCircleModuleSlot> slots, AbyssalCircleModuleEdge edge)
         {
             if (slots == null)
             {
@@ -58,7 +58,7 @@ namespace AbyssalProtocol
             return null;
         }
 
-        public static int CountInstalledModules(List<AbyssalCircleModuleSlot> slots, string requiredFamily = null)
+        public static int CountInstalledModules(IReadOnlyList<AbyssalCircleModuleSlot> slots, string requiredFamily = null)
         {
             if (slots == null)
             {
@@ -97,6 +97,18 @@ namespace AbyssalProtocol
         public static bool IsModuleThingDef(ThingDef thingDef)
         {
             return GetModuleExtension(thingDef) != null;
+        }
+
+        public static bool IsMatchingFamily(ThingDef thingDef, string requiredFamily)
+        {
+            DefModExtension_AbyssalCircleModule ext = GetModuleExtension(thingDef);
+            if (ext == null)
+            {
+                return false;
+            }
+
+            string family = ext.moduleFamily ?? DefModExtension_AbyssalCircleModule.StabilizerFamily;
+            return requiredFamily.NullOrEmpty() || string.Equals(family, requiredFamily);
         }
 
         public static Graphic GetSocketGraphic()
@@ -205,6 +217,237 @@ namespace AbyssalProtocol
             {
                 yield return OrderedEdges[i];
             }
+        }
+
+        public static AbyssalCircleStabilizerBonusSummary GetStabilizerBonusSummary(IReadOnlyList<AbyssalCircleModuleSlot> slots)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = new AbyssalCircleStabilizerBonusSummary
+            {
+                LowestTier = int.MaxValue,
+                HeatMultiplier = 1f,
+                ContaminationMultiplier = 1f,
+                ContaminationPenaltyMultiplier = 1f,
+                EventChanceMultiplier = 1f,
+                EventSeverityMultiplier = 1f,
+                PurgeEfficiencyMultiplier = 1f,
+                VentEfficiencyMultiplier = 1f
+            };
+
+            if (slots == null)
+            {
+                summary.LowestTier = 0;
+                return summary;
+            }
+
+            bool north = false;
+            bool south = false;
+            bool east = false;
+            bool west = false;
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                AbyssalCircleModuleSlot slot = slots[i];
+                if (slot == null || !slot.Occupied)
+                {
+                    continue;
+                }
+
+                ThingDef installedDef = slot.InstalledThingDef;
+                DefModExtension_AbyssalCircleModule ext = GetModuleExtension(installedDef);
+                if (ext == null || !IsMatchingFamily(installedDef, DefModExtension_AbyssalCircleModule.StabilizerFamily))
+                {
+                    continue;
+                }
+
+                summary.InstalledCount++;
+                summary.HighestTier = Mathf.Max(summary.HighestTier, ext.tier);
+                summary.LowestTier = Mathf.Min(summary.LowestTier, ext.tier);
+                summary.ContainmentBonus += Mathf.Max(0f, ext.containmentBonus) * 0.25f;
+                summary.HeatMultiplier *= Mathf.Clamp(ext.ritualHeatMultiplier, 0.82f, 1f);
+                summary.ContaminationMultiplier *= Mathf.Clamp(ext.contaminationMultiplier, 0.76f, 1f);
+                summary.PurgeEfficiencyMultiplier *= 1f + Mathf.Max(0, ext.tier - 1) * 0.015f;
+                summary.VentEfficiencyMultiplier *= 1f + ext.tier * 0.02f;
+
+                switch (slot.Edge)
+                {
+                    case AbyssalCircleModuleEdge.North:
+                        north = true;
+                        break;
+                    case AbyssalCircleModuleEdge.East:
+                        east = true;
+                        break;
+                    case AbyssalCircleModuleEdge.South:
+                        south = true;
+                        break;
+                    case AbyssalCircleModuleEdge.West:
+                        west = true;
+                        break;
+                }
+            }
+
+            if (summary.InstalledCount <= 0)
+            {
+                summary.LowestTier = 0;
+                summary.HighestTier = 0;
+                return summary;
+            }
+
+            summary.FullRing = summary.InstalledCount >= OrderedEdges.Length;
+            summary.UniformTier = summary.FullRing && summary.HighestTier == summary.LowestTier;
+            summary.OpposingPairs = 0;
+            if (north && south)
+            {
+                summary.OpposingPairs++;
+            }
+            if (east && west)
+            {
+                summary.OpposingPairs++;
+            }
+
+            if (summary.OpposingPairs > 0)
+            {
+                summary.ContainmentBonus += 0.015f * summary.OpposingPairs;
+                summary.HeatMultiplier *= Mathf.Pow(0.97f, summary.OpposingPairs);
+                summary.ContaminationMultiplier *= Mathf.Pow(0.96f, summary.OpposingPairs);
+                summary.ContaminationPenaltyMultiplier *= Mathf.Pow(0.95f, summary.OpposingPairs);
+                summary.EventChanceMultiplier *= Mathf.Pow(0.94f, summary.OpposingPairs);
+                summary.EventSeverityMultiplier *= Mathf.Pow(0.95f, summary.OpposingPairs);
+            }
+
+            if (summary.FullRing)
+            {
+                summary.ContainmentBonus += 0.03f;
+                summary.HeatMultiplier *= 0.95f;
+                summary.ContaminationMultiplier *= 0.92f;
+                summary.ContaminationPenaltyMultiplier *= 0.90f;
+                summary.EventChanceMultiplier *= 0.90f;
+                summary.EventSeverityMultiplier *= 0.92f;
+                summary.PurgeEfficiencyMultiplier *= 1.06f;
+                summary.VentEfficiencyMultiplier *= 1.08f;
+            }
+
+            if (summary.UniformTier)
+            {
+                float tierFactor = summary.HighestTier;
+                summary.ContainmentBonus += 0.015f + tierFactor * 0.006f;
+                summary.HeatMultiplier *= Mathf.Lerp(0.985f, 0.93f, (tierFactor - 1f) / 2f);
+                summary.ContaminationMultiplier *= Mathf.Lerp(0.97f, 0.86f, (tierFactor - 1f) / 2f);
+                summary.ContaminationPenaltyMultiplier *= Mathf.Lerp(0.96f, 0.82f, (tierFactor - 1f) / 2f);
+                summary.EventChanceMultiplier *= Mathf.Lerp(0.96f, 0.84f, (tierFactor - 1f) / 2f);
+                summary.EventSeverityMultiplier *= Mathf.Lerp(0.97f, 0.85f, (tierFactor - 1f) / 2f);
+                summary.PurgeEfficiencyMultiplier *= 1f + tierFactor * 0.03f;
+                summary.VentEfficiencyMultiplier *= 1f + tierFactor * 0.04f;
+            }
+
+            summary.ContainmentBonus = Mathf.Clamp(summary.ContainmentBonus, 0f, 0.34f);
+            summary.HeatMultiplier = Mathf.Clamp(summary.HeatMultiplier, 0.60f, 1f);
+            summary.ContaminationMultiplier = Mathf.Clamp(summary.ContaminationMultiplier, 0.50f, 1f);
+            summary.ContaminationPenaltyMultiplier = Mathf.Clamp(summary.ContaminationPenaltyMultiplier, 0.50f, 1f);
+            summary.EventChanceMultiplier = Mathf.Clamp(summary.EventChanceMultiplier, 0.58f, 1f);
+            summary.EventSeverityMultiplier = Mathf.Clamp(summary.EventSeverityMultiplier, 0.70f, 1f);
+            summary.PurgeEfficiencyMultiplier = Mathf.Clamp(summary.PurgeEfficiencyMultiplier, 1f, 1.28f);
+            summary.VentEfficiencyMultiplier = Mathf.Clamp(summary.VentEfficiencyMultiplier, 1f, 1.34f);
+            return summary;
+        }
+
+        public static string GetPatternKey(AbyssalCircleStabilizerBonusSummary summary)
+        {
+            if (!summary.AnyInstalled)
+            {
+                return "ABY_CircleStabilizerPattern_Open";
+            }
+
+            if (summary.UniformTier)
+            {
+                return "ABY_CircleStabilizerPattern_Symmetry";
+            }
+
+            if (summary.FullRing)
+            {
+                return "ABY_CircleStabilizerPattern_FullRing";
+            }
+
+            if (summary.OpposingPairs > 0)
+            {
+                return "ABY_CircleStabilizerPattern_Paired";
+            }
+
+            return "ABY_CircleStabilizerPattern_Partial";
+        }
+
+        public static string GetTierLabel(ThingDef thingDef)
+        {
+            DefModExtension_AbyssalCircleModule ext = GetModuleExtension(thingDef);
+            if (ext == null)
+            {
+                return "-";
+            }
+
+            return "ABY_CircleModuleTierLabel".Translate(ext.tier);
+        }
+
+        public static List<Thing> GetBestAvailableModuleCandidates(Building_AbyssalSummoningCircle circle, string requiredFamily = null)
+        {
+            List<Thing> results = new List<Thing>();
+            if (circle?.Map == null)
+            {
+                return results;
+            }
+
+            Dictionary<ThingDef, Thing> bestByDef = new Dictionary<ThingDef, Thing>();
+            Dictionary<ThingDef, float> bestScoreByDef = new Dictionary<ThingDef, float>();
+            List<Thing> allThings = circle.Map.listerThings.AllThings;
+            for (int i = 0; i < allThings.Count; i++)
+            {
+                Thing thing = allThings[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned || thing.MapHeld != circle.Map)
+                {
+                    continue;
+                }
+
+                if (!IsMatchingFamily(thing.def, requiredFamily))
+                {
+                    continue;
+                }
+
+                float score = thing.PositionHeld.DistanceToSquared(circle.PositionHeld);
+                if (!bestByDef.TryGetValue(thing.def, out Thing currentBest) || score < bestScoreByDef[thing.def])
+                {
+                    bestByDef[thing.def] = thing;
+                    bestScoreByDef[thing.def] = score;
+                }
+            }
+
+            foreach (Thing candidate in bestByDef.Values)
+            {
+                results.Add(candidate);
+            }
+
+            results.SortBy(t => GetModuleExtension(t.def)?.tier ?? 0);
+            return results;
+        }
+
+        public static int CountAvailableModules(Map map, ThingDef thingDef)
+        {
+            if (map == null || thingDef == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            List<Thing> allThings = map.listerThings.AllThings;
+            for (int i = 0; i < allThings.Count; i++)
+            {
+                Thing thing = allThings[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned || thing.MapHeld != map || thing.def != thingDef)
+                {
+                    continue;
+                }
+
+                count += Mathf.Max(1, thing.stackCount);
+            }
+
+            return count;
         }
     }
 }
