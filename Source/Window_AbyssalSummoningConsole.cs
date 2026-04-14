@@ -250,15 +250,17 @@ namespace AbyssalProtocol
             float summaryY = rowsY + rowIndex * (rowHeight + 4f) + 6f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 16f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetSupportDetailText(report));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x, summaryY + 18f, rect.width, 16f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 34f, rect.width, 16f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 50f, rect.width, 16f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 66f, rect.width, 16f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 82f, rect.width, 16f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 44f, rect.width, 16f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 60f, rect.width, 16f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 76f, rect.width, 16f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 92f, rect.width, 16f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 108f, rect.width, 16f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 124f, rect.width, 16f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY + 102f, rect.width, 34f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
-            Widgets.Label(new Rect(rect.x, summaryY + 136f, rect.width, rect.height - (summaryY - rect.y) - 136f), "ABY_CapacitorPanel_Hint".Translate());
+            Widgets.Label(new Rect(rect.x, summaryY + 144f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
+            Widgets.Label(new Rect(rect.x, summaryY + 172f, rect.width, rect.height - (summaryY - rect.y) - 172f), "ABY_CapacitorPanel_Hint".Translate());
             GUI.color = Color.white;
         }
 

@@ -296,6 +296,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback("ABY_CapacitorChargeState_NoLattice", "no lattice");
             }
 
+            if (circle.CapacitorRecovering && circle.StoredCapacitorCharge + 0.5f < capacity)
+            {
+                return TranslateOrFallback("ABY_CapacitorChargeState_Recovering", "recovering");
+            }
+
             float fill = Mathf.Clamp01(circle.StoredCapacitorCharge / capacity);
             if (fill <= 0.01f)
             {
@@ -465,6 +470,17 @@ namespace AbyssalProtocol
             }
 
             return TranslateOrFallback("ABY_CapacitorCompactActive", "Capacitors: {0} fitted • {1}", circle.GetInstalledCapacitorCount(), GetChargeReadout(circle));
+        }
+
+        public static string GetRecoverySummary(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null || !circle.CapacitorRecovering)
+            {
+                return TranslateOrFallback("ABY_CapacitorRecovery_None", "stable");
+            }
+
+            int seconds = Mathf.CeilToInt(circle.CapacitorRecoveryTicksRemaining / 60f);
+            return TranslateOrFallback("ABY_CapacitorRecovery_Readout", "~{0}s", seconds);
         }
 
         private static Thing FindBestAvailableThingOfDef(Building_AbyssalSummoningCircle circle, ThingDef def)

@@ -18,16 +18,24 @@
 
   <ABY_CapacitorChargeState_NoLattice>no lattice</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>dormant</ABY_CapacitorChargeState_Dormant>
+  <ABY_CapacitorChargeState_Recovering>recovering</ABY_CapacitorChargeState_Recovering>
   <ABY_CapacitorChargeState_Priming>priming</ABY_CapacitorChargeState_Priming>
   <ABY_CapacitorChargeState_Charged>charged</ABY_CapacitorChargeState_Charged>
   <ABY_CapacitorChargeState_Saturated>saturated</ABY_CapacitorChargeState_Saturated>
 
   <ABY_CapacitorCompact>Capacitors: no lattice</ABY_CapacitorCompact>
   <ABY_CapacitorCompactActive>Capacitors: {0} fitted • {1}</ABY_CapacitorCompactActive>
+  <ABY_CapacitorRecovery_None>stable</ABY_CapacitorRecovery_None>
+  <ABY_CapacitorRecovery_Readout>~{0}s</ABY_CapacitorRecovery_Readout>
 
   <ABY_CapacitorPanel_Header>Capacitor lattice</ABY_CapacitorPanel_Header>
   <ABY_CapacitorPanel_State>State</ABY_CapacitorPanel_State>
-    <ABY_CapacitorPanel_Hint>Capacitors now gate ritual startup buffer, total reserve and throughput. Stronger lattices charge faster, smooth grid spikes and reduce the chance that a supported ritual slips into a dirty power state.</ABY_CapacitorPanel_Hint>
+  <ABY_CapacitorPanel_Startup>Startup</ABY_CapacitorPanel_Startup>
+  <ABY_CapacitorPanel_Reserve>Reserve</ABY_CapacitorPanel_Reserve>
+  <ABY_CapacitorPanel_Feed>Feed</ABY_CapacitorPanel_Feed>
+  <ABY_CapacitorPanel_Grid>Grid smoothing</ABY_CapacitorPanel_Grid>
+  <ABY_CapacitorPanel_Flow>Charge flow</ABY_CapacitorPanel_Flow>
+  <ABY_CapacitorPanel_Hint>Capacitors now gate ritual startup buffer, total reserve and throughput. Stronger lattices charge faster, recover more cleanly after an invocation and reduce the chance that a supported ritual slips into a dirty power state.</ABY_CapacitorPanel_Hint>
 
   <ABY_CapacitorCommand_Install>Install</ABY_CapacitorCommand_Install>
   <ABY_CapacitorCommand_Remove>Remove</ABY_CapacitorCommand_Remove>
@@ -44,6 +52,10 @@
   <ABY_CapacitorFail_NoBay>The summoning circle does not expose a valid capacitor bay.</ABY_CapacitorFail_NoBay>
   <ABY_CapacitorFail_BayOccupied>{0} is already occupied.</ABY_CapacitorFail_BayOccupied>
   <ABY_CapacitorFail_NoInstalled>{0} has no installed capacitor.</ABY_CapacitorFail_NoInstalled>
+  <ABY_CapacitorFail_NoLattice>This ritual requires an installed capacitor lattice.</ABY_CapacitorFail_NoLattice>
+  <ABY_CapacitorFail_Startup>Insufficient startup buffer: {0} / {1}</ABY_CapacitorFail_Startup>
+  <ABY_CapacitorFail_Reserve>Insufficient charge reserve: {0} / {1}</ABY_CapacitorFail_Reserve>
+  <ABY_CapacitorFail_Throughput>Insufficient capacitor throughput: {0} / {1}</ABY_CapacitorFail_Throughput>
 
   <ABY_CapacitorSlotRow_Empty>{0}: empty</ABY_CapacitorSlotRow_Empty>
   <ABY_CapacitorSlotRow_Installed>{0}: {1} • {2}</ABY_CapacitorSlotRow_Installed>
@@ -52,11 +64,8 @@
 Tier: {1}
 Capacity: {2}
 Throughput: {3}
-Charge rate: {4}/s</ABY_CapacitorBayTooltip_Filled>
-  <ABY_CapacitorPanel_Startup>Startup</ABY_CapacitorPanel_Startup>
-  <ABY_CapacitorPanel_Reserve>Reserve</ABY_CapacitorPanel_Reserve>
-  <ABY_CapacitorPanel_Feed>Feed</ABY_CapacitorPanel_Feed>
-  <ABY_CapacitorPanel_Grid>Grid smoothing</ABY_CapacitorPanel_Grid>
+Charge rate: {4}/s
+Surge tolerance: {5}%</ABY_CapacitorBayTooltip_Filled>
 
   <ABY_CapacitorStatus_Support>Capacitors</ABY_CapacitorStatus_Support>
   <ABY_CapacitorStatus_Reserve>Reserve</ABY_CapacitorStatus_Reserve>
@@ -64,8 +73,11 @@ Charge rate: {4}/s</ABY_CapacitorBayTooltip_Filled>
 
   <ABY_CapacitorSupport_NotRequired>not required</ABY_CapacitorSupport_NotRequired>
   <ABY_CapacitorSupport_NoLattice>no lattice</ABY_CapacitorSupport_NoLattice>
+  <ABY_CapacitorSupport_Priming>priming</ABY_CapacitorSupport_Priming>
+  <ABY_CapacitorSupport_Recovering>recovering</ABY_CapacitorSupport_Recovering>
   <ABY_CapacitorSupport_Undercharged>undercharged</ABY_CapacitorSupport_Undercharged>
   <ABY_CapacitorSupport_ThroughputLimited>throughput-limited</ABY_CapacitorSupport_ThroughputLimited>
+  <ABY_CapacitorSupport_OverdrawRisk>overdraw risk</ABY_CapacitorSupport_OverdrawRisk>
   <ABY_CapacitorSupport_Ready>ready</ABY_CapacitorSupport_Ready>
 
   <ABY_CapacitorReadout_NotRequired>not required</ABY_CapacitorReadout_NotRequired>
@@ -73,12 +85,22 @@ Charge rate: {4}/s</ABY_CapacitorBayTooltip_Filled>
   <ABY_CapacitorReadout_Reserve>{0} / {1}</ABY_CapacitorReadout_Reserve>
   <ABY_CapacitorReadout_Throughput>{0} / {1}</ABY_CapacitorReadout_Throughput>
   <ABY_CapacitorReadout_GridSmoothing>{0}%</ABY_CapacitorReadout_GridSmoothing>
+  <ABY_CapacitorReadout_NoFlow>0/s</ABY_CapacitorReadout_NoFlow>
+  <ABY_CapacitorReadout_FlowStalled>stalled</ABY_CapacitorReadout_FlowStalled>
+  <ABY_CapacitorReadout_ChargeFlow>{0}/s</ABY_CapacitorReadout_ChargeFlow>
+  <ABY_CapacitorReadout_ChargeFlowRecovery>{0}/s • recovering</ABY_CapacitorReadout_ChargeFlowRecovery>
+  <ABY_CapacitorReadout_ChargeFlowPriming>{0}/s • priming</ABY_CapacitorReadout_ChargeFlowPriming>
+  <ABY_CapacitorEta_Value>~{0}s</ABY_CapacitorEta_Value>
+  <ABY_CapacitorEta_Stalled>stalled</ABY_CapacitorEta_Stalled>
+
+  <ABY_CapacitorModeHint_NotRequired>No capacitor gate is defined for this ritual.</ABY_CapacitorModeHint_NotRequired>
+  <ABY_CapacitorModeHint_NoLattice>Install a capacitor lattice to unlock startup, reserve and feed support.</ABY_CapacitorModeHint_NoLattice>
+  <ABY_CapacitorModeHint_Priming>Priming the lattice. Estimated ready time: {0}.</ABY_CapacitorModeHint_Priming>
+  <ABY_CapacitorModeHint_Recovering>Capacitors are reforming after the last invocation. Estimated ready time: {0}.</ABY_CapacitorModeHint_Recovering>
+  <ABY_CapacitorModeHint_Undercharged>Reserve is still building. Estimated ready time: {0}.</ABY_CapacitorModeHint_Undercharged>
+  <ABY_CapacitorModeHint_OverdrawRisk>Support is live, but feed headroom is thin. Overdraw risk remains elevated.</ABY_CapacitorModeHint_OverdrawRisk>
+  <ABY_CapacitorModeHint_Ready>Startup, reserve and feed are aligned.</ABY_CapacitorModeHint_Ready>
 
   <ABY_CapacitorDemandSummary_None>No capacitor gate is defined for this ritual.</ABY_CapacitorDemandSummary_None>
   <ABY_CapacitorDemandSummary>Startup {0} • reserve {1} • throughput {2}</ABY_CapacitorDemandSummary>
-
-  <ABY_CapacitorFail_NoLattice>This ritual requires an installed capacitor lattice.</ABY_CapacitorFail_NoLattice>
-  <ABY_CapacitorFail_Startup>Insufficient startup buffer: {0} / {1}</ABY_CapacitorFail_Startup>
-  <ABY_CapacitorFail_Reserve>Insufficient charge reserve: {0} / {1}</ABY_CapacitorFail_Reserve>
-  <ABY_CapacitorFail_Throughput>Insufficient capacitor throughput: {0} / {1}</ABY_CapacitorFail_Throughput>
 </LanguageData>

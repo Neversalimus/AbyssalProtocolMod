@@ -7,6 +7,17 @@ namespace AbyssalProtocol
 {
     public static class AbyssalCircleCapacitorRitualUtility
     {
+        public enum CapacitorSupportState
+        {
+            NotRequired,
+            NoLattice,
+            Priming,
+            Recovering,
+            Undercharged,
+            OverdrawRisk,
+            Ready
+        }
+
         public sealed class RitualProfile
         {
             public string RitualId;
@@ -23,10 +34,15 @@ namespace AbyssalProtocol
             public float Capacity;
             public float Throughput;
             public float ChargeRate;
+            public float EffectiveChargeRate;
             public float GridSmoothing;
             public float EffectiveStartupRequired;
             public float EffectiveTotalRequired;
             public float EffectiveThroughputRequired;
+            public float ChargeFill;
+            public float ThroughputHeadroomRatio;
+            public int RecoveryTicksRemaining;
+            public float RecoveryFactor;
 
             public bool HasLattice => Capacity > 0.01f;
             public bool StartupSatisfied => HasLattice && AvailableCharge + 0.001f >= EffectiveStartupRequired;
@@ -126,14 +142,20 @@ namespace AbyssalProtocol
                 Capacity = circle?.GetCapacitorCapacity() ?? 0f,
                 Throughput = circle?.GetCapacitorThroughput() ?? 0f,
                 ChargeRate = circle?.GetCapacitorChargeRatePerSecond() ?? 0f,
-                GridSmoothing = GetGridSmoothing(circle)
+                EffectiveChargeRate = circle?.GetCapacitorEffectiveChargeRatePerSecond() ?? 0f,
+                GridSmoothing = GetGridSmoothing(circle),
+                RecoveryTicksRemaining = circle?.CapacitorRecoveryTicksRemaining ?? 0,
+                RecoveryFactor = circle?.GetCapacitorRecoveryFactor() ?? 1f
             };
+
+            report.ChargeFill = report.Capacity <= 0.01f ? 0f : Mathf.Clamp01(report.AvailableCharge / report.Capacity);
 
             if (profile == null)
             {
                 report.EffectiveStartupRequired = 0f;
                 report.EffectiveTotalRequired = 0f;
                 report.EffectiveThroughputRequired = 0f;
+                report.ThroughputHeadroomRatio = 0f;
                 return report;
             }
 
@@ -141,6 +163,9 @@ namespace AbyssalProtocol
             report.EffectiveStartupRequired = profile.StartupChargeRequired * (1f - smoothing * 0.12f);
             report.EffectiveTotalRequired = Mathf.Max(report.EffectiveStartupRequired, profile.TotalChargeRequired * (1f - smoothing * 0.10f));
             report.EffectiveThroughputRequired = profile.ThroughputRequired * (1f - smoothing * 0.18f);
+            report.ThroughputHeadroomRatio = report.EffectiveThroughputRequired <= 0.01f
+                ? 0f
+                : (report.Throughput - report.EffectiveThroughputRequired) / report.EffectiveThroughputRequired;
             return report;
         }
 
@@ -206,20 +231,151 @@ namespace AbyssalProtocol
             return Mathf.Clamp01(totalTolerance * 0.5f);
         }
 
+        public static CapacitorSupportState GetSupportState(CapacitorReadinessReport report)
+        {
+            if (report == null || report.Profile == null)
+            {
+                return CapacitorSupportState.NotRequired;
+            }
+
+            if (!report.HasLattice)
+            {
+                return CapacitorSupportState.NoLattice;
+            }
+
+            bool recoveringAndShort = report.RecoveryTicksRemaining > 0 && !report.FullySatisfied;
+            if (!report.StartupSatisfied)
+            {
+                float startupFill = report.EffectiveStartupRequired <= 0.01f ? 0f : report.AvailableCharge / report.EffectiveStartupRequired;
+                return startupFill < 0.60f ? CapacitorSupportState.Priming : (recoveringAndShort ? CapacitorSupportState.Recovering : CapacitorSupportState.Undercharged);
+            }
+
+            if (!report.ReserveSatisfied)
+            {
+                return recoveringAndShort ? CapacitorSupportState.Recovering : CapacitorSupportState.Undercharged;
+            }
+
+            if (!report.ThroughputSatisfied)
+            {
+                return CapacitorSupportState.OverdrawRisk;
+            }
+
+            if (report.ThroughputHeadroomRatio < 0.12f && report.GridSmoothing < 0.25f)
+            {
+                return CapacitorSupportState.OverdrawRisk;
+            }
+
+            return CapacitorSupportState.Ready;
+        }
+
+        public static string GetSupportStateLabel(CapacitorReadinessReport report)
+        {
+            switch (GetSupportState(report))
+            {
+                case CapacitorSupportState.NoLattice:
+                    return TranslateOrFallback("ABY_CapacitorSupport_NoLattice", "no lattice");
+                case CapacitorSupportState.Priming:
+                    return TranslateOrFallback("ABY_CapacitorSupport_Priming", "priming");
+                case CapacitorSupportState.Recovering:
+                    return TranslateOrFallback("ABY_CapacitorSupport_Recovering", "recovering");
+                case CapacitorSupportState.Undercharged:
+                    return TranslateOrFallback("ABY_CapacitorSupport_Undercharged", "undercharged");
+                case CapacitorSupportState.OverdrawRisk:
+                    return TranslateOrFallback("ABY_CapacitorSupport_OverdrawRisk", "overdraw risk");
+                case CapacitorSupportState.Ready:
+                    return TranslateOrFallback("ABY_CapacitorSupport_Ready", "ready");
+                default:
+                    return TranslateOrFallback("ABY_CapacitorSupport_NotRequired", "not required");
+            }
+        }
+
+        public static string GetSupportDetailText(CapacitorReadinessReport report)
+        {
+            CapacitorSupportState state = GetSupportState(report);
+            switch (state)
+            {
+                case CapacitorSupportState.NoLattice:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_NoLattice", "Install a capacitor lattice to unlock startup, reserve and feed support.");
+                case CapacitorSupportState.Priming:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_Priming", "Priming the lattice. Estimated ready time: {0}.", GetReadyEtaLabel(report));
+                case CapacitorSupportState.Recovering:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_Recovering", "Capacitors are reforming after the last invocation. Estimated ready time: {0}.", GetReadyEtaLabel(report));
+                case CapacitorSupportState.Undercharged:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_Undercharged", "Reserve is still building. Estimated ready time: {0}.", GetReadyEtaLabel(report));
+                case CapacitorSupportState.OverdrawRisk:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_OverdrawRisk", "Support is live, but feed headroom is thin. Overdraw risk remains elevated.");
+                case CapacitorSupportState.Ready:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_Ready", "Startup, reserve and feed are aligned.");
+                default:
+                    return TranslateOrFallback("ABY_CapacitorModeHint_NotRequired", "No capacitor gate is defined for this ritual.");
+            }
+        }
+
+        public static string GetReadyEtaLabel(CapacitorReadinessReport report)
+        {
+            int seconds = EstimateSecondsToReady(report);
+            if (seconds < 0)
+            {
+                return TranslateOrFallback("ABY_CapacitorEta_Stalled", "stalled");
+            }
+
+            return TranslateOrFallback("ABY_CapacitorEta_Value", "~{0}s", seconds);
+        }
+
+        public static int EstimateSecondsToReady(CapacitorReadinessReport report)
+        {
+            if (report == null || report.Profile == null || !report.HasLattice)
+            {
+                return -1;
+            }
+
+            if (report.FullySatisfied)
+            {
+                return 0;
+            }
+
+            if (!report.ThroughputSatisfied)
+            {
+                return -1;
+            }
+
+            if (report.EffectiveChargeRate <= 0.001f)
+            {
+                return -1;
+            }
+
+            float startupMissing = Mathf.Max(0f, report.EffectiveStartupRequired - report.AvailableCharge);
+            float reserveMissing = Mathf.Max(0f, report.EffectiveTotalRequired - report.AvailableCharge);
+            float missing = Mathf.Max(startupMissing, reserveMissing);
+            if (missing <= 0.001f)
+            {
+                return 0;
+            }
+
+            return Mathf.CeilToInt(missing / report.EffectiveChargeRate);
+        }
+
         public static float GetRiskReduction(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             CapacitorReadinessReport report = CreateReadinessReport(circle, ritual);
-            if (report.Profile == null || !report.FullySatisfied)
+            CapacitorSupportState state = GetSupportState(report);
+            if (report.Profile == null || state == CapacitorSupportState.NoLattice || state == CapacitorSupportState.Priming || state == CapacitorSupportState.Recovering || state == CapacitorSupportState.Undercharged)
             {
                 return 0f;
             }
 
-            float fill = report.Capacity <= 0.01f ? 0f : Mathf.Clamp01(report.AvailableCharge / report.Capacity);
+            float fill = report.ChargeFill;
             float throughputHeadroom = report.EffectiveThroughputRequired <= 0.01f
                 ? 0f
-                : Mathf.Clamp01((report.Throughput - report.EffectiveThroughputRequired) / report.EffectiveThroughputRequired);
+                : Mathf.Clamp01(report.ThroughputHeadroomRatio);
             float reduction = report.GridSmoothing * 0.06f + fill * 0.03f + throughputHeadroom * 0.03f;
-            return Mathf.Min(report.Profile.MaxRiskReduction, reduction);
+            reduction = Mathf.Min(report.Profile.MaxRiskReduction, reduction);
+            if (state == CapacitorSupportState.OverdrawRisk)
+            {
+                reduction = Mathf.Min(report.Profile.MaxRiskReduction * 0.55f, reduction * 0.55f);
+            }
+
+            return reduction;
         }
 
         public static float GetSustainDrainPerSecond(CapacitorReadinessReport report)
@@ -229,32 +385,13 @@ namespace AbyssalProtocol
                 return 0f;
             }
 
-            return Mathf.Max(0f, report.EffectiveTotalRequired - report.EffectiveStartupRequired) / 6f;
-        }
-
-        public static string GetSupportStateLabel(CapacitorReadinessReport report)
-        {
-            if (report == null || report.Profile == null)
+            float drain = Mathf.Max(0f, report.EffectiveTotalRequired - report.EffectiveStartupRequired) / 6f;
+            if (report.GridSmoothing > 0.001f)
             {
-                return TranslateOrFallback("ABY_CapacitorSupport_NotRequired", "not required");
+                drain *= 1f - report.GridSmoothing * 0.08f;
             }
 
-            if (!report.HasLattice)
-            {
-                return TranslateOrFallback("ABY_CapacitorSupport_NoLattice", "no lattice");
-            }
-
-            if (!report.StartupSatisfied || !report.ReserveSatisfied)
-            {
-                return TranslateOrFallback("ABY_CapacitorSupport_Undercharged", "undercharged");
-            }
-
-            if (!report.ThroughputSatisfied)
-            {
-                return TranslateOrFallback("ABY_CapacitorSupport_ThroughputLimited", "throughput-limited");
-            }
-
-            return TranslateOrFallback("ABY_CapacitorSupport_Ready", "ready");
+            return drain;
         }
 
         public static string GetReserveReadout(CapacitorReadinessReport report)
@@ -305,6 +442,32 @@ namespace AbyssalProtocol
                 "ABY_CapacitorReadout_GridSmoothing",
                 "{0}%",
                 Mathf.RoundToInt(GetGridSmoothing(circle) * 100f));
+        }
+
+        public static string GetChargeFlowReadout(CapacitorReadinessReport report)
+        {
+            if (report == null || !report.HasLattice)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_NoFlow", "0/s");
+            }
+
+            if (report.EffectiveChargeRate <= 0.001f)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_FlowStalled", "stalled");
+            }
+
+            CapacitorSupportState state = GetSupportState(report);
+            if (state == CapacitorSupportState.Recovering)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_ChargeFlowRecovery", "{0}/s • recovering", report.EffectiveChargeRate.ToString("0.0"));
+            }
+
+            if (state == CapacitorSupportState.Priming)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_ChargeFlowPriming", "{0}/s • priming", report.EffectiveChargeRate.ToString("0.0"));
+            }
+
+            return TranslateOrFallback("ABY_CapacitorReadout_ChargeFlow", "{0}/s", report.EffectiveChargeRate.ToString("0.0"));
         }
 
         public static string GetRitualDemandSummary(AbyssalSummoningConsoleUtility.RitualDefinition ritual)

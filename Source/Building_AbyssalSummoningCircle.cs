@@ -110,6 +110,8 @@ namespace AbyssalProtocol
         private float pendingCapacitorSustainDrainPerSecond;
         private float pendingCapacitorReserveRequired;
         private float pendingCapacitorThroughputRequired;
+        private int capacitorRecoveryTicksRemaining;
+        private int capacitorRecoveryDurationTicks;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
@@ -164,6 +166,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCapacitorSustainDrainPerSecond, "pendingCapacitorSustainDrainPerSecond", 0f);
             Scribe_Values.Look(ref pendingCapacitorReserveRequired, "pendingCapacitorReserveRequired", 0f);
             Scribe_Values.Look(ref pendingCapacitorThroughputRequired, "pendingCapacitorThroughputRequired", 0f);
+            Scribe_Values.Look(ref capacitorRecoveryTicksRemaining, "capacitorRecoveryTicksRemaining", 0);
+            Scribe_Values.Look(ref capacitorRecoveryDurationTicks, "capacitorRecoveryDurationTicks", 0);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -202,6 +206,7 @@ namespace AbyssalProtocol
             base.Tick();
 
             EnsureCapacitorSlotsInitialized();
+            TickCapacitorRecovery();
             TickCapacitorCharge();
             TickCapacitorRitualFeed();
 
@@ -458,6 +463,11 @@ namespace AbyssalProtocol
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetChargeReadout(this));
             sb.AppendLine();
+            AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(this, AbyssalSummoningConsoleUtility.GetDefaultRitual());
+            sb.Append("ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(capacitorReport));
+            sb.AppendLine();
+            sb.Append("ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(capacitorReport));
+            sb.AppendLine();
             sb.Append("ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(this));
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetBaySummary(this));
@@ -490,6 +500,8 @@ namespace AbyssalProtocol
         }
 
         public float StoredCapacitorCharge => storedCapacitorCharge;
+        public int CapacitorRecoveryTicksRemaining => capacitorRecoveryTicksRemaining;
+        public bool CapacitorRecovering => capacitorRecoveryTicksRemaining > 0;
 
         public float GetCapacitorCapacity()
         {
@@ -504,6 +516,36 @@ namespace AbyssalProtocol
         public float GetCapacitorChargeRatePerSecond()
         {
             return AbyssalCircleCapacitorUtility.GetTotalChargeRate(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorEffectiveChargeRatePerSecond()
+        {
+            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
+            {
+                return 0f;
+            }
+
+            float baseRate = GetCapacitorChargeRatePerSecond();
+            if (baseRate <= 0.001f)
+            {
+                return 0f;
+            }
+
+            float capacity = GetCapacitorCapacity();
+            float fill = capacity <= 0.01f ? 0f : Mathf.Clamp01(storedCapacitorCharge / capacity);
+            float primingBoost = fill < 0.18f ? 1.12f : (fill < 0.35f ? 1.06f : 1f);
+            return baseRate * GetCapacitorRecoveryFactor() * primingBoost;
+        }
+
+        public float GetCapacitorRecoveryFactor()
+        {
+            if (capacitorRecoveryTicksRemaining <= 0 || capacitorRecoveryDurationTicks <= 0)
+            {
+                return 1f;
+            }
+
+            float progress = 1f - Mathf.Clamp01((float)capacitorRecoveryTicksRemaining / capacitorRecoveryDurationTicks);
+            return Mathf.Lerp(0.42f, 1f, progress);
         }
 
         public float GetCapacitorGridSmoothing()
@@ -644,12 +686,22 @@ namespace AbyssalProtocol
             AbyssalCircleCapacitorUtility.EnsureSlot(auxiliaryCapacitorSlot, AbyssalCircleCapacitorUtility.AuxiliaryBayId, AbyssalCircleCapacitorUtility.AuxiliaryBayLabelKey);
         }
 
+        private void TickCapacitorRecovery()
+        {
+            if (capacitorRecoveryTicksRemaining > 0)
+            {
+                capacitorRecoveryTicksRemaining--;
+            }
+        }
+
         private void TickCapacitorCharge()
         {
             float capacity = GetCapacitorCapacity();
             if (capacity <= 0.01f)
             {
                 storedCapacitorCharge = 0f;
+                capacitorRecoveryTicksRemaining = 0;
+                capacitorRecoveryDurationTicks = 0;
                 return;
             }
 
@@ -665,7 +717,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float rate = GetCapacitorChargeRatePerSecond();
+            float rate = GetCapacitorEffectiveChargeRatePerSecond();
             if (rate <= 0.001f)
             {
                 return;
@@ -691,13 +743,40 @@ namespace AbyssalProtocol
                 return;
             }
 
-            storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - pendingCapacitorSustainDrainPerSecond);
+            float drain = pendingCapacitorSustainDrainPerSecond;
+            float smoothing = GetCapacitorGridSmoothing();
+            if (smoothing > 0.001f)
+            {
+                drain *= 1f - smoothing * 0.08f;
+            }
+
+            storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - drain);
         }
 
         private void ClampStoredCapacitorCharge()
         {
             float capacity = GetCapacitorCapacity();
             storedCapacitorCharge = Mathf.Clamp(storedCapacitorCharge, 0f, Mathf.Max(0f, capacity));
+        }
+
+        private void BeginCapacitorRecovery()
+        {
+            float capacity = GetCapacitorCapacity();
+            float reserve = Mathf.Max(pendingCapacitorReserveRequired, pendingCapacitorStartupCost);
+            if (capacity <= 0.01f || reserve <= 0.01f)
+            {
+                capacitorRecoveryTicksRemaining = 0;
+                capacitorRecoveryDurationTicks = 0;
+                return;
+            }
+
+            float smoothing = GetCapacitorGridSmoothing();
+            float normalized = Mathf.Clamp01(reserve / Mathf.Max(1f, capacity));
+            int duration = Mathf.RoundToInt(Mathf.Lerp(240f, 780f, normalized));
+            duration = Mathf.RoundToInt(duration * (1f - smoothing * 0.28f));
+            duration = Mathf.Max(180, duration);
+            capacitorRecoveryDurationTicks = duration;
+            capacitorRecoveryTicksRemaining = duration;
         }
 
         private void MarkCircleVisualsDirty()
@@ -1036,6 +1115,7 @@ namespace AbyssalProtocol
 
         private void ResetRitual()
         {
+            BeginCapacitorRecovery();
             ritualPhase = RitualPhase.Idle;
             phaseTicksRemaining = 0;
             phaseDuration = 0;

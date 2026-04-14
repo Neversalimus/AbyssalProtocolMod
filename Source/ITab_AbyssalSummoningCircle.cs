@@ -47,9 +47,10 @@ namespace AbyssalProtocol
             AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 104f, leftInner.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 124f, leftInner.width, 18f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(capacitorReport));
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 144f, leftInner.width, 18f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(capacitorReport));
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 144f, leftInner.width, 18f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(capacitorReport));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 164f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetCompactHint());
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 164f, leftInner.width, 18f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(capacitorReport));
 
             AbyssalSummoningConsoleArt.DrawPanel(rightRect, true);
             Rect rightInner = rightRect.ContractedBy(10f);
