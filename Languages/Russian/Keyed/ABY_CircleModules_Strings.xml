@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleInspect_Stabilizers>Кольцо стабилизаторов: занято слотов {0} / {1}</ABY_CircleInspect_Stabilizers>
+
+  <ABY_CircleModuleEdge_North>северный край</ABY_CircleModuleEdge_North>
+  <ABY_CircleModuleEdge_East>восточный край</ABY_CircleModuleEdge_East>
+  <ABY_CircleModuleEdge_South>южный край</ABY_CircleModuleEdge_South>
+  <ABY_CircleModuleEdge_West>западный край</ABY_CircleModuleEdge_West>
+
+  <ABY_CircleModuleFail_NoModuleDef>Не передано определение модуля круга.</ABY_CircleModuleFail_NoModuleDef>
+  <ABY_CircleModuleFail_NotAModule>{0} не является допустимым модулем круга.</ABY_CircleModuleFail_NotAModule>
+  <ABY_CircleModuleFail_NoSlot>На стороне «{0}» нет слота для модуля.</ABY_CircleModuleFail_NoSlot>
+  <ABY_CircleModuleFail_SlotOccupied>На стороне «{0}» уже установлен модуль.</ABY_CircleModuleFail_SlotOccupied>
+
+</LanguageData>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftCrudeStabilizerModule</defName>
+    <label>forge crude stabilizer module</label>
+    <description>Assemble a heavy first-tier circle module that can later be inserted into one edge of the abyssal summoning circle to improve early containment.</description>
+    <jobString>Forging crude stabilizer module.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_CircleStabilizerFrames</researchPrerequisite>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_CrudeStabilizerModule>1</ABY_CrudeStabilizerModule>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>25</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftResonantStabilizerModule</defName>
+    <label>forge resonant stabilizer module</label>
+    <description>Build a tuned second-tier circle stabilizer with better resonance control and stronger suppression of bleedoff around repeated rituals.</description>
+    <jobString>Forging resonant stabilizer module.</jobString>
+    <workAmount>2400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_ResonantLatticeStabilization</researchPrerequisite>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_ResonantStabilizerModule>1</ABY_ResonantStabilizerModule>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>70</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftCrownStabilizerModule</defName>
+    <label>forge crown stabilizer module</label>
+    <description>Fabricate a crown-tier restraint engine for high-threat ritual work. These are intended for circles that are expected to survive serious breach pressure instead of merely limping through it.</description>
+    <jobString>Forging crown stabilizer module.</jobString>
+    <workAmount>3400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_CrownContainmentArchitecture</researchPrerequisite>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>28</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_CrownStabilizerModule>1</ABY_CrownStabilizerModule>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>130</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+</Defs>

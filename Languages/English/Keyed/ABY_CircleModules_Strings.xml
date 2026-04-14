@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleInspect_Stabilizers>Stabilizer ring: {0} / {1} sockets occupied</ABY_CircleInspect_Stabilizers>
+
+  <ABY_CircleModuleEdge_North>north edge</ABY_CircleModuleEdge_North>
+  <ABY_CircleModuleEdge_East>east edge</ABY_CircleModuleEdge_East>
+  <ABY_CircleModuleEdge_South>south edge</ABY_CircleModuleEdge_South>
+  <ABY_CircleModuleEdge_West>west edge</ABY_CircleModuleEdge_West>
+
+  <ABY_CircleModuleFail_NoModuleDef>No circle module definition was supplied.</ABY_CircleModuleFail_NoModuleDef>
+  <ABY_CircleModuleFail_NotAModule>{0} is not a valid circle module.</ABY_CircleModuleFail_NotAModule>
+  <ABY_CircleModuleFail_NoSlot>No module slot exists on the {0}.</ABY_CircleModuleFail_NoSlot>
+  <ABY_CircleModuleFail_SlotOccupied>The {0} already has a module installed.</ABY_CircleModuleFail_SlotOccupied>
+
+</LanguageData>

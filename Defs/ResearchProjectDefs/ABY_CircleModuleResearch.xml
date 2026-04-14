@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ABY_CircleStabilizerFrames</defName>
+    <label>circle stabilizer frames</label>
+    <description>Formalizes the first edge-mounted restraint blocks for the abyssal summoning circle. This does not make the breach safe; it simply gives the platform a way to begin resisting its own geometry.</description>
+    <baseCost>950</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>0.80</researchViewX>
+    <researchViewY>1.35</researchViewY>
+    <prerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_ResonantLatticeStabilization</defName>
+    <label>resonant lattice stabilization</label>
+    <description>Moves beyond brute-force clamps and into tuned infernal routing. Resonant stabilizers reduce the circle's tendency to shove excess ritual pressure outward as waste and contamination.</description>
+    <baseCost>1800</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>1.70</researchViewX>
+    <researchViewY>1.35</researchViewY>
+    <prerequisites>
+      <li>ABY_CircleStabilizerFrames</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ABY_CrownContainmentArchitecture</defName>
+    <label>crown containment architecture</label>
+    <description>Develops elite crown-tier restraint geometry for ritual infrastructure expected to survive repeated high-threat invoke patterns. These modules are no longer just clamps; they are active shape-imposition engines.</description>
+    <baseCost>3200</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>2.60</researchViewX>
+    <researchViewY>1.35</researchViewY>
+    <prerequisites>
+      <li>ABY_ResonantLatticeStabilization</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+</Defs>
