@@ -138,4 +138,23 @@
   <ABY_CircleReducedEffectsOn>Эффекты: снижены</ABY_CircleReducedEffectsOn>
   <ABY_CircleReducedEffectsOff>Эффекты: полные</ABY_CircleReducedEffectsOff>
 
+  <ABY_CircleInspect_Heat>Нагрев: {0}</ABY_CircleInspect_Heat>
+  <ABY_CircleInspect_Containment>Сдерживание: {0}</ABY_CircleInspect_Containment>
+
+  <ABY_CircleTelemetry_Heat>Нагрев</ABY_CircleTelemetry_Heat>
+  <ABY_CircleTelemetry_Containment>Сдерживание</ABY_CircleTelemetry_Containment>
+  <ABY_CircleTelemetry_Delta>Нагрузка ритуала</ABY_CircleTelemetry_Delta>
+  <ABY_CircleTelemetry_HeatValue>{0}%</ABY_CircleTelemetry_HeatValue>
+  <ABY_CircleTelemetry_ContainmentValue>{0}%</ABY_CircleTelemetry_ContainmentValue>
+  <ABY_CircleTelemetry_DeltaValue>+{0}%</ABY_CircleTelemetry_DeltaValue>
+  <ABY_CircleProjectedState>Прогнозируемое состояние: {0}</ABY_CircleProjectedState>
+  <ABY_CircleAnomaly_None>Вероятная аномалия: не ожидается</ABY_CircleAnomaly_None>
+  <ABY_CircleAnomaly_Lash>Вероятная аномалия: удар по контуру сдерживания</ABY_CircleAnomaly_Lash>
+  <ABY_CircleAnomaly_ImpSpill>Вероятная аномалия: удар по сдерживанию или пролив rift imp</ABY_CircleAnomaly_ImpSpill>
+  <ABY_CircleConsequencesProjected>• Нагрузка ритуального нагрева: {0}
+• {1}
+• {2}</ABY_CircleConsequencesProjected>
+  <ABY_CircleInstability_Lash>Круг призыва бьёт по собственному контуру сдерживания и получает {0} урона.</ABY_CircleInstability_Lash>
+  <ABY_CircleInstability_ImpSpill>Нестабильность выплёскивает за периметр разлома ещё {0} rift imp.</ABY_CircleInstability_ImpSpill>
+
 </LanguageData>

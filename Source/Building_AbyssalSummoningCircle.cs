@@ -92,12 +92,25 @@ namespace AbyssalProtocol
         private int pendingImpSpawnIntervalTicks;
         private int pendingImpPortalLingerTicks;
         private bool reducedConsoleEffects;
+        private float instabilityHeat;
+        private float cachedContainment;
+        private int nextContainmentRefreshTick;
+        private int lastInstabilityEventTick = -999999;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
         public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
         public bool ReducedConsoleEffects => reducedConsoleEffects;
         public float RitualProgress => RitualActive ? GetPhaseProgress() : 0f;
+        public float InstabilityHeat => instabilityHeat;
+        public float ContainmentRating
+        {
+            get
+            {
+                RefreshContainmentCache(false);
+                return cachedContainment;
+            }
+        }
 
         public ConsoleRitualPhase CurrentRitualPhase
         {
@@ -139,6 +152,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpSpawnIntervalTicks, "pendingImpSpawnIntervalTicks", 0);
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
+            Scribe_Values.Look(ref instabilityHeat, "instabilityHeat", 0f);
+            Scribe_Values.Look(ref cachedContainment, "cachedContainment", 0f);
+            Scribe_Values.Look(ref nextContainmentRefreshTick, "nextContainmentRefreshTick", 0);
+            Scribe_Values.Look(ref lastInstabilityEventTick, "lastInstabilityEventTick", -999999);
         }
 
         public void SetReducedConsoleEffects(bool value)
@@ -170,7 +187,14 @@ namespace AbyssalProtocol
         {
             base.Tick();
 
-            if (!RitualActive || Map == null)
+            if (Map == null)
+            {
+                return;
+            }
+
+            TickInstabilityPassive();
+
+            if (!RitualActive)
             {
                 return;
             }
@@ -254,6 +278,7 @@ namespace AbyssalProtocol
             }
 
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
+            ApplyRitualHeat(AbyssalSummoningConsoleUtility.GetRitualById(summonProps.ritualId));
 
             StartPhase(RitualPhase.Charging, 120);
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
@@ -373,6 +398,10 @@ namespace AbyssalProtocol
             sb.Append(AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
             sb.AppendLine();
             sb.Append(AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()))));
+            sb.AppendLine();
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectHeatText(AbyssalSummoningConsoleUtility.GetHeatDisplay(this)));
+            sb.AppendLine();
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectContainmentText(AbyssalSummoningConsoleUtility.GetContainmentDisplay(this)));
 
             return sb.ToString();
         }
@@ -595,6 +624,8 @@ namespace AbyssalProtocol
                 Map,
                 pendingSpawnCell,
                 pendingBossLabel);
+
+            TryTriggerInstabilityEvent();
         }
 
         private void CompleteImpPortalSummon()
@@ -655,6 +686,8 @@ namespace AbyssalProtocol
                 GetCompletionLetterDesc(),
                 LetterDefOf.ThreatSmall,
                 new TargetInfo(portal.Position, Map));
+
+            TryTriggerInstabilityEvent();
         }
 
         private bool IsImpPortalSummonMode(string summonMode)
@@ -695,6 +728,148 @@ namespace AbyssalProtocol
             ritualPhase = phase;
             phaseDuration = duration;
             phaseTicksRemaining = duration;
+        }
+
+        public float GetProjectedInstabilityHeat(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            return AbyssalCircleInstabilityUtility.GetProjectedPostInvokeHeat(this, ritual);
+        }
+
+        private void TickInstabilityPassive()
+        {
+            if (!ShouldDoHashInterval(AbyssalCircleInstabilityUtility.HeatTickInterval))
+            {
+                return;
+            }
+
+            RefreshContainmentCache(false);
+
+            if (instabilityHeat <= 0f)
+            {
+                instabilityHeat = 0f;
+                return;
+            }
+
+            float decay = ritualPhase == RitualPhase.Cooldown
+                ? AbyssalCircleInstabilityUtility.GetCooldownDecayPerTick(this)
+                : RitualActive
+                    ? 0f
+                    : AbyssalCircleInstabilityUtility.GetIdleDecayPerTick(this);
+
+            if (decay > 0f)
+            {
+                instabilityHeat = Mathf.Max(0f, instabilityHeat - decay);
+            }
+        }
+
+        private void RefreshContainmentCache(bool force)
+        {
+            if (Map == null)
+            {
+                cachedContainment = 0f;
+                return;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (!force && ticksGame < nextContainmentRefreshTick)
+            {
+                return;
+            }
+
+            cachedContainment = AbyssalCircleInstabilityUtility.CalculateContainment(this);
+            nextContainmentRefreshTick = ticksGame + AbyssalCircleInstabilityUtility.ContainmentRefreshInterval;
+        }
+
+        private void ApplyRitualHeat(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            RefreshContainmentCache(true);
+            instabilityHeat = Mathf.Clamp01(instabilityHeat + AbyssalCircleInstabilityUtility.GetProjectedHeatGain(this, ritual));
+        }
+
+        private void TryTriggerInstabilityEvent()
+        {
+            if (Map == null)
+            {
+                return;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (ticksGame - lastInstabilityEventTick < 2500)
+            {
+                return;
+            }
+
+            float chance = 0f;
+            if (instabilityHeat >= 0.82f)
+            {
+                chance = 0.40f;
+            }
+            else if (instabilityHeat >= 0.58f)
+            {
+                chance = 0.22f;
+            }
+
+            if (chance <= 0f || !Rand.Chance(chance))
+            {
+                return;
+            }
+
+            lastInstabilityEventTick = ticksGame;
+            if (instabilityHeat >= 0.82f && Rand.Chance(0.45f) && TrySpawnInstabilityImpSpill())
+            {
+                instabilityHeat = Mathf.Clamp01(instabilityHeat + 0.05f);
+                return;
+            }
+
+            DoContainmentLash();
+        }
+
+        private void DoContainmentLash()
+        {
+            float damageAmount = Mathf.Lerp(8f, 18f, Mathf.InverseLerp(0.58f, 1f, instabilityHeat));
+            TakeDamage(new DamageInfo(DamageDefOf.Flame, damageAmount));
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.10f);
+            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
+            Messages.Message("ABY_CircleInstability_Lash".Translate(Mathf.RoundToInt(damageAmount)), this, MessageTypeDefOf.NegativeHealthEvent, false);
+        }
+
+        private bool TrySpawnInstabilityImpSpill()
+        {
+            PawnKindDef impKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
+            Faction faction = pendingFaction ?? AbyssalBossSummonUtility.ResolveHostileFaction();
+            if (impKindDef == null || faction == null)
+            {
+                return false;
+            }
+
+            int count = instabilityHeat >= 0.92f ? 2 : 1;
+            List<Pawn> spawned = new List<Pawn>();
+            for (int i = 0; i < count; i++)
+            {
+                if (!CellFinder.TryFindRandomCellNear(RitualFocusCell, Map, 6, c => c.Standable(Map) && !c.Fogged(Map), out IntVec3 cell))
+                {
+                    continue;
+                }
+
+                if (!ABY_Phase2PortalUtility.TryGenerateImp(impKindDef, faction, Map, out Pawn imp))
+                {
+                    continue;
+                }
+
+                GenSpawn.Spawn(imp, cell, Map, Rot4.Random);
+                spawned.Add(imp);
+                ABY_Phase2PortalUtility.GiveAssaultLord(imp);
+            }
+
+            if (spawned.Count == 0)
+            {
+                return false;
+            }
+
+            ArchonInfernalVFXUtility.DoSummonVFX(Map, spawned[0].Position);
+            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", spawned[0].Position, Map);
+            Messages.Message("ABY_CircleInstability_ImpSpill".Translate(spawned.Count), this, MessageTypeDefOf.ThreatSmall, false);
+            return true;
         }
 
         private void ResetRitual()

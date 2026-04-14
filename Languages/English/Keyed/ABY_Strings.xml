@@ -138,4 +138,23 @@
   <ABY_CircleReducedEffectsOn>Effects: reduced</ABY_CircleReducedEffectsOn>
   <ABY_CircleReducedEffectsOff>Effects: full</ABY_CircleReducedEffectsOff>
 
+  <ABY_CircleInspect_Heat>Heat: {0}</ABY_CircleInspect_Heat>
+  <ABY_CircleInspect_Containment>Containment: {0}</ABY_CircleInspect_Containment>
+
+  <ABY_CircleTelemetry_Heat>Heat</ABY_CircleTelemetry_Heat>
+  <ABY_CircleTelemetry_Containment>Containment</ABY_CircleTelemetry_Containment>
+  <ABY_CircleTelemetry_Delta>Ritual load</ABY_CircleTelemetry_Delta>
+  <ABY_CircleTelemetry_HeatValue>{0}%</ABY_CircleTelemetry_HeatValue>
+  <ABY_CircleTelemetry_ContainmentValue>{0}%</ABY_CircleTelemetry_ContainmentValue>
+  <ABY_CircleTelemetry_DeltaValue>+{0}%</ABY_CircleTelemetry_DeltaValue>
+  <ABY_CircleProjectedState>Projected state: {0}</ABY_CircleProjectedState>
+  <ABY_CircleAnomaly_None>Likely anomaly: none expected</ABY_CircleAnomaly_None>
+  <ABY_CircleAnomaly_Lash>Likely anomaly: containment lash</ABY_CircleAnomaly_Lash>
+  <ABY_CircleAnomaly_ImpSpill>Likely anomaly: containment lash or imp spill</ABY_CircleAnomaly_ImpSpill>
+  <ABY_CircleConsequencesProjected>• Ritual heat load: {0}
+• {1}
+• {2}</ABY_CircleConsequencesProjected>
+  <ABY_CircleInstability_Lash>The summoning circle lashes back against its own containment shell, taking {0} damage.</ABY_CircleInstability_Lash>
+  <ABY_CircleInstability_ImpSpill>Instability spills {0} extra rift imp(s) out of the breach perimeter.</ABY_CircleInstability_ImpSpill>
+
 </LanguageData>

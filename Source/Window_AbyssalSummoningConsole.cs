@@ -161,9 +161,18 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Widgets.Label(new Rect(inner.x, inner.y + 84f, inner.width, 22f), circle.GetCurrentStatusLine());
 
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 108f, inner.width * 0.32f, 18f), "ABY_CircleTelemetry_Heat".Translate());
+            Widgets.Label(new Rect(inner.x + inner.width * 0.34f, inner.y + 108f, inner.width * 0.32f, 18f), "ABY_CircleTelemetry_Containment".Translate());
+            Widgets.Label(new Rect(inner.x + inner.width * 0.68f, inner.y + 108f, inner.width * 0.30f, 18f), "ABY_CircleTelemetry_Delta".Translate());
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(inner.x, inner.y + 126f, inner.width * 0.32f, 20f), AbyssalSummoningConsoleUtility.GetHeatDisplay(circle));
+            Widgets.Label(new Rect(inner.x + inner.width * 0.34f, inner.y + 126f, inner.width * 0.32f, 20f), AbyssalSummoningConsoleUtility.GetContainmentDisplay(circle));
+            Widgets.Label(new Rect(inner.x + inner.width * 0.68f, inner.y + 126f, inner.width * 0.30f, 20f), AbyssalSummoningConsoleUtility.GetProjectedDeltaDisplay(circle, ritual));
+
             bool reduced = circle.ReducedConsoleEffects;
             bool newReduced = reduced;
-            Rect reducedRect = new Rect(inner.x, inner.y + 112f, 180f, 24f);
+            Rect reducedRect = new Rect(inner.x, inner.y + 146f, 180f, 24f);
             Widgets.CheckboxLabeled(reducedRect, "ABY_CircleReducedEffects".Translate(), ref newReduced, false, null, null, false);
             if (newReduced != reduced)
             {
@@ -172,8 +181,8 @@ namespace AbyssalProtocol
             }
             TooltipHandler.TipRegion(reducedRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."));
 
-            Rect openRect = new Rect(inner.x, inner.y + 148f, inner.width, 30f);
-            Rect invokeRect = new Rect(inner.x, inner.y + 186f, inner.width, 34f);
+            Rect openRect = new Rect(inner.x, inner.y + 174f, inner.width, 28f);
+            Rect invokeRect = new Rect(inner.x, inner.y + 206f, inner.width, 30f);
             if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
             {
                 JumpToSigil(ritual);
@@ -224,7 +233,7 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(midRect.x, midRect.y + 28f, midRect.width, midRect.height - 28f), AbyssalSummoningConsoleUtility.GetRitualRewardHint(ritual));
 
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rightRect.x, rightRect.y, rightRect.width, 22f), "ABY_CircleConsequencesHeader".Translate());
-            Widgets.Label(new Rect(rightRect.x, rightRect.y + 28f, rightRect.width, rightRect.height - 28f), AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual));
+            Widgets.Label(new Rect(rightRect.x, rightRect.y + 28f, rightRect.width, rightRect.height - 28f), AbyssalSummoningConsoleUtility.GetProjectedInstabilityBlock(circle, ritual) + "\n\n" + AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual));
         }
 
         private void JumpToSigil(AbyssalSummoningConsoleUtility.RitualDefinition ritual)

@@ -43,8 +43,10 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 40f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 60f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(circle, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 80f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual))));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 100f, leftInner.width * 0.52f, 18f), AbyssalSummoningConsoleUtility.GetInspectHeatText(AbyssalSummoningConsoleUtility.GetHeatDisplay(circle)));
+            Widgets.Label(new Rect(leftInner.x + leftInner.width * 0.54f, leftInner.y + 100f, leftInner.width * 0.46f, 18f), AbyssalSummoningConsoleUtility.GetInspectContainmentText(AbyssalSummoningConsoleUtility.GetContainmentDisplay(circle)));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 104f, leftInner.width, 38f), AbyssalSummoningConsoleUtility.GetCompactHint());
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 116f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetProjectedStateSummary(circle, ritual));
 
             AbyssalSummoningConsoleArt.DrawPanel(rightRect, true);
             Rect rightInner = rightRect.ContractedBy(10f);

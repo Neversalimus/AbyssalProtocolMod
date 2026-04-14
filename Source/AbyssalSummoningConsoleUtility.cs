@@ -22,6 +22,7 @@ namespace AbyssalProtocol
             public string RewardHintKey;
             public string SideEffectHintKey;
             public float BaseRisk;
+            public float InstabilityGain;
             public int SpawnPoints;
         }
 
@@ -54,6 +55,7 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
+                InstabilityGain = 0.16f,
                 SpawnPoints = 180
             },
             new RitualDefinition
@@ -68,6 +70,7 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Archon_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
+                InstabilityGain = 0.30f,
                 SpawnPoints = 900
             }
         };
@@ -75,6 +78,17 @@ namespace AbyssalProtocol
         public static IEnumerable<RitualDefinition> GetRituals()
         {
             return Rituals;
+        }
+
+        public static RitualDefinition GetRitualById(string ritualId)
+        {
+            if (ritualId.NullOrEmpty())
+            {
+                return GetDefaultRitual();
+            }
+
+            RitualDefinition ritual = Rituals.FirstOrDefault(r => r.Id == ritualId);
+            return ritual ?? GetDefaultRitual();
         }
 
         public static RitualDefinition GetDefaultRitual()
@@ -176,6 +190,16 @@ namespace AbyssalProtocol
         public static string GetInspectRiskText(string risk)
         {
             return TranslateOrFallback("ABY_CircleInspect_Risk", "Risk: {0}", risk);
+        }
+
+        public static string GetInspectHeatText(string heat)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Heat", "Heat: {0}", heat);
+        }
+
+        public static string GetInspectContainmentText(string containment)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Containment", "Containment: {0}", containment);
         }
 
         public static string GetPhaseText(string phaseLabel, int progressPercent)
@@ -627,42 +651,7 @@ namespace AbyssalProtocol
 
         private static float GetRiskValue(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            if (circle == null)
-            {
-                return 0.25f;
-            }
-
-            float instabilityReduction = AbyssalForgeProgressUtility.GetSummoningInstabilityReduction(circle.Map);
-
-            if (circle.RitualActive)
-            {
-                float activeRisk;
-                switch (circle.CurrentRitualPhase)
-                {
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Charging:
-                        activeRisk = 0.58f;
-                        break;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Surge:
-                        activeRisk = 0.79f;
-                        break;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Breach:
-                        activeRisk = 1f;
-                        break;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Cooldown:
-                        activeRisk = 0.52f;
-                        break;
-                    default:
-                        activeRisk = 0.58f;
-                        break;
-                }
-
-                return Mathf.Clamp01(activeRisk - instabilityReduction);
-            }
-
-            float baseRisk = ritual != null ? ritual.BaseRisk : 0.25f;
-            int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
-            float risk = baseRisk + missing * 0.08f - instabilityReduction;
-            return Mathf.Clamp(risk, 0.05f, 1f);
+            return AbyssalCircleInstabilityUtility.GetRiskValue(circle, ritual);
         }
 
         public static Color GetRiskColor(CircleRiskTier tier)
@@ -697,6 +686,59 @@ namespace AbyssalProtocol
                 default:
                     return TranslateOrFallback("ABY_CircleRisk_Stable", "stable");
             }
+        }
+
+        public static string GetHeatDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            int percent = Mathf.RoundToInt((circle?.InstabilityHeat ?? 0f) * 100f);
+            return TranslateOrFallback("ABY_CircleTelemetry_HeatValue", "{0}%", percent);
+        }
+
+        public static string GetContainmentDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            int percent = Mathf.RoundToInt((circle?.ContainmentRating ?? 0f) * 100f);
+            return TranslateOrFallback("ABY_CircleTelemetry_ContainmentValue", "{0}%", percent);
+        }
+
+        public static string GetProjectedDeltaDisplay(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            int percent = Mathf.RoundToInt(AbyssalCircleInstabilityUtility.GetProjectedHeatGain(circle, ritual) * 100f);
+            return TranslateOrFallback("ABY_CircleTelemetry_DeltaValue", "+{0}%", percent);
+        }
+
+        public static string GetProjectedStateSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            CircleRiskTier tier = GetRiskTier(circle, ritual);
+            return TranslateOrFallback("ABY_CircleProjectedState", "Projected state: {0}", GetRiskLabel(tier));
+        }
+
+        public static string GetLikelyAnomalySummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            float projectedHeat = AbyssalCircleInstabilityUtility.GetProjectedPostInvokeHeat(circle, ritual);
+            string key;
+            string fallback;
+            if (projectedHeat >= 0.82f)
+            {
+                key = "ABY_CircleAnomaly_ImpSpill";
+                fallback = "Likely anomaly: containment lash or imp spill";
+            }
+            else if (projectedHeat >= 0.58f)
+            {
+                key = "ABY_CircleAnomaly_Lash";
+                fallback = "Likely anomaly: containment lash";
+            }
+            else
+            {
+                key = "ABY_CircleAnomaly_None";
+                fallback = "Likely anomaly: none expected";
+            }
+
+            return TranslateOrFallback(key, fallback);
+        }
+
+        public static string GetProjectedInstabilityBlock(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            return TranslateOrFallback("ABY_CircleConsequencesProjected", "• Ritual heat load: {0}\n• {1}\n• {2}", GetProjectedDeltaDisplay(circle, ritual), GetProjectedStateSummary(circle, ritual), GetLikelyAnomalySummary(circle, ritual));
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
