@@ -11,13 +11,13 @@
       <texPath>Things/VFX/SpecterLash/ABY_SpecterLash_StreamBlob</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(1.38,1.08)</drawSize>
+      <drawSize>(0.62,0.46)</drawSize>
     </graphicData>
     <mote>
       <fadeInTime>0.00</fadeInTime>
-      <solidTime>0.03</solidTime>
-      <fadeOutTime>0.12</fadeOutTime>
-      <growthRate>0.18</growthRate>
+      <solidTime>0.02</solidTime>
+      <fadeOutTime>0.08</fadeOutTime>
+      <growthRate>0.05</growthRate>
     </mote>
   </ThingDef>
 
@@ -31,13 +31,13 @@
       <texPath>Things/VFX/SpecterLash/ABY_SpecterLash_StreamCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.86,0.64)</drawSize>
+      <drawSize>(0.28,0.22)</drawSize>
     </graphicData>
     <mote>
       <fadeInTime>0.00</fadeInTime>
-      <solidTime>0.03</solidTime>
-      <fadeOutTime>0.10</fadeOutTime>
-      <growthRate>0.12</growthRate>
+      <solidTime>0.02</solidTime>
+      <fadeOutTime>0.06</fadeOutTime>
+      <growthRate>0.03</growthRate>
     </mote>
   </ThingDef>
 
@@ -51,13 +51,13 @@
       <texPath>Things/VFX/SpecterLash/ABY_SpecterLash_Spark</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.56,0.56)</drawSize>
+      <drawSize>(0.18,0.18)</drawSize>
     </graphicData>
     <mote>
       <fadeInTime>0.00</fadeInTime>
-      <solidTime>0.02</solidTime>
-      <fadeOutTime>0.08</fadeOutTime>
-      <growthRate>0.08</growthRate>
+      <solidTime>0.01</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>0.02</growthRate>
     </mote>
   </ThingDef>
 
