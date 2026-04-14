@@ -23,6 +23,7 @@ namespace AbyssalProtocol
             public string SideEffectHintKey;
             public float BaseRisk;
             public float InstabilityGain;
+            public float ContaminationGain;
             public int SpawnPoints;
         }
 
@@ -56,6 +57,7 @@ namespace AbyssalProtocol
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
                 InstabilityGain = 0.16f,
+                ContaminationGain = 0.08f,
                 SpawnPoints = 180
             },
             new RitualDefinition
@@ -71,6 +73,7 @@ namespace AbyssalProtocol
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
                 InstabilityGain = 0.30f,
+                ContaminationGain = 0.16f,
                 SpawnPoints = 900
             }
         };
@@ -200,6 +203,11 @@ namespace AbyssalProtocol
         public static string GetInspectContainmentText(string containment)
         {
             return TranslateOrFallback("ABY_CircleInspect_Containment", "Containment: {0}", containment);
+        }
+
+        public static string GetInspectContaminationText(string contamination)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Contamination", "Contamination: {0}", contamination);
         }
 
         public static string GetPhaseText(string phaseLabel, int progressPercent)
@@ -700,10 +708,22 @@ namespace AbyssalProtocol
             return TranslateOrFallback("ABY_CircleTelemetry_ContainmentValue", "{0}%", percent);
         }
 
+        public static string GetContaminationDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            int percent = Mathf.RoundToInt((circle?.ResidualContamination ?? 0f) * 100f);
+            return TranslateOrFallback("ABY_CircleTelemetry_ContaminationValue", "{0}%", percent);
+        }
+
         public static string GetProjectedDeltaDisplay(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
             int percent = Mathf.RoundToInt(AbyssalCircleInstabilityUtility.GetProjectedHeatGain(circle, ritual) * 100f);
             return TranslateOrFallback("ABY_CircleTelemetry_DeltaValue", "+{0}%", percent);
+        }
+
+        public static string GetProjectedContaminationDisplay(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            int percent = Mathf.RoundToInt(AbyssalCircleInstabilityUtility.GetProjectedContaminationGain(circle, ritual) * 100f);
+            return TranslateOrFallback("ABY_CircleTelemetry_ContaminationDeltaValue", "+{0}%", percent);
         }
 
         public static string GetProjectedStateSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
@@ -715,14 +735,15 @@ namespace AbyssalProtocol
         public static string GetLikelyAnomalySummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
             float projectedHeat = AbyssalCircleInstabilityUtility.GetProjectedPostInvokeHeat(circle, ritual);
+            float contamination = circle?.ResidualContamination ?? 0f;
             string key;
             string fallback;
-            if (projectedHeat >= 0.82f)
+            if (projectedHeat + contamination * 0.40f >= 0.88f)
             {
                 key = "ABY_CircleAnomaly_ImpSpill";
                 fallback = "Likely anomaly: containment lash or imp spill";
             }
-            else if (projectedHeat >= 0.58f)
+            else if (projectedHeat + contamination * 0.25f >= 0.58f)
             {
                 key = "ABY_CircleAnomaly_Lash";
                 fallback = "Likely anomaly: containment lash";
@@ -738,7 +759,30 @@ namespace AbyssalProtocol
 
         public static string GetProjectedInstabilityBlock(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            return TranslateOrFallback("ABY_CircleConsequencesProjected", "• Ritual heat load: {0}\n• {1}\n• {2}", GetProjectedDeltaDisplay(circle, ritual), GetProjectedStateSummary(circle, ritual), GetLikelyAnomalySummary(circle, ritual));
+            return TranslateOrFallback("ABY_CircleConsequencesProjected", "• Ritual heat load: {0}\n• Residue pressure after breach: {1}\n• {2}\n• {3}", GetProjectedDeltaDisplay(circle, ritual), GetProjectedContaminationDisplay(circle, ritual), GetProjectedStateSummary(circle, ritual), GetLikelyAnomalySummary(circle, ritual));
+        }
+
+        public static string FormatTicksShort(int ticks)
+        {
+            if (ticks <= 0)
+            {
+                return TranslateOrFallback("ABY_CircleCooldownReady", "ready");
+            }
+
+            int seconds = Mathf.CeilToInt(ticks / 60f);
+            if (seconds < 60)
+            {
+                return TranslateOrFallback("ABY_CircleCooldownSeconds", "{0}s", seconds);
+            }
+
+            int minutes = seconds / 60;
+            int remainder = seconds % 60;
+            if (remainder <= 0)
+            {
+                return TranslateOrFallback("ABY_CircleCooldownMinutes", "{0}m", minutes);
+            }
+
+            return TranslateOrFallback("ABY_CircleCooldownMinutesSeconds", "{0}m {1}s", minutes, remainder);
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

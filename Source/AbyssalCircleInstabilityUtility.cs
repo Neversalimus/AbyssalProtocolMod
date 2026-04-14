@@ -7,6 +7,10 @@ namespace AbyssalProtocol
     {
         public const int HeatTickInterval = 60;
         public const int ContainmentRefreshInterval = 180;
+        public const int ContaminationDecayInterval = 600;
+        public const int AmbientBleedInterval = 360;
+        public const int PurgeCooldownTicks = 3000;
+        public const int VentCooldownTicks = 4500;
 
         public static float CalculateContainment(Building_AbyssalSummoningCircle circle)
         {
@@ -26,12 +30,25 @@ namespace AbyssalProtocol
             return Mathf.Clamp(poweredContribution + healthContribution + attunementContribution, 0f, 0.32f);
         }
 
+        public static float GetEffectiveContainment(Building_AbyssalSummoningCircle circle, float rawContainment)
+        {
+            float contamination = circle?.ResidualContamination ?? 0f;
+            float penalty = contamination * 0.12f;
+            if (circle != null && circle.RitualActive)
+            {
+                penalty += 0.02f;
+            }
+
+            return Mathf.Clamp(rawContainment - penalty, 0f, 0.32f);
+        }
+
         public static float GetProjectedHeatGain(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             float baseGain = ritual?.InstabilityGain ?? 0.12f;
             float existingPressure = (circle?.InstabilityHeat ?? 0f) * 0.30f;
+            float contaminationPressure = (circle?.ResidualContamination ?? 0f) * 0.12f;
             float containmentMitigation = (circle?.ContainmentRating ?? 0f) * 0.55f;
-            float gain = baseGain + existingPressure - containmentMitigation;
+            float gain = baseGain + existingPressure + contaminationPressure - containmentMitigation;
             return Mathf.Clamp(gain, 0.04f, 0.55f);
         }
 
@@ -45,10 +62,18 @@ namespace AbyssalProtocol
             return Mathf.Clamp01(circle.InstabilityHeat + GetProjectedHeatGain(circle, ritual));
         }
 
+        public static float GetProjectedContaminationGain(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            float baseGain = ritual?.ContaminationGain ?? 0.05f;
+            float heatPressure = Mathf.Max(0f, (circle?.InstabilityHeat ?? 0f) - 0.35f) * 0.10f;
+            return Mathf.Clamp(baseGain + heatPressure, 0.03f, 0.28f);
+        }
+
         public static float GetIdleDecayPerTick(Building_AbyssalSummoningCircle circle)
         {
             float containment = circle?.ContainmentRating ?? 0f;
-            return 0.0015f + containment * 0.02f;
+            float contamination = circle?.ResidualContamination ?? 0f;
+            return Mathf.Max(0.0006f, 0.0012f + containment * 0.02f - contamination * 0.003f);
         }
 
         public static float GetCooldownDecayPerTick(Building_AbyssalSummoningCircle circle)
@@ -73,6 +98,40 @@ namespace AbyssalProtocol
             }
         }
 
+        public static float GetAmbientBleedAmount(Building_AbyssalSummoningCircle circle)
+        {
+            float heat = circle?.InstabilityHeat ?? 0f;
+            if (heat < 0.42f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp(0.004f + (heat - 0.42f) * 0.05f, 0.004f, 0.03f);
+        }
+
+        public static float GetPurgeRemovedHeat(Building_AbyssalSummoningCircle circle)
+        {
+            float containment = circle?.ContainmentRating ?? 0f;
+            return Mathf.Clamp(0.18f + containment * 0.35f, 0.18f, 0.32f);
+        }
+
+        public static float GetPurgeBackwash(float removedHeat)
+        {
+            return Mathf.Clamp(0.02f + removedHeat * 0.10f, 0.02f, 0.06f);
+        }
+
+        public static float GetVentRemovedContamination(Building_AbyssalSummoningCircle circle)
+        {
+            float contamination = circle?.ResidualContamination ?? 0f;
+            return Mathf.Clamp(0.16f + contamination * 0.18f, 0.12f, 0.32f);
+        }
+
+        public static float GetVentHeatKick(Building_AbyssalSummoningCircle circle)
+        {
+            float contamination = circle?.ResidualContamination ?? 0f;
+            return Mathf.Clamp(0.04f + contamination * 0.08f, 0.04f, 0.12f);
+        }
+
         public static float GetRiskValue(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             if (circle == null)
@@ -81,12 +140,13 @@ namespace AbyssalProtocol
             }
 
             float readinessPenalty = circle.IsReadyForSigil(out _) ? 0f : 0.04f;
+            float contamination = circle.ResidualContamination;
             if (circle.RitualActive)
             {
-                return Mathf.Clamp01(circle.InstabilityHeat + GetActivePhasePressure(circle.CurrentRitualPhase) + readinessPenalty);
+                return Mathf.Clamp01(circle.InstabilityHeat + GetActivePhasePressure(circle.CurrentRitualPhase) + contamination * 0.20f + readinessPenalty);
             }
 
-            return Mathf.Clamp(GetProjectedPostInvokeHeat(circle, ritual) + readinessPenalty, 0.05f, 1f);
+            return Mathf.Clamp(GetProjectedPostInvokeHeat(circle, ritual) + GetProjectedContaminationGain(circle, ritual) * 0.45f + contamination * 0.18f + readinessPenalty, 0.05f, 1f);
         }
     }
 }

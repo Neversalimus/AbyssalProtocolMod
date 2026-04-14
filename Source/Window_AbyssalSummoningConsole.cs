@@ -159,16 +159,19 @@ namespace AbyssalProtocol
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 64f, inner.width, 20f), "ABY_CircleControlState".Translate());
             GUI.color = Color.white;
-            Widgets.Label(new Rect(inner.x, inner.y + 84f, inner.width, 22f), circle.GetCurrentStatusLine());
+            Widgets.Label(new Rect(inner.x, inner.y + 84f, inner.width, 20f), circle.GetCurrentStatusLine());
 
+            float colWidth = inner.width / 4f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 108f, inner.width * 0.32f, 18f), "ABY_CircleTelemetry_Heat".Translate());
-            Widgets.Label(new Rect(inner.x + inner.width * 0.34f, inner.y + 108f, inner.width * 0.32f, 18f), "ABY_CircleTelemetry_Containment".Translate());
-            Widgets.Label(new Rect(inner.x + inner.width * 0.68f, inner.y + 108f, inner.width * 0.30f, 18f), "ABY_CircleTelemetry_Delta".Translate());
+            Widgets.Label(new Rect(inner.x + colWidth * 0f, inner.y + 108f, colWidth - 4f, 18f), "ABY_CircleTelemetry_Heat".Translate());
+            Widgets.Label(new Rect(inner.x + colWidth * 1f, inner.y + 108f, colWidth - 4f, 18f), "ABY_CircleTelemetry_Containment".Translate());
+            Widgets.Label(new Rect(inner.x + colWidth * 2f, inner.y + 108f, colWidth - 4f, 18f), "ABY_CircleTelemetry_Contamination".Translate());
+            Widgets.Label(new Rect(inner.x + colWidth * 3f, inner.y + 108f, colWidth - 4f, 18f), "ABY_CircleTelemetry_Delta".Translate());
             GUI.color = Color.white;
-            Widgets.Label(new Rect(inner.x, inner.y + 126f, inner.width * 0.32f, 20f), AbyssalSummoningConsoleUtility.GetHeatDisplay(circle));
-            Widgets.Label(new Rect(inner.x + inner.width * 0.34f, inner.y + 126f, inner.width * 0.32f, 20f), AbyssalSummoningConsoleUtility.GetContainmentDisplay(circle));
-            Widgets.Label(new Rect(inner.x + inner.width * 0.68f, inner.y + 126f, inner.width * 0.30f, 20f), AbyssalSummoningConsoleUtility.GetProjectedDeltaDisplay(circle, ritual));
+            Widgets.Label(new Rect(inner.x + colWidth * 0f, inner.y + 126f, colWidth - 4f, 20f), AbyssalSummoningConsoleUtility.GetHeatDisplay(circle));
+            Widgets.Label(new Rect(inner.x + colWidth * 1f, inner.y + 126f, colWidth - 4f, 20f), AbyssalSummoningConsoleUtility.GetContainmentDisplay(circle));
+            Widgets.Label(new Rect(inner.x + colWidth * 2f, inner.y + 126f, colWidth - 4f, 20f), AbyssalSummoningConsoleUtility.GetContaminationDisplay(circle));
+            Widgets.Label(new Rect(inner.x + colWidth * 3f, inner.y + 126f, colWidth - 4f, 20f), AbyssalSummoningConsoleUtility.GetProjectedDeltaDisplay(circle, ritual));
 
             bool reduced = circle.ReducedConsoleEffects;
             bool newReduced = reduced;
@@ -203,13 +206,49 @@ namespace AbyssalProtocol
             List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
             for (int i = 0; i < entries.Count; i++)
             {
-                Rect lineRect = new Rect(inner.x, inner.y + 28f + i * 22f, inner.width, 20f);
+                Rect lineRect = new Rect(inner.x, inner.y + 28f + i * 18f, inner.width, 18f);
                 Rect valueRect = new Rect(lineRect.x + inner.width * 0.44f, lineRect.y, inner.width * 0.56f, lineRect.height);
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 Widgets.Label(new Rect(lineRect.x, lineRect.y, inner.width * 0.42f, lineRect.height), entries[i].Label);
                 GUI.color = entries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.60f, 0.54f, 1f);
                 Widgets.Label(valueRect, entries[i].Value);
                 GUI.color = Color.white;
+            }
+
+            float buttonsY = inner.y + 140f;
+            Rect purgeRect = new Rect(inner.x, buttonsY, inner.width * 0.48f, 24f);
+            Rect ventRect = new Rect(inner.x + inner.width * 0.52f, buttonsY, inner.width * 0.48f, 24f);
+
+            bool canPurge = circle.CanPurgeHeat(out string purgeReason);
+            string purgeTooltip = canPurge
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePurgeTooltip", "Bleed local circle heat. Faster recovery, but some residue is dumped into the map layer.")
+                : purgeReason;
+            if (AbyssalStyledWidgets.TextButton(purgeRect, "ABY_CircleCommand_PurgeHeat".Translate(), canPurge, false, null, purgeTooltip))
+            {
+                if (circle.TryPurgeHeat(out string failReason))
+                {
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                }
+                else if (!failReason.NullOrEmpty())
+                {
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                }
+            }
+
+            bool canVent = circle.CanVentContamination(out string ventReason);
+            string ventTooltip = canVent
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleVentTooltip", "Vent residue pressure from the map layer. Safer future breaches, but it kicks heat back into the circle.")
+                : ventReason;
+            if (AbyssalStyledWidgets.TextButton(ventRect, "ABY_CircleCommand_VentResidue".Translate(), canVent, false, null, ventTooltip))
+            {
+                if (circle.TryVentContamination(out string failReason))
+                {
+                    SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                }
+                else if (!failReason.NullOrEmpty())
+                {
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                }
             }
         }
 

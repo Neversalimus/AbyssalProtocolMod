@@ -152,9 +152,33 @@
   <ABY_CircleAnomaly_Lash>Вероятная аномалия: удар по контуру сдерживания</ABY_CircleAnomaly_Lash>
   <ABY_CircleAnomaly_ImpSpill>Вероятная аномалия: удар по сдерживанию или пролив rift imp</ABY_CircleAnomaly_ImpSpill>
   <ABY_CircleConsequencesProjected>• Нагрузка ритуального нагрева: {0}
-• {1}
-• {2}</ABY_CircleConsequencesProjected>
+• Давление residue после разлома: {1}
+• {2}
+• {3}</ABY_CircleConsequencesProjected>
   <ABY_CircleInstability_Lash>Круг призыва бьёт по собственному контуру сдерживания и получает {0} урона.</ABY_CircleInstability_Lash>
   <ABY_CircleInstability_ImpSpill>Нестабильность выплёскивает за периметр разлома ещё {0} rift imp.</ABY_CircleInstability_ImpSpill>
+
+  <ABY_CircleInspect_Contamination>Загрязнение: {0}</ABY_CircleInspect_Contamination>
+  <ABY_CircleTelemetry_Contamination>Осадок</ABY_CircleTelemetry_Contamination>
+  <ABY_CircleTelemetry_ContaminationValue>{0}%</ABY_CircleTelemetry_ContaminationValue>
+  <ABY_CircleTelemetry_ContaminationDeltaValue>+{0}%</ABY_CircleTelemetry_ContaminationDeltaValue>
+  <ABY_CircleCommand_PurgeHeat>Сбросить нагрев</ABY_CircleCommand_PurgeHeat>
+  <ABY_CircleCommand_VentResidue>Стравить осадок</ABY_CircleCommand_VentResidue>
+  <ABY_CirclePurgeTooltip>Стравливает локальный нагрев круга. Он быстрее остывает, но часть residue уходит в слой загрязнения карты.</ABY_CirclePurgeTooltip>
+  <ABY_CircleVentTooltip>Стравливает давление residue из слоя карты. Следующие разломы безопаснее, но круг получает обратный нагрев.</ABY_CircleVentTooltip>
+  <ABY_CirclePurgeFail_NoCircle>Нет подходящего круга призыва для цикла сброса.</ABY_CirclePurgeFail_NoCircle>
+  <ABY_CirclePurgeFail_Busy>Круг призыва занят активным ритуалом.</ABY_CirclePurgeFail_Busy>
+  <ABY_CirclePurgeFail_LowHeat>Нагрев слишком низкий, чтобы запускать цикл сброса.</ABY_CirclePurgeFail_LowHeat>
+  <ABY_CirclePurgeFail_Cooldown>Цикл сброса перезаряжается: {0}.</ABY_CirclePurgeFail_Cooldown>
+  <ABY_CircleVentFail_NoCircle>Нет подходящего слоя нестабильности карты для стравливания residue.</ABY_CircleVentFail_NoCircle>
+  <ABY_CircleVentFail_Busy>Во время активного ритуала круг не может стравливать residue.</ABY_CircleVentFail_Busy>
+  <ABY_CircleVentFail_LowContamination>Остаточное загрязнение слишком низкое для стравливания.</ABY_CircleVentFail_LowContamination>
+  <ABY_CircleVentFail_Cooldown>Контур стравливания residue перезаряжается: {0}.</ABY_CircleVentFail_Cooldown>
+  <ABY_CirclePurgeSuccess>Цикл сброса вывел из круга {0}% нагрева.</ABY_CirclePurgeSuccess>
+  <ABY_CircleVentSuccess>Стравливание residue убрало из слоя карты {0}% загрязнения.</ABY_CircleVentSuccess>
+  <ABY_CircleCooldownReady>готово</ABY_CircleCooldownReady>
+  <ABY_CircleCooldownSeconds>{0}с</ABY_CircleCooldownSeconds>
+  <ABY_CircleCooldownMinutes>{0}м</ABY_CircleCooldownMinutes>
+  <ABY_CircleCooldownMinutesSeconds>{0}м {1}с</ABY_CircleCooldownMinutesSeconds>
 
 </LanguageData>

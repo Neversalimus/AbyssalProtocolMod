@@ -152,9 +152,33 @@
   <ABY_CircleAnomaly_Lash>Likely anomaly: containment lash</ABY_CircleAnomaly_Lash>
   <ABY_CircleAnomaly_ImpSpill>Likely anomaly: containment lash or imp spill</ABY_CircleAnomaly_ImpSpill>
   <ABY_CircleConsequencesProjected>• Ritual heat load: {0}
-• {1}
-• {2}</ABY_CircleConsequencesProjected>
+• Residue pressure after breach: {1}
+• {2}
+• {3}</ABY_CircleConsequencesProjected>
   <ABY_CircleInstability_Lash>The summoning circle lashes back against its own containment shell, taking {0} damage.</ABY_CircleInstability_Lash>
   <ABY_CircleInstability_ImpSpill>Instability spills {0} extra rift imp(s) out of the breach perimeter.</ABY_CircleInstability_ImpSpill>
+
+  <ABY_CircleInspect_Contamination>Contamination: {0}</ABY_CircleInspect_Contamination>
+  <ABY_CircleTelemetry_Contamination>Residue</ABY_CircleTelemetry_Contamination>
+  <ABY_CircleTelemetry_ContaminationValue>{0}%</ABY_CircleTelemetry_ContaminationValue>
+  <ABY_CircleTelemetry_ContaminationDeltaValue>+{0}%</ABY_CircleTelemetry_ContaminationDeltaValue>
+  <ABY_CircleCommand_PurgeHeat>Purge heat</ABY_CircleCommand_PurgeHeat>
+  <ABY_CircleCommand_VentResidue>Vent residue</ABY_CircleCommand_VentResidue>
+  <ABY_CirclePurgeTooltip>Bleed local circle heat. Faster recovery, but some residue is dumped into the map layer.</ABY_CirclePurgeTooltip>
+  <ABY_CircleVentTooltip>Vent residue pressure from the map layer. Safer future breaches, but it kicks heat back into the circle.</ABY_CircleVentTooltip>
+  <ABY_CirclePurgeFail_NoCircle>No valid summoning circle is available for purge routing.</ABY_CirclePurgeFail_NoCircle>
+  <ABY_CirclePurgeFail_Busy>The summoning circle is busy with an active ritual.</ABY_CirclePurgeFail_Busy>
+  <ABY_CirclePurgeFail_LowHeat>Heat is too low to justify a purge cycle.</ABY_CirclePurgeFail_LowHeat>
+  <ABY_CirclePurgeFail_Cooldown>Purge cycle recharging: {0}.</ABY_CirclePurgeFail_Cooldown>
+  <ABY_CircleVentFail_NoCircle>No valid map instability layer is available for residue venting.</ABY_CircleVentFail_NoCircle>
+  <ABY_CircleVentFail_Busy>The summoning circle cannot vent residue during an active ritual.</ABY_CircleVentFail_Busy>
+  <ABY_CircleVentFail_LowContamination>Residual contamination is too low to vent.</ABY_CircleVentFail_LowContamination>
+  <ABY_CircleVentFail_Cooldown>Residue vent routing recharging: {0}.</ABY_CircleVentFail_Cooldown>
+  <ABY_CirclePurgeSuccess>Purge cycle vented {0}% heat from the circle.</ABY_CirclePurgeSuccess>
+  <ABY_CircleVentSuccess>Residue vent removed {0}% contamination from the map layer.</ABY_CircleVentSuccess>
+  <ABY_CircleCooldownReady>ready</ABY_CircleCooldownReady>
+  <ABY_CircleCooldownSeconds>{0}s</ABY_CircleCooldownSeconds>
+  <ABY_CircleCooldownMinutes>{0}m</ABY_CircleCooldownMinutes>
+  <ABY_CircleCooldownMinutesSeconds>{0}m {1}s</ABY_CircleCooldownMinutesSeconds>
 
 </LanguageData>
