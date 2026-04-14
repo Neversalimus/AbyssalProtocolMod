@@ -64,6 +64,12 @@ namespace AbyssalProtocol
             Vector2.one,
             Color.white);
 
+        private static readonly Graphic CapacitorBaySocketGraphic = GraphicDatabase.Get<Graphic_Single>(
+            "Things/Building/Capacitors/ABY_CapacitorBaySocket",
+            ShaderDatabase.TransparentPostLight,
+            Vector2.one,
+            Color.white);
+
         private static readonly Vector2 OuterRingSize = new Vector2(9.38f, 9.38f);
         private static readonly Vector2 InnerGlyphSize = new Vector2(8.72f, 8.72f);
         private static readonly Vector2 EnergyArcsSize = new Vector2(8.36f, 8.36f);
@@ -71,6 +77,10 @@ namespace AbyssalProtocol
         private static readonly Vector2 CoreGlowSize = new Vector2(2.84f, 2.84f);
         private static readonly Vector2 IdleGlowSize = new Vector2(9.20f, 9.20f);
         private static readonly Vector2 BreachSize = new Vector2(6.90f, 6.90f);
+        private static readonly Vector2 CapacitorBaySocketSize = new Vector2(1.34f, 1.34f);
+        private static readonly Vector2 CapacitorMountedBaseSize = new Vector2(1.42f, 1.42f);
+        private static readonly Vector3 CoreCapacitorBayOffset = new Vector3(0f, 0f, 1.10f);
+        private static readonly Vector3 AuxiliaryCapacitorBayOffset = new Vector3(0f, 0f, -1.10f);
         private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get("UI/AbyssalSummoningCircle/ABY_SummoningSeal", false);
 
 
@@ -317,6 +327,7 @@ namespace AbyssalProtocol
                 center.z += Mathf.Cos(ticks * 1.40f + seedPhase) * jitter;
             }
 
+            DrawCapacitorBayVisuals(center, ticks, ritualIntensity, powerFactor);
             DrawLayer(IdleGlowGraphic, center, IdleGlowSize * (pulseA + ritualIntensity * 0.08f), 0f, 0.004f);
 
             if (!IsPoweredForRitual)
@@ -348,6 +359,34 @@ namespace AbyssalProtocol
                 DrawLayer(IdleGlowGraphic, center, BreachSize * breachPulse, breachAngle * -0.65f, 0.027f);
                 DrawLayer(CoreGlowGraphic, center, BreachSize * (0.65f + ritualIntensity * 0.22f), breachAngle * 1.35f, 0.028f);
             }
+        }
+
+        private void DrawCapacitorBayVisuals(Vector3 center, int ticks, float ritualIntensity, float powerFactor)
+        {
+            EnsureCapacitorSlotsInitialized();
+            DrawCapacitorBayVisual(center, coreCapacitorSlot, CoreCapacitorBayOffset, ticks, ritualIntensity, powerFactor, 0.007f);
+            DrawCapacitorBayVisual(center, auxiliaryCapacitorSlot, AuxiliaryCapacitorBayOffset, ticks, ritualIntensity, powerFactor, 0.008f);
+        }
+
+        private void DrawCapacitorBayVisual(Vector3 center, AbyssalCircleCapacitorSlot slot, Vector3 offset, int ticks, float ritualIntensity, float powerFactor, float yOffset)
+        {
+            Vector3 drawCenter = center + offset;
+            float socketPulse = 1f + Mathf.Sin(ticks * 0.031f + offset.z * 0.9f + thingIDNumber * 0.05f) * 0.015f * powerFactor;
+            DrawLayer(CapacitorBaySocketGraphic, drawCenter, CapacitorBaySocketSize * socketPulse, 0f, yOffset);
+
+            if (slot == null || slot.IsEmpty)
+            {
+                return;
+            }
+
+            Graphic mountedGraphic = AbyssalCircleCapacitorUtility.GetMountedGraphic(slot.InstalledThingDef);
+            if (mountedGraphic == null)
+            {
+                return;
+            }
+
+            float activePulse = 1f + Mathf.Sin(ticks * 0.052f + offset.z * 1.25f + thingIDNumber * 0.08f) * (0.018f + ritualIntensity * 0.020f) * powerFactor;
+            DrawLayer(mountedGraphic, drawCenter, CapacitorMountedBaseSize * activePulse, 0f, yOffset + 0.002f);
         }
 
         public override string GetInspectString()

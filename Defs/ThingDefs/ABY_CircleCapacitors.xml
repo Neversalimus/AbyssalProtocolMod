@@ -29,6 +29,8 @@
         <passiveLeakage>0.00</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
         <allowAuxiliaryBay>true</allowAuxiliaryBay>
+        <mountedTexPath>Things/Building/Capacitors/ABY_AshboundCapacitor_Mounted</mountedTexPath>
+        <mountedDrawScale>1.00</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>35</requiredResidue>
@@ -65,6 +67,8 @@
         <passiveLeakage>0.03</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
         <allowAuxiliaryBay>true</allowAuxiliaryBay>
+        <mountedTexPath>Things/Building/Capacitors/ABY_RiftCapacitor_Mounted</mountedTexPath>
+        <mountedDrawScale>1.04</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>80</requiredResidue>
@@ -101,6 +105,8 @@
         <passiveLeakage>0.08</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
         <allowAuxiliaryBay>true</allowAuxiliaryBay>
+        <mountedTexPath>Things/Building/Capacitors/ABY_CrownCondenser_Mounted</mountedTexPath>
+        <mountedDrawScale>1.08</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>145</requiredResidue>

@@ -15,6 +15,7 @@ namespace AbyssalProtocol
         public const string AuxiliaryBayLabelKey = "ABY_CapacitorBay_Auxiliary";
 
         private static List<ThingDef> cachedCapacitorDefs;
+        private static readonly Dictionary<string, Graphic> cachedMountedGraphics = new Dictionary<string, Graphic>();
 
         private static string TranslateOrFallback(string key, string fallback)
         {
@@ -241,6 +242,31 @@ namespace AbyssalProtocol
             }
 
             return TranslateOrFallback("ABY_CapacitorInspect_Throughput", "Throughput: {0}", Mathf.RoundToInt(circle.GetCapacitorThroughput()));
+        }
+
+        public static float GetMountedDrawScale(ThingDef def, float fallback = 1f)
+        {
+            return def?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>()?.mountedDrawScale ?? fallback;
+        }
+
+        public static Graphic GetMountedGraphic(ThingDef def)
+        {
+            DefModExtension_AbyssalCircleCapacitor extension = def?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>();
+            if (extension == null || extension.mountedTexPath.NullOrEmpty())
+            {
+                return null;
+            }
+
+            float scale = Mathf.Max(0.10f, extension.mountedDrawScale);
+            string cacheKey = extension.mountedTexPath + "|" + scale.ToString("0.###");
+            if (cachedMountedGraphics.TryGetValue(cacheKey, out Graphic graphic))
+            {
+                return graphic;
+            }
+
+            graphic = GraphicDatabase.Get<Graphic_Single>(extension.mountedTexPath, ShaderDatabase.TransparentPostLight, new Vector2(scale, scale), Color.white);
+            cachedMountedGraphics[cacheKey] = graphic;
+            return graphic;
         }
 
         public static string GetCompactSummary(Building_AbyssalSummoningCircle circle)
