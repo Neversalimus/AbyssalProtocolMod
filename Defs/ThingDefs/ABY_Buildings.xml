@@ -52,6 +52,10 @@
 
     <recipes Inherit="False" />
 
+    <inspectorTabs Inherit="False">
+      <li>AbyssalProtocol.ITab_AbyssalSummoningCircle</li>
+    </inspectorTabs>
+
     <comps Inherit="False">
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>

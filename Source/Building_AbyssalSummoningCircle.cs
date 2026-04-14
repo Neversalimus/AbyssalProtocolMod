@@ -1,13 +1,24 @@
+using System.Collections.Generic;
 using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
     [StaticConstructorOnStartup]
     public class Building_AbyssalSummoningCircle : Building_WorkTable
     {
+        public enum ConsoleRitualPhase
+        {
+            Idle,
+            Charging,
+            Surge,
+            Breach,
+            Cooldown
+        }
+
         private enum RitualPhase
         {
             Idle,
@@ -70,10 +81,33 @@ namespace AbyssalProtocol
         private string pendingBossLabel;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
+        private bool reducedConsoleEffects;
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
         public IntVec3 RitualFocusCell => GenAdj.OccupiedRect(Position, Rotation, def.Size).CenterCell;
+        public bool ReducedConsoleEffects => reducedConsoleEffects;
+        public float RitualProgress => RitualActive ? GetPhaseProgress() : 0f;
+
+        public ConsoleRitualPhase CurrentRitualPhase
+        {
+            get
+            {
+                switch (ritualPhase)
+                {
+                    case RitualPhase.Charging:
+                        return ConsoleRitualPhase.Charging;
+                    case RitualPhase.Surge:
+                        return ConsoleRitualPhase.Surge;
+                    case RitualPhase.Breach:
+                        return ConsoleRitualPhase.Breach;
+                    case RitualPhase.Cooldown:
+                        return ConsoleRitualPhase.Cooldown;
+                    default:
+                        return ConsoleRitualPhase.Idle;
+                }
+            }
+        }
 
         public override void ExposeData()
         {
@@ -86,6 +120,31 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingBossLabel, "pendingBossLabel");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
+            Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
+        }
+
+        public void SetReducedConsoleEffects(bool value)
+        {
+            reducedConsoleEffects = value;
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+
+            yield return new Command_Action
+            {
+                defaultLabel = "ABY_CircleCommand_OpenConsole".Translate(),
+                defaultDesc = "ABY_CircleCommand_OpenConsoleDesc".Translate(),
+                action = delegate
+                {
+                    Find.WindowStack.Add(new Window_AbyssalSummoningConsole(this));
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            };
         }
 
         protected override void Tick()
@@ -256,6 +315,13 @@ namespace AbyssalProtocol
             {
                 sb.Append("ABY_CircleInspect_NotReady".Translate(failReason));
             }
+
+            sb.AppendLine();
+            sb.Append("ABY_CircleInspect_Sigils".Translate(AbyssalSummoningConsoleUtility.CountSigilsOnMap(Map, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
+            sb.AppendLine();
+            sb.Append("ABY_CircleInspect_Readiness".Translate(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
+            sb.AppendLine();
+            sb.Append("ABY_CircleInspect_Risk".Translate(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()))));
 
             return sb.ToString();
         }
@@ -558,6 +624,26 @@ namespace AbyssalProtocol
             pos.x += Mathf.Sin(angle) * radius;
             pos.z += Mathf.Cos(angle) * radius;
             MoteMaker.MakeStaticMote(pos, Map, moteDef, scale);
+        }
+
+        public string GetCurrentPhaseTranslated()
+        {
+            return GetPhaseLabel().Translate();
+        }
+
+        public string GetCurrentStatusLine()
+        {
+            if (RitualActive)
+            {
+                return "ABY_CircleInspect_Phase".Translate(GetPhaseLabel().Translate(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
+            }
+
+            if (IsReadyForSigil(out string failReason))
+            {
+                return "ABY_CircleInspect_Ready".Translate();
+            }
+
+            return "ABY_CircleInspect_NotReady".Translate(failReason);
         }
 
         private static void DrawLayer(Graphic graphic, Vector3 center, Vector2 drawSize, float angle, float yOffset)
