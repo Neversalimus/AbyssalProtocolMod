@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
+  <ABY_ForgePanelHeader>Infernal communion lattice</ABY_ForgePanelHeader>
+  <ABY_ForgeOverviewSubtitleShort>Map-wide residue communion and pattern control.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOpenConsole>Open communion console</ABY_ForgeOpenConsole>
+  <ABY_ForgeOpenConsoleLabel>Communion console</ABY_ForgeOpenConsoleLabel>
+  <ABY_ForgeOpenConsoleDesc>Open the full communion console for pattern browsing, offering, and attunement tracking.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeStatusHeader>Communion state</ABY_ForgeStatusHeader>
+  <ABY_ForgeMetricResidue>Residue attuned</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Residue on map</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricAttunement>Colony attunement</ABY_ForgeMetricAttunement>
+  <ABY_ForgeMetricPower>Reactor state</ABY_ForgeMetricPower>
+  <ABY_ForgePowerOnlineShort>online</ABY_ForgePowerOnlineShort>
+  <ABY_ForgePowerOfflineShort>offline</ABY_ForgePowerOfflineShort>
+  <ABY_ForgeOfferHeader>Offering well</ABY_ForgeOfferHeader>
+  <ABY_ForgeOfferAmount>Offer {0}</ABY_ForgeOfferAmount>
+  <ABY_ForgeOfferAll>Offer all ({0})</ABY_ForgeOfferAll>
+  <ABY_ForgeOfferHintShort>Available residue can be committed directly into the lattice.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeOfferNoneAvailable>No abyssal residue is available on this map right now.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>Committed {0} residue. Total attuned residue: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeNextHeader>Pattern telemetry</ABY_ForgeNextHeader>
+  <ABY_ForgeUpcomingPatterns>Upcoming patterns</ABY_ForgeUpcomingPatterns>
+  <ABY_ForgeUnlockedSummary>{0} / {1} patterns unlocked in {2}</ABY_ForgeUnlockedSummary>
+  <ABY_ForgeAllPatternsUnlocked>All known patterns are unlocked.</ABY_ForgeAllPatternsUnlocked>
+  <ABY_ForgeProgressBand>{0} residue attuned • current band {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeProgressComplete>{0} residue attuned • maximum lattice band reached</ABY_ForgeProgressComplete>
+  <ABY_ForgeConsoleTitle>Infernal communion console</ABY_ForgeConsoleTitle>
+  <ABY_ForgeConsoleSubtitle>Ritual-industrial control surface for residue intake, attunement shaping, and pattern deployment.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeConsolePatternsHeader>Pattern browser</ABY_ForgeConsolePatternsHeader>
+  <ABY_ForgeConsoleBillsHeader>Queued fabrication</ABY_ForgeConsoleBillsHeader>
+  <ABY_ForgePatternNew>NEW</ABY_ForgePatternNew>
+  <ABY_ForgePatternUnlockedAt>Unlocked at {0} residue</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Locks until {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternRequirementsLabel>Requirements</ABY_ForgePatternRequirementsLabel>
+  <ABY_ForgePatternRequirementsState>Materials on map</ABY_ForgePatternRequirementsState>
+  <ABY_ForgePatternMoreRequirements>+{0} more requirements</ABY_ForgePatternMoreRequirements>
+  <ABY_ForgePatternAddBill>Add bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
+  <ABY_ForgePatternNoMaterialData>No material data available.</ABY_ForgePatternNoMaterialData>
+  <ABY_ForgeNoUnlockedRecipes>No unlocked patterns are available.</ABY_ForgeNoUnlockedRecipes>
+  <ABY_ForgeClipboardLocked>Clipboard actions are unavailable while no valid bill can be copied here.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeUnlockToast>New pattern attuned: {0}</ABY_ForgeUnlockToast>
+  <ABY_ForgeUnlockLetterLabel>New patterns attuned</ABY_ForgeUnlockLetterLabel>
+  <ABY_ForgeUnlockLetterDesc>The forge lattice has stabilized new patterns:
+
+{0}</ABY_ForgeUnlockLetterDesc>
+  <ABY_ForgeOverviewHintCompact>Use the full communion console for pattern browsing, requirement checks, and bill control.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgeNextPattern>Next pattern at {0}: {1}</ABY_ForgeNextPattern>
+  <ABY_ForgeNextPatternDone>All current forge patterns are already unlocked.</ABY_ForgeNextPatternDone>
+  <ABY_ForgeReducedEffectsOn>Effects: reduced</ABY_ForgeReducedEffectsOn>
+  <ABY_ForgeReducedEffectsOff>Effects: full</ABY_ForgeReducedEffectsOff>
+  <ABY_ForgeReducedEffectsDesc>Softens header sweeps, pulse accents, and other animated flourishes inside the forge console.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeCategory_All>All</ABY_ForgeCategory_All>
+  <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>
+  <ABY_ForgeCategory_Implants>Implants</ABY_ForgeCategory_Implants>
+  <ABY_ForgeCategory_Ritual>Ritual</ABY_ForgeCategory_Ritual>
+  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
+  <ABY_ForgeInspectResidue>Forge communion: {0} offered / {1} available on map</ABY_ForgeInspectResidue>
+  <ABY_ForgeInspectNextUnlock>Next pattern at {0}: {1}</ABY_ForgeInspectNextUnlock>
+  <ABY_ForgeInspectAllKnown>All current patterns are attuned.</ABY_ForgeInspectAllKnown>
+  <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
+  <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Commit abyssal residue on the current map into the forge lattice.</ABY_ForgeGizmoOfferDesc>
+</LanguageData>

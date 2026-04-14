@@ -26,7 +26,7 @@ namespace AbyssalProtocol
             resizeable = false;
         }
 
-        public override Vector2 InitialSize => new Vector2(1180f, 760f);
+        public override Vector2 InitialSize => new Vector2(1240f, 840f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -41,10 +41,15 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 72f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 62f);
-            Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 468f, 430f);
-            Rect controlRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 236f);
-            Rect statusRect = new Rect(ritualsRect.xMax + 10f, controlRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 184f);
-            Rect previewRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
+
+            float contentTop = stripRect.yMax + 10f;
+            float ritualsWidth = 500f;
+            float rightWidth = inRect.width - ritualsWidth - 10f;
+            Rect ritualsRect = new Rect(inRect.x, contentTop, ritualsWidth, 372f);
+            Rect controlRect = new Rect(ritualsRect.xMax + 10f, contentTop, rightWidth, 252f);
+            Rect statusRect = new Rect(ritualsRect.xMax + 10f, controlRect.yMax + 10f, rightWidth, 110f);
+            float previewTop = Mathf.Max(ritualsRect.yMax, statusRect.yMax) + 10f;
+            Rect previewRect = new Rect(inRect.x, previewTop, inRect.width, inRect.height - previewTop);
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
@@ -161,15 +166,18 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(inner.x, inner.y + 84f, inner.width, 22f), circle.GetCurrentStatusLine());
 
             bool reduced = circle.ReducedConsoleEffects;
-            Rect reducedRect = new Rect(inner.x, inner.y + 112f, inner.width, 24f);
-            if (AbyssalStyledWidgets.TextButton(reducedRect, AbyssalSummoningConsoleUtility.GetReducedEffectsLabel(reduced), true, reduced, null, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console.")))
+            bool oldReduced = reduced;
+            Rect toggleHitRect = new Rect(inner.x, inner.y + 112f, Mathf.Min(inner.width, 230f), 24f);
+            Widgets.CheckboxLabeled(toggleHitRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffects", "Reduced effects"), ref reduced);
+            TooltipHandler.TipRegion(toggleHitRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."));
+            if (reduced != oldReduced)
             {
-                circle.SetReducedConsoleEffects(!reduced);
+                circle.SetReducedConsoleEffects(reduced);
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
 
-            Rect openRect = new Rect(inner.x, inner.y + 150f, inner.width, 30f);
-            Rect invokeRect = new Rect(inner.x, inner.y + 188f, inner.width, 34f);
+            Rect openRect = new Rect(inner.x, inner.y + 148f, inner.width, 32f);
+            Rect invokeRect = new Rect(inner.x, inner.y + 188f, inner.width, 36f);
             if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
             {
                 JumpToSigil(ritual);

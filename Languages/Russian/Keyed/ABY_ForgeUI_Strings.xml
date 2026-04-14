@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeTabLabel>сопряжение</ABY_ForgeTabLabel>
+  <ABY_ForgePanelHeader>Инфернальная решётка сопряжения</ABY_ForgePanelHeader>
+  <ABY_ForgeOverviewSubtitleShort>Общекартное сопряжение residue и контроль шаблонов.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOpenConsole>Открыть консоль сопряжения</ABY_ForgeOpenConsole>
+  <ABY_ForgeOpenConsoleLabel>Консоль сопряжения</ABY_ForgeOpenConsoleLabel>
+  <ABY_ForgeOpenConsoleDesc>Открыть полную консоль сопряжения для шаблонов, внесения residue и отслеживания attunement.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeStatusHeader>Состояние сопряжения</ABY_ForgeStatusHeader>
+  <ABY_ForgeMetricResidue>Настроено residue</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Residue на карте</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricAttunement>Аттюмент колонии</ABY_ForgeMetricAttunement>
+  <ABY_ForgeMetricPower>Состояние реактора</ABY_ForgeMetricPower>
+  <ABY_ForgePowerOnlineShort>онлайн</ABY_ForgePowerOnlineShort>
+  <ABY_ForgePowerOfflineShort>офлайн</ABY_ForgePowerOfflineShort>
+  <ABY_ForgeOfferHeader>Колодец внесения</ABY_ForgeOfferHeader>
+  <ABY_ForgeOfferAmount>Внести {0}</ABY_ForgeOfferAmount>
+  <ABY_ForgeOfferAll>Внести всё ({0})</ABY_ForgeOfferAll>
+  <ABY_ForgeOfferHintShort>Доступный residue можно сразу внести в решётку.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeOfferNoneAvailable>На этой карте сейчас нет доступного abyssal residue.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>Внесено {0} residue. Всего настроено residue: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeNextHeader>Телеметрия шаблонов</ABY_ForgeNextHeader>
+  <ABY_ForgeUpcomingPatterns>Ближайшие шаблоны</ABY_ForgeUpcomingPatterns>
+  <ABY_ForgeUnlockedSummary>Открыто {0} / {1} шаблонов в категории {2}</ABY_ForgeUnlockedSummary>
+  <ABY_ForgeAllPatternsUnlocked>Все известные шаблоны уже открыты.</ABY_ForgeAllPatternsUnlocked>
+  <ABY_ForgeProgressBand>Настроено {0} residue • текущая полоса {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeProgressComplete>Настроено {0} residue • достигнута максимальная полоса решётки</ABY_ForgeProgressComplete>
+  <ABY_ForgeConsoleTitle>Консоль инфернального сопряжения</ABY_ForgeConsoleTitle>
+  <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная консоль для приёма residue, настройки attunement и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeConsolePatternsHeader>Браузер шаблонов</ABY_ForgeConsolePatternsHeader>
+  <ABY_ForgeConsoleBillsHeader>Очередь производства</ABY_ForgeConsoleBillsHeader>
+  <ABY_ForgePatternNew>НОВОЕ</ABY_ForgePatternNew>
+  <ABY_ForgePatternUnlockedAt>Открывается на {0} residue</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Закрыто до {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
+  <ABY_ForgePatternRequirementsState>Материалы на карте</ABY_ForgePatternRequirementsState>
+  <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
+  <ABY_ForgePatternAddBill>Добавить bill</ABY_ForgePatternAddBill>
+  <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
+  <ABY_ForgePatternNoMaterialData>Нет данных о материалах.</ABY_ForgePatternNoMaterialData>
+  <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
+  <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить bill.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeUnlockToast>Открыт новый шаблон: {0}</ABY_ForgeUnlockToast>
+  <ABY_ForgeUnlockLetterLabel>Открыты новые шаблоны</ABY_ForgeUnlockLetterLabel>
+  <ABY_ForgeUnlockLetterDesc>Решётка forge стабилизировала новые шаблоны:
+
+{0}</ABY_ForgeUnlockLetterDesc>
+  <ABY_ForgeOverviewHintCompact>Используй полную консоль сопряжения для шаблонов, проверки требований и управления bill.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgeNextPattern>Следующий шаблон на {0}: {1}</ABY_ForgeNextPattern>
+  <ABY_ForgeNextPatternDone>Все текущие forge-шаблоны уже открыты.</ABY_ForgeNextPatternDone>
+  <ABY_ForgeReducedEffectsOn>Эффекты: снижены</ABY_ForgeReducedEffectsOn>
+  <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
+  <ABY_ForgeReducedEffectsDesc>Смягчает sweep в шапке, пульсацию и другие анимированные акценты внутри forge-консоли.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
+  <ABY_ForgeCategory_Core>Ядро forge</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Weapons>Оружие</ABY_ForgeCategory_Weapons>
+  <ABY_ForgeCategory_Implants>Импланты</ABY_ForgeCategory_Implants>
+  <ABY_ForgeCategory_Ritual>Ритуал</ABY_ForgeCategory_Ritual>
+  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
+  <ABY_ForgeInspectResidue>Сопряжение forge: внесено {0} / доступно на карте {1}</ABY_ForgeInspectResidue>
+  <ABY_ForgeInspectNextUnlock>Следующий шаблон на {0}: {1}</ABY_ForgeInspectNextUnlock>
+  <ABY_ForgeInspectAllKnown>Все текущие шаблоны уже настроены.</ABY_ForgeInspectAllKnown>
+  <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
+  <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Внести abyssal residue с текущей карты в решётку forge.</ABY_ForgeGizmoOfferDesc>
+</LanguageData>

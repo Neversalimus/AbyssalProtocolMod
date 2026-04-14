@@ -321,7 +321,7 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            Rect buttonRect = new Rect(rect.x + rect.width - 114f, rect.y + rect.height - 34f, 102f, 28f);
+            Rect buttonRect = new Rect(rect.x + rect.width - 118f, rect.y + rect.height - 38f, 106f, 30f);
             if (unlocked && recipe.AvailableNow && recipe.AvailableOnNow(forge))
             {
                 if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternAddBill".Translate()))

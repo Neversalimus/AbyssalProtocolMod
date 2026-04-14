@@ -199,7 +199,7 @@ namespace AbyssalProtocol
 
         private static void DrawLabel(Rect rect, string label, bool enabled, bool active, bool hovered, Texture2D icon, bool useTabStyle)
         {
-            Rect labelRect = rect.ContractedBy(6f);
+            Rect labelRect = rect.ContractedBy(rect.height <= 30f ? 8f : 6f);
             if (icon != null)
             {
                 labelRect.xMin += useTabStyle ? 28f : 26f;
@@ -214,11 +214,6 @@ namespace AbyssalProtocol
             if (Text.CalcSize(label).x > labelRect.width - 4f)
             {
                 Text.Font = GameFont.Tiny;
-            }
-
-            if (rect.height <= 30f)
-            {
-                labelRect.y -= 1f;
             }
 
             if (!enabled)
