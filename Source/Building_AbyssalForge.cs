@@ -118,7 +118,7 @@ namespace AbyssalProtocol
                     lines.Add("ABY_ForgeInspectAllKnown".Translate());
                 }
 
-                lines.Add("ABY_ForgeInspectAttunement".Translate(("ABY_AttunementTier_" + progress.GetCurrentAttunementTier(false)).Translate()));
+                lines.Add("ABY_ForgeInspectAttunement".Translate(AbyssalForgeProgressUtility.GetAttunementDisplayLabel(progress.GetCurrentAttunementTier(false))));
             }
 
             return string.Join("\n", lines);

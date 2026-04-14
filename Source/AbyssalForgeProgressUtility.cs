@@ -12,6 +12,9 @@ namespace AbyssalProtocol
         public const string ForgeDefName = "ABY_AbyssalForge";
         public const string ResidueDefName = "ABY_AbyssalResidue";
         public const string AttunementHediffDefName = "ABY_AbyssalAttunement";
+        public const int MaxAttunementTier = 50;
+        public const int MaxAttunementResidue = 150000;
+        public const int ResiduePerAttunementTier = 3000;
 
         public const string AllCategory = "All";
         public const string CoreCategory = "Core";
@@ -49,6 +52,126 @@ namespace AbyssalProtocol
         public static ThingDef ForgeDef => DefDatabase<ThingDef>.GetNamedSilentFail(ForgeDefName);
         public static ThingDef ResidueDef => DefDatabase<ThingDef>.GetNamedSilentFail(ResidueDefName);
         public static HediffDef AttunementHediffDef => DefDatabase<HediffDef>.GetNamedSilentFail(AttunementHediffDefName);
+
+        private static string TranslateOrFallback(string key, string fallback)
+        {
+            string value = key.Translate();
+            return value == key ? fallback : value;
+        }
+
+        private static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
+        {
+            string template = key.Translate();
+            if (template == key)
+            {
+                return string.Format(fallbackFormat, args);
+            }
+
+            try
+            {
+                return string.Format(template, args);
+            }
+            catch (FormatException)
+            {
+                return template;
+            }
+        }
+
+        public static int GetAttunementTierForResidue(int totalResidueOffered)
+        {
+            if (totalResidueOffered <= 0)
+            {
+                return 0;
+            }
+
+            return Mathf.Clamp(totalResidueOffered / ResiduePerAttunementTier, 0, MaxAttunementTier);
+        }
+
+        public static int GetResidueRequiredForAttunementTier(int tier)
+        {
+            if (tier <= 0)
+            {
+                return 0;
+            }
+
+            return Mathf.Clamp(tier, 0, MaxAttunementTier) * ResiduePerAttunementTier;
+        }
+
+        public static int GetNextAttunementTierResidue(int currentTier)
+        {
+            if (currentTier >= MaxAttunementTier)
+            {
+                return -1;
+            }
+
+            return GetResidueRequiredForAttunementTier(currentTier + 1);
+        }
+
+        public static float GetSummoningInstabilityReductionForTier(int tier)
+        {
+            if (tier <= 0)
+            {
+                return 0f;
+            }
+
+            return 0.09f * Mathf.Clamp01(tier / (float)MaxAttunementTier);
+        }
+
+        public static float GetSummoningInstabilityReduction(Map map)
+        {
+            MapComponent_AbyssalForgeProgress progress = map?.GetComponent<MapComponent_AbyssalForgeProgress>();
+            return progress != null ? GetSummoningInstabilityReductionForTier(progress.GetCurrentAttunementTier(false)) : 0f;
+        }
+
+        public static float GetForgeBillSpeedCapstoneBonusForTier(int tier)
+        {
+            return tier >= MaxAttunementTier ? 0.50f : 0f;
+        }
+
+        public static string GetAttunementBandLabel(int tier)
+        {
+            if (tier <= 0)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Dormant", "dormant lattice");
+            }
+
+            if (tier >= MaxAttunementTier)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Dominion", "dominion attunement");
+            }
+
+            if (tier >= 40)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Ascendant", "ascendant attunement");
+            }
+
+            if (tier >= 30)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Crowned", "crowned attunement");
+            }
+
+            if (tier >= 20)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Deep", "deep attunement");
+            }
+
+            if (tier >= 10)
+            {
+                return TranslateOrFallback("ABY_ForgeAttunementBand_Stable", "stable attunement");
+            }
+
+            return TranslateOrFallback("ABY_ForgeAttunementBand_Faint", "faint attunement");
+        }
+
+        public static string GetAttunementMetricLabel(int tier)
+        {
+            return TranslateOrFallback("ABY_ForgeAttunementMetricLabel", "Tier {0}/50", tier, MaxAttunementTier);
+        }
+
+        public static string GetAttunementDisplayLabel(int tier)
+        {
+            return TranslateOrFallback("ABY_ForgeAttunementDisplayLabel", "{0} · tier {1}/50", GetAttunementBandLabel(tier), tier, MaxAttunementTier);
+        }
 
         public static List<RecipeDef> GetForgeRecipes(ThingDef forgeDef = null)
         {
@@ -254,22 +377,35 @@ namespace AbyssalProtocol
 
         public static string GetAttunementTooltip(int tier, bool active)
         {
-            List<string> lines = new List<string>();
+            List<string> lines = new List<string>
+            {
+                GetAttunementDisplayLabel(tier),
+                TranslateOrFallback("ABY_ForgeAttunementResidueProgress", "Residue attuned: {0}/{1}", GetResidueRequiredForAttunementTier(tier), MaxAttunementResidue)
+            };
+
+            int nextTierResidue = GetNextAttunementTierResidue(tier);
+            if (nextTierResidue > 0)
+            {
+                lines.Add(TranslateOrFallback("ABY_ForgeAttunementNextTier", "Next tier at {0} residue", nextTierResidue));
+            }
+            else
+            {
+                lines.Add(TranslateOrFallback("ABY_ForgeAttunementMaxTier", "Maximum attunement reached"));
+            }
+
             HediffDef hediffDef = AttunementHediffDef;
             if (hediffDef != null && !hediffDef.description.NullOrEmpty())
             {
+                lines.Add(string.Empty);
                 lines.Add(hediffDef.description);
             }
 
             HediffStage stage = GetAttunementStageForTier(tier);
             if (stage != null)
             {
-                if (lines.Count > 0)
-                {
-                    lines.Add(string.Empty);
-                }
+                lines.Add(string.Empty);
+                lines.Add(TranslateOrFallback("ABY_ForgeAttunementEffectsHeader", "Current effects"));
 
-                lines.Add("ABY_ForgeAttunementEffectsHeader".Translate());
                 if (stage.statOffsets != null && stage.statOffsets.Count > 0)
                 {
                     for (int i = 0; i < stage.statOffsets.Count; i++)
@@ -280,19 +416,41 @@ namespace AbyssalProtocol
                             continue;
                         }
 
-                        lines.Add("• " + modifier.stat.LabelCap + ": " + FormatStatOffset(modifier.value));
+                        lines.Add("• " + modifier.stat.LabelCap + ": " + FormatStatOffset(modifier.stat, modifier.value));
+                    }
+                }
+
+                if (stage.capMods != null && stage.capMods.Count > 0)
+                {
+                    for (int i = 0; i < stage.capMods.Count; i++)
+                    {
+                        PawnCapacityModifier modifier = stage.capMods[i];
+                        if (modifier?.capacity == null)
+                        {
+                            continue;
+                        }
+
+                        lines.Add("• " + modifier.capacity.label.CapitalizeFirst() + ": " + FormatCapacityOffset(modifier.capacity, modifier.offset));
                     }
                 }
             }
 
+            float instabilityReduction = GetSummoningInstabilityReductionForTier(tier);
+            if (instabilityReduction > 0f)
+            {
+                lines.Add("• " + TranslateOrFallback("ABY_ForgeAttunementInstability", "Summoning instability") + ": -" + instabilityReduction.ToStringPercent());
+            }
+
+            float forgeBillSpeed = GetForgeBillSpeedCapstoneBonusForTier(tier);
+            if (forgeBillSpeed > 0f)
+            {
+                lines.Add("• " + TranslateOrFallback("ABY_ForgeAttunementForgeBillSpeed", "Forge bill speed") + ": +" + forgeBillSpeed.ToStringPercent());
+            }
+
             if (!active)
             {
-                if (lines.Count > 0)
-                {
-                    lines.Add(string.Empty);
-                }
-
-                lines.Add("ABY_ForgeAttunementTooltipSuspended".Translate());
+                lines.Add(string.Empty);
+                lines.Add(TranslateOrFallback("ABY_ForgeAttunementTooltipSuspended", "Suspended until at least one Abyssal Forge on this map is powered."));
             }
 
             return string.Join("\n", lines.Where(line => line != null).ToArray());
@@ -464,7 +622,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            float severity = tier <= 1 ? 1f : tier;
+            float severity = tier <= 0 ? 0f : tier;
             HediffStage stage = hediffDef.stages[0];
             for (int i = 0; i < hediffDef.stages.Count; i++)
             {
@@ -478,10 +636,53 @@ namespace AbyssalProtocol
             return stage;
         }
 
-        private static string FormatStatOffset(float value)
+        private static string FormatStatOffset(StatDef stat, float value)
         {
             string prefix = value > 0f ? "+" : string.Empty;
-            return prefix + value.ToStringPercent();
+            if (stat == null)
+            {
+                return prefix + value.ToString("0.##");
+            }
+
+            switch (stat.defName)
+            {
+                case "WorkSpeedGlobal":
+                case "SmithingSpeed":
+                case "CraftingSpeed":
+                case "ConstructionSpeed":
+                case "ShootingAccuracyPawn":
+                case "MeleeHitChance":
+                case "ResearchSpeed":
+                case "MedicalTendQuality":
+                case "ImmunityGainSpeed":
+                case "GeneralLaborSpeed":
+                    return prefix + value.ToStringPercent();
+                case "ComfyTemperatureMax":
+                case "ComfyTemperatureMin":
+                    return prefix + value.ToString("0.#") + " C";
+                case "CarryingCapacity":
+                case "MoveSpeed":
+                    return prefix + value.ToString("0.##");
+                default:
+                    return prefix + value.ToString("0.##");
+            }
+        }
+
+        private static string FormatCapacityOffset(PawnCapacityDef capacity, float value)
+        {
+            string prefix = value > 0f ? "+" : string.Empty;
+            if (capacity == null)
+            {
+                return prefix + value.ToString("0.##");
+            }
+
+            switch (capacity.defName)
+            {
+                case "Manipulation":
+                    return prefix + value.ToString("0.##");
+                default:
+                    return prefix + value.ToStringPercent();
+            }
         }
     }
 }

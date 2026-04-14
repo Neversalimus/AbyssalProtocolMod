@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeAttunementBand_Dormant>dormant lattice</ABY_ForgeAttunementBand_Dormant>
+  <ABY_ForgeAttunementBand_Faint>faint attunement</ABY_ForgeAttunementBand_Faint>
+  <ABY_ForgeAttunementBand_Stable>stable attunement</ABY_ForgeAttunementBand_Stable>
+  <ABY_ForgeAttunementBand_Deep>deep attunement</ABY_ForgeAttunementBand_Deep>
+  <ABY_ForgeAttunementBand_Crowned>crowned attunement</ABY_ForgeAttunementBand_Crowned>
+  <ABY_ForgeAttunementBand_Ascendant>ascendant attunement</ABY_ForgeAttunementBand_Ascendant>
+  <ABY_ForgeAttunementBand_Dominion>dominion attunement</ABY_ForgeAttunementBand_Dominion>
+  <ABY_ForgeAttunementMetricLabel>Tier {0}/50</ABY_ForgeAttunementMetricLabel>
+  <ABY_ForgeAttunementDisplayLabel>{0} · tier {1}/50</ABY_ForgeAttunementDisplayLabel>
+  <ABY_ForgeAttunementResidueProgress>Residue attuned: {0}/{1}</ABY_ForgeAttunementResidueProgress>
+  <ABY_ForgeAttunementNextTier>Next tier at {0} residue</ABY_ForgeAttunementNextTier>
+  <ABY_ForgeAttunementMaxTier>Maximum attunement reached</ABY_ForgeAttunementMaxTier>
+  <ABY_ForgeAttunementEffectsHeader>Current effects</ABY_ForgeAttunementEffectsHeader>
+  <ABY_ForgeAttunementTooltipSuspended>Suspended until at least one Abyssal Forge on this map is powered.</ABY_ForgeAttunementTooltipSuspended>
+  <ABY_ForgeAttunementInstability>Summoning instability</ABY_ForgeAttunementInstability>
+  <ABY_ForgeAttunementForgeBillSpeed>Forge bill speed</ABY_ForgeAttunementForgeBillSpeed>
+</LanguageData>

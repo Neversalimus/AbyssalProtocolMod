@@ -157,22 +157,7 @@ namespace AbyssalProtocol
                 return 0;
             }
 
-            if (totalResidueOffered >= 500)
-            {
-                return 4;
-            }
-
-            if (totalResidueOffered >= 300)
-            {
-                return 3;
-            }
-
-            if (totalResidueOffered >= 150)
-            {
-                return 2;
-            }
-
-            return 1;
+            return AbyssalForgeProgressUtility.GetAttunementTierForResidue(totalResidueOffered);
         }
 
         public bool HasAnyForge()

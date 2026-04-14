@@ -76,8 +76,20 @@ namespace AbyssalProtocol
 
         public static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
         {
-            string value = key.Translate(args);
-            return value == key ? string.Format(fallbackFormat, args) : value;
+            string template = key.Translate();
+            if (template == key)
+            {
+                return string.Format(fallbackFormat, args);
+            }
+
+            try
+            {
+                return string.Format(template, args);
+            }
+            catch (FormatException)
+            {
+                return template;
+            }
         }
 
         public static string GetConsoleTitle()
@@ -541,57 +553,68 @@ namespace AbyssalProtocol
 
         public static CircleRiskTier GetRiskTier(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            if (circle == null)
+            float risk = GetRiskValue(circle, ritual);
+            if (risk <= 0.35f)
             {
                 return CircleRiskTier.Stable;
             }
 
-            if (circle.RitualActive)
-            {
-                switch (circle.CurrentRitualPhase)
-                {
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Charging:
-                        return CircleRiskTier.Strained;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Surge:
-                        return CircleRiskTier.Volatile;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Breach:
-                        return CircleRiskTier.Catastrophic;
-                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Cooldown:
-                        return CircleRiskTier.Strained;
-                }
-            }
-
-            int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
-            if (missing >= 3)
-            {
-                return CircleRiskTier.Stable;
-            }
-            if (missing == 2)
+            if (risk <= 0.60f)
             {
                 return CircleRiskTier.Strained;
             }
-            if (missing == 1)
+
+            if (risk <= 0.80f)
             {
                 return CircleRiskTier.Volatile;
             }
-            return CircleRiskTier.Volatile;
+
+            return CircleRiskTier.Catastrophic;
         }
 
         public static float GetRiskFill(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
-            switch (GetRiskTier(circle, ritual))
+            return GetRiskValue(circle, ritual);
+        }
+
+        private static float GetRiskValue(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            if (circle == null)
             {
-                case CircleRiskTier.Stable:
-                    return 0.25f;
-                case CircleRiskTier.Strained:
-                    return 0.48f;
-                case CircleRiskTier.Volatile:
-                    return 0.74f;
-                case CircleRiskTier.Catastrophic:
-                    return 1f;
-                default:
-                    return 0.25f;
+                return 0.25f;
             }
+
+            float instabilityReduction = AbyssalForgeProgressUtility.GetSummoningInstabilityReduction(circle.Map);
+
+            if (circle.RitualActive)
+            {
+                float activeRisk;
+                switch (circle.CurrentRitualPhase)
+                {
+                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Charging:
+                        activeRisk = 0.58f;
+                        break;
+                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Surge:
+                        activeRisk = 0.79f;
+                        break;
+                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Breach:
+                        activeRisk = 1f;
+                        break;
+                    case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Cooldown:
+                        activeRisk = 0.52f;
+                        break;
+                    default:
+                        activeRisk = 0.58f;
+                        break;
+                }
+
+                return Mathf.Clamp01(activeRisk - instabilityReduction);
+            }
+
+            float baseRisk = ritual != null ? ritual.BaseRisk : 0.25f;
+            int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
+            float risk = baseRisk + missing * 0.08f - instabilityReduction;
+            return Mathf.Clamp(risk, 0.05f, 1f);
         }
 
         public static Color GetRiskColor(CircleRiskTier tier)
