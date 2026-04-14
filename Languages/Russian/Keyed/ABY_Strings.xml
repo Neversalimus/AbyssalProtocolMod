@@ -128,5 +128,13 @@
   <ABY_ForgeOverviewHintCompact>Открой полную консоль, чтобы видеть шаблоны, ресурсы и управлять bill.</ABY_ForgeOverviewHintCompact>
   <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
   <ABY_ForgePatternNoMaterialData>Данные о материальных затратах недоступны.</ABY_ForgePatternNoMaterialData>
+  <ABY_ForgePatternRequirementsState>Материалы на карте</ABY_ForgePatternRequirementsState>
+  <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
+  <ABY_ForgePatternNew>NEW</ABY_ForgePatternNew>
+  <ABY_ForgeUnlockToast>Стабилизирован новый forge-шаблон: {0}</ABY_ForgeUnlockToast>
+  <ABY_ForgeReducedEffects>Уменьшенные эффекты</ABY_ForgeReducedEffects>
+  <ABY_ForgeReducedEffectsDesc>Снижает интенсивность sweep-линий, пульсации и анимированного свечения в интерфейсе communion.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeAttunementEffectsHeader>Текущие эффекты attunement колонии</ABY_ForgeAttunementEffectsHeader>
+  <ABY_ForgeAttunementTooltipSuspended>Бонусы attunement отключены, пока на карте нет запитанного Abyssal Forge.</ABY_ForgeAttunementTooltipSuspended>
 
 </LanguageData>

@@ -35,28 +35,37 @@ namespace AbyssalProtocol
         private static readonly Texture2D IconRitualTex = ContentFinder<Texture2D>.Get(IconRitualPath, false);
         private static readonly Texture2D IconHeraldTex = ContentFinder<Texture2D>.Get(IconHeraldPath, false);
 
+        public static bool ReducedEffects { get; set; }
+
         private static float AnimTime => Time.realtimeSinceStartup;
 
         public static void DrawBackground(Rect rect)
         {
             float pulse = Pulse(1.05f, 0.35f);
             Fill(rect, BackColor);
-            DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, 0.12f + pulse * 0.06f));
+            DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, (ReducedEffects ? 0.07f : 0.12f) + pulse * (ReducedEffects ? 0.02f : 0.06f)));
             DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, pulse * 0.35f));
 
-            float scanY = rect.y + Mathf.Repeat(AnimTime * 24f, Mathf.Max(1f, rect.height - 4f));
-            Fill(new Rect(rect.x + 2f, scanY, rect.width - 4f, 1f), new Color(1f, 0.55f, 0.24f, 0.06f));
+            if (!ReducedEffects)
+            {
+                float scanY = rect.y + Mathf.Repeat(AnimTime * 24f, Mathf.Max(1f, rect.height - 4f));
+                Fill(new Rect(rect.x + 2f, scanY, rect.width - 4f, 1f), new Color(1f, 0.55f, 0.24f, 0.06f));
+            }
         }
 
-        public static void DrawHeader(Rect rect, string title, string subtitle)
+        public static void DrawHeader(Rect rect, string title, string subtitle, bool alert)
         {
-            float pulse = Pulse(1.4f, 0.12f);
+            float pulse = Pulse(alert ? 2.0f : 1.4f, 0.12f);
             Fill(rect, new Color(0.09f, 0.075f, 0.07f, 1f));
-            DrawOverlay(rect, HeaderTex, new Color(1f, 0.5f, 0.22f, 0.64f + pulse * 0.08f));
-            DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, 0.45f + pulse * 0.35f));
+            DrawOverlay(rect, HeaderTex, new Color(1f, 0.5f, 0.22f, 0.58f + pulse * (alert ? 0.14f : 0.08f)));
+            DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, alert ? 0.58f + pulse * 0.30f : 0.45f + pulse * 0.20f));
 
-            float sweepX = rect.x - 90f + Mathf.Repeat(AnimTime * 120f, rect.width + 180f);
-            Fill(new Rect(sweepX, rect.y + rect.height - 8f, 88f, 2f), new Color(1f, 0.76f, 0.54f, 0.22f));
+            if (!ReducedEffects)
+            {
+                float sweepX = rect.x - 90f + Mathf.Repeat(AnimTime * 120f, rect.width + 180f);
+                Fill(new Rect(sweepX, rect.y + rect.height - 8f, 88f, 2f), new Color(1f, 0.76f, 0.54f, alert ? 0.34f : 0.22f));
+            }
+
             Fill(new Rect(rect.x + 16f, rect.y + rect.height - 4f, rect.width - 32f, 1f), new Color(1f, 0.42f, 0.16f, 0.72f));
 
             Text.Anchor = TextAnchor.UpperLeft;
@@ -79,12 +88,15 @@ namespace AbyssalProtocol
         {
             float pulse = Pulse(highlighted ? 2.1f : 1.25f, highlighted ? 0.35f : 0.12f);
             Fill(rect, highlighted ? PanelAltColor : PanelColor);
-            DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, highlighted ? 0.15f + pulse * 0.05f : 0.07f + pulse * 0.03f));
-            DrawOutline(rect, highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.45f + pulse * 0.40f) : Color.Lerp(AccentSoftColor, AccentColor, 0.12f + pulse * 0.12f));
-            Fill(new Rect(rect.x, rect.y, rect.width, 2f), highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.45f + pulse * 0.40f) : AccentSoftColor);
+            DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, highlighted ? 0.10f + pulse * (ReducedEffects ? 0.02f : 0.05f) : 0.05f + pulse * (ReducedEffects ? 0.02f : 0.03f)));
+            DrawOutline(rect, highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.35f + pulse * 0.25f) : Color.Lerp(AccentSoftColor, AccentColor, 0.10f + pulse * 0.12f));
+            Fill(new Rect(rect.x, rect.y, rect.width, 2f), highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.40f + pulse * 0.25f) : AccentSoftColor);
 
-            float sweep = rect.x - 70f + Mathf.Repeat(AnimTime * (highlighted ? 72f : 44f), rect.width + 140f);
-            Fill(new Rect(sweep, rect.y + 1f, 68f, 1f), new Color(1f, 0.76f, 0.54f, highlighted ? 0.20f : 0.10f));
+            if (!ReducedEffects)
+            {
+                float sweep = rect.x - 70f + Mathf.Repeat(AnimTime * (highlighted ? 72f : 44f), rect.width + 140f);
+                Fill(new Rect(sweep, rect.y + 1f, 68f, 1f), new Color(1f, 0.76f, 0.54f, highlighted ? 0.20f : 0.10f));
+            }
         }
 
         public static void DrawSectionTitle(Rect rect, string title)
@@ -105,21 +117,22 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
         }
 
-        public static void DrawProgressBar(Rect rect, float fillPercent, string label)
+        public static void DrawProgressBar(Rect rect, float fillPercent, string label, bool alert)
         {
             Fill(rect, new Color(0.04f, 0.04f, 0.045f, 1f));
             Rect fillRect = new Rect(rect.x + 2f, rect.y + 2f, (rect.width - 4f) * Mathf.Clamp01(fillPercent), rect.height - 4f);
-            Fill(fillRect, new Color(0.92f, 0.42f, 0.18f, 1f));
-            DrawOverlay(fillRect, HeaderTex, new Color(1f, 0.72f, 0.42f, 0.24f + Pulse(2.2f, 0.55f) * 0.08f));
+            Color fillColor = alert ? new Color(1f, 0.54f, 0.22f, 1f) : new Color(0.92f, 0.42f, 0.18f, 1f);
+            Fill(fillRect, fillColor);
+            DrawOverlay(fillRect, HeaderTex, new Color(1f, 0.72f, 0.42f, 0.20f + Pulse(alert ? 3.0f : 2.2f, 0.55f) * (alert ? 0.18f : 0.08f)));
 
-            if (fillRect.width > 20f)
+            if (fillRect.width > 20f && !ReducedEffects)
             {
                 float sheenWidth = Mathf.Min(80f, fillRect.width);
-                float sheenX = fillRect.x - sheenWidth + Mathf.Repeat(AnimTime * 68f, fillRect.width + sheenWidth);
-                Fill(new Rect(sheenX, fillRect.y, sheenWidth, fillRect.height), new Color(1f, 0.92f, 0.78f, 0.12f));
+                float sheenX = fillRect.x - sheenWidth + Mathf.Repeat(AnimTime * (alert ? 94f : 68f), fillRect.width + sheenWidth);
+                Fill(new Rect(sheenX, fillRect.y, sheenWidth, fillRect.height), new Color(1f, 0.92f, 0.78f, alert ? 0.20f : 0.12f));
             }
 
-            DrawOutline(rect, AccentSoftColor);
+            DrawOutline(rect, alert ? AccentColor : AccentSoftColor);
 
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = Color.white;
@@ -135,17 +148,32 @@ namespace AbyssalProtocol
             Fill(new Rect(rect.x + 8f, rect.y + rect.height - 8f, rect.width - 16f, 2f), new Color(1f, 0.68f, 0.42f, emphasis ? 0.16f + pulse * 0.12f : 0.08f));
         }
 
-        public static void DrawPatternCardPulse(Rect rect, bool unlocked)
+        public static void DrawPatternCardPulse(Rect rect, bool unlocked, bool freshlyUnlocked)
         {
             if (!unlocked)
             {
                 return;
             }
 
-            float pulse = Pulse(2.35f, rect.x * 0.01f + rect.y * 0.01f);
-            Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, 2f), new Color(1f, 0.72f, 0.50f, 0.08f + pulse * 0.08f));
-            float sweepX = rect.x - 36f + Mathf.Repeat(AnimTime * 58f + rect.y * 0.4f, rect.width + 72f);
-            Fill(new Rect(sweepX, rect.y + rect.height - 22f, 34f, 1f), new Color(1f, 0.82f, 0.66f, 0.18f));
+            float pulse = Pulse(freshlyUnlocked ? 3.2f : 2.35f, rect.x * 0.01f + rect.y * 0.01f);
+            Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, freshlyUnlocked ? 3f : 2f), new Color(1f, 0.72f, 0.50f, freshlyUnlocked ? 0.16f + pulse * 0.12f : 0.08f + pulse * 0.08f));
+            if (!ReducedEffects)
+            {
+                float sweepX = rect.x - 36f + Mathf.Repeat(AnimTime * (freshlyUnlocked ? 92f : 58f) + rect.y * 0.4f, rect.width + 72f);
+                Fill(new Rect(sweepX, rect.y + rect.height - 22f, 34f, 1f), new Color(1f, 0.82f, 0.66f, freshlyUnlocked ? 0.28f : 0.18f));
+            }
+        }
+
+        public static void DrawTag(Rect rect, string label, bool alert)
+        {
+            Fill(rect, alert ? new Color(0.85f, 0.26f, 0.08f, 0.92f) : new Color(0.35f, 0.18f, 0.10f, 0.92f));
+            DrawOutline(rect, alert ? new Color(1f, 0.72f, 0.44f, 0.9f) : AccentSoftColor);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+            GUI.color = Color.white;
+            Widgets.Label(rect, label);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         public static Texture2D GetCategoryIcon(string category)
@@ -240,7 +268,13 @@ namespace AbyssalProtocol
 
         private static float Pulse(float speed, float offset)
         {
-            return (Mathf.Sin(AnimTime * speed + offset) + 1f) * 0.5f;
+            float value = (Mathf.Sin(AnimTime * speed * (ReducedEffects ? 0.45f : 1f) + offset) + 1f) * 0.5f;
+            if (!ReducedEffects)
+            {
+                return value;
+            }
+
+            return Mathf.Lerp(0.35f, 0.65f, value);
         }
     }
 }

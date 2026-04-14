@@ -2,27 +2,55 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
     public class MapComponent_AbyssalForgeProgress : MapComponent
     {
         private const int AttunementSyncIntervalTicks = 180;
+        private const int RecentUnlockDurationTicks = 180000;
 
         private int totalResidueOffered;
         private int nextAttunementSyncTick;
+        private bool reducedVisualEffects;
+        private int recentUnlockTick = -999999;
+        private List<string> recentUnlockRecipeDefNames = new List<string>();
 
         public MapComponent_AbyssalForgeProgress(Map map) : base(map)
         {
         }
 
         public int TotalResidueOffered => totalResidueOffered;
+        public bool ReducedVisualEffects => reducedVisualEffects;
+
+        public bool HasRecentUnlocks
+        {
+            get
+            {
+                if (recentUnlockRecipeDefNames == null || recentUnlockRecipeDefNames.Count == 0)
+                {
+                    return false;
+                }
+
+                int currentTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return currentTick - recentUnlockTick <= RecentUnlockDurationTicks;
+            }
+        }
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref totalResidueOffered, "totalResidueOffered", 0);
             Scribe_Values.Look(ref nextAttunementSyncTick, "nextAttunementSyncTick", 0);
+            Scribe_Values.Look(ref reducedVisualEffects, "reducedVisualEffects", false);
+            Scribe_Values.Look(ref recentUnlockTick, "recentUnlockTick", -999999);
+            Scribe_Collections.Look(ref recentUnlockRecipeDefNames, "recentUnlockRecipeDefNames", LookMode.Value);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && recentUnlockRecipeDefNames == null)
+            {
+                recentUnlockRecipeDefNames = new List<string>();
+            }
         }
 
         public override void MapComponentTick()
@@ -35,18 +63,34 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager.TicksGame;
-            if (ticksGame < nextAttunementSyncTick)
+            if (ticksGame >= nextAttunementSyncTick)
             {
-                return;
+                nextAttunementSyncTick = ticksGame + AttunementSyncIntervalTicks;
+                SyncAttunementHediffs();
             }
 
-            nextAttunementSyncTick = ticksGame + AttunementSyncIntervalTicks;
-            SyncAttunementHediffs();
+            if (recentUnlockRecipeDefNames != null && recentUnlockRecipeDefNames.Count > 0 && ticksGame - recentUnlockTick > RecentUnlockDurationTicks)
+            {
+                recentUnlockRecipeDefNames.Clear();
+            }
         }
 
         public int CountAvailableResidue()
         {
             return AbyssalForgeProgressUtility.CountAvailableResidue(map);
+        }
+
+        public void SetReducedVisualEffects(bool value)
+        {
+            reducedVisualEffects = value;
+        }
+
+        public bool IsRecentlyUnlocked(RecipeDef recipe)
+        {
+            return recipe != null
+                && HasRecentUnlocks
+                && recentUnlockRecipeDefNames != null
+                && recentUnlockRecipeDefNames.Contains(recipe.defName);
         }
 
         public int OfferResidue(Building_AbyssalForge forge, int requestedAmount)
@@ -198,13 +242,45 @@ namespace AbyssalProtocol
                 return;
             }
 
-            string unlockedLines = string.Join("\n", unlockedNow.Select(recipe => "• " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)));
+            recentUnlockTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            recentUnlockRecipeDefNames = unlockedNow.Where(recipe => recipe != null && !recipe.defName.NullOrEmpty()).Select(recipe => recipe.defName).ToList();
+
+            string unlockedLines = string.Join("\n", unlockedNow.Select(recipe => "• " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)).ToArray());
             string currentAttunement = "ABY_AttunementTier_" + GetCurrentAttunementTier(false);
             Find.LetterStack.ReceiveLetter(
                 "ABY_ForgeUnlockLetterLabel".Translate(currentTotal),
                 "ABY_ForgeUnlockLetterDesc".Translate(currentTotal, currentAttunement.Translate(), unlockedLines),
                 LetterDefOf.PositiveEvent,
                 forge != null ? new LookTargets(forge) : LookTargets.Invalid);
+
+            Messages.Message(
+                "ABY_ForgeUnlockToast".Translate(BuildUnlockToastLabel(unlockedNow)),
+                forge,
+                MessageTypeDefOf.PositiveEvent,
+                false);
+
+            SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+        }
+
+        private static string BuildUnlockToastLabel(List<RecipeDef> unlockedNow)
+        {
+            if (unlockedNow == null || unlockedNow.Count == 0)
+            {
+                return "?";
+            }
+
+            if (unlockedNow.Count == 1)
+            {
+                return AbyssalForgeProgressUtility.GetRecipeDisplayLabel(unlockedNow[0]);
+            }
+
+            string combined = string.Join(", ", unlockedNow.Take(2).Select(recipe => AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)).ToArray());
+            if (unlockedNow.Count > 2)
+            {
+                combined += " +" + (unlockedNow.Count - 2);
+            }
+
+            return combined;
         }
 
         private void SyncAttunementHediffs()

@@ -20,6 +20,20 @@ namespace AbyssalProtocol
         public const string RitualCategory = "Ritual";
         public const string HeraldCategory = "Herald";
 
+        public class IngredientAvailabilityEntry
+        {
+            public string label;
+            public int requiredCount;
+            public int availableCount;
+
+            public bool IsSatisfied => availableCount >= requiredCount;
+
+            public string ToDisplayString()
+            {
+                return label + " " + availableCount + "/" + requiredCount;
+            }
+        }
+
         private static readonly List<string> CategoryOrder = new List<string>
         {
             AllCategory,
@@ -193,6 +207,97 @@ namespace AbyssalProtocol
             return string.Join("\n", parts.ToArray());
         }
 
+        public static List<IngredientAvailabilityEntry> GetIngredientAvailabilityEntries(Map map, RecipeDef recipe)
+        {
+            List<IngredientAvailabilityEntry> result = new List<IngredientAvailabilityEntry>();
+            if (recipe?.ingredients == null || recipe.ingredients.Count == 0)
+            {
+                return result;
+            }
+
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                IngredientCount ingredient = recipe.ingredients[i];
+                if (ingredient == null)
+                {
+                    continue;
+                }
+
+                result.Add(new IngredientAvailabilityEntry
+                {
+                    label = GetIngredientLabel(ingredient),
+                    requiredCount = Mathf.CeilToInt(ingredient.GetBaseCount()),
+                    availableCount = CountAvailableForIngredient(map, ingredient)
+                });
+            }
+
+            return result;
+        }
+
+        public static string GetRecipeAvailabilityTooltip(Map map, RecipeDef recipe)
+        {
+            List<IngredientAvailabilityEntry> entries = GetIngredientAvailabilityEntries(map, recipe);
+            if (entries.Count == 0)
+            {
+                return "ABY_ForgePatternNoMaterialData".Translate();
+            }
+
+            List<string> lines = new List<string>();
+            for (int i = 0; i < entries.Count; i++)
+            {
+                IngredientAvailabilityEntry entry = entries[i];
+                lines.Add("• " + entry.label + ": " + entry.availableCount + "/" + entry.requiredCount);
+            }
+
+            return string.Join("\n", lines.ToArray());
+        }
+
+        public static string GetAttunementTooltip(int tier, bool active)
+        {
+            List<string> lines = new List<string>();
+            HediffDef hediffDef = AttunementHediffDef;
+            if (hediffDef != null && !hediffDef.description.NullOrEmpty())
+            {
+                lines.Add(hediffDef.description);
+            }
+
+            HediffStage stage = GetAttunementStageForTier(tier);
+            if (stage != null)
+            {
+                if (lines.Count > 0)
+                {
+                    lines.Add(string.Empty);
+                }
+
+                lines.Add("ABY_ForgeAttunementEffectsHeader".Translate());
+                if (stage.statOffsets != null && stage.statOffsets.Count > 0)
+                {
+                    for (int i = 0; i < stage.statOffsets.Count; i++)
+                    {
+                        StatModifier modifier = stage.statOffsets[i];
+                        if (modifier?.stat == null)
+                        {
+                            continue;
+                        }
+
+                        lines.Add("• " + modifier.stat.LabelCap + ": " + FormatStatOffset(modifier.value));
+                    }
+                }
+            }
+
+            if (!active)
+            {
+                if (lines.Count > 0)
+                {
+                    lines.Add(string.Empty);
+                }
+
+                lines.Add("ABY_ForgeAttunementTooltipSuspended".Translate());
+            }
+
+            return string.Join("\n", lines.Where(line => line != null).ToArray());
+        }
+
         public static bool RecipeMatchesCategory(RecipeDef recipe, string category)
         {
             return category == AllCategory || GetCategory(recipe) == category;
@@ -285,6 +390,48 @@ namespace AbyssalProtocol
             return index >= 0 ? index : CategoryOrder.Count;
         }
 
+        private static int CountAvailableForIngredient(Map map, IngredientCount ingredient)
+        {
+            if (map?.listerThings == null || ingredient?.filter == null)
+            {
+                return 0;
+            }
+
+            IEnumerable<ThingDef> allowedDefs = ingredient.filter.AllowedThingDefs;
+            if (allowedDefs == null)
+            {
+                return 0;
+            }
+
+            int total = 0;
+            foreach (ThingDef thingDef in allowedDefs)
+            {
+                if (thingDef == null)
+                {
+                    continue;
+                }
+
+                List<Thing> stacks = map.listerThings.ThingsOfDef(thingDef);
+                if (stacks == null)
+                {
+                    continue;
+                }
+
+                for (int i = 0; i < stacks.Count; i++)
+                {
+                    Thing thing = stacks[i];
+                    if (thing == null || thing.Destroyed || !thing.Spawned)
+                    {
+                        continue;
+                    }
+
+                    total += thing.stackCount;
+                }
+            }
+
+            return total;
+        }
+
         private static string GetIngredientLabel(IngredientCount ingredient)
         {
             ThingFilter filter = ingredient.filter;
@@ -307,6 +454,34 @@ namespace AbyssalProtocol
             }
 
             return "ingredient";
+        }
+
+        private static HediffStage GetAttunementStageForTier(int tier)
+        {
+            HediffDef hediffDef = AttunementHediffDef;
+            if (hediffDef?.stages == null || hediffDef.stages.Count == 0)
+            {
+                return null;
+            }
+
+            float severity = tier <= 1 ? 1f : tier;
+            HediffStage stage = hediffDef.stages[0];
+            for (int i = 0; i < hediffDef.stages.Count; i++)
+            {
+                HediffStage candidate = hediffDef.stages[i];
+                if (candidate != null && candidate.minSeverity <= severity)
+                {
+                    stage = candidate;
+                }
+            }
+
+            return stage;
+        }
+
+        private static string FormatStatOffset(float value)
+        {
+            string prefix = value > 0f ? "+" : string.Empty;
+            return prefix + value.ToStringPercent();
         }
     }
 }
