@@ -70,13 +70,13 @@ namespace AbyssalProtocol
 
         public static string TranslateOrFallback(string key, string fallback)
         {
-            string value = key.Translate().Resolve();
+            string value = key.Translate();
             return value == key ? fallback : value;
         }
 
         public static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
         {
-            string value = key.Translate(args).Resolve();
+            string value = key.Translate(args);
             return value == key ? string.Format(fallbackFormat, args) : value;
         }
 
@@ -176,7 +176,7 @@ namespace AbyssalProtocol
 
             if (circle.RitualActive)
             {
-                return GetPhaseText(circle.GetCurrentPhaseTranslated(), Mathf.RoundToInt(circle.GetPhaseProgress() * 100f));
+                return GetPhaseText(circle.GetCurrentPhaseTranslated(), Mathf.RoundToInt(circle.RitualProgress * 100f));
             }
 
             if (circle.IsReadyForSigil(out string failReason))
