@@ -47,7 +47,7 @@ namespace AbyssalProtocol
         private static bool ButtonInternal(Rect rect, string label, bool enabled, bool active, Texture2D icon, string tooltip, bool useTabStyle, bool iconOnly)
         {
             bool hovered = Mouse.IsOver(rect);
-            bool pressed = enabled && hovered && Input.GetMouseButton(0);
+            bool pressed = enabled && hovered && IsMouseHeldOn(rect);
             Texture2D background = iconOnly
                 ? GetIconFrameTexture(enabled, hovered)
                 : GetTexture(useTabStyle, enabled, active, hovered, pressed);
@@ -78,6 +78,17 @@ namespace AbyssalProtocol
             }
 
             return enabled && Widgets.ButtonInvisible(rect);
+        }
+
+        private static bool IsMouseHeldOn(Rect rect)
+        {
+            Event current = Event.current;
+            if (current == null)
+            {
+                return false;
+            }
+
+            return current.isMouse && current.button == 0 && Mouse.IsOver(rect) && (current.type == EventType.MouseDown || current.type == EventType.MouseDrag);
         }
 
         private static Texture2D GetTexture(bool useTabStyle, bool enabled, bool active, bool hovered, bool pressed)
