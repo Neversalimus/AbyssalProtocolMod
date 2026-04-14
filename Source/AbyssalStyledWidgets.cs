@@ -47,7 +47,8 @@ namespace AbyssalProtocol
         private static bool ButtonInternal(Rect rect, string label, bool enabled, bool active, Texture2D icon, string tooltip, bool useTabStyle, bool iconOnly)
         {
             bool hovered = Mouse.IsOver(rect);
-            bool pressed = enabled && hovered && IsMouseHeldOn(rect);
+            Event currentEvent = Event.current;
+            bool pressed = enabled && hovered && currentEvent != null && currentEvent.button == 0 && (currentEvent.type == EventType.MouseDown || currentEvent.type == EventType.MouseDrag);
             Texture2D background = iconOnly
                 ? GetIconFrameTexture(enabled, hovered)
                 : GetTexture(useTabStyle, enabled, active, hovered, pressed);
@@ -78,17 +79,6 @@ namespace AbyssalProtocol
             }
 
             return enabled && Widgets.ButtonInvisible(rect);
-        }
-
-        private static bool IsMouseHeldOn(Rect rect)
-        {
-            Event current = Event.current;
-            if (current == null)
-            {
-                return false;
-            }
-
-            return current.isMouse && current.button == 0 && Mouse.IsOver(rect) && (current.type == EventType.MouseDown || current.type == EventType.MouseDrag);
         }
 
         private static Texture2D GetTexture(bool useTabStyle, bool enabled, bool active, bool hovered, bool pressed)
@@ -220,10 +210,15 @@ namespace AbyssalProtocol
             Color oldColor = GUI.color;
 
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Small;
+            Text.Font = rect.height <= 28f ? GameFont.Tiny : GameFont.Small;
             if (Text.CalcSize(label).x > labelRect.width - 4f)
             {
                 Text.Font = GameFont.Tiny;
+            }
+
+            if (rect.height <= 30f)
+            {
+                labelRect.y -= 1f;
             }
 
             if (!enabled)

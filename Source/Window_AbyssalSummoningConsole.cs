@@ -70,9 +70,9 @@ namespace AbyssalProtocol
         private void DrawHeader(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             string subtitle = circle.RitualActive
-                ? "ABY_CircleConsoleSubtitleActive".Translate(circle.GetCurrentPhaseTranslated())
-                : "ABY_CircleConsoleSubtitle".Translate();
-            AbyssalSummoningConsoleArt.DrawHeader(rect, "ABY_CircleConsoleTitle".Translate(), subtitle, circle.RitualActive);
+                ? AbyssalSummoningConsoleUtility.GetConsoleSubtitleActive(circle.GetCurrentPhaseTranslated())
+                : AbyssalSummoningConsoleUtility.GetConsoleSubtitle();
+            AbyssalSummoningConsoleArt.DrawHeader(rect, AbyssalSummoningConsoleUtility.GetConsoleTitle(), subtitle, circle.RitualActive);
         }
 
         private void DrawReadinessStrip(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -96,7 +96,7 @@ namespace AbyssalProtocol
 
             List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRituals().ToList();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
-            float cardHeight = 156f;
+            float cardHeight = 160f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
 
@@ -128,18 +128,18 @@ namespace AbyssalProtocol
             Rect subRect = new Rect(rect.x + 70f, rect.y + 34f, rect.width - 150f, 18f);
             Rect descRect = new Rect(rect.x + 12f, rect.y + 64f, rect.width - 24f, 50f);
             Rect metaRect = new Rect(rect.x + 12f, rect.y + 116f, rect.width - 24f, 18f);
-            Rect selectRect = new Rect(rect.xMax - 104f, rect.y + rect.height - 30f, 92f, 24f);
+            Rect selectRect = new Rect(rect.xMax - 108f, rect.y + rect.height - 34f, 96f, 28f);
 
-            Widgets.Label(titleRect, ritual.LabelKey.Translate());
+            Widgets.Label(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(subRect, ritual.SubtitleKey.Translate());
+            Widgets.Label(subRect, AbyssalSummoningConsoleUtility.GetRitualSubtitle(ritual));
             GUI.color = Color.white;
-            Widgets.Label(descRect, ritual.DescriptionKey.Translate());
+            Widgets.Label(descRect, AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
-            Widgets.Label(metaRect, "ABY_CircleRitualMeta".Translate(AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual), ritual.SpawnPoints));
+            Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual), ritual.SpawnPoints));
             GUI.color = Color.white;
 
-            if (AbyssalStyledWidgets.TextButton(selectRect, selected ? "ABY_CircleSelected".Translate() : "ABY_CircleSelect".Translate(), !selected, selected))
+            if (AbyssalStyledWidgets.TextButton(selectRect, selected ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected", "Selected") : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelect", "Select"), !selected, selected))
             {
                 selectedRitualId = ritual.Id;
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -162,7 +162,7 @@ namespace AbyssalProtocol
 
             bool reduced = circle.ReducedConsoleEffects;
             Rect reducedRect = new Rect(inner.x, inner.y + 112f, inner.width, 24f);
-            if (AbyssalStyledWidgets.TextButton(reducedRect, reduced ? "ABY_ForgeReducedEffectsOn".Translate() : "ABY_ForgeReducedEffectsOff".Translate(), true, reduced, null, "ABY_CircleReducedEffectsDesc".Translate()))
+            if (AbyssalStyledWidgets.TextButton(reducedRect, AbyssalSummoningConsoleUtility.GetReducedEffectsLabel(reduced), true, reduced, null, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console.")))
             {
                 circle.SetReducedConsoleEffects(!reduced);
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -170,12 +170,12 @@ namespace AbyssalProtocol
 
             Rect openRect = new Rect(inner.x, inner.y + 150f, inner.width, 30f);
             Rect invokeRect = new Rect(inner.x, inner.y + 188f, inner.width, 34f);
-            if (AbyssalStyledWidgets.TextButton(openRect, "ABY_CircleCommand_JumpToSigil".Translate()))
+            if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
             {
                 JumpToSigil(ritual);
             }
 
-            if (AbyssalStyledWidgets.TextButton(invokeRect, "ABY_CircleCommand_AssignSigil".Translate(), !circle.RitualActive, true))
+            if (AbyssalStyledWidgets.TextButton(invokeRect, AbyssalSummoningConsoleUtility.GetAssignSigilLabel(), !circle.RitualActive, true))
             {
                 ConfirmAndAssign(ritual);
             }
@@ -210,17 +210,17 @@ namespace AbyssalProtocol
             Rect rightRect = new Rect(midRect.xMax + 12f, inner.y, inner.width - leftRect.width - midRect.width - 24f, inner.height);
 
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(leftRect.x, leftRect.y, leftRect.width, 22f), "ABY_CirclePreviewHeader".Translate());
-            Widgets.Label(new Rect(leftRect.x, leftRect.y + 28f, leftRect.width, 22f), "ABY_CirclePreviewHost".Translate(ritual.BossLabel));
+            Widgets.Label(new Rect(leftRect.x, leftRect.y + 28f, leftRect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(leftRect.x, leftRect.y + 52f, leftRect.width, 18f), ritual.SubtitleKey.Translate());
+            Widgets.Label(new Rect(leftRect.x, leftRect.y + 52f, leftRect.width, 18f), AbyssalSummoningConsoleUtility.GetRitualSubtitle(ritual));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(leftRect.x, leftRect.y + 76f, leftRect.width, leftRect.height - 76f), ritual.DescriptionKey.Translate());
+            Widgets.Label(new Rect(leftRect.x, leftRect.y + 76f, leftRect.width, leftRect.height - 76f), AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
 
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(midRect.x, midRect.y, midRect.width, 22f), "ABY_CircleRewardsHeader".Translate());
-            Widgets.Label(new Rect(midRect.x, midRect.y + 28f, midRect.width, midRect.height - 28f), ritual.RewardHintKey.Translate());
+            Widgets.Label(new Rect(midRect.x, midRect.y + 28f, midRect.width, midRect.height - 28f), AbyssalSummoningConsoleUtility.GetRitualRewardHint(ritual));
 
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rightRect.x, rightRect.y, rightRect.width, 22f), "ABY_CircleConsequencesHeader".Translate());
-            Widgets.Label(new Rect(rightRect.x, rightRect.y + 28f, rightRect.width, rightRect.height - 28f), ritual.SideEffectHintKey.Translate());
+            Widgets.Label(new Rect(rightRect.x, rightRect.y + 28f, rightRect.width, rightRect.height - 28f), AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual));
         }
 
         private void JumpToSigil(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -239,12 +239,12 @@ namespace AbyssalProtocol
 
         private void ConfirmAndAssign(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
-            string confirmText = "ABY_CircleConfirmInvocation".Translate(ritual.LabelKey.Translate());
+            string confirmText = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleConfirmInvocation", "Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.", AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
             Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(confirmText, delegate
             {
                 if (AbyssalSummoningConsoleUtility.TryAssignInvocation(circle, ritual, out string failReason))
                 {
-                    Messages.Message("ABY_CircleAssignStarted".Translate(), MessageTypeDefOf.PositiveEvent, false);
+                    Messages.Message(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleAssignStarted", "Invocation sequence assigned. A colonist is moving a sigil to the circle."), MessageTypeDefOf.PositiveEvent, false);
                     SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
                 }
                 else if (!failReason.NullOrEmpty())

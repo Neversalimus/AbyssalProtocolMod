@@ -31,7 +31,7 @@ namespace AbyssalProtocol
             resizeable = false;
         }
 
-        public override Vector2 InitialSize => new Vector2(1200f, 790f);
+        public override Vector2 InitialSize => new Vector2(1200f, 800f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -193,13 +193,8 @@ namespace AbyssalProtocol
             List<RecipeDef> lockedAll = progress.GetLockedRecipes(selectedCategory);
             string summary = "ABY_ForgeUnlockedSummary".Translate(unlocked.Count, unlocked.Count + lockedAll.Count, categoryLabel);
 
-            Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 24f);
+            Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 48f);
             Widgets.Label(summaryRect, summary);
-
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Rect hintRect = new Rect(rightRect.x, rightRect.y + 32f, rightRect.width, 68f);
-            Widgets.Label(hintRect, "ABY_ForgePreviewHintShort".Translate());
-            GUI.color = Color.white;
 
             bool reduced = progress.ReducedVisualEffects;
             Rect toggleRect = new Rect(rightRect.x, rightRect.yMax - 28f, Mathf.Min(176f, rightRect.width), 24f);
@@ -242,7 +237,7 @@ namespace AbyssalProtocol
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             float cardWidth = (outRect.width - 12f) / 2f;
-            float cardHeight = 170f;
+            float cardHeight = 176f;
             int rows = Mathf.CeilToInt(recipes.Count / 2f);
             float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
@@ -326,7 +321,7 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            Rect buttonRect = new Rect(rect.x + rect.width - 112f, rect.y + rect.height - 30f, 100f, 24f);
+            Rect buttonRect = new Rect(rect.x + rect.width - 114f, rect.y + rect.height - 34f, 102f, 28f);
             if (unlocked && recipe.AvailableNow && recipe.AvailableOnNow(forge))
             {
                 if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternAddBill".Translate()))

@@ -7,7 +7,7 @@ namespace AbyssalProtocol
 {
     public class ITab_AbyssalForgeBills : ITab
     {
-        private static readonly Vector2 WinSize = new Vector2(648f, 284f);
+        private static readonly Vector2 WinSize = new Vector2(648f, 280f);
 
         protected Building_AbyssalForge SelForge => (Building_AbyssalForge)SelThing;
 
@@ -26,7 +26,7 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(canvas.x, canvas.y, canvas.width, 64f);
             Rect statusRect = new Rect(canvas.x, headerRect.yMax + 8f, 372f, 148f);
             Rect offerRect = new Rect(statusRect.xMax + 8f, headerRect.yMax + 8f, canvas.width - statusRect.width - 8f, 148f);
-            Rect openRect = new Rect(canvas.x, statusRect.yMax + 10f, canvas.width, 46f);
+            Rect openRect = new Rect(canvas.x, statusRect.yMax + 6f, canvas.width, 42f);
 
             MapComponent_AbyssalForgeProgress progress = SelForge.ProgressComponent;
             if (progress == null)

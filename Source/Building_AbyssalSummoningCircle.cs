@@ -71,6 +71,8 @@ namespace AbyssalProtocol
         private static readonly Vector2 CoreGlowSize = new Vector2(2.84f, 2.84f);
         private static readonly Vector2 IdleGlowSize = new Vector2(9.20f, 9.20f);
         private static readonly Vector2 BreachSize = new Vector2(6.90f, 6.90f);
+        private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get("UI/AbyssalSummoningCircle/ABY_SummoningSeal", false);
+
 
         private RitualPhase ritualPhase = RitualPhase.Idle;
         private int phaseTicksRemaining;
@@ -137,8 +139,9 @@ namespace AbyssalProtocol
 
             yield return new Command_Action
             {
-                defaultLabel = "ABY_CircleCommand_OpenConsole".Translate(),
-                defaultDesc = "ABY_CircleCommand_OpenConsoleDesc".Translate(),
+                defaultLabel = AbyssalSummoningConsoleUtility.GetOpenConsoleLabel(),
+                defaultDesc = AbyssalSummoningConsoleUtility.GetOpenConsoleDesc(),
+                icon = ConsoleCommandIcon,
                 action = delegate
                 {
                     Find.WindowStack.Add(new Window_AbyssalSummoningConsole(this));
@@ -299,29 +302,29 @@ namespace AbyssalProtocol
 
             if (RitualActive)
             {
-                sb.Append("ABY_CircleInspect_Phase".Translate(GetPhaseLabel().Translate(), Mathf.RoundToInt(GetPhaseProgress() * 100f)));
+                sb.Append(AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f)));
 
                 if (!IsPoweredForRitual)
                 {
                     sb.AppendLine();
-                    sb.Append("ABY_CircleInspect_StalledNoPower".Translate());
+                    sb.Append(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInspect_StalledNoPower", "Stalled: no power."));
                 }
             }
             else if (IsReadyForSigil(out string failReason))
             {
-                sb.Append("ABY_CircleInspect_Ready".Translate());
+                sb.Append(AbyssalSummoningConsoleUtility.GetReadyText());
             }
             else
             {
-                sb.Append("ABY_CircleInspect_NotReady".Translate(failReason));
+                sb.Append(AbyssalSummoningConsoleUtility.GetNotReadyText(failReason));
             }
 
             sb.AppendLine();
-            sb.Append("ABY_CircleInspect_Sigils".Translate(AbyssalSummoningConsoleUtility.CountSigilsOnMap(Map, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountSigilsOnMap(Map, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
             sb.AppendLine();
-            sb.Append("ABY_CircleInspect_Readiness".Translate(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
             sb.AppendLine();
-            sb.Append("ABY_CircleInspect_Risk".Translate(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()))));
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()))));
 
             return sb.ToString();
         }
@@ -635,15 +638,15 @@ namespace AbyssalProtocol
         {
             if (RitualActive)
             {
-                return "ABY_CircleInspect_Phase".Translate(GetPhaseLabel().Translate(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
+                return AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
             }
 
             if (IsReadyForSigil(out string failReason))
             {
-                return "ABY_CircleInspect_Ready".Translate();
+                return AbyssalSummoningConsoleUtility.GetReadyText();
             }
 
-            return "ABY_CircleInspect_NotReady".Translate(failReason);
+            return AbyssalSummoningConsoleUtility.GetNotReadyText(failReason);
         }
 
         private static void DrawLayer(Graphic graphic, Vector3 center, Vector2 drawSize, float angle, float yOffset)

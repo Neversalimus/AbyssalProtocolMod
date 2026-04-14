@@ -68,6 +68,210 @@ namespace AbyssalProtocol
             return Rituals[0];
         }
 
+        public static string TranslateOrFallback(string key, string fallback)
+        {
+            string value = key.Translate().Resolve();
+            return value == key ? fallback : value;
+        }
+
+        public static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
+        {
+            string value = key.Translate(args).Resolve();
+            return value == key ? string.Format(fallbackFormat, args) : value;
+        }
+
+        public static string GetConsoleTitle()
+        {
+            return TranslateOrFallback("ABY_CircleConsoleTitle", "abyssal summoning console");
+        }
+
+        public static string GetConsoleSubtitle()
+        {
+            return TranslateOrFallback("ABY_CircleConsoleSubtitle", "Threat-calibrated breach routing. Arm a prepared sigil, validate the circle, then let a colonist perform the invocation sequence.");
+        }
+
+        public static string GetConsoleSubtitleActive(string phaseLabel)
+        {
+            return TranslateOrFallback("ABY_CircleConsoleSubtitleActive", "Ritual active. Current phase: {0}.", phaseLabel);
+        }
+
+        public static string GetCompactSubtitle()
+        {
+            return TranslateOrFallback("ABY_CircleTab_SubtitleShort", "Compact ritual status and console access.");
+        }
+
+        public static string GetCompactHint()
+        {
+            return TranslateOrFallback("ABY_CircleTab_Hint", "Use the main console for full ritual preview, readiness checks, and automated sigil assignment.");
+        }
+
+        public static string GetCompactFooter()
+        {
+            return TranslateOrFallback("ABY_CircleTab_FooterShort", "Use the full console for ritual preview and sigil assignment.");
+        }
+
+        public static string GetOpenConsoleLabel()
+        {
+            return TranslateOrFallback("ABY_CircleCommand_OpenConsole", "Open summoning console");
+        }
+
+        public static string GetOpenConsoleDesc()
+        {
+            return TranslateOrFallback("ABY_CircleCommand_OpenConsoleDesc", "Open the full command console for ritual readiness, threat preview, and sigil assignment.");
+        }
+
+        public static string GetAssignSigilLabel()
+        {
+            return TranslateOrFallback("ABY_CircleCommand_AssignSigil", "Assign sigil and begin invocation");
+        }
+
+        public static string GetJumpToSigilLabel()
+        {
+            return TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Jump to nearest sigil");
+        }
+
+        public static string GetReducedEffectsLabel(bool reduced)
+        {
+            return reduced
+                ? TranslateOrFallback("ABY_CircleReducedEffectsOn", "Effects: reduced")
+                : TranslateOrFallback("ABY_CircleReducedEffectsOff", "Effects: full");
+        }
+
+        public static string GetInspectSigilsText(int count)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Sigils", "Sigils on map: {0}", count);
+        }
+
+        public static string GetInspectReadinessText(string readiness)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Readiness", "Readiness: {0}", readiness);
+        }
+
+        public static string GetInspectRiskText(string risk)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Risk", "Risk: {0}", risk);
+        }
+
+        public static string GetPhaseText(string phaseLabel, int progressPercent)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Phase", "Phase: {0} ({1}%)", phaseLabel, progressPercent);
+        }
+
+        public static string GetReadyText()
+        {
+            return TranslateOrFallback("ABY_CircleInspect_Ready", "Ready for activation.");
+        }
+
+        public static string GetNotReadyText(string failReason)
+        {
+            return TranslateOrFallback("ABY_CircleInspect_NotReady", "Not ready: {0}", failReason);
+        }
+
+        public static string GetCompactStatusLine(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+            }
+
+            if (circle.RitualActive)
+            {
+                return GetPhaseText(circle.GetCurrentPhaseTranslated(), Mathf.RoundToInt(circle.GetPhaseProgress() * 100f));
+            }
+
+            if (circle.IsReadyForSigil(out string failReason))
+            {
+                return GetReadyText();
+            }
+
+            return GetNotReadyText(Shorten(failReason, 72));
+        }
+
+        public static string GetRitualLabel(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return "Unknown ritual";
+            }
+
+            if (ritual.Id == "archon_beast")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
+            }
+
+            return TranslateOrFallback(ritual.LabelKey, ritual.Id);
+        }
+
+        public static string GetRitualSubtitle(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            if (ritual.Id == "archon_beast")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
+            }
+
+            return TranslateOrFallback(ritual.SubtitleKey, ritual.Id);
+        }
+
+        public static string GetRitualDescription(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            if (ritual.Id == "archon_beast")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.");
+            }
+
+            return TranslateOrFallback(ritual.DescriptionKey, ritual.Id);
+        }
+
+        public static string GetRitualRewardHint(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            if (ritual.Id == "archon_beast")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, "• First-loop boss progression\n• Archon-linked drops and unlock gating\n• Early abyssal loot and boss-side material gating");
+            }
+
+            return TranslateOrFallback(ritual.RewardHintKey, ritual.Id);
+        }
+
+        public static string GetRitualSideEffectHint(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            if (ritual.Id == "archon_beast")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, "• Opens a hostile breach on the current map\n• Can trigger escalation pressure if the colony is underprepared\n• Ritual phases intensify visuals, sound, and encounter pressure");
+            }
+
+            return TranslateOrFallback(ritual.SideEffectHintKey, ritual.Id);
+        }
+
+        private static string Shorten(string text, int maxLength)
+        {
+            if (text.NullOrEmpty() || text.Length <= maxLength)
+            {
+                return text ?? string.Empty;
+            }
+
+            return text.Substring(0, Mathf.Max(0, maxLength - 1)).TrimEnd() + "…";
+        }
+
         public static ThingDef GetSigilDef(RitualDefinition ritual)
         {
             return ritual == null ? null : DefDatabase<ThingDef>.GetNamedSilentFail(ritual.SigilThingDefName);
@@ -124,7 +328,7 @@ namespace AbyssalProtocol
 
             if (circle == null || circle.Destroyed || !circle.Spawned || circle.Map == null)
             {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
                 return false;
             }
 
@@ -163,7 +367,7 @@ namespace AbyssalProtocol
             failReason = null;
             if (circle?.Map == null)
             {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
                 return null;
             }
 
@@ -195,7 +399,7 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                failReason = "ABY_CircleConsoleFail_NoSigil".Translate();
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSigil", "No prepared archon sigil was found on the current map.");
             }
 
             return best;
@@ -206,7 +410,7 @@ namespace AbyssalProtocol
             failReason = null;
             if (circle?.Map == null || sigil == null)
             {
-                failReason = "ABY_CircleConsoleFail_NoOperator".Translate();
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
                 return null;
             }
 
@@ -245,7 +449,7 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                failReason = "ABY_CircleConsoleFail_NoOperator".Translate();
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
             }
 
             return best;
@@ -297,38 +501,38 @@ namespace AbyssalProtocol
 
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Power".Translate(),
-                Value = circle.IsPoweredForRitual ? "ABY_CircleStatus_Online".Translate() : "ABY_CircleStatus_Offline".Translate(),
+                Label = TranslateOrFallback("ABY_CircleStatus_Power", "Power"),
+                Value = circle.IsPoweredForRitual ? TranslateOrFallback("ABY_CircleStatus_Online", "online") : TranslateOrFallback("ABY_CircleStatus_Offline", "offline"),
                 Satisfied = circle.IsPoweredForRitual
             });
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Focus".Translate(),
-                Value = focusOk ? "ABY_CircleStatus_Clear".Translate() : focusFail,
+                Label = TranslateOrFallback("ABY_CircleStatus_Focus", "Focus"),
+                Value = focusOk ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : focusFail,
                 Satisfied = focusOk
             });
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Interaction".Translate(),
-                Value = interactionOk ? "ABY_CircleStatus_Clear".Translate() : interactionFail,
+                Label = TranslateOrFallback("ABY_CircleStatus_Interaction", "Access"),
+                Value = interactionOk ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : interactionFail,
                 Satisfied = interactionOk
             });
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Sigils".Translate(),
+                Label = TranslateOrFallback("ABY_CircleStatus_Sigils", "Sigils"),
                 Value = sigils.ToString(),
                 Satisfied = sigils > 0
             });
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Operators".Translate(),
+                Label = TranslateOrFallback("ABY_CircleStatus_Operators", "Operators"),
                 Value = operators.ToString(),
                 Satisfied = operators > 0
             });
             entries.Add(new StatusEntry
             {
-                Label = "ABY_CircleStatus_Encounter".Translate(),
-                Value = encounterClear ? "ABY_CircleStatus_Clear".Translate() : "ABY_BossSummonFail_EncounterActive".Translate(),
+                Label = TranslateOrFallback("ABY_CircleStatus_Encounter", "Encounter"),
+                Value = encounterClear ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : TranslateOrFallback("ABY_BossSummonFail_EncounterActive", "An abyssal encounter is already active on this map."),
                 Satisfied = encounterClear
             });
 
@@ -412,22 +616,22 @@ namespace AbyssalProtocol
             switch (tier)
             {
                 case CircleRiskTier.Stable:
-                    return "ABY_CircleRisk_Stable".Translate();
+                    return TranslateOrFallback("ABY_CircleRisk_Stable", "stable");
                 case CircleRiskTier.Strained:
-                    return "ABY_CircleRisk_Strained".Translate();
+                    return TranslateOrFallback("ABY_CircleRisk_Strained", "strained");
                 case CircleRiskTier.Volatile:
-                    return "ABY_CircleRisk_Volatile".Translate();
+                    return TranslateOrFallback("ABY_CircleRisk_Volatile", "volatile");
                 case CircleRiskTier.Catastrophic:
-                    return "ABY_CircleRisk_Catastrophic".Translate();
+                    return TranslateOrFallback("ABY_CircleRisk_Catastrophic", "catastrophic");
                 default:
-                    return "ABY_CircleRisk_Stable".Translate();
+                    return TranslateOrFallback("ABY_CircleRisk_Stable", "stable");
             }
         }
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
             int ready = GetStatusEntries(circle, ritual).Count(entry => entry.Satisfied);
-            return "ABY_CircleReadinessSummary".Translate(ready, 6);
+            return TranslateOrFallback("ABY_CircleReadinessSummary", "{0} / {1} gates clear", ready, 6);
         }
     }
 }

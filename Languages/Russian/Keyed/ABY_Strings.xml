@@ -16,7 +16,7 @@
   <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
 
   <ABY_FirstBossKillLabel>Первый босс уничтожен</ABY_FirstBossKillLabel>
-  
+  <ABY_FirstBossKillDesc>Первый abyssal-босс уничтожен. Теперь доступен анализ фрагмента вестника, а цикл Abyssal Protocol может перейти к Herald-уровню интеграции.</ABY_FirstBossKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый herald core fragment на высокотехнологичном исследовательском столе, чтобы открыть Herald-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
 
@@ -52,92 +52,76 @@
   <ABY_SigilActivationStarted>Активация сигила началась.</ABY_SigilActivationStarted>
   <ABY_SigilPlacementFailed>Сигил не смог найти подходящий круг призыва.</ABY_SigilPlacementFailed>
 
-  <ABY_FirstBossKillDesc>Первый abyssal-босс уничтожен. Теперь в колонию начинает поступать herald-добыча. Продолжай кормить Abyssal Forge residue, чтобы углублять communion и открывать новые шаблоны.</ABY_FirstBossKillDesc>
+  <ABY_CircleTab_Label>консоль</ABY_CircleTab_Label>
+  <ABY_CircleConsoleTitle>консоль инфернального сопряжения</ABY_CircleConsoleTitle>
+  <ABY_CircleConsoleSubtitle>Контроль разлома и боевого ритуала. Подготовь сигил, проверь готовность круга и запусти призыв через колониста.</ABY_CircleConsoleSubtitle>
+  <ABY_CircleConsoleSubtitleActive>Ритуал активен. Текущая фаза: {0}.</ABY_CircleConsoleSubtitleActive>
+  <ABY_CircleTab_Subtitle>Краткий ритуальный статус и быстрый доступ к консоли.</ABY_CircleTab_Subtitle>
+  <ABY_CircleTab_Hint>Полная консоль показывает превью ритуала, требования готовности и позволяет автоматически назначить перенос сигила.</ABY_CircleTab_Hint>
+  <ABY_CircleTab_Footer>Круг остаётся опасным эндгейм-триггером. Эта консоль повышает удобство и читаемость, но не делает ритуал безопаснее.</ABY_CircleTab_Footer>
 
-  <ABY_ForgeTabLabel>communion</ABY_ForgeTabLabel>
-  <ABY_ForgePanelHeader>Инфернально-технологическая матрица communion</ABY_ForgePanelHeader>
-  <ABY_ForgeProgressBar>Внесено residue: {0} / следующий шаблон на {1}</ABY_ForgeProgressBar>
-  <ABY_ForgeProgressComplete>Внесено residue: {0} / все текущие шаблоны уже открыты</ABY_ForgeProgressComplete>
-  <ABY_ForgeResidueAvailable>Residue на карте: {0}</ABY_ForgeResidueAvailable>
-  <ABY_ForgeAttunementState>Состояние attunement колонии: {0}</ABY_ForgeAttunementState>
-  <ABY_ForgeNextPattern>Следующий шаблон на {0}: {1}</ABY_ForgeNextPattern>
-  <ABY_ForgeNextPatternDone>На этой карте больше нет forge-гейтов для текущих шаблонов.</ABY_ForgeNextPatternDone>
-  <ABY_ForgePowerOnline>Реактор forge: онлайн</ABY_ForgePowerOnline>
-  <ABY_ForgePowerOffline>Реактор forge: оффлайн — attunement колонии приостановлен</ABY_ForgePowerOffline>
-  <ABY_ForgeOfferTip>Forge поглощает residue напрямую из размещённых на этой карте стаков.</ABY_ForgeOfferTip>
-  <ABY_ForgeOfferHint>Внесение residue общее для всей карты. Каждый порог навсегда открывает новые шаблоны forge для этой карты.</ABY_ForgeOfferHint>
-  <ABY_ForgeOfferAmount>Внести {0}</ABY_ForgeOfferAmount>
-  <ABY_ForgeOfferAll>Внести всё ({0})</ABY_ForgeOfferAll>
-  <ABY_ForgeOfferNoneAvailable>На этой карте сейчас нет abyssal residue.</ABY_ForgeOfferNoneAvailable>
-  <ABY_ForgeOfferComplete>В forge внесено {0} abyssal residue. Общий communion: {1}.</ABY_ForgeOfferComplete>
-  <ABY_ForgeUnlockLetterLabel>Communion forge углублён ({0})</ABY_ForgeUnlockLetterLabel>
-  <ABY_ForgeUnlockLetterDesc>Abyssal Forge стабилизировал более глубокий tier communion. Текущее состояние attunement: {1}. Новые открытые шаблоны:
+  <ABY_CircleCommand_OpenConsole>Открыть консоль призыва</ABY_CircleCommand_OpenConsole>
+  <ABY_CircleCommand_OpenConsoleDesc>Открыть полную консоль ритуала с проверкой готовности, превью угрозы и назначением сигила.</ABY_CircleCommand_OpenConsoleDesc>
+  <ABY_CircleCommand_AssignSigil>Назначить сигил и начать призыв</ABY_CircleCommand_AssignSigil>
+  <ABY_CircleCommand_JumpToSigil>Перейти к ближайшему сигилу</ABY_CircleCommand_JumpToSigil>
 
-{2}</ABY_ForgeUnlockLetterDesc>
-  <ABY_ForgeUnlockedSummary>Открыто {0} / {1} шаблонов в категории {2}</ABY_ForgeUnlockedSummary>
-  <ABY_ForgeUpcomingPatterns>Ближайшие шаблоны</ABY_ForgeUpcomingPatterns>
-  <ABY_ForgeAllPatternsUnlocked>Все текущие шаблоны в этом канале уже открыты.</ABY_ForgeAllPatternsUnlocked>
-  <ABY_ForgeNoUnlockedRecipes>В этой категории пока нет открытых forge-шаблонов.</ABY_ForgeNoUnlockedRecipes>
-  <ABY_ForgeClipboardLocked>Этот bill пока нельзя вставить: его шаблон ещё заблокирован forge communion.</ABY_ForgeClipboardLocked>
-  <ABY_ForgeNoFurtherUnlocks>все текущие шаблоны открыты</ABY_ForgeNoFurtherUnlocks>
-  <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
-  <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>
-  <ABY_ForgeCategory_Weapons>Weapons</ABY_ForgeCategory_Weapons>
-  <ABY_ForgeCategory_Implants>Implants</ABY_ForgeCategory_Implants>
-  <ABY_ForgeCategory_Ritual>Ritual</ABY_ForgeCategory_Ritual>
-  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
-  <ABY_AttunementTier_0>дремлющий</ABY_AttunementTier_0>
-  <ABY_AttunementTier_1>слабый attunement</ABY_AttunementTier_1>
-  <ABY_AttunementTier_2>стабильный attunement</ABY_AttunementTier_2>
-  <ABY_AttunementTier_3>глубокий attunement</ABY_AttunementTier_3>
-  <ABY_AttunementTier_4>коронованный attunement</ABY_AttunementTier_4>
-  <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
-  <ABY_ForgeGizmoOfferDesc>Кормит forge abyssal residue, открывает новые шаблоны и поддерживает attunement колонии.</ABY_ForgeGizmoOfferDesc>
-  <ABY_ForgeInspectResidue>Communion forge: внесено {0} / доступно на карте {1}</ABY_ForgeInspectResidue>
-  <ABY_ForgeInspectNextUnlock>Следующий шаблон на {0}: {1}</ABY_ForgeInspectNextUnlock>
-  <ABY_ForgeInspectAllKnown>Все текущие forge-шаблоны на этой карте уже открыты.</ABY_ForgeInspectAllKnown>
-  <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
+  <ABY_CircleInspect_Sigils>Сигилов на карте: {0}</ABY_CircleInspect_Sigils>
+  <ABY_CircleInspect_Readiness>Готовность: {0}</ABY_CircleInspect_Readiness>
+  <ABY_CircleInspect_Risk>Риск: {0}</ABY_CircleInspect_Risk>
 
-  <ABY_ForgeOverviewSubtitle>Общая для карты communion-система residue, открытия шаблонов и управления attunement колонии.</ABY_ForgeOverviewSubtitle>
-  <ABY_ForgeOverviewHint>Открой полный консольный интерфейс для просмотра шаблонов и управления bill.</ABY_ForgeOverviewHint>
-  <ABY_ForgeOpenConsole>Открыть консоль communion</ABY_ForgeOpenConsole>
-  <ABY_ForgeOpenConsoleLabel>Консоль communion</ABY_ForgeOpenConsoleLabel>
-  <ABY_ForgeOpenConsoleDesc>Открывает стилизованную консоль forge с внесением residue, браузером шаблонов и управлением bill.</ABY_ForgeOpenConsoleDesc>
-  <ABY_ForgeConsoleTitle>Инфернально-технологическая консоль communion</ABY_ForgeConsoleTitle>
-  <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная панель управления для intake residue, настройки attunement и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
-  <ABY_ForgeStatusHeader>Состояние communion</ABY_ForgeStatusHeader>
-  <ABY_ForgeOfferHeader>Колодец подношений</ABY_ForgeOfferHeader>
-  <ABY_ForgeOfferHintShort>Внесение общее для всей карты. Открытые шаблоны сохраняются для этой карты.</ABY_ForgeOfferHintShort>
-  <ABY_ForgeNextHeader>Телеметрия шаблонов</ABY_ForgeNextHeader>
-  <ABY_ForgePreviewHint>Переключай категории, чтобы сузить канал. Заблокированные шаблоны здесь тоже видны, поэтому прогресс читается сразу.</ABY_ForgePreviewHint>
-  <ABY_ForgePreviewHintShort>Переключай категории, чтобы сузить канал. Заблокированные шаблоны остаются видимыми для удобства.</ABY_ForgePreviewHintShort>
-  <ABY_ForgeConsolePatternsHeader>Браузер шаблонов</ABY_ForgeConsolePatternsHeader>
-  <ABY_ForgeConsoleBillsHeader>Очередь производства</ABY_ForgeConsoleBillsHeader>
-  <ABY_ForgeProgressBand>Настроено residue: {0} • текущий диапазон {1} → {2}</ABY_ForgeProgressBand>
-  <ABY_ForgeMetricResidue>Настроено residue</ABY_ForgeMetricResidue>
-  <ABY_ForgeMetricAvailable>Residue на карте</ABY_ForgeMetricAvailable>
-  <ABY_ForgeMetricAttunement>Attunement колонии</ABY_ForgeMetricAttunement>
-  <ABY_ForgeMetricPower>Состояние реактора</ABY_ForgeMetricPower>
-  <ABY_ForgePowerOnlineShort>онлайн</ABY_ForgePowerOnlineShort>
-  <ABY_ForgePowerOfflineShort>оффлайн</ABY_ForgePowerOfflineShort>
-  <ABY_ForgePatternUnlockedAt>Открыто на {0} residue</ABY_ForgePatternUnlockedAt>
-  <ABY_ForgePatternLockedAt>Заблокировано до {0} residue</ABY_ForgePatternLockedAt>
-  <ABY_ForgePatternAddBill>Добавить bill</ABY_ForgePatternAddBill>
-  <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
+  <ABY_CircleStatus_Power>Питание</ABY_CircleStatus_Power>
+  <ABY_CircleStatus_Focus>Фокус</ABY_CircleStatus_Focus>
+  <ABY_CircleStatus_Interaction>Доступ</ABY_CircleStatus_Interaction>
+  <ABY_CircleStatus_Sigils>Сигилы</ABY_CircleStatus_Sigils>
+  <ABY_CircleStatus_Operators>Операторы</ABY_CircleStatus_Operators>
+  <ABY_CircleStatus_Encounter>Столкновение</ABY_CircleStatus_Encounter>
+  <ABY_CircleStatus_Online>в норме</ABY_CircleStatus_Online>
+  <ABY_CircleStatus_Offline>нет</ABY_CircleStatus_Offline>
+  <ABY_CircleStatus_Clear>чисто</ABY_CircleStatus_Clear>
 
-  <ABY_ForgeOverviewSubtitleShort>Общая для карты communion-система residue и управления шаблонами.</ABY_ForgeOverviewSubtitleShort>
-  <ABY_ForgeOverviewHintCompact>Открой полную консоль, чтобы видеть шаблоны, ресурсы и управлять bill.</ABY_ForgeOverviewHintCompact>
-  <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
-  <ABY_ForgePatternNoMaterialData>Данные о материальных затратах недоступны.</ABY_ForgePatternNoMaterialData>
-  <ABY_ForgePatternRequirementsState>Материалы на карте</ABY_ForgePatternRequirementsState>
-  <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
-  <ABY_ForgePatternNew>NEW</ABY_ForgePatternNew>
-  <ABY_ForgeUnlockToast>Стабилизирован новый forge-шаблон: {0}</ABY_ForgeUnlockToast>
-  <ABY_ForgeReducedEffects>Уменьшенные эффекты</ABY_ForgeReducedEffects>
-  <ABY_ForgeReducedEffectsDesc>Снижает интенсивность sweep-линий, пульсации и анимированного свечения в интерфейсе communion.</ABY_ForgeReducedEffectsDesc>
-  <ABY_ForgeReducedEffectsOn>Эффекты: меньше</ABY_ForgeReducedEffectsOn>
-  <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
-  <ABY_ForgeAttunementEffectsHeader>Текущие эффекты attunement колонии</ABY_ForgeAttunementEffectsHeader>
-  <ABY_ForgeAttunementTooltipSuspended>Бонусы attunement отключены, пока на карте нет запитанного Abyssal Forge.</ABY_ForgeAttunementTooltipSuspended>
+  <ABY_CircleRisk_Stable>стабильно</ABY_CircleRisk_Stable>
+  <ABY_CircleRisk_Strained>напряжённо</ABY_CircleRisk_Strained>
+  <ABY_CircleRisk_Volatile>нестабильно</ABY_CircleRisk_Volatile>
+  <ABY_CircleRisk_Catastrophic>катастрофично</ABY_CircleRisk_Catastrophic>
+  <ABY_CircleReadinessSummary>{0} / {1} требований выполнено</ABY_CircleReadinessSummary>
+
+  <ABY_CirclePatternsHeader>Шаблоны инвокации</ABY_CirclePatternsHeader>
+  <ABY_CircleControlHeader>Управление призывом</ABY_CircleControlHeader>
+  <ABY_CircleControlState>Текущее состояние разлома</ABY_CircleControlState>
+  <ABY_CircleStatusHeaderLong>Разбор готовности</ABY_CircleStatusHeaderLong>
+  <ABY_CirclePreviewHeader>Превью ритуала</ABY_CirclePreviewHeader>
+  <ABY_CirclePreviewHost>Вероятная цель призыва: {0}</ABY_CirclePreviewHost>
+  <ABY_CircleRewardsHeader>Вектор наград</ABY_CircleRewardsHeader>
+  <ABY_CircleConsequencesHeader>Последствия и побочные эффекты</ABY_CircleConsequencesHeader>
+
+  <ABY_CircleReducedEffects>Сниженные эффекты</ABY_CircleReducedEffects>
+  <ABY_CircleReducedEffectsDesc>Ослабляет sweep-линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
+
+  <ABY_CircleRitual_Archon_Label>Призвать Archon Beast</ABY_CircleRitual_Archon_Label>
+  <ABY_CircleRitual_Archon_Subtitle>Шаблон первого босса</ABY_CircleRitual_Archon_Subtitle>
+  <ABY_CircleRitual_Archon_Desc>Расходует один подготовленный archon sigil, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
+  <ABY_CircleRitual_Archon_Rewards>• Прогрессия первого боевого цикла
+• Доступ к продолжению herald-линии
+• Ранний abyssal-лут и гейт материалов босса</ABY_CircleRitual_Archon_Rewards>
+  <ABY_CircleRitual_Archon_SideEffects>• Открывает враждебный разлом на текущей карте
+• Требует питания и свободного центра круга
+• Фазы ритуала усиливают визуал, звук и давление столкновения</ABY_CircleRitual_Archon_SideEffects>
+  <ABY_CircleRitualMeta>Сигилов на карте: {0}   •   Бюджет угрозы: {1}</ABY_CircleRitualMeta>
+
+  <ABY_CircleSelect>Выбрать</ABY_CircleSelect>
+  <ABY_CircleSelected>Выбрано</ABY_CircleSelected>
+
+  <ABY_CircleConfirmInvocation>Назначить подготовленный сигил и приказать колонисту начать {0}? Это запустит враждебную последовательность разлома.</ABY_CircleConfirmInvocation>
+  <ABY_CircleAssignStarted>Последовательность призыва назначена. Колонист несёт сигил к кругу.</ABY_CircleAssignStarted>
+
+  <ABY_CircleConsoleFail_NoCircle>Для управления через консоль нет подходящего круга призыва.</ABY_CircleConsoleFail_NoCircle>
+  <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одного подготовленного archon sigil.</ABY_CircleConsoleFail_NoSigil>
+  <ABY_CircleConsoleFail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил к кругу.</ABY_CircleConsoleFail_NoOperator>
+  <ABY_CircleConsoleFail_JobStart>Не удалось запустить приказ на призыв.</ABY_CircleConsoleFail_JobStart>
+
+  <ABY_CircleTab_SubtitleShort>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_SubtitleShort>
+  <ABY_CircleTab_FooterShort>Полная консоль показывает превью ритуала и назначение сигила.</ABY_CircleTab_FooterShort>
+  <ABY_CircleReducedEffectsOn>Эффекты: снижены</ABY_CircleReducedEffectsOn>
+  <ABY_CircleReducedEffectsOff>Эффекты: полные</ABY_CircleReducedEffectsOff>
 
 </LanguageData>
