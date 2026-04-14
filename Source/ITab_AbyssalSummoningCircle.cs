@@ -51,20 +51,17 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleUtility.CircleRiskTier riskTier = AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual);
             AbyssalSummoningConsoleArt.DrawRiskBar(new Rect(rightInner.x, rightInner.y + 10f, rightInner.width, 24f), AbyssalSummoningConsoleUtility.GetRiskFill(circle, ritual), AbyssalSummoningConsoleUtility.GetRiskLabel(riskTier), AbyssalSummoningConsoleUtility.GetRiskColor(riskTier), circle.RitualActive);
 
-            if (Widgets.ButtonText(new Rect(rightInner.x, rightInner.y + 50f, rightInner.width, 30f), "ABY_CircleCommand_OpenConsole".Translate()))
+            if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 50f, rightInner.width, 30f), "ABY_CircleCommand_OpenConsole".Translate(), true, true))
             {
                 Find.WindowStack.Add(new Window_AbyssalSummoningConsole(circle));
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
 
             bool canInvoke = !circle.RitualActive;
-            bool oldEnabled = GUI.enabled;
-            GUI.enabled = canInvoke;
-            if (Widgets.ButtonText(new Rect(rightInner.x, rightInner.y + 88f, rightInner.width, 30f), "ABY_CircleCommand_AssignSigil".Translate()))
+            if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 88f, rightInner.width, 30f), "ABY_CircleCommand_AssignSigil".Translate(), canInvoke, true))
             {
                 TryAssign(circle, ritual);
             }
-            GUI.enabled = oldEnabled;
 
             AbyssalSummoningConsoleArt.DrawPanel(bottomRect, false);
             Widgets.Label(bottomRect.ContractedBy(10f), "ABY_CircleTab_Footer".Translate());

@@ -40,8 +40,7 @@ namespace AbyssalProtocol
             DrawStatusPanel(statusRect, progress);
             DrawOfferPanel(offerRect, progress);
 
-            AbyssalForgeConsoleArt.DrawActionButtonFrame(openRect, true);
-            if (Widgets.ButtonText(openRect.ContractedBy(10f), "ABY_ForgeOpenConsole".Translate()))
+            if (AbyssalStyledWidgets.TextButton(openRect.ContractedBy(8f), "ABY_ForgeOpenConsole".Translate(), true, true))
             {
                 Find.WindowStack.Add(new Window_AbyssalForgeConsole(SelForge));
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -95,26 +94,23 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             bool enabled = availableResidue > 0;
-            bool oldEnabled = GUI.enabled;
-            GUI.enabled = enabled;
 
             float buttonWidth = (inner.width - 8f) / 2f;
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(10)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(10), enabled))
             {
                 TryOfferResidue(10);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x + buttonWidth + 8f, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(50)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x + buttonWidth + 8f, inner.y + 30f, buttonWidth, 30f), "ABY_ForgeOfferAmount".Translate(50), enabled))
             {
                 TryOfferResidue(50);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 66f, inner.width, 32f), "ABY_ForgeOfferAll".Translate(availableResidue)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 66f, inner.width, 32f), "ABY_ForgeOfferAll".Translate(availableResidue), enabled))
             {
                 TryOfferResidue(availableResidue);
             }
 
-            GUI.enabled = oldEnabled;
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
             Widgets.Label(new Rect(inner.x, inner.y + 104f, inner.width, inner.height - 104f), enabled ? "ABY_ForgeOverviewHintCompact".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;

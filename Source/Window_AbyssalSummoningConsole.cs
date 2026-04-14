@@ -139,7 +139,7 @@ namespace AbyssalProtocol
             Widgets.Label(metaRect, "ABY_CircleRitualMeta".Translate(AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual), ritual.SpawnPoints));
             GUI.color = Color.white;
 
-            if (Widgets.ButtonText(selectRect, selected ? "ABY_CircleSelected".Translate() : "ABY_CircleSelect".Translate()))
+            if (AbyssalStyledWidgets.TextButton(selectRect, selected ? "ABY_CircleSelected".Translate() : "ABY_CircleSelect".Translate(), !selected, selected))
             {
                 selectedRitualId = ritual.Id;
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -162,29 +162,23 @@ namespace AbyssalProtocol
 
             bool reduced = circle.ReducedConsoleEffects;
             Rect reducedRect = new Rect(inner.x, inner.y + 112f, inner.width, 24f);
-            Widgets.CheckboxLabeled(reducedRect, "ABY_CircleReducedEffects".Translate(), ref reduced);
-            if (reduced != circle.ReducedConsoleEffects)
+            if (AbyssalStyledWidgets.TextButton(reducedRect, reduced ? "ABY_ForgeReducedEffectsOn".Translate() : "ABY_ForgeReducedEffectsOff".Translate(), true, reduced, null, "ABY_CircleReducedEffectsDesc".Translate()))
             {
-                circle.SetReducedConsoleEffects(reduced);
+                circle.SetReducedConsoleEffects(!reduced);
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
-            TooltipHandler.TipRegion(reducedRect, "ABY_CircleReducedEffectsDesc".Translate());
 
             Rect openRect = new Rect(inner.x, inner.y + 150f, inner.width, 30f);
             Rect invokeRect = new Rect(inner.x, inner.y + 188f, inner.width, 34f);
-            if (Widgets.ButtonText(openRect, "ABY_CircleCommand_JumpToSigil".Translate()))
+            if (AbyssalStyledWidgets.TextButton(openRect, "ABY_CircleCommand_JumpToSigil".Translate()))
             {
                 JumpToSigil(ritual);
             }
 
-            bool oldEnabled = GUI.enabled;
-            GUI.enabled = !circle.RitualActive;
-            AbyssalSummoningConsoleArt.DrawActionButtonFrame(invokeRect, true);
-            if (Widgets.ButtonText(invokeRect, "ABY_CircleCommand_AssignSigil".Translate()))
+            if (AbyssalStyledWidgets.TextButton(invokeRect, "ABY_CircleCommand_AssignSigil".Translate(), !circle.RitualActive, true))
             {
                 ConfirmAndAssign(ritual);
             }
-            GUI.enabled = oldEnabled;
         }
 
         private void DrawStatusPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

@@ -139,25 +139,22 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeOfferHeader".Translate());
 
             bool enabled = availableResidue > 0;
-            bool oldEnabled = GUI.enabled;
-            GUI.enabled = enabled;
 
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 30f, inner.width, 30f), "ABY_ForgeOfferAmount".Translate(10)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 30f, inner.width, 30f), "ABY_ForgeOfferAmount".Translate(10), enabled))
             {
                 TryOfferResidue(10);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 66f, inner.width, 30f), "ABY_ForgeOfferAmount".Translate(50)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 66f, inner.width, 30f), "ABY_ForgeOfferAmount".Translate(50), enabled))
             {
                 TryOfferResidue(50);
             }
 
-            if (Widgets.ButtonText(new Rect(inner.x, inner.y + 102f, inner.width, 30f), "ABY_ForgeOfferAll".Translate(availableResidue)))
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 102f, inner.width, 30f), "ABY_ForgeOfferAll".Translate(availableResidue), enabled))
             {
                 TryOfferResidue(availableResidue);
             }
 
-            GUI.enabled = oldEnabled;
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 138f, inner.width, inner.height - 138f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
@@ -207,12 +204,11 @@ namespace AbyssalProtocol
             bool reduced = progress.ReducedVisualEffects;
             Rect toggleRect = new Rect(rightRect.x, rightRect.yMax - 28f, Mathf.Min(176f, rightRect.width), 24f);
             string toggleLabel = reduced ? "ABY_ForgeReducedEffectsOn".Translate() : "ABY_ForgeReducedEffectsOff".Translate();
-            if (Widgets.ButtonText(toggleRect, toggleLabel))
+            if (AbyssalStyledWidgets.TextButton(toggleRect, toggleLabel, true, reduced, null, "ABY_ForgeReducedEffectsDesc".Translate()))
             {
                 progress.SetReducedVisualEffects(!reduced);
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
-            TooltipHandler.TipRegion(toggleRect, "ABY_ForgeReducedEffectsDesc".Translate());
         }
 
         private void DrawCategoryRow(Rect rect)
@@ -226,8 +222,7 @@ namespace AbyssalProtocol
             {
                 string category = categories[i];
                 Rect buttonRect = new Rect(inner.x + width * i, inner.y, width - 4f, inner.height);
-                AbyssalForgeConsoleArt.DrawCategoryButton(buttonRect, category, category == selectedCategory);
-                if (Widgets.ButtonInvisible(buttonRect))
+                if (AbyssalStyledWidgets.TabButton(buttonRect, AbyssalForgeProgressUtility.GetCategoryLabel(category), AbyssalForgeConsoleArt.GetCategoryIcon(category), category == selectedCategory))
                 {
                     selectedCategory = category;
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -334,16 +329,14 @@ namespace AbyssalProtocol
             Rect buttonRect = new Rect(rect.x + rect.width - 112f, rect.y + rect.height - 30f, 100f, 24f);
             if (unlocked && recipe.AvailableNow && recipe.AvailableOnNow(forge))
             {
-                if (Widgets.ButtonText(buttonRect, "ABY_ForgePatternAddBill".Translate()))
+                if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternAddBill".Translate()))
                 {
                     AddBill(recipe);
                 }
             }
             else
             {
-                GUI.color = Color.gray;
-                Widgets.ButtonText(buttonRect, "ABY_ForgePatternLocked".Translate());
-                GUI.color = Color.white;
+                AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternLocked".Translate(), false);
             }
 
             string description = product != null && !product.description.NullOrEmpty() ? product.description : recipe.description;
@@ -463,41 +456,30 @@ namespace AbyssalProtocol
         {
             if (BillUtility.Clipboard == null)
             {
-                GUI.color = Color.gray;
-                Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
-                GUI.color = Color.white;
-                TooltipHandler.TipRegionByKey(rect, "PasteBillTip");
+                AbyssalStyledWidgets.IconButton(rect, TexButton.Paste, false, false, "PasteBillTip".Translate());
                 return;
             }
 
             RecipeDef clipboardRecipe = BillUtility.Clipboard.recipe;
             if (!CanUseRecipe(clipboardRecipe))
             {
-                GUI.color = Color.gray;
-                Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
-                GUI.color = Color.white;
-                TooltipHandler.TipRegion(rect, "ABY_ForgeClipboardLocked".Translate());
+                AbyssalStyledWidgets.IconButton(rect, TexButton.Paste, false, false, "ABY_ForgeClipboardLocked".Translate());
                 return;
             }
 
             if (forge.BillStack.Count >= 15)
             {
-                GUI.color = Color.gray;
-                Widgets.DrawTextureFitted(rect, TexButton.Paste, 1f);
-                GUI.color = Color.white;
-                TooltipHandler.TipRegion(rect, "PasteBillTip".Translate() + " (" + "PasteBillTip_LimitReached".Translate() + ")");
+                AbyssalStyledWidgets.IconButton(rect, TexButton.Paste, false, false, "PasteBillTip".Translate() + " (" + "PasteBillTip_LimitReached".Translate() + ")");
                 return;
             }
 
-            if (Widgets.ButtonImageFitted(rect, TexButton.Paste, Color.white))
+            if (AbyssalStyledWidgets.IconButton(rect, TexButton.Paste, true, false, "PasteBillTip".Translate()))
             {
                 Bill bill = BillUtility.Clipboard.Clone();
                 bill.InitializeAfterClone();
                 forge.BillStack.AddBill(bill);
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
             }
-
-            TooltipHandler.TipRegionByKey(rect, "PasteBillTip");
         }
 
         private bool CanUseRecipe(RecipeDef recipe)
