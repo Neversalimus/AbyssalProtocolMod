@@ -81,20 +81,23 @@ namespace AbyssalProtocol
         {
             if (totalResidueOffered <= 0)
             {
-                return 0;
+                return 1;
             }
 
-            return Mathf.Clamp(totalResidueOffered / ResiduePerAttunementTier, 0, MaxAttunementTier);
+            float ratio = Mathf.Clamp01(totalResidueOffered / (float)MaxAttunementResidue);
+            int tier = 1 + Mathf.FloorToInt(ratio * (MaxAttunementTier - 1));
+            return Mathf.Clamp(tier, 1, MaxAttunementTier);
         }
 
         public static int GetResidueRequiredForAttunementTier(int tier)
         {
-            if (tier <= 0)
+            if (tier <= 1)
             {
                 return 0;
             }
 
-            return Mathf.Clamp(tier, 0, MaxAttunementTier) * ResiduePerAttunementTier;
+            float ratio = (tier - 1) / (float)(MaxAttunementTier - 1);
+            return Mathf.Clamp(Mathf.CeilToInt(ratio * MaxAttunementResidue), 0, MaxAttunementResidue);
         }
 
         public static int GetNextAttunementTierResidue(int currentTier)
@@ -105,6 +108,16 @@ namespace AbyssalProtocol
             }
 
             return GetResidueRequiredForAttunementTier(currentTier + 1);
+        }
+
+        public static float GetAttunementLevelFill(int tier)
+        {
+            if (tier <= 0)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp01(tier / (float)MaxAttunementTier);
         }
 
         public static float GetSummoningInstabilityReductionForTier(int tier)
@@ -125,7 +138,7 @@ namespace AbyssalProtocol
 
         public static float GetForgeBillSpeedCapstoneBonusForTier(int tier)
         {
-            return 0f;
+            return tier >= MaxAttunementTier ? 0.50f : 0f;
         }
 
         public static string GetAttunementBandLabel(int tier)
@@ -166,6 +179,11 @@ namespace AbyssalProtocol
         public static string GetAttunementMetricLabel(int tier)
         {
             return TranslateOrFallback("ABY_ForgeAttunementMetricLabel", "Tier {0}/50", tier, MaxAttunementTier);
+        }
+
+        public static string GetAttunementBarLabel(int tier)
+        {
+            return TranslateOrFallback("ABY_ForgeAttunementLevelBar", "Attunement level • tier {0}/50", tier, MaxAttunementTier);
         }
 
         public static string GetAttunementDisplayLabel(int tier)
@@ -375,12 +393,12 @@ namespace AbyssalProtocol
             return string.Join("\n", lines.ToArray());
         }
 
-        public static string GetAttunementTooltip(int tier, bool active)
+        public static string GetAttunementTooltip(int tier, int totalResidueOffered, bool active)
         {
             List<string> lines = new List<string>
             {
                 GetAttunementDisplayLabel(tier),
-                TranslateOrFallback("ABY_ForgeAttunementResidueProgress", "Residue attuned: {0}/{1}", GetResidueRequiredForAttunementTier(tier), MaxAttunementResidue)
+                TranslateOrFallback("ABY_ForgeAttunementResidueProgress", "Residue attuned: {0}/{1}", totalResidueOffered, MaxAttunementResidue)
             };
 
             int nextTierResidue = GetNextAttunementTierResidue(tier);
@@ -439,12 +457,6 @@ namespace AbyssalProtocol
             if (instabilityReduction > 0f)
             {
                 lines.Add("• " + TranslateOrFallback("ABY_ForgeAttunementInstability", "Summoning instability") + ": -" + instabilityReduction.ToStringPercent());
-            }
-
-            float forgeBillSpeed = GetForgeBillSpeedCapstoneBonusForTier(tier);
-            if (forgeBillSpeed > 0f)
-            {
-                lines.Add("• " + TranslateOrFallback("ABY_ForgeAttunementForgeBillSpeed", "Forge bill speed") + ": +" + forgeBillSpeed.ToStringPercent());
             }
 
             if (!active)
@@ -679,7 +691,7 @@ namespace AbyssalProtocol
             switch (capacity.defName)
             {
                 case "Manipulation":
-                    return prefix + value.ToString("0.##");
+                    return prefix + value.ToStringPercent();
                 default:
                     return prefix + value.ToStringPercent();
             }

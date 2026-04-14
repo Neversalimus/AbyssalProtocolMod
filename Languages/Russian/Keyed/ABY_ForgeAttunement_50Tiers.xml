@@ -8,6 +8,7 @@
   <ABY_ForgeAttunementBand_Ascendant>восходящая настройка</ABY_ForgeAttunementBand_Ascendant>
   <ABY_ForgeAttunementBand_Dominion>доминантная настройка</ABY_ForgeAttunementBand_Dominion>
   <ABY_ForgeAttunementMetricLabel>Тир {0}/50</ABY_ForgeAttunementMetricLabel>
+  <ABY_ForgeAttunementLevelBar>Уровень attunement • тир {0}/50</ABY_ForgeAttunementLevelBar>
   <ABY_ForgeAttunementDisplayLabel>{0} · тир {1}/50</ABY_ForgeAttunementDisplayLabel>
   <ABY_ForgeAttunementResidueProgress>Настроено residue: {0}/{1}</ABY_ForgeAttunementResidueProgress>
   <ABY_ForgeAttunementNextTier>Следующий тир на {0} residue</ABY_ForgeAttunementNextTier>

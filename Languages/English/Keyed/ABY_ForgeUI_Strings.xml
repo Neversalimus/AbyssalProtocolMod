@@ -50,6 +50,7 @@
   <ABY_ForgeNextPatternDone>All current forge patterns are already unlocked.</ABY_ForgeNextPatternDone>
   <ABY_ForgeReducedEffectsOn>Effects: reduced</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Effects: full</ABY_ForgeReducedEffectsOff>
+  <ABY_ForgeReducedEffectsToggle>Reduced effects</ABY_ForgeReducedEffectsToggle>
   <ABY_ForgeReducedEffectsDesc>Softens header sweeps, pulse accents, and other animated flourishes inside the forge console.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>All</ABY_ForgeCategory_All>
   <ABY_ForgeCategory_Core>Forge Core</ABY_ForgeCategory_Core>

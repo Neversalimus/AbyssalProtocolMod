@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.Sound;
 
@@ -157,7 +158,7 @@ namespace AbyssalProtocol
                 return 0;
             }
 
-            return AbyssalForgeProgressUtility.GetAttunementTierForResidue(totalResidueOffered);
+            return Mathf.Max(1, AbyssalForgeProgressUtility.GetAttunementTierForResidue(totalResidueOffered));
         }
 
         public bool HasAnyForge()

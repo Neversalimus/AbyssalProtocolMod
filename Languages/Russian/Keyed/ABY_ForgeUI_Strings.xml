@@ -50,6 +50,7 @@
   <ABY_ForgeNextPatternDone>Все текущие forge-шаблоны уже открыты.</ABY_ForgeNextPatternDone>
   <ABY_ForgeReducedEffectsOn>Эффекты: снижены</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
+  <ABY_ForgeReducedEffectsToggle>Сниженные эффекты</ABY_ForgeReducedEffectsToggle>
   <ABY_ForgeReducedEffectsDesc>Смягчает sweep в шапке, пульсацию и другие анимированные акценты внутри forge-консоли.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
   <ABY_ForgeCategory_Core>Ядро forge</ABY_ForgeCategory_Core>

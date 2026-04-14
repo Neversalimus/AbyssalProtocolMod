@@ -21,12 +21,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>0.5000</offset>
+            <offset>0.0050</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0100</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.0200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0100</GeneralLaborSpeed>
           <ConstructionSpeed>0.0056</ConstructionSpeed>
           <ComfyTemperatureMax>1.0400</ComfyTemperatureMax>
           <CarryingCapacity>6.0000</CarryingCapacity>
@@ -44,12 +44,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>1.0000</offset>
+            <offset>0.0100</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0200</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.0400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0200</GeneralLaborSpeed>
           <ConstructionSpeed>0.0112</ConstructionSpeed>
           <ComfyTemperatureMax>2.0800</ComfyTemperatureMax>
           <CarryingCapacity>12.0000</CarryingCapacity>
@@ -67,12 +67,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>1.5000</offset>
+            <offset>0.0150</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0300</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.0600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0300</GeneralLaborSpeed>
           <ConstructionSpeed>0.0168</ConstructionSpeed>
           <ComfyTemperatureMax>3.1200</ComfyTemperatureMax>
           <CarryingCapacity>18.0000</CarryingCapacity>
@@ -90,12 +90,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>2.0000</offset>
+            <offset>0.0200</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0400</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.0800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0400</GeneralLaborSpeed>
           <ConstructionSpeed>0.0224</ConstructionSpeed>
           <ComfyTemperatureMax>4.1600</ComfyTemperatureMax>
           <CarryingCapacity>24.0000</CarryingCapacity>
@@ -113,12 +113,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>2.5000</offset>
+            <offset>0.0250</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0500</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.1000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0500</GeneralLaborSpeed>
           <ConstructionSpeed>0.0280</ConstructionSpeed>
           <ComfyTemperatureMax>5.2000</ComfyTemperatureMax>
           <CarryingCapacity>30.0000</CarryingCapacity>
@@ -136,12 +136,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>3.0000</offset>
+            <offset>0.0300</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0600</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.1200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0600</GeneralLaborSpeed>
           <ConstructionSpeed>0.0336</ConstructionSpeed>
           <ComfyTemperatureMax>6.2400</ComfyTemperatureMax>
           <CarryingCapacity>36.0000</CarryingCapacity>
@@ -159,12 +159,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>3.5000</offset>
+            <offset>0.0350</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0700</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.1400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0700</GeneralLaborSpeed>
           <ConstructionSpeed>0.0392</ConstructionSpeed>
           <ComfyTemperatureMax>7.2800</ComfyTemperatureMax>
           <CarryingCapacity>42.0000</CarryingCapacity>
@@ -182,12 +182,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>4.0000</offset>
+            <offset>0.0400</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0800</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.1600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0800</GeneralLaborSpeed>
           <ConstructionSpeed>0.0448</ConstructionSpeed>
           <ComfyTemperatureMax>8.3200</ComfyTemperatureMax>
           <CarryingCapacity>48.0000</CarryingCapacity>
@@ -205,12 +205,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>4.5000</offset>
+            <offset>0.0450</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.0900</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.1800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.0900</GeneralLaborSpeed>
           <ConstructionSpeed>0.0504</ConstructionSpeed>
           <ComfyTemperatureMax>9.3600</ComfyTemperatureMax>
           <CarryingCapacity>54.0000</CarryingCapacity>
@@ -228,12 +228,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>5.0000</offset>
+            <offset>0.0500</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1000</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.2000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1000</GeneralLaborSpeed>
           <ConstructionSpeed>0.0560</ConstructionSpeed>
           <ComfyTemperatureMax>10.4000</ComfyTemperatureMax>
           <CarryingCapacity>60.0000</CarryingCapacity>
@@ -251,12 +251,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>5.5000</offset>
+            <offset>0.0550</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1100</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.2200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1100</GeneralLaborSpeed>
           <ConstructionSpeed>0.0616</ConstructionSpeed>
           <ComfyTemperatureMax>11.4400</ComfyTemperatureMax>
           <CarryingCapacity>66.0000</CarryingCapacity>
@@ -274,12 +274,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>6.0000</offset>
+            <offset>0.0600</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1200</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.2400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1200</GeneralLaborSpeed>
           <ConstructionSpeed>0.0672</ConstructionSpeed>
           <ComfyTemperatureMax>12.4800</ComfyTemperatureMax>
           <CarryingCapacity>72.0000</CarryingCapacity>
@@ -297,12 +297,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>6.5000</offset>
+            <offset>0.0650</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1300</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.2600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1300</GeneralLaborSpeed>
           <ConstructionSpeed>0.0728</ConstructionSpeed>
           <ComfyTemperatureMax>13.5200</ComfyTemperatureMax>
           <CarryingCapacity>78.0000</CarryingCapacity>
@@ -320,12 +320,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>7.0000</offset>
+            <offset>0.0700</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1400</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.2800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1400</GeneralLaborSpeed>
           <ConstructionSpeed>0.0784</ConstructionSpeed>
           <ComfyTemperatureMax>14.5600</ComfyTemperatureMax>
           <CarryingCapacity>84.0000</CarryingCapacity>
@@ -343,12 +343,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>7.5000</offset>
+            <offset>0.0750</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1500</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.3000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1500</GeneralLaborSpeed>
           <ConstructionSpeed>0.0840</ConstructionSpeed>
           <ComfyTemperatureMax>15.6000</ComfyTemperatureMax>
           <CarryingCapacity>90.0000</CarryingCapacity>
@@ -366,12 +366,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>8.0000</offset>
+            <offset>0.0800</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1600</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.3200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1600</GeneralLaborSpeed>
           <ConstructionSpeed>0.0896</ConstructionSpeed>
           <ComfyTemperatureMax>16.6400</ComfyTemperatureMax>
           <CarryingCapacity>96.0000</CarryingCapacity>
@@ -389,12 +389,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>8.5000</offset>
+            <offset>0.0850</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1700</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.3400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1700</GeneralLaborSpeed>
           <ConstructionSpeed>0.0952</ConstructionSpeed>
           <ComfyTemperatureMax>17.6800</ComfyTemperatureMax>
           <CarryingCapacity>102.0000</CarryingCapacity>
@@ -412,12 +412,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>9.0000</offset>
+            <offset>0.0900</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1800</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.3600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1800</GeneralLaborSpeed>
           <ConstructionSpeed>0.1008</ConstructionSpeed>
           <ComfyTemperatureMax>18.7200</ComfyTemperatureMax>
           <CarryingCapacity>108.0000</CarryingCapacity>
@@ -435,12 +435,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>9.5000</offset>
+            <offset>0.0950</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.1900</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.3800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.1900</GeneralLaborSpeed>
           <ConstructionSpeed>0.1064</ConstructionSpeed>
           <ComfyTemperatureMax>19.7600</ComfyTemperatureMax>
           <CarryingCapacity>114.0000</CarryingCapacity>
@@ -458,12 +458,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>10.0000</offset>
+            <offset>0.1000</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2000</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.4000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2000</GeneralLaborSpeed>
           <ConstructionSpeed>0.1120</ConstructionSpeed>
           <ComfyTemperatureMax>20.8000</ComfyTemperatureMax>
           <CarryingCapacity>120.0000</CarryingCapacity>
@@ -481,12 +481,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>10.5000</offset>
+            <offset>0.1050</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2100</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.4200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2100</GeneralLaborSpeed>
           <ConstructionSpeed>0.1176</ConstructionSpeed>
           <ComfyTemperatureMax>21.8400</ComfyTemperatureMax>
           <CarryingCapacity>126.0000</CarryingCapacity>
@@ -504,12 +504,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>11.0000</offset>
+            <offset>0.1100</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2200</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.4400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2200</GeneralLaborSpeed>
           <ConstructionSpeed>0.1232</ConstructionSpeed>
           <ComfyTemperatureMax>22.8800</ComfyTemperatureMax>
           <CarryingCapacity>132.0000</CarryingCapacity>
@@ -527,12 +527,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>11.5000</offset>
+            <offset>0.1150</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2300</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.4600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2300</GeneralLaborSpeed>
           <ConstructionSpeed>0.1288</ConstructionSpeed>
           <ComfyTemperatureMax>23.9200</ComfyTemperatureMax>
           <CarryingCapacity>138.0000</CarryingCapacity>
@@ -550,12 +550,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>12.0000</offset>
+            <offset>0.1200</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2400</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.4800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2400</GeneralLaborSpeed>
           <ConstructionSpeed>0.1344</ConstructionSpeed>
           <ComfyTemperatureMax>24.9600</ComfyTemperatureMax>
           <CarryingCapacity>144.0000</CarryingCapacity>
@@ -573,12 +573,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>12.5000</offset>
+            <offset>0.1250</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2500</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.5000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2500</GeneralLaborSpeed>
           <ConstructionSpeed>0.1400</ConstructionSpeed>
           <ComfyTemperatureMax>26.0000</ComfyTemperatureMax>
           <CarryingCapacity>150.0000</CarryingCapacity>
@@ -596,12 +596,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>13.0000</offset>
+            <offset>0.1300</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2600</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.5200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2600</GeneralLaborSpeed>
           <ConstructionSpeed>0.1456</ConstructionSpeed>
           <ComfyTemperatureMax>27.0400</ComfyTemperatureMax>
           <CarryingCapacity>156.0000</CarryingCapacity>
@@ -619,12 +619,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>13.5000</offset>
+            <offset>0.1350</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2700</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.5400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2700</GeneralLaborSpeed>
           <ConstructionSpeed>0.1512</ConstructionSpeed>
           <ComfyTemperatureMax>28.0800</ComfyTemperatureMax>
           <CarryingCapacity>162.0000</CarryingCapacity>
@@ -642,12 +642,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>14.0000</offset>
+            <offset>0.1400</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2800</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.5600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2800</GeneralLaborSpeed>
           <ConstructionSpeed>0.1568</ConstructionSpeed>
           <ComfyTemperatureMax>29.1200</ComfyTemperatureMax>
           <CarryingCapacity>168.0000</CarryingCapacity>
@@ -665,12 +665,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>14.5000</offset>
+            <offset>0.1450</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.2900</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.5800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.2900</GeneralLaborSpeed>
           <ConstructionSpeed>0.1624</ConstructionSpeed>
           <ComfyTemperatureMax>30.1600</ComfyTemperatureMax>
           <CarryingCapacity>174.0000</CarryingCapacity>
@@ -688,12 +688,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>15.0000</offset>
+            <offset>0.1500</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3000</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.6000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3000</GeneralLaborSpeed>
           <ConstructionSpeed>0.1680</ConstructionSpeed>
           <ComfyTemperatureMax>31.2000</ComfyTemperatureMax>
           <CarryingCapacity>180.0000</CarryingCapacity>
@@ -711,12 +711,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>15.5000</offset>
+            <offset>0.1550</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3100</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.6200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3100</GeneralLaborSpeed>
           <ConstructionSpeed>0.1736</ConstructionSpeed>
           <ComfyTemperatureMax>32.2400</ComfyTemperatureMax>
           <CarryingCapacity>186.0000</CarryingCapacity>
@@ -734,12 +734,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>16.0000</offset>
+            <offset>0.1600</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3200</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.6400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3200</GeneralLaborSpeed>
           <ConstructionSpeed>0.1792</ConstructionSpeed>
           <ComfyTemperatureMax>33.2800</ComfyTemperatureMax>
           <CarryingCapacity>192.0000</CarryingCapacity>
@@ -757,12 +757,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>16.5000</offset>
+            <offset>0.1650</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3300</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.6600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3300</GeneralLaborSpeed>
           <ConstructionSpeed>0.1848</ConstructionSpeed>
           <ComfyTemperatureMax>34.3200</ComfyTemperatureMax>
           <CarryingCapacity>198.0000</CarryingCapacity>
@@ -780,12 +780,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>17.0000</offset>
+            <offset>0.1700</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3400</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.6800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3400</GeneralLaborSpeed>
           <ConstructionSpeed>0.1904</ConstructionSpeed>
           <ComfyTemperatureMax>35.3600</ComfyTemperatureMax>
           <CarryingCapacity>204.0000</CarryingCapacity>
@@ -803,12 +803,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>17.5000</offset>
+            <offset>0.1750</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3500</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.7000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3500</GeneralLaborSpeed>
           <ConstructionSpeed>0.1960</ConstructionSpeed>
           <ComfyTemperatureMax>36.4000</ComfyTemperatureMax>
           <CarryingCapacity>210.0000</CarryingCapacity>
@@ -826,12 +826,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>18.0000</offset>
+            <offset>0.1800</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3600</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.7200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3600</GeneralLaborSpeed>
           <ConstructionSpeed>0.2016</ConstructionSpeed>
           <ComfyTemperatureMax>37.4400</ComfyTemperatureMax>
           <CarryingCapacity>216.0000</CarryingCapacity>
@@ -849,12 +849,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>18.5000</offset>
+            <offset>0.1850</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3700</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.7400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3700</GeneralLaborSpeed>
           <ConstructionSpeed>0.2072</ConstructionSpeed>
           <ComfyTemperatureMax>38.4800</ComfyTemperatureMax>
           <CarryingCapacity>222.0000</CarryingCapacity>
@@ -872,12 +872,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>19.0000</offset>
+            <offset>0.1900</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3800</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.7600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3800</GeneralLaborSpeed>
           <ConstructionSpeed>0.2128</ConstructionSpeed>
           <ComfyTemperatureMax>39.5200</ComfyTemperatureMax>
           <CarryingCapacity>228.0000</CarryingCapacity>
@@ -895,12 +895,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>19.5000</offset>
+            <offset>0.1950</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.3900</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.7800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.3900</GeneralLaborSpeed>
           <ConstructionSpeed>0.2184</ConstructionSpeed>
           <ComfyTemperatureMax>40.5600</ComfyTemperatureMax>
           <CarryingCapacity>234.0000</CarryingCapacity>
@@ -918,12 +918,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>20.0000</offset>
+            <offset>0.2000</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4000</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.8000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4000</GeneralLaborSpeed>
           <ConstructionSpeed>0.2240</ConstructionSpeed>
           <ComfyTemperatureMax>41.6000</ComfyTemperatureMax>
           <CarryingCapacity>240.0000</CarryingCapacity>
@@ -941,12 +941,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>20.5000</offset>
+            <offset>0.2050</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4100</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.8200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4100</GeneralLaborSpeed>
           <ConstructionSpeed>0.2296</ConstructionSpeed>
           <ComfyTemperatureMax>42.6400</ComfyTemperatureMax>
           <CarryingCapacity>246.0000</CarryingCapacity>
@@ -964,12 +964,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>21.0000</offset>
+            <offset>0.2100</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4200</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.8400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4200</GeneralLaborSpeed>
           <ConstructionSpeed>0.2352</ConstructionSpeed>
           <ComfyTemperatureMax>43.6800</ComfyTemperatureMax>
           <CarryingCapacity>252.0000</CarryingCapacity>
@@ -987,12 +987,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>21.5000</offset>
+            <offset>0.2150</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4300</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.8600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4300</GeneralLaborSpeed>
           <ConstructionSpeed>0.2408</ConstructionSpeed>
           <ComfyTemperatureMax>44.7200</ComfyTemperatureMax>
           <CarryingCapacity>258.0000</CarryingCapacity>
@@ -1010,12 +1010,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>22.0000</offset>
+            <offset>0.2200</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4400</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.8800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4400</GeneralLaborSpeed>
           <ConstructionSpeed>0.2464</ConstructionSpeed>
           <ComfyTemperatureMax>45.7600</ComfyTemperatureMax>
           <CarryingCapacity>264.0000</CarryingCapacity>
@@ -1033,12 +1033,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>22.5000</offset>
+            <offset>0.2250</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4500</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.9000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4500</GeneralLaborSpeed>
           <ConstructionSpeed>0.2520</ConstructionSpeed>
           <ComfyTemperatureMax>46.8000</ComfyTemperatureMax>
           <CarryingCapacity>270.0000</CarryingCapacity>
@@ -1056,12 +1056,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>23.0000</offset>
+            <offset>0.2300</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4600</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.9200</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4600</GeneralLaborSpeed>
           <ConstructionSpeed>0.2576</ConstructionSpeed>
           <ComfyTemperatureMax>47.8400</ComfyTemperatureMax>
           <CarryingCapacity>276.0000</CarryingCapacity>
@@ -1079,12 +1079,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>23.5000</offset>
+            <offset>0.2350</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4700</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.9400</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4700</GeneralLaborSpeed>
           <ConstructionSpeed>0.2632</ConstructionSpeed>
           <ComfyTemperatureMax>48.8800</ComfyTemperatureMax>
           <CarryingCapacity>282.0000</CarryingCapacity>
@@ -1102,12 +1102,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>24.0000</offset>
+            <offset>0.2400</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4800</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.9600</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4800</GeneralLaborSpeed>
           <ConstructionSpeed>0.2688</ConstructionSpeed>
           <ComfyTemperatureMax>49.9200</ComfyTemperatureMax>
           <CarryingCapacity>288.0000</CarryingCapacity>
@@ -1125,12 +1125,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>24.5000</offset>
+            <offset>0.2450</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.4900</WorkSpeedGlobal>
-          <GeneralLaborSpeed>0.9800</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.4900</GeneralLaborSpeed>
           <ConstructionSpeed>0.2744</ConstructionSpeed>
           <ComfyTemperatureMax>50.9600</ComfyTemperatureMax>
           <CarryingCapacity>294.0000</CarryingCapacity>
@@ -1148,12 +1148,12 @@
         <capMods>
           <li>
             <capacity>Manipulation</capacity>
-            <offset>25.0000</offset>
+            <offset>0.2500</offset>
           </li>
         </capMods>
         <statOffsets>
           <WorkSpeedGlobal>0.5000</WorkSpeedGlobal>
-          <GeneralLaborSpeed>1.0000</GeneralLaborSpeed>
+          <GeneralLaborSpeed>0.5000</GeneralLaborSpeed>
           <ConstructionSpeed>0.2800</ConstructionSpeed>
           <ComfyTemperatureMax>52.0000</ComfyTemperatureMax>
           <CarryingCapacity>300.0000</CarryingCapacity>
@@ -1163,7 +1163,6 @@
           <ResearchSpeed>0.5000</ResearchSpeed>
           <MedicalTendQuality>0.1500</MedicalTendQuality>
           <ImmunityGainSpeed>0.8500</ImmunityGainSpeed>
-          <GeneralLaborSpeed>0.5000</GeneralLaborSpeed>
         </statOffsets>
       </li>
     </stages>
