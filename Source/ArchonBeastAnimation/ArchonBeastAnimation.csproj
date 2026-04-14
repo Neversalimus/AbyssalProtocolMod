@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>AbyssalProtocol.ArchonAnimation</AssemblyName>
+    <RootNamespace>AbyssalProtocol</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\libraries\Libraries\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\libraries\Libraries\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\libraries\Libraries\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\..\libraries\Libraries\mscorlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\..\libraries\Libraries\System.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\libraries\Libraries\System.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
