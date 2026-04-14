@@ -101,6 +101,7 @@ namespace AbyssalProtocol
         private int pendingImpPortalWarmupTicks;
         private int pendingImpSpawnIntervalTicks;
         private int pendingImpPortalLingerTicks;
+        private int pendingPackCount;
         private bool reducedConsoleEffects;
 
         private List<AbyssalCircleModuleSlot> stabilizerSlots = new List<AbyssalCircleModuleSlot>();
@@ -324,6 +325,7 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
+            pendingPackCount = 0;
 
             if (IsImpPortalSummonMode(pendingSummonMode))
             {
@@ -331,6 +333,22 @@ namespace AbyssalProtocol
                 pendingImpPortalWarmupTicks = Mathf.Max(30, summonProps.impPortalWarmupTicks);
                 pendingImpSpawnIntervalTicks = Mathf.Max(30, summonProps.impSpawnIntervalTicks);
                 pendingImpPortalLingerTicks = Mathf.Max(600, summonProps.impPortalLingerTicks);
+            }
+            else if (IsHostilePackSummonMode(pendingSummonMode))
+            {
+                pendingPackCount = Mathf.Max(1, summonProps.impCount);
+                pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.pawnKindDefName);
+                if (pendingPawnKindDef == null)
+                {
+                    failReason = "Missing PawnKindDef: " + summonProps.pawnKindDefName;
+                    return false;
+                }
+
+                if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+                {
+                    failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                    return false;
+                }
             }
             else
             {
@@ -1380,6 +1398,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (IsHostilePackSummonMode(pendingSummonMode))
+            {
+                CompleteHostilePackSummon();
+                return;
+            }
+
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -1461,6 +1485,34 @@ namespace AbyssalProtocol
                 new TargetInfo(portal.Position, Map));
         }
 
+        private void CompleteHostilePackSummon()
+        {
+            if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    Map,
+                    pendingPawnKindDef,
+                    pendingFaction,
+                    pendingSpawnCell,
+                    Mathf.Max(1, pendingPackCount),
+                    pendingBossLabel,
+                    GetCompletionLetterLabel(),
+                    GetCompletionLetterDesc(),
+                    out IntVec3 arrivalCell,
+                    out string failReason))
+            {
+                ResetRitual();
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.14f);
+            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", arrivalCell.IsValid ? arrivalCell : RitualFocusCell, Map);
+        }
+
+        private bool IsHostilePackSummonMode(string summonMode)
+        {
+            return string.Equals(summonMode, "HostilePack", System.StringComparison.OrdinalIgnoreCase);
+        }
+
         private bool IsImpPortalSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "ImpPortal", System.StringComparison.OrdinalIgnoreCase);
@@ -1520,6 +1572,7 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
+            pendingPackCount = 0;
             pendingCapacitorStartupCost = 0f;
             pendingCapacitorSustainDrainPerSecond = 0f;
             pendingCapacitorReserveRequired = 0f;

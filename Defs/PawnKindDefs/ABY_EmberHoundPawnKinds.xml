@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_EmberHound</defName>
+    <label>ember hound</label>
+    <race>ABY_EmberHound</race>
+    <combatPower>320</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/EmberHound/ABY_EmberHound</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(1.72,1.72)</drawSize>
+          <shadowData>
+            <volume>(0.70, 0.24, 0.70)</volume>
+            <offset>(0, 0, -0.20)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

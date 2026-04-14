@@ -62,6 +62,22 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "ember_hunt",
+                LabelKey = "ABY_CircleRitual_EmberHound_Label",
+                SubtitleKey = "ABY_CircleRitual_EmberHound_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_EmberHound_Desc",
+                BossLabel = "Ember Hound pack",
+                SigilThingDefName = "ABY_EmberHoundSigil",
+                PawnKindDefName = "ABY_EmberHound",
+                RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
+                BaseRisk = 0.49f,
+                InstabilityGain = 0.16f,
+                ContaminationGain = 0.07f,
+                SpawnPoints = 320
+            },
+            new RitualDefinition
+            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -231,6 +247,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Open unstable breach");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -251,6 +272,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Pre-boss hostile breach pattern");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Fast flanking pack assault");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -269,6 +295,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, punish loose firing lines, and recover residue when butchered.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -293,6 +324,13 @@ namespace AbyssalProtocol
 • A cleaner bridge between the circle and the Archon Beast fight");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop pressure test for interior defense
+• Fast residue return from butchered hound corpses
+• A clearer flanker identity before the first true boss");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• First-loop boss progression
@@ -315,6 +353,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
 • Still counts as an active abyssal encounter while the breach is live
 • Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
+• Ember hounds leap onto shooters and punish isolated operators
+• Lower spectacle than the Archon Beast, but deadlier against weak backlines");
             }
 
             if (ritual.Id == "archon_beast")

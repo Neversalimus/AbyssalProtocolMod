@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_EmberHound</defName>
+    <label>ember hound</label>
+    <description>A fast infernal-tech hunter extruded through controlled breach geometry. Ember hounds are built to slash through firing lines, leap onto isolated shooters, and hold enough internal heat to keep their armor seams glowing long after arrival.</description>
+
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+
+    <graphicData>
+      <texPath>Pawn/EmberHound/ABY_EmberHound</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1.55,1.55)</drawSize>
+    </graphicData>
+
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>QuadrupedAnimalWithHooves</body>
+      <baseBodySize>0.94</baseBodySize>
+      <baseHealthScale>1.18</baseHealthScale>
+      <baseHungerRate>0.48</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>Animal</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>10</gestationPeriodDays>
+      <lifeExpectancy>110</lifeExpectancy>
+      <herdAnimal>false</herdAnimal>
+      <predator>true</predator>
+      <foodType>CarnivoreAnimal</foodType>
+      <wildness>1</wildness>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+
+    <statBases>
+      <MaxHitPoints>620</MaxHitPoints>
+      <MoveSpeed>5.55</MoveSpeed>
+      <MeleeHitChance>0.83</MeleeHitChance>
+      <MeleeDPS>11.4</MeleeDPS>
+      <ArmorRating_Sharp>0.21</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.15</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.56</ArmorRating_Heat>
+      <ComfyTemperatureMin>-18</ComfyTemperatureMin>
+      <ComfyTemperatureMax>220</ComfyTemperatureMax>
+      <Flammability>0.01</Flammability>
+      <PainShockThreshold>0.93</PainShockThreshold>
+      <MarketValue>660</MarketValue>
+      <Mass>0.58</Mass>
+    </statBases>
+
+    <tools>
+      <li>
+        <label>ember claw</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Scratch</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>1.45</cooldownTime>
+        <chanceFactor>1.50</chanceFactor>
+        <armorPenetration>0.14</armorPenetration>
+      </li>
+      <li>
+        <label>cinder bite</label>
+        <capacities>
+          <li>Bite</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>2.05</cooldownTime>
+        <chanceFactor>1.05</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+
+    <butcherProducts>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+    </butcherProducts>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_EmberPounce">
+        <minRange>4.0</minRange>
+        <maxRange>13.9</maxRange>
+        <cooldownTicks>280</cooldownTicks>
+        <cooldownJitterTicks>60</cooldownJitterTicks>
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <impactHediffDefName>ABY_EmberShock</impactHediffDefName>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_EmberHoundSigil</defName>
+    <label>ember hound sigil</label>
+    <description>A feral breach-key etched for aggressive hunter-pack routing. Carry it to an abyssal summoning circle to inject a fast Ember Hound assault onto the current map.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_EmberHoundSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>235</MarketValue>
+      <Mass>0.26</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>loose ember hounds</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>ember_hunt</ritualId>
+        <summonMode>HostilePack</summonMode>
+        <pawnKindDefName>ABY_EmberHound</pawnKindDefName>
+        <bossLabel>Ember Hound pack</bossLabel>
+        <spawnPoints>320</spawnPoints>
+        <ritualWarmupTicks>165</ritualWarmupTicks>
+        <impCount>2</impCount>
+        <completionLetterLabelKey>ABY_CircleEmberHoundLetterLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_CircleEmberHoundLetterDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleEmberHoundLetterLabel>Выпущены ember hounds</ABY_CircleEmberHoundLetterLabel>
+  <ABY_CircleEmberHoundLetterDesc>Круг стравливает на карту разлом хищной стаи. Ember hounds уже ищут открытых стрелков и слабые точки обороны.</ABY_CircleEmberHoundLetterDesc>
+
+  <ABY_CircleRitual_EmberHound_Label>Спустить ember hounds</ABY_CircleRitual_EmberHound_Label>
+  <ABY_CircleRitual_EmberHound_Subtitle>Быстрая фланговая атака стаи</ABY_CircleRitual_EmberHound_Subtitle>
+  <ABY_CircleRitual_EmberHound_Desc>Тратит один ember hound sigil, направляет колониста к кругу и вводит на карту быструю враждебную охотничью стаю. Ember hounds прыгают на стрелков, наказывают рыхлую линию огня и после разделки возвращают abyssal residue.</ABY_CircleRitual_EmberHound_Desc>
+  <ABY_CircleRitual_EmberHound_Rewards>• Средний стресс-тест внутренней обороны
+• Быстрый возврат residue с разделанных туш
+• Более читаемая роль фланкера до первого полноценного босса</ABY_CircleRitual_EmberHound_Rewards>
+  <ABY_CircleRitual_EmberHound_SideEffects>• Выводит быструю враждебную охотничью стаю у края карты
+• Ember hounds прыгают на стрелков и наказывают изолированных операторов
+• Меньше зрелища, чем у Archon Beast, но опаснее для слабой задней линии</ABY_CircleRitual_EmberHound_SideEffects>
+
+</LanguageData>

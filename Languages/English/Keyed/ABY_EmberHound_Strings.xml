@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleEmberHoundLetterLabel>Ember hounds released</ABY_CircleEmberHoundLetterLabel>
+  <ABY_CircleEmberHoundLetterDesc>The circle vents a feral pack breach. Ember hounds have entered the map and are already seeking exposed shooters.</ABY_CircleEmberHoundLetterDesc>
+
+  <ABY_CircleRitual_EmberHound_Label>Loose ember hounds</ABY_CircleRitual_EmberHound_Label>
+  <ABY_CircleRitual_EmberHound_Subtitle>Fast flanking pack assault</ABY_CircleRitual_EmberHound_Subtitle>
+  <ABY_CircleRitual_EmberHound_Desc>Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, punish loose firing lines, and return abyssal residue when butchered.</ABY_CircleRitual_EmberHound_Desc>
+  <ABY_CircleRitual_EmberHound_Rewards>• Mid-loop pressure test for interior defense
+• Fast residue return from butchered hound corpses
+• A clearer flanker identity before the first true boss</ABY_CircleRitual_EmberHound_Rewards>
+  <ABY_CircleRitual_EmberHound_SideEffects>• Drops a fast hostile hunter-pack at the map edge
+• Ember hounds leap onto shooters and punish isolated operators
+• Lower spectacle than the Archon Beast, but deadlier against weak backlines</ABY_CircleRitual_EmberHound_SideEffects>
+
+</LanguageData>
