@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_SpecterLashProjector</defName>
+    <label>specter lash projector</label>
+    <description>A residue-fed tether projector that binds an impact point into a writhing containment stream. Instead of a straight beam, the lash keeps lurching side to side and chews through a hostile target in repeated burn pulses.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Item/Equipment/WeaponRanged/ABY_SpecterLashProjector</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <statBases>
+      <WorkToMake>48000</WorkToMake>
+      <Mass>4.7</Mass>
+      <MarketValue>2850</MarketValue>
+      <AccuracyTouch>0.81</AccuracyTouch>
+      <AccuracyShort>0.77</AccuracyShort>
+      <AccuracyMedium>0.69</AccuracyMedium>
+      <AccuracyLong>0.56</AccuracyLong>
+      <RangedWeapon_Cooldown>2.65</RangedWeapon_Cooldown>
+    </statBases>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
+      <Plasteel>65</Plasteel>
+      <Steel>80</Steel>
+      <ComponentSpacer>4</ComponentSpacer>
+    </costList>
+
+    <weaponTags>
+      <li>SpacerGun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_SpecterLashAnchor</defaultProjectile>
+        <warmupTime>1.30</warmupTime>
+        <range>28.9</range>
+        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
+        <burstShotCount>1</burstShotCount>
+        <soundAiming>ABY_SpecterLashCharge</soundAiming>
+        <soundCast>ABY_SpecterLashFire</soundCast>
+        <soundCastTail>ABY_SpecterLashTail</soundCastTail>
+        <muzzleFlashScale>9.5</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>housing</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>2.1</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>500</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_SpecterLashAnchor</defName>
+    <label>specter lash anchor</label>
+    <thingClass>AbyssalProtocol.Projectile_SpecterLashAnchor</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_SpecterLashAnchor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.26,0.56)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>8</damageAmountBase>
+      <armorPenetrationBase>1.10</armorPenetrationBase>
+      <stoppingPower>0.55</stoppingPower>
+      <speed>80</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
