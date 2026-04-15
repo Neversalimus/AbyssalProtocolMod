@@ -344,7 +344,13 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+                if (IsPortalWaveSummonMode(pendingSummonMode))
+                {
+                    pendingImpPortalWarmupTicks = Mathf.Max(90, summonProps.impPortalWarmupTicks);
+                    pendingImpSpawnIntervalTicks = Mathf.Max(14, summonProps.impSpawnIntervalTicks);
+                    pendingImpPortalLingerTicks = Mathf.Max(120, summonProps.impPortalLingerTicks);
+                }
+                else if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
                 {
                     failReason = "ABY_CircleFail_NoBossArrival".Translate();
                     return false;
@@ -1347,6 +1353,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (IsPortalWaveSummonMode(pendingSummonMode))
+            {
+                CompletePortalWaveSummon();
+                return;
+            }
+
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -1366,6 +1378,58 @@ namespace AbyssalProtocol
                 Map,
                 pendingSpawnCell,
                 pendingBossLabel);
+        }
+
+        private void CompletePortalWaveSummon()
+        {
+            if (Map == null)
+            {
+                ResetRitual();
+                return;
+            }
+
+            if (pendingFaction == null)
+            {
+                pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            }
+
+            if (pendingFaction == null)
+            {
+                ResetRitual();
+                Messages.Message("ABY_CircleFail_NoHostileFaction".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            MapComponent_AbyssalPortalWave portalWave = Map.GetComponent<MapComponent_AbyssalPortalWave>();
+            if (portalWave == null)
+            {
+                ResetRitual();
+                Messages.Message("ABY_CircleFail_NoPortalSpawn".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!portalWave.TryBeginEmberPortalWave(
+                    pendingFaction,
+                    pendingPawnKindDef,
+                    pendingImpPortalWarmupTicks,
+                    pendingImpSpawnIntervalTicks,
+                    pendingImpPortalLingerTicks,
+                    out IntVec3 firstPortalCell,
+                    out string failReason))
+            {
+                ResetRitual();
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            IntVec3 letterCell = firstPortalCell.IsValid ? firstPortalCell : RitualFocusCell;
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
+            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", letterCell, Map);
+            Find.LetterStack.ReceiveLetter(
+                GetCompletionLetterLabel(),
+                GetCompletionLetterDesc(),
+                LetterDefOf.ThreatSmall,
+                new TargetInfo(letterCell, Map));
         }
 
         private void CompleteImpPortalSummon()
@@ -1431,6 +1495,11 @@ namespace AbyssalProtocol
         private bool IsImpPortalSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "ImpPortal", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsPortalWaveSummonMode(string summonMode)
+        {
+            return string.Equals(summonMode, "PortalWave", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private string GetCompletionLetterLabel()

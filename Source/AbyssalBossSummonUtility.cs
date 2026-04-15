@@ -279,6 +279,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
+            if (portalWave != null && portalWave.IsWaveActive)
+            {
+                return true;
+            }
+
             if (map.mapPawns != null)
             {
                 foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)

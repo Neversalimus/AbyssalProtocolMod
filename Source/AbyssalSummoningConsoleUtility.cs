@@ -58,6 +58,20 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "ember_hunt",
+                LabelKey = "ABY_CircleRitual_EmberHound_Label",
+                SubtitleKey = "ABY_CircleRitual_EmberHound_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_EmberHound_Desc",
+                BossLabel = "Ember hound portal wave",
+                SigilThingDefName = "ABY_EmberHoundSigil",
+                PawnKindDefName = "ABY_EmberHound",
+                RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
+                BaseRisk = 0.54f,
+                SpawnPoints = 420
+            },
+            new RitualDefinition
+            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -225,6 +239,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Open unstable breach");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -245,6 +264,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Pre-boss hostile breach pattern");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Sequential portal-hunter cascade");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -263,6 +287,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, then opens a staggered portal cascade across the map. Each ember portal releases one or two ember hounds, and some colonists also add extra imp portals carrying two to four rift imps.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -287,6 +316,13 @@ namespace AbyssalProtocol
 • A cleaner bridge between the circle and the Archon Beast fight");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Portal-driven mid-loop pressure test
+• Stronger flanker identity before the first true boss
+• Extra residue and occasional imp overflow when the colony survives the wave");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• First-loop boss progression
@@ -309,6 +345,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
 • Still counts as an active abyssal encounter while the breach is live
 • Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Opens portals sequentially across the map instead of dropping the pack in one place
+• Each colonist adds an ember portal with a 75% chance for one hound and a 25% chance for two
+• Every colonist also has a 20% chance to add a separate imp portal carrying two to four rift imps");
             }
 
             if (ritual.Id == "archon_beast")

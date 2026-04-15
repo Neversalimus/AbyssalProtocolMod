@@ -2,16 +2,16 @@
 <LanguageData>
 
   <ABY_CircleEmberHoundLetterLabel>Выпущены ember hounds</ABY_CircleEmberHoundLetterLabel>
-  <ABY_CircleEmberHoundLetterDesc>Круг стравливает на карту разлом хищной стаи. Ember hounds уже ищут открытых стрелков и слабые точки обороны.</ABY_CircleEmberHoundLetterDesc>
+  <ABY_CircleEmberHoundLetterDesc>Круг начинает поочерёдно вскрывать ember-порталы по карте. Охотничьи конструкции входят волнами, а часть разломов дополнительно выбрасывает rift imps.</ABY_CircleEmberHoundLetterDesc>
 
   <ABY_CircleRitual_EmberHound_Label>Спустить ember hounds</ABY_CircleRitual_EmberHound_Label>
-  <ABY_CircleRitual_EmberHound_Subtitle>Быстрая фланговая атака стаи</ABY_CircleRitual_EmberHound_Subtitle>
-  <ABY_CircleRitual_EmberHound_Desc>Тратит один ember hound sigil, направляет колониста к кругу и вводит на карту быструю враждебную охотничью стаю. Ember hounds прыгают на стрелков, наказывают рыхлую линию огня и после разделки возвращают abyssal residue.</ABY_CircleRitual_EmberHound_Desc>
-  <ABY_CircleRitual_EmberHound_Rewards>• Средний стресс-тест внутренней обороны
-• Быстрый возврат residue с разделанных туш
-• Более читаемая роль фланкера до первого полноценного босса</ABY_CircleRitual_EmberHound_Rewards>
-  <ABY_CircleRitual_EmberHound_SideEffects>• Выводит быструю враждебную охотничью стаю у края карты
-• Ember hounds прыгают на стрелков и наказывают изолированных операторов
-• Меньше зрелища, чем у Archon Beast, но опаснее для слабой задней линии</ABY_CircleRitual_EmberHound_SideEffects>
+  <ABY_CircleRitual_EmberHound_Subtitle>Последовательный каскад охотничьих порталов</ABY_CircleRitual_EmberHound_Subtitle>
+  <ABY_CircleRitual_EmberHound_Desc>Тратит один ember hound sigil, направляет колониста к кругу, а затем открывает по карте поочерёдный каскад ember-порталов. Каждый колонист добавляет один ember-портал, который в 75% случаев выпускает одну гончую, а в 25% — две, и у каждого колониста также есть 20% шанс открыть отдельный imp-портал с двумя-четырьмя rift imps. Порталы подбираются вдали от базы.</ABY_CircleRitual_EmberHound_Desc>
+  <ABY_CircleRitual_EmberHound_Rewards>• Портальный стресс-тест средней фазы
+• Более сильная и читаемая роль фланкера до первого полноценного босса
+• Дополнительный residue и редкий imp-overflow, если колония переживёт каскад</ABY_CircleRitual_EmberHound_Rewards>
+  <ABY_CircleRitual_EmberHound_SideEffects>• Открывает порталы поочерёдно по всей карте вместо одного прямого сброса стаи
+• Каждый колонист добавляет один ember-портал с шансом 75% на одну гончую и 25% на две
+• У каждого колониста также есть 20% шанс открыть отдельный imp-портал с двумя-четырьмя rift imps</ABY_CircleRitual_EmberHound_SideEffects>
 
 </LanguageData>
