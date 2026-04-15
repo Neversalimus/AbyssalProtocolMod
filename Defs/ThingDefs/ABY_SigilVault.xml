@@ -51,6 +51,6 @@
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <paintable>false</paintable>
     </building>
-</ThingDef>
+  </ThingDef>
 
 </Defs>

@@ -7,8 +7,8 @@
     <giverClass>AbyssalProtocol.WorkGiver_LoadSigilVault</giverClass>
     <workType>Hauling</workType>
     <priorityInType>85</priorityInType>
-    <verb>store in</verb>
     <gerund>storing abyssal sigils</gerund>
+    <verb>store in</verb>
   </WorkGiverDef>
 
 </Defs>
