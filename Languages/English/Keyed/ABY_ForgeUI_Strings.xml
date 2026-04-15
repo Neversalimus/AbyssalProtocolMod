@@ -37,6 +37,8 @@
   <ABY_ForgePatternMoreRequirements>+{0} more requirements</ABY_ForgePatternMoreRequirements>
   <ABY_ForgePatternAddBill>Queue</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Locked</ABY_ForgePatternLocked>
+  <ABY_ForgePatternMissingMaterials>Missing materials</ABY_ForgePatternMissingMaterials>
+  <ABY_ForgePatternResearchRequired>Research required</ABY_ForgePatternResearchRequired>
   <ABY_ForgePatternNoMaterialData>No material data available.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgeNoUnlockedRecipes>No unlocked patterns are available.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Clipboard actions are unavailable while no valid bill can be copied here.</ABY_ForgeClipboardLocked>
@@ -64,7 +66,4 @@
   <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
   <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
   <ABY_ForgeGizmoOfferDesc>Commit abyssal residue on the current map into the forge lattice.</ABY_ForgeGizmoOfferDesc>
-  <ABY_ForgeDevResidueButton>DEV +1000 residue</ABY_ForgeDevResidueButton>
-  <ABY_ForgeDevResidueDesc>DEV: instantly adds 1000 attuned residue to this map's forge progression without consuming physical stacks.</ABY_ForgeDevResidueDesc>
-  <ABY_ForgeDevResidueApplied>DEV: added {0} residue. Total attuned residue: {1}.</ABY_ForgeDevResidueApplied>
 </LanguageData>

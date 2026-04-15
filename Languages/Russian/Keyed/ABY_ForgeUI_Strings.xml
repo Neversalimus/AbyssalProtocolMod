@@ -37,6 +37,8 @@
   <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
   <ABY_ForgePatternAddBill>В очередь</ABY_ForgePatternAddBill>
   <ABY_ForgePatternLocked>Закрыто</ABY_ForgePatternLocked>
+  <ABY_ForgePatternMissingMaterials>Не хватает материалов</ABY_ForgePatternMissingMaterials>
+  <ABY_ForgePatternResearchRequired>Нужно исследование</ABY_ForgePatternResearchRequired>
   <ABY_ForgePatternNoMaterialData>Нет данных о материалах.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить bill.</ABY_ForgeClipboardLocked>
@@ -64,7 +66,4 @@
   <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
   <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
   <ABY_ForgeGizmoOfferDesc>Внести abyssal residue с текущей карты в решётку forge.</ABY_ForgeGizmoOfferDesc>
-  <ABY_ForgeDevResidueButton>DEV +1000 residue</ABY_ForgeDevResidueButton>
-  <ABY_ForgeDevResidueDesc>DEV: мгновенно добавляет 1000 настроенного residue в прогрессию forge на этой карте без расхода физических стаков.</ABY_ForgeDevResidueDesc>
-  <ABY_ForgeDevResidueApplied>DEV: добавлено {0} residue. Всего настроено residue: {1}.</ABY_ForgeDevResidueApplied>
 </LanguageData>

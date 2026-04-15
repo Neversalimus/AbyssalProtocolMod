@@ -160,7 +160,7 @@ namespace AbyssalProtocol
             }
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 140f, inner.width, inner.height - 140f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            Widgets.Label(new Rect(inner.x, inner.y + 142f, inner.width, inner.height - 142f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 
@@ -330,17 +330,37 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
-            if (unlocked && recipe.AvailableNow && recipe.AvailableOnNow(forge))
+            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
+            bool recipeAvailable = recipe.AvailableNow && recipe.AvailableOnNow(forge);
+            string actionLabel;
+            if (!unlocked)
             {
-                if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternAddBill".Translate()))
+                actionLabel = "ABY_ForgePatternLocked".Translate();
+            }
+            else if (recipeAvailable)
+            {
+                actionLabel = "ABY_ForgePatternAddBill".Translate();
+            }
+            else if (!hasAllMaterials)
+            {
+                actionLabel = "ABY_ForgePatternMissingMaterials".Translate();
+            }
+            else
+            {
+                actionLabel = "ABY_ForgePatternResearchRequired".Translate();
+            }
+
+            Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
+            if (unlocked && recipeAvailable)
+            {
+                if (AbyssalStyledWidgets.TextButton(buttonRect, actionLabel))
                 {
                     AddBill(recipe);
                 }
             }
             else
             {
-                AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgePatternLocked".Translate(), false);
+                AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, false);
             }
 
             string description = product != null && !product.description.NullOrEmpty() ? product.description : recipe.description;
