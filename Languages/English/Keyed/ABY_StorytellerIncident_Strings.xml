@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_IncidentBreachLeakLetterLabel>Breach leak</ABY_IncidentBreachLeakLetterLabel>
+  <ABY_IncidentBreachLeakLetterText_ImpsOnly>The abyssal summoning circle has destabilized local space. {0} breach portal(s) have opened on the current map, and an estimated {1} rift imp(s) are spilling through the tears.</ABY_IncidentBreachLeakLetterText_ImpsOnly>
+  <ABY_IncidentBreachLeakLetterText_WithHounds>The abyssal summoning circle has destabilized local space. {0} breach portal(s) have opened on the current map, and an estimated {1} rift imp(s) with {2} ember hound(s) are forcing their way through behind them.</ABY_IncidentBreachLeakLetterText_WithHounds>
+</LanguageData>

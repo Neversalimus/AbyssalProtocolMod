@@ -11,6 +11,7 @@ namespace AbyssalProtocol
         private const string ArchonBeastRaceDefName = "ABY_ArchonBeast";
         private const string ArchonOfRuptureRaceDefName = "ABY_ArchonOfRupture";
         private const string RiftImpRaceDefName = "ABY_RiftImp";
+        private const string EmberHoundRaceDefName = "ABY_EmberHound";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
 
@@ -32,10 +33,8 @@ namespace AbyssalProtocol
                 return randomEnemy;
             }
 
-            FactionDef pirateDef =
-                DefDatabase<FactionDef>.GetNamedSilentFail("Pirate") ??
-                DefDatabase<FactionDef>.GetNamedSilentFail("Pirates");
-
+            FactionDef pirateDef = DefDatabase<FactionDef>.GetNamedSilentFail("Pirate")
+                ?? DefDatabase<FactionDef>.GetNamedSilentFail("Pirates");
             if (pirateDef != null)
             {
                 return Find.FactionManager.FirstFactionOfDef(pirateDef);
@@ -163,7 +162,6 @@ namespace AbyssalProtocol
                 canSteal: false);
 
             LordMaker.MakeNewLord(faction, lordJob, map, new List<Pawn> { pawn });
-
             Find.LetterStack.ReceiveLetter(
                 "ABY_BossSummonSuccessLabel".Translate(),
                 "ABY_BossSummonSuccessDesc".Translate(bossLabel),
@@ -215,7 +213,6 @@ namespace AbyssalProtocol
                 }
 
                 foundAny = true;
-
                 if (candidate.RitualActive)
                 {
                     foundBusy = true;
@@ -294,45 +291,54 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    string defName = pawn.def?.defName;
-                    if (defName == ArchonBeastRaceDefName || defName == ArchonOfRuptureRaceDefName || defName == RiftImpRaceDefName)
+                    if (IsActiveEncounterPawn(pawn.def?.defName))
                     {
                         return true;
                     }
                 }
             }
 
-            ThingDef rupturePortalDef = DefDatabase<ThingDef>.GetNamedSilentFail(RupturePortalDefName);
-            if (rupturePortalDef != null)
+            if (HasActivePortalOfDef(map, RupturePortalDefName))
             {
-                List<Thing> portals = map.listerThings.ThingsOfDef(rupturePortalDef);
-                if (portals != null)
-                {
-                    for (int i = 0; i < portals.Count; i++)
-                    {
-                        Thing portal = portals[i];
-                        if (portal != null && portal.Spawned && !portal.Destroyed)
-                        {
-                            return true;
-                        }
-                    }
-                }
+                return true;
             }
 
-            ThingDef impPortalDef = DefDatabase<ThingDef>.GetNamedSilentFail(ImpPortalDefName);
-            if (impPortalDef != null)
+            if (HasActivePortalOfDef(map, ImpPortalDefName))
             {
-                List<Thing> portals = map.listerThings.ThingsOfDef(impPortalDef);
-                if (portals != null)
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool IsActiveEncounterPawn(string defName)
+        {
+            return defName == ArchonBeastRaceDefName
+                || defName == ArchonOfRuptureRaceDefName
+                || defName == RiftImpRaceDefName
+                || defName == EmberHoundRaceDefName;
+        }
+
+        private static bool HasActivePortalOfDef(Map map, string defName)
+        {
+            ThingDef portalDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (portalDef == null)
+            {
+                return false;
+            }
+
+            List<Thing> portals = map.listerThings.ThingsOfDef(portalDef);
+            if (portals == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < portals.Count; i++)
+            {
+                Thing portal = portals[i];
+                if (portal != null && portal.Spawned && !portal.Destroyed)
                 {
-                    for (int i = 0; i < portals.Count; i++)
-                    {
-                        Thing portal = portals[i];
-                        if (portal != null && portal.Spawned && !portal.Destroyed)
-                        {
-                            return true;
-                        }
-                    }
+                    return true;
                 }
             }
 
@@ -347,7 +353,6 @@ namespace AbyssalProtocol
             }
 
             pawn.Name = new NameSingle(bossLabel);
-
             if (pawn.story != null)
             {
                 pawn.story.title = bossLabel;
@@ -425,7 +430,6 @@ namespace AbyssalProtocol
 
             HediffDef core = DefDatabase<HediffDef>.GetNamedSilentFail(coreDefName);
             HediffDef carapace = DefDatabase<HediffDef>.GetNamedSilentFail(carapaceDefName);
-
             if (core != null)
             {
                 pawn.health?.AddHediff(core);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <IncidentDef>
+    <defName>ABY_BreachLeak</defName>
+    <label>breach leak</label>
+    <category>ThreatSmall</category>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
+    <workerClass>AbyssalProtocol.IncidentWorker_ABY_BreachLeak</workerClass>
+    <letterDef>ThreatSmall</letterDef>
+    <baseChance>0.45</baseChance>
+    <earliestDay>6</earliestDay>
+    <minRefireDays>12</minRefireDays>
+    <minThreatPoints>70</minThreatPoints>
+    <pointsScaleable>true</pointsScaleable>
+    <minPopulation>3</minPopulation>
+    <requireColonistsPresent>true</requireColonistsPresent>
+  </IncidentDef>
+
+</Defs>
