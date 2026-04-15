@@ -91,6 +91,22 @@ namespace AbyssalProtocol
                 InstabilityGain = 0.18f,
                 ContaminationGain = 0.08f,
                 SpawnPoints = 900
+            },
+            new RitualDefinition
+            {
+                Id = "dominion_gate",
+                LabelKey = "ABY_CircleRitual_Dominion_Label",
+                SubtitleKey = "ABY_CircleRitual_Dominion_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_Dominion_Desc",
+                BossLabel = "Crowned Gate breach",
+                SigilThingDefName = "ABY_DominionSigil",
+                PawnKindDefName = string.Empty,
+                RewardHintKey = "ABY_CircleRitual_Dominion_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_Dominion_SideEffects",
+                BaseRisk = 0.82f,
+                InstabilityGain = 0.22f,
+                ContaminationGain = 0.10f,
+                SpawnPoints = 1600
             }
         };
 
@@ -102,6 +118,16 @@ namespace AbyssalProtocol
         public static RitualDefinition GetDefaultRitual()
         {
             return Rituals[0];
+        }
+
+        public static bool IsDominionRitual(RitualDefinition ritual)
+        {
+            return ritual != null && ritual.Id == "dominion_gate";
+        }
+
+        public static MapComponent_DominionCrisis GetDominionCrisis(Building_AbyssalSummoningCircle circle)
+        {
+            return circle?.Map?.GetComponent<MapComponent_DominionCrisis>();
         }
 
         public static string TranslateOrFallback(string key, string fallback)
@@ -141,6 +167,11 @@ namespace AbyssalProtocol
         public static string GetConsoleSubtitleActive(string phaseLabel)
         {
             return TranslateOrFallback("ABY_CircleConsoleSubtitleActive", "Ritual active. Current phase: {0}.", phaseLabel);
+        }
+
+        public static string GetConsoleSubtitleDominionActive(string phaseLabel)
+        {
+            return TranslateOrFallback("ABY_CircleConsoleSubtitleDominion", "Dominion crisis core active. Current state: {0}.", phaseLabel);
         }
 
         public static string FormatTicksShort(int ticks)
@@ -227,17 +258,7 @@ namespace AbyssalProtocol
                 return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
             }
 
-            if (circle.RitualActive)
-            {
-                return GetPhaseText(circle.GetCurrentPhaseTranslated(), Mathf.RoundToInt(circle.RitualProgress * 100f));
-            }
-
-            if (circle.IsReadyForSigil(out string failReason))
-            {
-                return GetReadyText();
-            }
-
-            return GetNotReadyText(Shorten(failReason, 72));
+            return Shorten(circle.GetCurrentStatusLine(), 72);
         }
 
         public static string GetRitualLabel(RitualDefinition ritual)
@@ -260,6 +281,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
+            }
+
+            if (ritual.Id == "dominion_gate")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Open dominion gate");
             }
 
             return TranslateOrFallback(ritual.LabelKey, ritual.Id);
@@ -287,6 +313,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
             }
 
+            if (ritual.Id == "dominion_gate")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Endgame crisis bootstrap");
+            }
+
             return TranslateOrFallback(ritual.SubtitleKey, ritual.Id);
         }
 
@@ -310,6 +341,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.");
+            }
+
+            if (ritual.Id == "dominion_gate")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 1 initializes synchronization, standby pressure, save-safe state tracking, and the launch/control surface for the later full encounter.");
             }
 
             return TranslateOrFallback(ritual.DescriptionKey, ritual.Id);
@@ -343,6 +379,13 @@ namespace AbyssalProtocol
 • Early abyssal loot and boss-side material gating");
             }
 
+            if (ritual.Id == "dominion_gate")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Initializes the endgame crisis framework in-world
+• Adds a repeatable high-tier ritual card, sigil, and crisis state machine
+• Establishes the control layer that later packages will expand with anchors and waves");
+            }
+
             return TranslateOrFallback(ritual.RewardHintKey, ritual.Id);
         }
 
@@ -372,6 +415,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Opens a hostile breach on the current map
 • Can trigger escalation pressure if the colony is underprepared
 • Ritual phases intensify visuals, sound, and encounter pressure");
+            }
+
+            if (ritual.Id == "dominion_gate")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Requires full stabilizer coverage and both capacitor bays online
+• Blocks other abyssal encounters while the crisis core is active
+• Adds contamination pressure and can fail if the circle loses power for too long");
             }
 
             return TranslateOrFallback(ritual.SideEffectHintKey, ritual.Id);
@@ -511,6 +561,17 @@ namespace AbyssalProtocol
         public static string GetRitualMetaText(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
             int sigilCount = CountAvailableSigils(circle, ritual);
+            if (IsDominionRitual(ritual))
+            {
+                MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+                string state = crisis != null ? crisis.GetPhaseLabel() : TranslateOrFallback("ABY_DominionCrisisPhase_Dormant", "dormant");
+                return TranslateOrFallback(
+                    "ABY_DominionRitualMeta",
+                    "Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame",
+                    sigilCount,
+                    state);
+            }
+
             if (ritual != null && circle?.Map != null && AbyssalT1SummonScalingUtility.IsSupportedRitual(ritual.Id))
             {
                 AbyssalT1SummonScalingUtility.ThreatPlan plan = AbyssalT1SummonScalingUtility.GetThreatPlan(circle.Map, ritual.Id);
@@ -1092,6 +1153,18 @@ namespace AbyssalProtocol
                 Value = encounterClear ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : TranslateOrFallback("ABY_BossSummonFail_EncounterActive", "An abyssal encounter is already active on this map."),
                 Satisfied = encounterClear
             });
+
+            if (IsDominionRitual(ritual) || GetDominionCrisis(circle)?.IsActive == true)
+            {
+                MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+                bool idle = crisis == null || !crisis.IsActive;
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_Dominion", "Dominion"),
+                    Value = crisis != null ? crisis.GetPhaseLabel() : TranslateOrFallback("ABY_DominionCrisisPhase_Dormant", "dormant"),
+                    Satisfied = idle
+                });
+            }
 
             if (ritual != null)
             {

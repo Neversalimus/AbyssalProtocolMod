@@ -82,6 +82,15 @@ namespace AbyssalProtocol
             MaxRiskReduction = 0.12f
         };
 
+        private static readonly RitualProfile DominionGateProfile = new RitualProfile
+        {
+            RitualId = "dominion_gate",
+            StartupChargeRequired = 56f,
+            TotalChargeRequired = 124f,
+            ThroughputRequired = 42f,
+            MaxRiskReduction = 0.15f
+        };
+
         private static string TranslateOrFallback(string key, string fallback)
         {
             string value = key.Translate();
@@ -136,6 +145,11 @@ namespace AbyssalProtocol
             if (string.Equals(ritualId, ArchonBeastProfile.RitualId, StringComparison.OrdinalIgnoreCase))
             {
                 return ArchonBeastProfile;
+            }
+
+            if (string.Equals(ritualId, DominionGateProfile.RitualId, StringComparison.OrdinalIgnoreCase))
+            {
+                return DominionGateProfile;
             }
 
             return null;

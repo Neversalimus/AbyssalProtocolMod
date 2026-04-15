@@ -71,10 +71,14 @@ namespace AbyssalProtocol
 
         private void DrawHeader(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            bool dominionActive = dominionCrisis != null && dominionCrisis.IsActive;
             string subtitle = circle.RitualActive
                 ? AbyssalSummoningConsoleUtility.GetConsoleSubtitleActive(circle.GetCurrentPhaseTranslated())
-                : AbyssalSummoningConsoleUtility.GetConsoleSubtitle();
-            AbyssalSummoningConsoleArt.DrawHeader(rect, AbyssalSummoningConsoleUtility.GetConsoleTitle(), subtitle, circle.RitualActive);
+                : dominionActive
+                    ? AbyssalSummoningConsoleUtility.GetConsoleSubtitleDominionActive(dominionCrisis.GetPhaseLabel())
+                    : AbyssalSummoningConsoleUtility.GetConsoleSubtitle();
+            AbyssalSummoningConsoleArt.DrawHeader(rect, AbyssalSummoningConsoleUtility.GetConsoleTitle(), subtitle, circle.RitualActive || dominionActive);
         }
 
         private void DrawReadinessStrip(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -202,10 +206,15 @@ namespace AbyssalProtocol
                 JumpToSigil(ritual);
             }
 
-            string invokeLabel = circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
-                ? "ABY_CapacitorCommand_ForceInvoke".Translate()
-                : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
-            if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, !circle.RitualActive, true))
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
+            string invokeLabel = dominionAbortMode
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortCommand", "Abort dominion staging")
+                : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                    ? "ABY_CapacitorCommand_ForceInvoke".Translate()
+                    : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
+            bool invokeEnabled = dominionAbortMode || !circle.RitualActive;
+            if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, invokeEnabled, true))
             {
                 ConfirmAndAssign(ritual);
             }
@@ -585,11 +594,32 @@ namespace AbyssalProtocol
 
         private void ConfirmAndAssign(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
-            string confirmText = circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
-                ? "ABY_CapacitorConfirm_ForcedInvocation".Translate(AbyssalSummoningConsoleUtility.GetRitualLabel(ritual))
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleConfirmInvocation", "Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.", AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
+
+            string confirmText = dominionAbortMode
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisConfirmAbort", "Abort the dominion crisis core on this map? This ends the current staging window and marks the run as cancelled.")
+                : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                    ? "ABY_CapacitorConfirm_ForcedInvocation".Translate(AbyssalSummoningConsoleUtility.GetRitualLabel(ritual))
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleConfirmInvocation", "Assign a prepared sigil and order a colonist to begin {0}? This starts a hostile breach sequence.", AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+
             Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(confirmText, delegate
             {
+                if (dominionAbortMode)
+                {
+                    if (dominionCrisis.TryAbort(circle, out string abortFailReason))
+                    {
+                        Messages.Message(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortStarted", "Dominion staging aborted."), MessageTypeDefOf.PositiveEvent, false);
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                    }
+                    else if (!abortFailReason.NullOrEmpty())
+                    {
+                        Messages.Message(abortFailReason, MessageTypeDefOf.RejectInput, false);
+                    }
+
+                    return;
+                }
+
                 if (AbyssalSummoningConsoleUtility.TryAssignInvocation(circle, ritual, out string failReason))
                 {
                     Messages.Message(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleAssignStarted", "Invocation sequence assigned. A colonist is moving a sigil to the circle."), MessageTypeDefOf.PositiveEvent, false);

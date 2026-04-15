@@ -255,6 +255,63 @@ namespace AbyssalProtocol
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             };
+
+            if (Prefs.DevMode && Map != null)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: start dominion crisis",
+                    defaultDesc = "Begin the dominion crisis core directly on this map without consuming a sigil.",
+                    action = delegate
+                    {
+                        MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
+                        if (crisis == null)
+                        {
+                            Messages.Message("Missing MapComponent_DominionCrisis.", MessageTypeDefOf.RejectInput, false);
+                            return;
+                        }
+
+                        if (crisis.TryBegin(this, out string failReason))
+                        {
+                            Messages.Message("Dominion crisis core started.", MessageTypeDefOf.PositiveEvent, false);
+                        }
+                        else if (!failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: advance dominion phase",
+                    defaultDesc = "Advance the dominion crisis core to its next package-1 phase.",
+                    action = delegate
+                    {
+                        Map.GetComponent<MapComponent_DominionCrisis>()?.DebugAdvancePhase();
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: fail dominion crisis",
+                    defaultDesc = "Force the dominion crisis core into its failed terminal state.",
+                    action = delegate
+                    {
+                        Map.GetComponent<MapComponent_DominionCrisis>()?.ForceFail("DEV: forced failure.", true);
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: reset dominion crisis",
+                    defaultDesc = "Reset the dominion crisis component to a dormant state.",
+                    action = delegate
+                    {
+                        Map.GetComponent<MapComponent_DominionCrisis>()?.DebugReset();
+                    }
+                };
+            }
         }
 
         protected override void Tick()
@@ -336,8 +393,10 @@ namespace AbyssalProtocol
             pendingBossLabel = summonProps.bossLabel;
             pendingCompletionLetterLabelKey = summonProps.completionLetterLabelKey;
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
-            pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
-            if (pendingFaction == null)
+
+            bool dominionCrisisMode = IsDominionCrisisSummonMode(pendingSummonMode);
+            pendingFaction = dominionCrisisMode ? null : AbyssalBossSummonUtility.ResolveHostileFaction();
+            if (!dominionCrisisMode && pendingFaction == null)
             {
                 failReason = "ABY_CircleFail_NoHostileFaction".Translate();
                 return false;
@@ -360,6 +419,20 @@ namespace AbyssalProtocol
                 pendingImpPortalWarmupTicks = Mathf.Max(30, summonProps.impPortalWarmupTicks);
                 pendingImpSpawnIntervalTicks = Mathf.Max(30, summonProps.impSpawnIntervalTicks);
                 pendingImpPortalLingerTicks = Mathf.Max(600, summonProps.impPortalLingerTicks);
+            }
+            else if (dominionCrisisMode)
+            {
+                MapComponent_DominionCrisis dominionCrisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+                if (dominionCrisis == null)
+                {
+                    failReason = "Missing MapComponent_DominionCrisis.";
+                    return false;
+                }
+
+                if (!dominionCrisis.CanBegin(this, out failReason))
+                {
+                    return false;
+                }
             }
             else
             {
@@ -586,6 +659,7 @@ namespace AbyssalProtocol
                 sb.AppendLine();
             }
 
+            MapComponent_DominionCrisis dominionCrisis = Map?.GetComponent<MapComponent_DominionCrisis>();
             if (RitualActive)
             {
                 sb.Append(AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f)));
@@ -595,6 +669,10 @@ namespace AbyssalProtocol
                     sb.AppendLine();
                     sb.Append(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInspect_StalledNoPower", "Stalled: no power."));
                 }
+            }
+            else if (dominionCrisis != null && dominionCrisis.IsActive)
+            {
+                sb.Append(dominionCrisis.GetStatusLine());
             }
             else if (IsReadyForSigil(out failReason))
             {
@@ -1403,6 +1481,12 @@ namespace AbyssalProtocol
         {
             string failReason;
 
+            if (IsDominionCrisisSummonMode(pendingSummonMode))
+            {
+                CompleteDominionCrisisInitialization();
+                return;
+            }
+
             if (IsImpPortalSummonMode(pendingSummonMode))
             {
                 CompleteImpPortalSummon();
@@ -1466,6 +1550,41 @@ namespace AbyssalProtocol
                 pendingSpawnCell,
                 pendingBossLabel);
             ApplyRitualInstability();
+        }
+
+        private void CompleteDominionCrisisInitialization()
+        {
+            if (Map == null)
+            {
+                ResetRitual();
+                return;
+            }
+
+            MapComponent_DominionCrisis dominionCrisis = Map.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis == null)
+            {
+                ResetRitual();
+                Messages.Message("Missing MapComponent_DominionCrisis.", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!dominionCrisis.TryBegin(this, out string failReason))
+            {
+                ResetRitual();
+                if (!failReason.NullOrEmpty())
+                {
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                }
+
+                return;
+            }
+
+            ApplyRitualInstability();
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.20f);
+            if (RitualFocusCell.IsValid)
+            {
+                ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
+            }
         }
 
         private void CompleteHostilePackSummon()
@@ -1765,6 +1884,11 @@ namespace AbyssalProtocol
             return string.Equals(summonMode, "HostilePack", System.StringComparison.OrdinalIgnoreCase);
         }
 
+        private bool IsDominionCrisisSummonMode(string summonMode)
+        {
+            return string.Equals(summonMode, "DominionCrisis", System.StringComparison.OrdinalIgnoreCase);
+        }
+
         private bool IsPortalWaveSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "PortalWave", System.StringComparison.OrdinalIgnoreCase);
@@ -1997,6 +2121,12 @@ namespace AbyssalProtocol
             if (RitualActive)
             {
                 return AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
+            }
+
+            MapComponent_DominionCrisis dominionCrisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis != null && dominionCrisis.IsActive)
+            {
+                return dominionCrisis.GetStatusLine();
             }
 
             if (IsReadyForSigil(out failReason))

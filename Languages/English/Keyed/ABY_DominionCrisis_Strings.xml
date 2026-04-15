@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleRitual_Dominion_Label>Open dominion gate</ABY_CircleRitual_Dominion_Label>
+  <ABY_CircleRitual_Dominion_Subtitle>Endgame crisis bootstrap</ABY_CircleRitual_Dominion_Subtitle>
+  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 1 initializes synchronization, standby pressure, save-safe state tracking, and the launch/control surface for the later full encounter.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame crisis framework in-world
+• Adds a repeatable high-tier ritual card, sigil, and crisis state machine
+• Establishes the control layer that later packages will expand with anchors and waves</ABY_CircleRitual_Dominion_Rewards>
+  <ABY_CircleRitual_Dominion_SideEffects>• Requires full stabilizer coverage and both capacitor bays online
+• Blocks other abyssal encounters while the crisis core is active
+• Adds contamination pressure and can fail if the circle loses power for too long</ABY_CircleRitual_Dominion_SideEffects>
+
+  <ABY_CircleConsoleSubtitleDominion>Dominion crisis core active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
+  <ABY_DominionRitualMeta>Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame</ABY_DominionRitualMeta>
+  <ABY_CircleStatus_Dominion>Dominion</ABY_CircleStatus_Dominion>
+
+  <ABY_DominionCrisisAbortCommand>Abort dominion staging</ABY_DominionCrisisAbortCommand>
+  <ABY_DominionCrisisConfirmAbort>Abort the dominion crisis core on this map? This ends the current staging window and marks the run as cancelled.</ABY_DominionCrisisConfirmAbort>
+  <ABY_DominionCrisisAbortStarted>Dominion staging aborted.</ABY_DominionCrisisAbortStarted>
+
+  <ABY_DominionCrisisStartLabel>Dominion gate armed</ABY_DominionCrisisStartLabel>
+  <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach core is unstable but not yet fully unfolded.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisStandbyLabel>Dominion core synchronized</ABY_DominionCrisisStandbyLabel>
+  <ABY_DominionCrisisStandbyDesc>{0} is now holding a live dominion standby state. Later crisis packages will turn this into the full multi-phase encounter; for now the colony is sustaining the armed core.</ABY_DominionCrisisStandbyDesc>
+  <ABY_DominionCrisisCancelledLabel>Dominion staging cancelled</ABY_DominionCrisisCancelledLabel>
+  <ABY_DominionCrisisCancelledDesc>The dominion crisis core was intentionally shut down. Outcome: {0}</ABY_DominionCrisisCancelledDesc>
+  <ABY_DominionCrisisCancelledReason>manual abort</ABY_DominionCrisisCancelledReason>
+  <ABY_DominionCrisisCompletedLabel>Dominion staging completed</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>The dominion crisis core was marked complete for the current package. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>package 1 staging complete</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisFailedLabel>Dominion staging failed</ABY_DominionCrisisFailedLabel>
+  <ABY_DominionCrisisFailedDesc>The dominion crisis core destabilized before the later packages could take over. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
+  <ABY_DominionCrisisReminder>Dominion standby remains armed for {0}.</ABY_DominionCrisisReminder>
+
+  <ABY_DominionCrisisFail_NoCircle>No valid summoning circle is available for dominion synchronization.</ABY_DominionCrisisFail_NoCircle>
+  <ABY_DominionCrisisFail_AlreadyActive>A dominion crisis core is already active on this map.</ABY_DominionCrisisFail_AlreadyActive>
+  <ABY_DominionCrisisFail_NoResearch>Dominion gate bootstrapping has not been researched yet.</ABY_DominionCrisisFail_NoResearch>
+  <ABY_DominionCrisisFail_Stabilizers>Dominion staging requires a full stabilizer ring. Installed: {0} / {1}.</ABY_DominionCrisisFail_Stabilizers>
+  <ABY_DominionCrisisFail_Capacitors>Dominion staging requires both capacitor bays online. Installed: {0} / {1}.</ABY_DominionCrisisFail_Capacitors>
+  <ABY_DominionCrisisFail_CircleLost>The source summoning circle was lost.</ABY_DominionCrisisFail_CircleLost>
+  <ABY_DominionCrisisFail_Power>The source summoning circle lost power for too long.</ABY_DominionCrisisFail_Power>
+  <ABY_DominionCrisisFail_WindowExpired>The package-1 dominion standby window expired.</ABY_DominionCrisisFail_WindowExpired>
+  <ABY_DominionCrisisAbortFail_NoActive>No dominion crisis core is active on this map.</ABY_DominionCrisisAbortFail_NoActive>
+
+  <ABY_DominionCrisisPhase_Dormant>dormant</ABY_DominionCrisisPhase_Dormant>
+  <ABY_DominionCrisisPhase_Synchronizing>synchronizing</ABY_DominionCrisisPhase_Synchronizing>
+  <ABY_DominionCrisisPhase_Standby>standby</ABY_DominionCrisisPhase_Standby>
+  <ABY_DominionCrisisPhase_Cancelled>cancelled</ABY_DominionCrisisPhase_Cancelled>
+  <ABY_DominionCrisisPhase_Failed>failed</ABY_DominionCrisisPhase_Failed>
+  <ABY_DominionCrisisPhase_Completed>completed</ABY_DominionCrisisPhase_Completed>
+
+  <ABY_DominionCrisisStatusLine_Active>Dominion crisis: {0} • {1} remaining</ABY_DominionCrisisStatusLine_Active>
+  <ABY_DominionCrisisStatusLine_Dormant>Dominion crisis core dormant.</ABY_DominionCrisisStatusLine_Dormant>
+  <ABY_DominionCrisisStatusLine_Terminal>Dominion crisis: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
+
+</LanguageData>

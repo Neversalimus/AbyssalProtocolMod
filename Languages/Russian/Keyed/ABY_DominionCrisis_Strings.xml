@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleRitual_Dominion_Label>Открыть врата доминиона</ABY_CircleRitual_Dominion_Label>
+  <ABY_CircleRitual_Dominion_Subtitle>Стартовый пакет эндгейм-кризиса</ABY_CircleRitual_Dominion_Subtitle>
+  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 1 добавляет синхронизацию, standby-состояние, безопасное сохранение состояния и базовую управляющую поверхность для следующих пакетов полного столкновения.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Rewards>• Реально инициализирует каркас эндгейм-кризиса на карте
+• Добавляет повторяемый high-tier ритуал, сигил и state machine кризиса
+• Создаёт основу управления, которую следующие пакеты расширят якорями и волнами</ABY_CircleRitual_Dominion_Rewards>
+  <ABY_CircleRitual_Dominion_SideEffects>• Требует полного кольца стабилизаторов и обеих активных capacitor bays
+• Блокирует другие abyssal-столкновения, пока активно ядро кризиса
+• Повышает contamination и может сорваться при долгой потере питания</ABY_CircleRitual_Dominion_SideEffects>
+
+  <ABY_CircleConsoleSubtitleDominion>Ядро кризиса доминиона активно. Текущее состояние: {0}.</ABY_CircleConsoleSubtitleDominion>
+  <ABY_DominionRitualMeta>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Тир угрозы: эндгейм</ABY_DominionRitualMeta>
+  <ABY_CircleStatus_Dominion>Доминион</ABY_CircleStatus_Dominion>
+
+  <ABY_DominionCrisisAbortCommand>Оборвать стадию доминиона</ABY_DominionCrisisAbortCommand>
+  <ABY_DominionCrisisConfirmAbort>Прервать ядро кризиса доминиона на этой карте? Это завершит текущее staging-окно и пометит запуск как отменённый.</ABY_DominionCrisisConfirmAbort>
+  <ABY_DominionCrisisAbortStarted>Стадия доминиона прервана.</ABY_DominionCrisisAbortStarted>
+
+  <ABY_DominionCrisisStartLabel>Врата доминиона вооружены</ABY_DominionCrisisStartLabel>
+  <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию синхронизации доминиона. Ядро прорыва нестабильно, но ещё не развернулось полностью.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisStandbyLabel>Ядро доминиона синхронизировано</ABY_DominionCrisisStandbyLabel>
+  <ABY_DominionCrisisStandbyDesc>{0} теперь удерживает активное standby-состояние доминиона. Следующие пакеты превратят это в полноценное многофазное столкновение; пока колония просто поддерживает вооружённое ядро.</ABY_DominionCrisisStandbyDesc>
+  <ABY_DominionCrisisCancelledLabel>Стадия доминиона отменена</ABY_DominionCrisisCancelledLabel>
+  <ABY_DominionCrisisCancelledDesc>Ядро кризиса доминиона было намеренно отключено. Итог: {0}</ABY_DominionCrisisCancelledDesc>
+  <ABY_DominionCrisisCancelledReason>ручная отмена</ABY_DominionCrisisCancelledReason>
+  <ABY_DominionCrisisCompletedLabel>Стадия доминиона завершена</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>Ядро кризиса доминиона помечено как завершённое для текущего пакета. Итог: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>этап пакета 1 завершён</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisFailedLabel>Стадия доминиона сорвалась</ABY_DominionCrisisFailedLabel>
+  <ABY_DominionCrisisFailedDesc>Ядро кризиса доминиона дестабилизировалось до того, как следующие пакеты взяли его на себя. Причина срыва: {0}</ABY_DominionCrisisFailedDesc>
+  <ABY_DominionCrisisReminder>Standby доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
+
+  <ABY_DominionCrisisFail_NoCircle>Нет подходящего круга призыва для синхронизации доминиона.</ABY_DominionCrisisFail_NoCircle>
+  <ABY_DominionCrisisFail_AlreadyActive>На этой карте уже активно ядро кризиса доминиона.</ABY_DominionCrisisFail_AlreadyActive>
+  <ABY_DominionCrisisFail_NoResearch>Исследование dominion gate bootstrapping ещё не завершено.</ABY_DominionCrisisFail_NoResearch>
+  <ABY_DominionCrisisFail_Stabilizers>Для стадии доминиона нужно полное кольцо стабилизаторов. Установлено: {0} / {1}.</ABY_DominionCrisisFail_Stabilizers>
+  <ABY_DominionCrisisFail_Capacitors>Для стадии доминиона нужны обе активные capacitor bays. Установлено: {0} / {1}.</ABY_DominionCrisisFail_Capacitors>
+  <ABY_DominionCrisisFail_CircleLost>Исходный круг призыва был потерян.</ABY_DominionCrisisFail_CircleLost>
+  <ABY_DominionCrisisFail_Power>Исходный круг призыва слишком долго оставался без питания.</ABY_DominionCrisisFail_Power>
+  <ABY_DominionCrisisFail_WindowExpired>Окно standby для пакета 1 доминиона истекло.</ABY_DominionCrisisFail_WindowExpired>
+  <ABY_DominionCrisisAbortFail_NoActive>На этой карте нет активного ядра кризиса доминиона.</ABY_DominionCrisisAbortFail_NoActive>
+
+  <ABY_DominionCrisisPhase_Dormant>спит</ABY_DominionCrisisPhase_Dormant>
+  <ABY_DominionCrisisPhase_Synchronizing>синхронизация</ABY_DominionCrisisPhase_Synchronizing>
+  <ABY_DominionCrisisPhase_Standby>standby</ABY_DominionCrisisPhase_Standby>
+  <ABY_DominionCrisisPhase_Cancelled>отменено</ABY_DominionCrisisPhase_Cancelled>
+  <ABY_DominionCrisisPhase_Failed>сорвано</ABY_DominionCrisisPhase_Failed>
+  <ABY_DominionCrisisPhase_Completed>завершено</ABY_DominionCrisisPhase_Completed>
+
+  <ABY_DominionCrisisStatusLine_Active>Кризис доминиона: {0} • осталось {1}</ABY_DominionCrisisStatusLine_Active>
+  <ABY_DominionCrisisStatusLine_Dormant>Ядро кризиса доминиона спит.</ABY_DominionCrisisStatusLine_Dormant>
+  <ABY_DominionCrisisStatusLine_Terminal>Кризис доминиона: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
+
+</LanguageData>

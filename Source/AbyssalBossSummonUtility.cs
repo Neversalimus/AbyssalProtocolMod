@@ -277,6 +277,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis != null && dominionCrisis.IsActive)
+            {
+                return true;
+            }
+
             MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
             if (portalWave != null && portalWave.IsWaveActive)
             {

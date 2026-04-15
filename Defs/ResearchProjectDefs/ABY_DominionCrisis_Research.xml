@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ABY_DominionGateBootstrapping</defName>
+    <label>dominion gate bootstrapping</label>
+    <description>Hardens the circle lattice for first-stage dominion synchronization. It does not finish the Crowned Gate crisis, but it lets the colony intentionally arm the breach core, hold it in standby, and build the systemic base for the full endgame collapse packages.</description>
+    <baseCost>4200</baseCost>
+    <techLevel>Spacer</techLevel>
+    <tab>ABY_AbyssalProtocolTab</tab>
+    <researchViewX>3.92</researchViewX>
+    <researchViewY>1.08</researchViewY>
+    <prerequisites>
+      <li>ABY_CrownCondensationArrays</li>
+      <li>ABY_CrownContainmentArchitecture</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+</Defs>
