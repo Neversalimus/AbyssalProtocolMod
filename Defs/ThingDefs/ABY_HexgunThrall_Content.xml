@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef ParentName="AnimalThingBase">
+  <ThingDef ParentName="Human">
     <defName>ABY_HexgunThrall</defName>
     <label>hexgun thrall</label>
     <description>A chained infernal gun-servitor grown for disciplined breach volleys. Hexgun thralls keep their distance, rake firing lines with cursed bursts, and mark exposed targets for the rest of the abyssal host.</description>
@@ -17,11 +17,10 @@
     </graphicData>
 
     <race>
-      <renderTree>Animal</renderTree>
+      <renderTree>Humanlike</renderTree>
       <thinkTreeMain>Humanlike</thinkTreeMain>
       <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
-      <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
       <canBecomeShambler>true</canBecomeShambler>
@@ -38,8 +37,8 @@
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <lifeExpectancy>95</lifeExpectancy>
-      <predator>false</predator>
       <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
       <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges>
         <li>

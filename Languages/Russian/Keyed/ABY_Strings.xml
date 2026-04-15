@@ -95,6 +95,10 @@
   <ABY_CircleConsequencesHeader>Последствия и побочные эффекты</ABY_CircleConsequencesHeader>
 
   <ABY_CircleReducedEffects>Сниженные эффекты</ABY_CircleReducedEffects>
+  <ABY_GenericEnabled>Включено</ABY_GenericEnabled>
+  <ABY_GenericDisabled>Выключено</ABY_GenericDisabled>
+  <ABY_CircleControlToggles>Тумблеры управления</ABY_CircleControlToggles>
+
   <ABY_CircleReducedEffectsDesc>Ослабляет sweep-линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
 
   <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>

@@ -95,6 +95,10 @@
   <ABY_CircleConsequencesHeader>Consequences and side effects</ABY_CircleConsequencesHeader>
 
   <ABY_CircleReducedEffects>Reduced effects</ABY_CircleReducedEffects>
+  <ABY_GenericEnabled>Enabled</ABY_GenericEnabled>
+  <ABY_GenericDisabled>Disabled</ABY_GenericDisabled>
+  <ABY_CircleControlToggles>Control toggles</ABY_CircleControlToggles>
+
   <ABY_CircleReducedEffectsDesc>Softens header sweeps, seal rotation, and other animated accents inside the summoning console.</ABY_CircleReducedEffectsDesc>
 
   <ABY_CircleFail_NoPortalSpawn>No valid breach point could be opened near the summoning circle.</ABY_CircleFail_NoPortalSpawn>
