@@ -16,19 +16,6 @@
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
 
-    <comps>
-      <li Class="AbyssalProtocol.CompProperties_ArchonAnimatedBody">
-        <southTexPath>Pawn/ArchonBeast/ArchonBeastAnim_south</southTexPath>
-        <northTexPath>Pawn/ArchonBeast/ArchonBeastAnim_north</northTexPath>
-        <eastTexPath>Pawn/ArchonBeast/ArchonBeastAnim_east</eastTexPath>
-        <frameCount>4</frameCount>
-        <ticksPerFrame>10</ticksPerFrame>
-        <drawScale>1.0</drawScale>
-        <layerOffset>0.0035</layerOffset>
-        <disableWhenDead>true</disableWhenDead>
-        <disableWhenDowned>true</disableWhenDowned>
-      </li>
-    </comps>
 
     <race>
       <renderTree>Animal</renderTree>
