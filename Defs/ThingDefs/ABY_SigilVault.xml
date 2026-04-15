@@ -25,7 +25,7 @@
     <selectable>true</selectable>
     <drawGUIOverlay>false</drawGUIOverlay>
 
-    <designationCategory>Storage</designationCategory>
+    <designationCategory>Furniture</designationCategory>
     <uiOrder>2550</uiOrder>
     <constructEffect>ConstructMetal</constructEffect>
     <castEdgeShadows>false</castEdgeShadows>

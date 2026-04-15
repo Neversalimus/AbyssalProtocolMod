@@ -28,7 +28,7 @@
       <hediffGiverSets>
         <li>OrganicStandard</li>
       </hediffGiverSets>
-      <body>Humanoid</body>
+      <body>Human</body>
       <baseBodySize>0.74</baseBodySize>
       <baseHealthScale>1.02</baseHealthScale>
       <baseHungerRate>0.42</baseHungerRate>
@@ -39,6 +39,7 @@
       <lifeExpectancy>95</lifeExpectancy>
       <predator>false</predator>
       <foodType>OmnivoreAnimal</foodType>
+      <gestationPeriodDays>16</gestationPeriodDays>
       <lifeStageAges>
         <li>
           <def>AnimalAdult</def>

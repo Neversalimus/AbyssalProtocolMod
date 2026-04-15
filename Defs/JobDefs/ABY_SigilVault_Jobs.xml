@@ -7,7 +7,6 @@
     <reportString>storing sigil in abyssal vault.</reportString>
     <casualInterruptible>false</casualInterruptible>
     <playerInterruptible>true</playerInterruptible>
-    <checkOverrideOnExpire>true</checkOverrideOnExpire>
   </JobDef>
 
 </Defs>
