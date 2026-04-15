@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_SigilVault</defName>
     <label>abyssal sigil vault</label>
-    <description>A compact infernal reliquary for isolated summon sigils. It stores up to twenty individual sigils inside a shielded containment core, displays a readable sample on top, and can stage a selected sigil directly toward the nearest ready summoning circle.</description>
+    <description>A compact infernal reliquary for isolated summon sigils. It stores up to twenty individual sigils inside a shielded containment core, visually displays its stored sample on top, and can be permanently linked to a specific abyssal summoning circle for direct ritual staging.</description>
     <thingClass>AbyssalProtocol.Building_ABY_SigilVault</thingClass>
     <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>

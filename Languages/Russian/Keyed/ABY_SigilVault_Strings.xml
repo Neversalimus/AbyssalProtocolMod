@@ -6,9 +6,22 @@
   <ABY_SigilVault_NearestReadyCircle>Ближайший готовый круг: {0} ({1} клеток)</ABY_SigilVault_NearestReadyCircle>
   <ABY_SigilVault_NoReadyCircle>Нет готового круга призыва.</ABY_SigilVault_NoReadyCircle>
   <ABY_SigilVault_NoReadyCircleReason>Нет готового круга призыва: {0}</ABY_SigilVault_NoReadyCircleReason>
+  <ABY_SigilVault_LinkedCircle>Связанный круг: {0} ({1} клеток)</ABY_SigilVault_LinkedCircle>
+  <ABY_SigilVault_LinkStateReady>Статус связи: круг готов принять сигил.</ABY_SigilVault_LinkStateReady>
+  <ABY_SigilVault_LinkStateBlocked>Статус связи: круг сейчас не готов.</ABY_SigilVault_LinkStateBlocked>
+  <ABY_SigilVault_LinkStateBlockedReason>Статус связи: {0}</ABY_SigilVault_LinkStateBlockedReason>
+  <ABY_SigilVault_LinkHint>Круг не привязан. Привяжи хранилище, чтобы оно стало выделенным податчиком сигилов для одного круга призыва.</ABY_SigilVault_LinkHint>
 
-  <ABY_SigilVault_StageToCircleLabel>Подать сигил к кругу</ABY_SigilVault_StageToCircleLabel>
-  <ABY_SigilVault_StageToCircleDesc>Извлекает один сигил из хранилища, выбирает подходящего колониста и отправляет сигил к ближайшему готовому abyssal-кругу призыва.</ABY_SigilVault_StageToCircleDesc>
+  <ABY_SigilVault_LinkLabel>Привязать к кругу</ABY_SigilVault_LinkLabel>
+  <ABY_SigilVault_ChangeLinkLabel>Сменить связанный круг</ABY_SigilVault_ChangeLinkLabel>
+  <ABY_SigilVault_LinkDesc>Выберите abyssal-круг призыва, который должно обслуживать это хранилище.</ABY_SigilVault_LinkDesc>
+  <ABY_SigilVault_UnlinkLabel>Разорвать связь с кругом</ABY_SigilVault_UnlinkLabel>
+  <ABY_SigilVault_UnlinkDesc>Удалить текущую постоянную связь этого хранилища с кругом.</ABY_SigilVault_UnlinkDesc>
+  <ABY_SigilVault_JumpToLinkedCircleLabel>Перейти к связанному кругу</ABY_SigilVault_JumpToLinkedCircleLabel>
+  <ABY_SigilVault_JumpToLinkedCircleDesc>Переместить камеру к связанному abyssal-кругу призыва.</ABY_SigilVault_JumpToLinkedCircleDesc>
+
+  <ABY_SigilVault_StageToLinkedCircleLabel>Подать сигил к связанному кругу</ABY_SigilVault_StageToLinkedCircleLabel>
+  <ABY_SigilVault_StageToLinkedCircleDesc>Выберите один сохранённый сигил и отправьте его из хранилища к текущему связанному abyssal-кругу призыва.</ABY_SigilVault_StageToLinkedCircleDesc>
   <ABY_SigilVault_StageOption>Подать {SIGIL} ({COUNT})</ABY_SigilVault_StageOption>
   <ABY_SigilVault_StageSuccess>{1} несёт {0} из хранилища к {2}.</ABY_SigilVault_StageSuccess>
 
@@ -19,10 +32,22 @@
   <ABY_SigilVault_EjectAllDesc>Выпустить все сохранённые сигилы из хранилища.</ABY_SigilVault_EjectAllDesc>
   <ABY_SigilVault_EjectSuccess>{0} выпущен из хранилища.</ABY_SigilVault_EjectSuccess>
 
+  <ABY_SigilVault_LinkOption>{0} ({1} клеток) — {2}</ABY_SigilVault_LinkOption>
+  <ABY_SigilVault_LinkOptionCurrent>[Связан] {0} ({1} клеток) — {2}</ABY_SigilVault_LinkOptionCurrent>
+  <ABY_SigilVault_LinkOptionReady>готов</ABY_SigilVault_LinkOptionReady>
+  <ABY_SigilVault_LinkOptionBlocked>не готов</ABY_SigilVault_LinkOptionBlocked>
+  <ABY_SigilVault_LinkSuccess>{0} теперь связан с {1}.</ABY_SigilVault_LinkSuccess>
+  <ABY_SigilVault_UnlinkSuccess>Связь с {0} удалена.</ABY_SigilVault_UnlinkSuccess>
+
   <ABY_SigilVault_Disabled_NoSigils>Внутри нет сигилов.</ABY_SigilVault_Disabled_NoSigils>
+  <ABY_SigilVault_Disabled_NoLink>Нет связанного круга призыва.</ABY_SigilVault_Disabled_NoLink>
   <ABY_SigilVault_Fail_NoStoredSigils>В этом хранилище нет доступных сигилов.</ABY_SigilVault_Fail_NoStoredSigils>
   <ABY_SigilVault_Fail_NoCircle>На этой карте нет abyssal-круга призыва.</ABY_SigilVault_Fail_NoCircle>
   <ABY_SigilVault_Fail_NoReadyCircle>Сейчас нет abyssal-круга призыва, готового принять сигил.</ABY_SigilVault_Fail_NoReadyCircle>
-  <ABY_SigilVault_Fail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил из хранилища к готовому кругу.</ABY_SigilVault_Fail_NoOperator>
+  <ABY_SigilVault_Fail_NoLink>Это хранилище ещё не связано ни с одним кругом призыва.</ABY_SigilVault_Fail_NoLink>
+  <ABY_SigilVault_Fail_LinkBlocked>Связанный круг сейчас не готов принять сигил.</ABY_SigilVault_Fail_LinkBlocked>
+  <ABY_SigilVault_Fail_LinkBlockedReason>Связанный круг не готов: {0}</ABY_SigilVault_Fail_LinkBlockedReason>
+  <ABY_SigilVault_Fail_LinkTargetInvalid>Выбранный круг больше не является допустимой целью на этой карте.</ABY_SigilVault_Fail_LinkTargetInvalid>
+  <ABY_SigilVault_Fail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил из хранилища к связанному кругу.</ABY_SigilVault_Fail_NoOperator>
   <ABY_SigilVault_Fail_MissingCarryJob>Отсутствует JobDef: ABY_CarrySigilToCircle.</ABY_SigilVault_Fail_MissingCarryJob>
 </LanguageData>

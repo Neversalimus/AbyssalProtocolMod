@@ -13,6 +13,9 @@ namespace AbyssalProtocol
     {
         public const int MaxSigilCapacity = 20;
 
+        private const string CircleDefName = "ABY_SummoningCircle";
+        private const string CarrySigilJobDefName = "ABY_CarrySigilToCircle";
+
         private static readonly string[] AcceptedSigilDefNames =
         {
             "ABY_ArchonSigil",
@@ -37,9 +40,16 @@ namespace AbyssalProtocol
         };
 
         private static readonly Dictionary<string, Material> OverlayMaterialCache = new Dictionary<string, Material>(StringComparer.Ordinal);
+        private static readonly Texture2D DefaultCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", false) ?? BaseContent.BadTex;
+        private static readonly Texture2D LinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/SetTarget", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/JumpToLocation", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D UnlinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Cancel", false) ?? DefaultCommandIcon;
+        private static readonly Material LinkedOverlayMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkedOverlay", ShaderDatabase.Cutout);
+        private static readonly Material LinkedPulseMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkPulse", ShaderDatabase.Cutout);
         private static List<ThingDef> cachedAcceptedSigilDefs;
 
         private ThingOwner<Thing> innerContainer;
+        private Building_AbyssalSummoningCircle linkedCircle;
         private bool cacheDirty = true;
         private int cachedStoredSigilCount;
         private readonly List<SigilSummary> cachedSummaries = new List<SigilSummary>();
@@ -87,21 +97,27 @@ namespace AbyssalProtocol
 
         public int FreeSigilSlots => Math.Max(0, MaxSigilCapacity - StoredSigilCount);
 
+        public bool HasLinkedCircle => ResolveLinkedCircle() != null;
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Deep.Look(ref innerContainer, "innerContainer", this);
+            Scribe_References.Look(ref linkedCircle, "linkedCircle");
+
             if (Scribe.mode == LoadSaveMode.PostLoadInit && innerContainer == null)
             {
                 innerContainer = new ThingOwner<Thing>(this, false);
             }
 
             MarkCacheDirty();
+            PruneInvalidLinkedCircle();
         }
 
         public override string GetInspectString()
         {
             EnsureCache();
+            PruneInvalidLinkedCircle();
 
             StringBuilder sb = new StringBuilder();
             string baseText = base.GetInspectString();
@@ -113,10 +129,29 @@ namespace AbyssalProtocol
             AppendLine(sb, "ABY_SigilVault_Stored".Translate(StoredSigilCount, MaxSigilCapacity));
             AppendLine(sb, "ABY_SigilVault_AcceptsConfigured".Translate(GetAcceptedSigilLabelList()));
 
-            if (TryFindNearestReadyCircle(out Building_AbyssalSummoningCircle circle, out string failReason))
+            Building_AbyssalSummoningCircle resolvedLink = ResolveLinkedCircle();
+            if (resolvedLink != null)
+            {
+                int dist = Mathf.RoundToInt(PositionHeld.DistanceTo(resolvedLink.PositionHeld));
+                AppendLine(sb, "ABY_SigilVault_LinkedCircle".Translate(resolvedLink.LabelCap, dist));
+
+                if (resolvedLink.IsReadyForSigil(out string linkedFailReason))
+                {
+                    AppendLine(sb, "ABY_SigilVault_LinkStateReady".Translate());
+                }
+                else
+                {
+                    string reason = linkedFailReason.NullOrEmpty()
+                        ? "ABY_SigilVault_LinkStateBlocked".Translate().ToString()
+                        : "ABY_SigilVault_LinkStateBlockedReason".Translate(linkedFailReason).ToString();
+                    AppendLine(sb, reason);
+                }
+            }
+            else if (TryFindNearestReadyCircle(out Building_AbyssalSummoningCircle circle, out string failReason))
             {
                 int dist = Mathf.RoundToInt(PositionHeld.DistanceTo(circle.PositionHeld));
                 AppendLine(sb, "ABY_SigilVault_NearestReadyCircle".Translate(circle.LabelCap, dist));
+                AppendLine(sb, "ABY_SigilVault_LinkHint".Translate());
             }
             else
             {
@@ -141,17 +176,58 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
+            Command_Action linkCommand = new Command_Action
+            {
+                defaultLabel = HasLinkedCircle
+                    ? "ABY_SigilVault_ChangeLinkLabel".Translate()
+                    : "ABY_SigilVault_LinkLabel".Translate(),
+                defaultDesc = "ABY_SigilVault_LinkDesc".Translate(),
+                icon = LinkCommandIcon,
+                action = OpenLinkMenu
+            };
+            yield return linkCommand;
+
+            Command_Action unlinkCommand = new Command_Action
+            {
+                defaultLabel = "ABY_SigilVault_UnlinkLabel".Translate(),
+                defaultDesc = "ABY_SigilVault_UnlinkDesc".Translate(),
+                icon = UnlinkCommandIcon,
+                action = UnlinkCircle
+            };
+            if (!HasLinkedCircle)
+            {
+                unlinkCommand.Disable("ABY_SigilVault_Disabled_NoLink".Translate());
+            }
+            yield return unlinkCommand;
+
+            Command_Action jumpCommand = new Command_Action
+            {
+                defaultLabel = "ABY_SigilVault_JumpToLinkedCircleLabel".Translate(),
+                defaultDesc = "ABY_SigilVault_JumpToLinkedCircleDesc".Translate(),
+                icon = JumpCommandIcon,
+                action = JumpToLinkedCircle
+            };
+            if (!HasLinkedCircle)
+            {
+                jumpCommand.Disable("ABY_SigilVault_Disabled_NoLink".Translate());
+            }
+            yield return jumpCommand;
+
             Command_Action stageCommand = new Command_Action
             {
-                defaultLabel = "ABY_SigilVault_StageToCircleLabel".Translate(),
-                defaultDesc = "ABY_SigilVault_StageToCircleDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", true),
+                defaultLabel = "ABY_SigilVault_StageToLinkedCircleLabel".Translate(),
+                defaultDesc = "ABY_SigilVault_StageToLinkedCircleDesc".Translate(),
+                icon = DefaultCommandIcon,
                 action = OpenStageMenu
             };
 
             if (StoredSigilCount <= 0)
             {
                 stageCommand.Disable("ABY_SigilVault_Disabled_NoSigils".Translate());
+            }
+            else if (!HasLinkedCircle)
+            {
+                stageCommand.Disable("ABY_SigilVault_Disabled_NoLink".Translate());
             }
 
             yield return stageCommand;
@@ -160,7 +236,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_EjectOneLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectOneDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", true),
+                icon = DefaultCommandIcon,
                 action = OpenEjectOneMenu
             };
 
@@ -171,13 +247,18 @@ namespace AbyssalProtocol
 
             yield return ejectOneCommand;
 
-            yield return new Command_Action
+            Command_Action ejectAllCommand = new Command_Action
             {
                 defaultLabel = "ABY_SigilVault_EjectAllLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectAllDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", true),
+                icon = DefaultCommandIcon,
                 action = EjectAllContents
             };
+            if (StoredSigilCount <= 0)
+            {
+                ejectAllCommand.Disable("ABY_SigilVault_Disabled_NoSigils".Translate());
+            }
+            yield return ejectAllCommand;
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -193,7 +274,21 @@ namespace AbyssalProtocol
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
+            DrawLinkState(drawLoc);
             DrawStoredSigils(drawLoc);
+        }
+
+        public override void DrawExtraSelectionOverlays()
+        {
+            base.DrawExtraSelectionOverlays();
+
+            Building_AbyssalSummoningCircle resolvedLink = ResolveLinkedCircle();
+            if (resolvedLink == null)
+            {
+                return;
+            }
+
+            GenDraw.DrawLineBetween(TrueCenter(), resolvedLink.TrueCenter());
         }
 
         public bool CanAccept(Thing thing)
@@ -270,6 +365,84 @@ namespace AbyssalProtocol
             }
         }
 
+        private void OpenLinkMenu()
+        {
+            if (MapHeld == null)
+            {
+                Messages.Message("ABY_SigilVault_Fail_NoCircle".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            List<Building_AbyssalSummoningCircle> circles = GetAllCirclesOnMap();
+            if (circles.Count == 0)
+            {
+                Messages.Message("ABY_SigilVault_Fail_NoCircle".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            circles.Sort((a, b) => PositionHeld.DistanceToSquared(a.PositionHeld).CompareTo(PositionHeld.DistanceToSquared(b.PositionHeld)));
+
+            List<FloatMenuOption> options = new List<FloatMenuOption>(circles.Count);
+            for (int i = 0; i < circles.Count; i++)
+            {
+                Building_AbyssalSummoningCircle circle = circles[i];
+                int dist = Mathf.RoundToInt(PositionHeld.DistanceTo(circle.PositionHeld));
+                bool isCurrent = circle == linkedCircle;
+                string readiness = circle.IsReadyForSigil(out string failReason)
+                    ? "ABY_SigilVault_LinkOptionReady".Translate().ToString()
+                    : (failReason.NullOrEmpty() ? "ABY_SigilVault_LinkOptionBlocked".Translate().ToString() : failReason);
+                string label = (isCurrent
+                        ? "ABY_SigilVault_LinkOptionCurrent".Translate(circle.LabelCap, dist, readiness)
+                        : "ABY_SigilVault_LinkOption".Translate(circle.LabelCap, dist, readiness))
+                    .ToString();
+
+                options.Add(new FloatMenuOption(label, delegate
+                {
+                    LinkToCircle(circle);
+                }));
+            }
+
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private void LinkToCircle(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld != MapHeld)
+            {
+                Messages.Message("ABY_SigilVault_Fail_LinkTargetInvalid".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            linkedCircle = circle;
+            Messages.Message("ABY_SigilVault_LinkSuccess".Translate(LabelCap, circle.LabelCap), this, MessageTypeDefOf.TaskCompletion, false);
+        }
+
+        private void UnlinkCircle()
+        {
+            Building_AbyssalSummoningCircle oldLink = ResolveLinkedCircle();
+            if (oldLink == null)
+            {
+                linkedCircle = null;
+                Messages.Message("ABY_SigilVault_Disabled_NoLink".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            linkedCircle = null;
+            Messages.Message("ABY_SigilVault_UnlinkSuccess".Translate(oldLink.LabelCap), this, MessageTypeDefOf.TaskCompletion, false);
+        }
+
+        private void JumpToLinkedCircle()
+        {
+            Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
+            if (circle == null)
+            {
+                Messages.Message("ABY_SigilVault_Disabled_NoLink".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            CameraJumper.TryJumpAndSelect(circle);
+        }
+
         private void OpenStageMenu()
         {
             EnsureCache();
@@ -280,7 +453,13 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<FloatMenuOption> options = BuildSigilTypeMenuOptions("ABY_SigilVault_StageOption", TryStageOneSigilToCircle);
+            if (ResolveLinkedCircle() == null)
+            {
+                Messages.Message("ABY_SigilVault_Fail_NoLink".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            List<FloatMenuOption> options = BuildSigilTypeMenuOptions("ABY_SigilVault_StageOption", TryStageOneSigilToLinkedCircle);
             if (options.Count == 1)
             {
                 options[0].action();
@@ -329,7 +508,7 @@ namespace AbyssalProtocol
             return options;
         }
 
-        private void TryStageOneSigilToCircle(ThingDef sigilDef)
+        private void TryStageOneSigilToLinkedCircle(ThingDef sigilDef)
         {
             if (sigilDef == null)
             {
@@ -337,10 +516,26 @@ namespace AbyssalProtocol
                 return;
             }
 
-            JobDef carryJobDef = DefDatabase<JobDef>.GetNamedSilentFail("ABY_CarrySigilToCircle");
+            Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
+            if (circle == null)
+            {
+                Messages.Message("ABY_SigilVault_Fail_NoLink".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            JobDef carryJobDef = DefDatabase<JobDef>.GetNamedSilentFail(CarrySigilJobDefName);
             if (carryJobDef == null)
             {
                 Messages.Message("ABY_SigilVault_Fail_MissingCarryJob".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!circle.IsReadyForSigil(out string readyFailReason))
+            {
+                string message = readyFailReason.NullOrEmpty()
+                    ? "ABY_SigilVault_Fail_LinkBlocked".Translate().ToString()
+                    : "ABY_SigilVault_Fail_LinkBlockedReason".Translate(readyFailReason).ToString();
+                Messages.Message(message, MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
@@ -351,10 +546,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!TryFindBestStageTarget(droppedSigil, out Building_AbyssalSummoningCircle circle, out Pawn carrier, out string failReason))
+            if (!TryFindOperatorForCircle(droppedSigil, circle, out Pawn carrier, out string failReason))
             {
                 TryReabsorbOrPlace(droppedSigil);
-                string message = failReason.NullOrEmpty() ? "ABY_SigilVault_Fail_NoReadyCircle".Translate().ToString() : failReason;
+                string message = failReason.NullOrEmpty() ? "ABY_SigilVault_Fail_NoOperator".Translate().ToString() : failReason;
                 Messages.Message(message, MessageTypeDefOf.RejectInput, false);
                 return;
             }
@@ -405,9 +600,8 @@ namespace AbyssalProtocol
             return null;
         }
 
-        private bool TryFindBestStageTarget(Thing sigil, out Building_AbyssalSummoningCircle bestCircle, out Pawn bestCarrier, out string failReason)
+        private bool TryFindOperatorForCircle(Thing sigil, Building_AbyssalSummoningCircle circle, out Pawn bestCarrier, out string failReason)
         {
-            bestCircle = null;
             bestCarrier = null;
             failReason = null;
 
@@ -417,17 +611,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ThingDef circleDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_SummoningCircle");
-            if (circleDef == null)
+            if (circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld != sigil.MapHeld)
             {
-                failReason = "ABY_SigilVault_Fail_NoCircle".Translate();
-                return false;
-            }
-
-            List<Thing> circles = sigil.Map.listerThings.ThingsOfDef(circleDef);
-            if (circles == null || circles.Count == 0)
-            {
-                failReason = "ABY_SigilVault_Fail_NoCircle".Translate();
+                failReason = "ABY_SigilVault_Fail_LinkTargetInvalid".Translate();
                 return false;
             }
 
@@ -439,75 +625,50 @@ namespace AbyssalProtocol
             }
 
             float bestScore = float.MaxValue;
-            string lastCircleFail = null;
-            bool foundReadyCircle = false;
-
-            for (int i = 0; i < circles.Count; i++)
+            for (int i = 0; i < pawns.Count; i++)
             {
-                Building_AbyssalSummoningCircle circle = circles[i] as Building_AbyssalSummoningCircle;
-                if (circle == null || circle.Destroyed || !circle.Spawned)
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Dead || pawn.Downed || pawn.jobs == null || pawn.InMentalState)
                 {
                     continue;
                 }
 
-                if (!circle.IsReadyForSigil(out string circleFailReason))
+                if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
                 {
-                    if (!circleFailReason.NullOrEmpty())
-                    {
-                        lastCircleFail = circleFailReason;
-                    }
-
                     continue;
                 }
 
-                foundReadyCircle = true;
-
-                for (int j = 0; j < pawns.Count; j++)
+                if (!pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
                 {
-                    Pawn pawn = pawns[j];
-                    if (pawn == null || pawn.Dead || pawn.Downed || pawn.jobs == null)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (!pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
-                    {
-                        continue;
-                    }
+                if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
+                {
+                    continue;
+                }
 
-                    if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
-                    {
-                        continue;
-                    }
+                float score = pawn.PositionHeld.DistanceToSquared(sigil.PositionHeld);
+                score += sigil.PositionHeld.DistanceToSquared(circle.InteractionCell) * 0.45f;
 
-                    float score = pawn.PositionHeld.DistanceToSquared(sigil.PositionHeld);
-                    score += sigil.PositionHeld.DistanceToSquared(circle.InteractionCell) * 0.45f;
+                if (pawn.Drafted)
+                {
+                    score += 4000f;
+                }
 
-                    if (pawn.Drafted)
-                    {
-                        score += 4000f;
-                    }
-
-                    if (score >= bestScore)
-                    {
-                        continue;
-                    }
-
+                if (score < bestScore)
+                {
                     bestScore = score;
-                    bestCircle = circle;
                     bestCarrier = pawn;
                 }
             }
 
-            if (bestCircle != null && bestCarrier != null)
+            if (bestCarrier != null)
             {
                 return true;
             }
 
-            failReason = foundReadyCircle
-                ? "ABY_SigilVault_Fail_NoOperator".Translate()
-                : (lastCircleFail.NullOrEmpty() ? "ABY_SigilVault_Fail_NoReadyCircle".Translate() : lastCircleFail);
-
+            failReason = "ABY_SigilVault_Fail_NoOperator".Translate();
             return false;
         }
 
@@ -522,15 +683,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ThingDef circleDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_SummoningCircle");
-            if (circleDef == null)
-            {
-                failReason = "ABY_SigilVault_NoReadyCircle".Translate();
-                return false;
-            }
-
-            List<Thing> circles = MapHeld.listerThings.ThingsOfDef(circleDef);
-            if (circles == null || circles.Count == 0)
+            List<Building_AbyssalSummoningCircle> circles = GetAllCirclesOnMap();
+            if (circles.Count == 0)
             {
                 failReason = "ABY_SigilVault_Fail_NoCircle".Translate();
                 return false;
@@ -541,12 +695,7 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < circles.Count; i++)
             {
-                Building_AbyssalSummoningCircle circle = circles[i] as Building_AbyssalSummoningCircle;
-                if (circle == null || circle.Destroyed || !circle.Spawned)
-                {
-                    continue;
-                }
-
+                Building_AbyssalSummoningCircle circle = circles[i];
                 if (!circle.IsReadyForSigil(out string circleFailReason))
                 {
                     if (!circleFailReason.NullOrEmpty())
@@ -576,6 +725,52 @@ namespace AbyssalProtocol
                 ? "ABY_SigilVault_NoReadyCircle".Translate()
                 : lastReason;
             return false;
+        }
+
+        private List<Building_AbyssalSummoningCircle> GetAllCirclesOnMap()
+        {
+            List<Building_AbyssalSummoningCircle> result = new List<Building_AbyssalSummoningCircle>();
+            if (MapHeld == null)
+            {
+                return result;
+            }
+
+            ThingDef circleDef = DefDatabase<ThingDef>.GetNamedSilentFail(CircleDefName);
+            if (circleDef == null)
+            {
+                return result;
+            }
+
+            List<Thing> circles = MapHeld.listerThings.ThingsOfDef(circleDef);
+            for (int i = 0; i < circles.Count; i++)
+            {
+                Building_AbyssalSummoningCircle circle = circles[i] as Building_AbyssalSummoningCircle;
+                if (circle != null && circle.Spawned && !circle.Destroyed)
+                {
+                    result.Add(circle);
+                }
+            }
+
+            return result;
+        }
+
+        private void PruneInvalidLinkedCircle()
+        {
+            if (linkedCircle == null)
+            {
+                return;
+            }
+
+            if (linkedCircle.Destroyed || !linkedCircle.Spawned || linkedCircle.MapHeld != MapHeld)
+            {
+                linkedCircle = null;
+            }
+        }
+
+        private Building_AbyssalSummoningCircle ResolveLinkedCircle()
+        {
+            PruneInvalidLinkedCircle();
+            return linkedCircle;
         }
 
         private void TryReabsorbOrPlace(Thing thing)
@@ -646,6 +841,28 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        private void DrawLinkState(Vector3 drawLoc)
+        {
+            Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
+            if (circle == null)
+            {
+                return;
+            }
+
+            Vector3 overlayPos = drawLoc;
+            overlayPos.y = Altitudes.AltitudeFor(AltitudeLayer.BuildingOnTop) + 0.023f;
+
+            Matrix4x4 overlayMatrix = Matrix4x4.identity;
+            overlayMatrix.SetTRS(overlayPos, Quaternion.identity, new Vector3(1.94f, 1f, 1.94f));
+            Graphics.DrawMesh(MeshPool.plane10, overlayMatrix, LinkedOverlayMaterial, 0);
+
+            bool ready = circle.IsReadyForSigil(out _);
+            float pulse = 1f + Mathf.Sin(Find.TickManager.TicksGame * 0.085f) * (ready ? 0.035f : 0.012f);
+            Matrix4x4 pulseMatrix = Matrix4x4.identity;
+            pulseMatrix.SetTRS(overlayPos + new Vector3(0f, 0.0008f, 0f), Quaternion.identity, new Vector3(1.30f * pulse, 1f, 1.30f * pulse));
+            Graphics.DrawMesh(MeshPool.plane10, pulseMatrix, LinkedPulseMaterial, 0);
         }
 
         private void DrawStoredSigils(Vector3 drawLoc)
@@ -788,21 +1005,6 @@ namespace AbyssalProtocol
             }
 
             return sb.ToString();
-        }
-
-        private int CountSigilsOfDef(ThingDef def)
-        {
-            EnsureCache();
-
-            for (int i = 0; i < cachedSummaries.Count; i++)
-            {
-                if (cachedSummaries[i].Def == def)
-                {
-                    return cachedSummaries[i].Count;
-                }
-            }
-
-            return 0;
         }
 
         private void MarkCacheDirty()

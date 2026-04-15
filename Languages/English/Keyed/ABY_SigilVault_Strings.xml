@@ -6,9 +6,22 @@
   <ABY_SigilVault_NearestReadyCircle>Nearest ready circle: {0} ({1} tiles)</ABY_SigilVault_NearestReadyCircle>
   <ABY_SigilVault_NoReadyCircle>No ready summoning circle.</ABY_SigilVault_NoReadyCircle>
   <ABY_SigilVault_NoReadyCircleReason>No ready summoning circle: {0}</ABY_SigilVault_NoReadyCircleReason>
+  <ABY_SigilVault_LinkedCircle>Linked circle: {0} ({1} tiles)</ABY_SigilVault_LinkedCircle>
+  <ABY_SigilVault_LinkStateReady>Link status: ready to receive a sigil.</ABY_SigilVault_LinkStateReady>
+  <ABY_SigilVault_LinkStateBlocked>Link status: circle is not currently ready.</ABY_SigilVault_LinkStateBlocked>
+  <ABY_SigilVault_LinkStateBlockedReason>Link status: {0}</ABY_SigilVault_LinkStateBlockedReason>
+  <ABY_SigilVault_LinkHint>No circle linked. Link this vault to turn it into a dedicated feeder for one summoning circle.</ABY_SigilVault_LinkHint>
 
-  <ABY_SigilVault_StageToCircleLabel>Stage sigil to circle</ABY_SigilVault_StageToCircleLabel>
-  <ABY_SigilVault_StageToCircleDesc>Eject one stored sigil, pick a suitable colonist, and send that sigil toward the nearest ready abyssal summoning circle.</ABY_SigilVault_StageToCircleDesc>
+  <ABY_SigilVault_LinkLabel>Link to circle</ABY_SigilVault_LinkLabel>
+  <ABY_SigilVault_ChangeLinkLabel>Change linked circle</ABY_SigilVault_ChangeLinkLabel>
+  <ABY_SigilVault_LinkDesc>Select which abyssal summoning circle this vault should serve.</ABY_SigilVault_LinkDesc>
+  <ABY_SigilVault_UnlinkLabel>Unlink circle</ABY_SigilVault_UnlinkLabel>
+  <ABY_SigilVault_UnlinkDesc>Remove the current persistent circle link from this vault.</ABY_SigilVault_UnlinkDesc>
+  <ABY_SigilVault_JumpToLinkedCircleLabel>Jump to linked circle</ABY_SigilVault_JumpToLinkedCircleLabel>
+  <ABY_SigilVault_JumpToLinkedCircleDesc>Center the camera on the linked abyssal summoning circle.</ABY_SigilVault_JumpToLinkedCircleDesc>
+
+  <ABY_SigilVault_StageToLinkedCircleLabel>Stage sigil to linked circle</ABY_SigilVault_StageToLinkedCircleLabel>
+  <ABY_SigilVault_StageToLinkedCircleDesc>Choose one stored sigil and send it from this vault to the currently linked abyssal summoning circle.</ABY_SigilVault_StageToLinkedCircleDesc>
   <ABY_SigilVault_StageOption>Stage {SIGIL} ({COUNT})</ABY_SigilVault_StageOption>
   <ABY_SigilVault_StageSuccess>{1} is carrying {0} from the vault to {2}.</ABY_SigilVault_StageSuccess>
 
@@ -19,10 +32,22 @@
   <ABY_SigilVault_EjectAllDesc>Release every stored sigil from the vault.</ABY_SigilVault_EjectAllDesc>
   <ABY_SigilVault_EjectSuccess>{0} released from the vault.</ABY_SigilVault_EjectSuccess>
 
+  <ABY_SigilVault_LinkOption>{0} ({1} tiles) - {2}</ABY_SigilVault_LinkOption>
+  <ABY_SigilVault_LinkOptionCurrent>[Linked] {0} ({1} tiles) - {2}</ABY_SigilVault_LinkOptionCurrent>
+  <ABY_SigilVault_LinkOptionReady>ready</ABY_SigilVault_LinkOptionReady>
+  <ABY_SigilVault_LinkOptionBlocked>not ready</ABY_SigilVault_LinkOptionBlocked>
+  <ABY_SigilVault_LinkSuccess>{0} is now linked to {1}.</ABY_SigilVault_LinkSuccess>
+  <ABY_SigilVault_UnlinkSuccess>Link removed from {0}.</ABY_SigilVault_UnlinkSuccess>
+
   <ABY_SigilVault_Disabled_NoSigils>No stored sigils.</ABY_SigilVault_Disabled_NoSigils>
+  <ABY_SigilVault_Disabled_NoLink>No linked summoning circle.</ABY_SigilVault_Disabled_NoLink>
   <ABY_SigilVault_Fail_NoStoredSigils>No stored sigils are available in this vault.</ABY_SigilVault_Fail_NoStoredSigils>
   <ABY_SigilVault_Fail_NoCircle>No abyssal summoning circle exists on this map.</ABY_SigilVault_Fail_NoCircle>
   <ABY_SigilVault_Fail_NoReadyCircle>No abyssal summoning circle is currently ready for sigil staging.</ABY_SigilVault_Fail_NoReadyCircle>
-  <ABY_SigilVault_Fail_NoOperator>No suitable colonist can currently carry a sigil from the vault to a ready circle.</ABY_SigilVault_Fail_NoOperator>
+  <ABY_SigilVault_Fail_NoLink>This vault is not linked to any summoning circle yet.</ABY_SigilVault_Fail_NoLink>
+  <ABY_SigilVault_Fail_LinkBlocked>The linked circle is not currently ready to receive a sigil.</ABY_SigilVault_Fail_LinkBlocked>
+  <ABY_SigilVault_Fail_LinkBlockedReason>The linked circle is not ready: {0}</ABY_SigilVault_Fail_LinkBlockedReason>
+  <ABY_SigilVault_Fail_LinkTargetInvalid>The chosen circle is no longer valid for this map.</ABY_SigilVault_Fail_LinkTargetInvalid>
+  <ABY_SigilVault_Fail_NoOperator>No suitable colonist can currently carry a sigil from the vault to the linked circle.</ABY_SigilVault_Fail_NoOperator>
   <ABY_SigilVault_Fail_MissingCarryJob>Missing JobDef: ABY_CarrySigilToCircle.</ABY_SigilVault_Fail_MissingCarryJob>
 </LanguageData>
