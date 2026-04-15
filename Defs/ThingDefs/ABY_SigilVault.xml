@@ -51,6 +51,10 @@
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <paintable>false</paintable>
     </building>
+
+    <researchPrerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </researchPrerequisites>
   </ThingDef>
 
 </Defs>
