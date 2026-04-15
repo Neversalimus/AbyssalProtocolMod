@@ -43,7 +43,6 @@
       <herdAnimal>false</herdAnimal>
       <predator>true</predator>
       <foodType>CarnivoreAnimal</foodType>
-      <wildness>1</wildness>
       <lifeStageAges>
         <li>
           <def>AnimalAdult</def>
@@ -111,7 +110,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_EmberHoundSigil</defName>
     <label>ember hound sigil</label>
-    <description>A feral breach-key etched for staggered hunter-pack routing. Carry it to an abyssal summoning circle to open sequential ember portals across the map, each disgorging ember hounds and occasional supporting imps away from the colony base.</description>
+    <description>A feral breach-key etched for aggressive hunter-pack routing. Carry it to an abyssal summoning circle to inject a fast Ember Hound assault onto the current map.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -135,15 +134,12 @@
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <ritualId>ember_hunt</ritualId>
-        <summonMode>PortalWave</summonMode>
+        <summonMode>HostilePack</summonMode>
         <pawnKindDefName>ABY_EmberHound</pawnKindDefName>
-        <bossLabel>Ember hound portal wave</bossLabel>
+        <bossLabel>Ember Hound pack</bossLabel>
         <spawnPoints>320</spawnPoints>
-        <ritualWarmupTicks>180</ritualWarmupTicks>
-        <impCount>0</impCount>
-        <impPortalWarmupTicks>150</impPortalWarmupTicks>
-        <impSpawnIntervalTicks>24</impSpawnIntervalTicks>
-        <impPortalLingerTicks>210</impPortalLingerTicks>
+        <ritualWarmupTicks>165</ritualWarmupTicks>
+        <impCount>2</impCount>
         <completionLetterLabelKey>ABY_CircleEmberHoundLetterLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_CircleEmberHoundLetterDesc</completionLetterDescKey>
       </li>
