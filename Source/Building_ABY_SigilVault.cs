@@ -42,13 +42,10 @@ namespace AbyssalProtocol
         };
 
         private static readonly Dictionary<string, Material> OverlayMaterialCache = new Dictionary<string, Material>(StringComparer.Ordinal);
-        private static readonly Texture2D FallbackCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", false) ?? BaseContent.BadTex;
-        private static readonly Texture2D LinkCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Link", false) ?? FallbackCommandIcon;
-        private static readonly Texture2D UnlinkCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Unlink", false) ?? FallbackCommandIcon;
-        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Jump", false) ?? FallbackCommandIcon;
-        private static readonly Texture2D StageCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Stage", false) ?? FallbackCommandIcon;
-        private static readonly Texture2D EjectOneCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_EjectOne", false) ?? FallbackCommandIcon;
-        private static readonly Texture2D EjectAllCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_EjectAll", false) ?? FallbackCommandIcon;
+        private static readonly Texture2D DefaultCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", false) ?? BaseContent.BadTex;
+        private static readonly Texture2D LinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/SetTarget", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/JumpToLocation", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D UnlinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Cancel", false) ?? DefaultCommandIcon;
         private static readonly Material LinkedOverlayMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkedOverlay", ShaderDatabase.Cutout);
         private static readonly Material LinkedPulseMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkPulse", ShaderDatabase.Cutout);
         private static List<ThingDef> cachedAcceptedSigilDefs;
@@ -163,7 +160,7 @@ namespace AbyssalProtocol
             }
 
             AppendLine(sb, "ABY_SigilVault_Stored".Translate(StoredSigilCount, MaxSigilCapacity));
-            AppendLine(sb, "ABY_SigilVault_AcceptsConfigured".Translate(GetAcceptedSigilInspectSummary()));
+            AppendLine(sb, "ABY_SigilVault_AcceptsConfigured".Translate(GetAcceptedSigilLabelList()));
 
             Building_AbyssalSummoningCircle resolvedLink = ResolveLinkedCircle();
             if (resolvedLink != null)
@@ -253,7 +250,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_StageToLinkedCircleLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_StageToLinkedCircleDesc".Translate(),
-                icon = StageCommandIcon,
+                icon = DefaultCommandIcon,
                 action = OpenStageMenu
             };
 
@@ -272,7 +269,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_EjectOneLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectOneDesc".Translate(),
-                icon = EjectOneCommandIcon,
+                icon = DefaultCommandIcon,
                 action = OpenEjectOneMenu
             };
 
@@ -287,7 +284,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_EjectAllLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectAllDesc".Translate(),
-                icon = EjectAllCommandIcon,
+                icon = DefaultCommandIcon,
                 action = EjectAllContents
             };
             if (StoredSigilCount <= 0)
@@ -324,7 +321,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            GenDraw.DrawLineBetween(TrueCenter(), resolvedLink.TrueCenter());
+            GenDraw.DrawLineBetween(this.TrueCenter(), resolvedLink.TrueCenter());
         }
 
         public bool IsLinkedTo(Building_AbyssalSummoningCircle circle)
@@ -907,7 +904,7 @@ namespace AbyssalProtocol
                 return PositionHeld;
             }
 
-            CellRect rect = OccupiedRect();
+            CellRect rect = GenAdj.OccupiedRect(Position, Rotation, def.Size);
             IntVec3 best = Position;
             int bestDist = int.MaxValue;
 
@@ -972,73 +969,24 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SigilOverlayLayout layout = GetOverlayLayout(Mathf.Clamp(Mathf.CeilToInt(cachedStoredSigilCount / 5f), 1, 4));
+            int visible = Mathf.Clamp(Mathf.CeilToInt(cachedStoredSigilCount / 5f), 1, 4);
             float angle = Rotation.AsAngle;
 
-            for (int i = 0; i < layout.Count; i++)
+            for (int i = 0; i < visible; i++)
             {
-                ThingDef def = GetDisplayedDefForIndex(i, layout.Count);
+                ThingDef def = GetDisplayedDefForIndex(i, visible);
                 Material material = GetOverlayMaterial(def);
                 if (material == null)
                 {
                     continue;
                 }
 
-                Vector3 pos = drawLoc + RotateOffset(layout.Offsets[i], Rotation);
-                pos.y = Altitudes.AltitudeFor(AltitudeLayer.Item) + 0.028f + (i * 0.0012f);
+                Vector3 pos = drawLoc + RotateOffset(OverlayOffsets[i], Rotation);
+                pos.y = Altitudes.AltitudeFor(AltitudeLayer.Item) + 0.026f + (i * 0.001f);
 
                 Matrix4x4 matrix = Matrix4x4.identity;
-                matrix.SetTRS(pos, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(layout.Scales[i], 1f, layout.Scales[i]));
+                matrix.SetTRS(pos, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(0.30f, 1f, 0.30f));
                 Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
-            }
-        }
-
-        private struct SigilOverlayLayout
-        {
-            public readonly Vector3[] Offsets;
-            public readonly float[] Scales;
-            public int Count => Offsets.Length;
-
-            public SigilOverlayLayout(Vector3[] offsets, float[] scales)
-            {
-                Offsets = offsets;
-                Scales = scales;
-            }
-        }
-
-        private static SigilOverlayLayout GetOverlayLayout(int overlayCount)
-        {
-            switch (overlayCount)
-            {
-                case 1:
-                    return new SigilOverlayLayout(new[] { new Vector3(0f, 0f, -0.18f) }, new[] { 0.56f });
-                case 2:
-                    return new SigilOverlayLayout(
-                        new[]
-                        {
-                            new Vector3(-0.28f, 0f, -0.18f),
-                            new Vector3(0.28f, 0f, -0.18f)
-                        },
-                        new[] { 0.46f, 0.46f });
-                case 3:
-                    return new SigilOverlayLayout(
-                        new[]
-                        {
-                            new Vector3(-0.28f, 0f, -0.18f),
-                            new Vector3(0.28f, 0f, -0.18f),
-                            new Vector3(0f, 0f, 0.15f)
-                        },
-                        new[] { 0.46f, 0.46f, 0.34f });
-                default:
-                    return new SigilOverlayLayout(
-                        new[]
-                        {
-                            new Vector3(-0.28f, 0f, -0.18f),
-                            new Vector3(0.28f, 0f, -0.18f),
-                            new Vector3(-0.23f, 0f, 0.17f),
-                            new Vector3(0.23f, 0f, 0.17f)
-                        },
-                        new[] { 0.46f, 0.46f, 0.30f, 0.30f });
             }
         }
 
@@ -1130,32 +1078,6 @@ namespace AbyssalProtocol
             }
 
             cachedSummaries.Sort(CompareSigilSummaries);
-        }
-
-        private string GetAcceptedSigilInspectSummary()
-        {
-            List<ThingDef> defs = AcceptedSigilDefs;
-            if (defs.Count == 0)
-            {
-                return "—";
-            }
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < defs.Count; i++)
-            {
-                if (i == 2)
-                {
-                    sb.AppendLine();
-                }
-                else if (i > 0)
-                {
-                    sb.Append(", ");
-                }
-
-                sb.Append(defs[i].label);
-            }
-
-            return sb.ToString();
         }
 
         private string GetAcceptedSigilLabelList()
