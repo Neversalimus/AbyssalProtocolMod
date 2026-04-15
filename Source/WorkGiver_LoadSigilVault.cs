@@ -11,12 +11,17 @@ namespace AbyssalProtocol
         private static readonly ThingDef VaultDef = DefDatabase<ThingDef>.GetNamed("ABY_SigilVault");
 
         public override PathEndMode PathEndMode => PathEndMode.ClosestTouch;
-        public override bool ShouldSkip(Pawn pawn, bool forced = false) => pawn.Map == null;
+
+        public override bool ShouldSkip(Pawn pawn, bool forced = false)
+        {
+            Map map = pawn?.Map;
+            return map == null || !MapHasAcceptingVault(map) || !MapHasLooseAcceptedSigils(map);
+        }
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
         {
-            Map map = pawn.Map;
-            if (map == null)
+            Map map = pawn?.Map;
+            if (map == null || !MapHasAcceptingVault(map))
             {
                 yield break;
             }
@@ -67,6 +72,49 @@ namespace AbyssalProtocol
             Job job = JobMaker.MakeJob(HaulToVaultJobDef, t, vault);
             job.count = 1;
             return job;
+        }
+
+        private static bool MapHasAcceptingVault(Map map)
+        {
+            if (map == null || VaultDef == null)
+            {
+                return false;
+            }
+
+            List<Thing> vaults = map.listerThings.ThingsOfDef(VaultDef);
+            for (int i = 0; i < vaults.Count; i++)
+            {
+                if (vaults[i] is Building_ABY_SigilVault vault && vault.Spawned && !vault.Destroyed && vault.FreeSigilSlots > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool MapHasLooseAcceptedSigils(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            List<ThingDef> sigilDefs = Building_ABY_SigilVault.AcceptedSigilDefs;
+            for (int i = 0; i < sigilDefs.Count; i++)
+            {
+                List<Thing> things = map.listerThings.ThingsOfDef(sigilDefs[i]);
+                for (int j = 0; j < things.Count; j++)
+                {
+                    Thing thing = things[j];
+                    if (thing != null && thing.Spawned)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static Building_ABY_SigilVault FindBestVaultFor(Pawn pawn, Thing sigil, bool forced)
