@@ -566,7 +566,7 @@ namespace AbyssalProtocol
                     sb.Append(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInspect_StalledNoPower", "Stalled: no power."));
                 }
             }
-            else if (IsReadyForSigil(out string failReason))
+            else if (IsReadyForSigil(out failReason))
             {
                 sb.Append(AbyssalSummoningConsoleUtility.GetReadyText());
             }
@@ -1371,6 +1371,8 @@ namespace AbyssalProtocol
 
         private void CompleteSummon()
         {
+            string failReason;
+
             if (IsImpPortalSummonMode(pendingSummonMode))
             {
                 CompleteImpPortalSummon();
@@ -1392,7 +1394,7 @@ namespace AbyssalProtocol
                         pendingBossLabel,
                         pendingSpawnCell,
                         out IntVec3 bossPortalCell,
-                        out string failReason))
+                        out failReason))
                 {
                     ResetRitual();
                     Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
@@ -1414,7 +1416,7 @@ namespace AbyssalProtocol
                     pendingFaction,
                     pendingBossLabel,
                     out Pawn pawn,
-                    out string failReason))
+                    out failReason))
             {
                 ResetRitual();
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
@@ -1465,7 +1467,7 @@ namespace AbyssalProtocol
                     pendingImpSpawnIntervalTicks,
                     pendingImpPortalLingerTicks,
                     out IntVec3 firstPortalCell,
-                    out string failReason))
+                    out failReason))
             {
                 ResetRitual();
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
@@ -1777,7 +1779,7 @@ namespace AbyssalProtocol
                 return AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
             }
 
-            if (IsReadyForSigil(out string failReason))
+            if (IsReadyForSigil(out failReason))
             {
                 return AbyssalSummoningConsoleUtility.GetReadyText();
             }
