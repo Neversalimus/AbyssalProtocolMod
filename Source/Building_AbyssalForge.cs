@@ -104,20 +104,21 @@ namespace AbyssalProtocol
                     Find.WindowStack.Add(new FloatMenu(options));
                 }
             };
-            if (Prefs.DevMode)
+
+            if (Prefs.DevMode && ProgressComponent != null)
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "ABY_ForgeDevResidueLabel".Translate(),
+                    defaultLabel = "ABY_ForgeDevResidueButton".Translate(),
                     defaultDesc = "ABY_ForgeDevResidueDesc".Translate(),
                     icon = ContentFinder<Texture2D>.Get("Things/Item/ABY_AbyssalResidue"),
                     action = delegate
                     {
-                        ProgressComponent?.DebugAddResidue(this, 1000);
+                        ProgressComponent.DebugGrantResidue(this, 1000);
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
                     }
                 };
             }
-
         }
 
         public override string GetInspectString()

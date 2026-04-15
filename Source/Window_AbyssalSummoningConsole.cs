@@ -14,6 +14,7 @@ namespace AbyssalProtocol
         private Vector2 ritualScrollPosition = Vector2.zero;
         private Vector2 capacitorScrollPosition = Vector2.zero;
         private Vector2 stabilizerScrollPosition = Vector2.zero;
+        private Vector2 ritualPreviewScrollPosition = Vector2.zero;
 
         public Window_AbyssalSummoningConsole(Building_AbyssalSummoningCircle circle)
         {
@@ -45,8 +46,8 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
             Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 520f, 420f);
-            Rect controlRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, ritualsRect.height);
-            Rect previewRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
+            Rect controlRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 420f);
+            Rect systemsRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
@@ -54,7 +55,7 @@ namespace AbyssalProtocol
             DrawReadinessStrip(stripRect, ritual);
             DrawRitualBrowser(ritualsRect, ritual);
             DrawControlPanel(controlRect, ritual);
-            DrawPreviewPanel(previewRect, ritual);
+            DrawSystemsPanel(systemsRect, ritual);
         }
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetSelectedRitual()
@@ -162,7 +163,7 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 28f), circle.GetCurrentStatusLine());
 
             float rowY = inner.y + 118f;
-            DrawCheckboxControlRow(new Rect(inner.x, rowY, inner.width, 30f),
+            DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CircleReducedEffects".Translate(),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
                 circle.ReducedConsoleEffects,
@@ -173,7 +174,7 @@ namespace AbyssalProtocol
                 });
 
             rowY += 34f;
-            DrawCheckboxControlRow(new Rect(inner.x, rowY, inner.width, 30f),
+            DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CapacitorControl_Overchannel".Translate(),
                 "ABY_CapacitorControl_OverchannelDesc".Translate(),
                 circle.CapacitorOverchannelEnabled,
@@ -210,13 +211,17 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawCheckboxControlRow(Rect rect, string label, string tooltip, bool state, System.Action<bool> setter)
+        private void DrawBooleanControlRow(Rect rect, string label, string tooltip, bool state, System.Action<bool> setter)
         {
-            bool newState = state;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Widgets.CheckboxLabeled(rect, label, ref newState, false, null, null, false);
-            Text.Anchor = TextAnchor.UpperLeft;
+            Rect labelRect = new Rect(rect.x, rect.y + 4f, rect.width - 42f, rect.height - 8f);
+            Rect checkboxRect = new Rect(rect.xMax - 24f, rect.y + Mathf.Max(0f, (rect.height - 24f) * 0.5f), 24f, 24f);
 
+            GUI.color = state ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(labelRect, label);
+            GUI.color = Color.white;
+
+            bool newState = state;
+            Widgets.CheckboxLabeled(new Rect(checkboxRect.x, checkboxRect.y, 24f, 24f), string.Empty, ref newState, false, null, null, false);
             if (newState != state)
             {
                 setter(newState);
@@ -228,37 +233,32 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawBooleanControlRow(Rect rect, string label, string tooltip, bool state, System.Action<bool> setter)
+        private void DrawStatusPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
-            Rect labelRect = new Rect(rect.x, rect.y + 2f, rect.width - 138f, rect.height - 4f);
-            Rect buttonRect = new Rect(rect.xMax - 126f, rect.y, 126f, rect.height);
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(12f);
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CircleStatusHeaderLong".Translate());
 
-            GUI.color = state ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(labelRect, label);
-            GUI.color = Color.white;
-
-            string buttonLabel = state
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_GenericEnabled", "Enabled")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_GenericDisabled", "Disabled");
-
-            if (AbyssalStyledWidgets.TextButton(buttonRect, buttonLabel, true, state))
+            List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
+            for (int i = 0; i < entries.Count; i++)
             {
-                setter(!state);
-            }
-
-            if (!tooltip.NullOrEmpty())
-            {
-                TooltipHandler.TipRegion(rect, tooltip);
+                Rect lineRect = new Rect(inner.x, inner.y + 28f + i * 22f, inner.width, 20f);
+                Rect valueRect = new Rect(lineRect.x + inner.width * 0.44f, lineRect.y, inner.width * 0.56f, lineRect.height);
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                Widgets.Label(new Rect(lineRect.x, lineRect.y, inner.width * 0.42f, lineRect.height), entries[i].Label);
+                GUI.color = entries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.60f, 0.54f, 1f);
+                Widgets.Label(valueRect, entries[i].Value);
+                GUI.color = Color.white;
             }
         }
 
-        private void DrawPreviewPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        private void DrawSystemsPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
 
             float gap = 10f;
-            float leftWidth = Mathf.Round((inner.width - gap) * 0.5f);
+            float leftWidth = (inner.width - gap) * 0.5f;
             float rightWidth = inner.width - leftWidth - gap;
 
             Rect leftRect = new Rect(inner.x, inner.y, leftWidth, inner.height);
@@ -395,6 +395,44 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
         }
 
+        private void DrawScrollableRitualPreviewPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(10f);
+            Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
+            float contentHeight = GetRitualPreviewContentHeight(ritual, Mathf.Max(0f, outRect.width - 16f));
+            Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
+
+            Widgets.BeginScrollView(outRect, ref ritualPreviewScrollPosition, viewRect, true);
+            DrawRitualPreviewPanel(new Rect(0f, 0f, viewRect.width, contentHeight), ritual);
+            Widgets.EndScrollView();
+        }
+
+        private void DrawRitualPreviewPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            Text.Anchor = TextAnchor.UpperLeft;
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rect.y, rect.width, 22f), "ABY_CirclePreviewHeader".Translate());
+
+            Widgets.Label(new Rect(rect.x, rect.y + 28f, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x, rect.y + 52f, rect.width, 18f), AbyssalSummoningConsoleUtility.GetRitualSubtitle(ritual));
+            GUI.color = Color.white;
+
+            Text.Font = GameFont.Tiny;
+            float descriptionHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualDescription(ritual), rect.width);
+            Widgets.Label(new Rect(rect.x, rect.y + 76f, rect.width, descriptionHeight), AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
+
+            float consequencesY = rect.y + 84f + descriptionHeight;
+            Text.Font = GameFont.Small;
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, consequencesY, rect.width, 22f), "ABY_CircleConsequencesHeader".Translate());
+            Text.Font = GameFont.Tiny;
+            string sideEffectText = AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual);
+            float sideEffectHeight = Text.CalcHeight(sideEffectText, rect.width);
+            Widgets.Label(new Rect(rect.x, consequencesY + 28f, rect.width, sideEffectHeight), sideEffectText);
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+        }
+
         private float GetCapacitorContentHeight(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             int bayCount = AbyssalCircleCapacitorUtility.GetOrderedBays().Count();
@@ -407,6 +445,15 @@ namespace AbyssalProtocol
             int edgeCount = AbyssalCircleModuleUtility.GetOrderedEdges().Count();
             float rowsHeight = edgeCount * 27f;
             return 48f + rowsHeight + 140f;
+        }
+
+        private float GetRitualPreviewContentHeight(AbyssalSummoningConsoleUtility.RitualDefinition ritual, float width)
+        {
+            Text.Font = GameFont.Tiny;
+            float descriptionHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualDescription(ritual), width);
+            float sideEffectHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual), width);
+            Text.Font = GameFont.Small;
+            return 120f + descriptionHeight + sideEffectHeight;
         }
 
         private void DrawModuleSlotRow(Rect rect, AbyssalCircleModuleEdge edge)

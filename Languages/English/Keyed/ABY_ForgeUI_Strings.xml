@@ -64,7 +64,7 @@
   <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
   <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
   <ABY_ForgeGizmoOfferDesc>Commit abyssal residue on the current map into the forge lattice.</ABY_ForgeGizmoOfferDesc>
-  <ABY_ForgeDevResidueLabel>DEV +1000 residue</ABY_ForgeDevResidueLabel>
-  <ABY_ForgeDevResidueDesc>DEV: add 1000 residue directly to forge attunement without consuming map items.</ABY_ForgeDevResidueDesc>
-  <ABY_ForgeDevResidueAdded>DEV added {0} residue. Total attuned residue: {1}.</ABY_ForgeDevResidueAdded>
+  <ABY_ForgeDevResidueButton>DEV +1000 residue</ABY_ForgeDevResidueButton>
+  <ABY_ForgeDevResidueDesc>DEV: instantly adds 1000 attuned residue to this map's forge progression without consuming physical stacks.</ABY_ForgeDevResidueDesc>
+  <ABY_ForgeDevResidueApplied>DEV: added {0} residue. Total attuned residue: {1}.</ABY_ForgeDevResidueApplied>
 </LanguageData>
