@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef ParentName="ShelfBase">
+  <ThingDef ParentName="BuildingBase">
     <defName>ABY_SigilVault</defName>
     <label>abyssal sigil vault</label>
-    <description>A compact infernal reliquary engineered to stage abyssal sigils without leaving them exposed on open shelving. It accepts only sigils and stabilizes up to twenty of them inside two reinforced containment chambers.</description>
+    <description>A compact infernal reliquary for individual abyssal sigils. It stores up to twenty isolated sigils inside a shielded containment core while displaying a small visible sample on top for quick ritual staging.</description>
     <thingClass>AbyssalProtocol.Building_ABY_SigilVault</thingClass>
-
+    <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>
 
     <graphicData>
@@ -15,9 +15,21 @@
       <drawSize>(2.0,2.0)</drawSize>
     </graphicData>
 
-    <castEdgeShadows>false</castEdgeShadows>
-    <constructEffect>ConstructMetal</constructEffect>
+    <size>(2,2)</size>
+    <rotatable>false</rotatable>
     <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.18</fillPercent>
+    <pathCost>6</pathCost>
+    <passability>PassThroughOnly</passability>
+    <surfaceType>Item</surfaceType>
+    <selectable>true</selectable>
+    <drawGUIOverlay>false</drawGUIOverlay>
+
+    <designationCategory>Storage</designationCategory>
+    <uiOrder>2550</uiOrder>
+    <constructEffect>ConstructMetal</constructEffect>
+    <castEdgeShadows>false</castEdgeShadows>
+    <repairEffect>Repair</repairEffect>
 
     <costList>
       <Steel>70</Steel>
@@ -31,42 +43,18 @@
       <MaxHitPoints>220</MaxHitPoints>
       <Flammability>0.08</Flammability>
       <Beauty>-1</Beauty>
+      <Mass>35</Mass>
     </statBases>
 
-    <size>(2,2)</size>
-    <rotatable>false</rotatable>
-    <fillPercent>0.18</fillPercent>
-    <pathCost>6</pathCost>
-    <passability>PassThroughOnly</passability>
-    <surfaceType>Item</surfaceType>
-    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
-
-    <designationCategory>Storage</designationCategory>
-    <uiOrder>2550</uiOrder>
-
     <building>
+      <isInert>true</isInert>
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
-      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
-
-      <fixedStorageSettings>
-        <filter>
-          <thingDefs>
-            <li>ABY_ArchonSigil</li>
-            <li>ABY_UnstableBreachSigil</li>
-          </thingDefs>
-        </filter>
-      </fixedStorageSettings>
-
-      <defaultStorageSettings>
-        <priority>Important</priority>
-        <filter>
-          <thingDefs>
-            <li>ABY_ArchonSigil</li>
-            <li>ABY_UnstableBreachSigil</li>
-          </thingDefs>
-        </filter>
-      </defaultStorageSettings>
+      <paintable>false</paintable>
     </building>
+
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
   </ThingDef>
 
 </Defs>

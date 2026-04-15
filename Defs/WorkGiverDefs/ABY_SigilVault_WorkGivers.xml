@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>ABY_LoadSigilVault</defName>
+    <label>store abyssal sigils</label>
+    <giverClass>AbyssalProtocol.WorkGiver_LoadSigilVault</giverClass>
+    <workType>Hauling</workType>
+    <priorityInType>85</priorityInType>
+    <gerund>storing abyssal sigils</gerund>
+  </WorkGiverDef>
+
+</Defs>

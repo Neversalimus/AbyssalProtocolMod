@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_ArchonSigil"]/stackLimit</xpath>
+    <value>
+      <stackLimit>1</stackLimit>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_UnstableBreachSigil"]/stackLimit</xpath>
+    <value>
+      <stackLimit>1</stackLimit>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_EmberHoundSigil"]/stackLimit</xpath>
+    <value>
+      <stackLimit>1</stackLimit>
+    </value>
+  </Operation>
+
+</Patch>

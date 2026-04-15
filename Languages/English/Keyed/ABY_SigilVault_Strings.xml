@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_SigilVault_Stored>Stored sigils: {0}/20</ABY_SigilVault_Stored>
-  <ABY_SigilVault_Accepts>Accepted contents: sigils only</ABY_SigilVault_Accepts>
+  <ABY_SigilVault_Stored>Stored sigils: {0}/{1}</ABY_SigilVault_Stored>
+  <ABY_SigilVault_Accepts>Accepts abyssal sigils only. Each sigil is stored individually.</ABY_SigilVault_Accepts>
+  <ABY_SigilVault_CountLine>{0}: {1}</ABY_SigilVault_CountLine>
+  <ABY_SigilVault_EjectOneLabel>Eject one sigil</ABY_SigilVault_EjectOneLabel>
+  <ABY_SigilVault_EjectOneDesc>Release one stored sigil from the vault.</ABY_SigilVault_EjectOneDesc>
+  <ABY_SigilVault_EjectAllLabel>Eject all sigils</ABY_SigilVault_EjectAllLabel>
+  <ABY_SigilVault_EjectAllDesc>Release every stored sigil from the vault.</ABY_SigilVault_EjectAllDesc>
 </LanguageData>

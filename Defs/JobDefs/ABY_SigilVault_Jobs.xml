@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+    <defName>ABY_HaulToSigilVault</defName>
+    <driverClass>AbyssalProtocol.JobDriver_HaulToSigilVault</driverClass>
+    <reportString>storing sigil in abyssal vault.</reportString>
+    <casualInterruptible>false</casualInterruptible>
+    <playerInterruptible>true</playerInterruptible>
+    <checkOverrideOnExpire>true</checkOverrideOnExpire>
+  </JobDef>
+
+</Defs>
