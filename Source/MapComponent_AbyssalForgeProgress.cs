@@ -115,7 +115,7 @@ namespace AbyssalProtocol
             return consumed;
         }
 
-        public void DebugGrantResidue(Building_AbyssalForge forge, int amount)
+        public void DebugAddResidue(Building_AbyssalForge forge, int amount)
         {
             if (amount <= 0)
             {
@@ -125,9 +125,9 @@ namespace AbyssalProtocol
             int previousTotal = totalResidueOffered;
             totalResidueOffered += amount;
             Messages.Message(
-                "ABY_ForgeDevResidueApplied".Translate(amount, totalResidueOffered),
+                "ABY_ForgeDevResidueAdded".Translate(amount, totalResidueOffered),
                 forge,
-                MessageTypeDefOf.TaskCompletion,
+                MessageTypeDefOf.PositiveEvent,
                 false);
             NotifyNewUnlocksIfNeeded(forge, previousTotal, totalResidueOffered);
             SyncAttunementHediffs();
