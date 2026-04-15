@@ -51,10 +51,6 @@
       <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
       <paintable>false</paintable>
     </building>
-
-    <placeWorkers>
-      <li>PlaceWorker_ShowFacilitiesConnections</li>
-    </placeWorkers>
-  </ThingDef>
+</ThingDef>
 
 </Defs>

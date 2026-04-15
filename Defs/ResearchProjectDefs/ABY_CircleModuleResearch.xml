@@ -8,7 +8,7 @@
     <baseCost>950</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>0.80</researchViewX>
+    <researchViewX>0.98</researchViewX>
     <researchViewY>1.35</researchViewY>
     <prerequisites>
       <li>ABY_AbyssalSignalTheory</li>
@@ -22,7 +22,7 @@
     <baseCost>1800</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>1.70</researchViewX>
+    <researchViewX>2.08</researchViewX>
     <researchViewY>1.35</researchViewY>
     <prerequisites>
       <li>ABY_CircleStabilizerFrames</li>
@@ -36,7 +36,7 @@
     <baseCost>3200</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>2.60</researchViewX>
+    <researchViewX>3.18</researchViewX>
     <researchViewY>1.35</researchViewY>
     <prerequisites>
       <li>ABY_ResonantLatticeStabilization</li>

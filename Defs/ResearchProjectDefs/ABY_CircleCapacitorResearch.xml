@@ -8,7 +8,7 @@
     <baseCost>900</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>0.52</researchViewX>
+    <researchViewX>0.72</researchViewX>
     <researchViewY>0.82</researchViewY>
     <prerequisites>
       <li>ABY_AbyssalSignalTheory</li>
@@ -22,7 +22,7 @@
     <baseCost>1800</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>1.06</researchViewX>
+    <researchViewX>1.52</researchViewX>
     <researchViewY>0.82</researchViewY>
     <prerequisites>
       <li>ABY_AshboundCapacitance</li>
@@ -36,7 +36,7 @@
     <baseCost>3200</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>
-    <researchViewX>1.62</researchViewX>
+    <researchViewX>2.38</researchViewX>
     <researchViewY>0.82</researchViewY>
     <prerequisites>
       <li>ABY_RiftCapacitanceMatrices</li>
