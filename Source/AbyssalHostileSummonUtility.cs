@@ -8,6 +8,12 @@ namespace AbyssalProtocol
 {
     public static class AbyssalHostileSummonUtility
     {
+        public sealed class HostilePackEntry
+        {
+            public PawnKindDef KindDef;
+            public int Count;
+        }
+
         public static bool TrySpawnHostilePack(
             Map map,
             PawnKindDef kindDef,
@@ -20,6 +26,38 @@ namespace AbyssalProtocol
             out IntVec3 arrivalCell,
             out string failReason)
         {
+            return TrySpawnHostilePack(
+                map,
+                new List<HostilePackEntry>
+                {
+                    new HostilePackEntry
+                    {
+                        KindDef = kindDef,
+                        Count = count
+                    }
+                },
+                faction,
+                requestedArrivalCell,
+                packLabel,
+                letterLabel,
+                letterDesc,
+                true,
+                out arrivalCell,
+                out failReason);
+        }
+
+        public static bool TrySpawnHostilePack(
+            Map map,
+            List<HostilePackEntry> entries,
+            Faction faction,
+            IntVec3 requestedArrivalCell,
+            string packLabel,
+            string letterLabel,
+            string letterDesc,
+            bool sendLetter,
+            out IntVec3 arrivalCell,
+            out string failReason)
+        {
             arrivalCell = IntVec3.Invalid;
             failReason = null;
 
@@ -29,9 +67,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (kindDef == null)
+            if (entries == null || entries.Count == 0)
             {
-                failReason = "Missing PawnKindDef for hostile pack spawn.";
+                failReason = "Missing hostile pack entries for summon spawn.";
                 return false;
             }
 
@@ -48,12 +86,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            count = Mathf.Max(1, count);
             List<Pawn> generated = new List<Pawn>();
-            for (int i = 0; i < count; i++)
+            for (int entryIndex = 0; entryIndex < entries.Count; entryIndex++)
             {
-                if (!TryGenerateHostilePawn(map, kindDef, faction, out Pawn pawn, out failReason))
+                HostilePackEntry entry = entries[entryIndex];
+                if (entry == null || entry.KindDef == null)
                 {
+                    failReason = "Missing PawnKindDef for hostile pack spawn.";
                     for (int j = 0; j < generated.Count; j++)
                     {
                         generated[j]?.Destroy(DestroyMode.Vanish);
@@ -62,7 +101,27 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                generated.Add(pawn);
+                int count = Mathf.Max(0, entry.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out Pawn pawn, out failReason))
+                    {
+                        for (int j = 0; j < generated.Count; j++)
+                        {
+                            generated[j]?.Destroy(DestroyMode.Vanish);
+                        }
+
+                        return false;
+                    }
+
+                    generated.Add(pawn);
+                }
+            }
+
+            if (generated.Count <= 0)
+            {
+                failReason = "Failed to generate any hostile pack pawns.";
+                return false;
             }
 
             List<Pawn> spawned = new List<Pawn>();
@@ -87,18 +146,22 @@ namespace AbyssalProtocol
 
             LordMaker.MakeNewLord(faction, lordJob, map, spawned);
 
-            string finalLabel = letterLabel.NullOrEmpty()
-                ? "ABY_BossSummonSuccessLabel".Translate()
-                : letterLabel;
-            string finalDesc = letterDesc.NullOrEmpty()
-                ? "ABY_BossSummonSuccessDesc".Translate(packLabel ?? kindDef.label)
-                : letterDesc;
+            if (sendLetter)
+            {
+                string finalLabel = letterLabel.NullOrEmpty()
+                    ? "ABY_BossSummonSuccessLabel".Translate()
+                    : letterLabel;
+                string fallbackLabel = packLabel ?? (entries[0]?.KindDef?.label ?? "breach");
+                string finalDesc = letterDesc.NullOrEmpty()
+                    ? "ABY_BossSummonSuccessDesc".Translate(fallbackLabel)
+                    : letterDesc;
 
-            Find.LetterStack.ReceiveLetter(
-                finalLabel,
-                finalDesc,
-                LetterDefOf.ThreatSmall,
-                new TargetInfo(arrivalCell, map));
+                Find.LetterStack.ReceiveLetter(
+                    finalLabel,
+                    finalDesc,
+                    LetterDefOf.ThreatSmall,
+                    new TargetInfo(arrivalCell, map));
+            }
 
             return true;
         }

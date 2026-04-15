@@ -52,12 +52,12 @@
     </race>
 
     <statBases>
-      <MaxHitPoints>620</MaxHitPoints>
-      <MoveSpeed>5.55</MoveSpeed>
+      <MaxHitPoints>480</MaxHitPoints>
+      <MoveSpeed>5.42</MoveSpeed>
       <MeleeHitChance>0.83</MeleeHitChance>
-      <MeleeDPS>11.4</MeleeDPS>
-      <ArmorRating_Sharp>0.21</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.15</ArmorRating_Blunt>
+      <MeleeDPS>9.8</MeleeDPS>
+      <ArmorRating_Sharp>0.18</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.13</ArmorRating_Blunt>
       <ArmorRating_Heat>0.56</ArmorRating_Heat>
       <ComfyTemperatureMin>-18</ComfyTemperatureMin>
       <ComfyTemperatureMax>220</ComfyTemperatureMax>
@@ -74,7 +74,7 @@
           <li>Blunt</li>
           <li>Scratch</li>
         </capacities>
-        <power>11</power>
+        <power>10</power>
         <cooldownTime>1.45</cooldownTime>
         <chanceFactor>1.50</chanceFactor>
         <armorPenetration>0.14</armorPenetration>
@@ -84,7 +84,7 @@
         <capacities>
           <li>Bite</li>
         </capacities>
-        <power>15</power>
+        <power>13</power>
         <cooldownTime>2.05</cooldownTime>
         <chanceFactor>1.05</chanceFactor>
         <armorPenetration>0.18</armorPenetration>
@@ -99,8 +99,8 @@
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>
         <maxRange>13.9</maxRange>
-        <cooldownTicks>280</cooldownTicks>
-        <cooldownJitterTicks>60</cooldownJitterTicks>
+        <cooldownTicks>360</cooldownTicks>
+        <cooldownJitterTicks>75</cooldownJitterTicks>
         <scanIntervalTicks>30</scanIntervalTicks>
         <impactHediffDefName>ABY_EmberShock</impactHediffDefName>
       </li>
@@ -123,7 +123,7 @@
     </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
-      <MarketValue>235</MarketValue>
+      <MarketValue>220</MarketValue>
       <Mass>0.26</Mass>
       <Flammability>0</Flammability>
     </statBases>
@@ -137,9 +137,9 @@
         <summonMode>HostilePack</summonMode>
         <pawnKindDefName>ABY_EmberHound</pawnKindDefName>
         <bossLabel>Ember Hound pack</bossLabel>
-        <spawnPoints>320</spawnPoints>
+        <spawnPoints>210</spawnPoints>
         <ritualWarmupTicks>165</ritualWarmupTicks>
-        <impCount>2</impCount>
+        <impCount>1</impCount>
         <completionLetterLabelKey>ABY_CircleEmberHoundLetterLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_CircleEmberHoundLetterDesc</completionLetterDescKey>
       </li>

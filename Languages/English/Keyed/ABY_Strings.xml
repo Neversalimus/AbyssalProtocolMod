@@ -99,7 +99,7 @@
 
   <ABY_CircleFail_NoPortalSpawn>No valid breach point could be opened near the summoning circle.</ABY_CircleFail_NoPortalSpawn>
   <ABY_CircleUnstableBreachLetterLabel>Unstable breach opened</ABY_CircleUnstableBreachLetterLabel>
-  <ABY_CircleUnstableBreachLetterDesc>The circle tears open a smaller hostile breach. Rift imps are spilling onto the map from the unstable portal.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleUnstableBreachLetterDesc>The circle tears open a smaller hostile breach. Rift imps are spilling onto the map from the unstable portal, and larger colonies can draw a heavier wave.</ABY_CircleUnstableBreachLetterDesc>
   <ABY_CircleRitual_Unstable_Label>Open unstable breach</ABY_CircleRitual_Unstable_Label>
   <ABY_CircleRitual_Unstable_Subtitle>Pre-boss hostile breach pattern</ABY_CircleRitual_Unstable_Subtitle>
   <ABY_CircleRitual_Unstable_Desc>Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.</ABY_CircleRitual_Unstable_Desc>
@@ -119,6 +119,17 @@
 • Can only proceed while the circle is powered and clear
 • Ritual phases intensify visuals, sound, and encounter pressure</ABY_CircleRitual_Archon_SideEffects>
   <ABY_CircleRitualMeta>Sigils on map: {0}   •   Threat budget: {1}</ABY_CircleRitualMeta>
+  <ABY_CircleRitualMetaScaled>Sigils on map: {0}   •   {1}   •   Forecast: {2}</ABY_CircleRitualMetaScaled>
+  <ABY_CircleThreatTier>T{0}</ABY_CircleThreatTier>
+  <ABY_CirclePreview_Imp_Singular>imp</ABY_CirclePreview_Imp_Singular>
+  <ABY_CirclePreview_Imp_Plural>imps</ABY_CirclePreview_Imp_Plural>
+  <ABY_CirclePreview_Hound_Singular>hound</ABY_CirclePreview_Hound_Singular>
+  <ABY_CirclePreview_Hound_Plural>hounds</ABY_CirclePreview_Hound_Plural>
+  <ABY_CirclePreview_Thrall_Singular>thrall</ABY_CirclePreview_Thrall_Singular>
+  <ABY_CirclePreview_Thrall_Plural>thralls</ABY_CirclePreview_Thrall_Plural>
+  <ABY_CirclePreview_None>no hostiles</ABY_CirclePreview_None>
+  <ABY_CircleFail_LegacySigilRetired>Legacy hexgun relay sigils have been retired from active T1 progression.</ABY_CircleFail_LegacySigilRetired>
+  <ABY_LegacySigilMigration_Message>Converted {0} retired hexgun relay sigils into ember hound sigils.</ABY_LegacySigilMigration_Message>
 
   <ABY_CircleSelect>Select</ABY_CircleSelect>
   <ABY_CircleSelected>Selected</ABY_CircleSelected>

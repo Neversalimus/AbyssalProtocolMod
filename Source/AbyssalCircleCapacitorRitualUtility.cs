@@ -73,15 +73,6 @@ namespace AbyssalProtocol
             MaxRiskReduction = 0.07f
         };
 
-        private static readonly RitualProfile HexgunThrallProfile = new RitualProfile
-        {
-            RitualId = "hexgun_thralls",
-            StartupChargeRequired = 28f,
-            TotalChargeRequired = 56f,
-            ThroughputRequired = 21f,
-            MaxRiskReduction = 0.08f
-        };
-
         private static readonly RitualProfile ArchonBeastProfile = new RitualProfile
         {
             RitualId = "archon_beast",
@@ -140,11 +131,6 @@ namespace AbyssalProtocol
             if (string.Equals(ritualId, EmberHuntProfile.RitualId, StringComparison.OrdinalIgnoreCase))
             {
                 return EmberHuntProfile;
-            }
-
-            if (string.Equals(ritualId, HexgunThrallProfile.RitualId, StringComparison.OrdinalIgnoreCase))
-            {
-                return HexgunThrallProfile;
             }
 
             if (string.Equals(ritualId, ArchonBeastProfile.RitualId, StringComparison.OrdinalIgnoreCase))

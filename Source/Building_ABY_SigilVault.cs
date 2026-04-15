@@ -99,6 +99,37 @@ namespace AbyssalProtocol
 
         public int FreeSigilSlots => Math.Max(0, MaxSigilCapacity - StoredSigilCount);
 
+        public int ConvertStoredSigils(ThingDef fromDef, ThingDef toDef)
+        {
+            if (innerContainer == null || fromDef == null || toDef == null || fromDef == toDef)
+            {
+                return 0;
+            }
+
+            int converted = 0;
+            for (int i = innerContainer.Count - 1; i >= 0; i--)
+            {
+                Thing thing = innerContainer[i];
+                if (thing == null || thing.def != fromDef)
+                {
+                    continue;
+                }
+
+                int count = Math.Max(1, thing.stackCount);
+                innerContainer.Remove(thing);
+                thing.Destroy(DestroyMode.Vanish);
+                AddSigilsToContainer(toDef, count);
+                converted += count;
+            }
+
+            if (converted > 0)
+            {
+                MarkCacheDirty();
+            }
+
+            return converted;
+        }
+
         public bool HasLinkedCircle => ResolveLinkedCircle() != null;
 
         public override void ExposeData()
@@ -893,6 +924,18 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        private void AddSigilsToContainer(ThingDef def, int count)
+        {
+            int remaining = Math.Max(0, count);
+            while (remaining > 0)
+            {
+                Thing replacement = ThingMaker.MakeThing(def);
+                replacement.stackCount = Math.Min(def.stackLimit, remaining);
+                innerContainer.TryAdd(replacement);
+                remaining -= replacement.stackCount;
+            }
         }
 
         private void DrawLinkState(Vector3 drawLoc)

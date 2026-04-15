@@ -52,12 +52,12 @@
     </race>
 
     <statBases>
-      <MaxHitPoints>450</MaxHitPoints>
-      <MoveSpeed>4.8</MoveSpeed>
+      <MaxHitPoints>300</MaxHitPoints>
+      <MoveSpeed>4.6</MoveSpeed>
       <MeleeHitChance>0.78</MeleeHitChance>
-      <MeleeDPS>8.2</MeleeDPS>
-      <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+      <MeleeDPS>6.8</MeleeDPS>
+      <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
       <ArmorRating_Heat>0.35</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>180</ComfyTemperatureMax>
@@ -74,7 +74,7 @@
           <li>Blunt</li>
           <li>Scratch</li>
         </capacities>
-        <power>9</power>
+        <power>8</power>
         <cooldownTime>1.65</cooldownTime>
         <chanceFactor>1.45</chanceFactor>
         <armorPenetration>0.10</armorPenetration>
@@ -84,7 +84,7 @@
         <capacities>
           <li>Bite</li>
         </capacities>
-        <power>12</power>
+        <power>10</power>
         <cooldownTime>2.25</cooldownTime>
         <chanceFactor>0.90</chanceFactor>
         <armorPenetration>0.14</armorPenetration>

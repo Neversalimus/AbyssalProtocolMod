@@ -99,7 +99,7 @@
 
   <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
   <ABY_CircleUnstableBreachLetterLabel>Открыт нестабильный разлом</ABY_CircleUnstableBreachLetterLabel>
-  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл меньший враждебный разлом. Из нестабильного портала на карту выходят rift imp.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл меньший враждебный разлом. Из нестабильного портала на карту выходят rift imp, а крупные колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>
   <ABY_CircleRitual_Unstable_Label>Открыть нестабильный разлом</ABY_CircleRitual_Unstable_Label>
   <ABY_CircleRitual_Unstable_Subtitle>Довражеский шаблон до первого босса</ABY_CircleRitual_Unstable_Subtitle>
   <ABY_CircleRitual_Unstable_Desc>Расходует один unstable breach sigil, направляет колониста к кругу и вскрывает меньший враждебный рифт для раннего abyssal-столкновения до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
@@ -119,6 +119,17 @@
 • Требует питания и свободного центра круга
 • Фазы ритуала усиливают визуал, звук и давление столкновения</ABY_CircleRitual_Archon_SideEffects>
   <ABY_CircleRitualMeta>Сигилов на карте: {0}   •   Бюджет угрозы: {1}</ABY_CircleRitualMeta>
+  <ABY_CircleRitualMetaScaled>Сигилов на карте: {0}   •   {1}   •   Прогноз: {2}</ABY_CircleRitualMetaScaled>
+  <ABY_CircleThreatTier>T{0}</ABY_CircleThreatTier>
+  <ABY_CirclePreview_Imp_Singular>имп</ABY_CirclePreview_Imp_Singular>
+  <ABY_CirclePreview_Imp_Plural>импа</ABY_CirclePreview_Imp_Plural>
+  <ABY_CirclePreview_Hound_Singular>гончая</ABY_CirclePreview_Hound_Singular>
+  <ABY_CirclePreview_Hound_Plural>гончие</ABY_CirclePreview_Hound_Plural>
+  <ABY_CirclePreview_Thrall_Singular>трэлл</ABY_CirclePreview_Thrall_Singular>
+  <ABY_CirclePreview_Thrall_Plural>трэлла</ABY_CirclePreview_Thrall_Plural>
+  <ABY_CirclePreview_None>без противников</ABY_CirclePreview_None>
+  <ABY_CircleFail_LegacySigilRetired>Устаревшие hexgun relay sigils выведены из активной T1-прогрессии.</ABY_CircleFail_LegacySigilRetired>
+  <ABY_LegacySigilMigration_Message>Преобразовано устаревших hexgun relay sigils в ember hound sigils: {0}.</ABY_LegacySigilMigration_Message>
 
   <ABY_CircleSelect>Выбрать</ABY_CircleSelect>
   <ABY_CircleSelected>Выбрано</ABY_CircleSelected>

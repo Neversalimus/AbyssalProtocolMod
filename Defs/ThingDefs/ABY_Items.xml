@@ -70,7 +70,7 @@
     </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
-      <MarketValue>180</MarketValue>
+      <MarketValue>160</MarketValue>
       <Mass>0.24</Mass>
       <Flammability>0</Flammability>
     </statBases>
@@ -83,9 +83,9 @@
         <ritualId>unstable_breach</ritualId>
         <summonMode>ImpPortal</summonMode>
         <bossLabel>rift imp breach</bossLabel>
-        <spawnPoints>180</spawnPoints>
+        <spawnPoints>160</spawnPoints>
         <ritualWarmupTicks>150</ritualWarmupTicks>
-        <impCount>3</impCount>
+        <impCount>2</impCount>
         <impPortalWarmupTicks>90</impPortalWarmupTicks>
         <impSpawnIntervalTicks>75</impSpawnIntervalTicks>
         <impPortalLingerTicks>1800</impPortalLingerTicks>

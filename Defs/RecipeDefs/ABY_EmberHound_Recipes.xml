@@ -21,7 +21,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>12</count>
+        <count>10</count>
       </li>
       <li>
         <filter>
@@ -29,7 +29,7 @@
             <li>Steel</li>
           </thingDefs>
         </filter>
-        <count>35</count>
+        <count>30</count>
       </li>
       <li>
         <filter>
@@ -45,7 +45,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>30</requiredResidue>
+        <requiredResidue>26</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>

@@ -101,7 +101,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HexgunRelaySigil</defName>
     <label>hexgun relay sigil</label>
-    <description>A bound infernal-tech relay keyed to disciplined breach marksmen. Carry it to an abyssal summoning circle to route a hostile Hexgun Thrall fireteam onto the current map.</description>
+    <description>A legacy infernal-tech relay from an earlier T1 layout. Existing copies are retained only for save compatibility and are automatically converted or rejected by the updated circle flow.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -121,7 +121,7 @@
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>route hexgun thralls</useLabel>
+        <useLabel>legacy relay (retired)</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <ritualId>hexgun_thralls</ritualId>

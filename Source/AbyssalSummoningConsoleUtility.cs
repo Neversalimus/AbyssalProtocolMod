@@ -22,6 +22,8 @@ namespace AbyssalProtocol
             public string RewardHintKey;
             public string SideEffectHintKey;
             public float BaseRisk;
+            public float InstabilityGain;
+            public float ContaminationGain;
             public int SpawnPoints;
         }
 
@@ -54,6 +56,8 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
+                InstabilityGain = 0.09f,
+                ContaminationGain = 0.03f,
                 SpawnPoints = 180
             },
             new RitualDefinition
@@ -68,21 +72,9 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
                 BaseRisk = 0.46f,
+                InstabilityGain = 0.12f,
+                ContaminationGain = 0.05f,
                 SpawnPoints = 320
-            },
-            new RitualDefinition
-            {
-                Id = "hexgun_thralls",
-                LabelKey = "ABY_CircleRitual_HexgunThrall_Label",
-                SubtitleKey = "ABY_CircleRitual_HexgunThrall_Subtitle",
-                DescriptionKey = "ABY_CircleRitual_HexgunThrall_Desc",
-                BossLabel = "Hexgun Thrall fireteam",
-                SigilThingDefName = "ABY_HexgunRelaySigil",
-                PawnKindDefName = "ABY_HexgunThrall",
-                RewardHintKey = "ABY_CircleRitual_HexgunThrall_Rewards",
-                SideEffectHintKey = "ABY_CircleRitual_HexgunThrall_SideEffects",
-                BaseRisk = 0.52f,
-                SpawnPoints = 340
             },
             new RitualDefinition
             {
@@ -96,6 +88,8 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Archon_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
+                InstabilityGain = 0.18f,
+                ContaminationGain = 0.08f,
                 SpawnPoints = 900
             }
         };
@@ -258,11 +252,6 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
             }
 
-            if (ritual.Id == "hexgun_thralls")
-            {
-                return TranslateOrFallback(ritual.LabelKey, "Route hexgun thralls");
-            }
-
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -288,11 +277,6 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Fast flanking pack assault");
             }
 
-            if (ritual.Id == "hexgun_thralls")
-            {
-                return TranslateOrFallback(ritual.SubtitleKey, "Disciplined ranged breach pressure");
-            }
-
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -310,17 +294,12 @@ namespace AbyssalProtocol
 
             if (ritual.Id == "unstable_breach")
             {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift. Colony size and wealth now scale how many rift imps pour through, with a single Hexgun Thrall joining the breach only at the highest threat tier.");
             }
 
             if (ritual.Id == "ember_hunt")
             {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns and punish loose firing lines.");
-            }
-
-            if (ritual.Id == "hexgun_thralls")
-            {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one hexgun relay sigil, routes a colonist to the circle, and inserts a hostile Hexgun Thrall fireteam onto the map. Thralls keep range, rake firing lines with burst fire, and mark exposed targets with short-lived hex telemetry.");
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a colony-scaled hunter-pack onto the map. Ember hounds leap onto ranged pawns, supporting imps widen the pressure band, and a single Hexgun Thrall joins only at the highest threat tier.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -341,22 +320,15 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• Early hostile summoning rehearsal
-• Smaller breach pressure before the first boss
-• A cleaner bridge between the circle and the Archon Beast fight");
+• Colony-scaled starter breach instead of a fixed tiny event
+• Cleaner bridge between circle setup and the Archon Beast fight");
             }
 
             if (ritual.Id == "ember_hunt")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop pressure test for interior defense
-• Fast residue return from butchered hound corpses
-• A clearer flanker identity before the first true boss");
-            }
-
-            if (ritual.Id == "hexgun_thralls")
-            {
-                return TranslateOrFallback(ritual.RewardHintKey, @"• First real abyssal gunline pressure test
-• Forces the colony to respect cover and firing lanes
-• Clear bridge between animal rush threats and later elite shooters");
+• Scales into mixed assaults for larger colonies
+• Clear flanker identity before the first true boss");
             }
 
             if (ritual.Id == "archon_beast")
@@ -379,22 +351,15 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
-• Still counts as an active abyssal encounter while the breach is live
-• Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
+• Breach size scales from small training pressure to a serious wave for bigger colonies
+• A single Hexgun Thrall only appears at the top threat tier");
             }
 
             if (ritual.Id == "ember_hunt")
             {
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
-• Ember hounds leap onto shooters and punish isolated operators
-• Lower spectacle than the Archon Beast, but deadlier against weak backlines");
-            }
-
-            if (ritual.Id == "hexgun_thralls")
-            {
-                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile Hexgun Thrall fireteam at the map edge
-• Burst hits apply Hex Mark and soften exposed targets
-• Less raw spectacle than a boss ritual, but punishing for loose backlines");
+• Larger colonies can draw mixed hound/imp assaults, with one supporting thrall only at the top tier
+• Lower spectacle than the Archon Beast, but deadly against weak backlines");
             }
 
             if (ritual.Id == "archon_beast")
@@ -536,6 +501,26 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        public static string GetRitualMetaText(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            int sigilCount = CountAvailableSigils(circle, ritual);
+            if (ritual != null && circle?.Map != null && AbyssalT1SummonScalingUtility.IsSupportedRitual(ritual.Id))
+            {
+                AbyssalT1SummonScalingUtility.ThreatPlan plan = AbyssalT1SummonScalingUtility.GetThreatPlan(circle.Map, ritual.Id);
+                if (plan != null)
+                {
+                    return TranslateOrFallback(
+                        "ABY_CircleRitualMetaScaled",
+                        "Sigils on map: {0}   •   {1}   •   Forecast: {2}",
+                        sigilCount,
+                        AbyssalT1SummonScalingUtility.GetThreatTierLabel(plan.Tier),
+                        AbyssalT1SummonScalingUtility.GetPreviewText(plan));
+                }
+            }
+
+            return TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", sigilCount, ritual?.SpawnPoints ?? 0);
         }
 
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

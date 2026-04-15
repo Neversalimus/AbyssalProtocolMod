@@ -140,7 +140,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Widgets.Label(descRect, AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
-            Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", AbyssalSummoningConsoleUtility.CountAvailableSigils(circle, ritual), ritual.SpawnPoints));
+            Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual));
             GUI.color = Color.white;
 
             if (AbyssalStyledWidgets.TextButton(selectRect, selected ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected", "Selected") : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelect", "Select"), !selected, selected))

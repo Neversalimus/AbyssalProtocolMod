@@ -6,12 +6,12 @@
 
   <ABY_CircleRitual_EmberHound_Label>Loose ember hounds</ABY_CircleRitual_EmberHound_Label>
   <ABY_CircleRitual_EmberHound_Subtitle>Fast flanking pack assault</ABY_CircleRitual_EmberHound_Subtitle>
-  <ABY_CircleRitual_EmberHound_Desc>Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, punish loose firing lines, and return abyssal residue when butchered.</ABY_CircleRitual_EmberHound_Desc>
+  <ABY_CircleRitual_EmberHound_Desc>Consumes one ember hound sigil, routes a colonist to the circle, and injects a colony-scaled hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, supporting imps widen the assault, and a single Hexgun Thrall only appears at the highest threat tier.</ABY_CircleRitual_EmberHound_Desc>
   <ABY_CircleRitual_EmberHound_Rewards>• Mid-loop pressure test for interior defense
-• Fast residue return from butchered hound corpses
-• A clearer flanker identity before the first true boss</ABY_CircleRitual_EmberHound_Rewards>
+• Scales into mixed assaults for larger colonies
+• Clear flanker identity before the first true boss</ABY_CircleRitual_EmberHound_Rewards>
   <ABY_CircleRitual_EmberHound_SideEffects>• Drops a fast hostile hunter-pack at the map edge
-• Ember hounds leap onto shooters and punish isolated operators
-• Lower spectacle than the Archon Beast, but deadlier against weak backlines</ABY_CircleRitual_EmberHound_SideEffects>
+• Larger colonies can draw mixed hound/imp assaults, with one supporting thrall only at the top tier
+• Lower spectacle than the Archon Beast, but deadly against weak backlines</ABY_CircleRitual_EmberHound_SideEffects>
 
 </LanguageData>

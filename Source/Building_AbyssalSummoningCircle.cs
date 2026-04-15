@@ -101,6 +101,10 @@ namespace AbyssalProtocol
         private int pendingImpPortalWarmupTicks;
         private int pendingImpSpawnIntervalTicks;
         private int pendingImpPortalLingerTicks;
+        private int pendingSupportImpCount;
+        private int pendingSupportThrallCount;
+        private int pendingThreatTier = -1;
+        private int pendingScaledThreatBudget;
         private bool reducedConsoleEffects;
 
         private AbyssalCircleCapacitorSlot coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
@@ -188,6 +192,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpPortalWarmupTicks, "pendingImpPortalWarmupTicks", 0);
             Scribe_Values.Look(ref pendingImpSpawnIntervalTicks, "pendingImpSpawnIntervalTicks", 0);
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
+            Scribe_Values.Look(ref pendingSupportImpCount, "pendingSupportImpCount", 0);
+            Scribe_Values.Look(ref pendingSupportThrallCount, "pendingSupportThrallCount", 0);
+            Scribe_Values.Look(ref pendingThreatTier, "pendingThreatTier", -1);
+            Scribe_Values.Look(ref pendingScaledThreatBudget, "pendingScaledThreatBudget", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
             Scribe_Deep.Look(ref coreCapacitorSlot, "coreCapacitorSlot");
             Scribe_Deep.Look(ref auxiliaryCapacitorSlot, "auxiliaryCapacitorSlot");
@@ -295,6 +303,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (string.Equals(summonProps.ritualId, "hexgun_thralls", System.StringComparison.OrdinalIgnoreCase))
+            {
+                failReason = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleFail_LegacySigilRetired", "Legacy hexgun relay sigils have been retired from active T1 progression.");
+                return false;
+            }
+
             if (!IsReadyForSigil(out failReason))
             {
                 return false;
@@ -335,6 +349,10 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
+            pendingSupportImpCount = 0;
+            pendingSupportThrallCount = 0;
+            pendingThreatTier = -1;
+            pendingScaledThreatBudget = 0;
 
             if (IsImpPortalSummonMode(pendingSummonMode))
             {
@@ -373,6 +391,8 @@ namespace AbyssalProtocol
                     return false;
                 }
             }
+
+            ApplyThreatScalingPlan(summonProps);
 
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
 
@@ -1479,13 +1499,13 @@ namespace AbyssalProtocol
 
             if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
                     Map,
-                    pendingPawnKindDef,
+                    BuildPendingHostilePackEntries(),
                     pendingFaction,
                     pendingSpawnCell,
-                    Mathf.Max(1, pendingImpCount),
                     pendingBossLabel,
                     GetCompletionLetterLabel(),
                     GetCompletionLetterDesc(),
+                    true,
                     out IntVec3 arrivalCell,
                     out failReason))
             {
@@ -1608,6 +1628,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            TrySpawnPendingSupportPack();
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
@@ -1616,6 +1637,122 @@ namespace AbyssalProtocol
                 GetCompletionLetterDesc(),
                 LetterDefOf.ThreatSmall,
                 new TargetInfo(portal.Position, Map));
+        }
+
+        private void ApplyThreatScalingPlan(CompProperties_UseEffectSummonBoss summonProps)
+        {
+            if (Map == null || summonProps == null || !AbyssalT1SummonScalingUtility.IsSupportedRitual(summonProps.ritualId))
+            {
+                return;
+            }
+
+            AbyssalT1SummonScalingUtility.ThreatPlan plan = AbyssalT1SummonScalingUtility.GetThreatPlan(Map, summonProps.ritualId);
+            if (plan == null)
+            {
+                return;
+            }
+
+            pendingThreatTier = plan.Tier;
+            pendingScaledThreatBudget = plan.ThreatBudget;
+
+            if (string.Equals(summonProps.ritualId, "unstable_breach", System.StringComparison.OrdinalIgnoreCase))
+            {
+                pendingImpCount = Mathf.Max(1, plan.PortalImpCount);
+                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
+                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                return;
+            }
+
+            if (string.Equals(summonProps.ritualId, "ember_hunt", System.StringComparison.OrdinalIgnoreCase))
+            {
+                pendingImpCount = Mathf.Max(1, plan.HoundCount);
+                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
+                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+            }
+        }
+
+        private List<AbyssalHostileSummonUtility.HostilePackEntry> BuildPendingHostilePackEntries()
+        {
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>();
+            if (pendingPawnKindDef != null && pendingImpCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = pendingPawnKindDef,
+                    Count = pendingImpCount
+                });
+            }
+
+            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
+            if (impKind != null && pendingSupportImpCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = impKind,
+                    Count = pendingSupportImpCount
+                });
+            }
+
+            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HexgunThrall");
+            if (thrallKind != null && pendingSupportThrallCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = thrallKind,
+                    Count = pendingSupportThrallCount
+                });
+            }
+
+            return entries;
+        }
+
+        private void TrySpawnPendingSupportPack()
+        {
+            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0))
+            {
+                return;
+            }
+
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>();
+            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
+            if (impKind != null && pendingSupportImpCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = impKind,
+                    Count = pendingSupportImpCount
+                });
+            }
+
+            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HexgunThrall");
+            if (thrallKind != null && pendingSupportThrallCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = thrallKind,
+                    Count = pendingSupportThrallCount
+                });
+            }
+
+            if (entries.Count <= 0)
+            {
+                return;
+            }
+
+            if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    Map,
+                    entries,
+                    pendingFaction,
+                    IntVec3.Invalid,
+                    pendingBossLabel,
+                    null,
+                    null,
+                    false,
+                    out _,
+                    out string failReason))
+            {
+                Log.Warning("[Abyssal Protocol] Failed to spawn scaled support pack: " + failReason);
+            }
         }
 
         private bool IsImpPortalSummonMode(string summonMode)
@@ -1767,6 +1904,10 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
+            pendingSupportImpCount = 0;
+            pendingSupportThrallCount = 0;
+            pendingThreatTier = -1;
+            pendingScaledThreatBudget = 0;
             pendingCapacitorStartupCost = 0f;
             pendingCapacitorSustainDrainPerSecond = 0f;
             pendingCapacitorReserveRequired = 0f;
