@@ -1367,6 +1367,31 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (ShouldUseArchonBeastPortalEscortEncounter())
+            {
+                if (!AbyssalArchonBeastPortalEncounterUtility.TryBeginEncounter(
+                        Map,
+                        pendingFaction,
+                        pendingPawnKindDef,
+                        pendingBossLabel,
+                        pendingSpawnCell,
+                        out IntVec3 bossPortalCell,
+                        out string failReason))
+                {
+                    ResetRitual();
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+
+                ApplyRitualInstability();
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.24f);
+                if (bossPortalCell.IsValid)
+                {
+                    ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", bossPortalCell, Map);
+                }
+                return;
+            }
+
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -1511,6 +1536,17 @@ namespace AbyssalProtocol
         private bool IsPortalWaveSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "PortalWave", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool ShouldUseArchonBeastPortalEscortEncounter()
+        {
+            if (pendingPawnKindDef?.defName != "ABY_ArchonBeast")
+            {
+                return false;
+            }
+
+            return string.Equals(pendingRitualId, "archon_beast", System.StringComparison.OrdinalIgnoreCase)
+                || string.Equals(pendingSummonMode, "Boss", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private string GetCompletionLetterLabel()
