@@ -81,7 +81,7 @@ namespace AbyssalProtocol
         private static readonly Vector2 CapacitorMountedBaseSize = new Vector2(1.42f, 1.42f);
         private static readonly Vector3 CoreCapacitorBayOffset = new Vector3(0f, 0f, 1.10f);
         private static readonly Vector3 AuxiliaryCapacitorBayOffset = new Vector3(0f, 0f, -1.10f);
-        private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get("UI/AbyssalSummoningCircle/ABY_SummoningSeal", false);
+        private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_OpenSummoningConsole", false);
 
 
         private RitualPhase ritualPhase = RitualPhase.Idle;

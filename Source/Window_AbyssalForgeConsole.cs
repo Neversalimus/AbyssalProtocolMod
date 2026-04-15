@@ -159,8 +159,14 @@ namespace AbyssalProtocol
                 TryOfferResidue(availableResidue);
             }
 
+            if (AbyssalStyledWidgets.TextButton(new Rect(inner.x, inner.y + 140f, inner.width, 28f), "ABY_ForgeDevResidueButton".Translate(), true, false))
+            {
+                GrantDevResidue(1000);
+            }
+            TooltipHandler.TipRegion(new Rect(inner.x, inner.y + 140f, inner.width, 28f), "ABY_ForgeDevResidueDesc".Translate());
+
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 142f, inner.width, inner.height - 142f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            Widgets.Label(new Rect(inner.x, inner.y + 174f, inner.width, inner.height - 174f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 
@@ -507,6 +513,17 @@ namespace AbyssalProtocol
             {
                 Messages.Message("ABY_ForgeOfferNoneAvailable".Translate(), forge, MessageTypeDefOf.RejectInput, false);
             }
+        }
+
+        private void GrantDevResidue(int amount)
+        {
+            if (forge?.ProgressComponent == null || amount <= 0)
+            {
+                return;
+            }
+
+            forge.ProgressComponent.DebugGrantResidue(forge, amount);
+            SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
         }
 
         private int GetPreviousUnlockThreshold(MapComponent_AbyssalForgeProgress progress, string category, int total)

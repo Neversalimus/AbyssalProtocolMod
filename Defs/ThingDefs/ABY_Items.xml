@@ -61,7 +61,7 @@
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
-      <texPath>Things/Item/ABY_ArchonSigil</texPath>
+      <texPath>Things/Item/ABY_UnstableBreachSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
