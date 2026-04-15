@@ -544,6 +544,7 @@ namespace AbyssalProtocol
 
         public override string GetInspectString()
         {
+            string failReason;
             StringBuilder sb = new StringBuilder();
             string baseText = base.GetInspectString();
             if (!baseText.NullOrEmpty())
@@ -1434,6 +1435,8 @@ namespace AbyssalProtocol
 
         private void CompletePortalWaveSummon()
         {
+            string failReason;
+
             if (Map == null)
             {
                 ResetRitual();
@@ -1774,6 +1777,8 @@ namespace AbyssalProtocol
 
         public string GetCurrentStatusLine()
         {
+            string failReason;
+
             if (RitualActive)
             {
                 return AbyssalSummoningConsoleUtility.GetPhaseText(GetCurrentPhaseTranslated(), Mathf.RoundToInt(GetPhaseProgress() * 100f));
