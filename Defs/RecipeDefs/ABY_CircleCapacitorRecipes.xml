@@ -14,6 +14,7 @@
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
+    <researchPrerequisite>ABY_AshboundCapacitance</researchPrerequisite>
     <ingredients>
       <li>
         <filter>
@@ -64,6 +65,7 @@
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
+    <researchPrerequisite>ABY_RiftCapacitanceMatrices</researchPrerequisite>
     <ingredients>
       <li>
         <filter>
@@ -122,6 +124,7 @@
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
+    <researchPrerequisite>ABY_CrownCondensationArrays</researchPrerequisite>
     <ingredients>
       <li>
         <filter>

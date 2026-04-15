@@ -11,6 +11,7 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_CircleStabilizerFrames</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -61,6 +62,7 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_ResonantLatticeStabilization</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -119,6 +121,7 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
+    <researchPrerequisite>ABY_CrownContainmentArchitecture</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
