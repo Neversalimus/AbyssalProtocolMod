@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ShelfBase">
+    <defName>ABY_SigilVault</defName>
+    <label>abyssal sigil vault</label>
+    <description>A compact infernal reliquary engineered to stage abyssal sigils without leaving them exposed on open shelving. It accepts only sigils and stabilizes up to twenty of them inside two reinforced containment chambers.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_SigilVault</thingClass>
+
+    <drawerType>MapMeshAndRealTime</drawerType>
+
+    <graphicData>
+      <texPath>Things/Building/ABY_SigilVault</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.0,2.0)</drawSize>
+    </graphicData>
+
+    <castEdgeShadows>false</castEdgeShadows>
+    <constructEffect>ConstructMetal</constructEffect>
+    <altitudeLayer>Building</altitudeLayer>
+
+    <costList>
+      <Steel>70</Steel>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+    </costList>
+
+    <statBases>
+      <WorkToBuild>2400</WorkToBuild>
+      <MaxHitPoints>220</MaxHitPoints>
+      <Flammability>0.08</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+
+    <size>(2,2)</size>
+    <rotatable>false</rotatable>
+    <fillPercent>0.18</fillPercent>
+    <pathCost>6</pathCost>
+    <passability>PassThroughOnly</passability>
+    <surfaceType>Item</surfaceType>
+    <constructionSkillPrerequisite>4</constructionSkillPrerequisite>
+
+    <designationCategory>Storage</designationCategory>
+    <uiOrder>2550</uiOrder>
+
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+
+      <fixedStorageSettings>
+        <filter>
+          <thingDefs>
+            <li>ABY_ArchonSigil</li>
+            <li>ABY_UnstableBreachSigil</li>
+          </thingDefs>
+        </filter>
+      </fixedStorageSettings>
+
+      <defaultStorageSettings>
+        <priority>Important</priority>
+        <filter>
+          <thingDefs>
+            <li>ABY_ArchonSigil</li>
+            <li>ABY_UnstableBreachSigil</li>
+          </thingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+  </ThingDef>
+
+</Defs>

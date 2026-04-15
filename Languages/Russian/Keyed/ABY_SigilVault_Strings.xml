@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_SigilVault_Stored>Хранится сигилов: {0}/20</ABY_SigilVault_Stored>
+  <ABY_SigilVault_Accepts>Допустимое содержимое: только сигилы</ABY_SigilVault_Accepts>
+</LanguageData>
