@@ -40,7 +40,7 @@
       <foodType>OmnivoreHuman</foodType>
       <useMeatFrom>Human</useMeatFrom>
       <gestationPeriodDays>18</gestationPeriodDays>
-      <lifeStageAges>
+      <lifeStageAges Inherit="False">
         <li>
           <def>HumanlikeAdult</def>
           <minAge>0</minAge>
