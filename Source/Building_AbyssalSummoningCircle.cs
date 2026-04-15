@@ -358,6 +358,15 @@ namespace AbyssalProtocol
                     pendingImpSpawnIntervalTicks = Mathf.Max(14, summonProps.impSpawnIntervalTicks);
                     pendingImpPortalLingerTicks = Mathf.Max(120, summonProps.impPortalLingerTicks);
                 }
+                else if (IsHostilePackSummonMode(pendingSummonMode))
+                {
+                    pendingImpCount = Mathf.Max(1, summonProps.impCount);
+                    if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+                    {
+                        failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                        return false;
+                    }
+                }
                 else if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
                 {
                     failReason = "ABY_CircleFail_NoBossArrival".Translate();
@@ -577,7 +586,7 @@ namespace AbyssalProtocol
             }
 
             sb.AppendLine();
-            sb.Append(AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountSigilsOnMap(Map, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
+            sb.Append(AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountAvailableSigils(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
             sb.AppendLine();
             sb.Append(AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual())));
             sb.AppendLine();
@@ -1386,6 +1395,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (IsHostilePackSummonMode(pendingSummonMode))
+            {
+                CompleteHostilePackSummon();
+                return;
+            }
+
             if (ShouldUseArchonBeastPortalEscortEncounter())
             {
                 if (!AbyssalArchonBeastPortalEncounterUtility.TryBeginEncounter(
@@ -1431,6 +1446,60 @@ namespace AbyssalProtocol
                 pendingSpawnCell,
                 pendingBossLabel);
             ApplyRitualInstability();
+        }
+
+        private void CompleteHostilePackSummon()
+        {
+            string failReason;
+
+            if (Map == null)
+            {
+                ResetRitual();
+                return;
+            }
+
+            if (pendingFaction == null)
+            {
+                pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            }
+
+            if (pendingFaction == null)
+            {
+                ResetRitual();
+                Messages.Message("ABY_CircleFail_NoHostileFaction".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (pendingPawnKindDef == null)
+            {
+                ResetRitual();
+                Messages.Message("Missing PawnKindDef for hostile pack summon.", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    Map,
+                    pendingPawnKindDef,
+                    pendingFaction,
+                    pendingSpawnCell,
+                    Mathf.Max(1, pendingImpCount),
+                    pendingBossLabel,
+                    GetCompletionLetterLabel(),
+                    GetCompletionLetterDesc(),
+                    out IntVec3 arrivalCell,
+                    out failReason))
+            {
+                ResetRitual();
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            ApplyRitualInstability();
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.16f);
+            if (arrivalCell.IsValid)
+            {
+                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", arrivalCell, Map);
+            }
         }
 
         private void CompletePortalWaveSummon()
@@ -1552,6 +1621,11 @@ namespace AbyssalProtocol
         private bool IsImpPortalSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "ImpPortal", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool IsHostilePackSummonMode(string summonMode)
+        {
+            return string.Equals(summonMode, "HostilePack", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsPortalWaveSummonMode(string summonMode)

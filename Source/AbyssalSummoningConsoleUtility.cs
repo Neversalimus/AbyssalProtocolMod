@@ -58,6 +58,34 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "ember_hunt",
+                LabelKey = "ABY_CircleRitual_EmberHound_Label",
+                SubtitleKey = "ABY_CircleRitual_EmberHound_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_EmberHound_Desc",
+                BossLabel = "Ember Hound pack",
+                SigilThingDefName = "ABY_EmberHoundSigil",
+                PawnKindDefName = "ABY_EmberHound",
+                RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
+                BaseRisk = 0.46f,
+                SpawnPoints = 320
+            },
+            new RitualDefinition
+            {
+                Id = "hexgun_thralls",
+                LabelKey = "ABY_CircleRitual_HexgunThrall_Label",
+                SubtitleKey = "ABY_CircleRitual_HexgunThrall_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_HexgunThrall_Desc",
+                BossLabel = "Hexgun Thrall fireteam",
+                SigilThingDefName = "ABY_HexgunRelaySigil",
+                PawnKindDefName = "ABY_HexgunThrall",
+                RewardHintKey = "ABY_CircleRitual_HexgunThrall_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_HexgunThrall_SideEffects",
+                BaseRisk = 0.52f,
+                SpawnPoints = 340
+            },
+            new RitualDefinition
+            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -225,6 +253,16 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Open unstable breach");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
+            }
+
+            if (ritual.Id == "hexgun_thralls")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Route hexgun thralls");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -245,6 +283,16 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Pre-boss hostile breach pattern");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Fast flanking pack assault");
+            }
+
+            if (ritual.Id == "hexgun_thralls")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Disciplined ranged breach pressure");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -263,6 +311,16 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns and punish loose firing lines.");
+            }
+
+            if (ritual.Id == "hexgun_thralls")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one hexgun relay sigil, routes a colonist to the circle, and inserts a hostile Hexgun Thrall fireteam onto the map. Thralls keep range, rake firing lines with burst fire, and mark exposed targets with short-lived hex telemetry.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -287,6 +345,20 @@ namespace AbyssalProtocol
 • A cleaner bridge between the circle and the Archon Beast fight");
             }
 
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop pressure test for interior defense
+• Fast residue return from butchered hound corpses
+• A clearer flanker identity before the first true boss");
+            }
+
+            if (ritual.Id == "hexgun_thralls")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• First real abyssal gunline pressure test
+• Forces the colony to respect cover and firing lanes
+• Clear bridge between animal rush threats and later elite shooters");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• First-loop boss progression
@@ -309,6 +381,20 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
 • Still counts as an active abyssal encounter while the breach is live
 • Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
+            }
+
+            if (ritual.Id == "ember_hunt")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
+• Ember hounds leap onto shooters and punish isolated operators
+• Lower spectacle than the Archon Beast, but deadlier against weak backlines");
+            }
+
+            if (ritual.Id == "hexgun_thralls")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile Hexgun Thrall fireteam at the map edge
+• Burst hits apply Hex Mark and soften exposed targets
+• Less raw spectacle than a boss ritual, but punishing for loose backlines");
             }
 
             if (ritual.Id == "archon_beast")
@@ -360,6 +446,98 @@ namespace AbyssalProtocol
             return count;
         }
 
+        public static int CountAvailableSigils(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            int count = CountSigilsOnMap(circle?.Map, ritual);
+            ThingDef sigilDef = GetSigilDef(ritual);
+            if (circle?.Map == null || sigilDef == null)
+            {
+                return count;
+            }
+
+            List<Building_ABY_SigilVault> linkedVaults = GetLinkedVaults(circle);
+            for (int i = 0; i < linkedVaults.Count; i++)
+            {
+                count += linkedVaults[i].CountStoredSigilsOfDef(sigilDef);
+            }
+
+            return count;
+        }
+
+        public static Thing FindBestSigilJumpTarget(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
+        {
+            Thing sigil = FindBestSigil(circle, ritual, out failReason);
+            if (sigil != null)
+            {
+                return sigil;
+            }
+
+            Building_ABY_SigilVault vault = FindBestLinkedVaultWithSigil(circle, ritual);
+            if (vault != null)
+            {
+                failReason = null;
+                return vault;
+            }
+
+            return null;
+        }
+
+        private static List<Building_ABY_SigilVault> GetLinkedVaults(Building_AbyssalSummoningCircle circle)
+        {
+            List<Building_ABY_SigilVault> results = new List<Building_ABY_SigilVault>();
+            if (circle?.Map == null)
+            {
+                return results;
+            }
+
+            ThingDef vaultDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_SigilVault");
+            if (vaultDef == null)
+            {
+                return results;
+            }
+
+            List<Thing> things = circle.Map.listerThings.ThingsOfDef(vaultDef);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Building_ABY_SigilVault vault && vault.Spawned && !vault.Destroyed && vault.IsLinkedTo(circle))
+                {
+                    results.Add(vault);
+                }
+            }
+
+            return results;
+        }
+
+        private static Building_ABY_SigilVault FindBestLinkedVaultWithSigil(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            ThingDef sigilDef = GetSigilDef(ritual);
+            if (circle?.Map == null || sigilDef == null)
+            {
+                return null;
+            }
+
+            Building_ABY_SigilVault best = null;
+            float bestScore = float.MaxValue;
+            List<Building_ABY_SigilVault> linkedVaults = GetLinkedVaults(circle);
+            for (int i = 0; i < linkedVaults.Count; i++)
+            {
+                Building_ABY_SigilVault vault = linkedVaults[i];
+                if (vault.CountStoredSigilsOfDef(sigilDef) <= 0)
+                {
+                    continue;
+                }
+
+                float score = vault.PositionHeld.DistanceToSquared(circle.PositionHeld);
+                if (score < bestScore)
+                {
+                    best = vault;
+                    bestScore = score;
+                }
+            }
+
+            return best;
+        }
+
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {
             if (circle == null || circle.Map == null)
@@ -404,7 +582,7 @@ namespace AbyssalProtocol
             Thing sigil = FindBestSigil(circle, ritual, out failReason);
             if (sigil == null)
             {
-                return false;
+                return TryAssignInvocationFromLinkedVault(circle, ritual, out failReason);
             }
 
             Pawn pawn = FindBestOperator(circle, ritual, sigil, out failReason);
@@ -566,6 +744,55 @@ namespace AbyssalProtocol
             return true;
         }
 
+
+        private static bool TryAssignInvocationFromLinkedVault(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
+        {
+            failReason = null;
+            ThingDef sigilDef = GetSigilDef(ritual);
+            if (circle?.Map == null || sigilDef == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+                return false;
+            }
+
+            List<Building_ABY_SigilVault> linkedVaults = GetLinkedVaults(circle);
+            if (linkedVaults.Count == 0)
+            {
+                string sigilLabel = sigilDef.label ?? ritual?.SigilThingDefName ?? TranslateOrFallback("ABY_CircleConsoleFail_NoSigilFallback", "prepared sigil");
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSpecificSigil", "No prepared {0} was found on the current map.", sigilLabel);
+                return false;
+            }
+
+            string firstFailure = null;
+            for (int i = 0; i < linkedVaults.Count; i++)
+            {
+                Building_ABY_SigilVault vault = linkedVaults[i];
+                if (vault.CountStoredSigilsOfDef(sigilDef) <= 0)
+                {
+                    continue;
+                }
+
+                if (vault.TryStageOneSigilToLinkedCircleFromConsole(sigilDef, out _, out string stageFailReason))
+                {
+                    return true;
+                }
+
+                if (firstFailure.NullOrEmpty() && !stageFailReason.NullOrEmpty())
+                {
+                    firstFailure = stageFailReason;
+                }
+            }
+
+            if (!firstFailure.NullOrEmpty())
+            {
+                failReason = firstFailure;
+                return false;
+            }
+
+            string fallbackLabel = sigilDef.label ?? ritual?.SigilThingDefName ?? TranslateOrFallback("ABY_CircleConsoleFail_NoSigilFallback", "prepared sigil");
+            failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoSpecificSigil", "No prepared {0} was found on the current map.", fallbackLabel);
+            return false;
+        }
 
         public static Thing FindBestSigil(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
         {
@@ -843,7 +1070,7 @@ namespace AbyssalProtocol
             bool interactionOk = circle.HasValidInteractionCell(out string interactionFail);
             bool focusOk = circle.HasClearRitualFocus(out string focusFail);
             bool encounterClear = circle.Map != null && !AbyssalBossSummonUtility.HasActiveAbyssalEncounter(circle.Map);
-            int sigils = CountSigilsOnMap(circle.Map, ritual);
+            int sigils = CountAvailableSigils(circle, ritual);
 
             entries.Add(new StatusEntry
             {

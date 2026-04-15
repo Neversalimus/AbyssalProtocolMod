@@ -40,7 +40,7 @@ namespace AbyssalProtocol
             Rect leftInner = leftRect.ContractedBy(10f);
             Widgets.Label(new Rect(leftInner.x, leftInner.y, leftInner.width, 36f), AbyssalSummoningConsoleUtility.GetCompactStatusLine(circle));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 40f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountSigilsOnMap(circle.Map, ritual)));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 40f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectSigilsText(AbyssalSummoningConsoleUtility.CountAvailableSigils(circle, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 60f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectReadinessText(AbyssalSummoningConsoleUtility.GetShortRequirementSummary(circle, ritual)));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 80f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.GetInspectRiskText(AbyssalSummoningConsoleUtility.GetRiskLabel(AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual))));
             GUI.color = Color.white;

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_HexgunThrall</defName>
+    <label>hexgun thrall</label>
+    <race>ABY_HexgunThrall</race>
+    <combatPower>210</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(1.48,1.48)</drawSize>
+          <shadowData>
+            <volume>(0.38, 0.22, 0.38)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

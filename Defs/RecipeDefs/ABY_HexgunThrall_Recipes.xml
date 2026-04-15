@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftHexgunRelaySigil</defName>
+    <label>forge hexgun relay sigil</label>
+    <description>Compress residue, steel and infernal tracking geometry into a relay-key that routes a hostile Hexgun Thrall fireteam onto the map. This ritual is meant to pressure firing lines and punish exposed ranged pawns before later elite tiers arrive.</description>
+    <jobString>Forging hexgun relay sigil.</jobString>
+    <workAmount>1900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_HexgunRelaySigil>1</ABY_HexgunRelaySigil>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>45</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+</Defs>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CircleHexgunThrallLetterLabel>Hexgun thralls routed</ABY_CircleHexgunThrallLetterLabel>
+  <ABY_CircleHexgunThrallLetterDesc>The circle completes a disciplined breach relay. A Hexgun Thrall fireteam has entered the map and is already searching for open firing angles.</ABY_CircleHexgunThrallLetterDesc>
+
+  <ABY_CircleRitual_HexgunThrall_Label>Route hexgun thralls</ABY_CircleRitual_HexgunThrall_Label>
+  <ABY_CircleRitual_HexgunThrall_Subtitle>Disciplined ranged breach pressure</ABY_CircleRitual_HexgunThrall_Subtitle>
+  <ABY_CircleRitual_HexgunThrall_Desc>Consumes one hexgun relay sigil, routes a colonist to the circle, and inserts a hostile Hexgun Thrall fireteam onto the map. Thralls keep range, rake firing lines with burst fire, and mark exposed targets with short-lived hex telemetry.</ABY_CircleRitual_HexgunThrall_Desc>
+  <ABY_CircleRitual_HexgunThrall_Rewards>• First real abyssal gunline pressure test
+• Forces the colony to respect cover and firing lanes
+• Clear bridge between animal rush threats and later elite shooters</ABY_CircleRitual_HexgunThrall_Rewards>
+  <ABY_CircleRitual_HexgunThrall_SideEffects>• Spawns a hostile Hexgun Thrall fireteam at the map edge
+• Burst hits apply Hex Mark and soften exposed targets
+• Less raw spectacle than a boss ritual, but punishing for loose backlines</ABY_CircleRitual_HexgunThrall_SideEffects>
+
+</LanguageData>

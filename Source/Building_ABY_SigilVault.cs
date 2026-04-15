@@ -20,14 +20,16 @@ namespace AbyssalProtocol
         {
             "ABY_ArchonSigil",
             "ABY_UnstableBreachSigil",
-            "ABY_EmberHoundSigil"
+            "ABY_EmberHoundSigil",
+            "ABY_HexgunRelaySigil"
         };
 
         private static readonly Dictionary<string, int> AcceptedSigilPriority = new Dictionary<string, int>(StringComparer.Ordinal)
         {
             { "ABY_ArchonSigil", 0 },
-            { "ABY_EmberHoundSigil", 1 },
-            { "ABY_UnstableBreachSigil", 2 }
+            { "ABY_HexgunRelaySigil", 1 },
+            { "ABY_EmberHoundSigil", 2 },
+            { "ABY_UnstableBreachSigil", 3 }
         };
 
         private static readonly HashSet<string> AcceptedSigilDefNameSet = new HashSet<string>(AcceptedSigilDefNames, StringComparer.Ordinal);
@@ -291,6 +293,94 @@ namespace AbyssalProtocol
             GenDraw.DrawLineBetween(TrueCenter(), resolvedLink.TrueCenter());
         }
 
+        public bool IsLinkedTo(Building_AbyssalSummoningCircle circle)
+        {
+            return circle != null && ResolveLinkedCircle() == circle;
+        }
+
+        public int CountStoredSigilsOfDef(ThingDef sigilDef)
+        {
+            if (sigilDef == null || innerContainer == null || innerContainer.Count == 0)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            for (int i = 0; i < innerContainer.Count; i++)
+            {
+                Thing thing = innerContainer[i];
+                if (thing != null && thing.def == sigilDef)
+                {
+                    count += Math.Max(1, thing.stackCount);
+                }
+            }
+
+            return count;
+        }
+
+        public bool TryStageOneSigilToLinkedCircleFromConsole(ThingDef sigilDef, out Pawn carrier, out string failReason)
+        {
+            carrier = null;
+            failReason = null;
+
+            if (sigilDef == null)
+            {
+                failReason = "ABY_SigilVault_Fail_NoStoredSigils".Translate().ToString();
+                return false;
+            }
+
+            if (StoredSigilCount <= 0)
+            {
+                failReason = "ABY_SigilVault_Fail_NoStoredSigils".Translate().ToString();
+                return false;
+            }
+
+            Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
+            if (circle == null)
+            {
+                failReason = "ABY_SigilVault_Fail_NoLink".Translate().ToString();
+                return false;
+            }
+
+            JobDef carryJobDef = DefDatabase<JobDef>.GetNamedSilentFail(CarrySigilJobDefName);
+            if (carryJobDef == null)
+            {
+                failReason = "ABY_SigilVault_Fail_MissingCarryJob".Translate().ToString();
+                return false;
+            }
+
+            if (!circle.IsReadyForSigil(out string readyFailReason))
+            {
+                failReason = readyFailReason.NullOrEmpty()
+                    ? "ABY_SigilVault_Fail_LinkBlocked".Translate().ToString()
+                    : "ABY_SigilVault_Fail_LinkBlockedReason".Translate(readyFailReason).ToString();
+                return false;
+            }
+
+            Thing droppedSigil = TryDropOneOfDef(sigilDef);
+            if (droppedSigil == null)
+            {
+                failReason = "ABY_SigilVault_Fail_NoStoredSigils".Translate().ToString();
+                return false;
+            }
+
+            if (!TryFindOperatorForCircle(droppedSigil, circle, out carrier, out failReason))
+            {
+                TryReabsorbOrPlace(droppedSigil);
+                if (failReason.NullOrEmpty())
+                {
+                    failReason = "ABY_SigilVault_Fail_NoOperator".Translate().ToString();
+                }
+
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(carryJobDef, droppedSigil, circle);
+            job.count = 1;
+            carrier.jobs.TryTakeOrderedJob(job);
+            return true;
+        }
+
         public bool CanAccept(Thing thing)
         {
             if (thing == null || thing.def == null)
@@ -510,55 +600,17 @@ namespace AbyssalProtocol
 
         private void TryStageOneSigilToLinkedCircle(ThingDef sigilDef)
         {
-            if (sigilDef == null)
+            if (TryStageOneSigilToLinkedCircleFromConsole(sigilDef, out Pawn carrier, out string failReason))
             {
-                Messages.Message("ABY_SigilVault_Fail_NoStoredSigils".Translate(), MessageTypeDefOf.RejectInput, false);
+                Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
+                Messages.Message("ABY_SigilVault_StageSuccess".Translate(sigilDef.LabelCap, carrier.LabelShortCap, circle?.LabelCap ?? "summoning circle"), MessageTypeDefOf.TaskCompletion, false);
                 return;
             }
 
-            Building_AbyssalSummoningCircle circle = ResolveLinkedCircle();
-            if (circle == null)
+            if (!failReason.NullOrEmpty())
             {
-                Messages.Message("ABY_SigilVault_Fail_NoLink".Translate(), MessageTypeDefOf.RejectInput, false);
-                return;
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
-
-            JobDef carryJobDef = DefDatabase<JobDef>.GetNamedSilentFail(CarrySigilJobDefName);
-            if (carryJobDef == null)
-            {
-                Messages.Message("ABY_SigilVault_Fail_MissingCarryJob".Translate(), MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            if (!circle.IsReadyForSigil(out string readyFailReason))
-            {
-                string message = readyFailReason.NullOrEmpty()
-                    ? "ABY_SigilVault_Fail_LinkBlocked".Translate().ToString()
-                    : "ABY_SigilVault_Fail_LinkBlockedReason".Translate(readyFailReason).ToString();
-                Messages.Message(message, MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Thing droppedSigil = TryDropOneOfDef(sigilDef);
-            if (droppedSigil == null)
-            {
-                Messages.Message("ABY_SigilVault_Fail_NoStoredSigils".Translate(), MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            if (!TryFindOperatorForCircle(droppedSigil, circle, out Pawn carrier, out string failReason))
-            {
-                TryReabsorbOrPlace(droppedSigil);
-                string message = failReason.NullOrEmpty() ? "ABY_SigilVault_Fail_NoOperator".Translate().ToString() : failReason;
-                Messages.Message(message, MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Job job = JobMaker.MakeJob(carryJobDef, droppedSigil, circle);
-            job.count = 1;
-            carrier.jobs.TryTakeOrderedJob(job);
-
-            Messages.Message("ABY_SigilVault_StageSuccess".Translate(sigilDef.LabelCap, carrier.LabelShortCap, circle.LabelCap), MessageTypeDefOf.TaskCompletion, false);
         }
 
         private void TryEjectOneOfDefWithMessage(ThingDef sigilDef)

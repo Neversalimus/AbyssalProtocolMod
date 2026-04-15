@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_HexgunThrall</defName>
+    <label>hexgun thrall</label>
+    <description>A chained infernal gun-servitor grown for disciplined breach volleys. Hexgun thralls keep their distance, rake firing lines with cursed bursts, and mark exposed targets for the rest of the abyssal host.</description>
+
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+
+    <graphicData>
+      <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1.42,1.42)</drawSize>
+    </graphicData>
+
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Humanoid</body>
+      <baseBodySize>0.74</baseBodySize>
+      <baseHealthScale>1.02</baseHealthScale>
+      <baseHungerRate>0.42</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <lifeExpectancy>95</lifeExpectancy>
+      <predator>false</predator>
+      <foodType>OmnivoreAnimal</foodType>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+
+    <statBases>
+      <MaxHitPoints>360</MaxHitPoints>
+      <MoveSpeed>4.55</MoveSpeed>
+      <MeleeHitChance>0.62</MeleeHitChance>
+      <MeleeDPS>3.6</MeleeDPS>
+      <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.11</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.42</ArmorRating_Heat>
+      <ComfyTemperatureMin>-12</ComfyTemperatureMin>
+      <ComfyTemperatureMax>170</ComfyTemperatureMax>
+      <Flammability>0.02</Flammability>
+      <PainShockThreshold>0.84</PainShockThreshold>
+      <ShootingAccuracyPawn>1.08</ShootingAccuracyPawn>
+      <MarketValue>540</MarketValue>
+      <Mass>0.55</Mass>
+    </statBases>
+
+    <tools>
+      <li>
+        <label>stock bash</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>7</power>
+        <cooldownTime>2.1</cooldownTime>
+        <chanceFactor>0.95</chanceFactor>
+        <armorPenetration>0.08</armorPenetration>
+      </li>
+    </tools>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>false</hasStandardCommand>
+        <defaultProjectile>ABY_HexgunBolt</defaultProjectile>
+        <warmupTime>0.95</warmupTime>
+        <range>27.9</range>
+        <burstShotCount>3</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_RiftCarbineCharge</soundAiming>
+        <soundCast>ABY_RiftCarbineFire</soundCast>
+        <soundCastTail>ABY_RiftCarbineTail</soundCastTail>
+        <muzzleFlashScale>8</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <butcherProducts>
+      <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
+    </butcherProducts>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_HexgunRelaySigil</defName>
+    <label>hexgun relay sigil</label>
+    <description>A bound infernal-tech relay keyed to disciplined breach marksmen. Carry it to an abyssal summoning circle to route a hostile Hexgun Thrall fireteam onto the current map.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_HexgunRelaySigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>265</MarketValue>
+      <Mass>0.24</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>route hexgun thralls</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>hexgun_thralls</ritualId>
+        <summonMode>HostilePack</summonMode>
+        <pawnKindDefName>ABY_HexgunThrall</pawnKindDefName>
+        <bossLabel>Hexgun Thrall fireteam</bossLabel>
+        <spawnPoints>340</spawnPoints>
+        <ritualWarmupTicks>170</ritualWarmupTicks>
+        <impCount>3</impCount>
+        <completionLetterLabelKey>ABY_CircleHexgunThrallLetterLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_CircleHexgunThrallLetterDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_HexgunBolt</defName>
+    <label>hexgun bolt</label>
+    <thingClass>AbyssalProtocol.Projectile_HexgunBurst</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_HexgunBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.24,1.08)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>11</damageAmountBase>
+      <armorPenetrationBase>0.22</armorPenetrationBase>
+      <stoppingPower>0.85</stoppingPower>
+      <speed>72</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
