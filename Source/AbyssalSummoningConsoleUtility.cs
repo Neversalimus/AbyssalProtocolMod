@@ -143,6 +143,11 @@ namespace AbyssalProtocol
             return TranslateOrFallback("ABY_CircleConsoleSubtitleActive", "Ritual active. Current phase: {0}.", phaseLabel);
         }
 
+        public static string FormatTicksShort(int ticks)
+        {
+            return Mathf.Max(0, ticks).ToStringTicksToPeriod();
+        }
+
         public static string GetCompactSubtitle()
         {
             return TranslateOrFallback("ABY_CircleTab_SubtitleShort", "Compact ritual status and console access.");

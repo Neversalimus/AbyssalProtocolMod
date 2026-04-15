@@ -321,7 +321,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            GenDraw.DrawLineBetween(TrueCenter(), resolvedLink.TrueCenter());
+            GenDraw.DrawLineBetween(this.TrueCenter(), resolvedLink.TrueCenter());
         }
 
         public bool IsLinkedTo(Building_AbyssalSummoningCircle circle)
@@ -904,7 +904,7 @@ namespace AbyssalProtocol
                 return PositionHeld;
             }
 
-            CellRect rect = OccupiedRect();
+            CellRect rect = GenAdj.OccupiedRect(Position, Rotation, def.Size);
             IntVec3 best = Position;
             int bestDist = int.MaxValue;
 
