@@ -11,7 +11,7 @@
         <onCamera>true</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
-            <clipPath>ABY/ABY_Rupture_BattleTheme</clipPath>
+            <clipPath>ABY/Archon_BossBattleTheme</clipPath>
           </li>
         </grains>
         <volumeRange>

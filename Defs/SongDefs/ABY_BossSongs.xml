@@ -3,7 +3,7 @@
 
   <SongDef>
     <defName>ABY_ArchonBossBattleTheme</defName>
-    <clipPath>ABY/ABY_Rupture_BattleTheme</clipPath>
+    <clipPath>ABY/Archon_BossBattleTheme</clipPath>
     <volume>0.90</volume>
     <tense>true</tense>
   </SongDef>
