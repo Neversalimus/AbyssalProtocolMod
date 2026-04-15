@@ -115,22 +115,27 @@ namespace AbyssalProtocol
             return consumed;
         }
 
-        public void DebugAddResidue(Building_AbyssalForge forge, int amount)
+
+
+        public int DebugGrantResidue(Building_AbyssalForge forge, int amount)
         {
             if (amount <= 0)
             {
-                return;
+                return 0;
             }
 
             int previousTotal = totalResidueOffered;
             totalResidueOffered += amount;
-            Messages.Message(
-                "ABY_ForgeDevResidueAdded".Translate(amount, totalResidueOffered),
-                forge,
-                MessageTypeDefOf.PositiveEvent,
-                false);
             NotifyNewUnlocksIfNeeded(forge, previousTotal, totalResidueOffered);
             SyncAttunementHediffs();
+
+            Messages.Message(
+                "ABY_ForgeDevResidueApplied".Translate(amount, totalResidueOffered),
+                forge,
+                MessageTypeDefOf.TaskCompletion,
+                false);
+
+            return amount;
         }
 
         public List<RecipeDef> GetUnlockedRecipes(string category = AbyssalForgeProgressUtility.AllCategory)
