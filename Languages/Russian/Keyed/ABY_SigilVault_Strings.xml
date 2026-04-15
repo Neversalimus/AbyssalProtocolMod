@@ -13,22 +13,22 @@
   <ABY_SigilVault_LinkHint>Круг не привязан. Привяжи хранилище, чтобы оно стало выделенным податчиком сигилов для одного круга призыва.</ABY_SigilVault_LinkHint>
 
   <ABY_SigilVault_LinkLabel>Привязать к кругу</ABY_SigilVault_LinkLabel>
-  <ABY_SigilVault_ChangeLinkLabel>Сменить связанный круг</ABY_SigilVault_ChangeLinkLabel>
+  <ABY_SigilVault_ChangeLinkLabel>Сменить круг</ABY_SigilVault_ChangeLinkLabel>
   <ABY_SigilVault_LinkDesc>Выберите abyssal-круг призыва, который должно обслуживать это хранилище.</ABY_SigilVault_LinkDesc>
-  <ABY_SigilVault_UnlinkLabel>Разорвать связь с кругом</ABY_SigilVault_UnlinkLabel>
+  <ABY_SigilVault_UnlinkLabel>Разорвать связь</ABY_SigilVault_UnlinkLabel>
   <ABY_SigilVault_UnlinkDesc>Удалить текущую постоянную связь этого хранилища с кругом.</ABY_SigilVault_UnlinkDesc>
-  <ABY_SigilVault_JumpToLinkedCircleLabel>Перейти к связанному кругу</ABY_SigilVault_JumpToLinkedCircleLabel>
+  <ABY_SigilVault_JumpToLinkedCircleLabel>К кругу</ABY_SigilVault_JumpToLinkedCircleLabel>
   <ABY_SigilVault_JumpToLinkedCircleDesc>Переместить камеру к связанному abyssal-кругу призыва.</ABY_SigilVault_JumpToLinkedCircleDesc>
 
-  <ABY_SigilVault_StageToLinkedCircleLabel>Подать сигил к связанному кругу</ABY_SigilVault_StageToLinkedCircleLabel>
+  <ABY_SigilVault_StageToLinkedCircleLabel>Подать к кругу</ABY_SigilVault_StageToLinkedCircleLabel>
   <ABY_SigilVault_StageToLinkedCircleDesc>Выберите один сохранённый сигил и отправьте его из хранилища к текущему связанному abyssal-кругу призыва.</ABY_SigilVault_StageToLinkedCircleDesc>
   <ABY_SigilVault_StageOption>Подать {SIGIL} ({COUNT})</ABY_SigilVault_StageOption>
   <ABY_SigilVault_StageSuccess>{1} несёт {0} из хранилища к {2}.</ABY_SigilVault_StageSuccess>
 
-  <ABY_SigilVault_EjectOneLabel>Извлечь один сигил</ABY_SigilVault_EjectOneLabel>
+  <ABY_SigilVault_EjectOneLabel>Извлечь один</ABY_SigilVault_EjectOneLabel>
   <ABY_SigilVault_EjectOneDesc>Выберите тип сигила, который нужно выпустить из хранилища.</ABY_SigilVault_EjectOneDesc>
   <ABY_SigilVault_EjectOption>Извлечь {SIGIL} ({COUNT})</ABY_SigilVault_EjectOption>
-  <ABY_SigilVault_EjectAllLabel>Извлечь все сигилы</ABY_SigilVault_EjectAllLabel>
+  <ABY_SigilVault_EjectAllLabel>Извлечь все</ABY_SigilVault_EjectAllLabel>
   <ABY_SigilVault_EjectAllDesc>Выпустить все сохранённые сигилы из хранилища.</ABY_SigilVault_EjectAllDesc>
   <ABY_SigilVault_EjectSuccess>{0} выпущен из хранилища.</ABY_SigilVault_EjectSuccess>
 

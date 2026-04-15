@@ -13,13 +13,13 @@
     <graphicData>
       <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(1.42,1.42)</drawSize>
+      <drawSize>(3.337,3.337)</drawSize>
     </graphicData>
 
     <race>
       <renderTree>Animal</renderTree>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <thinkTreeMain>Mechanoid</thinkTreeMain>
+      <thinkTreeConstant>MechanoidConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
       <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
@@ -36,10 +36,10 @@
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>10</gestationPeriodDays>
       <lifeExpectancy>95</lifeExpectancy>
       <predator>false</predator>
       <foodType>OmnivoreAnimal</foodType>
-      <gestationPeriodDays>16</gestationPeriodDays>
       <lifeStageAges>
         <li>
           <def>AnimalAdult</def>

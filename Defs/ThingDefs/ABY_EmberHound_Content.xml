@@ -13,7 +13,7 @@
     <graphicData>
       <texPath>Pawn/EmberHound/ABY_EmberHound</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(1.55,1.55)</drawSize>
+      <drawSize>(6.510,6.510)</drawSize>
     </graphicData>
 
     <race>

@@ -13,22 +13,22 @@
   <ABY_SigilVault_LinkHint>No circle linked. Link this vault to turn it into a dedicated feeder for one summoning circle.</ABY_SigilVault_LinkHint>
 
   <ABY_SigilVault_LinkLabel>Link to circle</ABY_SigilVault_LinkLabel>
-  <ABY_SigilVault_ChangeLinkLabel>Change linked circle</ABY_SigilVault_ChangeLinkLabel>
+  <ABY_SigilVault_ChangeLinkLabel>Change link</ABY_SigilVault_ChangeLinkLabel>
   <ABY_SigilVault_LinkDesc>Select which abyssal summoning circle this vault should serve.</ABY_SigilVault_LinkDesc>
-  <ABY_SigilVault_UnlinkLabel>Unlink circle</ABY_SigilVault_UnlinkLabel>
+  <ABY_SigilVault_UnlinkLabel>Unlink</ABY_SigilVault_UnlinkLabel>
   <ABY_SigilVault_UnlinkDesc>Remove the current persistent circle link from this vault.</ABY_SigilVault_UnlinkDesc>
-  <ABY_SigilVault_JumpToLinkedCircleLabel>Jump to linked circle</ABY_SigilVault_JumpToLinkedCircleLabel>
+  <ABY_SigilVault_JumpToLinkedCircleLabel>Jump to circle</ABY_SigilVault_JumpToLinkedCircleLabel>
   <ABY_SigilVault_JumpToLinkedCircleDesc>Center the camera on the linked abyssal summoning circle.</ABY_SigilVault_JumpToLinkedCircleDesc>
 
-  <ABY_SigilVault_StageToLinkedCircleLabel>Stage sigil to linked circle</ABY_SigilVault_StageToLinkedCircleLabel>
+  <ABY_SigilVault_StageToLinkedCircleLabel>Stage to circle</ABY_SigilVault_StageToLinkedCircleLabel>
   <ABY_SigilVault_StageToLinkedCircleDesc>Choose one stored sigil and send it from this vault to the currently linked abyssal summoning circle.</ABY_SigilVault_StageToLinkedCircleDesc>
   <ABY_SigilVault_StageOption>Stage {SIGIL} ({COUNT})</ABY_SigilVault_StageOption>
   <ABY_SigilVault_StageSuccess>{1} is carrying {0} from the vault to {2}.</ABY_SigilVault_StageSuccess>
 
-  <ABY_SigilVault_EjectOneLabel>Eject one sigil</ABY_SigilVault_EjectOneLabel>
+  <ABY_SigilVault_EjectOneLabel>Eject one</ABY_SigilVault_EjectOneLabel>
   <ABY_SigilVault_EjectOneDesc>Choose one stored sigil type to release from the vault.</ABY_SigilVault_EjectOneDesc>
   <ABY_SigilVault_EjectOption>Eject {SIGIL} ({COUNT})</ABY_SigilVault_EjectOption>
-  <ABY_SigilVault_EjectAllLabel>Eject all sigils</ABY_SigilVault_EjectAllLabel>
+  <ABY_SigilVault_EjectAllLabel>Eject all</ABY_SigilVault_EjectAllLabel>
   <ABY_SigilVault_EjectAllDesc>Release every stored sigil from the vault.</ABY_SigilVault_EjectAllDesc>
   <ABY_SigilVault_EjectSuccess>{0} released from the vault.</ABY_SigilVault_EjectSuccess>
 
