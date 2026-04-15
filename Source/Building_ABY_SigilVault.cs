@@ -42,10 +42,15 @@ namespace AbyssalProtocol
         };
 
         private static readonly Dictionary<string, Material> OverlayMaterialCache = new Dictionary<string, Material>(StringComparer.Ordinal);
-        private static readonly Texture2D DefaultCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Drop", false) ?? BaseContent.BadTex;
-        private static readonly Texture2D LinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/SetTarget", false) ?? DefaultCommandIcon;
-        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/JumpToLocation", false) ?? DefaultCommandIcon;
-        private static readonly Texture2D UnlinkCommandIcon = ContentFinder<Texture2D>.Get("UI/Commands/Cancel", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D DefaultCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Stage", false)
+            ?? ContentFinder<Texture2D>.Get("UI/Commands/Drop", false)
+            ?? BaseContent.BadTex;
+        private static readonly Texture2D LinkCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Link", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Jump", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D UnlinkCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Unlink", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D StageCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_Stage", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D EjectOneCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_EjectOne", false) ?? DefaultCommandIcon;
+        private static readonly Texture2D EjectAllCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_EjectAll", false) ?? DefaultCommandIcon;
         private static readonly Material LinkedOverlayMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkedOverlay", ShaderDatabase.Cutout);
         private static readonly Material LinkedPulseMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkPulse", ShaderDatabase.Cutout);
         private static List<ThingDef> cachedAcceptedSigilDefs;
@@ -250,7 +255,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_StageToLinkedCircleLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_StageToLinkedCircleDesc".Translate(),
-                icon = DefaultCommandIcon,
+                icon = StageCommandIcon,
                 action = OpenStageMenu
             };
 
@@ -269,7 +274,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_EjectOneLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectOneDesc".Translate(),
-                icon = DefaultCommandIcon,
+                icon = EjectOneCommandIcon,
                 action = OpenEjectOneMenu
             };
 
@@ -284,7 +289,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_SigilVault_EjectAllLabel".Translate(),
                 defaultDesc = "ABY_SigilVault_EjectAllDesc".Translate(),
-                icon = DefaultCommandIcon,
+                icon = EjectAllCommandIcon,
                 action = EjectAllContents
             };
             if (StoredSigilCount <= 0)
@@ -321,7 +326,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            GenDraw.DrawLineBetween(this.TrueCenter(), resolvedLink.TrueCenter());
+            GenDraw.DrawLineBetween(TrueCenter(), resolvedLink.TrueCenter());
         }
 
         public bool IsLinkedTo(Building_AbyssalSummoningCircle circle)
@@ -904,7 +909,7 @@ namespace AbyssalProtocol
                 return PositionHeld;
             }
 
-            CellRect rect = GenAdj.OccupiedRect(Position, Rotation, def.Size);
+            CellRect rect = OccupiedRect();
             IntVec3 best = Position;
             int bestDist = int.MaxValue;
 
