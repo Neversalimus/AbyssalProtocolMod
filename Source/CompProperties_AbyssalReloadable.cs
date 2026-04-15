@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Verse;
 using RimWorld;
 using UnityEngine;
@@ -74,8 +75,8 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            string noun = string.IsNullOrWhiteSpace(Props.chargeNoun) ? "charge" : Props.chargeNoun;
-            reason = "Out of " + noun + "s.";
+            string noun = ChargeNounPluralized();
+            reason = "Out of " + noun + ".";
             return false;
         }
 
@@ -90,15 +91,13 @@ namespace AbyssalProtocol
 
             if (wearer != null && wearer.IsColonistPlayerControlled && IsEmpty)
             {
-                string noun = string.IsNullOrWhiteSpace(Props.chargeNoun) ? "charge" : Props.chargeNoun;
-                Messages.Message(parent.LabelCap + " is empty and needs " + noun + "s.", parent, MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message(parent.LabelCap + " is empty and needs " + ChargeNounPluralized() + ".", parent, MessageTypeDefOf.NeutralEvent, false);
             }
         }
 
         public override string CompInspectStringExtra()
         {
-            string noun = string.IsNullOrWhiteSpace(Props.chargeNoun) ? "charge" : Props.chargeNoun;
-            return noun.CapitalizeFirst() + "s: " + RemainingCharges + " / " + MaxCharges;
+            return ChargeNounLabel() + ": " + RemainingCharges + " / " + MaxCharges;
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -108,13 +107,13 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            if (!(parent is ThingWithComps thingWithComps))
+            Pawn wearer = ResolveWearer();
+            if (wearer == null || !wearer.IsColonistPlayerControlled || wearer.Dead)
             {
                 yield break;
             }
 
-            Pawn wearer = thingWithComps.ParentHolder as Pawn;
-            if (wearer == null || !wearer.IsColonistPlayerControlled || wearer.Dead || !wearer.Spawned)
+            if (!Props.displayGizmoWhileUndrafted && !wearer.Drafted)
             {
                 yield break;
             }
@@ -122,7 +121,7 @@ namespace AbyssalProtocol
             Command_Action command = new Command_Action
             {
                 defaultLabel = "Reload " + parent.LabelNoCount,
-                defaultDesc = "Consume " + Props.ammoDef?.label + " to refill this weapon.",
+                defaultDesc = "Consume " + (Props.ammoDef?.label ?? "ammo") + " to refill this weapon.",
                 action = delegate
                 {
                     TryReloadFromWearerOrGround(wearer, true);
@@ -141,9 +140,24 @@ namespace AbyssalProtocol
             yield return command;
         }
 
+        public bool TryAutoReload(Pawn wearer)
+        {
+            if (wearer == null || IsFull)
+            {
+                return false;
+            }
+
+            if (CountAvailableAmmo(wearer) < Math.Max(1, Props.ammoCountPerCharge))
+            {
+                return false;
+            }
+
+            return TryReloadFromWearerOrGround(wearer, false);
+        }
+
         public bool TryReloadFromWearerOrGround(Pawn wearer, bool sendMessages)
         {
-            if (wearer == null || wearer.MapHeld == null)
+            if (wearer == null || (wearer.MapHeld == null && wearer.inventory == null) || Props.ammoDef == null)
             {
                 return false;
             }
@@ -158,7 +172,11 @@ namespace AbyssalProtocol
 
             if (loaded > 0)
             {
-                Props.soundReload?.PlayOneShot(new TargetInfo(wearer.PositionHeld, wearer.MapHeld));
+                if (wearer.MapHeld != null)
+                {
+                    Props.soundReload?.PlayOneShot(new TargetInfo(wearer.PositionHeld, wearer.MapHeld));
+                }
+
                 if (sendMessages)
                 {
                     Messages.Message(parent.LabelCap + " reloaded (" + RemainingCharges + " / " + MaxCharges + ").", wearer, MessageTypeDefOf.TaskCompletion, false);
@@ -284,6 +302,70 @@ namespace AbyssalProtocol
             }
 
             return remaining;
+        }
+
+        private Pawn ResolveWearer()
+        {
+            object current = parent?.ParentHolder;
+            for (int i = 0; i < 8 && current != null; i++)
+            {
+                if (current is Pawn pawn)
+                {
+                    return pawn;
+                }
+
+                object directPawn = GetMemberValue(current, "pawn") ?? GetMemberValue(current, "Pawn");
+                if (directPawn is Pawn holderPawn)
+                {
+                    return holderPawn;
+                }
+
+                if (current is Thing thing)
+                {
+                    current = thing.ParentHolder;
+                    continue;
+                }
+
+                object next = GetMemberValue(current, "Owner") ?? GetMemberValue(current, "owner") ?? GetMemberValue(current, "ParentHolder") ?? GetMemberValue(current, "parentHolder");
+                current = next;
+            }
+
+            return null;
+        }
+
+        private static object GetMemberValue(object instance, string memberName)
+        {
+            if (instance == null || string.IsNullOrEmpty(memberName))
+            {
+                return null;
+            }
+
+            Type type = instance.GetType();
+            PropertyInfo property = type.GetProperty(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (property != null)
+            {
+                return property.GetValue(instance, null);
+            }
+
+            FieldInfo field = type.GetField(memberName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (field != null)
+            {
+                return field.GetValue(instance);
+            }
+
+            return null;
+        }
+
+        private string ChargeNounLabel()
+        {
+            string noun = string.IsNullOrWhiteSpace(Props.chargeNoun) ? "charge" : Props.chargeNoun.Trim();
+            return noun.CapitalizeFirst();
+        }
+
+        private string ChargeNounPluralized()
+        {
+            string noun = string.IsNullOrWhiteSpace(Props.chargeNoun) ? "charge" : Props.chargeNoun.Trim();
+            return noun.EndsWith("s", StringComparison.OrdinalIgnoreCase) ? noun : noun + "s";
         }
     }
 }

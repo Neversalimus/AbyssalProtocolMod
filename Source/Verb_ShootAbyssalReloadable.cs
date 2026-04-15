@@ -8,6 +8,11 @@ namespace AbyssalProtocol
         protected override bool TryCastShot()
         {
             CompAbyssalReloadable reloadable = EquipmentSource?.GetComp<CompAbyssalReloadable>();
+            if (reloadable != null && reloadable.IsEmpty && CasterPawn != null)
+            {
+                reloadable.TryAutoReload(CasterPawn);
+            }
+
             if (reloadable != null && !reloadable.CanFireNow(out string reason))
             {
                 if (CasterPawn != null && CasterPawn.IsColonistPlayerControlled)

@@ -90,7 +90,7 @@
         <ammoCountToRefill>4</ammoCountToRefill>
         <baseReloadTicks>240</baseReloadTicks>
         <verbToUse>0</verbToUse>
-        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
         <chargeNoun>choir cell</chargeNoun>
         <destroyOnEmpty>false</destroyOnEmpty>
         <soundReload>ABY_UltraPlasmaCharge</soundReload>
@@ -138,7 +138,7 @@
     <graphicData>
       <texPath>Things/Projectile/ABY_OblivionChoirCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.90,0.82)</drawSize>
+      <drawSize>(0.96,2.40)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
