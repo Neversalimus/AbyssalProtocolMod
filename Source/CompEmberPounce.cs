@@ -55,7 +55,7 @@ namespace AbyssalProtocol
 
         private Pawn FindBestTarget(Pawn pawn, bool requireRanged)
         {
-            List<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
             Pawn best = null;
             float bestScore = float.MaxValue;
 

@@ -106,6 +106,7 @@ namespace AbyssalProtocol
         private AbyssalCircleCapacitorSlot coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
         private AbyssalCircleCapacitorSlot auxiliaryCapacitorSlot = new AbyssalCircleCapacitorSlot();
         private float storedCapacitorCharge;
+        private float instabilityHeat;
         private float pendingCapacitorStartupCost;
         private float pendingCapacitorSustainDrainPerSecond;
         private float pendingCapacitorReserveRequired;
@@ -142,6 +143,11 @@ namespace AbyssalProtocol
                 return AbyssalCircleModuleUtility.CountInstalledModules(moduleSlots, DefModExtension_AbyssalCircleModule.StabilizerFamily);
             }
         }
+
+        public float ContainmentRating => AbyssalCircleInstabilityUtility.GetEffectiveContainment(this, AbyssalCircleInstabilityUtility.CalculateContainment(this));
+        public float InstabilityHeat => instabilityHeat;
+        public float ResidualContamination => Map?.GetComponent<MapComponent_AbyssalCircleInstability>()?.ResidualContamination ?? 0f;
+
 
         public ConsoleRitualPhase CurrentRitualPhase
         {
@@ -186,6 +192,7 @@ namespace AbyssalProtocol
             Scribe_Deep.Look(ref coreCapacitorSlot, "coreCapacitorSlot");
             Scribe_Deep.Look(ref auxiliaryCapacitorSlot, "auxiliaryCapacitorSlot");
             Scribe_Values.Look(ref storedCapacitorCharge, "storedCapacitorCharge", 0f);
+            Scribe_Values.Look(ref instabilityHeat, "instabilityHeat", 0f);
             Scribe_Values.Look(ref pendingCapacitorStartupCost, "pendingCapacitorStartupCost", 0f);
             Scribe_Values.Look(ref pendingCapacitorSustainDrainPerSecond, "pendingCapacitorSustainDrainPerSecond", 0f);
             Scribe_Values.Look(ref pendingCapacitorReserveRequired, "pendingCapacitorReserveRequired", 0f);
@@ -250,6 +257,7 @@ namespace AbyssalProtocol
             TickCapacitorRecovery();
             TickCapacitorCharge();
             TickCapacitorRitualFeed();
+            TickInstabilityState();
 
             if (!RitualActive || Map == null)
             {
@@ -1378,6 +1386,7 @@ namespace AbyssalProtocol
                 Map,
                 pendingSpawnCell,
                 pendingBossLabel);
+            ApplyRitualInstability();
         }
 
         private void CompletePortalWaveSummon()
@@ -1423,6 +1432,7 @@ namespace AbyssalProtocol
             }
 
             IntVec3 letterCell = firstPortalCell.IsValid ? firstPortalCell : RitualFocusCell;
+            ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", letterCell, Map);
             Find.LetterStack.ReceiveLetter(
@@ -1483,6 +1493,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
             Find.LetterStack.ReceiveLetter(
@@ -1528,6 +1539,75 @@ namespace AbyssalProtocol
             }
 
             return "ABY_BossSummonSuccessDesc".Translate(pendingBossLabel ?? "breach");
+        }
+
+        private void TickInstabilityState()
+        {
+            if (Map == null || Destroyed)
+            {
+                instabilityHeat = 0f;
+                return;
+            }
+
+            if (!ShouldDoHashInterval(AbyssalCircleInstabilityUtility.HeatTickInterval))
+            {
+                return;
+            }
+
+            float nextHeat = instabilityHeat;
+            if (RitualActive)
+            {
+                nextHeat += AbyssalCircleInstabilityUtility.GetActivePhasePressure(CurrentRitualPhase) * 0.18f;
+            }
+            else
+            {
+                nextHeat -= AbyssalCircleInstabilityUtility.GetIdleDecayPerTick(this) * AbyssalCircleInstabilityUtility.HeatTickInterval;
+            }
+
+            instabilityHeat = Mathf.Clamp01(nextHeat);
+
+            if (!RitualActive)
+            {
+                float ambientBleed = AbyssalCircleInstabilityUtility.GetAmbientBleedAmount(this);
+                if (ambientBleed > 0.001f && ShouldDoHashInterval(AbyssalCircleInstabilityUtility.AmbientBleedInterval))
+                {
+                    Map.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(ambientBleed);
+                }
+            }
+        }
+
+        private void ApplyRitualInstability()
+        {
+            AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetPendingRitualDefinition();
+            if (ritual == null)
+            {
+                return;
+            }
+
+            instabilityHeat = Mathf.Clamp01(instabilityHeat + AbyssalCircleInstabilityUtility.GetProjectedHeatGain(this, ritual));
+            float contaminationGain = AbyssalCircleInstabilityUtility.GetProjectedContaminationGain(this, ritual);
+            if (contaminationGain > 0.001f)
+            {
+                Map?.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(contaminationGain);
+            }
+        }
+
+        private AbyssalSummoningConsoleUtility.RitualDefinition GetPendingRitualDefinition()
+        {
+            if (pendingRitualId.NullOrEmpty())
+            {
+                return null;
+            }
+
+            foreach (AbyssalSummoningConsoleUtility.RitualDefinition ritual in AbyssalSummoningConsoleUtility.GetRituals())
+            {
+                if (ritual != null && ritual.Id == pendingRitualId)
+                {
+                    return ritual;
+                }
+            }
+
+            return null;
         }
 
         private void StartPhase(RitualPhase phase, int duration)

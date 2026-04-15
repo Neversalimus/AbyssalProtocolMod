@@ -2,16 +2,16 @@
 <LanguageData>
 
   <ABY_CircleEmberHoundLetterLabel>Ember hounds released</ABY_CircleEmberHoundLetterLabel>
-  <ABY_CircleEmberHoundLetterDesc>The circle begins opening ember portals across the map. Hunter-constructs are coming through in staggered waves, and some breaches also spill bonus rift imps.</ABY_CircleEmberHoundLetterDesc>
+  <ABY_CircleEmberHoundLetterDesc>The circle vents a feral pack breach. Ember hounds have entered the map and are already seeking exposed shooters.</ABY_CircleEmberHoundLetterDesc>
 
   <ABY_CircleRitual_EmberHound_Label>Loose ember hounds</ABY_CircleRitual_EmberHound_Label>
-  <ABY_CircleRitual_EmberHound_Subtitle>Sequential portal-hunter cascade</ABY_CircleRitual_EmberHound_Subtitle>
-  <ABY_CircleRitual_EmberHound_Desc>Consumes one ember hound sigil, routes a colonist to the circle, and then opens a staggered cascade of ember portals across the map. Each colonist adds one ember portal that releases one hound 75% of the time or two hounds 25% of the time, and every colonist also has a 20% chance to add a separate imp portal carrying two to four rift imps. Portals are opened away from the colony base.</ABY_CircleRitual_EmberHound_Desc>
-  <ABY_CircleRitual_EmberHound_Rewards>• Portal-driven mid-loop pressure test
-• Stronger flanker identity before the first true boss
-• Extra residue and occasional imp overflow when the colony survives the cascade</ABY_CircleRitual_EmberHound_Rewards>
-  <ABY_CircleRitual_EmberHound_SideEffects>• Opens portals sequentially across the map instead of dropping the pack in one place
-• Each colonist adds one ember portal with a 75% chance for one hound and a 25% chance for two
-• Every colonist also has a 20% chance to add a separate imp portal carrying two to four rift imps</ABY_CircleRitual_EmberHound_SideEffects>
+  <ABY_CircleRitual_EmberHound_Subtitle>Fast flanking pack assault</ABY_CircleRitual_EmberHound_Subtitle>
+  <ABY_CircleRitual_EmberHound_Desc>Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, punish loose firing lines, and return abyssal residue when butchered.</ABY_CircleRitual_EmberHound_Desc>
+  <ABY_CircleRitual_EmberHound_Rewards>• Mid-loop pressure test for interior defense
+• Fast residue return from butchered hound corpses
+• A clearer flanker identity before the first true boss</ABY_CircleRitual_EmberHound_Rewards>
+  <ABY_CircleRitual_EmberHound_SideEffects>• Drops a fast hostile hunter-pack at the map edge
+• Ember hounds leap onto shooters and punish isolated operators
+• Lower spectacle than the Archon Beast, but deadlier against weak backlines</ABY_CircleRitual_EmberHound_SideEffects>
 
 </LanguageData>

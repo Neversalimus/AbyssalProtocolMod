@@ -23,6 +23,8 @@ namespace AbyssalProtocol
             public string SideEffectHintKey;
             public float BaseRisk;
             public int SpawnPoints;
+            public float InstabilityGain;
+            public float ContaminationGain;
         }
 
         public sealed class StatusEntry
@@ -54,7 +56,9 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
-                SpawnPoints = 180
+                SpawnPoints = 180,
+                InstabilityGain = 0.13f,
+                ContaminationGain = 0.05f
             },
             new RitualDefinition
             {
@@ -68,7 +72,9 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
                 BaseRisk = 0.54f,
-                SpawnPoints = 420
+                SpawnPoints = 420,
+                InstabilityGain = 0.19f,
+                ContaminationGain = 0.08f
             },
             new RitualDefinition
             {
@@ -82,7 +88,9 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Archon_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
-                SpawnPoints = 900
+                SpawnPoints = 900,
+                InstabilityGain = 0.26f,
+                ContaminationGain = 0.11f
             }
         };
 
@@ -118,6 +126,32 @@ namespace AbyssalProtocol
             {
                 return template;
             }
+        }
+
+        public static string FormatTicksShort(int ticks)
+        {
+            ticks = Mathf.Max(0, ticks);
+            if (ticks <= 0)
+            {
+                return "0s";
+            }
+
+            int seconds = ticks / 60;
+            if (seconds < 60)
+            {
+                return seconds + "s";
+            }
+
+            int minutes = seconds / 60;
+            if (minutes < 60)
+            {
+                int remSeconds = seconds % 60;
+                return remSeconds > 0 ? minutes + "m " + remSeconds + "s" : minutes + "m";
+            }
+
+            int hours = minutes / 60;
+            int remMinutes = minutes % 60;
+            return remMinutes > 0 ? hours + "h " + remMinutes + "m" : hours + "h";
         }
 
         public static string GetConsoleTitle()
