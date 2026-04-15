@@ -15,6 +15,8 @@
   <ABY_CapacitorInspect_Charge>Заряд: {0} ({1} / {2})</ABY_CapacitorInspect_Charge>
   <ABY_CapacitorInspect_Throughput>Пропускная способность: {0}</ABY_CapacitorInspect_Throughput>
   <ABY_CapacitorInspect_ChargeRate>Скорость зарядки: {0}/с</ABY_CapacitorInspect_ChargeRate>
+  <ABY_CapacitorInspect_Lattice>Решётка: {0}</ABY_CapacitorInspect_Lattice>
+  <ABY_CapacitorInspect_Leakage>Утечка: {0}</ABY_CapacitorInspect_Leakage>
 
   <ABY_CapacitorChargeState_NoLattice>нет решётки</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>покой</ABY_CapacitorChargeState_Dormant>
@@ -34,6 +36,8 @@
   <ABY_CapacitorPanel_Reserve>Резерв</ABY_CapacitorPanel_Reserve>
   <ABY_CapacitorPanel_Feed>Подача</ABY_CapacitorPanel_Feed>
   <ABY_CapacitorPanel_Grid>Сглаживание сети</ABY_CapacitorPanel_Grid>
+  <ABY_CapacitorPanel_Lattice>Решётка</ABY_CapacitorPanel_Lattice>
+  <ABY_CapacitorPanel_Leakage>Утечка</ABY_CapacitorPanel_Leakage>
   <ABY_CapacitorPanel_Flow>Поток заряда</ABY_CapacitorPanel_Flow>
   <ABY_CapacitorPanel_Hint>Теперь конденсаторы реально ограничивают стартовый буфер ритуала, общий резерв и пропускную способность. Более сильные решётки быстрее заряжаются, чище восстанавливаются после вызова и уменьшают шанс грязного энергетического срыва при поддержанном ритуале.</ABY_CapacitorPanel_Hint>
 
@@ -65,7 +69,8 @@
 Ёмкость: {2}
 Пропускная способность: {3}
 Скорость зарядки: {4}/с
-Устойчивость к всплескам: {5}%</ABY_CapacitorBayTooltip_Filled>
+Устойчивость к всплескам: {5}%
+Утечка: {6}/с</ABY_CapacitorBayTooltip_Filled>
 
   <ABY_CapacitorStatus_Support>Конденсаторы</ABY_CapacitorStatus_Support>
   <ABY_CapacitorStatus_Reserve>Резерв</ABY_CapacitorStatus_Reserve>
@@ -88,6 +93,10 @@
   <ABY_CapacitorReadout_NoFlow>0/с</ABY_CapacitorReadout_NoFlow>
   <ABY_CapacitorReadout_FlowStalled>остановлен</ABY_CapacitorReadout_FlowStalled>
   <ABY_CapacitorReadout_ChargeFlow>{0}/с</ABY_CapacitorReadout_ChargeFlow>
+  <ABY_CapacitorReadout_ChargeFlowNet>{0}/с чистый поток • утечка {1}/с</ABY_CapacitorReadout_ChargeFlowNet>
+  <ABY_CapacitorReadout_ChargeBleed>стравливание {0}/с</ABY_CapacitorReadout_ChargeBleed>
+  <ABY_CapacitorReadout_Leakage>{0}/с</ABY_CapacitorReadout_Leakage>
+  <ABY_CapacitorReadout_NoLeakage>нет</ABY_CapacitorReadout_NoLeakage>
   <ABY_CapacitorReadout_ChargeFlowRecovery>{0}/с • восстановление</ABY_CapacitorReadout_ChargeFlowRecovery>
   <ABY_CapacitorReadout_ChargeFlowPriming>{0}/с • накачка</ABY_CapacitorReadout_ChargeFlowPriming>
   <ABY_CapacitorEta_Value>~{0}с</ABY_CapacitorEta_Value>
@@ -124,4 +133,10 @@
   <ABY_CapacitorEmergencyDump_Aftermath>Аварийный сброс завершён. Решётка спасена, но восстановление займёт больше времени.</ABY_CapacitorEmergencyDump_Aftermath>
   <ABY_CapacitorBacklash_Message>Обратный удар конденсаторов бьёт по кругу. Тяжесть структурного стресса: {0}%.</ABY_CapacitorBacklash_Message>
 
+
+  <ABY_CapacitorLattice_None>нет решётки</ABY_CapacitorLattice_None>
+  <ABY_CapacitorLattice_Improvised>импровизированная</ABY_CapacitorLattice_Improvised>
+  <ABY_CapacitorLattice_Tuned>настроенная пара</ABY_CapacitorLattice_Tuned>
+  <ABY_CapacitorLattice_Coherent>когерентная пара</ABY_CapacitorLattice_Coherent>
+  <ABY_CapacitorLattice_Strained>напряжённая пара</ABY_CapacitorLattice_Strained>
 </LanguageData>

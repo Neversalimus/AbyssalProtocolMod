@@ -1,33 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
-  <JobDef>
-    <defName>ABY_CarrySigilToCircle</defName>
-    <driverClass>AbyssalProtocol.JobDriver_CarrySigilToAbyssalCircle</driverClass>
-    <reportString>performing an abyssal summoning ritual.</reportString>
-    <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>true</playerInterruptible>
-    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
-  </JobDef>
-
-
-
-  <JobDef>
-    <defName>ABY_InstallCircleCapacitor</defName>
-    <driverClass>AbyssalProtocol.JobDriver_InstallCircleCapacitor</driverClass>
-    <reportString>installing an abyssal capacitor module.</reportString>
-    <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>true</playerInterruptible>
-    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
-  </JobDef>
-
-  <JobDef>
-    <defName>ABY_RemoveCircleCapacitor</defName>
-    <driverClass>AbyssalProtocol.JobDriver_RemoveCircleCapacitor</driverClass>
-    <reportString>removing an abyssal capacitor module.</reportString>
-    <casualInterruptible>false</casualInterruptible>
-    <playerInterruptible>true</playerInterruptible>
-    <checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage>
-  </JobDef>
-
+  <JobDef><defName>ABY_CarrySigilToCircle</defName><driverClass>AbyssalProtocol.JobDriver_CarrySigilToAbyssalCircle</driverClass><reportString>performing an abyssal summoning ritual.</reportString><casualInterruptible>false</casualInterruptible><playerInterruptible>true</playerInterruptible><checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage></JobDef>
+  <JobDef><defName>ABY_InstallCircleCapacitor</defName><driverClass>AbyssalProtocol.JobDriver_InstallCircleCapacitor</driverClass><reportString>installing an abyssal capacitor module.</reportString><casualInterruptible>false</casualInterruptible><playerInterruptible>true</playerInterruptible><checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage></JobDef>
+  <JobDef><defName>ABY_RemoveCircleCapacitor</defName><driverClass>AbyssalProtocol.JobDriver_RemoveCircleCapacitor</driverClass><reportString>removing an abyssal capacitor module.</reportString><casualInterruptible>false</casualInterruptible><playerInterruptible>true</playerInterruptible><checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage></JobDef>
+  <JobDef><defName>ABY_InstallCircleModule</defName><driverClass>AbyssalProtocol.JobDriver_InstallCircleModule</driverClass><reportString>installing a stabilizer module.</reportString><casualInterruptible>false</casualInterruptible><playerInterruptible>true</playerInterruptible><checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage></JobDef>
+  <JobDef><defName>ABY_RemoveCircleModule</defName><driverClass>AbyssalProtocol.JobDriver_RemoveCircleModule</driverClass><reportString>removing a stabilizer module.</reportString><casualInterruptible>true</casualInterruptible><playerInterruptible>true</playerInterruptible><checkOverrideOnDamage>OnlyIfInstigatorNotJobTarget</checkOverrideOnDamage></JobDef>
 </Defs>

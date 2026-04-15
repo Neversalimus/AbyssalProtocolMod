@@ -22,8 +22,6 @@ namespace AbyssalProtocol
             public string RewardHintKey;
             public string SideEffectHintKey;
             public float BaseRisk;
-            public float InstabilityGain;
-            public float ContaminationGain;
             public int SpawnPoints;
         }
 
@@ -56,25 +54,7 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Unstable_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Unstable_SideEffects",
                 BaseRisk = 0.38f,
-                InstabilityGain = 0.12f,
-                ContaminationGain = 0.05f,
                 SpawnPoints = 180
-            },
-            new RitualDefinition
-            {
-                Id = "ember_hunt",
-                LabelKey = "ABY_CircleRitual_EmberHound_Label",
-                SubtitleKey = "ABY_CircleRitual_EmberHound_Subtitle",
-                DescriptionKey = "ABY_CircleRitual_EmberHound_Desc",
-                BossLabel = "Ember Hound pack",
-                SigilThingDefName = "ABY_EmberHoundSigil",
-                PawnKindDefName = "ABY_EmberHound",
-                RewardHintKey = "ABY_CircleRitual_EmberHound_Rewards",
-                SideEffectHintKey = "ABY_CircleRitual_EmberHound_SideEffects",
-                BaseRisk = 0.49f,
-                InstabilityGain = 0.16f,
-                ContaminationGain = 0.07f,
-                SpawnPoints = 320
             },
             new RitualDefinition
             {
@@ -88,8 +68,6 @@ namespace AbyssalProtocol
                 RewardHintKey = "ABY_CircleRitual_Archon_Rewards",
                 SideEffectHintKey = "ABY_CircleRitual_Archon_SideEffects",
                 BaseRisk = 0.68f,
-                InstabilityGain = 0.24f,
-                ContaminationGain = 0.10f,
                 SpawnPoints = 900
             }
         };
@@ -170,12 +148,12 @@ namespace AbyssalProtocol
 
         public static string GetAssignSigilLabel()
         {
-            return TranslateOrFallback("ABY_CircleCommand_AssignSigil", "Assign sigil and begin invocation");
+            return TranslateOrFallback("ABY_CircleCommand_AssignSigil", "Begin invocation");
         }
 
         public static string GetJumpToSigilLabel()
         {
-            return TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Jump to nearest sigil");
+            return TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Track sigil");
         }
 
         public static string GetReducedEffectsLabel(bool reduced)
@@ -247,11 +225,6 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Open unstable breach");
             }
 
-            if (ritual.Id == "ember_hunt")
-            {
-                return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
-            }
-
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -272,11 +245,6 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Pre-boss hostile breach pattern");
             }
 
-            if (ritual.Id == "ember_hunt")
-            {
-                return TranslateOrFallback(ritual.SubtitleKey, "Fast flanking pack assault");
-            }
-
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -295,11 +263,6 @@ namespace AbyssalProtocol
             if (ritual.Id == "unstable_breach")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.");
-            }
-
-            if (ritual.Id == "ember_hunt")
-            {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a fast hostile hunter-pack onto the map. Ember hounds leap onto ranged pawns, punish loose firing lines, and recover residue when butchered.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -324,13 +287,6 @@ namespace AbyssalProtocol
 • A cleaner bridge between the circle and the Archon Beast fight");
             }
 
-            if (ritual.Id == "ember_hunt")
-            {
-                return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop pressure test for interior defense
-• Fast residue return from butchered hound corpses
-• A clearer flanker identity before the first true boss");
-            }
-
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• First-loop boss progression
@@ -353,13 +309,6 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
 • Still counts as an active abyssal encounter while the breach is live
 • Lower threat than the Archon Beast, but meant to pressure unprepared colonies");
-            }
-
-            if (ritual.Id == "ember_hunt")
-            {
-                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
-• Ember hounds leap onto shooters and punish isolated operators
-• Lower spectacle than the Archon Beast, but deadlier against weak backlines");
             }
 
             if (ritual.Id == "archon_beast")
@@ -550,6 +499,74 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TryAssignModuleInstall(Building_AbyssalSummoningCircle circle, Thing moduleThing, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            if (circle == null || moduleThing == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleModuleFail_NoModuleThing", "No valid stabilizer module is available for installation.");
+                return false;
+            }
+
+            if (!circle.CanInstallModule(moduleThing.def, edge, out failReason))
+            {
+                return false;
+            }
+
+            Pawn pawn = FindBestModuleOperator(circle, moduleThing, out failReason);
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            JobDef jobDef = DefDatabase<JobDef>.GetNamedSilentFail("ABY_InstallCircleModule");
+            if (jobDef == null)
+            {
+                failReason = "Missing JobDef: ABY_InstallCircleModule";
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(jobDef, moduleThing, circle);
+            job.count = 1;
+            job.targetC = new LocalTargetInfo(new IntVec3((int)edge, 0, 0));
+            pawn.jobs.TryTakeOrderedJob(job);
+            return true;
+        }
+
+        public static bool TryAssignModuleRemove(Building_AbyssalSummoningCircle circle, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            if (circle == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+                return false;
+            }
+
+            if (!circle.CanRemoveInstalledModule(edge, out failReason))
+            {
+                return false;
+            }
+
+            Pawn pawn = FindBestModuleOperator(circle, null, out failReason);
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            JobDef jobDef = DefDatabase<JobDef>.GetNamedSilentFail("ABY_RemoveCircleModule");
+            if (jobDef == null)
+            {
+                failReason = "Missing JobDef: ABY_RemoveCircleModule";
+                return false;
+            }
+
+            Job job = JobMaker.MakeJob(jobDef, circle);
+            job.targetC = new LocalTargetInfo(new IntVec3((int)edge, 0, 0));
+            pawn.jobs.TryTakeOrderedJob(job);
+            return true;
+        }
+
+
         public static Thing FindBestSigil(Building_AbyssalSummoningCircle circle, RitualDefinition ritual, out string failReason)
         {
             failReason = null;
@@ -694,6 +711,66 @@ namespace AbyssalProtocol
 
             return best;
         }
+
+        public static Pawn FindBestModuleOperator(Building_AbyssalSummoningCircle circle, Thing moduleThing, out string failReason)
+        {
+            failReason = null;
+            if (circle?.Map == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
+                return null;
+            }
+
+            Pawn best = null;
+            float bestScore = float.MaxValue;
+            List<Pawn> pawns = circle.Map.mapPawns.FreeColonistsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.MapHeld != circle.Map || pawn.Dead || pawn.Downed || pawn.InMentalState)
+                {
+                    continue;
+                }
+
+                if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
+                {
+                    continue;
+                }
+
+                if (moduleThing != null && !pawn.CanReserveAndReach(moduleThing, PathEndMode.Touch, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float score = pawn.PositionHeld.DistanceToSquared(circle.PositionHeld) * 0.25f;
+                if (moduleThing != null)
+                {
+                    score += pawn.PositionHeld.DistanceToSquared(moduleThing.PositionHeld);
+                }
+                if (pawn.Drafted)
+                {
+                    score += 4000f;
+                }
+                if (score < bestScore)
+                {
+                    best = pawn;
+                    bestScore = score;
+                }
+            }
+
+            if (best == null)
+            {
+                failReason = TranslateOrFallback("ABY_CircleConsoleFail_NoOperator", "No suitable colonist is currently available to carry a sigil to the circle.");
+            }
+
+            return best;
+        }
+
 
         public static bool CanUseCircle(Pawn pawn, Building_AbyssalSummoningCircle circle, RitualDefinition ritual, bool requireReservations)
         {
@@ -923,38 +1000,125 @@ namespace AbyssalProtocol
             }
         }
 
-        public static string FormatTicksShort(int ticks)
+        public static string GetStabilizerPatternSummary(Building_AbyssalSummoningCircle circle)
         {
-            if (ticks <= 0)
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            string key = AbyssalCircleModuleUtility.GetPatternKey(summary);
+            string fallback;
+            switch (key)
             {
-                return "0s";
+                case "ABY_CircleStabilizerPattern_Symmetry":
+                    fallback = "Pattern: symmetric ring";
+                    break;
+                case "ABY_CircleStabilizerPattern_FullRing":
+                    fallback = "Pattern: full ring";
+                    break;
+                case "ABY_CircleStabilizerPattern_Paired":
+                    fallback = "Pattern: paired lattice";
+                    break;
+                case "ABY_CircleStabilizerPattern_Partial":
+                    fallback = "Pattern: partial lattice";
+                    break;
+                default:
+                    fallback = "Pattern: open ring";
+                    break;
             }
 
-            int seconds = Mathf.CeilToInt(ticks / 60f);
-            int days = seconds / 86400;
-            seconds -= days * 86400;
-            int hours = seconds / 3600;
-            seconds -= hours * 3600;
-            int minutes = seconds / 60;
-            seconds -= minutes * 60;
-
-            if (days > 0)
-            {
-                return hours > 0 ? $"{days}d {hours}h" : $"{days}d";
-            }
-
-            if (hours > 0)
-            {
-                return minutes > 0 ? $"{hours}h {minutes}m" : $"{hours}h";
-            }
-
-            if (minutes > 0)
-            {
-                return seconds > 0 ? $"{minutes}m {seconds}s" : $"{minutes}m";
-            }
-
-            return $"{seconds}s";
+            return TranslateOrFallback(key, fallback);
         }
+
+        public static string GetStabilizerContainmentBonusDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt(summary.ContainmentBonus * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerContainmentValue", "+{0}%", percent);
+        }
+
+        public static string GetStabilizerHeatDampingDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.HeatMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerHeatDampingValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerResidueSuppressionDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.ContaminationMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerResidueValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerAnomalyShieldingDisplay(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            int percent = Mathf.RoundToInt((1f - summary.EventChanceMultiplier) * 100f);
+            return TranslateOrFallback("ABY_CircleStabilizerAnomalyValue", "-{0}%", percent);
+        }
+
+        public static string GetStabilizerPatternDetail(Building_AbyssalSummoningCircle circle)
+        {
+            AbyssalCircleStabilizerBonusSummary summary = circle != null ? circle.GetStabilizerBonusSummary() : default;
+            string key = AbyssalCircleModuleUtility.GetPatternKey(summary);
+            switch (key)
+            {
+                case "ABY_CircleStabilizerPattern_Symmetry":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Symmetry", "Uniform full ring. Best anomaly shielding and the cleanest breach geometry.");
+                case "ABY_CircleStabilizerPattern_FullRing":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_FullRing", "All four edge sockets are occupied. The circle holds pressure more evenly.");
+                case "ABY_CircleStabilizerPattern_Paired":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Paired", "Opposing edges are synchronized. Strong value before the ring is fully completed.");
+                case "ABY_CircleStabilizerPattern_Partial":
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Partial", "Some routing is present, but the lattice is still open and bleeds pressure.");
+                default:
+                    return TranslateOrFallback("ABY_CircleStabilizerPatternDetail_Open", "No stabilizer lattice is installed. The circle relies on raw containment only.");
+            }
+        }
+
+        public static string GetStabilizerMiniSummary(Building_AbyssalSummoningCircle circle)
+        {
+            return TranslateOrFallback(
+                "ABY_CircleStabilizerMiniSummary",
+                "{0} • {1} • {2}",
+                GetStabilizerPatternSummary(circle),
+                GetStabilizerContainmentBonusDisplay(circle),
+                GetStabilizerHeatDampingDisplay(circle));
+        }
+
+        public static string GetStabilizerInspectSummary(Building_AbyssalSummoningCircle circle)
+        {
+            return TranslateOrFallback(
+                "ABY_CircleStabilizerInspectSummary",
+                "Containment {0} • Heat {1} • Residue {2} • Anomalies {3}",
+                GetStabilizerContainmentBonusDisplay(circle),
+                GetStabilizerHeatDampingDisplay(circle),
+                GetStabilizerResidueSuppressionDisplay(circle),
+                GetStabilizerAnomalyShieldingDisplay(circle));
+        }
+
+        public static string GetModuleSlotTooltip(Building_AbyssalSummoningCircle circle, AbyssalCircleModuleEdge edge)
+        {
+            AbyssalCircleModuleSlot slot = circle?.GetModuleSlot(edge);
+            string edgeLabel = AbyssalCircleModuleUtility.GetEdgeLabel(edge);
+            if (slot == null || !slot.Occupied || slot.InstalledThingDef == null)
+            {
+                return TranslateOrFallback("ABY_CircleModuleTooltip_Empty", "{0}: empty socket. Install a stabilizer module to improve containment and reduce ritual pressure.", edgeLabel);
+            }
+
+            DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(slot.InstalledThingDef);
+            int containmentPercent = Mathf.RoundToInt(Mathf.Max(0f, (ext?.containmentBonus ?? 0f) * 22f));
+            int heatPercent = Mathf.RoundToInt(Mathf.Max(0f, (1f - (ext?.ritualHeatMultiplier ?? 1f)) * 100f));
+            int residuePercent = Mathf.RoundToInt(Mathf.Max(0f, (1f - (ext?.contaminationMultiplier ?? 1f)) * 100f));
+            return TranslateOrFallback(
+                "ABY_CircleModuleTooltip_Installed",
+                "{0}: {1} ({2})\nBase containment: +{3}%\nHeat damping: -{4}%\nResidue suppression: -{5}%",
+                edgeLabel,
+                slot.InstalledThingDef.label.CapitalizeFirst(),
+                AbyssalCircleModuleUtility.GetTierLabel(slot.InstalledThingDef),
+                containmentPercent,
+                heatPercent,
+                residuePercent);
+        }
+
 
         public static string GetShortRequirementSummary(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
         {

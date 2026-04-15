@@ -24,7 +24,7 @@
         <tier>1</tier>
         <chargeCapacity>60</chargeCapacity>
         <throughput>18</throughput>
-        <chargeRatePerSecond>0.80</chargeRatePerSecond>
+        <chargeRatePerSecond>0.85</chargeRatePerSecond>
         <surgeTolerance>0.20</surgeTolerance>
         <passiveLeakage>0.00</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
@@ -60,11 +60,11 @@
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
         <tier>2</tier>
-        <chargeCapacity>120</chargeCapacity>
-        <throughput>34</throughput>
-        <chargeRatePerSecond>1.35</chargeRatePerSecond>
-        <surgeTolerance>0.42</surgeTolerance>
-        <passiveLeakage>0.03</passiveLeakage>
+        <chargeCapacity>118</chargeCapacity>
+        <throughput>33</throughput>
+        <chargeRatePerSecond>1.30</chargeRatePerSecond>
+        <surgeTolerance>0.40</surgeTolerance>
+        <passiveLeakage>0.04</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
         <allowAuxiliaryBay>true</allowAuxiliaryBay>
         <mountedTexPath>Things/Building/Capacitors/ABY_RiftCapacitor_Mounted</mountedTexPath>
@@ -98,11 +98,11 @@
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
         <tier>3</tier>
-        <chargeCapacity>220</chargeCapacity>
-        <throughput>58</throughput>
-        <chargeRatePerSecond>1.90</chargeRatePerSecond>
-        <surgeTolerance>0.70</surgeTolerance>
-        <passiveLeakage>0.08</passiveLeakage>
+        <chargeCapacity>210</chargeCapacity>
+        <throughput>54</throughput>
+        <chargeRatePerSecond>1.80</chargeRatePerSecond>
+        <surgeTolerance>0.66</surgeTolerance>
+        <passiveLeakage>0.10</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
         <allowAuxiliaryBay>true</allowAuxiliaryBay>
         <mountedTexPath>Things/Building/Capacitors/ABY_CrownCondenser_Mounted</mountedTexPath>

@@ -15,6 +15,8 @@
   <ABY_CapacitorInspect_Charge>Charge: {0} ({1} / {2})</ABY_CapacitorInspect_Charge>
   <ABY_CapacitorInspect_Throughput>Throughput: {0}</ABY_CapacitorInspect_Throughput>
   <ABY_CapacitorInspect_ChargeRate>Charge rate: {0}/s</ABY_CapacitorInspect_ChargeRate>
+  <ABY_CapacitorInspect_Lattice>Lattice: {0}</ABY_CapacitorInspect_Lattice>
+  <ABY_CapacitorInspect_Leakage>Leakage: {0}</ABY_CapacitorInspect_Leakage>
 
   <ABY_CapacitorChargeState_NoLattice>no lattice</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>dormant</ABY_CapacitorChargeState_Dormant>
@@ -34,6 +36,8 @@
   <ABY_CapacitorPanel_Reserve>Reserve</ABY_CapacitorPanel_Reserve>
   <ABY_CapacitorPanel_Feed>Feed</ABY_CapacitorPanel_Feed>
   <ABY_CapacitorPanel_Grid>Grid smoothing</ABY_CapacitorPanel_Grid>
+  <ABY_CapacitorPanel_Lattice>Lattice</ABY_CapacitorPanel_Lattice>
+  <ABY_CapacitorPanel_Leakage>Leakage</ABY_CapacitorPanel_Leakage>
   <ABY_CapacitorPanel_Flow>Charge flow</ABY_CapacitorPanel_Flow>
   <ABY_CapacitorPanel_Hint>Capacitors now gate ritual startup buffer, total reserve and throughput. Stronger lattices charge faster, recover more cleanly after an invocation and reduce the chance that a supported ritual slips into a dirty power state.</ABY_CapacitorPanel_Hint>
 
@@ -65,7 +69,8 @@ Tier: {1}
 Capacity: {2}
 Throughput: {3}
 Charge rate: {4}/s
-Surge tolerance: {5}%</ABY_CapacitorBayTooltip_Filled>
+Surge tolerance: {5}%
+Leakage: {6}/s</ABY_CapacitorBayTooltip_Filled>
 
   <ABY_CapacitorStatus_Support>Capacitors</ABY_CapacitorStatus_Support>
   <ABY_CapacitorStatus_Reserve>Reserve</ABY_CapacitorStatus_Reserve>
@@ -88,6 +93,10 @@ Surge tolerance: {5}%</ABY_CapacitorBayTooltip_Filled>
   <ABY_CapacitorReadout_NoFlow>0/s</ABY_CapacitorReadout_NoFlow>
   <ABY_CapacitorReadout_FlowStalled>stalled</ABY_CapacitorReadout_FlowStalled>
   <ABY_CapacitorReadout_ChargeFlow>{0}/s</ABY_CapacitorReadout_ChargeFlow>
+  <ABY_CapacitorReadout_ChargeFlowNet>{0}/s net • leak {1}/s</ABY_CapacitorReadout_ChargeFlowNet>
+  <ABY_CapacitorReadout_ChargeBleed>bleeding {0}/s</ABY_CapacitorReadout_ChargeBleed>
+  <ABY_CapacitorReadout_Leakage>{0}/s</ABY_CapacitorReadout_Leakage>
+  <ABY_CapacitorReadout_NoLeakage>none</ABY_CapacitorReadout_NoLeakage>
   <ABY_CapacitorReadout_ChargeFlowRecovery>{0}/s • recovering</ABY_CapacitorReadout_ChargeFlowRecovery>
   <ABY_CapacitorReadout_ChargeFlowPriming>{0}/s • priming</ABY_CapacitorReadout_ChargeFlowPriming>
   <ABY_CapacitorEta_Value>~{0}s</ABY_CapacitorEta_Value>
@@ -124,4 +133,10 @@ Surge tolerance: {5}%</ABY_CapacitorBayTooltip_Filled>
   <ABY_CapacitorEmergencyDump_Aftermath>Emergency dump completed. The lattice is safe, but recovery will take longer.</ABY_CapacitorEmergencyDump_Aftermath>
   <ABY_CapacitorBacklash_Message>Capacitor backlash lashes the circle. Structural stress severity: {0}%.</ABY_CapacitorBacklash_Message>
 
+
+  <ABY_CapacitorLattice_None>no lattice</ABY_CapacitorLattice_None>
+  <ABY_CapacitorLattice_Improvised>improvised</ABY_CapacitorLattice_Improvised>
+  <ABY_CapacitorLattice_Tuned>tuned pair</ABY_CapacitorLattice_Tuned>
+  <ABY_CapacitorLattice_Coherent>coherent pair</ABY_CapacitorLattice_Coherent>
+  <ABY_CapacitorLattice_Strained>strained pair</ABY_CapacitorLattice_Strained>
 </LanguageData>

@@ -147,22 +147,165 @@ namespace AbyssalProtocol
 
         public static float GetTotalCapacity(IEnumerable<AbyssalCircleCapacitorSlot> slots)
         {
-            return slots?.Sum(slot => slot?.InstalledExtension?.chargeCapacity ?? 0f) ?? 0f;
+            float raw = slots?.Sum(slot => slot?.InstalledExtension?.chargeCapacity ?? 0f) ?? 0f;
+            return raw * GetLatticeCapacityFactor(slots);
         }
 
         public static float GetTotalThroughput(IEnumerable<AbyssalCircleCapacitorSlot> slots)
         {
-            return slots?.Sum(slot => slot?.InstalledExtension?.throughput ?? 0f) ?? 0f;
+            float raw = slots?.Sum(slot => slot?.InstalledExtension?.throughput ?? 0f) ?? 0f;
+            return raw * GetLatticeThroughputFactor(slots);
         }
 
         public static float GetTotalChargeRate(IEnumerable<AbyssalCircleCapacitorSlot> slots)
         {
-            return slots?.Sum(slot => slot?.InstalledExtension?.chargeRatePerSecond ?? 0f) ?? 0f;
+            float raw = slots?.Sum(slot => slot?.InstalledExtension?.chargeRatePerSecond ?? 0f) ?? 0f;
+            return raw * GetLatticeChargeRateFactor(slots);
+        }
+
+        public static float GetTotalPassiveLeakage(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            float raw = slots?.Sum(slot => slot?.InstalledExtension?.passiveLeakage ?? 0f) ?? 0f;
+            return raw * GetLatticeLeakageFactor(slots);
         }
 
         public static int GetInstalledCount(IEnumerable<AbyssalCircleCapacitorSlot> slots)
         {
             return slots?.Count(slot => slot != null && !slot.IsEmpty) ?? 0;
+        }
+
+        private static List<ThingDef> GetInstalledThingDefs(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            if (slots == null)
+            {
+                return new List<ThingDef>();
+            }
+
+            return slots
+                .Where(slot => slot != null && !slot.IsEmpty && slot.InstalledThingDef != null)
+                .Select(slot => slot.InstalledThingDef)
+                .ToList();
+        }
+
+        private static int GetTierSpread(List<ThingDef> defs)
+        {
+            if (defs == null || defs.Count < 2)
+            {
+                return 0;
+            }
+
+            int minTier = int.MaxValue;
+            int maxTier = int.MinValue;
+            for (int i = 0; i < defs.Count; i++)
+            {
+                int tier = defs[i]?.GetModExtension<DefModExtension_AbyssalCircleCapacitor>()?.tier ?? 0;
+                if (tier < minTier)
+                {
+                    minTier = tier;
+                }
+
+                if (tier > maxTier)
+                {
+                    maxTier = tier;
+                }
+            }
+
+            return Math.Max(0, maxTier - minTier);
+        }
+
+        public static float GetLatticeCapacityFactor(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            List<ThingDef> defs = GetInstalledThingDefs(slots);
+            if (defs.Count < 2)
+            {
+                return 1f;
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return 1.05f;
+                case 1:
+                    return 1.02f;
+                default:
+                    return 0.98f;
+            }
+        }
+
+        public static float GetLatticeThroughputFactor(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            List<ThingDef> defs = GetInstalledThingDefs(slots);
+            if (defs.Count < 2)
+            {
+                return 1f;
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return 1.10f;
+                case 1:
+                    return 1.04f;
+                default:
+                    return 0.97f;
+            }
+        }
+
+        public static float GetLatticeChargeRateFactor(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            List<ThingDef> defs = GetInstalledThingDefs(slots);
+            if (defs.Count < 2)
+            {
+                return 1f;
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return 1.07f;
+                case 1:
+                    return 1.03f;
+                default:
+                    return 0.95f;
+            }
+        }
+
+        public static float GetLatticeLeakageFactor(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            List<ThingDef> defs = GetInstalledThingDefs(slots);
+            if (defs.Count < 2)
+            {
+                return 1f;
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return 0.92f;
+                case 1:
+                    return 1f;
+                default:
+                    return 1.10f;
+            }
+        }
+
+        public static float GetLatticeSmoothingBonus(IEnumerable<AbyssalCircleCapacitorSlot> slots)
+        {
+            List<ThingDef> defs = GetInstalledThingDefs(slots);
+            if (defs.Count < 2)
+            {
+                return 0f;
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return 0.04f;
+                case 1:
+                    return 0.015f;
+                default:
+                    return -0.015f;
+            }
         }
 
         public static string GetTierLabel(ThingDef def)
@@ -199,6 +342,35 @@ namespace AbyssalProtocol
                 .OrderByDescending(def => def.GetModExtension<DefModExtension_AbyssalCircleCapacitor>()?.tier ?? 0)
                 .FirstOrDefault();
             return best != null ? GetTierLabel(best) : TranslateOrFallback("ABY_CapacitorTier_None", "none");
+        }
+
+        public static string GetLatticeProfileLabel(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CapacitorLattice_None", "no lattice");
+            }
+
+            List<ThingDef> defs = GetInstalledThingDefs(circle.GetCapacitorSlots());
+            if (defs.Count <= 0)
+            {
+                return TranslateOrFallback("ABY_CapacitorLattice_None", "no lattice");
+            }
+
+            if (defs.Count == 1)
+            {
+                return TranslateOrFallback("ABY_CapacitorLattice_Improvised", "improvised");
+            }
+
+            switch (GetTierSpread(defs))
+            {
+                case 0:
+                    return TranslateOrFallback("ABY_CapacitorLattice_Coherent", "coherent pair");
+                case 1:
+                    return TranslateOrFallback("ABY_CapacitorLattice_Tuned", "tuned pair");
+                default:
+                    return TranslateOrFallback("ABY_CapacitorLattice_Strained", "strained pair");
+            }
         }
 
         public static string GetInstalledSummary(Building_AbyssalSummoningCircle circle)
@@ -360,6 +532,27 @@ namespace AbyssalProtocol
             }
 
             return TranslateOrFallback("ABY_CapacitorInspect_ChargeRate", "Charge rate: {0}/s", circle.GetCapacitorChargeRatePerSecond().ToString("0.0"));
+        }
+
+        public static string GetLeakageValueReadout(Building_AbyssalSummoningCircle circle)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_NoLeakage", "none");
+            }
+
+            float leakage = circle.GetCapacitorCurrentLeakagePerSecond();
+            if (leakage <= 0.001f)
+            {
+                return TranslateOrFallback("ABY_CapacitorReadout_NoLeakage", "none");
+            }
+
+            return TranslateOrFallback("ABY_CapacitorReadout_Leakage", "{0}/s", leakage.ToString("0.0"));
+        }
+
+        public static string GetLeakageReadout(Building_AbyssalSummoningCircle circle)
+        {
+            return TranslateOrFallback("ABY_CapacitorInspect_Leakage", "Leakage: {0}", GetLeakageValueReadout(circle));
         }
 
         public static float GetMountedDrawScale(ThingDef def, float fallback = 1f)

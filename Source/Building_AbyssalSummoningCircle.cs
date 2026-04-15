@@ -101,14 +101,7 @@ namespace AbyssalProtocol
         private int pendingImpPortalWarmupTicks;
         private int pendingImpSpawnIntervalTicks;
         private int pendingImpPortalLingerTicks;
-        private int pendingPackCount;
         private bool reducedConsoleEffects;
-
-        private List<AbyssalCircleModuleSlot> stabilizerSlots = new List<AbyssalCircleModuleSlot>();
-        private float instabilityHeat;
-        private float cachedContainmentRating;
-        private int nextContainmentRefreshTick;
-        private int purgeCooldownUntilTick;
 
         private AbyssalCircleCapacitorSlot coreCapacitorSlot = new AbyssalCircleCapacitorSlot();
         private AbyssalCircleCapacitorSlot auxiliaryCapacitorSlot = new AbyssalCircleCapacitorSlot();
@@ -124,6 +117,7 @@ namespace AbyssalProtocol
         private bool pendingCapacitorForcedStart;
         private bool pendingCapacitorEmergencyDumpUsed;
         private float pendingCapacitorBacklashSeverity;
+        private List<AbyssalCircleModuleSlot> moduleSlots = new List<AbyssalCircleModuleSlot>();
 
         public bool RitualActive => ritualPhase != RitualPhase.Idle;
         public bool IsPoweredForRitual => GetComp<CompPowerTrader>()?.PowerOn ?? true;
@@ -132,6 +126,22 @@ namespace AbyssalProtocol
         public float RitualProgress => RitualActive ? GetPhaseProgress() : 0f;
         public bool CapacitorOverchannelEnabled => capacitorOverchannelEnabled;
         public bool CapacitorEmergencyDumpEnabled => capacitorEmergencyDumpEnabled;
+        public IReadOnlyList<AbyssalCircleModuleSlot> ModuleSlots
+        {
+            get
+            {
+                EnsureModuleSlotsInitialized();
+                return moduleSlots;
+            }
+        }
+        public int InstalledStabilizerCount
+        {
+            get
+            {
+                EnsureModuleSlotsInitialized();
+                return AbyssalCircleModuleUtility.CountInstalledModules(moduleSlots, DefModExtension_AbyssalCircleModule.StabilizerFamily);
+            }
+        }
 
         public ConsoleRitualPhase CurrentRitualPhase
         {
@@ -173,11 +183,6 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpSpawnIntervalTicks, "pendingImpSpawnIntervalTicks", 0);
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
-            Scribe_Collections.Look(ref stabilizerSlots, "stabilizerSlots", LookMode.Deep);
-            Scribe_Values.Look(ref instabilityHeat, "instabilityHeat", 0f);
-            Scribe_Values.Look(ref cachedContainmentRating, "cachedContainmentRating", 0f);
-            Scribe_Values.Look(ref nextContainmentRefreshTick, "nextContainmentRefreshTick", 0);
-            Scribe_Values.Look(ref purgeCooldownUntilTick, "purgeCooldownUntilTick", 0);
             Scribe_Deep.Look(ref coreCapacitorSlot, "coreCapacitorSlot");
             Scribe_Deep.Look(ref auxiliaryCapacitorSlot, "auxiliaryCapacitorSlot");
             Scribe_Values.Look(ref storedCapacitorCharge, "storedCapacitorCharge", 0f);
@@ -192,13 +197,12 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCapacitorForcedStart, "pendingCapacitorForcedStart", false);
             Scribe_Values.Look(ref pendingCapacitorEmergencyDumpUsed, "pendingCapacitorEmergencyDumpUsed", false);
             Scribe_Values.Look(ref pendingCapacitorBacklashSeverity, "pendingCapacitorBacklashSeverity", 0f);
+            Scribe_Collections.Look(ref moduleSlots, "moduleSlots", LookMode.Deep);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                EnsureModuleSlotsInitialized();
                 EnsureCapacitorSlotsInitialized();
-                instabilityHeat = Mathf.Clamp01(instabilityHeat);
-                cachedContainmentRating = Mathf.Clamp(cachedContainmentRating, 0f, 0.50f);
+                EnsureModuleSlotsInitialized();
                 ClampStoredCapacitorCharge();
             }
         }
@@ -242,12 +246,10 @@ namespace AbyssalProtocol
         {
             base.Tick();
 
-            EnsureModuleSlotsInitialized();
             EnsureCapacitorSlotsInitialized();
             TickCapacitorRecovery();
             TickCapacitorCharge();
             TickCapacitorRitualFeed();
-            TickInstability();
 
             if (!RitualActive || Map == null)
             {
@@ -325,7 +327,6 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingPackCount = 0;
 
             if (IsImpPortalSummonMode(pendingSummonMode))
             {
@@ -333,22 +334,6 @@ namespace AbyssalProtocol
                 pendingImpPortalWarmupTicks = Mathf.Max(30, summonProps.impPortalWarmupTicks);
                 pendingImpSpawnIntervalTicks = Mathf.Max(30, summonProps.impSpawnIntervalTicks);
                 pendingImpPortalLingerTicks = Mathf.Max(600, summonProps.impPortalLingerTicks);
-            }
-            else if (IsHostilePackSummonMode(pendingSummonMode))
-            {
-                pendingPackCount = Mathf.Max(1, summonProps.impCount);
-                pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.pawnKindDefName);
-                if (pendingPawnKindDef == null)
-                {
-                    failReason = "Missing PawnKindDef: " + summonProps.pawnKindDefName;
-                    return false;
-                }
-
-                if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
-                {
-                    failReason = "ABY_CircleFail_NoBossArrival".Translate();
-                    return false;
-                }
             }
             else
             {
@@ -425,6 +410,7 @@ namespace AbyssalProtocol
             }
 
             DrawCapacitorBayVisuals(center, ticks, ritualIntensity, powerFactor);
+            DrawModuleVisuals(center, ritualIntensity, ticks, seedPhase);
             DrawLayer(IdleGlowGraphic, center, IdleGlowSize * (pulseA + ritualIntensity * 0.08f), 0f, 0.004f);
 
             if (!IsPoweredForRitual)
@@ -486,6 +472,62 @@ namespace AbyssalProtocol
             DrawLayer(mountedGraphic, drawCenter, CapacitorMountedBaseSize * activePulse, 0f, yOffset + 0.002f);
         }
 
+        private void DrawModuleVisuals(Vector3 center, float ritualIntensity, int ticks, float seedPhase)
+        {
+            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
+            Graphic socketGraphic = AbyssalCircleModuleUtility.GetSocketGraphic();
+            if (socketGraphic == null)
+            {
+                return;
+            }
+
+            float poweredFactor = IsPoweredForRitual ? 1f : 0f;
+            float socketPulse = 1f + (poweredFactor > 0f ? ritualIntensity * 0.025f : -0.015f);
+            float socketSize = AbyssalCircleModuleUtility.GetSocketDrawScaleValue() * socketPulse;
+            float yBase = 0.0294f;
+
+            foreach (AbyssalCircleModuleEdge edge in AbyssalCircleModuleUtility.GetOrderedEdges())
+            {
+                Vector3 moduleCenter = center + AbyssalCircleModuleUtility.GetEdgeOffset(edge);
+                float angle = AbyssalCircleModuleUtility.GetEdgeAngle(edge);
+
+                DrawLayer(socketGraphic, moduleCenter, new Vector2(socketSize, socketSize), angle, yBase);
+
+                AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+                if (slot == null || !slot.Occupied)
+                {
+                    continue;
+                }
+
+                ThingDef installedDef = slot.InstalledThingDef;
+                DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(installedDef);
+                Graphic mountedGraphic = AbyssalCircleModuleUtility.GetMountedGraphic(installedDef);
+                if (mountedGraphic == null)
+                {
+                    continue;
+                }
+
+                float tierPulse = 0.012f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.005f;
+                float microPulse = 1f + Mathf.Sin(ticks * 0.055f + seedPhase + (int)edge * 0.9f) * tierPulse;
+                float activeScale = 1f + ritualIntensity * (0.040f + Mathf.Max(0, (ext?.tier ?? 1) - 1) * 0.010f);
+                float drawScale = AbyssalCircleModuleUtility.GetMountedDrawScale(installedDef) * microPulse * activeScale;
+
+                if (poweredFactor > 0f)
+                {
+                    Graphic glowGraphic = AbyssalCircleModuleUtility.GetGlowGraphic(installedDef);
+                    if (glowGraphic != null)
+                    {
+                        float glowPulse = 1f + Mathf.Sin(ticks * 0.090f + seedPhase + (int)edge * 0.72f) * 0.020f;
+                        float glowScale = AbyssalCircleModuleUtility.GetGlowDrawScale(installedDef) * (1f + ritualIntensity * 0.085f) * glowPulse;
+                        DrawLayer(glowGraphic, moduleCenter, new Vector2(glowScale, glowScale), angle, yBase + 0.0008f);
+                    }
+                }
+
+                DrawLayer(mountedGraphic, moduleCenter, new Vector2(drawScale, drawScale), angle, yBase + 0.0012f);
+            }
+        }
+
+
         public override string GetInspectString()
         {
             StringBuilder sb = new StringBuilder();
@@ -530,6 +572,10 @@ namespace AbyssalProtocol
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetChargeReadout(this));
             sb.AppendLine();
+            sb.Append("ABY_CapacitorPanel_Lattice".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLatticeProfileLabel(this));
+            sb.AppendLine();
+            sb.Append(AbyssalCircleCapacitorUtility.GetLeakageReadout(this));
+            sb.AppendLine();
             sb.Append("ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(this, AbyssalSummoningConsoleUtility.GetDefaultRitual()));
             sb.AppendLine();
             sb.Append("ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(this));
@@ -542,6 +588,10 @@ namespace AbyssalProtocol
             sb.Append("ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(this));
             sb.AppendLine();
             sb.Append(AbyssalCircleCapacitorUtility.GetBaySummary(this));
+            sb.AppendLine();
+            sb.Append("ABY_CircleInspect_Stabilizers".Translate(InstalledStabilizerCount, moduleSlots.Count));
+            sb.AppendLine();
+            sb.Append(AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(this));
 
             return sb.ToString();
         }
@@ -587,6 +637,60 @@ namespace AbyssalProtocol
         public float GetCapacitorChargeRatePerSecond()
         {
             return AbyssalCircleCapacitorUtility.GetTotalChargeRate(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorPassiveLeakagePerSecond()
+        {
+            return AbyssalCircleCapacitorUtility.GetTotalPassiveLeakage(GetCapacitorSlots());
+        }
+
+        public float GetCapacitorCurrentLeakagePerSecond()
+        {
+            float baseLeakage = GetCapacitorPassiveLeakagePerSecond();
+            float capacity = GetCapacitorCapacity();
+            if (baseLeakage <= 0.001f || capacity <= 0.01f || storedCapacitorCharge <= 0.001f)
+            {
+                return 0f;
+            }
+
+            float fill = Mathf.Clamp01(storedCapacitorCharge / capacity);
+            float factor = 0.55f;
+            if (fill >= 0.92f)
+            {
+                factor = 1.25f;
+            }
+            else if (fill >= 0.60f)
+            {
+                factor = 0.85f;
+            }
+
+            if (CapacitorRecovering)
+            {
+                factor *= 0.95f;
+            }
+
+            if (RitualActive)
+            {
+                factor *= 1.75f;
+            }
+
+            if (!IsPoweredForRitual)
+            {
+                factor *= 1.10f;
+            }
+
+            return baseLeakage * factor;
+        }
+
+        public float GetCapacitorNetChargeFlowPerSecond()
+        {
+            float leakage = GetCapacitorCurrentLeakagePerSecond();
+            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
+            {
+                return leakage > 0.001f ? -leakage : 0f;
+            }
+
+            return GetCapacitorEffectiveChargeRatePerSecond() - leakage;
         }
 
         public float GetCapacitorEffectiveChargeRatePerSecond()
@@ -637,227 +741,6 @@ namespace AbyssalProtocol
         public float GetPendingCapacitorThroughputRequired()
         {
             return pendingCapacitorThroughputRequired;
-        }
-
-        public float InstabilityHeat => instabilityHeat;
-
-        public float ResidualContamination
-        {
-            get
-            {
-                if (Map == null || Destroyed)
-                {
-                    return 0f;
-                }
-
-                return Map.GetComponent<MapComponent_AbyssalCircleInstability>()?.ResidualContamination ?? 0f;
-            }
-        }
-
-        public float ContainmentRating
-        {
-            get
-            {
-                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-                if (ticksGame >= nextContainmentRefreshTick || cachedContainmentRating <= 0f)
-                {
-                    RefreshContainmentCache(ticksGame);
-                }
-
-                return cachedContainmentRating;
-            }
-        }
-
-        public int TicksUntilPurgeReady
-        {
-            get
-            {
-                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-                return Mathf.Max(0, purgeCooldownUntilTick - ticksGame);
-            }
-        }
-
-        public IReadOnlyList<AbyssalCircleModuleSlot> GetModuleSlots()
-        {
-            EnsureModuleSlotsInitialized();
-            return stabilizerSlots;
-        }
-
-        public int GetInstalledModuleCount()
-        {
-            EnsureModuleSlotsInitialized();
-            return AbyssalCircleModuleUtility.CountInstalledModules(stabilizerSlots, DefModExtension_AbyssalCircleModule.StabilizerFamily);
-        }
-
-        public AbyssalCircleStabilizerBonusSummary GetStabilizerBonusSummary()
-        {
-            EnsureModuleSlotsInitialized();
-            return AbyssalCircleModuleUtility.GetStabilizerBonusSummary(stabilizerSlots);
-        }
-
-        public bool CanInstallModule(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            failReason = null;
-            EnsureModuleSlotsInitialized();
-
-            if (!Spawned || Destroyed || Map == null)
-            {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CircleModuleFail_Busy".Translate();
-                return false;
-            }
-
-            if (moduleDef == null)
-            {
-                failReason = "ABY_CircleModuleFail_NoModuleDef".Translate();
-                return false;
-            }
-
-            if (!AbyssalCircleModuleUtility.IsMatchingFamily(moduleDef, DefModExtension_AbyssalCircleModule.StabilizerFamily))
-            {
-                failReason = "ABY_CircleModuleFail_NotAModule".Translate(moduleDef.label.CapitalizeFirst());
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(stabilizerSlots, edge);
-            if (slot == null)
-            {
-                failReason = "ABY_CircleModuleFail_NoSlot".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            if (slot.Occupied)
-            {
-                failReason = "ABY_CircleModuleFail_SlotOccupied".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryInstallModuleDirect(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            if (!CanInstallModule(moduleDef, edge, out failReason))
-            {
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(stabilizerSlots, edge);
-            slot.SetInstalledThingDef(moduleDef);
-            InvalidateStabilizerState();
-            return true;
-        }
-
-        public bool CanRemoveInstalledModule(AbyssalCircleModuleEdge edge, out string failReason)
-        {
-            failReason = null;
-            EnsureModuleSlotsInitialized();
-
-            if (!Spawned || Destroyed || Map == null)
-            {
-                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CircleModuleFail_Busy".Translate();
-                return false;
-            }
-
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(stabilizerSlots, edge);
-            if (slot == null)
-            {
-                failReason = "ABY_CircleModuleFail_NoSlot".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            if (!slot.Occupied)
-            {
-                failReason = "ABY_CircleModuleFail_SlotEmpty".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
-                return false;
-            }
-
-            return true;
-        }
-
-        public ThingDef RemoveInstalledModule(AbyssalCircleModuleEdge edge)
-        {
-            EnsureModuleSlotsInitialized();
-            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(stabilizerSlots, edge);
-            ThingDef removedDef = slot?.InstalledThingDef;
-            if (removedDef == null)
-            {
-                return null;
-            }
-
-            slot.Clear();
-            InvalidateStabilizerState();
-            return removedDef;
-        }
-
-        public bool CanPurgeInstability(out string failReason)
-        {
-            failReason = null;
-            if (!Spawned || Destroyed || Map == null)
-            {
-                failReason = "ABY_CirclePurgeFail_NoCircle".Translate();
-                return false;
-            }
-
-            if (RitualActive)
-            {
-                failReason = "ABY_CirclePurgeFail_Busy".Translate();
-                return false;
-            }
-
-            if (instabilityHeat < 0.05f)
-            {
-                failReason = "ABY_CirclePurgeFail_LowHeat".Translate();
-                return false;
-            }
-
-            if (TicksUntilPurgeReady > 0)
-            {
-                failReason = "ABY_CirclePurgeFail_Cooldown".Translate(AbyssalSummoningConsoleUtility.FormatTicksShort(TicksUntilPurgeReady));
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryPurgeInstability(out float removedHeat, out string failReason)
-        {
-            removedHeat = 0f;
-            if (!CanPurgeInstability(out failReason))
-            {
-                return false;
-            }
-
-            removedHeat = Mathf.Min(instabilityHeat, AbyssalCircleInstabilityUtility.GetPurgeRemovedHeat(this));
-            if (removedHeat <= 0f)
-            {
-                failReason = "ABY_CirclePurgeFail_LowHeat".Translate();
-                return false;
-            }
-
-            instabilityHeat = Mathf.Clamp01(instabilityHeat - removedHeat);
-            MapComponent_AbyssalCircleInstability mapComponent = Map.GetComponent<MapComponent_AbyssalCircleInstability>();
-            if (mapComponent != null)
-            {
-                mapComponent.AddContamination(AbyssalCircleInstabilityUtility.GetPurgeBackwash(removedHeat));
-            }
-
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            purgeCooldownUntilTick = ticksGame + AbyssalCircleInstabilityUtility.PurgeCooldownTicks;
-            InvalidateStabilizerState();
-            failReason = null;
-            return true;
         }
 
         public bool CanInstallCapacitor(ThingDef capacitorDef, AbyssalCircleCapacitorBay bay, out string failReason)
@@ -962,6 +845,118 @@ namespace AbyssalProtocol
             return removedDef;
         }
 
+
+        public AbyssalCircleModuleSlot GetModuleSlot(AbyssalCircleModuleEdge edge)
+        {
+            EnsureModuleSlotsInitialized();
+            return AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+        }
+
+        public IReadOnlyList<AbyssalCircleModuleSlot> GetModuleSlots()
+        {
+            EnsureModuleSlotsInitialized();
+            return moduleSlots;
+        }
+
+        public AbyssalCircleStabilizerBonusSummary GetStabilizerBonusSummary()
+        {
+            EnsureModuleSlotsInitialized();
+            return AbyssalCircleModuleUtility.GetStabilizerBonusSummary(moduleSlots);
+        }
+
+        public bool CanInstallModule(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            EnsureModuleSlotsInitialized();
+            if (!Spawned || Destroyed || Map == null)
+            {
+                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                return false;
+            }
+            if (RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+            if (moduleDef == null)
+            {
+                failReason = "ABY_CircleModuleFail_NoModuleDef".Translate();
+                return false;
+            }
+            DefModExtension_AbyssalCircleModule ext = AbyssalCircleModuleUtility.GetModuleExtension(moduleDef);
+            if (ext == null)
+            {
+                failReason = "ABY_CircleModuleFail_NotAModule".Translate(moduleDef.LabelCap);
+                return false;
+            }
+            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+            if (slot == null)
+            {
+                failReason = "ABY_CircleModuleFail_NoSlot".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
+                return false;
+            }
+            if (slot.Occupied)
+            {
+                failReason = "ABY_CircleModuleFail_SlotOccupied".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
+                return false;
+            }
+            return true;
+        }
+
+        public bool TryInstallModuleDirect(ThingDef moduleDef, AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            if (!CanInstallModule(moduleDef, edge, out failReason))
+            {
+                return false;
+            }
+            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+            slot.SetInstalledThingDef(moduleDef);
+            MarkCircleVisualsDirty();
+            return true;
+        }
+
+        public bool CanRemoveInstalledModule(AbyssalCircleModuleEdge edge, out string failReason)
+        {
+            failReason = null;
+            EnsureModuleSlotsInitialized();
+            if (!Spawned || Destroyed || Map == null)
+            {
+                failReason = "ABY_CircleConsoleFail_NoCircle".Translate();
+                return false;
+            }
+            if (RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+            if (slot == null || !slot.Occupied)
+            {
+                failReason = "ABY_CircleModuleFail_SlotEmpty".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge));
+                return false;
+            }
+            return true;
+        }
+
+        public ThingDef RemoveInstalledModule(AbyssalCircleModuleEdge edge)
+        {
+            EnsureModuleSlotsInitialized();
+            AbyssalCircleModuleSlot slot = AbyssalCircleModuleUtility.GetSlot(moduleSlots, edge);
+            ThingDef removedDef = slot?.InstalledThingDef;
+            if (removedDef == null)
+            {
+                return null;
+            }
+            slot.Clear();
+            MarkCircleVisualsDirty();
+            return removedDef;
+        }
+
+        private void EnsureModuleSlotsInitialized()
+        {
+            moduleSlots = AbyssalCircleModuleUtility.EnsureSlots(moduleSlots);
+        }
+
         private void EnsureCapacitorSlotsInitialized()
         {
             if (coreCapacitorSlot == null)
@@ -999,12 +994,18 @@ namespace AbyssalProtocol
 
             ClampStoredCapacitorCharge();
 
-            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
+            if (!ShouldDoHashInterval(60))
             {
                 return;
             }
 
-            if (!ShouldDoHashInterval(60))
+            float leakage = GetCapacitorCurrentLeakagePerSecond();
+            if (leakage > 0.001f)
+            {
+                storedCapacitorCharge = Mathf.Max(0f, storedCapacitorCharge - leakage);
+            }
+
+            if (!Spawned || Destroyed || Map == null || !IsPoweredForRitual)
             {
                 return;
             }
@@ -1144,58 +1145,6 @@ namespace AbyssalProtocol
             foreach (IntVec3 cell in GenAdj.OccupiedRect(Position, Rotation, def.Size))
             {
                 Map.mapDrawer.MapMeshDirty(cell, MapMeshFlagDefOf.Things);
-            }
-        }
-
-        private void EnsureModuleSlotsInitialized()
-        {
-            stabilizerSlots = AbyssalCircleModuleUtility.EnsureSlots(stabilizerSlots);
-        }
-
-        private void InvalidateStabilizerState()
-        {
-            nextContainmentRefreshTick = 0;
-            RefreshContainmentCache(Find.TickManager != null ? Find.TickManager.TicksGame : 0);
-            MarkCircleVisualsDirty();
-        }
-
-        private void RefreshContainmentCache(int ticksGame)
-        {
-            cachedContainmentRating = AbyssalCircleInstabilityUtility.GetEffectiveContainment(this, AbyssalCircleInstabilityUtility.CalculateContainment(this));
-            nextContainmentRefreshTick = ticksGame + AbyssalCircleInstabilityUtility.ContainmentRefreshInterval;
-        }
-
-        private void TickInstability()
-        {
-            if (Map == null || Destroyed)
-            {
-                return;
-            }
-
-            if (!ShouldDoHashInterval(AbyssalCircleInstabilityUtility.HeatTickInterval))
-            {
-                return;
-            }
-
-            if (RitualActive)
-            {
-                instabilityHeat = Mathf.Clamp01(instabilityHeat + AbyssalCircleInstabilityUtility.GetActivePhasePressure(CurrentRitualPhase) * 0.08f);
-            }
-            else
-            {
-                float decay = CurrentRitualPhase == ConsoleRitualPhase.Cooldown
-                    ? AbyssalCircleInstabilityUtility.GetCooldownDecayPerTick(this)
-                    : AbyssalCircleInstabilityUtility.GetIdleDecayPerTick(this);
-                instabilityHeat = Mathf.Clamp01(instabilityHeat - decay * AbyssalCircleInstabilityUtility.HeatTickInterval);
-            }
-
-            if (ShouldDoHashInterval(AbyssalCircleInstabilityUtility.AmbientBleedInterval))
-            {
-                float bleed = AbyssalCircleInstabilityUtility.GetAmbientBleedAmount(this);
-                if (bleed > 0.0001f)
-                {
-                    Map.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(bleed);
-                }
             }
         }
 
@@ -1398,12 +1347,6 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (IsHostilePackSummonMode(pendingSummonMode))
-            {
-                CompleteHostilePackSummon();
-                return;
-            }
-
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -1485,34 +1428,6 @@ namespace AbyssalProtocol
                 new TargetInfo(portal.Position, Map));
         }
 
-        private void CompleteHostilePackSummon()
-        {
-            if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                    Map,
-                    pendingPawnKindDef,
-                    pendingFaction,
-                    pendingSpawnCell,
-                    Mathf.Max(1, pendingPackCount),
-                    pendingBossLabel,
-                    GetCompletionLetterLabel(),
-                    GetCompletionLetterDesc(),
-                    out IntVec3 arrivalCell,
-                    out string failReason))
-            {
-                ResetRitual();
-                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.14f);
-            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", arrivalCell.IsValid ? arrivalCell : RitualFocusCell, Map);
-        }
-
-        private bool IsHostilePackSummonMode(string summonMode)
-        {
-            return string.Equals(summonMode, "HostilePack", System.StringComparison.OrdinalIgnoreCase);
-        }
-
         private bool IsImpPortalSummonMode(string summonMode)
         {
             return string.Equals(summonMode, "ImpPortal", System.StringComparison.OrdinalIgnoreCase);
@@ -1572,7 +1487,6 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingPackCount = 0;
             pendingCapacitorStartupCost = 0f;
             pendingCapacitorSustainDrainPerSecond = 0f;
             pendingCapacitorReserveRequired = 0f;

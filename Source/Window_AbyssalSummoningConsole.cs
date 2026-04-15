@@ -235,13 +235,11 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(12f);
 
             Rect leftRect = new Rect(inner.x, inner.y, inner.width * 0.36f, inner.height);
-            Rect midRect = new Rect(leftRect.xMax + 12f, inner.y, inner.width * 0.24f, inner.height);
+            Rect midRect = new Rect(leftRect.xMax + 12f, inner.y, inner.width * 0.25f, inner.height);
             Rect rightRect = new Rect(midRect.xMax + 12f, inner.y, inner.width - leftRect.width - midRect.width - 24f, inner.height);
 
             DrawCapacitorPanel(leftRect, ritual);
-
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(midRect.x, midRect.y, midRect.width, 22f), "ABY_CircleRewardsHeader".Translate());
-            Widgets.Label(new Rect(midRect.x, midRect.y + 28f, midRect.width, midRect.height - 28f), AbyssalSummoningConsoleUtility.GetRitualRewardHint(ritual));
+            DrawModulePanel(midRect);
 
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rightRect.x, rightRect.y, rightRect.width, 22f), "ABY_CirclePreviewHeader".Translate());
             Widgets.Label(new Rect(rightRect.x, rightRect.y + 28f, rightRect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
@@ -262,7 +260,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             float rowsY = rect.y + 48f;
-            float rowHeight = 22f;
+            float rowHeight = 24f;
             int rowIndex = 0;
             foreach (AbyssalCircleCapacitorBay bay in AbyssalCircleCapacitorUtility.GetOrderedBays())
             {
@@ -278,16 +276,17 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x, summaryY + 16f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetSupportDetailText(report));
             GUI.color = Color.white;
             Widgets.Label(new Rect(rect.x, summaryY + 44f, rect.width, 16f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 60f, rect.width, 16f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 76f, rect.width, 16f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 92f, rect.width, 16f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 108f, rect.width, 16f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 124f, rect.width, 16f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 140f, rect.width, 16f), "ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(circle, ritual));
-            Widgets.Label(new Rect(rect.x, summaryY + 156f, rect.width, 16f), "ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 60f, rect.width, 16f), "ABY_CapacitorPanel_Lattice".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLatticeProfileLabel(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 76f, rect.width, 16f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 92f, rect.width, 16f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 108f, rect.width, 16f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 124f, rect.width, 16f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 140f, rect.width, 16f), "ABY_CapacitorPanel_Leakage".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLeakageValueReadout(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 156f, rect.width, 16f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
+            Widgets.Label(new Rect(rect.x, summaryY + 172f, rect.width, 16f), "ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(circle, ritual));
+            Widgets.Label(new Rect(rect.x, summaryY + 188f, rect.width, 16f), "ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(circle));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY + 176f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
-            Widgets.Label(new Rect(rect.x, summaryY + 204f, rect.width, rect.height - (summaryY - rect.y) - 204f), "ABY_CapacitorPanel_Hint".Translate());
+            Widgets.Label(new Rect(rect.x, summaryY + 208f, rect.width, 30f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
             GUI.color = Color.white;
         }
 
@@ -301,7 +300,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             TooltipHandler.TipRegion(labelRect, AbyssalCircleCapacitorUtility.GetBayTooltip(circle, bay));
 
-            Rect actionRect = new Rect(rect.xMax - 88f, rect.y, 88f, rect.height);
+            Rect actionRect = new Rect(rect.xMax - 98f, rect.y - 1f, 98f, rect.height + 2f);
             if (installedDef == null)
             {
                 if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CapacitorCommand_Install".Translate(), !circle.RitualActive, false))
@@ -312,6 +311,103 @@ namespace AbyssalProtocol
             else if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CapacitorCommand_Remove".Translate(), !circle.RitualActive, false))
             {
                 TryAssignCapacitorRemove(bay);
+            }
+        }
+
+
+        private void DrawModulePanel(Rect rect)
+        {
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rect.y, rect.width, 22f), "ABY_CircleModulesHeader".Translate());
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x, rect.y + 24f, rect.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
+            GUI.color = Color.white;
+
+            float rowsY = rect.y + 48f;
+            float rowHeight = 24f;
+            int rowIndex = 0;
+            foreach (AbyssalCircleModuleEdge edge in AbyssalCircleModuleUtility.GetOrderedEdges())
+            {
+                Rect rowRect = new Rect(rect.x, rowsY + rowIndex * (rowHeight + 3f), rect.width, rowHeight);
+                DrawModuleSlotRow(rowRect, edge);
+                rowIndex++;
+            }
+
+            float summaryY = rowsY + rowIndex * (rowHeight + 3f) + 8f;
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 14f, rect.width, 34f), AbyssalSummoningConsoleUtility.GetStabilizerPatternDetail(circle));
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x, summaryY + 50f, rect.width, 16f), "ABY_CircleModulesContainment".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerContainmentBonusDisplay(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 66f, rect.width, 16f), "ABY_CircleModulesHeatDamping".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerHeatDampingDisplay(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 82f, rect.width, 16f), "ABY_CircleModulesResidue".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerResidueSuppressionDisplay(circle));
+            Widgets.Label(new Rect(rect.x, summaryY + 98f, rect.width, 16f), "ABY_CircleModulesAnomaly".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerAnomalyShieldingDisplay(circle));
+        }
+
+        private void DrawModuleSlotRow(Rect rect, AbyssalCircleModuleEdge edge)
+        {
+            AbyssalCircleModuleSlot slot = circle.GetModuleSlot(edge);
+            ThingDef installedDef = slot?.InstalledThingDef;
+            string edgeLabel = AbyssalCircleModuleUtility.GetEdgeLabel(edge);
+            string slotLabel = installedDef == null ? "ABY_CircleModuleSlotEmpty".Translate(edgeLabel) : "ABY_CircleModuleSlotInstalled".Translate(edgeLabel, installedDef.label.CapitalizeFirst(), AbyssalCircleModuleUtility.GetTierLabel(installedDef));
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 98f, rect.height);
+            GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
+            Widgets.Label(labelRect, slotLabel);
+            GUI.color = Color.white;
+            TooltipHandler.TipRegion(rect, AbyssalSummoningConsoleUtility.GetModuleSlotTooltip(circle, edge));
+            Rect actionRect = new Rect(rect.xMax - 96f, rect.y - 1f, 96f, rect.height + 2f);
+            if (installedDef == null)
+            {
+                if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CircleModuleCommand_Install".Translate(), !circle.RitualActive, false))
+                {
+                    OpenInstallMenu(edge);
+                }
+            }
+            else if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CircleModuleCommand_Remove".Translate(), !circle.RitualActive, false))
+            {
+                TryAssignRemove(edge);
+            }
+        }
+
+        private void OpenInstallMenu(AbyssalCircleModuleEdge edge)
+        {
+            List<Thing> candidates = AbyssalCircleModuleUtility.GetBestAvailableModuleCandidates(circle, DefModExtension_AbyssalCircleModule.StabilizerFamily);
+            if (candidates.Count == 0)
+            {
+                Messages.Message("ABY_CircleModuleFail_NoAvailableModules".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                Thing candidate = candidates[i];
+                int totalCount = AbyssalCircleModuleUtility.CountAvailableModules(circle.Map, candidate.def);
+                Thing capturedThing = candidate;
+                options.Add(new FloatMenuOption("ABY_CircleModuleMenuOption".Translate(candidate.LabelCap, AbyssalCircleModuleUtility.GetTierLabel(candidate.def), totalCount), delegate
+                {
+                    if (AbyssalSummoningConsoleUtility.TryAssignModuleInstall(circle, capturedThing, edge, out string failReason))
+                    {
+                        Messages.Message("ABY_CircleModuleInstallQueued".Translate(capturedThing.LabelCap, AbyssalCircleModuleUtility.GetEdgeLabel(edge)), MessageTypeDefOf.PositiveEvent, false);
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                    }
+                    else if (!failReason.NullOrEmpty())
+                    {
+                        Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                    }
+                }));
+            }
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private void TryAssignRemove(AbyssalCircleModuleEdge edge)
+        {
+            if (AbyssalSummoningConsoleUtility.TryAssignModuleRemove(circle, edge, out string failReason))
+            {
+                Messages.Message("ABY_CircleModuleRemoveQueued".Translate(AbyssalCircleModuleUtility.GetEdgeLabel(edge)), MessageTypeDefOf.PositiveEvent, false);
+                SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+            }
+            else if (!failReason.NullOrEmpty())
+            {
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
         }
 

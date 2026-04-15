@@ -48,14 +48,19 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 104f, leftInner.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
             Widgets.Label(new Rect(leftInner.x, leftInner.y + 124f, leftInner.width, 18f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(capacitorReport));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 144f, leftInner.width, 18f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(capacitorReport));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 144f, leftInner.width, 18f), "ABY_CapacitorPanel_Lattice".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLatticeProfileLabel(circle));
+            Widgets.Label(new Rect(leftInner.x, leftInner.y + 164f, leftInner.width, 18f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(capacitorReport));
             GUI.color = Color.white;
-            Widgets.Label(new Rect(leftInner.x, leftInner.y + 164f, leftInner.width, 18f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(capacitorReport));
 
             AbyssalSummoningConsoleArt.DrawPanel(rightRect, true);
             Rect rightInner = rightRect.ContractedBy(10f);
             AbyssalSummoningConsoleUtility.CircleRiskTier riskTier = AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual);
             AbyssalSummoningConsoleArt.DrawRiskBar(new Rect(rightInner.x, rightInner.y + 8f, rightInner.width, 24f), AbyssalSummoningConsoleUtility.GetRiskFill(circle, ritual), AbyssalSummoningConsoleUtility.GetRiskLabel(riskTier), AbyssalSummoningConsoleUtility.GetRiskColor(riskTier), circle.RitualActive);
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rightInner.x, rightInner.y + 126f, rightInner.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rightInner.x, rightInner.y + 146f, rightInner.width, 36f), AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(circle));
+            GUI.color = Color.white;
 
             if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 46f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetOpenConsoleLabel(), true, true))
             {
