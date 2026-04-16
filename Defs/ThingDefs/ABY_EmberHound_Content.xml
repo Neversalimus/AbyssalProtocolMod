@@ -88,6 +88,7 @@
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>
         <maxRange>13.9</maxRange>

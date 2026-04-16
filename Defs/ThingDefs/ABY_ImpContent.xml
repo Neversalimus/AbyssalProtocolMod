@@ -61,6 +61,9 @@
       <MarketValue>420</MarketValue>
       <Mass>0.42</Mass>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+    </comps>
     <tools>
       <li>
         <label>ember claw</label>

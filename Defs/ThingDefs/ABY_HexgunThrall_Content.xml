@@ -10,7 +10,7 @@
     <graphicData>
       <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(1.42,1.42)</drawSize>
+      <drawSize>(2.13,2.13)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>
@@ -76,6 +76,9 @@
     <butcherProducts>
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </butcherProducts>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+    </comps>
   </ThingDef>
 
   <ThingDef ParentName="BaseHumanMakeableGun">

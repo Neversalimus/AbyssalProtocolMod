@@ -25,9 +25,9 @@
         <bodyGraphicData>
           <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(1.42,1.42)</drawSize>
+          <drawSize>(2.13,2.13)</drawSize>
           <shadowData>
-            <volume>(0.45, 0.55, 0.45)</volume>
+            <volume>(0.68, 0.83, 0.68)</volume>
             <offset>(0, 0, -0.18)</offset>
           </shadowData>
         </bodyGraphicData>

@@ -86,6 +86,7 @@
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
         <minRange>4.2</minRange>
         <maxRange>11.2</maxRange>

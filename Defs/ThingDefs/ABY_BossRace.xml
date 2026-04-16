@@ -97,6 +97,9 @@
         <armorPenetration>0.5</armorPenetration>
       </li>
     </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+    </comps>
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
       <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
@@ -197,6 +200,9 @@
         <armorPenetration>1.12</armorPenetration>
       </li>
     </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+    </comps>
     <killedLeavings Inherit="False">
       <ABY_CrownOfRupture>1</ABY_CrownOfRupture>
     </killedLeavings>
