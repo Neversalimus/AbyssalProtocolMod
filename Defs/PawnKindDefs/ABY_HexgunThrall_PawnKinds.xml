@@ -13,13 +13,10 @@
       <min>-10</min>
       <max>-10</max>
     </apparelMoney>
-    <weaponMoney>
-      <min>5000</min>
-      <max>5000</max>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
     </weaponMoney>
-    <weaponTags>
-      <li>ABY_HexgunWeapon</li>
-    </weaponTags>
     <lifeStages>
       <li>
         <bodyGraphicData>

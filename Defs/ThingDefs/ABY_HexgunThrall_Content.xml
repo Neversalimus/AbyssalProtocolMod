@@ -14,8 +14,8 @@
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
       <hasGenders>true</hasGenders>
       <nameGenerator>NamerAnimalGenericMale</nameGenerator>
       <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
@@ -78,6 +78,17 @@
     </butcherProducts>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_HexgunBolt</projectileDefName>
+        <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
+        <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
+        <range>27.9</range>
+        <warmupTicks>57</warmupTicks>
+        <cooldownTicks>99</cooldownTicks>
+        <burstShotCount>3</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <scanIntervalTicks>15</scanIntervalTicks>
+      </li>
     </comps>
   </ThingDef>
 

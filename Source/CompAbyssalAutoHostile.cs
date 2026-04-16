@@ -1,19 +1,20 @@
-using System.Collections.Generic;
 using RimWorld;
 using Verse;
-using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
     public class CompAbyssalAutoHostile : ThingComp
     {
-        private int spawnedAtTick = -1;
+        private const int SpawnGraceTicks = 90;
+        private const int LordRetryTicks = 120;
+
         private int lastAggroTick = -99999;
+        private int spawnTick = -1;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            spawnedAtTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            spawnTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             TryEnsureHostility();
         }
 
@@ -25,12 +26,11 @@ namespace AbyssalProtocol
 
         private void TryEnsureHostility()
         {
-            if (!(parent is Pawn pawn) || pawn.Map == null || pawn.Dead)
+            Pawn pawn = parent as Pawn;
+            if (pawn == null || pawn.Map == null || pawn.Dead)
             {
                 return;
             }
-
-            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
 
             if (pawn.Faction == null)
             {
@@ -47,31 +47,34 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (AbyssalThreatPawnUtility.GetCurrentLord(pawn) != null || !pawn.Spawned || !pawn.Map.IsPlayerHome)
+            if (!pawn.Spawned || !pawn.Map.IsPlayerHome)
             {
                 return;
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (spawnedAtTick >= 0 && ticksGame - spawnedAtTick < 60)
+            if (spawnTick < 0)
+            {
+                spawnTick = ticksGame;
+            }
+
+            if (ticksGame - spawnTick < SpawnGraceTicks)
             {
                 return;
             }
 
-            if (ticksGame - lastAggroTick < 120)
+            if (AbyssalLordUtility.FindLordFor(pawn) != null)
+            {
+                return;
+            }
+
+            if (ticksGame - lastAggroTick < LordRetryTicks)
             {
                 return;
             }
 
             lastAggroTick = ticksGame;
-            LordJob lordJob = new LordJob_AssaultColony(
-                pawn.Faction,
-                canKidnap: false,
-                canTimeoutOrFlee: false,
-                sappers: true,
-                useAvoidGridSmart: true,
-                canSteal: false);
-            LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.Map, new List<Pawn> { pawn });
+            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
         }
     }
 }
