@@ -5,6 +5,8 @@
     <defName>ABY_EmberHound</defName>
     <label>ember hound</label>
     <race>ABY_EmberHound</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>320</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>

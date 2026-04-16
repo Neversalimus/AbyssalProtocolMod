@@ -13,12 +13,36 @@ namespace AbyssalProtocol
         private const string RiftImpRaceDefName = "ABY_RiftImp";
         private const string EmberHoundRaceDefName = "ABY_EmberHound";
         private const string HexgunThrallRaceDefName = "ABY_HexgunThrall";
-        private const string ChainZealotRaceDefName = "ABY_ChainZealot";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
 
         public static Faction ResolveHostileFaction()
         {
+            FactionDef abyssalHostDef = DefDatabase<FactionDef>.GetNamedSilentFail("ABY_AbyssalHost");
+            if (abyssalHostDef != null)
+            {
+                Faction abyssalHost = Find.FactionManager.FirstFactionOfDef(abyssalHostDef);
+                if (abyssalHost == null)
+                {
+                    try
+                    {
+                        abyssalHost = FactionGenerator.NewGeneratedFaction(abyssalHostDef);
+                        if (abyssalHost != null)
+                        {
+                            Find.FactionManager.Add(abyssalHost);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (abyssalHost != null)
+                {
+                    return abyssalHost;
+                }
+            }
+
             FactionDef ancientsHostileDef = DefDatabase<FactionDef>.GetNamedSilentFail("AncientsHostile");
             if (ancientsHostileDef != null)
             {
@@ -278,12 +302,6 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
-            if (dominionCrisis != null && dominionCrisis.IsActive)
-            {
-                return true;
-            }
-
             MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
             if (portalWave != null && portalWave.IsWaveActive)
             {
@@ -325,8 +343,7 @@ namespace AbyssalProtocol
                 || defName == ArchonOfRuptureRaceDefName
                 || defName == RiftImpRaceDefName
                 || defName == EmberHoundRaceDefName
-                || defName == HexgunThrallRaceDefName
-                || defName == ChainZealotRaceDefName;
+                || defName == HexgunThrallRaceDefName;
         }
 
         private static bool HasActivePortalOfDef(Map map, string defName)
