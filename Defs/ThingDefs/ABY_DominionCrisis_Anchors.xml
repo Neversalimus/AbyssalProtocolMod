@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionAnchor_Suppression</defName>
+    <label>suppression anchor</label>
+    <description>A dominion anchor tuned to suppress defensive response. It periodically lashes nearby turrets with EMP pressure and keeps static fire lanes unreliable while the breach remains active.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalDominionAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>560</MaxHitPoints>
+      <Mass>60</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
+        <role>Suppression</role>
+        <pulseIntervalTicks>210</pulseIntervalTicks>
+        <pulseRadius>12.5</pulseRadius>
+        <empDamage>3.2</empDamage>
+        <maxAffectedTargets>5</maxAffectedTargets>
+        <contaminationPulse>0.010</contaminationPulse>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression_Glow</glowTexPath>
+        <glowDrawScale>2.42</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionAnchor_Drain</defName>
+    <label>drain anchor</label>
+    <description>A dominion anchor built to bleed local infrastructure. It lashes batteries and powered machinery around it while continuously feeding more contamination into the breach lattice.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalDominionAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Drain</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>540</MaxHitPoints>
+      <Mass>58</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
+        <role>Drain</role>
+        <pulseIntervalTicks>225</pulseIntervalTicks>
+        <pulseRadius>12.0</pulseRadius>
+        <empDamage>2.6</empDamage>
+        <maxAffectedTargets>4</maxAffectedTargets>
+        <contaminationPulse>0.016</contaminationPulse>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Drain_Glow</glowTexPath>
+        <glowDrawScale>2.44</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionAnchor_Ward</defName>
+    <label>ward anchor</label>
+    <description>A dominion anchor that reinforces the breach perimeter. It periodically refits nearby anchors with fresh lattice plating and makes the objective phase much harder to brute-force.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalDominionAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>610</MaxHitPoints>
+      <Mass>62</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
+        <role>Ward</role>
+        <pulseIntervalTicks>240</pulseIntervalTicks>
+        <pulseRadius>14.5</pulseRadius>
+        <healAmount>18</healAmount>
+        <contaminationPulse>0.011</contaminationPulse>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward_Glow</glowTexPath>
+        <glowDrawScale>2.42</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionAnchor_Breach</defName>
+    <label>breach anchor</label>
+    <description>A dominion anchor dedicated to widening the tear. It does not spawn the later portal package yet, but it accelerates contamination growth and shortens the time window before the crisis slips out of control.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalDominionAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>520</MaxHitPoints>
+      <Mass>56</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
+        <role>Breach</role>
+        <pulseIntervalTicks>180</pulseIntervalTicks>
+        <pulseRadius>11.0</pulseRadius>
+        <contaminationPulse>0.020</contaminationPulse>
+        <timerDrainTicks>150</timerDrainTicks>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach_Glow</glowTexPath>
+        <glowDrawScale>2.48</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

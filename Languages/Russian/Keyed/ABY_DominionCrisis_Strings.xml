@@ -3,17 +3,20 @@
 
   <ABY_CircleRitual_Dominion_Label>Открыть врата доминиона</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Стартовый пакет эндгейм-кризиса</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 1 добавляет синхронизацию, standby-состояние, безопасное сохранение состояния и базовую управляющую поверхность для следующих пакетов полного столкновения.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 2 расширяет ритуал в живую anchorfall-фазу с реальными якорями на карте, давлением на инфраструктуру и объектами, которые нужно уничтожить.</ABY_CircleRitual_Dominion_Desc>
   <ABY_CircleRitual_Dominion_Rewards>• Реально инициализирует каркас эндгейм-кризиса на карте
-• Добавляет повторяемый high-tier ритуал, сигил и state machine кризиса
-• Создаёт основу управления, которую следующие пакеты расширят якорями и волнами</ABY_CircleRitual_Dominion_Rewards>
+• Порождает первые настоящие dominion-цели на карте
+• Добавляет отслеживание якорей, локальные дебаффы и pressure-фазу, которую следующие пакеты расширят волнами и Gate core</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Требует полного кольца стабилизаторов и обеих активных capacitor bays
 • Блокирует другие abyssal-столкновения, пока активно ядро кризиса
-• Повышает contamination и может сорваться при долгой потере питания</ABY_CircleRitual_Dominion_SideEffects>
+• Типы якорей теперь давят турели, питание, contamination и время, а не просто держат standby</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Ядро кризиса доминиона активно. Текущее состояние: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Тир угрозы: эндгейм</ABY_DominionRitualMeta>
+  <ABY_DominionRitualMetaActive>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Якоря: {2}   •   Давление: {3}</ABY_DominionRitualMetaActive>
   <ABY_CircleStatus_Dominion>Доминион</ABY_CircleStatus_Dominion>
+  <ABY_CircleStatus_Anchors>Якоря</ABY_CircleStatus_Anchors>
+  <ABY_CircleStatus_AnchorPressure>Давление якорей</ABY_CircleStatus_AnchorPressure>
 
   <ABY_DominionCrisisAbortCommand>Оборвать стадию доминиона</ABY_DominionCrisisAbortCommand>
   <ABY_DominionCrisisConfirmAbort>Прервать ядро кризиса доминиона на этой карте? Это завершит текущее staging-окно и пометит запуск как отменённый.</ABY_DominionCrisisConfirmAbort>
@@ -21,17 +24,21 @@
 
   <ABY_DominionCrisisStartLabel>Врата доминиона вооружены</ABY_DominionCrisisStartLabel>
   <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию синхронизации доминиона. Ядро прорыва нестабильно, но ещё не развернулось полностью.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisAnchorfallLabel>Якоря доминиона проявились</ABY_DominionCrisisAnchorfallLabel>
+  <ABY_DominionCrisisAnchorfallDesc>{0} перешёл в фазу anchorfall. На карте проявилось {1} якорей доминиона, и теперь они подпитывают прорыв. Уничтожьте их до коллапса таймера.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Ядро доминиона синхронизировано</ABY_DominionCrisisStandbyLabel>
   <ABY_DominionCrisisStandbyDesc>{0} теперь удерживает активное standby-состояние доминиона. Следующие пакеты превратят это в полноценное многофазное столкновение; пока колония просто поддерживает вооружённое ядро.</ABY_DominionCrisisStandbyDesc>
   <ABY_DominionCrisisCancelledLabel>Стадия доминиона отменена</ABY_DominionCrisisCancelledLabel>
   <ABY_DominionCrisisCancelledDesc>Ядро кризиса доминиона было намеренно отключено. Итог: {0}</ABY_DominionCrisisCancelledDesc>
   <ABY_DominionCrisisCancelledReason>ручная отмена</ABY_DominionCrisisCancelledReason>
-  <ABY_DominionCrisisCompletedLabel>Стадия доминиона завершена</ABY_DominionCrisisCompletedLabel>
-  <ABY_DominionCrisisCompletedDesc>Ядро кризиса доминиона помечено как завершённое для текущего пакета. Итог: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>этап пакета 1 завершён</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedLabel>Фаза якорей сломлена</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>Активные якоря доминиона уничтожены, и цель текущего пакета выполнена. Итог: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>якорная решётка пакета 2 уничтожена</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Стадия доминиона сорвалась</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>Ядро кризиса доминиона дестабилизировалось до того, как следующие пакеты взяли его на себя. Причина срыва: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Standby доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
+  <ABY_DominionCrisisReminderAnchors>Активно {0} / {1} якорей доминиона. До коллапса осталось {2}.</ABY_DominionCrisisReminderAnchors>
+  <ABY_DominionCrisisAnchorDestroyed>{0} уничтожен. Активных якорей осталось: {1} / {2}.</ABY_DominionCrisisAnchorDestroyed>
 
   <ABY_DominionCrisisFail_NoCircle>Нет подходящего круга призыва для синхронизации доминиона.</ABY_DominionCrisisFail_NoCircle>
   <ABY_DominionCrisisFail_AlreadyActive>На этой карте уже активно ядро кризиса доминиона.</ABY_DominionCrisisFail_AlreadyActive>
@@ -41,17 +48,53 @@
   <ABY_DominionCrisisFail_CircleLost>Исходный круг призыва был потерян.</ABY_DominionCrisisFail_CircleLost>
   <ABY_DominionCrisisFail_Power>Исходный круг призыва слишком долго оставался без питания.</ABY_DominionCrisisFail_Power>
   <ABY_DominionCrisisFail_WindowExpired>Окно standby для пакета 1 доминиона истекло.</ABY_DominionCrisisFail_WindowExpired>
+  <ABY_DominionCrisisFail_AnchorsPersisted>Якоря доминиона не были уничтожены до истечения таймера коллапса.</ABY_DominionCrisisFail_AnchorsPersisted>
+  <ABY_DominionCrisisFail_NoAnchorCell>На карте не нашлось подходящих клеток для якорей доминиона.</ABY_DominionCrisisFail_NoAnchorCell>
+  <ABY_DominionCrisisFail_AnchorRemnants>На карте всё ещё осталось {0} активных якорей доминиона от незавершённого прорыва.</ABY_DominionCrisisFail_AnchorRemnants>
   <ABY_DominionCrisisAbortFail_NoActive>На этой карте нет активного ядра кризиса доминиона.</ABY_DominionCrisisAbortFail_NoActive>
 
   <ABY_DominionCrisisPhase_Dormant>спит</ABY_DominionCrisisPhase_Dormant>
   <ABY_DominionCrisisPhase_Synchronizing>синхронизация</ABY_DominionCrisisPhase_Synchronizing>
+  <ABY_DominionCrisisPhase_Anchorfall>anchorfall</ABY_DominionCrisisPhase_Anchorfall>
   <ABY_DominionCrisisPhase_Standby>standby</ABY_DominionCrisisPhase_Standby>
   <ABY_DominionCrisisPhase_Cancelled>отменено</ABY_DominionCrisisPhase_Cancelled>
   <ABY_DominionCrisisPhase_Failed>сорвано</ABY_DominionCrisisPhase_Failed>
   <ABY_DominionCrisisPhase_Completed>завершено</ABY_DominionCrisisPhase_Completed>
 
   <ABY_DominionCrisisStatusLine_Active>Кризис доминиона: {0} • осталось {1}</ABY_DominionCrisisStatusLine_Active>
+  <ABY_DominionCrisisStatusLine_Anchors>Кризис доминиона: {0} • якорей {1}/{2} • осталось {3}</ABY_DominionCrisisStatusLine_Anchors>
   <ABY_DominionCrisisStatusLine_Dormant>Ядро кризиса доминиона спит.</ABY_DominionCrisisStatusLine_Dormant>
   <ABY_DominionCrisisStatusLine_Terminal>Кризис доминиона: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
+
+  <ABY_DominionAnchorPreviewHeader>Якорная решётка</ABY_DominionAnchorPreviewHeader>
+  <ABY_DominionAnchorPreviewSummary>Состояние якорей: {0}. Давление: {1}. Окно коллапса: {2}.</ABY_DominionAnchorPreviewSummary>
+  <ABY_DominionAnchorPreviewSummaryIdle>На этой карте пока нет активных якорей доминиона. После завершения синхронизации фаза anchorfall создаст несколько целей вокруг колонии.</ABY_DominionAnchorPreviewSummaryIdle>
+  <ABY_DominionAnchor_ConsoleIdle>Роли якорей ещё не активны. Прорыв всё ещё синхронизируется.</ABY_DominionAnchor_ConsoleIdle>
+  <ABY_DominionAnchor_ConsoleCleared>Все известные роли якорей на этой карте нейтрализованы.</ABY_DominionAnchor_ConsoleCleared>
+  <ABY_DominionAnchor_ConsoleLine>{0}: активно {1} — {2}</ABY_DominionAnchor_ConsoleLine>
+
+  <ABY_DominionAnchor_StatusShort_None>активной якорной решётки нет</ABY_DominionAnchor_StatusShort_None>
+  <ABY_DominionAnchor_StatusShort_Active>{0}/{1} якорей всё ещё питают прорыв</ABY_DominionAnchor_StatusShort_Active>
+  <ABY_DominionAnchor_StatusValue_Pending>проявление ожидается</ABY_DominionAnchor_StatusValue_Pending>
+  <ABY_DominionAnchor_StatusValue_Active>{0} / {1} активно</ABY_DominionAnchor_StatusValue_Active>
+
+  <ABY_DominionAnchor_Pressure_None>нет</ABY_DominionAnchor_Pressure_None>
+  <ABY_DominionAnchor_Pressure_Low>низкое</ABY_DominionAnchor_Pressure_Low>
+  <ABY_DominionAnchor_Pressure_High>высокое</ABY_DominionAnchor_Pressure_High>
+  <ABY_DominionAnchor_Pressure_Maximum>максимальное</ABY_DominionAnchor_Pressure_Maximum>
+
+  <ABY_DominionAnchor_Role_Suppression>подавление</ABY_DominionAnchor_Role_Suppression>
+  <ABY_DominionAnchor_Role_Drain>дренаж</ABY_DominionAnchor_Role_Drain>
+  <ABY_DominionAnchor_Role_Ward>защита</ABY_DominionAnchor_Role_Ward>
+  <ABY_DominionAnchor_Role_Breach>прорыв</ABY_DominionAnchor_Role_Breach>
+
+  <ABY_DominionAnchor_Effect_Suppression>бьёт по ближайшим турелям игрока EMP-импульсами</ABY_DominionAnchor_Effect_Suppression>
+  <ABY_DominionAnchor_Effect_Drain>высасывает ближайшую энергосеть и повышает contamination</ABY_DominionAnchor_Effect_Drain>
+  <ABY_DominionAnchor_Effect_Ward>периодически ремонтирует соседние dominion-якоря</ABY_DominionAnchor_Effect_Ward>
+  <ABY_DominionAnchor_Effect_Breach>ускоряет коллапс и вталкивает дополнительное contamination</ABY_DominionAnchor_Effect_Breach>
+
+  <ABY_DominionAnchor_Inspect>Роль: {0}
+Эффект: {1}
+Статус прорыва: {2}</ABY_DominionAnchor_Inspect>
 
 </LanguageData>

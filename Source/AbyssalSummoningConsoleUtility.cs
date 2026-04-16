@@ -565,6 +565,17 @@ namespace AbyssalProtocol
             {
                 MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
                 string state = crisis != null ? crisis.GetPhaseLabel() : TranslateOrFallback("ABY_DominionCrisisPhase_Dormant", "dormant");
+                if (crisis != null && crisis.IsActive)
+                {
+                    return TranslateOrFallback(
+                        "ABY_DominionRitualMetaActive",
+                        "Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Pressure: {3}",
+                        sigilCount,
+                        state,
+                        crisis.GetAnchorStatusValue(),
+                        crisis.GetAnchorPressureLabel());
+                }
+
                 return TranslateOrFallback(
                     "ABY_DominionRitualMeta",
                     "Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame",
@@ -1163,6 +1174,20 @@ namespace AbyssalProtocol
                     Label = TranslateOrFallback("ABY_CircleStatus_Dominion", "Dominion"),
                     Value = crisis != null ? crisis.GetPhaseLabel() : TranslateOrFallback("ABY_DominionCrisisPhase_Dormant", "dormant"),
                     Satisfied = idle
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_Anchors", "Anchors"),
+                    Value = crisis != null ? crisis.GetAnchorStatusValue() : TranslateOrFallback("ABY_DominionAnchor_StatusValue_Pending", "pending"),
+                    Satisfied = crisis == null || crisis.ActiveAnchorCount <= 0
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_AnchorPressure", "Anchor pressure"),
+                    Value = crisis != null ? crisis.GetAnchorPressureLabel() : TranslateOrFallback("ABY_DominionAnchor_Pressure_None", "none"),
+                    Satisfied = crisis == null || crisis.ActiveAnchorCount <= 0
                 });
             }
 

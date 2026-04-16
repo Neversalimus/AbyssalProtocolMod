@@ -428,8 +428,9 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             Text.Font = GameFont.Tiny;
-            float descriptionHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualDescription(ritual), rect.width);
-            Widgets.Label(new Rect(rect.x, rect.y + 76f, rect.width, descriptionHeight), AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
+            string ritualDescription = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
+            float descriptionHeight = Text.CalcHeight(ritualDescription, rect.width);
+            Widgets.Label(new Rect(rect.x, rect.y + 76f, rect.width, descriptionHeight), ritualDescription);
 
             float consequencesY = rect.y + 84f + descriptionHeight;
             Text.Font = GameFont.Small;
@@ -438,6 +439,34 @@ namespace AbyssalProtocol
             string sideEffectText = AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual);
             float sideEffectHeight = Text.CalcHeight(sideEffectText, rect.width);
             Widgets.Label(new Rect(rect.x, consequencesY + 28f, rect.width, sideEffectHeight), sideEffectText);
+
+            float dominionY = consequencesY + 34f + sideEffectHeight;
+            if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
+            {
+                MapComponent_DominionCrisis crisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, dominionY, rect.width, 22f), "ABY_DominionAnchorPreviewHeader".Translate());
+                Text.Font = GameFont.Tiny;
+
+                string summaryText = crisis != null && crisis.IsActive
+                    ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
+
+                float summaryHeight = Text.CalcHeight(summaryText, rect.width);
+                Widgets.Label(new Rect(rect.x, dominionY + 28f, rect.width, summaryHeight), summaryText);
+
+                float linesY = dominionY + 32f + summaryHeight;
+                List<string> anchorLines = crisis != null ? crisis.GetAnchorConsoleLines() : new List<string>();
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < anchorLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(anchorLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, linesY, rect.width, lineHeight), anchorLines[i]);
+                    linesY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+            }
+
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
         }
@@ -461,8 +490,25 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             float descriptionHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualDescription(ritual), width);
             float sideEffectHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual), width);
+            float total = 120f + descriptionHeight + sideEffectHeight;
+
+            if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
+            {
+                MapComponent_DominionCrisis crisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+                string summaryText = crisis != null && crisis.IsActive
+                    ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
+                total += 54f + Text.CalcHeight(summaryText, width);
+
+                List<string> anchorLines = crisis != null ? crisis.GetAnchorConsoleLines() : new List<string>();
+                for (int i = 0; i < anchorLines.Count; i++)
+                {
+                    total += Text.CalcHeight(anchorLines[i], width) + 4f;
+                }
+            }
+
             Text.Font = GameFont.Small;
-            return 120f + descriptionHeight + sideEffectHeight;
+            return total;
         }
 
         private void DrawModuleSlotRow(Rect rect, AbyssalCircleModuleEdge edge)
