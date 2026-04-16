@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -13,33 +14,37 @@ namespace AbyssalProtocol
         private const string RiftImpRaceDefName = "ABY_RiftImp";
         private const string EmberHoundRaceDefName = "ABY_EmberHound";
         private const string HexgunThrallRaceDefName = "ABY_HexgunThrall";
+        private const string ChainZealotRaceDefName = "ABY_ChainZealot";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
 
         public static Faction ResolveHostileFaction()
         {
-            FactionDef abyssalHostDef = DefDatabase<FactionDef>.GetNamedSilentFail("ABY_AbyssalHost");
-            if (abyssalHostDef != null)
+            FactionDef abyssalDef = DefDatabase<FactionDef>.GetNamedSilentFail("ABY_AbyssalHost");
+            if (abyssalDef != null)
             {
-                Faction abyssalHost = Find.FactionManager.FirstFactionOfDef(abyssalHostDef);
-                if (abyssalHost == null)
+                Faction abyssal = Find.FactionManager.FirstFactionOfDef(abyssalDef);
+                if (abyssal != null)
                 {
-                    try
-                    {
-                        abyssalHost = FactionGenerator.NewGeneratedFaction(abyssalHostDef);
-                        if (abyssalHost != null)
-                        {
-                            Find.FactionManager.Add(abyssalHost);
-                        }
-                    }
-                    catch
-                    {
-                    }
+                    return abyssal;
                 }
 
-                if (abyssalHost != null)
+                try
                 {
-                    return abyssalHost;
+                    Faction generated = FactionGenerator.NewGeneratedFaction(new FactionGeneratorParms(abyssalDef));
+                    if (generated != null)
+                    {
+                        if (!Find.FactionManager.AllFactionsListForReading.Contains(generated))
+                        {
+                            Find.FactionManager.Add(generated);
+                        }
+
+                        return generated;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning($"[AbyssalProtocol] Failed to generate ABY_AbyssalHost faction, falling back to vanilla hostile factions: {ex}");
                 }
             }
 
@@ -302,6 +307,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis != null && dominionCrisis.IsActive)
+            {
+                return true;
+            }
+
             MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
             if (portalWave != null && portalWave.IsWaveActive)
             {
@@ -343,7 +354,8 @@ namespace AbyssalProtocol
                 || defName == ArchonOfRuptureRaceDefName
                 || defName == RiftImpRaceDefName
                 || defName == EmberHoundRaceDefName
-                || defName == HexgunThrallRaceDefName;
+                || defName == HexgunThrallRaceDefName
+                || defName == ChainZealotRaceDefName;
         }
 
         private static bool HasActivePortalOfDef(Map map, string defName)
