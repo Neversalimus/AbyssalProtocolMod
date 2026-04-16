@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
@@ -135,7 +136,15 @@ namespace AbyssalProtocol
             ArchonInfernalVFXUtility.DoSummonVFX(map, arrivalCell);
             ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", arrivalCell, map);
 
-            AbyssalLordUtility.EnsureAssaultLord(spawned, faction, map, sappers: false);
+            LordJob lordJob = new LordJob_AssaultColony(
+                faction,
+                canKidnap: false,
+                canTimeoutOrFlee: false,
+                sappers: false,
+                useAvoidGridSmart: true,
+                canSteal: false);
+
+            LordMaker.MakeNewLord(faction, lordJob, map, spawned);
 
             if (sendLetter)
             {
@@ -206,6 +215,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
             return true;
         }
 
