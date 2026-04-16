@@ -1365,6 +1365,27 @@ namespace AbyssalProtocol
                     Value = crisis != null ? crisis.GetReplayStatusValue() : TranslateOrFallback("ABY_DominionReplay_Empty", "no completed dominion runs on this map yet"),
                     Satisfied = true
                 });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionCalibration", "Calibration"),
+                    Value = crisis != null ? crisis.GetCalibrationValue() : TranslateOrFallback("ABY_DominionCalibration_Contained", "contained"),
+                    Satisfied = true
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionBudget", "Runtime budget"),
+                    Value = crisis != null ? crisis.GetRuntimeBudgetValue() : TranslateOrFallback("ABY_DominionBudget_Value", "0/0 hostiles • 0/0 portals", 0, 0, 0, 0),
+                    Satisfied = true
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionFx", "FX mode"),
+                    Value = crisis != null ? crisis.GetFxModeValue() : TranslateOrFallback("ABY_DominionFxMode_Standard", "standard"),
+                    Satisfied = true
+                });
             }
 
             if (ritual != null)

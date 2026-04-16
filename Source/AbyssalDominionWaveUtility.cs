@@ -49,12 +49,10 @@ namespace AbyssalProtocol
                 return plan;
             }
 
-            int colonists = Mathf.Max(1, ABY_Phase2PortalUtility.CountActivePlayerColonists(map));
-            float wealth = map.wealthWatcher?.WealthTotal ?? 0f;
-
-            plan.ColonistTier = GetColonistTier(colonists);
-            plan.WealthTier = GetWealthTier(wealth);
-            plan.Tier = Mathf.Clamp(Math.Max(plan.ColonistTier, plan.WealthTier) + Mathf.Clamp(crisis.WavesTriggered / 2, 0, 2), 0, 5);
+            AbyssalDominionBalanceUtility.RuntimeProfile profile = AbyssalDominionBalanceUtility.BuildProfile(map, crisis);
+            plan.ColonistTier = GetColonistTier(profile.Colonists);
+            plan.WealthTier = GetWealthTier(profile.Wealth);
+            plan.Tier = Mathf.Clamp(Math.Max(plan.ColonistTier, plan.WealthTier) + Mathf.Clamp(crisis.WavesTriggered / 2, 0, 2) + profile.ReplayTier, 0, 5);
 
             plan.ActiveAnchorCount = crisis.ActiveAnchorCount;
             plan.SuppressionAnchors = crisis.GetActiveAnchorCount(DominionAnchorRole.Suppression);
@@ -69,6 +67,11 @@ namespace AbyssalProtocol
             if (plan.PortalCount > 0)
             {
                 plan.TotalImpCount = 2 + plan.Tier + Mathf.Min(2, plan.BreachAnchors) + Mathf.Min(1, plan.DrainAnchors) + Mathf.Min(crisis.WavesTriggered, 2);
+                if (profile.StageTier >= 4)
+                {
+                    plan.TotalImpCount += 1;
+                }
+
                 if (plan.ActiveAnchorCount <= 2)
                 {
                     plan.TotalImpCount = Mathf.Max(2, plan.TotalImpCount - 1);
@@ -81,6 +84,11 @@ namespace AbyssalProtocol
             }
 
             if (plan.WardAnchors > 0 && plan.Tier >= 3)
+            {
+                plan.HoundCount += 1;
+            }
+
+            if (profile.StageTier >= 5)
             {
                 plan.HoundCount += 1;
             }
@@ -110,8 +118,8 @@ namespace AbyssalProtocol
                 plan.ThrallCount = Mathf.Min(plan.ThrallCount, 1);
             }
 
-            plan.MaxActiveHostiles = Mathf.Clamp(10 + colonists + (plan.Tier * 2), 16, 30);
-            plan.MaxActivePortals = plan.PortalCount >= 2 ? 3 : 2;
+            plan.MaxActiveHostiles = profile.MaxActiveHostiles;
+            plan.MaxActivePortals = Mathf.Min(profile.MaxActivePortals, plan.PortalCount >= 2 ? 3 : 2);
             return plan;
         }
 
@@ -129,11 +137,18 @@ namespace AbyssalProtocol
 
             int anchors = Mathf.Max(0, crisis.ActiveAnchorCount);
             int breachAnchors = crisis.GetActiveAnchorCount(DominionAnchorRole.Breach);
+            AbyssalDominionBalanceUtility.RuntimeProfile profile = AbyssalDominionBalanceUtility.BuildProfile(crisis.CrisisMap, crisis);
             int delay = 4800;
             delay -= anchors * 220;
             delay -= breachAnchors * 600;
             delay -= Mathf.Min(5, crisis.WavesTriggered) * 130;
-            return Mathf.Clamp(delay, 2100, 5100);
+            if (profile.LowFxMode)
+            {
+                delay += 240;
+            }
+
+            delay -= profile.StageTier * 40;
+            return Mathf.Clamp(delay, 2100, 5400);
         }
 
         public static string GetWavePressureLabel(Map map, MapComponent_DominionCrisis crisis)
@@ -264,6 +279,7 @@ namespace AbyssalProtocol
                     crisis.LastWaveSummary));
             }
 
+            lines.AddRange(AbyssalDominionBalanceUtility.GetConsoleLines(map, crisis));
             return lines;
         }
 
@@ -477,15 +493,16 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            AbyssalDominionBalanceUtility.RuntimeProfile profile = AbyssalDominionBalanceUtility.BuildProfile(map, crisis);
             int activeHostiles = CountActiveAbyssalHostiles(map);
-            if (activeHostiles >= 28)
+            if (activeHostiles >= profile.MaxActiveHostiles)
             {
                 summary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePreviewStatus_ThrottledUnits", "throttled while earlier abyssal hostiles are still active");
                 return false;
             }
 
             int activePortals = CountActivePortals(map);
-            if (activePortals >= 2)
+            if (activePortals >= profile.MaxActivePortals)
             {
                 summary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePreviewStatus_ThrottledPortals", "waiting for earlier breach portals to collapse");
                 return false;
@@ -497,9 +514,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            int colonists = Mathf.Max(1, ABY_Phase2PortalUtility.CountActivePlayerColonists(map));
-            int tier = Mathf.Clamp((colonists - 1) / 3, 0, 5);
-            int impCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 8);
+            int tier = Mathf.Clamp(profile.StageTier + Mathf.Clamp(crisis.WavesTriggered / 2, 0, 2), 0, 5);
+            int impCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 9);
             int houndCount = tier >= 1 ? 1 + (tier >= 4 ? 1 : 0) : 0;
             int thrallCount = tier >= 2 ? 1 + (tier >= 5 ? 1 : 0) : 0;
 

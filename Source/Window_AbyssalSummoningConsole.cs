@@ -599,12 +599,24 @@ namespace AbyssalProtocol
 
                 float rewardLinesY = rewardSectionY + 32f + rewardSummaryHeight;
                 List<string> rewardLines = crisis != null ? crisis.GetRewardConsoleLines() : new List<string>();
+                List<string> balanceLines = crisis != null ? crisis.GetBalanceConsoleLines() : new List<string>();
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 for (int i = 0; i < rewardLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(rewardLines[i], rect.width);
                     Widgets.Label(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), rewardLines[i]);
                     rewardLinesY += lineHeight + 4f;
+                }
+
+                if (balanceLines.Count > 0)
+                {
+                    rewardLinesY += 6f;
+                    for (int i = 0; i < balanceLines.Count; i++)
+                    {
+                        float lineHeight = Text.CalcHeight(balanceLines[i], rect.width);
+                        Widgets.Label(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), balanceLines[i]);
+                        rewardLinesY += lineHeight + 4f;
+                    }
                 }
                 GUI.color = Color.white;
             }

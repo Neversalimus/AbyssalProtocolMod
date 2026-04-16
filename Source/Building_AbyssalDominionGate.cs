@@ -284,9 +284,13 @@ namespace AbyssalProtocol
 
             if (affected > 0)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 3.0f);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.9f : 3.0f);
                 crisis?.AddExternalContamination(0.022f);
-                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                if (!lowFx || this.IsHashIntervalTick(180))
+                {
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                }
             }
         }
 
@@ -306,13 +310,17 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
                 GenExplosion.DoExplosion(cell, Map, 1.45f, DamageDefOf.Flame, this, 10f, 0f);
                 FireUtility.TryStartFireIn(cell, Map, 0.25f);
-                FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), Map, 1.7f);
+                FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), Map, lowFx ? 1.0f : 1.7f);
             }
 
             crisis?.AddExternalContamination(0.018f * targets.Count);
-            ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", Position, Map);
+            if (!AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis) || this.IsHashIntervalTick(240))
+            {
+                ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", Position, Map);
+            }
         }
 
         private void ExecuteCallOfDominion(MapComponent_DominionCrisis crisis)

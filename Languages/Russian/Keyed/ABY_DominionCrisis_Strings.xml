@@ -238,4 +238,23 @@
   <ABY_CircleStatus_DominionRewards>Лента наград</ABY_CircleStatus_DominionRewards>
   <ABY_CircleStatus_DominionReplay>Статистика запусков</ABY_CircleStatus_DominionReplay>
 
+
+  <ABY_DominionCalibration_Contained>сдержанный</ABY_DominionCalibration_Contained>
+  <ABY_DominionCalibration_Escalated>эскалированный</ABY_DominionCalibration_Escalated>
+  <ABY_DominionCalibration_Apex>пиковый</ABY_DominionCalibration_Apex>
+  <ABY_DominionBudget_Value>{0}/{1} враждебных • {2}/{3} порталов</ABY_DominionBudget_Value>
+  <ABY_DominionFxMode_Standard>стандартный</ABY_DominionFxMode_Standard>
+  <ABY_DominionFxMode_Restrained>сдержанный</ABY_DominionFxMode_Restrained>
+  <ABY_DominionBalanceConsoleCalibration>Калибровка: {0}</ABY_DominionBalanceConsoleCalibration>
+  <ABY_DominionBalanceConsoleBudget>Бюджет рантайма: {0}</ABY_DominionBalanceConsoleBudget>
+  <ABY_DominionBalanceConsoleFx>Режим FX: {0}</ABY_DominionBalanceConsoleFx>
+  <ABY_DominionBalanceConsoleMaintenance>Регулятор: {0}</ABY_DominionBalanceConsoleMaintenance>
+  <ABY_DominionMaintenance_Stable>стабильно</ABY_DominionMaintenance_Stable>
+  <ABY_DominionMaintenance_Portals>схлопнуло лишние порталы: {0}</ABY_DominionMaintenance_Portals>
+  <ABY_DominionMaintenance_Delay>следующий импульс отложен на {0}</ABY_DominionMaintenance_Delay>
+  <ABY_DominionMaintenance_Combined>схлопнуло лишние порталы: {0}; следующий импульс отложен на {1}</ABY_DominionMaintenance_Combined>
+  <ABY_CircleStatus_DominionCalibration>Калибровка</ABY_CircleStatus_DominionCalibration>
+  <ABY_CircleStatus_DominionBudget>Бюджет рантайма</ABY_CircleStatus_DominionBudget>
+  <ABY_CircleStatus_DominionFx>Режим FX</ABY_CircleStatus_DominionFx>
+
 </LanguageData>

@@ -238,4 +238,23 @@ Directive: {1}</ABY_DominionOpsSummary>
   <ABY_CircleStatus_DominionRewards>Reward track</ABY_CircleStatus_DominionRewards>
   <ABY_CircleStatus_DominionReplay>Replay record</ABY_CircleStatus_DominionReplay>
 
+
+  <ABY_DominionCalibration_Contained>contained</ABY_DominionCalibration_Contained>
+  <ABY_DominionCalibration_Escalated>escalated</ABY_DominionCalibration_Escalated>
+  <ABY_DominionCalibration_Apex>apex</ABY_DominionCalibration_Apex>
+  <ABY_DominionBudget_Value>{0}/{1} hostiles • {2}/{3} portals</ABY_DominionBudget_Value>
+  <ABY_DominionFxMode_Standard>standard</ABY_DominionFxMode_Standard>
+  <ABY_DominionFxMode_Restrained>restrained</ABY_DominionFxMode_Restrained>
+  <ABY_DominionBalanceConsoleCalibration>Calibration: {0}</ABY_DominionBalanceConsoleCalibration>
+  <ABY_DominionBalanceConsoleBudget>Runtime budget: {0}</ABY_DominionBalanceConsoleBudget>
+  <ABY_DominionBalanceConsoleFx>FX mode: {0}</ABY_DominionBalanceConsoleFx>
+  <ABY_DominionBalanceConsoleMaintenance>Governor: {0}</ABY_DominionBalanceConsoleMaintenance>
+  <ABY_DominionMaintenance_Stable>stable</ABY_DominionMaintenance_Stable>
+  <ABY_DominionMaintenance_Portals>collapsed {0} excess portals</ABY_DominionMaintenance_Portals>
+  <ABY_DominionMaintenance_Delay>deferred the next pulse by {0}</ABY_DominionMaintenance_Delay>
+  <ABY_DominionMaintenance_Combined>collapsed {0} excess portals and deferred the next pulse by {1}</ABY_DominionMaintenance_Combined>
+  <ABY_CircleStatus_DominionCalibration>Calibration</ABY_CircleStatus_DominionCalibration>
+  <ABY_CircleStatus_DominionBudget>Runtime budget</ABY_CircleStatus_DominionBudget>
+  <ABY_CircleStatus_DominionFx>FX mode</ABY_CircleStatus_DominionFx>
+
 </LanguageData>

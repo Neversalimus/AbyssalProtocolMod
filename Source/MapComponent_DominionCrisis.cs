@@ -28,6 +28,7 @@ namespace AbyssalProtocol
         private const int AnchorReminderIntervalTicks = 3000;
         private const int GateReminderIntervalTicks = 2400;
         private const int WaveRetryTicks = 360;
+        private const int RuntimeMaintenanceIntervalTicks = 300;
         private const string DominionResearchDefName = "ABY_DominionGateBootstrapping";
         private const string DominionGateThingDefName = "ABY_DominionGateCore";
 
@@ -55,6 +56,8 @@ namespace AbyssalProtocol
         private int cancelledCount;
         private int cooldownUntilTick;
         private string lastRewardSummary;
+        private int nextMaintenanceTick;
+        private string lastMaintenanceSummary;
 
         public MapComponent_DominionCrisis(Map map) : base(map)
         {
@@ -81,6 +84,7 @@ namespace AbyssalProtocol
         public int CancelledCount => cancelledCount;
         public int CooldownUntilTick => cooldownUntilTick;
         public string LastRewardSummary => lastRewardSummary;
+        public string LastMaintenanceSummary => lastMaintenanceSummary;
         public bool HasCooldown => !IsActive && Find.TickManager != null && cooldownUntilTick > Find.TickManager.TicksGame;
 
         public int CooldownTicksRemaining
@@ -166,6 +170,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref cancelledCount, "cancelledCount", 0);
             Scribe_Values.Look(ref cooldownUntilTick, "cooldownUntilTick", 0);
             Scribe_Values.Look(ref lastRewardSummary, "lastRewardSummary");
+            Scribe_Values.Look(ref nextMaintenanceTick, "nextMaintenanceTick", 0);
+            Scribe_Values.Look(ref lastMaintenanceSummary, "lastMaintenanceSummary");
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -209,15 +215,21 @@ namespace AbyssalProtocol
             CleanupAnchorReferences();
             CleanupGateReference();
 
+            if (now >= nextMaintenanceTick)
+            {
+                nextMaintenanceTick = now + Mathf.Max(RuntimeMaintenanceIntervalTicks, AbyssalDominionBalanceUtility.GetMaintenanceIntervalTicks(map, this));
+                lastMaintenanceSummary = RunRuntimeMaintenance(now);
+            }
+
             if (now >= nextAmbientPulseTick)
             {
-                nextAmbientPulseTick = now + AmbientPulseIntervalTicks;
+                nextAmbientPulseTick = now + AbyssalDominionBalanceUtility.GetAmbientPulseIntervalTicks(map, this);
                 TickAmbientEffects(powered);
             }
 
             if (now >= nextAmbientSoundTick)
             {
-                nextAmbientSoundTick = now + AmbientSoundIntervalTicks;
+                nextAmbientSoundTick = now + AbyssalDominionBalanceUtility.GetAmbientSoundIntervalTicks(map, this);
                 if (sourceCell.IsValid)
                 {
                     ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", sourceCell, map);
@@ -356,10 +368,13 @@ namespace AbyssalProtocol
             nextReminderTick = 0;
             nextWaveTick = 0;
             lastWaveTick = 0;
+            nextMaintenanceTick = 0;
             wavesTriggered = 0;
             lastWaveSummary = null;
             lastOutcomeReason = null;
             lastRewardSummary = null;
+            nextMaintenanceTick = now + 60;
+            lastMaintenanceSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionMaintenance_Stable", "stable");
             activeAnchors.Clear();
             initialAnchorCount = 0;
             phase = DominionCrisisPhase.Synchronizing;
@@ -638,6 +653,26 @@ namespace AbyssalProtocol
             return AbyssalDominionRewardUtility.GetRewardConsoleLines(this);
         }
 
+        public List<string> GetBalanceConsoleLines()
+        {
+            return AbyssalDominionBalanceUtility.GetConsoleLines(map, this);
+        }
+
+        public string GetCalibrationValue()
+        {
+            return AbyssalDominionBalanceUtility.GetCalibrationValue(map, this);
+        }
+
+        public string GetRuntimeBudgetValue()
+        {
+            return AbyssalDominionBalanceUtility.GetRuntimeBudgetValue(map, this);
+        }
+
+        public string GetFxModeValue()
+        {
+            return AbyssalDominionBalanceUtility.GetFxModeValue(map, this);
+        }
+
         public void DebugAdvancePhase()
         {
             if (phase == DominionCrisisPhase.Synchronizing)
@@ -685,6 +720,7 @@ namespace AbyssalProtocol
             nextReminderTick = 0;
             nextWaveTick = 0;
             lastWaveTick = 0;
+            nextMaintenanceTick = 0;
             wavesTriggered = 0;
             lastWaveSummary = null;
             lastOutcomeReason = null;
@@ -697,6 +733,8 @@ namespace AbyssalProtocol
             cancelledCount = 0;
             cooldownUntilTick = 0;
             lastRewardSummary = null;
+            nextMaintenanceTick = 0;
+            lastMaintenanceSummary = null;
         }
 
         public string GetPhaseLabel()
@@ -1432,8 +1470,46 @@ namespace AbyssalProtocol
                 contamination += 0.0115f;
             }
 
+            contamination *= AbyssalDominionBalanceUtility.GetAmbientContaminationMultiplier(map, this);
             map.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(contamination);
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, phase == DominionCrisisPhase.Synchronizing ? 0.05f : (phase == DominionCrisisPhase.Gatecore ? 0.12f : 0.09f));
+
+            float pulseStrength = phase == DominionCrisisPhase.Synchronizing ? 0.05f : (phase == DominionCrisisPhase.Gatecore ? 0.12f : 0.09f);
+            pulseStrength *= AbyssalDominionBalanceUtility.GetScreenFxMultiplier(map, this);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, pulseStrength);
+        }
+
+        private string RunRuntimeMaintenance(int now)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+
+            int removedPortals = AbyssalDominionBalanceUtility.CollapseExcessPortals(map, this, sourceCell);
+            int waveDelay = 0;
+            AbyssalDominionBalanceUtility.RuntimeProfile profile = AbyssalDominionBalanceUtility.BuildProfile(map, this);
+            if (phase == DominionCrisisPhase.Anchorfall && nextWaveTick > 0 && profile.ActiveHostiles > profile.MaxActiveHostiles)
+            {
+                waveDelay = Mathf.Clamp((profile.ActiveHostiles - profile.MaxActiveHostiles) * 45, 240, 900);
+                nextWaveTick = Mathf.Max(nextWaveTick, now + waveDelay);
+            }
+
+            if (removedPortals > 0 && waveDelay > 0)
+            {
+                return "ABY_DominionMaintenance_Combined".Translate(removedPortals, waveDelay.ToStringTicksToPeriod());
+            }
+
+            if (removedPortals > 0)
+            {
+                return "ABY_DominionMaintenance_Portals".Translate(removedPortals);
+            }
+
+            if (waveDelay > 0)
+            {
+                return "ABY_DominionMaintenance_Delay".Translate(waveDelay.ToStringTicksToPeriod());
+            }
+
+            return "ABY_DominionMaintenance_Stable".Translate();
         }
 
         private void SendAnchorReminder()
@@ -1477,6 +1553,7 @@ namespace AbyssalProtocol
             nextReminderTick = 0;
             nextWaveTick = 0;
             lastWaveTick = 0;
+            nextMaintenanceTick = 0;
 
             switch (terminalPhase)
             {

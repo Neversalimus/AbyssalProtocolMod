@@ -175,8 +175,12 @@ namespace AbyssalProtocol
 
             if (affected > 0)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.8f);
-                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.2f : 1.8f);
+                if (!lowFx || this.IsHashIntervalTick(180))
+                {
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                }
             }
         }
 
@@ -209,7 +213,8 @@ namespace AbyssalProtocol
             crisis.AddExternalContamination((AnchorExtension?.contaminationPulse ?? 0.014f) * (affected > 0 ? 1.15f : 0.75f));
             if (affected > 0)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.65f);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.15f : 1.65f);
             }
         }
 
@@ -239,7 +244,8 @@ namespace AbyssalProtocol
 
             if (healed > 0)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.9f);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.25f : 1.9f);
                 crisis.AddExternalContamination((AnchorExtension?.contaminationPulse ?? 0.010f) * 0.8f);
             }
         }
@@ -248,8 +254,12 @@ namespace AbyssalProtocol
         {
             crisis.AddExternalContamination(AnchorExtension?.contaminationPulse ?? 0.018f);
             crisis.AccelerateAnchorDeadline(Mathf.Max(30, AnchorExtension?.timerDrainTicks ?? 120));
-            FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.05f);
-            FleckMaker.ThrowMicroSparks(DrawPos, Map);
+            bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+            FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.3f : 2.05f);
+            if (!lowFx)
+            {
+                FleckMaker.ThrowMicroSparks(DrawPos, Map);
+            }
         }
 
         private IEnumerable<Thing> GetNearbyDistinctThings(float radius)
