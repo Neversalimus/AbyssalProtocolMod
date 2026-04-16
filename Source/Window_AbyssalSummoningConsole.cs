@@ -15,11 +15,12 @@ namespace AbyssalProtocol
         private Vector2 capacitorScrollPosition = Vector2.zero;
         private Vector2 stabilizerScrollPosition = Vector2.zero;
         private Vector2 ritualPreviewScrollPosition = Vector2.zero;
+        private Vector2 statusScrollPosition = Vector2.zero;
 
         public Window_AbyssalSummoningConsole(Building_AbyssalSummoningCircle circle)
         {
             this.circle = circle;
-            selectedRitualId = AbyssalSummoningConsoleUtility.GetDefaultRitual()?.Id;
+            selectedRitualId = AbyssalSummoningConsoleUtility.GetSuggestedRitual(circle)?.Id;
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
             doCloseX = true;
@@ -46,15 +47,22 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
             Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 520f, 420f);
-            Rect controlRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 420f);
+            Rect overviewRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 420f);
             Rect systemsRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
+
+            float controlWidth = Mathf.Min(332f, overviewRect.width * 0.38f);
+            Rect controlRect = new Rect(overviewRect.x, overviewRect.y, controlWidth, overviewRect.height);
+            Rect statusRect = new Rect(controlRect.xMax + 10f, overviewRect.y, overviewRect.width - controlWidth - 10f, 172f);
+            Rect previewRect = new Rect(statusRect.x, statusRect.yMax + 10f, statusRect.width, overviewRect.height - statusRect.height - 10f);
 
             DrawHeader(headerRect, ritual);
             DrawReadinessStrip(stripRect, ritual);
             DrawRitualBrowser(ritualsRect, ritual);
             DrawControlPanel(controlRect, ritual);
+            DrawStatusPanel(statusRect, ritual);
+            DrawScrollableRitualPreviewPanel(previewRect, ritual);
             DrawSystemsPanel(systemsRect, ritual);
         }
 
@@ -161,12 +169,18 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleUtility.CircleRiskTier riskTier = AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual);
             AbyssalSummoningConsoleArt.DrawRiskBar(new Rect(inner.x, inner.y + 28f, inner.width, 28f), AbyssalSummoningConsoleUtility.GetRiskFill(circle, ritual), AbyssalSummoningConsoleUtility.GetRiskLabel(riskTier), AbyssalSummoningConsoleUtility.GetRiskColor(riskTier), circle.RitualActive);
 
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
+
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 64f, inner.width, 18f), "ABY_CircleControlState".Translate());
             GUI.color = Color.white;
-            Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 28f), circle.GetCurrentStatusLine());
+            string statusLine = dominionCrisis != null && dominionCrisis.IsActive
+                ? dominionCrisis.GetStatusLine()
+                : circle.GetCurrentStatusLine();
+            Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 44f), statusLine);
 
-            float rowY = inner.y + 118f;
+            float rowY = inner.y + 126f;
             DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CircleReducedEffects".Translate(),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
@@ -199,14 +213,31 @@ namespace AbyssalProtocol
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 });
 
-            Rect openRect = new Rect(inner.x, inner.yMax - 78f, inner.width, 30f);
             Rect invokeRect = new Rect(inner.x, inner.yMax - 40f, inner.width, 34f);
-            if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
+            if (dominionUiMode)
             {
-                JumpToSigil(ritual);
+                float halfWidth = (inner.width - 6f) * 0.5f;
+                Rect sigilRect = new Rect(inner.x, inner.yMax - 78f, halfWidth, 30f);
+                Rect objectiveRect = new Rect(sigilRect.xMax + 6f, inner.yMax - 78f, halfWidth, 30f);
+                if (AbyssalStyledWidgets.TextButton(sigilRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
+                {
+                    JumpToSigil(ritual);
+                }
+
+                if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                {
+                    JumpToDominionObjective();
+                }
+            }
+            else
+            {
+                Rect openRect = new Rect(inner.x, inner.yMax - 78f, inner.width, 30f);
+                if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
+                {
+                    JumpToSigil(ritual);
+                }
             }
 
-            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
             bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
             string invokeLabel = dominionAbortMode
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortCommand", "Abort dominion staging")
@@ -249,16 +280,39 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CircleStatusHeaderLong".Translate());
 
             List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
+            bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
+            float summaryHeight = dominionUiMode ? 54f : 0f;
+            float contentHeight = 8f + summaryHeight + entries.Count * 22f;
+            Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
+            Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
+
+            Widgets.BeginScrollView(outRect, ref statusScrollPosition, viewRect, true);
+            float y = 0f;
+            if (dominionUiMode)
+            {
+                GUI.color = new Color(0.19f, 0.08f, 0.07f, 0.78f);
+                GUI.DrawTexture(new Rect(0f, 0f, viewRect.width, 50f), BaseContent.WhiteTex);
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                Widgets.Label(new Rect(8f, 4f, viewRect.width - 16f, 16f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionStatusHeader", "Crisis telemetry"));
+                GUI.color = Color.white;
+                Text.Font = GameFont.Tiny;
+                Widgets.Label(new Rect(8f, 20f, viewRect.width - 16f, 28f), AbyssalSummoningConsoleUtility.GetDominionOpsSummary(circle));
+                Text.Font = GameFont.Small;
+                y += 58f;
+            }
+
             for (int i = 0; i < entries.Count; i++)
             {
-                Rect lineRect = new Rect(inner.x, inner.y + 28f + i * 22f, inner.width, 20f);
-                Rect valueRect = new Rect(lineRect.x + inner.width * 0.44f, lineRect.y, inner.width * 0.56f, lineRect.height);
+                Rect lineRect = new Rect(0f, y + i * 22f, viewRect.width, 20f);
+                Rect valueRect = new Rect(lineRect.x + viewRect.width * 0.44f, lineRect.y, viewRect.width * 0.56f, lineRect.height);
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(lineRect.x, lineRect.y, inner.width * 0.42f, lineRect.height), entries[i].Label);
+                Widgets.Label(new Rect(lineRect.x, lineRect.y, viewRect.width * 0.42f, lineRect.height), entries[i].Label);
                 GUI.color = entries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.60f, 0.54f, 1f);
                 Widgets.Label(valueRect, entries[i].Value);
                 GUI.color = Color.white;
             }
+
+            Widgets.EndScrollView();
         }
 
         private void DrawSystemsPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -706,6 +760,18 @@ namespace AbyssalProtocol
             if (jumpTarget != null)
             {
                 CameraJumper.TryJumpAndSelect(jumpTarget);
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
+            else if (!failReason.NullOrEmpty())
+            {
+                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+            }
+        }
+
+        private void JumpToDominionObjective()
+        {
+            if (AbyssalSummoningConsoleUtility.TryJumpToDominionObjective(circle, out string failReason))
+            {
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
             else if (!failReason.NullOrEmpty())

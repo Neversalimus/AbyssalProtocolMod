@@ -417,6 +417,116 @@ namespace AbyssalProtocol
             return activeAnchors == null ? new List<Building_AbyssalDominionAnchor>() : new List<Building_AbyssalDominionAnchor>(activeAnchors);
         }
 
+        public Thing GetPrimaryObjectiveThing()
+        {
+            CleanupAnchorReferences();
+            CleanupGateReference();
+
+            if (phase == DominionCrisisPhase.Gatecore && gateCore != null && !gateCore.Destroyed)
+            {
+                return gateCore;
+            }
+
+            if (phase == DominionCrisisPhase.Anchorfall)
+            {
+                Building_AbyssalDominionAnchor bestAnchor = GetBestAnchorObjective();
+                if (bestAnchor != null)
+                {
+                    return bestAnchor;
+                }
+            }
+
+            if (sourceCircle != null && !sourceCircle.Destroyed)
+            {
+                return sourceCircle;
+            }
+
+            return null;
+        }
+
+        public string GetPrimaryObjectiveLabel()
+        {
+            switch (phase)
+            {
+                case DominionCrisisPhase.Synchronizing:
+                    return "ABY_DominionOpsObjective_Sync".Translate();
+                case DominionCrisisPhase.Anchorfall:
+                    return "ABY_DominionOpsObjective_Anchors".Translate();
+                case DominionCrisisPhase.Gatecore:
+                    return "ABY_DominionOpsObjective_Gate".Translate();
+                default:
+                    return "ABY_DominionOpsObjective_Dormant".Translate();
+            }
+        }
+
+        public string GetDirectiveSummary()
+        {
+            switch (phase)
+            {
+                case DominionCrisisPhase.Synchronizing:
+                    return "ABY_DominionOpsDirective_Sync".Translate();
+                case DominionCrisisPhase.Anchorfall:
+                    return "ABY_DominionOpsDirective_Anchors".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), GetWavePressureLabel());
+                case DominionCrisisPhase.Gatecore:
+                    return "ABY_DominionOpsDirective_Gate".Translate(GetGateIntegrityValue(), GetGatePulseEtaValue());
+                case DominionCrisisPhase.Cancelled:
+                case DominionCrisisPhase.Failed:
+                case DominionCrisisPhase.Completed:
+                    return !lastOutcomeReason.NullOrEmpty() ? lastOutcomeReason : GetStatusLine();
+                default:
+                    return "ABY_DominionOpsObjective_Dormant".Translate();
+            }
+        }
+
+        private Building_AbyssalDominionAnchor GetBestAnchorObjective()
+        {
+            List<Building_AbyssalDominionAnchor> liveAnchors = GetLiveAnchors();
+            if (liveAnchors.Count == 0)
+            {
+                return null;
+            }
+
+            Building_AbyssalDominionAnchor best = null;
+            float bestScore = float.MaxValue;
+            for (int i = 0; i < liveAnchors.Count; i++)
+            {
+                Building_AbyssalDominionAnchor anchor = liveAnchors[i];
+                if (anchor == null || anchor.Destroyed)
+                {
+                    continue;
+                }
+
+                float score = GetAnchorObjectivePriority(anchor.AnchorRole) * 100000f;
+                if (sourceCell.IsValid)
+                {
+                    score += anchor.PositionHeld.DistanceToSquared(sourceCell);
+                }
+
+                if (score < bestScore)
+                {
+                    best = anchor;
+                    bestScore = score;
+                }
+            }
+
+            return best;
+        }
+
+        private static int GetAnchorObjectivePriority(DominionAnchorRole role)
+        {
+            switch (role)
+            {
+                case DominionAnchorRole.Breach:
+                    return 0;
+                case DominionAnchorRole.Ward:
+                    return 1;
+                case DominionAnchorRole.Drain:
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+
         public int GetActiveAnchorCount(DominionAnchorRole role)
         {
             CleanupAnchorReferences();

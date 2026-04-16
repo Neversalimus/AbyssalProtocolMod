@@ -184,4 +184,21 @@
   <ABY_DominionGateCall_Message>Всплеск Врат Короны проведён: {0}. Следующий примерно через {1}.</ABY_DominionGateCall_Message>
   <ABY_DominionGate_CallSummary>подкрепления врат</ABY_DominionGate_CallSummary>
 
+  <ABY_DominionStatusHeader>Телеметрия кризиса</ABY_DominionStatusHeader>
+  <ABY_DominionOpsSummary>Цель: {0}
+Директива: {1}</ABY_DominionOpsSummary>
+  <ABY_DominionOpsObjective_Dormant>На этой карте нет активного прорыва доминиона.</ABY_DominionOpsObjective_Dormant>
+  <ABY_DominionOpsObjective_Sync>Держите исходный круг под питанием, пока не проявится фаза anchorfall.</ABY_DominionOpsObjective_Sync>
+  <ABY_DominionOpsObjective_Anchors>Разрушьте якорную решётку до истечения окна коллапса.</ABY_DominionOpsObjective_Anchors>
+  <ABY_DominionOpsObjective_Gate>Уничтожьте ядро Врат Короны до завершения конвергенции доминиона.</ABY_DominionOpsObjective_Gate>
+  <ABY_DominionOpsDirective_Sync>Сохраняйте питание круга, свободный фокус и готовность к переходу в первый anchorfall.</ABY_DominionOpsDirective_Sync>
+  <ABY_DominionOpsDirective_Anchors>Активно якорей: {0}/{1}. Давление волн: {2}.</ABY_DominionOpsDirective_Anchors>
+  <ABY_DominionOpsDirective_Gate>Целостность врат: {0}. Следующий всплеск: {1}.</ABY_DominionOpsDirective_Gate>
+  <ABY_DominionCommand_TrackObjective>Отследить цель</ABY_DominionCommand_TrackObjective>
+  <ABY_DominionCommand_TrackAnchor>Отследить якорную решётку</ABY_DominionCommand_TrackAnchor>
+  <ABY_DominionCommand_TrackGate>Отследить ядро врат</ABY_DominionCommand_TrackGate>
+  <ABY_DominionCommand_NoObjective>На этой карте пока нет доступной цели кризиса доминиона.</ABY_DominionCommand_NoObjective>
+  <ABY_DominionCompactHint>Через круг сейчас идёт телеметрия кризиса доминиона.</ABY_DominionCompactHint>
+  <ABY_DominionCompactFooter>Прорыв доминиона активен. Откройте полную консоль для отслеживания якорей и ядра врат.</ABY_DominionCompactFooter>
+
 </LanguageData>

@@ -120,6 +120,21 @@ namespace AbyssalProtocol
             return Rituals[0];
         }
 
+        public static RitualDefinition GetSuggestedRitual(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.IsActive)
+            {
+                RitualDefinition dominion = Rituals.FirstOrDefault(r => r.Id == "dominion_gate");
+                if (dominion != null)
+                {
+                    return dominion;
+                }
+            }
+
+            return GetDefaultRitual();
+        }
+
         public static bool IsDominionRitual(RitualDefinition ritual)
         {
             return ritual != null && ritual.Id == "dominion_gate";
@@ -189,9 +204,31 @@ namespace AbyssalProtocol
             return TranslateOrFallback("ABY_CircleTab_Hint", "Use the main console for full ritual preview, readiness checks, and automated sigil assignment.");
         }
 
+        public static string GetCompactHint(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.IsActive)
+            {
+                return TranslateOrFallback("ABY_DominionCompactHint", "Dominion crisis telemetry is being routed through the circle.");
+            }
+
+            return GetCompactHint();
+        }
+
         public static string GetCompactFooter()
         {
             return TranslateOrFallback("ABY_CircleTab_FooterShort", "Use the full console for ritual preview and sigil assignment.");
+        }
+
+        public static string GetCompactFooter(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.IsActive)
+            {
+                return TranslateOrFallback("ABY_DominionCompactFooter", "Dominion breach active. Use the full console for anchor and gate tracking.");
+            }
+
+            return GetCompactFooter();
         }
 
         public static string GetOpenConsoleLabel()
@@ -256,6 +293,12 @@ namespace AbyssalProtocol
             if (circle == null)
             {
                 return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+            }
+
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.IsActive)
+            {
+                return Shorten(crisis.GetStatusLine(), 96);
             }
 
             return Shorten(circle.GetCurrentStatusLine(), 72);
@@ -609,6 +652,58 @@ namespace AbyssalProtocol
             }
 
             return TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", sigilCount, ritual?.SpawnPoints ?? 0);
+        }
+
+        public static bool IsDominionUiMode(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            return IsDominionRitual(ritual) || GetDominionCrisis(circle)?.IsActive == true;
+        }
+
+        public static string GetDominionObjectiveButtonLabel(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null)
+            {
+                if (crisis.IsGatePhaseActive)
+                {
+                    return TranslateOrFallback("ABY_DominionCommand_TrackGate", "Track gate core");
+                }
+
+                if (crisis.IsAnchorPhaseActive)
+                {
+                    return TranslateOrFallback("ABY_DominionCommand_TrackAnchor", "Track anchor lattice");
+                }
+            }
+
+            return TranslateOrFallback("ABY_DominionCommand_TrackObjective", "Track objective");
+        }
+
+        public static string GetDominionOpsSummary(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis == null)
+            {
+                return TranslateOrFallback("ABY_DominionOpsSummary", "Objective: {0}\nDirective: {1}",
+                    TranslateOrFallback("ABY_DominionOpsObjective_Dormant", "No active dominion breach on this map."),
+                    TranslateOrFallback("ABY_DominionOpsObjective_Dormant", "No active dominion breach on this map."));
+            }
+
+            return TranslateOrFallback("ABY_DominionOpsSummary", "Objective: {0}\nDirective: {1}", crisis.GetPrimaryObjectiveLabel(), crisis.GetDirectiveSummary());
+        }
+
+        public static bool TryJumpToDominionObjective(Building_AbyssalSummoningCircle circle, out string failReason)
+        {
+            failReason = null;
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            Thing target = crisis?.GetPrimaryObjectiveThing();
+            if (target == null)
+            {
+                failReason = TranslateOrFallback("ABY_DominionCommand_NoObjective", "No dominion objective is currently available on this map.");
+                return false;
+            }
+
+            CameraJumper.TryJumpAndSelect(target);
+            return true;
         }
 
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

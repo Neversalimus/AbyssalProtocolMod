@@ -184,4 +184,21 @@ Next surge: {2}</ABY_DominionGate_Inspect>
   <ABY_DominionGateCall_Message>Crowned Gate surge routed: {0}. Next surge in roughly {1}.</ABY_DominionGateCall_Message>
   <ABY_DominionGate_CallSummary>gate reinforcements</ABY_DominionGate_CallSummary>
 
+  <ABY_DominionStatusHeader>Crisis telemetry</ABY_DominionStatusHeader>
+  <ABY_DominionOpsSummary>Objective: {0}
+Directive: {1}</ABY_DominionOpsSummary>
+  <ABY_DominionOpsObjective_Dormant>No active dominion breach on this map.</ABY_DominionOpsObjective_Dormant>
+  <ABY_DominionOpsObjective_Sync>Keep the source circle online until anchorfall manifests.</ABY_DominionOpsObjective_Sync>
+  <ABY_DominionOpsObjective_Anchors>Break the anchor lattice before the collapse window expires.</ABY_DominionOpsObjective_Anchors>
+  <ABY_DominionOpsObjective_Gate>Destroy the Crowned Gate core before dominion convergence completes.</ABY_DominionOpsObjective_Gate>
+  <ABY_DominionOpsDirective_Sync>Keep the circle powered, unobstructed, and ready for the first anchorfall transition.</ABY_DominionOpsDirective_Sync>
+  <ABY_DominionOpsDirective_Anchors>{0}/{1} anchors remain active. Wave pressure: {2}.</ABY_DominionOpsDirective_Anchors>
+  <ABY_DominionOpsDirective_Gate>Gate integrity: {0}. Next surge: {1}.</ABY_DominionOpsDirective_Gate>
+  <ABY_DominionCommand_TrackObjective>Track objective</ABY_DominionCommand_TrackObjective>
+  <ABY_DominionCommand_TrackAnchor>Track anchor lattice</ABY_DominionCommand_TrackAnchor>
+  <ABY_DominionCommand_TrackGate>Track gate core</ABY_DominionCommand_TrackGate>
+  <ABY_DominionCommand_NoObjective>No dominion objective is currently available on this map.</ABY_DominionCommand_NoObjective>
+  <ABY_DominionCompactHint>Dominion crisis telemetry is being routed through the circle.</ABY_DominionCompactHint>
+  <ABY_DominionCompactFooter>Dominion breach active. Use the full console for anchor and gate tracking.</ABY_DominionCompactFooter>
+
 </LanguageData>
