@@ -15,8 +15,25 @@
   <ABY_SecretBossRevealLabel>Ответил истинный архонт</ABY_SecretBossRevealLabel>
   <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
 
-  <ABY_FirstBossKillLabel>Первый босс уничтожен</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>Первый abyssal-босс уничтожен. Теперь доступен анализ фрагмента вестника, а цикл Abyssal Protocol может перейти к Herald-уровню интеграции.</ABY_FirstBossKillDesc>
+  <ABY_FirstBossKillLabel>Это было замечено</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>Первая крупная форма пала.
+Но её смерть не прервала процесс. Она завершила его.
+
+Некоторые структуры не распадаются молча.
+Они уходят вверх по цепи.
+Иногда после них остаётся не останок, а форма разрыва — слишком правильная, чтобы быть просто следом.
+
+То, что казалось вершиной, оказалось лишь первым ответом.
+Не бог.
+Даже не его голос.
+Лишь жест, на который осмелились взглянуть.
+
+Старые фрагменты предупреждали:
+**первого посланника убивают не для спасения, а для подтверждения, что дальнейший разговор возможен.**
+
+Хуже всего не тишина после.
+Хуже то, как точно она держится.
+Словно следующий шаг уже ждёт.</ABY_FirstBossKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый herald core fragment на высокотехнологичном исследовательском столе, чтобы открыть Herald-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
 

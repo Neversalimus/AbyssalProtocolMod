@@ -15,8 +15,25 @@
   <ABY_SecretBossRevealLabel>The true archon answers</ABY_SecretBossRevealLabel>
   <ABY_SecretBossRevealDesc>The beast died before completing its first phase. The kill did not end the protocol. A greater breach is forming.</ABY_SecretBossRevealDesc>
 
-  <ABY_FirstBossKillLabel>First boss destroyed</ABY_FirstBossKillLabel>
-  <ABY_FirstBossKillDesc>The first abyssal boss has been destroyed. Herald fragment analysis is now available, and the Abyssal Protocol loop can advance into Herald-grade integration.</ABY_FirstBossKillDesc>
+  <ABY_FirstBossKillLabel>It Was Noticed</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>The first major form has fallen.
+But its death did not interrupt the process. It completed it.
+
+Some structures do not dissolve in silence.
+They travel upward through the chain.
+Sometimes what remains is not a corpse, but a rupture-shape too precise to be only a trace.
+
+What seemed like a summit was only the first answer.
+Not a god.
+Not even its voice.
+Only a gesture someone dared to look at.
+
+The old fragments warned:
+**the first messenger is not slain for salvation, but to confirm that further conversation is possible.**
+
+The worst part is not the silence after.
+It is the way the silence holds.
+As if the next step is already waiting.</ABY_FirstBossKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Herald integration unlocked</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>The fragment analysis path has been opened. Decode a recovered herald core fragment at a hi-tech research bench to unlock Herald weapon and implant research.</ABY_HeraldIntegrationUnlockedDesc>
 
