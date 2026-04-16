@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef>
+    <defName>ABY_WardenOfAsh</defName>
+    <label>warden of ash</label>
+    <race>ABY_WardenOfAsh</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>650</combatPower>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney>0</apparelMoney>
+    <weaponMoney>0</weaponMoney>
+    <shieldMoney>0</shieldMoney>
+    <canDropInventory>false</canDropInventory>
+
+    <graphicData>
+      <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.20,3.20)</drawSize>
+      <shadowData>
+        <volume>(1.20, 1.05, 1.20)</volume>
+        <offset>(0, 0, -0.26)</offset>
+      </shadowData>
+    </graphicData>
+  </PawnKindDef>
+
+</Defs>

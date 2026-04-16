@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BasePawn">
+    <defName>ABY_WardenOfAsh</defName>
+    <label>warden of ash</label>
+    <description>An infernal techno-warden built as the first disciplined overseer of abyssal breach pressure. Its armor is ash-black and furnace-heavy, with a contained portal embedded in the chest to mark it as both executioner and living gate-node.</description>
+
+    <thingClass>Pawn</thingClass>
+    <tickerType>RealtimeOnly</tickerType>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+
+    <graphicData>
+      <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.20,3.20)</drawSize>
+    </graphicData>
+
+    <race>
+      <body>Human</body>
+      <baseBodySize>1.40</baseBodySize>
+      <baseHealthScale>2.15</baseHealthScale>
+      <lifeStageAges>
+        <li>
+          <def>HumanlikeAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+      <intelligence>Humanlike</intelligence>
+      <foodType>OmnivoreHuman</foodType>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <fleshType>Normal</fleshType>
+      <hasGenders>false</hasGenders>
+      <bloodDef>Blood</bloodDef>
+      <meatLabel>ash-charred flesh</meatLabel>
+      <corpseLabel>warden husk</corpseLabel>
+      <soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
+      <herdMigrationAllowed>false</herdMigrationAllowed>
+      <predator>false</predator>
+      <wildness>0</wildness>
+      <trainability>None</trainability>
+    </race>
+
+    <statBases>
+      <MaxHitPoints>980</MaxHitPoints>
+      <MoveSpeed>4.35</MoveSpeed>
+      <MeleeHitChance>0.88</MeleeHitChance>
+      <MeleeDodgeChance>0.18</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.56</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.42</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.10</ArmorRating_Heat>
+      <ComfyTemperatureMin>-20</ComfyTemperatureMin>
+      <ComfyTemperatureMax>220</ComfyTemperatureMax>
+      <Mass>1.35</Mass>
+      <MarketValue>900</MarketValue>
+      <Flammability>0.00</Flammability>
+    </statBases>
+
+    <tools>
+      <li>
+        <label>ash pike</label>
+        <capacities>
+          <li>Stab</li>
+          <li>Blunt</li>
+        </capacities>
+        <power>24</power>
+        <cooldownTime>1.85</cooldownTime>
+        <chanceFactor>1.05</chanceFactor>
+        <armorPenetration>0.24</armorPenetration>
+      </li>
+      <li>
+        <label>censer smash</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>18</power>
+        <cooldownTime>2.35</cooldownTime>
+        <chanceFactor>0.78</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+  </ThingDef>
+
+</Defs>
