@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
-using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
@@ -184,15 +183,7 @@ namespace AbyssalProtocol
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
             fxComp?.RegisterBoss(pawn);
 
-            LordJob lordJob = new LordJob_AssaultColony(
-                faction,
-                canKidnap: false,
-                canTimeoutOrFlee: false,
-                sappers: true,
-                useAvoidGridSmart: true,
-                canSteal: false);
-
-            LordMaker.MakeNewLord(faction, lordJob, map, new List<Pawn> { pawn });
+            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
             Find.LetterStack.ReceiveLetter(
                 "ABY_BossSummonSuccessLabel".Translate(),
                 "ABY_BossSummonSuccessDesc".Translate(bossLabel),

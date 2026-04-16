@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
@@ -271,15 +270,7 @@ namespace AbyssalProtocol
 
             if (spawnedHounds.Count > 0)
             {
-                LordJob lordJob = new LordJob_AssaultColony(
-                    hostileFaction,
-                    canKidnap: false,
-                    canTimeoutOrFlee: false,
-                    sappers: false,
-                    useAvoidGridSmart: true,
-                    canSteal: false);
-
-                LordMaker.MakeNewLord(hostileFaction, lordJob, map, spawnedHounds);
+                AbyssalLordUtility.EnsureAssaultLord(spawnedHounds, hostileFaction, map, sappers: false);
             }
 
             return spawnedHounds.Count;

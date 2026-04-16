@@ -3,7 +3,6 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
@@ -451,15 +450,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            LordJob lordJob = new LordJob_AssaultColony(
-                pawn.Faction,
-                canKidnap: false,
-                canTimeoutOrFlee: false,
-                sappers: false,
-                useAvoidGridSmart: true,
-                canSteal: false);
-
-            LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.MapHeld, new List<Pawn> { pawn });
+            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: false);
         }
 
         private static IntVec3 RandomEdgeCell(Map map)
