@@ -212,6 +212,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback("ABY_DominionCompactHint", "Dominion crisis telemetry is being routed through the circle.");
             }
 
+            if (crisis != null && crisis.CooldownTicksRemaining > 0)
+            {
+                return TranslateOrFallback("ABY_DominionCompactHintCooldown", "Dominion lattice recovery in progress. Rearm available in {0}.", crisis.GetCooldownValue());
+            }
+
             return GetCompactHint();
         }
 
@@ -226,6 +231,11 @@ namespace AbyssalProtocol
             if (crisis != null && crisis.IsActive)
             {
                 return TranslateOrFallback("ABY_DominionCompactFooter", "Dominion breach active. Use the full console for anchor and gate tracking.");
+            }
+
+            if (crisis != null && (crisis.CompletionCount > 0 || crisis.FailureCount > 0 || crisis.CancelledCount > 0 || crisis.CooldownTicksRemaining > 0))
+            {
+                return TranslateOrFallback("ABY_DominionCompactFooterCooldown", "Dominion record: {0}. Next payout forecast: {1}.", crisis.GetReplayStatusValue(), crisis.GetRewardForecastValue());
             }
 
             return GetCompactFooter();
@@ -628,6 +638,17 @@ namespace AbyssalProtocol
                         state,
                         crisis.GetAnchorStatusValue(),
                         crisis.GetNextWaveEtaValue());
+                }
+
+                if (crisis != null && crisis.CooldownTicksRemaining > 0)
+                {
+                    return TranslateOrFallback(
+                        "ABY_DominionRitualMetaCooldown",
+                        "Sigils on map: {0}   •   Crisis state: {1}   •   Rearm: {2}   •   Record: {3}",
+                        sigilCount,
+                        state,
+                        crisis.GetCooldownValue(),
+                        crisis.GetReplayStatusValue());
                 }
 
                 return TranslateOrFallback(
@@ -1322,6 +1343,27 @@ namespace AbyssalProtocol
                     Label = TranslateOrFallback("ABY_CircleStatus_GateIntegrity", "Gate integrity"),
                     Value = crisis != null ? crisis.GetGateIntegrityValue() : TranslateOrFallback("ABY_DominionGate_Integrity_Dormant", "dormant"),
                     Satisfied = crisis == null || !crisis.IsGatePhaseActive
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionCooldown", "Rearm window"),
+                    Value = crisis != null ? crisis.GetCooldownValue() : TranslateOrFallback("ABY_DominionCooldown_Ready", "ready"),
+                    Satisfied = crisis == null || !crisis.HasCooldown
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionRewards", "Reward track"),
+                    Value = crisis != null ? crisis.GetRewardForecastValue() : TranslateOrFallback("ABY_DominionRewardForecast_Pending", "forecast pending"),
+                    Satisfied = true
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_DominionReplay", "Replay record"),
+                    Value = crisis != null ? crisis.GetReplayStatusValue() : TranslateOrFallback("ABY_DominionReplay_Empty", "no completed dominion runs on this map yet"),
+                    Satisfied = true
                 });
             }
 

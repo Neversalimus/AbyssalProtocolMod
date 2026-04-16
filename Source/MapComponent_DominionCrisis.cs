@@ -50,6 +50,11 @@ namespace AbyssalProtocol
         private List<Building_AbyssalDominionAnchor> activeAnchors = new List<Building_AbyssalDominionAnchor>();
         private int initialAnchorCount;
         private Building_AbyssalDominionGate gateCore;
+        private int completionCount;
+        private int failureCount;
+        private int cancelledCount;
+        private int cooldownUntilTick;
+        private string lastRewardSummary;
 
         public MapComponent_DominionCrisis(Map map) : base(map)
         {
@@ -70,6 +75,22 @@ namespace AbyssalProtocol
         public int WavesTriggered => wavesTriggered;
         public string LastWaveSummary => lastWaveSummary;
         public Building_AbyssalDominionGate GateCore => gateCore;
+        public Map CrisisMap => map;
+        public int CompletionCount => completionCount;
+        public int FailureCount => failureCount;
+        public int CancelledCount => cancelledCount;
+        public int CooldownUntilTick => cooldownUntilTick;
+        public string LastRewardSummary => lastRewardSummary;
+        public bool HasCooldown => !IsActive && Find.TickManager != null && cooldownUntilTick > Find.TickManager.TicksGame;
+
+        public int CooldownTicksRemaining
+        {
+            get
+            {
+                int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return Mathf.Max(0, cooldownUntilTick - now);
+            }
+        }
 
         public int TicksRemaining
         {
@@ -140,6 +161,11 @@ namespace AbyssalProtocol
             Scribe_Collections.Look(ref activeAnchors, "activeAnchors", LookMode.Reference);
             Scribe_Values.Look(ref initialAnchorCount, "initialAnchorCount", 0);
             Scribe_References.Look(ref gateCore, "gateCore");
+            Scribe_Values.Look(ref completionCount, "completionCount", 0);
+            Scribe_Values.Look(ref failureCount, "failureCount", 0);
+            Scribe_Values.Look(ref cancelledCount, "cancelledCount", 0);
+            Scribe_Values.Look(ref cooldownUntilTick, "cooldownUntilTick", 0);
+            Scribe_Values.Look(ref lastRewardSummary, "lastRewardSummary");
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -272,6 +298,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (CooldownTicksRemaining > 0)
+            {
+                failReason = "ABY_DominionCrisisFail_Cooldown".Translate(GetCooldownValue());
+                return false;
+            }
+
             if (ActiveAnchorCount > 0)
             {
                 failReason = "ABY_DominionCrisisFail_AnchorRemnants".Translate(ActiveAnchorCount);
@@ -327,6 +359,7 @@ namespace AbyssalProtocol
             wavesTriggered = 0;
             lastWaveSummary = null;
             lastOutcomeReason = null;
+            lastRewardSummary = null;
             activeAnchors.Clear();
             initialAnchorCount = 0;
             phase = DominionCrisisPhase.Synchronizing;
@@ -454,6 +487,10 @@ namespace AbyssalProtocol
                     return "ABY_DominionOpsObjective_Anchors".Translate();
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsObjective_Gate".Translate();
+                case DominionCrisisPhase.Cancelled:
+                case DominionCrisisPhase.Failed:
+                case DominionCrisisPhase.Completed:
+                    return "ABY_DominionOpsObjective_Rearm".Translate();
                 default:
                     return "ABY_DominionOpsObjective_Dormant".Translate();
             }
@@ -472,7 +509,7 @@ namespace AbyssalProtocol
                 case DominionCrisisPhase.Cancelled:
                 case DominionCrisisPhase.Failed:
                 case DominionCrisisPhase.Completed:
-                    return !lastOutcomeReason.NullOrEmpty() ? lastOutcomeReason : GetStatusLine();
+                    return "ABY_DominionOpsDirective_Rearm".Translate(GetCooldownValue(), GetReplayStatusValue());
                 default:
                     return "ABY_DominionOpsObjective_Dormant".Translate();
             }
@@ -570,6 +607,37 @@ namespace AbyssalProtocol
             phaseEndsTick = Mathf.Max(now + 900, phaseEndsTick - ticks);
         }
 
+        public string GetCooldownValue()
+        {
+            if (IsActive)
+            {
+                return "ABY_DominionCooldown_Active".Translate();
+            }
+
+            int ticks = CooldownTicksRemaining;
+            if (ticks > 0)
+            {
+                return ticks.ToStringTicksToPeriod();
+            }
+
+            return "ABY_DominionCooldown_Ready".Translate();
+        }
+
+        public string GetReplayStatusValue()
+        {
+            return "ABY_DominionReplay_Value".Translate(completionCount, failureCount, cancelledCount);
+        }
+
+        public string GetRewardForecastValue()
+        {
+            return AbyssalDominionRewardUtility.GetRewardForecastText(this);
+        }
+
+        public List<string> GetRewardConsoleLines()
+        {
+            return AbyssalDominionRewardUtility.GetRewardConsoleLines(this);
+        }
+
         public void DebugAdvancePhase()
         {
             if (phase == DominionCrisisPhase.Synchronizing)
@@ -624,6 +692,11 @@ namespace AbyssalProtocol
             activeAnchors.Clear();
             initialAnchorCount = 0;
             gateCore = null;
+            completionCount = 0;
+            failureCount = 0;
+            cancelledCount = 0;
+            cooldownUntilTick = 0;
+            lastRewardSummary = null;
         }
 
         public string GetPhaseLabel()
@@ -668,6 +741,11 @@ namespace AbyssalProtocol
 
             if (phase == DominionCrisisPhase.Dormant)
             {
+                if (CooldownTicksRemaining > 0 || completionCount > 0 || failureCount > 0 || cancelledCount > 0)
+                {
+                    return "ABY_DominionCrisisStatusLine_Cooldown".Translate(GetCooldownValue(), GetReplayStatusValue());
+                }
+
                 return "ABY_DominionCrisisStatusLine_Dormant".Translate();
             }
 
@@ -1400,6 +1478,23 @@ namespace AbyssalProtocol
             nextWaveTick = 0;
             lastWaveTick = 0;
 
+            switch (terminalPhase)
+            {
+                case DominionCrisisPhase.Completed:
+                    completionCount++;
+                    break;
+                case DominionCrisisPhase.Failed:
+                    failureCount++;
+                    break;
+                case DominionCrisisPhase.Cancelled:
+                    cancelledCount++;
+                    break;
+            }
+
+            cooldownUntilTick = lastOutcomeTick + AbyssalDominionRewardUtility.GetCooldownTicks(this, terminalPhase);
+            IntVec3 outcomeCell = gateCore != null && !gateCore.Destroyed ? gateCore.PositionHeld : sourceCell;
+            lastRewardSummary = AbyssalDominionRewardUtility.ApplyOutcome(this, terminalPhase, outcomeCell);
+
             if (sourceCircle != null && !sourceCircle.Destroyed && sourceCircle.Map == map)
             {
                 Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, terminalPhase == DominionCrisisPhase.Completed ? 0.10f : 0.16f);
@@ -1438,15 +1533,32 @@ namespace AbyssalProtocol
 
         private string GetLetterDescription(DominionCrisisPhase terminalPhase, string reason)
         {
+            string baseText;
             switch (terminalPhase)
             {
                 case DominionCrisisPhase.Cancelled:
-                    return "ABY_DominionCrisisCancelledDesc".Translate(reason);
+                    baseText = "ABY_DominionCrisisCancelledDesc".Translate(reason);
+                    break;
                 case DominionCrisisPhase.Completed:
-                    return "ABY_DominionCrisisCompletedDesc".Translate(reason);
+                    baseText = "ABY_DominionCrisisCompletedDesc".Translate(reason);
+                    break;
                 default:
-                    return "ABY_DominionCrisisFailedDesc".Translate(reason);
+                    baseText = "ABY_DominionCrisisFailedDesc".Translate(reason);
+                    break;
             }
+
+            List<string> parts = new List<string> { baseText };
+            if (!lastRewardSummary.NullOrEmpty())
+            {
+                parts.Add("ABY_DominionOutcome_RewardLine".Translate(lastRewardSummary));
+            }
+
+            if (CooldownTicksRemaining > 0)
+            {
+                parts.Add("ABY_DominionOutcome_CooldownLine".Translate(GetCooldownValue()));
+            }
+
+            return string.Join("\n\n", parts);
         }
 
         private void CleanupAnchorReferences()

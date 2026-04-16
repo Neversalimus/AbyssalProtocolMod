@@ -21,6 +21,15 @@ namespace AbyssalProtocol
         {
             this.circle = circle;
             selectedRitualId = AbyssalSummoningConsoleUtility.GetSuggestedRitual(circle)?.Id;
+            MapComponent_DominionCrisis dominionCrisis = circle?.Map?.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis != null && !dominionCrisis.IsActive && (dominionCrisis.CompletionCount > 0 || dominionCrisis.FailureCount > 0 || dominionCrisis.CancelledCount > 0 || dominionCrisis.CooldownTicksRemaining > 0))
+            {
+                AbyssalSummoningConsoleUtility.RitualDefinition dominionRitual = AbyssalSummoningConsoleUtility.GetRituals().FirstOrDefault(r => AbyssalSummoningConsoleUtility.IsDominionRitual(r));
+                if (dominionRitual != null)
+                {
+                    selectedRitualId = dominionRitual.Id;
+                }
+            }
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
             doCloseX = true;
@@ -569,6 +578,35 @@ namespace AbyssalProtocol
                     gateLinesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
+
+                float rewardSectionY = gateLinesY + 10f;
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardSectionY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionRewardPreviewHeader", "Reward / aftermath"));
+                Text.Font = GameFont.Tiny;
+
+                string rewardSummaryText = crisis != null
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DominionRewardPreviewSummary",
+                        "Next payout forecast: {0}. Rearm window: {1}.",
+                        crisis.GetRewardForecastValue(),
+                        crisis.GetCooldownValue())
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DominionRewardPreviewSummaryIdle",
+                        "Dominion reward routing is dormant until the breach is attempted on this map.");
+
+                float rewardSummaryHeight = Text.CalcHeight(rewardSummaryText, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardSectionY + 28f, rect.width, rewardSummaryHeight), rewardSummaryText);
+
+                float rewardLinesY = rewardSectionY + 32f + rewardSummaryHeight;
+                List<string> rewardLines = crisis != null ? crisis.GetRewardConsoleLines() : new List<string>();
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < rewardLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(rewardLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), rewardLines[i]);
+                    rewardLinesY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
             }
 
             Text.Font = GameFont.Small;
@@ -634,6 +672,23 @@ namespace AbyssalProtocol
                 for (int i = 0; i < gateLines.Count; i++)
                 {
                     total += Text.CalcHeight(gateLines[i], width) + 4f;
+                }
+
+                string rewardSummaryText = crisis != null
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DominionRewardPreviewSummary",
+                        "Next payout forecast: {0}. Rearm window: {1}.",
+                        crisis.GetRewardForecastValue(),
+                        crisis.GetCooldownValue())
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DominionRewardPreviewSummaryIdle",
+                        "Dominion reward routing is dormant until the breach is attempted on this map.");
+                total += 64f + Text.CalcHeight(rewardSummaryText, width);
+
+                List<string> rewardLines = crisis != null ? crisis.GetRewardConsoleLines() : new List<string>();
+                for (int i = 0; i < rewardLines.Count; i++)
+                {
+                    total += Text.CalcHeight(rewardLines[i], width) + 4f;
                 }
             }
 

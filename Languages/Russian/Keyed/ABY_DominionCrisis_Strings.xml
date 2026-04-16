@@ -201,4 +201,41 @@
   <ABY_DominionCompactHint>Через круг сейчас идёт телеметрия кризиса доминиона.</ABY_DominionCompactHint>
   <ABY_DominionCompactFooter>Прорыв доминиона активен. Откройте полную консоль для отслеживания якорей и ядра врат.</ABY_DominionCompactFooter>
 
+  <ABY_DominionRitualMetaCooldown>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Перезапуск: {2}   •   Статистика: {3}</ABY_DominionRitualMetaCooldown>
+  <ABY_DominionCompactHintCooldown>Латунь доминиона всё ещё восстанавливается. Повторный запуск будет доступен через {0}.</ABY_DominionCompactHintCooldown>
+  <ABY_DominionCompactFooterCooldown>Статистика доминиона: {0}. Прогноз следующей награды: {1}.</ABY_DominionCompactFooterCooldown>
+  <ABY_DominionCompactCooldown>Перезапуск: {0}</ABY_DominionCompactCooldown>
+  <ABY_DominionCompactRecord>Статистика: {0}</ABY_DominionCompactRecord>
+  <ABY_DominionCompactPayout>Следующая награда: {0}</ABY_DominionCompactPayout>
+
+  <ABY_DominionCrisisFail_Cooldown>Восстановление доминионной решётки ещё не завершено. Повторный запуск будет доступен через {0}.</ABY_DominionCrisisFail_Cooldown>
+  <ABY_DominionCooldown_Active>активно</ABY_DominionCooldown_Active>
+  <ABY_DominionCooldown_Ready>готово</ABY_DominionCooldown_Ready>
+  <ABY_DominionReplay_Value>{0} побед • {1} провалов • {2} отмен</ABY_DominionReplay_Value>
+  <ABY_DominionReplay_Empty>на этой карте ещё не было завершённых доминионных запусков</ABY_DominionReplay_Empty>
+  <ABY_DominionRewardForecast_Pending>прогноз недоступен</ABY_DominionRewardForecast_Pending>
+  <ABY_DominionRewardPreviewHeader>Награда / последствия</ABY_DominionRewardPreviewHeader>
+  <ABY_DominionRewardPreviewSummary>Прогноз следующей награды: {0}. Окно повторного запуска: {1}.</ABY_DominionRewardPreviewSummary>
+  <ABY_DominionRewardPreviewSummaryIdle>Наградной маршрут доминиона неактивен, пока на этой карте не был запущен кризис.</ABY_DominionRewardPreviewSummaryIdle>
+  <ABY_DominionRewardConsoleIdle>На этой карте ещё нет записей о доминионных прорывах.</ABY_DominionRewardConsoleIdle>
+  <ABY_DominionRewardConsoleForecast>Прогноз следующей награды: {0}</ABY_DominionRewardConsoleForecast>
+  <ABY_DominionRewardConsoleRecord>Статистика: {0}</ABY_DominionRewardConsoleRecord>
+  <ABY_DominionRewardConsoleCooldown>Окно повторного запуска: {0}</ABY_DominionRewardConsoleCooldown>
+  <ABY_DominionRewardConsoleLast>Последний итог: {0}</ABY_DominionRewardConsoleLast>
+  <ABY_DominionOutcome_RewardLine>Награда / последствия: {0}</ABY_DominionOutcome_RewardLine>
+  <ABY_DominionOutcome_CooldownLine>Окно повторного запуска: {0}</ABY_DominionOutcome_CooldownLine>
+  <ABY_DominionOutcome_CompletedSummary>Получено: {0}</ABY_DominionOutcome_CompletedSummary>
+  <ABY_DominionOutcome_FailedSummary>Откат вызвал аварийную утечку прорыва, повредил ближайшую инфраструктуру и принудительно открыл окно восстановления.</ABY_DominionOutcome_FailedSummary>
+  <ABY_DominionOutcome_FailedSummarySoft>Откат повредил ближайшую инфраструктуру, поднял загрязнение и принудительно открыл окно восстановления.</ABY_DominionOutcome_FailedSummarySoft>
+  <ABY_DominionOutcome_CancelledSummary>Прорыв был заглушен заранее, но решётке всё равно нужно время, чтобы остыть и сбросить загрязнение.</ABY_DominionOutcome_CancelledSummary>
+  <ABY_DominionFailure_HoundPack>охотник аварийного доминиона</ABY_DominionFailure_HoundPack>
+
+  <ABY_DominionCrisisStatusLine_Cooldown>Ядро доминионного кризиса стабилизируется • повторный запуск {0} • {1}</ABY_DominionCrisisStatusLine_Cooldown>
+  <ABY_DominionOpsObjective_Rearm>Подготовьте решётку к следующему доминионному прорыву.</ABY_DominionOpsObjective_Rearm>
+  <ABY_DominionOpsDirective_Rearm>Окно повторного запуска: {0}. Статистика: {1}.</ABY_DominionOpsDirective_Rearm>
+
+  <ABY_CircleStatus_DominionCooldown>Повторный запуск</ABY_CircleStatus_DominionCooldown>
+  <ABY_CircleStatus_DominionRewards>Лента наград</ABY_CircleStatus_DominionRewards>
+  <ABY_CircleStatus_DominionReplay>Статистика запусков</ABY_CircleStatus_DominionReplay>
+
 </LanguageData>

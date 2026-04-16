@@ -201,4 +201,41 @@ Directive: {1}</ABY_DominionOpsSummary>
   <ABY_DominionCompactHint>Dominion crisis telemetry is being routed through the circle.</ABY_DominionCompactHint>
   <ABY_DominionCompactFooter>Dominion breach active. Use the full console for anchor and gate tracking.</ABY_DominionCompactFooter>
 
+  <ABY_DominionRitualMetaCooldown>Sigils on map: {0}   •   Crisis state: {1}   •   Rearm: {2}   •   Record: {3}</ABY_DominionRitualMetaCooldown>
+  <ABY_DominionCompactHintCooldown>Dominion lattice recovery in progress. Rearm available in {0}.</ABY_DominionCompactHintCooldown>
+  <ABY_DominionCompactFooterCooldown>Dominion record: {0}. Next payout forecast: {1}.</ABY_DominionCompactFooterCooldown>
+  <ABY_DominionCompactCooldown>Rearm: {0}</ABY_DominionCompactCooldown>
+  <ABY_DominionCompactRecord>Record: {0}</ABY_DominionCompactRecord>
+  <ABY_DominionCompactPayout>Next payout: {0}</ABY_DominionCompactPayout>
+
+  <ABY_DominionCrisisFail_Cooldown>Dominion lattice recovery is still in progress. Rearm available in {0}.</ABY_DominionCrisisFail_Cooldown>
+  <ABY_DominionCooldown_Active>active</ABY_DominionCooldown_Active>
+  <ABY_DominionCooldown_Ready>ready</ABY_DominionCooldown_Ready>
+  <ABY_DominionReplay_Value>{0} clears • {1} failures • {2} aborts</ABY_DominionReplay_Value>
+  <ABY_DominionReplay_Empty>no dominion runs recorded on this map</ABY_DominionReplay_Empty>
+  <ABY_DominionRewardForecast_Pending>forecast pending</ABY_DominionRewardForecast_Pending>
+  <ABY_DominionRewardPreviewHeader>Reward / aftermath</ABY_DominionRewardPreviewHeader>
+  <ABY_DominionRewardPreviewSummary>Next payout forecast: {0}. Rearm window: {1}.</ABY_DominionRewardPreviewSummary>
+  <ABY_DominionRewardPreviewSummaryIdle>Dominion reward routing is dormant until the breach is attempted on this map.</ABY_DominionRewardPreviewSummaryIdle>
+  <ABY_DominionRewardConsoleIdle>No dominion breach data has been recorded on this map yet.</ABY_DominionRewardConsoleIdle>
+  <ABY_DominionRewardConsoleForecast>Projected next payout: {0}</ABY_DominionRewardConsoleForecast>
+  <ABY_DominionRewardConsoleRecord>Record: {0}</ABY_DominionRewardConsoleRecord>
+  <ABY_DominionRewardConsoleCooldown>Rearm window: {0}</ABY_DominionRewardConsoleCooldown>
+  <ABY_DominionRewardConsoleLast>Last outcome: {0}</ABY_DominionRewardConsoleLast>
+  <ABY_DominionOutcome_RewardLine>Reward / aftermath: {0}</ABY_DominionOutcome_RewardLine>
+  <ABY_DominionOutcome_CooldownLine>Rearm window: {0}</ABY_DominionOutcome_CooldownLine>
+  <ABY_DominionOutcome_CompletedSummary>Recovered {0}</ABY_DominionOutcome_CompletedSummary>
+  <ABY_DominionOutcome_FailedSummary>Backlash routed a breach leak, scorched nearby infrastructure, and forced a cooldown window.</ABY_DominionOutcome_FailedSummary>
+  <ABY_DominionOutcome_FailedSummarySoft>Backlash scorched nearby infrastructure, raised contamination, and forced a cooldown window.</ABY_DominionOutcome_FailedSummarySoft>
+  <ABY_DominionOutcome_CancelledSummary>The breach was damped early, but the lattice still needs time to cool and purge contamination.</ABY_DominionOutcome_CancelledSummary>
+  <ABY_DominionFailure_HoundPack>dominion failure hunter</ABY_DominionFailure_HoundPack>
+
+  <ABY_DominionCrisisStatusLine_Cooldown>Dominion crisis core stabilizing • rearm {0} • {1}</ABY_DominionCrisisStatusLine_Cooldown>
+  <ABY_DominionOpsObjective_Rearm>Prepare the lattice for another dominion breach.</ABY_DominionOpsObjective_Rearm>
+  <ABY_DominionOpsDirective_Rearm>Rearm window: {0}. Record: {1}.</ABY_DominionOpsDirective_Rearm>
+
+  <ABY_CircleStatus_DominionCooldown>Rearm window</ABY_CircleStatus_DominionCooldown>
+  <ABY_CircleStatus_DominionRewards>Reward track</ABY_CircleStatus_DominionRewards>
+  <ABY_CircleStatus_DominionReplay>Replay record</ABY_CircleStatus_DominionReplay>
+
 </LanguageData>

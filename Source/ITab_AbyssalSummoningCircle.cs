@@ -31,6 +31,7 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(rect.x, rect.y, rect.width, 52f);
             MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
             bool dominionActive = dominionCrisis != null && dominionCrisis.IsActive;
+            bool dominionAftermathMode = !dominionActive && dominionCrisis != null && (dominionCrisis.CompletionCount > 0 || dominionCrisis.FailureCount > 0 || dominionCrisis.CancelledCount > 0 || dominionCrisis.CooldownTicksRemaining > 0);
             string subtitle = dominionActive
                 ? AbyssalSummoningConsoleUtility.GetConsoleSubtitleDominionActive(dominionCrisis.GetPhaseLabel())
                 : AbyssalSummoningConsoleUtility.GetCompactSubtitle();
@@ -54,9 +55,17 @@ namespace AbyssalProtocol
                 Widgets.Label(new Rect(leftInner.x, leftInner.y + 100f, leftInner.width, 58f), AbyssalSummoningConsoleUtility.GetDominionOpsSummary(circle));
                 Text.Font = GameFont.Small;
             }
+            else if (dominionAftermathMode)
+            {
+                Text.Font = GameFont.Tiny;
+                Widgets.Label(new Rect(leftInner.x, leftInner.y + 100f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCompactCooldown", "Rearm: {0}", dominionCrisis.GetCooldownValue()));
+                Widgets.Label(new Rect(leftInner.x, leftInner.y + 118f, leftInner.width, 18f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCompactRecord", "Record: {0}", dominionCrisis.GetReplayStatusValue()));
+                Widgets.Label(new Rect(leftInner.x, leftInner.y + 136f, leftInner.width, 24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCompactPayout", "Next payout: {0}", dominionCrisis.GetRewardForecastValue()));
+                Text.Font = GameFont.Small;
+            }
             GUI.color = Color.white;
             AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
-            if (!dominionActive)
+            if (!dominionActive && !dominionAftermathMode)
             {
                 Widgets.Label(new Rect(leftInner.x, leftInner.y + 104f, leftInner.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
                 Widgets.Label(new Rect(leftInner.x, leftInner.y + 124f, leftInner.width, 18f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(capacitorReport));
@@ -78,7 +87,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Widgets.Label(new Rect(rightInner.x, rightInner.y + 126f, rightInner.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rightInner.x, rightInner.y + 146f, rightInner.width, 36f), dominionActive ? AbyssalSummoningConsoleUtility.GetCompactHint(circle) : AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(circle));
+            Widgets.Label(new Rect(rightInner.x, rightInner.y + 146f, rightInner.width, 36f), (dominionActive || dominionAftermathMode) ? AbyssalSummoningConsoleUtility.GetCompactHint(circle) : AbyssalSummoningConsoleUtility.GetStabilizerMiniSummary(circle));
             GUI.color = Color.white;
 
             if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 46f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetOpenConsoleLabel(), true, true))
