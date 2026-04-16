@@ -1,27 +1,26 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
-  <PawnKindDef ParentName="AnimalKindBase">
+  <PawnKindDef ParentName="OutlanderBase">
     <defName>ABY_HexgunThrall</defName>
     <label>hexgun thrall</label>
     <race>ABY_HexgunThrall</race>
     <combatPower>210</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-
-    <lifeStages>
-      <li>
-        <bodyGraphicData>
-          <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
-          <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(1.42,1.42)</drawSize>
-          <shadowData>
-            <volume>(0.56, 0.26, 0.56)</volume>
-            <offset>(0, 0, -0.18)</offset>
-          </shadowData>
-        </bodyGraphicData>
-      </li>
-    </lifeStages>
+    <apparelMoney Inherit="False">0</apparelMoney>
+    <weaponMoney>
+      <min>5000</min>
+      <max>5000</max>
+    </weaponMoney>
+    <weaponTags Inherit="False">
+      <li>ABY_HexgunWeapon</li>
+    </weaponTags>
+    <apparelRequired Inherit="False"/>
+    <apparelTags Inherit="False"/>
+    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+    <forceNormalGearQuality>true</forceNormalGearQuality>
+    <gearHealthRange>1~1</gearHealthRange>
+    <initialResistanceRange>17~26</initialResistanceRange>
+    <initialWillRange>3~5</initialWillRange>
   </PawnKindDef>
-
 </Defs>

@@ -1,21 +1,17 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_EmberHound</defName>
     <label>ember hound</label>
     <description>A fast infernal-tech hunter extruded through controlled breach geometry. Ember hounds are built to slash through firing lines, leap onto isolated shooters, and hold enough internal heat to keep their armor seams glowing long after arrival.</description>
-
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
-
     <graphicData>
       <texPath>Pawn/EmberHound/ABY_EmberHound</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(4.883,4.883)</drawSize>
     </graphicData>
-
     <race>
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
@@ -36,6 +32,7 @@
       <baseHungerRate>0.48</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
+      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>10</gestationPeriodDays>
@@ -50,7 +47,6 @@
         </li>
       </lifeStageAges>
     </race>
-
     <statBases>
       <MaxHitPoints>480</MaxHitPoints>
       <MoveSpeed>5.42</MoveSpeed>
@@ -66,7 +62,6 @@
       <MarketValue>660</MarketValue>
       <Mass>0.58</Mass>
     </statBases>
-
     <tools>
       <li>
         <label>ember claw</label>
@@ -90,11 +85,9 @@
         <armorPenetration>0.18</armorPenetration>
       </li>
     </tools>
-
     <butcherProducts>
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
-
     <comps>
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>
@@ -106,7 +99,6 @@
       </li>
     </comps>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_EmberHoundSigil</defName>
     <label>ember hound sigil</label>
@@ -145,5 +137,4 @@
       </li>
     </comps>
   </ThingDef>
-
 </Defs>

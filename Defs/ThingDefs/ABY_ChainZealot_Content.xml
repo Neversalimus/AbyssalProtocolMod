@@ -1,27 +1,22 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
-  <ThingDef ParentName="AnimalThingBase">
+  <ThingDef ParentName="Human">
     <defName>ABY_ChainZealot</defName>
     <label>chain zealot</label>
     <description>An abyssal breach-fanatic forged for close assault. Chain zealots carry heavy infernal shields, surge through opening fire, and use chain-snare lunges to pin ranged defenders in place for the rest of the host.</description>
-
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
-
     <graphicData>
       <texPath>Pawn/ChainZealot/ABY_ChainZealot</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(1.46,1.46)</drawSize>
     </graphicData>
-
     <race>
-      <renderTree>Animal</renderTree>
-      <thinkTreeMain>Animal</thinkTreeMain>
-      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <renderTree>Humanlike</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
-      <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
       <canBecomeShambler>true</canBecomeShambler>
@@ -33,23 +28,22 @@
       <baseHealthScale>1.20</baseHealthScale>
       <baseHungerRate>0.44</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>ToolUser</intelligence>
+      <intelligence>Humanlike</intelligence>
+      <nameCategory>HumanStandard</nameCategory>
+      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <lifeExpectancy>105</lifeExpectancy>
-      <herdAnimal>false</herdAnimal>
-      <predator>false</predator>
       <foodType>OmnivoreHuman</foodType>
       <useMeatFrom>Human</useMeatFrom>
       <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges Inherit="False">
         <li>
-          <def>AnimalAdult</def>
+          <def>HumanlikeAdult</def>
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
     </race>
-
     <statBases>
       <MaxHitPoints>520</MaxHitPoints>
       <MoveSpeed>4.72</MoveSpeed>
@@ -66,7 +60,6 @@
       <MarketValue>760</MarketValue>
       <Mass>0.74</Mass>
     </statBases>
-
     <tools>
       <li>
         <label>chain cleaver</label>
@@ -90,11 +83,9 @@
         <armorPenetration>0.16</armorPenetration>
       </li>
     </tools>
-
     <butcherProducts>
       <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
     </butcherProducts>
-
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
         <minRange>4.2</minRange>
@@ -106,5 +97,4 @@
       </li>
     </comps>
   </ThingDef>
-
 </Defs>

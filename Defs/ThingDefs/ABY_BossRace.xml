@@ -1,22 +1,17 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ArchonBeast</defName>
     <label>archon beast</label>
     <description>A colossal infernal war-beast grown as the living herald of a deeper rupture. It is not the true archon, only the chained predator sent ahead of it.</description>
-
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
-
     <graphicData>
       <texPath>Pawn/ArchonBeast/ArchonBeast</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
-
-
     <race>
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
@@ -37,6 +32,7 @@
       <baseHungerRate>1.2</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
+      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>12</gestationPeriodDays>
@@ -51,7 +47,6 @@
         </li>
       </lifeStageAges>
     </race>
-
     <statBases>
       <MaxHitPoints>2250</MaxHitPoints>
       <MoveSpeed>5.2</MoveSpeed>
@@ -69,7 +64,6 @@
       <MarketValue>6000</MarketValue>
       <Mass>4.5</Mass>
     </statBases>
-
     <tools>
       <li>
         <label>infernal claw</label>
@@ -104,28 +98,23 @@
         <armorPenetration>0.5</armorPenetration>
       </li>
     </tools>
-
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
       <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
     </killedLeavings>
   </ThingDef>
-
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ArchonOfRupture</defName>
     <label>archon of rupture</label>
     <description>The true archon hidden behind the beast. A crown-limbed infernal executor that only manifests when the herald is annihilated before it can unfold its ritual phases.</description>
-
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
-
     <graphicData>
       <texPath>Pawn/ArchonOfRupture/ArchonOfRupture</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(4.6,4.6)</drawSize>
     </graphicData>
-
     <race>
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
@@ -144,6 +133,7 @@
       <baseHungerRate>0.85</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
+      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>18</gestationPeriodDays>
@@ -158,7 +148,6 @@
         </li>
       </lifeStageAges>
     </race>
-
     <statBases>
       <MaxHitPoints>8600</MaxHitPoints>
       <MoveSpeed>6.25</MoveSpeed>
@@ -176,7 +165,6 @@
       <MarketValue>28000</MarketValue>
       <Mass>7.8</Mass>
     </statBases>
-
     <tools>
       <li>
         <label>crown talon</label>
@@ -211,10 +199,8 @@
         <armorPenetration>1.12</armorPenetration>
       </li>
     </tools>
-
     <killedLeavings Inherit="False">
       <ABY_CrownOfRupture>1</ABY_CrownOfRupture>
     </killedLeavings>
   </ThingDef>
-
 </Defs>
