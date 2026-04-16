@@ -269,5 +269,13 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowFireGlow(position, map, 0.72f);
         }
+
+        private static float HorizontalDistanceSquared(Vector3 origin, Thing thing)
+        {
+            Vector3 target = thing.TrueCenter();
+            float dx = target.x - origin.x;
+            float dz = target.z - origin.z;
+            return dx * dx + dz * dz;
+        }
     }
 }
