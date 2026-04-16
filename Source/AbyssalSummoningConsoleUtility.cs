@@ -383,12 +383,12 @@ namespace AbyssalProtocol
 
             if (ritual.Id == "unstable_breach")
             {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift. Colony size and wealth now scale how many rift imps pour through, with a single Hexgun Thrall joining the breach only at the highest threat tier.");
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift. Colony size and wealth now scale how many rift imps pour through, with a Hexgun Thrall and a Chain Zealot joining only at the highest threat tier.");
             }
 
             if (ritual.Id == "ember_hunt")
             {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a colony-scaled hunter-pack onto the map. Ember hounds leap onto ranged pawns, supporting imps widen the pressure band, and a single Hexgun Thrall joins only at the highest threat tier.");
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a colony-scaled hunter-pack onto the map. Ember hounds leap onto ranged pawns, supporting imps widen the pressure band, and a Hexgun Thrall plus Chain Zealot support pair join only at the highest threat tier.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -453,13 +453,13 @@ namespace AbyssalProtocol
             {
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile rift imp breach tied to the circle
 • Breach size scales from small training pressure to a serious wave for bigger colonies
-• A single Hexgun Thrall only appears at the top threat tier");
+• A Hexgun Thrall and Chain Zealot only appear at the top threat tier");
             }
 
             if (ritual.Id == "ember_hunt")
             {
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
-• Larger colonies can draw mixed hound/imp assaults, with one supporting thrall only at the top tier
+• Larger colonies can draw mixed hound/imp assaults, with one supporting thrall and one Chain Zealot only at the top tier
 • Lower spectacle than the Archon Beast, but deadly against weak backlines");
             }
 

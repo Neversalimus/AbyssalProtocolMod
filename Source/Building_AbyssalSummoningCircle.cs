@@ -103,6 +103,7 @@ namespace AbyssalProtocol
         private int pendingImpPortalLingerTicks;
         private int pendingSupportImpCount;
         private int pendingSupportThrallCount;
+        private int pendingSupportZealotCount;
         private int pendingThreatTier = -1;
         private int pendingScaledThreatBudget;
         private bool reducedConsoleEffects;
@@ -194,6 +195,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref pendingSupportImpCount, "pendingSupportImpCount", 0);
             Scribe_Values.Look(ref pendingSupportThrallCount, "pendingSupportThrallCount", 0);
+            Scribe_Values.Look(ref pendingSupportZealotCount, "pendingSupportZealotCount", 0);
             Scribe_Values.Look(ref pendingThreatTier, "pendingThreatTier", -1);
             Scribe_Values.Look(ref pendingScaledThreatBudget, "pendingScaledThreatBudget", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
@@ -410,6 +412,7 @@ namespace AbyssalProtocol
             pendingImpPortalLingerTicks = 0;
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
+            pendingSupportZealotCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
 
@@ -1779,6 +1782,7 @@ namespace AbyssalProtocol
                 pendingImpCount = Mathf.Max(1, plan.PortalImpCount);
                 pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
                 pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
                 return;
             }
 
@@ -1787,6 +1791,7 @@ namespace AbyssalProtocol
                 pendingImpCount = Mathf.Max(1, plan.HoundCount);
                 pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
                 pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
             }
         }
 
@@ -1822,12 +1827,22 @@ namespace AbyssalProtocol
                 });
             }
 
+            PawnKindDef zealotKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot");
+            if (zealotKind != null && pendingSupportZealotCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = zealotKind,
+                    Count = pendingSupportZealotCount
+                });
+            }
+
             return entries;
         }
 
         private void TrySpawnPendingSupportPack()
         {
-            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0))
+            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0 && pendingSupportZealotCount <= 0))
             {
                 return;
             }
@@ -1850,6 +1865,16 @@ namespace AbyssalProtocol
                 {
                     KindDef = thrallKind,
                     Count = pendingSupportThrallCount
+                });
+            }
+
+            PawnKindDef zealotKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot");
+            if (zealotKind != null && pendingSupportZealotCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = zealotKind,
+                    Count = pendingSupportZealotCount
                 });
             }
 
@@ -2030,6 +2055,7 @@ namespace AbyssalProtocol
             pendingImpPortalLingerTicks = 0;
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
+            pendingSupportZealotCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
             pendingCapacitorStartupCost = 0f;

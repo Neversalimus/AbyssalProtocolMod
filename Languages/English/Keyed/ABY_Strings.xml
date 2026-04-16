@@ -131,6 +131,9 @@
   <ABY_CirclePreview_Hound_Plural>hounds</ABY_CirclePreview_Hound_Plural>
   <ABY_CirclePreview_Thrall_Singular>thrall</ABY_CirclePreview_Thrall_Singular>
   <ABY_CirclePreview_Thrall_Plural>thralls</ABY_CirclePreview_Thrall_Plural>
+
+  <ABY_CirclePreview_Zealot_Singular>zealot</ABY_CirclePreview_Zealot_Singular>
+  <ABY_CirclePreview_Zealot_Plural>zealots</ABY_CirclePreview_Zealot_Plural>
   <ABY_CirclePreview_None>no hostiles</ABY_CirclePreview_None>
   <ABY_CircleFail_LegacySigilRetired>Legacy hexgun relay sigils have been retired from active T1 progression.</ABY_CircleFail_LegacySigilRetired>
   <ABY_LegacySigilMigration_Message>Converted {0} retired hexgun relay sigils into ember hound sigils.</ABY_LegacySigilMigration_Message>

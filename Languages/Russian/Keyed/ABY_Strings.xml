@@ -131,6 +131,9 @@
   <ABY_CirclePreview_Hound_Plural>гончие</ABY_CirclePreview_Hound_Plural>
   <ABY_CirclePreview_Thrall_Singular>трэлл</ABY_CirclePreview_Thrall_Singular>
   <ABY_CirclePreview_Thrall_Plural>трэлла</ABY_CirclePreview_Thrall_Plural>
+
+  <ABY_CirclePreview_Zealot_Singular>фанатик</ABY_CirclePreview_Zealot_Singular>
+  <ABY_CirclePreview_Zealot_Plural>фанатика</ABY_CirclePreview_Zealot_Plural>
   <ABY_CirclePreview_None>без противников</ABY_CirclePreview_None>
   <ABY_CircleFail_LegacySigilRetired>Устаревшие hexgun relay sigils выведены из активной T1-прогрессии.</ABY_CircleFail_LegacySigilRetired>
   <ABY_LegacySigilMigration_Message>Преобразовано устаревших hexgun relay sigils в ember hound sigils: {0}.</ABY_LegacySigilMigration_Message>

@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         private const string RiftImpRaceDefName = "ABY_RiftImp";
         private const string EmberHoundRaceDefName = "ABY_EmberHound";
         private const string HexgunThrallRaceDefName = "ABY_HexgunThrall";
+        private const string ChainZealotRaceDefName = "ABY_ChainZealot";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
 
@@ -324,7 +325,8 @@ namespace AbyssalProtocol
                 || defName == ArchonOfRuptureRaceDefName
                 || defName == RiftImpRaceDefName
                 || defName == EmberHoundRaceDefName
-                || defName == HexgunThrallRaceDefName;
+                || defName == HexgunThrallRaceDefName
+                || defName == ChainZealotRaceDefName;
         }
 
         private static bool HasActivePortalOfDef(Map map, string defName)

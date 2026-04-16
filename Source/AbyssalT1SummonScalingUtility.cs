@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         private const int ImpThreatValue = 85;
         private const int HoundThreatValue = 190;
         private const int ThrallThreatValue = 160;
+        private const int ZealotThreatValue = 235;
 
         public sealed class ThreatPlan
         {
@@ -25,6 +26,7 @@ namespace AbyssalProtocol
             public int PackImpCount;
             public int HoundCount;
             public int ThrallCount;
+            public int ZealotCount;
 
             public int TotalImpCount => Math.Max(0, PortalImpCount) + Math.Max(0, PackImpCount);
         }
@@ -102,6 +104,11 @@ namespace AbyssalProtocol
                 parts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
             }
 
+            if (plan.ZealotCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.ZealotCount, "ABY_CirclePreview_Zealot_Singular", "zealot", "ABY_CirclePreview_Zealot_Plural", "zealots"));
+            }
+
             return parts.Count == 0
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreview_None", "no hostiles")
                 : string.Join(" + ", parts);
@@ -165,7 +172,8 @@ namespace AbyssalProtocol
             int tier = Math.Min(plan.Tier, portalImpCounts.Length - 1);
             plan.PortalImpCount = portalImpCounts[tier];
             plan.ThrallCount = plan.Tier >= 4 ? 1 : 0;
-            plan.ThreatBudget = plan.PortalImpCount * ImpThreatValue + plan.ThrallCount * ThrallThreatValue;
+            plan.ZealotCount = plan.Tier >= 4 ? 1 : 0;
+            plan.ThreatBudget = plan.PortalImpCount * ImpThreatValue + plan.ThrallCount * ThrallThreatValue + plan.ZealotCount * ZealotThreatValue;
         }
 
         private static void ApplyEmberHuntPlan(ThreatPlan plan)
@@ -176,32 +184,38 @@ namespace AbyssalProtocol
                     plan.HoundCount = 1;
                     plan.PackImpCount = 0;
                     plan.ThrallCount = 0;
+                    plan.ZealotCount = 0;
                     break;
                 case 1:
                     plan.HoundCount = 1;
                     plan.PackImpCount = 1;
                     plan.ThrallCount = 0;
+                    plan.ZealotCount = 0;
                     break;
                 case 2:
                     plan.HoundCount = 1;
                     plan.PackImpCount = 2;
                     plan.ThrallCount = 0;
+                    plan.ZealotCount = 0;
                     break;
                 case 3:
                     plan.HoundCount = 2;
                     plan.PackImpCount = 0;
                     plan.ThrallCount = 0;
+                    plan.ZealotCount = 0;
                     break;
                 default:
                     plan.HoundCount = 2;
                     plan.PackImpCount = 2;
                     plan.ThrallCount = 1;
+                    plan.ZealotCount = 1;
                     break;
             }
 
             plan.ThreatBudget = plan.HoundCount * HoundThreatValue
                 + plan.PackImpCount * ImpThreatValue
-                + plan.ThrallCount * ThrallThreatValue;
+                + plan.ThrallCount * ThrallThreatValue
+                + plan.ZealotCount * ZealotThreatValue;
         }
 
         private static string GetCountLabel(int count, string singularKey, string singularFallback, string pluralKey, string pluralFallback)
