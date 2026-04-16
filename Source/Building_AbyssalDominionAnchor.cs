@@ -30,12 +30,12 @@ namespace AbyssalProtocol
             map?.GetComponent<MapComponent_DominionCrisis>()?.RegisterAnchor(this);
         }
 
-        public override bool ClaimableBy(Faction by)
+        public override AcceptanceReport ClaimableBy(Faction by)
         {
             return false;
         }
 
-        public override bool DeconstructibleBy(Faction faction)
+        public override AcceptanceReport DeconstructibleBy(Faction faction)
         {
             return false;
         }
