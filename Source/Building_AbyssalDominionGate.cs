@@ -321,8 +321,8 @@ namespace AbyssalProtocol
                 }
 
                 bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
-                GenExplosion.DoExplosion(cell, Map, 1.45f, DamageDefOf.Flame, this, 10f, 0f);
-                FireUtility.TryStartFireIn(cell, Map, 0.25f);
+                GenExplosion.DoExplosion(cell, Map, 1.45f, DamageDefOf.Flame, this, 10, 0f);
+                FireUtility.TryStartFireIn(cell, Map, 0.25f, null, null);
                 FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), Map, lowFx ? 1.0f : 1.7f);
             }
 
