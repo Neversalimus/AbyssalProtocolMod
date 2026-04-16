@@ -7,6 +7,7 @@
     <description>An infernal techno-warden built as the first disciplined overseer of abyssal breach pressure. Its armor is ash-black and furnace-heavy, with a contained portal embedded in the chest to mark it as both executioner and living gate-node.</description>
 
     <thingClass>Pawn</thingClass>
+    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropAshenCore</deathActionWorkerClass>
     <tickerType>Normal</tickerType>
     <selectable>true</selectable>
     <useHitPoints>true</useHitPoints>

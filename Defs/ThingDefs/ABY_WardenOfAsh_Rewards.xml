@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_AshenCore</defName>
+    <label>ashen core</label>
+    <description>A furnace-bound organ recovered from the Warden of Ash. It still holds a disciplined micro-rift under pressure, making it a stable proof that the first abyssal overseer was not merely a brute, but a transport node for deeper breach logic.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_AshenCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>340</MarketValue>
+      <Mass>0.18</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>
