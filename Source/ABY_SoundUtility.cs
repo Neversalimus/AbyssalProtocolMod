@@ -18,6 +18,11 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (soundDef.sustain)
+            {
+                return;
+            }
+
             soundDef.PlayOneShot(
                 SoundInfo.InMap(
                     new TargetInfo(cell, map, false),
