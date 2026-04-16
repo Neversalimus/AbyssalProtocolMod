@@ -92,7 +92,7 @@
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_AshenPikeSpike</defName>
     <label>ashen pike spike</label>
-    <thingClass>Bullet</thingClass>
+    <thingClass>AbyssalProtocol.Projectile_AshenPikeSpike</thingClass>
     <graphicData>
       <texPath>Things/Projectile/ABY_AshenPikeSpike</texPath>
       <graphicClass>Graphic_Single</graphicClass>
