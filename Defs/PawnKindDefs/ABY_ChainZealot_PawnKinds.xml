@@ -6,18 +6,19 @@
     <label>chain zealot</label>
     <race>ABY_ChainZealot</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>235</combatPower>
+    <combatPower>280</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
+
     <lifeStages>
       <li>
         <bodyGraphicData>
           <texPath>Pawn/ChainZealot/ABY_ChainZealot</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(1.46,1.46)</drawSize>
+          <drawSize>(2.84,2.84)</drawSize>
           <shadowData>
-            <volume>(0.46, 0.58, 0.46)</volume>
-            <offset>(0, 0, -0.18)</offset>
+            <volume>(0.85, 0.95, 0.85)</volume>
+            <offset>(0, 0, -0.22)</offset>
           </shadowData>
         </bodyGraphicData>
       </li>

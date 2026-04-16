@@ -3,20 +3,23 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ChainZealot</defName>
     <label>chain zealot</label>
-    <description>An infernal breach-enforcer fitted with hooked chains and restraint-limbs instead of proper doctrine hardware. Chain zealots are deployed to crash firing lines, drag ranged targets out of position, and pin open the route for the rest of the abyssal host.</description>
+    <description>A chained fanatic forged for breach assaults and line-breaking punishment. Chain zealots lunge into firing lines, snag vulnerable shooters out of position, and pin down defenders so the abyssal host can close.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
       <texPath>Pawn/ChainZealot/ABY_ChainZealot</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(1.46,1.46)</drawSize>
+      <drawSize>(2.84,2.84)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
       <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
-      <hasGenders>false</hasGenders>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
       <canBecomeShambler>true</canBecomeShambler>
@@ -24,17 +27,17 @@
         <li>OrganicStandard</li>
       </hediffGiverSets>
       <body>Human</body>
-      <baseBodySize>0.82</baseBodySize>
-      <baseHealthScale>1.18</baseHealthScale>
-      <baseHungerRate>0.46</baseHungerRate>
+      <baseBodySize>1.15</baseBodySize>
+      <baseHealthScale>1.75</baseHealthScale>
+      <baseHungerRate>0.52</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
       <lifeExpectancy>110</lifeExpectancy>
       <foodType>OmnivoreHuman</foodType>
       <useMeatFrom>Human</useMeatFrom>
-      <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges Inherit="False">
         <li>
           <def>AnimalAdult</def>
@@ -43,53 +46,51 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>420</MaxHitPoints>
-      <MoveSpeed>4.95</MoveSpeed>
-      <MeleeHitChance>0.84</MeleeHitChance>
-      <MeleeDPS>10.4</MeleeDPS>
-      <ArmorRating_Sharp>0.22</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.16</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.44</ArmorRating_Heat>
-      <ComfyTemperatureMin>-18</ComfyTemperatureMin>
-      <ComfyTemperatureMax>180</ComfyTemperatureMax>
-      <Flammability>0.02</Flammability>
-      <PainShockThreshold>0.90</PainShockThreshold>
-      <MarketValue>610</MarketValue>
-      <Mass>0.62</Mass>
+      <MaxHitPoints>520</MaxHitPoints>
+      <MoveSpeed>4.7</MoveSpeed>
+      <MeleeHitChance>0.82</MeleeHitChance>
+      <MeleeDPS>10.2</MeleeDPS>
+      <ArmorRating_Sharp>0.24</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.18</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.35</ArmorRating_Heat>
+      <ComfyTemperatureMin>-12</ComfyTemperatureMin>
+      <ComfyTemperatureMax>170</ComfyTemperatureMax>
+      <Flammability>0.03</Flammability>
+      <PainShockThreshold>0.92</PainShockThreshold>
+      <MarketValue>680</MarketValue>
+      <Mass>0.9</Mass>
     </statBases>
     <tools>
       <li>
-        <label>hooked chain</label>
+        <label>chain cleaver</label>
         <capacities>
-          <li>Blunt</li>
-          <li>Scratch</li>
+          <li>Cut</li>
         </capacities>
-        <power>11</power>
-        <cooldownTime>1.75</cooldownTime>
-        <chanceFactor>1.32</chanceFactor>
-        <armorPenetration>0.15</armorPenetration>
+        <power>18</power>
+        <cooldownTime>1.45</cooldownTime>
+        <chanceFactor>1.1</chanceFactor>
+        <armorPenetration>0.24</armorPenetration>
       </li>
       <li>
-        <label>breach hook</label>
+        <label>hook smash</label>
         <capacities>
           <li>Blunt</li>
-          <li>Stab</li>
         </capacities>
-        <power>16</power>
-        <cooldownTime>2.35</cooldownTime>
-        <chanceFactor>0.86</chanceFactor>
-        <armorPenetration>0.20</armorPenetration>
+        <power>12</power>
+        <cooldownTime>2.0</cooldownTime>
+        <chanceFactor>0.75</chanceFactor>
+        <armorPenetration>0.16</armorPenetration>
       </li>
     </tools>
     <butcherProducts>
-      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
-        <minRange>4.0</minRange>
-        <maxRange>11.9</maxRange>
-        <cooldownTicks>330</cooldownTicks>
-        <cooldownJitterTicks>70</cooldownJitterTicks>
+        <minRange>4.2</minRange>
+        <maxRange>11.2</maxRange>
+        <cooldownTicks>300</cooldownTicks>
+        <cooldownJitterTicks>60</cooldownJitterTicks>
         <scanIntervalTicks>30</scanIntervalTicks>
         <impactHediffDefName>ABY_ChainSnared</impactHediffDefName>
       </li>

@@ -16,9 +16,9 @@
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
       <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
-      <intelligence>ToolUser</intelligence>
-      <needsRest>false</needsRest>
-      <hasGenders>false</hasGenders>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
       <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
@@ -29,12 +29,15 @@
       <body>Human</body>
       <baseBodySize>0.74</baseBodySize>
       <baseHealthScale>1.02</baseHealthScale>
+      <baseHungerRate>0.42</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <foodType>None</foodType>
-      <useMeatFrom>Human</useMeatFrom>
-      <lifeExpectancy>95</lifeExpectancy>
+      <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>95</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
       <lifeStageAges Inherit="False">
         <li>
           <def>AnimalAdult</def>
@@ -74,6 +77,7 @@
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </butcherProducts>
   </ThingDef>
+
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_Hexgun</defName>
     <label>hexgun</label>
@@ -121,6 +125,7 @@
       </li>
     </verbs>
   </ThingDef>
+
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HexgunRelaySigil</defName>
     <label>hexgun relay sigil</label>
@@ -159,6 +164,7 @@
       </li>
     </comps>
   </ThingDef>
+
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_HexgunBolt</defName>
     <label>hexgun bolt</label>
