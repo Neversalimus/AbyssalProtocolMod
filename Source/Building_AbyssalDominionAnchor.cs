@@ -30,6 +30,16 @@ namespace AbyssalProtocol
             map?.GetComponent<MapComponent_DominionCrisis>()?.RegisterAnchor(this);
         }
 
+        public override bool ClaimableBy(Faction by)
+        {
+            return false;
+        }
+
+        public override bool DeconstructibleBy(Faction faction)
+        {
+            return false;
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();

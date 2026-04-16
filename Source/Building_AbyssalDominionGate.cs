@@ -62,6 +62,16 @@ namespace AbyssalProtocol
             map?.GetComponent<MapComponent_DominionCrisis>()?.RegisterGate(this);
         }
 
+        public override bool ClaimableBy(Faction by)
+        {
+            return false;
+        }
+
+        public override bool DeconstructibleBy(Faction faction)
+        {
+            return false;
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -284,9 +294,13 @@ namespace AbyssalProtocol
 
             if (affected > 0)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 3.0f);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, lowFx ? 1.9f : 3.0f);
                 crisis?.AddExternalContamination(0.022f);
-                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                if (!lowFx || this.IsHashIntervalTick(180))
+                {
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Position, Map);
+                }
             }
         }
 
@@ -306,13 +320,17 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                GenExplosion.DoExplosion(cell, Map, 1.45f, DamageDefOf.Flame, this, 10, 0f);
-                FireUtility.TryStartFireIn(cell, Map, 0.25f, null, null);
-                FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), Map, 1.7f);
+                bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+                GenExplosion.DoExplosion(cell, Map, 1.45f, DamageDefOf.Flame, this, 10f, 0f);
+                FireUtility.TryStartFireIn(cell, Map, 0.25f);
+                FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), Map, lowFx ? 1.0f : 1.7f);
             }
 
             crisis?.AddExternalContamination(0.018f * targets.Count);
-            ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", Position, Map);
+            if (!AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis) || this.IsHashIntervalTick(240))
+            {
+                ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", Position, Map);
+            }
         }
 
         private void ExecuteCallOfDominion(MapComponent_DominionCrisis crisis)
