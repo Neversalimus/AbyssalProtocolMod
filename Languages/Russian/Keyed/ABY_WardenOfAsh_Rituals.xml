@@ -3,8 +3,8 @@
   <ABY_CircleRitual_Warden_Label>Печать надсмотрщика</ABY_CircleRitual_Warden_Label>
   <ABY_CircleRitual_Warden_Subtitle>Дисциплинированный прорыв мини-босса</ABY_CircleRitual_Warden_Subtitle>
   <ABY_CircleRitual_Warden_Desc>Потребляет одну сигилу надсмотрщика, направляет колониста к кругу и вызывает первый дисциплинированный прорыв мини-босса. Warden of Ash приходит как тяжёлый инфернальный надзиратель с порталом в груди, пепельными импульсами и фазовыми подкреплениями импов.</ABY_CircleRitual_Warden_Desc>
-  <ABY_CircleRitual_Warden_Rewards>• Гарантированное пепельное ядро за убийство&#10;• Дополнительная выплата Abyssal Residue с первого дисциплинированного прорыва&#10;• Чистый мост между охотничьими волнами и первым полноценным боссом без прямого скипа в Archon-контент</ABY_CircleRitual_Warden_Rewards>
+  <ABY_CircleRitual_Warden_Rewards>• Гарантированное получение пепельного ядра после убийства&#10;• Выплата residue и реальный шаг прогрессии через мини-босса&#10;• Чистый мост между ранними hostile-волнами и первым полноценным боссом</ABY_CircleRitual_Warden_Rewards>
   <ABY_CircleRitual_Warden_SideEffects>• Вместо простой стаи появляется бронированный враждебный мини-босс&#10;• Даёт пепельные импульсы ближнего радиуса, наказывающие скученность и мили-рои&#10;• По мере потери здоровья открывает грудной портал и выпускает подкрепления импов</ABY_CircleRitual_Warden_SideEffects>
   <ABY_WardenSummonSuccessLabel>Пепельный прорыв открыт</ABY_WardenSummonSuccessLabel>
-  <ABY_WardenSummonSuccessDesc>Сигила сработала. Сформирован дисциплинированный пепельный разлом, и Warden of Ash пересекает локальное пространство. После убийства он должен оставить пепельное ядро.</ABY_WardenSummonSuccessDesc>
+  <ABY_WardenSummonSuccessDesc>Сигила сработала. Сформирован дисциплинированный пепельный разлом, и Warden of Ash пересекает локальное пространство.</ABY_WardenSummonSuccessDesc>
 </LanguageData>

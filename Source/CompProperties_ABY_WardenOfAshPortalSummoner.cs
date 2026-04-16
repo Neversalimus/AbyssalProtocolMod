@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         public int portalSpawnIntervalTicks = 9;
         public int portalLingerTicks = 95;
         public float portalFlashScale = 2.2f;
+        public string portalSoundDefName = "ABY_SigilChargePulse";
 
         public CompProperties_ABY_WardenOfAshPortalSummoner()
         {

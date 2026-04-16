@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         public float igniteChancePerCell = 0.14f;
         public int maxCellsToIgnite = 4;
         public float visualScale = 1.9f;
+        public string pulseSoundDefName = "ABY_SigilChargePulse";
 
         public CompProperties_ABY_WardenOfAshPulse()
         {

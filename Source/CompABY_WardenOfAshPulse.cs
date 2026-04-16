@@ -103,6 +103,10 @@ namespace AbyssalProtocol
 
             IntVec3 center = pawn.PositionHeld;
             FleckMaker.Static(center, map, FleckDefOf.ExplosionFlash, Props.visualScale);
+            if (!string.IsNullOrWhiteSpace(Props.pulseSoundDefName))
+            {
+                ABY_SoundUtility.PlayAt(Props.pulseSoundDefName, center, map);
+            }
 
             HashSet<Pawn> damagedPawns = new HashSet<Pawn>();
             List<IntVec3> candidateFireCells = new List<IntVec3>();

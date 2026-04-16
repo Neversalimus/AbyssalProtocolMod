@@ -47,17 +47,17 @@
     </race>
 
     <statBases>
-      <MaxHitPoints>1120</MaxHitPoints>
-      <MoveSpeed>4.25</MoveSpeed>
-      <MeleeHitChance>0.90</MeleeHitChance>
+      <MaxHitPoints>1180</MaxHitPoints>
+      <MoveSpeed>4.20</MoveSpeed>
+      <MeleeHitChance>0.92</MeleeHitChance>
       <MeleeDodgeChance>0.18</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.62</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.46</ArmorRating_Blunt>
-      <ArmorRating_Heat>1.40</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.66</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.48</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.45</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>240</ComfyTemperatureMax>
-      <Mass>1.45</Mass>
-      <MarketValue>1100</MarketValue>
+      <Mass>1.50</Mass>
+      <MarketValue>1250</MarketValue>
       <Flammability>0.00</Flammability>
     </statBases>
 
@@ -68,45 +68,47 @@
           <li>Stab</li>
           <li>Blunt</li>
         </capacities>
-        <power>26</power>
-        <cooldownTime>1.80</cooldownTime>
+        <power>28</power>
+        <cooldownTime>1.75</cooldownTime>
         <chanceFactor>1.05</chanceFactor>
-        <armorPenetration>0.26</armorPenetration>
+        <armorPenetration>0.28</armorPenetration>
       </li>
       <li>
         <label>censer smash</label>
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>19</power>
-        <cooldownTime>2.30</cooldownTime>
-        <chanceFactor>0.78</chanceFactor>
-        <armorPenetration>0.18</armorPenetration>
+        <power>20</power>
+        <cooldownTime>2.25</cooldownTime>
+        <chanceFactor>0.82</chanceFactor>
+        <armorPenetration>0.19</armorPenetration>
       </li>
     </tools>
 
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
-        <warmupTicks>240</warmupTicks>
-        <pulseIntervalTicks>360</pulseIntervalTicks>
-        <pulseIntervalVariance>75</pulseIntervalVariance>
-        <pulseRadius>3.6</pulseRadius>
-        <pulseDamage>14</pulseDamage>
-        <pulseArmorPenetration>0.16</pulseArmorPenetration>
-        <igniteChancePerCell>0.14</igniteChancePerCell>
+        <warmupTicks>210</warmupTicks>
+        <pulseIntervalTicks>345</pulseIntervalTicks>
+        <pulseIntervalVariance>60</pulseIntervalVariance>
+        <pulseRadius>3.7</pulseRadius>
+        <pulseDamage>15</pulseDamage>
+        <pulseArmorPenetration>0.18</pulseArmorPenetration>
+        <igniteChancePerCell>0.13</igniteChancePerCell>
         <maxCellsToIgnite>4</maxCellsToIgnite>
-        <visualScale>1.9</visualScale>
+        <visualScale>1.95</visualScale>
+        <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPortalSummoner">
         <threshold75Count>3</threshold75Count>
         <threshold40Count>4</threshold40Count>
         <threshold15Count>3</threshold15Count>
         <portalMinRadius>1.35</portalMinRadius>
-        <portalMaxRadius>2.65</portalMaxRadius>
-        <portalWarmupTicks>26</portalWarmupTicks>
-        <portalSpawnIntervalTicks>9</portalSpawnIntervalTicks>
-        <portalLingerTicks>95</portalLingerTicks>
-        <portalFlashScale>2.2</portalFlashScale>
+        <portalMaxRadius>2.75</portalMaxRadius>
+        <portalWarmupTicks>24</portalWarmupTicks>
+        <portalSpawnIntervalTicks>8</portalSpawnIntervalTicks>
+        <portalLingerTicks>105</portalLingerTicks>
+        <portalFlashScale>2.3</portalFlashScale>
+        <portalSoundDefName>ABY_SigilChargePulse</portalSoundDefName>
       </li>
     </comps>
   </ThingDef>

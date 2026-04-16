@@ -68,7 +68,10 @@ namespace AbyssalProtocol
             IntVec3 center = pawn.PositionHeld;
 
             FleckMaker.Static(center, map, FleckDefOf.ExplosionFlash, Props.portalFlashScale);
-            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", center, map);
+            if (!string.IsNullOrWhiteSpace(Props.portalSoundDefName))
+            {
+                ABY_SoundUtility.PlayAt(Props.portalSoundDefName, center, map);
+            }
 
             if (ABY_Phase2PortalUtility.TrySpawnImpPortalNear(
                 map,
