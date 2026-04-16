@@ -12,6 +12,7 @@ namespace AbyssalProtocol
             Dormant,
             Synchronizing,
             Anchorfall,
+            Gatecore,
             Standby,
             Cancelled,
             Failed,
@@ -20,12 +21,15 @@ namespace AbyssalProtocol
 
         private const int SynchronizationTicks = 4500;
         private const int AnchorfallTicks = 30000;
+        private const int GatecoreTicks = 24000;
         private const int FailurePowerGraceTicks = 3000;
         private const int AmbientPulseIntervalTicks = 180;
         private const int AmbientSoundIntervalTicks = 900;
         private const int AnchorReminderIntervalTicks = 3000;
+        private const int GateReminderIntervalTicks = 2400;
         private const int WaveRetryTicks = 360;
         private const string DominionResearchDefName = "ABY_DominionGateBootstrapping";
+        private const string DominionGateThingDefName = "ABY_DominionGateCore";
 
         private DominionCrisisPhase phase = DominionCrisisPhase.Dormant;
         private Building_AbyssalSummoningCircle sourceCircle;
@@ -45,14 +49,16 @@ namespace AbyssalProtocol
         private int lastOutcomeTick;
         private List<Building_AbyssalDominionAnchor> activeAnchors = new List<Building_AbyssalDominionAnchor>();
         private int initialAnchorCount;
+        private Building_AbyssalDominionGate gateCore;
 
         public MapComponent_DominionCrisis(Map map) : base(map)
         {
         }
 
         public DominionCrisisPhase Phase => phase;
-        public bool IsActive => phase == DominionCrisisPhase.Synchronizing || phase == DominionCrisisPhase.Anchorfall;
+        public bool IsActive => phase == DominionCrisisPhase.Synchronizing || phase == DominionCrisisPhase.Anchorfall || phase == DominionCrisisPhase.Gatecore;
         public bool IsAnchorPhaseActive => phase == DominionCrisisPhase.Anchorfall;
+        public bool IsGatePhaseActive => phase == DominionCrisisPhase.Gatecore;
         public bool IsTerminal => phase == DominionCrisisPhase.Cancelled || phase == DominionCrisisPhase.Failed || phase == DominionCrisisPhase.Completed;
         public Building_AbyssalSummoningCircle SourceCircle => sourceCircle;
         public IntVec3 SourceCell => sourceCell;
@@ -63,6 +69,7 @@ namespace AbyssalProtocol
         public int ActiveAnchorCount => CountLiveAnchors();
         public int WavesTriggered => wavesTriggered;
         public string LastWaveSummary => lastWaveSummary;
+        public Building_AbyssalDominionGate GateCore => gateCore;
 
         public int TicksRemaining
         {
@@ -77,12 +84,22 @@ namespace AbyssalProtocol
         {
             get
             {
-                if (phase != DominionCrisisPhase.Anchorfall || nextWaveTick <= 0 || Find.TickManager == null)
+                if (Find.TickManager == null)
                 {
                     return 0;
                 }
 
-                return Mathf.Max(0, nextWaveTick - Find.TickManager.TicksGame);
+                if (phase == DominionCrisisPhase.Anchorfall && nextWaveTick > 0)
+                {
+                    return Mathf.Max(0, nextWaveTick - Find.TickManager.TicksGame);
+                }
+
+                if (phase == DominionCrisisPhase.Gatecore && gateCore != null && !gateCore.Destroyed)
+                {
+                    return gateCore.TicksUntilNextPulse;
+                }
+
+                return 0;
             }
         }
 
@@ -122,11 +139,13 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref lastOutcomeTick, "lastOutcomeTick", 0);
             Scribe_Collections.Look(ref activeAnchors, "activeAnchors", LookMode.Reference);
             Scribe_Values.Look(ref initialAnchorCount, "initialAnchorCount", 0);
+            Scribe_References.Look(ref gateCore, "gateCore");
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 activeAnchors ??= new List<Building_AbyssalDominionAnchor>();
                 CleanupAnchorReferences();
+                CleanupGateReference();
             }
         }
 
@@ -162,6 +181,7 @@ namespace AbyssalProtocol
             }
 
             CleanupAnchorReferences();
+            CleanupGateReference();
 
             if (now >= nextAmbientPulseTick)
             {
@@ -188,7 +208,7 @@ namespace AbyssalProtocol
             {
                 if (ActiveAnchorCount <= 0)
                 {
-                    SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                    BeginGatecore();
                     return;
                 }
 
@@ -207,6 +227,29 @@ namespace AbyssalProtocol
                 if (nextWaveTick > 0 && now >= nextWaveTick)
                 {
                     TryFireWavePulse();
+                }
+
+                return;
+            }
+
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                if (gateCore == null || gateCore.Destroyed || gateCore.Map != map)
+                {
+                    SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                    return;
+                }
+
+                if (now >= phaseEndsTick)
+                {
+                    ForceFail("ABY_DominionCrisisFail_GatePersisted".Translate(), true);
+                    return;
+                }
+
+                if (now >= nextReminderTick)
+                {
+                    nextReminderTick = now + GateReminderIntervalTicks;
+                    SendGateReminder();
                 }
             }
         }
@@ -427,6 +470,13 @@ namespace AbyssalProtocol
 
             if (phase == DominionCrisisPhase.Anchorfall)
             {
+                DestroyTrackedAnchors(true);
+                BeginGatecore();
+                return;
+            }
+
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
                 SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
             }
         }
@@ -444,6 +494,7 @@ namespace AbyssalProtocol
         public void DebugReset()
         {
             DestroyTrackedAnchors(true);
+            DestroyTrackedGate(true);
             phase = DominionCrisisPhase.Dormant;
             sourceCircle = null;
             sourceCell = IntVec3.Invalid;
@@ -462,6 +513,7 @@ namespace AbyssalProtocol
             lastOutcomeTick = 0;
             activeAnchors.Clear();
             initialAnchorCount = 0;
+            gateCore = null;
         }
 
         public string GetPhaseLabel()
@@ -472,6 +524,8 @@ namespace AbyssalProtocol
                     return "ABY_DominionCrisisPhase_Synchronizing".Translate();
                 case DominionCrisisPhase.Anchorfall:
                     return "ABY_DominionCrisisPhase_Anchorfall".Translate();
+                case DominionCrisisPhase.Gatecore:
+                    return "ABY_DominionCrisisPhase_Gatecore".Translate();
                 case DominionCrisisPhase.Standby:
                     return "ABY_DominionCrisisPhase_Standby".Translate();
                 case DominionCrisisPhase.Cancelled:
@@ -490,6 +544,11 @@ namespace AbyssalProtocol
             if (phase == DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionCrisisStatusLine_Anchors".Translate(GetPhaseLabel(), ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), GetNextWaveEtaValue(), TicksRemaining.ToStringTicksToPeriod());
+            }
+
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                return "ABY_DominionCrisisStatusLine_Gate".Translate(GetPhaseLabel(), GetGateIntegrityValue(), GetGatePulseEtaValue(), TicksRemaining.ToStringTicksToPeriod());
             }
 
             if (IsActive)
@@ -512,6 +571,11 @@ namespace AbyssalProtocol
 
         public string GetAnchorStatusShort()
         {
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                return "ABY_DominionAnchor_StatusShort_Cleared".Translate();
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionAnchor_StatusShort_None".Translate();
@@ -522,6 +586,11 @@ namespace AbyssalProtocol
 
         public string GetAnchorStatusValue()
         {
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                return "ABY_DominionAnchor_StatusValue_Cleared".Translate();
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionAnchor_StatusValue_Pending".Translate();
@@ -559,6 +628,12 @@ namespace AbyssalProtocol
         {
             List<string> lines = new List<string>();
 
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                lines.Add("ABY_DominionAnchor_ConsoleGatecore".Translate());
+                return lines;
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 lines.Add("ABY_DominionAnchor_ConsoleIdle".Translate());
@@ -591,6 +666,11 @@ namespace AbyssalProtocol
 
         public string GetWaveStatusValue()
         {
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                return "ABY_DominionWavePreviewStatus_Gatebound".Translate();
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionWavePreviewStatus_Dormant".Translate();
@@ -606,6 +686,11 @@ namespace AbyssalProtocol
 
         public string GetNextWaveEtaValue()
         {
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                return GetGatePulseEtaValue();
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionWaveEta_Pending".Translate();
@@ -628,6 +713,100 @@ namespace AbyssalProtocol
         public List<string> GetWaveConsoleLines()
         {
             return AbyssalDominionWaveUtility.GetConsoleLines(map, this);
+        }
+
+
+        public void RegisterGate(Building_AbyssalDominionGate gate)
+        {
+            if (gate == null)
+            {
+                return;
+            }
+
+            gateCore = gate;
+        }
+
+        public bool IsRegisteredGate(Building_AbyssalDominionGate gate)
+        {
+            CleanupGateReference();
+            return gate != null && gate == gateCore;
+        }
+
+        public void NotifyGateDestroyed(Building_AbyssalDominionGate gate)
+        {
+            if (gate == null)
+            {
+                return;
+            }
+
+            if (gateCore == gate)
+            {
+                gateCore = null;
+            }
+
+            if (phase == DominionCrisisPhase.Gatecore)
+            {
+                SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+            }
+        }
+
+        public string GetGateStatusValue()
+        {
+            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            {
+                return "ABY_DominionGate_Status_Dormant".Translate();
+            }
+
+            return gateCore.GetStatusValue();
+        }
+
+        public string GetGateIntegrityValue()
+        {
+            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            {
+                return "ABY_DominionGate_Integrity_Dormant".Translate();
+            }
+
+            return gateCore.GetIntegrityValue();
+        }
+
+        public string GetGatePulseEtaValue()
+        {
+            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            {
+                return "ABY_DominionGate_PulseEta_Pending".Translate();
+            }
+
+            return gateCore.GetNextPulseEtaValue();
+        }
+
+        public List<string> GetGateConsoleLines()
+        {
+            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            {
+                return new List<string> { "ABY_DominionGate_ConsoleIdle".Translate() };
+            }
+
+            return gateCore.GetConsoleLines();
+        }
+
+        public void NotifyGatePulse(string summary, IntVec3 focusCell)
+        {
+            wavesTriggered += 1;
+            lastWaveTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            lastWaveSummary = summary;
+
+            if (focusCell.IsValid)
+            {
+                ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", focusCell, map);
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.16f);
+            }
+
+            Messages.Message(
+                "ABY_DominionGateCall_Message".Translate(summary, GetGatePulseEtaValue()),
+                new TargetInfo(focusCell.IsValid ? focusCell : sourceCell, map),
+                MessageTypeDefOf.CautionInput,
+                false);
         }
 
         private void TryFireWavePulse()
@@ -687,6 +866,142 @@ namespace AbyssalProtocol
                 "ABY_DominionCrisisAnchorfallDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle", initialAnchorCount),
                 LetterDefOf.ThreatBig,
                 new TargetInfo(sourceCell.IsValid ? sourceCell : sourceCircle?.PositionHeld ?? IntVec3.Invalid, map));
+        }
+
+        private void BeginGatecore()
+        {
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            DestroyTrackedAnchors(true);
+
+            if (!TrySpawnGateCore(out string failReason))
+            {
+                ForceFail(failReason, true);
+                return;
+            }
+
+            phase = DominionCrisisPhase.Gatecore;
+            phaseStartedTick = now;
+            phaseEndsTick = now + GatecoreTicks;
+            nextReminderTick = now + GateReminderIntervalTicks;
+            nextWaveTick = 0;
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.26f);
+
+            Find.LetterStack.ReceiveLetter(
+                "ABY_DominionCrisisGateLabel".Translate(),
+                "ABY_DominionCrisisGateDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle"),
+                LetterDefOf.ThreatBig,
+                new TargetInfo(gateCore != null ? gateCore.PositionHeld : sourceCell, map));
+        }
+
+        private bool TrySpawnGateCore(out string failReason)
+        {
+            failReason = null;
+            CleanupGateReference();
+
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(DominionGateThingDefName);
+            if (def == null)
+            {
+                failReason = "Missing dominion gate def: " + DominionGateThingDefName;
+                return false;
+            }
+
+            if (!TryFindGateSpawnCell(def.size, out IntVec3 cell))
+            {
+                failReason = "ABY_DominionCrisisFail_NoGateCell".Translate();
+                return false;
+            }
+
+            if (!(ThingMaker.MakeThing(def) is Building_AbyssalDominionGate gate))
+            {
+                failReason = "Failed to create dominion gate core.";
+                return false;
+            }
+
+            Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            GenSpawn.Spawn(gate, cell, map, Rot4.North);
+            if (hostileFaction != null)
+            {
+                gate.SetFaction(hostileFaction);
+            }
+
+            RegisterGate(gate);
+            FleckMaker.ThrowLightningGlow(gate.DrawPos, map, 2.8f);
+            FleckMaker.ThrowMicroSparks(gate.DrawPos, map);
+            ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", cell, map);
+            return true;
+        }
+
+        private bool TryFindGateSpawnCell(IntVec2 size, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !sourceCell.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+            float minRadius = 5f;
+            float maxRadius = 16f;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(sourceCell, maxRadius, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(sourceCell);
+                if (distance < minRadius || distance > maxRadius)
+                {
+                    continue;
+                }
+
+                CellRect rect = GenAdj.OccupiedRect(candidate, Rot4.North, size);
+                if (!CanUseGateRect(rect))
+                {
+                    continue;
+                }
+
+                float score = 0f;
+                score -= Mathf.Abs(distance - 9f);
+                score += CountAdjacentStandableCells(candidate) * 0.12f;
+                score += !candidate.Roofed(map) ? 0.7f : -0.35f;
+                score += CountNearbyPowerBuildings(candidate, 9f) * 0.22f;
+                score += CountNearbyTurrets(candidate, 9f) * 0.18f;
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        private bool CanUseGateRect(CellRect rect)
+        {
+            foreach (IntVec3 rectCell in rect.Cells)
+            {
+                if (!rectCell.InBounds(map) || !rectCell.Standable(map))
+                {
+                    return false;
+                }
+
+                if (rectCell.GetEdifice(map) != null || rectCell.GetFirstPawn(map) != null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool TrySpawnAnchors(out string failReason)
@@ -924,9 +1239,13 @@ namespace AbyssalProtocol
             {
                 contamination += Mathf.Max(0, ActiveAnchorCount) * 0.0015f;
             }
+            else if (phase == DominionCrisisPhase.Gatecore)
+            {
+                contamination += 0.0115f;
+            }
 
             map.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(contamination);
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, phase == DominionCrisisPhase.Synchronizing ? 0.05f : 0.09f);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, phase == DominionCrisisPhase.Synchronizing ? 0.05f : (phase == DominionCrisisPhase.Gatecore ? 0.12f : 0.09f));
         }
 
         private void SendAnchorReminder()
@@ -939,6 +1258,20 @@ namespace AbyssalProtocol
             Messages.Message(
                 "ABY_DominionCrisisReminderAnchors".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), TicksRemaining.ToStringTicksToPeriod()),
                 new TargetInfo(sourceCell.IsValid ? sourceCell : sourceCircle?.PositionHeld ?? IntVec3.Invalid, map),
+                MessageTypeDefOf.CautionInput,
+                false);
+        }
+
+        private void SendGateReminder()
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            Messages.Message(
+                "ABY_DominionCrisisReminderGate".Translate(GetGateIntegrityValue(), GetGatePulseEtaValue(), TicksRemaining.ToStringTicksToPeriod()),
+                new TargetInfo(gateCore != null ? gateCore.PositionHeld : sourceCell, map),
                 MessageTypeDefOf.CautionInput,
                 false);
         }
@@ -968,6 +1301,7 @@ namespace AbyssalProtocol
             }
 
             DestroyTrackedAnchors(false);
+            DestroyTrackedGate(false);
 
             if (sendLetter)
             {
@@ -1058,6 +1392,32 @@ namespace AbyssalProtocol
             }
 
             initialAnchorCount = 0;
+        }
+
+        private void CleanupGateReference()
+        {
+            if (gateCore != null && (gateCore.Destroyed || gateCore.Map != map))
+            {
+                gateCore = null;
+            }
+        }
+
+        private void DestroyTrackedGate(bool silent)
+        {
+            CleanupGateReference();
+            Building_AbyssalDominionGate gate = gateCore;
+            gateCore = null;
+            if (gate == null || gate.Destroyed)
+            {
+                return;
+            }
+
+            if (!silent)
+            {
+                FleckMaker.ThrowLightningGlow(gate.DrawPos, map, 2.1f);
+            }
+
+            gate.Destroy(DestroyMode.Vanish);
         }
 
         private static string GetAnchorDefName(DominionAnchorRole role)

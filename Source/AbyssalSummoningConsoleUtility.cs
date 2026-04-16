@@ -567,6 +567,17 @@ namespace AbyssalProtocol
                 string state = crisis != null ? crisis.GetPhaseLabel() : TranslateOrFallback("ABY_DominionCrisisPhase_Dormant", "dormant");
                 if (crisis != null && crisis.IsActive)
                 {
+                    if (crisis.IsGatePhaseActive)
+                    {
+                        return TranslateOrFallback(
+                            "ABY_DominionRitualMetaGate",
+                            "Sigils on map: {0}   •   Crisis state: {1}   •   Gate integrity: {2}   •   Next surge: {3}",
+                            sigilCount,
+                            state,
+                            crisis.GetGateIntegrityValue(),
+                            crisis.GetGatePulseEtaValue());
+                    }
+
                     return TranslateOrFallback(
                         "ABY_DominionRitualMetaActive",
                         "Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Wave ETA: {3}",
@@ -1194,14 +1205,28 @@ namespace AbyssalProtocol
                 {
                     Label = TranslateOrFallback("ABY_CircleStatus_Waves", "Wave pulse"),
                     Value = crisis != null ? crisis.GetWaveStatusValue() : TranslateOrFallback("ABY_DominionWavePreviewStatus_Dormant", "dormant"),
-                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
+                    Satisfied = crisis == null || (!crisis.IsAnchorPhaseActive && !crisis.IsGatePhaseActive)
                 });
 
                 entries.Add(new StatusEntry
                 {
                     Label = TranslateOrFallback("ABY_CircleStatus_NextWave", "Next pulse"),
                     Value = crisis != null ? crisis.GetNextWaveEtaValue() : TranslateOrFallback("ABY_DominionWaveEta_Pending", "pending"),
-                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
+                    Satisfied = crisis == null || (!crisis.IsAnchorPhaseActive && !crisis.IsGatePhaseActive)
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_Gate", "Gate core"),
+                    Value = crisis != null ? crisis.GetGateStatusValue() : TranslateOrFallback("ABY_DominionGate_Status_Dormant", "dormant"),
+                    Satisfied = crisis == null || !crisis.IsGatePhaseActive
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_GateIntegrity", "Gate integrity"),
+                    Value = crisis != null ? crisis.GetGateIntegrityValue() : TranslateOrFallback("ABY_DominionGate_Integrity_Dormant", "dormant"),
+                    Satisfied = crisis == null || !crisis.IsGatePhaseActive
                 });
             }
 

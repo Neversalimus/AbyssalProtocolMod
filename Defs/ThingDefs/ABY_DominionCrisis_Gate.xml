@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionGateCore</defName>
+    <label>crowned gate</label>
+    <description>The condensed heart of a dominion breach. Once the anchor lattice breaks, the tear in reality folds inward and manifests as a hostile Crowned Gate core that lashes the colony directly until it is destroyed.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalDominionGate</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.46</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <canOverlapZones>true</canOverlapZones>
+    <graphicData>
+      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(4.8,4.8)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>3400</MaxHitPoints>
+      <Mass>220</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(3,3)</size>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+</Defs>

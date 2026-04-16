@@ -3,13 +3,13 @@
 
   <ABY_CircleRitual_Dominion_Label>Open dominion gate</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Endgame crisis bootstrap</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 3 turns anchorfall into a live hostile pulse director with recurring abyssal waves, portal pressure, and escalation that ramps while anchors remain standing.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 4 now unfolds the full Gate-core phase after anchorfall: once the anchor lattice is destroyed, the breach manifests a central Crowned Gate that must be broken before dominion convergence completes.</ABY_CircleRitual_Dominion_Desc>
   <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame crisis framework in-world
 • Drives recurring hostile pulses while the anchor lattice survives
-• Establishes real wave routing, portal pressure, and escalation timing for the later Gate-core package</ABY_CircleRitual_Dominion_Rewards>
+• Unfolds a real Crowned Gate core that enters play after anchors are broken and must be destroyed to finish the package</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Requires full stabilizer coverage and both capacitor bays online
 • Blocks other abyssal encounters while the crisis core is active
-• Anchorfall now launches recurring hostile waves until the anchors are destroyed or the timer collapses</ABY_CircleRitual_Dominion_SideEffects>
+• After anchors fall, the Crowned Gate begins direct suppression, ignition strikes, and reinforcement pulses until it is destroyed or the breach stabilizes</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Dominion crisis core active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame</ABY_DominionRitualMeta>
@@ -31,9 +31,9 @@
   <ABY_DominionCrisisCancelledLabel>Dominion staging cancelled</ABY_DominionCrisisCancelledLabel>
   <ABY_DominionCrisisCancelledDesc>The dominion crisis core was intentionally shut down. Outcome: {0}</ABY_DominionCrisisCancelledDesc>
   <ABY_DominionCrisisCancelledReason>manual abort</ABY_DominionCrisisCancelledReason>
-  <ABY_DominionCrisisCompletedLabel>Dominion anchor phase broken</ABY_DominionCrisisCompletedLabel>
-  <ABY_DominionCrisisCompletedDesc>The active dominion anchors were destroyed and the current package objective was completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>package 3 anchor lattice broken before the Gate core could unfold</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedLabel>Crowned Gate collapsed</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>The anchor lattice was broken, the Crowned Gate manifested, and the gate core was destroyed before dominion convergence completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>Crowned Gate core destroyed before dominion convergence completed</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Dominion staging failed</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>The dominion crisis core destabilized before the later packages could take over. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Dominion standby remains armed for {0}.</ABY_DominionCrisisReminder>
@@ -135,5 +135,53 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
   <ABY_DominionWaveSummary_PortalSingle>1 portal</ABY_DominionWaveSummary_PortalSingle>
   <ABY_DominionWaveSummary_PortalPlural>{0} portals</ABY_DominionWaveSummary_PortalPlural>
   <ABY_DominionWaveComposition_Imps>{0} via {1}</ABY_DominionWaveComposition_Imps>
+
+
+  <ABY_DominionRitualMetaGate>Sigils on map: {0}   •   Crisis state: {1}   •   Gate integrity: {2}   •   Next surge: {3}</ABY_DominionRitualMetaGate>
+  <ABY_CircleStatus_Gate>Gate core</ABY_CircleStatus_Gate>
+  <ABY_CircleStatus_GateIntegrity>Gate integrity</ABY_CircleStatus_GateIntegrity>
+
+  <ABY_DominionCrisisGateLabel>Crowned Gate manifested</ABY_DominionCrisisGateLabel>
+  <ABY_DominionCrisisGateDesc>{0} has torn the breach fully open. The anchor lattice is gone, but a hostile Crowned Gate has manifested near the ritual site. Destroy it before dominion convergence completes.</ABY_DominionCrisisGateDesc>
+  <ABY_DominionCrisisReminderGate>Crowned Gate integrity: {0}. Next surge: {1}. Collapse window in {2}.</ABY_DominionCrisisReminderGate>
+  <ABY_DominionCrisisFail_NoGateCell>No valid cells were available for the Crowned Gate core to manifest.</ABY_DominionCrisisFail_NoGateCell>
+  <ABY_DominionCrisisFail_GatePersisted>The Crowned Gate remained active until dominion convergence completed.</ABY_DominionCrisisFail_GatePersisted>
+
+  <ABY_DominionCrisisPhase_Gatecore>gatecore</ABY_DominionCrisisPhase_Gatecore>
+  <ABY_DominionCrisisStatusLine_Gate>Dominion crisis: {0} • gate {1} • next surge {2} • {3} remaining</ABY_DominionCrisisStatusLine_Gate>
+
+  <ABY_DominionAnchorPreviewSummaryGate>Anchor state: broken. Crowned Gate state: {0}. Integrity: {1}. Collapse window: {2}.</ABY_DominionAnchorPreviewSummaryGate>
+  <ABY_DominionAnchor_ConsoleGatecore>The anchor lattice has been broken. The breach is now feeding directly into a manifested Crowned Gate core.</ABY_DominionAnchor_ConsoleGatecore>
+  <ABY_DominionAnchor_StatusShort_Cleared>anchor lattice broken</ABY_DominionAnchor_StatusShort_Cleared>
+  <ABY_DominionAnchor_StatusValue_Cleared>broken / exposed</ABY_DominionAnchor_StatusValue_Cleared>
+
+  <ABY_DominionWavePreviewStatus_Gatebound>rerouted through the Crowned Gate</ABY_DominionWavePreviewStatus_Gatebound>
+  <ABY_DominionWavePreviewSummaryGate>Support pulses are now routed by the Crowned Gate. Pattern: {0}. Next surge: {1}.</ABY_DominionWavePreviewSummaryGate>
+  <ABY_DominionWaveConsoleGatecore>Wave routing is now slaved directly to the Crowned Gate core.</ABY_DominionWaveConsoleGatecore>
+
+  <ABY_DominionGatePreviewHeader>Crowned Gate core</ABY_DominionGatePreviewHeader>
+  <ABY_DominionGatePreviewSummary>Gate state: {0}. Integrity: {1}. Next surge: {2}. Collapse window: {3}.</ABY_DominionGatePreviewSummary>
+  <ABY_DominionGatePreviewSummaryIdle>No manifested Crowned Gate is active yet. Once the anchor lattice is broken, the breach will condense into a central gate-core objective.</ABY_DominionGatePreviewSummaryIdle>
+  <ABY_DominionGate_Status_Dormant>dormant</ABY_DominionGate_Status_Dormant>
+  <ABY_DominionGate_Status_Stable>stable</ABY_DominionGate_Status_Stable>
+  <ABY_DominionGate_Status_Shaken>shaken</ABY_DominionGate_Status_Shaken>
+  <ABY_DominionGate_Status_Critical>critical</ABY_DominionGate_Status_Critical>
+  <ABY_DominionGate_Integrity_Dormant>dormant</ABY_DominionGate_Integrity_Dormant>
+  <ABY_DominionGate_Integrity_Value>{0}% • {1}/{2} HP</ABY_DominionGate_Integrity_Value>
+  <ABY_DominionGate_PulseEta_Pending>charging</ABY_DominionGate_PulseEta_Pending>
+  <ABY_DominionGate_PulseEta_Imminent>imminent</ABY_DominionGate_PulseEta_Imminent>
+  <ABY_DominionGate_ConsoleIdle>No manifested Crowned Gate is active on this map.</ABY_DominionGate_ConsoleIdle>
+  <ABY_DominionGate_ConsoleStatus>State: {0}</ABY_DominionGate_ConsoleStatus>
+  <ABY_DominionGate_ConsoleIntegrity>Integrity: {0}</ABY_DominionGate_ConsoleIntegrity>
+  <ABY_DominionGate_ConsoleNextPulse>Next surge: {0}</ABY_DominionGate_ConsoleNextPulse>
+  <ABY_DominionGate_ConsoleAbilities>Core pattern: {0} • {1} • {2}</ABY_DominionGate_ConsoleAbilities>
+  <ABY_DominionGate_Ability_Suppression>suppression pulse</ABY_DominionGate_Ability_Suppression>
+  <ABY_DominionGate_Ability_Ignition>rift ignition</ABY_DominionGate_Ability_Ignition>
+  <ABY_DominionGate_Ability_Call>call of dominion</ABY_DominionGate_Ability_Call>
+  <ABY_DominionGate_Inspect>State: {0}
+Integrity: {1}
+Next surge: {2}</ABY_DominionGate_Inspect>
+  <ABY_DominionGateCall_Message>Crowned Gate surge routed: {0}. Next surge in roughly {1}.</ABY_DominionGateCall_Message>
+  <ABY_DominionGate_CallSummary>gate reinforcements</ABY_DominionGate_CallSummary>
 
 </LanguageData>

@@ -3,13 +3,13 @@
 
   <ABY_CircleRitual_Dominion_Label>Открыть врата доминиона</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Стартовый пакет эндгейм-кризиса</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 3 превращает anchorfall в живой director враждебных импульсов с повторяющимися abyssal-волнами, порталами и эскалацией, пока якоря остаются целы.</ABY_CircleRitual_Dominion_Desc>
-  <ABY_CircleRitual_Dominion_Rewards>• Реально инициализирует каркас эндгейм-кризиса на карте
+  <ABY_CircleRitual_Dominion_Desc>Поглощает один sigil доминиона и использует всю решётку круга, чтобы запустить кризисное ядро Crowned Gate. Пакет 4 теперь раскрывает полноценную gate-core фазу после anchorfall: когда якорная решётка уничтожена, прорыв проявляет центральные Врата Короны, и их нужно сломать до завершения конвергенции доминиона.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Rewards>• Инициализирует каркас эндгейм-кризиса прямо в мире
 • Запускает повторяющиеся враждебные импульсы, пока жива якорная решётка
-• Добавляет реальный wave routing, порталы и эскалацию для следующего пакета с Gate core</ABY_CircleRitual_Dominion_Rewards>
-  <ABY_CircleRitual_Dominion_SideEffects>• Требует полного кольца стабилизаторов и обеих активных capacitor bays
-• Блокирует другие abyssal-столкновения, пока активно ядро кризиса
-• Во время anchorfall теперь запускаются повторяющиеся hostile-волны, пока якоря не уничтожены или не рухнет таймер</ABY_CircleRitual_Dominion_SideEffects>
+• После разрушения якорей проявляет реальные Врата Короны, которые нужно уничтожить, чтобы завершить пакет</ABY_CircleRitual_Dominion_Rewards>
+  <ABY_CircleRitual_Dominion_SideEffects>• Требует полного кольца стабилизаторов и двух рабочих capacitor-блоков
+• Блокирует другие abyssal-встречи, пока кризис активен
+• После падения якорей Врата Короны начинают прямые подавляющие импульсы, ignition-удары и волны подкреплений, пока не будут уничтожены или пока прорыв не стабилизируется</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Ядро кризиса доминиона активно. Текущее состояние: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Тир угрозы: эндгейм</ABY_DominionRitualMeta>
@@ -31,9 +31,9 @@
   <ABY_DominionCrisisCancelledLabel>Стадия доминиона отменена</ABY_DominionCrisisCancelledLabel>
   <ABY_DominionCrisisCancelledDesc>Ядро кризиса доминиона было намеренно отключено. Итог: {0}</ABY_DominionCrisisCancelledDesc>
   <ABY_DominionCrisisCancelledReason>ручная отмена</ABY_DominionCrisisCancelledReason>
-  <ABY_DominionCrisisCompletedLabel>Фаза якорей сломлена</ABY_DominionCrisisCompletedLabel>
-  <ABY_DominionCrisisCompletedDesc>Активные якоря доминиона уничтожены, и цель текущего пакета выполнена. Итог: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>якорная решётка пакета 3 сломлена до развёртывания Gate core</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedLabel>Врата Короны обрушены</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>Якорная решётка была сломана, Врата Короны проявились, и ядро врат было уничтожено до завершения конвергенции доминиона. Итог: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>ядро Врат Короны уничтожено до завершения конвергенции доминиона</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Стадия доминиона сорвалась</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>Ядро кризиса доминиона дестабилизировалось до того, как следующие пакеты взяли его на себя. Причина срыва: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Standby доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
@@ -135,5 +135,53 @@
   <ABY_DominionWaveSummary_PortalSingle>1 портал</ABY_DominionWaveSummary_PortalSingle>
   <ABY_DominionWaveSummary_PortalPlural>{0} портала(ов)</ABY_DominionWaveSummary_PortalPlural>
   <ABY_DominionWaveComposition_Imps>{0} через {1}</ABY_DominionWaveComposition_Imps>
+
+
+  <ABY_DominionRitualMetaGate>Sigil на карте: {0}   •   Состояние кризиса: {1}   •   Целостность врат: {2}   •   Следующий всплеск: {3}</ABY_DominionRitualMetaGate>
+  <ABY_CircleStatus_Gate>Ядро врат</ABY_CircleStatus_Gate>
+  <ABY_CircleStatus_GateIntegrity>Целостность врат</ABY_CircleStatus_GateIntegrity>
+
+  <ABY_DominionCrisisGateLabel>Врата Короны проявились</ABY_DominionCrisisGateLabel>
+  <ABY_DominionCrisisGateDesc>{0} полностью раскрыл прорыв. Якорная решётка исчезла, но рядом с ритуальной площадкой проявились враждебные Врата Короны. Уничтожьте их до завершения конвергенции доминиона.</ABY_DominionCrisisGateDesc>
+  <ABY_DominionCrisisReminderGate>Целостность Врат Короны: {0}. Следующий всплеск: {1}. Окно коллапса через {2}.</ABY_DominionCrisisReminderGate>
+  <ABY_DominionCrisisFail_NoGateCell>Не нашлось подходящих клеток, где могли бы проявиться Врата Короны.</ABY_DominionCrisisFail_NoGateCell>
+  <ABY_DominionCrisisFail_GatePersisted>Врата Короны оставались активны до полного завершения конвергенции доминиона.</ABY_DominionCrisisFail_GatePersisted>
+
+  <ABY_DominionCrisisPhase_Gatecore>ядро врат</ABY_DominionCrisisPhase_Gatecore>
+  <ABY_DominionCrisisStatusLine_Gate>Кризис доминиона: {0} • врата {1} • следующий всплеск {2} • осталось {3}</ABY_DominionCrisisStatusLine_Gate>
+
+  <ABY_DominionAnchorPreviewSummaryGate>Состояние якорей: сломаны. Состояние Врат Короны: {0}. Целостность: {1}. Окно коллапса: {2}.</ABY_DominionAnchorPreviewSummaryGate>
+  <ABY_DominionAnchor_ConsoleGatecore>Якорная решётка уничтожена. Теперь прорыв напрямую питает проявившееся ядро Врат Короны.</ABY_DominionAnchor_ConsoleGatecore>
+  <ABY_DominionAnchor_StatusShort_Cleared>якорная решётка сломана</ABY_DominionAnchor_StatusShort_Cleared>
+  <ABY_DominionAnchor_StatusValue_Cleared>сломана / ядро открыто</ABY_DominionAnchor_StatusValue_Cleared>
+
+  <ABY_DominionWavePreviewStatus_Gatebound>перенаправлено через Врата Короны</ABY_DominionWavePreviewStatus_Gatebound>
+  <ABY_DominionWavePreviewSummaryGate>Теперь импульсы поддержки идут через Врата Короны. Паттерн: {0}. Следующий всплеск: {1}.</ABY_DominionWavePreviewSummaryGate>
+  <ABY_DominionWaveConsoleGatecore>Маршрутизация волн теперь напрямую подчинена ядру Врат Короны.</ABY_DominionWaveConsoleGatecore>
+
+  <ABY_DominionGatePreviewHeader>Ядро Врат Короны</ABY_DominionGatePreviewHeader>
+  <ABY_DominionGatePreviewSummary>Состояние врат: {0}. Целостность: {1}. Следующий всплеск: {2}. Окно коллапса: {3}.</ABY_DominionGatePreviewSummary>
+  <ABY_DominionGatePreviewSummaryIdle>Проявившихся Врат Короны пока нет. Когда якорная решётка будет сломана, прорыв конденсируется в центральную цель — ядро врат.</ABY_DominionGatePreviewSummaryIdle>
+  <ABY_DominionGate_Status_Dormant>спит</ABY_DominionGate_Status_Dormant>
+  <ABY_DominionGate_Status_Stable>стабильно</ABY_DominionGate_Status_Stable>
+  <ABY_DominionGate_Status_Shaken>расшатано</ABY_DominionGate_Status_Shaken>
+  <ABY_DominionGate_Status_Critical>критично</ABY_DominionGate_Status_Critical>
+  <ABY_DominionGate_Integrity_Dormant>спит</ABY_DominionGate_Integrity_Dormant>
+  <ABY_DominionGate_Integrity_Value>{0}% • {1}/{2} HP</ABY_DominionGate_Integrity_Value>
+  <ABY_DominionGate_PulseEta_Pending>заряжается</ABY_DominionGate_PulseEta_Pending>
+  <ABY_DominionGate_PulseEta_Imminent>совсем скоро</ABY_DominionGate_PulseEta_Imminent>
+  <ABY_DominionGate_ConsoleIdle>На этой карте пока нет проявившихся Врат Короны.</ABY_DominionGate_ConsoleIdle>
+  <ABY_DominionGate_ConsoleStatus>Состояние: {0}</ABY_DominionGate_ConsoleStatus>
+  <ABY_DominionGate_ConsoleIntegrity>Целостность: {0}</ABY_DominionGate_ConsoleIntegrity>
+  <ABY_DominionGate_ConsoleNextPulse>Следующий всплеск: {0}</ABY_DominionGate_ConsoleNextPulse>
+  <ABY_DominionGate_ConsoleAbilities>Паттерн ядра: {0} • {1} • {2}</ABY_DominionGate_ConsoleAbilities>
+  <ABY_DominionGate_Ability_Suppression>подавляющий импульс</ABY_DominionGate_Ability_Suppression>
+  <ABY_DominionGate_Ability_Ignition>рифтовое возгорание</ABY_DominionGate_Ability_Ignition>
+  <ABY_DominionGate_Ability_Call>зов доминиона</ABY_DominionGate_Ability_Call>
+  <ABY_DominionGate_Inspect>Состояние: {0}
+Целостность: {1}
+Следующий всплеск: {2}</ABY_DominionGate_Inspect>
+  <ABY_DominionGateCall_Message>Всплеск Врат Короны проведён: {0}. Следующий примерно через {1}.</ABY_DominionGateCall_Message>
+  <ABY_DominionGate_CallSummary>подкрепления врат</ABY_DominionGate_CallSummary>
 
 </LanguageData>

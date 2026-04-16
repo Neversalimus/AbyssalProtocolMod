@@ -448,9 +448,11 @@ namespace AbyssalProtocol
                 AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, dominionY, rect.width, 22f), "ABY_DominionAnchorPreviewHeader".Translate());
                 Text.Font = GameFont.Tiny;
 
-                string summaryText = crisis != null && crisis.IsActive
-                    ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
-                    : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
+                string summaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionAnchorPreviewSummaryGate".Translate(crisis.GetGateStatusValue(), crisis.GetGateIntegrityValue(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : crisis != null && crisis.IsActive
+                        ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                        : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
 
                 float summaryHeight = Text.CalcHeight(summaryText, rect.width);
                 Widgets.Label(new Rect(rect.x, dominionY + 28f, rect.width, summaryHeight), summaryText);
@@ -471,9 +473,11 @@ namespace AbyssalProtocol
                 AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, waveSectionY, rect.width, 22f), "ABY_DominionWavePreviewHeader".Translate());
                 Text.Font = GameFont.Tiny;
 
-                string waveSummaryText = crisis != null && crisis.IsAnchorPhaseActive
-                    ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
-                    : "ABY_DominionWavePreviewSummaryIdle".Translate();
+                string waveSummaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionWavePreviewSummaryGate".Translate(crisis.GetWaveStatusValue(), crisis.GetGatePulseEtaValue())
+                    : crisis != null && crisis.IsAnchorPhaseActive
+                        ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
+                        : "ABY_DominionWavePreviewSummaryIdle".Translate();
 
                 float waveSummaryHeight = Text.CalcHeight(waveSummaryText, rect.width);
                 Widgets.Label(new Rect(rect.x, waveSectionY + 28f, rect.width, waveSummaryHeight), waveSummaryText);
@@ -486,6 +490,29 @@ namespace AbyssalProtocol
                     float lineHeight = Text.CalcHeight(waveLines[i], rect.width);
                     Widgets.Label(new Rect(rect.x, waveLinesY, rect.width, lineHeight), waveLines[i]);
                     waveLinesY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+
+                float gateSectionY = waveLinesY + 10f;
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, gateSectionY, rect.width, 22f), "ABY_DominionGatePreviewHeader".Translate());
+                Text.Font = GameFont.Tiny;
+
+                string gateSummaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionGatePreviewSummary".Translate(crisis.GetGateStatusValue(), crisis.GetGateIntegrityValue(), crisis.GetGatePulseEtaValue(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : "ABY_DominionGatePreviewSummaryIdle".Translate();
+
+                float gateSummaryHeight = Text.CalcHeight(gateSummaryText, rect.width);
+                Widgets.Label(new Rect(rect.x, gateSectionY + 28f, rect.width, gateSummaryHeight), gateSummaryText);
+
+                float gateLinesY = gateSectionY + 32f + gateSummaryHeight;
+                List<string> gateLines = crisis != null ? crisis.GetGateConsoleLines() : new List<string>();
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < gateLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(gateLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, gateLinesY, rect.width, lineHeight), gateLines[i]);
+                    gateLinesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
             }
@@ -518,9 +545,11 @@ namespace AbyssalProtocol
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
             {
                 MapComponent_DominionCrisis crisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
-                string summaryText = crisis != null && crisis.IsActive
-                    ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
-                    : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
+                string summaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionAnchorPreviewSummaryGate".Translate(crisis.GetGateStatusValue(), crisis.GetGateIntegrityValue(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : crisis != null && crisis.IsActive
+                        ? "ABY_DominionAnchorPreviewSummary".Translate(crisis.GetAnchorStatusValue(), crisis.GetAnchorPressureLabel(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                        : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
                 total += 54f + Text.CalcHeight(summaryText, width);
 
                 List<string> anchorLines = crisis != null ? crisis.GetAnchorConsoleLines() : new List<string>();
@@ -529,15 +558,28 @@ namespace AbyssalProtocol
                     total += Text.CalcHeight(anchorLines[i], width) + 4f;
                 }
 
-                string waveSummaryText = crisis != null && crisis.IsAnchorPhaseActive
-                    ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
-                    : "ABY_DominionWavePreviewSummaryIdle".Translate();
+                string waveSummaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionWavePreviewSummaryGate".Translate(crisis.GetWaveStatusValue(), crisis.GetGatePulseEtaValue())
+                    : crisis != null && crisis.IsAnchorPhaseActive
+                        ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
+                        : "ABY_DominionWavePreviewSummaryIdle".Translate();
                 total += 64f + Text.CalcHeight(waveSummaryText, width);
 
                 List<string> waveLines = crisis != null ? crisis.GetWaveConsoleLines() : new List<string>();
                 for (int i = 0; i < waveLines.Count; i++)
                 {
                     total += Text.CalcHeight(waveLines[i], width) + 4f;
+                }
+
+                string gateSummaryText = crisis != null && crisis.IsGatePhaseActive
+                    ? "ABY_DominionGatePreviewSummary".Translate(crisis.GetGateStatusValue(), crisis.GetGateIntegrityValue(), crisis.GetGatePulseEtaValue(), crisis.TicksRemaining.ToStringTicksToPeriod())
+                    : "ABY_DominionGatePreviewSummaryIdle".Translate();
+                total += 64f + Text.CalcHeight(gateSummaryText, width);
+
+                List<string> gateLines = crisis != null ? crisis.GetGateConsoleLines() : new List<string>();
+                for (int i = 0; i < gateLines.Count; i++)
+                {
+                    total += Text.CalcHeight(gateLines[i], width) + 4f;
                 }
             }
 

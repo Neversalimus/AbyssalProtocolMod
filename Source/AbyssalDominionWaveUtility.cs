@@ -208,7 +208,23 @@ namespace AbyssalProtocol
         public static List<string> GetConsoleLines(Map map, MapComponent_DominionCrisis crisis)
         {
             List<string> lines = new List<string>();
-            if (crisis == null || !crisis.IsAnchorPhaseActive)
+            if (crisis == null)
+            {
+                lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveConsoleIdle", "Wave routing remains dormant until anchorfall begins."));
+                return lines;
+            }
+
+            if (crisis.IsGatePhaseActive)
+            {
+                lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveConsoleGatecore", "Wave routing is now slaved directly to the Crowned Gate core."));
+                if (!crisis.LastWaveSummary.NullOrEmpty())
+                {
+                    lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveConsoleLastPulse", "Last pulse: {0}", crisis.LastWaveSummary));
+                }
+                return lines;
+            }
+
+            if (!crisis.IsAnchorPhaseActive)
             {
                 lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveConsoleIdle", "Wave routing remains dormant until anchorfall begins."));
                 return lines;
@@ -448,6 +464,180 @@ namespace AbyssalProtocol
             summary = summaryParts.Count > 0
                 ? string.Join(" + ", summaryParts)
                 : GetCompositionText(plan);
+            return true;
+        }
+
+        public static bool TryExecuteGateSupportWave(Map map, MapComponent_DominionCrisis crisis, IntVec3 origin, out string summary, out IntVec3 focusCell)
+        {
+            summary = null;
+            focusCell = IntVec3.Invalid;
+
+            if (map == null || crisis == null || !crisis.IsGatePhaseActive || !origin.IsValid)
+            {
+                return false;
+            }
+
+            int activeHostiles = CountActiveAbyssalHostiles(map);
+            if (activeHostiles >= 28)
+            {
+                summary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePreviewStatus_ThrottledUnits", "throttled while earlier abyssal hostiles are still active");
+                return false;
+            }
+
+            int activePortals = CountActivePortals(map);
+            if (activePortals >= 2)
+            {
+                summary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePreviewStatus_ThrottledPortals", "waiting for earlier breach portals to collapse");
+                return false;
+            }
+
+            Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            if (hostileFaction == null)
+            {
+                return false;
+            }
+
+            int colonists = Mathf.Max(1, ABY_Phase2PortalUtility.CountActivePlayerColonists(map));
+            int tier = Mathf.Clamp((colonists - 1) / 3, 0, 5);
+            int impCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 8);
+            int houndCount = tier >= 1 ? 1 + (tier >= 4 ? 1 : 0) : 0;
+            int thrallCount = tier >= 2 ? 1 + (tier >= 5 ? 1 : 0) : 0;
+
+            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
+            PawnKindDef houndKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName);
+            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName);
+
+            bool anySpawned = false;
+            List<string> summaryParts = new List<string>();
+
+            if (impKind != null)
+            {
+                bool spawnedPortal = ABY_Phase2PortalUtility.TrySpawnImpPortalNear(
+                    map,
+                    hostileFaction,
+                    origin,
+                    PortalMinRadius,
+                    PortalMaxRadius + 1.8f,
+                    impCount,
+                    PortalWarmupBaseTicks + 12,
+                    PortalSpawnIntervalFastTicks,
+                    PortalLingerBaseTicks + 50,
+                    out Building_AbyssalImpPortal portal);
+
+                if (!spawnedPortal)
+                {
+                    List<AbyssalHostileSummonUtility.HostilePackEntry> impEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+                    {
+                        new AbyssalHostileSummonUtility.HostilePackEntry
+                        {
+                            KindDef = impKind,
+                            Count = impCount
+                        }
+                    };
+
+                    spawnedPortal = AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                        map,
+                        impEntries,
+                        hostileFaction,
+                        origin,
+                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Imps", "dominion imp pulse"),
+                        string.Empty,
+                        string.Empty,
+                        false,
+                        out IntVec3 arrivalCell,
+                        out string _);
+
+                    if (spawnedPortal)
+                    {
+                        focusCell = arrivalCell;
+                    }
+                }
+                else if (portal != null)
+                {
+                    focusCell = portal.PositionHeld;
+                }
+
+                if (spawnedPortal)
+                {
+                    anySpawned = true;
+                    summaryParts.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DominionWaveSummary_Imps",
+                        "{0} via {1}",
+                        GetCountLabel(impCount, "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps"),
+                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalSingle", "1 portal")));
+                }
+            }
+
+            if (houndCount > 0 && houndKind != null)
+            {
+                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+                {
+                    new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = houndKind,
+                        Count = houndCount
+                    }
+                };
+
+                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    map,
+                    entries,
+                    hostileFaction,
+                    origin,
+                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Hounds", "dominion hunter pack"),
+                    string.Empty,
+                    string.Empty,
+                    false,
+                    out IntVec3 arrivalCell,
+                    out string _))
+                {
+                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    anySpawned = true;
+                    summaryParts.Add(GetCountLabel(houndCount, "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds"));
+                }
+            }
+
+            if (thrallCount > 0 && thrallKind != null)
+            {
+                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+                {
+                    new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = thrallKind,
+                        Count = thrallCount
+                    }
+                };
+
+                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    map,
+                    entries,
+                    hostileFaction,
+                    origin,
+                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Thralls", "dominion relay pack"),
+                    string.Empty,
+                    string.Empty,
+                    false,
+                    out IntVec3 arrivalCell,
+                    out string _))
+                {
+                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    anySpawned = true;
+                    summaryParts.Add(GetCountLabel(thrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
+                }
+            }
+
+            if (!anySpawned)
+            {
+                return false;
+            }
+
+            if (focusCell.IsValid)
+            {
+                ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", focusCell, map);
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.14f);
+            }
+
+            summary = summaryParts.Count > 0 ? string.Join(" + ", summaryParts) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionGate_CallSummary", "gate reinforcements");
             return true;
         }
 
