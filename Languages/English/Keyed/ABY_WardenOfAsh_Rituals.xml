@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleRitual_Warden_Label>Mark of the Warden</ABY_CircleRitual_Warden_Label>
+  <ABY_CircleRitual_Warden_Subtitle>Disciplined mini-boss breach pattern</ABY_CircleRitual_Warden_Subtitle>
+  <ABY_CircleRitual_Warden_Desc>Consumes one warden sigil, routes a colonist to the circle, and calls the first disciplined mini-boss breach. The Warden of Ash enters as a heavy infernal overseer with a chest-portal core, ash pulse pressure, and staged imp reinforcement triggers.</ABY_CircleRitual_Warden_Desc>
+  <ABY_CircleRitual_Warden_Rewards>• Mid-loop mini-boss progression step&#10;• Clean bridge between hunter-pack pressure and the first true boss&#10;• Early Warden-tier unlock hook without skipping straight to Archon content</ABY_CircleRitual_Warden_Rewards>
+  <ABY_CircleRitual_Warden_SideEffects>• Spawns a hostile armored mini-boss instead of a simple pack&#10;• Emits close-range ash pulses that punish clustering and melee swarms&#10;• Chest-portal phases open imp reinforcements as the Warden loses health</ABY_CircleRitual_Warden_SideEffects>
+  <ABY_WardenSummonSuccessLabel>Warden breach opened</ABY_WardenSummonSuccessLabel>
+  <ABY_WardenSummonSuccessDesc>The sigil has taken. A disciplined ash breach has formed and the Warden of Ash is crossing into local space.</ABY_WardenSummonSuccessDesc>
+</LanguageData>

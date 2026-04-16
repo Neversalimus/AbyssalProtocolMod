@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_WardenOfAshSigil</defName>
+    <label>warden sigil</label>
+    <description>A furnace-bound sigil keyed to the first ash overseer. Carry it to an abyssal summoning circle to route a controlled hostile breach for the Warden of Ash.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_WardenOfAshSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>220</MarketValue>
+      <Mass>0.28</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>mark of the warden</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>warden_of_ash</ritualId>
+        <summonMode>Boss</summonMode>
+        <pawnKindDefName>ABY_WardenOfAsh</pawnKindDefName>
+        <bossLabel>Warden of Ash</bossLabel>
+        <spawnPoints>560</spawnPoints>
+        <ritualWarmupTicks>150</ritualWarmupTicks>
+        <completionLetterLabelKey>ABY_WardenSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_WardenSummonSuccessDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

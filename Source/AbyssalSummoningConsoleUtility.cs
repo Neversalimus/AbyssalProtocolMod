@@ -78,6 +78,22 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "warden_of_ash",
+                LabelKey = "ABY_CircleRitual_Warden_Label",
+                SubtitleKey = "ABY_CircleRitual_Warden_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_Warden_Desc",
+                BossLabel = "Warden of Ash",
+                SigilThingDefName = "ABY_WardenOfAshSigil",
+                PawnKindDefName = "ABY_WardenOfAsh",
+                RewardHintKey = "ABY_CircleRitual_Warden_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_Warden_SideEffects",
+                BaseRisk = 0.57f,
+                InstabilityGain = 0.14f,
+                ContaminationGain = 0.06f,
+                SpawnPoints = 560
+            },
+            new RitualDefinition
+            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -331,6 +347,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Loose ember hounds");
             }
 
+            if (ritual.Id == "warden_of_ash")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Mark of the Warden");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
@@ -361,6 +382,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "Fast flanking pack assault");
             }
 
+            if (ritual.Id == "warden_of_ash")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Disciplined mini-boss breach pattern");
+            }
+
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
@@ -389,6 +415,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "ember_hunt")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one ember hound sigil, routes a colonist to the circle, and injects a colony-scaled hunter-pack onto the map. Ember hounds leap onto ranged pawns, supporting imps widen the pressure band, and a Hexgun Thrall plus Chain Zealot support pair join only at the highest threat tier.");
+            }
+
+            if (ritual.Id == "warden_of_ash")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one warden sigil, routes a colonist to the circle, and calls the first disciplined mini-boss breach. The Warden of Ash enters as a heavy infernal overseer with a chest-portal core, ash pulse pressure, and staged imp reinforcement triggers.");
             }
 
             if (ritual.Id == "archon_beast")
@@ -423,6 +454,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop pressure test for interior defense
 • Scales into mixed assaults for larger colonies
 • Clear flanker identity before the first true boss");
+            }
+
+            if (ritual.Id == "warden_of_ash")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Mid-loop mini-boss progression step
+• Clean bridge between hunter-pack pressure and the first true boss
+• Early Warden-tier unlock hook without skipping straight to Archon content");
             }
 
             if (ritual.Id == "archon_beast")
@@ -461,6 +499,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Drops a fast hostile hunter-pack at the map edge
 • Larger colonies can draw mixed hound/imp assaults, with one supporting thrall and one Chain Zealot only at the top tier
 • Lower spectacle than the Archon Beast, but deadly against weak backlines");
+            }
+
+            if (ritual.Id == "warden_of_ash")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile armored mini-boss instead of a simple pack
+• Emits close-range ash pulses that punish clustering and melee swarms
+• Chest-portal phases open imp reinforcements as the Warden loses health");
             }
 
             if (ritual.Id == "archon_beast")
