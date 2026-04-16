@@ -3,17 +3,17 @@
 
   <ABY_CircleRitual_Dominion_Label>Open dominion gate</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Endgame crisis bootstrap</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 2 expands the ritual into a live anchorfall objective phase with spawned dominion anchors, local infrastructure pressure, and real on-map targets to destroy.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 3 turns anchorfall into a live hostile pulse director with recurring abyssal waves, portal pressure, and escalation that ramps while anchors remain standing.</ABY_CircleRitual_Dominion_Desc>
   <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame crisis framework in-world
-• Spawns the first real dominion objectives on the map
-• Adds anchor tracking, local debuffs, and objective pressure the later packages will escalate with waves and the Gate core</ABY_CircleRitual_Dominion_Rewards>
+• Drives recurring hostile pulses while the anchor lattice survives
+• Establishes real wave routing, portal pressure, and escalation timing for the later Gate-core package</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Requires full stabilizer coverage and both capacitor bays online
 • Blocks other abyssal encounters while the crisis core is active
-• Anchor types now pressure turrets, power, contamination, and objective time instead of only sitting in standby</ABY_CircleRitual_Dominion_SideEffects>
+• Anchorfall now launches recurring hostile waves until the anchors are destroyed or the timer collapses</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Dominion crisis core active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame</ABY_DominionRitualMeta>
-  <ABY_DominionRitualMetaActive>Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Pressure: {3}</ABY_DominionRitualMetaActive>
+  <ABY_DominionRitualMetaActive>Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Wave ETA: {3}</ABY_DominionRitualMetaActive>
   <ABY_CircleStatus_Dominion>Dominion</ABY_CircleStatus_Dominion>
   <ABY_CircleStatus_Anchors>Anchors</ABY_CircleStatus_Anchors>
   <ABY_CircleStatus_AnchorPressure>Anchor pressure</ABY_CircleStatus_AnchorPressure>
@@ -25,7 +25,7 @@
   <ABY_DominionCrisisStartLabel>Dominion gate armed</ABY_DominionCrisisStartLabel>
   <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach core is unstable but not yet fully unfolded.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Dominion anchors manifested</ABY_DominionCrisisAnchorfallLabel>
-  <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into anchorfall. {1} dominion anchors have materialized across the map and are now feeding the breach. Destroy them before the timer collapses.</ABY_DominionCrisisAnchorfallDesc>
+  <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into anchorfall. {1} dominion anchors have materialized across the map, recurring abyssal pulses are now routing through them, and the breach will intensify until the anchors are destroyed.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Dominion core synchronized</ABY_DominionCrisisStandbyLabel>
   <ABY_DominionCrisisStandbyDesc>{0} is now holding a live dominion standby state. Later crisis packages will turn this into the full multi-phase encounter; for now the colony is sustaining the armed core.</ABY_DominionCrisisStandbyDesc>
   <ABY_DominionCrisisCancelledLabel>Dominion staging cancelled</ABY_DominionCrisisCancelledLabel>
@@ -33,7 +33,7 @@
   <ABY_DominionCrisisCancelledReason>manual abort</ABY_DominionCrisisCancelledReason>
   <ABY_DominionCrisisCompletedLabel>Dominion anchor phase broken</ABY_DominionCrisisCompletedLabel>
   <ABY_DominionCrisisCompletedDesc>The active dominion anchors were destroyed and the current package objective was completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>package 2 anchor lattice destroyed</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedReason>package 3 anchor lattice broken before the Gate core could unfold</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Dominion staging failed</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>The dominion crisis core destabilized before the later packages could take over. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Dominion standby remains armed for {0}.</ABY_DominionCrisisReminder>
@@ -62,7 +62,7 @@
   <ABY_DominionCrisisPhase_Completed>completed</ABY_DominionCrisisPhase_Completed>
 
   <ABY_DominionCrisisStatusLine_Active>Dominion crisis: {0} • {1} remaining</ABY_DominionCrisisStatusLine_Active>
-  <ABY_DominionCrisisStatusLine_Anchors>Dominion crisis: {0} • anchors {1}/{2} • {3} remaining</ABY_DominionCrisisStatusLine_Anchors>
+  <ABY_DominionCrisisStatusLine_Anchors>Dominion crisis: {0} • anchors {1}/{2} • next wave {3} • {4} remaining</ABY_DominionCrisisStatusLine_Anchors>
   <ABY_DominionCrisisStatusLine_Dormant>Dominion crisis core dormant.</ABY_DominionCrisisStatusLine_Dormant>
   <ABY_DominionCrisisStatusLine_Terminal>Dominion crisis: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
 
@@ -96,5 +96,44 @@
   <ABY_DominionAnchor_Inspect>Role: {0}
 Effect: {1}
 Breach status: {2}</ABY_DominionAnchor_Inspect>
+
+  <ABY_CircleStatus_Waves>Wave pulse</ABY_CircleStatus_Waves>
+  <ABY_CircleStatus_NextWave>Next pulse</ABY_CircleStatus_NextWave>
+
+  <ABY_DominionWavePulseLabel>Dominion pulses intensify</ABY_DominionWavePulseLabel>
+  <ABY_DominionWavePulseDesc>Anchorfall is now routing recurring hostile pulses through the breach lattice. First pulse: {0}. Next pulse in roughly {1}.</ABY_DominionWavePulseDesc>
+  <ABY_DominionWavePulseMessage>Dominion pulse routed: {0}. Next pulse in roughly {1}.</ABY_DominionWavePulseMessage>
+
+  <ABY_DominionWavePreviewHeader>Wave director</ABY_DominionWavePreviewHeader>
+  <ABY_DominionWavePreviewSummary>Projected pulse: {0}. Next pulse: {1}.</ABY_DominionWavePreviewSummary>
+  <ABY_DominionWavePreviewSummaryIdle>No hostile pulses are routing yet. Once anchorfall begins, the breach will start sending recurring waves through the active lattice.</ABY_DominionWavePreviewSummaryIdle>
+  <ABY_DominionWavePreviewStatus_Dormant>not armed</ABY_DominionWavePreviewStatus_Dormant>
+  <ABY_DominionWavePreviewStatus_Quiet>quiet</ABY_DominionWavePreviewStatus_Quiet>
+  <ABY_DominionWavePreviewStatus_ThrottledUnits>throttled while earlier abyssal hostiles are still active</ABY_DominionWavePreviewStatus_ThrottledUnits>
+  <ABY_DominionWavePreviewStatus_ThrottledPortals>waiting for earlier breach portals to collapse</ABY_DominionWavePreviewStatus_ThrottledPortals>
+
+  <ABY_DominionWaveEta_Pending>pending anchorfall</ABY_DominionWaveEta_Pending>
+  <ABY_DominionWaveEta_Queued>queueing</ABY_DominionWaveEta_Queued>
+  <ABY_DominionWaveEta_Imminent>imminent</ABY_DominionWaveEta_Imminent>
+
+  <ABY_DominionWavePressure_Dormant>dormant</ABY_DominionWavePressure_Dormant>
+  <ABY_DominionWavePressure_Low>low</ABY_DominionWavePressure_Low>
+  <ABY_DominionWavePressure_High>high</ABY_DominionWavePressure_High>
+  <ABY_DominionWavePressure_Severe>severe</ABY_DominionWavePressure_Severe>
+
+  <ABY_DominionWaveConsoleIdle>Wave routing remains dormant until anchorfall begins.</ABY_DominionWaveConsoleIdle>
+  <ABY_DominionWaveConsoleComposition>Projected pulse: {0}</ABY_DominionWaveConsoleComposition>
+  <ABY_DominionWaveConsoleCadence>Pulse cadence: roughly every {0}</ABY_DominionWaveConsoleCadence>
+  <ABY_DominionWaveConsoleThrottle>Current throttle: {0}</ABY_DominionWaveConsoleThrottle>
+  <ABY_DominionWaveConsolePressure>Wave pressure: {0}</ABY_DominionWaveConsolePressure>
+  <ABY_DominionWaveConsoleLastPulse>Last pulse: {0}</ABY_DominionWaveConsoleLastPulse>
+
+  <ABY_DominionWavePack_Imps>dominion imp pulse</ABY_DominionWavePack_Imps>
+  <ABY_DominionWavePack_Hounds>dominion hunter pack</ABY_DominionWavePack_Hounds>
+  <ABY_DominionWavePack_Thralls>dominion relay pack</ABY_DominionWavePack_Thralls>
+  <ABY_DominionWaveSummary_Imps>{0} via {1}</ABY_DominionWaveSummary_Imps>
+  <ABY_DominionWaveSummary_PortalSingle>1 portal</ABY_DominionWaveSummary_PortalSingle>
+  <ABY_DominionWaveSummary_PortalPlural>{0} portals</ABY_DominionWaveSummary_PortalPlural>
+  <ABY_DominionWaveComposition_Imps>{0} via {1}</ABY_DominionWaveComposition_Imps>
 
 </LanguageData>

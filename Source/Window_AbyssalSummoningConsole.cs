@@ -465,6 +465,29 @@ namespace AbyssalProtocol
                     linesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
+
+                float waveSectionY = linesY + 10f;
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, waveSectionY, rect.width, 22f), "ABY_DominionWavePreviewHeader".Translate());
+                Text.Font = GameFont.Tiny;
+
+                string waveSummaryText = crisis != null && crisis.IsAnchorPhaseActive
+                    ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
+                    : "ABY_DominionWavePreviewSummaryIdle".Translate();
+
+                float waveSummaryHeight = Text.CalcHeight(waveSummaryText, rect.width);
+                Widgets.Label(new Rect(rect.x, waveSectionY + 28f, rect.width, waveSummaryHeight), waveSummaryText);
+
+                float waveLinesY = waveSectionY + 32f + waveSummaryHeight;
+                List<string> waveLines = crisis != null ? crisis.GetWaveConsoleLines() : new List<string>();
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < waveLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(waveLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, waveLinesY, rect.width, lineHeight), waveLines[i]);
+                    waveLinesY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
             }
 
             Text.Font = GameFont.Small;
@@ -504,6 +527,17 @@ namespace AbyssalProtocol
                 for (int i = 0; i < anchorLines.Count; i++)
                 {
                     total += Text.CalcHeight(anchorLines[i], width) + 4f;
+                }
+
+                string waveSummaryText = crisis != null && crisis.IsAnchorPhaseActive
+                    ? "ABY_DominionWavePreviewSummary".Translate(crisis.GetWaveStatusValue(), crisis.GetNextWaveEtaValue())
+                    : "ABY_DominionWavePreviewSummaryIdle".Translate();
+                total += 64f + Text.CalcHeight(waveSummaryText, width);
+
+                List<string> waveLines = crisis != null ? crisis.GetWaveConsoleLines() : new List<string>();
+                for (int i = 0; i < waveLines.Count; i++)
+                {
+                    total += Text.CalcHeight(waveLines[i], width) + 4f;
                 }
             }
 

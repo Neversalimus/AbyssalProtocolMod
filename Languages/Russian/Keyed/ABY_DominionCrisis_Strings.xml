@@ -3,17 +3,17 @@
 
   <ABY_CircleRitual_Dominion_Label>Открыть врата доминиона</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Стартовый пакет эндгейм-кризиса</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 2 расширяет ритуал в живую anchorfall-фазу с реальными якорями на карте, давлением на инфраструктуру и объектами, которые нужно уничтожить.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Desc>Расходует один dominion sigil и использует полный контур круга, чтобы запустить ядро кризиса Crowned Gate. Пакет 3 превращает anchorfall в живой director враждебных импульсов с повторяющимися abyssal-волнами, порталами и эскалацией, пока якоря остаются целы.</ABY_CircleRitual_Dominion_Desc>
   <ABY_CircleRitual_Dominion_Rewards>• Реально инициализирует каркас эндгейм-кризиса на карте
-• Порождает первые настоящие dominion-цели на карте
-• Добавляет отслеживание якорей, локальные дебаффы и pressure-фазу, которую следующие пакеты расширят волнами и Gate core</ABY_CircleRitual_Dominion_Rewards>
+• Запускает повторяющиеся враждебные импульсы, пока жива якорная решётка
+• Добавляет реальный wave routing, порталы и эскалацию для следующего пакета с Gate core</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Требует полного кольца стабилизаторов и обеих активных capacitor bays
 • Блокирует другие abyssal-столкновения, пока активно ядро кризиса
-• Типы якорей теперь давят турели, питание, contamination и время, а не просто держат standby</ABY_CircleRitual_Dominion_SideEffects>
+• Во время anchorfall теперь запускаются повторяющиеся hostile-волны, пока якоря не уничтожены или не рухнет таймер</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Ядро кризиса доминиона активно. Текущее состояние: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Тир угрозы: эндгейм</ABY_DominionRitualMeta>
-  <ABY_DominionRitualMetaActive>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Якоря: {2}   •   Давление: {3}</ABY_DominionRitualMetaActive>
+  <ABY_DominionRitualMetaActive>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Якоря: {2}   •   Следующая волна: {3}</ABY_DominionRitualMetaActive>
   <ABY_CircleStatus_Dominion>Доминион</ABY_CircleStatus_Dominion>
   <ABY_CircleStatus_Anchors>Якоря</ABY_CircleStatus_Anchors>
   <ABY_CircleStatus_AnchorPressure>Давление якорей</ABY_CircleStatus_AnchorPressure>
@@ -25,7 +25,7 @@
   <ABY_DominionCrisisStartLabel>Врата доминиона вооружены</ABY_DominionCrisisStartLabel>
   <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию синхронизации доминиона. Ядро прорыва нестабильно, но ещё не развернулось полностью.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Якоря доминиона проявились</ABY_DominionCrisisAnchorfallLabel>
-  <ABY_DominionCrisisAnchorfallDesc>{0} перешёл в фазу anchorfall. На карте проявилось {1} якорей доминиона, и теперь они подпитывают прорыв. Уничтожьте их до коллапса таймера.</ABY_DominionCrisisAnchorfallDesc>
+  <ABY_DominionCrisisAnchorfallDesc>{0} перешёл в фазу anchorfall. На карте проявилось {1} якорей доминиона, через них уже пошли повторяющиеся abyssal-импульсы, и прорыв будет нарастать, пока якоря не уничтожены.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Ядро доминиона синхронизировано</ABY_DominionCrisisStandbyLabel>
   <ABY_DominionCrisisStandbyDesc>{0} теперь удерживает активное standby-состояние доминиона. Следующие пакеты превратят это в полноценное многофазное столкновение; пока колония просто поддерживает вооружённое ядро.</ABY_DominionCrisisStandbyDesc>
   <ABY_DominionCrisisCancelledLabel>Стадия доминиона отменена</ABY_DominionCrisisCancelledLabel>
@@ -33,7 +33,7 @@
   <ABY_DominionCrisisCancelledReason>ручная отмена</ABY_DominionCrisisCancelledReason>
   <ABY_DominionCrisisCompletedLabel>Фаза якорей сломлена</ABY_DominionCrisisCompletedLabel>
   <ABY_DominionCrisisCompletedDesc>Активные якоря доминиона уничтожены, и цель текущего пакета выполнена. Итог: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>якорная решётка пакета 2 уничтожена</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedReason>якорная решётка пакета 3 сломлена до развёртывания Gate core</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Стадия доминиона сорвалась</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>Ядро кризиса доминиона дестабилизировалось до того, как следующие пакеты взяли его на себя. Причина срыва: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Standby доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
@@ -62,7 +62,7 @@
   <ABY_DominionCrisisPhase_Completed>завершено</ABY_DominionCrisisPhase_Completed>
 
   <ABY_DominionCrisisStatusLine_Active>Кризис доминиона: {0} • осталось {1}</ABY_DominionCrisisStatusLine_Active>
-  <ABY_DominionCrisisStatusLine_Anchors>Кризис доминиона: {0} • якорей {1}/{2} • осталось {3}</ABY_DominionCrisisStatusLine_Anchors>
+  <ABY_DominionCrisisStatusLine_Anchors>Кризис доминиона: {0} • якорей {1}/{2} • следующая волна {3} • осталось {4}</ABY_DominionCrisisStatusLine_Anchors>
   <ABY_DominionCrisisStatusLine_Dormant>Ядро кризиса доминиона спит.</ABY_DominionCrisisStatusLine_Dormant>
   <ABY_DominionCrisisStatusLine_Terminal>Кризис доминиона: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
 
@@ -96,5 +96,44 @@
   <ABY_DominionAnchor_Inspect>Роль: {0}
 Эффект: {1}
 Статус прорыва: {2}</ABY_DominionAnchor_Inspect>
+
+  <ABY_CircleStatus_Waves>Волновой импульс</ABY_CircleStatus_Waves>
+  <ABY_CircleStatus_NextWave>Следующая волна</ABY_CircleStatus_NextWave>
+
+  <ABY_DominionWavePulseLabel>Импульсы доминиона усиливаются</ABY_DominionWavePulseLabel>
+  <ABY_DominionWavePulseDesc>Anchorfall теперь проводит повторяющиеся враждебные импульсы через решётку прорыва. Первый импульс: {0}. Следующий примерно через {1}.</ABY_DominionWavePulseDesc>
+  <ABY_DominionWavePulseMessage>Прошёл импульс доминиона: {0}. Следующий примерно через {1}.</ABY_DominionWavePulseMessage>
+
+  <ABY_DominionWavePreviewHeader>Директор волн</ABY_DominionWavePreviewHeader>
+  <ABY_DominionWavePreviewSummary>Ожидаемый импульс: {0}. Следующая волна: {1}.</ABY_DominionWavePreviewSummary>
+  <ABY_DominionWavePreviewSummaryIdle>Враждебные импульсы пока не идут. После начала anchorfall прорыв начнёт регулярно отправлять волны через активную решётку.</ABY_DominionWavePreviewSummaryIdle>
+  <ABY_DominionWavePreviewStatus_Dormant>не вооружено</ABY_DominionWavePreviewStatus_Dormant>
+  <ABY_DominionWavePreviewStatus_Quiet>тихо</ABY_DominionWavePreviewStatus_Quiet>
+  <ABY_DominionWavePreviewStatus_ThrottledUnits>сдерживается, пока ещё живы прошлые abyssal-враги</ABY_DominionWavePreviewStatus_ThrottledUnits>
+  <ABY_DominionWavePreviewStatus_ThrottledPortals>ожидание схлопывания прошлых порталов</ABY_DominionWavePreviewStatus_ThrottledPortals>
+
+  <ABY_DominionWaveEta_Pending>ожидается anchorfall</ABY_DominionWaveEta_Pending>
+  <ABY_DominionWaveEta_Queued>в очереди</ABY_DominionWaveEta_Queued>
+  <ABY_DominionWaveEta_Imminent>совсем скоро</ABY_DominionWaveEta_Imminent>
+
+  <ABY_DominionWavePressure_Dormant>спит</ABY_DominionWavePressure_Dormant>
+  <ABY_DominionWavePressure_Low>низкое</ABY_DominionWavePressure_Low>
+  <ABY_DominionWavePressure_High>высокое</ABY_DominionWavePressure_High>
+  <ABY_DominionWavePressure_Severe>критическое</ABY_DominionWavePressure_Severe>
+
+  <ABY_DominionWaveConsoleIdle>Маршрутизация волн спит до начала anchorfall.</ABY_DominionWaveConsoleIdle>
+  <ABY_DominionWaveConsoleComposition>Ожидаемый импульс: {0}</ABY_DominionWaveConsoleComposition>
+  <ABY_DominionWaveConsoleCadence>Интервал импульсов: примерно каждые {0}</ABY_DominionWaveConsoleCadence>
+  <ABY_DominionWaveConsoleThrottle>Текущее сдерживание: {0}</ABY_DominionWaveConsoleThrottle>
+  <ABY_DominionWaveConsolePressure>Давление волн: {0}</ABY_DominionWaveConsolePressure>
+  <ABY_DominionWaveConsoleLastPulse>Последний импульс: {0}</ABY_DominionWaveConsoleLastPulse>
+
+  <ABY_DominionWavePack_Imps>импульс dominion-импов</ABY_DominionWavePack_Imps>
+  <ABY_DominionWavePack_Hounds>охотничья группа доминиона</ABY_DominionWavePack_Hounds>
+  <ABY_DominionWavePack_Thralls>relay-группа доминиона</ABY_DominionWavePack_Thralls>
+  <ABY_DominionWaveSummary_Imps>{0} через {1}</ABY_DominionWaveSummary_Imps>
+  <ABY_DominionWaveSummary_PortalSingle>1 портал</ABY_DominionWaveSummary_PortalSingle>
+  <ABY_DominionWaveSummary_PortalPlural>{0} портала(ов)</ABY_DominionWaveSummary_PortalPlural>
+  <ABY_DominionWaveComposition_Imps>{0} через {1}</ABY_DominionWaveComposition_Imps>
 
 </LanguageData>

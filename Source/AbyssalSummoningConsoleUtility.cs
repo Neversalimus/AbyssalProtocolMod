@@ -345,7 +345,7 @@ namespace AbyssalProtocol
 
             if (ritual.Id == "dominion_gate")
             {
-                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 1 initializes synchronization, standby pressure, save-safe state tracking, and the launch/control surface for the later full encounter.");
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 3 turns anchorfall into a live hostile pulse director with recurring abyssal waves, portal pressure, and escalation that ramps while anchors remain standing.");
             }
 
             return TranslateOrFallback(ritual.DescriptionKey, ritual.Id);
@@ -382,8 +382,8 @@ namespace AbyssalProtocol
             if (ritual.Id == "dominion_gate")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• Initializes the endgame crisis framework in-world
-• Adds a repeatable high-tier ritual card, sigil, and crisis state machine
-• Establishes the control layer that later packages will expand with anchors and waves");
+• Drives recurring hostile pulses while the anchor lattice survives
+• Establishes real wave routing, portal pressure, and escalation timing for the later Gate-core package");
             }
 
             return TranslateOrFallback(ritual.RewardHintKey, ritual.Id);
@@ -421,7 +421,7 @@ namespace AbyssalProtocol
             {
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Requires full stabilizer coverage and both capacitor bays online
 • Blocks other abyssal encounters while the crisis core is active
-• Adds contamination pressure and can fail if the circle loses power for too long");
+• Anchorfall now launches recurring hostile waves until the anchors are destroyed or the timer collapses");
             }
 
             return TranslateOrFallback(ritual.SideEffectHintKey, ritual.Id);
@@ -569,11 +569,11 @@ namespace AbyssalProtocol
                 {
                     return TranslateOrFallback(
                         "ABY_DominionRitualMetaActive",
-                        "Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Pressure: {3}",
+                        "Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Wave ETA: {3}",
                         sigilCount,
                         state,
                         crisis.GetAnchorStatusValue(),
-                        crisis.GetAnchorPressureLabel());
+                        crisis.GetNextWaveEtaValue());
                 }
 
                 return TranslateOrFallback(
@@ -1188,6 +1188,20 @@ namespace AbyssalProtocol
                     Label = TranslateOrFallback("ABY_CircleStatus_AnchorPressure", "Anchor pressure"),
                     Value = crisis != null ? crisis.GetAnchorPressureLabel() : TranslateOrFallback("ABY_DominionAnchor_Pressure_None", "none"),
                     Satisfied = crisis == null || crisis.ActiveAnchorCount <= 0
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_Waves", "Wave pulse"),
+                    Value = crisis != null ? crisis.GetWaveStatusValue() : TranslateOrFallback("ABY_DominionWavePreviewStatus_Dormant", "dormant"),
+                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
+                });
+
+                entries.Add(new StatusEntry
+                {
+                    Label = TranslateOrFallback("ABY_CircleStatus_NextWave", "Next pulse"),
+                    Value = crisis != null ? crisis.GetNextWaveEtaValue() : TranslateOrFallback("ABY_DominionWaveEta_Pending", "pending"),
+                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
                 });
             }
 

@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         private const int AmbientPulseIntervalTicks = 180;
         private const int AmbientSoundIntervalTicks = 900;
         private const int AnchorReminderIntervalTicks = 3000;
+        private const int WaveRetryTicks = 360;
         private const string DominionResearchDefName = "ABY_DominionGateBootstrapping";
 
         private DominionCrisisPhase phase = DominionCrisisPhase.Dormant;
@@ -36,6 +37,10 @@ namespace AbyssalProtocol
         private int nextAmbientPulseTick;
         private int nextAmbientSoundTick;
         private int nextReminderTick;
+        private int nextWaveTick;
+        private int lastWaveTick;
+        private int wavesTriggered;
+        private string lastWaveSummary;
         private string lastOutcomeReason;
         private int lastOutcomeTick;
         private List<Building_AbyssalDominionAnchor> activeAnchors = new List<Building_AbyssalDominionAnchor>();
@@ -56,6 +61,8 @@ namespace AbyssalProtocol
         public string LastOutcomeReason => lastOutcomeReason;
         public int InitialAnchorCount => initialAnchorCount;
         public int ActiveAnchorCount => CountLiveAnchors();
+        public int WavesTriggered => wavesTriggered;
+        public string LastWaveSummary => lastWaveSummary;
 
         public int TicksRemaining
         {
@@ -63,6 +70,19 @@ namespace AbyssalProtocol
             {
                 int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
                 return Mathf.Max(0, phaseEndsTick - now);
+            }
+        }
+
+        public int TicksUntilNextWave
+        {
+            get
+            {
+                if (phase != DominionCrisisPhase.Anchorfall || nextWaveTick <= 0 || Find.TickManager == null)
+                {
+                    return 0;
+                }
+
+                return Mathf.Max(0, nextWaveTick - Find.TickManager.TicksGame);
             }
         }
 
@@ -94,6 +114,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextAmbientPulseTick, "nextAmbientPulseTick", 0);
             Scribe_Values.Look(ref nextAmbientSoundTick, "nextAmbientSoundTick", 0);
             Scribe_Values.Look(ref nextReminderTick, "nextReminderTick", 0);
+            Scribe_Values.Look(ref nextWaveTick, "nextWaveTick", 0);
+            Scribe_Values.Look(ref lastWaveTick, "lastWaveTick", 0);
+            Scribe_Values.Look(ref wavesTriggered, "wavesTriggered", 0);
+            Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_Values.Look(ref lastOutcomeReason, "lastOutcomeReason");
             Scribe_Values.Look(ref lastOutcomeTick, "lastOutcomeTick", 0);
             Scribe_Collections.Look(ref activeAnchors, "activeAnchors", LookMode.Reference);
@@ -179,6 +203,11 @@ namespace AbyssalProtocol
                     nextReminderTick = now + AnchorReminderIntervalTicks;
                     SendAnchorReminder();
                 }
+
+                if (nextWaveTick > 0 && now >= nextWaveTick)
+                {
+                    TryFireWavePulse();
+                }
             }
         }
 
@@ -250,6 +279,10 @@ namespace AbyssalProtocol
             nextAmbientPulseTick = now + 30;
             nextAmbientSoundTick = now + 90;
             nextReminderTick = 0;
+            nextWaveTick = 0;
+            lastWaveTick = 0;
+            wavesTriggered = 0;
+            lastWaveSummary = null;
             lastOutcomeReason = null;
             activeAnchors.Clear();
             initialAnchorCount = 0;
@@ -421,6 +454,10 @@ namespace AbyssalProtocol
             nextAmbientPulseTick = 0;
             nextAmbientSoundTick = 0;
             nextReminderTick = 0;
+            nextWaveTick = 0;
+            lastWaveTick = 0;
+            wavesTriggered = 0;
+            lastWaveSummary = null;
             lastOutcomeReason = null;
             lastOutcomeTick = 0;
             activeAnchors.Clear();
@@ -452,7 +489,7 @@ namespace AbyssalProtocol
         {
             if (phase == DominionCrisisPhase.Anchorfall)
             {
-                return "ABY_DominionCrisisStatusLine_Anchors".Translate(GetPhaseLabel(), ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), TicksRemaining.ToStringTicksToPeriod());
+                return "ABY_DominionCrisisStatusLine_Anchors".Translate(GetPhaseLabel(), ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), GetNextWaveEtaValue(), TicksRemaining.ToStringTicksToPeriod());
             }
 
             if (IsActive)
@@ -552,6 +589,79 @@ namespace AbyssalProtocol
             lines.Add("ABY_DominionAnchor_ConsoleLine".Translate(label, count, effect));
         }
 
+        public string GetWaveStatusValue()
+        {
+            if (phase != DominionCrisisPhase.Anchorfall)
+            {
+                return "ABY_DominionWavePreviewStatus_Dormant".Translate();
+            }
+
+            return AbyssalDominionWaveUtility.GetWavePreviewText(map, this);
+        }
+
+        public string GetWavePressureLabel()
+        {
+            return AbyssalDominionWaveUtility.GetWavePressureLabel(map, this);
+        }
+
+        public string GetNextWaveEtaValue()
+        {
+            if (phase != DominionCrisisPhase.Anchorfall)
+            {
+                return "ABY_DominionWaveEta_Pending".Translate();
+            }
+
+            if (nextWaveTick <= 0)
+            {
+                return "ABY_DominionWaveEta_Queued".Translate();
+            }
+
+            int ticks = TicksUntilNextWave;
+            if (ticks <= 90)
+            {
+                return "ABY_DominionWaveEta_Imminent".Translate();
+            }
+
+            return ticks.ToStringTicksToPeriod();
+        }
+
+        public List<string> GetWaveConsoleLines()
+        {
+            return AbyssalDominionWaveUtility.GetConsoleLines(map, this);
+        }
+
+        private void TryFireWavePulse()
+        {
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (!AbyssalDominionWaveUtility.TryExecuteWave(map, this, out string summary, out IntVec3 focusCell))
+            {
+                nextWaveTick = now + WaveRetryTicks;
+                return;
+            }
+
+            wavesTriggered++;
+            lastWaveTick = now;
+            lastWaveSummary = summary;
+            nextWaveTick = now + AbyssalDominionWaveUtility.GetNextWaveDelayTicks(this);
+
+            if (wavesTriggered == 1)
+            {
+                Find.LetterStack.ReceiveLetter(
+                    "ABY_DominionWavePulseLabel".Translate(),
+                    "ABY_DominionWavePulseDesc".Translate(summary, GetNextWaveEtaValue()),
+                    LetterDefOf.ThreatBig,
+                    new TargetInfo(focusCell.IsValid ? focusCell : sourceCell, map));
+            }
+            else
+            {
+                Messages.Message(
+                    "ABY_DominionWavePulseMessage".Translate(summary, GetNextWaveEtaValue()),
+                    new TargetInfo(focusCell.IsValid ? focusCell : sourceCell, map),
+                    MessageTypeDefOf.CautionInput,
+                    false);
+            }
+        }
+
         private void BeginAnchorfall()
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
@@ -566,6 +676,10 @@ namespace AbyssalProtocol
             phaseStartedTick = now;
             phaseEndsTick = now + AnchorfallTicks;
             nextReminderTick = now + AnchorReminderIntervalTicks;
+            nextWaveTick = now + AbyssalDominionWaveUtility.GetInitialWaveDelayTicks(this);
+            lastWaveTick = 0;
+            wavesTriggered = 0;
+            lastWaveSummary = null;
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.20f);
 
             Find.LetterStack.ReceiveLetter(
@@ -840,6 +954,8 @@ namespace AbyssalProtocol
             nextAmbientPulseTick = 0;
             nextAmbientSoundTick = 0;
             nextReminderTick = 0;
+            nextWaveTick = 0;
+            lastWaveTick = 0;
 
             if (sourceCircle != null && !sourceCircle.Destroyed && sourceCircle.Map == map)
             {
