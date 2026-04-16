@@ -1,3 +1,4 @@
+using System;
 using RimWorld;
 using Verse;
 using Verse.AI.Group;
@@ -25,7 +26,7 @@ namespace AbyssalProtocol
             if (coreDef != null)
             {
                 Thing core = ThingMaker.MakeThing(coreDef);
-                if (core != null && GenPlace.TryPlaceThing(core, cell, map, ThingPlaceMode.Near) != null)
+                if (core != null && GenPlace.TryPlaceThing(core, cell, map, ThingPlaceMode.Near))
                 {
                     droppedAny = true;
                 }
@@ -37,8 +38,8 @@ namespace AbyssalProtocol
                 Thing residue = ThingMaker.MakeThing(residueDef);
                 if (residue != null)
                 {
-                    residue.stackCount = Mathf.Min(residueDef.stackLimit, Rand.RangeInclusive(MinResidueDrop, MaxResidueDrop));
-                    if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near) != null)
+                    residue.stackCount = Math.Min(residueDef.stackLimit, Rand.RangeInclusive(MinResidueDrop, MaxResidueDrop));
+                    if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {
                         droppedAny = true;
                     }

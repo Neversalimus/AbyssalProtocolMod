@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -61,13 +62,13 @@ namespace AbyssalProtocol
             float dustSize = blockedByShield ? 0.85f : ImpactDustSize;
 
             FleckMaker.ThrowLightningGlow(impactPosition, map, primaryGlow);
-            FleckMaker.ThrowHeatGlow(impactPosition, map, secondaryGlow);
+            FleckMaker.ThrowHeatGlow(impactCell, map, secondaryGlow);
             FleckMaker.ThrowSmoke(impactPosition, map, smokeSize);
             FleckMaker.ThrowDustPuff(impactPosition, map, dustSize);
             FleckMaker.ThrowMicroSparks(impactPosition, map);
             FleckMaker.ThrowMicroSparks(impactPosition, map);
 
-            List<IntVec3> radialCells = GenRadial.RadialCellsAround(impactCell, 1.9f, true);
+            List<IntVec3> radialCells = GenRadial.RadialCellsAround(impactCell, 1.9f, true).ToList();
             for (int i = 0; i < radialCells.Count; i++)
             {
                 IntVec3 cell = radialCells[i];
@@ -91,7 +92,7 @@ namespace AbyssalProtocol
                 }
                 if (Rand.Chance(0.38f))
                 {
-                    FleckMaker.ThrowHeatGlow(cellPos, map, secondaryGlow * scaleFactor);
+                    FleckMaker.ThrowHeatGlow(cell, map, secondaryGlow * scaleFactor);
                 }
             }
         }

@@ -156,7 +156,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                FireUtility.TryStartFireIn(fireCell, map, Rand.Range(0.35f, 0.7f));
+                FireUtility.TryStartFireIn(fireCell, map, Rand.Range(0.35f, 0.7f), pawn, null);
                 ignited++;
             }
         }

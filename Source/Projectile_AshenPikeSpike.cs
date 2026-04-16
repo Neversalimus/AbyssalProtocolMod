@@ -63,7 +63,7 @@ namespace AbyssalProtocol
             }
 
             Vector3 point = Vector3.Lerp(from, to, 0.5f);
-            FleckMaker.ThrowHeatGlow(point, map, TrailHeatGlowSize);
+            FleckMaker.ThrowHeatGlow(point.ToIntVec3(), map, TrailHeatGlowSize);
             FleckMaker.ThrowDustPuff(point, map, TrailDustSize);
         }
 
@@ -74,7 +74,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            FleckMaker.ThrowHeatGlow(position, map, blockedByShield ? 0.55f : ImpactHeatGlowSize);
+            FleckMaker.ThrowHeatGlow(position.ToIntVec3(), map, blockedByShield ? 0.55f : ImpactHeatGlowSize);
             FleckMaker.ThrowFireGlow(position, map, blockedByShield ? 0.38f : ImpactFireGlowSize);
             FleckMaker.ThrowDustPuff(position, map, blockedByShield ? 0.55f : ImpactDustSize);
             FleckMaker.ThrowSmoke(position, map, blockedByShield ? 0.42f : ImpactSmokeSize);

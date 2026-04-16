@@ -94,7 +94,9 @@ namespace AbyssalProtocol
             }
 
             // Fallback: if portal placement fails, still try to materialize a single nearby imp directly.
-            if (ABY_Phase2PortalUtility.TryGenerateImp(PawnKindDef.NamedSilentFail("ABY_RiftImp"), pawn.Faction, map, out Pawn imp)
+            PawnKindDef impKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
+            if (impKindDef != null
+                && ABY_Phase2PortalUtility.TryGenerateImp(impKindDef, pawn.Faction, map, out Pawn imp)
                 && CellFinder.TryFindRandomCellNear(center, map, 2, c => c.InBounds(map) && c.Standable(map) && c.GetFirstPawn(map) == null, out IntVec3 spawnCell))
             {
                 GenSpawn.Spawn(imp, spawnCell, map, Rot4.Random);
