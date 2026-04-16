@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <PawnKindDef ParentName="OutlanderBase">
+  <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ChainZealot</defName>
     <label>chain zealot</label>
     <race>ABY_ChainZealot</race>
     <combatPower>285</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-    <apparelMoney Inherit="False">0</apparelMoney>
-    <weaponMoney Inherit="False">0</weaponMoney>
-    <weaponTags Inherit="False" />
-    <apparelRequired Inherit="False" />
-    <apparelTags Inherit="False" />
-    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
-    <forceNormalGearQuality>true</forceNormalGearQuality>
-    <gearHealthRange>1~1</gearHealthRange>
-    <initialResistanceRange>18~28</initialResistanceRange>
-    <initialWillRange>3~5</initialWillRange>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/ChainZealot/ABY_ChainZealot</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(1.46,1.46)</drawSize>
+          <shadowData>
+            <volume>(0.60, 0.28, 0.60)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
   </PawnKindDef>
 
 </Defs>
