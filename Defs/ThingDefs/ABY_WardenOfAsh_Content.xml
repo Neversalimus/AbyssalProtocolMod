@@ -7,7 +7,7 @@
     <description>An infernal techno-warden built as the first disciplined overseer of abyssal breach pressure. Its armor is ash-black and furnace-heavy, with a contained portal embedded in the chest to mark it as both executioner and living gate-node.</description>
 
     <thingClass>Pawn</thingClass>
-    <tickerType>RealtimeOnly</tickerType>
+    <tickerType>Normal</tickerType>
     <selectable>true</selectable>
     <useHitPoints>true</useHitPoints>
 
@@ -19,8 +19,8 @@
 
     <race>
       <body>Human</body>
-      <baseBodySize>1.40</baseBodySize>
-      <baseHealthScale>2.15</baseHealthScale>
+      <baseBodySize>1.45</baseBodySize>
+      <baseHealthScale>2.25</baseHealthScale>
       <lifeStageAges>
         <li>
           <def>HumanlikeAdult</def>
@@ -46,17 +46,17 @@
     </race>
 
     <statBases>
-      <MaxHitPoints>980</MaxHitPoints>
-      <MoveSpeed>4.35</MoveSpeed>
-      <MeleeHitChance>0.88</MeleeHitChance>
+      <MaxHitPoints>1120</MaxHitPoints>
+      <MoveSpeed>4.25</MoveSpeed>
+      <MeleeHitChance>0.90</MeleeHitChance>
       <MeleeDodgeChance>0.18</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.56</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.42</ArmorRating_Blunt>
-      <ArmorRating_Heat>1.10</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.62</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.46</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.40</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
-      <ComfyTemperatureMax>220</ComfyTemperatureMax>
-      <Mass>1.35</Mass>
-      <MarketValue>900</MarketValue>
+      <ComfyTemperatureMax>240</ComfyTemperatureMax>
+      <Mass>1.45</Mass>
+      <MarketValue>1100</MarketValue>
       <Flammability>0.00</Flammability>
     </statBases>
 
@@ -67,22 +67,36 @@
           <li>Stab</li>
           <li>Blunt</li>
         </capacities>
-        <power>24</power>
-        <cooldownTime>1.85</cooldownTime>
+        <power>26</power>
+        <cooldownTime>1.80</cooldownTime>
         <chanceFactor>1.05</chanceFactor>
-        <armorPenetration>0.24</armorPenetration>
+        <armorPenetration>0.26</armorPenetration>
       </li>
       <li>
         <label>censer smash</label>
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>18</power>
-        <cooldownTime>2.35</cooldownTime>
+        <power>19</power>
+        <cooldownTime>2.30</cooldownTime>
         <chanceFactor>0.78</chanceFactor>
         <armorPenetration>0.18</armorPenetration>
       </li>
     </tools>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
+        <warmupTicks>240</warmupTicks>
+        <pulseIntervalTicks>360</pulseIntervalTicks>
+        <pulseIntervalVariance>75</pulseIntervalVariance>
+        <pulseRadius>3.6</pulseRadius>
+        <pulseDamage>14</pulseDamage>
+        <pulseArmorPenetration>0.16</pulseArmorPenetration>
+        <igniteChancePerCell>0.14</igniteChancePerCell>
+        <maxCellsToIgnite>4</maxCellsToIgnite>
+        <visualScale>1.9</visualScale>
+      </li>
+    </comps>
   </ThingDef>
 
 </Defs>
