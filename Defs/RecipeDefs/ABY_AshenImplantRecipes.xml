@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!-- Forge crafting -->
+
+  <RecipeDef>
+    <defName>ABY_CraftAshenLiverLattice</defName>
+    <label>forge ashen liver lattice</label>
+    <description>Shape a disciplined ash core into a hepatic lattice optimized for filtration and immune stability.</description>
+    <jobString>Forging ashen liver lattice.</jobString>
+    <workAmount>1800</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>ABY_AshenCore</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <count>6</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Steel</li></thingDefs></filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AshenLiverLattice>1</ABY_AshenLiverLattice>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftCinderMandibleSeal</defName>
+    <label>forge cinder mandible seal</label>
+    <description>Cast an ash-core jaw seal that hardens pain tolerance and close-quarters discipline.</description>
+    <jobString>Forging cinder mandible seal.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>ABY_AshenCore</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <count>5</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Steel</li></thingDefs></filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_CinderMandibleSeal>1</ABY_CinderMandibleSeal>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftEmberLungArray</defName>
+    <label>forge ember lung array</label>
+    <description>Stabilize an ash core inside a high-flow respirator array and heat-sink the result through abyssal alloy.</description>
+    <jobString>Forging ember lung array.</jobString>
+    <workAmount>1900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>ABY_AshenCore</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <count>16</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <count>3</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_EmberLungArray>1</ABY_EmberLungArray>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftAshenAnchorNode</defName>
+    <label>forge ashen anchor node</label>
+    <description>Etch an ash core into a restrained auxiliary brain node meant for long-term abyssal cognition instead of brute combat surge.</description>
+    <jobString>Forging ashen anchor node.</jobString>
+    <workAmount>2100</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>ABY_AshenCore</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <count>9</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>Gold</li></thingDefs></filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AshenAnchorNode>1</ABY_AshenAnchorNode>
+    </products>
+  </RecipeDef>
+
+  <!-- Surgical installation -->
+
+  <RecipeDef>
+    <defName>ABY_InstallAshenLiverLattice</defName>
+    <label>install ashen liver lattice</label>
+    <description>Install an ashen liver lattice.</description>
+    <workerClass>Recipe_InstallImplant</workerClass>
+    <jobString>Installing ashen liver lattice.</jobString>
+    <anesthetize>true</anesthetize>
+    <targetsBodyPart>true</targetsBodyPart>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AshenLiverLattice</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Liver</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_AshenLiverLattice_Implant</addsHediff>
+    <recipeUsers>
+      <li>Human</li>
+      <li>CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_InstallCinderMandibleSeal</defName>
+    <label>install cinder mandible seal</label>
+    <description>Install a cinder mandible seal.</description>
+    <workerClass>Recipe_InstallImplant</workerClass>
+    <jobString>Installing cinder mandible seal.</jobString>
+    <anesthetize>true</anesthetize>
+    <targetsBodyPart>true</targetsBodyPart>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_CinderMandibleSeal</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Jaw</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_CinderMandibleSeal_Implant</addsHediff>
+    <recipeUsers>
+      <li>Human</li>
+      <li>CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_InstallEmberLungArray</defName>
+    <label>install ember lung array</label>
+    <description>Install an ember lung array.</description>
+    <workerClass>Recipe_InstallImplant</workerClass>
+    <jobString>Installing ember lung array.</jobString>
+    <anesthetize>true</anesthetize>
+    <targetsBodyPart>true</targetsBodyPart>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_EmberLungArray</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Lung</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_EmberLungArray_Implant</addsHediff>
+    <recipeUsers>
+      <li>Human</li>
+      <li>CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_InstallAshenAnchorNode</defName>
+    <label>install ashen anchor node</label>
+    <description>Install an ashen anchor node.</description>
+    <workerClass>Recipe_InstallImplant</workerClass>
+    <jobString>Installing ashen anchor node.</jobString>
+    <anesthetize>true</anesthetize>
+    <targetsBodyPart>true</targetsBodyPart>
+    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <ingredients>
+      <li>
+        <filter><thingDefs><li>MedicineIndustrial</li></thingDefs></filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter><thingDefs><li>ABY_AshenAnchorNode</li></thingDefs></filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_AshenAnchorNode_Implant</addsHediff>
+    <recipeUsers>
+      <li>Human</li>
+      <li>CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>

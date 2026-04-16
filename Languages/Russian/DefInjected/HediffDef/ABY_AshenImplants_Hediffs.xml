@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_AshenLiverLattice_Implant.label>пепельная печёночная решётка</ABY_AshenLiverLattice_Implant.label>
+  <ABY_AshenLiverLattice_Implant.description>Инфернальная печёночная решётка, собранная вокруг дисциплинированного пепельного ядра.</ABY_AshenLiverLattice_Implant.description>
+
+  <ABY_CinderMandibleSeal_Implant.label>угольная мандибулярная печать</ABY_CinderMandibleSeal_Implant.label>
+  <ABY_CinderMandibleSeal_Implant.description>Инфернальная челюстная скоба, подавляющая болевую спираль и стабилизирующая агрессивную траекторию удара.</ABY_CinderMandibleSeal_Implant.description>
+
+  <ABY_EmberLungArray_Implant.label>тлеющий лёгочный массив</ABY_EmberLungArray_Implant.label>
+  <ABY_EmberLungArray_Implant.description>Респираторный массив на пепельном ядре, повышающий дыхание и темп боя ценой большего расхода энергии.</ABY_EmberLungArray_Implant.description>
+
+  <ABY_AshenAnchorNode_Implant.label>пепельный якорный узел</ABY_AshenAnchorNode_Implant.label>
+  <ABY_AshenAnchorNode_Implant.description>Вспомогательный когнитивный модуль на пепельном ядре, устанавливаемый рядом с мозгом, а не вместо него.</ABY_AshenAnchorNode_Implant.description>
+</LanguageData>

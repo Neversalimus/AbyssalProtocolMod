@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_AshenLiverLattice_Implant</defName>
+    <label>ashen liver lattice</label>
+    <description>An infernal hepatic lattice built around a disciplined ash core.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.35</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.08</ImmunityGainSpeed>
+          <HungerRateMultiplier>0.05</HungerRateMultiplier>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_CinderMandibleSeal_Implant</defName>
+    <label>cinder mandible seal</label>
+    <description>An infernal jaw brace that suppresses pain cascade and stabilizes aggressive bite-line targeting.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+        <statOffsets>
+          <PainShockThreshold>0.15</PainShockThreshold>
+          <MeleeHitChance>0.05</MeleeHitChance>
+          <SocialImpact>-0.10</SocialImpact>
+          <Beauty>-0.30</Beauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_EmberLungArray_Implant</defName>
+    <label>ember lung array</label>
+    <description>An ash-core respirator array that increases breathing throughput and combat tempo while taxing the body's energy budget.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>0.22</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.05</MoveSpeed>
+          <HungerRateMultiplier>0.06</HungerRateMultiplier>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_AshenAnchorNode_Implant</defName>
+    <label>ashen anchor node</label>
+    <description>An auxiliary ash-core cognition module seated against the brain instead of replacing it outright.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+    </addedPartProps>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.06</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ResearchSpeed>0.12</ResearchSpeed>
+          <GlobalLearningFactor>0.08</GlobalLearningFactor>
+          <RestFallRate>0.05</RestFallRate>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

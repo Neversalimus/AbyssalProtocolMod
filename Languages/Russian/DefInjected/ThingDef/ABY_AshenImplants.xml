@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_AshenLiverLattice.label>пепельная печёночная решётка</ABY_AshenLiverLattice.label>
+  <ABY_AshenLiverLattice.description>Охлаждённая печёночная решётка, сплетённая вокруг дисциплинированного пепельного ядра. Усиливает фильтрацию и иммунный ответ, но заставляет организм работать чуть горячее и прожорливее обычного.</ABY_AshenLiverLattice.description>
+
+  <ABY_CinderMandibleSeal.label>угольная мандибулярная печать</ABY_CinderMandibleSeal.label>
+  <ABY_CinderMandibleSeal.description>Инфернальная челюстная скоба и болевой демпфер, отлитые вокруг стабилизированного пепельного ядра. Укрепляет дисциплину боя и точность в ближнем бою, но делает носителя заметно более чужеродным.</ABY_CinderMandibleSeal.description>
+
+  <ABY_EmberLungArray.label>тлеющий лёгочный массив</ABY_EmberLungArray.label>
+  <ABY_EmberLungArray.description>Парный инфернальный респиратор, выращенный вокруг пепельного ядра и прошитый жароотводами из бездного сплава. Улучшает дыхание и темп в бою, но ускоряет расход энергии организма.</ABY_EmberLungArray.description>
+
+  <ABY_AshenAnchorNode.label>пепельный якорный узел</ABY_AshenAnchorNode.label>
+  <ABY_AshenAnchorNode.description>Сдержанный метакогнитивный якорь, вытравленный вокруг пепельного ядра и настроенный на долгосрочную бездную когницию. Он не заменяет мозг, а встраивается рядом с ним как вспомогательный узел, повышая ясность мышления, обучение и скорость исследований ценой более глубокой усталости.</ABY_AshenAnchorNode.description>
+</LanguageData>
