@@ -9,8 +9,8 @@
     <pawnsPlural>abyssal entities</pawnsPlural>
     <hidden>true</hidden>
     <canMakeRandomly>false</canMakeRandomly>
-    <requiredCountAtGameStart>1</requiredCountAtGameStart>
-    <maxCountAtGameStart>1</maxCountAtGameStart>
+    <requiredCountAtGameStart>0</requiredCountAtGameStart>
+    <maxCountAtGameStart>0</maxCountAtGameStart>
     <fixedName>abyssal host</fixedName>
     <settlementGenerationWeight>0</settlementGenerationWeight>
     <permanentEnemy>true</permanentEnemy>

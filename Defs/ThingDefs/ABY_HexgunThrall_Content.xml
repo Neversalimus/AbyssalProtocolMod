@@ -16,7 +16,10 @@
       <renderTree>Animal</renderTree>
       <thinkTreeMain>Animal</thinkTreeMain>
       <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <intelligence>ToolUser</intelligence>
+      <needsRest>false</needsRest>
       <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
       <canBecomeShambler>true</canBecomeShambler>
@@ -26,15 +29,12 @@
       <body>Human</body>
       <baseBodySize>0.74</baseBodySize>
       <baseHealthScale>1.02</baseHealthScale>
-      <baseHungerRate>0.42</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>ToolUser</intelligence>
+      <foodType>None</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeExpectancy>95</lifeExpectancy>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
-      <lifeExpectancy>95</lifeExpectancy>
-      <foodType>OmnivoreHuman</foodType>
-      <useMeatFrom>Human</useMeatFrom>
-      <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges Inherit="False">
         <li>
           <def>AnimalAdult</def>
