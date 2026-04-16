@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <ThingDef ParentName="Human">
+  <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_HexgunThrall</defName>
     <label>hexgun thrall</label>
     <description>A chained infernal gun-servitor grown for disciplined breach volleys. Hexgun thralls keep their distance, rake firing lines with cursed bursts, and mark exposed targets for the rest of the abyssal host.</description>
@@ -13,9 +13,9 @@
       <drawSize>(1.42,1.42)</drawSize>
     </graphicData>
     <race>
-      <renderTree>Humanlike</renderTree>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
@@ -28,8 +28,7 @@
       <baseHealthScale>1.02</baseHealthScale>
       <baseHungerRate>0.42</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>Humanlike</intelligence>
-      <nameCategory>HumanStandard</nameCategory>
+      <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <lifeExpectancy>95</lifeExpectancy>
@@ -38,7 +37,7 @@
       <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges Inherit="False">
         <li>
-          <def>HumanlikeAdult</def>
+          <def>AnimalAdult</def>
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
@@ -91,12 +90,11 @@
       <li>RangedHeavy</li>
     </weaponTags>
     <costList>
-      <Steel>45</Steel>
+      <Steel>35</Steel>
       <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
     <smeltProducts>
-      <Steel>22</Steel>
-      <ComponentIndustrial>1</ComponentIndustrial>
+      <Steel>15</Steel>
     </smeltProducts>
     <statBases>
       <Mass>2.25</Mass>

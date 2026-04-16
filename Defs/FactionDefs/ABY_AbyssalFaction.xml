@@ -11,6 +11,7 @@
     <canMakeRandomly>false</canMakeRandomly>
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
     <maxCountAtGameStart>1</maxCountAtGameStart>
+    <fixedName>abyssal host</fixedName>
     <settlementGenerationWeight>0</settlementGenerationWeight>
     <permanentEnemy>true</permanentEnemy>
     <techLevel>Spacer</techLevel>

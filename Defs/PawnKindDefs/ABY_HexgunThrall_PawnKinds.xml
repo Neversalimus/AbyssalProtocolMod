@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <PawnKindDef ParentName="OutlanderBase">
+  <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_HexgunThrall</defName>
     <label>hexgun thrall</label>
     <race>ABY_HexgunThrall</race>
@@ -9,16 +9,30 @@
     <combatPower>210</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-    <apparelMoney Inherit="False">0</apparelMoney>
-    <weaponMoney Inherit="False">720</weaponMoney>
-    <weaponTags Inherit="False">
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney>
+      <min>5000</min>
+      <max>5000</max>
+    </weaponMoney>
+    <weaponTags>
       <li>ABY_HexgunWeapon</li>
     </weaponTags>
-    <apparelRequired Inherit="False" />
-    <apparelTags Inherit="False" />
-    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
-    <forceNormalGearQuality>true</forceNormalGearQuality>
-    <gearHealthRange>1~1</gearHealthRange>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/HexgunThrall/ABY_HexgunThrall</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(1.42,1.42)</drawSize>
+          <shadowData>
+            <volume>(0.45, 0.55, 0.45)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
   </PawnKindDef>
 
 </Defs>
