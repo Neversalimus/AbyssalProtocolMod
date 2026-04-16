@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_AshenScattergun</defName>
+    <label>ashen scattergun</label>
+    <description>A furnace-breather built around a stabilized ashen core. Instead of venting refined energy, it hammers a single brutal ash-shell into the breach, breaking charges with a tank-like blast and a wide infernal impact.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_AshenScattergun</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <soundInteract>Interact_BoltActionRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>ShortShots</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <Steel>55</Steel>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+    </costList>
+
+    <statBases>
+      <WorkToMake>28000</WorkToMake>
+      <Mass>4.9</Mass>
+      <MarketValue>2280</MarketValue>
+      <AccuracyTouch>0.94</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.42</AccuracyMedium>
+      <AccuracyLong>0.12</AccuracyLong>
+      <RangedWeapon_Cooldown>3.35</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_AshenScatterShell</defaultProjectile>
+        <warmupTime>1.30</warmupTime>
+        <range>13.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
+        <soundCast>ABY_AshenScattergunFire</soundCast>
+        <muzzleFlashScale>17</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>stock</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.1</cooldownTime>
+      </li>
+      <li>
+        <label>breach maw</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>2.35</cooldownTime>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>205</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_AshenScatterShell</defName>
+    <label>ashen scatter shell</label>
+    <thingClass>AbyssalProtocol.Projectile_AshenScatterShell</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_AshenScatterShell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,1.05)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>24</damageAmountBase>
+      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <stoppingPower>2.85</stoppingPower>
+      <speed>38</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_AshenScattergun.label>ashen scattergun</ABY_AshenScattergun.label>
+  <ABY_AshenScattergun.description>Печной штурмовой ствол, собранный вокруг стабилизированного пепельного ядра. Вместо энергетического разряда он выбрасывает один тяжёлый ash-shell, ломая натиск танкоподобным выстрелом и широким инфернальным импульсом при попадании.</ABY_AshenScattergun.description>
+
+  <ABY_AshenScatterShell.label>ashen scatter shell</ABY_AshenScatterShell.label>
+
+</LanguageData>

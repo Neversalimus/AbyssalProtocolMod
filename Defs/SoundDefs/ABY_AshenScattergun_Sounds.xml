@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_AshenScattergunFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>3</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/AshenScattergun_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>46</min>
+          <max>50</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.97</min>
+          <max>1.00</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
