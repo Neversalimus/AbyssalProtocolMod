@@ -7,19 +7,23 @@ namespace AbyssalProtocol
 {
     public class Projectile_OblivionChoirCore : Bullet
     {
-        private const int TrailIntervalTicks = 2;
-        private const int ArcIntervalTicks = 3;
-        private const int ArcRetargetCooldownTicks = 9;
-        private const float TrailGlowSize = 0.42f;
-        private const float ArcGlowSize = 0.60f;
-        private const float ImpactGlowSize = 2.85f;
-        private const float ArcRadius = 2.35f;
-        private const int MaxArcTargetsPerPulse = 4;
-        private const float ArcDamage = 5f;
-        private const float ArcArmorPenetration = 0.42f;
-        private const float ImpactExplosionRadius = 5.4f;
-        private const int ImpactExplosionDamage = 68;
-        private const float ImpactExplosionArmorPenetration = 1.35f;
+        private const int TrailIntervalTicks = 1;
+        private const int CorePulseIntervalTicks = 2;
+        private const int ArcIntervalTicks = 4;
+        private const int ArcRetargetCooldownTicks = 11;
+        private const float TrailGlowSize = 0.34f;
+        private const float TrailFireGlowSize = 0.18f;
+        private const float CoreGlowBaseSize = 0.44f;
+        private const float CoreFireGlowBaseSize = 0.22f;
+        private const float ArcGlowSize = 0.54f;
+        private const float ImpactGlowSize = 2.45f;
+        private const float ArcRadius = 2.10f;
+        private const int MaxArcTargetsPerPulse = 3;
+        private const float ArcDamage = 4f;
+        private const float ArcArmorPenetration = 0.34f;
+        private const float ImpactExplosionRadius = 4.8f;
+        private const int ImpactExplosionDamage = 60;
+        private const float ImpactExplosionArmorPenetration = 1.22f;
 
         private readonly Dictionary<int, int> targetRetargetTicks = new Dictionary<int, int>();
         private int ticksAlive;
@@ -46,7 +50,12 @@ namespace AbyssalProtocol
 
             if (ticksAlive % TrailIntervalTicks == 0)
             {
-                SpawnTrail(lastExactPosition, ExactPosition, Map);
+                SpawnTrail(lastExactPosition, ExactPosition, Map, ticksAlive);
+            }
+
+            if (ticksAlive % CorePulseIntervalTicks == 0)
+            {
+                SpawnCorePulse(ExactPosition, Map, ticksAlive);
             }
 
             if (ticksAlive % ArcIntervalTicks == 0)
@@ -212,7 +221,7 @@ namespace AbyssalProtocol
             thing.TakeDamage(damageInfo);
         }
 
-        private static void SpawnTrail(Vector3 from, Vector3 to, Map map)
+        private static void SpawnTrail(Vector3 from, Vector3 to, Map map, int ticksAlive)
         {
             if (map == null)
             {
@@ -223,11 +232,32 @@ namespace AbyssalProtocol
             {
                 float t = i / 4f;
                 Vector3 point = Vector3.Lerp(from, to, t);
-                FleckMaker.ThrowLightningGlow(point, map, TrailGlowSize);
-                if (i >= 2)
+                float pulse = 0.90f + Mathf.Abs(Mathf.Sin((ticksAlive + i * 3) * 0.38f)) * 0.35f;
+                FleckMaker.ThrowLightningGlow(point, map, TrailGlowSize * pulse);
+                if (((ticksAlive + i) & 1) == 0)
+                {
+                    FleckMaker.ThrowFireGlow(point, map, TrailFireGlowSize * pulse);
+                }
+                if (i >= 2 || Rand.Chance(0.40f))
                 {
                     FleckMaker.ThrowMicroSparks(point, map);
                 }
+            }
+        }
+
+        private static void SpawnCorePulse(Vector3 position, Map map, int ticksAlive)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            float pulse = 0.92f + Mathf.Abs(Mathf.Sin(ticksAlive * 0.42f)) * 0.40f;
+            FleckMaker.ThrowLightningGlow(position, map, CoreGlowBaseSize * pulse);
+            FleckMaker.ThrowFireGlow(position, map, CoreFireGlowBaseSize * pulse);
+            if ((ticksAlive % 4) == 0)
+            {
+                FleckMaker.ThrowMicroSparks(position, map);
             }
         }
 
@@ -237,14 +267,7 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowMicroSparks(position, map);
-        }
-
-        private static float HorizontalDistanceSquared(Vector3 origin, Thing thing)
-        {
-            Vector3 target = thing.TrueCenter();
-            float dx = target.x - origin.x;
-            float dz = target.z - origin.z;
-            return dx * dx + dz * dz;
+            FleckMaker.ThrowFireGlow(position, map, 0.72f);
         }
     }
 }

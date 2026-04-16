@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_OblivionChoir</defName>
     <label>oblivion choir</label>
-    <description>A forge-born annihilation cannon that chambers choir cells into a constrained abyssal core. The projectile advances like a miniature breach-heart, lashing nearby targets on its way in before detonating in a violent infernal bloom. It is brutally effective against clustered infantry, breach points and static defenses, but it is slow, heavy and ruinously expensive to feed.</description>
+    <description>A forge-born annihilation cannon that stabilizes a choir-core inside a self-cycling abyssal chamber. The projectile advances like a miniature breach-heart, lashing nearby targets on its way in before detonating in a violent infernal bloom. It remains devastating against clustered infantry and breach points, but it is slower, slightly less overwhelming and no longer depends on external choir-cell reloads.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
@@ -21,7 +21,7 @@
       <AccuracyShort>0.61</AccuracyShort>
       <AccuracyMedium>0.66</AccuracyMedium>
       <AccuracyLong>0.60</AccuracyLong>
-      <RangedWeapon_Cooldown>4.80</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>4.95</RangedWeapon_Cooldown>
     </statBases>
 
     <recipeMaker>
@@ -48,7 +48,7 @@
 
     <verbs>
       <li>
-        <verbClass>AbyssalProtocol.Verb_ShootAbyssalReloadable</verbClass>
+        <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_OblivionChoirCoreProjectile</defaultProjectile>
         <warmupTime>2.80</warmupTime>
@@ -81,21 +81,6 @@
         <cooldownTime>2.2</cooldownTime>
       </li>
     </tools>
-
-    <comps>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalReloadable">
-        <maxCharges>4</maxCharges>
-        <ammoDef>ABY_OblivionChoirCell</ammoDef>
-        <ammoCountPerCharge>1</ammoCountPerCharge>
-        <ammoCountToRefill>4</ammoCountToRefill>
-        <baseReloadTicks>240</baseReloadTicks>
-        <verbToUse>0</verbToUse>
-        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
-        <chargeNoun>choir cell</chargeNoun>
-        <destroyOnEmpty>false</destroyOnEmpty>
-        <soundReload>ABY_UltraPlasmaCharge</soundReload>
-      </li>
-    </comps>
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
@@ -142,10 +127,10 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>38</damageAmountBase>
-      <armorPenetrationBase>1.05</armorPenetrationBase>
-      <stoppingPower>4.2</stoppingPower>
-      <speed>18</speed>
+      <damageAmountBase>34</damageAmountBase>
+      <armorPenetrationBase>0.96</armorPenetrationBase>
+      <stoppingPower>3.8</stoppingPower>
+      <speed>17</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
