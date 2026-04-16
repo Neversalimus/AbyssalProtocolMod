@@ -9,12 +9,12 @@ namespace AbyssalProtocol
     {
         public static Lord FindLordFor(Pawn pawn)
         {
-            if (pawn?.Map?.lordManager?.lords == null)
+            if (pawn?.MapHeld?.lordManager?.lords == null)
             {
                 return null;
             }
 
-            List<Lord> lords = pawn.Map.lordManager.lords;
+            List<Lord> lords = pawn.MapHeld.lordManager.lords;
             for (int i = 0; i < lords.Count; i++)
             {
                 Lord lord = lords[i];
@@ -27,16 +27,17 @@ namespace AbyssalProtocol
             return null;
         }
 
-        public static bool EnsureAssaultLord(Pawn pawn, bool sappers)
+        public static Lord EnsureAssaultLord(Pawn pawn, bool sappers)
         {
-            if (pawn?.Map == null || pawn.Faction == null)
+            if (pawn == null || pawn.Faction == null || pawn.MapHeld == null || pawn.Dead)
             {
-                return false;
+                return null;
             }
 
-            if (FindLordFor(pawn) != null)
+            Lord existingLord = FindLordFor(pawn);
+            if (existingLord != null)
             {
-                return true;
+                return existingLord;
             }
 
             LordJob lordJob = new LordJob_AssaultColony(
@@ -47,8 +48,71 @@ namespace AbyssalProtocol
                 useAvoidGridSmart: true,
                 canSteal: false);
 
-            LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.Map, new List<Pawn> { pawn });
-            return true;
+            return LordMaker.MakeNewLord(pawn.Faction, lordJob, pawn.MapHeld, new List<Pawn> { pawn });
+        }
+
+        public static Lord EnsureAssaultLord(IEnumerable<Pawn> pawns, Faction faction, Map map, bool sappers)
+        {
+            if (pawns == null || faction == null || map == null)
+            {
+                return null;
+            }
+
+            List<Pawn> lordless = new List<Pawn>();
+            Lord sharedExistingLord = null;
+            bool multipleDifferentLords = false;
+
+            foreach (Pawn pawn in pawns)
+            {
+                if (pawn == null || pawn.Dead || pawn.MapHeld != map || pawn.Faction != faction)
+                {
+                    continue;
+                }
+
+                Lord existingLord = FindLordFor(pawn);
+                if (existingLord == null)
+                {
+                    lordless.Add(pawn);
+                    continue;
+                }
+
+                if (sharedExistingLord == null)
+                {
+                    sharedExistingLord = existingLord;
+                }
+                else if (sharedExistingLord != existingLord)
+                {
+                    multipleDifferentLords = true;
+                }
+            }
+
+            if (sharedExistingLord != null && !multipleDifferentLords)
+            {
+                for (int i = 0; i < lordless.Count; i++)
+                {
+                    if (!sharedExistingLord.ownedPawns.Contains(lordless[i]))
+                    {
+                        sharedExistingLord.AddPawn(lordless[i]);
+                    }
+                }
+
+                return sharedExistingLord;
+            }
+
+            if (lordless.Count == 0)
+            {
+                return multipleDifferentLords ? null : sharedExistingLord;
+            }
+
+            LordJob lordJob = new LordJob_AssaultColony(
+                faction,
+                canKidnap: false,
+                canTimeoutOrFlee: false,
+                sappers: sappers,
+                useAvoidGridSmart: true,
+                canSteal: false);
+
+            return LordMaker.MakeNewLord(faction, lordJob, map, lordless);
         }
     }
 }
