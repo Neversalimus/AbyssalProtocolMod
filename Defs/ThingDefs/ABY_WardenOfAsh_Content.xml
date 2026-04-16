@@ -96,6 +96,17 @@
         <maxCellsToIgnite>4</maxCellsToIgnite>
         <visualScale>1.9</visualScale>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPortalSummoner">
+        <threshold75Count>3</threshold75Count>
+        <threshold40Count>4</threshold40Count>
+        <threshold15Count>3</threshold15Count>
+        <portalMinRadius>1.35</portalMinRadius>
+        <portalMaxRadius>2.65</portalMaxRadius>
+        <portalWarmupTicks>26</portalWarmupTicks>
+        <portalSpawnIntervalTicks>9</portalSpawnIntervalTicks>
+        <portalLingerTicks>95</portalLingerTicks>
+        <portalFlashScale>2.2</portalFlashScale>
+      </li>
     </comps>
   </ThingDef>
 
