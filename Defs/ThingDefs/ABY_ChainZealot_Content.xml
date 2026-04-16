@@ -17,7 +17,7 @@
     </graphicData>
 
     <race>
-      <renderTree>Humanlike</renderTree>
+      <renderTree>Animal</renderTree>
       <thinkTreeMain>Humanlike</thinkTreeMain>
       <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
@@ -42,7 +42,7 @@
       <gestationPeriodDays>18</gestationPeriodDays>
       <lifeStageAges Inherit="False">
         <li>
-          <def>HumanlikeAdult</def>
+          <def>AnimalAdult</def>
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
