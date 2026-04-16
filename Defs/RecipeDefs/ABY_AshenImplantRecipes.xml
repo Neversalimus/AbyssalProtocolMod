@@ -182,7 +182,7 @@
     <addsHediff>ABY_AshenLiverLattice_Implant</addsHediff>
     <recipeUsers>
       <li>Human</li>
-      <li>CreepJoiner</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -211,7 +211,7 @@
     <addsHediff>ABY_CinderMandibleSeal_Implant</addsHediff>
     <recipeUsers>
       <li>Human</li>
-      <li>CreepJoiner</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -240,7 +240,7 @@
     <addsHediff>ABY_EmberLungArray_Implant</addsHediff>
     <recipeUsers>
       <li>Human</li>
-      <li>CreepJoiner</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -269,7 +269,7 @@
     <addsHediff>ABY_AshenAnchorNode_Implant</addsHediff>
     <recipeUsers>
       <li>Human</li>
-      <li>CreepJoiner</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
     </recipeUsers>
   </RecipeDef>
 

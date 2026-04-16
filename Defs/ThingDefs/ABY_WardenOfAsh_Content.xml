@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef ParentName="BasePawn">
+  <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_WardenOfAsh</defName>
     <label>warden of ash</label>
     <description>An infernal techno-warden built as the first disciplined overseer of abyssal breach pressure. Its armor is ash-black and furnace-heavy, with a contained portal embedded in the chest to mark it as both executioner and living gate-node.</description>
 
     <thingClass>Pawn</thingClass>
-    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropAshenCore</deathActionWorkerClass>
-    <tickerType>Normal</tickerType>
-    <selectable>true</selectable>
-    <useHitPoints>true</useHitPoints>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
 
     <graphicData>
       <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
@@ -19,31 +17,40 @@
     </graphicData>
 
     <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
       <body>Human</body>
       <baseBodySize>1.45</baseBodySize>
       <baseHealthScale>2.25</baseHealthScale>
-      <lifeStageAges>
+      <baseHungerRate>0.56</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>Humanlike</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <lifeExpectancy>220</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
         <li>
-          <def>HumanlikeAdult</def>
+          <def>AnimalAdult</def>
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
-      <intelligence>Humanlike</intelligence>
-      <foodType>OmnivoreHuman</foodType>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
-      <fleshType>Normal</fleshType>
-      <hasGenders>false</hasGenders>
-      <bloodDef>Blood</bloodDef>
       <meatLabel>ash-charred flesh</meatLabel>
-      <corpseLabel>warden husk</corpseLabel>
       <soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
-      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitPawn</soundMeleeHitBuilding>
       <soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
       <herdMigrationAllowed>false</herdMigrationAllowed>
       <predator>false</predator>
-      <wildness>0</wildness>
-      <trainability>None</trainability>
     </race>
 
     <statBases>
@@ -56,9 +63,10 @@
       <ArmorRating_Heat>1.45</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>240</ComfyTemperatureMax>
+      <PainShockThreshold>999</PainShockThreshold>
+      <Flammability>0.00</Flammability>
       <Mass>1.50</Mass>
       <MarketValue>1250</MarketValue>
-      <Flammability>0.00</Flammability>
     </statBases>
 
     <tools>
@@ -85,7 +93,13 @@
       </li>
     </tools>
 
+    <killedLeavings Inherit="False">
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+    </killedLeavings>
+
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
         <warmupTicks>210</warmupTicks>
         <pulseIntervalTicks>345</pulseIntervalTicks>

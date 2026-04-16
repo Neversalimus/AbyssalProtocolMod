@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <PawnKindDef>
+  <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_WardenOfAsh</defName>
     <label>warden of ash</label>
     <race>ABY_WardenOfAsh</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>650</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-    <apparelMoney>0</apparelMoney>
-    <weaponMoney>0</weaponMoney>
-    <shieldMoney>0</shieldMoney>
-    <canDropInventory>false</canDropInventory>
-
-    <graphicData>
-      <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(3.20,3.20)</drawSize>
-      <shadowData>
-        <volume>(1.20, 1.05, 1.20)</volume>
-        <offset>(0, 0, -0.26)</offset>
-      </shadowData>
-    </graphicData>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(3.20,3.20)</drawSize>
+          <shadowData>
+            <volume>(1.20, 1.05, 1.20)</volume>
+            <offset>(0, 0, -0.26)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
   </PawnKindDef>
 
 </Defs>

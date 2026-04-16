@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-  <ThingDef ParentName="ImplantBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenLiverLattice</defName>
     <label>ashen liver lattice</label>
     <description>A furnace-cooled hepatic lattice woven around a disciplined ash core. It reinforces filtration and immune response, but runs the host slightly hotter and hungrier than baseline flesh.</description>
@@ -9,17 +9,19 @@
       <texPath>Things/Implant/ABY_AshenLiverLattice</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <thingSetMakerTags>
-      <li>RewardStandardMidFreq</li>
-    </thingSetMakerTags>
+    <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
     <statBases>
       <MaxHitPoints>24</MaxHitPoints>
       <Mass>0.15</Mass>
       <MarketValue>820</MarketValue>
+      <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>6</requiredResidue>
@@ -28,7 +30,7 @@
     </modExtensions>
   </ThingDef>
 
-  <ThingDef ParentName="ImplantBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CinderMandibleSeal</defName>
     <label>cinder mandible seal</label>
     <description>An infernal jaw brace and pain-damping seal cast around a stabilized ash core. It hardens battlefield discipline and close-quarters accuracy, but leaves the wearer visibly and socially unnatural.</description>
@@ -36,17 +38,19 @@
       <texPath>Things/Implant/ABY_CinderMandibleSeal</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <thingSetMakerTags>
-      <li>RewardStandardMidFreq</li>
-    </thingSetMakerTags>
+    <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
     <statBases>
       <MaxHitPoints>22</MaxHitPoints>
       <Mass>0.12</Mass>
       <MarketValue>760</MarketValue>
+      <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>7</requiredResidue>
@@ -55,7 +59,7 @@
     </modExtensions>
   </ThingDef>
 
-  <ThingDef ParentName="ImplantBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_EmberLungArray</defName>
     <label>ember lung array</label>
     <description>A paired infernal respirator grown around an ash core and heat-sunk through abyssal alloy. It improves breathing and field tempo, but drives the body to burn through energy faster.</description>
@@ -63,17 +67,19 @@
       <texPath>Things/Implant/ABY_EmberLungArray</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <thingSetMakerTags>
-      <li>RewardStandardMidFreq</li>
-    </thingSetMakerTags>
+    <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
     <statBases>
       <MaxHitPoints>26</MaxHitPoints>
       <Mass>0.18</Mass>
       <MarketValue>900</MarketValue>
+      <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>8</requiredResidue>
@@ -82,7 +88,7 @@
     </modExtensions>
   </ThingDef>
 
-  <ThingDef ParentName="ImplantBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenAnchorNode</defName>
     <label>ashen anchor node</label>
     <description>A restrained metacognitive anchor etched around an ash core and tuned for long-term abyssal cognition. It does not replace the brain; it nests against it as an auxiliary node, improving clarity, learning, and research throughput at the cost of deeper fatigue.</description>
@@ -90,17 +96,19 @@
       <texPath>Things/Implant/ABY_AshenAnchorNode</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <thingSetMakerTags>
-      <li>RewardStandardMidFreq</li>
-    </thingSetMakerTags>
+    <stackLimit>1</stackLimit>
     <tradeability>Sellable</tradeability>
     <techLevel>Spacer</techLevel>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
       <Mass>0.10</Mass>
       <MarketValue>980</MarketValue>
+      <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>9</requiredResidue>
