@@ -58,7 +58,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!pawn.Spawned || !pawn.Map.IsPlayerHome || pawn.GetLord() != null)
+            if (!pawn.Spawned || !pawn.Map.IsPlayerHome || AbyssalLordUtility.FindLord(pawn) != null)
             {
                 return;
             }

@@ -7,6 +7,32 @@ namespace AbyssalProtocol
 {
     public static class AbyssalLordUtility
     {
+        public static Lord FindLord(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return null;
+            }
+
+            Map map = pawn.MapHeld;
+            if (map?.lordManager?.lords == null)
+            {
+                return null;
+            }
+
+            List<Lord> lords = map.lordManager.lords;
+            for (int i = 0; i < lords.Count; i++)
+            {
+                Lord lord = lords[i];
+                if (lord?.ownedPawns != null && lord.ownedPawns.Contains(pawn))
+                {
+                    return lord;
+                }
+            }
+
+            return null;
+        }
+
         public static Lord EnsureAssaultLord(
             Pawn pawn,
             bool sappers)
@@ -16,7 +42,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            Lord existingLord = pawn.GetLord();
+            Lord existingLord = FindLord(pawn);
             if (existingLord != null)
             {
                 return existingLord;
@@ -55,7 +81,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                Lord existingLord = pawn.GetLord();
+                Lord existingLord = FindLord(pawn);
                 if (existingLord == null)
                 {
                     lordless.Add(pawn);
