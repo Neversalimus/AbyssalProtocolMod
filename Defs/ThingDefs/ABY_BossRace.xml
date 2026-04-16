@@ -32,7 +32,6 @@
       <baseHungerRate>1.2</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
-      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>12</gestationPeriodDays>
@@ -133,7 +132,6 @@
       <baseHungerRate>0.85</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>Animal</intelligence>
-      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>18</gestationPeriodDays>

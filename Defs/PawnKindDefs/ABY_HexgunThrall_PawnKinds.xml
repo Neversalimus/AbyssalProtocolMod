@@ -6,20 +6,19 @@
     <label>hexgun thrall</label>
     <race>ABY_HexgunThrall</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>210</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">0</apparelMoney>
-    <weaponMoney Inherit="False">0</weaponMoney>
-    <weaponTags Inherit="False" />
+    <weaponMoney Inherit="False">720</weaponMoney>
+    <weaponTags Inherit="False">
+      <li>ABY_HexgunWeapon</li>
+    </weaponTags>
     <apparelRequired Inherit="False" />
     <apparelTags Inherit="False" />
     <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
     <forceNormalGearQuality>true</forceNormalGearQuality>
     <gearHealthRange>1~1</gearHealthRange>
-    <initialResistanceRange>17~26</initialResistanceRange>
-    <initialWillRange>3~5</initialWillRange>
   </PawnKindDef>
 
 </Defs>

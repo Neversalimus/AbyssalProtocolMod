@@ -30,7 +30,6 @@
       <fleshType>Normal</fleshType>
       <intelligence>Humanlike</intelligence>
       <nameCategory>HumanStandard</nameCategory>
-      <defaultFactionType>AncientsHostile</defaultFactionType>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <lifeExpectancy>95</lifeExpectancy>
@@ -91,6 +90,14 @@
       <li>Gun</li>
       <li>RangedHeavy</li>
     </weaponTags>
+    <costList>
+      <Steel>45</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <smeltProducts>
+      <Steel>22</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
     <statBases>
       <Mass>2.25</Mass>
       <MarketValue>720</MarketValue>

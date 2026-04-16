@@ -6,7 +6,6 @@
     <label>archon beast</label>
     <race>ABY_ArchonBeast</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>900</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>

@@ -23,7 +23,6 @@
       <li>(0.68, 0.10, 0.12)</li>
       <li>(0.92, 0.32, 0.14)</li>
     </colorSpectrum>
-    <pawnGroupMakers Inherit="False" />
     <caravanTraderKinds Inherit="False" />
     <visitorTraderKinds Inherit="False" />
   </FactionDef>

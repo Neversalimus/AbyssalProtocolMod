@@ -6,7 +6,6 @@
     <label>rift imp</label>
     <race>ABY_RiftImp</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>180</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
