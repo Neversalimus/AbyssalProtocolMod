@@ -5,37 +5,35 @@
     <defName>ABY_WardenOfAsh</defName>
     <label>warden of ash</label>
     <description>An infernal techno-warden built as the first disciplined overseer of abyssal breach pressure. Its armor is ash-black and furnace-heavy, with a contained portal embedded in the chest to mark it as both executioner and living gate-node.</description>
-
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
-
     <graphicData>
       <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <drawSize>(3.20,3.20)</drawSize>
     </graphicData>
-
     <race>
       <renderTree>Animal</renderTree>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
       <trainability>None</trainability>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
-      <canBecomeShambler>true</canBecomeShambler>
+      <canBecomeShambler>false</canBecomeShambler>
       <hediffGiverSets>
         <li>OrganicStandard</li>
       </hediffGiverSets>
       <body>Human</body>
       <baseBodySize>1.45</baseBodySize>
       <baseHealthScale>2.25</baseHealthScale>
-      <baseHungerRate>0.56</baseHungerRate>
+      <baseHungerRate>0.62</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>Humanlike</intelligence>
+      <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
       <lifeExpectancy>220</lifeExpectancy>
       <foodType>OmnivoreHuman</foodType>
       <useMeatFrom>Human</useMeatFrom>
@@ -45,14 +43,7 @@
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
-      <meatLabel>ash-charred flesh</meatLabel>
-      <soundMeleeHitPawn>Pawn_Melee_Punch_HitPawn</soundMeleeHitPawn>
-      <soundMeleeHitBuilding>Pawn_Melee_Punch_HitPawn</soundMeleeHitBuilding>
-      <soundMeleeMiss>Pawn_Melee_Punch_Miss</soundMeleeMiss>
-      <herdMigrationAllowed>false</herdMigrationAllowed>
-      <predator>false</predator>
     </race>
-
     <statBases>
       <MaxHitPoints>1180</MaxHitPoints>
       <MoveSpeed>4.20</MoveSpeed>
@@ -63,12 +54,11 @@
       <ArmorRating_Heat>1.45</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>240</ComfyTemperatureMax>
-      <PainShockThreshold>999</PainShockThreshold>
-      <Flammability>0.00</Flammability>
       <Mass>1.50</Mass>
       <MarketValue>1250</MarketValue>
+      <Flammability>0.00</Flammability>
+      <PainShockThreshold>999</PainShockThreshold>
     </statBases>
-
     <tools>
       <li>
         <label>ash pike</label>
@@ -92,12 +82,6 @@
         <armorPenetration>0.19</armorPenetration>
       </li>
     </tools>
-
-    <killedLeavings Inherit="False">
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
-    </killedLeavings>
-
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
@@ -125,6 +109,10 @@
         <portalSoundDefName>ABY_SigilChargePulse</portalSoundDefName>
       </li>
     </comps>
+    <killedLeavings Inherit="False">
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+    </killedLeavings>
   </ThingDef>
 
 </Defs>

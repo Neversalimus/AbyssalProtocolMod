@@ -19,7 +19,6 @@
         </capMods>
         <statOffsets>
           <ImmunityGainSpeed>0.08</ImmunityGainSpeed>
-          <HungerRateMultiplier>0.05</HungerRateMultiplier>
         </statOffsets>
       </li>
     </stages>
@@ -63,7 +62,6 @@
         </capMods>
         <statOffsets>
           <MoveSpeed>0.05</MoveSpeed>
-          <HungerRateMultiplier>0.06</HungerRateMultiplier>
         </statOffsets>
       </li>
     </stages>
@@ -88,8 +86,10 @@
         <statOffsets>
           <ResearchSpeed>0.12</ResearchSpeed>
           <GlobalLearningFactor>0.08</GlobalLearningFactor>
-          <RestFallRate>0.05</RestFallRate>
         </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.05</RestFallRateFactor>
+        </statFactors>
       </li>
     </stages>
   </HediffDef>
