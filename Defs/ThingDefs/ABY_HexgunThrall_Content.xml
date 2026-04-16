@@ -18,8 +18,8 @@
 
     <race>
       <renderTree>Animal</renderTree>
-      <thinkTreeMain>Humanlike</thinkTreeMain>
-      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
       <bloodDef>Filth_Blood</bloodDef>
       <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
@@ -32,7 +32,7 @@
       <baseHealthScale>1.02</baseHealthScale>
       <baseHungerRate>0.42</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>Humanlike</intelligence>
+      <intelligence>ToolUser</intelligence>
       <nameCategory>HumanStandard</nameCategory>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
