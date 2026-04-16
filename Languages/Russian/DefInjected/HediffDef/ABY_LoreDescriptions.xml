@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_AbyssalAttunement.description>Картографический резонанс, возникающий после долгого единения с решёткой кузницы. Чем больше residue безвозвратно отдаётся системе, тем меньше колония просто пользуется Бездной и тем больше тихо синхронизируется с ней.</ABY_AbyssalAttunement.description>
+  <ABY_ArchonCarapace.description>Слоистые abyssal-пластины, распределяющие удар, жар и нагрузку по всему корпусу боевого зверя. Это броня как распределённая враждебная инженерия, а не просто защита.</ABY_ArchonCarapace.description>
+  <ABY_ArchonCore.description>Реакторное сердце, связанное с архонтской боевой формой. Оно движет телом как подвижным доменным узлом и становится всё нестабильнее по мере приближения носителя к коллапсу.</ABY_ArchonCore.description>
+  <ABY_ArchonOverrideFeedback.description>Остаточная цена за прогон архонтских рутин через плоть. Тело запомнило паттерн, но не умеет поддерживать его долго.</ABY_ArchonOverrideFeedback.description>
+  <ABY_ArchonOverrideSurge.description>Украденные архонтские рутины, принудительно прогоняемые через человеческую нервную систему. На короткое время тело подчиняется более чистой и жёсткой боевой логике, прежде чем откат напомнит ему, чем оно на самом деле является.</ABY_ArchonOverrideSurge.description>
+  <ABY_ArchonTendonSpine_Implant.description>Имплантированный archon-pattern позвоночник и сухожильная решётка, дисциплинирующие движение во что-то более быстрое, жёсткое и беспощадное.</ABY_ArchonTendonSpine_Implant.description>
+  <ABY_EmberShock.description>Удар ember hound оставляет после себя не только травму. Мышцы срываются, дисциплина прицеливания ломается, и жертва двигается как добыча, которую уже пометили.</ABY_EmberShock.description>
+  <ABY_HeraldCarapaceMesh_Implant.description>Подкожная mesh-сетка вестнического класса, превращающая тело в более охотного участника брони, теплоотвода и враждебной живучести.</ABY_HeraldCarapaceMesh_Implant.description>
+  <ABY_HeraldEye_Implant.description>Окулярная замена вестнического класса, установленная в череп. Она улучшает зрение, навязывая более abyssal-стандарт того, что считать целевой информацией.</ABY_HeraldEye_Implant.description>
+  <ABY_HexMark.description>Техно-инфернальная метка наведения, прогоняющая враждебную телеметрию через движение и зрение. Помеченная цель чувствует себя медленнее, потому что поле боя уже частично перестало ей принадлежать.</ABY_HexMark.description>
+  <ABY_RiftArmorMelt.description>Остаточный жар разлома всё ещё ползёт по швам, сочленениям и несущим слоям. Броня сдаёт не потому, что была слаба, а потому, что реальность убедили пропустить внутрь неправильную энергию.</ABY_RiftArmorMelt.description>
+  <ABY_RuptureCarapace.description>Пластины из нуль-металла и коронные вены, превращающие входящую силу в проблему для всего каркаса, а не одной точки удара.</ABY_RuptureCarapace.description>
+  <ABY_RuptureCore.description>Коронный реактор, обёрнутый вокруг дисциплинированной нуль-сингулярности. Он даёт неестественную живучесть, потому что носитель сражается уже не как одно тело, а как локальный процесс разрыва.</ABY_RuptureCore.description>
+  <ABY_RuptureCrownBearer.description>Носитель связан с Crown of Rupture и признан фрагментом враждебной власти. Это усиление лишь до тех пор, пока не задумываться, какая именно иерархия обратила на него внимание.</ABY_RuptureCrownBearer.description>
+  <ABY_RuptureSentenceMark.description>Казнящая метка, наложенная коронной логикой. Движение, ритм брони и предсказание деградируют, потому что цель уже частично переведена в статус решённой задачи.</ABY_RuptureSentenceMark.description>
+  <ABY_UltraPlasmaDestabilization.description>Остатки ультра-плазмы всё ещё реагируют внутри тела. Цель страдает не только от жара: часть попадания вела себя скорее как сжатая телеметрия разлома, чем как обычный огонь.</ABY_UltraPlasmaDestabilization.description>
+</LanguageData>

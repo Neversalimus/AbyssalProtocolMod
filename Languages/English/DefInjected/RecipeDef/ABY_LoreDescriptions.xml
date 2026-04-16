@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftArchonSigil.description>Forge an archon-class sigil from hardened abyssal matter. This records the right to reproduce a more serious encounter protocol.</ABY_CraftArchonSigil.description>
+  <ABY_CraftAshboundCapacitorModule.description>Fabricate a low-tier capacitor module able to hold the first disciplined charge states of the summoning circle.</ABY_CraftAshboundCapacitorModule.description>
+  <ABY_CraftCrownCondenserModule.description>Build a crown-grade condenser module for the heaviest ritual loads and the most dangerous circle states.</ABY_CraftCrownCondenserModule.description>
+  <ABY_CraftCrownStabilizerModule.description>Assemble a crown-tier stabilizer meant for severe containment duty during late ritual work.</ABY_CraftCrownStabilizerModule.description>
+  <ABY_CraftCrudeStabilizerModule.description>Construct a primitive stabilizer frame to keep early summon geometry from tearing outward too violently.</ABY_CraftCrudeStabilizerModule.description>
+  <ABY_CraftDominionSigil.description>Assemble the sigil required to begin a dominion-class breach. This is less a key than a signed declaration that the colony is willing to escalate.</ABY_CraftDominionSigil.description>
+  <ABY_CraftEmberHoundSigil.description>Bind the ember hound pattern into a reusable sigil and make that fast predatory breach rite available on demand.</ABY_CraftEmberHoundSigil.description>
+  <ABY_CraftOblivionChoirCells.description>Manufacture sealed choir cells, each containing a stabilized core-seed for the Oblivion Choir.</ABY_CraftOblivionChoirCells.description>
+  <ABY_CraftResidue.description>Condense raw infernal traces into a stable stock of abyssal residue suitable for forging, ritual fuel and deeper progression.</ABY_CraftResidue.description>
+  <ABY_CraftResonantStabilizerModule.description>Fabricate a tuned stabilizer lattice that distributes gate stress through resonance instead of brute failure.</ABY_CraftResonantStabilizerModule.description>
+  <ABY_CraftRiftCapacitorModule.description>Forge a mid-tier capacitor module tuned for reshaping unstable ritual load into reusable breach current.</ABY_CraftRiftCapacitorModule.description>
+  <ABY_CraftUnstableBreachSigil.description>Seal a crude right of breach into a low-tier sigil. It is an invitation written before the colony truly knows how to contain the answer.</ABY_CraftUnstableBreachSigil.description>
+  <ABY_InstallArchonTendonSpine.description>Install an archon-pattern tendon spine to increase movement, handling and battlefield stability.</ABY_InstallArchonTendonSpine.description>
+  <ABY_InstallHeraldCarapaceMesh.description>Thread a herald carapace mesh under the skin and teach flesh to accept abyssal-grade reinforcement.</ABY_InstallHeraldCarapaceMesh.description>
+  <ABY_InstallHeraldEye.description>Implant a herald-grade ocular unit and replace ordinary sight with boss-derived acquisition logic.</ABY_InstallHeraldEye.description>
+</LanguageData>

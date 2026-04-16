@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_AbyssalAttunement.description>A map-wide resonance created by long-term communion with the forge lattice. As more residue is surrendered to the system, the colony becomes less merely equipped by the Abyss and more quietly synchronized with it.</ABY_AbyssalAttunement.description>
+  <ABY_ArchonCarapace.description>Layered abyssal plates designed to spread impact, heat and stress across a war-beast frame. It is armor as distributed hostile engineering rather than simple protection.</ABY_ArchonCarapace.description>
+  <ABY_ArchonCore.description>A reactor-heart bound into an archon war-form. It drives the body like a moving domain node and grows more unstable as the host is forced toward collapse.</ABY_ArchonCore.description>
+  <ABY_ArchonOverrideFeedback.description>The residual cost of forcing archon-grade routines through flesh. The body has remembered the pattern, but not how to sustain it.</ABY_ArchonOverrideFeedback.description>
+  <ABY_ArchonOverrideSurge.description>Stolen archon routines forced through a human nervous system. For a short interval the body obeys a cleaner, harder combat logic before the aftershock reminds it what it really is.</ABY_ArchonOverrideSurge.description>
+  <ABY_ArchonTendonSpine_Implant.description>An implanted archon-pattern spine and tendon lattice that disciplines movement into something faster, harder and less forgiving.</ABY_ArchonTendonSpine_Implant.description>
+  <ABY_EmberShock.description>A hit from an ember hound leaves more than impact trauma. Muscles misfire, aim discipline breaks and the victim briefly moves like prey that has already been tagged.</ABY_EmberShock.description>
+  <ABY_HeraldCarapaceMesh_Implant.description>A subdermal herald mesh that turns the body into a more willing participant in armor, heat management and hostile survivability.</ABY_HeraldCarapaceMesh_Implant.description>
+  <ABY_HeraldEye_Implant.description>A herald-grade ocular replacement installed in the skull. It improves sight by imposing a more abyssal standard for what counts as target information.</ABY_HeraldEye_Implant.description>
+  <ABY_HexMark.description>A techno-infernal targeting mark that feeds hostile telemetry through motion and sight. Marked targets feel slower because the battlefield has partially stopped belonging to them.</ABY_HexMark.description>
+  <ABY_RiftArmorMelt.description>Residual breach heat is still crawling through seams, joints and structural layers. Armor fails here not because it was weak, but because reality was persuaded to let the wrong energy inside.</ABY_RiftArmorMelt.description>
+  <ABY_RuptureCarapace.description>Null-metal plates and crown vanes that turn incoming force into a problem for the whole frame instead of any one impact point.</ABY_RuptureCarapace.description>
+  <ABY_RuptureCore.description>A crown-reactor wrapped around a disciplined null singularity. It grants unnatural survivability because the bearer is no longer fighting as a single body, but as a local rupture process.</ABY_RuptureCore.description>
+  <ABY_RuptureCrownBearer.description>The wearer is bound to the Crown of Rupture and recognized by a fragment of hostile authority. This is a buff only if one ignores what kind of hierarchy has noticed.</ABY_RuptureCrownBearer.description>
+  <ABY_RuptureSentenceMark.description>An execution mark laid down by crown logic. Motion, armor rhythm and prediction all degrade because the target has already been partially translated into a solved problem.</ABY_RuptureSentenceMark.description>
+  <ABY_UltraPlasmaDestabilization.description>Ultra-plasma residue is still reacting inside the target. The body struggles because some part of the hit behaved less like fire and more like contained breach telemetry.</ABY_UltraPlasmaDestabilization.description>
+</LanguageData>
