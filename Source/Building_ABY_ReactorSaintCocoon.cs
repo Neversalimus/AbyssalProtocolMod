@@ -13,10 +13,14 @@ namespace AbyssalProtocol
         private const string DepartureSkyfallerDefName = "ABY_Manifestation_ReactorSaintDeparture";
         private const int ReleaseDelayTicks = 834;
         private const int PostReleaseTicks = 417;
+        private const float ImpactExplosionRadius = 3.9f;
+        private const int ImpactExplosionDamage = 28;
+        private const float ImpactExplosionArmorPenetration = 0.18f;
 
         private int ticksSinceImpact;
         private bool bossReleased;
         private bool releaseFailedPermanently;
+        private bool impactProcessed;
 
         public override void ExposeData()
         {
@@ -24,6 +28,18 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref ticksSinceImpact, "ticksSinceImpact", 0);
             Scribe_Values.Look(ref bossReleased, "bossReleased", false);
             Scribe_Values.Look(ref releaseFailedPermanently, "releaseFailedPermanently", false);
+            Scribe_Values.Look(ref impactProcessed, "impactProcessed", false);
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+
+            if (!respawningAfterLoad && !impactProcessed)
+            {
+                impactProcessed = true;
+                TriggerImpactEffects();
+            }
         }
 
         protected override void Tick()
@@ -55,6 +71,20 @@ namespace AbyssalProtocol
             {
                 LaunchAway();
             }
+        }
+
+        private void TriggerImpactEffects()
+        {
+            if (Map == null)
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.8f);
+            FleckMaker.ThrowHeatGlow(Position, Map, 2.1f);
+            FleckMaker.ThrowMicroSparks(DrawPos, Map);
+            FilthMaker.TryMakeFilth(Position, Map, ThingDefOf.Filth_Ash, 3);
+            GenExplosion.DoExplosion(Position, Map, ImpactExplosionRadius, DamageDefOf.Burn, this, ImpactExplosionDamage, ImpactExplosionArmorPenetration);
         }
 
         private void TickDormantCocoon()

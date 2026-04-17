@@ -24,9 +24,6 @@
         <min>60</min>
         <max>70</max>
       </ticksToImpactRange>
-      <explosionRadius>3.9</explosionRadius>
-      <explosionDamage>28</explosionDamage>
-      <damageSpawnedThings>false</damageSpawnedThings>
       <movementType>Accelerate</movementType>
       <speed>0.85</speed>
       <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
@@ -57,7 +54,7 @@
     <graphicData>
       <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>TransparentPostLight</shaderType>
+      <shaderType>Cutout</shaderType>
       <drawSize>(2.90,4.20)</drawSize>
     </graphicData>
   </ThingDef>
