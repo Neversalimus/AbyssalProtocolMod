@@ -80,8 +80,12 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>RangedSkirmisher</archetype>
         <forcedPrimaryDefName>ABY_Hexgun</forcedPrimaryDefName>
-        <minimumShootingSkill>10</minimumShootingSkill>
+        <minShootingSkill>10</minShootingSkill>
+        <preferredMinRange>7.5</preferredMinRange>
+        <retreatSearchRadius>9</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_HexgunBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>

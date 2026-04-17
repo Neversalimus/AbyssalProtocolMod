@@ -1,3 +1,5 @@
+using Verse;
+
 namespace AbyssalProtocol
 {
     public enum AbyssalPawnArchetype
@@ -9,6 +11,9 @@ namespace AbyssalProtocol
         RangedSkirmisher,
         LongRangeMarksman,
         BossJuggernaut,
-        ArchonPredator
+        ArchonPredator,
+        SupportCaster,
+        PortalSummoner,
+        SiegeNode
     }
 }

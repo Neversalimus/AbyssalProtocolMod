@@ -88,8 +88,9 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>HookBruiser</archetype>
-        <minimumMeleeSkill>11</minimumMeleeSkill>
+        <minMeleeSkill>11</minMeleeSkill>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
         <minRange>4.2</minRange>
         <maxRange>11.2</maxRange>

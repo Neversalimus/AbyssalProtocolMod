@@ -21,7 +21,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!AbyssalThreatPawnUtility.CanOperateAbyssalPawn(pawn) || pawn.stances == null)
+            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed || pawn.stances == null)
             {
                 return;
             }
@@ -37,13 +37,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(
-                pawn,
-                Props.minRange,
-                Props.maxRange,
-                AbyssalThreatPawnUtility.GetArchetype(pawn, AbyssalPawnArchetype.HookBruiser),
-                preferRangedTargets: true,
-                requireLineOfSight: true);
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.minRange, Props.maxRange, false, true, true, 2.6f, 1.8f)
+                ?? AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.minRange, Props.maxRange, false, false, false, 0f, 1.8f);
             if (target == null)
             {
                 return;
@@ -55,26 +50,24 @@ namespace AbyssalProtocol
             }
 
             DoSnag(pawn, target, landingCell);
-            nextSnagTick = currentTick
-                + Mathf.Max(60, Props.cooldownTicks)
-                + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
+            nextSnagTick = currentTick + Mathf.Max(60, Props.cooldownTicks) + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
         }
 
         private void DoSnag(Pawn pawn, Pawn target, IntVec3 landingCell)
         {
             Map map = pawn.Map;
             IntVec3 sourceCell = pawn.Position;
-
             SpawnMote(map, sourceCell);
+
             pawn.pather?.StopDead();
             pawn.Position = landingCell;
             pawn.Drawer?.tweener?.ResetTweenedPosToRoot();
             pawn.stances?.CancelBusyStanceSoft();
             pawn.rotationTracker?.FaceCell(target.Position);
-            SpawnMote(map, landingCell);
 
+            SpawnMote(map, landingCell);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.RefreshOrApplyHediff(target, Props.impactHediffDefName, 0.3f);
+            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName);
         }
 
         private void SpawnMote(Map map, IntVec3 cell)
@@ -90,7 +83,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MoteMaker.MakeStaticMote(cell.ToVector3Shifted(), map, moteDef, 0.64f);
+            MoteMaker.MakeStaticMote(cell.ToVector3Shifted(), map, moteDef, 0.9f);
         }
     }
 }

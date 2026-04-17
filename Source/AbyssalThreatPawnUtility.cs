@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 using Verse.AI.Group;
 
 namespace AbyssalProtocol
@@ -10,23 +11,23 @@ namespace AbyssalProtocol
     {
         private const string HexgunThrallDefName = "ABY_HexgunThrall";
         private const string HexgunWeaponDefName = "ABY_Hexgun";
-        private const string RiftSniperDefName = "ABY_RiftSniper";
         private const string ChainZealotDefName = "ABY_ChainZealot";
 
-        public static void PrepareThreatPawn(Pawn pawn)
-        {
-            PrepareThreatPawn(pawn, CompAbyssalPawnController.GetFor(pawn)?.Props);
-        }
-
-        public static void PrepareThreatPawn(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
+        public static void PrepareThreatPawn(Pawn pawn, CompProperties_AbyssalPawnController controllerProps = null)
         {
             if (pawn == null)
             {
                 return;
             }
 
-            EnsureLoadout(pawn, controllerProps);
-            EnsureCombatSkills(pawn, controllerProps);
+            CompProperties_AbyssalPawnController resolvedProps = controllerProps ?? GetControllerProps(pawn);
+            EnsureLoadout(pawn, resolvedProps);
+            EnsureCombatSkills(pawn, resolvedProps);
+        }
+
+        public static CompProperties_AbyssalPawnController GetControllerProps(Pawn pawn)
+        {
+            return pawn?.TryGetComp<CompAbyssalPawnController>()?.Props;
         }
 
         public static Lord GetCurrentLord(Pawn pawn)
@@ -49,143 +50,97 @@ namespace AbyssalProtocol
             return null;
         }
 
-        public static AbyssalPawnArchetype GetArchetype(Pawn pawn, AbyssalPawnArchetype fallback = AbyssalPawnArchetype.None)
-        {
-            CompAbyssalPawnController controller = CompAbyssalPawnController.GetFor(pawn);
-            if (controller?.Props != null && controller.Props.archetype != AbyssalPawnArchetype.None)
-            {
-                return controller.Props.archetype;
-            }
-
-            return fallback;
-        }
-
-        public static bool CanOperateAbyssalPawn(Pawn pawn)
-        {
-            if (pawn == null || pawn.MapHeld == null || pawn.Dead || pawn.Downed || !pawn.Spawned)
-            {
-                return false;
-            }
-
-            Faction playerFaction = Faction.OfPlayer;
-            if (playerFaction == null)
-            {
-                return false;
-            }
-
-            return pawn.Faction != null && pawn.Faction.HostileTo(playerFaction);
-        }
-
-        public static void EnsureHostilityAndLord(
+        public static bool TryEnsureHostileAggression(
             Pawn pawn,
-            bool ensureAssaultLord,
             bool sappers,
-            int spawnTick,
-            ref int lastLordEnsureTick,
             int spawnGraceTicks,
-            int lordRetryTicks)
+            int lordRetryTicks,
+            ref int spawnTick,
+            ref int lastAggroTick)
         {
             if (pawn == null || pawn.Map == null || pawn.Dead)
             {
-                return;
+                return false;
             }
 
-            EnsureHostility(pawn);
+            EnsureHostileFaction(pawn);
 
             Faction playerFaction = Faction.OfPlayer;
-            if (!ensureAssaultLord || playerFaction == null || pawn.Faction == null || !pawn.Faction.HostileTo(playerFaction))
+            if (pawn.Faction == null || playerFaction == null || !pawn.Faction.HostileTo(playerFaction))
             {
-                return;
+                return false;
             }
 
             if (!pawn.Spawned || !pawn.Map.IsPlayerHome)
             {
-                return;
+                return false;
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (spawnTick >= 0 && ticksGame - spawnTick < spawnGraceTicks)
+            if (spawnTick < 0)
             {
-                return;
+                spawnTick = ticksGame;
             }
 
-            if (GetCurrentLord(pawn) != null)
+            if (ticksGame - spawnTick < Mathf.Max(0, spawnGraceTicks))
             {
-                return;
+                return false;
             }
 
-            if (ticksGame - lastLordEnsureTick < lordRetryTicks)
+            if (AbyssalLordUtility.FindLordFor(pawn) != null)
             {
-                return;
+                return false;
             }
 
-            lastLordEnsureTick = ticksGame;
+            if (ticksGame - lastAggroTick < Mathf.Max(30, lordRetryTicks))
+            {
+                return false;
+            }
+
+            lastAggroTick = ticksGame;
             AbyssalLordUtility.EnsureAssaultLord(pawn, sappers);
+            return true;
         }
 
-        public static void EnsureHostility(Pawn pawn)
+        public static void EnsureHostileFaction(Pawn pawn)
         {
-            if (pawn == null)
-            {
-                return;
-            }
-
-            Faction playerFaction = Faction.OfPlayer;
-            if (playerFaction == null)
-            {
-                return;
-            }
-
-            if (pawn.Faction != null && pawn.Faction.HostileTo(playerFaction))
+            if (pawn == null || pawn.Faction != null)
             {
                 return;
             }
 
             Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
-            if (hostileFaction != null && pawn.Faction != hostileFaction)
+            if (hostileFaction != null)
             {
                 pawn.SetFaction(hostileFaction);
             }
-        }
-
-        public static bool IsValidHostileTarget(Pawn source, Pawn target)
-        {
-            if (source == null || target == null || target == source || target.MapHeld != source.MapHeld || !target.Spawned || target.Dead || target.Downed)
-            {
-                return false;
-            }
-
-            return source.HostileTo(target);
-        }
-
-        public static bool HasRangedWeapon(Pawn pawn)
-        {
-            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
         }
 
         public static Pawn FindBestTarget(
             Pawn pawn,
             float minRange,
             float maxRange,
-            AbyssalPawnArchetype archetype,
+            bool preferFarthestTargets,
             bool preferRangedTargets,
-            bool requireLineOfSight = true)
+            bool requireRangedTargets,
+            float rangedTargetBias = 0f,
+            float healthWeight = 0f)
         {
             if (pawn?.Map == null)
             {
                 return null;
             }
 
-            List<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
                 return null;
             }
 
-            Pawn bestTarget = null;
-            float bestScore = float.MinValue;
-            float effectiveMaxRange = maxRange <= 0f ? 9999f : maxRange;
-            float effectiveMinRange = minRange < 0f ? 0f : minRange;
+            Pawn best = null;
+            float bestScore = preferFarthestTargets ? float.MinValue : float.MaxValue;
+            float resolvedMinRange = Mathf.Max(0f, minRange);
+            float resolvedMaxRange = maxRange > 0f ? maxRange : float.MaxValue;
 
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -196,25 +151,49 @@ namespace AbyssalProtocol
                 }
 
                 float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance < effectiveMinRange || distance > effectiveMaxRange)
+                if (distance < resolvedMinRange || distance > resolvedMaxRange)
                 {
                     continue;
                 }
 
-                if (requireLineOfSight && !GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
+                if (!GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
                 {
                     continue;
                 }
 
-                float score = ScoreTarget(pawn, candidate, distance, archetype, preferRangedTargets);
-                if (score > bestScore)
+                bool hasRangedWeapon = HasRangedWeapon(candidate);
+                if (requireRangedTargets && !hasRangedWeapon)
+                {
+                    continue;
+                }
+
+                float score = distance;
+                if (preferRangedTargets && hasRangedWeapon)
+                {
+                    score += preferFarthestTargets ? Mathf.Abs(rangedTargetBias) : -Mathf.Abs(rangedTargetBias);
+                }
+
+                if (healthWeight > 0f && candidate.health != null)
+                {
+                    score += candidate.health.summaryHealth.SummaryHealthPercent * healthWeight;
+                }
+
+                if (preferFarthestTargets)
+                {
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        best = candidate;
+                    }
+                }
+                else if (score < bestScore)
                 {
                     bestScore = score;
-                    bestTarget = candidate;
+                    best = candidate;
                 }
             }
 
-            return bestTarget;
+            return best;
         }
 
         public static Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
@@ -224,14 +203,13 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            List<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            Pawn best = null;
+            float bestDistance = maxDistance;
+            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
                 return null;
             }
-
-            Pawn bestTarget = null;
-            float bestDistance = maxDistance;
 
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -248,24 +226,24 @@ namespace AbyssalProtocol
                 }
 
                 bestDistance = distance;
-                bestTarget = candidate;
+                best = candidate;
             }
 
-            return bestTarget;
+            return best;
         }
 
-        public static bool TryFindRetreatCell(Pawn pawn, Pawn threat, float preferredMinRange, int retreatSearchRadius, out IntVec3 retreatCell)
+        public static bool TryFindRetreatCell(Pawn pawn, Pawn threat, float preferredMinRange, int searchRadius, out IntVec3 retreatCell)
         {
             retreatCell = IntVec3.Invalid;
-            if (pawn?.Map == null || threat == null)
+            Map map = pawn?.Map;
+            if (map == null || threat == null)
             {
                 return false;
             }
 
-            Map map = pawn.Map;
             float currentDistance = pawn.Position.DistanceTo(threat.Position);
             float bestScore = float.MinValue;
-            int radius = retreatSearchRadius < 1 ? 1 : retreatSearchRadius;
+            int radius = Mathf.Max(4, searchRadius);
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, radius, true))
             {
@@ -300,14 +278,13 @@ namespace AbyssalProtocol
         public static bool TryFindAdjacentLandingCell(Pawn pawn, Pawn target, out IntVec3 landingCell)
         {
             landingCell = IntVec3.Invalid;
-            if (pawn?.Map == null || target == null)
+            Map map = pawn?.Map;
+            if (map == null || target == null)
             {
                 return false;
             }
 
-            Map map = pawn.Map;
             float bestDistance = float.MaxValue;
-
             for (int dx = -1; dx <= 1; dx++)
             {
                 for (int dz = -1; dz <= 1; dz++)
@@ -335,7 +312,7 @@ namespace AbyssalProtocol
             return landingCell.IsValid;
         }
 
-        public static void RefreshOrApplyHediff(Pawn target, string hediffDefName, float minimumSeverity = 0f)
+        public static void ApplyOrRefreshHediff(Pawn target, string hediffDefName, float severity = -1f)
         {
             if (target?.health == null || hediffDefName.NullOrEmpty())
             {
@@ -351,100 +328,129 @@ namespace AbyssalProtocol
             Hediff existing = target.health.hediffSet.GetFirstHediffOfDef(hediffDef);
             if (existing != null)
             {
-                if (minimumSeverity > 0f)
+                if (severity > 0f)
                 {
-                    existing.Severity = existing.Severity < minimumSeverity ? minimumSeverity : existing.Severity;
+                    existing.Severity = Mathf.Max(existing.Severity, severity);
                 }
 
                 return;
             }
 
             Hediff added = HediffMaker.MakeHediff(hediffDef, target);
-            if (minimumSeverity > 0f)
+            if (added == null)
             {
-                added.Severity = minimumSeverity;
+                return;
+            }
+
+            if (severity > 0f)
+            {
+                added.Severity = severity;
             }
 
             target.health.AddHediff(added);
         }
 
-        private static float ScoreTarget(Pawn source, Pawn candidate, float distance, AbyssalPawnArchetype archetype, bool preferRangedTargets)
+        public static bool IsValidHostileTarget(Pawn actor, Pawn candidate)
         {
-            bool targetIsRanged = HasRangedWeapon(candidate);
-            float healthPct = 1f;
-            if (candidate.health != null)
+            if (actor == null || candidate == null || candidate == actor)
             {
-                healthPct = candidate.health.summaryHealth.SummaryHealthPercent;
+                return false;
             }
 
-            float score;
-            switch (archetype)
+            if (candidate.Map != actor.Map || !candidate.Spawned || candidate.Dead || candidate.Downed)
             {
-                case AbyssalPawnArchetype.SwarmRusher:
-                    score = 18f - distance;
-                    break;
-                case AbyssalPawnArchetype.Pouncer:
-                    score = 10f - Mathf.Abs(distance - 7.5f);
-                    break;
-                case AbyssalPawnArchetype.HookBruiser:
-                    score = 9f - Mathf.Abs(distance - 6.5f);
-                    break;
-                case AbyssalPawnArchetype.RangedSkirmisher:
-                    score = distance * 1.15f;
-                    break;
-                case AbyssalPawnArchetype.LongRangeMarksman:
-                    score = distance * 1.45f + ((1f - healthPct) * 2.2f);
-                    break;
-                case AbyssalPawnArchetype.BossJuggernaut:
-                    score = 13f - distance;
-                    break;
-                case AbyssalPawnArchetype.ArchonPredator:
-                    score = 12f - Mathf.Abs(distance - 5.5f);
-                    break;
-                default:
-                    score = 10f - distance;
-                    break;
+                return false;
             }
 
-            if (preferRangedTargets && targetIsRanged)
+            if (candidate.Faction == null || actor.Faction == null)
             {
-                score += 4.5f;
+                return false;
             }
 
-            if (candidate.Faction == Faction.OfPlayer)
+            return actor.Faction.HostileTo(candidate.Faction);
+        }
+
+        public static bool HasRangedWeapon(Pawn pawn)
+        {
+            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
+        }
+
+        public static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
+        {
+            var things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
             {
-                score += 1.5f;
+                if (things[i] is Pawn pawn && pawn != ignore)
+                {
+                    return true;
+                }
             }
 
-            if (candidate.Drafted)
+            return false;
+        }
+
+        public static bool TryMaintainSpacing(Pawn pawn, Thing currentTarget, float preferredMinRange, int retreatSearchRadius, bool holdPositionWhenTargeting)
+        {
+            if (pawn == null)
             {
-                score += 0.8f;
+                return false;
             }
 
-            return score;
+            if (preferredMinRange <= 0f)
+            {
+                if (holdPositionWhenTargeting && currentTarget is Pawn targetPawn && CanFireAt(pawn, targetPawn))
+                {
+                    pawn.pather?.StopDead();
+                }
+
+                return false;
+            }
+
+            Pawn nearestThreat = FindClosestThreatWithin(pawn, preferredMinRange);
+            if (nearestThreat == null)
+            {
+                if (holdPositionWhenTargeting && currentTarget is Pawn targetPawn && CanFireAt(pawn, targetPawn))
+                {
+                    pawn.pather?.StopDead();
+                }
+
+                return false;
+            }
+
+            if (!TryFindRetreatCell(pawn, nearestThreat, preferredMinRange, retreatSearchRadius, out IntVec3 retreatCell))
+            {
+                return false;
+            }
+
+            if (retreatCell == pawn.Position)
+            {
+                return false;
+            }
+
+            pawn.pather?.StartPath(retreatCell, PathEndMode.OnCell);
+            pawn.rotationTracker?.FaceCell(nearestThreat.Position);
+            return true;
+        }
+
+        public static bool CanFireAt(Pawn shooter, Pawn target)
+        {
+            if (!IsValidHostileTarget(shooter, target))
+            {
+                return false;
+            }
+
+            return GenSight.LineOfSight(shooter.Position, target.Position, shooter.Map);
         }
 
         private static void EnsureLoadout(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
         {
-            if (pawn?.equipment == null || pawn.equipment.Primary != null)
+            string weaponDefName = ResolveForcedPrimaryDefName(pawn, controllerProps);
+            if (weaponDefName.NullOrEmpty())
             {
                 return;
             }
 
-            string weaponDefName = controllerProps?.forcedPrimaryDefName;
-            if (weaponDefName.NullOrEmpty())
-            {
-                if (IsHexgunThrall(pawn))
-                {
-                    weaponDefName = HexgunWeaponDefName;
-                }
-                else if (IsRiftSniper(pawn))
-                {
-                    weaponDefName = null;
-                }
-            }
-
-            if (weaponDefName.NullOrEmpty())
+            if (pawn.equipment == null || pawn.equipment.Primary != null)
             {
                 return;
             }
@@ -464,34 +470,24 @@ namespace AbyssalProtocol
 
         private static void EnsureCombatSkills(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
         {
-            if (pawn?.skills == null)
+            if (pawn.skills == null)
             {
                 return;
             }
 
-            int minShooting = controllerProps != null ? controllerProps.minimumShootingSkill : -1;
-            int minMelee = controllerProps != null ? controllerProps.minimumMeleeSkill : -1;
+            int minShoot = ResolveMinShootingSkill(pawn, controllerProps);
+            int minMelee = ResolveMinMeleeSkill(pawn, controllerProps);
 
-            if (minShooting < 0 && IsHexgunThrall(pawn))
-            {
-                minShooting = 10;
-            }
-
-            if (minMelee < 0 && IsChainZealot(pawn))
-            {
-                minMelee = 11;
-            }
-
-            if (minShooting >= 0)
+            if (minShoot > 0)
             {
                 SkillRecord shooting = pawn.skills.GetSkill(SkillDefOf.Shooting);
-                if (shooting != null && shooting.Level < minShooting)
+                if (shooting != null && shooting.Level < minShoot)
                 {
-                    shooting.Level = minShooting;
+                    shooting.Level = minShoot;
                 }
             }
 
-            if (minMelee >= 0)
+            if (minMelee > 0)
             {
                 SkillRecord melee = pawn.skills.GetSkill(SkillDefOf.Melee);
                 if (melee != null && melee.Level < minMelee)
@@ -501,14 +497,89 @@ namespace AbyssalProtocol
             }
         }
 
+        private static string ResolveForcedPrimaryDefName(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
+        {
+            if (controllerProps != null && !controllerProps.forcedPrimaryDefName.NullOrEmpty())
+            {
+                return controllerProps.forcedPrimaryDefName;
+            }
+
+            if (IsHexgunThrall(pawn))
+            {
+                return HexgunWeaponDefName;
+            }
+
+            if (controllerProps != null)
+            {
+                switch (controllerProps.archetype)
+                {
+                    case AbyssalPawnArchetype.RangedSkirmisher:
+                        return HexgunWeaponDefName;
+                }
+            }
+
+            return null;
+        }
+
+        private static int ResolveMinShootingSkill(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
+        {
+            if (controllerProps != null && controllerProps.minShootingSkill >= 0)
+            {
+                return controllerProps.minShootingSkill;
+            }
+
+            if (IsHexgunThrall(pawn))
+            {
+                return 10;
+            }
+
+            switch (controllerProps?.archetype)
+            {
+                case AbyssalPawnArchetype.RangedSkirmisher:
+                    return 10;
+                case AbyssalPawnArchetype.LongRangeMarksman:
+                    return 12;
+                case AbyssalPawnArchetype.SupportCaster:
+                    return 8;
+                case AbyssalPawnArchetype.SiegeNode:
+                    return 11;
+                default:
+                    return -1;
+            }
+        }
+
+        private static int ResolveMinMeleeSkill(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)
+        {
+            if (controllerProps != null && controllerProps.minMeleeSkill >= 0)
+            {
+                return controllerProps.minMeleeSkill;
+            }
+
+            if (IsChainZealot(pawn))
+            {
+                return 11;
+            }
+
+            switch (controllerProps?.archetype)
+            {
+                case AbyssalPawnArchetype.SwarmRusher:
+                    return 8;
+                case AbyssalPawnArchetype.Pouncer:
+                    return 10;
+                case AbyssalPawnArchetype.HookBruiser:
+                    return 11;
+                case AbyssalPawnArchetype.BossJuggernaut:
+                    return 12;
+                case AbyssalPawnArchetype.ArchonPredator:
+                    return 14;
+                default:
+                    return -1;
+            }
+        }
+
         private static bool IsHexgunThrall(Pawn pawn)
         {
             return HasDefName(pawn, HexgunThrallDefName);
-        }
-
-        private static bool IsRiftSniper(Pawn pawn)
-        {
-            return HasDefName(pawn, RiftSniperDefName);
         }
 
         private static bool IsChainZealot(Pawn pawn)
@@ -516,7 +587,7 @@ namespace AbyssalProtocol
             return HasDefName(pawn, ChainZealotDefName);
         }
 
-        private static bool HasDefName(Pawn pawn, string defName)
+        public static bool HasDefName(Pawn pawn, string defName)
         {
             if (pawn == null || defName.NullOrEmpty())
             {
@@ -524,20 +595,6 @@ namespace AbyssalProtocol
             }
 
             return pawn.def?.defName == defName || pawn.kindDef?.defName == defName;
-        }
-
-        private static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
-        {
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i] is Pawn pawn && pawn != ignore)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

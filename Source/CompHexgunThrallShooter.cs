@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using RimWorld;
-using UnityEngine;
 using Verse;
-using Verse.AI;
+using UnityEngine;
 
 namespace AbyssalProtocol
 {
@@ -35,7 +34,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!AbyssalThreatPawnUtility.CanOperateAbyssalPawn(pawn))
+            if (!CanOperate(pawn))
             {
                 ResetBurst();
                 return;
@@ -129,73 +128,53 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(target.Position);
         }
 
+        private bool CanOperate(Pawn pawn)
+        {
+            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
+            {
+                return false;
+            }
+
+            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private Pawn FindBestTarget(Pawn pawn)
         {
-            AbyssalPawnArchetype fallbackArchetype = Props.preferFarthestTargets
-                ? AbyssalPawnArchetype.LongRangeMarksman
-                : AbyssalPawnArchetype.RangedSkirmisher;
-
             return AbyssalThreatPawnUtility.FindBestTarget(
                 pawn,
                 0f,
                 Props.range,
-                AbyssalThreatPawnUtility.GetArchetype(pawn, fallbackArchetype),
+                Props.preferFarthestTargets,
                 Props.preferRangedTargets,
-                requireLineOfSight: true);
+                false,
+                4.5f,
+                0f);
         }
 
         private bool CanFireAt(Pawn shooter, Thing target)
         {
             Pawn targetPawn = target as Pawn;
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(shooter, targetPawn))
+            if (!AbyssalThreatPawnUtility.CanFireAt(shooter, targetPawn))
             {
                 return false;
             }
 
-            if (shooter.Position.DistanceTo(targetPawn.Position) > Props.range)
-            {
-                return false;
-            }
-
-            return GenSight.LineOfSight(shooter.Position, targetPawn.Position, shooter.Map);
+            return shooter.Position.DistanceTo(targetPawn.Position) <= Props.range;
         }
 
         private bool TryMaintainSpacing(Pawn pawn)
         {
-            if (Props.preferredMinRange <= 0f)
-            {
-                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
-                {
-                    pawn.pather?.StopDead();
-                }
-
-                return false;
-            }
-
-            Pawn nearestThreat = AbyssalThreatPawnUtility.FindClosestThreatWithin(pawn, Props.preferredMinRange);
-            if (nearestThreat == null)
-            {
-                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
-                {
-                    pawn.pather?.StopDead();
-                }
-
-                return false;
-            }
-
-            if (!AbyssalThreatPawnUtility.TryFindRetreatCell(pawn, nearestThreat, Props.preferredMinRange, Math.Max(4, Props.retreatSearchRadius), out IntVec3 retreatCell))
-            {
-                return false;
-            }
-
-            if (retreatCell == pawn.Position)
-            {
-                return false;
-            }
-
-            pawn.pather?.StartPath(retreatCell, PathEndMode.OnCell);
-            pawn.rotationTracker?.FaceCell(nearestThreat.Position);
-            return true;
+            return AbyssalThreatPawnUtility.TryMaintainSpacing(
+                pawn,
+                currentTarget,
+                Props.preferredMinRange,
+                Props.retreatSearchRadius,
+                Props.holdPositionWhenTargeting);
         }
 
         private void FireShot(Pawn pawn, Thing target)

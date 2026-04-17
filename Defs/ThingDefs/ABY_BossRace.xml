@@ -100,7 +100,9 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>ArchonPredator</archetype>
+        <minMeleeSkill>14</minMeleeSkill>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
     </comps>
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
@@ -205,7 +207,9 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>ArchonPredator</archetype>
+        <minMeleeSkill>16</minMeleeSkill>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
     </comps>
     <killedLeavings Inherit="False">
       <ABY_CrownOfRupture>1</ABY_CrownOfRupture>

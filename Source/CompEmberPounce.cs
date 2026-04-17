@@ -21,7 +21,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!AbyssalThreatPawnUtility.CanOperateAbyssalPawn(pawn) || pawn.stances == null)
+            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed)
             {
                 return;
             }
@@ -37,13 +37,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(
-                pawn,
-                Props.minRange,
-                Props.maxRange,
-                AbyssalThreatPawnUtility.GetArchetype(pawn, AbyssalPawnArchetype.Pouncer),
-                preferRangedTargets: true,
-                requireLineOfSight: true);
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.minRange, Props.maxRange, false, true, true, 2.4f, 2.0f)
+                ?? AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.minRange, Props.maxRange, false, false, false, 0f, 2.0f);
             if (target == null)
             {
                 return;
@@ -55,9 +50,7 @@ namespace AbyssalProtocol
             }
 
             DoPounce(pawn, target, landingCell);
-            nextPounceTick = currentTick
-                + Mathf.Max(60, Props.cooldownTicks)
-                + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
+            nextPounceTick = currentTick + Mathf.Max(60, Props.cooldownTicks) + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
         }
 
         private void DoPounce(Pawn pawn, Pawn target, IntVec3 landingCell)
@@ -74,7 +67,7 @@ namespace AbyssalProtocol
             SpawnMote(map, landingCell);
 
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.RefreshOrApplyHediff(target, Props.impactHediffDefName);
+            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName);
         }
 
         private void SpawnMote(Map map, IntVec3 cell)

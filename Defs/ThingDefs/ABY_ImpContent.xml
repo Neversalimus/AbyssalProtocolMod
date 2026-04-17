@@ -64,7 +64,10 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>SwarmRusher</archetype>
+        <minMeleeSkill>8</minMeleeSkill>
+        <useSapperAssaultLord>false</useSapperAssaultLord>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
     </comps>
     <tools>
       <li>

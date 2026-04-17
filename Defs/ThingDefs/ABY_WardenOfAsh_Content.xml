@@ -85,8 +85,9 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>BossJuggernaut</archetype>
-        <minimumMeleeSkill>13</minimumMeleeSkill>
+        <minMeleeSkill>12</minMeleeSkill>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
         <warmupTicks>210</warmupTicks>
         <pulseIntervalTicks>345</pulseIntervalTicks>
