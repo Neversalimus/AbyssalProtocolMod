@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeDevResidueButton>DEV: grant 1000 residue</ABY_ForgeDevResidueButton>
+  <ABY_ForgeDevResidueDesc>Adds 1000 residue directly into forge communion progress without consuming map items.</ABY_ForgeDevResidueDesc>
+  <ABY_ForgeDevResidueApplied>DEV: added {0} residue. Total attuned residue: {1}.</ABY_ForgeDevResidueApplied>
+
+  <ABY_ForgeDevImmortalityLabel>DEV: toggle immortality</ABY_ForgeDevImmortalityLabel>
+  <ABY_ForgeDevImmortalityDesc>Open a dev-only pawn list and toggle the test immortality anchor on any spawned pawn on this map.</ABY_ForgeDevImmortalityDesc>
+  <ABY_ForgeDevImmortalityNoPawns>No valid spawned pawns were found on this map.</ABY_ForgeDevImmortalityNoPawns>
+  <ABY_ForgeDevImmortalityOption>{0}  •  immortality {1}</ABY_ForgeDevImmortalityOption>
+
+  <ABY_TestImmortalityStateOn>ON</ABY_TestImmortalityStateOn>
+  <ABY_TestImmortalityStateOff>OFF</ABY_TestImmortalityStateOff>
+  <ABY_TestImmortalityAdded>{0} is now protected by the dev immortality anchor.</ABY_TestImmortalityAdded>
+  <ABY_TestImmortalityRemoved>{0} is no longer protected by the dev immortality anchor.</ABY_TestImmortalityRemoved>
+  <ABY_TestImmortalityPawnGizmoLabel>DEV: disable immortality</ABY_TestImmortalityPawnGizmoLabel>
+  <ABY_TestImmortalityPawnGizmoDesc>Remove the dev immortality anchor from this pawn.</ABY_TestImmortalityPawnGizmoDesc>
+</LanguageData>
