@@ -21,7 +21,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed)
+            if (!AbyssalThreatPawnUtility.CanOperateAbyssalPawn(pawn) || pawn.stances == null)
             {
                 return;
             }
@@ -37,27 +37,27 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: true)
-                ?? AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: false);
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(
+                pawn,
+                Props.minRange,
+                Props.maxRange,
+                AbyssalThreatPawnUtility.GetArchetype(pawn, AbyssalPawnArchetype.Pouncer),
+                preferRangedTargets: true,
+                requireLineOfSight: true);
             if (target == null)
             {
                 return;
             }
 
-            float distance = pawn.Position.DistanceTo(target.Position);
-            if (distance < Props.minRange || distance > Props.maxRange)
-            {
-                return;
-            }
-
-            IntVec3 landingCell;
-            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out landingCell))
+            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out IntVec3 landingCell))
             {
                 return;
             }
 
             DoPounce(pawn, target, landingCell);
-            nextPounceTick = currentTick + Mathf.Max(60, Props.cooldownTicks) + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
+            nextPounceTick = currentTick
+                + Mathf.Max(60, Props.cooldownTicks)
+                + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
         }
 
         private void DoPounce(Pawn pawn, Pawn target, IntVec3 landingCell)
@@ -74,7 +74,7 @@ namespace AbyssalProtocol
             SpawnMote(map, landingCell);
 
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName, 0.20f);
+            AbyssalThreatPawnUtility.RefreshOrApplyHediff(target, Props.impactHediffDefName);
         }
 
         private void SpawnMote(Map map, IntVec3 cell)

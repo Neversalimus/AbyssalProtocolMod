@@ -90,8 +90,6 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>Pouncer</archetype>
-        <minimumMeleeSkill>9</minimumMeleeSkill>
-        <useSapperLord>false</useSapperLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>

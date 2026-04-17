@@ -98,7 +98,9 @@
       </li>
     </tools>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>ArchonPredator</archetype>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
@@ -201,7 +203,9 @@
       </li>
     </tools>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>ArchonPredator</archetype>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_CrownOfRupture>1</ABY_CrownOfRupture>

@@ -1,106 +1,70 @@
-using RimWorld;
 using Verse;
 
 namespace AbyssalProtocol
 {
     public class CompAbyssalPawnController : ThingComp
     {
-        private int lastLordRetryTick = -99999;
         private int spawnTick = -1;
+        private int lastLordEnsureTick = -99999;
 
         public CompProperties_AbyssalPawnController Props => (CompProperties_AbyssalPawnController)props;
 
-        public static CompAbyssalPawnController GetFor(Pawn pawn)
-        {
-            return pawn?.GetComp<CompAbyssalPawnController>();
-        }
+        private Pawn PawnParent => parent as Pawn;
 
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref lastLordRetryTick, "lastLordRetryTick", -99999);
             Scribe_Values.Look(ref spawnTick, "spawnTick", -1);
+            Scribe_Values.Look(ref lastLordEnsureTick, "lastLordEnsureTick", -99999);
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            spawnTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            ConfigurePawn();
-            TryEnsureHostilityAndLord(skipSpawnGrace: true);
+
+            if (spawnTick < 0)
+            {
+                spawnTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            }
+
+            TryUpdateController();
         }
 
         public override void CompTickRare()
         {
             base.CompTickRare();
-            ConfigurePawn();
-            TryEnsureHostilityAndLord(skipSpawnGrace: false);
+            TryUpdateController();
         }
 
-        private void ConfigurePawn()
+        private void TryUpdateController()
         {
-            Pawn pawn = parent as Pawn;
-            if (pawn == null || pawn.Dead)
+            Pawn pawn = PawnParent;
+            if (pawn == null || pawn.MapHeld == null || pawn.Dead)
             {
                 return;
             }
 
-            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn, this);
+            if (Props.autoPrepare)
+            {
+                AbyssalThreatPawnUtility.PrepareThreatPawn(pawn, Props);
+            }
+
+            if (Props.ensureHostileFaction)
+            {
+                AbyssalThreatPawnUtility.EnsureHostilityAndLord(
+                    pawn,
+                    Props.ensureAssaultLord,
+                    Props.sappers,
+                    spawnTick,
+                    ref lastLordEnsureTick,
+                    Props.spawnGraceTicks,
+                    Props.lordRetryTicks);
+            }
         }
 
-        private void TryEnsureHostilityAndLord(bool skipSpawnGrace)
+        public static CompAbyssalPawnController GetFor(Pawn pawn)
         {
-            if (!Props.autoHostile)
-            {
-                return;
-            }
-
-            Pawn pawn = parent as Pawn;
-            if (pawn == null || pawn.Map == null || pawn.Dead)
-            {
-                return;
-            }
-
-            AbyssalThreatPawnUtility.EnsureHostileFaction(pawn);
-            if (!Props.assignAssaultLord)
-            {
-                return;
-            }
-
-            Faction playerFaction = Faction.OfPlayer;
-            if (pawn.Faction == null || playerFaction == null || !pawn.Faction.HostileTo(playerFaction))
-            {
-                return;
-            }
-
-            if (!pawn.Spawned || !pawn.Map.IsPlayerHome)
-            {
-                return;
-            }
-
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (spawnTick < 0)
-            {
-                spawnTick = ticksGame;
-            }
-
-            if (!skipSpawnGrace && ticksGame - spawnTick < Props.spawnGraceTicks)
-            {
-                return;
-            }
-
-            if (AbyssalLordUtility.FindLordFor(pawn) != null)
-            {
-                return;
-            }
-
-            if (ticksGame - lastLordRetryTick < Props.lordRetryTicks)
-            {
-                return;
-            }
-
-            lastLordRetryTick = ticksGame;
-            AbyssalThreatPawnUtility.EnsureAssaultLordForPawn(pawn, Props.useSapperLord);
+            return pawn?.GetComp<CompAbyssalPawnController>();
         }
     }
 }

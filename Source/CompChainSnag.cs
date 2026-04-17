@@ -21,7 +21,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed || pawn.stances == null)
+            if (!AbyssalThreatPawnUtility.CanOperateAbyssalPawn(pawn) || pawn.stances == null)
             {
                 return;
             }
@@ -37,21 +37,19 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: true)
-                ?? AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: false);
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(
+                pawn,
+                Props.minRange,
+                Props.maxRange,
+                AbyssalThreatPawnUtility.GetArchetype(pawn, AbyssalPawnArchetype.HookBruiser),
+                preferRangedTargets: true,
+                requireLineOfSight: true);
             if (target == null)
             {
                 return;
             }
 
-            float distance = pawn.Position.DistanceTo(target.Position);
-            if (distance < Props.minRange || distance > Props.maxRange)
-            {
-                return;
-            }
-
-            IntVec3 landingCell;
-            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out landingCell))
+            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out IntVec3 landingCell))
             {
                 return;
             }
@@ -76,7 +74,7 @@ namespace AbyssalProtocol
             SpawnMote(map, landingCell);
 
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName, 0.30f);
+            AbyssalThreatPawnUtility.RefreshOrApplyHediff(target, Props.impactHediffDefName, 0.3f);
         }
 
         private void SpawnMote(Map map, IntVec3 cell)

@@ -1,14 +1,14 @@
-using System;
-
 namespace AbyssalProtocol
 {
     public enum AbyssalPawnArchetype
     {
         None,
-        RangedSkirmisher,
-        LongRangeMarksman,
+        SwarmRusher,
         Pouncer,
         HookBruiser,
-        BossJuggernaut
+        RangedSkirmisher,
+        LongRangeMarksman,
+        BossJuggernaut,
+        ArchonPredator
     }
 }

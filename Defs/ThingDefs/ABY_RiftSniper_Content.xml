@@ -79,13 +79,7 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>LongRangeMarksman</archetype>
-        <minimumShootingSkill>14</minimumShootingSkill>
-        <preferRangedTargets>true</preferRangedTargets>
-        <preferFarthestTargets>true</preferFarthestTargets>
-        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
-        <preferredMinRange>14.5</preferredMinRange>
-        <retreatSearchRadius>12</retreatSearchRadius>
-        <useSapperLord>true</useSapperLord>
+        <minimumShootingSkill>13</minimumShootingSkill>
       </li>
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_RiftSniperBolt</projectileDefName>

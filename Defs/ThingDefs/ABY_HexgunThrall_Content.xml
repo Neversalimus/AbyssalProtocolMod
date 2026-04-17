@@ -79,9 +79,8 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>RangedSkirmisher</archetype>
-        <forcePrimaryWeaponDefName>ABY_Hexgun</forcePrimaryWeaponDefName>
+        <forcedPrimaryDefName>ABY_Hexgun</forcedPrimaryDefName>
         <minimumShootingSkill>10</minimumShootingSkill>
-        <useSapperLord>true</useSapperLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_HexgunBolt</projectileDefName>

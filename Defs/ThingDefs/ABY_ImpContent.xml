@@ -62,7 +62,9 @@
       <Mass>0.42</Mass>
     </statBases>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>SwarmRusher</archetype>
+      </li>
     </comps>
     <tools>
       <li>
