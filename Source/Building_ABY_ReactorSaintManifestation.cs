@@ -22,11 +22,7 @@ namespace AbyssalProtocol
         private const float DefaultImpactExplosionRadius = 3.9f;
         private const int DefaultImpactExplosionDamage = 28;
 
-        private static readonly Graphic CocoonGraphic = GraphicDatabase.Get<Graphic_Single>(
-            CocoonPath,
-            ShaderDatabase.Cutout,
-            new Vector2(4.75f, 4.75f),
-            Color.white);
+        private static readonly Vector2 CocoonDrawSize = new Vector2(3.35f, 4.95f);
 
         private PawnKindDef bossKindDef;
         private IntVec3 bossArrivalCell = IntVec3.Invalid;
@@ -261,21 +257,29 @@ namespace AbyssalProtocol
                 cocoonLoc.x += Mathf.Sin(ticks * 0.13f) * idleJitter;
             }
 
-            float cocoonRotation = Mathf.Lerp(-10f, 0f, descentProgress);
+            float cocoonWidth = CocoonDrawSize.x * (1f - ascentProgress * 0.08f);
+            float cocoonHeight = CocoonDrawSize.y * (1f - ascentProgress * 0.04f);
+
             if (!impactTriggered)
             {
-                cocoonRotation += Mathf.Sin(ticks * 0.11f) * 3.0f;
+                float descentScale = Mathf.Lerp(0.78f, 1f, descentProgress);
+                cocoonWidth *= descentScale;
+                cocoonHeight *= descentScale;
             }
             else if (!bossReleased)
             {
-                cocoonRotation += Mathf.Sin(ticks * 0.08f) * (1.10f - preReleaseProgress * 0.85f);
+                float settlePulse = 1f + Mathf.Sin(ticks * 0.08f) * (0.010f + (1f - preReleaseProgress) * 0.015f);
+                cocoonWidth *= settlePulse;
+                cocoonHeight *= 1f + Mathf.Sin(ticks * 0.06f + 0.8f) * 0.010f;
             }
             else
             {
-                cocoonRotation += ascentProgress * 12f + Mathf.Sin(ticks * 0.05f) * (0.35f + (1f - ascentProgress) * 0.45f);
+                float driftPulse = 1f + Mathf.Sin(ticks * 0.05f) * 0.008f;
+                cocoonWidth *= driftPulse;
+                cocoonHeight *= 1f + Mathf.Sin(ticks * 0.04f + 0.35f) * 0.006f;
             }
 
-            CocoonGraphic.Draw(cocoonLoc, Rot4.South, this, cocoonRotation);
+            DrawCocoon(cocoonLoc, cocoonWidth, cocoonHeight);
         }
 
         private void ReleaseBoss()
@@ -391,6 +395,35 @@ namespace AbyssalProtocol
         private int GetDepartureAnimationStartTick()
         {
             return Mathf.Max(bossReleaseDelayTicks + 1, warmupTicks - DepartureAnimationTicks);
+        }
+
+
+
+        private static void DrawCocoon(Vector3 loc, float width, float height)
+        {
+            Material rimMaterial = MaterialPool.MatFrom(CocoonPath, ShaderDatabase.TransparentPostLight, new Color(1f, 0.48f, 0.18f, 0.16f));
+            if (rimMaterial != null)
+            {
+                Matrix4x4 rimMatrix = Matrix4x4.TRS(
+                    loc + new Vector3(0f, 0.002f, 0f),
+                    Quaternion.identity,
+                    new Vector3(width * 1.05f, 1f, height * 1.04f));
+
+                Graphics.DrawMesh(MeshPool.plane10, rimMatrix, rimMaterial, 0);
+            }
+
+            Material material = MaterialPool.MatFrom(CocoonPath, ShaderDatabase.Cutout);
+            if (material == null)
+            {
+                return;
+            }
+
+            Matrix4x4 matrix = Matrix4x4.TRS(
+                loc,
+                Quaternion.identity,
+                new Vector3(width, 1f, height));
+
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
 
         private float GetPostReleaseProgress()
