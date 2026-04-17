@@ -94,22 +94,6 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
-                Id = "choir_engine",
-                LabelKey = "ABY_CircleRitual_Choir_Label",
-                SubtitleKey = "ABY_CircleRitual_Choir_Subtitle",
-                DescriptionKey = "ABY_CircleRitual_Choir_Desc",
-                BossLabel = "Choir Engine",
-                SigilThingDefName = "ABY_ChoirEngineSigil",
-                PawnKindDefName = "ABY_ChoirEngine",
-                RewardHintKey = "ABY_CircleRitual_Choir_Rewards",
-                SideEffectHintKey = "ABY_CircleRitual_Choir_SideEffects",
-                BaseRisk = 0.62f,
-                InstabilityGain = 0.15f,
-                ContaminationGain = 0.07f,
-                SpawnPoints = 780
-            },
-            new RitualDefinition
-            {
                 Id = "archon_beast",
                 LabelKey = "ABY_CircleRitual_Archon_Label",
                 SubtitleKey = "ABY_CircleRitual_Archon_Subtitle",
@@ -123,6 +107,22 @@ namespace AbyssalProtocol
                 InstabilityGain = 0.18f,
                 ContaminationGain = 0.08f,
                 SpawnPoints = 900
+            },
+            new RitualDefinition
+            {
+                Id = "choir_engine",
+                LabelKey = "ABY_CircleRitual_Choir_Label",
+                SubtitleKey = "ABY_CircleRitual_Choir_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_Choir_Desc",
+                BossLabel = "Choir Engine",
+                SigilThingDefName = "ABY_ChoirEngineSigil",
+                PawnKindDefName = "ABY_ChoirEngine",
+                RewardHintKey = "ABY_CircleRitual_Choir_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_Choir_SideEffects",
+                BaseRisk = 0.74f,
+                InstabilityGain = 0.20f,
+                ContaminationGain = 0.09f,
+                SpawnPoints = 1040
             },
             new RitualDefinition
             {

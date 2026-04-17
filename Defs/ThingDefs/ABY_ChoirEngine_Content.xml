@@ -4,7 +4,7 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ChoirEngine</defName>
     <label>choir engine</label>
-    <description>A techno-infernal relay node that enters battle as a walking command choir rather than a pure kill-form. Choir engines turn nearby abyssal troops into a tighter, deadlier formation while flooding defenders, turrets, and local electronics with hostile signal noise.</description>
+    <description>A post-first-boss techno-infernal relay node that enters battle as a walking command choir rather than a pure kill-form. Choir engines turn nearby abyssal troops into a tighter, deadlier formation while flooding defenders, turrets, and local electronics with hostile signal noise.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
@@ -45,18 +45,18 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>980</MaxHitPoints>
-      <MoveSpeed>3.82</MoveSpeed>
-      <MeleeHitChance>0.70</MeleeHitChance>
-      <MeleeDPS>5.4</MeleeDPS>
+      <MaxHitPoints>1280</MaxHitPoints>
+      <MoveSpeed>3.95</MoveSpeed>
+      <MeleeHitChance>0.74</MeleeHitChance>
+      <MeleeDPS>6.0</MeleeDPS>
       <MeleeDodgeChance>0.09</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.52</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.82</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.68</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.46</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.92</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>210</ComfyTemperatureMax>
       <Mass>1.65</Mass>
-      <MarketValue>1680</MarketValue>
+      <MarketValue>2100</MarketValue>
       <Flammability>0.00</Flammability>
       <PainShockThreshold>999</PainShockThreshold>
       <PsychicSensitivity>0</PsychicSensitivity>
@@ -92,32 +92,32 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_ChoirEngineAura">
         <scanIntervalTicks>30</scanIntervalTicks>
-        <allyRadius>10.8</allyRadius>
-        <enemyRadius>8.6</enemyRadius>
-        <allySeverity>0.36</allySeverity>
-        <enemySeverity>0.34</enemySeverity>
+        <allyRadius>11.2</allyRadius>
+        <enemyRadius>9.1</enemyRadius>
+        <allySeverity>0.42</allySeverity>
+        <enemySeverity>0.38</enemySeverity>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_ChoirEngineRelay">
         <warmupTicks>210</warmupTicks>
-        <pulseIntervalTicks>410</pulseIntervalTicks>
-        <pulseIntervalVariance>70</pulseIntervalVariance>
+        <pulseIntervalTicks>390</pulseIntervalTicks>
+        <pulseIntervalVariance>60</pulseIntervalVariance>
         <pulseRadius>11.4</pulseRadius>
-        <pulseAllySeverity>0.82</pulseAllySeverity>
-        <pulseEnemySeverity>0.62</pulseEnemySeverity>
-        <turretSuppressionIntervalTicks>185</turretSuppressionIntervalTicks>
-        <turretSuppressionVariance>45</turretSuppressionVariance>
-        <turretSuppressionRadius>18.0</turretSuppressionRadius>
-        <turretEmpDamage>5.2</turretEmpDamage>
-        <infrastructureEmpDamage>3.2</infrastructureEmpDamage>
-        <maxInfrastructureTargets>4</maxInfrastructureTargets>
-        <maxPulseInfrastructureTargets>6</maxPulseInfrastructureTargets>
+        <pulseAllySeverity>0.90</pulseAllySeverity>
+        <pulseEnemySeverity>0.72</pulseEnemySeverity>
+        <turretSuppressionIntervalTicks>170</turretSuppressionIntervalTicks>
+        <turretSuppressionVariance>40</turretSuppressionVariance>
+        <turretSuppressionRadius>19.0</turretSuppressionRadius>
+        <turretEmpDamage>6.0</turretEmpDamage>
+        <infrastructureEmpDamage>3.6</infrastructureEmpDamage>
+        <maxInfrastructureTargets>5</maxInfrastructureTargets>
+        <maxPulseInfrastructureTargets>7</maxPulseInfrastructureTargets>
         <pulseVisualScale>2.45</pulseVisualScale>
         <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
       </li>
     </comps>
     <killedLeavings Inherit="False">
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
+      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
     </killedLeavings>
     <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_ABY_ChoirEngineBurst</deathActionWorkerClass>
   </ThingDef>
@@ -125,7 +125,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ChoirEngineSigil</defName>
     <label>choir engine sigil</label>
-    <description>A command-grade sigil wafer built from an ashen core and residue lattice. Carry it to an abyssal summoning circle to invite a Choir Engine breach with disciplined escort troops and active signal warfare.</description>
+    <description>A command-grade sigil wafer built from a herald core fragment and residue lattice. Carry it to an abyssal summoning circle to invite a Choir Engine breach with disciplined escort troops and active signal warfare.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -138,7 +138,7 @@
     </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
-      <MarketValue>420</MarketValue>
+      <MarketValue>520</MarketValue>
       <Mass>0.32</Mass>
       <Flammability>0</Flammability>
     </statBases>
@@ -152,7 +152,7 @@
         <summonMode>Boss</summonMode>
         <pawnKindDefName>ABY_ChoirEngine</pawnKindDefName>
         <bossLabel>Choir Engine</bossLabel>
-        <spawnPoints>780</spawnPoints>
+        <spawnPoints>1040</spawnPoints>
         <ritualWarmupTicks>180</ritualWarmupTicks>
         <supportThrallCount>2</supportThrallCount>
         <supportZealotCount>1</supportZealotCount>

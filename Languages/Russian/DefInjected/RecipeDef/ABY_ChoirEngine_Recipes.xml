@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_CraftChoirEngineSigil.label>создать сигилу choir engine</ABY_CraftChoirEngineSigil.label>
-  <ABY_CraftChoirEngineSigil.description>Собирает командную сигилу прорыва из residue, компонентов и одного Ashen Core. Это первый реальный шаг эскалации после Warden: мини-босс поддержки, который усиливает эскорт, глушит турели и наказывает статичную оборону.</ABY_CraftChoirEngineSigil.description>
+  <ABY_CraftChoirEngineSigil.description>Собирает командную сигилу прорыва из residue, компонентов и одного Herald Core Fragment. Это шаг эскалации уже после первого босса: мини-босс поддержки, который усиливает эскорт, глушит турели и наказывает статичную оборону.</ABY_CraftChoirEngineSigil.description>
   <ABY_CraftChoirEngineSigil.jobString>Создание сигилы choir engine.</ABY_CraftChoirEngineSigil.jobString>
 </LanguageData>

@@ -2,8 +2,8 @@
 <LanguageData>
   <ABY_CircleRitual_Choir_Label>Хоровой ретранслятор</ABY_CircleRitual_Choir_Label>
   <ABY_CircleRitual_Choir_Subtitle>Прорыв мини-босса поддержки</ABY_CircleRitual_Choir_Subtitle>
-  <ABY_CircleRitual_Choir_Desc>Потребляет одну сигилу Choir Engine, направляет колониста к кругу и открывает дисциплинированный прорыв поддержки сразу после первого босса. Choir Engine опасен не прямым уроном: он усиливает эскорт, забивает защитников помехами наведения, глушит турели и превращает стабильную линию огня в зону командного шума и срыва.</ABY_CircleRitual_Choir_Desc>
-  <ABY_CircleRitual_Choir_Rewards>• Пост-warden шаг прогрессии с реальным давлением, а не обучающим ритмом&#10;• Гарантированное возвращение Ashen Core и более высокий payout residue&#10;• Учит фокусу по support-цели до следующей эскалации боссов</ABY_CircleRitual_Choir_Rewards>
+  <ABY_CircleRitual_Choir_Desc>Потребляет одну сигилу Choir Engine, направляет колониста к кругу и открывает дисциплинированный прорыв поддержки только после того, как первый босс уже пройден. Choir Engine опасен не прямым уроном: он усиливает эскорт, забивает защитников помехами наведения, глушит турели и превращает стабильную линию огня в зону командного шума и срыва.</ABY_CircleRitual_Choir_Desc>
+  <ABY_CircleRitual_Choir_Rewards>• Пост-первый-босс шаг прогрессии с реальным давлением, а не обучающим ритмом&#10;• Гарантированное возвращение Herald Core Fragment и более высокий payout residue&#10;• Учит фокусу по support-цели до следующей эскалации боссов</ABY_CircleRitual_Choir_Rewards>
   <ABY_CircleRitual_Choir_SideEffects>• Пока engine активен, его эскорт получает постоянные усиления&#10;• Близкие защитники и турели регулярно получают signal interference и EMP-подавление&#10;• Периодические choir pulses усиливают весь прорыв вместо ставки на прямой урон босса</ABY_CircleRitual_Choir_SideEffects>
   <ABY_ChoirSummonSuccessLabel>Хоровой прорыв маршрутизирован</ABY_ChoirSummonSuccessLabel>
   <ABY_ChoirSummonSuccessDesc>Командная пластина сработала. Узел Choir Engine проходит в локальное пространство вместе с дисциплинированным эскортом.</ABY_ChoirSummonSuccessDesc>

@@ -4,7 +4,7 @@
   <RecipeDef>
     <defName>ABY_CraftChoirEngineSigil</defName>
     <label>forge choir engine sigil</label>
-    <description>Builds a command-grade breach sigil from residue, components, and one recovered ashen core. This is the first real post-warden escalation step: a hostile support mini-boss that amplifies escorts, suppresses turrets, and punishes static defenses.</description>
+    <description>Builds a command-grade breach sigil from residue, components, and one recovered herald core fragment. This is a post-first-boss escalation step: a hostile support mini-boss that follows the archon kill, amplifies escorts, suppresses turrets, and punishes static defenses.</description>
     <jobString>Forging choir engine sigil.</jobString>
     <workAmount>2550</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -18,7 +18,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>ABY_AshenCore</li>
+            <li>ABY_HeraldCoreFragment</li>
           </thingDefs>
         </filter>
         <count>1</count>
@@ -29,7 +29,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>16</count>
+        <count>20</count>
       </li>
       <li>
         <filter>
@@ -37,7 +37,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>24</count>
+        <count>32</count>
       </li>
       <li>
         <filter>
@@ -45,7 +45,7 @@
             <li>ComponentIndustrial</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>3</count>
       </li>
     </ingredients>
     <products>
@@ -53,7 +53,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>70</requiredResidue>
+        <requiredResidue>90</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>

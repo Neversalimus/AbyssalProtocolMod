@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_ChoirEngine.label>Choir Engine</ABY_ChoirEngine.label>
-  <ABY_ChoirEngine.description>Техно-инфернальный ретрансляторный узел, который входит в бой не как чистая машина убийства, а как ходячий командный хор. Choir Engine усиливает ближайшие abyssal-отряды, забивает защитников сигнальным шумом и подавляет турели и локальную электронику.</ABY_ChoirEngine.description>
+  <ABY_ChoirEngine.description>Пост-первый-босс техно-инфернальный ретрансляторный узел, который входит в бой не как чистая машина убийства, а как ходячий командный хор. Choir Engine усиливает ближайшие abyssal-отряды, забивает защитников сигнальным шумом и подавляет турели и локальную электронику.</ABY_ChoirEngine.description>
   <ABY_ChoirEngineSigil.label>сигила choir engine</ABY_ChoirEngineSigil.label>
-  <ABY_ChoirEngineSigil.description>Командная сигила, собранная из пепельного ядра и решётки residue. Отнесите её к abyssal summoning circle, чтобы вызвать прорыв Choir Engine с дисциплинированным эскортом и активной сигнальной войной.</ABY_ChoirEngineSigil.description>
+  <ABY_ChoirEngineSigil.description>Командная сигила, собранная из Herald Core Fragment и решётки residue. Отнесите её к abyssal summoning circle, чтобы вызвать прорыв Choir Engine с дисциплинированным эскортом и активной сигнальной войной.</ABY_ChoirEngineSigil.description>
 </LanguageData>

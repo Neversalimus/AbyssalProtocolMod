@@ -6,7 +6,7 @@
     <label>choir engine</label>
     <race>ABY_ChoirEngine</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>780</combatPower>
+    <combatPower>980</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
