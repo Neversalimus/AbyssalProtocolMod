@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_RiftHelm</defName>
+    <thingClass>Apparel</thingClass>
+    <label>rift helm</label>
+    <description>A disciplined abyssal combat helm built around a sealed visor-slit, reinforced jaw grille and a micro-sigil logic plate. It is not ceremonial gear. It is the first sign that a colony has stopped improvising around the Abyss and started fielding purpose-built wargear made to look back into the breach.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_RiftHelm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.95,0.95)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Apparel/ABY_RiftHelm</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1400</WorkToMake>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Mass>1.6</Mass>
+      <MarketValue>950</MarketValue>
+      <ArmorRating_Sharp>0.52</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.24</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.40</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>
