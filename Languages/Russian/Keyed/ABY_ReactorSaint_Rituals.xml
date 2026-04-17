@@ -2,9 +2,9 @@
 <LanguageData>
   <ABY_CircleRitual_ReactorSaint_Label>Зажечь Святого Реактора</ABY_CircleRitual_ReactorSaint_Label>
   <ABY_CircleRitual_ReactorSaint_Subtitle>Прорыв биомеханического reactor-босса</ABY_CircleRitual_ReactorSaint_Subtitle>
-  <ABY_CircleRitual_ReactorSaint_Desc>Потребляет одну сигилу Reactor Saint, направляет колониста к кругу и запускает реакторное phase-in проявление, которое конденсируется в Infernal Reactor Saint. Этот прорыв построен вокруг дальнего давления, реакторного щита, saturation-поля тепла и видимого проявления вместо мгновенного спавна.</ABY_CircleRitual_ReactorSaint_Desc>
+  <ABY_CircleRitual_ReactorSaint_Desc>Потребляет одну сигилу Reactor Saint, направляет колониста к кругу и запускает breach-skyfall кокон, который врезается на край карты и затем раскрывается в Infernal Reactor Saint. Этот прорыв построен вокруг дальнего давления, реакторного щита, saturation-поля тепла и видимого цикла появления вместо мгновенного спавна.</ABY_CircleRitual_ReactorSaint_Desc>
   <ABY_CircleRitual_ReactorSaint_Rewards>• Второй полноценный тир босса после первого vertical slice&#10;• Даёт saint reactor core, spacer-компоненты и высокий объём residue&#10;• Заставляет играть от рассредоточения против артиллерийского давления и долгого boss-pressure</ABY_CircleRitual_ReactorSaint_Rewards>
-  <ABY_CircleRitual_ReactorSaint_SideEffects>• Входит через staged manifestation вместо мгновенного появления&#10;• Использует прямой reactor-volley и zone-barrage, наказывая статичную линию обороны&#10;• Уже работает через полноценный Aegis, saturation-поле и усиливающиеся фазы</ABY_CircleRitual_ReactorSaint_SideEffects>
+  <ABY_CircleRitual_ReactorSaint_SideEffects>• Входит через staged breach-skyfall кокон вместо мгновенного появления&#10;• Использует прямой reactor-volley и zone-barrage, наказывая статичную линию обороны&#10;• Уже работает через полноценный Aegis, saturation-поле и усиливающиеся фазы</ABY_CircleRitual_ReactorSaint_SideEffects>
   <ABY_ReactorSaintSummonSuccessLabel>Святой Реактор проявился</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>Реакторная сигила сработала. Saint-class биомеханический прорыв завершил фазовый вход, и Infernal Reactor Saint проходит в локальное пространство.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaintSummonSuccessDesc>Реакторная сигила сработала. Saint-class биомеханический прорыв завершил skyfall-цикл разрыва, и Infernal Reactor Saint проходит в локальное пространство.</ABY_ReactorSaintSummonSuccessDesc>
 </LanguageData>

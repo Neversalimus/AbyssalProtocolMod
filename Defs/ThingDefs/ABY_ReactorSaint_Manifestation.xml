@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_Manifestation_ReactorSaintArrival</defName>
     <label>reactor saint arrival manifestation</label>
-    <description>Hidden arrival manifestation anchor for the Infernal Reactor Saint.</description>
+    <description>Hidden breach-skyfall cocoon anchor for the Infernal Reactor Saint.</description>
     <thingClass>AbyssalProtocol.Building_ABY_ReactorSaintManifestation</thingClass>
     <category>Building</category>
     <graphicData>
