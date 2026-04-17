@@ -46,6 +46,31 @@ namespace AbyssalProtocol
             string bossLabel,
             string arrivalSoundDefName,
             string completionLetterLabelKey,
+            string completionLetterDescKey)
+        {
+            Initialize(
+                kindDef,
+                faction,
+                warmup,
+                arrivalCell,
+                bossLabel,
+                arrivalSoundDefName,
+                completionLetterLabelKey,
+                completionLetterDescKey,
+                DefaultReleaseDelayTicks,
+                DefaultPostReleaseTicks,
+                DefaultImpactExplosionRadius,
+                DefaultImpactExplosionDamage);
+        }
+
+        public void Initialize(
+            PawnKindDef kindDef,
+            Faction faction,
+            int warmup,
+            IntVec3 arrivalCell,
+            string bossLabel,
+            string arrivalSoundDefName,
+            string completionLetterLabelKey,
             string completionLetterDescKey,
             int releaseDelayTicks,
             int postReleaseTicks,
