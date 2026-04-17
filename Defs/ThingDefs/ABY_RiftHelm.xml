@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_RiftHelm</defName>
     <thingClass>Apparel</thingClass>
@@ -19,14 +18,23 @@
       <layers>
         <li>Overhead</li>
       </layers>
-      <wornGraphicPath>Apparel/ABY_RiftHelm</wornGraphicPath>
+      <wornGraphicPath>Things/Apparel/ABY_RiftHelm</wornGraphicPath>
     </apparel>
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
-      <Steel>12</Steel>
-      <Plasteel>12</Plasteel>
-      <ComponentIndustrial>1</ComponentIndustrial>
+      <li>
+        <thingDef>Steel</thingDef>
+        <count>12</count>
+      </li>
+      <li>
+        <thingDef>Plasteel</thingDef>
+        <count>12</count>
+      </li>
+      <li>
+        <thingDef>ComponentIndustrial</thingDef>
+        <count>1</count>
+      </li>
     </smeltProducts>
     <equippedStatOffsets>
       <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
@@ -41,5 +49,4 @@
       <ArmorRating_Heat>0.46</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>
