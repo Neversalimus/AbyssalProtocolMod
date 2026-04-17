@@ -34,14 +34,31 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!CanOperate(pawn))
+            if (!AbyssalThreatPawnUtility.CanOperateHostilePawn(pawn))
             {
                 ResetBurst();
                 return;
             }
 
+            CompProperties_AbyssalPawnController controller = AbyssalThreatPawnUtility.GetControllerProperties(pawn);
+            float effectivePreferredMinRange = Props.preferredMinRange > 0f
+                ? Props.preferredMinRange
+                : (controller != null ? controller.maintainDistanceBelow : 0f);
+            int effectiveRetreatSearchRadius = Props.retreatSearchRadius > 0
+                ? Props.retreatSearchRadius
+                : (controller != null ? controller.retreatSearchRadius : 9);
+            bool effectivePreferRangedTargets = Props.preferRangedTargets || (controller != null && controller.preferRangedTargets);
+            bool effectivePreferFarthestTargets = Props.preferFarthestTargets || (controller != null && controller.preferFarthestTargets);
+            bool effectiveHoldPosition = Props.holdPositionWhenTargeting || (controller != null && controller.holdPositionWhenTargeting);
+
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (TryMaintainSpacing(pawn))
+            if (AbyssalThreatPawnUtility.TryMaintainSpacing(
+                pawn,
+                currentTarget as Pawn,
+                Props.range,
+                effectivePreferredMinRange,
+                effectiveRetreatSearchRadius,
+                effectiveHoldPosition))
             {
                 ResetBurst();
                 return;
@@ -107,7 +124,16 @@ namespace AbyssalProtocol
             }
 
             nextSearchTick = ticksGame + Math.Max(5, Props.scanIntervalTicks);
-            Pawn target = FindBestTarget(pawn);
+            Pawn target = AbyssalThreatPawnUtility.FindBestHostilePawnTarget(
+                pawn,
+                minRange: 0f,
+                maxRange: Props.range,
+                requireRanged: false,
+                preferRangedTargets: effectivePreferRangedTargets,
+                preferLowHealthTargets: false,
+                preferFarthestTargets: effectivePreferFarthestTargets,
+                rangedTargetBonus: 4.5f,
+                lowHealthWeight: 0f);
             if (target == null)
             {
                 return;
@@ -120,7 +146,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
-            if (Props.holdPositionWhenTargeting)
+            if (effectiveHoldPosition)
             {
                 pawn.pather?.StopDead();
             }
@@ -128,93 +154,10 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(target.Position);
         }
 
-        private bool CanOperate(Pawn pawn)
-        {
-            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
-            {
-                return false;
-            }
-
-            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private Pawn FindBestTarget(Pawn pawn)
-        {
-            Pawn bestTarget = null;
-            float bestScore = Props.preferFarthestTargets ? float.MinValue : float.MaxValue;
-            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn candidate = pawns[i];
-                if (!IsValidTarget(pawn, candidate))
-                {
-                    continue;
-                }
-
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > Props.range)
-                {
-                    continue;
-                }
-
-                if (!GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
-                {
-                    continue;
-                }
-
-                float score = distance;
-                if (Props.preferRangedTargets && HasRangedWeapon(candidate))
-                {
-                    score += 4.5f;
-                }
-
-                if (Props.preferFarthestTargets)
-                {
-                    if (score > bestScore)
-                    {
-                        bestScore = score;
-                        bestTarget = candidate;
-                    }
-                }
-                else if (score < bestScore)
-                {
-                    bestScore = score;
-                    bestTarget = candidate;
-                }
-            }
-
-            return bestTarget;
-        }
-
-        private bool IsValidTarget(Pawn shooter, Pawn target)
-        {
-            if (target == null || target == shooter || target.Map != shooter.Map || !target.Spawned || target.Dead || target.Downed)
-            {
-                return false;
-            }
-
-            if (target.Faction == null || shooter.Faction == null)
-            {
-                return false;
-            }
-
-            return shooter.Faction.HostileTo(target.Faction);
-        }
-
         private bool CanFireAt(Pawn shooter, Thing target)
         {
             Pawn targetPawn = target as Pawn;
-            if (!IsValidTarget(shooter, targetPawn))
+            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(shooter, targetPawn))
             {
                 return false;
             }
@@ -225,132 +168,6 @@ namespace AbyssalProtocol
             }
 
             return GenSight.LineOfSight(shooter.Position, targetPawn.Position, shooter.Map);
-        }
-
-        private bool TryMaintainSpacing(Pawn pawn)
-        {
-            if (Props.preferredMinRange <= 0f)
-            {
-                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
-                {
-                    pawn.pather?.StopDead();
-                }
-
-                return false;
-            }
-
-            Pawn nearestThreat = FindClosestThreatWithin(pawn, Props.preferredMinRange);
-            if (nearestThreat == null)
-            {
-                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
-                {
-                    pawn.pather?.StopDead();
-                }
-
-                return false;
-            }
-
-            if (!TryFindRetreatCell(pawn, nearestThreat, out IntVec3 retreatCell))
-            {
-                return false;
-            }
-
-            if (retreatCell == pawn.Position)
-            {
-                return false;
-            }
-
-            pawn.pather?.StartPath(retreatCell, PathEndMode.OnCell);
-            pawn.rotationTracker?.FaceCell(nearestThreat.Position);
-            return true;
-        }
-
-        private Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
-        {
-            Pawn bestTarget = null;
-            float bestDistance = maxDistance;
-            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn candidate = pawns[i];
-                if (!IsValidTarget(pawn, candidate))
-                {
-                    continue;
-                }
-
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > bestDistance)
-                {
-                    continue;
-                }
-
-                bestDistance = distance;
-                bestTarget = candidate;
-            }
-
-            return bestTarget;
-        }
-
-        private bool TryFindRetreatCell(Pawn pawn, Pawn threat, out IntVec3 retreatCell)
-        {
-            retreatCell = IntVec3.Invalid;
-            Map map = pawn.Map;
-            float currentDistance = pawn.Position.DistanceTo(threat.Position);
-            float bestScore = float.MinValue;
-            int radius = Math.Max(4, Props.retreatSearchRadius);
-
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, radius, true))
-            {
-                if (!cell.InBounds(map) || !cell.Standable(map) || CellHasOtherPawn(cell, map, pawn))
-                {
-                    continue;
-                }
-
-                float threatDistance = cell.DistanceTo(threat.Position);
-                if (threatDistance <= currentDistance + 1.9f || threatDistance < Props.preferredMinRange + 1.2f)
-                {
-                    continue;
-                }
-
-                float moveCost = pawn.Position.DistanceTo(cell);
-                float score = (threatDistance * 2.8f) - (moveCost * 0.75f);
-                if (GenSight.LineOfSight(cell, threat.Position, map))
-                {
-                    score += 1.6f;
-                }
-
-                if (score > bestScore)
-                {
-                    bestScore = score;
-                    retreatCell = cell;
-                }
-            }
-
-            return retreatCell.IsValid;
-        }
-
-        private static bool HasRangedWeapon(Pawn pawn)
-        {
-            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
-        }
-
-        private static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
-        {
-            var things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i] is Pawn pawn && pawn != ignore)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private void FireShot(Pawn pawn, Thing target)

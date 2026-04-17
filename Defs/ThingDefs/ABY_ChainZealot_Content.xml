@@ -86,6 +86,14 @@
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <roleId>chain_zealot</roleId>
+        <minimumMeleeSkill>11</minimumMeleeSkill>
+        <preferRangedTargets>true</preferRangedTargets>
+        <preferLowHealthTargets>true</preferLowHealthTargets>
+        <useSapperAssaultLord>true</useSapperAssaultLord>
+        <refreshIntervalTicks>180</refreshIntervalTicks>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
         <minRange>4.2</minRange>

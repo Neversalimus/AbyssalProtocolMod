@@ -88,6 +88,13 @@
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <roleId>ember_hound</roleId>
+        <preferRangedTargets>true</preferRangedTargets>
+        <preferLowHealthTargets>true</preferLowHealthTargets>
+        <useSapperAssaultLord>true</useSapperAssaultLord>
+        <refreshIntervalTicks>180</refreshIntervalTicks>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>

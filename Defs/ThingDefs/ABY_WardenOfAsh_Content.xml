@@ -83,6 +83,12 @@
       </li>
     </tools>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <roleId>warden_of_ash</roleId>
+        <minimumMeleeSkill>13</minimumMeleeSkill>
+        <useSapperAssaultLord>true</useSapperAssaultLord>
+        <refreshIntervalTicks>180</refreshIntervalTicks>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
         <warmupTicks>210</warmupTicks>

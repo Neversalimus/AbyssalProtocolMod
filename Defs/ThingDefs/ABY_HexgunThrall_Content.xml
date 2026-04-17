@@ -77,6 +77,18 @@
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </butcherProducts>
     <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <roleId>hexgun_thrall</roleId>
+        <forcedWeaponDefName>ABY_Hexgun</forcedWeaponDefName>
+        <minimumShootingSkill>10</minimumShootingSkill>
+        <maintainDistanceBelow>8.5</maintainDistanceBelow>
+        <retreatSearchRadius>9</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <preferFarthestTargets>true</preferFarthestTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+        <useSapperAssaultLord>true</useSapperAssaultLord>
+        <refreshIntervalTicks>180</refreshIntervalTicks>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_HexgunBolt</projectileDefName>

@@ -32,6 +32,8 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
+
             if (pawn.Faction == null)
             {
                 Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
@@ -74,7 +76,9 @@ namespace AbyssalProtocol
             }
 
             lastAggroTick = ticksGame;
-            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
+            CompProperties_AbyssalPawnController controller = AbyssalThreatPawnUtility.GetControllerProperties(pawn);
+            bool sappers = controller == null || controller.useSapperAssaultLord;
+            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers);
         }
     }
 }
