@@ -12,6 +12,7 @@ namespace AbyssalProtocol
         private const string IconAllPath = "UI/AbyssalForge/ABY_Category_All";
         private const string IconCorePath = "UI/AbyssalForge/ABY_Category_Core";
         private const string IconWeaponsPath = "UI/AbyssalForge/ABY_Category_Weapons";
+        private const string IconArmorPath = "UI/AbyssalForge/ABY_Category_Armor";
         private const string IconImplantsPath = "UI/AbyssalForge/ABY_Category_Implants";
         private const string IconRitualPath = "UI/AbyssalForge/ABY_Category_Ritual";
         private const string IconHeraldPath = "UI/AbyssalForge/ABY_Category_Herald";
@@ -31,6 +32,7 @@ namespace AbyssalProtocol
         private static readonly Texture2D IconAllTex = ContentFinder<Texture2D>.Get(IconAllPath, false);
         private static readonly Texture2D IconCoreTex = ContentFinder<Texture2D>.Get(IconCorePath, false);
         private static readonly Texture2D IconWeaponsTex = ContentFinder<Texture2D>.Get(IconWeaponsPath, false);
+        private static readonly Texture2D IconArmorTex = ContentFinder<Texture2D>.Get(IconArmorPath, false);
         private static readonly Texture2D IconImplantsTex = ContentFinder<Texture2D>.Get(IconImplantsPath, false);
         private static readonly Texture2D IconRitualTex = ContentFinder<Texture2D>.Get(IconRitualPath, false);
         private static readonly Texture2D IconHeraldTex = ContentFinder<Texture2D>.Get(IconHeraldPath, false);
@@ -188,6 +190,11 @@ namespace AbyssalProtocol
             if (category == AbyssalForgeProgressUtility.WeaponsCategory)
             {
                 return IconWeaponsTex;
+            }
+
+            if (category == AbyssalForgeProgressUtility.ArmorCategory)
+            {
+                return IconArmorTex;
             }
 
             if (category == AbyssalForgeProgressUtility.ImplantsCategory)
