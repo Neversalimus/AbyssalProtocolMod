@@ -44,6 +44,7 @@
     <thingClass>AbyssalProtocol.Building_ABY_ReactorSaintCocoon</thingClass>
     <category>Building</category>
     <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
     <useHitPoints>false</useHitPoints>
     <passability>PassThroughOnly</passability>
     <fillPercent>0.01</fillPercent>
