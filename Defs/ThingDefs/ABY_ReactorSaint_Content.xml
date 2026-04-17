@@ -181,10 +181,9 @@
         <phase3BarrageShotBonus>1</phase3BarrageShotBonus>
       </li>
     </comps>
-    <deathAction>
-      <workerClass>AbyssalProtocol.DeathActionWorker_DropReactorSaintCache</workerClass>
-    </deathAction>
-    <killedLeavings Inherit="False">
+<killedLeavings Inherit="False">
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ComponentSpacer>1</ComponentSpacer>
       <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
     </killedLeavings>
   </ThingDef>
