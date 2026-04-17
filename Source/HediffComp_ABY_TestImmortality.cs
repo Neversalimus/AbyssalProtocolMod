@@ -20,7 +20,7 @@ namespace AbyssalProtocol
     {
         private const string GizmoIconPath = "UI/AbyssalForge/ABY_Category_Implants";
 
-        private Pawn Pawn => parent?.pawn;
+        private Pawn OwningPawn => parent?.pawn;
 
         public HediffCompProperties_ABY_TestImmortality Props =>
             (HediffCompProperties_ABY_TestImmortality)props;
@@ -28,20 +28,20 @@ namespace AbyssalProtocol
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             base.CompPostPostAdd(dinfo);
-            ABY_TestImmortalityUtility.StabilizePawn(Pawn, Props.aggressiveCleansing);
+            ABY_TestImmortalityUtility.StabilizePawn(OwningPawn, Props.aggressiveCleansing);
         }
 
         public override void Notify_PawnPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)
         {
             base.Notify_PawnPostApplyDamage(dinfo, totalDamageDealt);
-            ABY_TestImmortalityUtility.StabilizePawn(Pawn, Props.aggressiveCleansing);
+            ABY_TestImmortalityUtility.StabilizePawn(OwningPawn, Props.aggressiveCleansing);
         }
 
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);
 
-            Pawn pawn = Pawn;
+            Pawn pawn = OwningPawn;
             if (pawn == null || pawn.health == null || pawn.Dead)
             {
                 return;
@@ -62,14 +62,11 @@ namespace AbyssalProtocol
             {
                 foreach (Gizmo gizmo in baseGizmos)
                 {
-                    if (gizmo != null)
-                    {
-                        yield return gizmo;
-                    }
+                    yield return gizmo;
                 }
             }
 
-            Pawn pawn = Pawn;
+            Pawn pawn = OwningPawn;
             if (!Prefs.DevMode || pawn == null || pawn.Dead)
             {
                 yield break;
