@@ -4,9 +4,9 @@
   <RecipeDef>
     <defName>ABY_CraftRiftHelm</defName>
     <label>forge rift helm</label>
-    <description>Press residue-lined alloy plates into a sealed abyssal combat helm with a disciplined visor slit and rupture-safe inner grille. The result is lighter than a full frame, but already unmistakably abyssal wargear.</description>
+    <description>Press residue-lined alloy plates into a sealed helm from the infernal combat line. The result is lighter than a full frame, but already unmistakably abyssal wargear.</description>
     <jobString>Forging rift helm.</jobString>
-    <workAmount>1400</workAmount>
+    <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -21,7 +21,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>8</count>
+        <count>10</count>
       </li>
       <li>
         <filter>
@@ -29,7 +29,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>24</count>
+        <count>26</count>
       </li>
       <li>
         <filter>
@@ -37,7 +37,7 @@
             <li>Steel</li>
           </thingDefs>
         </filter>
-        <count>28</count>
+        <count>26</count>
       </li>
       <li>
         <filter>
@@ -45,7 +45,7 @@
             <li>ComponentIndustrial</li>
           </thingDefs>
         </filter>
-        <count>1</count>
+        <count>2</count>
       </li>
     </ingredients>
     <products>
@@ -53,8 +53,8 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>15</requiredResidue>
-        <category>Weapons</category>
+        <requiredResidue>120</requiredResidue>
+        <category>Armor</category>
       </li>
     </modExtensions>
   </RecipeDef>

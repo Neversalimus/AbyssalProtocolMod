@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CraftRiftHelm.description>Press residue-lined alloy plates into a sealed abyssal combat helm with a disciplined visor slit and rupture-safe inner grille. The result is lighter than a full frame, but already unmistakably abyssal wargear.</ABY_CraftRiftHelm.description>
+  <ABY_CraftRiftHelm.label>forge rift helm</ABY_CraftRiftHelm.label>
+  <ABY_CraftRiftHelm.description>Press residue-lined alloy plates into a sealed helm from the infernal combat line. The result is lighter than a full frame, but already unmistakably abyssal wargear.</ABY_CraftRiftHelm.description>
+  <ABY_CraftRiftHelm.jobString>Forging rift helm.</ABY_CraftRiftHelm.jobString>
 </LanguageData>

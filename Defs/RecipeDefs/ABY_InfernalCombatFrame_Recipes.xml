@@ -4,9 +4,9 @@
   <RecipeDef>
     <defName>ABY_CraftInfernalCombatFrame</defName>
     <label>forge infernal combat frame</label>
-    <description>Assemble a disciplined abyssal torso frame from residue-lined plating, reinforced plasteel ribs, and a sealed chest-core lattice. Heavier than the rift helm, but still cut for active combat instead of ceremonial bulk.</description>
+    <description>Assemble the torso frame of the first infernal combat line from residue-lined plating, reinforced plasteel ribs and a sealed chest-core lattice. Heavier than the helm, but still cut for active combat instead of ceremonial bulk.</description>
     <jobString>Forging infernal combat frame.</jobString>
-    <workAmount>2800</workAmount>
+    <workAmount>3200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -21,7 +21,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>18</count>
+        <count>22</count>
       </li>
       <li>
         <filter>
@@ -29,7 +29,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>58</count>
+        <count>64</count>
       </li>
       <li>
         <filter>
@@ -37,7 +37,7 @@
             <li>Steel</li>
           </thingDefs>
         </filter>
-        <count>70</count>
+        <count>62</count>
       </li>
       <li>
         <filter>
@@ -45,7 +45,7 @@
             <li>ComponentIndustrial</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>4</count>
       </li>
       <li>
         <filter>
@@ -61,8 +61,8 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>24</requiredResidue>
-        <category>Weapons</category>
+        <requiredResidue>175</requiredResidue>
+        <category>Armor</category>
       </li>
     </modExtensions>
   </RecipeDef>

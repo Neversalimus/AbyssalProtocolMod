@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CraftInfernalCombatFrame.label>ковать infernal combat frame</ABY_CraftInfernalCombatFrame.label>
-  <ABY_CraftInfernalCombatFrame.description>Собрать дисциплинированный бездный торсовый frame из пластин с residue-прокладкой, усиленных пласталевых рёбер и герметичной грудной core-решётки. Он тяжелее rift helm, но всё ещё рассчитан на активный бой, а не на церемониальную громоздкость.</ABY_CraftInfernalCombatFrame.description>
-  <ABY_CraftInfernalCombatFrame.jobString>Ковка infernal combat frame.</ABY_CraftInfernalCombatFrame.jobString>
+  <ABY_CraftInfernalCombatFrame.label>выковать инфернальный боевой каркас</ABY_CraftInfernalCombatFrame.label>
+  <ABY_CraftInfernalCombatFrame.description>Собрать торсовый каркас первой инфернальной боевой линии из пластин с residue-прокладкой, усиленных пласталевых рёбер и герметичной грудной core-решётки. Он тяжелее шлема, но всё ещё рассчитан на активный бой, а не на церемониальную громоздкость.</ABY_CraftInfernalCombatFrame.description>
+  <ABY_CraftInfernalCombatFrame.jobString>Ковка инфернального боевого каркаса.</ABY_CraftInfernalCombatFrame.jobString>
 </LanguageData>

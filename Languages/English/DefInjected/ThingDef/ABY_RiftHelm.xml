@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_RiftHelm.description>A disciplined abyssal combat helm built around a sealed visor-slit, reinforced jaw grille and a micro-sigil logic plate. It is not ceremonial gear. It is the first sign that a colony has stopped improvising around the Abyss and started fielding purpose-built wargear made to look back into the breach.</ABY_RiftHelm.description>
+  <ABY_RiftHelm.label>rift helm</ABY_RiftHelm.label>
+  <ABY_RiftHelm.description>A sealed abyssal combat helm designed as the headpiece of the first infernal combat line. Narrow optics, a reinforced jaw grille and a micro-sigil logic plate make it a disciplined breach-war helm rather than a ceremonial relic.</ABY_RiftHelm.description>
 </LanguageData>

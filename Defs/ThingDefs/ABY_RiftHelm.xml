@@ -5,7 +5,7 @@
     <defName>ABY_RiftHelm</defName>
     <thingClass>Apparel</thingClass>
     <label>rift helm</label>
-    <description>A disciplined abyssal combat helm built around a sealed visor-slit, reinforced jaw grille and a micro-sigil logic plate. It is not ceremonial gear. It is the first sign that a colony has stopped improvising around the Abyss and started fielding purpose-built wargear made to look back into the breach.</description>
+    <description>A sealed abyssal combat helm designed as the headpiece of the first infernal combat line. Narrow optics, a reinforced jaw grille and a micro-sigil logic plate make it a disciplined breach-war helm rather than a ceremonial relic.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_RiftHelm</texPath>
@@ -24,16 +24,16 @@
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1400</WorkToMake>
-      <MaxHitPoints>180</MaxHitPoints>
-      <Mass>1.6</Mass>
-      <MarketValue>950</MarketValue>
-      <ArmorRating_Sharp>0.52</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.24</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.40</ArmorRating_Heat>
+      <WorkToMake>1600</WorkToMake>
+      <MaxHitPoints>190</MaxHitPoints>
+      <Mass>1.7</Mass>
+      <MarketValue>1050</MarketValue>
+      <ArmorRating_Sharp>0.56</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.26</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.46</ArmorRating_Heat>
     </statBases>
   </ThingDef>
 
