@@ -43,6 +43,7 @@
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
+      <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropReactorSaintCache</deathActionWorkerClass>
     </race>
     <statBases>
       <MaxHitPoints>2650</MaxHitPoints>
@@ -181,7 +182,6 @@
         <phase3BarrageShotBonus>1</phase3BarrageShotBonus>
       </li>
     </comps>
-    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropReactorSaintCache</deathActionWorkerClass>
     <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
     </killedLeavings>

@@ -43,6 +43,7 @@
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
+      <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_ABY_ChoirEngineBurst</deathActionWorkerClass>
     </race>
     <statBases>
       <MaxHitPoints>1280</MaxHitPoints>
@@ -119,7 +120,6 @@
       <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
       <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
     </killedLeavings>
-    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_ABY_ChoirEngineBurst</deathActionWorkerClass>
   </ThingDef>
 
   <ThingDef ParentName="ResourceBase">
