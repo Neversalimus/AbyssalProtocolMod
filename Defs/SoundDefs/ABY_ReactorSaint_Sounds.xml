@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintCharge</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/VesperLance_Aim</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>30</min>
+          <max>34</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.94</min>
+          <max>0.98</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintVolleyFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>36</min>
+          <max>40</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.92</min>
+          <max>0.96</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintBarrageFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/AshenScattergun_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>34</min>
+          <max>38</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.84</min>
+          <max>0.90</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintBarrageImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>34</min>
+          <max>39</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.90</min>
+          <max>0.96</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

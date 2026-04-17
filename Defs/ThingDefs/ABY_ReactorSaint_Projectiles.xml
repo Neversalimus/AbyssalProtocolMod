@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_ReactorSaintBolt</defName>
+    <label>reactor lance bolt</label>
+    <thingClass>AbyssalProtocol.Projectile_ReactorSaintBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_UltraPlasmaBeam_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.42,3.15)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>26</damageAmountBase>
+      <armorPenetrationBase>1.38</armorPenetrationBase>
+      <stoppingPower>2.1</stoppingPower>
+      <speed>50</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_ReactorSaintBarrageShell</defName>
+    <label>reactor barrage shell</label>
+    <thingClass>AbyssalProtocol.Projectile_ReactorSaintBarrage</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_AshenScatterShell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.52,0.88)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <armorPenetrationBase>0.45</armorPenetrationBase>
+      <stoppingPower>0.9</stoppingPower>
+      <speed>36</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

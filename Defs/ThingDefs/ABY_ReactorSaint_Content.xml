@@ -60,6 +60,7 @@
       <PainShockThreshold>999</PainShockThreshold>
       <PsychicSensitivity>0</PsychicSensitivity>
       <ToxicResistance>1</ToxicResistance>
+      <ShootingAccuracyPawn>1.18</ShootingAccuracyPawn>
     </statBases>
     <tools>
       <li>
@@ -88,8 +89,40 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>BossJuggernaut</archetype>
         <minMeleeSkill>12</minMeleeSkill>
+        <minShootingSkill>15</minShootingSkill>
+        <preferredMinRange>10.5</preferredMinRange>
+        <retreatSearchRadius>11</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <preferFarthestTargets>true</preferFarthestTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_ReactorSaintShooter">
+        <directProjectileDefName>ABY_ReactorSaintBolt</directProjectileDefName>
+        <barrageProjectileDefName>ABY_ReactorSaintBarrageShell</barrageProjectileDefName>
+        <aimSoundDefName>ABY_ReactorSaintCharge</aimSoundDefName>
+        <primaryFireSoundDefName>ABY_ReactorSaintVolleyFire</primaryFireSoundDefName>
+        <barrageFireSoundDefName>ABY_ReactorSaintBarrageFire</barrageFireSoundDefName>
+        <range>34.9</range>
+        <scanIntervalTicks>15</scanIntervalTicks>
+        <primaryWarmupTicks>60</primaryWarmupTicks>
+        <primaryCooldownTicks>165</primaryCooldownTicks>
+        <primaryBurstShotCount>3</primaryBurstShotCount>
+        <ticksBetweenPrimaryShots>9</ticksBetweenPrimaryShots>
+        <barrageWarmupTicks>78</barrageWarmupTicks>
+        <barrageCooldownTicks>300</barrageCooldownTicks>
+        <barrageShotCount>4</barrageShotCount>
+        <ticksBetweenBarrageShots>14</ticksBetweenBarrageShots>
+        <barrageScatterRadius>2.6</barrageScatterRadius>
+        <barrageTargetClusterRadius>2.85</barrageTargetClusterRadius>
+        <barrageClusterThreshold>2</barrageClusterThreshold>
+        <barrageRandomChance>0.24</barrageRandomChance>
+        <preferredMinRange>10.5</preferredMinRange>
+        <retreatSearchRadius>11</retreatSearchRadius>
+        <preferFarthestTargets>true</preferFarthestTargets>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
