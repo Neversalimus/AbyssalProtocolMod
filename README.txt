@@ -1,18 +1,21 @@
 # Abyssal Protocol
 
-**Abyssal Protocol** is a RimWorld techno-demonic endgame mod built around controlled summoning, abyssal progression, hostile ritual encounters, and boss-oriented reward escalation.
+**Abyssal Protocol** is a RimWorld techno-demonic endgame mod built around controlled summoning, infernal-tech progression, hostile ritual encounters, and boss-oriented reward escalation.
 
 Instead of being a simple "research stronger gear and win" content pack, the mod is designed around a deliberate infernal-tech loop:
-research forbidden systems, construct abyssal infrastructure, refine ritual materials, trigger controlled hostile encounters, survive them, and convert the rewards into stronger weapons, implants, and deeper summon access.
+research forbidden systems, build abyssal infrastructure, prepare ritual access, trigger controlled hostile encounters, survive them, and convert the rewards into stronger weapons, implants, and deeper progression.
 
 ---
 
 ## Current Project State
 
-**Stage:** Pre-Alpha / First Vertical Slice
+**Stage:** Alpha / expanding systems build  
+**Internal version target:** v0.6.0-alpha
 
-Abyssal Protocol is already well past the pure concept stage.
-The current public repository contains a real playable foundation with custom code, custom defs, custom assets, and a clear gameplay identity. It is not a 1.0 content-complete release yet, but it is already a real mod buildout rather than a design mockup.
+Abyssal Protocol is well past the pure concept stage and also past the old "first vertical slice only" description.
+The current local project build already contains a broader playable alpha foundation with custom code, custom defs, custom assets, multiple hostile content tiers, and several connected progression systems.
+
+This is still not a content-complete 1.0 release. Balance, hardening, broader tier coverage, and later-game escalation are still actively developing.
 
 ---
 
@@ -21,69 +24,73 @@ The current public repository contains a real playable foundation with custom co
 Abyssal Protocol is designed as a **summon-driven infernal progression mod**.
 
 You do not simply unlock a late-game research project and print the best gear.
-Progression is intended to be earned through increasingly dangerous abyssal encounters and infrastructure investment.
+Progression is meant to be earned through increasingly dangerous abyssal encounters, infrastructure investment, and reward-gated expansion.
 
 The intended loop is:
 
-1. Unlock forbidden abyssal technologies.
+1. Unlock forbidden abyssal access.
 2. Build infernal infrastructure.
-3. Refine ritual materials and progression items.
-4. Prepare summon access through crafted resources.
-5. Trigger controlled hostile encounters.
-6. Defeat abyssal entities and boss content.
-7. Convert rewards into stronger weapons, implants, and deeper progression.
+3. Prepare sigils, residue, and progression materials.
+4. Open controlled hostile summons and ritual encounters.
+5. Survive abyssal entities, elites, and bosses.
+6. Convert rewards into stronger weapons, implants, systems, and deeper summon access.
 
 The target tone is:
 **infernal, industrial, ritualized, hostile, and high-tech**.
 
 ---
 
-## What Is Already Implemented In The Public Repository
+## Implemented In The Current Local Build
 
-### Summoning and progression foundation
+### Core infrastructure and UI
 - **Abyssal Summoning Circle**
 - **Abyssal Forge**
-- early abyssal research progression
-- craftable **Abyssal Residue**
-- craftable **Archon Sigil**
+- compact tabs plus full custom abyssal consoles
+- styled abyssal UI support code
 - powered summon infrastructure
-- C# summon and encounter activation pipeline
-- early ritual and crafting progression
+- summon and encounter activation pipeline
 
-### First boss vertical slice
-- custom summon sequence
-- custom boss spawn logic
-- **Archon Beast** encounter content
-- abyssal boss race definitions
-- custom boss enhancement hediffs
-- oversized boss visuals and directional sprite handling
-- encounter-side presentation and VFX support systems
+### Progression and support systems
+- **Abyssal Residue** progression
+- sigil-based progression hooks
+- **Sigil Vault** storage and hauling support
+- circle module system
+- circle capacitor system
+- circle instability systems
+- arrival / hostile manifestation framework
+- early Dominion-side groundwork and reward hooks
 
-### Additional hostile and escalation content
+### Hostile content already present
 - **Rift Imp**
-- **Abyssal Imp Portal**
-- **Rupture Portal**
-- portal-driven escalation logic
-- rupture-side follow-up encounter support already present in the repository
+- **Ember Hound**
+- **Hexgun Thrall**
+- **Chain Zealot**
+- **Rift Sniper**
+- **Null Priest**
+- **Warden of Ash**
+- **Choir Engine**
+- **Archon Beast** progression content
+- **Reactor Saint** content
+- portal-driven hostile escalation and manifestation content
 
-### Early player rewards and gear
+### Player-facing combat and reward content
 - **Rift Carbine**
 - **Rift Blade**
 - **Ultra Plasma Rifle**
-- early implant reward content
-- Herald progression content
-
-### Rupture Crown content
-- **Rupture Crown** item-side content
-- Rupture Crown hediff content
-- Rupture Crown ability content
-- related C# control, halo, and effect support
-- patch-side boss-drop integration
+- **Specter Lash**
+- **Vesper Lance**
+- **Ashen Pike**
+- **Ashen Scattergun**
+- implant content
+- Herald-side content
+- **Rupture Crown** item / hediff / ability systems
+- custom projectiles, VFX, sounds, and reward drops
 
 ### Content pipeline already present
 - XML defs
 - C# source code
-- textures and VFX-style assets
+- compiled assembly in the local build
+- textures and effect assets
 - sound defs and audio assets
 - EN/RU localization
 - patch-side integration files
@@ -101,80 +108,40 @@ Its identity is built around:
 - abyssal bio-mechanical entities
 - controlled summon encounters instead of passive faction pressure
 - boss-oriented reward progression with strong presentation
+- custom UI as part of the gameplay identity, not just a wrapper
 
 The goal is closer to **forbidden ultra-tech ritual warfare** than to traditional fantasy demon content.
 
 ---
 
-## Current Gameplay Focus
+## What Is Real Now vs What Is Still Developing
 
-Right now development is focused on locking in the first strong gameplay pillar of the mod:
-- a reliable summon pipeline
-- first-loop closure testing
-- boss reward-gating polish
-- portal and rupture escalation logic
-- stronger audiovisual identity
-- early abyssal rewards, weapons, and implants
-- a stable systemic base to expand from
-
-In practice, the current version is about proving the first real loop works in-game with real repository-backed systems:
-**research -> forge -> sigil -> summon -> first boss -> reward gate**
-
----
-
-## What Is Real Now vs What Is Still Planned
-
-### Already real in the public repository
+### Already real in the current local build
 - summon infrastructure
-- forge and crafting foundation
-- boss summon flow
-- first boss vertical slice
-- hostile abyssal entities
-- portal-based escalation
-- early weapons
-- implant-related content
-- Herald progression content
-- Rupture Crown content and related hooks
+- forge and summoning custom UI
+- sigil handling and Sigil Vault support
+- circle module / capacitor / instability systems
+- hostile manifestation framework
+- multiple hostile abyssal unit types beyond the original first slice
+- miniboss and boss-side content expansion
+- several custom weapons and projectile pipelines
+- implant, Herald, and Rupture Crown systems
 - custom source code, textures, sounds, patches, and localization
 
-### Still in active development
-- broader multi-tier progression
-- more rituals
-- more infernal enemies and elites
-- more bosses beyond the current vertical slice
-- wider armor, implant, and weapon coverage
-- stronger endgame reward structure
-- additional encounter polish and system expansion
-
----
-
-## Near-Term Development Direction
-
-The next major expansion goals are:
-- more summon rituals
-- more infernal enemies and elites
-- broader reward structure between tiers
-- more abyssal weapons, armor, and implants
-- deeper multi-stage progression
-- more boss encounters beyond the first vertical slice
-- stronger encounter presentation and polish
-- expansion from a first boss prototype into a fuller late-game progression system
+### Still in active development / hardening
+- overall balance and encounter tuning
+- wider multi-tier progression coverage
+- more rituals, enemies, and bosses beyond the current alpha spread
+- stronger endgame and post-endgame escalation
+- more gear breadth across armor, implants, and weapons
+- additional polish, compatibility, and systemic cleanup
 
 ---
 
 ## Status Summary
 
-**Abyssal Protocol is currently a playable pre-alpha vertical slice with real systems, real repository content, and a clear expansion path.**
+**Abyssal Protocol is currently best described as an alpha-stage expanding systems build, not just a first vertical slice.**
 
-It already includes:
-- summon infrastructure
-- crafted ritual progression
-- custom hostile abyssal content
-- first boss encounter logic
-- portal and rupture escalation groundwork
-- early custom loot and augmentation
-- Herald-side content
-- Rupture Crown-side content
-- a growing techno-demonic audiovisual identity
+It already contains a real summon-driven gameplay foundation, multiple hostile content layers, bespoke UI infrastructure, custom audiovisual identity, and a growing reward/progression ecosystem.
 
-It is already a real mod foundation, but it is still in the stage where the first pillar is being hardened before the broader multi-tier content buildout.
+The project is still actively evolving, but it is already a substantial mod framework rather than a narrow prototype.
