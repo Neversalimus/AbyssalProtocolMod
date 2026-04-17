@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeDevResidueButton>DEV: выдать 1000 residue</ABY_ForgeDevResidueButton>
+  <ABY_ForgeDevResidueDesc>Добавляет 1000 residue прямо в прогресс forge communion без расхода предметов на карте.</ABY_ForgeDevResidueDesc>
+  <ABY_ForgeDevResidueApplied>DEV: добавлено {0} residue. Всего настроено residue: {1}.</ABY_ForgeDevResidueApplied>
+
+  <ABY_ForgeDevImmortalityLabel>DEV: переключить бессмертие</ABY_ForgeDevImmortalityLabel>
+  <ABY_ForgeDevImmortalityDesc>Открывает dev-список пешек на карте и переключает тестовый якорь бессмертия для любой заспавненной пешки.</ABY_ForgeDevImmortalityDesc>
+  <ABY_ForgeDevImmortalityNoPawns>На этой карте не найдено подходящих заспавненных пешек.</ABY_ForgeDevImmortalityNoPawns>
+  <ABY_ForgeDevImmortalityOption>{0}  •  бессмертие {1}</ABY_ForgeDevImmortalityOption>
+
+  <ABY_TestImmortalityStateOn>ВКЛ</ABY_TestImmortalityStateOn>
+  <ABY_TestImmortalityStateOff>ВЫКЛ</ABY_TestImmortalityStateOff>
+  <ABY_TestImmortalityAdded>{0} теперь защищён тестовым якорем бессмертия.</ABY_TestImmortalityAdded>
+  <ABY_TestImmortalityRemoved>{0} больше не защищён тестовым якорем бессмертия.</ABY_TestImmortalityRemoved>
+  <ABY_TestImmortalityPawnGizmoLabel>DEV: отключить бессмертие</ABY_TestImmortalityPawnGizmoLabel>
+  <ABY_TestImmortalityPawnGizmoDesc>Снять с этой пешки тестовый якорь бессмертия.</ABY_TestImmortalityPawnGizmoDesc>
+</LanguageData>

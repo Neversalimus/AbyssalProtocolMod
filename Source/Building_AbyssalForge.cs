@@ -119,6 +119,17 @@ namespace AbyssalProtocol
                         SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
                     }
                 };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "ABY_ForgeDevImmortalityLabel".Translate(),
+                    defaultDesc = "ABY_ForgeDevImmortalityDesc".Translate(),
+                    icon = ContentFinder<Texture2D>.Get("UI/AbyssalForge/ABY_Category_Implants"),
+                    action = delegate
+                    {
+                        OpenDevImmortalityMenu();
+                    }
+                };
             }
         }
 
@@ -150,6 +161,38 @@ namespace AbyssalProtocol
             }
 
             return string.Join("\n", lines);
+        }
+
+        private void OpenDevImmortalityMenu()
+        {
+            List<Pawn> pawns = ABY_TestImmortalityUtility.GetToggleCandidates(Map);
+            if (pawns.Count == 0)
+            {
+                Messages.Message(
+                    "ABY_ForgeDevImmortalityNoPawns".Translate(),
+                    this,
+                    MessageTypeDefOf.RejectInput,
+                    false);
+                return;
+            }
+
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            foreach (Pawn pawn in pawns)
+            {
+                bool immortal = ABY_TestImmortalityUtility.HasImmortality(pawn);
+                string state = immortal
+                    ? "ABY_TestImmortalityStateOn".Translate()
+                    : "ABY_TestImmortalityStateOff".Translate();
+
+                options.Add(new FloatMenuOption(
+                    "ABY_ForgeDevImmortalityOption".Translate(pawn.LabelShortCap, state),
+                    delegate
+                    {
+                        ABY_TestImmortalityUtility.ToggleImmortality(pawn);
+                    }));
+            }
+
+            Find.WindowStack.Add(new FloatMenu(options));
         }
 
         private void AddOfferOption(List<FloatMenuOption> options, int requestedAmount, int availableResidue)

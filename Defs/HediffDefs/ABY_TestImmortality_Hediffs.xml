@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_TestImmortality</defName>
+    <label>dev immortality anchor</label>
+    <description>A dev-only stability anchor that immediately repairs injuries, restores missing parts, and strips lethal bad hediffs for testing.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <isBad>false</isBad>
+    <defaultLabelColor>(0.36, 1.00, 0.74)</defaultLabelColor>
+    <comps>
+      <li Class="AbyssalProtocol.HediffCompProperties_ABY_TestImmortality">
+        <stabilizeIntervalTicks>1</stabilizeIntervalTicks>
+        <aggressiveCleansing>true</aggressiveCleansing>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

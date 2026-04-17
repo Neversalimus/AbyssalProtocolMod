@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_TestImmortality.label>dev-якорь бессмертия</ABY_TestImmortality.label>
+  <ABY_TestImmortality.description>Dev-only якорь стабильности, который мгновенно лечит травмы, восстанавливает отсутствующие части тела и снимает смертельные негативные hediff для тестов.</ABY_TestImmortality.description>
+</LanguageData>
