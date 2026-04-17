@@ -27,6 +27,11 @@
     </apparel>
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>30</Steel>
+      <Plasteel>28</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </smeltProducts>
     <equippedStatOffsets>
       <MoveSpeed>-0.03</MoveSpeed>
     </equippedStatOffsets>

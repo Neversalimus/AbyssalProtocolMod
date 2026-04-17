@@ -23,6 +23,11 @@
     </apparel>
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>12</Steel>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
     <equippedStatOffsets>
       <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
     </equippedStatOffsets>
