@@ -14,10 +14,10 @@
         <bodyGraphicData>
           <texPath>Pawn/ReactorSaint/ABY_ReactorSaint</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(5.25,5.25)</drawSize>
+          <drawSize>(26.25,26.25)</drawSize>
           <shadowData>
-            <volume>(2.15, 1.18, 1.72)</volume>
-            <offset>(0, 0, -0.33)</offset>
+            <volume>(10.75, 5.90, 8.60)</volume>
+            <offset>(0, 0, -1.65)</offset>
           </shadowData>
         </bodyGraphicData>
       </li>

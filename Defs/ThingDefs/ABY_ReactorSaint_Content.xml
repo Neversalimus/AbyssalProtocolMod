@@ -11,7 +11,7 @@
     <graphicData>
       <texPath>Pawn/ReactorSaint/ABY_ReactorSaint</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(4.35,4.35)</drawSize>
+      <drawSize>(21.75,21.75)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>

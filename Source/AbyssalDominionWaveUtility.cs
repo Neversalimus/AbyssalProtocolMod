@@ -21,6 +21,8 @@ namespace AbyssalProtocol
         private const int PortalLingerBaseTicks = 170;
         private const int PortalSpawnIntervalFastTicks = 12;
         private const int PortalSpawnIntervalSlowTicks = 17;
+        private const int NullPriestManifestationWarmupTicks = 105;
+        private const int NullPriestManifestationWarmupTicksGate = 120;
 
         public sealed class ThreatPlan
         {
@@ -486,33 +488,18 @@ namespace AbyssalProtocol
                     ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Drain)
                     ?? GetAnyAnchor(crisis.GetLiveAnchors());
 
-                if (priestAnchor != null)
+                if (priestAnchor != null && TrySpawnNullPriestManifestationPack(
+                    map,
+                    hostileFaction,
+                    priestKind,
+                    plan.PriestCount,
+                    priestAnchor.PositionHeld,
+                    NullPriestManifestationWarmupTicks,
+                    out IntVec3 arrivalCell))
                 {
-                    List<AbyssalHostileSummonUtility.HostilePackEntry> priestEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                    {
-                        new AbyssalHostileSummonUtility.HostilePackEntry
-                        {
-                            KindDef = priestKind,
-                            Count = plan.PriestCount
-                        }
-                    };
-
-                    if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                        map,
-                        priestEntries,
-                        hostileFaction,
-                        priestAnchor.PositionHeld,
-                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
-                        string.Empty,
-                        string.Empty,
-                        false,
-                        out IntVec3 arrivalCell,
-                        out string _))
-                    {
-                        focusCell = focusCell.IsValid ? focusCell : arrivalCell;
-                        anySpawned = true;
-                        summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
-                    }
+                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    anySpawned = true;
+                    summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
                 }
             }
 
@@ -694,33 +681,18 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (priestCount > 0 && priestKind != null)
+            if (priestCount > 0 && priestKind != null && TrySpawnNullPriestManifestationPack(
+                map,
+                hostileFaction,
+                priestKind,
+                priestCount,
+                origin,
+                NullPriestManifestationWarmupTicksGate,
+                out IntVec3 arrivalCell))
             {
-                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                {
-                    new AbyssalHostileSummonUtility.HostilePackEntry
-                    {
-                        KindDef = priestKind,
-                        Count = priestCount
-                    }
-                };
-
-                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                    map,
-                    entries,
-                    hostileFaction,
-                    origin,
-                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
-                    string.Empty,
-                    string.Empty,
-                    false,
-                    out IntVec3 arrivalCell,
-                    out string _))
-                {
-                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
-                    anySpawned = true;
-                    summaryParts.Add(GetCountLabel(priestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
-                }
+                focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                anySpawned = true;
+                summaryParts.Add(GetCountLabel(priestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
             }
 
             if (!anySpawned)
@@ -736,6 +708,62 @@ namespace AbyssalProtocol
 
             summary = summaryParts.Count > 0 ? string.Join(" + ", summaryParts) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionGate_CallSummary", "gate reinforcements");
             return true;
+        }
+
+        private static bool TrySpawnNullPriestManifestationPack(
+            Map map,
+            Faction faction,
+            PawnKindDef priestKind,
+            int count,
+            IntVec3 origin,
+            int warmupTicks,
+            out IntVec3 arrivalCell)
+        {
+            arrivalCell = IntVec3.Invalid;
+
+            if (map == null || faction == null || priestKind == null || count <= 0 || !origin.IsValid)
+            {
+                return false;
+            }
+
+            List<ABY_HostileManifestEntry> entries = new List<ABY_HostileManifestEntry>
+            {
+                new ABY_HostileManifestEntry(priestKind, count)
+            };
+
+            if (ABY_ArrivalManifestationUtility.TrySpawnSeamBreach(
+                map,
+                entries,
+                faction,
+                origin,
+                Mathf.Max(60, warmupTicks),
+                out Thing manifestation,
+                out string _,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
+                string.Empty,
+                string.Empty))
+            {
+                arrivalCell = manifestation != null ? manifestation.PositionHeld : origin;
+                return true;
+            }
+
+            if (ABY_ArrivalManifestationUtility.TrySpawnStaticPhaseIn(
+                map,
+                entries,
+                faction,
+                origin,
+                Mathf.Max(60, warmupTicks),
+                out Thing fallbackManifestation,
+                out string _,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
+                string.Empty,
+                string.Empty))
+            {
+                arrivalCell = fallbackManifestation != null ? fallbackManifestation.PositionHeld : origin;
+                return true;
+            }
+
+            return false;
         }
 
         public static int CountActiveAbyssalHostiles(Map map)

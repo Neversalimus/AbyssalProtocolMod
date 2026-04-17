@@ -46,7 +46,7 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>400</MaxHitPoints>
+      <MaxHitPoints>520</MaxHitPoints>
       <MoveSpeed>4.60</MoveSpeed>
       <MeleeHitChance>0.60</MeleeHitChance>
       <MeleeDPS>3.1</MeleeDPS>

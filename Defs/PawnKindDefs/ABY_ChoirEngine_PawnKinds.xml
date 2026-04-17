@@ -14,10 +14,10 @@
         <bodyGraphicData>
           <texPath>Pawn/ChoirEngine/ABY_ChoirEngine</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(3.35,3.35)</drawSize>
+          <drawSize>(10.05,10.05)</drawSize>
           <shadowData>
-            <volume>(1.16, 1.02, 1.16)</volume>
-            <offset>(0, 0, -0.25)</offset>
+            <volume>(3.48, 3.06, 3.48)</volume>
+            <offset>(0, 0, -0.75)</offset>
           </shadowData>
         </bodyGraphicData>
       </li>

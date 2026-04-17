@@ -401,6 +401,8 @@ namespace AbyssalProtocol
                 pawn.story.title = bossLabel;
             }
 
+            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
+
             if (pawn.RaceProps != null && pawn.RaceProps.Humanlike)
             {
                 PrepareHumanlikeBoss(pawn);
