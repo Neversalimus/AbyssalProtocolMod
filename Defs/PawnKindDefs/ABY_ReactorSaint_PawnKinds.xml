@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_ReactorSaint</defName>
+    <label>infernal reactor saint</label>
+    <race>ABY_ReactorSaint</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>3200</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/ReactorSaint/ABY_ReactorSaint</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(5.25,5.25)</drawSize>
+          <shadowData>
+            <volume>(2.15, 1.18, 1.72)</volume>
+            <offset>(0, 0, -0.33)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>
