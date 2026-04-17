@@ -86,19 +86,21 @@
         <preferFarthestTargets>true</preferFarthestTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
       </li>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_RiftSniperBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
         <range>38.9</range>
-        <warmupTicks>84</warmupTicks>
+        <warmupTicks>66</warmupTicks>
         <preferredMinRange>14.5</preferredMinRange>
+        <targetMinRange>12.5</targetMinRange>
         <retreatSearchRadius>12</retreatSearchRadius>
+        <panicMeleeRange>2.8</panicMeleeRange>
+        <panicMeleeJobExpiryTicks>150</panicMeleeJobExpiryTicks>
         <preferFarthestTargets>true</preferFarthestTargets>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
-        <cooldownTicks>168</cooldownTicks>
+        <cooldownTicks>126</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <scanIntervalTicks>20</scanIntervalTicks>

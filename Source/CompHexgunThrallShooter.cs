@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using RimWorld;
 using Verse;
+using Verse.AI;
 using UnityEngine;
 
 namespace AbyssalProtocol
@@ -42,6 +43,12 @@ namespace AbyssalProtocol
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             if (TryMaintainSpacing(pawn))
+            {
+                ResetBurst();
+                return;
+            }
+
+            if (TryPanicMelee(pawn))
             {
                 ResetBurst();
                 return;
@@ -145,9 +152,13 @@ namespace AbyssalProtocol
 
         private Pawn FindBestTarget(Pawn pawn)
         {
+            float minimumTargetRange = Props.targetMinRange >= 0f
+                ? Props.targetMinRange
+                : Mathf.Max(0f, Props.preferredMinRange);
+
             return AbyssalThreatPawnUtility.FindBestTarget(
                 pawn,
-                0f,
+                minimumTargetRange,
                 Props.range,
                 Props.preferFarthestTargets,
                 Props.preferRangedTargets,
@@ -175,6 +186,45 @@ namespace AbyssalProtocol
                 Props.preferredMinRange,
                 Props.retreatSearchRadius,
                 Props.holdPositionWhenTargeting);
+        }
+
+        private bool TryPanicMelee(Pawn pawn)
+        {
+            if (pawn == null || pawn.jobs == null || Props.panicMeleeRange <= 0f)
+            {
+                return false;
+            }
+
+            Pawn nearestThreat = AbyssalThreatPawnUtility.FindClosestThreatWithin(pawn, Props.panicMeleeRange);
+            if (nearestThreat == null)
+            {
+                return false;
+            }
+
+            if (AbyssalThreatPawnUtility.TryFindRetreatCell(
+                pawn,
+                nearestThreat,
+                Props.preferredMinRange,
+                Props.retreatSearchRadius,
+                out IntVec3 retreatCell) && retreatCell.IsValid && retreatCell != pawn.Position)
+            {
+                return false;
+            }
+
+            if (pawn.CurJob != null && pawn.CurJob.def == JobDefOf.AttackMelee && pawn.CurJob.targetA.Thing == nearestThreat)
+            {
+                return true;
+            }
+
+            currentTarget = nearestThreat;
+            pawn.rotationTracker?.FaceTarget(nearestThreat.Position);
+
+            Job meleeJob = JobMaker.MakeJob(JobDefOf.AttackMelee, nearestThreat);
+            meleeJob.expiryInterval = Math.Max(60, Props.panicMeleeJobExpiryTicks);
+            meleeJob.checkOverrideOnExpire = true;
+            meleeJob.collideWithPawns = true;
+            pawn.jobs.TryTakeOrderedJob(meleeJob, JobTag.Misc);
+            return true;
         }
 
         private void FireShot(Pawn pawn, Thing target)

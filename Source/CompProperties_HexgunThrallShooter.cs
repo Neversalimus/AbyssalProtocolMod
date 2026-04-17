@@ -14,7 +14,10 @@ namespace AbyssalProtocol
         public int ticksBetweenBurstShots = 10;
         public int scanIntervalTicks = 15;
         public float preferredMinRange;
+        public float targetMinRange = -1f;
         public int retreatSearchRadius = 9;
+        public float panicMeleeRange = -1f;
+        public int panicMeleeJobExpiryTicks = 180;
         public bool preferFarthestTargets;
         public bool preferRangedTargets;
         public bool holdPositionWhenTargeting;
