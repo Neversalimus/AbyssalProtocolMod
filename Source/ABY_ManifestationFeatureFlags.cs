@@ -2,10 +2,10 @@ namespace AbyssalProtocol
 {
     public static class ABY_ManifestationFeatureFlags
     {
-        public const bool EnableFutureManifestationMatrix = false;
-        public const bool EnableSigilBloomFutureMatrix = false;
-        public const bool EnableStaticPhaseInFutureMatrix = false;
-        public const bool EnableSeamBreachFutureMatrix = false;
+        public static readonly bool EnableFutureManifestationMatrix = false;
+        public static readonly bool EnableSigilBloomFutureMatrix = false;
+        public static readonly bool EnableStaticPhaseInFutureMatrix = false;
+        public static readonly bool EnableSeamBreachFutureMatrix = false;
 
         public static bool IsGlobalFutureMatrixEnabled()
         {
