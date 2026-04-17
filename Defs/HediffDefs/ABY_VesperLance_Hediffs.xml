@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_VesperJudgement</defName>
+    <label>vesper judgement</label>
+    <description>A cold sanction burns through targeting rhythm and local armor harmonics. If the mark is refreshed too quickly, the pattern collapses into a punitive burst.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <showRemainingTime>true</showRemainingTime>
+        <disappearsAfterTicks>480</disappearsAfterTicks>
+      </li>
+      <li Class="HediffCompProperties_DisappearsOnDeath" />
+    </comps>
+    <stages>
+      <li>
+        <statOffsets>
+          <MoveSpeed>-0.08</MoveSpeed>
+          <ShootingAccuracyPawn>-0.05</ShootingAccuracyPawn>
+          <ArmorRating_Sharp>-0.06</ArmorRating_Sharp>
+          <ArmorRating_Heat>-0.10</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

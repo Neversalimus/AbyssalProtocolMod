@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_VesperLance</defName>
+    <label>vesper lance</label>
+    <description>A hyper-precise relic recovered from a reactor-saint shell. Its geometry is too clean for infernal industry and its discharge resembles a sanction more than a weapon. Repeated hits place a target under brief judgement before the beam collapses into a punitive burst.</description>
+    <techLevel>Spacer</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_VesperLance</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <costList>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>120</Plasteel>
+      <ComponentSpacer>5</ComponentSpacer>
+      <Gold>14</Gold>
+    </costList>
+
+    <statBases>
+      <WorkToMake>120000</WorkToMake>
+      <Mass>5.2</Mass>
+      <MarketValue>2950</MarketValue>
+      <AccuracyTouch>0.83</AccuracyTouch>
+      <AccuracyShort>0.95</AccuracyShort>
+      <AccuracyMedium>0.97</AccuracyMedium>
+      <AccuracyLong>0.93</AccuracyLong>
+      <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_VesperLanceBeam</defaultProjectile>
+        <warmupTime>0.95</warmupTime>
+        <range>34.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_VesperLanceAim</soundAiming>
+        <soundCast>ABY_VesperLanceFire</soundCast>
+        <soundCastTail>ABY_VesperLanceTail</soundCastTail>
+        <muzzleFlashScale>11</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+    </tools>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_VesperLanceBeam</defName>
+    <label>vesper lance beam</label>
+    <thingClass>AbyssalProtocol.Projectile_VesperLanceBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_VesperLanceBeam_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.38,3.05)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>1.05</armorPenetrationBase>
+      <stoppingPower>2.0</stoppingPower>
+      <speed>52</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

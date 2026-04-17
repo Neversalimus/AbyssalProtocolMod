@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_VesperLance.label>весперное копьё</ABY_VesperLance.label>
+  <ABY_VesperLance.description>Гиперточная реликвия, снятая с оболочки реакторного святого. Её геометрия слишком чиста для инфернальной индустрии, а разряд больше напоминает санкцию, чем оружие. Повторные попадания накладывают краткий приговор, после чего луч схлопывается в карательный импульс.</ABY_VesperLance.description>
+
+  <ABY_VesperLanceBeam.label>весперный луч</ABY_VesperLanceBeam.label>
+
+</LanguageData>

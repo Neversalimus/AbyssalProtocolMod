@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_VesperLance.label>vesper lance</ABY_VesperLance.label>
+  <ABY_VesperLance.description>A hyper-precise relic recovered from a reactor-saint shell. Its geometry is too clean for infernal industry and its discharge resembles a sanction more than a weapon. Repeated hits place a target under brief judgement before the beam collapses into a punitive burst.</ABY_VesperLance.description>
+
+  <ABY_VesperLanceBeam.label>vesper lance beam</ABY_VesperLanceBeam.label>
+
+</LanguageData>
