@@ -26,7 +26,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref releaseFailedPermanently, "releaseFailedPermanently", false);
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 
