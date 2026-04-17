@@ -98,6 +98,67 @@ namespace AbyssalProtocol
                 letterDesc);
         }
 
+        public static bool TrySpawnManifestationFromProfile(
+            Map map,
+            string profileDefName,
+            List<ABY_HostileManifestEntry> entries,
+            Faction faction,
+            IntVec3 requestedCell,
+            out Thing manifestation,
+            out string failReason,
+            string packLabel = null,
+            string letterLabel = null,
+            string letterDesc = null)
+        {
+            manifestation = null;
+            failReason = null;
+
+            if (!ABY_ManifestationFeatureFlags.IsGlobalFutureMatrixEnabled())
+            {
+                failReason = "Future manifestation matrix feature flag is disabled.";
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(profileDefName))
+            {
+                failReason = "No future manifestation profile defName was supplied.";
+                return false;
+            }
+
+            ABY_ArrivalManifestationProfileDef profile = DefDatabase<ABY_ArrivalManifestationProfileDef>.GetNamedSilentFail(profileDefName);
+            if (profile == null)
+            {
+                failReason = "Missing future manifestation profile: " + profileDefName;
+                return false;
+            }
+
+            if (!profile.IsEnabledForFutureUse())
+            {
+                failReason = "Future manifestation profile exists but is disabled by feature flags: " + profileDefName;
+                return false;
+            }
+
+            ABY_ArrivalManifestationProfileEntry chosenOption;
+            if (!TryChooseManifestationOption(profile, out chosenOption, out failReason))
+            {
+                return false;
+            }
+
+            int warmupTicks = chosenOption.ResolveWarmupTicks(profile.defaultWarmupTicks);
+            return TrySpawnManifestation(
+                map,
+                chosenOption.type,
+                entries,
+                faction,
+                requestedCell,
+                warmupTicks,
+                out manifestation,
+                out failReason,
+                packLabel,
+                letterLabel,
+                letterDesc);
+        }
+
         public static bool TrySpawnManifestation(
             Map map,
             ABY_ArrivalManifestationType manifestationType,
@@ -161,40 +222,49 @@ namespace AbyssalProtocol
             switch (manifestationType)
             {
                 case ABY_ArrivalManifestationType.SigilBloom:
-                    if (!(thing is Building_ABY_SigilBloomManifestation sigil))
                     {
-                        thing.Destroy(DestroyMode.Vanish);
-                        failReason = "Spawned manifestation was not a Sigil Bloom building.";
-                        return false;
-                    }
+                        Building_ABY_SigilBloomManifestation sigil = thing as Building_ABY_SigilBloomManifestation;
+                        if (sigil == null)
+                        {
+                            thing.Destroy(DestroyMode.Vanish);
+                            failReason = "Spawned manifestation was not a Sigil Bloom building.";
+                            return false;
+                        }
 
-                    sigil.Initialize(faction, entries, warmupTicks, packLabel, letterLabel, letterDesc);
-                    manifestation = sigil;
-                    return true;
+                        sigil.Initialize(faction, entries, warmupTicks, packLabel, letterLabel, letterDesc);
+                        manifestation = sigil;
+                        return true;
+                    }
 
                 case ABY_ArrivalManifestationType.StaticPhaseIn:
-                    if (!(thing is Building_ABY_StaticPhaseInManifestation phaseIn))
                     {
-                        thing.Destroy(DestroyMode.Vanish);
-                        failReason = "Spawned manifestation was not a Static Phase-In building.";
-                        return false;
-                    }
+                        Building_ABY_StaticPhaseInManifestation phaseIn = thing as Building_ABY_StaticPhaseInManifestation;
+                        if (phaseIn == null)
+                        {
+                            thing.Destroy(DestroyMode.Vanish);
+                            failReason = "Spawned manifestation was not a Static Phase-In building.";
+                            return false;
+                        }
 
-                    phaseIn.Initialize(faction, entries, warmupTicks, packLabel, letterLabel, letterDesc);
-                    manifestation = phaseIn;
-                    return true;
+                        phaseIn.Initialize(faction, entries, warmupTicks, packLabel, letterLabel, letterDesc);
+                        manifestation = phaseIn;
+                        return true;
+                    }
 
                 case ABY_ArrivalManifestationType.SeamBreach:
-                    if (!(thing is Building_ABY_SeamBreachManifestation breach))
                     {
-                        thing.Destroy(DestroyMode.Vanish);
-                        failReason = "Spawned manifestation was not a Seam Breach building.";
-                        return false;
-                    }
+                        Building_ABY_SeamBreachManifestation breach = thing as Building_ABY_SeamBreachManifestation;
+                        if (breach == null)
+                        {
+                            thing.Destroy(DestroyMode.Vanish);
+                            failReason = "Spawned manifestation was not a Seam Breach building.";
+                            return false;
+                        }
 
-                    breach.Initialize(faction, entries, warmupTicks, seamSide, packLabel, letterLabel, letterDesc);
-                    manifestation = breach;
-                    return true;
+                        breach.Initialize(faction, entries, warmupTicks, seamSide, packLabel, letterLabel, letterDesc);
+                        manifestation = breach;
+                        return true;
+                    }
 
                 default:
                     thing.Destroy(DestroyMode.Vanish);
@@ -246,7 +316,7 @@ namespace AbyssalProtocol
             for (int entryIndex = 0; entryIndex < entries.Count; entryIndex++)
             {
                 ABY_HostileManifestEntry entry = entries[entryIndex];
-                if (entry?.KindDef == null)
+                if (entry == null || entry.KindDef == null)
                 {
                     failReason = "Manifested hostile entry is missing a PawnKindDef.";
                     DestroyGeneratedPawns(generated);
@@ -256,7 +326,8 @@ namespace AbyssalProtocol
                 int count = Mathf.Max(0, entry.Count);
                 for (int i = 0; i < count; i++)
                 {
-                    if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out Pawn pawn, out failReason))
+                    Pawn pawn;
+                    if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out pawn, out failReason))
                     {
                         DestroyGeneratedPawns(generated);
                         return false;
@@ -304,6 +375,65 @@ namespace AbyssalProtocol
             }
 
             return true;
+        }
+
+        private static bool TryChooseManifestationOption(
+            ABY_ArrivalManifestationProfileDef profile,
+            out ABY_ArrivalManifestationProfileEntry chosenOption,
+            out string failReason)
+        {
+            chosenOption = null;
+            failReason = null;
+
+            if (profile == null)
+            {
+                failReason = "Future manifestation profile is null.";
+                return false;
+            }
+
+            if (profile.options == null || profile.options.Count == 0)
+            {
+                failReason = "Future manifestation profile has no options: " + profile.defName;
+                return false;
+            }
+
+            List<ABY_ArrivalManifestationProfileEntry> weightedOptions = new List<ABY_ArrivalManifestationProfileEntry>();
+            float totalWeight = 0f;
+
+            for (int i = 0; i < profile.options.Count; i++)
+            {
+                ABY_ArrivalManifestationProfileEntry option = profile.options[i];
+                if (option == null || !option.IsEnabledForFutureUse() || option.weight <= 0f || float.IsNaN(option.weight))
+                {
+                    continue;
+                }
+
+                weightedOptions.Add(option);
+                totalWeight += option.weight;
+            }
+
+            if (weightedOptions.Count == 0 || totalWeight <= 0f)
+            {
+                failReason = "Future manifestation profile has no currently enabled options: " + profile.defName;
+                return false;
+            }
+
+            float roll = Rand.Value * totalWeight;
+            float current = 0f;
+
+            for (int i = 0; i < weightedOptions.Count; i++)
+            {
+                ABY_ArrivalManifestationProfileEntry option = weightedOptions[i];
+                current += option.weight;
+                if (roll <= current || i == weightedOptions.Count - 1)
+                {
+                    chosenOption = option;
+                    return true;
+                }
+            }
+
+            failReason = "Failed to choose a future manifestation option.";
+            return false;
         }
 
         private static bool TryGenerateHostilePawn(
@@ -397,7 +527,10 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < generated.Count; i++)
             {
-                generated[i]?.Destroy(DestroyMode.Vanish);
+                if (generated[i] != null)
+                {
+                    generated[i].Destroy(DestroyMode.Vanish);
+                }
             }
         }
 
