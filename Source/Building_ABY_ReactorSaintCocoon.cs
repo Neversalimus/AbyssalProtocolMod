@@ -4,7 +4,6 @@ using Verse;
 
 namespace AbyssalProtocol
 {
-    [StaticConstructorOnStartup]
     public sealed class Building_ABY_ReactorSaintCocoon : Building
     {
         private const string BossPawnKindDefName = "ABY_ReactorSaint";
@@ -12,26 +11,21 @@ namespace AbyssalProtocol
         private const string ArrivalSoundDefName = "ABY_ReactorSaintCharge";
         private const string CompletionLetterLabelKey = "ABY_ReactorSaintSummonSuccessLabel";
         private const string CompletionLetterDescKey = "ABY_ReactorSaintSummonSuccessDesc";
-        private const string CocoonPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon";
-        private const string CocoonShadowPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon_Shadow";
         private const int ReleaseDelayTicks = 834;
         private const int PostReleaseTicks = 417;
-        private const int LaunchDurationTicks = 90;
-        private const float LaunchRise = 7.2f;
-        private const float LaunchForwardDrift = 1.85f;
-        private const float LaunchEndScaleMultiplier = 0.22f;
+        private const int LaunchDurationTicks = 72;
+        private const float LaunchVerticalOffset = 8.50f;
+        private const float LaunchForwardDrift = 1.35f;
+        private const float LaunchSideDrift = 0.18f;
         private const float ImpactExplosionRadius = 3.9f;
         private const int ImpactExplosionDamage = 28;
         private const float ImpactExplosionArmorPenetration = 0.18f;
-
-        private static readonly Material CocoonMaterial = MaterialPool.MatFrom(CocoonPath, ShaderDatabase.Cutout);
-        private static readonly Material CocoonShadowMaterial = MaterialPool.MatFrom(CocoonShadowPath, ShaderDatabase.TransparentPostLight);
 
         private int ticksSinceImpact;
         private bool bossReleased;
         private bool releaseFailedPermanently;
         private bool impactProcessed;
-        private bool launchInProgress;
+        private bool launching;
         private int launchTicks;
 
         public override void ExposeData()
@@ -41,7 +35,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref bossReleased, "bossReleased", false);
             Scribe_Values.Look(ref releaseFailedPermanently, "releaseFailedPermanently", false);
             Scribe_Values.Look(ref impactProcessed, "impactProcessed", false);
-            Scribe_Values.Look(ref launchInProgress, "launchInProgress", false);
+            Scribe_Values.Look(ref launching, "launching", false);
             Scribe_Values.Look(ref launchTicks, "launchTicks", 0);
         }
 
@@ -65,9 +59,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (launchInProgress)
+            if (launching)
             {
-                TickLaunchSequence();
+                TickLaunching();
                 return;
             }
 
@@ -89,19 +83,8 @@ namespace AbyssalProtocol
 
             if (ticksSinceImpact >= ReleaseDelayTicks + PostReleaseTicks)
             {
-                BeginLaunchAway();
+                BeginLaunch();
             }
-        }
-
-        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
-        {
-            if (!launchInProgress)
-            {
-                base.DrawAt(drawLoc, flip);
-                return;
-            }
-
-            DrawLaunchingCocoon(drawLoc);
         }
 
         private void TriggerImpactEffects()
@@ -213,70 +196,58 @@ namespace AbyssalProtocol
             return cell.IsValid && cell.InBounds(Map) && cell.Standable(Map) && !cell.Fogged(Map);
         }
 
-        private void BeginLaunchAway()
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            if (launchInProgress || Map == null || Destroyed)
+            if (!launching)
+            {
+                base.DrawAt(drawLoc, flip);
+                return;
+            }
+
+            float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
+            Vector3 liftedLoc = drawLoc;
+            liftedLoc.y += 0.10f + progress * LaunchVerticalOffset;
+            liftedLoc.z += progress * LaunchForwardDrift;
+            liftedLoc.x += progress * LaunchSideDrift;
+            base.DrawAt(liftedLoc, flip);
+        }
+
+        private void BeginLaunch()
+        {
+            if (launching || Map == null || Destroyed)
             {
                 return;
             }
 
-            launchInProgress = true;
+            launching = true;
             launchTicks = 0;
 
-            FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.20f);
+            FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.40f);
+            FleckMaker.ThrowHeatGlow(Position, Map, 1.55f);
             FleckMaker.ThrowMicroSparks(DrawPos, Map);
-            FleckMaker.ThrowHeatGlow(Position, Map, 1.35f);
-            FilthMaker.TryMakeFilth(Position, Map, ThingDefOf.Filth_Ash, 1);
         }
 
-        private void TickLaunchSequence()
+        private void TickLaunching()
         {
             launchTicks++;
 
-            if (launchTicks % 5 == 0)
+            if (Map != null)
             {
-                FleckMaker.ThrowMicroSparks(DrawPos, Map);
-            }
+                if (launchTicks % 4 == 0)
+                {
+                    FleckMaker.ThrowMicroSparks(DrawPos, Map);
+                }
 
-            if (launchTicks % 12 == 0)
-            {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.45f);
+                if (launchTicks % 9 == 0)
+                {
+                    float glowSize = 1.20f + 1.20f * (launchTicks / (float)LaunchDurationTicks);
+                    FleckMaker.ThrowLightningGlow(DrawPos, Map, glowSize);
+                }
             }
 
             if (launchTicks >= LaunchDurationTicks)
             {
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.85f);
-                FleckMaker.ThrowHeatGlow(Position, Map, 1.15f);
                 Destroy(DestroyMode.Vanish);
-            }
-        }
-
-        private void DrawLaunchingCocoon(Vector3 drawLoc)
-        {
-            Vector2 baseSize = def?.graphicData?.drawSize ?? new Vector2(15.95f, 23.10f);
-            float progress = Mathf.Clamp01(launchTicks / (float)Mathf.Max(1, LaunchDurationTicks));
-            float eased = progress * progress;
-            float scaleMultiplier = Mathf.Lerp(1f, LaunchEndScaleMultiplier, eased);
-
-            float driftX = Mathf.Sin((Find.TickManager.TicksGame + thingIDNumber) * 0.07f) * 0.22f * (1f - progress);
-            Vector3 bodyLoc = drawLoc;
-            bodyLoc.x += driftX;
-            bodyLoc.z += Mathf.Lerp(0f, LaunchForwardDrift, eased);
-            bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + Mathf.Lerp(0f, LaunchRise, eased);
-
-            Vector3 bodyScale = new Vector3(baseSize.x * scaleMultiplier, 1f, baseSize.y * scaleMultiplier);
-            Matrix4x4 bodyMatrix = Matrix4x4.TRS(bodyLoc, Quaternion.identity, bodyScale);
-            Graphics.DrawMesh(MeshPool.plane10, bodyMatrix, CocoonMaterial, 0);
-
-            float shadowAlpha = 1f - progress;
-            if (shadowAlpha > 0.01f)
-            {
-                Vector3 shadowLoc = drawLoc;
-                shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
-                float shadowScaleMultiplier = Mathf.Lerp(1f, 0.55f, eased);
-                Vector3 shadowScale = new Vector3(baseSize.x * shadowScaleMultiplier, 1f, baseSize.y * shadowScaleMultiplier);
-                Matrix4x4 shadowMatrix = Matrix4x4.TRS(shadowLoc, Quaternion.identity, shadowScale);
-                Graphics.DrawMesh(MeshPool.plane10, shadowMatrix, FadedMaterialPool.FadedVersionOf(CocoonShadowMaterial, shadowAlpha), 0);
             }
         }
     }
