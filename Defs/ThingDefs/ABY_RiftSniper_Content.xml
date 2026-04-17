@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_RiftSniper</defName>
+    <label>rift sniper</label>
+    <description>An elite abyssal marksman grown for disciplined long-angle execution fire. Rift snipers hold extreme distance, settle into a brief target lock, and punish exposed shooters with distortion-laced lance rounds that blur vision and collapse aim.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/RiftSniper/ABY_RiftSniper</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.18,2.18)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>0.76</baseBodySize>
+      <baseHealthScale>1.06</baseHealthScale>
+      <baseHungerRate>0.40</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>105</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>340</MaxHitPoints>
+      <MoveSpeed>4.38</MoveSpeed>
+      <MeleeHitChance>0.58</MeleeHitChance>
+      <MeleeDPS>2.8</MeleeDPS>
+      <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.28</ArmorRating_Heat>
+      <ComfyTemperatureMin>-16</ComfyTemperatureMin>
+      <ComfyTemperatureMax>170</ComfyTemperatureMax>
+      <Flammability>0.02</Flammability>
+      <PainShockThreshold>0.82</PainShockThreshold>
+      <ShootingAccuracyPawn>1.18</ShootingAccuracyPawn>
+      <MarketValue>780</MarketValue>
+      <Mass>0.52</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>rifle stock bash</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>2.2</cooldownTime>
+        <chanceFactor>0.92</chanceFactor>
+        <armorPenetration>0.07</armorPenetration>
+      </li>
+    </tools>
+    <butcherProducts>
+      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
+    </butcherProducts>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_RiftSniperBolt</projectileDefName>
+        <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
+        <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
+        <range>36.9</range>
+        <warmupTicks>84</warmupTicks>
+        <cooldownTicks>168</cooldownTicks>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
+        <scanIntervalTicks>20</scanIntervalTicks>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_RiftSniperBolt</defName>
+    <label>rift lance round</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_RiftSniperBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.22,1.34)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>ABY_RiftSniperLance</damageDef>
+      <damageAmountBase>22</damageAmountBase>
+      <armorPenetrationBase>0.34</armorPenetrationBase>
+      <stoppingPower>1.10</stoppingPower>
+      <speed>82</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+</Defs>

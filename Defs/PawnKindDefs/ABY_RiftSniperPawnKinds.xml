@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_RiftSniper</defName>
+    <label>rift sniper</label>
+    <race>ABY_RiftSniper</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>450</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/RiftSniper/ABY_RiftSniper</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(7.6,7.6)</drawSize>
+          <shadowData>
+            <volume>(0.82, 0.26, 0.82)</volume>
+            <offset>(0, 0, -0.18)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

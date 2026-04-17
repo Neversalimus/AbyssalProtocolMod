@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>ABY_RiftDazzled</defName>
+    <label>rift dazzled</label>
+    <description>Rift-static has burned through the target's sightlines and motor timing. Vision blurs, aim drifts, and movement becomes briefly uncertain under the afterimage of the shot.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(0.20, 0.90, 1.00)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>420</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <Sight>-0.18</Sight>
+          <ShootingAccuracyPawn>-0.06</ShootingAccuracyPawn>
+          <MoveSpeed>-0.04</MoveSpeed>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.35</minSeverity>
+        <statOffsets>
+          <Sight>-0.28</Sight>
+          <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
+          <MoveSpeed>-0.08</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>
