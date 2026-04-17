@@ -17,7 +17,7 @@
       <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutFlying</shaderType>
-      <drawSize>(2.90,4.20)</drawSize>
+      <drawSize>(15.95,23.10)</drawSize>
     </graphicData>
     <skyfaller>
       <ticksToImpactRange>
@@ -27,7 +27,7 @@
       <movementType>Accelerate</movementType>
       <speed>0.85</speed>
       <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
-      <shadowSize>(4.20,4.20)</shadowSize>
+      <shadowSize>(23.10,23.10)</shadowSize>
       <cameraShake>0.75</cameraShake>
       <impactSound>ABY_ReactorSaintBarrageImpact</impactSound>
       <anticipationSound>DropPod_Fall</anticipationSound>
@@ -55,7 +55,7 @@
       <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>Cutout</shaderType>
-      <drawSize>(2.90,4.20)</drawSize>
+      <drawSize>(15.95,23.10)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -75,7 +75,7 @@
       <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutFlying</shaderType>
-      <drawSize>(2.90,4.20)</drawSize>
+      <drawSize>(15.95,23.10)</drawSize>
     </graphicData>
     <skyfaller>
       <reversed>true</reversed>
@@ -83,7 +83,7 @@
       <movementType>Accelerate</movementType>
       <speed>0.90</speed>
       <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
-      <shadowSize>(4.20,4.20)</shadowSize>
+      <shadowSize>(23.10,23.10)</shadowSize>
       <motesPerCell>0</motesPerCell>
     </skyfaller>
   </ThingDef>
