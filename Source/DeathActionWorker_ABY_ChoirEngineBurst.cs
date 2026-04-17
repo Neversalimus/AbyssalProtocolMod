@@ -1,6 +1,7 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI.Group;
 
 namespace AbyssalProtocol
 {
@@ -11,9 +12,9 @@ namespace AbyssalProtocol
         private const float BuildingEmpDamage = 4.0f;
         private const float MechEmpDamage = 6.5f;
 
-        public override void PawnDied(Corpse corpse)
+        public override void PawnDied(Corpse corpse, Lord prevLord)
         {
-            base.PawnDied(corpse);
+            base.PawnDied(corpse, prevLord);
 
             Pawn pawn = corpse?.InnerPawn;
             Map map = corpse?.MapHeld;
