@@ -13,7 +13,7 @@
         <bodyGraphicData>
           <texPath>Pawn/RiftSniper/ABY_RiftSniper</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(7.6,7.6)</drawSize>
+          <drawSize>(2.18,2.18)</drawSize>
           <shadowData>
             <volume>(0.82, 0.26, 0.82)</volume>
             <offset>(0, 0, -0.18)</offset>

@@ -17,16 +17,26 @@
     <stages>
       <li>
         <minSeverity>0.01</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>-0.18</offset>
+          </li>
+        </capMods>
         <statOffsets>
-          <Sight>-0.18</Sight>
           <ShootingAccuracyPawn>-0.06</ShootingAccuracyPawn>
           <MoveSpeed>-0.04</MoveSpeed>
         </statOffsets>
       </li>
       <li>
         <minSeverity>0.35</minSeverity>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>-0.28</offset>
+          </li>
+        </capMods>
         <statOffsets>
-          <Sight>-0.28</Sight>
           <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
           <MoveSpeed>-0.08</MoveSpeed>
         </statOffsets>
