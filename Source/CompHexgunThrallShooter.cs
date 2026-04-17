@@ -41,6 +41,11 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (TryMaintainSpacing(pawn))
+            {
+                ResetBurst();
+                return;
+            }
 
             if (burstShotsRemaining > 0)
             {
@@ -115,6 +120,11 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
+            if (Props.holdPositionWhenTargeting)
+            {
+                pawn.pather?.StopDead();
+            }
+
             pawn.rotationTracker?.FaceTarget(target.Position);
         }
 
@@ -136,7 +146,7 @@ namespace AbyssalProtocol
         private Pawn FindBestTarget(Pawn pawn)
         {
             Pawn bestTarget = null;
-            float bestDistance = Props.range;
+            float bestScore = Props.preferFarthestTargets ? float.MinValue : float.MaxValue;
             var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
@@ -152,7 +162,7 @@ namespace AbyssalProtocol
                 }
 
                 float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > bestDistance)
+                if (distance > Props.range)
                 {
                     continue;
                 }
@@ -162,8 +172,25 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                bestDistance = distance;
-                bestTarget = candidate;
+                float score = distance;
+                if (Props.preferRangedTargets && HasRangedWeapon(candidate))
+                {
+                    score += 4.5f;
+                }
+
+                if (Props.preferFarthestTargets)
+                {
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        bestTarget = candidate;
+                    }
+                }
+                else if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestTarget = candidate;
+                }
             }
 
             return bestTarget;
@@ -198,6 +225,132 @@ namespace AbyssalProtocol
             }
 
             return GenSight.LineOfSight(shooter.Position, targetPawn.Position, shooter.Map);
+        }
+
+        private bool TryMaintainSpacing(Pawn pawn)
+        {
+            if (Props.preferredMinRange <= 0f)
+            {
+                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
+                {
+                    pawn.pather?.StopDead();
+                }
+
+                return false;
+            }
+
+            Pawn nearestThreat = FindClosestThreatWithin(pawn, Props.preferredMinRange);
+            if (nearestThreat == null)
+            {
+                if (Props.holdPositionWhenTargeting && CanFireAt(pawn, currentTarget))
+                {
+                    pawn.pather?.StopDead();
+                }
+
+                return false;
+            }
+
+            if (!TryFindRetreatCell(pawn, nearestThreat, out IntVec3 retreatCell))
+            {
+                return false;
+            }
+
+            if (retreatCell == pawn.Position)
+            {
+                return false;
+            }
+
+            pawn.pather?.StartPath(retreatCell, PathEndMode.OnCell);
+            pawn.rotationTracker?.FaceCell(nearestThreat.Position);
+            return true;
+        }
+
+        private Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
+        {
+            Pawn bestTarget = null;
+            float bestDistance = maxDistance;
+            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn candidate = pawns[i];
+                if (!IsValidTarget(pawn, candidate))
+                {
+                    continue;
+                }
+
+                float distance = pawn.Position.DistanceTo(candidate.Position);
+                if (distance > bestDistance)
+                {
+                    continue;
+                }
+
+                bestDistance = distance;
+                bestTarget = candidate;
+            }
+
+            return bestTarget;
+        }
+
+        private bool TryFindRetreatCell(Pawn pawn, Pawn threat, out IntVec3 retreatCell)
+        {
+            retreatCell = IntVec3.Invalid;
+            Map map = pawn.Map;
+            float currentDistance = pawn.Position.DistanceTo(threat.Position);
+            float bestScore = float.MinValue;
+            int radius = Math.Max(4, Props.retreatSearchRadius);
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, radius, true))
+            {
+                if (!cell.InBounds(map) || !cell.Standable(map) || CellHasOtherPawn(cell, map, pawn))
+                {
+                    continue;
+                }
+
+                float threatDistance = cell.DistanceTo(threat.Position);
+                if (threatDistance <= currentDistance + 1.9f || threatDistance < Props.preferredMinRange + 1.2f)
+                {
+                    continue;
+                }
+
+                float moveCost = pawn.Position.DistanceTo(cell);
+                float score = (threatDistance * 2.8f) - (moveCost * 0.75f);
+                if (GenSight.LineOfSight(cell, threat.Position, map))
+                {
+                    score += 1.6f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    retreatCell = cell;
+                }
+            }
+
+            return retreatCell.IsValid;
+        }
+
+        private static bool HasRangedWeapon(Pawn pawn)
+        {
+            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
+        }
+
+        private static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
+        {
+            var things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Pawn pawn && pawn != ignore)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void FireShot(Pawn pawn, Thing target)

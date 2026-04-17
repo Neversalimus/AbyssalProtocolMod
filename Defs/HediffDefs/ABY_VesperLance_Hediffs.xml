@@ -18,10 +18,10 @@
     <stages>
       <li>
         <statOffsets>
-          <MoveSpeed>-0.08</MoveSpeed>
-          <ShootingAccuracyPawn>-0.05</ShootingAccuracyPawn>
-          <ArmorRating_Sharp>-0.06</ArmorRating_Sharp>
-          <ArmorRating_Heat>-0.10</ArmorRating_Heat>
+          <MoveSpeed>-0.40</MoveSpeed>
+          <ShootingAccuracyPawn>-0.25</ShootingAccuracyPawn>
+          <ArmorRating_Sharp>-0.30</ArmorRating_Sharp>
+          <ArmorRating_Heat>-0.50</ArmorRating_Heat>
         </statOffsets>
       </li>
     </stages>

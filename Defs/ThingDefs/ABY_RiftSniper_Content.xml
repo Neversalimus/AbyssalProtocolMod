@@ -10,7 +10,7 @@
     <graphicData>
       <texPath>Pawn/RiftSniper/ABY_RiftSniper</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(2.18,2.18)</drawSize>
+      <drawSize>(1.96,1.96)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>
@@ -82,8 +82,13 @@
         <projectileDefName>ABY_RiftSniperBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
-        <range>36.9</range>
+        <range>38.9</range>
         <warmupTicks>84</warmupTicks>
+        <preferredMinRange>14.5</preferredMinRange>
+        <retreatSearchRadius>12</retreatSearchRadius>
+        <preferFarthestTargets>true</preferFarthestTargets>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
         <cooldownTicks>168</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
