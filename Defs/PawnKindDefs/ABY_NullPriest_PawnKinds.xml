@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_NullPriest</defName>
+    <label>null priest</label>
+    <race>ABY_NullPriest</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>360</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/NullPriest/ABY_NullPriest</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(2.42,2.42)</drawSize>
+          <shadowData>
+            <volume>(0.74, 0.92, 0.74)</volume>
+            <offset>(0, 0, -0.19)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

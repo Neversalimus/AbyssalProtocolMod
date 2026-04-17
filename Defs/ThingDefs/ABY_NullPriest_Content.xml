@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_NullPriest</defName>
+    <label>null priest</label>
+    <description>A mid-tier abyssal field-priest built to make the rest of the breach more dangerous without serving as a raw damage monster itself. Null priests harden nearby abyssal bodies, unravel defensive layers on priority targets, and open short-lived micro-rifts that spill flank pressure into otherwise stable firing lines.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/NullPriest/ABY_NullPriest</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.42,2.42)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>true</hasGenders>
+      <nameGenerator>NamerAnimalGenericMale</nameGenerator>
+      <nameGeneratorFemale>NamerAnimalGenericFemale</nameGeneratorFemale>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>0.82</baseBodySize>
+      <baseHealthScale>1.10</baseHealthScale>
+      <baseHungerRate>0.42</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>120</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>430</MaxHitPoints>
+      <MoveSpeed>4.72</MoveSpeed>
+      <MeleeHitChance>0.60</MeleeHitChance>
+      <MeleeDPS>3.1</MeleeDPS>
+      <MeleeDodgeChance>0.10</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.14</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.09</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.26</ArmorRating_Heat>
+      <ComfyTemperatureMin>-18</ComfyTemperatureMin>
+      <ComfyTemperatureMax>180</ComfyTemperatureMax>
+      <Flammability>0.01</Flammability>
+      <PainShockThreshold>0.78</PainShockThreshold>
+      <ShootingAccuracyPawn>1.02</ShootingAccuracyPawn>
+      <MarketValue>860</MarketValue>
+      <Mass>0.62</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>ritual staff butt</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>2.25</cooldownTime>
+        <chanceFactor>0.88</chanceFactor>
+        <armorPenetration>0.07</armorPenetration>
+      </li>
+    </tools>
+    <butcherProducts>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+    </butcherProducts>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>SupportCaster</archetype>
+        <minShootingSkill>11</minShootingSkill>
+        <preferredMinRange>8.8</preferredMinRange>
+        <retreatSearchRadius>10</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_NullBoltProjectile</projectileDefName>
+        <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
+        <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
+        <range>18.9</range>
+        <warmupTicks>48</warmupTicks>
+        <cooldownTicks>186</cooldownTicks>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
+        <scanIntervalTicks>18</scanIntervalTicks>
+        <preferredMinRange>8.8</preferredMinRange>
+        <retreatSearchRadius>10</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_NullPriestAura">
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <allyRadius>8.8</allyRadius>
+        <allySeverity>0.56</allySeverity>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_NullPriestBreach">
+        <warmupTicks>150</warmupTicks>
+        <breachIntervalTicks>420</breachIntervalTicks>
+        <breachIntervalVariance>90</breachIntervalVariance>
+        <minTargetRange>6.0</minTargetRange>
+        <maxTargetRange>20.5</maxTargetRange>
+        <maxActiveManifestations>2</maxActiveManifestations>
+        <maxLifetimeSummons>4</maxLifetimeSummons>
+        <seamBreachChance>0.58</seamBreachChance>
+        <emberHoundChance>0.22</emberHoundChance>
+        <manifestationWarmupMinTicks>95</manifestationWarmupMinTicks>
+        <manifestationWarmupMaxTicks>145</manifestationWarmupMaxTicks>
+        <pulseRadius>2.7</pulseRadius>
+        <pulseSeverity>0.34</pulseSeverity>
+        <pulseVisualScale>1.45</pulseVisualScale>
+        <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_NullBoltProjectile</defName>
+    <label>null bolt</label>
+    <thingClass>AbyssalProtocol.Projectile_NullBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_NullBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.22,1.08)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>ABY_NullBoltDamage</damageDef>
+      <damageAmountBase>8</damageAmountBase>
+      <armorPenetrationBase>0.16</armorPenetrationBase>
+      <stoppingPower>0.7</stoppingPower>
+      <speed>76</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+</Defs>

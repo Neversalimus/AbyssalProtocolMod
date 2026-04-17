@@ -11,6 +11,7 @@ namespace AbyssalProtocol
         private const string RiftImpPawnKindDefName = "ABY_RiftImp";
         private const string EmberHoundPawnKindDefName = "ABY_EmberHound";
         private const string HexgunThrallPawnKindDefName = "ABY_HexgunThrall";
+        private const string NullPriestPawnKindDefName = "ABY_NullPriest";
         private const string ImpPortalDefName = "ABY_ImpPortal";
         private const string RupturePortalDefName = "ABY_RupturePortal";
 
@@ -30,6 +31,7 @@ namespace AbyssalProtocol
             public int TotalImpCount;
             public int HoundCount;
             public int ThrallCount;
+            public int PriestCount;
             public int MaxActiveHostiles;
             public int MaxActivePortals;
             public int ActiveAnchorCount;
@@ -38,7 +40,7 @@ namespace AbyssalProtocol
             public int WardAnchors;
             public int BreachAnchors;
 
-            public int TotalUnits => Math.Max(0, TotalImpCount) + Math.Max(0, HoundCount) + Math.Max(0, ThrallCount);
+            public int TotalUnits => Math.Max(0, TotalImpCount) + Math.Max(0, HoundCount) + Math.Max(0, ThrallCount) + Math.Max(0, PriestCount);
         }
 
         public static ThreatPlan BuildThreatPlan(Map map, MapComponent_DominionCrisis crisis)
@@ -116,6 +118,16 @@ namespace AbyssalProtocol
             if (plan.ActiveAnchorCount <= 1)
             {
                 plan.ThrallCount = Mathf.Min(plan.ThrallCount, 1);
+            }
+
+            if (plan.Tier >= 4 && (plan.SuppressionAnchors > 0 || plan.WardAnchors > 0 || plan.DrainAnchors > 0))
+            {
+                plan.PriestCount = 1;
+            }
+
+            if (plan.ActiveAnchorCount <= 2)
+            {
+                plan.PriestCount = 0;
             }
 
             plan.MaxActiveHostiles = profile.MaxActiveHostiles;
@@ -315,6 +327,7 @@ namespace AbyssalProtocol
             PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
             PawnKindDef houndKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName);
             PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName);
+            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
 
             List<string> summaryParts = new List<string>();
             bool anySpawned = false;
@@ -466,6 +479,43 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (plan.PriestCount > 0 && priestKind != null)
+            {
+                Building_AbyssalDominionAnchor priestAnchor = GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Suppression)
+                    ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Ward)
+                    ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Drain)
+                    ?? GetAnyAnchor(crisis.GetLiveAnchors());
+
+                if (priestAnchor != null)
+                {
+                    List<AbyssalHostileSummonUtility.HostilePackEntry> priestEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+                    {
+                        new AbyssalHostileSummonUtility.HostilePackEntry
+                        {
+                            KindDef = priestKind,
+                            Count = plan.PriestCount
+                        }
+                    };
+
+                    if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                        map,
+                        priestEntries,
+                        hostileFaction,
+                        priestAnchor.PositionHeld,
+                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
+                        string.Empty,
+                        string.Empty,
+                        false,
+                        out IntVec3 arrivalCell,
+                        out string _))
+                    {
+                        focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                        anySpawned = true;
+                        summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
+                    }
+                }
+            }
+
             if (!anySpawned)
             {
                 return false;
@@ -518,10 +568,12 @@ namespace AbyssalProtocol
             int impCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 9);
             int houndCount = tier >= 1 ? 1 + (tier >= 4 ? 1 : 0) : 0;
             int thrallCount = tier >= 2 ? 1 + (tier >= 5 ? 1 : 0) : 0;
+            int priestCount = tier >= 4 ? 1 : 0;
 
             PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
             PawnKindDef houndKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName);
             PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName);
+            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
 
             bool anySpawned = false;
             List<string> summaryParts = new List<string>();
@@ -642,6 +694,35 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (priestCount > 0 && priestKind != null)
+            {
+                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+                {
+                    new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = priestKind,
+                        Count = priestCount
+                    }
+                };
+
+                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    map,
+                    entries,
+                    hostileFaction,
+                    origin,
+                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Priests", "dominion null cell"),
+                    string.Empty,
+                    string.Empty,
+                    false,
+                    out IntVec3 arrivalCell,
+                    out string _))
+                {
+                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    anySpawned = true;
+                    summaryParts.Add(GetCountLabel(priestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
+                }
+            }
+
             if (!anySpawned)
             {
                 return false;
@@ -673,7 +754,7 @@ namespace AbyssalProtocol
                 }
 
                 string defName = pawn.def?.defName;
-                if (defName == RiftImpPawnKindDefName || defName == EmberHoundPawnKindDefName || defName == HexgunThrallPawnKindDefName)
+                if (defName == RiftImpPawnKindDefName || defName == EmberHoundPawnKindDefName || defName == HexgunThrallPawnKindDefName || defName == NullPriestPawnKindDefName)
                 {
                     count++;
                 }
@@ -842,6 +923,11 @@ namespace AbyssalProtocol
             if (plan.ThrallCount > 0)
             {
                 parts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
+            }
+
+            if (plan.PriestCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
             }
 
             return parts.Count == 0
