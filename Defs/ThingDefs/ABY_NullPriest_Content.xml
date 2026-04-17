@@ -46,8 +46,8 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>430</MaxHitPoints>
-      <MoveSpeed>4.72</MoveSpeed>
+      <MaxHitPoints>400</MaxHitPoints>
+      <MoveSpeed>4.60</MoveSpeed>
       <MeleeHitChance>0.60</MeleeHitChance>
       <MeleeDPS>3.1</MeleeDPS>
       <MeleeDodgeChance>0.10</MeleeDodgeChance>
@@ -57,7 +57,7 @@
       <ComfyTemperatureMin>-18</ComfyTemperatureMin>
       <ComfyTemperatureMax>180</ComfyTemperatureMax>
       <Flammability>0.01</Flammability>
-      <PainShockThreshold>0.78</PainShockThreshold>
+      <PainShockThreshold>0.72</PainShockThreshold>
       <ShootingAccuracyPawn>1.02</ShootingAccuracyPawn>
       <MarketValue>860</MarketValue>
       <Mass>0.62</Mass>
@@ -92,8 +92,8 @@
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
         <range>18.9</range>
-        <warmupTicks>48</warmupTicks>
-        <cooldownTicks>186</cooldownTicks>
+        <warmupTicks>54</warmupTicks>
+        <cooldownTicks>240</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <scanIntervalTicks>18</scanIntervalTicks>
@@ -105,22 +105,22 @@
       <li Class="AbyssalProtocol.CompProperties_ABY_NullPriestAura">
         <scanIntervalTicks>30</scanIntervalTicks>
         <allyRadius>8.8</allyRadius>
-        <allySeverity>0.56</allySeverity>
+        <allySeverity>0.42</allySeverity>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_NullPriestBreach">
         <warmupTicks>150</warmupTicks>
-        <breachIntervalTicks>420</breachIntervalTicks>
-        <breachIntervalVariance>90</breachIntervalVariance>
+        <breachIntervalTicks>900</breachIntervalTicks>
+        <breachIntervalVariance>180</breachIntervalVariance>
         <minTargetRange>6.0</minTargetRange>
         <maxTargetRange>20.5</maxTargetRange>
         <maxActiveManifestations>2</maxActiveManifestations>
-        <maxLifetimeSummons>4</maxLifetimeSummons>
+        <maxLifetimeSummons>3</maxLifetimeSummons>
         <seamBreachChance>0.58</seamBreachChance>
-        <emberHoundChance>0.22</emberHoundChance>
+        <emberHoundChance>0.12</emberHoundChance>
         <manifestationWarmupMinTicks>95</manifestationWarmupMinTicks>
         <manifestationWarmupMaxTicks>145</manifestationWarmupMaxTicks>
         <pulseRadius>2.7</pulseRadius>
-        <pulseSeverity>0.34</pulseSeverity>
+        <pulseSeverity>0.20</pulseSeverity>
         <pulseVisualScale>1.45</pulseVisualScale>
         <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
       </li>
@@ -139,7 +139,7 @@
     <projectile>
       <damageDef>ABY_NullBoltDamage</damageDef>
       <damageAmountBase>8</damageAmountBase>
-      <armorPenetrationBase>0.16</armorPenetrationBase>
+      <armorPenetrationBase>0.14</armorPenetrationBase>
       <stoppingPower>0.7</stoppingPower>
       <speed>76</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

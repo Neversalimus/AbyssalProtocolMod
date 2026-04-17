@@ -8,8 +8,8 @@ namespace AbyssalProtocol
     public class Projectile_NullBolt : Bullet
     {
         private const string NullExposureHediffDefName = "ABY_NullExposure";
-        private const float DirectSeverity = 0.46f;
-        private const float SplashSeverity = 0.24f;
+        private const float DirectSeverity = 0.36f;
+        private const float SplashSeverity = 0.14f;
         private const float SplashRadius = 1.65f;
         private const int DebuffDurationTicks = 360;
         private const int TrailIntervalTicks = 3;

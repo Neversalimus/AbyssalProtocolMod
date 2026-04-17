@@ -21,8 +21,8 @@
           <MoveSpeed>0.06</MoveSpeed>
           <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
           <ArmorRating_Heat>0.05</ArmorRating_Heat>
-          <MeleeDodgeChance>0.03</MeleeDodgeChance>
-          <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+          <MeleeDodgeChance>0.02</MeleeDodgeChance>
+          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
         </statOffsets>
       </li>
       <li>
@@ -57,20 +57,20 @@
         <minSeverity>0.01</minSeverity>
         <label>thinned</label>
         <statOffsets>
-          <ArmorRating_Sharp>-0.08</ArmorRating_Sharp>
-          <ArmorRating_Blunt>-0.05</ArmorRating_Blunt>
-          <ArmorRating_Heat>-0.10</ArmorRating_Heat>
-          <MeleeDodgeChance>-0.03</MeleeDodgeChance>
+          <ArmorRating_Sharp>-0.06</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.03</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.08</ArmorRating_Heat>
+          <MeleeDodgeChance>-0.02</MeleeDodgeChance>
         </statOffsets>
       </li>
       <li>
-        <minSeverity>0.55</minSeverity>
+        <minSeverity>0.70</minSeverity>
         <label>unbound</label>
         <statOffsets>
-          <ArmorRating_Sharp>-0.16</ArmorRating_Sharp>
-          <ArmorRating_Blunt>-0.10</ArmorRating_Blunt>
-          <ArmorRating_Heat>-0.22</ArmorRating_Heat>
-          <MeleeDodgeChance>-0.07</MeleeDodgeChance>
+          <ArmorRating_Sharp>-0.14</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.08</ArmorRating_Blunt>
+          <ArmorRating_Heat>-0.18</ArmorRating_Heat>
+          <MeleeDodgeChance>-0.05</MeleeDodgeChance>
         </statOffsets>
       </li>
     </stages>
