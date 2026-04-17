@@ -14,7 +14,6 @@ namespace AbyssalProtocol
 
         public override void PawnDied(Corpse corpse, Lord prevLord)
         {
-            base.PawnDied(corpse, prevLord);
 
             Pawn pawn = corpse?.InnerPawn;
             Map map = corpse?.MapHeld;
