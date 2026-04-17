@@ -456,35 +456,47 @@ namespace AbyssalProtocol
             }
 
             string raceDefName = pawn.def?.defName;
-            switch (raceDefName)
+            string coreDefName = null;
+            string carapaceDefName = null;
+
+            if (raceDefName == ArchonOfRuptureRaceDefName)
             {
-                case ArchonOfRuptureRaceDefName:
-                    AddBossHediffIfMissing(pawn, "ABY_RuptureCore");
-                    AddBossHediffIfMissing(pawn, "ABY_RuptureCarapace");
-                    break;
-                case ArchonBeastRaceDefName:
-                    AddBossHediffIfMissing(pawn, "ABY_ArchonCore");
-                    AddBossHediffIfMissing(pawn, "ABY_ArchonCarapace");
-                    break;
-                case WardenOfAshRaceDefName:
-                    // Warden of Ash uses its own ash pulse + threshold portal logic from ThingDef comps.
-                    // Do not inject Archon phase hediffs here or it will inherit the Archon boss state machine.
-                    break;
-                default:
-                    AddBossHediffIfMissing(pawn, "ABY_ArchonCarapace");
-                    break;
+                coreDefName = "ABY_RuptureCore";
+                carapaceDefName = "ABY_RuptureCarapace";
             }
+            else if (raceDefName == ArchonBeastRaceDefName)
+            {
+                coreDefName = "ABY_ArchonCore";
+                carapaceDefName = "ABY_ArchonCarapace";
+            }
+            else if (raceDefName == WardenOfAshRaceDefName)
+            {
+                // Warden of Ash has its own comp-driven mechanics and must not inherit Archon phase logic.
+                return;
+            }
+            else
+            {
+                return;
+            }
+
+            TryAddUniqueHediff(pawn, coreDefName);
+            TryAddUniqueHediff(pawn, carapaceDefName);
         }
 
-        private static void AddBossHediffIfMissing(Pawn pawn, string hediffDefName)
+        private static void TryAddUniqueHediff(Pawn pawn, string hediffDefName)
         {
-            if (pawn?.health == null || string.IsNullOrWhiteSpace(hediffDefName))
+            if (pawn == null || string.IsNullOrWhiteSpace(hediffDefName) || pawn.health == null)
             {
                 return;
             }
 
             HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
-            if (hediffDef == null || pawn.health.hediffSet?.HasHediff(hediffDef) == true)
+            if (hediffDef == null)
+            {
+                return;
+            }
+
+            if (pawn.health.hediffSet?.HasHediff(hediffDef) == true)
             {
                 return;
             }

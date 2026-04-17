@@ -8,10 +8,21 @@ namespace AbyssalProtocol
         private bool triggered75;
         private bool triggered40;
         private bool triggered15;
+        private int spawnTick = -1;
+        private float lastHealthPct = 1f;
 
         public CompProperties_ABY_WardenOfAshPortalSummoner Props => (CompProperties_ABY_WardenOfAshPortalSummoner)props;
 
         private Pawn PawnParent => parent as Pawn;
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+
+            Pawn pawn = PawnParent;
+            spawnTick = Find.TickManager.TicksGame;
+            lastHealthPct = GetHealthPct(pawn);
+        }
 
         public override void PostExposeData()
         {
@@ -19,6 +30,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref triggered75, "triggered75", false);
             Scribe_Values.Look(ref triggered40, "triggered40", false);
             Scribe_Values.Look(ref triggered15, "triggered15", false);
+            Scribe_Values.Look(ref spawnTick, "spawnTick", -1);
+            Scribe_Values.Look(ref lastHealthPct, "lastHealthPct", 1f);
         }
 
         public override void CompTick()
@@ -31,25 +44,57 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float healthPct = pawn.MaxHitPoints > 0 ? (float)pawn.HitPoints / pawn.MaxHitPoints : 0f;
+            if (spawnTick < 0)
+            {
+                spawnTick = Find.TickManager.TicksGame;
+                lastHealthPct = GetHealthPct(pawn);
+                return;
+            }
 
-            if (!triggered75 && healthPct <= 0.75f)
+            float healthPct = GetHealthPct(pawn);
+
+            // Ignore the exact spawn tick so freshly spawned bosses do not instantly fire threshold events
+            // due to transient initialization values.
+            if (Find.TickManager.TicksGame <= spawnTick)
+            {
+                lastHealthPct = healthPct;
+                return;
+            }
+
+            if (!triggered75 && CrossedThreshold(lastHealthPct, healthPct, 0.75f))
             {
                 triggered75 = true;
                 TriggerPortalBurst(pawn, Props.threshold75Count);
             }
 
-            if (!triggered40 && healthPct <= 0.40f)
+            if (!triggered40 && CrossedThreshold(lastHealthPct, healthPct, 0.40f))
             {
                 triggered40 = true;
                 TriggerPortalBurst(pawn, Props.threshold40Count);
             }
 
-            if (!triggered15 && healthPct <= 0.15f)
+            if (!triggered15 && CrossedThreshold(lastHealthPct, healthPct, 0.15f))
             {
                 triggered15 = true;
                 TriggerPortalBurst(pawn, Props.threshold15Count);
             }
+
+            lastHealthPct = healthPct;
+        }
+
+        private static bool CrossedThreshold(float previousPct, float currentPct, float threshold)
+        {
+            return previousPct > threshold && currentPct <= threshold;
+        }
+
+        private static float GetHealthPct(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null)
+            {
+                return 1f;
+            }
+
+            return pawn.health.summaryHealth.SummaryHealthPercent;
         }
 
         private bool ShouldOperateNow(Pawn pawn)
