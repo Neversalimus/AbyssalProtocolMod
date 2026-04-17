@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_InfernalCombatFrame</defName>
+    <thingClass>Apparel</thingClass>
+    <label>infernal combat frame</label>
+    <description>A first-generation abyssal body frame built for colonies that have stopped treating breach warfare as an experiment. Layered plasteel ribs, residue-lined plating, and a sealed chest-core lattice make it sturdier than improvised combat gear without turning the wearer into a slow-moving shrine. It is the first real torso armor of Abyssal Protocol: disciplined, hostile, industrial, and unmistakably forged for wars that should not exist.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_InfernalCombatFrame</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.08,1.08)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Apparel/ABY_InfernalCombatFrame</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.04</MoveSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2800</WorkToMake>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Mass>4.3</Mass>
+      <MarketValue>2100</MarketValue>
+      <ArmorRating_Sharp>0.68</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.46</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>
