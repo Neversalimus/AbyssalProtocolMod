@@ -11,20 +11,29 @@ namespace AbyssalProtocol
         private const string ArrivalSoundDefName = "ABY_ReactorSaintCharge";
         private const string CompletionLetterLabelKey = "ABY_ReactorSaintSummonSuccessLabel";
         private const string CompletionLetterDescKey = "ABY_ReactorSaintSummonSuccessDesc";
-        private const string CocoonPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon";
-        private const string ShadowPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon_Shadow";
+        private const string CocoonTexPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon";
+        private const string CocoonShadowTexPath = "Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon_Shadow";
+
         private const int ReleaseDelayTicks = 834;
         private const int PostReleaseTicks = 417;
         private const int LaunchDurationTicks = 84;
-        private const float LaunchVerticalOffset = 0.16f;
-        private const float LaunchForwardDrift = 6.40f;
-        private const float LaunchSideDrift = 0.70f;
-        private const float LaunchEndScale = 0.58f;
+
         private const float ImpactExplosionRadius = 3.9f;
         private const int ImpactExplosionDamage = 28;
         private const float ImpactExplosionArmorPenetration = 0.18f;
-        private static readonly Vector3 BodyScale = new Vector3(15.95f, 1f, 23.10f);
-        private static readonly Vector3 ShadowScale = new Vector3(23.10f, 1f, 23.10f);
+
+        private const float BodyScaleX = 15.95f;
+        private const float BodyScaleZ = 23.10f;
+        private const float ShadowScale = 23.10f;
+        private const float LaunchNorthDrift = 5.80f;
+        private const float LaunchSideDrift = 0.90f;
+        private const float LaunchAltitudeBoost = 2.30f;
+        private const float LaunchBodyScaleEnd = 0.93f;
+        private const float LaunchShadowScaleEnd = 0.76f;
+        private const float ShadowAlpha = 0.62f;
+
+        private static readonly Material CocoonMat = MaterialPool.MatFrom(CocoonTexPath, ShaderDatabase.Cutout, Color.white);
+        private static readonly Material CocoonShadowMat = MaterialPool.MatFrom(CocoonShadowTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, ShadowAlpha));
 
         private int ticksSinceImpact;
         private bool bossReleased;
@@ -96,59 +105,59 @@ namespace AbyssalProtocol
         {
             Vector3 bodyLoc = drawLoc;
             Vector3 shadowLoc = drawLoc;
-            float bodyScale = 1f;
-            float shadowAlpha = 0.42f;
-            float bodyAlpha = 1f;
+            float bodyScaleX = BodyScaleX;
+            float bodyScaleZ = BodyScaleZ;
+            float shadowScale = ShadowScale;
+            float shadowAlpha = ShadowAlpha;
 
             if (launching)
             {
                 float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
-                bodyLoc.y += 0.036f + progress * LaunchVerticalOffset;
-                bodyLoc.z += progress * LaunchForwardDrift;
-                bodyLoc.x += progress * LaunchSideDrift;
-                shadowLoc.y += 0.005f;
-                shadowLoc.z += progress * (LaunchForwardDrift * 0.35f);
-                shadowLoc.x += progress * (LaunchSideDrift * 0.35f);
-                bodyScale = Mathf.Lerp(1f, LaunchEndScale, progress);
-                shadowAlpha = Mathf.Lerp(0.42f, 0.03f, progress);
-                bodyAlpha = Mathf.Lerp(1f, 0.92f, progress);
+                float eased = 1f - Mathf.Pow(1f - progress, 2.2f);
+
+                bodyLoc.x += eased * LaunchSideDrift;
+                bodyLoc.z -= eased * LaunchNorthDrift;
+                bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.04f + eased * LaunchAltitudeBoost;
+
+                shadowLoc.x += eased * (LaunchSideDrift * 0.35f);
+                shadowLoc.z -= eased * (LaunchNorthDrift * 0.28f);
+                shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
+
+                float bodyScale = Mathf.Lerp(1f, LaunchBodyScaleEnd, eased);
+                float shadowScaleFactor = Mathf.Lerp(1f, LaunchShadowScaleEnd, eased);
+                bodyScaleX *= bodyScale;
+                bodyScaleZ *= bodyScale;
+                shadowScale *= shadowScaleFactor;
+                shadowAlpha *= 1f - eased;
             }
             else
             {
-                bodyLoc.y += 0.036f;
-                shadowLoc.y += 0.005f;
+                bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.04f;
+                shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
             }
 
-            DrawQuad(ShadowPath, shadowLoc, ShadowScale, 0f, new Color(1f, 1f, 1f, shadowAlpha), ShaderDatabase.Transparent, 1f);
-            DrawQuad(CocoonPath, bodyLoc, BodyScale, 0f, new Color(1f, 1f, 1f, bodyAlpha), ShaderDatabase.Cutout, bodyScale);
-
-            if (launching && Map != null)
-            {
-                float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
-                if (launchTicks % 5 == 0)
-                {
-                    FleckMaker.ThrowMicroSparks(bodyLoc, Map);
-                }
-
-                if (launchTicks % 10 == 0)
-                {
-                    FleckMaker.ThrowLightningGlow(bodyLoc, Map, 1.2f + progress * 1.6f);
-                }
-            }
+            DrawCocoonShadow(shadowLoc, shadowScale, shadowAlpha);
+            DrawCocoonBody(bodyLoc, bodyScaleX, bodyScaleZ);
         }
 
-        private static void DrawQuad(string texPath, Vector3 loc, Vector3 baseScale, float angle, Color color, Shader shader, float scaleMultiplier)
+        private void DrawCocoonBody(Vector3 loc, float scaleX, float scaleZ)
         {
-            if (ContentFinder<Texture2D>.Get(texPath, false) == null)
+            Matrix4x4 matrix = Matrix4x4.identity;
+            matrix.SetTRS(loc, Quaternion.identity, new Vector3(scaleX, 1f, scaleZ));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, CocoonMat, 0);
+        }
+
+        private void DrawCocoonShadow(Vector3 loc, float scale, float alpha)
+        {
+            if (alpha <= 0.01f)
             {
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(texPath, shader, color);
+            Material shadowMat = MaterialPool.MatFrom(CocoonShadowTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, alpha));
             Matrix4x4 matrix = Matrix4x4.identity;
-            Vector3 scale = new Vector3(baseScale.x * scaleMultiplier, 1f, baseScale.z * scaleMultiplier);
-            matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), scale);
-            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+            matrix.SetTRS(loc, Quaternion.identity, new Vector3(scale, 1f, scale));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMat, 0);
         }
 
         private void TriggerImpactEffects()
@@ -283,7 +292,10 @@ namespace AbyssalProtocol
             {
                 if (launchTicks % 4 == 0)
                 {
-                    FleckMaker.ThrowMicroSparks(DrawPos, Map);
+                    Vector3 fxPos = DrawPos;
+                    float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
+                    fxPos.z -= progress * (LaunchNorthDrift * 0.45f);
+                    FleckMaker.ThrowMicroSparks(fxPos, Map);
                 }
 
                 if (launchTicks % 9 == 0)
