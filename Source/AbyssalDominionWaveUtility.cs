@@ -599,12 +599,12 @@ namespace AbyssalProtocol
                         string.Empty,
                         string.Empty,
                         false,
-                        out IntVec3 arrivalCell,
+                        out IntVec3 impArrivalCell,
                         out string _);
 
                     if (spawnedPortal)
                     {
-                        focusCell = arrivalCell;
+                        focusCell = impArrivalCell;
                     }
                 }
                 else if (portal != null)
@@ -643,10 +643,10 @@ namespace AbyssalProtocol
                     string.Empty,
                     string.Empty,
                     false,
-                    out IntVec3 arrivalCell,
+                    out IntVec3 houndArrivalCell,
                     out string _))
                 {
-                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    focusCell = focusCell.IsValid ? focusCell : houndArrivalCell;
                     anySpawned = true;
                     summaryParts.Add(GetCountLabel(houndCount, "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds"));
                 }
@@ -672,10 +672,10 @@ namespace AbyssalProtocol
                     string.Empty,
                     string.Empty,
                     false,
-                    out IntVec3 arrivalCell,
+                    out IntVec3 thrallArrivalCell,
                     out string _))
                 {
-                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                    focusCell = focusCell.IsValid ? focusCell : thrallArrivalCell;
                     anySpawned = true;
                     summaryParts.Add(GetCountLabel(thrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
                 }
@@ -688,9 +688,9 @@ namespace AbyssalProtocol
                 priestCount,
                 origin,
                 NullPriestManifestationWarmupTicksGate,
-                out IntVec3 arrivalCell))
+                out IntVec3 priestArrivalCell))
             {
-                focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                focusCell = focusCell.IsValid ? focusCell : priestArrivalCell;
                 anySpawned = true;
                 summaryParts.Add(GetCountLabel(priestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
             }

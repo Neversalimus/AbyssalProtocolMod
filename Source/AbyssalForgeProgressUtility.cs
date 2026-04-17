@@ -19,6 +19,7 @@ namespace AbyssalProtocol
         public const string AllCategory = "All";
         public const string CoreCategory = "Core";
         public const string WeaponsCategory = "Weapons";
+        public const string ArmorCategory = "Armor";
         public const string ImplantsCategory = "Implants";
         public const string RitualCategory = "Ritual";
         public const string HeraldCategory = "Herald";
@@ -42,6 +43,7 @@ namespace AbyssalProtocol
             AllCategory,
             CoreCategory,
             WeaponsCategory,
+            ArmorCategory,
             ImplantsCategory,
             RitualCategory,
             HeraldCategory
