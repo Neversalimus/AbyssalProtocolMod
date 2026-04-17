@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_Manifestation_SigilBloom</defName>
+    <label>abyssal sigil bloom manifestation</label>
+    <description>Hidden future-use hostile manifestation anchor.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_SigilBloomManifestation</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>(1.0,1.0)</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <fillPercent>0.01</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <selectable>false</selectable>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_Manifestation_StaticPhaseIn</defName>
+    <label>abyssal static phase-in manifestation</label>
+    <description>Hidden future-use hostile manifestation anchor.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_StaticPhaseInManifestation</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>(1.0,1.0)</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <fillPercent>0.01</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <selectable>false</selectable>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_Manifestation_SeamBreach</defName>
+    <label>abyssal seam breach manifestation</label>
+    <description>Hidden future-use hostile manifestation anchor.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_SeamBreachManifestation</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>(1.0,1.0)</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <fillPercent>0.01</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <selectable>false</selectable>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+
+</Defs>
