@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -10,108 +11,80 @@ namespace AbyssalProtocol
         private const string HexgunThrallDefName = "ABY_HexgunThrall";
         private const string HexgunWeaponDefName = "ABY_Hexgun";
         private const string ChainZealotDefName = "ABY_ChainZealot";
+        private const string RiftSniperDefName = "ABY_RiftSniper";
 
-        public static void PrepareThreatPawn(Pawn pawn)
+        public static void PrepareThreatPawn(Pawn pawn, CompAbyssalPawnController controller = null)
         {
             if (pawn == null)
             {
                 return;
             }
 
-            CompProperties_AbyssalPawnController controller = GetControllerProperties(pawn);
+            controller = controller ?? GetController(pawn);
             EnsureLoadout(pawn, controller);
             EnsureCombatSkills(pawn, controller);
         }
 
-        public static CompProperties_AbyssalPawnController GetControllerProperties(Pawn pawn)
+        public static CompAbyssalPawnController GetController(Pawn pawn)
         {
-            if (pawn?.AllComps == null)
+            return CompAbyssalPawnController.GetFor(pawn);
+        }
+
+        public static Lord GetCurrentLord(Pawn pawn)
+        {
+            return AbyssalLordUtility.FindLordFor(pawn);
+        }
+
+        public static void EnsureHostileFaction(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            if (pawn.Faction != null)
+            {
+                return;
+            }
+
+            Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+            if (hostileFaction != null)
+            {
+                pawn.SetFaction(hostileFaction);
+            }
+        }
+
+        public static Lord EnsureAssaultLordForPawn(Pawn pawn, bool sappers)
+        {
+            return AbyssalLordUtility.EnsureAssaultLord(pawn, sappers);
+        }
+
+        public static Pawn FindBestTarget(Pawn pawn, float maxRange, bool preferRangedTargets, bool preferFarthestTargets, bool requireRangedTarget)
+        {
+            if (pawn?.Map?.mapPawns?.AllPawnsSpawned == null)
             {
                 return null;
             }
 
-            for (int i = 0; i < pawn.AllComps.Count; i++)
-            {
-                if (pawn.AllComps[i] is CompAbyssalPawnController controller)
-                {
-                    return controller.Props;
-                }
-            }
-
-            return null;
-        }
-
-        public static bool CanOperateHostilePawn(Pawn pawn)
-        {
-            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
-            {
-                return false;
-            }
-
-            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public static bool IsValidHostileTarget(Pawn owner, Pawn target)
-        {
-            if (owner == null || target == null || target == owner || target.Map != owner.Map || !target.Spawned || target.Dead || target.Downed)
-            {
-                return false;
-            }
-
-            if (target.Faction == null || owner.Faction == null)
-            {
-                return false;
-            }
-
-            return owner.Faction.HostileTo(target.Faction);
-        }
-
-        public static bool HasRangedWeapon(Pawn pawn)
-        {
-            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
-        }
-
-        public static Pawn FindBestHostilePawnTarget(
-            Pawn pawn,
-            float minRange,
-            float maxRange,
-            bool requireRanged,
-            bool preferRangedTargets,
-            bool preferLowHealthTargets,
-            bool preferFarthestTargets,
-            float rangedTargetBonus,
-            float lowHealthWeight)
-        {
-            if (pawn?.Map?.mapPawns == null)
-            {
-                return null;
-            }
-
-            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
             Pawn bestTarget = null;
             float bestScore = preferFarthestTargets ? float.MinValue : float.MaxValue;
-
+            List<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn candidate = pawns[i];
-                if (!IsValidHostileTarget(pawn, candidate))
+                if (!IsValidTarget(pawn, candidate))
                 {
                     continue;
                 }
 
                 bool hasRangedWeapon = HasRangedWeapon(candidate);
-                if (requireRanged && !hasRangedWeapon)
+                if (requireRangedTarget && !hasRangedWeapon)
                 {
                     continue;
                 }
 
                 float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance < minRange || distance > maxRange)
+                if (distance > maxRange)
                 {
                     continue;
                 }
@@ -124,15 +97,16 @@ namespace AbyssalProtocol
                 float score = distance;
                 if (preferRangedTargets && hasRangedWeapon)
                 {
-                    score += preferFarthestTargets ? rangedTargetBonus : -rangedTargetBonus;
+                    score += preferFarthestTargets ? 4.5f : -2.8f;
                 }
 
-                if (preferLowHealthTargets)
+                float healthFactor = 1f;
+                if (candidate.health != null)
                 {
-                    float healthFactor = candidate.health != null ? candidate.health.summaryHealth.SummaryHealthPercent : 1f;
-                    score += preferFarthestTargets ? (1f - healthFactor) * lowHealthWeight : healthFactor * lowHealthWeight;
+                    healthFactor = candidate.health.summaryHealth.SummaryHealthPercent;
                 }
 
+                score += preferFarthestTargets ? healthFactor * 0.35f : healthFactor * 1.2f;
                 if (preferFarthestTargets)
                 {
                     if (score > bestScore)
@@ -151,46 +125,23 @@ namespace AbyssalProtocol
             return bestTarget;
         }
 
-        public static bool TryFindAdjacentLandingCell(Pawn pawn, Thing target, out IntVec3 landingCell)
+        public static bool CanFireAt(Pawn shooter, Thing target, float maxRange)
         {
-            landingCell = IntVec3.Invalid;
-            if (pawn?.Map == null || target == null)
+            Pawn targetPawn = target as Pawn;
+            if (!IsValidTarget(shooter, targetPawn))
             {
                 return false;
             }
 
-            Map map = pawn.Map;
-            IntVec3 center = target.Position;
-            float bestDistance = float.MaxValue;
-
-            for (int dx = -1; dx <= 1; dx++)
+            if (shooter.Position.DistanceTo(targetPawn.Position) > maxRange)
             {
-                for (int dz = -1; dz <= 1; dz++)
-                {
-                    if (dx == 0 && dz == 0)
-                    {
-                        continue;
-                    }
-
-                    IntVec3 cell = center + new IntVec3(dx, 0, dz);
-                    if (!cell.InBounds(map) || !cell.Standable(map) || CellHasOtherPawn(cell, map, pawn))
-                    {
-                        continue;
-                    }
-
-                    float distance = pawn.Position.DistanceToSquared(cell);
-                    if (distance < bestDistance)
-                    {
-                        bestDistance = distance;
-                        landingCell = cell;
-                    }
-                }
+                return false;
             }
 
-            return landingCell.IsValid;
+            return GenSight.LineOfSight(shooter.Position, targetPawn.Position, shooter.Map);
         }
 
-        public static bool TryMaintainSpacing(Pawn pawn, Pawn currentTarget, float maxRange, float preferredMinRange, int retreatSearchRadius, bool holdPositionWhenTargeting)
+        public static bool TryMaintainSpacing(Pawn pawn, float preferredMinRange, int retreatSearchRadius, Thing currentTarget, bool holdPositionWhenTargeting)
         {
             if (pawn == null || pawn.Map == null)
             {
@@ -199,7 +150,7 @@ namespace AbyssalProtocol
 
             if (preferredMinRange <= 0f)
             {
-                if (holdPositionWhenTargeting && CanAttackTargetAtRange(pawn, currentTarget, maxRange))
+                if (holdPositionWhenTargeting && CanFireAt(pawn, currentTarget, 999f))
                 {
                     pawn.pather?.StopDead();
                 }
@@ -210,7 +161,7 @@ namespace AbyssalProtocol
             Pawn nearestThreat = FindClosestThreatWithin(pawn, preferredMinRange);
             if (nearestThreat == null)
             {
-                if (holdPositionWhenTargeting && CanAttackTargetAtRange(pawn, currentTarget, maxRange))
+                if (holdPositionWhenTargeting && currentTarget != null)
                 {
                     pawn.pather?.StopDead();
                 }
@@ -218,7 +169,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!TryFindRetreatCell(pawn, nearestThreat, preferredMinRange, retreatSearchRadius, out IntVec3 retreatCell))
+            IntVec3 retreatCell;
+            if (!TryFindRetreatCell(pawn, nearestThreat, preferredMinRange, retreatSearchRadius, out retreatCell))
             {
                 return false;
             }
@@ -233,146 +185,20 @@ namespace AbyssalProtocol
             return true;
         }
 
-        public static void ApplyOrRefreshHediff(Pawn target, string hediffDefName, float minimumSeverity)
+        public static Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
         {
-            if (target?.health == null || hediffDefName.NullOrEmpty())
-            {
-                return;
-            }
-
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
-            if (hediffDef == null)
-            {
-                return;
-            }
-
-            Hediff existing = target.health.hediffSet.GetFirstHediffOfDef(hediffDef);
-            if (existing != null)
-            {
-                if (minimumSeverity > 0f)
-                {
-                    existing.Severity = existing.Severity < minimumSeverity ? minimumSeverity : existing.Severity;
-                }
-
-                return;
-            }
-
-            Hediff added = HediffMaker.MakeHediff(hediffDef, target);
-            if (minimumSeverity > 0f)
-            {
-                added.Severity = minimumSeverity;
-            }
-
-            target.health.AddHediff(added);
-        }
-
-        public static Lord GetCurrentLord(Pawn pawn)
-        {
-            if (pawn?.Map?.lordManager?.lords == null)
+            if (pawn?.Map?.mapPawns?.AllPawnsSpawned == null)
             {
                 return null;
             }
 
-            List<Lord> lords = pawn.Map.lordManager.lords;
-            for (int i = 0; i < lords.Count; i++)
-            {
-                Lord lord = lords[i];
-                if (lord?.ownedPawns != null && lord.ownedPawns.Contains(pawn))
-                {
-                    return lord;
-                }
-            }
-
-            return null;
-        }
-
-        private static void EnsureLoadout(Pawn pawn, CompProperties_AbyssalPawnController controller)
-        {
-            string weaponDefName = controller != null ? controller.forcedWeaponDefName : null;
-            if (weaponDefName.NullOrEmpty() && IsHexgunThrall(pawn))
-            {
-                weaponDefName = HexgunWeaponDefName;
-            }
-
-            if (weaponDefName.NullOrEmpty() || pawn.equipment == null || pawn.equipment.Primary != null)
-            {
-                return;
-            }
-
-            ThingDef weaponDef = DefDatabase<ThingDef>.GetNamedSilentFail(weaponDefName);
-            if (weaponDef == null)
-            {
-                return;
-            }
-
-            Thing weapon = ThingMaker.MakeThing(weaponDef);
-            if (weapon is ThingWithComps thingWithComps)
-            {
-                pawn.equipment.AddEquipment(thingWithComps);
-            }
-        }
-
-        private static void EnsureCombatSkills(Pawn pawn, CompProperties_AbyssalPawnController controller)
-        {
-            if (pawn?.skills == null)
-            {
-                return;
-            }
-
-            int minimumShootingSkill = controller != null ? controller.minimumShootingSkill : -1;
-            int minimumMeleeSkill = controller != null ? controller.minimumMeleeSkill : -1;
-
-            if (minimumShootingSkill < 0 && IsHexgunThrall(pawn))
-            {
-                minimumShootingSkill = 10;
-            }
-
-            if (minimumMeleeSkill < 0 && IsChainZealot(pawn))
-            {
-                minimumMeleeSkill = 11;
-            }
-
-            if (minimumShootingSkill > 0)
-            {
-                SkillRecord shooting = pawn.skills.GetSkill(SkillDefOf.Shooting);
-                if (shooting != null && shooting.Level < minimumShootingSkill)
-                {
-                    shooting.Level = minimumShootingSkill;
-                }
-            }
-
-            if (minimumMeleeSkill > 0)
-            {
-                SkillRecord melee = pawn.skills.GetSkill(SkillDefOf.Melee);
-                if (melee != null && melee.Level < minimumMeleeSkill)
-                {
-                    melee.Level = minimumMeleeSkill;
-                }
-            }
-        }
-
-        private static bool CanAttackTargetAtRange(Pawn pawn, Pawn target, float maxRange)
-        {
-            return IsValidHostileTarget(pawn, target)
-                && pawn.Position.DistanceTo(target.Position) <= maxRange
-                && GenSight.LineOfSight(pawn.Position, target.Position, pawn.Map);
-        }
-
-        private static Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
-        {
-            if (pawn?.Map?.mapPawns == null)
-            {
-                return null;
-            }
-
-            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
             Pawn bestTarget = null;
             float bestDistance = maxDistance;
-
+            List<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn candidate = pawns[i];
-                if (!IsValidHostileTarget(pawn, candidate))
+                if (!IsValidTarget(pawn, candidate))
                 {
                     continue;
                 }
@@ -390,13 +216,18 @@ namespace AbyssalProtocol
             return bestTarget;
         }
 
-        private static bool TryFindRetreatCell(Pawn pawn, Pawn threat, float preferredMinRange, int retreatSearchRadius, out IntVec3 retreatCell)
+        public static bool TryFindRetreatCell(Pawn pawn, Pawn threat, float preferredMinRange, int retreatSearchRadius, out IntVec3 retreatCell)
         {
             retreatCell = IntVec3.Invalid;
+            if (pawn == null || threat == null || pawn.Map == null)
+            {
+                return false;
+            }
+
             Map map = pawn.Map;
             float currentDistance = pawn.Position.DistanceTo(threat.Position);
             float bestScore = float.MinValue;
-            int radius = retreatSearchRadius > 0 ? retreatSearchRadius : 9;
+            int radius = Math.Max(4, retreatSearchRadius);
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, radius, true))
             {
@@ -428,7 +259,97 @@ namespace AbyssalProtocol
             return retreatCell.IsValid;
         }
 
-        private static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
+        public static bool TryFindAdjacentLandingCell(Pawn pawn, Pawn target, out IntVec3 landingCell)
+        {
+            landingCell = IntVec3.Invalid;
+            if (pawn == null || target == null || pawn.Map == null)
+            {
+                return false;
+            }
+
+            Map map = pawn.Map;
+            float bestDistance = float.MaxValue;
+            for (int dx = -1; dx <= 1; dx++)
+            {
+                for (int dz = -1; dz <= 1; dz++)
+                {
+                    if (dx == 0 && dz == 0)
+                    {
+                        continue;
+                    }
+
+                    IntVec3 cell = target.Position + new IntVec3(dx, 0, dz);
+                    if (!cell.InBounds(map) || !cell.Standable(map) || CellHasOtherPawn(cell, map, pawn))
+                    {
+                        continue;
+                    }
+
+                    float distance = pawn.Position.DistanceToSquared(cell);
+                    if (distance < bestDistance)
+                    {
+                        bestDistance = distance;
+                        landingCell = cell;
+                    }
+                }
+            }
+
+            return landingCell.IsValid;
+        }
+
+        public static void ApplyOrRefreshHediff(Pawn target, string hediffDefName, float minimumSeverity)
+        {
+            if (target?.health == null || hediffDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
+            if (hediffDef == null)
+            {
+                return;
+            }
+
+            Hediff existing = target.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+            if (existing != null)
+            {
+                if (minimumSeverity > 0f)
+                {
+                    existing.Severity = Math.Max(existing.Severity, minimumSeverity);
+                }
+
+                return;
+            }
+
+            Hediff added = HediffMaker.MakeHediff(hediffDef, target);
+            if (minimumSeverity > 0f)
+            {
+                added.Severity = Math.Max(added.Severity, minimumSeverity);
+            }
+
+            target.health.AddHediff(added);
+        }
+
+        public static bool IsValidTarget(Pawn shooter, Pawn target)
+        {
+            if (shooter == null || target == null || target == shooter || target.Map != shooter.Map || !target.Spawned || target.Dead || target.Downed)
+            {
+                return false;
+            }
+
+            if (target.Faction == null || shooter.Faction == null)
+            {
+                return false;
+            }
+
+            return shooter.Faction.HostileTo(target.Faction);
+        }
+
+        public static bool HasRangedWeapon(Pawn pawn)
+        {
+            return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
+        }
+
+        public static bool CellHasOtherPawn(IntVec3 cell, Map map, Pawn ignore)
         {
             List<Thing> things = cell.GetThingList(map);
             for (int i = 0; i < things.Count; i++)
@@ -442,9 +363,94 @@ namespace AbyssalProtocol
             return false;
         }
 
+        private static void EnsureLoadout(Pawn pawn, CompAbyssalPawnController controller)
+        {
+            if (pawn.equipment == null || pawn.equipment.Primary != null)
+            {
+                return;
+            }
+
+            string weaponDefName = controller?.Props.forcePrimaryWeaponDefName;
+            if (weaponDefName.NullOrEmpty() && IsHexgunThrall(pawn))
+            {
+                weaponDefName = HexgunWeaponDefName;
+            }
+
+            if (weaponDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            ThingDef weaponDef = DefDatabase<ThingDef>.GetNamedSilentFail(weaponDefName);
+            if (weaponDef == null)
+            {
+                return;
+            }
+
+            Thing weapon = ThingMaker.MakeThing(weaponDef);
+            if (weapon is ThingWithComps thingWithComps)
+            {
+                pawn.equipment.AddEquipment(thingWithComps);
+            }
+        }
+
+        private static void EnsureCombatSkills(Pawn pawn, CompAbyssalPawnController controller)
+        {
+            if (pawn.skills == null)
+            {
+                return;
+            }
+
+            int minimumShooting = 0;
+            int minimumMelee = 0;
+            if (controller != null)
+            {
+                minimumShooting = controller.Props.minimumShootingSkill;
+                minimumMelee = controller.Props.minimumMeleeSkill;
+            }
+            else
+            {
+                if (IsHexgunThrall(pawn))
+                {
+                    minimumShooting = 10;
+                }
+                else if (IsRiftSniper(pawn))
+                {
+                    minimumShooting = 14;
+                }
+                else if (IsChainZealot(pawn))
+                {
+                    minimumMelee = 11;
+                }
+            }
+
+            if (minimumShooting > 0)
+            {
+                SkillRecord shooting = pawn.skills.GetSkill(SkillDefOf.Shooting);
+                if (shooting != null && shooting.Level < minimumShooting)
+                {
+                    shooting.Level = minimumShooting;
+                }
+            }
+
+            if (minimumMelee > 0)
+            {
+                SkillRecord melee = pawn.skills.GetSkill(SkillDefOf.Melee);
+                if (melee != null && melee.Level < minimumMelee)
+                {
+                    melee.Level = minimumMelee;
+                }
+            }
+        }
+
         private static bool IsHexgunThrall(Pawn pawn)
         {
             return HasDefName(pawn, HexgunThrallDefName);
+        }
+
+        private static bool IsRiftSniper(Pawn pawn)
+        {
+            return HasDefName(pawn, RiftSniperDefName);
         }
 
         private static bool IsChainZealot(Pawn pawn)

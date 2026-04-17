@@ -87,14 +87,10 @@
     </butcherProducts>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
-        <roleId>chain_zealot</roleId>
+        <archetype>HookBruiser</archetype>
         <minimumMeleeSkill>11</minimumMeleeSkill>
-        <preferRangedTargets>true</preferRangedTargets>
-        <preferLowHealthTargets>true</preferLowHealthTargets>
-        <useSapperAssaultLord>true</useSapperAssaultLord>
-        <refreshIntervalTicks>180</refreshIntervalTicks>
+        <useSapperLord>true</useSapperLord>
       </li>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ChainSnag">
         <minRange>4.2</minRange>
         <maxRange>11.2</maxRange>

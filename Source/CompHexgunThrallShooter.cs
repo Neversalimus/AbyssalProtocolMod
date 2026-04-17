@@ -34,31 +34,19 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!AbyssalThreatPawnUtility.CanOperateHostilePawn(pawn))
+            if (!CanOperate(pawn))
             {
                 ResetBurst();
                 return;
             }
 
-            CompProperties_AbyssalPawnController controller = AbyssalThreatPawnUtility.GetControllerProperties(pawn);
-            float effectivePreferredMinRange = Props.preferredMinRange > 0f
-                ? Props.preferredMinRange
-                : (controller != null ? controller.maintainDistanceBelow : 0f);
-            int effectiveRetreatSearchRadius = Props.retreatSearchRadius > 0
-                ? Props.retreatSearchRadius
-                : (controller != null ? controller.retreatSearchRadius : 9);
-            bool effectivePreferRangedTargets = Props.preferRangedTargets || (controller != null && controller.preferRangedTargets);
-            bool effectivePreferFarthestTargets = Props.preferFarthestTargets || (controller != null && controller.preferFarthestTargets);
-            bool effectiveHoldPosition = Props.holdPositionWhenTargeting || (controller != null && controller.holdPositionWhenTargeting);
-
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             if (AbyssalThreatPawnUtility.TryMaintainSpacing(
                 pawn,
-                currentTarget as Pawn,
-                Props.range,
-                effectivePreferredMinRange,
-                effectiveRetreatSearchRadius,
-                effectiveHoldPosition))
+                GetPreferredMinRange(pawn),
+                GetRetreatSearchRadius(pawn),
+                currentTarget,
+                GetHoldPositionWhenTargeting(pawn)))
             {
                 ResetBurst();
                 return;
@@ -124,16 +112,12 @@ namespace AbyssalProtocol
             }
 
             nextSearchTick = ticksGame + Math.Max(5, Props.scanIntervalTicks);
-            Pawn target = AbyssalThreatPawnUtility.FindBestHostilePawnTarget(
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(
                 pawn,
-                minRange: 0f,
-                maxRange: Props.range,
-                requireRanged: false,
-                preferRangedTargets: effectivePreferRangedTargets,
-                preferLowHealthTargets: false,
-                preferFarthestTargets: effectivePreferFarthestTargets,
-                rangedTargetBonus: 4.5f,
-                lowHealthWeight: 0f);
+                Props.range,
+                GetPreferRangedTargets(pawn),
+                GetPreferFarthestTargets(pawn),
+                requireRangedTarget: false);
             if (target == null)
             {
                 return;
@@ -146,7 +130,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
-            if (effectiveHoldPosition)
+            if (GetHoldPositionWhenTargeting(pawn))
             {
                 pawn.pather?.StopDead();
             }
@@ -154,20 +138,79 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(target.Position);
         }
 
+        private bool CanOperate(Pawn pawn)
+        {
+            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
+            {
+                return false;
+            }
+
+            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private bool CanFireAt(Pawn shooter, Thing target)
         {
-            Pawn targetPawn = target as Pawn;
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(shooter, targetPawn))
+            return AbyssalThreatPawnUtility.CanFireAt(shooter, target, Props.range);
+        }
+
+        private float GetPreferredMinRange(Pawn pawn)
+        {
+            CompAbyssalPawnController controller = AbyssalThreatPawnUtility.GetController(pawn);
+            if (controller != null && controller.Props.preferredMinRange > 0f)
             {
-                return false;
+                return controller.Props.preferredMinRange;
             }
 
-            if (shooter.Position.DistanceTo(targetPawn.Position) > Props.range)
+            return Props.preferredMinRange;
+        }
+
+        private int GetRetreatSearchRadius(Pawn pawn)
+        {
+            CompAbyssalPawnController controller = AbyssalThreatPawnUtility.GetController(pawn);
+            if (controller != null && controller.Props.retreatSearchRadius > 0)
             {
-                return false;
+                return controller.Props.retreatSearchRadius;
             }
 
-            return GenSight.LineOfSight(shooter.Position, targetPawn.Position, shooter.Map);
+            return Props.retreatSearchRadius;
+        }
+
+        private bool GetPreferRangedTargets(Pawn pawn)
+        {
+            CompAbyssalPawnController controller = AbyssalThreatPawnUtility.GetController(pawn);
+            if (controller != null)
+            {
+                return controller.Props.preferRangedTargets;
+            }
+
+            return Props.preferRangedTargets;
+        }
+
+        private bool GetPreferFarthestTargets(Pawn pawn)
+        {
+            CompAbyssalPawnController controller = AbyssalThreatPawnUtility.GetController(pawn);
+            if (controller != null)
+            {
+                return controller.Props.preferFarthestTargets;
+            }
+
+            return Props.preferFarthestTargets;
+        }
+
+        private bool GetHoldPositionWhenTargeting(Pawn pawn)
+        {
+            CompAbyssalPawnController controller = AbyssalThreatPawnUtility.GetController(pawn);
+            if (controller != null)
+            {
+                return controller.Props.holdPositionWhenTargeting;
+            }
+
+            return Props.holdPositionWhenTargeting;
         }
 
         private void FireShot(Pawn pawn, Thing target)
@@ -211,7 +254,8 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < methods.Length; i++)
             {
-                if (!TryBuildLaunchArgs(methods[i], pawn, target, out object[] args))
+                object[] args;
+                if (!TryBuildLaunchArgs(methods[i], pawn, target, out args))
                 {
                     continue;
                 }

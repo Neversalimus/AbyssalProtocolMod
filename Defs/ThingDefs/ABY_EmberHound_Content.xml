@@ -89,13 +89,10 @@
     </butcherProducts>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
-        <roleId>ember_hound</roleId>
-        <preferRangedTargets>true</preferRangedTargets>
-        <preferLowHealthTargets>true</preferLowHealthTargets>
-        <useSapperAssaultLord>true</useSapperAssaultLord>
-        <refreshIntervalTicks>180</refreshIntervalTicks>
+        <archetype>Pouncer</archetype>
+        <minimumMeleeSkill>9</minimumMeleeSkill>
+        <useSapperLord>false</useSapperLord>
       </li>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_EmberPounce">
         <minRange>4.0</minRange>
         <maxRange>13.9</maxRange>

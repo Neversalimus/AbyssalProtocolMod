@@ -32,17 +32,12 @@ namespace AbyssalProtocol
                 return;
             }
 
-            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
-
-            if (pawn.Faction == null)
+            if (AbyssalThreatPawnUtility.GetController(pawn) != null)
             {
-                Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
-                if (hostileFaction != null)
-                {
-                    pawn.SetFaction(hostileFaction);
-                }
+                return;
             }
 
+            AbyssalThreatPawnUtility.EnsureHostileFaction(pawn);
             Faction playerFaction = Faction.OfPlayer;
             if (pawn.Faction == null || playerFaction == null || !pawn.Faction.HostileTo(playerFaction))
             {
@@ -76,9 +71,7 @@ namespace AbyssalProtocol
             }
 
             lastAggroTick = ticksGame;
-            CompProperties_AbyssalPawnController controller = AbyssalThreatPawnUtility.GetControllerProperties(pawn);
-            bool sappers = controller == null || controller.useSapperAssaultLord;
-            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers);
+            AbyssalThreatPawnUtility.EnsureAssaultLordForPawn(pawn, sappers: true);
         }
     }
 }

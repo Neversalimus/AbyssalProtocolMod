@@ -78,18 +78,11 @@
     </butcherProducts>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
-        <roleId>hexgun_thrall</roleId>
-        <forcedWeaponDefName>ABY_Hexgun</forcedWeaponDefName>
+        <archetype>RangedSkirmisher</archetype>
+        <forcePrimaryWeaponDefName>ABY_Hexgun</forcePrimaryWeaponDefName>
         <minimumShootingSkill>10</minimumShootingSkill>
-        <maintainDistanceBelow>8.5</maintainDistanceBelow>
-        <retreatSearchRadius>9</retreatSearchRadius>
-        <preferRangedTargets>true</preferRangedTargets>
-        <preferFarthestTargets>true</preferFarthestTargets>
-        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
-        <useSapperAssaultLord>true</useSapperAssaultLord>
-        <refreshIntervalTicks>180</refreshIntervalTicks>
+        <useSapperLord>true</useSapperLord>
       </li>
-      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
         <projectileDefName>ABY_HexgunBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>

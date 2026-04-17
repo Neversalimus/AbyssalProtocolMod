@@ -21,7 +21,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = parent as Pawn;
-            if (!AbyssalThreatPawnUtility.CanOperateHostilePawn(pawn) || pawn.stances == null)
+            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead || pawn.Downed || pawn.stances == null)
             {
                 return;
             }
@@ -37,37 +37,21 @@ namespace AbyssalProtocol
                 return;
             }
 
-            CompProperties_AbyssalPawnController controller = AbyssalThreatPawnUtility.GetControllerProperties(pawn);
-            bool preferRangedTargets = controller == null || controller.preferRangedTargets;
-            bool preferLowHealthTargets = controller == null || controller.preferLowHealthTargets;
-
-            Pawn target = AbyssalThreatPawnUtility.FindBestHostilePawnTarget(
-                pawn,
-                Props.minRange,
-                Props.maxRange,
-                requireRanged: preferRangedTargets,
-                preferRangedTargets: preferRangedTargets,
-                preferLowHealthTargets: preferLowHealthTargets,
-                preferFarthestTargets: false,
-                rangedTargetBonus: 2.6f,
-                lowHealthWeight: 1.8f)
-                ?? AbyssalThreatPawnUtility.FindBestHostilePawnTarget(
-                    pawn,
-                    Props.minRange,
-                    Props.maxRange,
-                    requireRanged: false,
-                    preferRangedTargets: preferRangedTargets,
-                    preferLowHealthTargets: preferLowHealthTargets,
-                    preferFarthestTargets: false,
-                    rangedTargetBonus: 2.6f,
-                    lowHealthWeight: 1.8f);
-
+            Pawn target = AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: true)
+                ?? AbyssalThreatPawnUtility.FindBestTarget(pawn, Props.maxRange, preferRangedTargets: true, preferFarthestTargets: false, requireRangedTarget: false);
             if (target == null)
             {
                 return;
             }
 
-            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out IntVec3 landingCell))
+            float distance = pawn.Position.DistanceTo(target.Position);
+            if (distance < Props.minRange || distance > Props.maxRange)
+            {
+                return;
+            }
+
+            IntVec3 landingCell;
+            if (!AbyssalThreatPawnUtility.TryFindAdjacentLandingCell(pawn, target, out landingCell))
             {
                 return;
             }
@@ -92,7 +76,7 @@ namespace AbyssalProtocol
             SpawnMote(map, landingCell);
 
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName, 0.3f);
+            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName, 0.30f);
         }
 
         private void SpawnMote(Map map, IntVec3 cell)
