@@ -94,6 +94,162 @@ namespace AbyssalProtocol
             return false;
         }
 
+        public static bool TryFindNearColonyArrivalCell(
+            Map map,
+            IntVec3 fallbackOrigin,
+            float minDistance,
+            float maxDistance,
+            out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null)
+            {
+                return false;
+            }
+
+            IntVec3 anchor = GetColonyAnchorCell(map, fallbackOrigin);
+            float min = Mathf.Max(6f, minDistance);
+            float max = Mathf.Max(min + 2f, maxDistance);
+            List<IntVec3> candidates = new List<IntVec3>();
+            int radialCount = GenRadial.NumCellsInRadius(max);
+
+            for (int i = 0; i < radialCount; i++)
+            {
+                IntVec3 candidate = anchor + GenRadial.RadialPattern[i];
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(anchor);
+                if (distance < min || distance > max)
+                {
+                    continue;
+                }
+
+                if (!IsValidNearColonyArrivalCell(map, candidate))
+                {
+                    continue;
+                }
+
+                candidates.Add(candidate);
+            }
+
+            if (candidates.Count > 0)
+            {
+                cell = candidates.RandomElement();
+                return true;
+            }
+
+            if (IsValidNearColonyArrivalCell(map, anchor))
+            {
+                cell = anchor;
+                return true;
+            }
+
+            return TryFindBossArrivalCell(map, out cell);
+        }
+
+        private static IntVec3 GetColonyAnchorCell(Map map, IntVec3 fallbackOrigin)
+        {
+            Area home = map.areaManager?.Home;
+            if (home != null)
+            {
+                int totalX = 0;
+                int totalZ = 0;
+                int count = 0;
+
+                foreach (IntVec3 cell in home.ActiveCells)
+                {
+                    totalX += cell.x;
+                    totalZ += cell.z;
+                    count++;
+                }
+
+                if (count > 0)
+                {
+                    return new IntVec3(totalX / count, 0, totalZ / count);
+                }
+            }
+
+            List<Building> colonistBuildings = map.listerBuildings?.allBuildingsColonist;
+            if (colonistBuildings != null && colonistBuildings.Count > 0)
+            {
+                int totalX = 0;
+                int totalZ = 0;
+                int count = 0;
+                for (int i = 0; i < colonistBuildings.Count; i++)
+                {
+                    Building building = colonistBuildings[i];
+                    if (building == null || !building.Spawned)
+                    {
+                        continue;
+                    }
+
+                    totalX += building.Position.x;
+                    totalZ += building.Position.z;
+                    count++;
+                }
+
+                if (count > 0)
+                {
+                    return new IntVec3(totalX / count, 0, totalZ / count);
+                }
+            }
+
+            List<Pawn> colonists = map.mapPawns?.FreeColonistsSpawned;
+            if (colonists != null && colonists.Count > 0)
+            {
+                int totalX = 0;
+                int totalZ = 0;
+                int count = 0;
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn pawn = colonists[i];
+                    if (pawn == null || !pawn.Spawned)
+                    {
+                        continue;
+                    }
+
+                    totalX += pawn.Position.x;
+                    totalZ += pawn.Position.z;
+                    count++;
+                }
+
+                if (count > 0)
+                {
+                    return new IntVec3(totalX / count, 0, totalZ / count);
+                }
+            }
+
+            return fallbackOrigin.IsValid ? fallbackOrigin : map.Center;
+        }
+
+        private static bool IsValidNearColonyArrivalCell(Map map, IntVec3 cell)
+        {
+            if (!cell.IsValid || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (cell.x < 8 || cell.z < 8 || cell.x >= map.Size.x - 8 || cell.z >= map.Size.z - 8)
+            {
+                return false;
+            }
+
+            if (!cell.Standable(map) || !cell.Walkable(map) || cell.Fogged(map) || cell.Roofed(map))
+            {
+                return false;
+            }
+
+            if (cell.GetEdifice(map) != null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool TryGenerateBoss(
             Map map,
             PawnKindDef kindDef,

@@ -2,9 +2,9 @@
 <LanguageData>
   <ABY_CircleRitual_ReactorSaint_Label>Ignite the Saint</ABY_CircleRitual_ReactorSaint_Label>
   <ABY_CircleRitual_ReactorSaint_Subtitle>Biomechanical reactor boss breach</ABY_CircleRitual_ReactorSaint_Subtitle>
-  <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and stages a breach-skyfall cocoon directly over the ritual focus before rupturing into the Infernal Reactor Saint. This breach is built around ranged pressure, reactor shielding, heat saturation, and a visible arrival cycle instead of an instant pop-in.</ABY_CircleRitual_ReactorSaint_Desc>
+  <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and stages a breach-skyfall cocoon that slams down near the colony with an impact blast. The cocoon remains sealed for about twenty in-game minutes, releases the Infernal Reactor Saint, then burns back upward roughly ten minutes later.</ABY_CircleRitual_ReactorSaint_Desc>
   <ABY_CircleRitual_ReactorSaint_Rewards>• Second full boss tier after the first vertical slice&#10;• Drops a saint reactor core, spacer-grade salvage, and high-value residue&#10;• Forces anti-artillery spacing and sustained boss pressure management</ABY_CircleRitual_ReactorSaint_Rewards>
-  <ABY_CircleRitual_ReactorSaint_SideEffects>• Arrives through a staged breach-skyfall cocoon instead of immediate spawn&#10;• Uses a direct reactor volley plus zone-barrage pressure to punish static lines&#10;• Runs a real Aegis cycle, saturation field, and escalating phase behavior</ABY_CircleRitual_ReactorSaint_SideEffects>
+  <ABY_CircleRitual_ReactorSaint_SideEffects>• Impacts near the colony instead of entering from the map edge&#10;• Stays on the field as a sealed reactor cocoon for roughly twenty in-game minutes before release&#10;• Launches back upward about ten minutes after releasing the boss</ABY_CircleRitual_ReactorSaint_SideEffects>
   <ABY_ReactorSaintSummonSuccessLabel>Reactor saint manifested</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>The reactor sigil has taken. A saint-class biomechanical breach has completed its skyfall rupture cycle, and the Infernal Reactor Saint is now crossing into local space.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaintSummonSuccessDesc>The reactor sigil has taken. A saint-class biomechanical cocoon has completed its sealed skyfall cycle, ruptured near the colony, and released the Infernal Reactor Saint into local space.</ABY_ReactorSaintSummonSuccessDesc>
 </LanguageData>

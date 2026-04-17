@@ -97,7 +97,10 @@ namespace AbyssalProtocol
         private string pendingCompletionLetterDescKey;
         private string pendingArrivalManifestationDefName;
         private int pendingArrivalManifestationWarmupTicks;
-        private bool pendingArrivalManifestationAtRitualFocus;
+        private int pendingArrivalReleaseDelayTicks;
+        private int pendingArrivalPostReleaseTicks;
+        private float pendingArrivalImpactExplosionRadius;
+        private int pendingArrivalImpactExplosionDamage;
         private string pendingArrivalSoundDefName;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
@@ -193,7 +196,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCompletionLetterDescKey, "pendingCompletionLetterDescKey");
             Scribe_Values.Look(ref pendingArrivalManifestationDefName, "pendingArrivalManifestationDefName");
             Scribe_Values.Look(ref pendingArrivalManifestationWarmupTicks, "pendingArrivalManifestationWarmupTicks", 0);
-            Scribe_Values.Look(ref pendingArrivalManifestationAtRitualFocus, "pendingArrivalManifestationAtRitualFocus", false);
+            Scribe_Values.Look(ref pendingArrivalReleaseDelayTicks, "pendingArrivalReleaseDelayTicks", 0);
+            Scribe_Values.Look(ref pendingArrivalPostReleaseTicks, "pendingArrivalPostReleaseTicks", 0);
+            Scribe_Values.Look(ref pendingArrivalImpactExplosionRadius, "pendingArrivalImpactExplosionRadius", 0f);
+            Scribe_Values.Look(ref pendingArrivalImpactExplosionDamage, "pendingArrivalImpactExplosionDamage", 0);
             Scribe_Values.Look(ref pendingArrivalSoundDefName, "pendingArrivalSoundDefName");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
@@ -405,7 +411,10 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
             pendingArrivalManifestationDefName = summonProps.arrivalManifestationDefName;
             pendingArrivalManifestationWarmupTicks = Mathf.Max(0, summonProps.arrivalManifestationWarmupTicks);
-            pendingArrivalManifestationAtRitualFocus = summonProps.arrivalManifestationAtRitualFocus;
+            pendingArrivalReleaseDelayTicks = Mathf.Max(0, summonProps.arrivalReleaseDelayTicks);
+            pendingArrivalPostReleaseTicks = Mathf.Max(0, summonProps.arrivalPostReleaseTicks);
+            pendingArrivalImpactExplosionRadius = Mathf.Max(0f, summonProps.arrivalImpactExplosionRadius);
+            pendingArrivalImpactExplosionDamage = Mathf.Max(0, summonProps.arrivalImpactExplosionDamage);
             pendingArrivalSoundDefName = summonProps.arrivalSoundDefName;
 
             bool dominionCrisisMode = IsDominionCrisisSummonMode(pendingSummonMode);
@@ -473,10 +482,14 @@ namespace AbyssalProtocol
                         return false;
                     }
                 }
-                else if (!pendingArrivalManifestationDefName.NullOrEmpty() && pendingArrivalManifestationAtRitualFocus)
+                else if (!pendingArrivalManifestationDefName.NullOrEmpty() && summonProps.arrivalNearColony)
                 {
-                    pendingSpawnCell = RitualFocusCell;
-                    if (!pendingSpawnCell.IsValid || !pendingSpawnCell.InBounds(Map))
+                    if (!AbyssalBossSummonUtility.TryFindNearColonyArrivalCell(
+                            Map,
+                            RitualFocusCell,
+                            summonProps.arrivalNearColonyMinDistance,
+                            summonProps.arrivalNearColonyMaxDistance,
+                            out pendingSpawnCell))
                     {
                         failReason = "ABY_CircleFail_NoBossArrival".Translate();
                         return false;
@@ -1637,7 +1650,11 @@ namespace AbyssalProtocol
                 pendingBossLabel,
                 pendingArrivalSoundDefName,
                 pendingCompletionLetterLabelKey,
-                pendingCompletionLetterDescKey);
+                pendingCompletionLetterDescKey,
+                pendingArrivalReleaseDelayTicks,
+                pendingArrivalPostReleaseTicks,
+                pendingArrivalImpactExplosionRadius,
+                pendingArrivalImpactExplosionDamage);
 
             return true;
         }
@@ -2136,7 +2153,10 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = null;
             pendingArrivalManifestationDefName = null;
             pendingArrivalManifestationWarmupTicks = 0;
-            pendingArrivalManifestationAtRitualFocus = false;
+            pendingArrivalReleaseDelayTicks = 0;
+            pendingArrivalPostReleaseTicks = 0;
+            pendingArrivalImpactExplosionRadius = 0f;
+            pendingArrivalImpactExplosionDamage = 0;
             pendingArrivalSoundDefName = null;
             pendingFaction = null;
             pendingSpawnCell = IntVec3.Invalid;

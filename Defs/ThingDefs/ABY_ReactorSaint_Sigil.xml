@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ReactorSaintSigil</defName>
     <label>reactor saint sigil</label>
-    <description>A reactor-bound invocation wafer keyed to a saint-class biomechanical breach. Carry it to an abyssal summoning circle to call the Infernal Reactor Saint down directly over the ritual focus through a staged breach-skyfall cocoon manifestation.</description>
+    <description>A reactor-bound invocation wafer keyed to a saint-class biomechanical breach. Carry it to an abyssal summoning circle to route the Infernal Reactor Saint into local space through a breach-skyfall cocoon that slams down near the colony, remains sealed for a prolonged reactor cycle, then releases the boss before burning back into the sky.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -34,8 +34,14 @@
         <spawnPoints>1320</spawnPoints>
         <ritualWarmupTicks>210</ritualWarmupTicks>
         <arrivalManifestationDefName>ABY_Manifestation_ReactorSaintArrival</arrivalManifestationDefName>
-        <arrivalManifestationWarmupTicks>120</arrivalManifestationWarmupTicks>
-        <arrivalManifestationAtRitualFocus>true</arrivalManifestationAtRitualFocus>
+        <arrivalManifestationWarmupTicks>1251</arrivalManifestationWarmupTicks>
+        <arrivalReleaseDelayTicks>834</arrivalReleaseDelayTicks>
+        <arrivalPostReleaseTicks>417</arrivalPostReleaseTicks>
+        <arrivalImpactExplosionRadius>3.9</arrivalImpactExplosionRadius>
+        <arrivalImpactExplosionDamage>28</arrivalImpactExplosionDamage>
+        <arrivalNearColony>true</arrivalNearColony>
+        <arrivalNearColonyMinDistance>14</arrivalNearColonyMinDistance>
+        <arrivalNearColonyMaxDistance>28</arrivalNearColonyMaxDistance>
         <arrivalSoundDefName>ABY_ReactorSaintCharge</arrivalSoundDefName>
         <completionLetterLabelKey>ABY_ReactorSaintSummonSuccessLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_ReactorSaintSummonSuccessDesc</completionLetterDescKey>
