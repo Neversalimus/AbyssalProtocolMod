@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ReactorSaturation.label>реакторное насыщение</ABY_ReactorSaturation.label>
+  <ABY_ReactorSaturation.description>Перегретый инфернальный реакторный выброс забивает швы брони, оптику и открытые ткани. Движение замедляется, точность падает, а тепловая защита постепенно срывается под давлением поля Saint.</ABY_ReactorSaturation.description>
+</LanguageData>

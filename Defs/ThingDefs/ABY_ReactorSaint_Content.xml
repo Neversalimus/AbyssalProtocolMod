@@ -123,6 +123,63 @@
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ReactorAegis">
+        <maxAegisPoints>1900</maxAegisPoints>
+        <rechargeDelayTicks>360</rechargeDelayTicks>
+        <rechargeIntervalTicks>30</rechargeIntervalTicks>
+        <rechargePerInterval>105</rechargePerInterval>
+        <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
+        <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
+        <breakFlashScale>3.00</breakFlashScale>
+        <restoreFlashScale>2.40</restoreFlashScale>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ReactorOverheatField">
+        <hediffDefName>ABY_ReactorSaturation</hediffDefName>
+        <baseRadius>9.4</baseRadius>
+        <tickIntervalTicks>50</tickIntervalTicks>
+        <severityPerPulse>0.18</severityPerPulse>
+        <maxSeverity>1.20</maxSeverity>
+        <requireLineOfSight>false</requireLineOfSight>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ReactorSaintPhaseController">
+        <phase2HealthPct>0.68</phase2HealthPct>
+        <phase3HealthPct>0.34</phase3HealthPct>
+        <phaseTransitionSoundDefName>ABY_ReactorSaintCharge</phaseTransitionSoundDefName>
+        <phaseTransitionFlashScale>2.60</phaseTransitionFlashScale>
+        <phase1AegisMaxFactor>1.00</phase1AegisMaxFactor>
+        <phase2AegisMaxFactor>0.92</phase2AegisMaxFactor>
+        <phase3AegisMaxFactor>0.82</phase3AegisMaxFactor>
+        <phase1AegisRechargeFactor>1.00</phase1AegisRechargeFactor>
+        <phase2AegisRechargeFactor>1.08</phase2AegisRechargeFactor>
+        <phase3AegisRechargeFactor>1.18</phase3AegisRechargeFactor>
+        <phase1AegisDelayFactor>1.00</phase1AegisDelayFactor>
+        <phase2AegisDelayFactor>0.92</phase2AegisDelayFactor>
+        <phase3AegisDelayFactor>0.84</phase3AegisDelayFactor>
+        <phase1OverheatRadius>9.4</phase1OverheatRadius>
+        <phase2OverheatRadius>10.6</phase2OverheatRadius>
+        <phase3OverheatRadius>11.8</phase3OverheatRadius>
+        <phase1OverheatSeverity>0.18</phase1OverheatSeverity>
+        <phase2OverheatSeverity>0.27</phase2OverheatSeverity>
+        <phase3OverheatSeverity>0.36</phase3OverheatSeverity>
+        <phase1OverheatIntervalTicks>50</phase1OverheatIntervalTicks>
+        <phase2OverheatIntervalTicks>42</phase2OverheatIntervalTicks>
+        <phase3OverheatIntervalTicks>34</phase3OverheatIntervalTicks>
+        <phase1PrimaryCooldownFactor>1.00</phase1PrimaryCooldownFactor>
+        <phase2PrimaryCooldownFactor>0.88</phase2PrimaryCooldownFactor>
+        <phase3PrimaryCooldownFactor>0.76</phase3PrimaryCooldownFactor>
+        <phase1BarrageCooldownFactor>1.00</phase1BarrageCooldownFactor>
+        <phase2BarrageCooldownFactor>0.86</phase2BarrageCooldownFactor>
+        <phase3BarrageCooldownFactor>0.72</phase3BarrageCooldownFactor>
+        <phase1WarmupFactor>1.00</phase1WarmupFactor>
+        <phase2WarmupFactor>0.93</phase2WarmupFactor>
+        <phase3WarmupFactor>0.86</phase3WarmupFactor>
+        <phase1BarrageChanceBonus>0.00</phase1BarrageChanceBonus>
+        <phase2BarrageChanceBonus>0.10</phase2BarrageChanceBonus>
+        <phase3BarrageChanceBonus>0.18</phase3BarrageChanceBonus>
+        <phase1BarrageShotBonus>0</phase1BarrageShotBonus>
+        <phase2BarrageShotBonus>0</phase2BarrageShotBonus>
+        <phase3BarrageShotBonus>1</phase3BarrageShotBonus>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>28</ABY_AbyssalResidue>

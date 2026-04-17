@@ -23,6 +23,12 @@ namespace AbyssalProtocol
         private Pawn currentTarget;
         private IntVec3 currentTargetCell = IntVec3.Invalid;
 
+        private float primaryCooldownFactor = 1f;
+        private float barrageCooldownFactor = 1f;
+        private float warmupFactor = 1f;
+        private float barrageChanceBonus;
+        private int barrageShotBonus;
+
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
 
         public override void PostExposeData()
@@ -37,6 +43,11 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref currentAttackMode, "currentAttackMode", 0);
             Scribe_Values.Look(ref currentTargetCell, "currentTargetCell");
             Scribe_References.Look(ref currentTarget, "currentTarget");
+            Scribe_Values.Look(ref primaryCooldownFactor, "primaryCooldownFactor", 1f);
+            Scribe_Values.Look(ref barrageCooldownFactor, "barrageCooldownFactor", 1f);
+            Scribe_Values.Look(ref warmupFactor, "warmupFactor", 1f);
+            Scribe_Values.Look(ref barrageChanceBonus, "barrageChanceBonus", 0f);
+            Scribe_Values.Look(ref barrageShotBonus, "barrageShotBonus", 0);
         }
 
         public override void CompTick()
@@ -146,6 +157,20 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(target.Position);
         }
 
+        public void SetPhaseTuning(
+            float primaryCdFactor,
+            float barrageCdFactor,
+            float phaseWarmupFactor,
+            float phaseBarrageChanceBonus,
+            int phaseBarrageShotBonus)
+        {
+            primaryCooldownFactor = Mathf.Max(0.2f, primaryCdFactor);
+            barrageCooldownFactor = Mathf.Max(0.2f, barrageCdFactor);
+            warmupFactor = Mathf.Max(0.2f, phaseWarmupFactor);
+            barrageChanceBonus = Mathf.Clamp(phaseBarrageChanceBonus, -0.9f, 0.9f);
+            barrageShotBonus = Mathf.Max(0, phaseBarrageShotBonus);
+        }
+
         private bool CanOperate(Pawn pawn)
         {
             if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
@@ -246,7 +271,8 @@ namespace AbyssalProtocol
             if (barrageReady)
             {
                 int nearbyThreats = CountNearbyThreats(target, Props.barrageTargetClusterRadius, pawn);
-                if (!primaryReady || nearbyThreats >= Math.Max(1, Props.barrageClusterThreshold) || Rand.Chance(Props.barrageRandomChance))
+                float barrageChance = Mathf.Clamp01(Props.barrageRandomChance + barrageChanceBonus);
+                if (!primaryReady || nearbyThreats >= Math.Max(1, Props.barrageClusterThreshold) || Rand.Chance(barrageChance))
                 {
                     return AttackModeBarrage;
                 }
@@ -529,16 +555,18 @@ namespace AbyssalProtocol
 
         private int GetWarmupTicksForCurrentMode()
         {
-            return currentAttackMode == AttackModeBarrage
-                ? Math.Max(1, Props.barrageWarmupTicks)
-                : Math.Max(1, Props.primaryWarmupTicks);
+            int baseTicks = currentAttackMode == AttackModeBarrage ? Props.barrageWarmupTicks : Props.primaryWarmupTicks;
+            return Math.Max(1, Mathf.RoundToInt(baseTicks * warmupFactor));
         }
 
         private int GetShotCountForCurrentMode()
         {
-            return currentAttackMode == AttackModeBarrage
-                ? Math.Max(1, Props.barrageShotCount)
-                : Math.Max(1, Props.primaryBurstShotCount);
+            if (currentAttackMode == AttackModeBarrage)
+            {
+                return Math.Max(1, Props.barrageShotCount + barrageShotBonus);
+            }
+
+            return Math.Max(1, Props.primaryBurstShotCount);
         }
 
         private int GetTicksBetweenShotsForCurrentMode()
@@ -552,11 +580,11 @@ namespace AbyssalProtocol
         {
             if (currentAttackMode == AttackModeBarrage)
             {
-                nextBarrageReadyTick = ticksGame + Math.Max(1, Props.barrageCooldownTicks);
+                nextBarrageReadyTick = ticksGame + Math.Max(1, Mathf.RoundToInt(Props.barrageCooldownTicks * barrageCooldownFactor));
             }
             else if (currentAttackMode == AttackModePrimary)
             {
-                nextPrimaryReadyTick = ticksGame + Math.Max(1, Props.primaryCooldownTicks);
+                nextPrimaryReadyTick = ticksGame + Math.Max(1, Mathf.RoundToInt(Props.primaryCooldownTicks * primaryCooldownFactor));
             }
 
             ResetAttackState();
