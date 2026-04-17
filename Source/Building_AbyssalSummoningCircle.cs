@@ -410,9 +410,9 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingSupportImpCount = 0;
-            pendingSupportThrallCount = 0;
-            pendingSupportZealotCount = 0;
+            pendingSupportImpCount = Mathf.Max(0, summonProps.supportImpCount);
+            pendingSupportThrallCount = Mathf.Max(0, summonProps.supportThrallCount);
+            pendingSupportZealotCount = Mathf.Max(0, summonProps.supportZealotCount);
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
 
@@ -1552,6 +1552,7 @@ namespace AbyssalProtocol
                 Map,
                 pendingSpawnCell,
                 pendingBossLabel);
+            TrySpawnPendingSupportPack();
             ApplyRitualInstability();
         }
 
@@ -2053,9 +2054,9 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingSupportImpCount = 0;
-            pendingSupportThrallCount = 0;
-            pendingSupportZealotCount = 0;
+            pendingSupportImpCount = Mathf.Max(0, summonProps.supportImpCount);
+            pendingSupportThrallCount = Mathf.Max(0, summonProps.supportThrallCount);
+            pendingSupportZealotCount = Mathf.Max(0, summonProps.supportZealotCount);
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
             pendingCapacitorStartupCost = 0f;

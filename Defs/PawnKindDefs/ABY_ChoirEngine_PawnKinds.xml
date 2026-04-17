@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_ChoirEngine</defName>
+    <label>choir engine</label>
+    <race>ABY_ChoirEngine</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>780</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/ChoirEngine/ABY_ChoirEngine</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(3.35,3.35)</drawSize>
+          <shadowData>
+            <volume>(1.16, 1.02, 1.16)</volume>
+            <offset>(0, 0, -0.25)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>

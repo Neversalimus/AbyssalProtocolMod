@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_ChoirEngine</defName>
+    <label>choir engine</label>
+    <description>A techno-infernal relay node that enters battle as a walking command choir rather than a pure kill-form. Choir engines turn nearby abyssal troops into a tighter, deadlier formation while flooding defenders, turrets, and local electronics with hostile signal noise.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/ChoirEngine/ABY_ChoirEngine</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.10,3.10)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.35</baseBodySize>
+      <baseHealthScale>2.10</baseHealthScale>
+      <baseHungerRate>0.56</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>260</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>980</MaxHitPoints>
+      <MoveSpeed>3.82</MoveSpeed>
+      <MeleeHitChance>0.70</MeleeHitChance>
+      <MeleeDPS>5.4</MeleeDPS>
+      <MeleeDodgeChance>0.09</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.52</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.82</ArmorRating_Heat>
+      <ComfyTemperatureMin>-20</ComfyTemperatureMin>
+      <ComfyTemperatureMax>210</ComfyTemperatureMax>
+      <Mass>1.65</Mass>
+      <MarketValue>1680</MarketValue>
+      <Flammability>0.00</Flammability>
+      <PainShockThreshold>999</PainShockThreshold>
+      <PsychicSensitivity>0</PsychicSensitivity>
+    </statBases>
+    <tools>
+      <li>
+        <label>speaker ram</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>2.05</cooldownTime>
+        <chanceFactor>0.95</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+      <li>
+        <label>relay claw</label>
+        <capacities>
+          <li>Scratch</li>
+          <li>Blunt</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>1.75</cooldownTime>
+        <chanceFactor>0.82</chanceFactor>
+        <armorPenetration>0.12</armorPenetration>
+      </li>
+    </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>SupportCaster</archetype>
+        <minMeleeSkill>10</minMeleeSkill>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_ChoirEngineAura">
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <allyRadius>10.8</allyRadius>
+        <enemyRadius>8.6</enemyRadius>
+        <allySeverity>0.36</allySeverity>
+        <enemySeverity>0.34</enemySeverity>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ChoirEngineRelay">
+        <warmupTicks>210</warmupTicks>
+        <pulseIntervalTicks>410</pulseIntervalTicks>
+        <pulseIntervalVariance>70</pulseIntervalVariance>
+        <pulseRadius>11.4</pulseRadius>
+        <pulseAllySeverity>0.82</pulseAllySeverity>
+        <pulseEnemySeverity>0.62</pulseEnemySeverity>
+        <turretSuppressionIntervalTicks>185</turretSuppressionIntervalTicks>
+        <turretSuppressionVariance>45</turretSuppressionVariance>
+        <turretSuppressionRadius>18.0</turretSuppressionRadius>
+        <turretEmpDamage>5.2</turretEmpDamage>
+        <infrastructureEmpDamage>3.2</infrastructureEmpDamage>
+        <maxInfrastructureTargets>4</maxInfrastructureTargets>
+        <maxPulseInfrastructureTargets>6</maxPulseInfrastructureTargets>
+        <pulseVisualScale>2.45</pulseVisualScale>
+        <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
+      </li>
+    </comps>
+    <killedLeavings Inherit="False">
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+    </killedLeavings>
+    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_ABY_ChoirEngineBurst</deathActionWorkerClass>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ChoirEngineSigil</defName>
+    <label>choir engine sigil</label>
+    <description>A command-grade sigil wafer built from an ashen core and residue lattice. Carry it to an abyssal summoning circle to invite a Choir Engine breach with disciplined escort troops and active signal warfare.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_ChoirEngineSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>420</MarketValue>
+      <Mass>0.32</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>route choir breach</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>choir_engine</ritualId>
+        <summonMode>Boss</summonMode>
+        <pawnKindDefName>ABY_ChoirEngine</pawnKindDefName>
+        <bossLabel>Choir Engine</bossLabel>
+        <spawnPoints>780</spawnPoints>
+        <ritualWarmupTicks>180</ritualWarmupTicks>
+        <supportThrallCount>2</supportThrallCount>
+        <supportZealotCount>1</supportZealotCount>
+        <completionLetterLabelKey>ABY_ChoirSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_ChoirSummonSuccessDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

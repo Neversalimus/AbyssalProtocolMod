@@ -20,6 +20,8 @@ namespace AbyssalProtocol
         {
             "ABY_DominionSigil",
             "ABY_ArchonSigil",
+            "ABY_ChoirEngineSigil",
+            "ABY_WardenOfAshSigil",
             "ABY_UnstableBreachSigil",
             "ABY_EmberHoundSigil",
             "ABY_HexgunRelaySigil"
@@ -29,9 +31,11 @@ namespace AbyssalProtocol
         {
             { "ABY_DominionSigil", 0 },
             { "ABY_ArchonSigil", 1 },
-            { "ABY_HexgunRelaySigil", 2 },
-            { "ABY_EmberHoundSigil", 3 },
-            { "ABY_UnstableBreachSigil", 4 }
+            { "ABY_ChoirEngineSigil", 2 },
+            { "ABY_WardenOfAshSigil", 3 },
+            { "ABY_HexgunRelaySigil", 4 },
+            { "ABY_EmberHoundSigil", 5 },
+            { "ABY_UnstableBreachSigil", 6 }
         };
 
         private static readonly HashSet<string> AcceptedSigilDefNameSet = new HashSet<string>(AcceptedSigilDefNames, StringComparer.Ordinal);

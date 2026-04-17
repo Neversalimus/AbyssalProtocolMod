@@ -16,6 +16,9 @@ namespace AbyssalProtocol
         public int impPortalWarmupTicks = 120;
         public int impSpawnIntervalTicks = 120;
         public int impPortalLingerTicks = 2400;
+        public int supportImpCount;
+        public int supportThrallCount;
+        public int supportZealotCount;
         public string completionLetterLabelKey;
         public string completionLetterDescKey;
 

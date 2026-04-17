@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ChoirEngineUplift.label>хоровое возвышение</ABY_ChoirEngineUplift.label>
+  <ABY_ChoirEngineUplift.description>Инфернальные релейные гармоники собирают движение, ускоряют ритм стрельбы и делают ближайшие abyssal-тела более дисциплинированной линией прорыва.</ABY_ChoirEngineUplift.description>
+  <ABY_ChoirSignalNoise.label>сигнальный шум</ABY_ChoirSignalNoise.label>
+  <ABY_ChoirSignalNoise.description>Командный статический шум Choir Engine размывает sightlines, прицельные подсказки и моторный ритм. Защитники теряют точность, пока инфернальный ретранслятор заливает поле боя помехами.</ABY_ChoirSignalNoise.description>
+</LanguageData>
