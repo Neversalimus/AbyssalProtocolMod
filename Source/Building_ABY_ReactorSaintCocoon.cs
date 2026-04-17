@@ -25,11 +25,11 @@ namespace AbyssalProtocol
         private const float BodyScaleX = 15.95f;
         private const float BodyScaleZ = 23.10f;
         private const float ShadowScale = 23.10f;
-        private const float LaunchNorthDrift = 5.80f;
-        private const float LaunchSideDrift = 0.90f;
-        private const float LaunchAltitudeBoost = 2.30f;
-        private const float LaunchBodyScaleEnd = 0.93f;
-        private const float LaunchShadowScaleEnd = 0.76f;
+        private const float LaunchNorthDrift = 58.00f;
+        private const float LaunchSideDrift = 0.30f;
+        private const float LaunchAltitudeBoost = 4.20f;
+        private const float LaunchBodyScaleEnd = 0.98f;
+        private const float LaunchShadowScaleEnd = 0.42f;
         private const float ShadowAlpha = 0.62f;
 
         private static readonly Material CocoonMat = MaterialPool.MatFrom(CocoonTexPath, ShaderDatabase.Cutout, Color.white);
@@ -110,17 +110,26 @@ namespace AbyssalProtocol
             float shadowScale = ShadowScale;
             float shadowAlpha = ShadowAlpha;
 
+            ApplyLaunchTransform(ref bodyLoc, ref shadowLoc, ref bodyScaleX, ref bodyScaleZ, ref shadowScale, ref shadowAlpha);
+
+            DrawCocoonShadow(shadowLoc, shadowScale, shadowAlpha);
+            DrawCocoonBody(bodyLoc, bodyScaleX, bodyScaleZ);
+        }
+
+
+        private void ApplyLaunchTransform(ref Vector3 bodyLoc, ref Vector3 shadowLoc, ref float bodyScaleX, ref float bodyScaleZ, ref float shadowScale, ref float shadowAlpha)
+        {
             if (launching)
             {
                 float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
                 float eased = 1f - Mathf.Pow(1f - progress, 2.2f);
 
                 bodyLoc.x += eased * LaunchSideDrift;
-                bodyLoc.z -= eased * LaunchNorthDrift;
+                bodyLoc.z += eased * LaunchNorthDrift;
                 bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.04f + eased * LaunchAltitudeBoost;
 
-                shadowLoc.x += eased * (LaunchSideDrift * 0.35f);
-                shadowLoc.z -= eased * (LaunchNorthDrift * 0.28f);
+                shadowLoc.x += eased * (LaunchSideDrift * 0.14f);
+                shadowLoc.z += eased * (LaunchNorthDrift * 0.10f);
                 shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
 
                 float bodyScale = Mathf.Lerp(1f, LaunchBodyScaleEnd, eased);
@@ -135,11 +144,19 @@ namespace AbyssalProtocol
                 bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.04f;
                 shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
             }
-
-            DrawCocoonShadow(shadowLoc, shadowScale, shadowAlpha);
-            DrawCocoonBody(bodyLoc, bodyScaleX, bodyScaleZ);
         }
 
+        private Vector3 GetCurrentBodyDrawPos()
+        {
+            Vector3 bodyLoc = DrawPos;
+            Vector3 shadowLoc = DrawPos;
+            float bodyScaleX = BodyScaleX;
+            float bodyScaleZ = BodyScaleZ;
+            float shadowScale = ShadowScale;
+            float shadowAlpha = ShadowAlpha;
+            ApplyLaunchTransform(ref bodyLoc, ref shadowLoc, ref bodyScaleX, ref bodyScaleZ, ref shadowScale, ref shadowAlpha);
+            return bodyLoc;
+        }
         private void DrawCocoonBody(Vector3 loc, float scaleX, float scaleZ)
         {
             Matrix4x4 matrix = Matrix4x4.identity;
@@ -290,18 +307,46 @@ namespace AbyssalProtocol
 
             if (Map != null)
             {
-                if (launchTicks % 4 == 0)
+                float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
+                Vector3 bodyPos = GetCurrentBodyDrawPos();
+                Vector3 exhaustCenter = bodyPos + new Vector3(0f, 0f, -4.40f);
+                Vector3 exhaustLeft = exhaustCenter + new Vector3(-3.10f, 0f, -0.45f);
+                Vector3 exhaustRight = exhaustCenter + new Vector3(3.10f, 0f, -0.45f);
+                float fireGlowSize = 1.55f + progress * 1.55f;
+                float smokeSize = 1.10f + progress * 1.30f;
+                float dustSize = 1.40f + progress * 1.35f;
+                float lightningGlow = 1.25f + progress * 1.65f;
+
+                if (launchTicks % 2 == 0)
                 {
-                    Vector3 fxPos = DrawPos;
-                    float progress = Mathf.Clamp01(launchTicks / (float)LaunchDurationTicks);
-                    fxPos.z -= progress * (LaunchNorthDrift * 0.45f);
-                    FleckMaker.ThrowMicroSparks(fxPos, Map);
+                    FleckMaker.ThrowMicroSparks(exhaustLeft, Map);
+                    FleckMaker.ThrowMicroSparks(exhaustRight, Map);
+                    FleckMaker.ThrowFireGlow(exhaustLeft, Map, fireGlowSize);
+                    FleckMaker.ThrowFireGlow(exhaustRight, Map, fireGlowSize);
                 }
 
-                if (launchTicks % 9 == 0)
+                if (launchTicks % 3 == 0)
                 {
-                    float glowSize = 1.20f + 1.20f * (launchTicks / (float)LaunchDurationTicks);
-                    FleckMaker.ThrowLightningGlow(DrawPos, Map, glowSize);
+                    FleckMaker.ThrowSmoke(exhaustLeft, Map, smokeSize);
+                    FleckMaker.ThrowSmoke(exhaustRight, Map, smokeSize);
+                }
+
+                if (launchTicks % 4 == 0)
+                {
+                    Vector3 groundFxCenter = DrawPos + new Vector3(0f, 0f, -2.80f);
+                    FleckMaker.ThrowDustPuff(groundFxCenter + new Vector3(-2.20f, 0f, 0f), Map, dustSize);
+                    FleckMaker.ThrowDustPuff(groundFxCenter + new Vector3(2.20f, 0f, 0f), Map, dustSize);
+                    FleckMaker.ThrowHeatGlow(Position, Map, 1.35f + progress * 1.10f);
+                }
+
+                if (launchTicks % 6 == 0)
+                {
+                    FleckMaker.ThrowLightningGlow(exhaustCenter, Map, lightningGlow);
+                }
+
+                if (launchTicks % 10 == 0)
+                {
+                    FleckMaker.ThrowLightningGlow(bodyPos, Map, 1.65f + progress * 1.80f);
                 }
             }
 
