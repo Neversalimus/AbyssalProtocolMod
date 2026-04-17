@@ -23,18 +23,9 @@
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
-      <li>
-        <thingDef>Steel</thingDef>
-        <count>12</count>
-      </li>
-      <li>
-        <thingDef>Plasteel</thingDef>
-        <count>12</count>
-      </li>
-      <li>
-        <thingDef>ComponentIndustrial</thingDef>
-        <count>1</count>
-      </li>
+      <Steel>12</Steel>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
     </smeltProducts>
     <equippedStatOffsets>
       <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>

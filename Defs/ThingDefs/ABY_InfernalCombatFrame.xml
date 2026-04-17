@@ -27,18 +27,9 @@
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
-      <li>
-        <thingDef>Steel</thingDef>
-        <count>30</count>
-      </li>
-      <li>
-        <thingDef>Plasteel</thingDef>
-        <count>28</count>
-      </li>
-      <li>
-        <thingDef>ComponentIndustrial</thingDef>
-        <count>2</count>
-      </li>
+      <Steel>30</Steel>
+      <Plasteel>28</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
     </smeltProducts>
     <equippedStatOffsets>
       <MoveSpeed>-0.03</MoveSpeed>
