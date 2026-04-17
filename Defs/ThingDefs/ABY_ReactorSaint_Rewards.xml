@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ReactorSaintCore</defName>
+    <label>saint reactor core</label>
+    <description>A saint-class reactor heart recovered after the breach collapses. Unlike crude abyssal organs, this core was built to regulate artillery-grade output, shielding discipline, and controlled heat overflow. It is proof that the Infernal Reactor Saint was not merely a machine, but a field-scale power authority.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_ReactorSaintCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>620</MarketValue>
+      <Mass>0.24</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

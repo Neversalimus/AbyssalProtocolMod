@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CraftReactorSaintSigil.label>создать сигилу святого реактора</ABY_CraftReactorSaintSigil.label>
+  <ABY_CraftReactorSaintSigil.description>Сжимает herald-фрагменты, residue, пласталь и spacer-компоненты в saint-класса сигилу-пропуск. Это первый настоящий шаг дальше стартового boss-slice: более тяжёлый прорыв, завязанный на артиллерийское давление, фазовый щит и длительное управление реакторным коллапсом.</ABY_CraftReactorSaintSigil.description>
+  <ABY_CraftReactorSaintSigil.jobString>Создание сигилы святого реактора.</ABY_CraftReactorSaintSigil.jobString>
+</LanguageData>

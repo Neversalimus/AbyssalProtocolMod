@@ -4,7 +4,7 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ReactorSaint</defName>
     <label>infernal reactor saint</label>
-    <description>A colossal techno-infernal saint built around a bound reactor heart and armored missile shoulders. Even before its deeper combat systems are awakened, the chassis is already a towering mid-endgame boss shell intended to stand above ordinary abyssal troops.</description>
+    <description>A colossal techno-infernal saint built around a bound reactor heart and armored missile shoulders. Its phase shield, saturation field and artillery lattice mark it as a second-tier full boss built to stand well above ordinary abyssal troops and punish static defenses.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
@@ -181,8 +181,9 @@
         <phase3BarrageShotBonus>1</phase3BarrageShotBonus>
       </li>
     </comps>
+    <deathActionWorkerClass>AbyssalProtocol.DeathActionWorker_DropReactorSaintCache</deathActionWorkerClass>
     <killedLeavings Inherit="False">
-      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
     </killedLeavings>
   </ThingDef>
 
