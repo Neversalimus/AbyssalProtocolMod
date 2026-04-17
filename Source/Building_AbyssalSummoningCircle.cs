@@ -97,6 +97,7 @@ namespace AbyssalProtocol
         private string pendingCompletionLetterDescKey;
         private string pendingArrivalManifestationDefName;
         private int pendingArrivalManifestationWarmupTicks;
+        private bool pendingArrivalManifestationAtRitualFocus;
         private string pendingArrivalSoundDefName;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
@@ -192,6 +193,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCompletionLetterDescKey, "pendingCompletionLetterDescKey");
             Scribe_Values.Look(ref pendingArrivalManifestationDefName, "pendingArrivalManifestationDefName");
             Scribe_Values.Look(ref pendingArrivalManifestationWarmupTicks, "pendingArrivalManifestationWarmupTicks", 0);
+            Scribe_Values.Look(ref pendingArrivalManifestationAtRitualFocus, "pendingArrivalManifestationAtRitualFocus", false);
             Scribe_Values.Look(ref pendingArrivalSoundDefName, "pendingArrivalSoundDefName");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
@@ -403,6 +405,7 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
             pendingArrivalManifestationDefName = summonProps.arrivalManifestationDefName;
             pendingArrivalManifestationWarmupTicks = Mathf.Max(0, summonProps.arrivalManifestationWarmupTicks);
+            pendingArrivalManifestationAtRitualFocus = summonProps.arrivalManifestationAtRitualFocus;
             pendingArrivalSoundDefName = summonProps.arrivalSoundDefName;
 
             bool dominionCrisisMode = IsDominionCrisisSummonMode(pendingSummonMode);
@@ -465,6 +468,15 @@ namespace AbyssalProtocol
                 {
                     pendingImpCount = Mathf.Max(1, summonProps.impCount);
                     if (!AbyssalBossSummonUtility.TryFindBossArrivalCell(Map, out pendingSpawnCell))
+                    {
+                        failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                        return false;
+                    }
+                }
+                else if (!pendingArrivalManifestationDefName.NullOrEmpty() && pendingArrivalManifestationAtRitualFocus)
+                {
+                    pendingSpawnCell = RitualFocusCell;
+                    if (!pendingSpawnCell.IsValid || !pendingSpawnCell.InBounds(Map))
                     {
                         failReason = "ABY_CircleFail_NoBossArrival".Translate();
                         return false;
@@ -2124,6 +2136,7 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = null;
             pendingArrivalManifestationDefName = null;
             pendingArrivalManifestationWarmupTicks = 0;
+            pendingArrivalManifestationAtRitualFocus = false;
             pendingArrivalSoundDefName = null;
             pendingFaction = null;
             pendingSpawnCell = IntVec3.Invalid;

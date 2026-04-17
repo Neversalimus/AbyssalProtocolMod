@@ -57,9 +57,16 @@ namespace AbyssalProtocol
 
         public override IEnumerable<Gizmo> CompGetGizmos()
         {
-            foreach (Gizmo gizmo in base.CompGetGizmos())
+            IEnumerable<Gizmo> baseGizmos = base.CompGetGizmos();
+            if (baseGizmos != null)
             {
-                yield return gizmo;
+                foreach (Gizmo gizmo in baseGizmos)
+                {
+                    if (gizmo != null)
+                    {
+                        yield return gizmo;
+                    }
+                }
             }
 
             Pawn pawn = Pawn;

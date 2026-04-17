@@ -23,6 +23,7 @@ namespace AbyssalProtocol
         public string completionLetterDescKey;
         public string arrivalManifestationDefName;
         public int arrivalManifestationWarmupTicks;
+        public bool arrivalManifestationAtRitualFocus;
         public string arrivalSoundDefName = "ABY_ArchonBossArrive";
 
         public CompProperties_UseEffectSummonBoss()
