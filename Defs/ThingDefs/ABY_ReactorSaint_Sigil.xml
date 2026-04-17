@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ReactorSaintSigil</defName>
+    <label>reactor saint sigil</label>
+    <description>A reactor-bound invocation wafer keyed to a saint-class biomechanical breach. Carry it to an abyssal summoning circle to route the Infernal Reactor Saint into local space through a staged phase-in manifestation.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_ReactorSaintSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>740</MarketValue>
+      <Mass>0.38</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>invoke reactor saint</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>reactor_saint</ritualId>
+        <summonMode>Boss</summonMode>
+        <pawnKindDefName>ABY_ReactorSaint</pawnKindDefName>
+        <bossLabel>Infernal Reactor Saint</bossLabel>
+        <spawnPoints>1320</spawnPoints>
+        <ritualWarmupTicks>210</ritualWarmupTicks>
+        <arrivalManifestationDefName>ABY_Manifestation_ReactorSaintArrival</arrivalManifestationDefName>
+        <arrivalManifestationWarmupTicks>95</arrivalManifestationWarmupTicks>
+        <arrivalSoundDefName>ABY_ReactorSaintCharge</arrivalSoundDefName>
+        <completionLetterLabelKey>ABY_ReactorSaintSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_ReactorSaintSummonSuccessDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

@@ -126,6 +126,22 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "reactor_saint",
+                LabelKey = "ABY_CircleRitual_ReactorSaint_Label",
+                SubtitleKey = "ABY_CircleRitual_ReactorSaint_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_ReactorSaint_Desc",
+                BossLabel = "Infernal Reactor Saint",
+                SigilThingDefName = "ABY_ReactorSaintSigil",
+                PawnKindDefName = "ABY_ReactorSaint",
+                RewardHintKey = "ABY_CircleRitual_ReactorSaint_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_ReactorSaint_SideEffects",
+                BaseRisk = 0.79f,
+                InstabilityGain = 0.21f,
+                ContaminationGain = 0.09f,
+                SpawnPoints = 1320
+            },
+            new RitualDefinition
+            {
                 Id = "dominion_gate",
                 LabelKey = "ABY_CircleRitual_Dominion_Label",
                 SubtitleKey = "ABY_CircleRitual_Dominion_Subtitle",

@@ -172,7 +172,9 @@ namespace AbyssalProtocol
             Map map,
             IntVec3 spawnCell,
             string bossLabel,
-            string arrivalSoundDefName = "ABY_ArchonBossArrive")
+            string arrivalSoundDefName = "ABY_ArchonBossArrive",
+            string completionLetterLabelKey = null,
+            string completionLetterDescKey = null)
         {
             if (pawn == null || faction == null || map == null || !spawnCell.IsValid)
             {
@@ -187,9 +189,15 @@ namespace AbyssalProtocol
             fxComp?.RegisterBoss(pawn);
 
             AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
+            string letterLabel = completionLetterLabelKey.NullOrEmpty()
+                ? "ABY_BossSummonSuccessLabel".Translate()
+                : completionLetterLabelKey.Translate();
+            string letterDesc = completionLetterDescKey.NullOrEmpty()
+                ? "ABY_BossSummonSuccessDesc".Translate(bossLabel)
+                : completionLetterDescKey.Translate();
             Find.LetterStack.ReceiveLetter(
-                "ABY_BossSummonSuccessLabel".Translate(),
-                "ABY_BossSummonSuccessDesc".Translate(bossLabel),
+                letterLabel,
+                letterDesc,
                 LetterDefOf.ThreatBig,
                 new TargetInfo(spawnCell, map));
         }

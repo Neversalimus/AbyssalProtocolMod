@@ -95,6 +95,9 @@ namespace AbyssalProtocol
         private string pendingSummonMode;
         private string pendingCompletionLetterLabelKey;
         private string pendingCompletionLetterDescKey;
+        private string pendingArrivalManifestationDefName;
+        private int pendingArrivalManifestationWarmupTicks;
+        private string pendingArrivalSoundDefName;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
         private int pendingImpCount;
@@ -187,6 +190,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingSummonMode, "pendingSummonMode");
             Scribe_Values.Look(ref pendingCompletionLetterLabelKey, "pendingCompletionLetterLabelKey");
             Scribe_Values.Look(ref pendingCompletionLetterDescKey, "pendingCompletionLetterDescKey");
+            Scribe_Values.Look(ref pendingArrivalManifestationDefName, "pendingArrivalManifestationDefName");
+            Scribe_Values.Look(ref pendingArrivalManifestationWarmupTicks, "pendingArrivalManifestationWarmupTicks", 0);
+            Scribe_Values.Look(ref pendingArrivalSoundDefName, "pendingArrivalSoundDefName");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
             Scribe_Values.Look(ref pendingImpCount, "pendingImpCount", 0);
@@ -395,6 +401,9 @@ namespace AbyssalProtocol
             pendingBossLabel = summonProps.bossLabel;
             pendingCompletionLetterLabelKey = summonProps.completionLetterLabelKey;
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
+            pendingArrivalManifestationDefName = summonProps.arrivalManifestationDefName;
+            pendingArrivalManifestationWarmupTicks = Mathf.Max(0, summonProps.arrivalManifestationWarmupTicks);
+            pendingArrivalSoundDefName = summonProps.arrivalSoundDefName;
 
             bool dominionCrisisMode = IsDominionCrisisSummonMode(pendingSummonMode);
             pendingFaction = dominionCrisisMode ? null : AbyssalBossSummonUtility.ResolveHostileFaction();
@@ -410,9 +419,9 @@ namespace AbyssalProtocol
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingSupportImpCount = Mathf.Max(0, summonProps.supportImpCount);
-            pendingSupportThrallCount = Mathf.Max(0, summonProps.supportThrallCount);
-            pendingSupportZealotCount = Mathf.Max(0, summonProps.supportZealotCount);
+            pendingSupportImpCount = 0;
+            pendingSupportThrallCount = 0;
+            pendingSupportZealotCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
 
@@ -1533,6 +1542,18 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (TrySpawnPendingBossManifestation(out failReason))
+            {
+                ApplyRitualInstability();
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.22f);
+                if (pendingSpawnCell.IsValid)
+                {
+                    ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", pendingSpawnCell, Map);
+                }
+
+                return;
+            }
+
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
                     Map,
                     pendingPawnKindDef,
@@ -1551,9 +1572,62 @@ namespace AbyssalProtocol
                 pendingFaction,
                 Map,
                 pendingSpawnCell,
-                pendingBossLabel);
+                pendingBossLabel,
+                pendingArrivalSoundDefName,
+                pendingCompletionLetterLabelKey,
+                pendingCompletionLetterDescKey);
             TrySpawnPendingSupportPack();
             ApplyRitualInstability();
+        }
+
+        private bool TrySpawnPendingBossManifestation(out string failReason)
+        {
+            failReason = null;
+
+            if (pendingArrivalManifestationDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            if (Map == null || pendingFaction == null || pendingPawnKindDef == null)
+            {
+                failReason = "Missing boss manifestation summon state.";
+                return false;
+            }
+
+            ThingDef manifestationDef = DefDatabase<ThingDef>.GetNamedSilentFail(pendingArrivalManifestationDefName);
+            if (manifestationDef == null)
+            {
+                failReason = "Missing ThingDef: " + pendingArrivalManifestationDefName;
+                return false;
+            }
+
+            IntVec3 spawnCell = pendingSpawnCell.IsValid ? pendingSpawnCell : RitualFocusCell;
+            if (!spawnCell.IsValid || !spawnCell.InBounds(Map))
+            {
+                failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                return false;
+            }
+
+            Thing thing = GenSpawn.Spawn(manifestationDef, spawnCell, Map, WipeMode.Vanish);
+            if (!(thing is Building_ABY_ReactorSaintManifestation manifestation))
+            {
+                thing.Destroy(DestroyMode.Vanish);
+                failReason = "Spawned manifestation was not a Reactor Saint manifestation building.";
+                return false;
+            }
+
+            manifestation.Initialize(
+                pendingPawnKindDef,
+                pendingFaction,
+                Mathf.Max(30, pendingArrivalManifestationWarmupTicks),
+                spawnCell,
+                pendingBossLabel,
+                pendingArrivalSoundDefName,
+                pendingCompletionLetterLabelKey,
+                pendingCompletionLetterDescKey);
+
+            return true;
         }
 
         private void CompleteDominionCrisisInitialization()
@@ -2048,15 +2122,18 @@ namespace AbyssalProtocol
             pendingSummonMode = null;
             pendingCompletionLetterLabelKey = null;
             pendingCompletionLetterDescKey = null;
+            pendingArrivalManifestationDefName = null;
+            pendingArrivalManifestationWarmupTicks = 0;
+            pendingArrivalSoundDefName = null;
             pendingFaction = null;
             pendingSpawnCell = IntVec3.Invalid;
             pendingImpCount = 0;
             pendingImpPortalWarmupTicks = 0;
             pendingImpSpawnIntervalTicks = 0;
             pendingImpPortalLingerTicks = 0;
-            pendingSupportImpCount = Mathf.Max(0, summonProps.supportImpCount);
-            pendingSupportThrallCount = Mathf.Max(0, summonProps.supportThrallCount);
-            pendingSupportZealotCount = Mathf.Max(0, summonProps.supportZealotCount);
+            pendingSupportImpCount = 0;
+            pendingSupportThrallCount = 0;
+            pendingSupportZealotCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
             pendingCapacitorStartupCost = 0f;

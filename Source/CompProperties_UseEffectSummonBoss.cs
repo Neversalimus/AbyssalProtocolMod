@@ -21,6 +21,9 @@ namespace AbyssalProtocol
         public int supportZealotCount;
         public string completionLetterLabelKey;
         public string completionLetterDescKey;
+        public string arrivalManifestationDefName;
+        public int arrivalManifestationWarmupTicks;
+        public string arrivalSoundDefName = "ABY_ArchonBossArrive";
 
         public CompProperties_UseEffectSummonBoss()
         {

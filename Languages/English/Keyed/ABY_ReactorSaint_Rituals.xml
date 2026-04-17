@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleRitual_ReactorSaint_Label>Ignite the Saint</ABY_CircleRitual_ReactorSaint_Label>
+  <ABY_CircleRitual_ReactorSaint_Subtitle>Biomechanical reactor boss breach</ABY_CircleRitual_ReactorSaint_Subtitle>
+  <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and stages a reactor-phase manifestation that condenses into the Infernal Reactor Saint. This breach is built around ranged pressure, reactor shielding, heat saturation, and a visible phase-in arrival instead of an instant pop-in.</ABY_CircleRitual_ReactorSaint_Desc>
+  <ABY_CircleRitual_ReactorSaint_Rewards>• Introduces the second full boss tier after the first vertical slice&#10;• High-value residue and future reactor-grade reward routing&#10;• Forces anti-artillery spacing and sustained boss pressure management</ABY_CircleRitual_ReactorSaint_Rewards>
+  <ABY_CircleRitual_ReactorSaint_SideEffects>• Arrives through a staged manifestation instead of immediate spawn&#10;• Uses ranged volley and zone-barrage patterns to punish static lines&#10;• Later packages layer in full Aegis and phase pressure instead of treating it like a simple gun-platform</ABY_CircleRitual_ReactorSaint_SideEffects>
+  <ABY_ReactorSaintSummonSuccessLabel>Reactor saint manifested</ABY_ReactorSaintSummonSuccessLabel>
+  <ABY_ReactorSaintSummonSuccessDesc>The reactor sigil has taken. A saint-class biomechanical breach has completed its phase-in cycle and the Infernal Reactor Saint is now crossing into local space.</ABY_ReactorSaintSummonSuccessDesc>
+</LanguageData>
