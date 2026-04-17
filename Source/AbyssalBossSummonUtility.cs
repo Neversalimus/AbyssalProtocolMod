@@ -108,8 +108,8 @@ namespace AbyssalProtocol
             }
 
             IntVec3 anchor = GetColonyAnchorCell(map, fallbackOrigin);
-            float min = (float)Math.Max(6d, minDistance);
-            float max = (float)Math.Max(min + 2f, maxDistance);
+            float min = (float)System.Math.Max(6d, minDistance);
+            float max = (float)System.Math.Max(min + 2f, maxDistance);
             List<IntVec3> candidates = new List<IntVec3>();
             int radialCount = GenRadial.NumCellsInRadius(max);
 

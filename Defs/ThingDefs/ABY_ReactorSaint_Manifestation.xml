@@ -3,24 +3,92 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_Manifestation_ReactorSaintArrival</defName>
-    <label>reactor saint arrival manifestation</label>
-    <description>Hidden breach-skyfall cocoon anchor for the Infernal Reactor Saint.</description>
-    <thingClass>AbyssalProtocol.Building_ABY_ReactorSaintManifestation</thingClass>
-    <category>Building</category>
+    <label>reactor saint cocoon incoming</label>
+    <description>A biomechanical breach cocoon descending toward the colony.</description>
+    <thingClass>RimWorld.Skyfaller</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Normal</tickerType>
+    <drawerType>RealtimeOnly</drawerType>
+    <drawOffscreen>true</drawOffscreen>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <altitudeLayer>Skyfaller</altitudeLayer>
     <graphicData>
-      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
+      <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutFlying</shaderType>
+      <drawSize>(2.90,4.20)</drawSize>
+    </graphicData>
+    <skyfaller>
+      <ticksToImpactRange>
+        <min>60</min>
+        <max>70</max>
+      </ticksToImpactRange>
+      <explosionRadius>3.9</explosionRadius>
+      <explosionDamage>28</explosionDamage>
+      <damageSpawnedThings>false</damageSpawnedThings>
+      <movementType>Accelerate</movementType>
+      <speed>0.85</speed>
+      <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
+      <shadowSize>(4.20,4.20)</shadowSize>
+      <cameraShake>0.75</cameraShake>
+      <impactSound>ABY_ReactorSaintBarrageImpact</impactSound>
+      <anticipationSound>DropPod_Fall</anticipationSound>
+      <anticipationSoundTicks>55</anticipationSoundTicks>
+      <motesPerCell>0</motesPerCell>
+      <spawnThing>ABY_ReactorSaintCocoon</spawnThing>
+    </skyfaller>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_ReactorSaintCocoon</defName>
+    <label>reactor saint cocoon</label>
+    <description>A reactor-sealed cocoon holding the Infernal Reactor Saint in a suspended breach state.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_ReactorSaintCocoon</thingClass>
+    <category>Building</category>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.01</fillPercent>
+    <selectable>false</selectable>
+    <rotatable>false</rotatable>
+    <altitudeLayer>BuildingOnTop</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>TransparentPostLight</shaderType>
-      <drawSize>(1.0,1.0)</drawSize>
+      <drawSize>(2.90,4.20)</drawSize>
     </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_Manifestation_ReactorSaintDeparture</defName>
+    <label>reactor saint cocoon departure</label>
+    <description>The spent cocoon burning upward back into the breach.</description>
+    <thingClass>RimWorld.Skyfaller</thingClass>
+    <category>Ethereal</category>
     <tickerType>Normal</tickerType>
-    <fillPercent>0.01</fillPercent>
-    <passability>PassThroughOnly</passability>
-    <selectable>false</selectable>
-    <useHitPoints>false</useHitPoints>
-    <rotatable>false</rotatable>
-    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawerType>RealtimeOnly</drawerType>
     <drawOffscreen>true</drawOffscreen>
+    <useHitPoints>false</useHitPoints>
+    <selectable>false</selectable>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/ReactorSaintArrival/ABY_ReactorSaintCocoon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutFlying</shaderType>
+      <drawSize>(2.90,4.20)</drawSize>
+    </graphicData>
+    <skyfaller>
+      <reversed>true</reversed>
+      <ticksToDiscardInReverse>55</ticksToDiscardInReverse>
+      <movementType>Accelerate</movementType>
+      <speed>0.90</speed>
+      <shadow>Things/Skyfaller/SkyfallerShadowDropPod</shadow>
+      <shadowSize>(4.20,4.20)</shadowSize>
+      <motesPerCell>0</motesPerCell>
+    </skyfaller>
   </ThingDef>
 
 </Defs>

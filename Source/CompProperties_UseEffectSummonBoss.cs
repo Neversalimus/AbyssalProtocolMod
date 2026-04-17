@@ -23,10 +23,6 @@ namespace AbyssalProtocol
         public string completionLetterDescKey;
         public string arrivalManifestationDefName;
         public int arrivalManifestationWarmupTicks;
-        public int arrivalReleaseDelayTicks;
-        public int arrivalPostReleaseTicks;
-        public float arrivalImpactExplosionRadius;
-        public int arrivalImpactExplosionDamage;
         public bool arrivalNearColony;
         public float arrivalNearColonyMinDistance = 12f;
         public float arrivalNearColonyMaxDistance = 26f;

@@ -97,10 +97,6 @@ namespace AbyssalProtocol
         private string pendingCompletionLetterDescKey;
         private string pendingArrivalManifestationDefName;
         private int pendingArrivalManifestationWarmupTicks;
-        private int pendingArrivalReleaseDelayTicks;
-        private int pendingArrivalPostReleaseTicks;
-        private float pendingArrivalImpactExplosionRadius;
-        private int pendingArrivalImpactExplosionDamage;
         private string pendingArrivalSoundDefName;
         private Faction pendingFaction;
         private IntVec3 pendingSpawnCell = IntVec3.Invalid;
@@ -196,10 +192,6 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingCompletionLetterDescKey, "pendingCompletionLetterDescKey");
             Scribe_Values.Look(ref pendingArrivalManifestationDefName, "pendingArrivalManifestationDefName");
             Scribe_Values.Look(ref pendingArrivalManifestationWarmupTicks, "pendingArrivalManifestationWarmupTicks", 0);
-            Scribe_Values.Look(ref pendingArrivalReleaseDelayTicks, "pendingArrivalReleaseDelayTicks", 0);
-            Scribe_Values.Look(ref pendingArrivalPostReleaseTicks, "pendingArrivalPostReleaseTicks", 0);
-            Scribe_Values.Look(ref pendingArrivalImpactExplosionRadius, "pendingArrivalImpactExplosionRadius", 0f);
-            Scribe_Values.Look(ref pendingArrivalImpactExplosionDamage, "pendingArrivalImpactExplosionDamage", 0);
             Scribe_Values.Look(ref pendingArrivalSoundDefName, "pendingArrivalSoundDefName");
             Scribe_References.Look(ref pendingFaction, "pendingFaction");
             Scribe_Values.Look(ref pendingSpawnCell, "pendingSpawnCell");
@@ -411,10 +403,6 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
             pendingArrivalManifestationDefName = summonProps.arrivalManifestationDefName;
             pendingArrivalManifestationWarmupTicks = Mathf.Max(0, summonProps.arrivalManifestationWarmupTicks);
-            pendingArrivalReleaseDelayTicks = Mathf.Max(0, summonProps.arrivalReleaseDelayTicks);
-            pendingArrivalPostReleaseTicks = Mathf.Max(0, summonProps.arrivalPostReleaseTicks);
-            pendingArrivalImpactExplosionRadius = Mathf.Max(0f, summonProps.arrivalImpactExplosionRadius);
-            pendingArrivalImpactExplosionDamage = Mathf.Max(0, summonProps.arrivalImpactExplosionDamage);
             pendingArrivalSoundDefName = summonProps.arrivalSoundDefName;
 
             bool dominionCrisisMode = IsDominionCrisisSummonMode(pendingSummonMode);
@@ -482,11 +470,11 @@ namespace AbyssalProtocol
                         return false;
                     }
                 }
-                else if (!pendingArrivalManifestationDefName.NullOrEmpty() && summonProps.arrivalNearColony)
+                else if (!summonProps.arrivalManifestationDefName.NullOrEmpty() && summonProps.arrivalNearColony)
                 {
                     if (!AbyssalBossSummonUtility.TryFindNearColonyArrivalCell(
                             Map,
-                            RitualFocusCell,
+                            RitualFocusCell.IsValid ? RitualFocusCell : Position,
                             summonProps.arrivalNearColonyMinDistance,
                             summonProps.arrivalNearColonyMaxDistance,
                             out pendingSpawnCell))
@@ -1634,11 +1622,17 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (manifestationDef.thingClass != null && typeof(Skyfaller).IsAssignableFrom(manifestationDef.thingClass))
+            {
+                SkyfallerMaker.SpawnSkyfaller(manifestationDef, spawnCell, Map);
+                return true;
+            }
+
             Thing thing = GenSpawn.Spawn(manifestationDef, spawnCell, Map, WipeMode.Vanish);
             if (!(thing is Building_ABY_ReactorSaintManifestation manifestation))
             {
                 thing.Destroy(DestroyMode.Vanish);
-                failReason = "Spawned manifestation was not a Reactor Saint manifestation building.";
+                failReason = "Spawned manifestation was not a supported Reactor Saint arrival thing.";
                 return false;
             }
 
@@ -1650,11 +1644,7 @@ namespace AbyssalProtocol
                 pendingBossLabel,
                 pendingArrivalSoundDefName,
                 pendingCompletionLetterLabelKey,
-                pendingCompletionLetterDescKey,
-                pendingArrivalReleaseDelayTicks,
-                pendingArrivalPostReleaseTicks,
-                pendingArrivalImpactExplosionRadius,
-                pendingArrivalImpactExplosionDamage);
+                pendingCompletionLetterDescKey);
 
             return true;
         }
@@ -2153,10 +2143,6 @@ namespace AbyssalProtocol
             pendingCompletionLetterDescKey = null;
             pendingArrivalManifestationDefName = null;
             pendingArrivalManifestationWarmupTicks = 0;
-            pendingArrivalReleaseDelayTicks = 0;
-            pendingArrivalPostReleaseTicks = 0;
-            pendingArrivalImpactExplosionRadius = 0f;
-            pendingArrivalImpactExplosionDamage = 0;
             pendingArrivalSoundDefName = null;
             pendingFaction = null;
             pendingSpawnCell = IntVec3.Invalid;

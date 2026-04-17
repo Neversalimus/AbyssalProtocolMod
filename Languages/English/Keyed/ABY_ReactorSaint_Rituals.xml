@@ -2,9 +2,9 @@
 <LanguageData>
   <ABY_CircleRitual_ReactorSaint_Label>Ignite the Saint</ABY_CircleRitual_ReactorSaint_Label>
   <ABY_CircleRitual_ReactorSaint_Subtitle>Biomechanical reactor boss breach</ABY_CircleRitual_ReactorSaint_Subtitle>
-  <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and stages a breach-skyfall cocoon that slams down near the colony with an impact blast. The cocoon remains sealed for about twenty in-game minutes, releases the Infernal Reactor Saint, then burns back upward roughly ten minutes later.</ABY_CircleRitual_ReactorSaint_Desc>
+  <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and calls down a sealed reactor cocoon near the colony. The cocoon crashes in with a violent breach impact, remains dormant for a prolonged cycle, then releases the Infernal Reactor Saint before burning upward into the sky.</ABY_CircleRitual_ReactorSaint_Desc>
   <ABY_CircleRitual_ReactorSaint_Rewards>• Second full boss tier after the first vertical slice&#10;• Drops a saint reactor core, spacer-grade salvage, and high-value residue&#10;• Forces anti-artillery spacing and sustained boss pressure management</ABY_CircleRitual_ReactorSaint_Rewards>
-  <ABY_CircleRitual_ReactorSaint_SideEffects>• Impacts near the colony instead of entering from the map edge&#10;• Stays on the field as a sealed reactor cocoon for roughly twenty in-game minutes before release&#10;• Launches back upward about ten minutes after releasing the boss</ABY_CircleRitual_ReactorSaint_SideEffects>
-  <ABY_ReactorSaintSummonSuccessLabel>Reactor saint manifested</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>The reactor sigil has taken. A saint-class biomechanical cocoon has completed its sealed skyfall cycle, ruptured near the colony, and released the Infernal Reactor Saint into local space.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_CircleRitual_ReactorSaint_SideEffects>• Arrives as a real falling cocoon instead of an instant pop-in&#10;• Impacts near the colony with a breach explosion before opening&#10;• Stays on the field after release, then burns back into the sky</ABY_CircleRitual_ReactorSaint_SideEffects>
+  <ABY_ReactorSaintSummonSuccessLabel>Reactor saint released</ABY_ReactorSaintSummonSuccessLabel>
+  <ABY_ReactorSaintSummonSuccessDesc>The sealed cocoon has broken open. The Infernal Reactor Saint has stepped out of the breach and is now fully active.</ABY_ReactorSaintSummonSuccessDesc>
 </LanguageData>
