@@ -242,18 +242,20 @@ namespace AbyssalProtocol
             Widgets.DrawBoxSolid(rect, new Color(0.04f, 0.04f, 0.05f, alpha * 0.94f));
             Widgets.DrawBoxSolid(innerRect, new Color(palette.backFill.r, palette.backFill.g, palette.backFill.b, alpha * 0.96f));
 
+            DrawFrameTextureBackground(rect, frameTex, alpha);
+
             if (displayedTrailPct > 0.001f)
             {
                 Rect trailRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedTrailPct, innerRect.height);
-                Widgets.DrawBoxSolid(trailRect, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.32f));
-                DrawTexturedFill(trailRect, trailTex, new Color(1f, 1f, 1f, alpha * 0.58f));
+                Widgets.DrawBoxSolid(trailRect, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.42f));
+                DrawTexturedFill(trailRect, trailTex, new Color(1f, 1f, 1f, alpha * 0.50f));
             }
 
             if (displayedHealthPct > 0.001f)
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedHealthPct, innerRect.height);
                 Widgets.DrawBoxSolid(fillRect, new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.98f));
-                DrawTexturedFill(fillRect, fillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                DrawTexturedFill(fillRect, fillTex, new Color(1f, 1f, 1f, alpha * 0.52f));
                 Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(3f, fillRect.height)), new Color(1f, 0.92f, 0.82f, alpha * 0.18f));
 
                 if (!settings.reducedMotion && fillRect.width > 24f)
@@ -273,14 +275,39 @@ namespace AbyssalProtocol
                 DrawCriticalPhaseOverlay(innerRect, palette, alpha, settings.reducedMotion);
             }
 
-            GUI.color = new Color(1f, 1f, 1f, alpha);
-            GUI.DrawTexture(rect, frameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
-            GUI.color = Color.white;
+            DrawFrameTextureOverlay(rect, frameTex, alpha);
 
             if (state.profile.showPhaseMarkers && settings.showPhaseMarkers)
             {
                 DrawPhaseMarkers(rect, innerRect, state, palette, alpha);
             }
+        }
+
+
+        private static void DrawFrameTextureBackground(Rect rect, Texture2D frameTex, float alpha)
+        {
+            if (frameTex == null)
+            {
+                return;
+            }
+
+            Color oldColor = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, Mathf.Clamp01(alpha) * 0.34f);
+            GUI.DrawTexture(rect, frameTex, ScaleMode.StretchToFill, true);
+            GUI.color = oldColor;
+        }
+
+        private static void DrawFrameTextureOverlay(Rect rect, Texture2D frameTex, float alpha)
+        {
+            if (frameTex == null)
+            {
+                return;
+            }
+
+            Color oldColor = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, Mathf.Clamp01(alpha) * 0.22f);
+            GUI.DrawTexture(rect, frameTex, ScaleMode.StretchToFill, true);
+            GUI.color = oldColor;
         }
 
         private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)
@@ -306,14 +333,16 @@ namespace AbyssalProtocol
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
         {
             Texture2D subFillTex = ResolveSubFillTexture(state?.profile);
+            Texture2D frameTex = ResolveFrameTexture(state?.profile);
             Widgets.DrawBoxSolid(rect, new Color(0.035f, 0.04f, 0.05f, alpha * 0.92f));
             Rect innerRect = rect.ContractedBy(2f);
             Widgets.DrawBoxSolid(innerRect, new Color(0.07f, 0.10f, 0.14f, alpha * 0.94f));
+            DrawFrameTextureBackground(rect, frameTex, alpha * 0.65f);
             if (displayedSecondaryPct > 0.001f)
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedSecondaryPct, innerRect.height);
-                Widgets.DrawBoxSolid(fillRect, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.94f));
-                DrawTexturedFill(fillRect, subFillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                Widgets.DrawBoxSolid(fillRect, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.98f));
+                DrawTexturedFill(fillRect, subFillTex, new Color(1f, 1f, 1f, alpha * 0.50f));
                 Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(2f, fillRect.height)), new Color(1f, 1f, 1f, alpha * 0.14f));
             }
 
@@ -325,6 +354,7 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
+            DrawFrameTextureOverlay(rect, frameTex, alpha * 0.80f);
             Widgets.DrawBox(rect, 1);
             if (state.secondaryLabel.NullOrEmpty())
             {

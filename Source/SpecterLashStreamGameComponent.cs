@@ -15,8 +15,8 @@ namespace AbyssalProtocol
         private const string TailSoundDefName = "ABY_SpecterLashTail";
 
         private const int VisualIntervalTicks = 1;
-        private const int DamageIntervalTicks = 14;
-        private const int PawnStreamDurationTicks = 56;
+        private const int DamageIntervalTicks = 10;
+        private const int PawnStreamDurationTicks = 72;
         private const int PointStreamDurationTicks = 18;
         private const float PulseDamage = 8f;
         private const float PulseArmorPenetration = 0.24f;
@@ -62,17 +62,23 @@ namespace AbyssalProtocol
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             RemoveExistingStreamFor(source);
 
-            activeStreams.Add(new ActiveStream
+            ActiveStream stream = new ActiveStream
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
                 targetPawnId = target?.thingIDNumber ?? -1,
                 expireTick = ticksGame + PawnStreamDurationTicks,
-                nextDamageTick = ticksGame + DamageIntervalTicks,
+                nextDamageTick = ticksGame + 4,
                 seed = source.thingIDNumber * 397 ^ (target?.thingIDNumber ?? fallbackTargetPos.GetHashCode()) * 17,
                 damageEnabled = target != null && GenHostility.HostileTo(source, target),
                 staticTargetPos = targetPos
-            });
+            };
+            activeStreams.Add(stream);
+
+            if (target != null && stream.damageEnabled)
+            {
+                ApplyPulseDamage(source, target);
+            }
 
             if (source.MapHeld != null)
             {

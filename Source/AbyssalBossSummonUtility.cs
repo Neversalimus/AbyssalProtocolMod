@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace AbyssalProtocol
 {
@@ -19,9 +20,6 @@ namespace AbyssalProtocol
         private const string ChoirEngineRaceDefName = "ABY_ChoirEngine";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
-        private const int BossArrivalNearColonyEdgeMargin = 8;
-        private const int BossManifestationMinEdgeMargin = 6;
-        private const float BossManifestationSearchRadius = 18f;
 
         public static Faction ResolveHostileFaction()
         {
@@ -81,16 +79,10 @@ namespace AbyssalProtocol
 
         public static bool TryFindBossArrivalCell(Map map, out IntVec3 cell)
         {
-            cell = IntVec3.Invalid;
-            if (map == null)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 8; i++)
             {
                 if (CellFinder.TryFindRandomEdgeCellWith(
-                    c => IsValidBossArrivalCell(map, c, allowEdgeCell: true),
+                    c => c.Standable(map) && !c.Fogged(map),
                     map,
                     CellFinder.EdgeRoadChance_Hostile,
                     out cell))
@@ -99,7 +91,8 @@ namespace AbyssalProtocol
                 }
             }
 
-            return CellFinder.TryFindRandomCell(map, c => IsValidBossArrivalCell(map, c, allowEdgeCell: true), out cell);
+            cell = IntVec3.Invalid;
+            return false;
         }
 
         public static bool TryFindNearColonyArrivalCell(
@@ -152,46 +145,6 @@ namespace AbyssalProtocol
             if (IsValidNearColonyArrivalCell(map, anchor))
             {
                 cell = anchor;
-                return true;
-            }
-
-            return TryFindBossArrivalCell(map, out cell);
-        }
-
-        public static bool TryResolveBossManifestationCell(Map map, ThingDef manifestationDef, IntVec3 requestedCell, out IntVec3 cell)
-        {
-            cell = IntVec3.Invalid;
-            if (map == null)
-            {
-                return false;
-            }
-
-            if (IsValidBossManifestationCell(map, requestedCell))
-            {
-                cell = requestedCell;
-                return true;
-            }
-
-            int radialCount = GenRadial.NumCellsInRadius(BossManifestationSearchRadius);
-            List<IntVec3> nearbyCandidates = new List<IntVec3>();
-            for (int i = 0; i < radialCount; i++)
-            {
-                IntVec3 candidate = requestedCell + GenRadial.RadialPattern[i];
-                if (IsValidBossManifestationCell(map, candidate))
-                {
-                    nearbyCandidates.Add(candidate);
-                }
-            }
-
-            if (nearbyCandidates.Count > 0)
-            {
-                nearbyCandidates.SortBy(c => c.DistanceToSquared(requestedCell));
-                cell = nearbyCandidates[0];
-                return true;
-            }
-
-            if (TryFindNearColonyArrivalCell(map, requestedCell.IsValid ? requestedCell : map.Center, 8f, 30f, out cell))
-            {
                 return true;
             }
 
@@ -275,34 +228,17 @@ namespace AbyssalProtocol
 
         private static bool IsValidNearColonyArrivalCell(Map map, IntVec3 cell)
         {
-            return IsValidBossArrivalCell(map, cell, allowEdgeCell: false);
-        }
-
-        private static bool IsValidBossManifestationCell(Map map, IntVec3 cell)
-        {
-            return IsValidBossArrivalCell(map, cell, allowEdgeCell: false, additionalEdgeMargin: BossManifestationMinEdgeMargin);
-        }
-
-        private static bool IsValidBossArrivalCell(Map map, IntVec3 cell, bool allowEdgeCell, int additionalEdgeMargin = 0)
-        {
             if (!cell.IsValid || !cell.InBounds(map))
             {
                 return false;
             }
 
-            int edgeMargin = allowEdgeCell ? System.Math.Max(0, additionalEdgeMargin) : System.Math.Max(BossArrivalNearColonyEdgeMargin, additionalEdgeMargin);
-            if (edgeMargin > 0 && (cell.x < edgeMargin || cell.z < edgeMargin || cell.x >= map.Size.x - edgeMargin || cell.z >= map.Size.z - edgeMargin))
+            if (cell.x < 8 || cell.z < 8 || cell.x >= map.Size.x - 8 || cell.z >= map.Size.z - 8)
             {
                 return false;
             }
 
             if (!cell.Standable(map) || !cell.Walkable(map) || cell.Fogged(map) || cell.Roofed(map))
-            {
-                return false;
-            }
-
-            TerrainDef terrain = cell.GetTerrain(map);
-            if (terrain == null || terrain.IsWater)
             {
                 return false;
             }
@@ -409,7 +345,7 @@ namespace AbyssalProtocol
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
             fxComp?.RegisterBoss(pawn, bossLabel);
 
-            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
+            KickstartBossAggression(pawn);
             string letterLabel = completionLetterLabelKey.NullOrEmpty()
                 ? "ABY_BossSummonSuccessLabel".Translate()
                 : completionLetterLabelKey.Translate();
@@ -421,6 +357,34 @@ namespace AbyssalProtocol
                 letterDesc,
                 LetterDefOf.ThreatBig,
                 new TargetInfo(spawnCell, map));
+        }
+
+        private static void KickstartBossAggression(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
+            {
+                return;
+            }
+
+            AbyssalThreatPawnUtility.EnsureHostileFaction(pawn);
+            AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
+            pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
+            pawn.pather?.StopDead();
+            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
+
+            Pawn initialTarget = AbyssalThreatPawnUtility.FindBestTarget(pawn, 0f, 45f, false, true, false, 4f, 0.5f)
+                ?? AbyssalThreatPawnUtility.FindClosestThreatWithin(pawn, 45f);
+
+            if (initialTarget == null)
+            {
+                return;
+            }
+
+            pawn.rotationTracker?.FaceTarget(initialTarget.Position);
+            if (pawn.Position.DistanceTo(initialTarget.Position) > 8.5f)
+            {
+                pawn.pather?.StartPath(initialTarget, PathEndMode.Touch);
+            }
         }
 
         public static bool TryFindNearestAvailableCircle(
