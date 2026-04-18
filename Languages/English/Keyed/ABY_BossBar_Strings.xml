@@ -8,7 +8,7 @@
   <ABY_BossBar_ShowPhaseMarkers>Show phase markers</ABY_BossBar_ShowPhaseMarkers>
   <ABY_BossBar_ShowPhaseMarkersDesc>Displays threshold markers for supported boss phase transitions.</ABY_BossBar_ShowPhaseMarkersDesc>
   <ABY_BossBar_ShowPhaseLabel>Show current phase label</ABY_BossBar_ShowPhaseLabel>
-  <ABY_BossBar_ShowPhaseLabelDesc>Displays the current phase tag under the boss bar.</ABY_BossBar_ShowPhaseLabelDesc>
+  <ABY_BossBar_ShowPhaseLabelDesc>Displays the current phase tag in the boss bar header.</ABY_BossBar_ShowPhaseLabelDesc>
   <ABY_BossBar_ShowSecondaryBars>Show secondary bars</ABY_BossBar_ShowSecondaryBars>
   <ABY_BossBar_ShowSecondaryBarsDesc>Displays supported secondary boss resources such as the Reactor Saint's Aegis.</ABY_BossBar_ShowSecondaryBarsDesc>
   <ABY_BossBar_ShowCalibrationButton>Show adjustment button on boss bar</ABY_BossBar_ShowCalibrationButton>

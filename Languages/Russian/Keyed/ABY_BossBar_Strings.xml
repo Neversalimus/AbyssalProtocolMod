@@ -8,7 +8,7 @@
   <ABY_BossBar_ShowPhaseMarkers>Показывать маркеры фаз</ABY_BossBar_ShowPhaseMarkers>
   <ABY_BossBar_ShowPhaseMarkersDesc>Показывает пороги переходов фаз у поддерживаемых боссов.</ABY_BossBar_ShowPhaseMarkersDesc>
   <ABY_BossBar_ShowPhaseLabel>Показывать текущую фазу</ABY_BossBar_ShowPhaseLabel>
-  <ABY_BossBar_ShowPhaseLabelDesc>Показывает текущую фазу под полосой босса.</ABY_BossBar_ShowPhaseLabelDesc>
+  <ABY_BossBar_ShowPhaseLabelDesc>Показывает текущую фазу в верхней строке boss bar.</ABY_BossBar_ShowPhaseLabelDesc>
   <ABY_BossBar_ShowSecondaryBars>Показывать вторичные полосы</ABY_BossBar_ShowSecondaryBars>
   <ABY_BossBar_ShowSecondaryBarsDesc>Показывает поддерживаемые вторичные ресурсы босса, например Aegis у Reactor Saint.</ABY_BossBar_ShowSecondaryBarsDesc>
   <ABY_BossBar_ShowCalibrationButton>Показывать кнопку настройки на boss bar</ABY_BossBar_ShowCalibrationButton>

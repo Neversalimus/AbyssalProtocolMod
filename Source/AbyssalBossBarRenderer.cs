@@ -62,7 +62,7 @@ namespace AbyssalProtocol
             float barHeight = settings.height * scale;
             float secondaryHeight = state.hasSecondaryBar && settings.showSecondaryBars ? Mathf.Max(10f, barHeight * 0.34f) : 0f;
             float secondaryGap = secondaryHeight > 0f ? 6f * scale : 0f;
-            float footerHeight = (settings.showHealthNumbers || settings.showPhaseLabel) ? 18f * scale : 0f;
+            float footerHeight = settings.showHealthNumbers ? 18f * scale : 0f;
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
             float barWidth = settings.width * scale;
@@ -83,7 +83,7 @@ namespace AbyssalProtocol
 
             DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
             DrawIcon(iconRect, state, palette, displayedAlpha);
-            DrawName(nameRect, state.displayLabel, palette, displayedAlpha);
+            DrawHeader(nameRect, state, palette, displayedAlpha, settings);
             DrawMainBar(mainBarRect, state, palette, displayedAlpha, settings);
 
             if (secondaryHeight > 0f)
@@ -198,14 +198,38 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
         }
 
-        private static void DrawName(Rect rect, string label, ABY_BossBarStylePalette palette, float alpha)
+        private static void DrawHeader(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
         {
-            Text.Anchor = TextAnchor.UpperLeft;
+            if (state == null)
+            {
+                return;
+            }
+
+            string label = state.displayLabel ?? string.Empty;
+            string phaseLabel = settings.showPhaseLabel ? "ABY_BossBar_PhaseLabel".Translate(state.currentPhaseLabel) : string.Empty;
+            float phaseWidth = phaseLabel.NullOrEmpty() ? 0f : Mathf.Min(150f, rect.width * 0.30f);
+            Rect titleRect = phaseWidth > 0f
+                ? new Rect(rect.x, rect.y, rect.width - phaseWidth - 8f, rect.height)
+                : rect;
+            Rect phaseRect = phaseWidth > 0f
+                ? new Rect(rect.xMax - phaseWidth, rect.y, phaseWidth, rect.height)
+                : Rect.zero;
+
             Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
             Color oldColor = GUI.color;
             GUI.color = new Color(palette.text.r, palette.text.g, palette.text.b, alpha);
-            Widgets.Label(rect, label);
+            Widgets.Label(titleRect, label);
+
+            if (!phaseLabel.NullOrEmpty())
+            {
+                Text.Anchor = TextAnchor.UpperRight;
+                GUI.color = new Color(palette.phaseText.r, palette.phaseText.g, palette.phaseText.b, alpha * 0.98f);
+                Widgets.Label(phaseRect, phaseLabel);
+            }
+
             GUI.color = oldColor;
+            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         private static void DrawMainBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
@@ -217,13 +241,16 @@ namespace AbyssalProtocol
             if (displayedTrailPct > 0.001f)
             {
                 Rect trailRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedTrailPct, innerRect.height);
-                DrawTexturedFill(trailRect, TrailTex, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.72f));
+                Widgets.DrawBoxSolid(trailRect, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.32f));
+                DrawTexturedFill(trailRect, TrailTex, new Color(1f, 1f, 1f, alpha * 0.58f));
             }
 
             if (displayedHealthPct > 0.001f)
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedHealthPct, innerRect.height);
-                DrawTexturedFill(fillRect, FillTex, new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha));
+                Widgets.DrawBoxSolid(fillRect, new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.98f));
+                DrawTexturedFill(fillRect, FillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(3f, fillRect.height)), new Color(1f, 0.92f, 0.82f, alpha * 0.18f));
 
                 if (!settings.reducedMotion && fillRect.width > 24f)
                 {
@@ -280,7 +307,9 @@ namespace AbyssalProtocol
             if (displayedSecondaryPct > 0.001f)
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedSecondaryPct, innerRect.height);
-                DrawTexturedFill(fillRect, SubFillTex, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha));
+                Widgets.DrawBoxSolid(fillRect, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.94f));
+                DrawTexturedFill(fillRect, SubFillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(2f, fillRect.height)), new Color(1f, 1f, 1f, alpha * 0.14f));
             }
 
             if (state.secondaryCriticalStateActive)
@@ -316,12 +345,6 @@ namespace AbyssalProtocol
         {
             Text.Font = GameFont.Tiny;
             Color oldColor = GUI.color;
-
-            if (settings.showPhaseLabel)
-            {
-                GUI.color = new Color(palette.phaseText.r, palette.phaseText.g, palette.phaseText.b, alpha);
-                Widgets.Label(new Rect(rect.x, rect.y, rect.width * 0.45f, rect.height), "ABY_BossBar_PhaseLabel".Translate(state.currentPhaseLabel));
-            }
 
             if (settings.showHealthNumbers)
             {
