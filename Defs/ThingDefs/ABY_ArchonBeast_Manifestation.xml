@@ -1,26 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
-
-  <ThingDef ParentName="BuildingBase">
-    <defName>ABY_Manifestation_ArchonBeastArrival</defName>
-    <label>archon beast rupture emergence</label>
-    <description>A chained herald-beast forcing itself through a predatory rupture seam near the colony.</description>
-    <thingClass>AbyssalProtocol.Building_ABY_ArchonBeastManifestation</thingClass>
-    <category>Building</category>
-    <graphicData>
-      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>TransparentPostLight</shaderType>
-      <drawSize>(1.0,1.0)</drawSize>
-    </graphicData>
-    <tickerType>Normal</tickerType>
-    <fillPercent>0.01</fillPercent>
-    <passability>PassThroughOnly</passability>
-    <selectable>false</selectable>
-    <useHitPoints>false</useHitPoints>
-    <rotatable>false</rotatable>
-    <altitudeLayer>MetaOverlays</altitudeLayer>
-    <drawOffscreen>true</drawOffscreen>
-  </ThingDef>
-
+  <!-- Intentionally left empty.
+       The active Archon Beast manifestation def is kept in:
+       Defs/ThingDefs/ABY_ArchonArrival_Manifestation.xml
+       This file remains only as a compatibility placeholder to avoid duplicate defName errors
+       in local builds that previously received both Package B and the later polish package. -->
 </Defs>
