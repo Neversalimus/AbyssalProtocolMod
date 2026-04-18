@@ -107,6 +107,8 @@ namespace AbyssalProtocol
         private int pendingSupportImpCount;
         private int pendingSupportThrallCount;
         private int pendingSupportZealotCount;
+        private PawnKindDef pendingRareEscortPawnKindDef;
+        private int pendingRareEscortCount;
         private int pendingThreatTier = -1;
         private int pendingScaledThreatBudget;
         private bool reducedConsoleEffects;
@@ -202,6 +204,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingSupportImpCount, "pendingSupportImpCount", 0);
             Scribe_Values.Look(ref pendingSupportThrallCount, "pendingSupportThrallCount", 0);
             Scribe_Values.Look(ref pendingSupportZealotCount, "pendingSupportZealotCount", 0);
+            Scribe_Defs.Look(ref pendingRareEscortPawnKindDef, "pendingRareEscortPawnKindDef");
+            Scribe_Values.Look(ref pendingRareEscortCount, "pendingRareEscortCount", 0);
             Scribe_Values.Look(ref pendingThreatTier, "pendingThreatTier", -1);
             Scribe_Values.Look(ref pendingScaledThreatBudget, "pendingScaledThreatBudget", 0);
             Scribe_Values.Look(ref reducedConsoleEffects, "reducedConsoleEffects", false);
@@ -422,6 +426,8 @@ namespace AbyssalProtocol
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
             pendingSupportZealotCount = 0;
+            pendingRareEscortPawnKindDef = null;
+            pendingRareEscortCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
 
@@ -491,6 +497,16 @@ namespace AbyssalProtocol
             }
 
             ApplyThreatScalingPlan(summonProps);
+
+            if (!summonProps.rareEscortPawnKindDefName.NullOrEmpty() && summonProps.rareEscortCount > 0 && summonProps.rareEscortChance > 0f)
+            {
+                PawnKindDef rareEscortKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.rareEscortPawnKindDefName);
+                if (rareEscortKind != null && Rand.Chance(Mathf.Clamp01(summonProps.rareEscortChance)))
+                {
+                    pendingRareEscortPawnKindDef = rareEscortKind;
+                    pendingRareEscortCount = Mathf.Max(1, summonProps.rareEscortCount);
+                }
+            }
 
             ritualSeed = thingIDNumber * 397 ^ Find.TickManager.TicksGame;
 
@@ -1931,12 +1947,21 @@ namespace AbyssalProtocol
                 });
             }
 
+            if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = pendingRareEscortPawnKindDef,
+                    Count = pendingRareEscortCount
+                });
+            }
+
             return entries;
         }
 
         private void TrySpawnPendingSupportPack()
         {
-            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0 && pendingSupportZealotCount <= 0))
+            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0 && pendingSupportZealotCount <= 0 && (pendingRareEscortPawnKindDef == null || pendingRareEscortCount <= 0)))
             {
                 return;
             }
@@ -1969,6 +1994,15 @@ namespace AbyssalProtocol
                 {
                     KindDef = zealotKind,
                     Count = pendingSupportZealotCount
+                });
+            }
+
+            if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = pendingRareEscortPawnKindDef,
+                    Count = pendingRareEscortCount
                 });
             }
 
@@ -2153,6 +2187,8 @@ namespace AbyssalProtocol
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
             pendingSupportZealotCount = 0;
+            pendingRareEscortPawnKindDef = null;
+            pendingRareEscortCount = 0;
             pendingThreatTier = -1;
             pendingScaledThreatBudget = 0;
             pendingCapacitorStartupCost = 0f;

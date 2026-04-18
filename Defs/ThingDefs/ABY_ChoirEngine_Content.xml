@@ -157,6 +157,10 @@
         <supportZealotCount>1</supportZealotCount>
         <completionLetterLabelKey>ABY_ChoirSummonSuccessLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_ChoirSummonSuccessDesc</completionLetterDescKey>
+
+                <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+                <rareEscortCount>1</rareEscortCount>
+                <rareEscortChance>0.12</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

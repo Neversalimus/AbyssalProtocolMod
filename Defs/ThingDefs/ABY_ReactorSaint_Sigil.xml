@@ -41,6 +41,10 @@
         <arrivalSoundDefName>ABY_ReactorSaintCharge</arrivalSoundDefName>
         <completionLetterLabelKey>ABY_ReactorSaintSummonSuccessLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_ReactorSaintSummonSuccessDesc</completionLetterDescKey>
+
+                <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+                <rareEscortCount>1</rareEscortCount>
+                <rareEscortChance>0.16</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

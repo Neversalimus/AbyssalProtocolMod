@@ -35,6 +35,10 @@
         <ritualWarmupTicks>150</ritualWarmupTicks>
         <completionLetterLabelKey>ABY_WardenSummonSuccessLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_WardenSummonSuccessDesc</completionLetterDescKey>
+
+                <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+                <rareEscortCount>1</rareEscortCount>
+                <rareEscortChance>0.08</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

@@ -27,6 +27,9 @@ namespace AbyssalProtocol
         public float arrivalNearColonyMinDistance = 12f;
         public float arrivalNearColonyMaxDistance = 26f;
         public string arrivalSoundDefName = "ABY_ArchonBossArrive";
+        public string rareEscortPawnKindDefName;
+        public int rareEscortCount;
+        public float rareEscortChance;
 
         public CompProperties_UseEffectSummonBoss()
         {

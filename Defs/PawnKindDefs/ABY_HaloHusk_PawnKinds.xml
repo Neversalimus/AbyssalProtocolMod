@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_HaloHusk</defName>
+    <label>halo husk</label>
+    <race>ABY_HaloHusk</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>380</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/HaloHusk/ABY_HaloHusk</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(4.10,4.10)</drawSize>
+          <shadowData>
+            <volume>(1.05, 1.42, 1.05)</volume>
+            <offset>(0, 0, -0.28)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+</Defs>
