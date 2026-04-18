@@ -170,25 +170,24 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(12f);
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeNextHeader".Translate());
 
-            List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(3).ToList();
-            float leftWidth = inner.width * 0.54f;
+            List<AbyssalForgeProgressUtility.MilestoneEntry> milestones = AbyssalForgeProgressUtility.GetMilestoneEntries(progress, selectedCategory);
+            float leftWidth = inner.width * 0.58f;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeUpcomingPatterns".Translate());
+            Widgets.Label(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeMilestonesHeader".Translate());
             GUI.color = Color.white;
 
-            if (locked.Count == 0)
+            float lineY = inner.y + 54f;
+            for (int i = 0; i < milestones.Count; i++)
             {
-                Widgets.Label(new Rect(inner.x, inner.y + 54f, leftWidth, inner.height - 54f), "ABY_ForgeAllPatternsUnlocked".Translate());
+                AbyssalForgeProgressUtility.MilestoneEntry entry = milestones[i];
+                GUI.color = entry.satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : Color.white;
+                Text.Font = GameFont.Tiny;
+                float height = Text.CalcHeight(entry.label + ": " + entry.value, leftWidth);
+                Widgets.Label(new Rect(inner.x, lineY, leftWidth, height), entry.label + ": " + entry.value);
+                lineY += height + 8f;
             }
-            else
-            {
-                for (int i = 0; i < locked.Count; i++)
-                {
-                    RecipeDef recipe = locked[i];
-                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe);
-                    Widgets.Label(new Rect(inner.x, inner.y + 52f + i * 28f, leftWidth, 24f), line);
-                }
-            }
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
 
             Rect rightRect = new Rect(inner.x + leftWidth + 18f, inner.y + 28f, inner.width - leftWidth - 18f, inner.height - 28f);
             string categoryLabel = AbyssalForgeProgressUtility.GetCategoryLabel(selectedCategory);
@@ -200,12 +199,33 @@ namespace AbyssalProtocol
             Widgets.Label(summaryRect, summary);
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 20f), "ABY_ForgeReducedEffectsDesc".Translate());
+            Widgets.Label(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 18f), "ABY_ForgeUpcomingPatterns".Translate());
+            GUI.color = Color.white;
+
+            List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(2).ToList();
+            Text.Font = GameFont.Tiny;
+            if (locked.Count == 0)
+            {
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                Widgets.Label(new Rect(rightRect.x, rightRect.y + 76f, rightRect.width, 34f), "ABY_ForgeAllPatternsUnlocked".Translate());
+            }
+            else
+            {
+                for (int i = 0; i < locked.Count; i++)
+                {
+                    RecipeDef recipe = locked[i];
+                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe);
+                    Widgets.Label(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
+                }
+            }
+            Text.Font = GameFont.Small;
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rightRect.x, rightRect.y + 126f, rightRect.width, 28f), "ABY_ForgeReducedEffectsDesc".Translate());
             GUI.color = Color.white;
 
             bool reduced = progress.ReducedVisualEffects;
             bool newReduced = reduced;
-            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 82f, Mathf.Min(186f, rightRect.width), 24f);
+            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 156f, Mathf.Min(186f, rightRect.width), 24f);
             Widgets.CheckboxLabeled(checkboxRect, "ABY_ForgeReducedEffectsToggle".Translate(), ref newReduced, false, null, null, false);
             if (newReduced != reduced)
             {

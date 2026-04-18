@@ -149,15 +149,20 @@ namespace AbyssalProtocol
 
             Rect titleRect = new Rect(rect.x + 70f, rect.y + 12f, rect.width - 150f, 22f);
             Rect subRect = new Rect(rect.x + 70f, rect.y + 34f, rect.width - 150f, 18f);
-            Rect descRect = new Rect(rect.x + 12f, rect.y + 64f, rect.width - 24f, 50f);
+            Rect tagRect = new Rect(rect.x + 70f, rect.y + 52f, rect.width - 150f, 16f);
+            Rect descRect = new Rect(rect.x + 12f, rect.y + 72f, rect.width - 24f, 42f);
             Rect metaRect = new Rect(rect.x + 12f, rect.y + 116f, rect.width - 24f, 18f);
             Rect selectRect = new Rect(rect.xMax - 108f, rect.y + rect.height - 34f, 96f, 28f);
 
             Widgets.Label(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(subRect, AbyssalSummoningConsoleUtility.GetRitualSubtitle(ritual));
+            Text.Font = GameFont.Tiny;
+            Widgets.Label(tagRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
             GUI.color = Color.white;
+            Text.Font = GameFont.Tiny;
             Widgets.Label(descRect, AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
+            Text.Font = GameFont.Small;
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
             Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual));
             GUI.color = Color.white;
@@ -187,9 +192,21 @@ namespace AbyssalProtocol
             string statusLine = dominionCrisis != null && dominionCrisis.IsActive
                 ? dominionCrisis.GetStatusLine()
                 : circle.GetCurrentStatusLine();
-            Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 44f), statusLine);
+            Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 26f), statusLine);
 
-            float rowY = inner.y + 126f;
+            string blockerLine = AbyssalSummoningConsoleUtility.IsInvocationPathClear(circle, ritual)
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandReady", "Invocation path clear. Prepared sigil, operator, and circle state are valid.")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandBlocked", "Current blocker: {0}", AbyssalSummoningConsoleUtility.GetPrimaryInvocationBlocker(circle, ritual));
+
+            GUI.color = AbyssalSummoningConsoleUtility.IsInvocationPathClear(circle, ritual)
+                ? new Color(0.72f, 1f, 0.74f, 1f)
+                : new Color(1f, 0.60f, 0.54f, 1f);
+            Text.Font = GameFont.Tiny;
+            Widgets.Label(new Rect(inner.x, inner.y + 108f, inner.width, 30f), blockerLine);
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+
+            float rowY = inner.y + 140f;
             DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CircleReducedEffects".Translate(),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
@@ -488,14 +505,30 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x, rect.y + 28f, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(rect.x, rect.y + 52f, rect.width, 18f), AbyssalSummoningConsoleUtility.GetRitualSubtitle(ritual));
+            Widgets.Label(new Rect(rect.x, rect.y + 68f, rect.width, 16f), AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
             GUI.color = Color.white;
 
             Text.Font = GameFont.Tiny;
             string ritualDescription = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
             float descriptionHeight = Text.CalcHeight(ritualDescription, rect.width);
-            Widgets.Label(new Rect(rect.x, rect.y + 76f, rect.width, descriptionHeight), ritualDescription);
+            Widgets.Label(new Rect(rect.x, rect.y + 88f, rect.width, descriptionHeight), ritualDescription);
 
-            float consequencesY = rect.y + 84f + descriptionHeight;
+            float rewardY = rect.y + 96f + descriptionHeight;
+            Text.Font = GameFont.Small;
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), "ABY_CircleRewardsHeader".Translate());
+            Text.Font = GameFont.Tiny;
+
+            string rewardText = string.Join("\n",
+                new[]
+                {
+                    AbyssalSummoningConsoleUtility.GetRewardVectorGuaranteed(ritual),
+                    AbyssalSummoningConsoleUtility.GetRewardVectorProgression(ritual),
+                    AbyssalSummoningConsoleUtility.GetRewardVectorFollowUp(ritual)
+                }.Where(line => !line.NullOrEmpty()).ToArray());
+            float rewardHeight = Text.CalcHeight(rewardText, rect.width);
+            Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, rewardHeight), rewardText);
+
+            float consequencesY = rewardY + 36f + rewardHeight;
             Text.Font = GameFont.Small;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, consequencesY, rect.width, 22f), "ABY_CircleConsequencesHeader".Translate());
             Text.Font = GameFont.Tiny;
@@ -503,7 +536,22 @@ namespace AbyssalProtocol
             float sideEffectHeight = Text.CalcHeight(sideEffectText, rect.width);
             Widgets.Label(new Rect(rect.x, consequencesY + 28f, rect.width, sideEffectHeight), sideEffectText);
 
-            float dominionY = consequencesY + 34f + sideEffectHeight;
+            float milestoneY = consequencesY + 36f + sideEffectHeight;
+            Text.Font = GameFont.Small;
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, milestoneY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleMilestonesHeader", "Next milestones"));
+            Text.Font = GameFont.Tiny;
+            List<AbyssalSummoningConsoleUtility.StatusEntry> milestoneEntries = AbyssalSummoningConsoleUtility.GetMilestoneEntries(circle, ritual);
+            float milestoneLineY = milestoneY + 28f;
+            for (int i = 0; i < milestoneEntries.Count; i++)
+            {
+                GUI.color = milestoneEntries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
+                float lineHeight = Text.CalcHeight(milestoneEntries[i].Label + ": " + milestoneEntries[i].Value, rect.width);
+                Widgets.Label(new Rect(rect.x, milestoneLineY, rect.width, lineHeight), milestoneEntries[i].Label + ": " + milestoneEntries[i].Value);
+                milestoneLineY += lineHeight + 4f;
+            }
+            GUI.color = Color.white;
+
+            float dominionY = milestoneLineY + 10f;
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
             {
                 MapComponent_DominionCrisis crisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
@@ -643,8 +691,22 @@ namespace AbyssalProtocol
         {
             Text.Font = GameFont.Tiny;
             float descriptionHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualDescription(ritual), width);
+            float rewardHeight = Text.CalcHeight(string.Join("\n",
+                new[]
+                {
+                    AbyssalSummoningConsoleUtility.GetRewardVectorGuaranteed(ritual),
+                    AbyssalSummoningConsoleUtility.GetRewardVectorProgression(ritual),
+                    AbyssalSummoningConsoleUtility.GetRewardVectorFollowUp(ritual)
+                }.Where(line => !line.NullOrEmpty()).ToArray()), width);
             float sideEffectHeight = Text.CalcHeight(AbyssalSummoningConsoleUtility.GetRitualSideEffectHint(ritual), width);
-            float total = 120f + descriptionHeight + sideEffectHeight;
+            List<AbyssalSummoningConsoleUtility.StatusEntry> milestones = AbyssalSummoningConsoleUtility.GetMilestoneEntries(circle, ritual);
+            float milestoneHeight = 0f;
+            for (int i = 0; i < milestones.Count; i++)
+            {
+                milestoneHeight += Text.CalcHeight(milestones[i].Label + ": " + milestones[i].Value, width) + 4f;
+            }
+
+            float total = 192f + descriptionHeight + rewardHeight + sideEffectHeight + milestoneHeight;
 
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
             {

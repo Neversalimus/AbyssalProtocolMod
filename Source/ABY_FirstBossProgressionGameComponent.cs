@@ -93,6 +93,8 @@ namespace AbyssalProtocol
                         "ABY_FirstBossKillDesc".Translate(),
                         LetterDefOf.PositiveEvent,
                         new LookTargets(new TargetInfo(corpse.PositionHeld, map)));
+
+                    AbyssalProgressRecapUtility.SendFirstBossRecap(map, corpse.PositionHeld);
                     return;
                 }
             }

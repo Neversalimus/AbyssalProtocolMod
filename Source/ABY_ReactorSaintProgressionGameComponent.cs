@@ -93,6 +93,8 @@ namespace AbyssalProtocol
                         "ABY_ReactorSaintKillDesc".Translate(),
                         LetterDefOf.PositiveEvent,
                         new LookTargets(new TargetInfo(corpse.PositionHeld, map)));
+
+                    AbyssalProgressRecapUtility.SendReactorRecap(map, corpse.PositionHeld);
                     return;
                 }
             }

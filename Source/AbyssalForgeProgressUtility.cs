@@ -38,6 +38,13 @@ namespace AbyssalProtocol
             }
         }
 
+        public class MilestoneEntry
+        {
+            public string label;
+            public string value;
+            public bool satisfied;
+        }
+
         private static readonly List<string> CategoryOrder = new List<string>
         {
             AllCategory,
@@ -469,6 +476,100 @@ namespace AbyssalProtocol
             }
 
             return string.Join("\n", lines.Where(line => line != null).ToArray());
+        }
+
+        public static List<MilestoneEntry> GetMilestoneEntries(MapComponent_AbyssalForgeProgress progress, string category)
+        {
+            List<MilestoneEntry> entries = new List<MilestoneEntry>();
+            if (progress == null)
+            {
+                return entries;
+            }
+
+            RecipeDef nextRecipe = progress.GetNextUnlockRecipe(category);
+            if (nextRecipe != null)
+            {
+                entries.Add(new MilestoneEntry
+                {
+                    label = TranslateOrFallback("ABY_ForgeMilestone_Pattern", "Next pattern"),
+                    value = TranslateOrFallback(
+                        "ABY_ForgeMilestone_PatternValue",
+                        "{0} at {1} residue",
+                        GetRecipeDisplayLabel(nextRecipe),
+                        GetRequiredResidue(nextRecipe)),
+                    satisfied = false
+                });
+            }
+            else
+            {
+                entries.Add(new MilestoneEntry
+                {
+                    label = TranslateOrFallback("ABY_ForgeMilestone_Pattern", "Next pattern"),
+                    value = TranslateOrFallback("ABY_ForgeMilestone_PatternComplete", "All current patterns in this category are attuned."),
+                    satisfied = true
+                });
+            }
+
+            int currentTier = Mathf.Max(1, progress.GetCurrentAttunementTier(false));
+            int nextTierResidue = GetNextAttunementTierResidue(currentTier);
+            if (nextTierResidue > progress.TotalResidueOffered)
+            {
+                entries.Add(new MilestoneEntry
+                {
+                    label = TranslateOrFallback("ABY_ForgeMilestone_Attunement", "Next attunement"),
+                    value = TranslateOrFallback(
+                        "ABY_ForgeMilestone_AttunementValue",
+                        "{0} at {1} residue",
+                        GetAttunementDisplayLabel(Mathf.Min(MaxAttunementTier, currentTier + 1)),
+                        nextTierResidue),
+                    satisfied = false
+                });
+            }
+            else
+            {
+                entries.Add(new MilestoneEntry
+                {
+                    label = TranslateOrFallback("ABY_ForgeMilestone_Attunement", "Next attunement"),
+                    value = TranslateOrFallback("ABY_ForgeMilestone_AttunementComplete", "The lattice already sits at the current attunement capstone."),
+                    satisfied = true
+                });
+            }
+
+            string blockerValue;
+            bool blockerSatisfied;
+            int availableResidue = progress.CountAvailableResidue();
+            if (!progress.HasPoweredForge())
+            {
+                blockerValue = TranslateOrFallback("ABY_ForgeMilestone_BlockerPower", "No powered forge is online. Reactivate the lattice before relying on attunement effects.");
+                blockerSatisfied = false;
+            }
+            else if (availableResidue <= 0)
+            {
+                blockerValue = TranslateOrFallback("ABY_ForgeMilestone_BlockerResidue", "No loose residue is available on this map. Recover more before pushing the next unlock.");
+                blockerSatisfied = false;
+            }
+            else if (nextRecipe != null && GetRequiredResidue(nextRecipe) > progress.TotalResidueOffered)
+            {
+                blockerValue = TranslateOrFallback(
+                    "ABY_ForgeMilestone_BlockerOfferMore",
+                    "Offer {0} more residue to reach the next pattern.",
+                    Mathf.Max(0, GetRequiredResidue(nextRecipe) - progress.TotalResidueOffered));
+                blockerSatisfied = false;
+            }
+            else
+            {
+                blockerValue = TranslateOrFallback("ABY_ForgeMilestone_BlockerClear", "Residue routing is clear. Materials and bills now determine output.");
+                blockerSatisfied = true;
+            }
+
+            entries.Add(new MilestoneEntry
+            {
+                label = TranslateOrFallback("ABY_ForgeMilestone_Blocker", "Current blocker"),
+                value = blockerValue,
+                satisfied = blockerSatisfied
+            });
+
+            return entries;
         }
 
         public static bool RecipeMatchesCategory(RecipeDef recipe, string category)

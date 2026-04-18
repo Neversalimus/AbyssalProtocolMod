@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleTagsHeader>Tactical profile</ABY_CircleTagsHeader>
+  <ABY_CircleMilestonesHeader>Next milestones</ABY_CircleMilestonesHeader>
+  <ABY_CircleMilestone_Command>Command path</ABY_CircleMilestone_Command>
+  <ABY_CircleMilestone_CommandReady>Invocation path clear. A prepared sigil, operator, and circle state are all valid.</ABY_CircleMilestone_CommandReady>
+  <ABY_CircleMilestone_CommandBlocked>Clear blocker: {0}</ABY_CircleMilestone_CommandBlocked>
+  <ABY_CircleMilestone_Reward>Payout focus</ABY_CircleMilestone_Reward>
+  <ABY_CircleMilestone_Next>Next escalation</ABY_CircleMilestone_Next>
+  <ABY_CircleMilestone_NextValue>After this breach, escalate into {0}.</ABY_CircleMilestone_NextValue>
+  <ABY_CircleMilestone_NextFinal>This ritual already sits at the current top of the escalation ladder.</ABY_CircleMilestone_NextFinal>
+  <ABY_CircleMilestone_StageFromVault>Stage a prepared sigil from the linked vault before beginning the invocation.</ABY_CircleMilestone_StageFromVault>
+  <ABY_CircleCommandReady>Invocation path clear. Prepared sigil, operator, and circle state are valid.</ABY_CircleCommandReady>
+  <ABY_CircleCommandBlocked>Current blocker: {0}</ABY_CircleCommandBlocked>
+
+  <ABY_CircleRoleTag_Swarm>swarm</ABY_CircleRoleTag_Swarm>
+  <ABY_CircleRoleTag_Rehearsal>rehearsal</ABY_CircleRoleTag_Rehearsal>
+  <ABY_CircleRoleTag_Flanking>flanking</ABY_CircleRoleTag_Flanking>
+  <ABY_CircleRoleTag_BacklinePressure>backline pressure</ABY_CircleRoleTag_BacklinePressure>
+  <ABY_CircleRoleTag_Miniboss>mini-boss</ABY_CircleRoleTag_Miniboss>
+  <ABY_CircleRoleTag_AntiCluster>anti-cluster</ABY_CircleRoleTag_AntiCluster>
+  <ABY_CircleRoleTag_Boss>boss</ABY_CircleRoleTag_Boss>
+  <ABY_CircleRoleTag_PhaseEncounter>phase encounter</ABY_CircleRoleTag_PhaseEncounter>
+  <ABY_CircleRoleTag_SupportSuppression>support suppression</ABY_CircleRoleTag_SupportSuppression>
+  <ABY_CircleRoleTag_TurretPressure>turret pressure</ABY_CircleRoleTag_TurretPressure>
+  <ABY_CircleRoleTag_ShieldArtillery>shield artillery</ABY_CircleRoleTag_ShieldArtillery>
+  <ABY_CircleRoleTag_AreaDenial>area denial</ABY_CircleRoleTag_AreaDenial>
+  <ABY_CircleRoleTag_ObjectiveEncounter>objective encounter</ABY_CircleRoleTag_ObjectiveEncounter>
+  <ABY_CircleRoleTag_WavePressure>wave pressure</ABY_CircleRoleTag_WavePressure>
+
+  <ABY_CircleRewardGuaranteed_Unstable>Guaranteed: residue and cleanup drops from a controlled early breach.</ABY_CircleRewardGuaranteed_Unstable>
+  <ABY_CircleRewardProgression_Unstable>Progression: teaches the circle loop before the first boss tier.</ABY_CircleRewardProgression_Unstable>
+  <ABY_CircleRewardGuaranteed_Ember>Guaranteed: residue, beast cleanup loot, and a stronger hunter-pack rehearsal.</ABY_CircleRewardGuaranteed_Ember>
+  <ABY_CircleRewardProgression_Ember>Progression: stress-tests backline defense before mini-boss escalation.</ABY_CircleRewardProgression_Ember>
+  <ABY_CircleRewardGuaranteed_Warden>Guaranteed: 1 Ashen Core plus residue from the first true mini-boss step.</ABY_CircleRewardGuaranteed_Warden>
+  <ABY_CircleRewardProgression_Warden>Progression: opens the first ashbound weapon and implant branch.</ABY_CircleRewardProgression_Warden>
+  <ABY_CircleRewardGuaranteed_Archon>Guaranteed: Herald Core Fragments and an Archon Override Ampoule from the first true boss.</ABY_CircleRewardGuaranteed_Archon>
+  <ABY_CircleRewardProgression_Archon>Progression: clears the first boss gate and makes herald-side follow-up routes matter.</ABY_CircleRewardProgression_Archon>
+  <ABY_CircleRewardGuaranteed_Choir>Guaranteed: 1 Choir Resonance Core and a heavier residue payout.</ABY_CircleRewardGuaranteed_Choir>
+  <ABY_CircleRewardProgression_Choir>Progression: unlocks the support-oriented reward line built around Choir implants and the Canticle Driver.</ABY_CircleRewardProgression_Choir>
+  <ABY_CircleRewardGuaranteed_Reactor>Guaranteed: 1 Reactor Saint Core, residue, and spacer-grade salvage.</ABY_CircleRewardGuaranteed_Reactor>
+  <ABY_CircleRewardProgression_Reactor>Progression: feeds saint-class fabrication and pushes the colony toward late-game escalation.</ABY_CircleRewardProgression_Reactor>
+  <ABY_CircleRewardGuaranteed_Dominion>Guaranteed: dominion outcome rewards, shards, and late-stage progression materials if the breach is contained.</ABY_CircleRewardGuaranteed_Dominion>
+  <ABY_CircleRewardProgression_Dominion>Progression: arms the full dominion crisis ladder and outcome routing.</ABY_CircleRewardProgression_Dominion>
+  <ABY_CircleRewardFollowUp_Generic>Follow-up: next clean escalation is {0}.</ABY_CircleRewardFollowUp_Generic>
+  <ABY_CircleRewardFollowUp_Final>Follow-up: this is already the current apex ritual track.</ABY_CircleRewardFollowUp_Final>
+
+  <ABY_ForgeMilestonesHeader>Next milestones</ABY_ForgeMilestonesHeader>
+  <ABY_ForgeMilestone_Pattern>Next pattern</ABY_ForgeMilestone_Pattern>
+  <ABY_ForgeMilestone_PatternValue>{0} at {1} residue</ABY_ForgeMilestone_PatternValue>
+  <ABY_ForgeMilestone_PatternComplete>All current patterns in this category are attuned.</ABY_ForgeMilestone_PatternComplete>
+  <ABY_ForgeMilestone_Attunement>Next attunement</ABY_ForgeMilestone_Attunement>
+  <ABY_ForgeMilestone_AttunementValue>{0} at {1} residue</ABY_ForgeMilestone_AttunementValue>
+  <ABY_ForgeMilestone_AttunementComplete>The lattice already sits at the current attunement capstone.</ABY_ForgeMilestone_AttunementComplete>
+  <ABY_ForgeMilestone_Blocker>Current blocker</ABY_ForgeMilestone_Blocker>
+  <ABY_ForgeMilestone_BlockerPower>No powered forge is online. Reactivate the lattice before relying on attunement effects.</ABY_ForgeMilestone_BlockerPower>
+  <ABY_ForgeMilestone_BlockerResidue>No loose residue is available on this map. Recover more before pushing the next unlock.</ABY_ForgeMilestone_BlockerResidue>
+  <ABY_ForgeMilestone_BlockerOfferMore>Offer {0} more residue to reach the next pattern.</ABY_ForgeMilestone_BlockerOfferMore>
+  <ABY_ForgeMilestone_BlockerClear>Residue routing is clear. Materials and bills now determine output.</ABY_ForgeMilestone_BlockerClear>
+
+  <ABY_ProgressRecap_Archon_Label>Protocol shift registered</ABY_ProgressRecap_Archon_Label>
+  <ABY_ProgressRecap_Archon_Desc>The archon threshold has been broken.
+
+{0} now becomes forge-reachable at {1} attuned residue, while {2} sits one step higher at {3}. Herald core fragments now matter as real progression currency, and the clean next route is to keep feeding the forge, decode herald-side follow-up, and escalate into the post-first-boss support branch before saint-class invocation.</ABY_ProgressRecap_Archon_Desc>
+  <ABY_ProgressRecap_Reactor_Label>Late lattice escalation registered</ABY_ProgressRecap_Reactor_Label>
+  <ABY_ProgressRecap_Reactor_Desc>The saint-tier threshold has been broken.
+
+Reactor saint cores now feed {0}, {1}, and the heavier saint-side fabrication line. If {2} is prepared, dominion sigils become forge-reachable at {3} attuned residue for the next deliberate escalation beyond the current boss ladder.</ABY_ProgressRecap_Reactor_Desc>
+</LanguageData>

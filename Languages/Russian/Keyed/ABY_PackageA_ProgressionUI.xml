@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleTagsHeader>Тактический профиль</ABY_CircleTagsHeader>
+  <ABY_CircleMilestonesHeader>Следующие вехи</ABY_CircleMilestonesHeader>
+  <ABY_CircleMilestone_Command>Командный путь</ABY_CircleMilestone_Command>
+  <ABY_CircleMilestone_CommandReady>Путь инвокации чист. Подготовленный сигил, оператор и состояние круга подходят для запуска.</ABY_CircleMilestone_CommandReady>
+  <ABY_CircleMilestone_CommandBlocked>Сначала убери блокер: {0}</ABY_CircleMilestone_CommandBlocked>
+  <ABY_CircleMilestone_Reward>Фокус награды</ABY_CircleMilestone_Reward>
+  <ABY_CircleMilestone_Next>Следующая эскалация</ABY_CircleMilestone_Next>
+  <ABY_CircleMilestone_NextValue>После этого прорыва логично эскалировать в {0}.</ABY_CircleMilestone_NextValue>
+  <ABY_CircleMilestone_NextFinal>Этот ритуал уже находится на текущей вершине лестницы эскалации.</ABY_CircleMilestone_NextFinal>
+  <ABY_CircleMilestone_StageFromVault>Сначала выведи подготовленный сигил из связанного vault, а уже потом запускай инвокацию.</ABY_CircleMilestone_StageFromVault>
+  <ABY_CircleCommandReady>Путь инвокации чист. Сигил, оператор и состояние круга подходят для запуска.</ABY_CircleCommandReady>
+  <ABY_CircleCommandBlocked>Текущий блокер: {0}</ABY_CircleCommandBlocked>
+
+  <ABY_CircleRoleTag_Swarm>рой</ABY_CircleRoleTag_Swarm>
+  <ABY_CircleRoleTag_Rehearsal>репетиция</ABY_CircleRoleTag_Rehearsal>
+  <ABY_CircleRoleTag_Flanking>фланговое давление</ABY_CircleRoleTag_Flanking>
+  <ABY_CircleRoleTag_BacklinePressure>давление на тыл</ABY_CircleRoleTag_BacklinePressure>
+  <ABY_CircleRoleTag_Miniboss>мини-босс</ABY_CircleRoleTag_Miniboss>
+  <ABY_CircleRoleTag_AntiCluster>анти-скученность</ABY_CircleRoleTag_AntiCluster>
+  <ABY_CircleRoleTag_Boss>босс</ABY_CircleRoleTag_Boss>
+  <ABY_CircleRoleTag_PhaseEncounter>фазовый encounter</ABY_CircleRoleTag_PhaseEncounter>
+  <ABY_CircleRoleTag_SupportSuppression>подавление поддержки</ABY_CircleRoleTag_SupportSuppression>
+  <ABY_CircleRoleTag_TurretPressure>давление на турели</ABY_CircleRoleTag_TurretPressure>
+  <ABY_CircleRoleTag_ShieldArtillery>щиты и артиллерия</ABY_CircleRoleTag_ShieldArtillery>
+  <ABY_CircleRoleTag_AreaDenial>запрет зоны</ABY_CircleRoleTag_AreaDenial>
+  <ABY_CircleRoleTag_ObjectiveEncounter>сценарий с целью</ABY_CircleRoleTag_ObjectiveEncounter>
+  <ABY_CircleRoleTag_WavePressure>давление волнами</ABY_CircleRoleTag_WavePressure>
+
+  <ABY_CircleRewardGuaranteed_Unstable>Гарантированно: residue и стандартный лут зачистки с контролируемого раннего разлома.</ABY_CircleRewardGuaranteed_Unstable>
+  <ABY_CircleRewardProgression_Unstable>Прогрессия: обучает самому summon-loop до тира первого босса.</ABY_CircleRewardProgression_Unstable>
+  <ABY_CircleRewardGuaranteed_Ember>Гарантированно: residue, звериный cleanup-лут и более серьёзная репетиция охотничьей стаи.</ABY_CircleRewardGuaranteed_Ember>
+  <ABY_CircleRewardProgression_Ember>Прогрессия: проверяет защиту тыла перед переходом к мини-боссам.</ABY_CircleRewardProgression_Ember>
+  <ABY_CircleRewardGuaranteed_Warden>Гарантированно: 1 Ashen Core и residue за первый настоящий шаг через мини-босса.</ABY_CircleRewardGuaranteed_Warden>
+  <ABY_CircleRewardProgression_Warden>Прогрессия: открывает первую ветку ashbound-оружия и имплантов.</ABY_CircleRewardProgression_Warden>
+  <ABY_CircleRewardGuaranteed_Archon>Гарантированно: Herald Core Fragments и Archon Override Ampoule с первого настоящего босса.</ABY_CircleRewardGuaranteed_Archon>
+  <ABY_CircleRewardProgression_Archon>Прогрессия: снимает первый босс-гейт и делает herald-side продолжение реально важным.</ABY_CircleRewardProgression_Archon>
+  <ABY_CircleRewardGuaranteed_Choir>Гарантированно: 1 Choir Resonance Core и более тяжёлый payout residue.</ABY_CircleRewardGuaranteed_Choir>
+  <ABY_CircleRewardProgression_Choir>Прогрессия: открывает ветку наград поддержки вокруг Choir-имплантов и Canticle Driver.</ABY_CircleRewardProgression_Choir>
+  <ABY_CircleRewardGuaranteed_Reactor>Гарантированно: 1 Reactor Saint Core, residue и spacer-grade salvage.</ABY_CircleRewardGuaranteed_Reactor>
+  <ABY_CircleRewardProgression_Reactor>Прогрессия: питает saint-class fabrication и ведёт колонию в позднюю эскалацию.</ABY_CircleRewardProgression_Reactor>
+  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: dominion-итоговые награды, shard-материалы и поздние progression drops при успешном удержании прорыва.</ABY_CircleRewardGuaranteed_Dominion>
+  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает всю dominion-лестницу кризиса и её исходы.</ABY_CircleRewardProgression_Dominion>
+  <ABY_CircleRewardFollowUp_Generic>Следом: следующий чистый шаг эскалации — {0}.</ABY_CircleRewardFollowUp_Generic>
+  <ABY_CircleRewardFollowUp_Final>Следом: это уже текущая вершина ритуальной ветки.</ABY_CircleRewardFollowUp_Final>
+
+  <ABY_ForgeMilestonesHeader>Следующие вехи</ABY_ForgeMilestonesHeader>
+  <ABY_ForgeMilestone_Pattern>Следующий паттерн</ABY_ForgeMilestone_Pattern>
+  <ABY_ForgeMilestone_PatternValue>{0} при {1} residue</ABY_ForgeMilestone_PatternValue>
+  <ABY_ForgeMilestone_PatternComplete>Все текущие паттерны этой категории уже attuned.</ABY_ForgeMilestone_PatternComplete>
+  <ABY_ForgeMilestone_Attunement>Следующее attunement</ABY_ForgeMilestone_Attunement>
+  <ABY_ForgeMilestone_AttunementValue>{0} при {1} residue</ABY_ForgeMilestone_AttunementValue>
+  <ABY_ForgeMilestone_AttunementComplete>Решётка уже находится на текущем attunement-capstone.</ABY_ForgeMilestone_AttunementComplete>
+  <ABY_ForgeMilestone_Blocker>Текущий блокер</ABY_ForgeMilestone_Blocker>
+  <ABY_ForgeMilestone_BlockerPower>Нет ни одной запитанной forge. Сначала верни питание решётке, иначе attunement-эффекты не работают как надо.</ABY_ForgeMilestone_BlockerPower>
+  <ABY_ForgeMilestone_BlockerResidue>На карте нет свободного residue. Сначала добудь ещё, потом продавливай следующий unlock.</ABY_ForgeMilestone_BlockerResidue>
+  <ABY_ForgeMilestone_BlockerOfferMore>Нужно ещё {0} residue, чтобы дотянуться до следующего паттерна.</ABY_ForgeMilestone_BlockerOfferMore>
+  <ABY_ForgeMilestone_BlockerClear>Путь residue чист. Дальше результат определяется материалами и очередями биллов.</ABY_ForgeMilestone_BlockerClear>
+
+  <ABY_ProgressRecap_Archon_Label>Зафиксирован сдвиг протокола</ABY_ProgressRecap_Archon_Label>
+  <ABY_ProgressRecap_Archon_Desc>Порог архонта прорван.
+
+{0} теперь достигается через forge на {1} attuned residue, а {2} находится ступенью выше на {3}. Herald core fragments теперь стали реальной progression-валютой, и самый чистый следующий маршрут — продолжать кормить forge, разбирать herald-side продолжение и эскалировать в пост-первый-босс ветку поддержки до saint-class инвокации.</ABY_ProgressRecap_Archon_Desc>
+  <ABY_ProgressRecap_Reactor_Label>Зафиксирована поздняя эскалация решётки</ABY_ProgressRecap_Reactor_Label>
+  <ABY_ProgressRecap_Reactor_Desc>Порог saint-tier прорван.
+
+Ядра Reactor Saint теперь питают {0}, {1} и более тяжёлую saint-side ветку крафта. Если готово исследование {2}, dominion sigils становятся достижимыми через forge на {3} attuned residue — это следующий осознанный шаг за пределы текущей лестницы боссов.</ABY_ProgressRecap_Reactor_Desc>
+</LanguageData>

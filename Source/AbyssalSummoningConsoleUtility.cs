@@ -557,6 +557,226 @@ namespace AbyssalProtocol
             return TranslateOrFallback(ritual.SideEffectHintKey, ritual.Id);
         }
 
+        public static List<string> GetRitualRoleTags(RitualDefinition ritual)
+        {
+            List<string> tags = new List<string>();
+            if (ritual == null)
+            {
+                return tags;
+            }
+
+            switch (ritual.Id)
+            {
+                case "unstable_breach":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Swarm", "swarm"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Rehearsal", "rehearsal"));
+                    break;
+                case "ember_hunt":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Flanking", "flanking"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_BacklinePressure", "backline pressure"));
+                    break;
+                case "warden_of_ash":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Miniboss", "mini-boss"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_AntiCluster", "anti-cluster"));
+                    break;
+                case "archon_beast":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Boss", "boss"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_PhaseEncounter", "phase encounter"));
+                    break;
+                case "choir_engine":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_SupportSuppression", "support suppression"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_TurretPressure", "turret pressure"));
+                    break;
+                case "reactor_saint":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_ShieldArtillery", "shield artillery"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_AreaDenial", "area denial"));
+                    break;
+                case "dominion_gate":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_ObjectiveEncounter", "objective encounter"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_WavePressure", "wave pressure"));
+                    break;
+            }
+
+            return tags;
+        }
+
+        public static string GetRewardVectorGuaranteed(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            switch (ritual.Id)
+            {
+                case "unstable_breach":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Unstable", "Guaranteed: residue and cleanup drops from a controlled early breach.");
+                case "ember_hunt":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Ember", "Guaranteed: residue, beast cleanup loot, and a stronger hunter-pack rehearsal.");
+                case "warden_of_ash":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Warden", "Guaranteed: 1 Ashen Core plus residue from the first true mini-boss step.");
+                case "archon_beast":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Archon", "Guaranteed: Herald Core Fragments and an Archon Override Ampoule from the first true boss.");
+                case "choir_engine":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Choir", "Guaranteed: 1 Choir Resonance Core and a heavier residue payout.");
+                case "reactor_saint":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Reactor", "Guaranteed: 1 Reactor Saint Core, residue, and spacer-grade salvage.");
+                case "dominion_gate":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Dominion", "Guaranteed: dominion outcome rewards, shards, and late-stage progression materials if the breach is contained.");
+                default:
+                    return GetRitualRewardHint(ritual);
+            }
+        }
+
+        public static string GetRewardVectorProgression(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            switch (ritual.Id)
+            {
+                case "unstable_breach":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Unstable", "Progression: teaches the circle loop before the first boss tier.");
+                case "ember_hunt":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Ember", "Progression: stress-tests backline defense before mini-boss escalation.");
+                case "warden_of_ash":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Warden", "Progression: opens the first ashbound weapon and implant branch.");
+                case "archon_beast":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Archon", "Progression: clears the first boss gate and makes herald-side follow-up routes matter.");
+                case "choir_engine":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Choir", "Progression: unlocks the support-oriented reward line built around Choir implants and the Canticle Driver.");
+                case "reactor_saint":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Reactor", "Progression: feeds saint-class fabrication and pushes the colony toward late-game escalation.");
+                case "dominion_gate":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Dominion", "Progression: arms the full dominion crisis ladder and outcome routing.");
+                default:
+                    return GetRitualRewardHint(ritual);
+            }
+        }
+
+        public static string GetRewardVectorFollowUp(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return string.Empty;
+            }
+
+            RitualDefinition next = GetNextEscalationRitual(ritual);
+            if (next == null)
+            {
+                return TranslateOrFallback("ABY_CircleRewardFollowUp_Final", "Follow-up: this is already the current apex ritual track.");
+            }
+
+            return TranslateOrFallback("ABY_CircleRewardFollowUp_Generic", "Follow-up: next clean escalation is {0}.", GetRitualLabel(next));
+        }
+
+        public static string GetRoleTagLine(RitualDefinition ritual)
+        {
+            List<string> tags = GetRitualRoleTags(ritual);
+            return tags.Count == 0 ? string.Empty : string.Join("  •  ", tags.ToArray());
+        }
+
+        public static RitualDefinition GetNextEscalationRitual(RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < Rituals.Count; i++)
+            {
+                if (Rituals[i].Id == ritual.Id)
+                {
+                    return i + 1 < Rituals.Count ? Rituals[i + 1] : null;
+                }
+            }
+
+            return null;
+        }
+
+        public static string GetPrimaryInvocationBlocker(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            if (circle == null)
+            {
+                return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
+            }
+
+            if (!circle.IsReadyForSigil(out string failReason))
+            {
+                return failReason;
+            }
+
+            if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(circle, ritual, circle.CapacitorOverchannelEnabled, out _, out _, out failReason))
+            {
+                return failReason;
+            }
+
+            Thing sigil = FindBestSigil(circle, ritual, out failReason);
+            if (sigil == null)
+            {
+                ThingDef sigilDef = GetSigilDef(ritual);
+                if (sigilDef != null)
+                {
+                    List<Building_ABY_SigilVault> linkedVaults = GetLinkedVaults(circle);
+                    for (int i = 0; i < linkedVaults.Count; i++)
+                    {
+                        Building_ABY_SigilVault vault = linkedVaults[i];
+                        if (vault.CountStoredSigilsOfDef(sigilDef) > 0)
+                        {
+                            return TranslateOrFallback("ABY_CircleMilestone_StageFromVault", "Stage a prepared sigil from the linked vault before beginning the invocation.");
+                        }
+                    }
+                }
+
+                return failReason;
+            }
+
+            FindBestOperator(circle, ritual, sigil, out failReason);
+            return failReason;
+        }
+
+        public static bool IsInvocationPathClear(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            return GetPrimaryInvocationBlocker(circle, ritual).NullOrEmpty();
+        }
+
+        public static List<StatusEntry> GetMilestoneEntries(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            List<StatusEntry> entries = new List<StatusEntry>();
+            bool ready = IsInvocationPathClear(circle, ritual);
+            string blocker = GetPrimaryInvocationBlocker(circle, ritual);
+
+            entries.Add(new StatusEntry
+            {
+                Label = TranslateOrFallback("ABY_CircleMilestone_Command", "Command path"),
+                Value = ready
+                    ? TranslateOrFallback("ABY_CircleMilestone_CommandReady", "Invocation path clear. A prepared sigil, operator, and circle state are all valid.")
+                    : TranslateOrFallback("ABY_CircleMilestone_CommandBlocked", "Clear blocker: {0}", blocker),
+                Satisfied = ready
+            });
+
+            entries.Add(new StatusEntry
+            {
+                Label = TranslateOrFallback("ABY_CircleMilestone_Reward", "Payout focus"),
+                Value = GetRewardVectorGuaranteed(ritual),
+                Satisfied = CountAvailableSigils(circle, ritual) > 0
+            });
+
+            RitualDefinition next = GetNextEscalationRitual(ritual);
+            entries.Add(new StatusEntry
+            {
+                Label = TranslateOrFallback("ABY_CircleMilestone_Next", "Next escalation"),
+                Value = next != null
+                    ? TranslateOrFallback("ABY_CircleMilestone_NextValue", "After this breach, escalate into {0}.", GetRitualLabel(next))
+                    : TranslateOrFallback("ABY_CircleMilestone_NextFinal", "This ritual already sits at the current top of the escalation ladder."),
+                Satisfied = false
+            });
+
+            return entries;
+        }
+
         private static string Shorten(string text, int maxLength)
         {
             if (text.NullOrEmpty() || text.Length <= maxLength)
