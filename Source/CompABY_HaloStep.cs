@@ -111,7 +111,7 @@ namespace AbyssalProtocol
 
         private bool HasNearbyThreat(Pawn pawn)
         {
-            List<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
                 return false;
@@ -204,7 +204,7 @@ namespace AbyssalProtocol
         private static List<Pawn> CollectHostilePawns(Pawn pawn)
         {
             List<Pawn> hostiles = new List<Pawn>();
-            List<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
                 return hostiles;

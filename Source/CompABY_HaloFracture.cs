@@ -70,7 +70,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<Pawn> pawns = map.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = map.mapPawns?.AllPawnsSpawned;
             if (pawns == null)
             {
                 return;
