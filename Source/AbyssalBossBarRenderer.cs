@@ -150,7 +150,9 @@ namespace AbyssalProtocol
             Color oldColor = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, alpha);
             GUI.DrawTexture(rect, IconFrameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
-            GUI.color = new Color(palette.iconTint.r, palette.iconTint.g, palette.iconTint.b, alpha);
+            GUI.color = state?.profile != null && state.profile.useRawIconColors
+                ? new Color(1f, 1f, 1f, alpha)
+                : new Color(palette.iconTint.r, palette.iconTint.g, palette.iconTint.b, alpha);
             GUI.DrawTexture(rect.ContractedBy(rect.width * 0.12f), icon ?? DefaultIconTex ?? BaseContent.BadTex, ScaleMode.ScaleToFit, true);
             GUI.color = oldColor;
         }
@@ -335,6 +337,20 @@ namespace AbyssalProtocol
         {
             switch (styleId)
             {
+                case "abyssal_archon":
+                    return new ABY_BossBarStylePalette(
+                        new Color(0.10f, 0.065f, 0.055f, 0.96f),
+                        new Color(0.17f, 0.10f, 0.075f, 1f),
+                        new Color(0.88f, 0.26f, 0.12f, 1f),
+                        new Color(1f, 0.56f, 0.22f, 1f),
+                        new Color(1f, 0.74f, 0.54f, 1f),
+                        new Color(0.99f, 0.93f, 0.88f, 1f),
+                        new Color(1f, 0.82f, 0.66f, 1f),
+                        new Color(0.82f, 0.46f, 0.24f, 1f),
+                        new Color(0.38f, 0.20f, 0.12f, 1f),
+                        new Color(0.17f, 0.10f, 0.07f, 1f),
+                        new Color(0.98f, 0.46f, 0.18f, 1f),
+                        new Color(1f, 0.48f, 0.20f, 0.58f));
                 case "abyssal_rupture":
                     return new ABY_BossBarStylePalette(
                         new Color(0.12f, 0.05f, 0.055f, 0.96f),

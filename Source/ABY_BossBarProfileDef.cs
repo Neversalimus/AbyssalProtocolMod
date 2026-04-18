@@ -12,6 +12,7 @@ namespace AbyssalProtocol
         public string displayLabelKey;
         public string iconTexPath;
         public string styleId = "default";
+        public bool useRawIconColors;
         public string phaseSourceMode;
         public string secondaryBarSource;
 

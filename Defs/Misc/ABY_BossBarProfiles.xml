@@ -10,7 +10,9 @@
       <li>ABY_ArchonBeast</li>
     </bossPawnKindDefNames>
     <displayLabel>Archon Beast</displayLabel>
+    <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonBeast</iconTexPath>
     <styleId>abyssal_archon</styleId>
+    <useRawIconColors>true</useRawIconColors>
     <priority>100</priority>
     <phaseSourceMode>ArchonCoreController</phaseSourceMode>
     <showPhaseMarkers>true</showPhaseMarkers>
