@@ -1633,12 +1633,20 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IntVec3 spawnCell = pendingSpawnCell.IsValid ? pendingSpawnCell : RitualFocusCell;
-            if (!spawnCell.IsValid || !spawnCell.InBounds(Map))
+            IntVec3 requestedSpawnCell = pendingSpawnCell.IsValid ? pendingSpawnCell : RitualFocusCell;
+            if (!requestedSpawnCell.IsValid || !requestedSpawnCell.InBounds(Map))
             {
                 failReason = "ABY_CircleFail_NoBossArrival".Translate();
                 return false;
             }
+
+            if (!AbyssalBossSummonUtility.TryResolveBossManifestationCell(Map, manifestationDef, requestedSpawnCell, out IntVec3 spawnCell) || !spawnCell.IsValid)
+            {
+                failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                return false;
+            }
+
+            pendingSpawnCell = spawnCell;
 
             if (manifestationDef.thingClass != null && typeof(Skyfaller).IsAssignableFrom(manifestationDef.thingClass))
             {
@@ -2206,7 +2214,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            foreach (AbyssalSummoningConsoleUtility.RitualDefinition ritual in AbyssalSummoningConsoleUtility.GetRitualsForCircle(this))
+            foreach (AbyssalSummoningConsoleUtility.RitualDefinition ritual in AbyssalSummoningConsoleUtility.GetRituals())
             {
                 if (ritual != null && ritual.Id == pendingRitualId)
                 {

@@ -19,6 +19,9 @@ namespace AbyssalProtocol
         private const string ChoirEngineRaceDefName = "ABY_ChoirEngine";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
+        private const int BossArrivalNearColonyEdgeMargin = 8;
+        private const int BossManifestationMinEdgeMargin = 6;
+        private const float BossManifestationSearchRadius = 18f;
 
         public static Faction ResolveHostileFaction()
         {
@@ -78,10 +81,16 @@ namespace AbyssalProtocol
 
         public static bool TryFindBossArrivalCell(Map map, out IntVec3 cell)
         {
-            for (int i = 0; i < 8; i++)
+            cell = IntVec3.Invalid;
+            if (map == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < 16; i++)
             {
                 if (CellFinder.TryFindRandomEdgeCellWith(
-                    c => c.Standable(map) && !c.Fogged(map),
+                    c => IsValidBossArrivalCell(map, c, allowEdgeCell: true),
                     map,
                     CellFinder.EdgeRoadChance_Hostile,
                     out cell))
@@ -90,8 +99,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            cell = IntVec3.Invalid;
-            return false;
+            return CellFinder.TryFindRandomCell(map, c => IsValidBossArrivalCell(map, c, allowEdgeCell: true), out cell);
         }
 
         public static bool TryFindNearColonyArrivalCell(
@@ -144,6 +152,46 @@ namespace AbyssalProtocol
             if (IsValidNearColonyArrivalCell(map, anchor))
             {
                 cell = anchor;
+                return true;
+            }
+
+            return TryFindBossArrivalCell(map, out cell);
+        }
+
+        public static bool TryResolveBossManifestationCell(Map map, ThingDef manifestationDef, IntVec3 requestedCell, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null)
+            {
+                return false;
+            }
+
+            if (IsValidBossManifestationCell(map, requestedCell))
+            {
+                cell = requestedCell;
+                return true;
+            }
+
+            int radialCount = GenRadial.NumCellsInRadius(BossManifestationSearchRadius);
+            List<IntVec3> nearbyCandidates = new List<IntVec3>();
+            for (int i = 0; i < radialCount; i++)
+            {
+                IntVec3 candidate = requestedCell + GenRadial.RadialPattern[i];
+                if (IsValidBossManifestationCell(map, candidate))
+                {
+                    nearbyCandidates.Add(candidate);
+                }
+            }
+
+            if (nearbyCandidates.Count > 0)
+            {
+                nearbyCandidates.SortBy(c => c.DistanceToSquared(requestedCell));
+                cell = nearbyCandidates[0];
+                return true;
+            }
+
+            if (TryFindNearColonyArrivalCell(map, requestedCell.IsValid ? requestedCell : map.Center, 8f, 30f, out cell))
+            {
                 return true;
             }
 
@@ -227,17 +275,34 @@ namespace AbyssalProtocol
 
         private static bool IsValidNearColonyArrivalCell(Map map, IntVec3 cell)
         {
+            return IsValidBossArrivalCell(map, cell, allowEdgeCell: false);
+        }
+
+        private static bool IsValidBossManifestationCell(Map map, IntVec3 cell)
+        {
+            return IsValidBossArrivalCell(map, cell, allowEdgeCell: false, additionalEdgeMargin: BossManifestationMinEdgeMargin);
+        }
+
+        private static bool IsValidBossArrivalCell(Map map, IntVec3 cell, bool allowEdgeCell, int additionalEdgeMargin = 0)
+        {
             if (!cell.IsValid || !cell.InBounds(map))
             {
                 return false;
             }
 
-            if (cell.x < 8 || cell.z < 8 || cell.x >= map.Size.x - 8 || cell.z >= map.Size.z - 8)
+            int edgeMargin = allowEdgeCell ? System.Math.Max(0, additionalEdgeMargin) : System.Math.Max(BossArrivalNearColonyEdgeMargin, additionalEdgeMargin);
+            if (edgeMargin > 0 && (cell.x < edgeMargin || cell.z < edgeMargin || cell.x >= map.Size.x - edgeMargin || cell.z >= map.Size.z - edgeMargin))
             {
                 return false;
             }
 
             if (!cell.Standable(map) || !cell.Walkable(map) || cell.Fogged(map) || cell.Roofed(map))
+            {
+                return false;
+            }
+
+            TerrainDef terrain = cell.GetTerrain(map);
+            if (terrain == null || terrain.IsWater)
             {
                 return false;
             }
