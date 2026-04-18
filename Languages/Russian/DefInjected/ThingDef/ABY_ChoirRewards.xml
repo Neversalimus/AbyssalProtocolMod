@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ChoirResonanceCore.label>хоровое резонансное ядро</ABY_ChoirResonanceCore.label>
+  <ABY_ChoirResonanceCore.description>Дисциплинированная choir-призма, извлечённая из relay-двигателя. В отличие от рваного herald-фрагмента, этот узел создан для когерентности: давление, тайминг, сигнальная форма и враждебный командный ритм удерживаются внутри стабильной резонансной оболочки.</ABY_ChoirResonanceCore.description>
+
+  <ABY_CanticleSubcoreNode.label>узел субядра Canticle</ABY_CanticleSubcoreNode.label>
+  <ABY_CanticleSubcoreNode.description>Вспомогательный choir-узел, монтируемый рядом с мозгом, а не вместо него. Он даёт вторую линию упорядоченного мышления, настроенную на обучение, ритм наведения и спокойный предвыстрельный тайминг.</ABY_CanticleSubcoreNode.description>
+
+  <ABY_ResonanceServoArm.label>резонансная серво-рука</ABY_ResonanceServoArm.label>
+  <ABY_ResonanceServoArm.description>Servo-armature choir-паттерна, созданная для контролируемого обращения с оружием, а не для грубой saint-классовой экзекуции. Она усиливает манипуляцию и дальнобойный ритм, не дотягиваясь до точности поздних босс-наград.</ABY_ResonanceServoArm.description>
+
+  <ABY_HarmonicMesh.label>гармоническая сетка</ABY_HarmonicMesh.label>
+  <ABY_HarmonicMesh.description>Складная подкожная choir-сетка, распределяющая удар, жар и кровопотерю через дисциплинированную резонансную решётку. Она легче, чем поздние boss-tier бронеимпланты, но заметно превосходит обычную защитную хирургию.</ABY_HarmonicMesh.description>
+
+  <ABY_ChoirSinkKidney.label>почка хорового теплоотвода</ABY_ChoirSinkKidney.label>
+  <ABY_ChoirSinkKidney.description>Резонансно-охлаждённый почечный теплоотвод, который жёстче фильтрует кровь, режет кровопотерю и уводит враждебное тепловое давление от мягких тканей, пока оно не сорвало организм в каскадный коллапс.</ABY_ChoirSinkKidney.description>
+
+  <ABY_CanticleDriver.label>драйвер Canticle</ABY_CanticleDriver.label>
+  <ABY_CanticleDriver.description>Sonic pressure rifle choir-паттерна, запускающая компактные резонансные шипы вместо горячей плазмы. Она создана для срыва темпа, подавления открытой пехоты и контузионного давления через звук и blunt-force удар, а не как чистое anti-armor копьё.</ABY_CanticleDriver.description>
+
+  <ABY_CanticleWaveProjectile.label>волна Canticle</ABY_CanticleWaveProjectile.label>
+</LanguageData>

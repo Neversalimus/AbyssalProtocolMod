@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_InstallCanticleSubcoreNode.label>установить узел субядра Canticle</ABY_InstallCanticleSubcoreNode.label>
+  <ABY_InstallCanticleSubcoreNode.description>Установить узел субядра Canticle.</ABY_InstallCanticleSubcoreNode.description>
+  <ABY_InstallCanticleSubcoreNode.jobString>Установка узла субядра Canticle.</ABY_InstallCanticleSubcoreNode.jobString>
+
+  <ABY_InstallResonanceServoArm.label>установить резонансную серво-руку</ABY_InstallResonanceServoArm.label>
+  <ABY_InstallResonanceServoArm.description>Установить резонансную серво-руку.</ABY_InstallResonanceServoArm.description>
+  <ABY_InstallResonanceServoArm.jobString>Установка резонансной серво-руки.</ABY_InstallResonanceServoArm.jobString>
+
+  <ABY_InstallHarmonicMesh.label>установить гармоническую сетку</ABY_InstallHarmonicMesh.label>
+  <ABY_InstallHarmonicMesh.description>Установить гармоническую сетку.</ABY_InstallHarmonicMesh.description>
+  <ABY_InstallHarmonicMesh.jobString>Установка гармонической сетки.</ABY_InstallHarmonicMesh.jobString>
+
+  <ABY_InstallChoirSinkKidney.label>установить почку хорового теплоотвода</ABY_InstallChoirSinkKidney.label>
+  <ABY_InstallChoirSinkKidney.description>Установить почку хорового теплоотвода.</ABY_InstallChoirSinkKidney.description>
+  <ABY_InstallChoirSinkKidney.jobString>Установка почки хорового теплоотвода.</ABY_InstallChoirSinkKidney.jobString>
+</LanguageData>

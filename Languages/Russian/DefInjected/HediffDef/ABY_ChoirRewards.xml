@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CanticleSubcoreNode_Implant.label>узел субядра Canticle</ABY_CanticleSubcoreNode_Implant.label>
+  <ABY_CanticleSubcoreNode_Implant.description>Вспомогательное choir-субъядро, посаженное рядом с мозгом и дающее вторую линию упорядоченной когниции без грубой замены носителя.</ABY_CanticleSubcoreNode_Implant.description>
+
+  <ABY_ResonanceServoArm_Implant.label>резонансная серво-рука</ABY_ResonanceServoArm_Implant.label>
+  <ABY_ResonanceServoArm_Implant.description>Servo-arm choir-паттерна, настроенная на более чистое обращение с оружием, дисциплину наведения и стабильную манипуляцию.</ABY_ResonanceServoArm_Implant.description>
+
+  <ABY_HarmonicMesh_Implant.label>гармоническая сетка</ABY_HarmonicMesh_Implant.label>
+  <ABY_HarmonicMesh_Implant.description>Подкожная choir-сетка, распределяющая удар и жар через дисциплинированную резонансную решётку.</ABY_HarmonicMesh_Implant.description>
+
+  <ABY_ChoirSinkKidney_Implant.label>почка хорового теплоотвода</ABY_ChoirSinkKidney_Implant.label>
+  <ABY_ChoirSinkKidney_Implant.description>Резонансно-охлаждённый renal-sink, который жёстче фильтрует кровь и отводит враждебное тепловое давление от тела.</ABY_ChoirSinkKidney_Implant.description>
+</LanguageData>

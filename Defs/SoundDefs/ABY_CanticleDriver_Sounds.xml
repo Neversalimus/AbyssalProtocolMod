@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_CanticleDriverAim</defName>
+    <sustain>true</sustain>
+    <context>MapOnly</context>
+    <maxSimultaneous>4</maxSimultaneous>
+    <maxVoices>2</maxVoices>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <sustainFadeoutTime>0.08</sustainFadeoutTime>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/SpecterLash_Charge</clipPath>
+          </li>
+        </grains>
+        <volumeRange>24~28</volumeRange>
+        <pitchRange>1.02~1.06</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CanticleDriverFire</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>6</maxSimultaneous>
+    <maxVoices>3</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/SpecterLash_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>32~36</volumeRange>
+        <pitchRange>1.03~1.07</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CanticleDriverTail</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>6</maxSimultaneous>
+    <maxVoices>3</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/SpecterLash_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~22</volumeRange>
+        <pitchRange>1.03~1.07</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CanticleDriverImpact</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>8</maxSimultaneous>
+    <maxVoices>4</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/SpecterLash_Pulse</clipPath>
+          </li>
+        </grains>
+        <volumeRange>20~24</volumeRange>
+        <pitchRange>1.04~1.08</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

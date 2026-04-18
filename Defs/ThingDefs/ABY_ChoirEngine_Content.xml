@@ -116,7 +116,7 @@
       </li>
     </comps>
     <killedLeavings Inherit="False">
-      <ABY_HeraldCoreFragment>1</ABY_HeraldCoreFragment>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
       <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
     </killedLeavings>
 </ThingDef>

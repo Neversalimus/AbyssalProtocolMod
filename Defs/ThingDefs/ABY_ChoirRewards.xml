@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_ChoirResonanceCore</defName>
+    <label>choir resonance core</label>
+    <description>A disciplined choir-core prism recovered from the relay engine. Unlike the jagged herald fragment, this node is built for coherence: pressure, timing, signal shaping, and hostile command rhythm held inside a stable resonant shell.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_ChoirResonanceCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>330</MarketValue>
+      <Mass>0.18</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CanticleSubcoreNode</defName>
+    <label>canticle subcore node</label>
+    <description>An auxiliary choir cognition node mounted beside the brain instead of replacing it outright. It grants a second line of ordered thought tuned for learning, target rhythm and calm pre-shot timing.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CanticleSubcoreNode</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.16</Mass>
+      <WorkToMake>32000</WorkToMake>
+      <MarketValue>1580</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>12</Plasteel>
+      <Gold>4</Gold>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ResonanceServoArm</defName>
+    <label>resonance servo arm</label>
+    <description>A choir-pattern servo armature built for controlled handling rather than brutal saint-grade execution. It improves manipulation and ranged cadence without fully reaching later boss-tier precision.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ResonanceServoArm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.38</Mass>
+      <WorkToMake>33500</WorkToMake>
+      <MarketValue>1680</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>16</Plasteel>
+      <Steel>18</Steel>
+      <Gold>2</Gold>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>165</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HarmonicMesh</defName>
+    <label>harmonic mesh</label>
+    <description>A folded subdermal choir weave that spreads impact, heat and blood loss through a disciplined resonance lattice. It is lighter than later boss-tier armor implants, but far superior to ordinary protective surgery.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HarmonicMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.24</Mass>
+      <WorkToMake>31000</WorkToMake>
+      <MarketValue>1540</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>18</Plasteel>
+      <Steel>20</Steel>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>180</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ChoirSinkKidney</defName>
+    <label>choir sink kidney</label>
+    <description>A resonance-cooled renal sink that filters harder, trims blood loss and vents hostile thermal pressure away from soft tissue before it snowballs into collapse.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ChoirSinkKidney</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.22</Mass>
+      <WorkToMake>30000</WorkToMake>
+      <MarketValue>1490</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>11</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>14</Plasteel>
+      <Steel>16</Steel>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>170</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_CanticleDriver</defName>
+    <label>canticle driver</label>
+    <description>A choir-pattern sonic pressure rifle that launches compact resonance spikes rather than hot plasma. It is built to stagger flesh, punish exposed infantry and break firing rhythm through blunt pressure and hostile sound, not to serve as a pure anti-armor lance.</description>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CanticleDriver</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Plasteel>38</Plasteel>
+      <Steel>46</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <Gold>6</Gold>
+    </costList>
+
+    <statBases>
+      <WorkToMake>48000</WorkToMake>
+      <Mass>4.8</Mass>
+      <MarketValue>2280</MarketValue>
+      <AccuracyTouch>0.77</AccuracyTouch>
+      <AccuracyShort>0.84</AccuracyShort>
+      <AccuracyMedium>0.78</AccuracyMedium>
+      <AccuracyLong>0.60</AccuracyLong>
+      <RangedWeapon_Cooldown>2.45</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_CanticleWaveProjectile</defaultProjectile>
+        <warmupTime>1.55</warmupTime>
+        <range>29.9</range>
+        <burstShotCount>2</burstShotCount>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+        <soundAiming>ABY_CanticleDriverAim</soundAiming>
+        <soundCast>ABY_CanticleDriverFire</soundCast>
+        <soundCastTail>ABY_CanticleDriverTail</soundCastTail>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>190</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CanticleWaveProjectile</defName>
+    <label>canticle wave</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CanticleWave_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.30,2.55)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Blunt</damageDef>
+      <damageAmountBase>16</damageAmountBase>
+      <armorPenetrationBase>0.20</armorPenetrationBase>
+      <stoppingPower>2.30</stoppingPower>
+      <speed>78</speed>
+      <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
