@@ -72,8 +72,18 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null)
+            {
+                return false;
+            }
+
+            if (pawn.Downed && !profile.showWhenDowned)
+            {
+                return false;
+            }
+
             float healthPct = Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
-            float maxHealth = GetApproximateMaxHealth(pawn);
+            float maxHealth = Mathf.Max(1f, GetApproximateMaxHealth(pawn));
             int currentPhase = ResolveCurrentPhase(pawn, profile, healthPct);
 
             state = new ABY_BossBarState
@@ -89,6 +99,7 @@ namespace AbyssalProtocol
             };
 
             PopulatePhaseSnapshots(state, profile, currentPhase);
+            ApplyPhaseSpecialStateTag(state, profile);
             ApplySpecialStateContext(state, pawn, profile);
             for (int i = 0; i < state.phases.Count; i++)
             {
@@ -327,6 +338,26 @@ namespace AbyssalProtocol
             }
         }
 
+        private static void ApplyPhaseSpecialStateTag(ABY_BossBarState state, ABY_BossBarProfileDef profile)
+        {
+            if (state == null || profile?.phaseEntries == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < profile.phaseEntries.Count; i++)
+            {
+                ABY_BossBarPhaseEntry entry = profile.phaseEntries[i];
+                if (entry == null || entry.phaseIndex != state.currentPhase || entry.specialStateTag.NullOrEmpty())
+                {
+                    continue;
+                }
+
+                state.specialStateTag = entry.specialStateTag;
+                return;
+            }
+        }
+
         private static void PopulateSecondaryBar(ABY_BossBarState state, Pawn pawn, ABY_BossBarProfileDef profile)
         {
             if (state == null || pawn == null || profile == null || profile.secondaryBarSource.NullOrEmpty())
@@ -344,9 +375,9 @@ namespace AbyssalProtocol
                     }
 
                     state.hasSecondaryBar = true;
-                    state.secondaryPct = aegis.AegisFraction;
-                    state.secondaryCurrent = aegis.CurrentAegisPoints;
-                    state.secondaryMax = aegis.MaxAegisPoints;
+                    state.secondaryPct = Mathf.Clamp01(aegis.AegisFraction);
+                    state.secondaryCurrent = Mathf.Max(0f, aegis.CurrentAegisPoints);
+                    state.secondaryMax = Mathf.Max(1f, aegis.MaxAegisPoints);
                     state.secondaryCriticalStateActive = aegis.CollapseWindowActive;
                     state.secondaryLabel = aegis.CollapseWindowActive
                         ? "ABY_BossBar_SecondaryAegisCollapsed".Translate()

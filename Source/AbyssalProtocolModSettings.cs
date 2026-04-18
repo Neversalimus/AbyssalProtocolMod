@@ -111,9 +111,53 @@ namespace AbyssalProtocol
 
             x += offsetX;
             y += offsetY;
-            x = Mathf.Clamp(x, screenRect.x, screenRect.xMax - totalSize.x);
-            y = Mathf.Clamp(y, screenRect.y, screenRect.yMax - totalSize.y);
+
+            float minX = screenRect.x + safeMargin;
+            float minY = screenRect.y + safeMargin;
+            float maxX = screenRect.xMax - safeMargin - totalSize.x;
+            float maxY = screenRect.yMax - safeMargin - totalSize.y;
+
+            if (maxX < minX)
+            {
+                minX = screenRect.x;
+                maxX = screenRect.xMax - totalSize.x;
+            }
+
+            if (maxY < minY)
+            {
+                minY = screenRect.y;
+                maxY = screenRect.yMax - totalSize.y;
+            }
+
+            x = Mathf.Clamp(x, minX, maxX);
+            y = Mathf.Clamp(y, minY, maxY);
             return new Vector2(x, y);
+        }
+
+        public Rect ClampRectToSafeArea(Rect rect, Rect screenRect, float extraMargin = 0f)
+        {
+            ClampValues();
+            float margin = Mathf.Max(0f, safeMargin + extraMargin);
+            float minX = screenRect.x + margin;
+            float minY = screenRect.y + margin;
+            float maxX = screenRect.xMax - margin - rect.width;
+            float maxY = screenRect.yMax - margin - rect.height;
+
+            if (maxX < minX)
+            {
+                minX = screenRect.x;
+                maxX = screenRect.xMax - rect.width;
+            }
+
+            if (maxY < minY)
+            {
+                minY = screenRect.y;
+                maxY = screenRect.yMax - rect.height;
+            }
+
+            rect.x = Mathf.Clamp(rect.x, minX, maxX);
+            rect.y = Mathf.Clamp(rect.y, minY, maxY);
+            return rect;
         }
     }
 }

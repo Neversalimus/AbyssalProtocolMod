@@ -69,6 +69,7 @@ namespace AbyssalProtocol
             activeBoss = boss;
             activeBossDisplayLabelOverride = displayLabelOverride;
             activeBossBarProfile = AbyssalBossBarUtility.ResolveProfileFor(boss);
+            AbyssalBossBarRenderer.ResetVisualState();
             effectMap = boss.MapHeld;
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
@@ -89,6 +90,7 @@ namespace AbyssalProtocol
             activeBossDisplayLabelOverride = null;
             effectMap = null;
             currentStrength = 0f;
+            AbyssalBossBarRenderer.ResetVisualState();
             ResetBossMusicState();
         }
 
@@ -158,6 +160,7 @@ namespace AbyssalProtocol
                 activeBossBarProfile = null;
                 activeBossDisplayLabelOverride = null;
                 effectMap = null;
+                AbyssalBossBarRenderer.ResetVisualState();
                 ResetBossMusicState();
             }
         }

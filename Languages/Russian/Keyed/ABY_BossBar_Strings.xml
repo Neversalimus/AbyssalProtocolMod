@@ -51,4 +51,6 @@
   <ABY_BossBar_SecondaryAegisCollapsed>Срыв Aegis</ABY_BossBar_SecondaryAegisCollapsed>
   <ABY_BossBar_Phase_Veil>Пелена</ABY_BossBar_Phase_Veil>
   <ABY_BossBar_Phase_Fury>Ярость</ABY_BossBar_Phase_Fury>
+  <ABY_BossBar_CalibrationPreviewActive>Текущая цель превью: {0}</ABY_BossBar_CalibrationPreviewActive>
+  <ABY_BossBar_CalibrationPreviewMissing>На этой карте сейчас нет активного поддерживаемого босса. Настраивать layout всё равно можно, но live-превью лучше всего работает, когда активен Archon Beast, Archon of Rupture или Reactor Saint.</ABY_BossBar_CalibrationPreviewMissing>
 </LanguageData>

@@ -51,4 +51,6 @@
   <ABY_BossBar_SecondaryAegisCollapsed>Aegis Collapse</ABY_BossBar_SecondaryAegisCollapsed>
   <ABY_BossBar_Phase_Veil>Veil</ABY_BossBar_Phase_Veil>
   <ABY_BossBar_Phase_Fury>Fury</ABY_BossBar_Phase_Fury>
+  <ABY_BossBar_CalibrationPreviewActive>Preview target: {0}</ABY_BossBar_CalibrationPreviewActive>
+  <ABY_BossBar_CalibrationPreviewMissing>No supported active boss is currently available on this map. You can still adjust the layout, but live preview works best while Archon Beast, Archon of Rupture, or Reactor Saint is active.</ABY_BossBar_CalibrationPreviewMissing>
 </LanguageData>

@@ -24,6 +24,16 @@ namespace AbyssalProtocol
         private static float displayedAlpha;
         private static float displayedSpecialPulse;
 
+        public static void ResetVisualState()
+        {
+            trackedBossId = -1;
+            displayedHealthPct = 1f;
+            displayedTrailPct = 1f;
+            displayedSecondaryPct = 1f;
+            displayedAlpha = 0f;
+            displayedSpecialPulse = 0f;
+        }
+
         public static void Draw(ABY_BossBarState state)
         {
             if (state?.boss == null || state.profile == null)
@@ -34,6 +44,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
             if (!settings.enableBossBars)
             {
+                ResetVisualState();
                 return;
             }
 
@@ -62,7 +73,7 @@ namespace AbyssalProtocol
                 ? new Rect(0f, 0f, UI.screenWidth, UI.screenHeight)
                 : new Rect(0f, 0f, Screen.width, Screen.height);
             Vector2 topLeft = settings.ResolveTopLeft(screenRect, new Vector2(totalWidth, totalHeight));
-            Rect rootRect = new Rect(topLeft.x, topLeft.y, totalWidth, totalHeight);
+            Rect rootRect = settings.ClampRectToSafeArea(new Rect(topLeft.x, topLeft.y, totalWidth, totalHeight), screenRect);
             Rect iconRect = new Rect(rootRect.x, rootRect.y + Mathf.Max(0f, totalHeight - iconSize) * 0.5f, iconSize, iconSize);
             Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, barWidth, totalHeight);
             Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
@@ -87,7 +98,7 @@ namespace AbyssalProtocol
 
             if (settings.showCalibrationButton)
             {
-                DrawCalibrationButton(new Rect(rootRect.xMax - 84f * scale, rootRect.y - 26f * scale, 84f * scale, 22f * scale));
+                DrawCalibrationButton(ResolveCalibrationButtonRect(rootRect, screenRect, settings, scale));
             }
         }
 
@@ -336,6 +347,18 @@ namespace AbyssalProtocol
             }
         }
 
+        private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
+        {
+            Rect rect = new Rect(rootRect.xMax - 84f * scale, rootRect.y - 26f * scale, 84f * scale, 22f * scale);
+            float minY = screenRect.y + settings.safeMargin;
+            if (rect.y < minY)
+            {
+                rect.y = rootRect.yMax + 4f * scale;
+            }
+
+            return settings.ClampRectToSafeArea(rect, screenRect, -4f);
+        }
+
         private static void DrawPhaseMarkers(Rect frameRect, Rect innerRect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha)
         {
             List<ABY_BossBarPhaseSnapshot> phases = state.phases;
@@ -362,6 +385,7 @@ namespace AbyssalProtocol
                     Color oldColor = GUI.color;
                     GUI.color = new Color(tickColor.r, tickColor.g, tickColor.b, alpha);
                     Rect labelRect = new Rect(x - 16f, frameRect.y - 14f, 32f, 14f);
+                    labelRect.x = Mathf.Clamp(labelRect.x, frameRect.x, frameRect.xMax - labelRect.width);
                     Text.Anchor = TextAnchor.UpperCenter;
                     Widgets.Label(labelRect, phase.label);
                     Text.Anchor = TextAnchor.UpperLeft;

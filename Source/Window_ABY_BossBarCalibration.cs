@@ -38,6 +38,9 @@ namespace AbyssalProtocol
             {
                 openWindow = null;
             }
+
+            AbyssalProtocolMod.Settings.ClampValues();
+            AbyssalProtocolMod.SaveNow();
         }
 
         public override void DoWindowContents(Rect inRect)
@@ -55,6 +58,7 @@ namespace AbyssalProtocol
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
 
             float curY = 0f;
+            DrawPreviewStatus(viewRect, ref curY);
             DrawSectionLabel(viewRect, ref curY, "ABY_BossBar_Calibration_Positioning".Translate());
             DrawAnchorButtons(viewRect, ref curY, settings);
             DrawNudgeGrid(viewRect, ref curY, settings);
@@ -101,7 +105,31 @@ namespace AbyssalProtocol
 
             Widgets.EndScrollView();
             settings.ClampValues();
-            AbyssalProtocolMod.SaveNow();
+        }
+
+        private static void DrawPreviewStatus(Rect viewRect, ref float curY)
+        {
+            string text;
+            Color color;
+            AbyssalBossScreenFXGameComponent comp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
+            if (comp != null && comp.TryGetActiveBossBarState(out ABY_BossBarState state) && state != null)
+            {
+                text = "ABY_BossBar_CalibrationPreviewActive".Translate(state.displayLabel);
+                color = new Color(0.84f, 0.96f, 1f, 1f);
+            }
+            else
+            {
+                text = "ABY_BossBar_CalibrationPreviewMissing".Translate();
+                color = new Color(0.95f, 0.80f, 0.66f, 1f);
+            }
+
+            Rect rect = new Rect(0f, curY, viewRect.width, 44f);
+            Text.Font = GameFont.Tiny;
+            GUI.color = color;
+            Widgets.Label(rect, text);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            curY = rect.yMax + 6f;
         }
 
         private static void DrawSectionLabel(Rect viewRect, ref float curY, string label)
