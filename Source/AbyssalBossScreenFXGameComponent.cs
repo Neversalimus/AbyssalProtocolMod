@@ -10,6 +10,8 @@ namespace AbyssalProtocol
     public class AbyssalBossScreenFXGameComponent : GameComponent
     {
         private Pawn activeBoss;
+        private ABY_BossBarProfileDef activeBossBarProfile;
+        private string activeBossDisplayLabelOverride;
         private Map effectMap;
         private float currentStrength;
         private int effectStartTick;
@@ -34,19 +36,30 @@ namespace AbyssalProtocol
         {
         }
 
+        public Pawn ActiveBoss => activeBoss;
+        public ABY_BossBarProfileDef ActiveBossBarProfile => activeBossBarProfile;
+        public string ActiveBossDisplayLabelOverride => activeBossDisplayLabelOverride;
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_References.Look(ref activeBoss, "activeBoss");
+            Scribe_Defs.Look(ref activeBossBarProfile, "activeBossBarProfile");
+            Scribe_Values.Look(ref activeBossDisplayLabelOverride, "activeBossDisplayLabelOverride");
             Scribe_References.Look(ref effectMap, "effectMap");
             Scribe_Values.Look(ref currentStrength, "currentStrength", 0f);
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
             Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                RefreshActiveBossBarProfile();
+            }
         }
 
-        public void RegisterBoss(Pawn boss)
+        public void RegisterBoss(Pawn boss, string displayLabelOverride = null)
         {
             if (boss == null)
             {
@@ -54,12 +67,58 @@ namespace AbyssalProtocol
             }
 
             activeBoss = boss;
+            activeBossDisplayLabelOverride = displayLabelOverride;
+            activeBossBarProfile = AbyssalBossBarUtility.ResolveProfileFor(boss);
             effectMap = boss.MapHeld;
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
             ScheduleBossSongStart(0.05f);
             vanillaSongRestoreQueued = false;
+        }
+
+        public void ClearBoss(Pawn boss = null)
+        {
+            if (boss != null && activeBoss != boss)
+            {
+                return;
+            }
+
+            activeBoss = null;
+            activeBossBarProfile = null;
+            activeBossDisplayLabelOverride = null;
+            effectMap = null;
+            currentStrength = 0f;
+            ResetBossMusicState();
+        }
+
+        public bool TryGetActiveBossBarState(out ABY_BossBarState state)
+        {
+            state = null;
+            if (!BossAlive())
+            {
+                return false;
+            }
+
+            RefreshActiveBossBarProfile();
+            return activeBossBarProfile != null &&
+                   AbyssalBossBarUtility.TryBuildState(activeBoss, activeBossBarProfile, activeBossDisplayLabelOverride, out state);
+        }
+
+        private void RefreshActiveBossBarProfile()
+        {
+            if (activeBoss == null)
+            {
+                activeBossBarProfile = null;
+                return;
+            }
+
+            if (activeBossBarProfile != null && activeBossBarProfile.Matches(activeBoss))
+            {
+                return;
+            }
+
+            activeBossBarProfile = AbyssalBossBarUtility.ResolveProfileFor(activeBoss);
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -96,6 +155,8 @@ namespace AbyssalProtocol
             if (!bossAlive && currentStrength <= 0.001f)
             {
                 activeBoss = null;
+                activeBossBarProfile = null;
+                activeBossDisplayLabelOverride = null;
                 effectMap = null;
                 ResetBossMusicState();
             }

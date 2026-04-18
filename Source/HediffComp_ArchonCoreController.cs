@@ -94,6 +94,12 @@ namespace AbyssalProtocol
         public HediffCompProperties_ArchonCoreController Props =>
             (HediffCompProperties_ArchonCoreController)props;
 
+        public int CurrentPhase => Mathf.Max(1, currentPhase);
+        public float Phase2HealthPct => Props.phase2HealthPct;
+        public float Phase3HealthPct => Props.phase3HealthPct;
+        public ArchonEncounterState EncounterState => encounterState;
+        public bool Phase2PortalActive => phase2PortalActive;
+
         public override void CompExposeData()
         {
             base.CompExposeData();

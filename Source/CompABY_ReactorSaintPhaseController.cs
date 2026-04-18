@@ -10,6 +10,10 @@ namespace AbyssalProtocol
 
         public CompProperties_ABY_ReactorSaintPhaseController Props => (CompProperties_ABY_ReactorSaintPhaseController)props;
 
+        public int CurrentPhase => currentPhase < 1 ? 1 : currentPhase;
+        public float Phase2HealthPct => Props.phase2HealthPct;
+        public float Phase3HealthPct => Props.phase3HealthPct;
+
         private Pawn PawnParent => parent as Pawn;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)

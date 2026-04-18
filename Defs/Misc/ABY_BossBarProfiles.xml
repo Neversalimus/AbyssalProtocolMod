@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <AbyssalProtocol.ABY_BossBarProfileDef>
+    <defName>ABY_BossBarProfile_ArchonBeast</defName>
+    <bossThingDefNames>
+      <li>ABY_ArchonBeast</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ArchonBeast</li>
+    </bossPawnKindDefNames>
+    <displayLabel>Archon Beast</displayLabel>
+    <styleId>abyssal_archon</styleId>
+    <priority>100</priority>
+    <phaseSourceMode>ArchonCoreController</phaseSourceMode>
+    <showPhaseMarkers>true</showPhaseMarkers>
+    <phaseEntries>
+      <li>
+        <phaseIndex>1</phaseIndex>
+        <triggerHealthPct>1.00</triggerHealthPct>
+        <label>I</label>
+      </li>
+      <li>
+        <phaseIndex>2</phaseIndex>
+        <triggerHealthPct>0.70</triggerHealthPct>
+        <label>II</label>
+      </li>
+      <li>
+        <phaseIndex>3</phaseIndex>
+        <triggerHealthPct>0.35</triggerHealthPct>
+        <label>III</label>
+      </li>
+    </phaseEntries>
+  </AbyssalProtocol.ABY_BossBarProfileDef>
+
+  <AbyssalProtocol.ABY_BossBarProfileDef>
+    <defName>ABY_BossBarProfile_ArchonOfRupture</defName>
+    <bossThingDefNames>
+      <li>ABY_ArchonOfRupture</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ArchonOfRupture</li>
+    </bossPawnKindDefNames>
+    <displayLabel>Archon of Rupture</displayLabel>
+    <styleId>abyssal_rupture</styleId>
+    <priority>110</priority>
+    <phaseSourceMode>RuptureCoreController</phaseSourceMode>
+    <showPhaseMarkers>true</showPhaseMarkers>
+    <phaseEntries>
+      <li>
+        <phaseIndex>1</phaseIndex>
+        <triggerHealthPct>1.00</triggerHealthPct>
+        <label>I</label>
+      </li>
+      <li>
+        <phaseIndex>2</phaseIndex>
+        <triggerHealthPct>0.75</triggerHealthPct>
+        <label>II</label>
+      </li>
+      <li>
+        <phaseIndex>3</phaseIndex>
+        <triggerHealthPct>0.45</triggerHealthPct>
+        <label>III</label>
+      </li>
+    </phaseEntries>
+  </AbyssalProtocol.ABY_BossBarProfileDef>
+
+  <AbyssalProtocol.ABY_BossBarProfileDef>
+    <defName>ABY_BossBarProfile_ReactorSaint</defName>
+    <bossThingDefNames>
+      <li>ABY_ReactorSaint</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ReactorSaint</li>
+    </bossPawnKindDefNames>
+    <displayLabel>Infernal Reactor Saint</displayLabel>
+    <styleId>abyssal_reactor_saint</styleId>
+    <priority>105</priority>
+    <phaseSourceMode>ReactorSaintPhaseController</phaseSourceMode>
+    <secondaryBarSource>ReactorAegis</secondaryBarSource>
+    <showPhaseMarkers>true</showPhaseMarkers>
+    <phaseEntries>
+      <li>
+        <phaseIndex>1</phaseIndex>
+        <triggerHealthPct>1.00</triggerHealthPct>
+        <label>I</label>
+      </li>
+      <li>
+        <phaseIndex>2</phaseIndex>
+        <triggerHealthPct>0.68</triggerHealthPct>
+        <label>II</label>
+      </li>
+      <li>
+        <phaseIndex>3</phaseIndex>
+        <triggerHealthPct>0.34</triggerHealthPct>
+        <label>III</label>
+      </li>
+    </phaseEntries>
+  </AbyssalProtocol.ABY_BossBarProfileDef>
+
+</Defs>

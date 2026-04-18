@@ -71,6 +71,25 @@ namespace AbyssalProtocol
 
         public HediffCompProperties_RuptureCoreController Props => (HediffCompProperties_RuptureCoreController)props;
 
+        public int CurrentPhase => currentPhase < 1 ? 1 : currentPhase;
+        public float Phase2HealthPct => Props.phase2HealthPct;
+        public float Phase3HealthPct => Props.phase3HealthPct;
+        public float FinalFrenzyHealthPct => Props.finalFrenzyHealthPct;
+        public bool RebirthUsed => rebirthUsed;
+        public bool FinalFrenzyTriggered => finalFrenzyTriggered;
+        public bool SpawnShieldActive
+        {
+            get
+            {
+                if (spawnTick < 0 || Find.TickManager == null)
+                {
+                    return false;
+                }
+
+                return Find.TickManager.TicksGame - spawnTick < Props.spawnShieldTicks;
+            }
+        }
+
         private Pawn ControlledPawn => parent?.pawn;
 
         public override void CompExposeData()

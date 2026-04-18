@@ -342,7 +342,7 @@ namespace AbyssalProtocol
             ABY_SoundUtility.PlayAt(arrivalSoundDefName, spawnCell, map);
 
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
-            fxComp?.RegisterBoss(pawn);
+            fxComp?.RegisterBoss(pawn, bossLabel);
 
             AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
             string letterLabel = completionLetterLabelKey.NullOrEmpty()

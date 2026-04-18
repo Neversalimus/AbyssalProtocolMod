@@ -213,7 +213,7 @@ namespace AbyssalProtocol
             CreateAshScar(3, 0.85f);
 
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
-            fxComp?.RegisterBoss(boss);
+            fxComp?.RegisterBoss(boss, bossLabel);
             fxComp?.RegisterRitualPulse(Map, 0.32f);
 
             AbyssalLordUtility.EnsureAssaultLord(boss, sappers: true);
