@@ -214,7 +214,7 @@ namespace AbyssalProtocol
             }
 
             return forgeDef.AllRecipes
-                .Where(recipe => recipe != null)
+                .Where(recipe => recipe != null && AbyssalDominionAccessUtility.ShouldExposeForgeRecipe(recipe))
                 .OrderBy(GetRequiredResidue)
                 .ThenBy(recipe => GetCategoryOrderIndex(GetCategory(recipe)))
                 .ThenBy(recipe => GetRecipeDisplayLabel(recipe))

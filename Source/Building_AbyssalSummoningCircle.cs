@@ -2206,7 +2206,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            foreach (AbyssalSummoningConsoleUtility.RitualDefinition ritual in AbyssalSummoningConsoleUtility.GetRituals())
+            foreach (AbyssalSummoningConsoleUtility.RitualDefinition ritual in AbyssalSummoningConsoleUtility.GetRitualsForCircle(this))
             {
                 if (ritual != null && ritual.Id == pendingRitualId)
                 {

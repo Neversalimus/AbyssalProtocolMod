@@ -267,6 +267,7 @@ namespace AbyssalProtocol
             }
 
             TryTriggerDeathVFX();
+            AbyssalArchonEncounterCleanupUtility.HandleArchonBeastDeath(Pawn);
             TryTriggerSecretBoss();
         }
 

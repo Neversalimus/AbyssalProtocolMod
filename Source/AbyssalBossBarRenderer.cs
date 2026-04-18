@@ -8,14 +8,15 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class AbyssalBossBarRenderer
     {
-        private static readonly Texture2D FrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Frame", false);
-        private static readonly Texture2D FillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Fill", false);
-        private static readonly Texture2D TrailTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Trail", false);
-        private static readonly Texture2D SubFillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_SubFill", false);
-        private static readonly Texture2D IconFrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_IconFrame", false);
+        private static readonly Texture2D DefaultFrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Frame", false);
+        private static readonly Texture2D DefaultFillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Fill", false);
+        private static readonly Texture2D DefaultTrailTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Trail", false);
+        private static readonly Texture2D DefaultSubFillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_SubFill", false);
+        private static readonly Texture2D DefaultIconFrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_IconFrame", false);
         private static readonly Texture2D DefaultIconTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_DefaultBossIcon", false);
 
         private static readonly Dictionary<string, Texture2D> IconCache = new Dictionary<string, Texture2D>();
+        private static readonly Dictionary<string, Texture2D> TextureCache = new Dictionary<string, Texture2D>();
 
         private static int trackedBossId = -1;
         private static float displayedHealthPct = 1f;
@@ -190,7 +191,7 @@ namespace AbyssalProtocol
             Texture2D icon = ResolveIconTexture(state.profile);
             Color oldColor = GUI.color;
             GUI.color = new Color(1f, 1f, 1f, alpha);
-            GUI.DrawTexture(rect, IconFrameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.DrawTexture(rect, ResolveIconFrameTexture(state.profile) ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
             GUI.color = state?.profile != null && state.profile.useRawIconColors
                 ? new Color(1f, 1f, 1f, alpha)
                 : new Color(palette.iconTint.r, palette.iconTint.g, palette.iconTint.b, alpha);
@@ -234,6 +235,9 @@ namespace AbyssalProtocol
 
         private static void DrawMainBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
         {
+            Texture2D frameTex = ResolveFrameTexture(state?.profile);
+            Texture2D fillTex = ResolveFillTexture(state?.profile);
+            Texture2D trailTex = ResolveTrailTexture(state?.profile);
             Rect innerRect = rect.ContractedBy(2f);
             Widgets.DrawBoxSolid(rect, new Color(0.04f, 0.04f, 0.05f, alpha * 0.94f));
             Widgets.DrawBoxSolid(innerRect, new Color(palette.backFill.r, palette.backFill.g, palette.backFill.b, alpha * 0.96f));
@@ -242,14 +246,14 @@ namespace AbyssalProtocol
             {
                 Rect trailRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedTrailPct, innerRect.height);
                 Widgets.DrawBoxSolid(trailRect, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.32f));
-                DrawTexturedFill(trailRect, TrailTex, new Color(1f, 1f, 1f, alpha * 0.58f));
+                DrawTexturedFill(trailRect, trailTex, new Color(1f, 1f, 1f, alpha * 0.58f));
             }
 
             if (displayedHealthPct > 0.001f)
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedHealthPct, innerRect.height);
                 Widgets.DrawBoxSolid(fillRect, new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.98f));
-                DrawTexturedFill(fillRect, FillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                DrawTexturedFill(fillRect, fillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
                 Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(3f, fillRect.height)), new Color(1f, 0.92f, 0.82f, alpha * 0.18f));
 
                 if (!settings.reducedMotion && fillRect.width > 24f)
@@ -270,7 +274,7 @@ namespace AbyssalProtocol
             }
 
             GUI.color = new Color(1f, 1f, 1f, alpha);
-            GUI.DrawTexture(rect, FrameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.DrawTexture(rect, frameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
             GUI.color = Color.white;
 
             if (state.profile.showPhaseMarkers && settings.showPhaseMarkers)
@@ -301,6 +305,7 @@ namespace AbyssalProtocol
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
         {
+            Texture2D subFillTex = ResolveSubFillTexture(state?.profile);
             Widgets.DrawBoxSolid(rect, new Color(0.035f, 0.04f, 0.05f, alpha * 0.92f));
             Rect innerRect = rect.ContractedBy(2f);
             Widgets.DrawBoxSolid(innerRect, new Color(0.07f, 0.10f, 0.14f, alpha * 0.94f));
@@ -308,7 +313,7 @@ namespace AbyssalProtocol
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedSecondaryPct, innerRect.height);
                 Widgets.DrawBoxSolid(fillRect, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.94f));
-                DrawTexturedFill(fillRect, SubFillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
+                DrawTexturedFill(fillRect, subFillTex, new Color(1f, 1f, 1f, alpha * 0.60f));
                 Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(2f, fillRect.height)), new Color(1f, 1f, 1f, alpha * 0.14f));
             }
 
@@ -432,19 +437,49 @@ namespace AbyssalProtocol
 
         private static Texture2D ResolveIconTexture(ABY_BossBarProfileDef profile)
         {
-            if (profile == null || profile.iconTexPath.NullOrEmpty())
+            return ResolveCachedTexture(profile?.iconTexPath, DefaultIconTex, IconCache);
+        }
+
+        private static Texture2D ResolveIconFrameTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.iconFrameTexPath, DefaultIconFrameTex, TextureCache);
+        }
+
+        private static Texture2D ResolveFrameTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.frameTexPath, DefaultFrameTex, TextureCache);
+        }
+
+        private static Texture2D ResolveFillTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.fillTexPath, DefaultFillTex, TextureCache);
+        }
+
+        private static Texture2D ResolveTrailTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.trailTexPath, DefaultTrailTex, TextureCache);
+        }
+
+        private static Texture2D ResolveSubFillTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.subFillTexPath, DefaultSubFillTex, TextureCache);
+        }
+
+        private static Texture2D ResolveCachedTexture(string texPath, Texture2D fallback, Dictionary<string, Texture2D> cache)
+        {
+            if (texPath.NullOrEmpty())
             {
-                return DefaultIconTex;
+                return fallback;
             }
 
-            if (IconCache.TryGetValue(profile.iconTexPath, out Texture2D cached))
+            if (cache.TryGetValue(texPath, out Texture2D cached))
             {
-                return cached ?? DefaultIconTex;
+                return cached ?? fallback;
             }
 
-            Texture2D loaded = ContentFinder<Texture2D>.Get(profile.iconTexPath, false);
-            IconCache[profile.iconTexPath] = loaded;
-            return loaded ?? DefaultIconTex;
+            Texture2D loaded = ContentFinder<Texture2D>.Get(texPath, false);
+            cache[texPath] = loaded;
+            return loaded ?? fallback;
         }
 
         private static ABY_BossBarStylePalette ResolvePalette(string styleId)

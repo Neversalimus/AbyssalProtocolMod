@@ -88,6 +88,12 @@
         <minMeleeSkill>12</minMeleeSkill>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.16</bloodLossClamp>
+        <heatstrokeClamp>0.18</heatstrokeClamp>
+        <healWorstInjuryAmount>32</healWorstInjuryAmount>
+        <maxHealPasses>5</maxHealPasses>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPulse">
         <warmupTicks>210</warmupTicks>
         <pulseIntervalTicks>345</pulseIntervalTicks>

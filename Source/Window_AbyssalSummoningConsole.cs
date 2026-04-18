@@ -24,7 +24,7 @@ namespace AbyssalProtocol
             MapComponent_DominionCrisis dominionCrisis = circle?.Map?.GetComponent<MapComponent_DominionCrisis>();
             if (dominionCrisis != null && !dominionCrisis.IsActive && (dominionCrisis.CompletionCount > 0 || dominionCrisis.FailureCount > 0 || dominionCrisis.CancelledCount > 0 || dominionCrisis.CooldownTicksRemaining > 0))
             {
-                AbyssalSummoningConsoleUtility.RitualDefinition dominionRitual = AbyssalSummoningConsoleUtility.GetRituals().FirstOrDefault(r => AbyssalSummoningConsoleUtility.IsDominionRitual(r));
+                AbyssalSummoningConsoleUtility.RitualDefinition dominionRitual = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).FirstOrDefault(r => AbyssalSummoningConsoleUtility.IsDominionRitual(r));
                 if (dominionRitual != null)
                 {
                     selectedRitualId = dominionRitual.Id;
@@ -77,7 +77,7 @@ namespace AbyssalProtocol
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetSelectedRitual()
         {
-            AbyssalSummoningConsoleUtility.RitualDefinition ritual = AbyssalSummoningConsoleUtility.GetRituals().FirstOrDefault(r => r.Id == selectedRitualId);
+            AbyssalSummoningConsoleUtility.RitualDefinition ritual = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).FirstOrDefault(r => r.Id == selectedRitualId);
             if (ritual == null)
             {
                 ritual = AbyssalSummoningConsoleUtility.GetDefaultRitual();
@@ -117,7 +117,7 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(10f);
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CirclePatternsHeader".Translate());
 
-            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRituals().ToList();
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).ToList();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
             float cardHeight = 156f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));

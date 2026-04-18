@@ -97,6 +97,12 @@
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.10</bloodLossClamp>
+        <heatstrokeClamp>0.12</heatstrokeClamp>
+        <healWorstInjuryAmount>54</healWorstInjuryAmount>
+        <maxHealPasses>6</maxHealPasses>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_ReactorSaintShooter">
         <directProjectileDefName>ABY_ReactorSaintBolt</directProjectileDefName>
         <barrageProjectileDefName>ABY_ReactorSaintBarrageShell</barrageProjectileDefName>

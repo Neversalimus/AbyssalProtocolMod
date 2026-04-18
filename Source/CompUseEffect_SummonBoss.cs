@@ -12,6 +12,12 @@ namespace AbyssalProtocol
         {
             base.DoEffect(usedBy);
 
+            if (AbyssalDominionAccessUtility.IsDominionRitualId(Props.ritualId) && !AbyssalDominionAccessUtility.IsUserFacingDominionContentEnabled())
+            {
+                Messages.Message("ABY_DominionSigilDisabled".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
             Map map = usedBy?.MapHeld;
             if (map == null)
             {

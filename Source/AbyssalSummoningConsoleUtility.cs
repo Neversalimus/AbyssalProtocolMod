@@ -160,12 +160,28 @@ namespace AbyssalProtocol
 
         public static IEnumerable<RitualDefinition> GetRituals()
         {
-            return Rituals;
+            if (AbyssalDominionAccessUtility.IsUserFacingDominionContentEnabled())
+            {
+                return Rituals;
+            }
+
+            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id));
         }
 
         public static RitualDefinition GetDefaultRitual()
         {
             return Rituals[0];
+        }
+
+        public static IEnumerable<RitualDefinition> GetRitualsForCircle(Building_AbyssalSummoningCircle circle)
+        {
+            bool exposeDominion = AbyssalDominionAccessUtility.ShouldExposeDominionRitual(circle);
+            if (exposeDominion)
+            {
+                return Rituals;
+            }
+
+            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id));
         }
 
         public static RitualDefinition GetSuggestedRitual(Building_AbyssalSummoningCircle circle)

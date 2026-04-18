@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
+  <ABY_DominionSigilDisabled>Сигил доминиона сейчас отключён вне dev режима.</ABY_DominionSigilDisabled>
 
   <ABY_CircleRitual_Dominion_Label>Открыть врата доминиона</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Стартовый пакет эндгейм-кризиса</ABY_CircleRitual_Dominion_Subtitle>

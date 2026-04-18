@@ -45,6 +45,11 @@
     </bossPawnKindDefNames>
     <displayLabel>Archon of Rupture</displayLabel>
     <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonOfRupture</iconTexPath>
+    <frameTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_Frame_Rupture</frameTexPath>
+    <fillTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_Fill_Rupture</fillTexPath>
+    <trailTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_Trail_Rupture</trailTexPath>
+    <subFillTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_SubFill_Rupture</subFillTexPath>
+    <iconFrameTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_IconFrame_Rupture</iconFrameTexPath>
     <styleId>abyssal_rupture</styleId>
     <useRawIconColors>true</useRawIconColors>
     <introLabelKey>ABY_BossBar_Phase_Veil</introLabelKey>
@@ -85,6 +90,11 @@
     </bossPawnKindDefNames>
     <displayLabel>Infernal Reactor Saint</displayLabel>
     <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ReactorSaint</iconTexPath>
+    <frameTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_Frame_Saint</frameTexPath>
+    <fillTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_Fill_Saint</fillTexPath>
+    <trailTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_Trail_Saint</trailTexPath>
+    <subFillTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_SubFill_Saint</subFillTexPath>
+    <iconFrameTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_IconFrame_Saint</iconFrameTexPath>
     <styleId>abyssal_reactor_saint</styleId>
     <useRawIconColors>true</useRawIconColors>
     <priority>105</priority>

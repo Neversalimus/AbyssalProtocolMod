@@ -11,6 +11,11 @@ namespace AbyssalProtocol
         public string displayLabel;
         public string displayLabelKey;
         public string iconTexPath;
+        public string frameTexPath;
+        public string fillTexPath;
+        public string trailTexPath;
+        public string subFillTexPath;
+        public string iconFrameTexPath;
         public string styleId = "default";
         public bool useRawIconColors;
         public string introLabel;

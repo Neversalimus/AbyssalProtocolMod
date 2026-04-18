@@ -103,6 +103,12 @@
         <minMeleeSkill>14</minMeleeSkill>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.12</bloodLossClamp>
+        <heatstrokeClamp>0.14</heatstrokeClamp>
+        <healWorstInjuryAmount>42</healWorstInjuryAmount>
+        <maxHealPasses>6</maxHealPasses>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
@@ -210,6 +216,12 @@
         <minMeleeSkill>16</minMeleeSkill>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.08</bloodLossClamp>
+        <heatstrokeClamp>0.10</heatstrokeClamp>
+        <healWorstInjuryAmount>90</healWorstInjuryAmount>
+        <maxHealPasses>8</maxHealPasses>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_CrownOfRupture>1</ABY_CrownOfRupture>

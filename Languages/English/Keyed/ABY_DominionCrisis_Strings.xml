@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
+  <ABY_DominionSigilDisabled>Dominion sigils are currently disabled outside dev mode.</ABY_DominionSigilDisabled>
 
   <ABY_CircleRitual_Dominion_Label>Open dominion gate</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Endgame crisis bootstrap</ABY_CircleRitual_Dominion_Subtitle>
