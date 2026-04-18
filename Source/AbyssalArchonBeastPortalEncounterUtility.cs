@@ -11,13 +11,14 @@ namespace AbyssalProtocol
         private const string CompanionPortalDefName = "ABY_ImpPortal";
         private const string EmberHoundKindDefName = "ABY_EmberHound";
 
-        private const int BossPortalWarmupTicks = 120;
-        private const int BossPortalLingerTicks = 240;
+        private const int BossPortalWarmupTicks = 168;
+        private const int BossPortalLingerTicks = 300;
 
-        private const int CompanionPortalWarmupTicks = 102;
-        private const int CompanionPortalWarmupJitterTicks = 12;
-        private const int CompanionPortalSpawnIntervalTicks = 18;
-        private const int CompanionPortalLingerTicks = 180;
+        private const int CompanionPortalWarmupTicks = 86;
+        private const int CompanionPortalWarmupJitterTicks = 8;
+        private const int CompanionPortalWarmupCascadeTicks = 22;
+        private const int CompanionPortalSpawnIntervalTicks = 20;
+        private const int CompanionPortalLingerTicks = 210;
 
         private const float CompanionPortalMinRadius = 4.6f;
         private const float CompanionPortalMaxRadius = 8.4f;
@@ -84,6 +85,9 @@ namespace AbyssalProtocol
                 BossPortalLingerTicks,
                 bossLabel.NullOrEmpty() ? "Archon Beast" : bossLabel);
 
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.18f);
+            ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", bossPortalCell, map);
+
             TrySpawnCompanionHoundPortals(map, faction, bossPortalCell);
             return true;
         }
@@ -131,7 +135,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                int warmup = Mathf.Max(60, CompanionPortalWarmupTicks + Rand.RangeInclusive(-CompanionPortalWarmupJitterTicks, CompanionPortalWarmupJitterTicks));
+                int warmup = Mathf.Max(60, CompanionPortalWarmupTicks + i * CompanionPortalWarmupCascadeTicks + Rand.RangeInclusive(-CompanionPortalWarmupJitterTicks, CompanionPortalWarmupJitterTicks));
                 GenSpawn.Spawn(companionPortal, portalCell, map, Rot4.Random);
                 companionPortal.Initialize(
                     faction,
@@ -141,6 +145,7 @@ namespace AbyssalProtocol
                     CompanionPortalSpawnIntervalTicks,
                     CompanionPortalLingerTicks);
 
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.06f + i * 0.03f);
                 ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portalCell, map);
                 usedCells.Add(portalCell);
             }
