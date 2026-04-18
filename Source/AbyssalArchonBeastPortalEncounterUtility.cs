@@ -105,7 +105,7 @@ namespace AbyssalProtocol
             return AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out bossPortalCell);
         }
 
-        private static void TrySpawnCompanionHoundPortals(Map map, Faction faction, IntVec3 bossPortalCell)
+        public static void TrySpawnCompanionHoundPortals(Map map, Faction faction, IntVec3 bossPortalCell)
         {
             if (map == null || !bossPortalCell.IsValid || faction == null)
             {

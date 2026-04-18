@@ -22,7 +22,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ArchonSigil</defName>
     <label>archon sigil</label>
-    <description>A stabilized infernal key. Carry it to an abyssal summoning circle to charge the sigil and tear open a breach for the first techno-demonic boss.</description>
+    <description>A stabilized infernal key. Carry it to an abyssal summoning circle to charge the sigil and drag the first techno-demonic herald-beast into local space through a chained predatory rupture seam near the colony.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -50,6 +50,13 @@
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
         <bossLabel>Archon Beast</bossLabel>
         <spawnPoints>900</spawnPoints>
+        <ritualWarmupTicks>195</ritualWarmupTicks>
+        <arrivalManifestationDefName>ABY_Manifestation_ArchonBeastArrival</arrivalManifestationDefName>
+        <arrivalManifestationWarmupTicks>150</arrivalManifestationWarmupTicks>
+        <arrivalNearColony>true</arrivalNearColony>
+        <arrivalNearColonyMinDistance>12</arrivalNearColonyMinDistance>
+        <arrivalNearColonyMaxDistance>24</arrivalNearColonyMaxDistance>
+        <arrivalSoundDefName>ABY_ArchonBossArrive</arrivalSoundDefName>
       </li>
     </comps>
   </ThingDef>

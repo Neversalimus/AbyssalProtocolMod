@@ -1645,24 +1645,39 @@ namespace AbyssalProtocol
             }
 
             Thing thing = GenSpawn.Spawn(manifestationDef, spawnCell, Map, WipeMode.Vanish);
-            if (!(thing is Building_ABY_ReactorSaintManifestation manifestation))
+            if (thing is Building_ABY_ReactorSaintManifestation reactorManifestation)
             {
-                thing.Destroy(DestroyMode.Vanish);
-                failReason = "Spawned manifestation was not a supported Reactor Saint arrival thing.";
-                return false;
+                reactorManifestation.Initialize(
+                    pendingPawnKindDef,
+                    pendingFaction,
+                    Mathf.Max(30, pendingArrivalManifestationWarmupTicks),
+                    spawnCell,
+                    pendingBossLabel,
+                    pendingArrivalSoundDefName,
+                    pendingCompletionLetterLabelKey,
+                    pendingCompletionLetterDescKey);
+
+                return true;
             }
 
-            manifestation.Initialize(
-                pendingPawnKindDef,
-                pendingFaction,
-                Mathf.Max(30, pendingArrivalManifestationWarmupTicks),
-                spawnCell,
-                pendingBossLabel,
-                pendingArrivalSoundDefName,
-                pendingCompletionLetterLabelKey,
-                pendingCompletionLetterDescKey);
+            if (thing is Building_ABY_ArchonBeastManifestation archonManifestation)
+            {
+                archonManifestation.Initialize(
+                    pendingPawnKindDef,
+                    pendingFaction,
+                    Mathf.Max(30, pendingArrivalManifestationWarmupTicks),
+                    spawnCell,
+                    pendingBossLabel,
+                    pendingArrivalSoundDefName,
+                    pendingCompletionLetterLabelKey,
+                    pendingCompletionLetterDescKey);
 
-            return true;
+                return true;
+            }
+
+            thing.Destroy(DestroyMode.Vanish);
+            failReason = "Spawned manifestation was not a supported boss arrival thing.";
+            return false;
         }
 
         private void CompleteDominionCrisisInitialization()
@@ -2050,6 +2065,11 @@ namespace AbyssalProtocol
         private bool ShouldUseArchonBeastPortalEscortEncounter()
         {
             if (pendingPawnKindDef?.defName != "ABY_ArchonBeast")
+            {
+                return false;
+            }
+
+            if (!pendingArrivalManifestationDefName.NullOrEmpty())
             {
                 return false;
             }
