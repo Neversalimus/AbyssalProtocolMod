@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_InstallSaintReactorHeart.label>установить сердце святого реактора</ABY_InstallSaintReactorHeart.label>
+  <ABY_InstallSaintReactorHeart.description>Установить сердце святого реактора.</ABY_InstallSaintReactorHeart.description>
+  <ABY_InstallSaintReactorHeart.jobString>Установка сердца святого реактора.</ABY_InstallSaintReactorHeart.jobString>
+
+  <ABY_InstallAegisSinkKidney.label>установить почку эгидного теплоотвода</ABY_InstallAegisSinkKidney.label>
+  <ABY_InstallAegisSinkKidney.description>Установить почку эгидного теплоотвода.</ABY_InstallAegisSinkKidney.description>
+  <ABY_InstallAegisSinkKidney.jobString>Установка почки эгидного теплоотвода.</ABY_InstallAegisSinkKidney.jobString>
+
+  <ABY_InstallVesperServoArm.label>установить серво-руку Веспера</ABY_InstallVesperServoArm.label>
+  <ABY_InstallVesperServoArm.description>Установить серво-руку Веспера.</ABY_InstallVesperServoArm.description>
+  <ABY_InstallVesperServoArm.jobString>Установка серво-руки Веспера.</ABY_InstallVesperServoArm.jobString>
+
+  <ABY_InstallHaloSubcoreNode.label>установить гало-субъядерный узел</ABY_InstallHaloSubcoreNode.label>
+  <ABY_InstallHaloSubcoreNode.description>Установить гало-субъядерный узел.</ABY_InstallHaloSubcoreNode.description>
+  <ABY_InstallHaloSubcoreNode.jobString>Установка гало-субъядерного узла.</ABY_InstallHaloSubcoreNode.jobString>
+</LanguageData>

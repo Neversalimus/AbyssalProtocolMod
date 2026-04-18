@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_SaintReactorHeart</defName>
+    <label>saint reactor heart</label>
+    <description>A reactor-disciplined abyssal heart grown around a saint-class core. It does not simply push blood harder; it enforces a cleaner combat rhythm, steadier consciousness, and a body that can tolerate infernal heat without collapsing into panic or pain shock.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_SaintReactorHeart</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.30</Mass>
+      <WorkToMake>42000</WorkToMake>
+      <MarketValue>2650</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Plasteel>24</Plasteel>
+      <Steel>30</Steel>
+      <Gold>6</Gold>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>420</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AegisSinkKidney</defName>
+    <label>aegis sink kidney</label>
+    <description>A saint-tier renal sink wrapped in infernal heat vanes and containment channels. It filters harder, stabilizes blood chemistry under prolonged punishment, and bleeds reactor heat away from the body instead of letting it spike through exposed flesh.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AegisSinkKidney</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.22</Mass>
+      <WorkToMake>36000</WorkToMake>
+      <MarketValue>2350</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Plasteel>18</Plasteel>
+      <Steel>20</Steel>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>390</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_VesperServoArm</defName>
+    <label>vesper servo arm</label>
+    <description>An execution-grade armature patterned after reactor-saint weapon handling. Its servo bundles do more than restore strength: they lock the shoulder and forearm into a colder, more deliberate firing cadence that favors ranged discipline over ordinary dexterity.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_VesperServoArm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.42</Mass>
+      <WorkToMake>40000</WorkToMake>
+      <MarketValue>2550</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Plasteel>24</Plasteel>
+      <Steel>18</Steel>
+      <Gold>4</Gold>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>430</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HaloSubcoreNode</defName>
+    <label>halo subcore node</label>
+    <description>An auxiliary saint-tier cognition node mounted beside the brain instead of replacing it. The halo ring handles ordering and rhythm, while the subcore drives clarity, learning, and cold combat anticipation through a second line of thought the bearer never quite stops hearing.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HaloSubcoreNode</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.16</Mass>
+      <WorkToMake>44000</WorkToMake>
+      <MarketValue>2750</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Plasteel>18</Plasteel>
+      <Gold>10</Gold>
+    </costList>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>450</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

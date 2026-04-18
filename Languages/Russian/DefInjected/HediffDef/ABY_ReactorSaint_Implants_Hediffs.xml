@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_SaintReactorHeart_Implant.label>сердце святого реактора</ABY_SaintReactorHeart_Implant.label>
+  <ABY_SaintReactorHeart_Implant.description>Реакторное сердце saint-класса, стабилизирующее боевой ритм, сознание и термостойкость носителя.</ABY_SaintReactorHeart_Implant.description>
+
+  <ABY_AegisSinkKidney_Implant.label>почка эгидного теплоотвода</ABY_AegisSinkKidney_Implant.label>
+  <ABY_AegisSinkKidney_Implant.description>Почка saint-класса, отводящая реакторное давление и жёстко фильтрующая кровь даже под затяжным боевым стрессом.</ABY_AegisSinkKidney_Implant.description>
+
+  <ABY_VesperServoArm_Implant.label>серво-рука Веспера</ABY_VesperServoArm_Implant.label>
+  <ABY_VesperServoArm_Implant.description>Исполнительная saint-рука, настроенная на манипуляцию, дисциплину прицеливания и решительное ведение дальнего боя.</ABY_VesperServoArm_Implant.description>
+
+  <ABY_HaloSubcoreNode_Implant.label>гало-субъядерный узел</ABY_HaloSubcoreNode_Implant.label>
+  <ABY_HaloSubcoreNode_Implant.description>Вспомогательное halo-субъядро, посаженное рядом с мозгом вместо грубой замены, дающее вторую линию упорядоченной когниции.</ABY_HaloSubcoreNode_Implant.description>
+</LanguageData>

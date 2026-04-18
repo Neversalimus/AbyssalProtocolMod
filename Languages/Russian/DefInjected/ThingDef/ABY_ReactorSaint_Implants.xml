@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_SaintReactorHeart.label>сердце святого реактора</ABY_SaintReactorHeart.label>
+  <ABY_SaintReactorHeart.description>Дисциплинированное реакторное сердце, выращенное вокруг ядра saint-класса. Оно не просто сильнее гонит кровь: оно навязывает телу более чистый боевой ритм, повышает ясность сознания и помогает переносить инфернальный жар без срыва в боль и панику.</ABY_SaintReactorHeart.description>
+
+  <ABY_AegisSinkKidney.label>почка эгидного теплоотвода</ABY_AegisSinkKidney.label>
+  <ABY_AegisSinkKidney.description>Почка saint-тиpa, обёрнутая инфернальными тепловыми рёбрами и каналами сдерживания. Она жёстче фильтрует кровь, стабилизирует химию организма под затяжным давлением и отводит реакторный жар от тканей, не давая телу перегреться изнутри.</ABY_AegisSinkKidney.description>
+
+  <ABY_VesperServoArm.label>серво-рука Веспера</ABY_VesperServoArm.label>
+  <ABY_VesperServoArm.description>Исполнительный armature-узел, повторяющий логику обращения с оружием у Reactor Saint. Его серво-связки не только возвращают силу: они фиксируют плечо и предплечье в более холодном, дисциплинированном ритме стрельбы, предпочитая дальнобойную точность обычной ловкости.</ABY_VesperServoArm.description>
+
+  <ABY_HaloSubcoreNode.label>гало-субъядерный узел</ABY_HaloSubcoreNode.label>
+  <ABY_HaloSubcoreNode.description>Вспомогательный saint-узел, монтируемый рядом с мозгом, а не вместо него. Halo-кольцо отвечает за порядок и ритм, а субядро продавливает ясность, обучение и холодное боевое предвосхищение через вторую линию мышления, которую носитель уже не может полностью отключить.</ABY_HaloSubcoreNode.description>
+</LanguageData>
