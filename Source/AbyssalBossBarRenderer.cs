@@ -160,6 +160,14 @@ namespace AbyssalProtocol
                     GUI.color = new Color(1f, 0.18f, 0.16f, alpha * (0.18f + frenzyPulse) * Mathf.Clamp01(0.35f + displayedSpecialPulse));
                     GUI.DrawTexture(rect.ExpandedBy(4f), BaseContent.WhiteTex);
                 }
+                else if (state.specialStateTag == "saint_aegis_collapsed")
+                {
+                    float collapsePulse = reducedMotion ? 0.20f : 0.22f + Mathf.Sin(Time.realtimeSinceStartup * 7.4f) * 0.10f;
+                    GUI.color = new Color(0.72f, 0.95f, 1f, alpha * (0.16f + collapsePulse));
+                    GUI.DrawTexture(rect.ExpandedBy(3f), BaseContent.WhiteTex);
+                    GUI.color = new Color(1f, 0.62f, 0.22f, alpha * 0.22f);
+                    GUI.DrawTexture(new Rect(rect.x, rect.yMax - 2f, rect.width, 2f), BaseContent.WhiteTex);
+                }
             }
 
             GUI.color = oldColor;
@@ -262,6 +270,14 @@ namespace AbyssalProtocol
             {
                 Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedSecondaryPct, innerRect.height);
                 DrawTexturedFill(fillRect, SubFillTex, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha));
+            }
+
+            if (state.secondaryCriticalStateActive)
+            {
+                float pulse = settings.reducedMotion ? 0.26f : 0.28f + Mathf.Sin(Time.realtimeSinceStartup * 8.2f) * 0.12f;
+                GUI.color = new Color(0.68f, 0.94f, 1f, alpha * pulse);
+                GUI.DrawTexture(rect.ExpandedBy(2f), BaseContent.WhiteTex);
+                GUI.color = Color.white;
             }
 
             Widgets.DrawBox(rect, 1);

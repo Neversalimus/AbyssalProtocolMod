@@ -28,6 +28,7 @@ namespace AbyssalProtocol
         public bool introStateActive;
         public bool criticalStateActive;
         public bool hasSecondaryBar;
+        public bool secondaryCriticalStateActive;
         public float secondaryPct;
         public float secondaryCurrent;
         public float secondaryMax;
@@ -206,6 +207,24 @@ namespace AbyssalProtocol
                     state.criticalStateActive = true;
                     state.specialStateTag = "rupture_frenzy";
                 }
+
+                return;
+            }
+
+            if (profile.phaseSourceMode == "ReactorSaintPhaseController")
+            {
+                CompABY_ReactorSaintPhaseController controller = GetReactorSaintPhaseController(pawn);
+                CompABY_ReactorAegis aegis = GetReactorAegis(pawn);
+
+                if (aegis != null && aegis.CollapseWindowActive)
+                {
+                    state.secondaryCriticalStateActive = true;
+                    state.specialStateTag = "saint_aegis_collapsed";
+                }
+                else if (controller != null && controller.CurrentPhase >= 3)
+                {
+                    state.specialStateTag = "saint_phase_three";
+                }
             }
         }
 
@@ -328,7 +347,10 @@ namespace AbyssalProtocol
                     state.secondaryPct = aegis.AegisFraction;
                     state.secondaryCurrent = aegis.CurrentAegisPoints;
                     state.secondaryMax = aegis.MaxAegisPoints;
-                    state.secondaryLabel = "ABY_BossBar_SecondaryAegis".Translate();
+                    state.secondaryCriticalStateActive = aegis.CollapseWindowActive;
+                    state.secondaryLabel = aegis.CollapseWindowActive
+                        ? "ABY_BossBar_SecondaryAegisCollapsed".Translate()
+                        : "ABY_BossBar_SecondaryAegis".Translate();
                     break;
             }
         }

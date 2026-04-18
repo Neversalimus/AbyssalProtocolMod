@@ -84,7 +84,9 @@
       <li>ABY_ReactorSaint</li>
     </bossPawnKindDefNames>
     <displayLabel>Infernal Reactor Saint</displayLabel>
+    <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ReactorSaint</iconTexPath>
     <styleId>abyssal_reactor_saint</styleId>
+    <useRawIconColors>true</useRawIconColors>
     <priority>105</priority>
     <phaseSourceMode>ReactorSaintPhaseController</phaseSourceMode>
     <secondaryBarSource>ReactorAegis</secondaryBarSource>
