@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftSaintCondensationCell</defName>
+    <label>forge saint condensation cell</label>
+    <description>Fabricate a saint-grade condensation heart for the summoning circle. This is a reactor-authority upgrade, not a basic battery: it pushes higher startup coverage, deeper reserve and stronger surge smoothing into the core bay so late rituals stop feeling like the circle is always one spike away from tearing itself apart.</description>
+    <jobString>Forging saint condensation cell.</jobString>
+    <workAmount>4200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <researchPrerequisite>ABY_CrownCondensationArrays</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_ReactorSaintCore</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>42</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_SaintCondensationCell>1</ABY_SaintCondensationCell>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>470</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+</Defs>

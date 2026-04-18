@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CraftSaintCondensationCell.label>создать конденсационную ячейку святого</ABY_CraftSaintCondensationCell.label>
+  <ABY_CraftSaintCondensationCell.description>Собрать saint-grade конденсационное сердце для круга призыва. Это уже не просто батарея, а upgrade уровня реакторной власти: выше стартовое покрытие, глубже резерв и надёжнее сглаживание всплесков в core-bay.</ABY_CraftSaintCondensationCell.description>
+  <ABY_CraftSaintCondensationCell.jobString>Создание конденсационной ячейки святого.</ABY_CraftSaintCondensationCell.jobString>
+
+</LanguageData>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_SaintCondensationCell</defName>
+    <label>saint condensation cell</label>
+    <description>A saint-class condensation heart built around disciplined reactor geometry instead of a crude infernal reservoir. It is designed for circles that are expected to carry boss-grade startup spikes, hold deeper reserve, and survive overchannel work without turning the whole lattice into a furnace of blind waste heat.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_SaintCondensationCell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <stackLimit>5</stackLimit>
+    <statBases>
+      <MarketValue>1380</MarketValue>
+      <Mass>1.72</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalCircleCapacitor">
+        <tier>4</tier>
+        <chargeCapacity>292</chargeCapacity>
+        <throughput>76</throughput>
+        <chargeRatePerSecond>2.35</chargeRatePerSecond>
+        <surgeTolerance>0.88</surgeTolerance>
+        <passiveLeakage>0.06</passiveLeakage>
+        <allowCoreBay>true</allowCoreBay>
+        <allowAuxiliaryBay>false</allowAuxiliaryBay>
+        <mountedTexPath>Things/Building/Capacitors/ABY_SaintCondensationCell_Mounted</mountedTexPath>
+        <mountedDrawScale>1.10</mountedDrawScale>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>470</requiredResidue>
+        <category>Core</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
