@@ -14,6 +14,7 @@ namespace AbyssalProtocol
         private int nextReadyTick;
         private int warmupCompleteTick = -1;
         private int nextBurstShotTick = -1;
+        private int nextWarmupTelegraphTick = -1;
         private int burstShotsRemaining;
         private Thing currentTarget;
 
@@ -26,6 +27,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextReadyTick, "nextReadyTick", 0);
             Scribe_Values.Look(ref warmupCompleteTick, "warmupCompleteTick", -1);
             Scribe_Values.Look(ref nextBurstShotTick, "nextBurstShotTick", -1);
+            Scribe_Values.Look(ref nextWarmupTelegraphTick, "nextWarmupTelegraphTick", -1);
             Scribe_Values.Look(ref burstShotsRemaining, "burstShotsRemaining", 0);
             Scribe_References.Look(ref currentTarget, "currentTarget");
         }
@@ -89,6 +91,12 @@ namespace AbyssalProtocol
                     return;
                 }
 
+                if (ShouldShowTargetLockFX(pawn, currentTarget) && ticksGame >= nextWarmupTelegraphTick)
+                {
+                    ShowTargetLockFX(pawn, currentTarget, false);
+                    nextWarmupTelegraphTick = ticksGame + 12;
+                }
+
                 if (ticksGame >= warmupCompleteTick)
                 {
                     warmupCompleteTick = -1;
@@ -122,6 +130,7 @@ namespace AbyssalProtocol
 
             currentTarget = target;
             warmupCompleteTick = ticksGame + Math.Max(1, Props.warmupTicks);
+            nextWarmupTelegraphTick = ticksGame + 12;
             if (!Props.aimSoundDefName.NullOrEmpty())
             {
                 ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
@@ -133,6 +142,24 @@ namespace AbyssalProtocol
             }
 
             pawn.rotationTracker?.FaceTarget(target.Position);
+            if (ShouldShowTargetLockFX(pawn, target))
+            {
+                ShowTargetLockFX(pawn, target, true);
+            }
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            if (!IsSniperProfile() || warmupCompleteTick < 0 || currentTarget == null || Find.TickManager == null)
+            {
+                return null;
+            }
+
+            int totalWarmup = Math.Max(1, Props.warmupTicks);
+            int remaining = Math.Max(0, warmupCompleteTick - Find.TickManager.TicksGame);
+            int elapsed = Math.Max(0, totalWarmup - remaining);
+            float progress = Mathf.Clamp01(elapsed / (float)totalWarmup);
+            return "Target lock: " + progress.ToString("P0");
         }
 
         private bool CanOperate(Pawn pawn)
@@ -346,11 +373,43 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private bool IsSniperProfile()
+        {
+            return string.Equals(Props.projectileDefName, "ABY_RiftSniperBolt", StringComparison.OrdinalIgnoreCase)
+                || (Props.burstShotCount <= 1 && Props.warmupTicks >= 60 && Props.range >= 30f && Props.preferFarthestTargets);
+        }
+
+        private bool ShouldShowTargetLockFX(Pawn pawn, Thing target)
+        {
+            return IsSniperProfile()
+                && pawn?.Map != null
+                && target is Pawn targetPawn
+                && targetPawn.Spawned
+                && targetPawn.Map == pawn.Map
+                && !targetPawn.Dead;
+        }
+
+        private void ShowTargetLockFX(Pawn pawn, Thing target, bool initial)
+        {
+            Pawn targetPawn = target as Pawn;
+            if (pawn?.Map == null || targetPawn == null || !targetPawn.Spawned || targetPawn.Map != pawn.Map || targetPawn.Dead)
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(targetPawn.DrawPos, pawn.Map, initial ? 1.35f : 0.75f);
+            if (initial)
+            {
+                FleckMaker.Static(targetPawn.PositionHeld, pawn.Map, FleckDefOf.ExplosionFlash, 0.85f);
+            }
+        }
+
         private void ResetBurst()
         {
             currentTarget = null;
             warmupCompleteTick = -1;
             nextBurstShotTick = -1;
+            nextWarmupTelegraphTick = -1;
             burstShotsRemaining = 0;
         }
     }

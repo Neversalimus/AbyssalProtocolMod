@@ -1,3 +1,4 @@
+using System;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -8,10 +9,13 @@ namespace AbyssalProtocol
     {
         private float currentAegisPoints = -1f;
         private int lastAegisHitTick = -999999;
+        private const int CollapseWindowDurationTicks = 210;
+
         private float tunedMaxFactor = 1f;
         private float tunedRechargeFactor = 1f;
         private float tunedDelayFactor = 1f;
         private bool wasBroken;
+        private int collapseWindowUntilTick = -1;
 
         public CompProperties_ABY_ReactorAegis Props => (CompProperties_ABY_ReactorAegis)props;
 
@@ -40,6 +44,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref tunedRechargeFactor, "tunedRechargeFactor", 1f);
             Scribe_Values.Look(ref tunedDelayFactor, "tunedDelayFactor", 1f);
             Scribe_Values.Look(ref wasBroken, "wasBroken", false);
+            Scribe_Values.Look(ref collapseWindowUntilTick, "collapseWindowUntilTick", -1);
         }
 
         public override void CompTick()
@@ -83,6 +88,7 @@ namespace AbyssalProtocol
             {
                 TriggerRestoreFeedback(pawn);
                 wasBroken = false;
+                collapseWindowUntilTick = -1;
             }
         }
 
@@ -105,6 +111,7 @@ namespace AbyssalProtocol
                 currentAegisPoints = 0f;
                 TriggerBreakFeedback(pawn);
                 wasBroken = true;
+                StartCollapseWindow(pawn);
             }
         }
 
@@ -118,7 +125,31 @@ namespace AbyssalProtocol
 
         public override string CompInspectStringExtra()
         {
-            return "Reactor Aegis: " + Mathf.RoundToInt(CurrentAegisPoints) + " / " + Mathf.RoundToInt(MaxAegisPoints);
+            string text = "Reactor Aegis: " + Mathf.RoundToInt(CurrentAegisPoints) + " / " + Mathf.RoundToInt(MaxAegisPoints);
+            if (CollapseWindowActive && Find.TickManager != null)
+            {
+                int ticksRemaining = Math.Max(0, collapseWindowUntilTick - Find.TickManager.TicksGame);
+                text += "\nCore destabilized: " + (ticksRemaining / 60f).ToString("0.0") + "s";
+            }
+
+            return text;
+        }
+
+        public bool CollapseWindowActive
+        {
+            get
+            {
+                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return ticksGame < collapseWindowUntilTick;
+            }
+        }
+
+        private void StartCollapseWindow(Pawn pawn)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            collapseWindowUntilTick = Math.Max(collapseWindowUntilTick, ticksGame + CollapseWindowDurationTicks);
+            parent.TryGetComp<CompABY_ReactorSaintShooter>()?.NotifyAegisCollapsed(CollapseWindowDurationTicks);
+            parent.TryGetComp<CompABY_ReactorOverheatField>()?.NotifyAegisCollapsed(CollapseWindowDurationTicks);
         }
 
         private bool ShouldAbsorbDamage(Pawn pawn, DamageInfo dinfo)

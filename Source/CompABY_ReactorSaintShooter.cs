@@ -28,6 +28,7 @@ namespace AbyssalProtocol
         private float warmupFactor = 1f;
         private float barrageChanceBonus;
         private int barrageShotBonus;
+        private int collapseWindowUntilTick = -1;
 
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
 
@@ -48,6 +49,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref warmupFactor, "warmupFactor", 1f);
             Scribe_Values.Look(ref barrageChanceBonus, "barrageChanceBonus", 0f);
             Scribe_Values.Look(ref barrageShotBonus, "barrageShotBonus", 0);
+            Scribe_Values.Look(ref collapseWindowUntilTick, "collapseWindowUntilTick", -1);
         }
 
         public override void CompTick()
@@ -171,6 +173,27 @@ namespace AbyssalProtocol
             barrageShotBonus = Mathf.Max(0, phaseBarrageShotBonus);
         }
 
+        public void NotifyAegisCollapsed(int durationTicks)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            collapseWindowUntilTick = Math.Max(collapseWindowUntilTick, ticksGame + Math.Max(60, durationTicks));
+            nextPrimaryReadyTick = Math.Max(nextPrimaryReadyTick, ticksGame + 45);
+            nextBarrageReadyTick = Math.Max(nextBarrageReadyTick, ticksGame + Math.Max(60, durationTicks));
+            nextSearchTick = Math.Max(nextSearchTick, ticksGame + 15);
+            ResetAttackState();
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            if (!CollapseWindowActive || Find.TickManager == null)
+            {
+                return null;
+            }
+
+            int ticksRemaining = Math.Max(0, collapseWindowUntilTick - Find.TickManager.TicksGame);
+            return "Reactor destabilized: " + (ticksRemaining / 60f).ToString("0.0") + "s";
+        }
+
         private bool CanOperate(Pawn pawn)
         {
             if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
@@ -258,10 +281,19 @@ namespace AbyssalProtocol
                 Props.holdPositionWhenTargeting);
         }
 
+        private bool CollapseWindowActive
+        {
+            get
+            {
+                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return ticksGame < collapseWindowUntilTick;
+            }
+        }
+
         private int ResolveAttackMode(Pawn pawn, Pawn target, int ticksGame)
         {
             bool primaryReady = ticksGame >= nextPrimaryReadyTick;
-            bool barrageReady = ticksGame >= nextBarrageReadyTick;
+            bool barrageReady = !CollapseWindowActive && ticksGame >= nextBarrageReadyTick;
 
             if (!primaryReady && !barrageReady)
             {
@@ -556,7 +588,13 @@ namespace AbyssalProtocol
         private int GetWarmupTicksForCurrentMode()
         {
             int baseTicks = currentAttackMode == AttackModeBarrage ? Props.barrageWarmupTicks : Props.primaryWarmupTicks;
-            return Math.Max(1, Mathf.RoundToInt(baseTicks * warmupFactor));
+            float factor = warmupFactor;
+            if (CollapseWindowActive && currentAttackMode == AttackModePrimary)
+            {
+                factor *= 1.15f;
+            }
+
+            return Math.Max(1, Mathf.RoundToInt(baseTicks * factor));
         }
 
         private int GetShotCountForCurrentMode()

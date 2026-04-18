@@ -1,3 +1,4 @@
+using System;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -9,6 +10,7 @@ namespace AbyssalProtocol
         private float tunedRadius = -1f;
         private float tunedSeverityPerPulse = -1f;
         private int tunedIntervalTicks = -1;
+        private int collapseWindowUntilTick = -1;
 
         public CompProperties_ABY_ReactorOverheatField Props => (CompProperties_ABY_ReactorOverheatField)props;
 
@@ -23,6 +25,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref tunedRadius, "tunedRadius", -1f);
             Scribe_Values.Look(ref tunedSeverityPerPulse, "tunedSeverityPerPulse", -1f);
             Scribe_Values.Look(ref tunedIntervalTicks, "tunedIntervalTicks", -1);
+            Scribe_Values.Look(ref collapseWindowUntilTick, "collapseWindowUntilTick", -1);
         }
 
         public override void CompTick()
@@ -30,7 +33,7 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = PawnParent;
-            if (!ShouldOperateNow(pawn) || !parent.IsHashIntervalTick(Mathf.Max(15, ActiveIntervalTicks)))
+            if (!ShouldOperateNow(pawn) || CollapseWindowActive || !parent.IsHashIntervalTick(Mathf.Max(15, ActiveIntervalTicks)))
             {
                 return;
             }
@@ -74,6 +77,21 @@ namespace AbyssalProtocol
             tunedRadius = Mathf.Max(1f, radius);
             tunedSeverityPerPulse = Mathf.Max(0.01f, severityPerPulse);
             tunedIntervalTicks = Mathf.Max(15, intervalTicks);
+        }
+
+        public void NotifyAegisCollapsed(int durationTicks)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            collapseWindowUntilTick = Math.Max(collapseWindowUntilTick, ticksGame + Math.Max(60, durationTicks));
+        }
+
+        private bool CollapseWindowActive
+        {
+            get
+            {
+                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return ticksGame < collapseWindowUntilTick;
+            }
         }
 
         private static bool ShouldOperateNow(Pawn pawn)

@@ -64,18 +64,21 @@ namespace AbyssalProtocol
             if (!triggered75 && CrossedThreshold(lastHealthPct, healthPct, 0.75f))
             {
                 triggered75 = true;
+                TriggerThresholdFeedback(pawn, 0.08f);
                 TriggerPortalBurst(pawn, Props.threshold75Count);
             }
 
             if (!triggered40 && CrossedThreshold(lastHealthPct, healthPct, 0.40f))
             {
                 triggered40 = true;
+                TriggerThresholdFeedback(pawn, 0.10f);
                 TriggerPortalBurst(pawn, Props.threshold40Count);
             }
 
             if (!triggered15 && CrossedThreshold(lastHealthPct, healthPct, 0.15f))
             {
                 triggered15 = true;
+                TriggerThresholdFeedback(pawn, 0.12f);
                 TriggerPortalBurst(pawn, Props.threshold15Count);
             }
 
@@ -100,6 +103,23 @@ namespace AbyssalProtocol
         private bool ShouldOperateNow(Pawn pawn)
         {
             return pawn != null && pawn.Spawned && pawn.MapHeld != null && !pawn.Dead;
+        }
+
+
+        private void TriggerThresholdFeedback(Pawn pawn, float pulseStrength)
+        {
+            if (pawn?.MapHeld == null)
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(pawn.DrawPos, pawn.MapHeld, Props.portalFlashScale * 0.82f);
+            FleckMaker.Static(pawn.PositionHeld, pawn.MapHeld, FleckDefOf.ExplosionFlash, Props.portalFlashScale * 0.58f);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(pawn.MapHeld, pulseStrength);
+            if (!string.IsNullOrWhiteSpace(Props.portalSoundDefName))
+            {
+                ABY_SoundUtility.PlayAt(Props.portalSoundDefName, pawn.PositionHeld, pawn.MapHeld);
+            }
         }
 
         private void TriggerPortalBurst(Pawn pawn, int impCount)

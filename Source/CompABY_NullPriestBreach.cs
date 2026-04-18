@@ -14,6 +14,9 @@ namespace AbyssalProtocol
 
         private int nextBreachTick = -1;
         private int totalLifetimeSummons;
+        private int markedUntilTick = -1;
+        private int nextMarkFxTick = -1;
+        private Pawn markedTarget;
         private List<Thing> activeManifestations = new List<Thing>();
 
         public CompProperties_ABY_NullPriestBreach Props => (CompProperties_ABY_NullPriestBreach)props;
@@ -35,6 +38,9 @@ namespace AbyssalProtocol
             base.PostExposeData();
             Scribe_Values.Look(ref nextBreachTick, "nextBreachTick", -1);
             Scribe_Values.Look(ref totalLifetimeSummons, "totalLifetimeSummons", 0);
+            Scribe_Values.Look(ref markedUntilTick, "markedUntilTick", -1);
+            Scribe_Values.Look(ref nextMarkFxTick, "nextMarkFxTick", -1);
+            Scribe_References.Look(ref markedTarget, "markedTarget");
             Scribe_Collections.Look(ref activeManifestations, "activeManifestations", LookMode.Reference);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit && activeManifestations == null)
@@ -54,6 +60,7 @@ namespace AbyssalProtocol
             }
 
             CleanupManifestationRefs();
+            EmitMarkFXIfNeeded(pawn);
 
             if (nextBreachTick < 0)
             {
@@ -78,6 +85,8 @@ namespace AbyssalProtocol
 
             if (target != null)
             {
+                UpdateMark(pawn, target);
+
                 bool canManifest = activeManifestations.Count < Math.Max(1, Props.maxActiveManifestations)
                     && totalLifetimeSummons < Math.Max(1, Props.maxLifetimeSummons);
 
@@ -88,6 +97,17 @@ namespace AbyssalProtocol
             }
 
             ScheduleNextBreach(initial: false);
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (markedTarget == null || markedTarget.Dead || markedUntilTick <= ticksGame)
+            {
+                return null;
+            }
+
+            return "Marked prey: " + markedTarget.LabelShortCap;
         }
 
         private void CleanupManifestationRefs()
@@ -161,6 +181,7 @@ namespace AbyssalProtocol
 
             activeManifestations.Add(manifestation);
             totalLifetimeSummons++;
+            EmitMarkFX(pawn, target, true);
             ABY_SoundUtility.PlayAt(Props.pulseSoundDefName, cell, map);
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.05f);
             return true;
@@ -232,6 +253,52 @@ namespace AbyssalProtocol
             }
 
             return bestCell.IsValid;
+        }
+
+        private void UpdateMark(Pawn pawn, Pawn target)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            markedTarget = target;
+            markedUntilTick = ticksGame + 180;
+            if (ticksGame >= nextMarkFxTick)
+            {
+                EmitMarkFX(pawn, target, true);
+                nextMarkFxTick = ticksGame + 24;
+            }
+        }
+
+        private void EmitMarkFXIfNeeded(Pawn pawn)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (markedTarget == null || markedTarget.Dead || !markedTarget.Spawned || markedTarget.MapHeld != pawn.MapHeld || markedUntilTick <= ticksGame)
+            {
+                markedTarget = null;
+                markedUntilTick = -1;
+                return;
+            }
+
+            if (ticksGame < nextMarkFxTick)
+            {
+                return;
+            }
+
+            EmitMarkFX(pawn, markedTarget, false);
+            nextMarkFxTick = ticksGame + 24;
+        }
+
+        private void EmitMarkFX(Pawn pawn, Pawn target, bool strong)
+        {
+            if (pawn?.MapHeld == null || target == null || !target.Spawned || target.MapHeld != pawn.MapHeld)
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.MapHeld, strong ? 1.35f : 0.72f);
+            if (strong)
+            {
+                FleckMaker.ThrowLightningGlow(pawn.DrawPos, pawn.MapHeld, 0.92f);
+                FleckMaker.Static(target.PositionHeld, pawn.MapHeld, FleckDefOf.ExplosionFlash, 0.82f);
+            }
         }
 
         private static int CountAdjacentCover(IntVec3 root, Map map)

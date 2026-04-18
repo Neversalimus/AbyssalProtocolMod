@@ -8,11 +8,25 @@ namespace AbyssalProtocol
 {
     public class CompABY_ChoirEngineRelay : ThingComp
     {
+        private const int DisruptionDurationTicks = 240;
+        private const float DisruptionDamageThreshold = 18f;
+
         private int nextPulseTick = -1;
         private int nextTurretTick = -1;
+        private int disruptedUntilTick = -1;
+        private int nextDisruptionFxTick = -1;
 
         public CompProperties_ABY_ChoirEngineRelay Props => (CompProperties_ABY_ChoirEngineRelay)props;
         private Pawn PawnParent => parent as Pawn;
+
+        public bool IsDisrupted
+        {
+            get
+            {
+                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return ticksGame < disruptedUntilTick;
+            }
+        }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -29,6 +43,8 @@ namespace AbyssalProtocol
             base.PostExposeData();
             Scribe_Values.Look(ref nextPulseTick, "nextPulseTick", -1);
             Scribe_Values.Look(ref nextTurretTick, "nextTurretTick", -1);
+            Scribe_Values.Look(ref disruptedUntilTick, "disruptedUntilTick", -1);
+            Scribe_Values.Look(ref nextDisruptionFxTick, "nextDisruptionFxTick", -1);
         }
 
         public override void CompTick()
@@ -42,6 +58,17 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (IsDisrupted)
+            {
+                if (ticksGame >= nextDisruptionFxTick)
+                {
+                    ShowDisruptionFX(pawn, false);
+                    nextDisruptionFxTick = ticksGame + 45;
+                }
+
+                return;
+            }
+
             if (nextPulseTick < 0)
             {
                 SchedulePulse(initial: true);
@@ -67,6 +94,57 @@ namespace AbyssalProtocol
             }
         }
 
+        public override void PostPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)
+        {
+            base.PostPostApplyDamage(dinfo, totalDamageDealt);
+
+            Pawn pawn = PawnParent;
+            if (!ShouldOperateNow(pawn))
+            {
+                return;
+            }
+
+            if (dinfo.Def == DamageDefOf.EMP || totalDamageDealt >= DisruptionDamageThreshold)
+            {
+                TriggerDisruption(pawn);
+            }
+        }
+
+        public override string CompInspectStringExtra()
+        {
+            if (!IsDisrupted || Find.TickManager == null)
+            {
+                return null;
+            }
+
+            int ticksRemaining = Math.Max(0, disruptedUntilTick - Find.TickManager.TicksGame);
+            return "Choir relay disrupted: " + (ticksRemaining / 60f).ToString("0.0") + "s";
+        }
+
+        private void TriggerDisruption(Pawn pawn)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            disruptedUntilTick = Math.Max(disruptedUntilTick, ticksGame + DisruptionDurationTicks);
+            nextDisruptionFxTick = ticksGame + 30;
+            ShowDisruptionFX(pawn, true);
+        }
+
+        private void ShowDisruptionFX(Pawn pawn, bool strong)
+        {
+            if (pawn?.MapHeld == null)
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(pawn.DrawPos, pawn.MapHeld, strong ? 2.4f : 1.25f);
+            FleckMaker.Static(pawn.PositionHeld, pawn.MapHeld, FleckDefOf.ExplosionFlash, strong ? 1.8f : 0.9f);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(pawn.MapHeld, strong ? 0.10f : 0.03f);
+            if (strong && !Props.pulseSoundDefName.NullOrEmpty())
+            {
+                ABY_SoundUtility.PlayAt(Props.pulseSoundDefName, pawn.PositionHeld, pawn.MapHeld);
+            }
+        }
+
         private void SchedulePulse(bool initial)
         {
             int variance = Math.Max(0, Props.pulseIntervalVariance);
@@ -85,7 +163,7 @@ namespace AbyssalProtocol
 
         private void ExecuteTurretSuppression(Pawn pawn)
         {
-            if (pawn?.MapHeld == null)
+            if (pawn?.MapHeld == null || IsDisrupted)
             {
                 return;
             }
@@ -115,7 +193,7 @@ namespace AbyssalProtocol
         private void ExecuteChoirPulse(Pawn pawn)
         {
             Map map = pawn.MapHeld;
-            if (map == null)
+            if (map == null || IsDisrupted)
             {
                 return;
             }

@@ -14,7 +14,9 @@ namespace AbyssalProtocol
             base.CompTick();
 
             Pawn pawn = PawnParent;
-            if (!ShouldOperateNow(pawn) || !parent.IsHashIntervalTick(System.Math.Max(15, Props.scanIntervalTicks)))
+            if (!ShouldOperateNow(pawn)
+                || IsRelaySuppressed(pawn)
+                || !parent.IsHashIntervalTick(System.Math.Max(15, Props.scanIntervalTicks)))
             {
                 return;
             }
@@ -25,12 +27,18 @@ namespace AbyssalProtocol
         public void ApplyPulseAura(float allyRadius, float enemyRadius, float allySeverity, float enemySeverity)
         {
             Pawn pawn = PawnParent;
-            if (!ShouldOperateNow(pawn))
+            if (!ShouldOperateNow(pawn) || IsRelaySuppressed(pawn))
             {
                 return;
             }
 
             ApplyAura(allyRadius, enemyRadius, allySeverity, enemySeverity);
+        }
+
+        private static bool IsRelaySuppressed(Pawn pawn)
+        {
+            CompABY_ChoirEngineRelay relay = pawn?.TryGetComp<CompABY_ChoirEngineRelay>();
+            return relay != null && relay.IsDisrupted;
         }
 
         private void ApplyAura(float allyRadius, float enemyRadius, float allySeverity, float enemySeverity)
