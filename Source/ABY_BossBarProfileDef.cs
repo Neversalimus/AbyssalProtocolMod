@@ -13,6 +13,8 @@ namespace AbyssalProtocol
         public string iconTexPath;
         public string styleId = "default";
         public bool useRawIconColors;
+        public string introLabel;
+        public string introLabelKey;
         public string phaseSourceMode;
         public string secondaryBarSource;
 
@@ -57,6 +59,21 @@ namespace AbyssalProtocol
             }
 
             return pawn?.LabelCap ?? defName;
+        }
+
+        public string ResolveIntroLabel()
+        {
+            if (!introLabelKey.NullOrEmpty())
+            {
+                return introLabelKey.Translate();
+            }
+
+            if (!introLabel.NullOrEmpty())
+            {
+                return introLabel;
+            }
+
+            return string.Empty;
         }
 
         public override IEnumerable<string> ConfigErrors()

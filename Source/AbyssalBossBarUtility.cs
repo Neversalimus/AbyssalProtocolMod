@@ -24,6 +24,9 @@ namespace AbyssalProtocol
         public float maxHealth;
         public int currentPhase;
         public string currentPhaseLabel;
+        public string specialStateTag;
+        public bool introStateActive;
+        public bool criticalStateActive;
         public bool hasSecondaryBar;
         public float secondaryPct;
         public float secondaryCurrent;
@@ -85,6 +88,7 @@ namespace AbyssalProtocol
             };
 
             PopulatePhaseSnapshots(state, profile, currentPhase);
+            ApplySpecialStateContext(state, pawn, profile);
             for (int i = 0; i < state.phases.Count; i++)
             {
                 ABY_BossBarPhaseSnapshot phase = state.phases[i];
@@ -92,6 +96,15 @@ namespace AbyssalProtocol
                 {
                     state.currentPhaseLabel = phase.label;
                     break;
+                }
+            }
+
+            if (state.introStateActive)
+            {
+                string introLabel = profile.ResolveIntroLabel();
+                if (!introLabel.NullOrEmpty())
+                {
+                    state.currentPhaseLabel = introLabel;
                 }
             }
 
@@ -166,6 +179,34 @@ namespace AbyssalProtocol
         public static CompABY_ReactorAegis GetReactorAegis(Pawn pawn)
         {
             return pawn?.TryGetComp<CompABY_ReactorAegis>();
+        }
+
+        private static void ApplySpecialStateContext(ABY_BossBarState state, Pawn pawn, ABY_BossBarProfileDef profile)
+        {
+            if (state == null || pawn == null || profile == null)
+            {
+                return;
+            }
+
+            if (profile.phaseSourceMode == "RuptureCoreController")
+            {
+                HediffComp_RuptureCoreController controller = GetRuptureCoreController(pawn);
+                if (controller == null)
+                {
+                    return;
+                }
+
+                if (controller.SpawnShieldActive)
+                {
+                    state.introStateActive = true;
+                    state.specialStateTag = "rupture_intro";
+                }
+                else if (controller.FinalFrenzyTriggered || state.currentPhase >= 4)
+                {
+                    state.criticalStateActive = true;
+                    state.specialStateTag = "rupture_frenzy";
+                }
+            }
         }
 
         private static float GetApproximateMaxHealth(Pawn pawn)

@@ -48,4 +48,6 @@
   <ABY_BossBar_HeightPlus>Высота +4</ABY_BossBar_HeightPlus>
   <ABY_BossBar_PhaseLabel>Фаза {0}</ABY_BossBar_PhaseLabel>
   <ABY_BossBar_SecondaryAegis>Aegis</ABY_BossBar_SecondaryAegis>
+  <ABY_BossBar_Phase_Veil>Пелена</ABY_BossBar_Phase_Veil>
+  <ABY_BossBar_Phase_Fury>Ярость</ABY_BossBar_Phase_Fury>
 </LanguageData>

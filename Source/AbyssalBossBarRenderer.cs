@@ -22,6 +22,7 @@ namespace AbyssalProtocol
         private static float displayedTrailPct = 1f;
         private static float displayedSecondaryPct = 1f;
         private static float displayedAlpha;
+        private static float displayedSpecialPulse;
 
         public static void Draw(ABY_BossBarState state)
         {
@@ -69,7 +70,7 @@ namespace AbyssalProtocol
             Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, mainBarRect.width, secondaryHeight);
             Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, mainBarRect.width, footerHeight);
 
-            DrawBackdrop(rootRect, palette, displayedAlpha, settings.reducedMotion);
+            DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
             DrawIcon(iconRect, state, palette, displayedAlpha);
             DrawName(nameRect, state.displayLabel, palette, displayedAlpha);
             DrawMainBar(mainBarRect, state, palette, displayedAlpha, settings);
@@ -100,6 +101,7 @@ namespace AbyssalProtocol
                 displayedTrailPct = state.healthPct;
                 displayedSecondaryPct = state.secondaryPct;
                 displayedAlpha = 0f;
+                displayedSpecialPulse = 0f;
             }
 
             float realtime = Time.unscaledDeltaTime <= 0f ? 0.016f : Time.unscaledDeltaTime;
@@ -107,6 +109,8 @@ namespace AbyssalProtocol
             float trailLerp = settings.reducedMotion ? 10f : 3.25f;
 
             displayedAlpha = Mathf.MoveTowards(displayedAlpha, 1f, realtime * (settings.reducedMotion ? 6f : 3.2f));
+            float specialTarget = state.criticalStateActive ? 1f : (state.introStateActive ? 0.45f : 0f);
+            displayedSpecialPulse = Mathf.Lerp(displayedSpecialPulse, specialTarget, 1f - Mathf.Exp(-(settings.reducedMotion ? 7f : 4.2f) * realtime));
             displayedHealthPct = Mathf.Lerp(displayedHealthPct, state.healthPct, 1f - Mathf.Exp(-fastLerp * realtime));
 
             if (state.healthPct >= displayedTrailPct)
@@ -132,7 +136,7 @@ namespace AbyssalProtocol
             displayedSecondaryPct = Mathf.Clamp01(displayedSecondaryPct);
         }
 
-        private static void DrawBackdrop(Rect rect, ABY_BossBarStylePalette palette, float alpha, bool reducedMotion)
+        private static void DrawBackdrop(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, bool reducedMotion)
         {
             float pulse = reducedMotion ? 0.15f : 0.20f + Mathf.Sin(Time.realtimeSinceStartup * 2.3f) * 0.08f;
             Color oldColor = GUI.color;
@@ -140,6 +144,24 @@ namespace AbyssalProtocol
             GUI.DrawTexture(rect, BaseContent.WhiteTex);
             GUI.color = new Color(palette.glow.r, palette.glow.g, palette.glow.b, alpha * (0.09f + pulse));
             GUI.DrawTexture(rect.ContractedBy(2f), BaseContent.WhiteTex);
+
+            if (state != null)
+            {
+                if (state.introStateActive)
+                {
+                    float shieldPulse = reducedMotion ? 0.24f : 0.28f + Mathf.Sin(Time.realtimeSinceStartup * 3.6f) * 0.10f;
+                    GUI.color = new Color(1f, 0.82f, 0.74f, alpha * shieldPulse * Mathf.Clamp01(0.55f + displayedSpecialPulse));
+                    GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, 3f), BaseContent.WhiteTex);
+                    GUI.DrawTexture(new Rect(rect.x, rect.yMax - 3f, rect.width, 3f), BaseContent.WhiteTex);
+                }
+                else if (state.criticalStateActive)
+                {
+                    float frenzyPulse = reducedMotion ? 0.28f : 0.24f + Mathf.Sin(Time.realtimeSinceStartup * 6.1f) * 0.14f;
+                    GUI.color = new Color(1f, 0.18f, 0.16f, alpha * (0.18f + frenzyPulse) * Mathf.Clamp01(0.35f + displayedSpecialPulse));
+                    GUI.DrawTexture(rect.ExpandedBy(4f), BaseContent.WhiteTex);
+                }
+            }
+
             GUI.color = oldColor;
             Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 2f, rect.width, 2f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.9f));
         }
@@ -192,6 +214,15 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (state.introStateActive)
+            {
+                DrawIntroShieldOverlay(innerRect, alpha, settings.reducedMotion);
+            }
+            else if (state.criticalStateActive)
+            {
+                DrawCriticalPhaseOverlay(innerRect, palette, alpha, settings.reducedMotion);
+            }
+
             GUI.color = new Color(1f, 1f, 1f, alpha);
             GUI.DrawTexture(rect, FrameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
             GUI.color = Color.white;
@@ -200,6 +231,26 @@ namespace AbyssalProtocol
             {
                 DrawPhaseMarkers(rect, innerRect, state, palette, alpha);
             }
+        }
+
+        private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)
+        {
+            float speed = reducedMotion ? 48f : 82f;
+            float lineWidth = 12f;
+            float spacing = 28f;
+            float offset = Mathf.Repeat(Time.realtimeSinceStartup * speed, spacing);
+            for (float x = innerRect.x - spacing; x < innerRect.xMax + spacing; x += spacing)
+            {
+                Rect lineRect = new Rect(x + offset, innerRect.y, lineWidth, innerRect.height);
+                Widgets.DrawBoxSolid(lineRect, new Color(1f, 0.88f, 0.82f, alpha * 0.11f * Mathf.Clamp01(0.55f + displayedSpecialPulse)));
+            }
+        }
+
+        private static void DrawCriticalPhaseOverlay(Rect innerRect, ABY_BossBarStylePalette palette, float alpha, bool reducedMotion)
+        {
+            float pulse = reducedMotion ? 0.22f : 0.16f + Mathf.Sin(Time.realtimeSinceStartup * 7.4f) * 0.10f;
+            Widgets.DrawBoxSolid(new Rect(innerRect.x, innerRect.y, innerRect.width, 2f), new Color(1f, 0.32f, 0.26f, alpha * (0.24f + pulse) * Mathf.Clamp01(0.40f + displayedSpecialPulse)));
+            Widgets.DrawBoxSolid(new Rect(innerRect.x, innerRect.yMax - 2f, innerRect.width, 2f), new Color(1f, 0.20f, 0.18f, alpha * (0.30f + pulse) * Mathf.Clamp01(0.40f + displayedSpecialPulse)));
         }
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)

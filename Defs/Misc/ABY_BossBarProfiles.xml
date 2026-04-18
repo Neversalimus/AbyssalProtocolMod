@@ -44,7 +44,10 @@
       <li>ABY_ArchonOfRupture</li>
     </bossPawnKindDefNames>
     <displayLabel>Archon of Rupture</displayLabel>
+    <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonOfRupture</iconTexPath>
     <styleId>abyssal_rupture</styleId>
+    <useRawIconColors>true</useRawIconColors>
+    <introLabelKey>ABY_BossBar_Phase_Veil</introLabelKey>
     <priority>110</priority>
     <phaseSourceMode>RuptureCoreController</phaseSourceMode>
     <showPhaseMarkers>true</showPhaseMarkers>
@@ -63,6 +66,11 @@
         <phaseIndex>3</phaseIndex>
         <triggerHealthPct>0.45</triggerHealthPct>
         <label>III</label>
+      </li>
+      <li>
+        <phaseIndex>4</phaseIndex>
+        <triggerHealthPct>0.20</triggerHealthPct>
+        <labelKey>ABY_BossBar_Phase_Fury</labelKey>
       </li>
     </phaseEntries>
   </AbyssalProtocol.ABY_BossBarProfileDef>
