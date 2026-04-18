@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_SigilRepeaterFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_SigilRepeater_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>34~38</volumeRange>
+        <pitchRange>0.99~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_SigilRepeaterTail</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_SigilRepeater_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>16~20</volumeRange>
+        <pitchRange>0.99~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_SigilRepeaterImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_SigilRepeater_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~24</volumeRange>
+        <pitchRange>1.00~1.04</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_SigilRepeater.label>sigil repeater</ABY_SigilRepeater.label>
+  <ABY_SigilRepeater.description>Компактный инфернальный репитер, собранный вокруг цепной сигильной камеры. Он выбрасывает шесть ритуализированных breach-игл в яркой быстрой очереди и даёт первый по-настоящему узнаваемый вкус Abyssal Protocol, не перепрыгивая сразу в поздний тир.</ABY_SigilRepeater.description>
+
+  <ABY_SigilNeedleProjectile.label>sigil needle</ABY_SigilNeedleProjectile.label>
+
+</LanguageData>

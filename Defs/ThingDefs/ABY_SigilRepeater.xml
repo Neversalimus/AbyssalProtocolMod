@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_SigilRepeater</defName>
+    <label>sigil repeater</label>
+    <description>A compact infernal repeater built around a chained sigil chamber. It dumps six ritualized breach needles in a fast, bright burst, making it the first weapon in the forge that feels unmistakably Abyssal without jumping straight into late-game dominance.</description>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_SigilRepeater</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+
+    <weaponTags>
+      <li>Gun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>9</ABY_AbyssalResidue>
+      <Steel>55</Steel>
+      <Plasteel>16</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+
+    <statBases>
+      <WorkToMake>13500</WorkToMake>
+      <Mass>2.10</Mass>
+      <MarketValue>1180</MarketValue>
+      <AccuracyTouch>0.86</AccuracyTouch>
+      <AccuracyShort>0.82</AccuracyShort>
+      <AccuracyMedium>0.69</AccuracyMedium>
+      <AccuracyLong>0.36</AccuracyLong>
+      <RangedWeapon_Cooldown>2.45</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_SigilNeedleProjectile</defaultProjectile>
+        <warmupTime>0.70</warmupTime>
+        <range>24.9</range>
+        <burstShotCount>6</burstShotCount>
+        <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+        <soundCast>ABY_SigilRepeaterFire</soundCast>
+        <soundCastTail>ABY_SigilRepeaterTail</soundCastTail>
+        <muzzleFlashScale>8.2</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>65</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_SigilNeedleProjectile</defName>
+    <label>sigil needle</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_SigilNeedle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.26,1.52)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>6</damageAmountBase>
+      <armorPenetrationBase>0.24</armorPenetrationBase>
+      <stoppingPower>0.42</stoppingPower>
+      <speed>56</speed>
+      <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

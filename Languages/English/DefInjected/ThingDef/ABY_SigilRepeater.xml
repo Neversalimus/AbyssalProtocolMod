@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_SigilRepeater.label>sigil repeater</ABY_SigilRepeater.label>
+  <ABY_SigilRepeater.description>A compact infernal repeater built around a chained sigil chamber. It dumps six ritualized breach needles in a fast, bright burst, making it the first weapon in the forge that feels unmistakably Abyssal without jumping straight into late-game dominance.</ABY_SigilRepeater.description>
+
+  <ABY_SigilNeedleProjectile.label>sigil needle</ABY_SigilNeedleProjectile.label>
+
+</LanguageData>
