@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ModSettingsCategory>Abyssal Protocol</ABY_ModSettingsCategory>
+  <ABY_BossBar_Enable>Enable abyssal boss bars</ABY_BossBar_Enable>
+  <ABY_BossBar_EnableDesc>Shows the custom Abyssal Protocol boss HUD for supported active bosses.</ABY_BossBar_EnableDesc>
+  <ABY_BossBar_ShowHealthNumbers>Show health numbers</ABY_BossBar_ShowHealthNumbers>
+  <ABY_BossBar_ShowHealthNumbersDesc>Displays current and maximum health values on the boss bar.</ABY_BossBar_ShowHealthNumbersDesc>
+  <ABY_BossBar_ShowPhaseMarkers>Show phase markers</ABY_BossBar_ShowPhaseMarkers>
+  <ABY_BossBar_ShowPhaseMarkersDesc>Displays threshold markers for supported boss phase transitions.</ABY_BossBar_ShowPhaseMarkersDesc>
+  <ABY_BossBar_ShowPhaseLabel>Show current phase label</ABY_BossBar_ShowPhaseLabel>
+  <ABY_BossBar_ShowPhaseLabelDesc>Displays the current phase tag under the boss bar.</ABY_BossBar_ShowPhaseLabelDesc>
+  <ABY_BossBar_ShowSecondaryBars>Show secondary bars</ABY_BossBar_ShowSecondaryBars>
+  <ABY_BossBar_ShowSecondaryBarsDesc>Displays supported secondary boss resources such as the Reactor Saint's Aegis.</ABY_BossBar_ShowSecondaryBarsDesc>
+  <ABY_BossBar_ShowCalibrationButton>Show adjustment button on boss bar</ABY_BossBar_ShowCalibrationButton>
+  <ABY_BossBar_ShowCalibrationButtonDesc>Adds a small live-adjust button next to the active boss bar.</ABY_BossBar_ShowCalibrationButtonDesc>
+  <ABY_BossBar_ReducedMotion>Reduced motion</ABY_BossBar_ReducedMotion>
+  <ABY_BossBar_ReducedMotionDesc>Softens sheen, pulsing, and catch-up animation on the boss bar.</ABY_BossBar_ReducedMotionDesc>
+  <ABY_BossBar_Anchor>Anchor preset</ABY_BossBar_Anchor>
+  <ABY_BossBar_Anchor_TopLeft>Top left</ABY_BossBar_Anchor_TopLeft>
+  <ABY_BossBar_Anchor_TopCenter>Top center</ABY_BossBar_Anchor_TopCenter>
+  <ABY_BossBar_Anchor_TopRight>Top right</ABY_BossBar_Anchor_TopRight>
+  <ABY_BossBar_Anchor_BottomLeft>Bottom left</ABY_BossBar_Anchor_BottomLeft>
+  <ABY_BossBar_Anchor_BottomCenter>Bottom center</ABY_BossBar_Anchor_BottomCenter>
+  <ABY_BossBar_Anchor_BottomRight>Bottom right</ABY_BossBar_Anchor_BottomRight>
+  <ABY_BossBar_Width>Bar width: {0}</ABY_BossBar_Width>
+  <ABY_BossBar_Height>Bar height: {0}</ABY_BossBar_Height>
+  <ABY_BossBar_IconSize>Icon size: {0}</ABY_BossBar_IconSize>
+  <ABY_BossBar_Gap>Icon gap: {0}</ABY_BossBar_Gap>
+  <ABY_BossBar_Scale>Global scale: {0}</ABY_BossBar_Scale>
+  <ABY_BossBar_OffsetX>Horizontal offset: {0}</ABY_BossBar_OffsetX>
+  <ABY_BossBar_OffsetY>Vertical offset: {0}</ABY_BossBar_OffsetY>
+  <ABY_BossBar_SafeMargin>Safe margin: {0}</ABY_BossBar_SafeMargin>
+  <ABY_BossBar_OpenCalibration>Open live boss bar calibration</ABY_BossBar_OpenCalibration>
+  <ABY_BossBar_ResetDefaults>Reset defaults</ABY_BossBar_ResetDefaults>
+  <ABY_BossBar_SettingsHint>The live calibration window lets you move and resize the boss bar while a supported boss is active on the map.</ABY_BossBar_SettingsHint>
+  <ABY_BossBar_AdjustShort>ADJ</ABY_BossBar_AdjustShort>
+  <ABY_BossBar_CalibrationTitle>Boss Bar Calibration</ABY_BossBar_CalibrationTitle>
+  <ABY_BossBar_CalibrationDesc>Live adjustment tools for the abyssal boss HUD. Keep a supported boss active on the current map to preview the result in place.</ABY_BossBar_CalibrationDesc>
+  <ABY_BossBar_Calibration_Positioning>Positioning</ABY_BossBar_Calibration_Positioning>
+  <ABY_BossBar_Calibration_Size>Size and spacing</ABY_BossBar_Calibration_Size>
+  <ABY_BossBar_Calibration_Display>Display toggles</ABY_BossBar_Calibration_Display>
+  <ABY_BossBar_Calibration_Nudge>Nudge position by 10 px</ABY_BossBar_Calibration_Nudge>
+  <ABY_BossBar_CalibrationHint>Tip: use the anchor preset first, then fine-tune with offsets and scale.</ABY_BossBar_CalibrationHint>
+  <ABY_BossBar_CloseCalibration>Close calibration</ABY_BossBar_CloseCalibration>
+  <ABY_BossBar_WidthMinus>Width -20</ABY_BossBar_WidthMinus>
+  <ABY_BossBar_WidthPlus>Width +20</ABY_BossBar_WidthPlus>
+  <ABY_BossBar_HeightMinus>Height -4</ABY_BossBar_HeightMinus>
+  <ABY_BossBar_HeightPlus>Height +4</ABY_BossBar_HeightPlus>
+  <ABY_BossBar_PhaseLabel>Phase {0}</ABY_BossBar_PhaseLabel>
+  <ABY_BossBar_SecondaryAegis>Aegis</ABY_BossBar_SecondaryAegis>
+</LanguageData>

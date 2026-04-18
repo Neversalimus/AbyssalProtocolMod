@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ModSettingsCategory>Abyssal Protocol</ABY_ModSettingsCategory>
+  <ABY_BossBar_Enable>Включить abyssal boss bars</ABY_BossBar_Enable>
+  <ABY_BossBar_EnableDesc>Показывает кастомный HUD босса Abyssal Protocol для поддерживаемых активных боссов.</ABY_BossBar_EnableDesc>
+  <ABY_BossBar_ShowHealthNumbers>Показывать числа здоровья</ABY_BossBar_ShowHealthNumbers>
+  <ABY_BossBar_ShowHealthNumbersDesc>Показывает текущее и максимальное здоровье на полосе босса.</ABY_BossBar_ShowHealthNumbersDesc>
+  <ABY_BossBar_ShowPhaseMarkers>Показывать маркеры фаз</ABY_BossBar_ShowPhaseMarkers>
+  <ABY_BossBar_ShowPhaseMarkersDesc>Показывает пороги переходов фаз у поддерживаемых боссов.</ABY_BossBar_ShowPhaseMarkersDesc>
+  <ABY_BossBar_ShowPhaseLabel>Показывать текущую фазу</ABY_BossBar_ShowPhaseLabel>
+  <ABY_BossBar_ShowPhaseLabelDesc>Показывает текущую фазу под полосой босса.</ABY_BossBar_ShowPhaseLabelDesc>
+  <ABY_BossBar_ShowSecondaryBars>Показывать вторичные полосы</ABY_BossBar_ShowSecondaryBars>
+  <ABY_BossBar_ShowSecondaryBarsDesc>Показывает поддерживаемые вторичные ресурсы босса, например Aegis у Reactor Saint.</ABY_BossBar_ShowSecondaryBarsDesc>
+  <ABY_BossBar_ShowCalibrationButton>Показывать кнопку настройки на boss bar</ABY_BossBar_ShowCalibrationButton>
+  <ABY_BossBar_ShowCalibrationButtonDesc>Добавляет маленькую кнопку live-настройки рядом с активным boss bar.</ABY_BossBar_ShowCalibrationButtonDesc>
+  <ABY_BossBar_ReducedMotion>Уменьшенная анимация</ABY_BossBar_ReducedMotion>
+  <ABY_BossBar_ReducedMotionDesc>Ослабляет блики, пульсацию и catch-up анимацию полосы босса.</ABY_BossBar_ReducedMotionDesc>
+  <ABY_BossBar_Anchor>Пресет привязки</ABY_BossBar_Anchor>
+  <ABY_BossBar_Anchor_TopLeft>Сверху слева</ABY_BossBar_Anchor_TopLeft>
+  <ABY_BossBar_Anchor_TopCenter>Сверху по центру</ABY_BossBar_Anchor_TopCenter>
+  <ABY_BossBar_Anchor_TopRight>Сверху справа</ABY_BossBar_Anchor_TopRight>
+  <ABY_BossBar_Anchor_BottomLeft>Снизу слева</ABY_BossBar_Anchor_BottomLeft>
+  <ABY_BossBar_Anchor_BottomCenter>Снизу по центру</ABY_BossBar_Anchor_BottomCenter>
+  <ABY_BossBar_Anchor_BottomRight>Снизу справа</ABY_BossBar_Anchor_BottomRight>
+  <ABY_BossBar_Width>Ширина полосы: {0}</ABY_BossBar_Width>
+  <ABY_BossBar_Height>Высота полосы: {0}</ABY_BossBar_Height>
+  <ABY_BossBar_IconSize>Размер иконки: {0}</ABY_BossBar_IconSize>
+  <ABY_BossBar_Gap>Отступ от иконки: {0}</ABY_BossBar_Gap>
+  <ABY_BossBar_Scale>Общий масштаб: {0}</ABY_BossBar_Scale>
+  <ABY_BossBar_OffsetX>Смещение по X: {0}</ABY_BossBar_OffsetX>
+  <ABY_BossBar_OffsetY>Смещение по Y: {0}</ABY_BossBar_OffsetY>
+  <ABY_BossBar_SafeMargin>Безопасный отступ: {0}</ABY_BossBar_SafeMargin>
+  <ABY_BossBar_OpenCalibration>Открыть live-настройку boss bar</ABY_BossBar_OpenCalibration>
+  <ABY_BossBar_ResetDefaults>Сбросить по умолчанию</ABY_BossBar_ResetDefaults>
+  <ABY_BossBar_SettingsHint>Окно live-настройки позволяет двигать и менять размер boss bar, пока на карте активен поддерживаемый босс.</ABY_BossBar_SettingsHint>
+  <ABY_BossBar_AdjustShort>НАСТ</ABY_BossBar_AdjustShort>
+  <ABY_BossBar_CalibrationTitle>Калибровка Boss Bar</ABY_BossBar_CalibrationTitle>
+  <ABY_BossBar_CalibrationDesc>Инструменты live-настройки для abyssal boss HUD. Держи поддерживаемого босса активным на текущей карте, чтобы сразу видеть результат.</ABY_BossBar_CalibrationDesc>
+  <ABY_BossBar_Calibration_Positioning>Позиционирование</ABY_BossBar_Calibration_Positioning>
+  <ABY_BossBar_Calibration_Size>Размер и отступы</ABY_BossBar_Calibration_Size>
+  <ABY_BossBar_Calibration_Display>Параметры отображения</ABY_BossBar_Calibration_Display>
+  <ABY_BossBar_Calibration_Nudge>Сдвигать позицию по 10 px</ABY_BossBar_Calibration_Nudge>
+  <ABY_BossBar_CalibrationHint>Подсказка: сначала выбери anchor preset, потом докрути offsets и scale.</ABY_BossBar_CalibrationHint>
+  <ABY_BossBar_CloseCalibration>Закрыть калибровку</ABY_BossBar_CloseCalibration>
+  <ABY_BossBar_WidthMinus>Ширина -20</ABY_BossBar_WidthMinus>
+  <ABY_BossBar_WidthPlus>Ширина +20</ABY_BossBar_WidthPlus>
+  <ABY_BossBar_HeightMinus>Высота -4</ABY_BossBar_HeightMinus>
+  <ABY_BossBar_HeightPlus>Высота +4</ABY_BossBar_HeightPlus>
+  <ABY_BossBar_PhaseLabel>Фаза {0}</ABY_BossBar_PhaseLabel>
+  <ABY_BossBar_SecondaryAegis>Aegis</ABY_BossBar_SecondaryAegis>
+</LanguageData>

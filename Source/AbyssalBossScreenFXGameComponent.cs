@@ -167,6 +167,10 @@ namespace AbyssalProtocol
             base.GameComponentOnGUI();
             HandleBossMusicRealtime();
             DrawOverlay();
+            if (TryGetActiveBossBarState(out ABY_BossBarState state))
+            {
+                AbyssalBossBarRenderer.Draw(state);
+            }
         }
 
         private void HandleBossMusicRealtime()
@@ -438,7 +442,6 @@ namespace AbyssalProtocol
             }
 
             BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-
             FieldInfo[] fields = valueType.GetFields(flags);
             for (int i = 0; i < fields.Length; i++)
             {

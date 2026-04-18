@@ -85,6 +85,16 @@ namespace AbyssalProtocol
             };
 
             PopulatePhaseSnapshots(state, profile, currentPhase);
+            for (int i = 0; i < state.phases.Count; i++)
+            {
+                ABY_BossBarPhaseSnapshot phase = state.phases[i];
+                if (phase != null && phase.current && !phase.label.NullOrEmpty())
+                {
+                    state.currentPhaseLabel = phase.label;
+                    break;
+                }
+            }
+
             PopulateSecondaryBar(state, pawn, profile);
             return true;
         }
@@ -277,7 +287,7 @@ namespace AbyssalProtocol
                     state.secondaryPct = aegis.AegisFraction;
                     state.secondaryCurrent = aegis.CurrentAegisPoints;
                     state.secondaryMax = aegis.MaxAegisPoints;
-                    state.secondaryLabel = "Aegis";
+                    state.secondaryLabel = "ABY_BossBar_SecondaryAegis".Translate();
                     break;
             }
         }
