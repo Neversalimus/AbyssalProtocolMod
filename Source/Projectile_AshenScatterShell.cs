@@ -14,6 +14,9 @@ namespace AbyssalProtocol
         private const float ImpactSecondaryGlow = 1.35f;
         private const float ImpactSmokeSize = 1.25f;
         private const float ImpactDustSize = 1.55f;
+        private const float ExplosionRadius = 1.65f;
+        private const int ExplosionDamage = 10;
+        private const float ExplosionArmorPenetration = 0.16f;
         private int ticksAlive;
 
         protected override void Tick()
@@ -44,6 +47,7 @@ namespace AbyssalProtocol
             IntVec3 impactCell = Position;
             Vector3 impactPosition = ExactPosition;
 
+            Thing instigator = Launcher;
             base.Impact(hitThing, blockedByShield);
 
             if (impactMap == null || !impactCell.IsValid)
@@ -52,6 +56,12 @@ namespace AbyssalProtocol
             }
 
             SpawnImpactVfx(impactCell, impactPosition, impactMap, blockedByShield);
+            if (blockedByShield)
+            {
+                return;
+            }
+
+            GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Bomb, instigator, ExplosionDamage, ExplosionArmorPenetration);
         }
 
         private static void SpawnImpactVfx(IntVec3 impactCell, Vector3 impactPosition, Map map, bool blockedByShield)

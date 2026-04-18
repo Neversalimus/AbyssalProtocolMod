@@ -43,8 +43,8 @@
       <AccuracyTouch>0.87</AccuracyTouch>
       <AccuracyShort>0.84</AccuracyShort>
       <AccuracyMedium>0.73</AccuracyMedium>
-      <AccuracyLong>0.47</AccuracyLong>
-      <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
+      <AccuracyLong>0.52</AccuracyLong>
+      <RangedWeapon_Cooldown>2.35</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -52,8 +52,8 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AshenPikeSpike</defaultProjectile>
-        <warmupTime>1.45</warmupTime>
-        <range>27.9</range>
+        <warmupTime>1.35</warmupTime>
+        <range>29.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundCast>ABY_AshenPikeFire</soundCast>
@@ -100,10 +100,10 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>30</damageAmountBase>
-      <armorPenetrationBase>0.45</armorPenetrationBase>
+      <damageAmountBase>34</damageAmountBase>
+      <armorPenetrationBase>0.52</armorPenetrationBase>
       <stoppingPower>2.35</stoppingPower>
-      <speed>64</speed>
+      <speed>68</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>

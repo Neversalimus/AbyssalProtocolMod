@@ -42,10 +42,10 @@
       <Mass>4.9</Mass>
       <MarketValue>2280</MarketValue>
       <AccuracyTouch>0.94</AccuracyTouch>
-      <AccuracyShort>0.78</AccuracyShort>
-      <AccuracyMedium>0.42</AccuracyMedium>
+      <AccuracyShort>0.80</AccuracyShort>
+      <AccuracyMedium>0.48</AccuracyMedium>
       <AccuracyLong>0.12</AccuracyLong>
-      <RangedWeapon_Cooldown>3.35</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.95</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -53,8 +53,8 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AshenScatterShell</defaultProjectile>
-        <warmupTime>1.30</warmupTime>
-        <range>13.9</range>
+        <warmupTime>1.20</warmupTime>
+        <range>15.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
         <soundCast>ABY_AshenScattergunFire</soundCast>
@@ -102,10 +102,10 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>24</damageAmountBase>
-      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <damageAmountBase>26</damageAmountBase>
+      <armorPenetrationBase>0.32</armorPenetrationBase>
       <stoppingPower>2.85</stoppingPower>
-      <speed>38</speed>
+      <speed>42</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>

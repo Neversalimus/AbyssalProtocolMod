@@ -15,11 +15,11 @@ namespace AbyssalProtocol
         private const string TailSoundDefName = "ABY_SpecterLashTail";
 
         private const int VisualIntervalTicks = 1;
-        private const int DamageIntervalTicks = 10;
-        private const int PawnStreamDurationTicks = 84;
-        private const int PointStreamDurationTicks = 20;
-        private const float PulseDamage = 18f;
-        private const float PulseArmorPenetration = 3.20f;
+        private const int DamageIntervalTicks = 14;
+        private const int PawnStreamDurationTicks = 56;
+        private const int PointStreamDurationTicks = 18;
+        private const float PulseDamage = 8f;
+        private const float PulseArmorPenetration = 0.24f;
         private const float MaxStreamRange = 28.9f;
         private const float EndpointInset = 0.34f;
         private const float BaseAmplitude = 0.20f;
@@ -68,7 +68,7 @@ namespace AbyssalProtocol
                 sourcePawnId = source.thingIDNumber,
                 targetPawnId = target?.thingIDNumber ?? -1,
                 expireTick = ticksGame + PawnStreamDurationTicks,
-                nextDamageTick = ticksGame,
+                nextDamageTick = ticksGame + DamageIntervalTicks,
                 seed = source.thingIDNumber * 397 ^ (target?.thingIDNumber ?? fallbackTargetPos.GetHashCode()) * 17,
                 damageEnabled = target != null && GenHostility.HostileTo(source, target),
                 staticTargetPos = targetPos
@@ -77,7 +77,7 @@ namespace AbyssalProtocol
             if (source.MapHeld != null)
             {
                 ABY_SoundUtility.PlayAt(PulseSoundDefName, targetPos.ToIntVec3(), source.MapHeld);
-                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, 1.10f);
+                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, 0.95f);
                 FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
             }
         }
@@ -270,7 +270,7 @@ namespace AbyssalProtocol
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
             target.TakeDamage(damageInfo);
-            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.88f);
+            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.62f);
             FleckMaker.ThrowMicroSparks(target.DrawPos, map);
             FleckMaker.ThrowMicroSparks(target.DrawPos, map);
             ABY_SoundUtility.PlayAt(PulseSoundDefName, target.PositionHeld, map);

@@ -18,12 +18,12 @@
     <statBases>
       <WorkToMake>48000</WorkToMake>
       <Mass>4.7</Mass>
-      <MarketValue>2850</MarketValue>
+      <MarketValue>2650</MarketValue>
       <AccuracyTouch>0.83</AccuracyTouch>
-      <AccuracyShort>0.79</AccuracyShort>
-      <AccuracyMedium>0.71</AccuracyMedium>
-      <AccuracyLong>0.58</AccuracyLong>
-      <RangedWeapon_Cooldown>2.15</RangedWeapon_Cooldown>
+      <AccuracyShort>0.77</AccuracyShort>
+      <AccuracyMedium>0.67</AccuracyMedium>
+      <AccuracyLong>0.52</AccuracyLong>
+      <RangedWeapon_Cooldown>2.50</RangedWeapon_Cooldown>
     </statBases>
 
     <recipeMaker>
@@ -52,8 +52,8 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_SpecterLashAnchor</defaultProjectile>
-        <warmupTime>1.16</warmupTime>
-        <range>28.9</range>
+        <warmupTime>1.25</warmupTime>
+        <range>26.9</range>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <burstShotCount>1</burstShotCount>
         <soundAiming>ABY_SpecterLashCharge</soundAiming>
@@ -76,7 +76,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>500</requiredResidue>
+        <requiredResidue>450</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>
@@ -93,8 +93,8 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>20</damageAmountBase>
-      <armorPenetrationBase>2.80</armorPenetrationBase>
+      <damageAmountBase>13</damageAmountBase>
+      <armorPenetrationBase>0.90</armorPenetrationBase>
       <stoppingPower>0.45</stoppingPower>
       <speed>120</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

@@ -226,11 +226,11 @@
       <WorkToMake>48000</WorkToMake>
       <Mass>4.8</Mass>
       <MarketValue>2280</MarketValue>
-      <AccuracyTouch>0.77</AccuracyTouch>
+      <AccuracyTouch>0.78</AccuracyTouch>
       <AccuracyShort>0.84</AccuracyShort>
-      <AccuracyMedium>0.78</AccuracyMedium>
-      <AccuracyLong>0.60</AccuracyLong>
-      <RangedWeapon_Cooldown>2.45</RangedWeapon_Cooldown>
+      <AccuracyMedium>0.80</AccuracyMedium>
+      <AccuracyLong>0.64</AccuracyLong>
+      <RangedWeapon_Cooldown>2.20</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -238,8 +238,8 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_CanticleWaveProjectile</defaultProjectile>
-        <warmupTime>1.55</warmupTime>
-        <range>29.9</range>
+        <warmupTime>1.40</warmupTime>
+        <range>30.9</range>
         <burstShotCount>2</burstShotCount>
         <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
         <soundAiming>ABY_CanticleDriverAim</soundAiming>
@@ -267,9 +267,9 @@
     </graphicData>
     <projectile>
       <damageDef>Blunt</damageDef>
-      <damageAmountBase>16</damageAmountBase>
-      <armorPenetrationBase>0.20</armorPenetrationBase>
-      <stoppingPower>2.30</stoppingPower>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <stoppingPower>2.60</stoppingPower>
       <speed>78</speed>
       <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>
     </projectile>

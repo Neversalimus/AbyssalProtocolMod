@@ -12,9 +12,9 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>20</damageAmountBase>
-      <armorPenetrationBase>1.25</armorPenetrationBase>
-      <speed>46</speed>
+      <damageAmountBase>14</damageAmountBase>
+      <armorPenetrationBase>0.44</armorPenetrationBase>
+      <speed>50</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>

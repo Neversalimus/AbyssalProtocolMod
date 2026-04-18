@@ -7,10 +7,10 @@ namespace AbyssalProtocol
     public class Projectile_RiftCarbineBurst : Bullet
     {
         private const string ArmorMeltHediffDefName = "ABY_RiftArmorMelt";
-        private const float SeverityPerHit = 0.34f;
+        private const float SeverityPerHit = 0.24f;
         private const float BreachThreshold = 0.95f;
-        private const float BreachDamage = 10f;
-        private const float BreachArmorPenetration = 0.30f;
+        private const float BreachDamage = 8f;
+        private const float BreachArmorPenetration = 0.22f;
         private const int DebuffDurationTicks = 360;
         private const int TrailIntervalTicks = 2;
         private const float TrailGlowSize = 0.24f;

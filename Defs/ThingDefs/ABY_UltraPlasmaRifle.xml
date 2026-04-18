@@ -26,7 +26,7 @@
 
     <recipeMaker>
       <skillRequirements>
-        <Crafting>10</Crafting>
+        <Crafting>12</Crafting>
       </skillRequirements>
       <recipeUsers Inherit="False">
         <li>ABY_AbyssalForge</li>
@@ -34,6 +34,8 @@
     </recipeMaker>
 
     <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
       <Plasteel>500</Plasteel>
       <ComponentSpacer>12</ComponentSpacer>
       <Steel>750</Steel>
@@ -81,7 +83,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>350</requiredResidue>
+        <requiredResidue>440</requiredResidue>
         <category>Herald</category>
       </li>
     </modExtensions>
