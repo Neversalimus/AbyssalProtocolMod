@@ -520,7 +520,7 @@ namespace AbyssalProtocol
                 Messages.Message("ABY_CapacitorForcedStart_Queued".Translate(), MessageTypeDefOf.NeutralEvent, false);
             }
 
-            StartPhase(RitualPhase.Charging, GetChargingPhaseDuration());
+            StartPhase(RitualPhase.Charging, GetPhaseDurationForPendingRitual(RitualPhase.Charging));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
             SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.95f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
@@ -1430,6 +1430,8 @@ namespace AbyssalProtocol
         private void TickRitualEffects()
         {
             float progress = GetPhaseProgress();
+            bool archonRitual = IsCurrentArchonBeastRitual();
+            float archonFactor = archonRitual ? 1.18f : 1f;
             AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
 
             switch (ritualPhase)
@@ -1437,12 +1439,12 @@ namespace AbyssalProtocol
                 case RitualPhase.Charging:
                     if (ShouldDoHashInterval(24))
                     {
-                        SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.85f + progress * 0.35f);
+                        SpawnMinorMote("ABY_Mote_ArchonDashTrail", (0.85f + progress * 0.35f) * archonFactor);
                     }
 
                     if (ShouldDoHashInterval(18))
                     {
-                        fxComp?.RegisterRitualPulse(Map, 0.06f + progress * 0.08f);
+                        fxComp?.RegisterRitualPulse(Map, (0.06f + progress * 0.08f) * archonFactor);
                     }
 
                     if (ShouldDoHashInterval(26))
@@ -1454,12 +1456,12 @@ namespace AbyssalProtocol
                 case RitualPhase.Surge:
                     if (ShouldDoHashInterval(10))
                     {
-                        SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.05f + progress * 0.45f);
+                        SpawnMinorMote("ABY_Mote_ArchonDashEntry", (1.05f + progress * 0.45f) * archonFactor);
                     }
 
                     if (ShouldDoHashInterval(8))
                     {
-                        fxComp?.RegisterRitualPulse(Map, 0.12f + progress * 0.16f);
+                        fxComp?.RegisterRitualPulse(Map, (0.12f + progress * 0.16f) * archonFactor);
                     }
 
                     if (ShouldDoHashInterval(14))
@@ -1471,12 +1473,12 @@ namespace AbyssalProtocol
                 case RitualPhase.Breach:
                     if (ShouldDoHashInterval(5))
                     {
-                        SpawnMinorMote("ABY_Mote_ArchonDashExit", 1.50f + progress * 0.75f);
+                        SpawnMinorMote("ABY_Mote_ArchonDashExit", (1.50f + progress * 0.75f) * archonFactor);
                     }
 
                     if (ShouldDoHashInterval(4))
                     {
-                        fxComp?.RegisterRitualPulse(Map, 0.22f + progress * 0.28f);
+                        fxComp?.RegisterRitualPulse(Map, (0.22f + progress * 0.28f) * archonFactor);
                     }
                     break;
 
@@ -1494,14 +1496,14 @@ namespace AbyssalProtocol
             switch (ritualPhase)
             {
                 case RitualPhase.Charging:
-                    StartPhase(RitualPhase.Surge, GetSurgePhaseDuration());
+                    StartPhase(RitualPhase.Surge, GetPhaseDurationForPendingRitual(RitualPhase.Surge));
                     SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.40f);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
                     ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
                     break;
 
                 case RitualPhase.Surge:
-                    StartPhase(RitualPhase.Breach, GetBreachPhaseDuration());
+                    StartPhase(RitualPhase.Breach, GetPhaseDurationForPendingRitual(RitualPhase.Breach));
                     ArchonInfernalVFXUtility.DoSummonVFX(Map, RitualFocusCell);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.36f);
                     ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
@@ -1509,7 +1511,7 @@ namespace AbyssalProtocol
 
                 case RitualPhase.Breach:
                     CompleteSummon();
-                    StartPhase(RitualPhase.Cooldown, GetCooldownPhaseDuration());
+                    StartPhase(RitualPhase.Cooldown, GetPhaseDurationForPendingRitual(RitualPhase.Cooldown));
                     break;
 
                 case RitualPhase.Cooldown:
@@ -2062,6 +2064,46 @@ namespace AbyssalProtocol
             return string.Equals(summonMode, "PortalWave", System.StringComparison.OrdinalIgnoreCase);
         }
 
+        private bool IsCurrentArchonBeastRitual()
+        {
+            return pendingPawnKindDef?.defName == "ABY_ArchonBeast"
+                && string.Equals(pendingRitualId, "archon_beast", System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private int GetPhaseDurationForPendingRitual(RitualPhase phase)
+        {
+            if (!IsCurrentArchonBeastRitual())
+            {
+                switch (phase)
+                {
+                    case RitualPhase.Charging:
+                        return 120;
+                    case RitualPhase.Surge:
+                        return 90;
+                    case RitualPhase.Breach:
+                        return 30;
+                    case RitualPhase.Cooldown:
+                        return 120;
+                    default:
+                        return 60;
+                }
+            }
+
+            switch (phase)
+            {
+                case RitualPhase.Charging:
+                    return 132;
+                case RitualPhase.Surge:
+                    return 102;
+                case RitualPhase.Breach:
+                    return 42;
+                case RitualPhase.Cooldown:
+                    return 128;
+                default:
+                    return 60;
+            }
+        }
+
         private bool ShouldUseArchonBeastPortalEscortEncounter()
         {
             if (pendingPawnKindDef?.defName != "ABY_ArchonBeast")
@@ -2173,37 +2215,6 @@ namespace AbyssalProtocol
             }
 
             return null;
-        }
-
-
-        private int GetChargingPhaseDuration()
-        {
-            return IsArchonBeastPresentationSequence() ? 150 : 120;
-        }
-
-        private int GetSurgePhaseDuration()
-        {
-            return IsArchonBeastPresentationSequence() ? 108 : 90;
-        }
-
-        private int GetBreachPhaseDuration()
-        {
-            return IsArchonBeastPresentationSequence() ? 42 : 30;
-        }
-
-        private int GetCooldownPhaseDuration()
-        {
-            return IsArchonBeastPresentationSequence() ? 132 : 120;
-        }
-
-        private bool IsArchonBeastPresentationSequence()
-        {
-            if (!pendingRitualId.NullOrEmpty() && pendingRitualId == "archon_beast")
-            {
-                return true;
-            }
-
-            return pendingPawnKindDef != null && pendingPawnKindDef.defName == "ABY_ArchonBeast";
         }
 
         private void StartPhase(RitualPhase phase, int duration)

@@ -11,17 +11,16 @@ namespace AbyssalProtocol
         private const string CompanionPortalDefName = "ABY_ImpPortal";
         private const string EmberHoundKindDefName = "ABY_EmberHound";
 
-        private const int BossPortalWarmupTicks = 168;
-        private const int BossPortalLingerTicks = 300;
+        private const int BossPortalWarmupTicks = 156;
+        private const int BossPortalLingerTicks = 320;
 
-        private const int CompanionPortalWarmupTicks = 86;
-        private const int CompanionPortalWarmupJitterTicks = 8;
-        private const int CompanionPortalWarmupCascadeTicks = 22;
-        private const int CompanionPortalSpawnIntervalTicks = 20;
-        private const int CompanionPortalLingerTicks = 210;
+        private const int CompanionPortalWarmupTicks = 116;
+        private const int CompanionPortalWarmupJitterTicks = 10;
+        private const int CompanionPortalSpawnIntervalTicks = 24;
+        private const int CompanionPortalLingerTicks = 220;
 
-        private const float CompanionPortalMinRadius = 4.6f;
-        private const float CompanionPortalMaxRadius = 8.4f;
+        private const float CompanionPortalMinRadius = 4.9f;
+        private const float CompanionPortalMaxRadius = 8.8f;
 
         public static bool TryBeginEncounter(
             Map map,
@@ -85,10 +84,8 @@ namespace AbyssalProtocol
                 BossPortalLingerTicks,
                 bossLabel.NullOrEmpty() ? "Archon Beast" : bossLabel);
 
-            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.18f);
-            ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", bossPortalCell, map);
-
             TrySpawnCompanionHoundPortals(map, faction, bossPortalCell);
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.20f);
             return true;
         }
 
@@ -105,7 +102,7 @@ namespace AbyssalProtocol
             return AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out bossPortalCell);
         }
 
-        public static void TrySpawnCompanionHoundPortals(Map map, Faction faction, IntVec3 bossPortalCell)
+        public static void TrySpawnCompanionHoundPortals(Map map, Faction faction, IntVec3 bossPortalCell, int warmupOffsetTicks = 0, int desiredPortalCount = -1, int staggerTicks = 26)
         {
             if (map == null || !bossPortalCell.IsValid || faction == null)
             {
@@ -119,10 +116,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int desiredPortalCount = GetCompanionPortalCount(map);
+            int resolvedPortalCount = desiredPortalCount > 0 ? desiredPortalCount : GetCompanionPortalCount(map);
             HashSet<IntVec3> usedCells = new HashSet<IntVec3> { bossPortalCell };
 
-            for (int i = 0; i < desiredPortalCount; i++)
+            for (int i = 0; i < resolvedPortalCount; i++)
             {
                 if (!TryFindCompanionPortalCell(map, bossPortalCell, usedCells, out IntVec3 portalCell))
                 {
@@ -135,7 +132,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                int warmup = Mathf.Max(60, CompanionPortalWarmupTicks + i * CompanionPortalWarmupCascadeTicks + Rand.RangeInclusive(-CompanionPortalWarmupJitterTicks, CompanionPortalWarmupJitterTicks));
+                int warmup = Mathf.Max(60, CompanionPortalWarmupTicks + warmupOffsetTicks + i * Mathf.Max(8, staggerTicks) + Rand.RangeInclusive(-CompanionPortalWarmupJitterTicks, CompanionPortalWarmupJitterTicks));
                 GenSpawn.Spawn(companionPortal, portalCell, map, Rot4.Random);
                 companionPortal.Initialize(
                     faction,
@@ -145,13 +142,13 @@ namespace AbyssalProtocol
                     CompanionPortalSpawnIntervalTicks,
                     CompanionPortalLingerTicks);
 
-                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.06f + i * 0.03f);
                 ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portalCell, map);
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.09f + i * 0.03f);
                 usedCells.Add(portalCell);
             }
         }
 
-        private static int GetCompanionPortalCount(Map map)
+        public static int GetCompanionPortalCount(Map map)
         {
             int colonistCount = Mathf.Max(1, ABY_Phase2PortalUtility.CountActivePlayerColonists(map));
             if (colonistCount >= 10)
@@ -187,6 +184,11 @@ namespace AbyssalProtocol
                 }
 
                 if (usedCells != null && usedCells.Contains(candidate))
+                {
+                    continue;
+                }
+
+                if (HasUsedCellNearby(usedCells, candidate, 2.6f))
                 {
                     continue;
                 }
@@ -227,6 +229,29 @@ namespace AbyssalProtocol
 
             cell = bestCell;
             return true;
+        }
+
+        private static bool HasUsedCellNearby(HashSet<IntVec3> usedCells, IntVec3 candidate, float minDistance)
+        {
+            if (usedCells == null || !candidate.IsValid)
+            {
+                return false;
+            }
+
+            foreach (IntVec3 usedCell in usedCells)
+            {
+                if (!usedCell.IsValid)
+                {
+                    continue;
+                }
+
+                if (usedCell.DistanceTo(candidate) < minDistance)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool HasBlockingPlayerBuildingNearby(Map map, IntVec3 center, float radius)
