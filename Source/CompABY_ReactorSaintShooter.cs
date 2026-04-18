@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace AbyssalProtocol
 {
@@ -20,7 +22,7 @@ namespace AbyssalProtocol
         private int nextBurstShotTick = -1;
         private int burstShotsRemaining;
         private int currentAttackMode;
-        private Pawn currentTarget;
+        private Thing currentTarget;
         private IntVec3 currentTargetCell = IntVec3.Invalid;
 
         private float primaryCooldownFactor = 1f;
@@ -127,21 +129,23 @@ namespace AbyssalProtocol
             }
 
             nextSearchTick = ticksGame + Math.Max(5, Props.scanIntervalTicks);
-            Pawn target = FindBestTarget(pawn);
+            Thing target = FindBestTargetThing(pawn);
             if (target == null)
             {
+                TryForceAdjacentBuildingBash(pawn);
                 return;
             }
 
             int attackMode = ResolveAttackMode(pawn, target, ticksGame);
             if (attackMode == AttackModeNone)
             {
+                TryForceAdjacentBuildingBash(pawn);
                 return;
             }
 
             currentAttackMode = attackMode;
             currentTarget = target;
-            currentTargetCell = target.Position;
+            currentTargetCell = target.PositionHeld;
             warmupCompleteTick = ticksGame + GetWarmupTicksForCurrentMode();
             nextBurstShotTick = -1;
             burstShotsRemaining = 0;
@@ -156,7 +160,7 @@ namespace AbyssalProtocol
                 pawn.pather?.StopDead();
             }
 
-            pawn.rotationTracker?.FaceTarget(target.Position);
+            pawn.rotationTracker?.FaceTarget(target.PositionHeld);
         }
 
         public void SetPhaseTuning(
@@ -209,9 +213,14 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private Pawn FindBestTarget(Pawn pawn)
+        private Thing FindBestTargetThing(Pawn pawn)
         {
-            return AbyssalThreatPawnUtility.FindBestTarget(
+            if (pawn == null)
+            {
+                return null;
+            }
+
+            Pawn pawnTarget = AbyssalThreatPawnUtility.FindBestTarget(
                 pawn,
                 0f,
                 Props.range,
@@ -220,6 +229,122 @@ namespace AbyssalProtocol
                 false,
                 5.5f,
                 1.1f);
+            if (pawnTarget != null)
+            {
+                return pawnTarget;
+            }
+
+            Building blockingBuilding = FindNearbyBlockingBuilding(pawn);
+            if (blockingBuilding != null)
+            {
+                return blockingBuilding;
+            }
+
+            return FindBestBuildingTarget(pawn);
+        }
+
+        private Building FindBestBuildingTarget(Pawn pawn)
+        {
+            if (pawn?.Map == null || pawn.Faction == null)
+            {
+                return null;
+            }
+
+            Building best = null;
+            float bestScore = float.MinValue;
+            List<Building> colonistBuildings = pawn.Map.listerBuildings?.allBuildingsColonist;
+            if (colonistBuildings == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < colonistBuildings.Count; i++)
+            {
+                Building building = colonistBuildings[i];
+                if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, building))
+                {
+                    continue;
+                }
+
+                float distance = pawn.Position.DistanceTo(building.Position);
+                if (distance > Props.range || distance < 0.5f)
+                {
+                    continue;
+                }
+
+                bool hasLos = GenSight.LineOfSight(pawn.Position, building.Position, pawn.Map);
+                float score = -distance;
+                if (hasLos)
+                {
+                    score += 6f;
+                }
+
+                if (building.def?.building?.isTurret == true)
+                {
+                    score += 8f;
+                }
+
+                if (building.def?.Fillage == FillCategory.Full)
+                {
+                    score += 4f;
+                }
+
+                if (distance <= 8.5f)
+                {
+                    score += 3.5f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = building;
+                }
+            }
+
+            return best;
+        }
+
+        private Building FindNearbyBlockingBuilding(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            Building best = null;
+            float bestScore = float.MinValue;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, 3.4f, true))
+            {
+                if (!cell.InBounds(pawn.Map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(pawn.Map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Building building = things[i] as Building;
+                    if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, building))
+                    {
+                        continue;
+                    }
+
+                    float distance = pawn.Position.DistanceTo(building.Position);
+                    float score = 10f - distance;
+                    if (building.def?.building?.isTurret == true)
+                    {
+                        score += 3f;
+                    }
+
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        best = building;
+                    }
+                }
+            }
+
+            return best;
         }
 
         private bool CanContinueCurrentAttack(Pawn pawn)
@@ -235,17 +360,18 @@ namespace AbyssalProtocol
             }
         }
 
-        private bool CanFirePrimaryAt(Pawn shooter, Pawn target)
+        private bool CanFirePrimaryAt(Pawn shooter, Thing target)
         {
             if (!AbyssalThreatPawnUtility.CanFireAt(shooter, target))
             {
                 return false;
             }
 
-            return shooter.Position.DistanceTo(target.Position) <= Props.range;
+            IntVec3 targetCell = target.PositionHeld;
+            return targetCell.IsValid && shooter.Position.DistanceTo(targetCell) <= Props.range;
         }
 
-        private bool CanFireBarrageAt(Pawn shooter, Pawn target, IntVec3 fallbackCell)
+        private bool CanFireBarrageAt(Pawn shooter, Thing target, IntVec3 fallbackCell)
         {
             if (shooter == null || shooter.Map == null)
             {
@@ -253,9 +379,12 @@ namespace AbyssalProtocol
             }
 
             IntVec3 targetCell = fallbackCell;
-            if (target != null && target.Spawned && target.Map == shooter.Map && !target.Dead)
+            if (target != null && target.Spawned && target.Map == shooter.Map)
             {
-                targetCell = target.Position;
+                if (!(target is Pawn pawnTarget) || !pawnTarget.Dead)
+                {
+                    targetCell = target.PositionHeld;
+                }
             }
 
             if (!targetCell.IsValid || !targetCell.InBounds(shooter.Map))
@@ -275,7 +404,7 @@ namespace AbyssalProtocol
         {
             return AbyssalThreatPawnUtility.TryMaintainSpacing(
                 pawn,
-                currentTarget,
+                currentTarget as Pawn,
                 Props.preferredMinRange,
                 Props.retreatSearchRadius,
                 Props.holdPositionWhenTargeting);
@@ -290,7 +419,7 @@ namespace AbyssalProtocol
             }
         }
 
-        private int ResolveAttackMode(Pawn pawn, Pawn target, int ticksGame)
+        private int ResolveAttackMode(Pawn pawn, Thing target, int ticksGame)
         {
             bool primaryReady = ticksGame >= nextPrimaryReadyTick;
             bool barrageReady = !CollapseWindowActive && ticksGame >= nextBarrageReadyTick;
@@ -318,9 +447,15 @@ namespace AbyssalProtocol
             return barrageReady ? AttackModeBarrage : AttackModeNone;
         }
 
-        private int CountNearbyThreats(Pawn focusTarget, float radius, Pawn shooter)
+        private int CountNearbyThreats(Thing focusTarget, float radius, Pawn shooter)
         {
             if (focusTarget?.Map == null || shooter?.Faction == null)
+            {
+                return 0;
+            }
+
+            IntVec3 center = focusTarget.PositionHeld;
+            if (!center.IsValid)
             {
                 return 0;
             }
@@ -346,7 +481,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if ((pawn.Position - focusTarget.Position).LengthHorizontalSquared > radiusSq)
+                if ((pawn.Position - center).LengthHorizontalSquared > radiusSq)
                 {
                     continue;
                 }
@@ -370,14 +505,20 @@ namespace AbyssalProtocol
             }
         }
 
-        private void FirePrimaryShot(Pawn pawn, Pawn target)
+        private void FirePrimaryShot(Pawn pawn, Thing target)
         {
             if (pawn == null || target == null)
             {
                 return;
             }
 
-            pawn.rotationTracker?.FaceTarget(target.Position);
+            IntVec3 targetCell = target.PositionHeld;
+            if (!targetCell.IsValid)
+            {
+                return;
+            }
+
+            pawn.rotationTracker?.FaceTarget(targetCell);
             if (!Props.primaryFireSoundDefName.NullOrEmpty())
             {
                 ABY_SoundUtility.PlayAt(Props.primaryFireSoundDefName, pawn.Position, pawn.Map);
@@ -401,7 +542,7 @@ namespace AbyssalProtocol
             }
         }
 
-        private void FireBarrageShot(Pawn pawn, Pawn target, IntVec3 fallbackCell)
+        private void FireBarrageShot(Pawn pawn, Thing target, IntVec3 fallbackCell)
         {
             if (pawn == null || pawn.Map == null)
             {
@@ -409,9 +550,12 @@ namespace AbyssalProtocol
             }
 
             IntVec3 anchorCell = fallbackCell;
-            if (target != null && target.Spawned && !target.Dead && target.Map == pawn.Map)
+            if (target != null && target.Spawned && target.Map == pawn.Map)
             {
-                anchorCell = target.Position;
+                if (!(target is Pawn pawnTarget) || !pawnTarget.Dead)
+                {
+                    anchorCell = target.PositionHeld;
+                }
             }
 
             IntVec3 targetCell = ResolveBarrageCell(anchorCell, pawn.Map);
@@ -582,6 +726,23 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            return true;
+        }
+
+        private bool TryForceAdjacentBuildingBash(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return false;
+            }
+
+            Building building = FindNearbyBlockingBuilding(pawn);
+            if (building == null || !building.Spawned)
+            {
+                return false;
+            }
+
+            pawn.jobs?.StartJob(JobMaker.MakeJob(JobDefOf.AttackMelee, building), JobCondition.InterruptForced, null, false, true);
             return true;
         }
 

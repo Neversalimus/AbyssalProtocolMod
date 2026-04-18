@@ -16,8 +16,8 @@ namespace AbyssalProtocol
 
         private const int VisualIntervalTicks = 1;
         private const int DamageIntervalTicks = 10;
-        private const int PawnStreamDurationTicks = 72;
-        private const int PointStreamDurationTicks = 18;
+        private const int PawnStreamDurationTicks = 90;
+        private const int PointStreamDurationTicks = 24;
         private const float PulseDamage = 8f;
         private const float PulseArmorPenetration = 0.24f;
         private const float MaxStreamRange = 28.9f;
@@ -62,29 +62,30 @@ namespace AbyssalProtocol
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             RemoveExistingStreamFor(source);
 
-            ActiveStream stream = new ActiveStream
+            bool damageEnabled = target != null && GenHostility.HostileTo(source, target);
+
+            activeStreams.Add(new ActiveStream
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
                 targetPawnId = target?.thingIDNumber ?? -1,
                 expireTick = ticksGame + PawnStreamDurationTicks,
-                nextDamageTick = ticksGame + 4,
+                nextDamageTick = ticksGame + Mathf.Max(4, DamageIntervalTicks / 2),
                 seed = source.thingIDNumber * 397 ^ (target?.thingIDNumber ?? fallbackTargetPos.GetHashCode()) * 17,
-                damageEnabled = target != null && GenHostility.HostileTo(source, target),
+                damageEnabled = damageEnabled,
                 staticTargetPos = targetPos
-            };
-            activeStreams.Add(stream);
-
-            if (target != null && stream.damageEnabled)
-            {
-                ApplyPulseDamage(source, target);
-            }
+            });
 
             if (source.MapHeld != null)
             {
                 ABY_SoundUtility.PlayAt(PulseSoundDefName, targetPos.ToIntVec3(), source.MapHeld);
                 FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, 0.95f);
                 FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
+            }
+
+            if (damageEnabled && target != null)
+            {
+                ApplyPulseDamage(source, target);
             }
         }
 
@@ -228,7 +229,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return CanUseTargetPos(source, target.DrawPos);
+            Vector3 sourcePos = source.DrawPos;
+            Vector3 targetPos = target.DrawPos;
+            sourcePos.y = 0f;
+            targetPos.y = 0f;
+            return (targetPos - sourcePos).magnitude <= MaxStreamRange + 1.8f;
         }
 
         private static bool CanUseTargetPos(Pawn source, Vector3 targetPos)
@@ -246,14 +251,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IntVec3 sourceCell = source.PositionHeld;
             IntVec3 targetCell = targetPos.ToIntVec3();
-            if (!targetCell.IsValid)
-            {
-                return false;
-            }
-
-            return GenSight.LineOfSight(sourceCell, targetCell, source.MapHeld);
+            return targetCell.IsValid && targetCell.InBounds(source.MapHeld);
         }
 
         private void ApplyPulseDamage(Pawn source, Pawn target)

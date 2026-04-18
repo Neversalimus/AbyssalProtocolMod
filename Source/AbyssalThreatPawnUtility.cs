@@ -371,6 +371,41 @@ namespace AbyssalProtocol
             return actor.Faction.HostileTo(candidate.Faction);
         }
 
+        public static bool IsValidHostileThingTarget(Pawn actor, Thing candidate)
+        {
+            if (actor == null || candidate == null || candidate == actor || candidate.Destroyed || !candidate.Spawned)
+            {
+                return false;
+            }
+
+            if (candidate.Map != actor.Map || actor.Faction == null)
+            {
+                return false;
+            }
+
+            if (candidate is Pawn pawnCandidate)
+            {
+                return IsValidHostileTarget(actor, pawnCandidate);
+            }
+
+            if (candidate.def == null || !candidate.def.useHitPoints)
+            {
+                return false;
+            }
+
+            if (!(candidate is Building))
+            {
+                return false;
+            }
+
+            if (candidate.Faction == null)
+            {
+                return false;
+            }
+
+            return actor.Faction.HostileTo(candidate.Faction);
+        }
+
         public static bool HasRangedWeapon(Pawn pawn)
         {
             return pawn?.equipment?.Primary?.def != null && pawn.equipment.Primary.def.IsRangedWeapon;
@@ -441,6 +476,17 @@ namespace AbyssalProtocol
             }
 
             return GenSight.LineOfSight(shooter.Position, target.Position, shooter.Map);
+        }
+
+        public static bool CanFireAt(Pawn shooter, Thing target)
+        {
+            if (!IsValidHostileThingTarget(shooter, target))
+            {
+                return false;
+            }
+
+            IntVec3 targetCell = target.PositionHeld;
+            return targetCell.IsValid && GenSight.LineOfSight(shooter.Position, targetCell, shooter.Map);
         }
 
         private static void RemoveSpawnDiseases(Pawn pawn)
