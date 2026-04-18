@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_SaintAegisCarapace</defName>
+    <thingClass>Apparel</thingClass>
+    <label>saint aegis carapace</label>
+    <description>A rebuilt torso shell forged from salvaged Infernal Reactor Saint plating, reactor housings and scorched containment ribs. It still looks like it belonged on a walking artillery-saint first and a human body second. The result is heavy, unnervingly clean, and markedly better at surviving heat and high-energy punishment than the first infernal combat line.</description>
+    <techLevel>Spacer</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_SaintAegisCarapace</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.14,1.14)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_SaintAegisCarapace</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>42</Plasteel>
+      <Uranium>16</Uranium>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>4</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.08</MoveSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>5800</WorkToMake>
+      <MaxHitPoints>455</MaxHitPoints>
+      <Mass>6.2</Mass>
+      <MarketValue>4150</MarketValue>
+      <ArmorRating_Sharp>1.04</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.54</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.92</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_VesperHaloHelm</defName>
+    <thingClass>Apparel</thingClass>
+    <label>vesper halo helm</label>
+    <description>A saint-line war helm rebuilt from reactor-saint face plating, signal crown fragments and scorched halo braces. Its visor geometry and reinforced cranial seal feel less like standard armor and more like a sanctioned remnant stripped from a boss-grade shell.</description>
+    <techLevel>Spacer</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_VesperHaloHelm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.98,0.98)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_VesperHaloHelm</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>18</Plasteel>
+      <Uranium>6</Uranium>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>2</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2200</WorkToMake>
+      <MaxHitPoints>245</MaxHitPoints>
+      <Mass>2.1</Mass>
+      <MarketValue>1780</MarketValue>
+      <ArmorRating_Sharp>0.86</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.44</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.74</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>
