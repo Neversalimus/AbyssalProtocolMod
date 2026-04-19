@@ -77,12 +77,11 @@
         <armorPenetration>0.10</armorPenetration>
       </li>
     </tools>
-
-    <butcherProducts>
+    <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
-    </butcherProducts>
+    </killedLeavings>
 
-    <comps>
+<comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>RangedSkirmisher</archetype>
         <minShootingSkill>11</minShootingSkill>

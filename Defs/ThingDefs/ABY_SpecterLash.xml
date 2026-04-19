@@ -93,7 +93,7 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>13</damageAmountBase>
+      <damageAmountBase>26</damageAmountBase>
       <armorPenetrationBase>0.90</armorPenetrationBase>
       <stoppingPower>0.45</stoppingPower>
       <speed>120</speed>

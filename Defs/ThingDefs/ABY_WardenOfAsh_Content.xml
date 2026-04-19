@@ -45,7 +45,7 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>1180</MaxHitPoints>
+      <MaxHitPoints>2950</MaxHitPoints>
       <MoveSpeed>4.20</MoveSpeed>
       <MeleeHitChance>0.92</MeleeHitChance>
       <MeleeDodgeChance>0.18</MeleeDodgeChance>
@@ -86,6 +86,8 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>BossJuggernaut</archetype>
         <minMeleeSkill>12</minMeleeSkill>
+        <spawnGraceTicks>30</spawnGraceTicks>
+        <lordRetryTicks>60</lordRetryTicks>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
@@ -107,9 +109,9 @@
         <pulseSoundDefName>ABY_SigilChargePulse</pulseSoundDefName>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_WardenOfAshPortalSummoner">
-        <threshold75Count>3</threshold75Count>
-        <threshold40Count>4</threshold40Count>
-        <threshold15Count>3</threshold15Count>
+        <threshold75Count>9</threshold75Count>
+        <threshold40Count>12</threshold40Count>
+        <threshold15Count>9</threshold15Count>
         <portalMinRadius>1.35</portalMinRadius>
         <portalMaxRadius>2.75</portalMaxRadius>
         <portalWarmupTicks>24</portalWarmupTicks>

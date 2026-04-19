@@ -9,6 +9,7 @@ namespace AbyssalProtocol
     {
         private const string UnstableBreachRitualId = "unstable_breach";
         private const string EmberHuntRitualId = "ember_hunt";
+        private const string ChoirEngineRitualId = "choir_engine";
 
         private const int ImpThreatValue = 85;
         private const int HoundThreatValue = 190;
@@ -29,12 +30,19 @@ namespace AbyssalProtocol
             public int ZealotCount;
 
             public int TotalImpCount => Math.Max(0, PortalImpCount) + Math.Max(0, PackImpCount);
+            public int TotalEscortCount => Math.Max(0, HoundCount) + TotalImpCount + Math.Max(0, ThrallCount) + Math.Max(0, ZealotCount);
         }
 
         public static bool IsSupportedRitual(string ritualId)
         {
             return string.Equals(ritualId, UnstableBreachRitualId, StringComparison.OrdinalIgnoreCase)
-                || string.Equals(ritualId, EmberHuntRitualId, StringComparison.OrdinalIgnoreCase);
+                || string.Equals(ritualId, EmberHuntRitualId, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(ritualId, ChoirEngineRitualId, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static int GetActiveColonistCount(Map map)
+        {
+            return Math.Max(1, map?.mapPawns?.FreeColonistsSpawnedCount ?? 0);
         }
 
         public static ThreatPlan GetThreatPlan(Map map, string ritualId)
@@ -46,23 +54,26 @@ namespace AbyssalProtocol
 
             int colonistTier = GetColonistTier(map);
             int wealthTier = GetWealthTier(map);
-            int finalTier = Math.Max(colonistTier, wealthTier);
 
             ThreatPlan plan = new ThreatPlan
             {
                 RitualId = ritualId,
                 ColonistTier = colonistTier,
                 WealthTier = wealthTier,
-                Tier = finalTier
+                Tier = Math.Max(colonistTier, wealthTier)
             };
 
             if (string.Equals(ritualId, UnstableBreachRitualId, StringComparison.OrdinalIgnoreCase))
             {
-                ApplyUnstableBreachPlan(plan);
+                ApplyUnstableBreachPlan(map, plan);
+            }
+            else if (string.Equals(ritualId, EmberHuntRitualId, StringComparison.OrdinalIgnoreCase))
+            {
+                ApplyEmberHuntPreviewPlan(map, plan);
             }
             else
             {
-                ApplyEmberHuntPlan(plan);
+                ApplyChoirEnginePlan(map, plan);
             }
 
             return plan;
@@ -116,7 +127,7 @@ namespace AbyssalProtocol
 
         private static int GetColonistTier(Map map)
         {
-            int colonists = map?.mapPawns?.FreeColonistsSpawnedCount ?? 0;
+            int colonists = GetActiveColonistCount(map);
             if (colonists <= 4)
             {
                 return 0;
@@ -166,54 +177,41 @@ namespace AbyssalProtocol
             return 4;
         }
 
-        private static void ApplyUnstableBreachPlan(ThreatPlan plan)
+        private static void ApplyUnstableBreachPlan(Map map, ThreatPlan plan)
         {
-            int[] portalImpCounts = { 2, 3, 4, 5, 6 };
-            int tier = Math.Min(plan.Tier, portalImpCounts.Length - 1);
-            plan.PortalImpCount = portalImpCounts[tier];
-            plan.ThrallCount = plan.Tier >= 4 ? 1 : 0;
-            plan.ZealotCount = plan.Tier >= 4 ? 1 : 0;
-            plan.ThreatBudget = plan.PortalImpCount * ImpThreatValue + plan.ThrallCount * ThrallThreatValue + plan.ZealotCount * ZealotThreatValue;
+            int colonists = GetActiveColonistCount(map);
+            plan.PortalImpCount = Math.Min(60, Math.Max(3, colonists * 3));
+            plan.PackImpCount = 0;
+            plan.HoundCount = 0;
+            plan.ThrallCount = 0;
+            plan.ZealotCount = 0;
+            plan.ThreatBudget = plan.PortalImpCount * ImpThreatValue;
         }
 
-        private static void ApplyEmberHuntPlan(ThreatPlan plan)
+        private static void ApplyEmberHuntPreviewPlan(Map map, ThreatPlan plan)
         {
-            switch (plan.Tier)
-            {
-                case 0:
-                    plan.HoundCount = 1;
-                    plan.PackImpCount = 0;
-                    plan.ThrallCount = 0;
-                    plan.ZealotCount = 0;
-                    break;
-                case 1:
-                    plan.HoundCount = 1;
-                    plan.PackImpCount = 1;
-                    plan.ThrallCount = 0;
-                    plan.ZealotCount = 0;
-                    break;
-                case 2:
-                    plan.HoundCount = 1;
-                    plan.PackImpCount = 2;
-                    plan.ThrallCount = 0;
-                    plan.ZealotCount = 0;
-                    break;
-                case 3:
-                    plan.HoundCount = 2;
-                    plan.PackImpCount = 0;
-                    plan.ThrallCount = 0;
-                    plan.ZealotCount = 0;
-                    break;
-                default:
-                    plan.HoundCount = 2;
-                    plan.PackImpCount = 2;
-                    plan.ThrallCount = 1;
-                    plan.ZealotCount = 1;
-                    break;
-            }
+            int colonists = GetActiveColonistCount(map);
+            int minCount = Math.Max(1, colonists);
+            int maxCount = Math.Min(25, Math.Max(minCount, colonists * 3));
+            plan.HoundCount = Math.Max(1, (minCount + maxCount) / 2);
+            plan.PortalImpCount = 0;
+            plan.PackImpCount = 0;
+            plan.ThrallCount = 0;
+            plan.ZealotCount = 0;
+            plan.ThreatBudget = plan.HoundCount * HoundThreatValue;
+        }
 
-            plan.ThreatBudget = plan.HoundCount * HoundThreatValue
-                + plan.PackImpCount * ImpThreatValue
+        private static void ApplyChoirEnginePlan(Map map, ThreatPlan plan)
+        {
+            int colonists = GetActiveColonistCount(map);
+            int totalEscort = Math.Min(30, Math.Max(6, colonists * 6));
+
+            plan.PortalImpCount = 0;
+            plan.PackImpCount = totalEscort / 2;
+            plan.ThrallCount = totalEscort / 3;
+            plan.ZealotCount = Math.Max(0, totalEscort - plan.PackImpCount - plan.ThrallCount);
+            plan.HoundCount = 0;
+            plan.ThreatBudget = plan.TotalImpCount * ImpThreatValue
                 + plan.ThrallCount * ThrallThreatValue
                 + plan.ZealotCount * ZealotThreatValue;
         }

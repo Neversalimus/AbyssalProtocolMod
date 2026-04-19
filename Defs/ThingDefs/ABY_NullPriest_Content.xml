@@ -74,10 +74,11 @@
         <armorPenetration>0.07</armorPenetration>
       </li>
     </tools>
-    <butcherProducts>
+    <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-    </butcherProducts>
-    <comps>
+    </killedLeavings>
+
+<comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>SupportCaster</archetype>
         <minShootingSkill>11</minShootingSkill>

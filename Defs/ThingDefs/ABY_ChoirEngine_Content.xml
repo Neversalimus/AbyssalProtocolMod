@@ -88,6 +88,8 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>SupportCaster</archetype>
         <minMeleeSkill>10</minMeleeSkill>
+        <spawnGraceTicks>30</spawnGraceTicks>
+        <lordRetryTicks>60</lordRetryTicks>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
@@ -159,6 +161,9 @@
         <bossLabel>Choir Engine</bossLabel>
         <spawnPoints>1040</spawnPoints>
         <ritualWarmupTicks>180</ritualWarmupTicks>
+        <arrivalNearColony>true</arrivalNearColony>
+        <arrivalNearColonyMinDistance>14</arrivalNearColonyMinDistance>
+        <arrivalNearColonyMaxDistance>24</arrivalNearColonyMaxDistance>
         <supportThrallCount>2</supportThrallCount>
         <supportZealotCount>1</supportZealotCount>
         <completionLetterLabelKey>ABY_ChoirSummonSuccessLabel</completionLetterLabelKey>

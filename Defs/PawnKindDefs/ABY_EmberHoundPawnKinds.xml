@@ -15,9 +15,9 @@
         <bodyGraphicData>
           <texPath>Pawn/EmberHound/ABY_EmberHound</texPath>
           <graphicClass>Graphic_Multi</graphicClass>
-          <drawSize>(5.418,5.418)</drawSize>
+          <drawSize>(2.709,2.709)</drawSize>
           <shadowData>
-            <volume>(2.205, 0.756, 2.205)</volume>
+            <volume>(1.103, 0.378, 1.103)</volume>
             <offset>(0, 0, -0.20)</offset>
           </shadowData>
         </bodyGraphicData>

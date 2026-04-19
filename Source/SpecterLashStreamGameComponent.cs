@@ -18,7 +18,7 @@ namespace AbyssalProtocol
         private const int DamageIntervalTicks = 10;
         private const int PawnStreamDurationTicks = 90;
         private const int PointStreamDurationTicks = 24;
-        private const float PulseDamage = 8f;
+        private const float PulseDamage = 16f;
         private const float PulseArmorPenetration = 0.24f;
         private const float MaxStreamRange = 28.9f;
         private const float EndpointInset = 0.34f;

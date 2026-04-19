@@ -94,7 +94,7 @@
         <ritualWarmupTicks>150</ritualWarmupTicks>
         <impCount>2</impCount>
         <impPortalWarmupTicks>90</impPortalWarmupTicks>
-        <impSpawnIntervalTicks>75</impSpawnIntervalTicks>
+        <impSpawnIntervalTicks>30</impSpawnIntervalTicks>
         <impPortalLingerTicks>1800</impPortalLingerTicks>
         <completionLetterLabelKey>ABY_CircleUnstableBreachLetterLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_CircleUnstableBreachLetterDesc</completionLetterDescKey>

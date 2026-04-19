@@ -61,6 +61,9 @@
       <MarketValue>420</MarketValue>
       <Mass>0.42</Mass>
     </statBases>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>4</ABY_AbyssalResidue>
+    </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>SwarmRusher</archetype>

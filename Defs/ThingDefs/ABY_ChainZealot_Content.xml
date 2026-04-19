@@ -82,10 +82,11 @@
         <armorPenetration>0.16</armorPenetration>
       </li>
     </tools>
-    <butcherProducts>
+    <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-    </butcherProducts>
-    <comps>
+    </killedLeavings>
+
+<comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>HookBruiser</archetype>
         <minMeleeSkill>11</minMeleeSkill>

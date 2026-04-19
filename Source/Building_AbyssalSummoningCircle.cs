@@ -476,7 +476,7 @@ namespace AbyssalProtocol
                         return false;
                     }
                 }
-                else if (!summonProps.arrivalManifestationDefName.NullOrEmpty() && summonProps.arrivalNearColony)
+                else if (summonProps.arrivalNearColony)
                 {
                     if (!AbyssalBossSummonUtility.TryFindNearColonyArrivalCell(
                             Map,
@@ -1915,18 +1915,34 @@ namespace AbyssalProtocol
             if (string.Equals(summonProps.ritualId, "unstable_breach", System.StringComparison.OrdinalIgnoreCase))
             {
                 pendingImpCount = Mathf.Max(1, plan.PortalImpCount);
-                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
-                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
-                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
+                pendingSupportImpCount = 0;
+                pendingSupportThrallCount = 0;
+                pendingSupportZealotCount = 0;
+                pendingImpSpawnIntervalTicks = Mathf.Clamp(Mathf.CeilToInt(1800f / Mathf.Max(1, pendingImpCount)), 12, pendingImpSpawnIntervalTicks);
+                pendingScaledThreatBudget = pendingImpCount * 85;
                 return;
             }
 
             if (string.Equals(summonProps.ritualId, "ember_hunt", System.StringComparison.OrdinalIgnoreCase))
             {
-                pendingImpCount = Mathf.Max(1, plan.HoundCount);
-                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
-                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
-                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
+                int colonists = AbyssalT1SummonScalingUtility.GetActiveColonistCount(Map);
+                int maxHounds = Mathf.Min(25, Mathf.Max(1, colonists * 3));
+                pendingImpCount = Mathf.Clamp(Rand.RangeInclusive(Mathf.Max(1, colonists), maxHounds), 1, 25);
+                pendingSupportImpCount = 0;
+                pendingSupportThrallCount = 0;
+                pendingSupportZealotCount = 0;
+                pendingScaledThreatBudget = pendingImpCount * 190;
+                return;
+            }
+
+            if (string.Equals(summonProps.ritualId, "choir_engine", System.StringComparison.OrdinalIgnoreCase))
+            {
+                int colonists = AbyssalT1SummonScalingUtility.GetActiveColonistCount(Map);
+                int escortTotal = Mathf.Min(30, Mathf.Max(6, colonists * 6));
+                pendingSupportImpCount = escortTotal / 2;
+                pendingSupportThrallCount = escortTotal / 3;
+                pendingSupportZealotCount = Mathf.Max(0, escortTotal - pendingSupportImpCount - pendingSupportThrallCount);
+                pendingScaledThreatBudget = pendingSupportImpCount * 85 + pendingSupportThrallCount * 160 + pendingSupportZealotCount * 235;
             }
         }
 

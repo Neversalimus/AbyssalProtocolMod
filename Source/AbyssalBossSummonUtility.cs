@@ -220,7 +220,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private static IntVec3 GetColonyAnchorCell(Map map, IntVec3 fallbackOrigin)
+        public static IntVec3 GetColonyAnchorCell(Map map, IntVec3 fallbackOrigin)
         {
             Area home = map.areaManager?.Home;
             if (home != null)
@@ -444,8 +444,16 @@ namespace AbyssalProtocol
             Pawn initialTarget = AbyssalThreatPawnUtility.FindBestTarget(pawn, 0f, 45f, false, true, false, 4f, 0.5f)
                 ?? AbyssalThreatPawnUtility.FindClosestThreatWithin(pawn, 45f);
 
+            IntVec3 colonyAnchor = GetColonyAnchorCell(pawn.MapHeld, pawn.PositionHeld);
+
             if (initialTarget == null)
             {
+                if (colonyAnchor.IsValid && colonyAnchor != pawn.PositionHeld)
+                {
+                    pawn.rotationTracker?.FaceCell(colonyAnchor);
+                    pawn.pather?.StartPath(colonyAnchor, PathEndMode.OnCell);
+                }
+
                 return;
             }
 
@@ -453,6 +461,10 @@ namespace AbyssalProtocol
             if (pawn.Position.DistanceTo(initialTarget.Position) > 8.5f)
             {
                 pawn.pather?.StartPath(initialTarget, PathEndMode.Touch);
+            }
+            else if (colonyAnchor.IsValid && pawn.Position.DistanceTo(colonyAnchor) > 6.5f)
+            {
+                pawn.pather?.StartPath(colonyAnchor, PathEndMode.OnCell);
             }
         }
 

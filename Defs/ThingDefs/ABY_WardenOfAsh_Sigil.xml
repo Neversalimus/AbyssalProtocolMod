@@ -33,6 +33,9 @@
         <bossLabel>Warden of Ash</bossLabel>
         <spawnPoints>560</spawnPoints>
         <ritualWarmupTicks>150</ritualWarmupTicks>
+        <arrivalNearColony>true</arrivalNearColony>
+        <arrivalNearColonyMinDistance>14</arrivalNearColonyMinDistance>
+        <arrivalNearColonyMaxDistance>24</arrivalNearColonyMaxDistance>
         <completionLetterLabelKey>ABY_WardenSummonSuccessLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_WardenSummonSuccessDesc</completionLetterDescKey>
 
