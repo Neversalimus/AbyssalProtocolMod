@@ -105,6 +105,24 @@ namespace AbyssalProtocol
                 CompletionLetterLabelKey,
                 CompletionLetterDescKey);
 
+            if (AbyssalBossOrchestrationUtility.ShouldSpawnEscortAtBossRelease("reactor_saint") || AbyssalBossOrchestrationUtility.HasBossEscortProfile("reactor_saint"))
+            {
+                AbyssalBossOrchestrationUtility.TrySpawnEscortPack(
+                    Map,
+                    faction,
+                    "reactor_saint",
+                    releaseCell,
+                    980f,
+                    BossLabel,
+                    out _,
+                    out string escortFailReason);
+
+                if (!escortFailReason.NullOrEmpty())
+                {
+                    Log.Warning("[Abyssal Protocol] Reactor Saint escort warning: " + escortFailReason);
+                }
+            }
+
             FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.30f);
             FleckMaker.ThrowHeatGlow(Position, Map, 1.55f);
             FilthMaker.TryMakeFilth(Position, Map, ThingDefOf.Filth_Ash, 2);

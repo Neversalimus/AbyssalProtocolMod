@@ -7,6 +7,7 @@ namespace AbyssalProtocol
     {
         public List<string> ritualIds = new List<string>();
         public List<string> bossPawnKindDefNames = new List<string>();
+        public List<string> escalationPackageDefNames = new List<string>();
         public int minProgressionStage = 0;
         public string escortPoolId = string.Empty;
         public int escortBaseContentTier = 1;

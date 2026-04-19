@@ -22,6 +22,7 @@ namespace AbyssalProtocol
             public string TemplateDefName;
             public string DoctrineDefName;
             public string BossProfileDefName;
+            public string EscalationPackageDefName;
             public int AllowedContentTier;
             public float Budget;
             public List<DirectedEntry> Entries = new List<DirectedEntry>();
@@ -129,7 +130,7 @@ namespace AbyssalProtocol
 
         public static EncounterPlan BuildPlan(string poolId, float baseBudget, int baseContentTier)
         {
-            return BuildPlan(poolId, baseBudget, baseContentTier, null, null, null, null, null);
+            return BuildPlan(poolId, baseBudget, baseContentTier, null, null, null, null, null, null);
         }
 
         public static EncounterPlan BuildPlan(
@@ -140,7 +141,7 @@ namespace AbyssalProtocol
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts)
         {
-            return BuildPlan(poolId, baseBudget, baseContentTier, null, seed, minimumRoleCounts, maximumRoleCounts, null);
+            return BuildPlan(poolId, baseBudget, baseContentTier, null, seed, minimumRoleCounts, maximumRoleCounts, null, null);
         }
 
         public static EncounterPlan BuildPlan(
@@ -152,7 +153,7 @@ namespace AbyssalProtocol
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts)
         {
-            return BuildPlan(poolId, baseBudget, baseContentTier, map, seed, minimumRoleCounts, maximumRoleCounts, null);
+            return BuildPlan(poolId, baseBudget, baseContentTier, map, seed, minimumRoleCounts, maximumRoleCounts, null, null);
         }
 
         public static EncounterPlan BuildPlan(
@@ -163,7 +164,8 @@ namespace AbyssalProtocol
             int? seed,
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts,
-            string bossProfileDefName)
+            string bossProfileDefName,
+            string escalationPackageDefName)
         {
             if (seed.HasValue)
             {
@@ -173,8 +175,9 @@ namespace AbyssalProtocol
             try
             {
                 ABY_BossDifficultyProfileDef bossProfile = ResolveBossProfile(bossProfileDefName);
+                ABY_BossEscalationPackageDef escalationPackage = ResolveBossEscalationPackage(escalationPackageDefName);
                 ABY_EncounterTemplateDef template = ChooseTemplate(poolId, baseContentTier, map);
-                ABY_ThreatDoctrineDef doctrine = ChooseDoctrine(poolId, baseContentTier, template, bossProfile, map);
+                ABY_ThreatDoctrineDef doctrine = ChooseDoctrine(poolId, baseContentTier, template, bossProfile, escalationPackage, map);
 
                 EncounterPlan plan = new EncounterPlan
                 {
@@ -182,14 +185,17 @@ namespace AbyssalProtocol
                     TemplateDefName = template?.defName ?? string.Empty,
                     DoctrineDefName = doctrine?.defName ?? string.Empty,
                     BossProfileDefName = bossProfile?.defName ?? string.Empty,
+                    EscalationPackageDefName = escalationPackage?.defName ?? string.Empty,
                     AllowedContentTier = GetAllowedPlanTier(baseContentTier, template, doctrine),
                     Budget = Math.Max(1f, baseBudget * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier() * Math.Max(0.25f, template?.budgetMultiplier ?? 1f) * Math.Max(0.25f, doctrine?.budgetMultiplier ?? 1f))
                 };
 
                 Dictionary<string, int> mergedMinimums = MergeRoleCounts(minimumRoleCounts, template?.minimumRoleCounts, true);
                 mergedMinimums = MergeRoleCounts(mergedMinimums, doctrine?.minimumRoleCounts, true);
+                mergedMinimums = MergeRoleCounts(mergedMinimums, escalationPackage?.minimumRoleCounts, true);
                 Dictionary<string, int> mergedMaximums = MergeRoleCounts(maximumRoleCounts, template?.maximumRoleCounts, false);
                 mergedMaximums = MergeRoleCounts(mergedMaximums, doctrine?.maximumRoleCounts, false);
+                mergedMaximums = MergeRoleCounts(mergedMaximums, escalationPackage?.maximumRoleCounts, false);
 
                 List<Candidate> candidates = GetCandidates(plan.PoolId, baseContentTier, plan.AllowedContentTier);
                 if (candidates.Count == 0)
@@ -233,6 +239,16 @@ namespace AbyssalProtocol
             }
 
             return DefDatabase<ABY_BossDifficultyProfileDef>.GetNamedSilentFail(bossProfileDefName);
+        }
+
+        private static ABY_BossEscalationPackageDef ResolveBossEscalationPackage(string escalationPackageDefName)
+        {
+            if (escalationPackageDefName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            return DefDatabase<ABY_BossEscalationPackageDef>.GetNamedSilentFail(escalationPackageDefName);
         }
 
         private static ABY_EncounterTemplateDef ChooseTemplate(string poolId, int baseContentTier, Map map)
@@ -315,7 +331,7 @@ namespace AbyssalProtocol
             return candidates[candidates.Count - 1];
         }
 
-        private static ABY_ThreatDoctrineDef ChooseDoctrine(string poolId, int baseContentTier, ABY_EncounterTemplateDef template, ABY_BossDifficultyProfileDef bossProfile, Map map)
+        private static ABY_ThreatDoctrineDef ChooseDoctrine(string poolId, int baseContentTier, ABY_EncounterTemplateDef template, ABY_BossDifficultyProfileDef bossProfile, ABY_BossEscalationPackageDef escalationPackage, Map map)
         {
             List<ABY_ThreatDoctrineDef> allDefs = DefDatabase<ABY_ThreatDoctrineDef>.AllDefsListForReading;
             if (allDefs == null || allDefs.Count == 0)
@@ -384,6 +400,24 @@ namespace AbyssalProtocol
                     else if (hasBossPreferences)
                     {
                         weight *= 0.88f;
+                    }
+                }
+
+                if (escalationPackage != null)
+                {
+                    bool hasPackagePreferences = (escalationPackage.preferredDoctrineDefNames != null && escalationPackage.preferredDoctrineDefNames.Count > 0)
+                        || (escalationPackage.secondaryDoctrineDefNames != null && escalationPackage.secondaryDoctrineDefNames.Count > 0);
+                    if (escalationPackage.IsPreferredDoctrine(doctrine.defName))
+                    {
+                        weight *= Mathf.Max(1f, escalationPackage.preferredDoctrineWeightMultiplier);
+                    }
+                    else if (escalationPackage.IsSecondaryDoctrine(doctrine.defName))
+                    {
+                        weight *= Mathf.Max(1f, escalationPackage.secondaryDoctrineWeightMultiplier);
+                    }
+                    else if (hasPackagePreferences)
+                    {
+                        weight *= 0.90f;
                     }
                 }
 

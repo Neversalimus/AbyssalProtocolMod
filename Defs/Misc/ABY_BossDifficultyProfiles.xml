@@ -39,6 +39,12 @@
     <secondaryDoctrineDefNames>
       <li>ABY_Doctrine_HunterPressure</li>
     </secondaryDoctrineDefNames>
+    <escalationPackageDefNames>
+      <li>ABY_BossEscalation_Archon_RuptureHunt</li>
+      <li>ABY_BossEscalation_Archon_LivingRupture</li>
+      <li>ABY_BossEscalation_Archon_CrownPredator</li>
+      <li>ABY_BossEscalation_Archon_RuptureDominion</li>
+    </escalationPackageDefNames>
     <bonusCompanionPortalsAtDominion>1</bonusCompanionPortalsAtDominion>
     <bonusCompanionPortalsAtFinalGate>1</bonusCompanionPortalsAtFinalGate>
   </AbyssalProtocol.ABY_BossDifficultyProfileDef>
@@ -83,6 +89,12 @@
     <secondaryDoctrineDefNames>
       <li>ABY_Doctrine_SupportNet</li>
     </secondaryDoctrineDefNames>
+    <escalationPackageDefNames>
+      <li>ABY_BossEscalation_Reactor_SaintAegisGrid</li>
+      <li>ABY_BossEscalation_Reactor_HeatOfCommunion</li>
+      <li>ABY_BossEscalation_Reactor_ChoirOfCapacitors</li>
+      <li>ABY_BossEscalation_Reactor_SaintOverload</li>
+    </escalationPackageDefNames>
   </AbyssalProtocol.ABY_BossDifficultyProfileDef>
 
 </Defs>

@@ -10,6 +10,7 @@ namespace AbyssalProtocol
         public string templateDefName;
         public string doctrineDefName;
         public string bossProfileDefName;
+        public string escalationPackageDefName;
         public string dominantKindDefName;
         public int totalUnits;
         public int supportCount;
@@ -24,6 +25,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref templateDefName, "templateDefName");
             Scribe_Values.Look(ref doctrineDefName, "doctrineDefName");
             Scribe_Values.Look(ref bossProfileDefName, "bossProfileDefName");
+            Scribe_Values.Look(ref escalationPackageDefName, "escalationPackageDefName");
             Scribe_Values.Look(ref dominantKindDefName, "dominantKindDefName");
             Scribe_Values.Look(ref totalUnits, "totalUnits", 0);
             Scribe_Values.Look(ref supportCount, "supportCount", 0);
@@ -68,6 +70,7 @@ namespace AbyssalProtocol
                 templateDefName = plan.TemplateDefName ?? string.Empty,
                 doctrineDefName = plan.DoctrineDefName ?? string.Empty,
                 bossProfileDefName = plan.BossProfileDefName ?? string.Empty,
+                escalationPackageDefName = plan.EscalationPackageDefName ?? string.Empty,
                 dominantKindDefName = ResolveDominantKindDefName(plan),
                 totalUnits = plan.TotalUnits,
                 supportCount = plan.GetRoleCount("support"),
@@ -208,6 +211,33 @@ namespace AbyssalProtocol
             {
                 ABY_EncounterTelemetryEntry entry = entries[i];
                 if (entry != null && string.Equals(entry.doctrineDefName ?? string.Empty, doctrineDefName, StringComparison.OrdinalIgnoreCase))
+                {
+                    hits++;
+                }
+            }
+
+            return hits;
+        }
+
+
+        public static int GetRecentPackageHits(string poolId, string packageDefName, int lookback)
+        {
+            if (packageDefName.NullOrEmpty() || lookback <= 0)
+            {
+                return 0;
+            }
+
+            int hits = 0;
+            List<ABY_EncounterTelemetryEntry> entries = GetComponent()?.GetRecentEntries(poolId, lookback);
+            if (entries == null)
+            {
+                return 0;
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                ABY_EncounterTelemetryEntry entry = entries[i];
+                if (entry != null && string.Equals(entry.escalationPackageDefName ?? string.Empty, packageDefName, StringComparison.OrdinalIgnoreCase))
                 {
                     hits++;
                 }

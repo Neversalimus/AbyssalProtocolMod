@@ -356,6 +356,24 @@ namespace AbyssalProtocol
                 arrivalSoundDefName.NullOrEmpty() ? "ABY_ReactorSaintCharge" : arrivalSoundDefName,
                 completionLetterLabelKey,
                 completionLetterDescKey);
+
+            if (AbyssalBossOrchestrationUtility.ShouldSpawnEscortAtBossRelease("reactor_saint") || AbyssalBossOrchestrationUtility.HasBossEscortProfile("reactor_saint"))
+            {
+                AbyssalBossOrchestrationUtility.TrySpawnEscortPack(
+                    Map,
+                    manifestationFaction,
+                    "reactor_saint",
+                    spawnCell,
+                    980f,
+                    bossLabel,
+                    out _,
+                    out string escortFailReason);
+
+                if (!escortFailReason.NullOrEmpty())
+                {
+                    Log.Warning("[Abyssal Protocol] Reactor Saint escort warning: " + escortFailReason);
+                }
+            }
         }
 
         private void DoSkyfallImpact()
