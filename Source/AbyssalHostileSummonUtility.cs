@@ -101,11 +101,6 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                if (!AbyssalDifficultyUtility.CanSpawnKindNow(entry.KindDef))
-                {
-                    continue;
-                }
-
                 int count = Mathf.Max(0, entry.Count);
                 for (int i = 0; i < count; i++)
                 {
@@ -221,7 +216,7 @@ namespace AbyssalProtocol
             }
 
             AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
-            AbyssalDifficultyUtility.ApplyPawnDifficulty(pawn, kindDef);
+            AbyssalDifficultyUtility.ApplyDifficultyScaling(pawn);
             return true;
         }
 

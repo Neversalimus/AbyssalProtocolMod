@@ -1,274 +1,217 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
   <HediffDef>
-    <defName>ABY_DifficultyBossEscalation</defName>
-    <label>abyssal escalation matrix</label>
-    <description>The current abyssal difficulty profile has overclocked this boss through additional rupture pressure, lattice reinforcement and combat telemetry alignment.</description>
+    <defName>ABY_DifficultyScaling_Assault</defName>
+    <label>assault protocol escalation</label>
+    <description>Hidden protocol layer for assault-class abyssal entities.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
+    <tendable>false</tendable>
     <scenarioCanAdd>false</scenarioCanAdd>
     <stages>
       <li>
-        <minSeverity>0.0</minSeverity>
+        <minSeverity>0</minSeverity>
       </li>
       <li>
-        <minSeverity>1.0</minSeverity>
-        <capMods>
-          <li><capacity>Consciousness</capacity><offset>0.08</offset></li>
-          <li><capacity>Moving</capacity><offset>0.10</offset></li>
-          <li><capacity>BloodPumping</capacity><offset>0.05</offset></li>
-        </capMods>
+        <minSeverity>1</minSeverity>
         <statOffsets>
-          <HealthScale>0.10</HealthScale>
+          <MoveSpeed>0.02</MoveSpeed>
+          <MeleeHitChance>0.01</MeleeHitChance>
+          <ArmorRating_Sharp>0.03</ArmorRating_Sharp>
+          <MaxHitPoints>0.04</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>2</minSeverity>
+        <statOffsets>
+          <MoveSpeed>0.04</MoveSpeed>
+          <MeleeHitChance>0.02</MeleeHitChance>
+          <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
+          <MaxHitPoints>0.08</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>3</minSeverity>
+        <statOffsets>
+          <MoveSpeed>0.06</MoveSpeed>
+          <MeleeHitChance>0.03</MeleeHitChance>
+          <ArmorRating_Sharp>0.09</ArmorRating_Sharp>
+          <MaxHitPoints>0.12</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>4</minSeverity>
+        <statOffsets>
           <MoveSpeed>0.08</MoveSpeed>
-          <MeleeHitChance>0.05</MeleeHitChance>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.08</ArmorRating_Heat>
-          <PainShockThreshold>2.5</PainShockThreshold>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.96</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>2.0</minSeverity>
-        <capMods>
-          <li><capacity>Consciousness</capacity><offset>0.14</offset></li>
-          <li><capacity>Moving</capacity><offset>0.14</offset></li>
-          <li><capacity>BloodPumping</capacity><offset>0.08</offset></li>
-        </capMods>
-        <statOffsets>
-          <HealthScale>0.18</HealthScale>
-          <MoveSpeed>0.12</MoveSpeed>
-          <MeleeHitChance>0.08</MeleeHitChance>
-          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+          <MeleeHitChance>0.04</MeleeHitChance>
           <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.12</ArmorRating_Heat>
-          <PainShockThreshold>4.0</PainShockThreshold>
+          <MaxHitPoints>0.16</MaxHitPoints>
         </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.93</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>3.0</minSeverity>
-        <capMods>
-          <li><capacity>Consciousness</capacity><offset>0.20</offset></li>
-          <li><capacity>Moving</capacity><offset>0.18</offset></li>
-          <li><capacity>BloodPumping</capacity><offset>0.10</offset></li>
-        </capMods>
-        <statOffsets>
-          <HealthScale>0.28</HealthScale>
-          <MoveSpeed>0.16</MoveSpeed>
-          <MeleeHitChance>0.10</MeleeHitChance>
-          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
-          <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.16</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.16</ArmorRating_Heat>
-          <PainShockThreshold>6.0</PainShockThreshold>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.90</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>4.0</minSeverity>
-        <capMods>
-          <li><capacity>Consciousness</capacity><offset>0.26</offset></li>
-          <li><capacity>Moving</capacity><offset>0.22</offset></li>
-          <li><capacity>BloodPumping</capacity><offset>0.12</offset></li>
-        </capMods>
-        <statOffsets>
-          <HealthScale>0.38</HealthScale>
-          <MoveSpeed>0.20</MoveSpeed>
-          <MeleeHitChance>0.12</MeleeHitChance>
-          <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
-          <ArmorRating_Sharp>0.20</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.20</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.20</ArmorRating_Heat>
-          <PainShockThreshold>8.0</PainShockThreshold>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.87</AimingDelayFactor>
-        </statFactors>
       </li>
     </stages>
   </HediffDef>
 
   <HediffDef>
-    <defName>ABY_DifficultyEliteEscalation</defName>
-    <label>abyssal elite escalation</label>
-    <description>This elite has been reinforced by the active abyssal difficulty calibration.</description>
+    <defName>ABY_DifficultyScaling_Support</defName>
+    <label>support protocol escalation</label>
+    <description>Hidden protocol layer for support-class abyssal entities.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>false</isBad>
+    <tendable>false</tendable>
     <scenarioCanAdd>false</scenarioCanAdd>
     <stages>
-      <li><minSeverity>0.0</minSeverity></li>
       <li>
-        <minSeverity>1.0</minSeverity>
+        <minSeverity>0</minSeverity>
+      </li>
+      <li>
+        <minSeverity>1</minSeverity>
         <statOffsets>
-          <HealthScale>0.04</HealthScale>
-          <MoveSpeed>0.03</MoveSpeed>
+          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.03</AimingDelayFactor>
+          <ArmorRating_Sharp>0.02</ArmorRating_Sharp>
+          <MaxHitPoints>0.04</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>2</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.05</AimingDelayFactor>
           <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
+          <MaxHitPoints>0.08</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>3</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.07</AimingDelayFactor>
+          <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
+          <MaxHitPoints>0.12</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>4</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.09</AimingDelayFactor>
+          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
+          <MaxHitPoints>0.16</MaxHitPoints>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_DifficultyScaling_Elite</defName>
+    <label>elite protocol escalation</label>
+    <description>Hidden protocol layer for elite abyssal entities.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <stages>
+      <li>
+        <minSeverity>0</minSeverity>
+      </li>
+      <li>
+        <minSeverity>1</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+          <MoveSpeed>0.02</MoveSpeed>
+          <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
+          <MaxHitPoints>0.06</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>2</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+          <MoveSpeed>0.03</MoveSpeed>
+          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.06</ArmorRating_Blunt>
+          <MaxHitPoints>0.12</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>3</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+          <MoveSpeed>0.04</MoveSpeed>
+          <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.09</ArmorRating_Blunt>
+          <MaxHitPoints>0.18</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>4</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+          <MoveSpeed>0.05</MoveSpeed>
+          <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
+          <MaxHitPoints>0.24</MaxHitPoints>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_DifficultyScaling_Boss</defName>
+    <label>boss protocol escalation</label>
+    <description>Hidden protocol layer for boss-class abyssal entities.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <stages>
+      <li>
+        <minSeverity>0</minSeverity>
+      </li>
+      <li>
+        <minSeverity>1</minSeverity>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+          <MoveSpeed>0.02</MoveSpeed>
+          <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
           <ArmorRating_Heat>0.04</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+          <MaxHitPoints>0.08</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
-        <minSeverity>2.0</minSeverity>
+        <minSeverity>2</minSeverity>
         <statOffsets>
-          <HealthScale>0.08</HealthScale>
-          <MoveSpeed>0.05</MoveSpeed>
-          <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.06</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.06</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
-          <MeleeHitChance>0.03</MeleeHitChance>
-        </statOffsets>
-      </li>
-      <li>
-        <minSeverity>3.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.12</HealthScale>
-          <MoveSpeed>0.06</MoveSpeed>
-          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.08</ArmorRating_Heat>
           <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-          <MeleeHitChance>0.04</MeleeHitChance>
-        </statOffsets>
-      </li>
-      <li>
-        <minSeverity>4.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.16</HealthScale>
-          <MoveSpeed>0.08</MoveSpeed>
+          <MoveSpeed>0.03</MoveSpeed>
           <ArmorRating_Sharp>0.10</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.10</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
-          <MeleeHitChance>0.05</MeleeHitChance>
-        </statOffsets>
-      </li>
-    </stages>
-  </HediffDef>
-
-  <HediffDef>
-    <defName>ABY_DifficultySupportEscalation</defName>
-    <label>abyssal support escalation</label>
-    <description>This support node is receiving additional command bandwidth from the active abyssal difficulty profile.</description>
-    <hediffClass>HediffWithComps</hediffClass>
-    <isBad>false</isBad>
-    <scenarioCanAdd>false</scenarioCanAdd>
-    <stages>
-      <li><minSeverity>0.0</minSeverity></li>
-      <li>
-        <minSeverity>1.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.04</HealthScale>
-          <MoveSpeed>0.03</MoveSpeed>
-          <ArmorRating_Sharp>0.03</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.03</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.98</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>2.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.08</HealthScale>
-          <MoveSpeed>0.05</MoveSpeed>
-          <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.05</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.96</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>3.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.12</HealthScale>
-          <MoveSpeed>0.07</MoveSpeed>
-          <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.06</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.06</ArmorRating_Heat>
-          <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.94</AimingDelayFactor>
-        </statFactors>
-      </li>
-      <li>
-        <minSeverity>4.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.16</HealthScale>
-          <MoveSpeed>0.08</MoveSpeed>
-          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
           <ArmorRating_Heat>0.08</ArmorRating_Heat>
+          <MaxHitPoints>0.16</MaxHitPoints>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>3</minSeverity>
+        <statOffsets>
           <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
-        </statOffsets>
-        <statFactors>
-          <AimingDelayFactor>0.92</AimingDelayFactor>
-        </statFactors>
-      </li>
-    </stages>
-  </HediffDef>
-
-  <HediffDef>
-    <defName>ABY_DifficultyAssaultEscalation</defName>
-    <label>abyssal assault escalation</label>
-    <description>This assault unit has been tightened by the active abyssal difficulty profile.</description>
-    <hediffClass>HediffWithComps</hediffClass>
-    <isBad>false</isBad>
-    <scenarioCanAdd>false</scenarioCanAdd>
-    <stages>
-      <li><minSeverity>0.0</minSeverity></li>
-      <li>
-        <minSeverity>1.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.03</HealthScale>
-          <MoveSpeed>0.02</MoveSpeed>
-          <ArmorRating_Sharp>0.02</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.02</ArmorRating_Blunt>
+          <MoveSpeed>0.04</MoveSpeed>
+          <ArmorRating_Sharp>0.15</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.12</ArmorRating_Heat>
+          <MaxHitPoints>0.24</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
-        <minSeverity>2.0</minSeverity>
+        <minSeverity>4</minSeverity>
         <statOffsets>
-          <HealthScale>0.06</HealthScale>
-          <MoveSpeed>0.03</MoveSpeed>
-          <ArmorRating_Sharp>0.03</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
-        </statOffsets>
-      </li>
-      <li>
-        <minSeverity>3.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.09</HealthScale>
+          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
           <MoveSpeed>0.05</MoveSpeed>
-          <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
-        </statOffsets>
-      </li>
-      <li>
-        <minSeverity>4.0</minSeverity>
-        <statOffsets>
-          <HealthScale>0.12</HealthScale>
-          <MoveSpeed>0.06</MoveSpeed>
-          <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+          <ArmorRating_Sharp>0.20</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.16</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.16</ArmorRating_Heat>
+          <MaxHitPoints>0.32</MaxHitPoints>
         </statOffsets>
       </li>
     </stages>

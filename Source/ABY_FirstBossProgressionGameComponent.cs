@@ -13,6 +13,8 @@ namespace AbyssalProtocol
         private int nextScanTick;
         private List<int> processedArchonPawnIds = new List<int>();
 
+        public bool FirstBossKillRecorded => firstBeastKillRecorded;
+
         public ABY_FirstBossProgressionGameComponent(Game game)
         {
         }

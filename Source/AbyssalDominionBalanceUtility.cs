@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -38,22 +39,20 @@ namespace AbyssalProtocol
             int colonistTier = GetColonistTier(profile.Colonists);
             int wealthTier = GetWealthTier(profile.Wealth);
             profile.ReplayTier = crisis != null ? Mathf.Clamp(crisis.CompletionCount - crisis.FailureCount, 0, 2) : 0;
-            profile.StageTier = AbyssalDifficultyUtility.ScaleDominionStageTier(Mathf.Clamp(Mathf.Max(colonistTier, wealthTier) + profile.ReplayTier, 0, 6));
+            profile.StageTier = Mathf.Clamp(Mathf.Max(colonistTier, wealthTier) + profile.ReplayTier + Math.Max(0, AbyssalDifficultyUtility.GetCurrentProfile()?.extraContentTier ?? 0), 0, 6);
 
             profile.ActiveHostiles = map != null ? AbyssalDominionWaveUtility.CountActiveAbyssalHostiles(map) : 0;
             profile.ActivePortals = map != null ? AbyssalDominionWaveUtility.CountActivePortals(map) : 0;
-            profile.MaxActiveHostiles = Mathf.Clamp(AbyssalDifficultyUtility.ScaleEncounterBudget(14 + profile.Colonists + profile.StageTier * 2 + (crisis?.CompletionCount ?? 0)), 16, 42);
-            profile.MaxActivePortals = profile.StageTier >= 4 ? 3 : 2;
-            if (AbyssalDifficultyUtility.CurrentPreset >= ABY_DifficultyPreset.FinalGate && profile.MaxActivePortals < 4)
-            {
-                profile.MaxActivePortals = 4;
-            }
+            int rawMaxHostiles = Mathf.Clamp(14 + profile.Colonists + profile.StageTier * 2 + (crisis?.CompletionCount ?? 0), 16, 34);
+            profile.MaxActiveHostiles = Mathf.Clamp(Mathf.RoundToInt(rawMaxHostiles * AbyssalDifficultyUtility.GetDominionHostileBudgetMultiplier()), 16, 56);
+            int rawMaxPortals = profile.StageTier >= 4 ? 3 : 2;
+            profile.MaxActivePortals = Mathf.Clamp(Mathf.RoundToInt(rawMaxPortals * AbyssalDifficultyUtility.GetDominionPortalBudgetMultiplier()), 1, 4);
             profile.CleanupPortalBudget = Mathf.Max(1, profile.MaxActivePortals - (profile.ActiveHostiles >= profile.MaxActiveHostiles ? 1 : 0));
             profile.LowFxMode = profile.ActiveHostiles >= Mathf.RoundToInt(profile.MaxActiveHostiles * 0.82f) || profile.ActivePortals >= profile.MaxActivePortals;
             profile.AmbientPulseIntervalTicks = Mathf.Clamp((profile.LowFxMode ? 270 : 210) - profile.StageTier * 6, 150, 300);
             profile.AmbientSoundIntervalTicks = profile.LowFxMode ? 1320 : 900;
             profile.MaintenanceIntervalTicks = profile.LowFxMode ? 240 : 300;
-            profile.AmbientContaminationMultiplier = Mathf.Clamp((0.94f + profile.StageTier * 0.035f) * (profile.LowFxMode ? 0.92f : 1f) * AbyssalDifficultyUtility.CurrentProfile.InstabilityMultiplier, 0.85f, 1.35f);
+            profile.AmbientContaminationMultiplier = Mathf.Clamp((0.94f + profile.StageTier * 0.035f) * (profile.LowFxMode ? 0.92f : 1f) * Mathf.Lerp(1f, AbyssalDifficultyUtility.GetInstabilityMultiplier(), 0.45f), 0.85f, 1.40f);
             profile.ScreenFxMultiplier = profile.LowFxMode ? 0.72f : 1f;
             return profile;
         }
@@ -108,16 +107,6 @@ namespace AbyssalProtocol
                 "ABY_DominionBalanceConsoleFx",
                 "FX mode: {0}",
                 GetFxModeValue(map, crisis)));
-            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_Difficulty_ConsoleLine",
-                "Difficulty protocol: {0}",
-                AbyssalDifficultyUtility.GetCurrentPresetLabel()));
-            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_Difficulty_ConsoleImpact",
-                "Profile effect: encounter x{0}, instability x{1}, rewards x{2}",
-                AbyssalDifficultyUtility.CurrentProfile.EncounterBudgetMultiplier.ToString("F2"),
-                AbyssalDifficultyUtility.CurrentProfile.InstabilityMultiplier.ToString("F2"),
-                AbyssalDifficultyUtility.CurrentProfile.RewardMultiplier.ToString("F2")));
 
             if (crisis != null && !crisis.LastMaintenanceSummary.NullOrEmpty())
             {
@@ -125,6 +114,12 @@ namespace AbyssalProtocol
                     "ABY_DominionBalanceConsoleMaintenance",
                     "Governor: {0}",
                     crisis.LastMaintenanceSummary));
+            }
+
+            List<string> difficultyLines = AbyssalDifficultyUtility.GetDiagnosticsLines();
+            for (int i = 0; i < difficultyLines.Count; i++)
+            {
+                lines.Add(difficultyLines[i]);
             }
 
             return lines;

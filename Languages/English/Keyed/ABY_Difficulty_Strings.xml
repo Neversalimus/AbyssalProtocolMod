@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_Difficulty_Header>Abyssal difficulty protocol</ABY_Difficulty_Header>
-  <ABY_Difficulty_Subheader>Sets the global summon calibration profile. Higher settings intensify composition, instability and boss pressure without bypassing progression gates.</ABY_Difficulty_Subheader>
-  <ABY_Difficulty_TelemetrySummary>Protocol: {0}  •  Encounter x{1}  •  Instability x{2}  •  Rewards x{3}</ABY_Difficulty_TelemetrySummary>
-  <ABY_Difficulty_Current>Current protocol: {0}</ABY_Difficulty_Current>
-  <ABY_Difficulty_CurrentDesc>{0}</ABY_Difficulty_CurrentDesc>
-  <ABY_Difficulty_ButtonHint>These settings raise pressure and late-stage calibration only. They do not unlock future content before its normal sigil / boss-drop / research gates.</ABY_Difficulty_ButtonHint>
-  <ABY_Difficulty_Normal>Normal</ABY_Difficulty_Normal>
-  <ABY_Difficulty_Normal_Desc>Baseline calibrated summon pressure.</ABY_Difficulty_Normal_Desc>
-  <ABY_Difficulty_Severe>Severe</ABY_Difficulty_Severe>
-  <ABY_Difficulty_Severe_Desc>Cleaner assault packs, slightly stronger elites and harsher ritual instability.</ABY_Difficulty_Severe_Desc>
-  <ABY_Difficulty_Rupture>Rupture</ABY_Difficulty_Rupture>
-  <ABY_Difficulty_Rupture_Desc>Escalates elite density and tempo while keeping progression order intact.</ABY_Difficulty_Rupture_Desc>
-  <ABY_Difficulty_Dominion>Dominion</ABY_Difficulty_Dominion>
-  <ABY_Difficulty_Dominion_Desc>Endgame pressure profile. Dominion calibration runs hotter and support cadres scale harder.</ABY_Difficulty_Dominion_Desc>
-  <ABY_Difficulty_FinalGate>Final Gate</ABY_Difficulty_FinalGate>
-  <ABY_Difficulty_FinalGate_Desc>Apex crisis calibration with the strongest composition pressure and instability backlash.</ABY_Difficulty_FinalGate_Desc>
-  <ABY_Difficulty_ProtocolLine>Protocol: {0}</ABY_Difficulty_ProtocolLine>
-  <ABY_Difficulty_ConsoleLine>Difficulty protocol: {0}</ABY_Difficulty_ConsoleLine>
-  <ABY_Difficulty_ConsoleImpact>Profile effect: encounter x{0}, instability x{1}, rewards x{2}</ABY_Difficulty_ConsoleImpact>
-  <ABY_Difficulty_ConsoleThreat>Threat calibration: {0}</ABY_Difficulty_ConsoleThreat>
+  <ABY_DifficultyLabel_Default>Normal</ABY_DifficultyLabel_Default>
+  <ABY_DifficultySettingsHeader>Abyssal difficulty protocol</ABY_DifficultySettingsHeader>
+  <ABY_DifficultySettingsDesc>Global threat protocol for summon pressure, instability, reward routing, and future encounter composition.</ABY_DifficultySettingsDesc>
+  <ABY_DifficultySettingsCurrent>Current protocol: {0}</ABY_DifficultySettingsCurrent>
+  <ABY_DifficultySettingsLock>Lock protocol after first boss kill</ABY_DifficultySettingsLock>
+  <ABY_DifficultySettingsLockDesc>Prevents switching between difficulty profiles after the first Archon Beast kill has been recorded on this save.</ABY_DifficultySettingsLockDesc>
+  <ABY_DifficultySettingsLockedNow>Protocol changes are currently locked on this save because the first boss kill has already been recorded.</ABY_DifficultySettingsLockedNow>
+
+  <ABY_DifficultyDiagnostics_Profile>Protocol: {0}</ABY_DifficultyDiagnostics_Profile>
+  <ABY_DifficultyDiagnostics_Budget>Encounter budget: x{0}</ABY_DifficultyDiagnostics_Budget>
+  <ABY_DifficultyDiagnostics_Instability>Instability pressure: x{0}</ABY_DifficultyDiagnostics_Instability>
+  <ABY_DifficultyDiagnostics_Reward>Residue payout: x{0}</ABY_DifficultyDiagnostics_Reward>
+  <ABY_DifficultyDiagnostics_TierLift>Escalation lift: +{0} content tier</ABY_DifficultyDiagnostics_TierLift>
+  <ABY_DifficultyDiagnostics_Locked>Protocol changes are locked after the first boss kill on this save.</ABY_DifficultyDiagnostics_Locked>
+  <ABY_DifficultyDiagnostics_Armed>Protocol lock will engage after the first boss kill on this save.</ABY_DifficultyDiagnostics_Armed>
+
+  <ABY_DifficultyProfile_Normal_Label>Normal</ABY_DifficultyProfile_Normal_Label>
+  <ABY_DifficultyProfile_Normal_Desc>Baseline Abyssal protocol. Uses the current intended summon pressure without softening the mod.</ABY_DifficultyProfile_Normal_Desc>
+  <ABY_DifficultyProfile_Severe_Label>Severe</ABY_DifficultyProfile_Severe_Label>
+  <ABY_DifficultyProfile_Severe_Desc>Pushes the circle into harder mixed-pressure breaches. Support and elite pieces begin appearing earlier, but progression gates stay intact.</ABY_DifficultyProfile_Severe_Desc>
+  <ABY_DifficultyProfile_Rupture_Label>Rupture</ABY_DifficultyProfile_Rupture_Label>
+  <ABY_DifficultyProfile_Rupture_Desc>Escalates breach composition and cadence. High-value support pieces enter the rotation more often and instability starts punishing overuse faster.</ABY_DifficultyProfile_Rupture_Desc>
+  <ABY_DifficultyProfile_Dominion_Label>Dominion</ABY_DifficultyProfile_Dominion_Label>
+  <ABY_DifficultyProfile_Dominion_Desc>Hard endgame protocol. Dominion pressure rises, escort mixes sharpen, and the system is allowed to reach one tier deeper when legal content exists.</ABY_DifficultyProfile_Dominion_Desc>
+  <ABY_DifficultyProfile_FinalGate_Label>Final Gate</ABY_DifficultyProfile_FinalGate_Label>
+  <ABY_DifficultyProfile_FinalGate_Desc>Apex protocol. The circle leans into deep escalation, future high-tier content is allowed in sooner when tagged for it, and long fights become harsher to stabilize.</ABY_DifficultyProfile_FinalGate_Desc>
+
+  <ABY_CirclePreview_Sniper_Singular>rift sniper</ABY_CirclePreview_Sniper_Singular>
+  <ABY_CirclePreview_Sniper_Plural>rift snipers</ABY_CirclePreview_Sniper_Plural>
 </LanguageData>

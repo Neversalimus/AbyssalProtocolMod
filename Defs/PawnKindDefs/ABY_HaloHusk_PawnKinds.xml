@@ -19,6 +19,20 @@
       <min>0</min>
       <max>0</max>
     </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
+        <role>elite</role>
+        <budgetCost>520</budgetCost>
+        <selectionWeight>0.58</selectionWeight>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>choir_escort</li>
+          <li>dominion_wave</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
 
     <lifeStages>
       <li>

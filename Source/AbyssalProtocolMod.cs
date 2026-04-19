@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -45,7 +46,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 820f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 860f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -53,6 +54,7 @@ namespace AbyssalProtocol
             list.Gap(4f);
             DrawDifficultySection(list, s);
             list.GapLine();
+
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowHealthNumbers".Translate(), ref s.showHealthNumbers, "ABY_BossBar_ShowHealthNumbersDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowPhaseMarkers".Translate(), ref s.showPhaseMarkers, "ABY_BossBar_ShowPhaseMarkersDesc".Translate());
@@ -104,54 +106,60 @@ namespace AbyssalProtocol
             base.WriteSettings();
         }
 
+
         private static void DrawDifficultySection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
         {
-            Rect headerRect = list.GetRect(22f);
-            Widgets.Label(headerRect, "ABY_Difficulty_Header".Translate());
-
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsHeader", "Abyssal difficulty protocol"));
             Text.Font = GameFont.Tiny;
             GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
-            float subHeight = Text.CalcHeight("ABY_Difficulty_Subheader".Translate(), list.ColumnWidth);
-            Widgets.Label(list.GetRect(subHeight + 4f), "ABY_Difficulty_Subheader".Translate());
+            Widgets.Label(list.GetRect(34f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsDesc", "Global threat protocol for summon pressure, instability, reward routing, and future encounter composition."));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
-            list.Gap(4f);
 
-            Rect rowRect = list.GetRect(68f);
+            bool locked = !AbyssalDifficultyUtility.IsProfileAllowedForCurrentSave(AbyssalDifficultyUtility.GetCurrentProfile());
+            Widgets.Label(list.GetRect(22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsCurrent", "Current protocol: {0}", AbyssalDifficultyUtility.GetCurrentDifficultyLabel()));
+
             float gap = 6f;
-            float cellWidth = (rowRect.width - gap * 4f) / 5f;
-            ABY_DifficultyPreset[] presets =
+            Rect row = list.GetRect(34f);
+            var profiles = new List<ABY_DifficultyProfileDef>(AbyssalDifficultyUtility.GetOrderedProfiles());
+            float cellWidth = (row.width - gap * (profiles.Count - 1)) / Mathf.Max(1, profiles.Count);
+            for (int i = 0; i < profiles.Count; i++)
             {
-                ABY_DifficultyPreset.Normal,
-                ABY_DifficultyPreset.Severe,
-                ABY_DifficultyPreset.Rupture,
-                ABY_DifficultyPreset.Dominion,
-                ABY_DifficultyPreset.FinalGate
-            };
-
-            for (int i = 0; i < presets.Length; i++)
-            {
-                Rect buttonRect = new Rect(rowRect.x + (cellWidth + gap) * i, rowRect.y, cellWidth, 32f);
-                ABY_DifficultyPreset preset = presets[i];
-                if (AbyssalStyledWidgets.TextButton(buttonRect, AbyssalDifficultyUtility.GetPresetLabel(preset), true, settingsData.difficultyPreset == preset))
+                ABY_DifficultyProfileDef profile = profiles[i];
+                Rect buttonRect = new Rect(row.x + (cellWidth + gap) * i, row.y, cellWidth, 34f);
+                bool active = string.Equals(settingsData.difficultyProfileDefName, profile.defName);
+                bool canUse = !AbyssalProtocolMod.Settings.lockDifficultyAfterFirstBoss || !AbyssalDifficultyUtility.HasRecordedFirstBossKill() || active;
+                if (AbyssalStyledWidgets.TextButton(buttonRect, profile.ResolveLabel(), canUse && !active, active))
                 {
-                    settingsData.difficultyPreset = preset;
+                    settingsData.difficultyProfileDefName = profile.defName;
                 }
             }
 
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
-            string currentLabel = "ABY_Difficulty_Current".Translate(AbyssalDifficultyUtility.GetPresetLabel(settingsData.difficultyPreset));
-            Widgets.Label(new Rect(rowRect.x, rowRect.y + 36f, rowRect.width, 14f), currentLabel);
-            string desc = "ABY_Difficulty_CurrentDesc".Translate(AbyssalDifficultyUtility.GetPresetDescription(settingsData.difficultyPreset));
-            Widgets.Label(new Rect(rowRect.x, rowRect.y + 50f, rowRect.width, 18f), desc);
+            GUI.color = new Color(0.88f, 0.82f, 0.78f, 1f);
+            Widgets.Label(list.GetRect(44f), AbyssalDifficultyUtility.GetCurrentDifficultyDescription());
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
-            float hintHeight = Text.CalcHeight("ABY_Difficulty_ButtonHint".Translate(), list.ColumnWidth);
-            Widgets.Label(list.GetRect(hintHeight + 4f), "ABY_Difficulty_ButtonHint".Translate());
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLock", "Lock protocol after first boss kill"), ref settingsData.lockDifficultyAfterFirstBoss, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLockDesc", "Prevents switching between difficulty profiles after the first Archon Beast kill has been recorded on this save."));
+
+            if (settingsData.lockDifficultyAfterFirstBoss && AbyssalDifficultyUtility.HasRecordedFirstBossKill())
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(1f, 0.64f, 0.58f, 1f);
+                Widgets.Label(list.GetRect(30f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLockedNow", "Protocol changes are currently locked on this save because the first boss kill has already been recorded."));
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+            }
+
+            List<string> lines = AbyssalDifficultyUtility.GetDiagnosticsLines();
+            for (int i = 0; i < lines.Count; i++)
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(0.78f, 0.92f, 1f, 1f);
+                Widgets.Label(list.GetRect(20f), lines[i]);
+            }
+
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
             list.Gap(4f);

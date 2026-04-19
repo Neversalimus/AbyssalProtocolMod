@@ -304,9 +304,11 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CircleStatusHeaderLong".Translate());
 
             List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
+            List<string> difficultyLines = AbyssalDifficultyUtility.GetDiagnosticsLines();
             bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
             float summaryHeight = dominionUiMode ? 54f : 0f;
-            float contentHeight = 8f + summaryHeight + entries.Count * 22f;
+            float difficultyHeight = difficultyLines.Count * 18f + (difficultyLines.Count > 0 ? 10f : 0f);
+            float contentHeight = 8f + summaryHeight + difficultyHeight + entries.Count * 22f;
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
@@ -323,6 +325,23 @@ namespace AbyssalProtocol
                 Widgets.Label(new Rect(8f, 20f, viewRect.width - 16f, 28f), AbyssalSummoningConsoleUtility.GetDominionOpsSummary(circle));
                 Text.Font = GameFont.Small;
                 y += 58f;
+            }
+
+            if (difficultyLines.Count > 0)
+            {
+                GUI.color = new Color(0.17f, 0.09f, 0.12f, 0.72f);
+                GUI.DrawTexture(new Rect(0f, y, viewRect.width, difficultyLines.Count * 18f + 6f), BaseContent.WhiteTex);
+                GUI.color = Color.white;
+                Text.Font = GameFont.Tiny;
+                for (int i = 0; i < difficultyLines.Count; i++)
+                {
+                    GUI.color = new Color(0.78f, 0.92f, 1f, 1f);
+                    Widgets.Label(new Rect(8f, y + 4f + i * 18f, viewRect.width - 16f, 18f), difficultyLines[i]);
+                }
+
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+                y += difficultyLines.Count * 18f + 10f;
             }
 
             for (int i = 0; i < entries.Count; i++)

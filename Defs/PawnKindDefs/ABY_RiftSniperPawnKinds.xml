@@ -10,13 +10,19 @@
     <canArriveManhunter>false</canArriveManhunter>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>2</contentTier>
+        <contentTier>3</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <difficultyFloor>Normal</difficultyFloor>
-        <applyRoleStatScaling>true</applyRoleStatScaling>
+        <budgetCost>450</budgetCost>
+        <selectionWeight>0.68</selectionWeight>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>choir_escort</li>
+          <li>dominion_wave</li>
+        </encounterPools>
       </li>
     </modExtensions>
+
     <lifeStages>
       <li>
         <bodyGraphicData>

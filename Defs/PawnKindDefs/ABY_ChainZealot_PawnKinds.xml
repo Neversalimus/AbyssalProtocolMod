@@ -12,10 +12,17 @@
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>2</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
         <role>elite</role>
-        <difficultyFloor>Normal</difficultyFloor>
-        <applyRoleStatScaling>true</applyRoleStatScaling>
+        <budgetCost>280</budgetCost>
+        <selectionWeight>0.90</selectionWeight>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>unstable_breach_portal</li>
+          <li>ember_hunt_pack</li>
+          <li>choir_escort</li>
+          <li>dominion_wave</li>
+        </encounterPools>
       </li>
     </modExtensions>
 

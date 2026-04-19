@@ -1915,34 +1915,65 @@ namespace AbyssalProtocol
             if (string.Equals(summonProps.ritualId, "unstable_breach", System.StringComparison.OrdinalIgnoreCase))
             {
                 pendingImpCount = Mathf.Max(1, plan.PortalImpCount);
-                pendingSupportImpCount = 0;
-                pendingSupportThrallCount = 0;
-                pendingSupportZealotCount = 0;
+                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
+                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
+                pendingRareEscortPawnKindDef = null;
+                pendingRareEscortCount = 0;
+                if (plan.SniperCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSniper");
+                    pendingRareEscortCount = plan.SniperCount;
+                }
+                else if (plan.PriestCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_NullPriest");
+                    pendingRareEscortCount = plan.PriestCount;
+                }
+
                 pendingImpSpawnIntervalTicks = Mathf.Clamp(Mathf.CeilToInt(1800f / Mathf.Max(1, pendingImpCount)), 12, pendingImpSpawnIntervalTicks);
-                pendingScaledThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(pendingImpCount * 85);
                 return;
             }
 
             if (string.Equals(summonProps.ritualId, "ember_hunt", System.StringComparison.OrdinalIgnoreCase))
             {
-                int colonists = AbyssalT1SummonScalingUtility.GetActiveColonistCount(Map);
-                int maxHounds = Mathf.Min(25, Mathf.Max(1, colonists * 3));
-                pendingImpCount = AbyssalDifficultyUtility.ScaleCountByRole(Mathf.Clamp(Rand.RangeInclusive(Mathf.Max(1, colonists), maxHounds), 1, 25), "assault", 1, 32);
-                pendingSupportImpCount = 0;
-                pendingSupportThrallCount = 0;
-                pendingSupportZealotCount = 0;
-                pendingScaledThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(pendingImpCount * 190);
+                pendingImpCount = Mathf.Max(1, plan.HoundCount);
+                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
+                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
+                pendingRareEscortPawnKindDef = null;
+                pendingRareEscortCount = 0;
+                if (plan.SniperCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSniper");
+                    pendingRareEscortCount = plan.SniperCount;
+                }
+                else if (plan.PriestCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_NullPriest");
+                    pendingRareEscortCount = plan.PriestCount;
+                }
+
                 return;
             }
 
             if (string.Equals(summonProps.ritualId, "choir_engine", System.StringComparison.OrdinalIgnoreCase))
             {
-                int colonists = AbyssalT1SummonScalingUtility.GetActiveColonistCount(Map);
-                int escortTotal = AbyssalDifficultyUtility.ScaleCountByRole(Mathf.Min(30, Mathf.Max(6, colonists * 6)), "elite", 6, 42);
-                pendingSupportImpCount = AbyssalDifficultyUtility.ScaleCountByRole(escortTotal / 2, "trash", 1, 26);
-                pendingSupportThrallCount = AbyssalDifficultyUtility.ScaleCountByRole(escortTotal / 3, "support", 1, 18);
-                pendingSupportZealotCount = Mathf.Max(0, AbyssalDifficultyUtility.ScaleCountByRole(escortTotal - (escortTotal / 2) - (escortTotal / 3), "elite", 1, 14));
-                pendingScaledThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(pendingSupportImpCount * 85 + pendingSupportThrallCount * 160 + pendingSupportZealotCount * 235);
+                pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
+                pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
+                pendingRareEscortPawnKindDef = null;
+                pendingRareEscortCount = 0;
+                if (plan.SniperCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSniper");
+                    pendingRareEscortCount = plan.SniperCount;
+                }
+                else if (plan.PriestCount > 0)
+                {
+                    pendingRareEscortPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_NullPriest");
+                    pendingRareEscortCount = plan.PriestCount;
+                }
             }
         }
 
@@ -1988,7 +2019,7 @@ namespace AbyssalProtocol
                 });
             }
 
-            if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
+                if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
             {
                 entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
                 {
@@ -2007,44 +2038,56 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>();
-            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
-            if (impKind != null && pendingSupportImpCount > 0)
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = null;
+            if (string.Equals(pendingRitualId, "choir_engine", System.StringComparison.OrdinalIgnoreCase))
             {
-                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
-                {
-                    KindDef = impKind,
-                    Count = pendingSupportImpCount
-                });
+                float supportBudget = pendingScaledThreatBudget > 0 ? pendingScaledThreatBudget : 720f;
+                AbyssalEncounterDirectorUtility.EncounterPlan directedPlan = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", supportBudget, 2);
+                entries = directedPlan.ToHostilePackEntries();
             }
 
-            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HexgunThrall");
-            if (thrallKind != null && pendingSupportThrallCount > 0)
+            if (entries == null || entries.Count <= 0)
             {
-                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
-                {
-                    KindDef = thrallKind,
-                    Count = pendingSupportThrallCount
-                });
-            }
+                entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>();
 
-            PawnKindDef zealotKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot");
-            if (zealotKind != null && pendingSupportZealotCount > 0)
-            {
-                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftImp");
+                if (impKind != null && pendingSupportImpCount > 0)
                 {
-                    KindDef = zealotKind,
-                    Count = pendingSupportZealotCount
-                });
-            }
+                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = impKind,
+                        Count = pendingSupportImpCount
+                    });
+                }
 
-            if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
-            {
-                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HexgunThrall");
+                if (thrallKind != null && pendingSupportThrallCount > 0)
                 {
-                    KindDef = pendingRareEscortPawnKindDef,
-                    Count = pendingRareEscortCount
-                });
+                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = thrallKind,
+                        Count = pendingSupportThrallCount
+                    });
+                }
+
+                PawnKindDef zealotKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot");
+                if (zealotKind != null && pendingSupportZealotCount > 0)
+                {
+                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = zealotKind,
+                        Count = pendingSupportZealotCount
+                    });
+                }
+
+                if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
+                {
+                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = pendingRareEscortPawnKindDef,
+                        Count = pendingRareEscortCount
+                    });
+                }
             }
 
             if (entries.Count <= 0)

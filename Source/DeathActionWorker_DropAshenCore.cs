@@ -1,5 +1,6 @@
 using System;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI.Group;
 
@@ -38,7 +39,9 @@ namespace AbyssalProtocol
                 Thing residue = ThingMaker.MakeThing(residueDef);
                 if (residue != null)
                 {
-                    residue.stackCount = Math.Min(residueDef.stackLimit, AbyssalDifficultyUtility.ScaleRewardRoll(MinResidueDrop, MaxResidueDrop));
+                    int residueCount = Rand.RangeInclusive(MinResidueDrop, MaxResidueDrop);
+                    residueCount = Math.Max(1, Mathf.RoundToInt(residueCount * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
+                    residue.stackCount = Math.Min(residueDef.stackLimit, residueCount);
                     if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {
                         droppedAny = true;

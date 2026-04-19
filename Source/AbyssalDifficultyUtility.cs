@@ -1,423 +1,287 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
 {
     public static class AbyssalDifficultyUtility
     {
-        private const string BossEscalationHediffDefName = "ABY_DifficultyBossEscalation";
-        private const string EliteEscalationHediffDefName = "ABY_DifficultyEliteEscalation";
-        private const string SupportEscalationHediffDefName = "ABY_DifficultySupportEscalation";
-        private const string AssaultEscalationHediffDefName = "ABY_DifficultyAssaultEscalation";
-
-        public sealed class DifficultyProfile
+        public const string NormalProfileDefName = "ABY_Difficulty_Normal";
+        private static readonly string[] RoleHediffDefs =
         {
-            public ABY_DifficultyPreset Preset;
-            public float EncounterBudgetMultiplier;
-            public float TrashCountMultiplier;
-            public float AssaultCountMultiplier;
-            public float EliteCountMultiplier;
-            public float SupportCountMultiplier;
-            public float BossCountMultiplier;
-            public float InstabilityMultiplier;
-            public float RitualRiskMultiplier;
-            public float RewardMultiplier;
-            public int DominionStageBonus;
-            public int ThreatTierBonus;
-            public float BossHediffSeverity;
-            public float EliteHediffSeverity;
-            public float SupportHediffSeverity;
-            public float AssaultHediffSeverity;
-            public string LabelKey;
-            public string LabelFallback;
-            public string DescKey;
-            public string DescFallback;
-        }
-
-        private static readonly DifficultyProfile[] Profiles =
-        {
-            new DifficultyProfile
-            {
-                Preset = ABY_DifficultyPreset.Normal,
-                EncounterBudgetMultiplier = 1.00f,
-                TrashCountMultiplier = 1.00f,
-                AssaultCountMultiplier = 1.00f,
-                EliteCountMultiplier = 1.00f,
-                SupportCountMultiplier = 1.00f,
-                BossCountMultiplier = 1.00f,
-                InstabilityMultiplier = 1.00f,
-                RitualRiskMultiplier = 1.00f,
-                RewardMultiplier = 1.00f,
-                DominionStageBonus = 0,
-                ThreatTierBonus = 0,
-                BossHediffSeverity = 0f,
-                EliteHediffSeverity = 0f,
-                SupportHediffSeverity = 0f,
-                AssaultHediffSeverity = 0f,
-                LabelKey = "ABY_Difficulty_Normal",
-                LabelFallback = "Normal",
-                DescKey = "ABY_Difficulty_Normal_Desc",
-                DescFallback = "Baseline calibrated summon pressure."
-            },
-            new DifficultyProfile
-            {
-                Preset = ABY_DifficultyPreset.Severe,
-                EncounterBudgetMultiplier = 1.12f,
-                TrashCountMultiplier = 1.05f,
-                AssaultCountMultiplier = 1.10f,
-                EliteCountMultiplier = 1.15f,
-                SupportCountMultiplier = 1.15f,
-                BossCountMultiplier = 1.00f,
-                InstabilityMultiplier = 1.12f,
-                RitualRiskMultiplier = 1.05f,
-                RewardMultiplier = 1.05f,
-                DominionStageBonus = 0,
-                ThreatTierBonus = 0,
-                BossHediffSeverity = 1f,
-                EliteHediffSeverity = 1f,
-                SupportHediffSeverity = 1f,
-                AssaultHediffSeverity = 1f,
-                LabelKey = "ABY_Difficulty_Severe",
-                LabelFallback = "Severe",
-                DescKey = "ABY_Difficulty_Severe_Desc",
-                DescFallback = "Leaner budgets harden into cleaner assault compositions and slightly harsher ritual backlash."
-            },
-            new DifficultyProfile
-            {
-                Preset = ABY_DifficultyPreset.Rupture,
-                EncounterBudgetMultiplier = 1.25f,
-                TrashCountMultiplier = 1.10f,
-                AssaultCountMultiplier = 1.18f,
-                EliteCountMultiplier = 1.30f,
-                SupportCountMultiplier = 1.30f,
-                BossCountMultiplier = 1.00f,
-                InstabilityMultiplier = 1.25f,
-                RitualRiskMultiplier = 1.10f,
-                RewardMultiplier = 1.10f,
-                DominionStageBonus = 0,
-                ThreatTierBonus = 0,
-                BossHediffSeverity = 2f,
-                EliteHediffSeverity = 2f,
-                SupportHediffSeverity = 2f,
-                AssaultHediffSeverity = 1f,
-                LabelKey = "ABY_Difficulty_Rupture",
-                LabelFallback = "Rupture",
-                DescKey = "ABY_Difficulty_Rupture_Desc",
-                DescFallback = "Escalates elite density, tempo and breach aftermath without unlocking content early."
-            },
-            new DifficultyProfile
-            {
-                Preset = ABY_DifficultyPreset.Dominion,
-                EncounterBudgetMultiplier = 1.40f,
-                TrashCountMultiplier = 1.14f,
-                AssaultCountMultiplier = 1.24f,
-                EliteCountMultiplier = 1.45f,
-                SupportCountMultiplier = 1.45f,
-                BossCountMultiplier = 1.00f,
-                InstabilityMultiplier = 1.40f,
-                RitualRiskMultiplier = 1.16f,
-                RewardMultiplier = 1.15f,
-                DominionStageBonus = 1,
-                ThreatTierBonus = 1,
-                BossHediffSeverity = 3f,
-                EliteHediffSeverity = 3f,
-                SupportHediffSeverity = 3f,
-                AssaultHediffSeverity = 2f,
-                LabelKey = "ABY_Difficulty_Dominion",
-                LabelFallback = "Dominion",
-                DescKey = "ABY_Difficulty_Dominion_Desc",
-                DescFallback = "Endgame pressure profile. Dominion incidents run one calibration step hotter and support cadres scale harder."
-            },
-            new DifficultyProfile
-            {
-                Preset = ABY_DifficultyPreset.FinalGate,
-                EncounterBudgetMultiplier = 1.58f,
-                TrashCountMultiplier = 1.18f,
-                AssaultCountMultiplier = 1.30f,
-                EliteCountMultiplier = 1.60f,
-                SupportCountMultiplier = 1.60f,
-                BossCountMultiplier = 1.00f,
-                InstabilityMultiplier = 1.60f,
-                RitualRiskMultiplier = 1.22f,
-                RewardMultiplier = 1.20f,
-                DominionStageBonus = 1,
-                ThreatTierBonus = 1,
-                BossHediffSeverity = 4f,
-                EliteHediffSeverity = 4f,
-                SupportHediffSeverity = 4f,
-                AssaultHediffSeverity = 3f,
-                LabelKey = "ABY_Difficulty_FinalGate",
-                LabelFallback = "Final Gate",
-                DescKey = "ABY_Difficulty_FinalGate_Desc",
-                DescFallback = "Apex crisis calibration. Highest composition pressure, harshest instability, no early progression skips."
-            }
+            "ABY_DifficultyScaling_Assault",
+            "ABY_DifficultyScaling_Support",
+            "ABY_DifficultyScaling_Elite",
+            "ABY_DifficultyScaling_Boss"
         };
 
-        public static ABY_DifficultyPreset CurrentPreset => AbyssalProtocolMod.Settings?.difficultyPreset ?? ABY_DifficultyPreset.Normal;
-
-        public static DifficultyProfile CurrentProfile => GetProfile(CurrentPreset);
-
-        public static DifficultyProfile GetProfile(ABY_DifficultyPreset preset)
+        public static ABY_DifficultyProfileDef GetCurrentProfile()
         {
-            int index = Mathf.Clamp((int)preset, 0, Profiles.Length - 1);
-            return Profiles[index];
-        }
+            string defName = AbyssalProtocolMod.Settings?.difficultyProfileDefName;
+            ABY_DifficultyProfileDef profile = !defName.NullOrEmpty()
+                ? DefDatabase<ABY_DifficultyProfileDef>.GetNamedSilentFail(defName)
+                : null;
 
-        public static string GetPresetLabel(ABY_DifficultyPreset preset)
-        {
-            DifficultyProfile profile = GetProfile(preset);
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback(profile.LabelKey, profile.LabelFallback);
-        }
-
-        public static string GetCurrentPresetLabel()
-        {
-            return GetPresetLabel(CurrentPreset);
-        }
-
-        public static string GetPresetDescription(ABY_DifficultyPreset preset)
-        {
-            DifficultyProfile profile = GetProfile(preset);
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback(profile.DescKey, profile.DescFallback);
-        }
-
-        public static string GetCurrentPresetDescription()
-        {
-            return GetPresetDescription(CurrentPreset);
-        }
-
-        public static string GetTelemetrySummary()
-        {
-            DifficultyProfile profile = CurrentProfile;
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_Difficulty_TelemetrySummary",
-                "Protocol: {0}  •  Encounter x{1:F2}  •  Instability x{2:F2}  •  Rewards x{3:F2}",
-                GetPresetLabel(profile.Preset),
-                profile.EncounterBudgetMultiplier,
-                profile.InstabilityMultiplier,
-                profile.RewardMultiplier);
-        }
-
-        public static int ScaleEncounterBudget(int value)
-        {
-            if (value <= 0)
+            if (profile != null)
             {
-                return 0;
+                return profile;
             }
 
-            return Mathf.Max(1, Mathf.RoundToInt(value * CurrentProfile.EncounterBudgetMultiplier));
-        }
-
-        public static int ScaleThreatTier(int tier)
-        {
-            return Mathf.Clamp(tier + CurrentProfile.ThreatTierBonus, 0, 6);
-        }
-
-        public static int ScaleDominionStageTier(int tier)
-        {
-            return Mathf.Clamp(tier + CurrentProfile.DominionStageBonus, 0, 6);
-        }
-
-        public static float ScaleInstability(float value)
-        {
-            if (value <= 0f)
+            profile = DefDatabase<ABY_DifficultyProfileDef>.GetNamedSilentFail(NormalProfileDefName);
+            if (profile != null)
             {
-                return 0f;
+                return profile;
             }
 
-            return value * CurrentProfile.InstabilityMultiplier;
+            List<ABY_DifficultyProfileDef> allDefs = DefDatabase<ABY_DifficultyProfileDef>.AllDefsListForReading;
+            return allDefs != null && allDefs.Count > 0 ? allDefs[0] : null;
         }
 
-        public static float ScaleRisk(float value)
+        public static IEnumerable<ABY_DifficultyProfileDef> GetOrderedProfiles()
         {
-            if (value <= 0f)
+            List<ABY_DifficultyProfileDef> defs = new List<ABY_DifficultyProfileDef>(DefDatabase<ABY_DifficultyProfileDef>.AllDefsListForReading);
+            defs.Sort(delegate (ABY_DifficultyProfileDef a, ABY_DifficultyProfileDef b)
             {
-                return 0f;
-            }
+                if (a == null && b == null)
+                {
+                    return 0;
+                }
 
-            return Mathf.Clamp01(value * CurrentProfile.RitualRiskMultiplier);
+                if (a == null)
+                {
+                    return 1;
+                }
+
+                if (b == null)
+                {
+                    return -1;
+                }
+
+                int orderCompare = a.order.CompareTo(b.order);
+                return orderCompare != 0 ? orderCompare : string.Compare(a.defName, b.defName, StringComparison.Ordinal);
+            });
+            return defs;
         }
 
-        public static int ScaleRewardCount(int count)
+        public static int GetCurrentProfileOrder()
         {
-            if (count <= 0)
-            {
-                return 0;
-            }
-
-            return Mathf.Max(1, Mathf.RoundToInt(count * CurrentProfile.RewardMultiplier));
+            return GetProfileOrder(GetCurrentProfile());
         }
 
-        public static int ScaleRewardRoll(int min, int max)
+        public static int GetProfileOrder(ABY_DifficultyProfileDef profile)
         {
-            if (max <= 0)
-            {
-                return 0;
-            }
-
-            int rolled = Rand.RangeInclusive(Mathf.Max(0, min), Mathf.Max(min, max));
-            return Mathf.Clamp(ScaleRewardCount(rolled), 0, max * 3);
+            return profile != null ? profile.order : 0;
         }
 
-        public static int ScaleCountByRole(int count, string role, int min = 0, int? max = null)
+        public static bool IsProfileAllowedForCurrentSave(ABY_DifficultyProfileDef profile)
         {
-            if (count <= 0)
+            if (profile == null)
             {
-                return 0;
+                return false;
             }
 
-            float multiplier = GetRoleCountMultiplier(role);
-            int scaled = Mathf.Max(min, Mathf.RoundToInt(count * multiplier));
-            if (max.HasValue)
-            {
-                scaled = Mathf.Clamp(scaled, min, max.Value);
-            }
-
-            return scaled;
-        }
-
-        public static float GetRoleCountMultiplier(string role)
-        {
-            DifficultyProfile profile = CurrentProfile;
-            switch (NormalizeRole(role))
-            {
-                case "trash":
-                    return profile.TrashCountMultiplier;
-                case "support":
-                    return profile.SupportCountMultiplier;
-                case "elite":
-                    return profile.EliteCountMultiplier;
-                case "boss":
-                case "crisis":
-                    return profile.BossCountMultiplier;
-                default:
-                    return profile.AssaultCountMultiplier;
-            }
-        }
-
-        public static bool CanSpawnKindNow(PawnKindDef kindDef)
-        {
-            DefModExtension_AbyssalDifficultyScaling ext = kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
-            if (ext == null)
+            if (!AbyssalProtocolMod.Settings.lockDifficultyAfterFirstBoss)
             {
                 return true;
             }
 
-            return CurrentPreset >= ext.difficultyFloor;
+            if (!HasRecordedFirstBossKill())
+            {
+                return true;
+            }
+
+            ABY_DifficultyProfileDef current = GetCurrentProfile();
+            if (current == null)
+            {
+                return true;
+            }
+
+            return string.Equals(current.defName, profile.defName, StringComparison.OrdinalIgnoreCase);
         }
 
-        public static void ApplyPawnDifficulty(Pawn pawn, PawnKindDef explicitKindDef = null)
+        public static bool HasRecordedFirstBossKill()
         {
-            if (pawn == null || pawn.Dead)
+            return Current.Game != null && Current.Game.GetComponent<ABY_FirstBossProgressionGameComponent>()?.FirstBossKillRecorded == true;
+        }
+
+        public static bool CanUseByDifficulty(DefModExtension_AbyssalDifficultyScaling extension, ABY_DifficultyProfileDef profile)
+        {
+            if (extension == null)
             {
-                return;
+                return false;
             }
 
-            PawnKindDef kindDef = explicitKindDef ?? pawn.kindDef;
-            DefModExtension_AbyssalDifficultyScaling ext = kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
-            if (ext == null || !ext.applyRoleStatScaling)
+            return GetProfileOrder(profile ?? GetCurrentProfile()) >= GetProfileOrder(extension.difficultyFloorDefName);
+        }
+
+        public static int GetProfileOrder(string defName)
+        {
+            if (defName.NullOrEmpty())
             {
-                return;
+                return 0;
             }
 
-            string role = NormalizeRole(ext.role);
-            float severity = GetSeverityForRole(role);
-            if (severity <= 0.001f)
-            {
-                RemoveScalingHediffIfPresent(pawn, BossEscalationHediffDefName);
-                RemoveScalingHediffIfPresent(pawn, EliteEscalationHediffDefName);
-                RemoveScalingHediffIfPresent(pawn, SupportEscalationHediffDefName);
-                RemoveScalingHediffIfPresent(pawn, AssaultEscalationHediffDefName);
-                return;
-            }
+            ABY_DifficultyProfileDef profile = DefDatabase<ABY_DifficultyProfileDef>.GetNamedSilentFail(defName);
+            return profile != null ? profile.order : 0;
+        }
 
-            switch (role)
+        public static float GetEncounterBudgetMultiplier()
+        {
+            return Math.Max(0.25f, GetCurrentProfile()?.encounterBudgetMultiplier ?? 1f);
+        }
+
+        public static float GetInstabilityMultiplier()
+        {
+            return Math.Max(0.25f, GetCurrentProfile()?.instabilityMultiplier ?? 1f);
+        }
+
+        public static float GetResidueRewardMultiplier()
+        {
+            return Math.Max(0.10f, GetCurrentProfile()?.residueRewardMultiplier ?? 1f);
+        }
+
+        public static float GetBonusLootMultiplier()
+        {
+            return Math.Max(0.10f, GetCurrentProfile()?.bonusLootMultiplier ?? 1f);
+        }
+
+        public static float GetDominionHostileBudgetMultiplier()
+        {
+            return Math.Max(0.25f, GetCurrentProfile()?.dominionHostileBudgetMultiplier ?? 1f);
+        }
+
+        public static float GetDominionPortalBudgetMultiplier()
+        {
+            return Math.Max(0.25f, GetCurrentProfile()?.dominionPortalBudgetMultiplier ?? 1f);
+        }
+
+        public static float GetRoleWeightMultiplier(string role)
+        {
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            switch ((role ?? string.Empty).ToLowerInvariant())
             {
-                case "boss":
-                case "crisis":
-                    ApplyScalingHediff(pawn, BossEscalationHediffDefName, severity);
-                    break;
-                case "elite":
-                    ApplyScalingHediff(pawn, EliteEscalationHediffDefName, severity);
-                    break;
                 case "support":
-                    ApplyScalingHediff(pawn, SupportEscalationHediffDefName, severity);
-                    break;
-                default:
-                    ApplyScalingHediff(pawn, AssaultEscalationHediffDefName, severity);
-                    break;
-            }
-        }
-
-        private static float GetSeverityForRole(string role)
-        {
-            DifficultyProfile profile = CurrentProfile;
-            switch (NormalizeRole(role))
-            {
-                case "boss":
-                case "crisis":
-                    return profile.BossHediffSeverity;
+                    return Math.Max(0.10f, profile?.supportRoleWeightMultiplier ?? 1f);
                 case "elite":
-                    return profile.EliteHediffSeverity;
-                case "support":
-                    return profile.SupportHediffSeverity;
+                    return Math.Max(0.10f, profile?.eliteRoleWeightMultiplier ?? 1f);
+                case "boss":
+                    return Math.Max(0.10f, profile?.bossRoleWeightMultiplier ?? 1f);
                 default:
-                    return profile.AssaultHediffSeverity;
+                    return 1f;
             }
         }
 
-        private static void ApplyScalingHediff(Pawn pawn, string hediffDefName, float severity)
+        public static int GetAllowedContentTier(int baseTier)
         {
-            if (pawn?.health == null)
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            return Math.Max(1, baseTier + Math.Max(0, profile != null ? profile.extraContentTier : 0));
+        }
+
+        public static string GetCurrentDifficultyLabel()
+        {
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            return profile != null ? profile.ResolveLabel() : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyLabel_Default", "Normal");
+        }
+
+        public static string GetCurrentDifficultyDescription()
+        {
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            return profile != null ? profile.ResolveDescription() : string.Empty;
+        }
+
+        public static List<string> GetDiagnosticsLines()
+        {
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            List<string> lines = new List<string>();
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Profile", "Protocol: {0}", GetCurrentDifficultyLabel()));
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Budget", "Encounter budget: x{0}", GetEncounterBudgetMultiplier().ToString("F2")));
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Instability", "Instability pressure: x{0}", GetInstabilityMultiplier().ToString("F2")));
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Reward", "Residue payout: x{0}", GetResidueRewardMultiplier().ToString("F2")));
+            if (profile != null && profile.extraContentTier > 0)
+            {
+                lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_TierLift", "Escalation lift: +{0} content tier", profile.extraContentTier));
+            }
+
+            if (AbyssalProtocolMod.Settings.lockDifficultyAfterFirstBoss)
+            {
+                lines.Add(HasRecordedFirstBossKill()
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Locked", "Protocol changes are locked after the first boss kill on this save.")
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Armed", "Protocol lock will engage after the first boss kill on this save."));
+            }
+
+            return lines;
+        }
+
+        public static void ApplyDifficultyScaling(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null)
             {
                 return;
             }
 
-            RemoveScalingHediffIfPresent(pawn, BossEscalationHediffDefName, hediffDefName);
-            RemoveScalingHediffIfPresent(pawn, EliteEscalationHediffDefName, hediffDefName);
-            RemoveScalingHediffIfPresent(pawn, SupportEscalationHediffDefName, hediffDefName);
-            RemoveScalingHediffIfPresent(pawn, AssaultEscalationHediffDefName, hediffDefName);
-
-            HediffDef def = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
-            if (def == null)
+            DefModExtension_AbyssalDifficultyScaling extension = pawn.kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+            if (extension == null)
             {
                 return;
             }
 
-            Hediff hediff = pawn.health.hediffSet?.GetFirstHediffOfDef(def);
-            if (hediff == null)
+            ABY_DifficultyProfileDef profile = GetCurrentProfile();
+            if (!CanUseByDifficulty(extension, profile))
             {
-                hediff = HediffMaker.MakeHediff(def, pawn);
-                if (hediff == null)
+                return;
+            }
+
+            string hediffDefName = GetRoleHediffDefName(extension.role);
+            if (hediffDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
+            if (hediffDef == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < RoleHediffDefs.Length; i++)
+            {
+                HediffDef existingDef = DefDatabase<HediffDef>.GetNamedSilentFail(RoleHediffDefs[i]);
+                if (existingDef == null || existingDef == hediffDef)
                 {
-                    return;
+                    continue;
                 }
 
-                pawn.health.AddHediff(hediff);
+                Hediff existingOther = pawn.health.hediffSet.GetFirstHediffOfDef(existingDef);
+                if (existingOther != null)
+                {
+                    pawn.health.RemoveHediff(existingOther);
+                }
             }
 
-            hediff.Severity = severity;
+            Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+            if (existing == null)
+            {
+                existing = HediffMaker.MakeHediff(hediffDef, pawn);
+                pawn.health.AddHediff(existing);
+            }
+
+            existing.Severity = Math.Max(0, GetProfileOrder(profile));
         }
 
-        private static void RemoveScalingHediffIfPresent(Pawn pawn, string hediffDefName, string exceptDefName = null)
+        private static string GetRoleHediffDefName(string role)
         {
-            if (pawn?.health?.hediffSet == null || hediffDefName.NullOrEmpty() || hediffDefName == exceptDefName)
+            switch ((role ?? string.Empty).ToLowerInvariant())
             {
-                return;
+                case "support":
+                    return "ABY_DifficultyScaling_Support";
+                case "elite":
+                    return "ABY_DifficultyScaling_Elite";
+                case "boss":
+                    return "ABY_DifficultyScaling_Boss";
+                default:
+                    return "ABY_DifficultyScaling_Assault";
             }
-
-            HediffDef def = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
-            Hediff existing = def != null ? pawn.health.hediffSet.GetFirstHediffOfDef(def) : null;
-            if (existing != null)
-            {
-                pawn.health.RemoveHediff(existing);
-            }
-        }
-
-        private static string NormalizeRole(string role)
-        {
-            return role.NullOrEmpty() ? "assault" : role.Trim().ToLowerInvariant();
         }
     }
 }

@@ -9,15 +9,6 @@
     <combatPower>650</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-    <modExtensions>
-      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>3</contentTier>
-        <role>boss</role>
-        <difficultyFloor>Normal</difficultyFloor>
-        <applyRoleStatScaling>true</applyRoleStatScaling>
-        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
-      </li>
-    </modExtensions>
     <apparelMoney Inherit="False">
       <min>-10</min>
       <max>-10</max>
@@ -26,6 +17,20 @@
       <min>0</min>
       <max>0</max>
     </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>3</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
+        <role>boss</role>
+        <budgetCost>650</budgetCost>
+        <selectionWeight>1.00</selectionWeight>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>boss_main</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+
     <lifeStages>
       <li>
         <bodyGraphicData>

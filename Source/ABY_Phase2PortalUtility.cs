@@ -442,11 +442,11 @@ namespace AbyssalProtocol
             pawn = PawnGenerator.GeneratePawn(request);
             if (pawn != null)
             {
-                AbyssalDifficultyUtility.ApplyPawnDifficulty(pawn, kindDef);
-                return true;
+                AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
+                AbyssalDifficultyUtility.ApplyDifficultyScaling(pawn);
             }
 
-            return false;
+            return pawn != null;
         }
 
         public static void GiveAssaultLord(Pawn pawn)

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <AbyssalProtocol.ABY_DifficultyProfileDef>
+    <defName>ABY_Difficulty_Normal</defName>
+    <label>Normal</label>
+    <description>Baseline Abyssal protocol. Uses the current intended summon pressure without softening the mod.</description>
+    <labelKey>ABY_DifficultyProfile_Normal_Label</labelKey>
+    <descriptionKey>ABY_DifficultyProfile_Normal_Desc</descriptionKey>
+    <order>0</order>
+    <encounterBudgetMultiplier>1.00</encounterBudgetMultiplier>
+    <instabilityMultiplier>1.00</instabilityMultiplier>
+    <residueRewardMultiplier>1.00</residueRewardMultiplier>
+    <bonusLootMultiplier>1.00</bonusLootMultiplier>
+    <dominionHostileBudgetMultiplier>1.00</dominionHostileBudgetMultiplier>
+    <dominionPortalBudgetMultiplier>1.00</dominionPortalBudgetMultiplier>
+    <eliteRoleWeightMultiplier>1.00</eliteRoleWeightMultiplier>
+    <supportRoleWeightMultiplier>1.00</supportRoleWeightMultiplier>
+    <bossRoleWeightMultiplier>1.00</bossRoleWeightMultiplier>
+    <extraContentTier>0</extraContentTier>
+  </AbyssalProtocol.ABY_DifficultyProfileDef>
+
+  <AbyssalProtocol.ABY_DifficultyProfileDef>
+    <defName>ABY_Difficulty_Severe</defName>
+    <label>Severe</label>
+    <description>Pushes the circle into harder mixed-pressure breaches. Support and elite pieces begin appearing earlier, but progression gates stay intact.</description>
+    <labelKey>ABY_DifficultyProfile_Severe_Label</labelKey>
+    <descriptionKey>ABY_DifficultyProfile_Severe_Desc</descriptionKey>
+    <order>1</order>
+    <encounterBudgetMultiplier>1.12</encounterBudgetMultiplier>
+    <instabilityMultiplier>1.12</instabilityMultiplier>
+    <residueRewardMultiplier>1.05</residueRewardMultiplier>
+    <bonusLootMultiplier>1.05</bonusLootMultiplier>
+    <dominionHostileBudgetMultiplier>1.08</dominionHostileBudgetMultiplier>
+    <dominionPortalBudgetMultiplier>1.00</dominionPortalBudgetMultiplier>
+    <eliteRoleWeightMultiplier>1.15</eliteRoleWeightMultiplier>
+    <supportRoleWeightMultiplier>1.15</supportRoleWeightMultiplier>
+    <bossRoleWeightMultiplier>1.05</bossRoleWeightMultiplier>
+    <extraContentTier>0</extraContentTier>
+  </AbyssalProtocol.ABY_DifficultyProfileDef>
+
+  <AbyssalProtocol.ABY_DifficultyProfileDef>
+    <defName>ABY_Difficulty_Rupture</defName>
+    <label>Rupture</label>
+    <description>Escalates breach composition and cadence. High-value support pieces enter the rotation more often and instability starts punishing overuse faster.</description>
+    <labelKey>ABY_DifficultyProfile_Rupture_Label</labelKey>
+    <descriptionKey>ABY_DifficultyProfile_Rupture_Desc</descriptionKey>
+    <order>2</order>
+    <encounterBudgetMultiplier>1.25</encounterBudgetMultiplier>
+    <instabilityMultiplier>1.25</instabilityMultiplier>
+    <residueRewardMultiplier>1.10</residueRewardMultiplier>
+    <bonusLootMultiplier>1.10</bonusLootMultiplier>
+    <dominionHostileBudgetMultiplier>1.15</dominionHostileBudgetMultiplier>
+    <dominionPortalBudgetMultiplier>1.05</dominionPortalBudgetMultiplier>
+    <eliteRoleWeightMultiplier>1.30</eliteRoleWeightMultiplier>
+    <supportRoleWeightMultiplier>1.30</supportRoleWeightMultiplier>
+    <bossRoleWeightMultiplier>1.10</bossRoleWeightMultiplier>
+    <extraContentTier>0</extraContentTier>
+  </AbyssalProtocol.ABY_DifficultyProfileDef>
+
+  <AbyssalProtocol.ABY_DifficultyProfileDef>
+    <defName>ABY_Difficulty_Dominion</defName>
+    <label>Dominion</label>
+    <description>Hard endgame protocol. Dominion pressure rises, escort mixes sharpen, and the system is allowed to reach one tier deeper when legal content exists.</description>
+    <labelKey>ABY_DifficultyProfile_Dominion_Label</labelKey>
+    <descriptionKey>ABY_DifficultyProfile_Dominion_Desc</descriptionKey>
+    <order>3</order>
+    <encounterBudgetMultiplier>1.40</encounterBudgetMultiplier>
+    <instabilityMultiplier>1.40</instabilityMultiplier>
+    <residueRewardMultiplier>1.15</residueRewardMultiplier>
+    <bonusLootMultiplier>1.15</bonusLootMultiplier>
+    <dominionHostileBudgetMultiplier>1.25</dominionHostileBudgetMultiplier>
+    <dominionPortalBudgetMultiplier>1.15</dominionPortalBudgetMultiplier>
+    <eliteRoleWeightMultiplier>1.45</eliteRoleWeightMultiplier>
+    <supportRoleWeightMultiplier>1.45</supportRoleWeightMultiplier>
+    <bossRoleWeightMultiplier>1.16</bossRoleWeightMultiplier>
+    <extraContentTier>1</extraContentTier>
+  </AbyssalProtocol.ABY_DifficultyProfileDef>
+
+  <AbyssalProtocol.ABY_DifficultyProfileDef>
+    <defName>ABY_Difficulty_FinalGate</defName>
+    <label>Final Gate</label>
+    <description>Apex protocol. The circle leans into deep escalation, future high-tier content is allowed in sooner when tagged for it, and long fights become harsher to stabilize.</description>
+    <labelKey>ABY_DifficultyProfile_FinalGate_Label</labelKey>
+    <descriptionKey>ABY_DifficultyProfile_FinalGate_Desc</descriptionKey>
+    <order>4</order>
+    <encounterBudgetMultiplier>1.58</encounterBudgetMultiplier>
+    <instabilityMultiplier>1.60</instabilityMultiplier>
+    <residueRewardMultiplier>1.20</residueRewardMultiplier>
+    <bonusLootMultiplier>1.20</bonusLootMultiplier>
+    <dominionHostileBudgetMultiplier>1.40</dominionHostileBudgetMultiplier>
+    <dominionPortalBudgetMultiplier>1.25</dominionPortalBudgetMultiplier>
+    <eliteRoleWeightMultiplier>1.60</eliteRoleWeightMultiplier>
+    <supportRoleWeightMultiplier>1.60</supportRoleWeightMultiplier>
+    <bossRoleWeightMultiplier>1.22</bossRoleWeightMultiplier>
+    <extraContentTier>1</extraContentTier>
+  </AbyssalProtocol.ABY_DifficultyProfileDef>
+
+</Defs>

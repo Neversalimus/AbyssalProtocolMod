@@ -11,13 +11,18 @@
     <canArriveManhunter>false</canArriveManhunter>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>4</contentTier>
+        <contentTier>5</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>boss</role>
-        <difficultyFloor>Normal</difficultyFloor>
-        <applyRoleStatScaling>true</applyRoleStatScaling>
+        <budgetCost>3200</budgetCost>
+        <selectionWeight>1.00</selectionWeight>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>boss_main</li>
+        </encounterPools>
       </li>
     </modExtensions>
+
     <lifeStages>
       <li>
         <bodyGraphicData>
