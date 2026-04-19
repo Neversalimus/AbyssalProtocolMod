@@ -339,24 +339,49 @@ namespace AbyssalProtocol
 
         private static IntVec3 FindLocalEscortSpawnCell(IntVec3 root, Map map, List<Pawn> alreadySpawned)
         {
-            int maxCells = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(7.9f));
-            for (int i = 0; i < maxCells; i++)
+            if (map == null)
             {
-                IntVec3 candidate = root + GenRadial.RadialPattern[i];
-                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
-                {
-                    continue;
-                }
-
-                if (CellHasPawn(candidate, map) || CellOccupiedBySpawnList(candidate, alreadySpawned))
-                {
-                    continue;
-                }
-
-                return candidate;
+                return root;
             }
 
-            return FindSpawnCellNear(root, map, alreadySpawned != null ? alreadySpawned.Count : 0);
+            float[] searchRadii = { 5.9f, 8.9f, 12.9f, 16.9f };
+            for (int radiusIndex = 0; radiusIndex < searchRadii.Length; radiusIndex++)
+            {
+                int maxCells = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(searchRadii[radiusIndex]));
+                for (int i = 0; i < maxCells; i++)
+                {
+                    IntVec3 candidate = root + GenRadial.RadialPattern[i];
+                    if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
+                    {
+                        continue;
+                    }
+
+                    if (CellHasPawn(candidate, map) || CellOccupiedBySpawnList(candidate, alreadySpawned))
+                    {
+                        continue;
+                    }
+
+                    return candidate;
+                }
+            }
+
+            IntVec3 alternateRoot = root;
+            if (AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out IntVec3 arrivalCell) && arrivalCell.IsValid)
+            {
+                alternateRoot = arrivalCell;
+            }
+
+            if (CellFinder.TryFindRandomCellNear(
+                alternateRoot,
+                map,
+                12,
+                cell => cell.InBounds(map) && cell.Standable(map) && !cell.Fogged(map) && !CellHasPawn(cell, map) && !CellOccupiedBySpawnList(cell, alreadySpawned),
+                out IntVec3 result))
+            {
+                return result;
+            }
+
+            return FindSpawnCellNear(alternateRoot, map, alreadySpawned != null ? alreadySpawned.Count : 0);
         }
 
         private static bool CellOccupiedBySpawnList(IntVec3 cell, List<Pawn> alreadySpawned)
