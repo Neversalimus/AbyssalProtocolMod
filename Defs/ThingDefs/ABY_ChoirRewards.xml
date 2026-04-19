@@ -194,6 +194,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_CanticleDriver</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,0.48)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>

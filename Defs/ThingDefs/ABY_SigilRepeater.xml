@@ -9,6 +9,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_SigilRepeater</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.20,0.59)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>

@@ -10,6 +10,7 @@
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/PlasmaRifle_UHT</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,0.47)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>

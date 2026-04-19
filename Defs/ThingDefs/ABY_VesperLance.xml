@@ -12,6 +12,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_VesperLance</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.46,0.40)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>

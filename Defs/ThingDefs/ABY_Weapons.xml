@@ -9,6 +9,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_RiftCarbine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,0.47)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
@@ -72,6 +73,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_RiftBlade</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.96,0.96)</drawSize>
     </graphicData>
 
     <recipeMaker>

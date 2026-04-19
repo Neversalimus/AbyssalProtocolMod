@@ -10,6 +10,7 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_AshenScattergun</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,0.35)</drawSize>
     </graphicData>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
