@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Defs>
-  <ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenLiverLattice</defName>
     <label>ashen liver lattice</label>
     <description>A furnace-cooled hepatic lattice woven around a disciplined ash core. It reinforces filtration and immune response, but runs the host slightly hotter than baseline flesh.</description>
@@ -31,7 +31,7 @@
       </li>
     </modExtensions>
   </ThingDef>
-  <ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CinderMandibleSeal</defName>
     <label>cinder mandible seal</label>
     <description>An infernal jaw brace and pain-damping seal cast around a stabilized ash core. It hardens battlefield discipline and close-quarters accuracy, but leaves the wearer visibly and socially unnatural.</description>
@@ -62,7 +62,7 @@
       </li>
     </modExtensions>
   </ThingDef>
-  <ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_EmberLungArray</defName>
     <label>ember lung array</label>
     <description>A paired infernal respirator grown around an ash core and heat-sunk through abyssal alloy. It improves breathing and field tempo without relying on unstable hunger-side stat hooks.</description>
@@ -93,7 +93,7 @@
       </li>
     </modExtensions>
   </ThingDef>
-  <ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenAnchorNode</defName>
     <label>ashen anchor node</label>
     <description>A restrained metacognitive anchor etched around an ash core and tuned for long-term abyssal cognition. It does not replace the brain; it nests against it as an auxiliary node, improving clarity, learning, and research throughput at the cost of deeper fatigue.</description>

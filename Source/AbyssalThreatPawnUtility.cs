@@ -22,6 +22,7 @@ namespace AbyssalProtocol
 
             CompProperties_AbyssalPawnController resolvedProps = controllerProps ?? GetControllerProps(pawn);
             RemoveSpawnDiseases(pawn);
+            RemoveSpawnPermanentDamage(pawn);
             EnsureLoadout(pawn, resolvedProps);
             EnsureCombatSkills(pawn, resolvedProps);
         }
@@ -546,6 +547,47 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private static void RemoveSpawnPermanentDamage(Pawn pawn)
+        {
+            if (pawn?.health?.hediffSet?.hediffs == null)
+            {
+                return;
+            }
+
+            List<Hediff> toRemove = null;
+            List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
+            for (int i = 0; i < hediffs.Count; i++)
+            {
+                Hediff hediff = hediffs[i];
+                if (!(hediff is Hediff_Injury injury))
+                {
+                    continue;
+                }
+
+                if (!injury.IsPermanent())
+                {
+                    continue;
+                }
+
+                if (toRemove == null)
+                {
+                    toRemove = new List<Hediff>();
+                }
+
+                toRemove.Add(hediff);
+            }
+
+            if (toRemove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < toRemove.Count; i++)
+            {
+                pawn.health.RemoveHediff(toRemove[i]);
+            }
         }
 
         private static void EnsureLoadout(Pawn pawn, CompProperties_AbyssalPawnController controllerProps)

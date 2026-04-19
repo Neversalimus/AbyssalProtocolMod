@@ -232,6 +232,33 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (!spawned)
+            {
+                spawned = TrySpawnEscortPack(
+                    map,
+                    faction,
+                    ritualId,
+                    bossPawn.PositionHeld,
+                    fallbackBudget,
+                    packLabel,
+                    out IntVec3 broaderArrivalCell,
+                    out string broaderFailReason,
+                    forcedPackageDefName,
+                    reinforcementMode,
+                    allowFollowupScheduling);
+
+                if (spawned)
+                {
+                    failReason = null;
+                    return true;
+                }
+
+                if (!broaderFailReason.NullOrEmpty())
+                {
+                    failReason = broaderFailReason;
+                }
+            }
+
             if (spawned)
             {
                 failReason = null;

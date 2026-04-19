@@ -265,7 +265,88 @@ namespace AbyssalProtocol
                 return hediffDescription;
             }
 
+            string recipeDescription = ResolveImplantRecipeDescription(implantThingDef, implantHediff);
+            if (!recipeDescription.NullOrEmpty())
+            {
+                return recipeDescription;
+            }
+
+            return BuildFallbackImplantSummary(implantThingDef, implantHediff);
+        }
+
+        private static string ResolveImplantRecipeDescription(ThingDef implantThingDef, HediffDef implantHediff)
+        {
+            if (implantThingDef == null)
+            {
+                return null;
+            }
+
+            List<RecipeDef> allRecipes = DefDatabase<RecipeDef>.AllDefsListForReading;
+            for (int i = 0; i < allRecipes.Count; i++)
+            {
+                RecipeDef recipe = allRecipes[i];
+                if (recipe == null)
+                {
+                    continue;
+                }
+
+                if (RecipeUsesImplantThing(recipe, implantThingDef) || (implantHediff != null && recipe.addsHediff == implantHediff))
+                {
+                    if (!recipe.description.NullOrEmpty())
+                    {
+                        return recipe.description;
+                    }
+                }
+            }
+
             return null;
+        }
+
+        private static bool RecipeUsesImplantThing(RecipeDef recipe, ThingDef implantThingDef)
+        {
+            if (recipe == null || implantThingDef == null)
+            {
+                return false;
+            }
+
+            ThingFilter fixedFilter = recipe.fixedIngredientFilter;
+            if (fixedFilter != null && fixedFilter.Allows(implantThingDef))
+            {
+                return true;
+            }
+
+            List<IngredientCount> ingredients = recipe.ingredients;
+            if (ingredients == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < ingredients.Count; i++)
+            {
+                ThingFilter ingredientFilter = ingredients[i]?.filter;
+                if (ingredientFilter != null && ingredientFilter.Allows(implantThingDef))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string BuildFallbackImplantSummary(ThingDef implantThingDef, HediffDef implantHediff)
+        {
+            string label = implantThingDef?.label ?? implantHediff?.label;
+            if (label.NullOrEmpty())
+            {
+                return null;
+            }
+
+            if (implantHediff?.addedPartProps != null)
+            {
+                return TranslateOrFallback("ABY_ImplantInfo_FallbackSummary", "A specialized abyssal implant that permanently alters the host through {0} integration.", label);
+            }
+
+            return TranslateOrFallback("ABY_ImplantInfo_FallbackSummaryGeneric", "A specialized abyssal implant built for disciplined host integration.");
         }
 
 

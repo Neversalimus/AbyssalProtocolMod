@@ -15,6 +15,8 @@ namespace AbyssalProtocol
         private const int AttackModePrimary = 1;
         private const int AttackModeBarrage = 2;
 
+        private const int PreferredTargetLockTicks = 90;
+
         private int nextSearchTick;
         private int nextPrimaryReadyTick;
         private int nextBarrageReadyTick;
@@ -24,6 +26,9 @@ namespace AbyssalProtocol
         private int currentAttackMode;
         private Thing currentTarget;
         private IntVec3 currentTargetCell = IntVec3.Invalid;
+        private Thing preferredTarget;
+        private IntVec3 preferredTargetCell = IntVec3.Invalid;
+        private int preferredTargetUntilTick = -1;
 
         private float primaryCooldownFactor = 1f;
         private float barrageCooldownFactor = 1f;
@@ -46,6 +51,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref currentAttackMode, "currentAttackMode", 0);
             Scribe_Values.Look(ref currentTargetCell, "currentTargetCell");
             Scribe_References.Look(ref currentTarget, "currentTarget");
+            Scribe_Values.Look(ref preferredTargetCell, "preferredTargetCell");
+            Scribe_References.Look(ref preferredTarget, "preferredTarget");
+            Scribe_Values.Look(ref preferredTargetUntilTick, "preferredTargetUntilTick", -1);
             Scribe_Values.Look(ref primaryCooldownFactor, "primaryCooldownFactor", 1f);
             Scribe_Values.Look(ref barrageCooldownFactor, "barrageCooldownFactor", 1f);
             Scribe_Values.Look(ref warmupFactor, "warmupFactor", 1f);
@@ -131,7 +139,7 @@ namespace AbyssalProtocol
             }
 
             nextSearchTick = ticksGame + Math.Max(5, Props.scanIntervalTicks);
-            Thing target = FindBestTargetThing(pawn);
+            Thing target = FindBestTargetThing(pawn, ticksGame);
             if (target == null)
             {
                 if (TryAdvanceTowardDistantThreat(pawn))
@@ -146,6 +154,11 @@ namespace AbyssalProtocol
             int attackMode = ResolveAttackMode(pawn, target, ticksGame);
             if (attackMode == AttackModeNone)
             {
+                if (TryAdvanceTowardDistantThreat(pawn))
+                {
+                    return;
+                }
+
                 TryForceAdjacentBuildingBash(pawn);
                 return;
             }
@@ -153,6 +166,7 @@ namespace AbyssalProtocol
             currentAttackMode = attackMode;
             currentTarget = target;
             currentTargetCell = target.PositionHeld;
+            RememberPreferredTarget(target, ticksGame);
             warmupCompleteTick = ticksGame + GetWarmupTicksForCurrentMode();
             nextBurstShotTick = -1;
             burstShotsRemaining = 0;
@@ -220,11 +234,16 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private Thing FindBestTargetThing(Pawn pawn)
+        private Thing FindBestTargetThing(Pawn pawn, int ticksGame)
         {
             if (pawn == null)
             {
                 return null;
+            }
+
+            if (TryGetPreferredTarget(pawn, ticksGame, out Thing retainedTarget))
+            {
+                return retainedTarget;
             }
 
             Pawn pawnTarget = AbyssalThreatPawnUtility.FindBestTarget(
@@ -384,6 +403,11 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (TryGetPreferredAdvanceTarget(pawn, out Thing preferredAdvanceTarget))
+            {
+                return preferredAdvanceTarget;
+            }
+
             if (bestPawn != null)
             {
                 return bestPawn;
@@ -519,6 +543,68 @@ namespace AbyssalProtocol
             }
 
             return destination.IsValid;
+        }
+
+        private bool TryGetPreferredTarget(Pawn pawn, int ticksGame, out Thing target)
+        {
+            target = null;
+            if (pawn?.Map == null || preferredTarget == null || ticksGame > preferredTargetUntilTick)
+            {
+                return false;
+            }
+
+            if (!preferredTarget.Spawned || preferredTarget.Destroyed || preferredTarget.Map != pawn.Map)
+            {
+                return false;
+            }
+
+            if (!AbyssalThreatPawnUtility.CanFireAt(pawn, preferredTarget))
+            {
+                return false;
+            }
+
+            IntVec3 targetCell = preferredTarget.PositionHeld;
+            if (!targetCell.IsValid || pawn.Position.DistanceTo(targetCell) > Props.range)
+            {
+                return false;
+            }
+
+            target = preferredTarget;
+            return true;
+        }
+
+        private bool TryGetPreferredAdvanceTarget(Pawn pawn, out Thing target)
+        {
+            target = null;
+            if (pawn?.Map == null || preferredTarget == null)
+            {
+                return false;
+            }
+
+            if (!preferredTarget.Spawned || preferredTarget.Destroyed || preferredTarget.Map != pawn.Map)
+            {
+                return false;
+            }
+
+            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, preferredTarget))
+            {
+                return false;
+            }
+
+            target = preferredTarget;
+            return true;
+        }
+
+        private void RememberPreferredTarget(Thing target, int ticksGame)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            preferredTarget = target;
+            preferredTargetCell = target.PositionHeld;
+            preferredTargetUntilTick = ticksGame + PreferredTargetLockTicks;
         }
 
         private static bool IsTurretLike(Building building)
