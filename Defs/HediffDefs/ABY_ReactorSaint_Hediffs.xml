@@ -12,7 +12,7 @@
     <defaultLabelColor>(1.00, 0.34, 0.12)</defaultLabelColor>
     <comps>
       <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>180</disappearsAfterTicks>
+        <disappearsAfterTicks>300</disappearsAfterTicks>
       </li>
     </comps>
     <stages>
