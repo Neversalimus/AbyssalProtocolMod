@@ -279,7 +279,7 @@ namespace AbyssalProtocol
                     score += 6f;
                 }
 
-                if (building.def?.building?.isTurret == true)
+                if (IsTurretLike(building))
                 {
                     score += 8f;
                 }
@@ -331,7 +331,7 @@ namespace AbyssalProtocol
 
                     float distance = pawn.Position.DistanceTo(building.Position);
                     float score = 10f - distance;
-                    if (building.def?.building?.isTurret == true)
+                    if (IsTurretLike(building))
                     {
                         score += 3f;
                     }
@@ -345,6 +345,22 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        private static bool IsTurretLike(Building building)
+        {
+            if (building == null)
+            {
+                return false;
+            }
+
+            if (building is Building_Turret)
+            {
+                return true;
+            }
+
+            System.Type thingClass = building.def?.thingClass;
+            return thingClass != null && typeof(Building_Turret).IsAssignableFrom(thingClass);
         }
 
         private bool CanContinueCurrentAttack(Pawn pawn)

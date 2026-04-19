@@ -151,6 +151,75 @@ namespace AbyssalProtocol
             return TryFindBossArrivalCell(map, out cell);
         }
 
+        public static bool TryResolveBossManifestationCell(Map map, ThingDef manifestationDef, IntVec3 requestedCell, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || manifestationDef == null)
+            {
+                return false;
+            }
+
+            if (IsUsableBossManifestationCell(map, manifestationDef, requestedCell))
+            {
+                cell = requestedCell;
+                return true;
+            }
+
+            IntVec3 anchor = requestedCell.IsValid && requestedCell.InBounds(map) ? requestedCell : map.Center;
+            int maxRadius = System.Math.Min(System.Math.Min(map.Size.x, map.Size.z) / 2, 45);
+
+            for (int radius = 1; radius <= maxRadius; radius += 2)
+            {
+                int maxCells = System.Math.Min(GenRadial.NumCellsInRadius(radius), GenRadial.RadialPattern.Length);
+                for (int i = 0; i < maxCells; i++)
+                {
+                    IntVec3 candidate = anchor + GenRadial.RadialPattern[i];
+                    if (IsUsableBossManifestationCell(map, manifestationDef, candidate))
+                    {
+                        cell = candidate;
+                        return true;
+                    }
+                }
+            }
+
+            return TryFindBossArrivalCell(map, out cell);
+        }
+
+        private static bool IsUsableBossManifestationCell(Map map, ThingDef manifestationDef, IntVec3 cell)
+        {
+            if (map == null || manifestationDef == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (!cell.Standable(map) || !cell.Walkable(map) || cell.Fogged(map) || cell.Roofed(map))
+            {
+                return false;
+            }
+
+            if (cell.GetEdifice(map) != null)
+            {
+                return false;
+            }
+
+            TerrainDef terrain = cell.GetTerrain(map);
+            if (terrain != null && terrain.IsWater)
+            {
+                return false;
+            }
+
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Pawn || things[i] is Building)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private static IntVec3 GetColonyAnchorCell(Map map, IntVec3 fallbackOrigin)
         {
             Area home = map.areaManager?.Home;
