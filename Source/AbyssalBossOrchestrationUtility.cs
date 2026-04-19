@@ -81,21 +81,19 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ABY_BossEscalationPackageDef package = allowPackageSelection ? ResolveEscalationPackage(profile, forcedPackageDefName) : null;
-            if (!allowPackageSelection && !forcedPackageDefName.NullOrEmpty())
-            {
-                ABY_BossEscalationPackageDef forced = DefDatabase<ABY_BossEscalationPackageDef>.GetNamedSilentFail(forcedPackageDefName);
-                if (forced != null && forced.AllowsBossProfile(profile.defName))
-                {
-                    package = forced;
-                }
-            }
+            ABY_BossEscalationPackageDef package = ResolveEscalationPackage(profile, forcedPackageDefName);
             return package != null && package.spawnEscortNearBossRelease;
         }
 
         public static AbyssalEncounterDirectorUtility.EncounterPlan BuildEscortPlan(string ritualId, Map map, float fallbackBudget, int? seed = null)
         {
-            return BuildBestEscortContext(ritualId, null, map, fallbackBudget, seed, null, false)?.Plan;
+            BossEscortContext context = BuildEscortPlanContext(ritualId, null, map, fallbackBudget, seed, null, false);
+            if (HasUsablePlan(context))
+            {
+                return context.Plan;
+            }
+
+            return BuildGuaranteedFallbackContext(ritualId, null, map, fallbackBudget, false)?.Plan;
         }
 
         public static bool TrySpawnEscortPack(
@@ -118,11 +116,14 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildBestEscortContext(ritualId, null, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            BossEscortContext context = BuildEscortPlanContext(ritualId, null, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
             if (!HasUsablePlan(context))
             {
-                failReason = "No valid boss escort plan available for " + (ritualId ?? "escort") + ".";
-                return false;
+                context = BuildGuaranteedFallbackContext(ritualId, null, map, fallbackBudget, reinforcementMode);
+                if (!HasUsablePlan(context))
+                {
+                    return false;
+                }
             }
 
             ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
@@ -192,11 +193,14 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildBestEscortContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            BossEscortContext context = BuildEscortPlanContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
             if (!HasUsablePlan(context))
             {
-                failReason = "No valid boss escort plan available for " + (ritualId ?? bossPawn.kindDef?.defName ?? "escort") + ".";
-                return false;
+                context = BuildGuaranteedFallbackContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, reinforcementMode);
+                if (!HasUsablePlan(context))
+                {
+                    return false;
+                }
             }
 
             ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
@@ -259,11 +263,14 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildBestEscortContext(ritualId, bossKindDefName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            BossEscortContext context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
             if (!HasUsablePlan(context))
             {
-                failReason = "No valid boss escort plan available for " + (ritualId ?? bossKindDefName ?? "escort") + ".";
-                return false;
+                context = BuildGuaranteedFallbackContext(ritualId, bossKindDefName, map, fallbackBudget, reinforcementMode);
+                if (!HasUsablePlan(context))
+                {
+                    return false;
+                }
             }
 
             ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
@@ -380,26 +387,6 @@ namespace AbyssalProtocol
             return bestCell.IsValid ? bestCell : fallbackCell;
         }
 
-        private static BossEscortContext BuildBestEscortContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
-        {
-            BossEscortContext context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, seed, forcedPackageDefName, reinforcementMode, true);
-            if (HasUsablePlan(context))
-            {
-                return context;
-            }
-
-            if (forcedPackageDefName.NullOrEmpty())
-            {
-                context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, seed, null, reinforcementMode, false);
-                if (HasUsablePlan(context))
-                {
-                    return context;
-                }
-            }
-
-            return BuildGuaranteedFallbackContext(ritualId, bossKindDefName, map, fallbackBudget, reinforcementMode);
-        }
-
         private static bool HasUsablePlan(BossEscortContext context)
         {
             return context != null && context.Plan != null && context.Plan.TotalUnits > 0;
@@ -419,13 +406,13 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            int baseTier = profile.escortBaseContentTier > 0 ? profile.escortBaseContentTier : GetFallbackEscortTier(ritualId);
             string poolId = profile.escortPoolId;
             if (poolId.NullOrEmpty())
             {
                 return null;
             }
 
+            int baseTier = profile.escortBaseContentTier > 0 ? profile.escortBaseContentTier : GetFallbackEscortTier(ritualId);
             AbyssalEncounterDirectorUtility.EncounterPlan plan = BuildGuaranteedFallbackPlan(ritualId, bossKindDefName, poolId, baseBudget, baseTier, profile);
             if (plan == null || plan.TotalUnits <= 0)
             {
@@ -464,10 +451,10 @@ namespace AbyssalProtocol
             };
 
             int currentOrder = AbyssalDifficultyUtility.GetCurrentProfileOrder();
-            string resolvedId = (ritualId ?? string.Empty).ToLowerInvariant();
-            string bossDefName = bossKindDefName ?? string.Empty;
+            string resolvedRitualId = (ritualId ?? string.Empty).ToLowerInvariant();
+            string resolvedBossKind = bossKindDefName ?? string.Empty;
 
-            if (resolvedId == "archon_of_rupture" || string.Equals(bossDefName, "ABY_ArchonOfRupture", StringComparison.OrdinalIgnoreCase))
+            if (resolvedRitualId == "archon_beast" || string.Equals(resolvedBossKind, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
@@ -480,20 +467,17 @@ namespace AbyssalProtocol
                     TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
                 }
             }
-            else if (resolvedId == "archon_beast" || string.Equals(bossDefName, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase))
+            else if (resolvedRitualId == "archon_of_rupture" || string.Equals(resolvedBossKind, "ABY_ArchonOfRupture", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
-                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
-                {
-                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_NullPriest", poolId, allowedContentTier, false);
-                }
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_NullPriest", poolId, allowedContentTier, false);
                 if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Dominion"))
                 {
                     TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
                 }
             }
-            else if (resolvedId == "reactor_saint" || string.Equals(bossDefName, "ABY_ReactorSaint", StringComparison.OrdinalIgnoreCase))
+            else if (resolvedRitualId == "reactor_saint" || string.Equals(resolvedBossKind, "ABY_ReactorSaint", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
@@ -630,7 +614,8 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private static BossEscortContext BuildEscortPlanContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode, bool allowPackageSelection)
+
+        private static BossEscortContext BuildEscortPlanContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
         {
             ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, bossKindDefName);
             if (profile == null)
@@ -644,15 +629,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            ABY_BossEscalationPackageDef package = allowPackageSelection ? ResolveEscalationPackage(profile, forcedPackageDefName) : null;
-            if (!allowPackageSelection && !forcedPackageDefName.NullOrEmpty())
-            {
-                ABY_BossEscalationPackageDef forced = DefDatabase<ABY_BossEscalationPackageDef>.GetNamedSilentFail(forcedPackageDefName);
-                if (forced != null && forced.AllowsBossProfile(profile.defName))
-                {
-                    package = forced;
-                }
-            }
+            ABY_BossEscalationPackageDef package = ResolveEscalationPackage(profile, forcedPackageDefName);
             float budgetMultiplier = Mathf.Max(0.25f, profile.escortBudgetMultiplier <= 0f ? 1f : profile.escortBudgetMultiplier);
             string poolId = profile.escortPoolId;
             int baseTier = profile.escortBaseContentTier > 0 ? profile.escortBaseContentTier : GetFallbackEscortTier(ritualId);

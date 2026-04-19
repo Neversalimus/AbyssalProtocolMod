@@ -225,7 +225,7 @@ namespace AbyssalProtocol
                     return recipe.addsHediff;
                 }
 
-                List<ThingDefCountClass> costList = recipe.ingredients;
+                List<IngredientCount> costList = recipe.ingredients;
                 if (costList == null)
                 {
                     continue;
@@ -233,8 +233,9 @@ namespace AbyssalProtocol
 
                 for (int j = 0; j < costList.Count; j++)
                 {
-                    ThingDefCountClass cost = costList[j];
-                    if (cost?.thingDef == implantThingDef)
+                    IngredientCount cost = costList[j];
+                    ThingFilter ingredientFilter = cost?.filter;
+                    if (ingredientFilter != null && ingredientFilter.Allows(implantThingDef))
                     {
                         return recipe.addsHediff;
                     }
