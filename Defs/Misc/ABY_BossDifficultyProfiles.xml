@@ -97,4 +97,33 @@
     </escalationPackageDefNames>
   </AbyssalProtocol.ABY_BossDifficultyProfileDef>
 
+
+  <AbyssalProtocol.ABY_BossDifficultyProfileDef>
+    <defName>ABY_BossProfile_ArchonOfRupture</defName>
+    <ritualIds>
+      <li>archon_of_rupture</li>
+    </ritualIds>
+    <bossPawnKindDefNames>
+      <li>ABY_ArchonOfRupture</li>
+    </bossPawnKindDefNames>
+    <escortPoolId>archon_boss_escort</escortPoolId>
+    <escortBaseContentTier>5</escortBaseContentTier>
+    <fallbackEscortBudget>760</fallbackEscortBudget>
+    <escortBudgetMultiplier>1.10</escortBudgetMultiplier>
+    <preferredDoctrineDefNames>
+      <li>ABY_Doctrine_RupturePursuit</li>
+    </preferredDoctrineDefNames>
+    <secondaryDoctrineDefNames>
+      <li>ABY_Doctrine_HunterPressure</li>
+    </secondaryDoctrineDefNames>
+    <escalationPackageDefNames>
+      <li>ABY_BossEscalation_Archon_RuptureHunt</li>
+      <li>ABY_BossEscalation_Archon_LivingRupture</li>
+      <li>ABY_BossEscalation_Archon_CrownPredator</li>
+      <li>ABY_BossEscalation_Archon_RuptureDominion</li>
+    </escalationPackageDefNames>
+    <bonusCompanionPortalsAtDominion>1</bonusCompanionPortalsAtDominion>
+    <bonusCompanionPortalsAtFinalGate>1</bonusCompanionPortalsAtFinalGate>
+  </AbyssalProtocol.ABY_BossDifficultyProfileDef>
+
 </Defs>

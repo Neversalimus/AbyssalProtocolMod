@@ -158,7 +158,6 @@ namespace AbyssalProtocol
             return true;
         }
 
-
         public static bool TrySpawnHostilePackAroundAnchor(
             Map map,
             List<HostilePackEntry> entries,
@@ -244,6 +243,30 @@ namespace AbyssalProtocol
                 canSteal: false);
 
             LordMaker.MakeNewLord(faction, lordJob, map, spawned);
+            return true;
+        }
+
+
+        public static bool TrySpawnHostilePackThroughPortal(
+            Map map,
+            List<HostilePackEntry> entries,
+            Faction faction,
+            IntVec3 portalCell,
+            string packLabel,
+            out string failReason)
+        {
+            failReason = null;
+            if (!TrySpawnHostilePackAroundAnchor(map, entries, faction, portalCell, packLabel, out failReason))
+            {
+                return false;
+            }
+
+            if (map != null && portalCell.IsValid && portalCell.InBounds(map))
+            {
+                ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", portalCell, map);
+                Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.16f);
+            }
+
             return true;
         }
 

@@ -265,11 +265,13 @@ namespace AbyssalProtocol
                 .ToList();
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
-            float cardWidth = (outRect.width - 12f) / 2f;
+            const float scrollbarReserve = 18f;
+            float contentWidth = Mathf.Max(120f, outRect.width - scrollbarReserve);
+            float cardWidth = (contentWidth - 12f) / 2f;
             float cardHeight = 180f;
             int rows = Mathf.CeilToInt(recipes.Count / 2f);
             float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
-            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
+            Rect viewRect = new Rect(0f, 0f, contentWidth, viewHeight);
 
             Widgets.BeginScrollView(outRect, ref patternScrollPosition, viewRect, true);
             for (int i = 0; i < recipes.Count; i++)
@@ -316,37 +318,51 @@ namespace AbyssalProtocol
                 AbyssalForgeConsoleArt.DrawTag(newRect, "ABY_ForgePatternNew".Translate(), true);
             }
 
-            Rect labelRect = new Rect(rect.x + 60f, rect.y + 10f, rect.width - 136f, 22f);
+            Def infoDef = (Def)product ?? recipe;
+            Rect infoRect = new Rect(rect.xMax - 82f, rect.y + 10f, 24f, 24f);
+            if (infoDef != null)
+            {
+                Widgets.InfoCardButton(infoRect.x, infoRect.y, infoDef);
+                TooltipHandler.TipRegion(infoRect, "ABY_ForgePatternOpenInfo".Translate());
+            }
+
+            Rect labelRect = new Rect(rect.x + 60f, rect.y + 10f, rect.width - 154f, 22f);
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             Widgets.Label(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 84f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 100f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+
+            int primaryProductCount = AbyssalForgeProgressUtility.GetPrimaryProductCount(recipe);
+            if (primaryProductCount > 1)
+            {
+                Widgets.Label(new Rect(rect.x + 60f, rect.y + 48f, rect.width - 100f, 18f), "ABY_ForgePatternOutputCount".Translate(primaryProductCount));
+            }
             GUI.color = Color.white;
 
             string unlockLine = unlocked
                 ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe))
                 : "ABY_ForgePatternLockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe));
             GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 56f, rect.width - 20f, 18f), unlockLine);
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 66f, rect.width - 20f, 18f), unlockLine);
             GUI.color = Color.white;
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 76f, rect.width - 20f, 18f), "ABY_ForgePatternRequirementsState".Translate());
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 86f, rect.width - 20f, 18f), "ABY_ForgePatternRequirementsState".Translate());
             GUI.color = Color.white;
 
             List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe);
             int shownEntries = Math.Min(2, entries.Count);
             for (int i = 0; i < shownEntries; i++)
             {
-                DrawIngredientStateLine(new Rect(rect.x + 10f, rect.y + 94f + i * 18f, rect.width - 20f, 18f), entries[i]);
+                DrawIngredientStateLine(new Rect(rect.x + 10f, rect.y + 104f + i * 18f, rect.width - 20f, 18f), entries[i]);
             }
 
             if (entries.Count > shownEntries)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(rect.x + 10f, rect.y + 94f + shownEntries * 18f, rect.width - 20f, 18f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
+                Widgets.Label(new Rect(rect.x + 10f, rect.y + 104f + shownEntries * 18f, rect.width - 20f, 18f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
                 GUI.color = Color.white;
             }
 

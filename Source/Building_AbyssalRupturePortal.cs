@@ -216,6 +216,25 @@ namespace AbyssalProtocol
             fxComp?.RegisterBoss(boss, bossLabel);
             fxComp?.RegisterRitualPulse(Map, 0.32f);
 
+            string ritualId = string.Equals(bossKindDef?.defName, "ABY_ArchonOfRupture", System.StringComparison.OrdinalIgnoreCase)
+                ? "archon_of_rupture"
+                : "archon_beast";
+
+            bool spawnedEscort = AbyssalBossOrchestrationUtility.TrySpawnEscortPackThroughPortal(
+                Map,
+                portalFaction ?? AbyssalBossSummonUtility.ResolveHostileFaction(),
+                ritualId,
+                bossKindDef?.defName,
+                Position,
+                string.Equals(ritualId, "archon_of_rupture", System.StringComparison.OrdinalIgnoreCase) ? 760f : 620f,
+                bossLabel,
+                out string escortFailReason);
+
+            if (!spawnedEscort && !escortFailReason.NullOrEmpty())
+            {
+                Log.Warning("[Abyssal Protocol] Rupture portal escort plan warning: " + escortFailReason);
+            }
+
             AbyssalLordUtility.EnsureAssaultLord(boss, sappers: true);
 
             Find.LetterStack.ReceiveLetter(

@@ -257,6 +257,25 @@ namespace AbyssalProtocol
             return null;
         }
 
+        public static int GetPrimaryProductCount(RecipeDef recipe)
+        {
+            if (recipe?.products == null || recipe.products.Count == 0)
+            {
+                return 0;
+            }
+
+            for (int i = 0; i < recipe.products.Count; i++)
+            {
+                ThingDefCountClass entry = recipe.products[i];
+                if (entry?.thingDef != null)
+                {
+                    return Mathf.Max(1, entry.count);
+                }
+            }
+
+            return 0;
+        }
+
         public static int GetRequiredResidue(RecipeDef recipe)
         {
             return GetUnlockExtension(recipe)?.requiredResidue ?? 0;

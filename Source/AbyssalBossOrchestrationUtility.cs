@@ -25,26 +25,15 @@ namespace AbyssalProtocol
             }
 
             int stage = AbyssalDifficultyUtility.GetProgressionStage();
-            ABY_BossDifficultyProfileDef fallback = null;
             foreach (ABY_BossDifficultyProfileDef def in DefDatabase<ABY_BossDifficultyProfileDef>.AllDefsListForReading)
             {
-                if (def == null || !def.MatchesRitualId(ritualId))
-                {
-                    continue;
-                }
-
-                if (stage >= def.minProgressionStage)
+                if (def != null && stage >= def.minProgressionStage && def.MatchesRitualId(ritualId))
                 {
                     return def;
                 }
-
-                if (fallback == null)
-                {
-                    fallback = def;
-                }
             }
 
-            return fallback;
+            return null;
         }
 
         public static ABY_BossDifficultyProfileDef ResolveProfileByBossKindDefName(string bossKindDefName)
@@ -55,37 +44,37 @@ namespace AbyssalProtocol
             }
 
             int stage = AbyssalDifficultyUtility.GetProgressionStage();
-            ABY_BossDifficultyProfileDef fallback = null;
             foreach (ABY_BossDifficultyProfileDef def in DefDatabase<ABY_BossDifficultyProfileDef>.AllDefsListForReading)
             {
-                if (def == null || !def.MatchesBossKindDefName(bossKindDefName))
-                {
-                    continue;
-                }
-
-                if (stage >= def.minProgressionStage)
+                if (def != null && stage >= def.minProgressionStage && def.MatchesBossKindDefName(bossKindDefName))
                 {
                     return def;
                 }
-
-                if (fallback == null)
-                {
-                    fallback = def;
-                }
             }
 
-            return fallback;
+            return null;
+        }
+
+        private static ABY_BossDifficultyProfileDef ResolveProfile(string ritualId, string bossKindDefName)
+        {
+            ABY_BossDifficultyProfileDef profile = ResolveProfileByRitualId(ritualId);
+            if (profile == null && !bossKindDefName.NullOrEmpty())
+            {
+                profile = ResolveProfileByBossKindDefName(bossKindDefName);
+            }
+
+            return profile;
         }
 
         public static bool HasBossEscortProfile(string ritualId)
         {
-            ABY_BossDifficultyProfileDef profile = ResolveProfileByRitualId(ritualId);
+            ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, null);
             return profile != null && !profile.escortPoolId.NullOrEmpty();
         }
 
         public static bool ShouldSpawnEscortAtBossRelease(string ritualId, string forcedPackageDefName = null)
         {
-            ABY_BossDifficultyProfileDef profile = ResolveProfileByRitualId(ritualId);
+            ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, null);
             if (profile == null)
             {
                 return false;
@@ -97,7 +86,7 @@ namespace AbyssalProtocol
 
         public static AbyssalEncounterDirectorUtility.EncounterPlan BuildEscortPlan(string ritualId, Map map, float fallbackBudget, int? seed = null)
         {
-            return BuildEscortPlanContext(ritualId, map, fallbackBudget, seed, null, false)?.Plan;
+            return BuildEscortPlanContext(ritualId, null, map, fallbackBudget, seed, null, false)?.Plan;
         }
 
         public static bool TrySpawnEscortPack(
@@ -120,7 +109,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildEscortPlanContext(ritualId, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            BossEscortContext context = BuildEscortPlanContext(ritualId, null, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
             if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
             {
                 return false;
@@ -165,7 +154,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildEscortPlanContext(ritualId, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            BossEscortContext context = BuildEscortPlanContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
             if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
             {
                 return false;
@@ -183,6 +172,48 @@ namespace AbyssalProtocol
             if (spawned && allowFollowupScheduling && !reinforcementMode)
             {
                 TryScheduleDelayedReinforcement(context, map, packLabel, bossPawn.PositionHeld);
+            }
+
+            return spawned;
+        }
+
+        public static bool TrySpawnEscortPackThroughPortal(
+            Map map,
+            Faction faction,
+            string ritualId,
+            string bossKindDefName,
+            IntVec3 portalCell,
+            float fallbackBudget,
+            string packLabel,
+            out string failReason,
+            string forcedPackageDefName = null,
+            bool reinforcementMode = false,
+            bool allowFollowupScheduling = true)
+        {
+            failReason = null;
+            if (map == null || faction == null || !portalCell.IsValid || !portalCell.InBounds(map))
+            {
+                return false;
+            }
+
+            BossEscortContext context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
+            {
+                return false;
+            }
+
+            ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
+            bool spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackThroughPortal(
+                map,
+                context.Plan.ToHostilePackEntries(),
+                faction,
+                portalCell,
+                packLabel,
+                out failReason);
+
+            if (spawned && allowFollowupScheduling && !reinforcementMode)
+            {
+                TryScheduleDelayedReinforcement(context, map, packLabel, portalCell);
             }
 
             return spawned;
@@ -233,7 +264,7 @@ namespace AbyssalProtocol
 
             IntVec3 bestCell = IntVec3.Invalid;
             float bestDistance = float.MaxValue;
-            IReadOnlyList<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
+            IReadOnlyList<Pawn> pawns = map.mapPawns?.AllPawnsSpawned;
             if (pawns != null)
             {
                 for (int i = 0; i < pawns.Count; i++)
@@ -261,9 +292,9 @@ namespace AbyssalProtocol
             return bestCell.IsValid ? bestCell : fallbackCell;
         }
 
-        private static BossEscortContext BuildEscortPlanContext(string ritualId, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
+        private static BossEscortContext BuildEscortPlanContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
         {
-            ABY_BossDifficultyProfileDef profile = ResolveProfileByRitualId(ritualId);
+            ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, bossKindDefName);
             if (profile == null)
             {
                 return null;
@@ -318,7 +349,7 @@ namespace AbyssalProtocol
                 null,
                 null,
                 profile.defName,
-                package != null ? package.defName : null);
+                package?.defName);
 
             return new BossEscortContext
             {
@@ -418,13 +449,7 @@ namespace AbyssalProtocol
             }
 
             int delay = Mathf.Max(60, package.reinforcementDelayTicks + Rand.RangeInclusive(-Mathf.Max(0, package.reinforcementDelayJitterTicks), Mathf.Max(0, package.reinforcementDelayJitterTicks)));
-            ABY_BossEscalationGameComponent escalation = Current.Game != null ? Current.Game.GetComponent<ABY_BossEscalationGameComponent>() : null;
-            if (escalation == null)
-            {
-                return;
-            }
-
-            escalation.ScheduleEscort(new ABY_BossEscalationScheduledEscort
+            Current.Game?.GetComponent<ABY_BossEscalationGameComponent>()?.ScheduleEscort(new ABY_BossEscalationScheduledEscort
             {
                 mapUniqueId = map.uniqueID,
                 triggerTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + delay,
@@ -465,6 +490,8 @@ namespace AbyssalProtocol
                     return 2;
                 case "archon_beast":
                     return 4;
+                case "archon_of_rupture":
+                    return 5;
                 case "choir_engine":
                     return 3;
                 case "reactor_saint":
