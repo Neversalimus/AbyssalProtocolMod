@@ -111,8 +111,13 @@ namespace AbyssalProtocol
             IntVec3 anchor = GetColonyAnchorCell(map, fallbackOrigin);
             float min = (float)System.Math.Max(6d, minDistance);
             float max = (float)System.Math.Max(min + 2f, maxDistance);
-            List<IntVec3> candidates = new List<IntVec3>();
+            float preferredRadius = (min + max) * 0.5f;
             int radialCount = GenRadial.NumCellsInRadius(max);
+
+            IntVec3 bestReachable = IntVec3.Invalid;
+            float bestReachableScore = float.MinValue;
+            IntVec3 bestFallback = IntVec3.Invalid;
+            float bestFallbackScore = float.MinValue;
 
             for (int i = 0; i < radialCount; i++)
             {
@@ -133,12 +138,36 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                candidates.Add(candidate);
+                bool reachableToAnchor = CanReachColonyAnchor(map, candidate, anchor);
+                float score = ScoreNearColonyArrivalCell(map, candidate, anchor, distance, preferredRadius, reachableToAnchor);
+
+                if (reachableToAnchor)
+                {
+                    if (score > bestReachableScore)
+                    {
+                        bestReachableScore = score;
+                        bestReachable = candidate;
+                    }
+
+                    continue;
+                }
+
+                if (score > bestFallbackScore)
+                {
+                    bestFallbackScore = score;
+                    bestFallback = candidate;
+                }
             }
 
-            if (candidates.Count > 0)
+            if (bestReachable.IsValid)
             {
-                cell = candidates.RandomElement();
+                cell = bestReachable;
+                return true;
+            }
+
+            if (bestFallback.IsValid)
+            {
+                cell = bestFallback;
                 return true;
             }
 
@@ -204,6 +233,16 @@ namespace AbyssalProtocol
 
             TerrainDef terrain = cell.GetTerrain(map);
             if (terrain != null && terrain.IsWater)
+            {
+                return false;
+            }
+
+            if (HasBlockingPlayerBuildingNearby(map, cell, 2.6f))
+            {
+                return false;
+            }
+
+            if (CountAdjacentStandableCells(map, cell) < 4)
             {
                 return false;
             }
@@ -317,7 +356,223 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (map.areaManager?.Home != null && map.areaManager.Home[cell])
+            {
+                return false;
+            }
+
+            if (HasBlockingPlayerBuildingNearby(map, cell, 2.9f))
+            {
+                return false;
+            }
+
+            if (CountAdjacentStandableCells(map, cell) < 5)
+            {
+                return false;
+            }
+
             return true;
+        }
+
+        public static bool TryFindEscortPortalCellNear(Map map, IntVec3 origin, out IntVec3 cell, float minRadius = 5.5f, float maxRadius = 10.5f)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 colonyAnchor = GetColonyAnchorCell(map, origin);
+            float preferredRadius = (minRadius + maxRadius) * 0.5f;
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, maxRadius, true))
+            {
+                if (!candidate.InBounds(map) || candidate.Fogged(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(origin);
+                if (distance < minRadius || distance > maxRadius)
+                {
+                    continue;
+                }
+
+                if (!IsValidEscortPortalCell(map, candidate))
+                {
+                    continue;
+                }
+
+                float score = -Mathf.Abs(distance - preferredRadius);
+                score += CountAdjacentStandableCells(map, candidate) * 0.08f;
+                if (!candidate.Roofed(map))
+                {
+                    score += 0.25f;
+                }
+
+                if (colonyAnchor.IsValid)
+                {
+                    score -= candidate.DistanceTo(colonyAnchor) * 0.04f;
+                    if (CanReachColonyAnchor(map, candidate, colonyAnchor))
+                    {
+                        score += 1.1f;
+                    }
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        private static bool IsValidEscortPortalCell(Map map, IntVec3 cell)
+        {
+            if (map == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (!cell.Standable(map) || cell.Fogged(map))
+            {
+                return false;
+            }
+
+            if (cell.GetFirstPawn(map) != null)
+            {
+                return false;
+            }
+
+            if (cell.GetEdifice(map) != null)
+            {
+                return false;
+            }
+
+            if (map.areaManager?.Home != null && map.areaManager.Home[cell])
+            {
+                return false;
+            }
+
+            if (HasBlockingPlayerBuildingNearby(map, cell, 2.4f))
+            {
+                return false;
+            }
+
+            if (CountAdjacentStandableCells(map, cell) < 4)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static float ScoreNearColonyArrivalCell(Map map, IntVec3 cell, IntVec3 anchor, float distanceToAnchor, float preferredRadius, bool reachableToAnchor)
+        {
+            float score = -Mathf.Abs(distanceToAnchor - preferredRadius);
+            score += CountAdjacentStandableCells(map, cell) * 0.09f;
+            if (!cell.Roofed(map))
+            {
+                score += 0.20f;
+            }
+
+            if (reachableToAnchor)
+            {
+                score += 2.2f;
+            }
+
+            if (anchor.IsValid)
+            {
+                Vector3 anchorVector = new Vector3(anchor.x - cell.x, 0f, anchor.z - cell.z);
+                score -= anchorVector.magnitude * 0.015f;
+            }
+
+            return score;
+        }
+
+        private static bool CanReachColonyAnchor(Map map, IntVec3 origin, IntVec3 anchor)
+        {
+            if (map == null || !origin.IsValid || !anchor.IsValid || !anchor.InBounds(map))
+            {
+                return false;
+            }
+
+            if (origin == anchor)
+            {
+                return true;
+            }
+
+            try
+            {
+                return map.reachability != null && map.reachability.CanReach(origin, anchor, PathEndMode.OnCell, TraverseParms.For(TraverseMode.PassDoors, Danger.Deadly, false));
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static int CountAdjacentStandableCells(Map map, IntVec3 center)
+        {
+            if (map == null || !center.IsValid)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            for (int i = 0; i < GenAdj.AdjacentCells.Length; i++)
+            {
+                IntVec3 cell = center + GenAdj.AdjacentCells[i];
+                if (cell.InBounds(map) && cell.Standable(map))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static bool HasBlockingPlayerBuildingNearby(Map map, IntVec3 center, float radius)
+        {
+            if (map == null || !center.IsValid)
+            {
+                return false;
+            }
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, true))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing thing = things[i];
+                    if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
+                    {
+                        continue;
+                    }
+
+                    if (thing.def != null && thing.def.category == ThingCategory.Building)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public static bool TryGenerateBoss(

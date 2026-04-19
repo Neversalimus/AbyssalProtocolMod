@@ -357,16 +357,33 @@ namespace AbyssalProtocol
                 completionLetterLabelKey,
                 completionLetterDescKey);
 
-            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
+            IntVec3 escortPortalCell = spawnCell;
+            if (!AbyssalBossSummonUtility.TryFindEscortPortalCellNear(Map, spawnCell, out escortPortalCell))
+            {
+                escortPortalCell = spawnCell;
+            }
+
+            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackThroughPortal(
                     Map,
                     manifestationFaction,
                     "reactor_saint",
-                    pawn,
+                    bossKindDef?.defName ?? "ABY_ReactorSaint",
+                    escortPortalCell,
                     980f,
                     bossLabel,
-                    out string escortFailReason) && !escortFailReason.NullOrEmpty())
+                    out string escortFailReason))
             {
-                Log.Warning("[AbyssalProtocol] Reactor Saint manifestation escort spawn failed: " + escortFailReason);
+                if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
+                        Map,
+                        manifestationFaction,
+                        "reactor_saint",
+                        pawn,
+                        980f,
+                        bossLabel,
+                        out escortFailReason) && !escortFailReason.NullOrEmpty())
+                {
+                    Log.Warning("[AbyssalProtocol] Reactor Saint manifestation escort spawn failed: " + escortFailReason);
+                }
             }
         }
 
