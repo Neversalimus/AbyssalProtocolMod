@@ -29,8 +29,11 @@ namespace AbyssalProtocol
         protected override float ShadowScale => 23.10f;
         protected override float ShadowAlpha => 0.62f;
 
-        protected override float LaunchNorthDrift => 58.00f;
-        protected override float LaunchSideDrift => 0.30f;
+        private const float DepartureDriftX = 0.30f;
+        private const float DepartureDriftZ = -58.00f;
+
+        protected override float LaunchDriftX => DepartureDriftX;
+        protected override float LaunchDriftZ => DepartureDriftZ;
         protected override float LaunchAltitudeBoost => 4.20f;
         protected override float LaunchBodyScaleEnd => 0.98f;
         protected override float LaunchShadowScaleEnd => 0.42f;

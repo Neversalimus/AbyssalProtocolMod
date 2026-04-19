@@ -36,8 +36,8 @@ namespace AbyssalProtocol
         protected virtual float ShadowScale => 1f;
         protected virtual float ShadowAlpha => 0.62f;
 
-        protected virtual float LaunchNorthDrift => 0f;
-        protected virtual float LaunchSideDrift => 0f;
+        protected virtual float LaunchDriftX => 0f;
+        protected virtual float LaunchDriftZ => 0f;
         protected virtual float LaunchAltitudeBoost => 0f;
         protected virtual float LaunchBodyScaleEnd => 1f;
         protected virtual float LaunchShadowScaleEnd => 0.4f;
@@ -241,12 +241,12 @@ namespace AbyssalProtocol
                 float progress = LaunchProgress;
                 float eased = 1f - Mathf.Pow(1f - progress, 2.2f);
 
-                bodyLoc.x += eased * LaunchSideDrift;
-                bodyLoc.z -= eased * LaunchNorthDrift;
+                bodyLoc.x += eased * LaunchDriftX;
+                bodyLoc.z += eased * LaunchDriftZ;
                 bodyLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.04f + eased * LaunchAltitudeBoost;
 
-                shadowLoc.x += eased * (LaunchSideDrift * 0.14f);
-                shadowLoc.z -= eased * (LaunchNorthDrift * 0.10f);
+                shadowLoc.x += eased * (LaunchDriftX * 0.14f);
+                shadowLoc.z += eased * (LaunchDriftZ * 0.10f);
                 shadowLoc.y = AltitudeLayer.Shadows.AltitudeFor();
 
                 float bodyScale = Mathf.Lerp(1f, LaunchBodyScaleEnd, eased);

@@ -22,6 +22,8 @@ namespace AbyssalProtocol
         private const float DefaultImpactExplosionRadius = 3.9f;
         private const int DefaultImpactExplosionDamage = 28;
 
+        private const float DepartureDriftZ = -0.20f;
+
         private PawnKindDef bossKindDef;
         private IntVec3 bossArrivalCell = IntVec3.Invalid;
         private string bossLabel;
@@ -266,7 +268,7 @@ namespace AbyssalProtocol
             cocoonLoc.y = AltitudeLayer.Building.AltitudeFor() + 0.080f;
             cocoonLoc.z += Mathf.Lerp(0.72f, 0f, descentProgress);
             cocoonLoc.y += ascentProgress * 2.55f;
-            cocoonLoc.z -= ascentProgress * 0.20f;
+            cocoonLoc.z += ascentProgress * DepartureDriftZ;
 
             if (impactTriggered && !bossReleased)
             {
