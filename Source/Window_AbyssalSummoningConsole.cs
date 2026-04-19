@@ -63,14 +63,12 @@ namespace AbyssalProtocol
 
             float controlWidth = Mathf.Min(332f, overviewRect.width * 0.38f);
             Rect controlRect = new Rect(overviewRect.x, overviewRect.y, controlWidth, overviewRect.height);
-            Rect statusRect = new Rect(controlRect.xMax + 10f, overviewRect.y, overviewRect.width - controlWidth - 10f, 172f);
-            Rect previewRect = new Rect(statusRect.x, statusRect.yMax + 10f, statusRect.width, overviewRect.height - statusRect.height - 10f);
+            Rect previewRect = new Rect(controlRect.xMax + 10f, overviewRect.y, overviewRect.width - controlWidth - 10f, overviewRect.height);
 
             DrawHeader(headerRect, ritual);
             DrawReadinessStrip(stripRect, ritual);
             DrawRitualBrowser(ritualsRect, ritual);
             DrawControlPanel(controlRect, ritual);
-            DrawStatusPanel(statusRect, ritual);
             DrawScrollableRitualPreviewPanel(previewRect, ritual);
             DrawSystemsPanel(systemsRect, ritual);
         }

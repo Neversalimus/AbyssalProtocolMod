@@ -22,7 +22,7 @@ namespace AbyssalProtocol
         private const float DefaultImpactExplosionRadius = 3.9f;
         private const int DefaultImpactExplosionDamage = 28;
 
-        private const float DepartureDriftZ = -0.20f;
+        private const float DepartureDriftZ = 0.20f;
 
         private PawnKindDef bossKindDef;
         private IntVec3 bossArrivalCell = IntVec3.Invalid;

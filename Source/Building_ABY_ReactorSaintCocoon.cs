@@ -30,7 +30,7 @@ namespace AbyssalProtocol
         protected override float ShadowAlpha => 0.62f;
 
         private const float DepartureDriftX = 0.30f;
-        private const float DepartureDriftZ = -58.00f;
+        private const float DepartureDriftZ = 58.00f;
 
         protected override float LaunchDriftX => DepartureDriftX;
         protected override float LaunchDriftZ => DepartureDriftZ;
