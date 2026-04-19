@@ -5,8 +5,9 @@
   <ABY_DifficultySettingsDesc>Global threat protocol for summon pressure, instability, reward routing, and future encounter composition.</ABY_DifficultySettingsDesc>
   <ABY_DifficultySettingsCurrent>Current protocol: {0}</ABY_DifficultySettingsCurrent>
   <ABY_DifficultySettingsLock>Lock protocol after first boss kill</ABY_DifficultySettingsLock>
-  <ABY_DifficultySettingsLockDesc>Prevents switching between difficulty profiles after the first Archon Beast kill has been recorded on this save.</ABY_DifficultySettingsLockDesc>
+  <ABY_DifficultySettingsLockDesc>Optional anti-abuse toggle. Disabled by default in v3, but can be re-enabled to restore the old per-save lock behavior after the first Archon Beast kill.</ABY_DifficultySettingsLockDesc>
   <ABY_DifficultySettingsLockedNow>Protocol changes are currently locked on this save because the first boss kill has already been recorded.</ABY_DifficultySettingsLockedNow>
+  <ABY_DifficultySettingsUnlockedNote>Save-lock is currently disabled by default. Re-enable it here to restore the old per-save protocol lock.</ABY_DifficultySettingsUnlockedNote>
 
   <ABY_DifficultyDiagnostics_Profile>Protocol: {0}</ABY_DifficultyDiagnostics_Profile>
   <ABY_DifficultyDiagnostics_Budget>Encounter budget: x{0}</ABY_DifficultyDiagnostics_Budget>
@@ -15,6 +16,7 @@
   <ABY_DifficultyDiagnostics_TierLift>Escalation lift: +{0} content tier</ABY_DifficultyDiagnostics_TierLift>
   <ABY_DifficultyDiagnostics_Locked>Protocol changes are locked after the first boss kill on this save.</ABY_DifficultyDiagnostics_Locked>
   <ABY_DifficultyDiagnostics_Armed>Protocol lock will engage after the first boss kill on this save.</ABY_DifficultyDiagnostics_Armed>
+  <ABY_DifficultyDiagnostics_Unlocked>Protocol lock is currently disabled for this save.</ABY_DifficultyDiagnostics_Unlocked>
 
   <ABY_DifficultyProfile_Normal_Label>Normal</ABY_DifficultyProfile_Normal_Label>
   <ABY_DifficultyProfile_Normal_Desc>Baseline Abyssal protocol. Uses the current intended summon pressure without softening the mod.</ABY_DifficultyProfile_Normal_Desc>
@@ -29,4 +31,6 @@
 
   <ABY_CirclePreview_Sniper_Singular>rift sniper</ABY_CirclePreview_Sniper_Singular>
   <ABY_CirclePreview_Sniper_Plural>rift snipers</ABY_CirclePreview_Sniper_Plural>
+  <ABY_CirclePreview_HaloHusk_Singular>halo husk</ABY_CirclePreview_HaloHusk_Singular>
+  <ABY_CirclePreview_HaloHusk_Plural>halo husks</ABY_CirclePreview_HaloHusk_Plural>
 </LanguageData>

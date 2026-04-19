@@ -34,6 +34,9 @@ namespace AbyssalProtocol
             public int HoundCount;
             public int ThrallCount;
             public int PriestCount;
+            public int ZealotCount;
+            public int SniperCount;
+            public int HaloHuskCount;
             public int MaxActiveHostiles;
             public int MaxActivePortals;
             public int ActiveAnchorCount;
@@ -41,8 +44,15 @@ namespace AbyssalProtocol
             public int DrainAnchors;
             public int WardAnchors;
             public int BreachAnchors;
+            public AbyssalEncounterDirectorUtility.EncounterPlan DirectedPlan;
 
-            public int TotalUnits => Math.Max(0, TotalImpCount) + Math.Max(0, HoundCount) + Math.Max(0, ThrallCount) + Math.Max(0, PriestCount);
+            public int TotalUnits => Math.Max(0, TotalImpCount)
+                + Math.Max(0, HoundCount)
+                + Math.Max(0, ThrallCount)
+                + Math.Max(0, PriestCount)
+                + Math.Max(0, ZealotCount)
+                + Math.Max(0, SniperCount)
+                + Math.Max(0, HaloHuskCount);
         }
 
         public static ThreatPlan BuildThreatPlan(Map map, MapComponent_DominionCrisis crisis)
@@ -64,77 +74,151 @@ namespace AbyssalProtocol
             plan.WardAnchors = crisis.GetActiveAnchorCount(DominionAnchorRole.Ward);
             plan.BreachAnchors = crisis.GetActiveAnchorCount(DominionAnchorRole.Breach);
 
-            plan.PortalCount = plan.BreachAnchors > 0
+            int legacyPortalCount = plan.BreachAnchors > 0
                 ? (plan.Tier >= 3 ? 2 : 1)
                 : (plan.ActiveAnchorCount >= 3 && plan.Tier >= 4 ? 1 : 0);
 
-            if (plan.PortalCount > 0)
+            int legacyImpCount = 0;
+            if (legacyPortalCount > 0)
             {
-                plan.TotalImpCount = 2 + plan.Tier + Mathf.Min(2, plan.BreachAnchors) + Mathf.Min(1, plan.DrainAnchors) + Mathf.Min(crisis.WavesTriggered, 2);
+                legacyImpCount = 2 + plan.Tier + Mathf.Min(2, plan.BreachAnchors) + Mathf.Min(1, plan.DrainAnchors) + Mathf.Min(crisis.WavesTriggered, 2);
                 if (profile.StageTier >= 4)
                 {
-                    plan.TotalImpCount += 1;
+                    legacyImpCount += 1;
                 }
 
                 if (plan.ActiveAnchorCount <= 2)
                 {
-                    plan.TotalImpCount = Mathf.Max(2, plan.TotalImpCount - 1);
+                    legacyImpCount = Mathf.Max(2, legacyImpCount - 1);
                 }
             }
 
-            if (plan.Tier >= 2)
-            {
-                plan.HoundCount = 1;
-            }
-
+            int legacyHounds = plan.Tier >= 2 ? 1 : 0;
             if (plan.WardAnchors > 0 && plan.Tier >= 3)
             {
-                plan.HoundCount += 1;
+                legacyHounds += 1;
             }
-
             if (profile.StageTier >= 5)
             {
-                plan.HoundCount += 1;
+                legacyHounds += 1;
             }
-
             if (plan.ActiveAnchorCount <= 2)
             {
-                plan.HoundCount = Mathf.Max(0, plan.HoundCount - 1);
+                legacyHounds = Mathf.Max(0, legacyHounds - 1);
             }
 
+            int legacyThralls = 0;
             if (plan.SuppressionAnchors > 0 && plan.Tier >= 2)
             {
-                plan.ThrallCount = 1;
+                legacyThralls = 1;
             }
-
             if (plan.DrainAnchors > 0 && plan.Tier >= 4)
             {
-                plan.ThrallCount += 1;
+                legacyThralls += 1;
             }
-
             if (crisis.WavesTriggered >= 3 && plan.Tier >= 5)
             {
-                plan.ThrallCount = Mathf.Min(2, plan.ThrallCount + 1);
+                legacyThralls = Mathf.Min(2, legacyThralls + 1);
             }
-
             if (plan.ActiveAnchorCount <= 1)
             {
-                plan.ThrallCount = Mathf.Min(plan.ThrallCount, 1);
+                legacyThralls = Mathf.Min(legacyThralls, 1);
             }
 
+            int legacyPriests = 0;
             if (plan.Tier >= 4 && (plan.SuppressionAnchors > 0 || plan.WardAnchors > 0 || plan.DrainAnchors > 0))
             {
-                plan.PriestCount = 1;
+                legacyPriests = 1;
             }
-
             if (plan.ActiveAnchorCount <= 2)
             {
-                plan.PriestCount = 0;
+                legacyPriests = 0;
+            }
+
+            float baseBudget = legacyImpCount * 85f + legacyHounds * 160f + legacyThralls * 210f + legacyPriests * 360f;
+            baseBudget = Mathf.Max(170f, baseBudget);
+            baseBudget += Mathf.Max(0, plan.ActiveAnchorCount - 1) * 30f;
+
+            Dictionary<string, int> minimumRoleCounts = new Dictionary<string, int>();
+            Dictionary<string, int> maximumRoleCounts = new Dictionary<string, int>
+            {
+                { "boss", 0 },
+                { "support", plan.Tier >= 4 ? 2 : 1 },
+                { "elite", plan.Tier >= 5 ? 3 : (plan.Tier >= 3 ? 2 : 1) }
+            };
+
+            if (plan.Tier >= 2 && (plan.WardAnchors > 0 || plan.BreachAnchors > 0))
+            {
+                minimumRoleCounts["elite"] = 1;
+            }
+
+            if (plan.Tier >= 4 && (plan.SuppressionAnchors > 0 || plan.DrainAnchors > 0 || plan.WardAnchors > 0))
+            {
+                minimumRoleCounts["support"] = 1;
+            }
+
+            int seed = GetDirectorSeed(map, crisis, 3719 + plan.ActiveAnchorCount * 11);
+            plan.DirectedPlan = AbyssalEncounterDirectorUtility.BuildPlan(
+                "dominion_wave",
+                baseBudget,
+                plan.Tier,
+                seed,
+                minimumRoleCounts,
+                maximumRoleCounts);
+
+            ApplyDirectedEntriesToThreatPlan(plan, plan.DirectedPlan);
+
+            if (plan.TotalUnits <= 0)
+            {
+                plan.TotalImpCount = legacyImpCount;
+                plan.HoundCount = legacyHounds;
+                plan.ThrallCount = legacyThralls;
+                plan.PriestCount = legacyPriests;
             }
 
             plan.MaxActiveHostiles = profile.MaxActiveHostiles;
+            plan.PortalCount = 0;
+            if (plan.TotalImpCount > 0)
+            {
+                if (plan.BreachAnchors > 0)
+                {
+                    plan.PortalCount = plan.TotalImpCount >= 5 || plan.Tier >= 3 ? 2 : 1;
+                }
+                else if (plan.ActiveAnchorCount >= 3 && plan.Tier >= 4)
+                {
+                    plan.PortalCount = 1;
+                }
+            }
+
             plan.MaxActivePortals = Mathf.Min(profile.MaxActivePortals, plan.PortalCount >= 2 ? 3 : 2);
             return plan;
+        }
+
+        private static void ApplyDirectedEntriesToThreatPlan(ThreatPlan plan, AbyssalEncounterDirectorUtility.EncounterPlan directed)
+        {
+            if (plan == null || directed == null)
+            {
+                return;
+            }
+
+            plan.TotalImpCount = directed.GetCount(RiftImpPawnKindDefName);
+            plan.HoundCount = directed.GetCount(EmberHoundPawnKindDefName);
+            plan.ThrallCount = directed.GetCount(HexgunThrallPawnKindDefName);
+            plan.PriestCount = directed.GetCount(NullPriestPawnKindDefName);
+            plan.ZealotCount = directed.GetCount("ABY_ChainZealot");
+            plan.SniperCount = directed.GetCount("ABY_RiftSniper");
+            plan.HaloHuskCount = directed.GetCount("ABY_HaloHusk");
+        }
+
+        private static int GetDirectorSeed(Map map, MapComponent_DominionCrisis crisis, int salt)
+        {
+            int seed = 17;
+            seed = Gen.HashCombineInt(seed, map != null ? map.uniqueID : 0);
+            seed = Gen.HashCombineInt(seed, crisis != null ? crisis.WavesTriggered : 0);
+            seed = Gen.HashCombineInt(seed, crisis != null ? crisis.ActiveAnchorCount : 0);
+            seed = Gen.HashCombineInt(seed, crisis != null ? crisis.CompletionCount : 0);
+            seed = Gen.HashCombineInt(seed, salt);
+            return seed;
         }
 
         public static int GetInitialWaveDelayTicks(MapComponent_DominionCrisis crisis)
@@ -326,25 +410,20 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
-            PawnKindDef houndKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName);
-            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName);
-            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
-
-            List<string> summaryParts = new List<string>();
             bool anySpawned = false;
+            List<string> summaryParts = new List<string>();
+            List<Building_AbyssalDominionAnchor> anchors = crisis.GetLiveAnchors();
 
-            if (plan.PortalCount > 0 && impKind != null)
+            if (plan.TotalImpCount > 0)
             {
+                int requestedPortals = Mathf.Clamp(plan.PortalCount, 0, Math.Max(1, plan.TotalImpCount));
                 int portalsOpened = 0;
                 int impsSpawned = 0;
-                List<Building_AbyssalDominionAnchor> anchors = crisis.GetLiveAnchors();
-                for (int i = 0; i < plan.PortalCount; i++)
+                for (int i = 0; i < requestedPortals; i++)
                 {
-                    int remainingPortals = Mathf.Max(1, plan.PortalCount - i);
+                    int remainingPortals = Math.Max(1, requestedPortals - i);
                     int impsForPulse = Mathf.Clamp(Mathf.CeilToInt((float)(plan.TotalImpCount - impsSpawned) / remainingPortals), 1, Math.Max(1, plan.TotalImpCount - impsSpawned));
-                    Building_AbyssalDominionAnchor preferredAnchor = GetPreferredAnchor(anchors, DominionAnchorRole.Breach) ?? GetPreferredAnchor(anchors, DominionAnchorRole.Drain) ?? GetPreferredAnchor(anchors, DominionAnchorRole.Ward) ?? GetAnyAnchor(anchors);
-                    IntVec3 origin = preferredAnchor?.PositionHeld ?? crisis.SourceCell;
+                    IntVec3 origin = GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Breach, DominionAnchorRole.Drain, DominionAnchorRole.Ward)?.PositionHeld ?? crisis.SourceCell;
                     if (!origin.IsValid)
                     {
                         continue;
@@ -364,29 +443,17 @@ namespace AbyssalProtocol
 
                     if (!spawnedPortal)
                     {
-                        List<AbyssalHostileSummonUtility.HostilePackEntry> impEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                        {
-                            new AbyssalHostileSummonUtility.HostilePackEntry
-                            {
-                                KindDef = impKind,
-                                Count = impsForPulse
-                            }
-                        };
-
-                        spawnedPortal = AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                        PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
+                        if (impKind != null && TrySpawnSingleKindPack(
                             map,
-                            impEntries,
                             hostileFaction,
+                            impKind,
+                            impsForPulse,
                             origin,
                             AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Imps", "dominion imp pulse"),
-                            string.Empty,
-                            string.Empty,
-                            false,
-                            out IntVec3 arrivalCell,
-                            out string _);
-
-                        if (spawnedPortal)
+                            out IntVec3 arrivalCell))
                         {
+                            spawnedPortal = true;
                             focusCell = arrivalCell;
                         }
                     }
@@ -403,104 +470,122 @@ namespace AbyssalProtocol
                     }
                 }
 
-                if (portalsOpened > 0)
+                int directImps = Math.Max(0, plan.TotalImpCount - impsSpawned);
+                if (directImps > 0)
+                {
+                    PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
+                    IntVec3 fallbackOrigin = GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Breach, DominionAnchorRole.Drain, DominionAnchorRole.Ward)?.PositionHeld ?? crisis.SourceCell;
+                    if (impKind != null && fallbackOrigin.IsValid && TrySpawnSingleKindPack(
+                        map,
+                        hostileFaction,
+                        impKind,
+                        directImps,
+                        fallbackOrigin,
+                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Imps", "dominion imp pulse"),
+                        out IntVec3 arrivalCell))
+                    {
+                        focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+                        anySpawned = true;
+                        impsSpawned += directImps;
+                    }
+                }
+
+                if (impsSpawned > 0)
                 {
                     summaryParts.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
                         "ABY_DominionWaveSummary_Imps",
                         "{0} via {1}",
                         GetCountLabel(impsSpawned, "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps"),
-                        portalsOpened == 1
+                        portalsOpened <= 1
                             ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalSingle", "1 portal")
                             : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalPlural", "{0} portals", portalsOpened)));
                 }
             }
 
-            if (plan.HoundCount > 0 && houndKind != null)
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName),
+                plan.HoundCount,
+                GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Ward, DominionAnchorRole.Breach)?.PositionHeld ?? crisis.SourceCell,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Hounds", "dominion hunter pack"),
+                "ABY_CirclePreview_Hound_Singular",
+                "hound",
+                "ABY_CirclePreview_Hound_Plural",
+                "hounds",
+                summaryParts,
+                ref focusCell);
+
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot"),
+                plan.ZealotCount,
+                GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Breach, DominionAnchorRole.Suppression, DominionAnchorRole.Ward)?.PositionHeld ?? crisis.SourceCell,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Zealots", "dominion breach cell"),
+                "ABY_CirclePreview_Zealot_Singular",
+                "zealot",
+                "ABY_CirclePreview_Zealot_Plural",
+                "zealots",
+                summaryParts,
+                ref focusCell);
+
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName),
+                plan.ThrallCount,
+                GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Suppression, DominionAnchorRole.Drain, DominionAnchorRole.Ward)?.PositionHeld ?? crisis.SourceCell,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Thralls", "dominion relay pack"),
+                "ABY_CirclePreview_Thrall_Singular",
+                "thrall",
+                "ABY_CirclePreview_Thrall_Plural",
+                "thralls",
+                summaryParts,
+                ref focusCell);
+
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSniper"),
+                plan.SniperCount,
+                GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Suppression, DominionAnchorRole.Ward, DominionAnchorRole.Drain)?.PositionHeld ?? crisis.SourceCell,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Snipers", "dominion mark pack"),
+                "ABY_CirclePreview_Sniper_Singular",
+                "rift sniper",
+                "ABY_CirclePreview_Sniper_Plural",
+                "rift snipers",
+                summaryParts,
+                ref focusCell);
+
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HaloHusk"),
+                plan.HaloHuskCount,
+                GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Ward, DominionAnchorRole.Suppression, DominionAnchorRole.Breach)?.PositionHeld ?? crisis.SourceCell,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_HaloHusks", "dominion halo cell"),
+                "ABY_CirclePreview_HaloHusk_Singular",
+                "halo husk",
+                "ABY_CirclePreview_HaloHusk_Plural",
+                "halo husks",
+                summaryParts,
+                ref focusCell);
+
+            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
+            IntVec3 priestOrigin = GetPreferredAnchorFromRoles(anchors, DominionAnchorRole.Suppression, DominionAnchorRole.Ward, DominionAnchorRole.Drain)?.PositionHeld ?? crisis.SourceCell;
+            if (plan.PriestCount > 0 && priestKind != null && priestOrigin.IsValid && TrySpawnNullPriestManifestationPack(
+                map,
+                hostileFaction,
+                priestKind,
+                plan.PriestCount,
+                priestOrigin,
+                NullPriestManifestationWarmupTicks,
+                out IntVec3 priestArrivalCell))
             {
-                Building_AbyssalDominionAnchor houndAnchor = GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Ward) ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Breach) ?? GetAnyAnchor(crisis.GetLiveAnchors());
-                if (houndAnchor != null)
-                {
-                    List<AbyssalHostileSummonUtility.HostilePackEntry> houndEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                    {
-                        new AbyssalHostileSummonUtility.HostilePackEntry
-                        {
-                            KindDef = houndKind,
-                            Count = plan.HoundCount
-                        }
-                    };
-
-                    if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                        map,
-                        houndEntries,
-                        hostileFaction,
-                        houndAnchor.PositionHeld,
-                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Hounds", "dominion hunter pack"),
-                        string.Empty,
-                        string.Empty,
-                        false,
-                        out IntVec3 arrivalCell,
-                        out string _))
-                    {
-                        focusCell = focusCell.IsValid ? focusCell : arrivalCell;
-                        anySpawned = true;
-                        summaryParts.Add(GetCountLabel(plan.HoundCount, "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds"));
-                    }
-                }
-            }
-
-            if (plan.ThrallCount > 0 && thrallKind != null)
-            {
-                Building_AbyssalDominionAnchor thrallAnchor = GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Suppression) ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Drain) ?? GetAnyAnchor(crisis.GetLiveAnchors());
-                if (thrallAnchor != null)
-                {
-                    List<AbyssalHostileSummonUtility.HostilePackEntry> thrallEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                    {
-                        new AbyssalHostileSummonUtility.HostilePackEntry
-                        {
-                            KindDef = thrallKind,
-                            Count = plan.ThrallCount
-                        }
-                    };
-
-                    if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                        map,
-                        thrallEntries,
-                        hostileFaction,
-                        thrallAnchor.PositionHeld,
-                        AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Thralls", "dominion relay pack"),
-                        string.Empty,
-                        string.Empty,
-                        false,
-                        out IntVec3 arrivalCell,
-                        out string _))
-                    {
-                        focusCell = focusCell.IsValid ? focusCell : arrivalCell;
-                        anySpawned = true;
-                        summaryParts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
-                    }
-                }
-            }
-
-            if (plan.PriestCount > 0 && priestKind != null)
-            {
-                Building_AbyssalDominionAnchor priestAnchor = GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Suppression)
-                    ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Ward)
-                    ?? GetPreferredAnchor(crisis.GetLiveAnchors(), DominionAnchorRole.Drain)
-                    ?? GetAnyAnchor(crisis.GetLiveAnchors());
-
-                if (priestAnchor != null && TrySpawnNullPriestManifestationPack(
-                    map,
-                    hostileFaction,
-                    priestKind,
-                    plan.PriestCount,
-                    priestAnchor.PositionHeld,
-                    NullPriestManifestationWarmupTicks,
-                    out IntVec3 arrivalCell))
-                {
-                    focusCell = focusCell.IsValid ? focusCell : arrivalCell;
-                    anySpawned = true;
-                    summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
-                }
+                focusCell = focusCell.IsValid ? focusCell : priestArrivalCell;
+                anySpawned = true;
+                summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
             }
 
             if (!anySpawned)
@@ -552,20 +637,56 @@ namespace AbyssalProtocol
             }
 
             int tier = Mathf.Clamp(profile.StageTier + Mathf.Clamp(crisis.WavesTriggered / 2, 0, 2), 0, 5);
-            int impCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 9);
-            int houndCount = tier >= 1 ? 1 + (tier >= 4 ? 1 : 0) : 0;
-            int thrallCount = tier >= 2 ? 1 + (tier >= 5 ? 1 : 0) : 0;
-            int priestCount = tier >= 4 ? 1 : 0;
+            int legacyImpCount = Mathf.Clamp(3 + tier + Mathf.Min(2, crisis.WavesTriggered / 2), 3, 9);
+            int legacyHoundCount = tier >= 1 ? 1 + (tier >= 4 ? 1 : 0) : 0;
+            int legacyThrallCount = tier >= 2 ? 1 + (tier >= 5 ? 1 : 0) : 0;
+            int legacyPriestCount = tier >= 4 ? 1 : 0;
+            float baseBudget = Mathf.Max(220f, legacyImpCount * 85f + legacyHoundCount * 160f + legacyThrallCount * 210f + legacyPriestCount * 360f);
 
-            PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
-            PawnKindDef houndKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName);
-            PawnKindDef thrallKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName);
-            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
+            Dictionary<string, int> minimumRoleCounts = new Dictionary<string, int>();
+            Dictionary<string, int> maximumRoleCounts = new Dictionary<string, int>
+            {
+                { "boss", 0 },
+                { "support", tier >= 4 ? 2 : 1 },
+                { "elite", tier >= 5 ? 3 : 2 }
+            };
+
+            if (tier >= 2)
+            {
+                minimumRoleCounts["elite"] = 1;
+            }
+            if (tier >= 4)
+            {
+                minimumRoleCounts["support"] = 1;
+            }
+
+            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan(
+                "dominion_gate_support",
+                baseBudget,
+                tier,
+                GetDirectorSeed(map, crisis, 6127 + tier),
+                minimumRoleCounts,
+                maximumRoleCounts);
+
+            ThreatPlan plan = new ThreatPlan
+            {
+                Tier = tier,
+                DirectedPlan = directed
+            };
+            ApplyDirectedEntriesToThreatPlan(plan, directed);
+
+            if (plan.TotalUnits <= 0)
+            {
+                plan.TotalImpCount = legacyImpCount;
+                plan.HoundCount = legacyHoundCount;
+                plan.ThrallCount = legacyThrallCount;
+                plan.PriestCount = legacyPriestCount;
+            }
 
             bool anySpawned = false;
             List<string> summaryParts = new List<string>();
 
-            if (impKind != null)
+            if (plan.TotalImpCount > 0)
             {
                 bool spawnedPortal = ABY_Phase2PortalUtility.TrySpawnImpPortalNear(
                     map,
@@ -573,7 +694,7 @@ namespace AbyssalProtocol
                     origin,
                     PortalMinRadius,
                     PortalMaxRadius + 1.8f,
-                    impCount,
+                    plan.TotalImpCount,
                     PortalWarmupBaseTicks + 12,
                     PortalSpawnIntervalFastTicks,
                     PortalLingerBaseTicks + 50,
@@ -581,29 +702,17 @@ namespace AbyssalProtocol
 
                 if (!spawnedPortal)
                 {
-                    List<AbyssalHostileSummonUtility.HostilePackEntry> impEntries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                    {
-                        new AbyssalHostileSummonUtility.HostilePackEntry
-                        {
-                            KindDef = impKind,
-                            Count = impCount
-                        }
-                    };
-
-                    spawnedPortal = AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    PawnKindDef impKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(RiftImpPawnKindDefName);
+                    if (impKind != null && TrySpawnSingleKindPack(
                         map,
-                        impEntries,
                         hostileFaction,
+                        impKind,
+                        plan.TotalImpCount,
                         origin,
                         AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Imps", "dominion imp pulse"),
-                        string.Empty,
-                        string.Empty,
-                        false,
-                        out IntVec3 impArrivalCell,
-                        out string _);
-
-                    if (spawnedPortal)
+                        out IntVec3 impArrivalCell))
                     {
+                        spawnedPortal = true;
                         focusCell = impArrivalCell;
                     }
                 }
@@ -618,81 +727,94 @@ namespace AbyssalProtocol
                     summaryParts.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
                         "ABY_DominionWaveSummary_Imps",
                         "{0} via {1}",
-                        GetCountLabel(impCount, "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps"),
+                        GetCountLabel(plan.TotalImpCount, "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps"),
                         AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalSingle", "1 portal")));
                 }
             }
 
-            if (houndCount > 0 && houndKind != null)
-            {
-                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                {
-                    new AbyssalHostileSummonUtility.HostilePackEntry
-                    {
-                        KindDef = houndKind,
-                        Count = houndCount
-                    }
-                };
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail(EmberHoundPawnKindDefName),
+                plan.HoundCount,
+                origin,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Hounds", "dominion hunter pack"),
+                "ABY_CirclePreview_Hound_Singular",
+                "hound",
+                "ABY_CirclePreview_Hound_Plural",
+                "hounds",
+                summaryParts,
+                ref focusCell);
 
-                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                    map,
-                    entries,
-                    hostileFaction,
-                    origin,
-                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Hounds", "dominion hunter pack"),
-                    string.Empty,
-                    string.Empty,
-                    false,
-                    out IntVec3 houndArrivalCell,
-                    out string _))
-                {
-                    focusCell = focusCell.IsValid ? focusCell : houndArrivalCell;
-                    anySpawned = true;
-                    summaryParts.Add(GetCountLabel(houndCount, "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds"));
-                }
-            }
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot"),
+                plan.ZealotCount,
+                origin,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Zealots", "dominion breach cell"),
+                "ABY_CirclePreview_Zealot_Singular",
+                "zealot",
+                "ABY_CirclePreview_Zealot_Plural",
+                "zealots",
+                summaryParts,
+                ref focusCell);
 
-            if (thrallCount > 0 && thrallKind != null)
-            {
-                List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
-                {
-                    new AbyssalHostileSummonUtility.HostilePackEntry
-                    {
-                        KindDef = thrallKind,
-                        Count = thrallCount
-                    }
-                };
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail(HexgunThrallPawnKindDefName),
+                plan.ThrallCount,
+                origin,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Thralls", "dominion relay pack"),
+                "ABY_CirclePreview_Thrall_Singular",
+                "thrall",
+                "ABY_CirclePreview_Thrall_Plural",
+                "thralls",
+                summaryParts,
+                ref focusCell);
 
-                if (AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                    map,
-                    entries,
-                    hostileFaction,
-                    origin,
-                    AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Thralls", "dominion relay pack"),
-                    string.Empty,
-                    string.Empty,
-                    false,
-                    out IntVec3 thrallArrivalCell,
-                    out string _))
-                {
-                    focusCell = focusCell.IsValid ? focusCell : thrallArrivalCell;
-                    anySpawned = true;
-                    summaryParts.Add(GetCountLabel(thrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
-                }
-            }
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSniper"),
+                plan.SniperCount,
+                origin,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_Snipers", "dominion mark pack"),
+                "ABY_CirclePreview_Sniper_Singular",
+                "rift sniper",
+                "ABY_CirclePreview_Sniper_Plural",
+                "rift snipers",
+                summaryParts,
+                ref focusCell);
 
-            if (priestCount > 0 && priestKind != null && TrySpawnNullPriestManifestationPack(
+            anySpawned |= TrySpawnSingleKindSummary(
+                map,
+                hostileFaction,
+                DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_HaloHusk"),
+                plan.HaloHuskCount,
+                origin,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWavePack_HaloHusks", "dominion halo cell"),
+                "ABY_CirclePreview_HaloHusk_Singular",
+                "halo husk",
+                "ABY_CirclePreview_HaloHusk_Plural",
+                "halo husks",
+                summaryParts,
+                ref focusCell);
+
+            PawnKindDef priestKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(NullPriestPawnKindDefName);
+            if (plan.PriestCount > 0 && priestKind != null && TrySpawnNullPriestManifestationPack(
                 map,
                 hostileFaction,
                 priestKind,
-                priestCount,
+                plan.PriestCount,
                 origin,
                 NullPriestManifestationWarmupTicksGate,
                 out IntVec3 priestArrivalCell))
             {
                 focusCell = focusCell.IsValid ? focusCell : priestArrivalCell;
                 anySpawned = true;
-                summaryParts.Add(GetCountLabel(priestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
+                summaryParts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
             }
 
             if (!anySpawned)
@@ -708,6 +830,89 @@ namespace AbyssalProtocol
 
             summary = summaryParts.Count > 0 ? string.Join(" + ", summaryParts) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionGate_CallSummary", "gate reinforcements");
             return true;
+        }
+
+        private static bool TrySpawnSingleKindSummary(
+            Map map,
+            Faction hostileFaction,
+            PawnKindDef kindDef,
+            int count,
+            IntVec3 origin,
+            string packLabel,
+            string singularKey,
+            string singularFallback,
+            string pluralKey,
+            string pluralFallback,
+            List<string> summaryParts,
+            ref IntVec3 focusCell)
+        {
+            if (count <= 0 || kindDef == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            if (!TrySpawnSingleKindPack(map, hostileFaction, kindDef, count, origin, packLabel, out IntVec3 arrivalCell))
+            {
+                return false;
+            }
+
+            focusCell = focusCell.IsValid ? focusCell : arrivalCell;
+            summaryParts.Add(GetCountLabel(count, singularKey, singularFallback, pluralKey, pluralFallback));
+            return true;
+        }
+
+        private static bool TrySpawnSingleKindPack(
+            Map map,
+            Faction hostileFaction,
+            PawnKindDef kindDef,
+            int count,
+            IntVec3 origin,
+            string packLabel,
+            out IntVec3 arrivalCell)
+        {
+            arrivalCell = IntVec3.Invalid;
+            if (map == null || hostileFaction == null || kindDef == null || count <= 0 || !origin.IsValid)
+            {
+                return false;
+            }
+
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>
+            {
+                new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = kindDef,
+                    Count = count
+                }
+            };
+
+            return AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                map,
+                entries,
+                hostileFaction,
+                origin,
+                packLabel,
+                string.Empty,
+                string.Empty,
+                false,
+                out arrivalCell,
+                out string _);
+        }
+
+        private static Building_AbyssalDominionAnchor GetPreferredAnchorFromRoles(List<Building_AbyssalDominionAnchor> anchors, params DominionAnchorRole[] roles)
+        {
+            if (roles != null)
+            {
+                for (int i = 0; i < roles.Length; i++)
+                {
+                    Building_AbyssalDominionAnchor preferred = GetPreferredAnchor(anchors, roles[i]);
+                    if (preferred != null)
+                    {
+                        return preferred;
+                    }
+                }
+            }
+
+            return GetAnyAnchor(anchors);
         }
 
         private static bool TrySpawnNullPriestManifestationPack(
@@ -776,13 +981,18 @@ namespace AbyssalProtocol
             int count = 0;
             foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
             {
-                if (pawn == null || pawn.Destroyed || pawn.Dead)
+                if (pawn == null || pawn.Destroyed || pawn.Dead || !pawn.HostileTo(Faction.OfPlayer))
                 {
                     continue;
                 }
 
-                string defName = pawn.def?.defName;
-                if (defName == RiftImpPawnKindDefName || defName == EmberHoundPawnKindDefName || defName == HexgunThrallPawnKindDefName || defName == NullPriestPawnKindDefName)
+                DefModExtension_AbyssalDifficultyScaling extension = pawn.kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+                if (extension?.encounterPools == null)
+                {
+                    continue;
+                }
+
+                if (extension.encounterPools.Contains("dominion_wave") || extension.encounterPools.Contains("dominion_gate_support"))
                 {
                     count++;
                 }
@@ -942,10 +1152,19 @@ namespace AbyssalProtocol
                         ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalSingle", "1 portal")
                         : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWaveSummary_PortalPlural", "{0} portals", plan.PortalCount)));
             }
+            else if (plan.TotalImpCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.TotalImpCount, "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps"));
+            }
 
             if (plan.HoundCount > 0)
             {
                 parts.Add(GetCountLabel(plan.HoundCount, "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds"));
+            }
+
+            if (plan.ZealotCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.ZealotCount, "ABY_CirclePreview_Zealot_Singular", "zealot", "ABY_CirclePreview_Zealot_Plural", "zealots"));
             }
 
             if (plan.ThrallCount > 0)
@@ -953,9 +1172,19 @@ namespace AbyssalProtocol
                 parts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
             }
 
+            if (plan.SniperCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.SniperCount, "ABY_CirclePreview_Sniper_Singular", "rift sniper", "ABY_CirclePreview_Sniper_Plural", "rift snipers"));
+            }
+
             if (plan.PriestCount > 0)
             {
                 parts.Add(GetCountLabel(plan.PriestCount, "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests"));
+            }
+
+            if (plan.HaloHuskCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.HaloHuskCount, "ABY_CirclePreview_HaloHusk_Singular", "halo husk", "ABY_CirclePreview_HaloHusk_Plural", "halo husks"));
             }
 
             return parts.Count == 0

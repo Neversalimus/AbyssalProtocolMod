@@ -22,7 +22,8 @@ namespace AbyssalProtocol
         public bool showCalibrationButton = true;
         public bool reducedMotion = false;
         public string difficultyProfileDefName = AbyssalDifficultyUtility.NormalProfileDefName;
-        public bool lockDifficultyAfterFirstBoss = true;
+        public const bool DefaultLockDifficultyAfterFirstBoss = false;
+        public bool lockDifficultyAfterFirstBoss = DefaultLockDifficultyAfterFirstBoss;
 
         public override void ExposeData()
         {
@@ -44,7 +45,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref showCalibrationButton, "showCalibrationButton", true);
             Scribe_Values.Look(ref reducedMotion, "reducedMotion", false);
             Scribe_Values.Look(ref difficultyProfileDefName, "difficultyProfileDefName", AbyssalDifficultyUtility.NormalProfileDefName);
-            Scribe_Values.Look(ref lockDifficultyAfterFirstBoss, "lockDifficultyAfterFirstBoss", true);
+            Scribe_Values.Look(ref lockDifficultyAfterFirstBoss, "lockDifficultyAfterFirstBoss", DefaultLockDifficultyAfterFirstBoss);
             ClampValues();
         }
 
@@ -79,7 +80,7 @@ namespace AbyssalProtocol
             showCalibrationButton = true;
             reducedMotion = false;
             difficultyProfileDefName = AbyssalDifficultyUtility.NormalProfileDefName;
-            lockDifficultyAfterFirstBoss = true;
+            lockDifficultyAfterFirstBoss = DefaultLockDifficultyAfterFirstBoss;
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)

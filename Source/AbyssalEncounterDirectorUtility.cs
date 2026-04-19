@@ -37,6 +37,26 @@ namespace AbyssalProtocol
                 return 0;
             }
 
+            public int GetRoleCount(string role)
+            {
+                int count = 0;
+                for (int i = 0; i < Entries.Count; i++)
+                {
+                    DirectedEntry entry = Entries[i];
+                    if (entry == null || entry.Count <= 0)
+                    {
+                        continue;
+                    }
+
+                    if (string.Equals(entry.Role ?? string.Empty, role ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                    {
+                        count += entry.Count;
+                    }
+                }
+
+                return count;
+            }
+
             public string GetSummary()
             {
                 List<string> parts = new List<string>();
@@ -88,35 +108,63 @@ namespace AbyssalProtocol
 
         public static EncounterPlan BuildPlan(string poolId, float baseBudget, int baseContentTier)
         {
-            EncounterPlan plan = new EncounterPlan
-            {
-                PoolId = poolId ?? string.Empty,
-                AllowedContentTier = AbyssalDifficultyUtility.GetAllowedContentTier(baseContentTier),
-                Budget = Math.Max(1f, baseBudget * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier())
-            };
+            return BuildPlan(poolId, baseBudget, baseContentTier, null, null, null);
+        }
 
-            List<Candidate> candidates = GetCandidates(plan.PoolId, baseContentTier, plan.AllowedContentTier);
-            if (candidates.Count == 0)
+        public static EncounterPlan BuildPlan(
+            string poolId,
+            float baseBudget,
+            int baseContentTier,
+            int? seed,
+            Dictionary<string, int> minimumRoleCounts,
+            Dictionary<string, int> maximumRoleCounts)
+        {
+            if (seed.HasValue)
             {
-                return plan;
+                Rand.PushState(seed.Value);
             }
 
-            float remainingBudget = plan.Budget;
-            int safety = 0;
-            while (remainingBudget > 0.01f && safety < 128)
+            try
             {
-                safety++;
-                Candidate pick = TryPickCandidate(candidates, remainingBudget);
-                if (pick == null)
+                EncounterPlan plan = new EncounterPlan
                 {
-                    break;
+                    PoolId = poolId ?? string.Empty,
+                    AllowedContentTier = AbyssalDifficultyUtility.GetAllowedContentTier(baseContentTier),
+                    Budget = Math.Max(1f, baseBudget * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier())
+                };
+
+                List<Candidate> candidates = GetCandidates(plan.PoolId, baseContentTier, plan.AllowedContentTier);
+                if (candidates.Count == 0)
+                {
+                    return plan;
                 }
 
-                AddOrIncrement(plan, pick);
-                remainingBudget -= Math.Max(1f, pick.Extension != null ? pick.Extension.budgetCost : 100f);
-            }
+                float remainingBudget = plan.Budget;
+                ApplyRoleMinimums(plan, candidates, minimumRoleCounts, maximumRoleCounts, ref remainingBudget);
 
-            return plan;
+                int safety = 0;
+                while (remainingBudget > 0.01f && safety < 128)
+                {
+                    safety++;
+                    Candidate pick = TryPickCandidate(candidates, remainingBudget, maximumRoleCounts, plan);
+                    if (pick == null)
+                    {
+                        break;
+                    }
+
+                    AddOrIncrement(plan, pick);
+                    remainingBudget -= Math.Max(1f, pick.Extension != null ? pick.Extension.budgetCost : 100f);
+                }
+
+                return plan;
+            }
+            finally
+            {
+                if (seed.HasValue)
+                {
+                    Rand.PopState();
+                }
+            }
         }
 
         private static List<Candidate> GetCandidates(string poolId, int baseContentTier, int allowedContentTier)
@@ -165,11 +213,92 @@ namespace AbyssalProtocol
             return result;
         }
 
-        private static Candidate TryPickCandidate(List<Candidate> candidates, float remainingBudget)
+        private static void ApplyRoleMinimums(
+            EncounterPlan plan,
+            List<Candidate> candidates,
+            Dictionary<string, int> minimumRoleCounts,
+            Dictionary<string, int> maximumRoleCounts,
+            ref float remainingBudget)
         {
-            float cheapestBudget = GetCheapestBudget(candidates);
+            if (minimumRoleCounts == null || minimumRoleCounts.Count == 0)
+            {
+                return;
+            }
+
+            foreach (KeyValuePair<string, int> pair in minimumRoleCounts)
+            {
+                string role = pair.Key ?? string.Empty;
+                int required = Math.Max(0, pair.Value);
+                while (plan.GetRoleCount(role) < required && remainingBudget > 0.01f)
+                {
+                    Candidate pick = TryPickRoleCandidate(candidates, role, remainingBudget, maximumRoleCounts, plan);
+                    if (pick == null)
+                    {
+                        break;
+                    }
+
+                    AddOrIncrement(plan, pick);
+                    remainingBudget -= Math.Max(1f, pick.Extension != null ? pick.Extension.budgetCost : 100f);
+                }
+            }
+        }
+
+        private static Candidate TryPickRoleCandidate(
+            List<Candidate> candidates,
+            string role,
+            float remainingBudget,
+            Dictionary<string, int> maximumRoleCounts,
+            EncounterPlan plan)
+        {
+            Candidate best = null;
+            float bestScore = float.MinValue;
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                Candidate candidate = candidates[i];
+                if (candidate == null || candidate.Extension == null)
+                {
+                    continue;
+                }
+
+                if (!string.Equals(candidate.Extension.role ?? string.Empty, role ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (!CanAddCandidateToPlan(plan, candidate, maximumRoleCounts))
+                {
+                    continue;
+                }
+
+                float budgetCost = Math.Max(1f, candidate.Extension.budgetCost);
+                if (budgetCost > remainingBudget && remainingBudget >= 1f)
+                {
+                    continue;
+                }
+
+                float score = candidate.EffectiveWeight / budgetCost;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = candidate;
+                }
+            }
+
+            return best;
+        }
+
+        private static Candidate TryPickCandidate(
+            List<Candidate> candidates,
+            float remainingBudget,
+            Dictionary<string, int> maximumRoleCounts,
+            EncounterPlan plan)
+        {
+            float cheapestBudget = GetCheapestBudget(candidates, maximumRoleCounts, plan);
             List<Candidate> affordable = candidates
-                .Where(c => c != null && c.Extension != null && (c.Extension.budgetCost <= remainingBudget || remainingBudget < cheapestBudget * 1.05f))
+                .Where(c => c != null
+                    && c.Extension != null
+                    && CanAddCandidateToPlan(plan, c, maximumRoleCounts)
+                    && (c.Extension.budgetCost <= remainingBudget || remainingBudget < cheapestBudget * 1.05f))
                 .ToList();
 
             if (affordable.Count == 0)
@@ -196,12 +325,44 @@ namespace AbyssalProtocol
             return affordable[affordable.Count - 1];
         }
 
-        private static float GetCheapestBudget(List<Candidate> candidates)
+        private static bool CanAddCandidateToPlan(EncounterPlan plan, Candidate candidate, Dictionary<string, int> maximumRoleCounts)
+        {
+            if (candidate == null || candidate.Extension == null)
+            {
+                return false;
+            }
+
+            if (maximumRoleCounts == null || maximumRoleCounts.Count == 0)
+            {
+                return true;
+            }
+
+            string role = candidate.Extension.role ?? string.Empty;
+            foreach (KeyValuePair<string, int> pair in maximumRoleCounts)
+            {
+                if (!string.Equals(pair.Key ?? string.Empty, role, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                return plan.GetRoleCount(role) < Math.Max(0, pair.Value);
+            }
+
+            return true;
+        }
+
+        private static float GetCheapestBudget(List<Candidate> candidates, Dictionary<string, int> maximumRoleCounts, EncounterPlan plan)
         {
             float cheapest = float.MaxValue;
             for (int i = 0; i < candidates.Count; i++)
             {
-                float cost = Math.Max(1f, candidates[i] != null && candidates[i].Extension != null ? candidates[i].Extension.budgetCost : 100f);
+                Candidate candidate = candidates[i];
+                if (!CanAddCandidateToPlan(plan, candidate, maximumRoleCounts))
+                {
+                    continue;
+                }
+
+                float cost = Math.Max(1f, candidate != null && candidate.Extension != null ? candidate.Extension.budgetCost : 100f);
                 if (cost < cheapest)
                 {
                     cheapest = cost;

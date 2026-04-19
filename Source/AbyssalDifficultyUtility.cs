@@ -209,6 +209,10 @@ namespace AbyssalProtocol
                     ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Locked", "Protocol changes are locked after the first boss kill on this save.")
                     : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Armed", "Protocol lock will engage after the first boss kill on this save."));
             }
+            else
+            {
+                lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultyDiagnostics_Unlocked", "Protocol lock is currently disabled for this save."));
+            }
 
             return lines;
         }

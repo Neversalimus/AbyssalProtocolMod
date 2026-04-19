@@ -5,8 +5,9 @@
   <ABY_DifficultySettingsDesc>Глобальный протокол угрозы для давления энкаунтеров, нестабильности, выдачи наград и будущей композиции призывов.</ABY_DifficultySettingsDesc>
   <ABY_DifficultySettingsCurrent>Текущий протокол: {0}</ABY_DifficultySettingsCurrent>
   <ABY_DifficultySettingsLock>Блокировать смену протокола после первого убийства босса</ABY_DifficultySettingsLock>
-  <ABY_DifficultySettingsLockDesc>Запрещает переключать профили сложности после того, как в этом сейве зафиксировано первое убийство Archon Beast.</ABY_DifficultySettingsLockDesc>
+  <ABY_DifficultySettingsLockDesc>Необязательная anti-abuse-настройка. В v3 по умолчанию выключена, но её можно снова включить и вернуть старое поведение с блокировкой сложности после первого убийства Archon Beast.</ABY_DifficultySettingsLockDesc>
   <ABY_DifficultySettingsLockedNow>Смена протокола уже заблокирована для этого сейва, потому что первое убийство босса было зафиксировано.</ABY_DifficultySettingsLockedNow>
+  <ABY_DifficultySettingsUnlockedNote>Save-lock сейчас по умолчанию отключён. Включи его здесь, если захочешь вернуть старую блокировку протокола на сейв.</ABY_DifficultySettingsUnlockedNote>
 
   <ABY_DifficultyDiagnostics_Profile>Протокол: {0}</ABY_DifficultyDiagnostics_Profile>
   <ABY_DifficultyDiagnostics_Budget>Бюджет энкаунтера: x{0}</ABY_DifficultyDiagnostics_Budget>
@@ -15,6 +16,7 @@
   <ABY_DifficultyDiagnostics_TierLift>Подъём эскалации: +{0} tier контента</ABY_DifficultyDiagnostics_TierLift>
   <ABY_DifficultyDiagnostics_Locked>После первого убийства босса смена протокола заблокирована для этого сейва.</ABY_DifficultyDiagnostics_Locked>
   <ABY_DifficultyDiagnostics_Armed>Блокировка протокола включится после первого убийства босса в этом сейве.</ABY_DifficultyDiagnostics_Armed>
+  <ABY_DifficultyDiagnostics_Unlocked>Блокировка протокола сейчас отключена для этого сейва.</ABY_DifficultyDiagnostics_Unlocked>
 
   <ABY_DifficultyProfile_Normal_Label>Нормально</ABY_DifficultyProfile_Normal_Label>
   <ABY_DifficultyProfile_Normal_Desc>Базовый abyssal-протокол. Использует текущую задуманную интенсивность мода и ничего не ослабляет.</ABY_DifficultyProfile_Normal_Desc>
@@ -29,4 +31,6 @@
 
   <ABY_CirclePreview_Sniper_Singular>rift sniper</ABY_CirclePreview_Sniper_Singular>
   <ABY_CirclePreview_Sniper_Plural>rift snipers</ABY_CirclePreview_Sniper_Plural>
+  <ABY_CirclePreview_HaloHusk_Singular>halo husk</ABY_CirclePreview_HaloHusk_Singular>
+  <ABY_CirclePreview_HaloHusk_Plural>halo husks</ABY_CirclePreview_HaloHusk_Plural>
 </LanguageData>

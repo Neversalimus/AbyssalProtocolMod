@@ -30,6 +30,7 @@
         <encounterPools>
           <li>choir_escort</li>
           <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
         </encounterPools>
       </li>
     </modExtensions>

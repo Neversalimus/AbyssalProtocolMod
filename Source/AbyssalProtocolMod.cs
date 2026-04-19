@@ -116,7 +116,6 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            bool locked = !AbyssalDifficultyUtility.IsProfileAllowedForCurrentSave(AbyssalDifficultyUtility.GetCurrentProfile());
             Widgets.Label(list.GetRect(22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsCurrent", "Current protocol: {0}", AbyssalDifficultyUtility.GetCurrentDifficultyLabel()));
 
             float gap = 6f;
@@ -141,9 +140,17 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLock", "Lock protocol after first boss kill"), ref settingsData.lockDifficultyAfterFirstBoss, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLockDesc", "Prevents switching between difficulty profiles after the first Archon Beast kill has been recorded on this save."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLock", "Lock protocol after first boss kill"), ref settingsData.lockDifficultyAfterFirstBoss, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsLockDesc", "Optional anti-abuse toggle. Disabled by default in v3, but can be re-enabled for the old per-save lock behavior."));
 
-            if (settingsData.lockDifficultyAfterFirstBoss && AbyssalDifficultyUtility.HasRecordedFirstBossKill())
+            if (!settingsData.lockDifficultyAfterFirstBoss)
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(0.80f, 0.92f, 1f, 1f);
+                Widgets.Label(list.GetRect(26f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DifficultySettingsUnlockedNote", "Save-lock is currently disabled by default. Re-enable it here to restore the old per-save protocol lock."));
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+            }
+            else if (AbyssalDifficultyUtility.HasRecordedFirstBossKill())
             {
                 Text.Font = GameFont.Tiny;
                 GUI.color = new Color(1f, 0.64f, 0.58f, 1f);
