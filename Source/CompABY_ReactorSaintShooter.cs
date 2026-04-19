@@ -364,7 +364,7 @@ namespace AbyssalProtocol
 
             Pawn bestPawn = null;
             float bestPawnDistance = float.MaxValue;
-            List<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
             if (pawns != null)
             {
                 for (int i = 0; i < pawns.Count; i++)
