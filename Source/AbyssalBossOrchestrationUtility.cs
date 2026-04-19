@@ -15,6 +15,7 @@ namespace AbyssalProtocol
             public AbyssalEncounterDirectorUtility.EncounterPlan Plan;
             public float BaseBudget;
             public bool ReinforcementMode;
+            public bool IsGuaranteedFallback;
         }
 
         public static ABY_BossDifficultyProfileDef ResolveProfileByRitualId(string ritualId)
@@ -86,7 +87,7 @@ namespace AbyssalProtocol
 
         public static AbyssalEncounterDirectorUtility.EncounterPlan BuildEscortPlan(string ritualId, Map map, float fallbackBudget, int? seed = null)
         {
-            return BuildEscortPlanContext(ritualId, null, map, fallbackBudget, seed, null, false)?.Plan;
+            return BuildBestEscortContext(ritualId, null, map, fallbackBudget, seed, null, false)?.Plan;
         }
 
         public static bool TrySpawnEscortPack(
@@ -109,9 +110,10 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildEscortPlanContext(ritualId, null, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
-            if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
+            BossEscortContext context = BuildBestEscortContext(ritualId, null, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            if (!HasUsablePlan(context))
             {
+                failReason = "No valid boss escort plan available for " + (ritualId ?? "escort") + ".";
                 return false;
             }
 
@@ -128,9 +130,37 @@ namespace AbyssalProtocol
                 out arrivalCell,
                 out failReason);
 
-            if (spawned && allowFollowupScheduling && !reinforcementMode)
+            if (!spawned && !context.IsGuaranteedFallback)
             {
-                TryScheduleDelayedReinforcement(context, map, packLabel, requestedArrivalCell);
+                BossEscortContext fallbackContext = BuildGuaranteedFallbackContext(ritualId, null, map, fallbackBudget, reinforcementMode);
+                if (HasUsablePlan(fallbackContext))
+                {
+                    ABY_EncounterTelemetryUtility.RecordPlan(fallbackContext.Plan);
+                    spawned = AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                        map,
+                        fallbackContext.Plan.ToHostilePackEntries(),
+                        faction,
+                        requestedArrivalCell,
+                        packLabel,
+                        null,
+                        null,
+                        false,
+                        out arrivalCell,
+                        out failReason);
+                    if (spawned)
+                    {
+                        context = fallbackContext;
+                    }
+                }
+            }
+
+            if (spawned)
+            {
+                failReason = null;
+                if (allowFollowupScheduling && !reinforcementMode)
+                {
+                    TryScheduleDelayedReinforcement(context, map, packLabel, requestedArrivalCell);
+                }
             }
 
             return spawned;
@@ -154,67 +184,68 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildEscortPlanContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
-            if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
+            BossEscortContext context = BuildBestEscortContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            if (!HasUsablePlan(context))
             {
-                failReason = failReason ?? "No escort plan could be assembled for this boss release.";
+                failReason = "No valid boss escort plan available for " + (ritualId ?? bossPawn.kindDef?.defName ?? "escort") + ".";
                 return false;
             }
 
-            int nearbyEscortCountBefore = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
-
             ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
+            IntVec3 bossAnchorCell = ResolveBossEscortAnchorCell(bossPawn, map);
+            List<AbyssalHostileSummonUtility.HostilePackEntry> primaryEntries = context.Plan.ToHostilePackEntries();
             bool spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchor(
                 map,
-                context.Plan.ToHostilePackEntries(),
+                primaryEntries,
                 faction,
-                bossPawn.PositionHeld,
+                bossAnchorCell,
                 packLabel,
                 out failReason);
 
+            if (spawned && CountNearbyEscortPawns(map, faction, bossPawn, context.Profile, 35f) <= 0)
+            {
+                spawned = false;
+                failReason = "Escort plan reported success, but no escort pawns appeared near the boss.";
+            }
+
             if (!spawned)
             {
-                IntVec3 fallbackArrival = bossPawn.PositionHeld;
-                if (map != null && (!fallbackArrival.IsValid || !fallbackArrival.InBounds(map)) && AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out IntVec3 resolvedArrival))
+                BossEscortContext fallbackContext = BuildGuaranteedFallbackContext(ritualId, bossPawn.kindDef?.defName, map, fallbackBudget, reinforcementMode);
+                if (HasUsablePlan(fallbackContext))
                 {
-                    fallbackArrival = resolvedArrival;
-                }
+                    ABY_EncounterTelemetryUtility.RecordPlan(fallbackContext.Plan);
+                    spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchorWide(
+                        map,
+                        fallbackContext.Plan.ToHostilePackEntries(),
+                        faction,
+                        bossAnchorCell,
+                        packLabel,
+                        7,
+                        20,
+                        out List<Pawn> fallbackSpawnedPawns,
+                        out failReason);
 
-                spawned = AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                    map,
-                    context.Plan.ToHostilePackEntries(),
-                    faction,
-                    fallbackArrival,
-                    packLabel,
-                    null,
-                    null,
-                    false,
-                    out IntVec3 fallbackArrivalCell,
-                    out failReason);
+                    if (spawned && fallbackSpawnedPawns != null && fallbackSpawnedPawns.Count > 0)
+                    {
+                        context = fallbackContext;
+                    }
+                    else
+                    {
+                        spawned = false;
+                    }
+                }
             }
 
-            int nearbyEscortCountAfter = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
-            bool escortMaterialized = nearbyEscortCountAfter > nearbyEscortCountBefore;
-            if (!escortMaterialized)
+            if (spawned)
             {
-                if (TrySpawnGuaranteedEscortFallback(context, map, faction, ritualId, bossPawn, packLabel, out string forcedFailReason))
+                failReason = null;
+                if (allowFollowupScheduling && !reinforcementMode)
                 {
-                    spawned = true;
-                    nearbyEscortCountAfter = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
-                    escortMaterialized = nearbyEscortCountAfter > nearbyEscortCountBefore;
-                }
-                else if (!forcedFailReason.NullOrEmpty())
-                {
-                    failReason = forcedFailReason;
+                    TryScheduleDelayedReinforcement(context, map, packLabel, bossAnchorCell);
                 }
             }
 
-            if (spawned && escortMaterialized && allowFollowupScheduling && !reinforcementMode)
-            {
-                TryScheduleDelayedReinforcement(context, map, packLabel, bossPawn.PositionHeld);
-            }
-
-            return spawned && escortMaterialized;
+            return spawned;
         }
 
         public static bool TrySpawnEscortPackThroughPortal(
@@ -236,9 +267,10 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            BossEscortContext context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
-            if (context == null || context.Plan == null || context.Plan.TotalUnits <= 0)
+            BossEscortContext context = BuildBestEscortContext(ritualId, bossKindDefName, map, fallbackBudget, null, forcedPackageDefName, reinforcementMode);
+            if (!HasUsablePlan(context))
             {
+                failReason = "No valid boss escort plan available for " + (ritualId ?? bossKindDefName ?? "escort") + ".";
                 return false;
             }
 
@@ -251,9 +283,33 @@ namespace AbyssalProtocol
                 packLabel,
                 out failReason);
 
-            if (spawned && allowFollowupScheduling && !reinforcementMode)
+            if (!spawned && !context.IsGuaranteedFallback)
             {
-                TryScheduleDelayedReinforcement(context, map, packLabel, portalCell);
+                BossEscortContext fallbackContext = BuildGuaranteedFallbackContext(ritualId, bossKindDefName, map, fallbackBudget, reinforcementMode);
+                if (HasUsablePlan(fallbackContext))
+                {
+                    ABY_EncounterTelemetryUtility.RecordPlan(fallbackContext.Plan);
+                    spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackThroughPortal(
+                        map,
+                        fallbackContext.Plan.ToHostilePackEntries(),
+                        faction,
+                        portalCell,
+                        packLabel,
+                        out failReason);
+                    if (spawned)
+                    {
+                        context = fallbackContext;
+                    }
+                }
+            }
+
+            if (spawned)
+            {
+                failReason = null;
+                if (allowFollowupScheduling && !reinforcementMode)
+                {
+                    TryScheduleDelayedReinforcement(context, map, packLabel, portalCell);
+                }
             }
 
             return spawned;
@@ -332,7 +388,96 @@ namespace AbyssalProtocol
             return bestCell.IsValid ? bestCell : fallbackCell;
         }
 
-        private static BossEscortContext BuildEscortPlanContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
+        private static IntVec3 ResolveBossEscortAnchorCell(Pawn bossPawn, Map map)
+        {
+            if (bossPawn == null)
+            {
+                return IntVec3.Invalid;
+            }
+
+            CellRect rect = bossPawn.OccupiedRect();
+            if (!rect.IsEmpty)
+            {
+                IntVec3 center = rect.CenterCell;
+                if (center.IsValid && (map == null || center.InBounds(map)))
+                {
+                    return center;
+                }
+            }
+
+            IntVec3 fallback = bossPawn.PositionHeld;
+            if (fallback.IsValid && (map == null || fallback.InBounds(map)))
+            {
+                return fallback;
+            }
+
+            return IntVec3.Invalid;
+        }
+
+        private static int CountNearbyEscortPawns(Map map, Faction faction, Pawn bossPawn, ABY_BossDifficultyProfileDef profile, float radius)
+        {
+            if (map == null || faction == null || bossPawn == null || map.mapPawns == null)
+            {
+                return 0;
+            }
+
+            IntVec3 anchor = ResolveBossEscortAnchorCell(bossPawn, map);
+            float maxDistanceSq = radius * radius;
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn == bossPawn || !pawn.Spawned || pawn.Dead || pawn.Faction != faction)
+                {
+                    continue;
+                }
+
+                if (profile != null && pawn.kindDef != null && profile.MatchesBossKindDefName(pawn.kindDef.defName))
+                {
+                    continue;
+                }
+
+                if ((pawn.Position - anchor).LengthHorizontalSquared <= maxDistanceSq)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static BossEscortContext BuildBestEscortContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode)
+        {
+            BossEscortContext context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, seed, forcedPackageDefName, reinforcementMode, true);
+            if (HasUsablePlan(context))
+            {
+                return context;
+            }
+
+            if (forcedPackageDefName.NullOrEmpty())
+            {
+                context = BuildEscortPlanContext(ritualId, bossKindDefName, map, fallbackBudget, seed, null, reinforcementMode, false);
+                if (HasUsablePlan(context))
+                {
+                    return context;
+                }
+            }
+
+            return BuildGuaranteedFallbackContext(ritualId, bossKindDefName, map, fallbackBudget, reinforcementMode);
+        }
+
+        private static bool HasUsablePlan(BossEscortContext context)
+        {
+            return context != null && context.Plan != null && context.Plan.TotalUnits > 0;
+        }
+
+        private static BossEscortContext BuildGuaranteedFallbackContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, bool reinforcementMode)
         {
             ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, bossKindDefName);
             if (profile == null)
@@ -346,7 +491,240 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            ABY_BossEscalationPackageDef package = ResolveEscalationPackage(profile, forcedPackageDefName);
+            int baseTier = profile.escortBaseContentTier > 0 ? profile.escortBaseContentTier : GetFallbackEscortTier(ritualId);
+            string poolId = profile.escortPoolId;
+            if (poolId.NullOrEmpty())
+            {
+                return null;
+            }
+
+            AbyssalEncounterDirectorUtility.EncounterPlan plan = BuildGuaranteedFallbackPlan(ritualId, bossKindDefName, poolId, baseBudget, baseTier, profile);
+            if (plan == null || plan.TotalUnits <= 0)
+            {
+                return null;
+            }
+
+            return new BossEscortContext
+            {
+                Profile = profile,
+                Package = null,
+                Plan = plan,
+                BaseBudget = baseBudget,
+                ReinforcementMode = reinforcementMode,
+                IsGuaranteedFallback = true
+            };
+        }
+
+        private static AbyssalEncounterDirectorUtility.EncounterPlan BuildGuaranteedFallbackPlan(string ritualId, string bossKindDefName, string poolId, float baseBudget, int baseTier, ABY_BossDifficultyProfileDef profile)
+        {
+            if (poolId.NullOrEmpty())
+            {
+                return null;
+            }
+
+            int allowedContentTier = AbyssalDifficultyUtility.GetAllowedContentTier(baseTier);
+            float escortBudgetMultiplier = Mathf.Max(0.25f, profile != null && profile.escortBudgetMultiplier > 0f ? profile.escortBudgetMultiplier : 1f);
+            float planBudget = Math.Max(1f, baseBudget * escortBudgetMultiplier * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier());
+            float remainingBudget = planBudget;
+
+            AbyssalEncounterDirectorUtility.EncounterPlan plan = new AbyssalEncounterDirectorUtility.EncounterPlan
+            {
+                PoolId = poolId,
+                BossProfileDefName = profile?.defName ?? string.Empty,
+                AllowedContentTier = allowedContentTier,
+                Budget = planBudget
+            };
+
+            int currentOrder = AbyssalDifficultyUtility.GetCurrentProfileOrder();
+            string resolvedId = (ritualId ?? string.Empty).ToLowerInvariant();
+            string bossDefName = bossKindDefName ?? string.Empty;
+
+            if (resolvedId == "archon_of_rupture" || string.Equals(bossDefName, "ABY_ArchonOfRupture", StringComparison.OrdinalIgnoreCase))
+            {
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_NullPriest", poolId, allowedContentTier, false);
+                }
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Dominion"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
+                }
+            }
+            else if (resolvedId == "archon_beast" || string.Equals(bossDefName, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase))
+            {
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_NullPriest", poolId, allowedContentTier, false);
+                }
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Dominion"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
+                }
+            }
+            else if (resolvedId == "reactor_saint" || string.Equals(bossDefName, "ABY_ReactorSaint", StringComparison.OrdinalIgnoreCase))
+            {
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_NullPriest", poolId, allowedContentTier, false);
+                }
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Dominion"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
+                }
+                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_FinalGate"))
+                {
+                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HaloHusk", poolId, allowedContentTier, false);
+                }
+            }
+            else
+            {
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
+            }
+
+            if (plan.TotalUnits <= 0)
+            {
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
+            }
+
+            return plan.TotalUnits > 0 ? plan : null;
+        }
+
+        private static bool TryAddGuaranteedEscortKind(
+            AbyssalEncounterDirectorUtility.EncounterPlan plan,
+            ref float remainingBudget,
+            string pawnKindDefName,
+            string poolId,
+            int allowedContentTier,
+            bool forceAdd)
+        {
+            if (plan == null || pawnKindDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            PawnKindDef kindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(pawnKindDefName);
+            DefModExtension_AbyssalDifficultyScaling extension = kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+            if (kindDef == null || extension == null)
+            {
+                return false;
+            }
+
+            if (!CanUseFallbackKind(extension, poolId, allowedContentTier))
+            {
+                return false;
+            }
+
+            int currentCount = plan.GetCount(kindDef.defName);
+            if (extension.maxPlanCount > 0 && currentCount >= extension.maxPlanCount)
+            {
+                return false;
+            }
+
+            float budgetCost = Math.Max(1f, extension.budgetCost);
+            if (!forceAdd && budgetCost > remainingBudget && plan.TotalUnits > 0)
+            {
+                return false;
+            }
+
+            bool incremented = false;
+            for (int i = 0; i < plan.Entries.Count; i++)
+            {
+                AbyssalEncounterDirectorUtility.DirectedEntry existing = plan.Entries[i];
+                if (existing != null && existing.KindDef == kindDef)
+                {
+                    existing.Count++;
+                    incremented = true;
+                    break;
+                }
+            }
+
+            if (!incremented)
+            {
+                plan.Entries.Add(new AbyssalEncounterDirectorUtility.DirectedEntry
+                {
+                    KindDef = kindDef,
+                    Count = 1,
+                    BudgetCost = budgetCost,
+                    Role = extension.role ?? "assault"
+                });
+            }
+
+            remainingBudget = Math.Max(0f, remainingBudget - budgetCost);
+            return true;
+        }
+
+        private static bool CanUseFallbackKind(DefModExtension_AbyssalDifficultyScaling extension, string poolId, int allowedContentTier)
+        {
+            if (extension == null)
+            {
+                return false;
+            }
+
+            if (extension.encounterPools == null || !ListContainsIgnoreCase(extension.encounterPools, poolId))
+            {
+                return false;
+            }
+
+            if (!AbyssalDifficultyUtility.CanUseByDifficulty(extension, AbyssalDifficultyUtility.GetCurrentProfile()))
+            {
+                return false;
+            }
+
+            return extension.contentTier <= allowedContentTier;
+        }
+
+        private static bool ListContainsIgnoreCase(List<string> values, string sought)
+        {
+            if (values == null || values.Count == 0 || sought.NullOrEmpty())
+            {
+                return false;
+            }
+
+            string safe = sought.ToLowerInvariant();
+            for (int i = 0; i < values.Count; i++)
+            {
+                string value = values[i];
+                if (!value.NullOrEmpty() && value.ToLowerInvariant() == safe)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static BossEscortContext BuildEscortPlanContext(string ritualId, string bossKindDefName, Map map, float fallbackBudget, int? seed, string forcedPackageDefName, bool reinforcementMode, bool allowPackageSelection)
+        {
+            ABY_BossDifficultyProfileDef profile = ResolveProfile(ritualId, bossKindDefName);
+            if (profile == null)
+            {
+                return null;
+            }
+
+            float baseBudget = fallbackBudget > 0f ? fallbackBudget : profile.fallbackEscortBudget;
+            if (baseBudget <= 0.01f)
+            {
+                return null;
+            }
+
+            ABY_BossEscalationPackageDef package = allowPackageSelection ? ResolveEscalationPackage(profile, forcedPackageDefName) : null;
+            if (!allowPackageSelection && !forcedPackageDefName.NullOrEmpty())
+            {
+                ABY_BossEscalationPackageDef forced = DefDatabase<ABY_BossEscalationPackageDef>.GetNamedSilentFail(forcedPackageDefName);
+                if (forced != null && forced.AllowsBossProfile(profile.defName))
+                {
+                    package = forced;
+                }
+            }
             float budgetMultiplier = Mathf.Max(0.25f, profile.escortBudgetMultiplier <= 0f ? 1f : profile.escortBudgetMultiplier);
             string poolId = profile.escortPoolId;
             int baseTier = profile.escortBaseContentTier > 0 ? profile.escortBaseContentTier : GetFallbackEscortTier(ritualId);
@@ -375,36 +753,21 @@ namespace AbyssalProtocol
                 }
             }
 
-            AbyssalEncounterDirectorUtility.EncounterPlan plan = null;
-            if (!poolId.NullOrEmpty())
-            {
-                plan = AbyssalEncounterDirectorUtility.BuildPlan(
-                    poolId,
-                    baseBudget * budgetMultiplier,
-                    baseTier,
-                    map,
-                    seed,
-                    null,
-                    null,
-                    profile.defName,
-                    package?.defName);
-            }
-
-            if (plan == null || plan.TotalUnits <= 0)
-            {
-                plan = BuildGuaranteedEscortPlan(
-                    profile,
-                    ritualId,
-                    bossKindDefName,
-                    map,
-                    baseBudget * budgetMultiplier,
-                    reinforcementMode);
-            }
-
-            if (plan == null || plan.TotalUnits <= 0)
+            if (poolId.NullOrEmpty())
             {
                 return null;
             }
+
+            AbyssalEncounterDirectorUtility.EncounterPlan plan = AbyssalEncounterDirectorUtility.BuildPlan(
+                poolId,
+                baseBudget * budgetMultiplier,
+                baseTier,
+                map,
+                seed,
+                null,
+                null,
+                profile.defName,
+                package?.defName);
 
             return new BossEscortContext
             {
@@ -490,99 +853,6 @@ namespace AbyssalProtocol
             return candidates[candidates.Count - 1];
         }
 
-        private static int CountNearbyActiveFactionPawns(Map map, Faction faction, Pawn bossPawn, float radius)
-        {
-            if (map?.mapPawns?.AllPawnsSpawned == null || faction == null || bossPawn == null)
-            {
-                return 0;
-            }
-
-            int count = 0;
-            float radiusSq = radius * radius;
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (pawn == null || pawn == bossPawn || pawn.Dead || pawn.Downed || !pawn.Spawned)
-                {
-                    continue;
-                }
-
-                if (pawn.Faction != faction)
-                {
-                    continue;
-                }
-
-                if ((pawn.Position - bossPawn.PositionHeld).LengthHorizontalSquared > radiusSq)
-                {
-                    continue;
-                }
-
-                count++;
-            }
-
-            return count;
-        }
-
-        private static bool TrySpawnGuaranteedEscortFallback(
-            BossEscortContext context,
-            Map map,
-            Faction faction,
-            string ritualId,
-            Pawn bossPawn,
-            string packLabel,
-            out string failReason)
-        {
-            failReason = null;
-            if (context == null || map == null || faction == null || bossPawn == null || bossPawn.Dead || !bossPawn.Spawned)
-            {
-                return false;
-            }
-
-            AbyssalEncounterDirectorUtility.EncounterPlan guaranteedPlan = BuildGuaranteedEscortPlan(
-                context.Profile,
-                ritualId,
-                bossPawn.kindDef?.defName,
-                map,
-                Mathf.Max(1f, context.BaseBudget),
-                context.ReinforcementMode);
-            if (guaranteedPlan == null || guaranteedPlan.TotalUnits <= 0)
-            {
-                failReason = "Guaranteed escort fallback could not assemble a direct escort pack.";
-                return false;
-            }
-
-            bool spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchor(
-                map,
-                guaranteedPlan.ToHostilePackEntries(),
-                faction,
-                bossPawn.PositionHeld,
-                packLabel,
-                out failReason);
-            if (spawned)
-            {
-                return true;
-            }
-
-            IntVec3 fallbackArrival = bossPawn.PositionHeld;
-            if ((!fallbackArrival.IsValid || !fallbackArrival.InBounds(map)) && AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out IntVec3 resolvedArrival))
-            {
-                fallbackArrival = resolvedArrival;
-            }
-
-            return AbyssalHostileSummonUtility.TrySpawnHostilePack(
-                map,
-                guaranteedPlan.ToHostilePackEntries(),
-                faction,
-                fallbackArrival,
-                packLabel,
-                null,
-                null,
-                false,
-                out IntVec3 fallbackArrivalCell,
-                out failReason);
-        }
-
         private static void TryScheduleDelayedReinforcement(BossEscortContext context, Map map, string packLabel, IntVec3 fallbackCell)
         {
             if (context == null || context.Profile == null || context.Package == null || map == null)
@@ -628,89 +898,6 @@ namespace AbyssalProtocol
             }
 
             return profile.bossPawnKindDefNames[0] ?? string.Empty;
-        }
-
-        private static AbyssalEncounterDirectorUtility.EncounterPlan BuildGuaranteedEscortPlan(
-            ABY_BossDifficultyProfileDef profile,
-            string ritualId,
-            string bossKindDefName,
-            Map map,
-            float budget,
-            bool reinforcementMode)
-        {
-            string ritualKey = (ritualId ?? string.Empty).ToLowerInvariant();
-            if (ritualKey.NullOrEmpty() && !bossKindDefName.NullOrEmpty())
-            {
-                ritualKey = bossKindDefName.ToLowerInvariant();
-            }
-
-            AbyssalEncounterDirectorUtility.EncounterPlan plan = new AbyssalEncounterDirectorUtility.EncounterPlan
-            {
-                PoolId = profile?.escortPoolId ?? string.Empty,
-                BossProfileDefName = profile?.defName ?? string.Empty,
-                AllowedContentTier = Mathf.Max(1, GetFallbackEscortTier(ritualKey)),
-                Budget = Mathf.Max(1f, budget)
-            };
-
-            int currentOrder = AbyssalDifficultyUtility.GetCurrentProfileOrder();
-            bool isDominionOrHigher = currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Dominion");
-            bool isFinalGateOrHigher = currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_FinalGate");
-
-            if (ritualKey.Contains("reactor"))
-            {
-                AddGuaranteedEscortEntry(plan, "ABY_ChainZealot", reinforcementMode ? 1 : 2);
-                AddGuaranteedEscortEntry(plan, "ABY_HexgunThrall", reinforcementMode ? 1 : 2);
-                AddGuaranteedEscortEntry(plan, "ABY_NullPriest", 1);
-                if (isDominionOrHigher)
-                {
-                    AddGuaranteedEscortEntry(plan, "ABY_RiftSniper", 1);
-                }
-
-                if (isFinalGateOrHigher && !reinforcementMode)
-                {
-                    AddGuaranteedEscortEntry(plan, "ABY_HaloHusk", 1);
-                }
-            }
-            else if (ritualKey.Contains("archon"))
-            {
-                AddGuaranteedEscortEntry(plan, "ABY_EmberHound", reinforcementMode ? 2 : 3);
-                AddGuaranteedEscortEntry(plan, "ABY_ChainZealot", reinforcementMode ? 1 : 2);
-                AddGuaranteedEscortEntry(plan, "ABY_HexgunThrall", 1);
-                if (isDominionOrHigher)
-                {
-                    AddGuaranteedEscortEntry(plan, "ABY_RiftSniper", 1);
-                }
-
-                if (isFinalGateOrHigher && !reinforcementMode)
-                {
-                    AddGuaranteedEscortEntry(plan, "ABY_NullPriest", 1);
-                }
-            }
-
-            return plan.TotalUnits > 0 ? plan : null;
-        }
-
-        private static void AddGuaranteedEscortEntry(AbyssalEncounterDirectorUtility.EncounterPlan plan, string pawnKindDefName, int count)
-        {
-            if (plan == null || count <= 0 || pawnKindDefName.NullOrEmpty())
-            {
-                return;
-            }
-
-            PawnKindDef kindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(pawnKindDefName);
-            if (kindDef == null)
-            {
-                return;
-            }
-
-            DefModExtension_AbyssalDifficultyScaling extension = kindDef.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
-            plan.Entries.Add(new AbyssalEncounterDirectorUtility.DirectedEntry
-            {
-                KindDef = kindDef,
-                Count = Mathf.Max(1, count),
-                BudgetCost = Mathf.Max(1f, extension != null ? extension.budgetCost : 100f),
-                Role = extension != null ? extension.role : "assault"
-            });
         }
 
         private static int GetFallbackEscortTier(string ritualId)

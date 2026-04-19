@@ -270,6 +270,108 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TrySpawnHostilePackAroundAnchorWide(
+            Map map,
+            List<HostilePackEntry> entries,
+            Faction faction,
+            IntVec3 anchorCell,
+            string packLabel,
+            int minRadius,
+            int maxRadius,
+            out List<Pawn> spawnedPawns,
+            out string failReason)
+        {
+            spawnedPawns = new List<Pawn>();
+            failReason = null;
+
+            if (map == null)
+            {
+                failReason = "No map available for hostile pack spawn.";
+                return false;
+            }
+
+            if (entries == null || entries.Count == 0)
+            {
+                failReason = "Missing hostile pack entries for summon spawn.";
+                return false;
+            }
+
+            if (faction == null)
+            {
+                failReason = "No hostile faction available for hostile pack spawn.";
+                return false;
+            }
+
+            if (!anchorCell.IsValid || !anchorCell.InBounds(map))
+            {
+                failReason = "Missing valid anchor cell for wide hostile pack spawn.";
+                return false;
+            }
+
+            List<Pawn> generated = new List<Pawn>();
+            for (int entryIndex = 0; entryIndex < entries.Count; entryIndex++)
+            {
+                HostilePackEntry entry = entries[entryIndex];
+                if (entry == null || entry.KindDef == null)
+                {
+                    failReason = "Missing PawnKindDef for hostile pack spawn.";
+                    CleanupGeneratedPawns(generated);
+                    return false;
+                }
+
+                int count = Mathf.Max(0, entry.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out Pawn pawn, out failReason))
+                    {
+                        CleanupGeneratedPawns(generated);
+                        return false;
+                    }
+
+                    generated.Add(pawn);
+                }
+            }
+
+            if (generated.Count <= 0)
+            {
+                failReason = "Failed to generate any hostile pack pawns.";
+                return false;
+            }
+
+            List<Pawn> spawned = new List<Pawn>();
+            int safeMinRadius = Mathf.Max(1, minRadius);
+            int safeMaxRadius = Mathf.Max(safeMinRadius + 1, maxRadius);
+            for (int i = 0; i < generated.Count; i++)
+            {
+                Pawn pawn = generated[i];
+                IntVec3 spawnCell = FindWideEscortSpawnCell(anchorCell, map, spawned, safeMinRadius, safeMaxRadius);
+                GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
+                spawned.Add(pawn);
+            }
+
+            if (spawned.Count <= 0)
+            {
+                failReason = "Failed to place any hostile pack pawns near the boss anchor.";
+                CleanupGeneratedPawns(generated);
+                return false;
+            }
+
+            spawnedPawns = spawned;
+            ArchonInfernalVFXUtility.DoSummonVFX(map, anchorCell);
+            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", anchorCell, map);
+
+            LordJob lordJob = new LordJob_AssaultColony(
+                faction,
+                canKidnap: false,
+                canTimeoutOrFlee: false,
+                sappers: false,
+                useAvoidGridSmart: true,
+                canSteal: false);
+
+            LordMaker.MakeNewLord(faction, lordJob, map, spawned);
+            return true;
+        }
+
         private static bool TryGenerateHostilePawn(
             Map map,
             PawnKindDef kindDef,
@@ -339,16 +441,40 @@ namespace AbyssalProtocol
 
         private static IntVec3 FindLocalEscortSpawnCell(IntVec3 root, Map map, List<Pawn> alreadySpawned)
         {
+            int maxCells = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(7.9f));
+            for (int i = 0; i < maxCells; i++)
+            {
+                IntVec3 candidate = root + GenRadial.RadialPattern[i];
+                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
+                {
+                    continue;
+                }
+
+                if (CellHasPawn(candidate, map) || CellOccupiedBySpawnList(candidate, alreadySpawned))
+                {
+                    continue;
+                }
+
+                return candidate;
+            }
+
+            return FindSpawnCellNear(root, map, alreadySpawned != null ? alreadySpawned.Count : 0);
+        }
+
+        private static IntVec3 FindWideEscortSpawnCell(IntVec3 root, Map map, List<Pawn> alreadySpawned, int minRadius, int maxRadius)
+        {
             if (map == null)
             {
                 return root;
             }
 
-            float[] searchRadii = { 5.9f, 8.9f, 12.9f, 16.9f };
-            for (int radiusIndex = 0; radiusIndex < searchRadii.Length; radiusIndex++)
+            int safeMinRadius = Mathf.Max(1, minRadius);
+            int safeMaxRadius = Mathf.Max(safeMinRadius + 1, maxRadius);
+            for (int radius = safeMinRadius; radius <= safeMaxRadius; radius++)
             {
-                int maxCells = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(searchRadii[radiusIndex]));
-                for (int i = 0; i < maxCells; i++)
+                int innerCount = radius > 0 ? GenRadial.NumCellsInRadius(radius - 0.25f) : 0;
+                int outerCount = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(radius + 0.25f));
+                for (int i = innerCount; i < outerCount; i++)
                 {
                     IntVec3 candidate = root + GenRadial.RadialPattern[i];
                     if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
@@ -365,23 +491,17 @@ namespace AbyssalProtocol
                 }
             }
 
-            IntVec3 alternateRoot = root;
-            if (AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out IntVec3 arrivalCell) && arrivalCell.IsValid)
-            {
-                alternateRoot = arrivalCell;
-            }
-
             if (CellFinder.TryFindRandomCellNear(
-                alternateRoot,
+                root,
                 map,
-                12,
+                safeMaxRadius,
                 cell => cell.InBounds(map) && cell.Standable(map) && !cell.Fogged(map) && !CellHasPawn(cell, map) && !CellOccupiedBySpawnList(cell, alreadySpawned),
                 out IntVec3 result))
             {
                 return result;
             }
 
-            return FindSpawnCellNear(alternateRoot, map, alreadySpawned != null ? alreadySpawned.Count : 0);
+            return FindLocalEscortSpawnCell(root, map, alreadySpawned);
         }
 
         private static bool CellOccupiedBySpawnList(IntVec3 cell, List<Pawn> alreadySpawned)
