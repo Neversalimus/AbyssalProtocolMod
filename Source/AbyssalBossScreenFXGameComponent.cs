@@ -27,9 +27,14 @@ namespace AbyssalProtocol
         private string activeBossSongDefName;
         private float activeBossSongLengthSeconds;
         private float activeBossSongStartDelaySeconds = 0.05f;
+        private float activeBossSongEndLingerSeconds = 1.35f;
+        private float bossMusicRestoreEarliestRealtime = -1f;
+        private bool bossMusicOutroActive;
 
         private const string FallbackBossSongDefName = "ABY_ArchonBossBattleTheme";
         private const float FallbackBossSongLengthSeconds = 90.0f;
+        private const float FallbackBossSongStartDelaySeconds = 0.05f;
+        private const float FallbackBossSongEndLingerSeconds = 1.35f;
         private const float BossSongRestartLeadSeconds = 0.12f;
         private const float BossSongProbeDelaySeconds = 2.2f;
         private const float BossSongProbeIntervalSeconds = 0.65f;
@@ -57,7 +62,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
             Scribe_Values.Look(ref activeBossSongDefName, "activeBossSongDefName");
             Scribe_Values.Look(ref activeBossSongLengthSeconds, "activeBossSongLengthSeconds", 0f);
-            Scribe_Values.Look(ref activeBossSongStartDelaySeconds, "activeBossSongStartDelaySeconds", 0.05f);
+            Scribe_Values.Look(ref activeBossSongStartDelaySeconds, "activeBossSongStartDelaySeconds", FallbackBossSongStartDelaySeconds);
+            Scribe_Values.Look(ref activeBossSongEndLingerSeconds, "activeBossSongEndLingerSeconds", FallbackBossSongEndLingerSeconds);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -82,8 +88,8 @@ namespace AbyssalProtocol
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
             RefreshActiveBossSongProfile();
+            ResetBossMusicRuntimeState(clearSongProfile: false);
             ScheduleBossSongStart(activeBossSongStartDelaySeconds);
-            vanillaSongRestoreQueued = false;
         }
 
         public void ClearBoss(Pawn boss = null)
@@ -98,11 +104,8 @@ namespace AbyssalProtocol
             activeBossDisplayLabelOverride = null;
             effectMap = null;
             currentStrength = 0f;
-            activeBossSongDefName = null;
-            activeBossSongLengthSeconds = 0f;
-            activeBossSongStartDelaySeconds = 0.05f;
             AbyssalBossBarRenderer.ResetVisualState();
-            ResetBossMusicState();
+            QueueVanillaMusicRestore();
         }
 
         public bool TryGetActiveBossBarState(out ABY_BossBarState state)
@@ -139,7 +142,8 @@ namespace AbyssalProtocol
         {
             string resolvedSongDefName = activeBossBarProfile?.bossSongDefName;
             float resolvedSongLengthSeconds = activeBossBarProfile?.bossSongLengthSeconds ?? 0f;
-            float resolvedSongStartDelaySeconds = activeBossBarProfile?.bossSongStartDelaySeconds ?? 0.05f;
+            float resolvedSongStartDelaySeconds = activeBossBarProfile?.bossSongStartDelaySeconds ?? FallbackBossSongStartDelaySeconds;
+            float resolvedSongEndLingerSeconds = activeBossBarProfile?.bossSongEndLingerSeconds ?? FallbackBossSongEndLingerSeconds;
 
             if (resolvedSongDefName.NullOrEmpty())
             {
@@ -151,9 +155,20 @@ namespace AbyssalProtocol
                 resolvedSongLengthSeconds = FallbackBossSongLengthSeconds;
             }
 
+            if (resolvedSongStartDelaySeconds < 0f)
+            {
+                resolvedSongStartDelaySeconds = FallbackBossSongStartDelaySeconds;
+            }
+
+            if (resolvedSongEndLingerSeconds < 0f)
+            {
+                resolvedSongEndLingerSeconds = FallbackBossSongEndLingerSeconds;
+            }
+
             activeBossSongDefName = resolvedSongDefName;
             activeBossSongLengthSeconds = resolvedSongLengthSeconds;
             activeBossSongStartDelaySeconds = Mathf.Max(0f, resolvedSongStartDelaySeconds);
+            activeBossSongEndLingerSeconds = Mathf.Max(0f, resolvedSongEndLingerSeconds);
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -184,6 +199,7 @@ namespace AbyssalProtocol
 
             if (!bossAlive)
             {
+                QueueVanillaMusicRestore();
                 TryRestoreVanillaMusicIfNeeded();
             }
 
@@ -193,11 +209,13 @@ namespace AbyssalProtocol
                 activeBossBarProfile = null;
                 activeBossDisplayLabelOverride = null;
                 effectMap = null;
-                activeBossSongDefName = null;
-                activeBossSongLengthSeconds = 0f;
-                activeBossSongStartDelaySeconds = 0.05f;
                 AbyssalBossBarRenderer.ResetVisualState();
-                ResetBossMusicState();
+
+                if (!vanillaSongRestoreQueued)
+                {
+                    ClearBossSongProfile();
+                    ResetBossMusicRuntimeState(clearSongProfile: false);
+                }
             }
         }
 
@@ -221,7 +239,6 @@ namespace AbyssalProtocol
 
             if (!BossAlive() || effectMap == null)
             {
-                ResetBossMusicState();
                 return;
             }
 
@@ -288,14 +305,56 @@ namespace AbyssalProtocol
             bossSongExpectedEndRealtime = -1f;
             nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
             missingBossSongChecks = 0;
+            bossMusicRestoreEarliestRealtime = -1f;
+            bossMusicOutroActive = false;
         }
 
-        private void ResetBossMusicState()
+        private void QueueVanillaMusicRestore()
+        {
+            if (!vanillaSongRestoreQueued || bossMusicOutroActive)
+            {
+                if (!vanillaSongRestoreQueued)
+                {
+                    return;
+                }
+
+                if (bossMusicOutroActive)
+                {
+                    return;
+                }
+            }
+
+            float now = Time.realtimeSinceStartup;
+            bossMusicRestoreEarliestRealtime = now + Mathf.Max(0f, activeBossSongEndLingerSeconds);
+            bossMusicOutroActive = true;
+            nextBossMusicRealtime = -1f;
+            bossSongExpectedEndRealtime = -1f;
+            nextBossSongProbeRealtime = -1f;
+            missingBossSongChecks = 0;
+        }
+
+        private void ResetBossMusicRuntimeState(bool clearSongProfile)
         {
             nextBossMusicRealtime = -1f;
             bossSongExpectedEndRealtime = -1f;
             nextBossSongProbeRealtime = -1f;
             missingBossSongChecks = 0;
+            vanillaSongRestoreQueued = false;
+            bossMusicRestoreEarliestRealtime = -1f;
+            bossMusicOutroActive = false;
+
+            if (clearSongProfile)
+            {
+                ClearBossSongProfile();
+            }
+        }
+
+        private void ClearBossSongProfile()
+        {
+            activeBossSongDefName = null;
+            activeBossSongLengthSeconds = 0f;
+            activeBossSongStartDelaySeconds = FallbackBossSongStartDelaySeconds;
+            activeBossSongEndLingerSeconds = FallbackBossSongEndLingerSeconds;
         }
 
         private bool TryStartBossSong(MusicManagerPlay music, SongDef song, float now)
@@ -315,6 +374,8 @@ namespace AbyssalProtocol
             }
 
             vanillaSongRestoreQueued = true;
+            bossMusicOutroActive = false;
+            bossMusicRestoreEarliestRealtime = -1f;
             nextBossMusicRealtime = now + activeBossSongLengthSeconds - BossSongRestartLeadSeconds;
             bossSongExpectedEndRealtime = now + activeBossSongLengthSeconds;
             nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
@@ -329,6 +390,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            float now = Time.realtimeSinceStartup;
+            if (bossMusicRestoreEarliestRealtime > 0f && now < bossMusicRestoreEarliestRealtime)
+            {
+                return;
+            }
+
             MusicManagerPlay music = Find.MusicManagerPlay;
             if (music == null)
             {
@@ -338,13 +405,21 @@ namespace AbyssalProtocol
             SongDef bossSong = activeBossSongDefName.NullOrEmpty() ? null : DefDatabase<SongDef>.GetNamedSilentFail(activeBossSongDefName);
             if (bossSong == null)
             {
-                vanillaSongRestoreQueued = false;
+                ResetBossMusicRuntimeState(clearSongProfile: false);
+                if (!BossAlive() && currentStrength <= 0.001f)
+                {
+                    ClearBossSongProfile();
+                }
                 return;
             }
 
             if (!IsSongAlreadyPlaying(music, bossSong))
             {
-                vanillaSongRestoreQueued = false;
+                ResetBossMusicRuntimeState(clearSongProfile: false);
+                if (!BossAlive() && currentStrength <= 0.001f)
+                {
+                    ClearBossSongProfile();
+                }
                 return;
             }
 
@@ -353,7 +428,11 @@ namespace AbyssalProtocol
 
             if (started)
             {
-                vanillaSongRestoreQueued = false;
+                ResetBossMusicRuntimeState(clearSongProfile: false);
+                if (!BossAlive() && currentStrength <= 0.001f)
+                {
+                    ClearBossSongProfile();
+                }
             }
         }
 
@@ -555,69 +634,30 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float time = Find.TickManager.TicksGame * 0.045f;
-            float pulseA = 0.5f + 0.5f * Mathf.Sin(time);
-            float pulseB = 0.5f + 0.5f * Mathf.Sin(time * 1.7f + 1.2f);
-            float pulseC = 0.5f + 0.5f * Mathf.Sin(time * 2.6f + 0.4f);
+            float t = effectStartTick > 0 ? (Find.TickManager.TicksGame - effectStartTick) / 60f : 0f;
+            float pulse = 0.42f + 0.26f * Mathf.Sin(t * 3.6f);
+            float fade = Mathf.SmoothStep(0f, 1f, totalStrength);
+            float vignetteAlpha = fade * (0.12f + pulse * 0.08f);
+            float bloomAlpha = fade * (0.05f + pulse * 0.06f);
+            Color vignetteColor = new Color(0.65f, 0.06f, 0.06f, vignetteAlpha);
+            Color bloomColor = new Color(0.90f, 0.12f, 0.10f, bloomAlpha);
 
-            float screenW = UI.screenWidth;
-            float screenH = UI.screenHeight;
-            Rect full = new Rect(0f, 0f, screenW, screenH);
+            Rect fullRect = new Rect(0f, 0f, UI.screenWidth, UI.screenHeight);
+            Widgets.DrawBoxSolid(fullRect, vignetteColor);
 
-            Color darkHeat = new Color(0.33f, 0.04f, 0.01f, totalStrength * (0.10f + pulseA * 0.05f));
-            Color fireGlow = new Color(1f, 0.28f, 0.03f, totalStrength * (0.05f + pulseB * 0.05f));
-            Color innerHeat = new Color(1f, 0.78f, 0.14f, totalStrength * (0.02f + pulseC * 0.04f));
-
-            Widgets.DrawBoxSolid(full, darkHeat);
-            Widgets.DrawBoxSolid(full, fireGlow);
-            Widgets.DrawBoxSolid(full, innerHeat);
-
-            float outerX = screenW * Mathf.Lerp(0.06f, 0.10f, totalStrength);
-            float outerY = screenH * Mathf.Lerp(0.06f, 0.10f, totalStrength);
-            float innerX = screenW * Mathf.Lerp(0.03f, 0.05f, totalStrength);
-            float innerY = screenH * Mathf.Lerp(0.03f, 0.05f, totalStrength);
-
-            Color edgeDark = new Color(0.45f, 0.06f, 0.01f, totalStrength * (0.14f + pulseA * 0.08f));
-            Color edgeHot = new Color(1f, 0.45f, 0.08f, totalStrength * (0.05f + pulseB * 0.05f));
-
-            DrawSoftEdgeFrame(outerX, outerY, edgeDark, screenW, screenH, 6);
-            DrawSoftEdgeFrame(innerX, innerY, edgeHot, screenW, screenH, 5);
-        }
-
-        private static void DrawSoftEdgeFrame(float thicknessX, float thicknessY, Color color, float screenW, float screenH, int layers)
-        {
-            if (thicknessX <= 0f || thicknessY <= 0f || layers <= 0)
-            {
-                return;
-            }
-
-            for (int i = 0; i < layers; i++)
-            {
-                float t = (float)(i + 1) / layers;
-                float layerThicknessX = Mathf.Lerp(thicknessX, 2f, t);
-                float layerThicknessY = Mathf.Lerp(thicknessY, 2f, t);
-                Color layerColor = color;
-                layerColor.a *= (1f - t) * 0.85f;
-
-                if (layerColor.a <= 0.001f)
-                {
-                    continue;
-                }
-
-                Widgets.DrawBoxSolid(new Rect(0f, 0f, screenW, layerThicknessY), layerColor);
-                Widgets.DrawBoxSolid(new Rect(0f, screenH - layerThicknessY, screenW, layerThicknessY), layerColor);
-                Widgets.DrawBoxSolid(new Rect(0f, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f), layerColor);
-                Widgets.DrawBoxSolid(new Rect(screenW - layerThicknessX, layerThicknessY, layerThicknessX, screenH - layerThicknessY * 2f), layerColor);
-            }
+            float glowWidth = UI.screenWidth * (0.82f + pulse * 0.06f);
+            float glowHeight = UI.screenHeight * (0.62f + pulse * 0.05f);
+            Rect glowRect = new Rect(
+                (UI.screenWidth - glowWidth) * 0.5f,
+                (UI.screenHeight - glowHeight) * 0.28f,
+                glowWidth,
+                glowHeight);
+            Widgets.DrawBoxSolid(glowRect, bloomColor);
         }
 
         private bool BossAlive()
         {
-            return activeBoss != null &&
-                   !activeBoss.Destroyed &&
-                   !activeBoss.Dead &&
-                   activeBoss.Spawned &&
-                   activeBoss.MapHeld != null;
+            return activeBoss != null && !activeBoss.Destroyed && !activeBoss.Dead && activeBoss.Spawned && activeBoss.MapHeld != null;
         }
     }
 }

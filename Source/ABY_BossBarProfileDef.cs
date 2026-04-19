@@ -25,6 +25,7 @@ namespace AbyssalProtocol
         public string bossSongDefName;
         public float bossSongLengthSeconds = 0f;
         public float bossSongStartDelaySeconds = 0.05f;
+        public float bossSongEndLingerSeconds = 1.35f;
 
         public bool showPhaseMarkers = true;
         public bool showWhenDowned = true;
@@ -95,6 +96,21 @@ namespace AbyssalProtocol
                 (bossPawnKindDefNames == null || bossPawnKindDefNames.Count == 0))
             {
                 yield return defName + " does not define any bossThingDefNames or bossPawnKindDefNames.";
+            }
+
+            if (bossSongLengthSeconds < 0f)
+            {
+                yield return defName + " has bossSongLengthSeconds < 0.";
+            }
+
+            if (bossSongStartDelaySeconds < 0f)
+            {
+                yield return defName + " has bossSongStartDelaySeconds < 0.";
+            }
+
+            if (bossSongEndLingerSeconds < 0f)
+            {
+                yield return defName + " has bossSongEndLingerSeconds < 0.";
             }
 
             if (phaseEntries == null)
