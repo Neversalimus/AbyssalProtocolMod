@@ -275,6 +275,18 @@ namespace AbyssalProtocol
                 arrivalSoundDefName.NullOrEmpty() ? "ABY_RuptureArrive" : arrivalSoundDefName,
                 completionLetterLabelKey,
                 completionLetterDescKey);
+
+            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
+                    Map,
+                    manifestationFaction,
+                    "archon_beast",
+                    pawn,
+                    620f,
+                    bossLabel,
+                    out string escortFailReason) && !escortFailReason.NullOrEmpty())
+            {
+                Log.Warning("[AbyssalProtocol] Archon Beast manifestation escort spawn failed: " + escortFailReason);
+            }
         }
 
         private void DoReleaseWarmup()
