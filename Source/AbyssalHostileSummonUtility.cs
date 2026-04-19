@@ -93,11 +93,7 @@ namespace AbyssalProtocol
                 if (entry == null || entry.KindDef == null)
                 {
                     failReason = "Missing PawnKindDef for hostile pack spawn.";
-                    for (int j = 0; j < generated.Count; j++)
-                    {
-                        generated[j]?.Destroy(DestroyMode.Vanish);
-                    }
-
+                    CleanupGeneratedPawns(generated);
                     return false;
                 }
 
@@ -106,11 +102,7 @@ namespace AbyssalProtocol
                 {
                     if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out Pawn pawn, out failReason))
                     {
-                        for (int j = 0; j < generated.Count; j++)
-                        {
-                            generated[j]?.Destroy(DestroyMode.Vanish);
-                        }
-
+                        CleanupGeneratedPawns(generated);
                         return false;
                     }
 
@@ -166,6 +158,94 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static bool TrySpawnHostilePackAroundAnchor(
+            Map map,
+            List<HostilePackEntry> entries,
+            Faction faction,
+            IntVec3 anchorCell,
+            string packLabel,
+            out string failReason)
+        {
+            failReason = null;
+
+            if (map == null)
+            {
+                failReason = "No map available for hostile pack spawn.";
+                return false;
+            }
+
+            if (entries == null || entries.Count == 0)
+            {
+                failReason = "Missing hostile pack entries for summon spawn.";
+                return false;
+            }
+
+            if (faction == null)
+            {
+                failReason = "No hostile faction available for hostile pack spawn.";
+                return false;
+            }
+
+            if (!anchorCell.IsValid || !anchorCell.InBounds(map))
+            {
+                failReason = "Missing valid anchor cell for local hostile pack spawn.";
+                return false;
+            }
+
+            List<Pawn> generated = new List<Pawn>();
+            for (int entryIndex = 0; entryIndex < entries.Count; entryIndex++)
+            {
+                HostilePackEntry entry = entries[entryIndex];
+                if (entry == null || entry.KindDef == null)
+                {
+                    failReason = "Missing PawnKindDef for hostile pack spawn.";
+                    CleanupGeneratedPawns(generated);
+                    return false;
+                }
+
+                int count = Mathf.Max(0, entry.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    if (!TryGenerateHostilePawn(map, entry.KindDef, faction, out Pawn pawn, out failReason))
+                    {
+                        CleanupGeneratedPawns(generated);
+                        return false;
+                    }
+
+                    generated.Add(pawn);
+                }
+            }
+
+            if (generated.Count <= 0)
+            {
+                failReason = "Failed to generate any hostile pack pawns.";
+                return false;
+            }
+
+            List<Pawn> spawned = new List<Pawn>();
+            for (int i = 0; i < generated.Count; i++)
+            {
+                Pawn pawn = generated[i];
+                IntVec3 spawnCell = FindLocalEscortSpawnCell(anchorCell, map, spawned);
+                GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
+                spawned.Add(pawn);
+            }
+
+            ArchonInfernalVFXUtility.DoSummonVFX(map, anchorCell);
+            ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", anchorCell, map);
+
+            LordJob lordJob = new LordJob_AssaultColony(
+                faction,
+                canKidnap: false,
+                canTimeoutOrFlee: false,
+                sappers: false,
+                useAvoidGridSmart: true,
+                canSteal: false);
+
+            LordMaker.MakeNewLord(faction, lordJob, map, spawned);
+            return true;
+        }
+
         private static bool TryGenerateHostilePawn(
             Map map,
             PawnKindDef kindDef,
@@ -218,6 +298,60 @@ namespace AbyssalProtocol
             AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
             AbyssalDifficultyUtility.ApplyDifficultyScaling(pawn);
             return true;
+        }
+
+        private static void CleanupGeneratedPawns(List<Pawn> generated)
+        {
+            if (generated == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < generated.Count; i++)
+            {
+                generated[i]?.Destroy(DestroyMode.Vanish);
+            }
+        }
+
+        private static IntVec3 FindLocalEscortSpawnCell(IntVec3 root, Map map, List<Pawn> alreadySpawned)
+        {
+            int maxCells = Mathf.Min(GenRadial.RadialPattern.Length, GenRadial.NumCellsInRadius(7.9f));
+            for (int i = 0; i < maxCells; i++)
+            {
+                IntVec3 candidate = root + GenRadial.RadialPattern[i];
+                if (!candidate.InBounds(map) || !candidate.Standable(map) || candidate.Fogged(map))
+                {
+                    continue;
+                }
+
+                if (CellHasPawn(candidate, map) || CellOccupiedBySpawnList(candidate, alreadySpawned))
+                {
+                    continue;
+                }
+
+                return candidate;
+            }
+
+            return FindSpawnCellNear(root, map, alreadySpawned != null ? alreadySpawned.Count : 0);
+        }
+
+        private static bool CellOccupiedBySpawnList(IntVec3 cell, List<Pawn> alreadySpawned)
+        {
+            if (alreadySpawned == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < alreadySpawned.Count; i++)
+            {
+                Pawn pawn = alreadySpawned[i];
+                if (pawn != null && pawn.Spawned && pawn.Position == cell)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static IntVec3 FindSpawnCellNear(IntVec3 root, Map map, int index)

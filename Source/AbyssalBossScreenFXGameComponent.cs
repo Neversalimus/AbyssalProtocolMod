@@ -24,9 +24,12 @@ namespace AbyssalProtocol
         private float nextBossSongProbeRealtime = -1f;
         private int missingBossSongChecks;
         private bool vanillaSongRestoreQueued;
+        private string activeBossSongDefName;
+        private float activeBossSongLengthSeconds;
+        private float activeBossSongStartDelaySeconds = 0.05f;
 
-        private const string BossSongDefName = "ABY_ArchonBossBattleTheme";
-        private const float BossSongLengthSeconds = 115.9f;
+        private const string FallbackBossSongDefName = "ABY_ArchonBossBattleTheme";
+        private const float FallbackBossSongLengthSeconds = 90.0f;
         private const float BossSongRestartLeadSeconds = 0.12f;
         private const float BossSongProbeDelaySeconds = 2.2f;
         private const float BossSongProbeIntervalSeconds = 0.65f;
@@ -52,10 +55,14 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
             Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
+            Scribe_Values.Look(ref activeBossSongDefName, "activeBossSongDefName");
+            Scribe_Values.Look(ref activeBossSongLengthSeconds, "activeBossSongLengthSeconds", 0f);
+            Scribe_Values.Look(ref activeBossSongStartDelaySeconds, "activeBossSongStartDelaySeconds", 0.05f);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 RefreshActiveBossBarProfile();
+                RefreshActiveBossSongProfile();
             }
         }
 
@@ -74,7 +81,8 @@ namespace AbyssalProtocol
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             RegisterRitualPulse(effectMap, 0.35f);
-            ScheduleBossSongStart(0.05f);
+            RefreshActiveBossSongProfile();
+            ScheduleBossSongStart(activeBossSongStartDelaySeconds);
             vanillaSongRestoreQueued = false;
         }
 
@@ -90,6 +98,9 @@ namespace AbyssalProtocol
             activeBossDisplayLabelOverride = null;
             effectMap = null;
             currentStrength = 0f;
+            activeBossSongDefName = null;
+            activeBossSongLengthSeconds = 0f;
+            activeBossSongStartDelaySeconds = 0.05f;
             AbyssalBossBarRenderer.ResetVisualState();
             ResetBossMusicState();
         }
@@ -121,6 +132,28 @@ namespace AbyssalProtocol
             }
 
             activeBossBarProfile = AbyssalBossBarUtility.ResolveProfileFor(activeBoss);
+            RefreshActiveBossSongProfile();
+        }
+
+        private void RefreshActiveBossSongProfile()
+        {
+            string resolvedSongDefName = activeBossBarProfile?.bossSongDefName;
+            float resolvedSongLengthSeconds = activeBossBarProfile?.bossSongLengthSeconds ?? 0f;
+            float resolvedSongStartDelaySeconds = activeBossBarProfile?.bossSongStartDelaySeconds ?? 0.05f;
+
+            if (resolvedSongDefName.NullOrEmpty())
+            {
+                resolvedSongDefName = FallbackBossSongDefName;
+            }
+
+            if (resolvedSongLengthSeconds <= 0.01f)
+            {
+                resolvedSongLengthSeconds = FallbackBossSongLengthSeconds;
+            }
+
+            activeBossSongDefName = resolvedSongDefName;
+            activeBossSongLengthSeconds = resolvedSongLengthSeconds;
+            activeBossSongStartDelaySeconds = Mathf.Max(0f, resolvedSongStartDelaySeconds);
         }
 
         public void RegisterRitualPulse(Map map, float strength)
@@ -160,6 +193,9 @@ namespace AbyssalProtocol
                 activeBossBarProfile = null;
                 activeBossDisplayLabelOverride = null;
                 effectMap = null;
+                activeBossSongDefName = null;
+                activeBossSongLengthSeconds = 0f;
+                activeBossSongStartDelaySeconds = 0.05f;
                 AbyssalBossBarRenderer.ResetVisualState();
                 ResetBossMusicState();
             }
@@ -194,9 +230,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SongDef song = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
+            SongDef song = activeBossSongDefName.NullOrEmpty() ? null : DefDatabase<SongDef>.GetNamedSilentFail(activeBossSongDefName);
             MusicManagerPlay music = Find.MusicManagerPlay;
-            if (song == null || music == null)
+            if (song == null || music == null || activeBossSongLengthSeconds <= 0.01f)
             {
                 return;
             }
@@ -204,7 +240,7 @@ namespace AbyssalProtocol
             float now = Time.realtimeSinceStartup;
             if (nextBossMusicRealtime < 0f)
             {
-                ScheduleBossSongStart(0.05f);
+                ScheduleBossSongStart(activeBossSongStartDelaySeconds);
             }
 
             if (now >= nextBossMusicRealtime)
@@ -279,8 +315,8 @@ namespace AbyssalProtocol
             }
 
             vanillaSongRestoreQueued = true;
-            nextBossMusicRealtime = now + BossSongLengthSeconds - BossSongRestartLeadSeconds;
-            bossSongExpectedEndRealtime = now + BossSongLengthSeconds;
+            nextBossMusicRealtime = now + activeBossSongLengthSeconds - BossSongRestartLeadSeconds;
+            bossSongExpectedEndRealtime = now + activeBossSongLengthSeconds;
             nextBossSongProbeRealtime = now + BossSongProbeDelaySeconds;
             missingBossSongChecks = 0;
             return true;
@@ -299,7 +335,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SongDef bossSong = DefDatabase<SongDef>.GetNamedSilentFail(BossSongDefName);
+            SongDef bossSong = activeBossSongDefName.NullOrEmpty() ? null : DefDatabase<SongDef>.GetNamedSilentFail(activeBossSongDefName);
             if (bossSong == null)
             {
                 vanillaSongRestoreQueued = false;

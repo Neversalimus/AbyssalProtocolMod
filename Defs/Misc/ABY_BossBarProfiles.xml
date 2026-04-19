@@ -12,6 +12,9 @@
     <displayLabel>Archon Beast</displayLabel>
     <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonBeast</iconTexPath>
     <styleId>abyssal_archon</styleId>
+    <bossSongDefName>ABY_ArchonBossBattleTheme</bossSongDefName>
+    <bossSongLengthSeconds>90.0</bossSongLengthSeconds>
+    <bossSongStartDelaySeconds>0.05</bossSongStartDelaySeconds>
     <useRawIconColors>true</useRawIconColors>
     <priority>100</priority>
     <phaseSourceMode>ArchonCoreController</phaseSourceMode>
@@ -51,6 +54,9 @@
     <subFillTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_SubFill_Rupture</subFillTexPath>
     <iconFrameTexPath>UI/AbyssalBossBar/Rupture/ABY_BossBar_IconFrame_Rupture</iconFrameTexPath>
     <styleId>abyssal_rupture</styleId>
+    <bossSongDefName>ABY_RuptureBossBattleTheme</bossSongDefName>
+    <bossSongLengthSeconds>115.914</bossSongLengthSeconds>
+    <bossSongStartDelaySeconds>0.05</bossSongStartDelaySeconds>
     <useRawIconColors>true</useRawIconColors>
     <introLabelKey>ABY_BossBar_Phase_Veil</introLabelKey>
     <priority>110</priority>
@@ -96,6 +102,9 @@
     <subFillTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_SubFill_Saint</subFillTexPath>
     <iconFrameTexPath>UI/AbyssalBossBar/Saint/ABY_BossBar_IconFrame_Saint</iconFrameTexPath>
     <styleId>abyssal_reactor_saint</styleId>
+    <bossSongDefName>ABY_ReactorSaintBossBattleTheme</bossSongDefName>
+    <bossSongLengthSeconds>155.0</bossSongLengthSeconds>
+    <bossSongStartDelaySeconds>0.00</bossSongStartDelaySeconds>
     <useRawIconColors>true</useRawIconColors>
     <priority>105</priority>
     <phaseSourceMode>ReactorSaintPhaseController</phaseSourceMode>

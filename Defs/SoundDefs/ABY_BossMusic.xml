@@ -26,4 +26,54 @@
     </subSounds>
   </SoundDef>
 
+  <SoundDef>
+    <defName>ABY_RuptureBossBattleTheme</defName>
+    <context>Any</context>
+    <maxVoices>1</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_Rupture_BattleTheme</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>7.8</min>
+          <max>8.6</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.0</min>
+          <max>1.0</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintBossBattleTheme</defName>
+    <context>Any</context>
+    <maxVoices>1</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ReactorSaint_BossBattleTheme</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>7.8</min>
+          <max>8.6</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.0</min>
+          <max>1.0</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
 </Defs>

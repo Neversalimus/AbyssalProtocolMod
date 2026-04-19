@@ -8,4 +8,18 @@
     <tense>true</tense>
   </SongDef>
 
+  <SongDef>
+    <defName>ABY_RuptureBossBattleTheme</defName>
+    <clipPath>ABY/ABY_Rupture_BattleTheme</clipPath>
+    <volume>0.92</volume>
+    <tense>true</tense>
+  </SongDef>
+
+  <SongDef>
+    <defName>ABY_ReactorSaintBossBattleTheme</defName>
+    <clipPath>ABY/ReactorSaint_BossBattleTheme</clipPath>
+    <volume>0.94</volume>
+    <tense>true</tense>
+  </SongDef>
+
 </Defs>

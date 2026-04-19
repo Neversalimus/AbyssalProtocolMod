@@ -22,6 +22,9 @@ namespace AbyssalProtocol
         public string introLabelKey;
         public string phaseSourceMode;
         public string secondaryBarSource;
+        public string bossSongDefName;
+        public float bossSongLengthSeconds = 0f;
+        public float bossSongStartDelaySeconds = 0.05f;
 
         public bool showPhaseMarkers = true;
         public bool showWhenDowned = true;

@@ -105,22 +105,16 @@ namespace AbyssalProtocol
                 CompletionLetterLabelKey,
                 CompletionLetterDescKey);
 
-            if (AbyssalBossOrchestrationUtility.ShouldSpawnEscortAtBossRelease("reactor_saint") || AbyssalBossOrchestrationUtility.HasBossEscortProfile("reactor_saint"))
-            {
-                AbyssalBossOrchestrationUtility.TrySpawnEscortPack(
+            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
                     Map,
                     faction,
                     "reactor_saint",
-                    releaseCell,
+                    pawn,
                     980f,
                     BossLabel,
-                    out _,
-                    out string escortFailReason);
-
-                if (!escortFailReason.NullOrEmpty())
-                {
-                    Log.Warning("[Abyssal Protocol] Reactor Saint escort warning: " + escortFailReason);
-                }
+                    out string escortFailReason) && !escortFailReason.NullOrEmpty())
+            {
+                Log.Warning("[AbyssalProtocol] Reactor Saint cocoon escort spawn failed: " + escortFailReason);
             }
 
             FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.30f);

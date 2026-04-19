@@ -345,7 +345,6 @@ namespace AbyssalProtocol
             FleckMaker.ThrowHeatGlow(Position, Map, 1.85f);
             FleckMaker.ThrowMicroSparks(DrawPos, Map);
             FleckMaker.ThrowMicroSparks(DrawPos, Map);
-            ABY_SoundUtility.PlayAt("ABY_ReactorSaintCharge", Position, Map);
 
             AbyssalBossSummonUtility.FinalizeBossArrival(
                 pawn,
@@ -357,22 +356,16 @@ namespace AbyssalProtocol
                 completionLetterLabelKey,
                 completionLetterDescKey);
 
-            if (AbyssalBossOrchestrationUtility.ShouldSpawnEscortAtBossRelease("reactor_saint") || AbyssalBossOrchestrationUtility.HasBossEscortProfile("reactor_saint"))
-            {
-                AbyssalBossOrchestrationUtility.TrySpawnEscortPack(
+            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
                     Map,
                     manifestationFaction,
                     "reactor_saint",
-                    spawnCell,
+                    pawn,
                     980f,
                     bossLabel,
-                    out _,
-                    out string escortFailReason);
-
-                if (!escortFailReason.NullOrEmpty())
-                {
-                    Log.Warning("[Abyssal Protocol] Reactor Saint escort warning: " + escortFailReason);
-                }
+                    out string escortFailReason) && !escortFailReason.NullOrEmpty())
+            {
+                Log.Warning("[AbyssalProtocol] Reactor Saint manifestation escort spawn failed: " + escortFailReason);
             }
         }
 
