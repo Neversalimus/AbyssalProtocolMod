@@ -332,7 +332,7 @@ namespace AbyssalProtocol
             Widgets.Label(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 100f, 18f), AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe)));
+            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 100f, 18f), AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
 
             int primaryProductCount = AbyssalForgeProgressUtility.GetPrimaryProductCount(recipe);
             if (primaryProductCount > 1)
@@ -399,35 +399,39 @@ namespace AbyssalProtocol
                 AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, false);
             }
 
-            string description = product != null && !product.description.NullOrEmpty() ? product.description : recipe.description;
-            string tooltip = description;
-            string costBlock = AbyssalForgeProgressUtility.GetRecipeIngredientTooltip(recipe);
-            string stateBlock = AbyssalForgeProgressUtility.GetRecipeAvailabilityTooltip(forge.Map, recipe);
-            if (!costBlock.NullOrEmpty())
+            List<string> tooltipLines = new List<string>
             {
-                if (!tooltip.NullOrEmpty())
-                {
-                    tooltip += "\n\n";
-                }
-                tooltip += "ABY_ForgePatternRequirementsLabel".Translate() + "\n" + costBlock;
-            }
-            if (!stateBlock.NullOrEmpty())
+                AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe)
+            };
+
+            if (primaryProductCount > 1)
             {
-                if (!tooltip.NullOrEmpty())
-                {
-                    tooltip += "\n\n";
-                }
-                tooltip += "ABY_ForgePatternRequirementsState".Translate() + "\n" + stateBlock;
-            }
-            if (freshlyUnlocked)
-            {
-                if (!tooltip.NullOrEmpty())
-                {
-                    tooltip += "\n\n";
-                }
-                tooltip += "ABY_ForgeUnlockToast".Translate(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+                tooltipLines.Add("ABY_ForgePatternOutputCount".Translate(primaryProductCount));
             }
 
+            string costBlock = AbyssalForgeProgressUtility.GetRecipeIngredientTooltip(recipe);
+            if (!costBlock.NullOrEmpty())
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add("ABY_ForgePatternRequirementsLabel".Translate());
+                tooltipLines.Add(costBlock);
+            }
+
+            string stateBlock = AbyssalForgeProgressUtility.GetRecipeAvailabilityTooltip(forge.Map, recipe);
+            if (!stateBlock.NullOrEmpty())
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add("ABY_ForgePatternRequirementsState".Translate());
+                tooltipLines.Add(stateBlock);
+            }
+
+            if (freshlyUnlocked)
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add("ABY_ForgeUnlockToast".Translate(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)));
+            }
+
+            string tooltip = string.Join("\n", tooltipLines.Where(line => line != null).ToArray()).Trim();
             if (!tooltip.NullOrEmpty())
             {
                 TooltipHandler.TipRegion(rect, tooltip);

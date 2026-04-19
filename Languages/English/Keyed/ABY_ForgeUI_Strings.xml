@@ -41,6 +41,13 @@
   <ABY_ForgePatternResearchRequired>Research required</ABY_ForgePatternResearchRequired>
   <ABY_ForgePatternNoMaterialData>No material data available.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgePatternOutputCount>Output: x{0}</ABY_ForgePatternOutputCount>
+  <ABY_ForgePatternSummary_Core>Forge core pattern</ABY_ForgePatternSummary_Core>
+  <ABY_ForgePatternSummary_Weapons>Weapon pattern</ABY_ForgePatternSummary_Weapons>
+  <ABY_ForgePatternSummary_Armor>Armor pattern</ABY_ForgePatternSummary_Armor>
+  <ABY_ForgePatternSummary_Implants>Implant pattern</ABY_ForgePatternSummary_Implants>
+  <ABY_ForgePatternSummary_Ritual>Ritual support pattern</ABY_ForgePatternSummary_Ritual>
+  <ABY_ForgePatternSummary_Herald>Herald pattern</ABY_ForgePatternSummary_Herald>
+  <ABY_ForgePatternSummary_Generic>Forge pattern</ABY_ForgePatternSummary_Generic>
   <ABY_ForgePatternOpenInfo>Open item info</ABY_ForgePatternOpenInfo>
   <ABY_ForgeNoUnlockedRecipes>No unlocked patterns are available.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Clipboard actions are unavailable while no valid bill can be copied here.</ABY_ForgeClipboardLocked>

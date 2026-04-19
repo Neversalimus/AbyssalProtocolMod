@@ -297,6 +297,27 @@ namespace AbyssalProtocol
             return ("ABY_ForgeCategory_" + category).Translate();
         }
 
+        public static string GetPatternBrowserSummary(RecipeDef recipe)
+        {
+            switch (GetCategory(recipe))
+            {
+                case CoreCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Core", "Forge core pattern");
+                case WeaponsCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Weapons", "Weapon pattern");
+                case ArmorCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Armor", "Armor pattern");
+                case ImplantsCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Implants", "Implant pattern");
+                case RitualCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Ritual", "Ritual support pattern");
+                case HeraldCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Herald", "Herald pattern");
+                default:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_Generic", "Forge pattern");
+            }
+        }
+
         public static string GetRecipeDisplayLabel(RecipeDef recipe)
         {
             if (recipe == null)

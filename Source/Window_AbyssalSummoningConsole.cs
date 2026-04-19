@@ -147,7 +147,7 @@ namespace AbyssalProtocol
 
             Rect titleRect = new Rect(rect.x + 70f, rect.y + 12f, rect.width - 150f, 22f);
             Rect tagRect = new Rect(rect.x + 70f, rect.y + 34f, rect.width - 150f, 16f);
-            Rect descRect = new Rect(rect.x + 12f, rect.y + 58f, rect.width - 24f, 56f);
+            Rect descRect = new Rect(rect.x + 12f, rect.y + 54f, rect.width - 24f, 58f);
             Rect metaRect = new Rect(rect.x + 12f, rect.y + 116f, rect.width - 24f, 18f);
             Rect selectRect = new Rect(rect.xMax - 108f, rect.y + rect.height - 34f, 96f, 28f);
 
@@ -525,9 +525,9 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             string ritualDescription = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
             float descriptionHeight = Text.CalcHeight(ritualDescription, rect.width);
-            Widgets.Label(new Rect(rect.x, rect.y + 76f, rect.width, descriptionHeight), ritualDescription);
+            Widgets.Label(new Rect(rect.x, rect.y + 72f, rect.width, descriptionHeight), ritualDescription);
 
-            float rewardY = rect.y + 84f + descriptionHeight;
+            float rewardY = rect.y + 80f + descriptionHeight;
             Text.Font = GameFont.Small;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), "ABY_CircleRewardsHeader".Translate());
             Text.Font = GameFont.Tiny;
@@ -689,7 +689,7 @@ namespace AbyssalProtocol
                     AbyssalSummoningConsoleUtility.GetRewardVectorProgression(ritual),
                     AbyssalSummoningConsoleUtility.GetRewardVectorFollowUp(ritual)
                 }.Where(line => !line.NullOrEmpty()).ToArray()), width);
-            float total = 130f + descriptionHeight + rewardHeight;
+            float total = 126f + descriptionHeight + rewardHeight;
 
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
             {

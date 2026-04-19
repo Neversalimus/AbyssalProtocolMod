@@ -41,6 +41,13 @@
   <ABY_ForgePatternResearchRequired>Нужно исследование</ABY_ForgePatternResearchRequired>
   <ABY_ForgePatternNoMaterialData>Нет данных о материалах.</ABY_ForgePatternNoMaterialData>
   <ABY_ForgePatternOutputCount>Выход: x{0}</ABY_ForgePatternOutputCount>
+  <ABY_ForgePatternSummary_Core>Шаблон ядра forge</ABY_ForgePatternSummary_Core>
+  <ABY_ForgePatternSummary_Weapons>Шаблон оружия</ABY_ForgePatternSummary_Weapons>
+  <ABY_ForgePatternSummary_Armor>Шаблон брони</ABY_ForgePatternSummary_Armor>
+  <ABY_ForgePatternSummary_Implants>Шаблон импланта</ABY_ForgePatternSummary_Implants>
+  <ABY_ForgePatternSummary_Ritual>Шаблон ритуальной поддержки</ABY_ForgePatternSummary_Ritual>
+  <ABY_ForgePatternSummary_Herald>Herald-шаблон</ABY_ForgePatternSummary_Herald>
+  <ABY_ForgePatternSummary_Generic>Шаблон forge</ABY_ForgePatternSummary_Generic>
   <ABY_ForgePatternOpenInfo>Открыть информацию о предмете</ABY_ForgePatternOpenInfo>
   <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить bill.</ABY_ForgeClipboardLocked>
