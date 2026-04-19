@@ -19,8 +19,8 @@ namespace AbyssalProtocol
         private const string ChainZealotRaceDefName = "ABY_ChainZealot";
         private const string NullPriestRaceDefName = "ABY_NullPriest";
         private const string ChoirEngineRaceDefName = "ABY_ChoirEngine";
-        private const string ReactorSaintRaceDefName = "ABY_ReactorSaint";
-        private const string ReactorSaintManifestationDefName = "ABY_Manifestation_ReactorSaintArrival";
+        private const string ReactorSaintKindDefName = "ABY_ReactorSaint";
+        private const string ReactorSaintManifestationDefName = "ABY_Manifestation_ReactorSaintArrivalControlled";
         private const string ReactorSaintRitualId = "reactor_saint";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
@@ -186,12 +186,7 @@ namespace AbyssalProtocol
 
         public static bool IsReactorSaintKindDefName(string kindDefName)
         {
-            return string.Equals(kindDefName, ReactorSaintRaceDefName, StringComparison.Ordinal);
-        }
-
-        public static bool IsReactorSaintManifestationDef(ThingDef manifestationDef)
-        {
-            return manifestationDef != null && string.Equals(manifestationDef.defName, ReactorSaintManifestationDefName, StringComparison.Ordinal);
+            return string.Equals(kindDefName, ReactorSaintKindDefName, StringComparison.Ordinal);
         }
 
         public static bool TryFindReactorSaintArrivalCell(
@@ -416,7 +411,7 @@ namespace AbyssalProtocol
             }
 
             string lastPortalFailReason = null;
-            string bossKindDefName = bossPawn.kindDef?.defName ?? ReactorSaintRaceDefName;
+            string bossKindDefName = bossPawn.kindDef?.defName ?? ReactorSaintKindDefName;
             for (int i = 0; i < candidatePortalCells.Count; i++)
             {
                 IntVec3 portalCell = candidatePortalCells[i];
@@ -1350,6 +1345,7 @@ namespace AbyssalProtocol
         {
             return defName == ArchonBeastRaceDefName
                 || defName == ArchonOfRuptureRaceDefName
+                || defName == ReactorSaintKindDefName
                 || defName == RiftImpRaceDefName
                 || defName == EmberHoundRaceDefName
                 || defName == HexgunThrallRaceDefName

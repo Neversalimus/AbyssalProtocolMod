@@ -2,6 +2,28 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
+    <defName>ABY_Manifestation_ReactorSaintArrivalControlled</defName>
+    <label>reactor saint manifestation</label>
+    <description>A controlled reactor-saint breach cocoon descending toward the colony through a stabilized manifestation channel.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_ReactorSaintManifestation</thingClass>
+    <category>Building</category>
+    <graphicData>
+      <texPath>Things/VFX/Manifestation/ABY_Manifestation_Invisible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>(1.0,1.0)</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <fillPercent>0.01</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <selectable>false</selectable>
+    <useHitPoints>false</useHitPoints>
+    <rotatable>false</rotatable>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
     <defName>ABY_Manifestation_ReactorSaintArrival</defName>
     <label>reactor saint cocoon incoming</label>
     <description>A biomechanical breach cocoon descending toward the colony.</description>

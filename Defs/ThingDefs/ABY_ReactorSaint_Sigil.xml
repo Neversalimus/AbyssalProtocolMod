@@ -33,7 +33,7 @@
         <bossLabel>Infernal Reactor Saint</bossLabel>
         <spawnPoints>1320</spawnPoints>
         <ritualWarmupTicks>210</ritualWarmupTicks>
-        <arrivalManifestationDefName>ABY_Manifestation_ReactorSaintArrival</arrivalManifestationDefName>
+        <arrivalManifestationDefName>ABY_Manifestation_ReactorSaintArrivalControlled</arrivalManifestationDefName>
         <arrivalManifestationWarmupTicks>95</arrivalManifestationWarmupTicks>
         <arrivalNearColony>true</arrivalNearColony>
         <arrivalNearColonyMinDistance>14</arrivalNearColonyMinDistance>
