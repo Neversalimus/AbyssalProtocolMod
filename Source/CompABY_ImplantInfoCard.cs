@@ -254,13 +254,17 @@ namespace AbyssalProtocol
 
         private static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
         {
-            TaggedString translated = key.Translate(args);
-            if (translated.RawText == key)
-            {
-                return string.Format(fallbackFormat, args);
-            }
+            TaggedString translated = key.Translate();
+            string template = translated.RawText == key ? fallbackFormat : translated.Resolve();
 
-            return translated.Resolve();
+            try
+            {
+                return string.Format(template, args);
+            }
+            catch
+            {
+                return template;
+            }
         }
     }
 }
