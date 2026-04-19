@@ -32,13 +32,25 @@ namespace AbyssalProtocol
             }
 
             HediffDef implantHediff = ResolveImplantHediff(implantThingDef);
+
+            StatCategoryDef category = ResolveStatCategory();
+            int displayOrder = 6200;
+
+            string implantDescription = ResolveImplantDescription(implantThingDef, implantHediff);
+            if (!implantDescription.NullOrEmpty())
+            {
+                yield return MakeEntry(
+                    category,
+                    displayOrder++,
+                    TranslateOrFallback("ABY_ImplantInfo_Profile", "Implant profile"),
+                    implantDescription,
+                    TranslateOrFallback("ABY_ImplantInfo_ProfileDesc", "Summary of what this implant is and how it alters the host."));
+            }
+
             if (implantHediff == null)
             {
                 yield break;
             }
-
-            StatCategoryDef category = ResolveStatCategory();
-            int displayOrder = 6200;
 
             if (implantHediff.addedPartProps != null && implantHediff.addedPartProps.partEfficiency > 0f)
             {
@@ -236,6 +248,25 @@ namespace AbyssalProtocol
         {
             return new StatDrawEntry(category, label, value, description, displayOrder);
         }
+
+        private static string ResolveImplantDescription(ThingDef implantThingDef, HediffDef implantHediff)
+        {
+            string thingDescription = implantThingDef?.description;
+            string hediffDescription = implantHediff?.description;
+
+            if (!thingDescription.NullOrEmpty())
+            {
+                return thingDescription;
+            }
+
+            if (!hediffDescription.NullOrEmpty())
+            {
+                return hediffDescription;
+            }
+
+            return null;
+        }
+
 
         private static StatCategoryDef ResolveStatCategory()
         {

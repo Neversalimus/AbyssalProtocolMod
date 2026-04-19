@@ -12,4 +12,6 @@
   <ABY_ImplantInfo_PainDesc>Изменяет ощущаемую боль на {0}, пока имплант установлен.</ABY_ImplantInfo_PainDesc>
   <ABY_ImplantInfo_HungerRate>Скорость голода</ABY_ImplantInfo_HungerRate>
   <ABY_ImplantInfo_HungerRateDesc>Изменяет скорость голода на {0}, пока имплант установлен.</ABY_ImplantInfo_HungerRateDesc>
+  <ABY_ImplantInfo_Profile>Профиль импланта</ABY_ImplantInfo_Profile>
+  <ABY_ImplantInfo_ProfileDesc>Краткое описание импланта и того, как он изменяет носителя.</ABY_ImplantInfo_ProfileDesc>
 </LanguageData>
