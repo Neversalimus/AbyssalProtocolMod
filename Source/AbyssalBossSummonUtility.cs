@@ -19,6 +19,9 @@ namespace AbyssalProtocol
         private const string ChainZealotRaceDefName = "ABY_ChainZealot";
         private const string NullPriestRaceDefName = "ABY_NullPriest";
         private const string ChoirEngineRaceDefName = "ABY_ChoirEngine";
+        private const string ReactorSaintRaceDefName = "ABY_ReactorSaint";
+        private const string ReactorSaintManifestationDefName = "ABY_Manifestation_ReactorSaintArrival";
+        private const string ReactorSaintRitualId = "reactor_saint";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
 
@@ -179,6 +182,288 @@ namespace AbyssalProtocol
             }
 
             return TryFindBossArrivalCell(map, out cell);
+        }
+
+        public static bool IsReactorSaintKindDefName(string kindDefName)
+        {
+            return string.Equals(kindDefName, ReactorSaintRaceDefName, StringComparison.Ordinal);
+        }
+
+        public static bool IsReactorSaintManifestationDef(ThingDef manifestationDef)
+        {
+            return manifestationDef != null && string.Equals(manifestationDef.defName, ReactorSaintManifestationDefName, StringComparison.Ordinal);
+        }
+
+        public static bool TryFindReactorSaintArrivalCell(
+            Map map,
+            IntVec3 fallbackOrigin,
+            float minDistance,
+            float maxDistance,
+            out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null)
+            {
+                return false;
+            }
+
+            IntVec3 anchor = GetColonyAnchorCell(map, fallbackOrigin);
+            float min = Mathf.Max(10f, minDistance);
+            float max = Mathf.Max(min + 3f, maxDistance);
+
+            if (TryFindBestReactorSaintArrivalCell(map, anchor, min, max, out cell))
+            {
+                return true;
+            }
+
+            float expandedMin = Mathf.Max(8f, min - 2f);
+            float expandedMax = Mathf.Min(Mathf.Max(map.Size.x, map.Size.z) - 8f, max + 8f);
+            if (expandedMax > expandedMin && TryFindBestReactorSaintArrivalCell(map, anchor, expandedMin, expandedMax, out cell))
+            {
+                return true;
+            }
+
+            if (TryFindNearColonyArrivalCell(map, fallbackOrigin, minDistance, maxDistance, out IntVec3 genericCell)
+                && CanReachColonyAnchor(map, genericCell, anchor)
+                && IsValidReactorSaintArrivalCell(map, genericCell, anchor))
+            {
+                cell = genericCell;
+                return true;
+            }
+
+            return TryFindBossArrivalCell(map, out cell);
+        }
+
+        public static bool TryResolveReactorSaintManifestationCell(Map map, ThingDef manifestationDef, IntVec3 requestedCell, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || manifestationDef == null)
+            {
+                return false;
+            }
+
+            IntVec3 anchor = GetColonyAnchorCell(map, requestedCell);
+            if (requestedCell.IsValid && IsValidReactorSaintArrivalCell(map, requestedCell, anchor) && IsUsableBossManifestationCell(map, manifestationDef, requestedCell))
+            {
+                cell = requestedCell;
+                return true;
+            }
+
+            if (TryFindReactorSaintReleaseCell(map, requestedCell.IsValid ? requestedCell : anchor, out IntVec3 nearbySafeCell)
+                && IsUsableBossManifestationCell(map, manifestationDef, nearbySafeCell))
+            {
+                cell = nearbySafeCell;
+                return true;
+            }
+
+            if (TryFindReactorSaintArrivalCell(map, requestedCell.IsValid ? requestedCell : anchor, 12f, 28f, out IntVec3 arrivalCell)
+                && IsUsableBossManifestationCell(map, manifestationDef, arrivalCell))
+            {
+                cell = arrivalCell;
+                return true;
+            }
+
+            if (TryResolveBossManifestationCell(map, manifestationDef, requestedCell, out IntVec3 genericCell)
+                && IsUsableBossManifestationCell(map, manifestationDef, genericCell)
+                && IsValidReactorSaintArrivalCell(map, genericCell, anchor))
+            {
+                cell = genericCell;
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool TryFindReactorSaintReleaseCell(Map map, IntVec3 origin, out IntVec3 cell, float maxRadius = 7.9f)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 colonyAnchor = GetColonyAnchorCell(map, origin);
+            if (IsValidReactorSaintReleaseCell(map, origin, colonyAnchor))
+            {
+                cell = origin;
+                return true;
+            }
+
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, maxRadius, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                if (!IsValidReactorSaintReleaseCell(map, candidate, colonyAnchor))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(origin);
+                float score = 100f - Mathf.Abs(distance - 3.8f) * 4.5f;
+                score += CountAdjacentStandableCells(map, candidate) * 0.12f;
+                score += CountStandableCellsInRadius(map, candidate, 2.9f) * 0.05f;
+                if (GenSight.LineOfSight(candidate, colonyAnchor, map))
+                {
+                    score += 0.35f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        public static bool TryFindReactorSaintEscortPortalCellNear(Map map, IntVec3 origin, out IntVec3 cell, float minRadius = 6.2f, float maxRadius = 10.8f)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 colonyAnchor = GetColonyAnchorCell(map, origin);
+            float preferredRadius = (minRadius + maxRadius) * 0.5f;
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, maxRadius, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(origin);
+                if (distance < minRadius || distance > maxRadius)
+                {
+                    continue;
+                }
+
+                if (!IsValidReactorSaintEscortPortalCell(map, candidate, colonyAnchor))
+                {
+                    continue;
+                }
+
+                float score = -Mathf.Abs(distance - preferredRadius);
+                score += CountAdjacentStandableCells(map, candidate) * 0.08f;
+                score += CountStandableCellsInRadius(map, candidate, 2.4f) * 0.04f;
+                if (!candidate.Roofed(map))
+                {
+                    score += 0.25f;
+                }
+
+                if (GenSight.LineOfSight(candidate, colonyAnchor, map))
+                {
+                    score += 0.40f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        public static bool TrySpawnReactorSaintEscort(Map map, Faction faction, Pawn bossPawn, IntVec3 releaseCell, string bossLabel, out string failReason)
+        {
+            failReason = null;
+            if (map == null || faction == null || bossPawn == null || bossPawn.Dead || !bossPawn.Spawned)
+            {
+                failReason = "Missing map, faction, or live Reactor Saint for escort spawn.";
+                return false;
+            }
+
+            List<IntVec3> candidatePortalCells = new List<IntVec3>();
+            AddUniqueCell(candidatePortalCells, releaseCell);
+
+            if (TryFindReactorSaintEscortPortalCellNear(map, releaseCell, out IntVec3 tightPortalCell))
+            {
+                AddUniqueCell(candidatePortalCells, tightPortalCell);
+            }
+
+            if (TryFindReactorSaintEscortPortalCellNear(map, releaseCell, out IntVec3 midPortalCell, 7.5f, 12.6f))
+            {
+                AddUniqueCell(candidatePortalCells, midPortalCell);
+            }
+
+            if (TryFindEscortPortalCellNear(map, releaseCell, out IntVec3 genericPortalCell, 8.5f, 14.6f))
+            {
+                AddUniqueCell(candidatePortalCells, genericPortalCell);
+            }
+
+            string lastPortalFailReason = null;
+            string bossKindDefName = bossPawn.kindDef?.defName ?? ReactorSaintRaceDefName;
+            for (int i = 0; i < candidatePortalCells.Count; i++)
+            {
+                IntVec3 portalCell = candidatePortalCells[i];
+                if (!portalCell.IsValid || !portalCell.InBounds(map))
+                {
+                    continue;
+                }
+
+                if (AbyssalBossOrchestrationUtility.TrySpawnEscortPackThroughPortal(
+                        map,
+                        faction,
+                        ReactorSaintRitualId,
+                        bossKindDefName,
+                        portalCell,
+                        980f,
+                        bossLabel,
+                        out failReason))
+                {
+                    return true;
+                }
+
+                if (!failReason.NullOrEmpty())
+                {
+                    lastPortalFailReason = failReason;
+                }
+            }
+
+            if (AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
+                    map,
+                    faction,
+                    ReactorSaintRitualId,
+                    bossPawn,
+                    980f,
+                    bossLabel,
+                    out failReason))
+            {
+                return true;
+            }
+
+            if (failReason.NullOrEmpty())
+            {
+                failReason = lastPortalFailReason.NullOrEmpty()
+                    ? "Reactor Saint escort spawn failed after portal and local fallback attempts."
+                    : lastPortalFailReason;
+            }
+
+            return false;
         }
 
         public static bool TryResolveBossManifestationCell(Map map, ThingDef manifestationDef, IntVec3 requestedCell, out IntVec3 cell)
@@ -478,6 +763,155 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private static bool TryFindBestReactorSaintArrivalCell(Map map, IntVec3 colonyAnchor, float minRadius, float maxRadius, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !colonyAnchor.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+            float preferredRadius = (minRadius + maxRadius) * 0.5f;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(colonyAnchor, maxRadius, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                float distance = candidate.DistanceTo(colonyAnchor);
+                if (distance < minRadius || distance > maxRadius)
+                {
+                    continue;
+                }
+
+                if (!IsValidReactorSaintArrivalCell(map, candidate, colonyAnchor))
+                {
+                    continue;
+                }
+
+                float score = ScoreReactorSaintArrivalCell(map, candidate, colonyAnchor, distance, preferredRadius);
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        private static bool IsValidReactorSaintArrivalCell(Map map, IntVec3 cell, IntVec3 colonyAnchor)
+        {
+            if (!IsValidNearColonyArrivalCell(map, cell))
+            {
+                return false;
+            }
+
+            if (!ABY_Phase2PortalUtility.IsBossSafeStandableCell(map, cell, null, false))
+            {
+                return false;
+            }
+
+            if (HasBlockingPlayerBuildingNearby(map, cell, 3.6f))
+            {
+                return false;
+            }
+
+            if (CountAdjacentStandableCells(map, cell) < 6)
+            {
+                return false;
+            }
+
+            if (CountStandableCellsInRadius(map, cell, 2.9f) < 14)
+            {
+                return false;
+            }
+
+            return CanReachColonyAnchor(map, cell, colonyAnchor);
+        }
+
+        private static bool IsValidReactorSaintReleaseCell(Map map, IntVec3 cell, IntVec3 colonyAnchor)
+        {
+            if (map == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (!cell.Standable(map) || !cell.Walkable(map) || cell.Fogged(map) || cell.Roofed(map))
+            {
+                return false;
+            }
+
+            if (cell.GetFirstPawn(map) != null || cell.GetEdifice(map) != null)
+            {
+                return false;
+            }
+
+            if (map.areaManager?.Home != null && map.areaManager.Home[cell])
+            {
+                return false;
+            }
+
+            if (HasBlockingPlayerBuildingNearby(map, cell, 2.4f))
+            {
+                return false;
+            }
+
+            if (CountAdjacentStandableCells(map, cell) < 5)
+            {
+                return false;
+            }
+
+            if (CountStandableCellsInRadius(map, cell, 2.4f) < 11)
+            {
+                return false;
+            }
+
+            return CanReachColonyAnchor(map, cell, colonyAnchor);
+        }
+
+        private static bool IsValidReactorSaintEscortPortalCell(Map map, IntVec3 cell, IntVec3 colonyAnchor)
+        {
+            if (!IsValidEscortPortalCell(map, cell))
+            {
+                return false;
+            }
+
+            if (CountStandableCellsInRadius(map, cell, 2.4f) < 10)
+            {
+                return false;
+            }
+
+            return CanReachColonyAnchor(map, cell, colonyAnchor);
+        }
+
+        private static float ScoreReactorSaintArrivalCell(Map map, IntVec3 cell, IntVec3 anchor, float distanceToAnchor, float preferredRadius)
+        {
+            float score = ScoreNearColonyArrivalCell(map, cell, anchor, distanceToAnchor, preferredRadius, true);
+            score += CountStandableCellsInRadius(map, cell, 2.9f) * 0.05f;
+            if (!HasBlockingPlayerBuildingNearby(map, cell, 4.5f))
+            {
+                score += 0.70f;
+            }
+
+            if (GenSight.LineOfSight(cell, anchor, map))
+            {
+                score += 0.45f;
+            }
+
+            return score;
+        }
+
         private static float ScoreNearColonyArrivalCell(Map map, IntVec3 cell, IntVec3 anchor, float distanceToAnchor, float preferredRadius, bool reachableToAnchor)
         {
             float score = -Mathf.Abs(distanceToAnchor - preferredRadius);
@@ -541,6 +975,38 @@ namespace AbyssalProtocol
             }
 
             return count;
+        }
+
+        private static int CountStandableCellsInRadius(Map map, IntVec3 center, float radius)
+        {
+            if (map == null || !center.IsValid)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, true))
+            {
+                if (cell.InBounds(map) && cell.Standable(map))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static void AddUniqueCell(List<IntVec3> cells, IntVec3 cell)
+        {
+            if (cells == null || !cell.IsValid)
+            {
+                return;
+            }
+
+            if (!cells.Contains(cell))
+            {
+                cells.Add(cell);
+            }
         }
 
         private static bool HasBlockingPlayerBuildingNearby(Map map, IntVec3 center, float radius)
@@ -696,12 +1162,19 @@ namespace AbyssalProtocol
             AbyssalDifficultyUtility.ApplyDifficultyScaling(pawn);
             pawn.jobs?.EndCurrentJob(JobCondition.InterruptForced);
             pawn.pather?.StopDead();
-            AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
+
+            IntVec3 colonyAnchor = GetColonyAnchorCell(pawn.MapHeld, pawn.PositionHeld);
+            bool isReactorSaint = IsReactorSaintKindDefName(pawn.kindDef?.defName);
+            bool useSappers = !isReactorSaint;
+            if (isReactorSaint && colonyAnchor.IsValid)
+            {
+                useSappers = !CanReachColonyAnchor(pawn.MapHeld, pawn.PositionHeld, colonyAnchor);
+            }
+
+            AbyssalLordUtility.EnsureAssaultLord(pawn, useSappers);
 
             Pawn initialTarget = AbyssalThreatPawnUtility.FindBestTarget(pawn, 0f, 45f, false, true, false, 4f, 0.5f)
                 ?? AbyssalThreatPawnUtility.FindClosestThreatWithin(pawn, 45f);
-
-            IntVec3 colonyAnchor = GetColonyAnchorCell(pawn.MapHeld, pawn.PositionHeld);
 
             if (initialTarget == null)
             {

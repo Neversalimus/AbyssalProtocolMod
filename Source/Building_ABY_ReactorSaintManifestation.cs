@@ -318,10 +318,16 @@ namespace AbyssalProtocol
                 return;
             }
 
-            IntVec3 spawnCell = bossArrivalCell.IsValid ? bossArrivalCell : Position;
-            if (!spawnCell.IsValid || !spawnCell.InBounds(Map) || !spawnCell.Standable(Map))
+            IntVec3 releaseOrigin = bossArrivalCell.IsValid ? bossArrivalCell : Position;
+            if (!releaseOrigin.IsValid || !releaseOrigin.InBounds(Map) || !releaseOrigin.Standable(Map))
             {
-                spawnCell = Position;
+                releaseOrigin = Position;
+            }
+
+            IntVec3 spawnCell = releaseOrigin;
+            if (!AbyssalBossSummonUtility.TryFindReactorSaintReleaseCell(Map, releaseOrigin, out spawnCell))
+            {
+                spawnCell = releaseOrigin;
             }
 
             if (!AbyssalBossSummonUtility.TryGenerateBoss(
@@ -357,33 +363,10 @@ namespace AbyssalProtocol
                 completionLetterLabelKey,
                 completionLetterDescKey);
 
-            IntVec3 escortPortalCell = spawnCell;
-            if (!AbyssalBossSummonUtility.TryFindEscortPortalCellNear(Map, spawnCell, out escortPortalCell))
+            if (!AbyssalBossSummonUtility.TrySpawnReactorSaintEscort(Map, manifestationFaction, pawn, spawnCell, bossLabel, out string escortFailReason)
+                && !escortFailReason.NullOrEmpty())
             {
-                escortPortalCell = spawnCell;
-            }
-
-            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackThroughPortal(
-                    Map,
-                    manifestationFaction,
-                    "reactor_saint",
-                    bossKindDef?.defName ?? "ABY_ReactorSaint",
-                    escortPortalCell,
-                    980f,
-                    bossLabel,
-                    out string escortFailReason))
-            {
-                if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
-                        Map,
-                        manifestationFaction,
-                        "reactor_saint",
-                        pawn,
-                        980f,
-                        bossLabel,
-                        out escortFailReason) && !escortFailReason.NullOrEmpty())
-                {
-                    Log.Warning("[AbyssalProtocol] Reactor Saint manifestation escort spawn failed: " + escortFailReason);
-                }
+                Log.Warning("[AbyssalProtocol] Reactor Saint manifestation escort spawn failed: " + escortFailReason);
             }
         }
 

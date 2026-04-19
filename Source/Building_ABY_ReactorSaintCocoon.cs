@@ -94,7 +94,15 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IntVec3 releaseCell = FindReleaseCell();
+            IntVec3 releaseOrigin = FindReleaseCell(6.9f);
+            IntVec3 releaseCell;
+            if (!AbyssalBossSummonUtility.TryFindReactorSaintReleaseCell(Map, releaseOrigin, out releaseCell))
+            {
+                releaseCell = releaseOrigin.IsValid && releaseOrigin.InBounds(Map) && releaseOrigin.Standable(Map)
+                    ? releaseOrigin
+                    : Position;
+            }
+
             AbyssalBossSummonUtility.FinalizeBossArrival(
                 pawn,
                 faction,
@@ -105,33 +113,10 @@ namespace AbyssalProtocol
                 CompletionLetterLabelKey,
                 CompletionLetterDescKey);
 
-            IntVec3 escortPortalCell = releaseCell;
-            if (!AbyssalBossSummonUtility.TryFindEscortPortalCellNear(Map, releaseCell, out escortPortalCell))
+            if (!AbyssalBossSummonUtility.TrySpawnReactorSaintEscort(Map, faction, pawn, releaseCell, BossLabel, out string escortFailReason)
+                && !escortFailReason.NullOrEmpty())
             {
-                escortPortalCell = releaseCell;
-            }
-
-            if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackThroughPortal(
-                    Map,
-                    faction,
-                    "reactor_saint",
-                    BossPawnKindDefName,
-                    escortPortalCell,
-                    980f,
-                    BossLabel,
-                    out string escortFailReason))
-            {
-                if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
-                        Map,
-                        faction,
-                        "reactor_saint",
-                        pawn,
-                        980f,
-                        BossLabel,
-                        out escortFailReason) && !escortFailReason.NullOrEmpty())
-                {
-                    Log.Warning("[AbyssalProtocol] Reactor Saint cocoon escort spawn failed: " + escortFailReason);
-                }
+                Log.Warning("[AbyssalProtocol] Reactor Saint cocoon escort spawn failed: " + escortFailReason);
             }
 
             FleckMaker.ThrowLightningGlow(DrawPos, Map, 2.30f);

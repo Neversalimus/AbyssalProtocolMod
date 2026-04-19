@@ -478,12 +478,21 @@ namespace AbyssalProtocol
                 }
                 else if (summonProps.arrivalNearColony)
                 {
-                    if (!AbyssalBossSummonUtility.TryFindNearColonyArrivalCell(
+                    bool foundArrivalCell = AbyssalBossSummonUtility.IsReactorSaintKindDefName(pendingPawnKindDef?.defName)
+                        ? AbyssalBossSummonUtility.TryFindReactorSaintArrivalCell(
                             Map,
                             RitualFocusCell.IsValid ? RitualFocusCell : Position,
                             summonProps.arrivalNearColonyMinDistance,
                             summonProps.arrivalNearColonyMaxDistance,
-                            out pendingSpawnCell))
+                            out pendingSpawnCell)
+                        : AbyssalBossSummonUtility.TryFindNearColonyArrivalCell(
+                            Map,
+                            RitualFocusCell.IsValid ? RitualFocusCell : Position,
+                            summonProps.arrivalNearColonyMinDistance,
+                            summonProps.arrivalNearColonyMaxDistance,
+                            out pendingSpawnCell);
+
+                    if (!foundArrivalCell)
                     {
                         failReason = "ABY_CircleFail_NoBossArrival".Translate();
                         return false;
@@ -1640,7 +1649,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalBossSummonUtility.TryResolveBossManifestationCell(Map, manifestationDef, requestedSpawnCell, out IntVec3 spawnCell) || !spawnCell.IsValid)
+            IntVec3 spawnCell;
+            bool resolvedManifestationCell = AbyssalBossSummonUtility.IsReactorSaintKindDefName(pendingPawnKindDef?.defName)
+                ? AbyssalBossSummonUtility.TryResolveReactorSaintManifestationCell(Map, manifestationDef, requestedSpawnCell, out spawnCell)
+                : AbyssalBossSummonUtility.TryResolveBossManifestationCell(Map, manifestationDef, requestedSpawnCell, out spawnCell);
+
+            if (!resolvedManifestationCell || !spawnCell.IsValid)
             {
                 failReason = "ABY_CircleFail_NoBossArrival".Translate();
                 return false;
