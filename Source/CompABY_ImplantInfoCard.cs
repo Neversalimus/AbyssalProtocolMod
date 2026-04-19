@@ -167,20 +167,69 @@ namespace AbyssalProtocol
                 return cached;
             }
 
-            HediffDef resolved = null;
+            HediffDef resolved = ResolveImplantHediffByRemovedThing(implantThingDef)
+                                ?? ResolveImplantHediffByDefNameConvention(implantThingDef)
+                                ?? ResolveImplantHediffBySurgeryRecipe(implantThingDef);
+
+            CachedImplantHediffsByThingDefName[implantThingDef.defName] = resolved;
+            return resolved;
+        }
+
+        private static HediffDef ResolveImplantHediffByRemovedThing(ThingDef implantThingDef)
+        {
             List<HediffDef> allHediffs = DefDatabase<HediffDef>.AllDefsListForReading;
             for (int i = 0; i < allHediffs.Count; i++)
             {
                 HediffDef candidate = allHediffs[i];
                 if (candidate != null && candidate.spawnThingOnRemoved == implantThingDef)
                 {
-                    resolved = candidate;
-                    break;
+                    return candidate;
                 }
             }
 
-            CachedImplantHediffsByThingDefName[implantThingDef.defName] = resolved;
-            return resolved;
+            return null;
+        }
+
+        private static HediffDef ResolveImplantHediffByDefNameConvention(ThingDef implantThingDef)
+        {
+            string hediffDefName = implantThingDef.defName + "_Implant";
+            return DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
+        }
+
+        private static HediffDef ResolveImplantHediffBySurgeryRecipe(ThingDef implantThingDef)
+        {
+            List<RecipeDef> allRecipes = DefDatabase<RecipeDef>.AllDefsListForReading;
+            for (int i = 0; i < allRecipes.Count; i++)
+            {
+                RecipeDef recipe = allRecipes[i];
+                if (recipe == null || recipe.addsHediff == null)
+                {
+                    continue;
+                }
+
+                ThingFilter filter = recipe.fixedIngredientFilter;
+                if (filter != null && filter.Allows(implantThingDef))
+                {
+                    return recipe.addsHediff;
+                }
+
+                List<ThingDefCountClass> costList = recipe.ingredients;
+                if (costList == null)
+                {
+                    continue;
+                }
+
+                for (int j = 0; j < costList.Count; j++)
+                {
+                    ThingDefCountClass cost = costList[j];
+                    if (cost?.thingDef == implantThingDef)
+                    {
+                        return recipe.addsHediff;
+                    }
+                }
+            }
+
+            return null;
         }
 
         private static StatDrawEntry MakeEntry(StatCategoryDef category, int displayOrder, string label, string value, string description)

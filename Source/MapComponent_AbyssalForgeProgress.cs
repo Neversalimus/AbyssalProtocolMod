@@ -94,6 +94,17 @@ namespace AbyssalProtocol
                 && recentUnlockRecipeDefNames.Contains(recipe.defName);
         }
 
+        public void ConsumeRecentUnlocks()
+        {
+            if (recentUnlockRecipeDefNames == null || recentUnlockRecipeDefNames.Count == 0)
+            {
+                return;
+            }
+
+            recentUnlockRecipeDefNames.Clear();
+            recentUnlockTick = -999999;
+        }
+
         public int OfferResidue(Building_AbyssalForge forge, int requestedAmount)
         {
             if (requestedAmount <= 0 || map == null)

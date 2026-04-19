@@ -33,6 +33,16 @@ namespace AbyssalProtocol
 
         public override Vector2 InitialSize => new Vector2(1228f, 812f);
 
+        public override void PostClose()
+        {
+            base.PostClose();
+
+            if (forge?.ProgressComponent != null)
+            {
+                forge.ProgressComponent.ConsumeRecentUnlocks();
+            }
+        }
+
         public override void DoWindowContents(Rect inRect)
         {
             if (forge == null || forge.Destroyed || forge.Map == null)
