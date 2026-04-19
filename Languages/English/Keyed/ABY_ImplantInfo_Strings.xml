@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ImplantInfo_BodyPartEfficiency>Body part efficiency</ABY_ImplantInfo_BodyPartEfficiency>
+  <ABY_ImplantInfo_BodyPartEfficiencyDesc>Efficiency of the replaced or added body part after installation.</ABY_ImplantInfo_BodyPartEfficiencyDesc>
+  <ABY_ImplantInfo_CapacityDesc>Changes {0} by {1} when the implant is installed.</ABY_ImplantInfo_CapacityDesc>
+  <ABY_ImplantInfo_StatOffsetDesc>Changes {0} by {1} when the implant is installed.</ABY_ImplantInfo_StatOffsetDesc>
+  <ABY_ImplantInfo_StatFactorLabel>{0} factor</ABY_ImplantInfo_StatFactorLabel>
+  <ABY_ImplantInfo_StatFactorDesc>Multiplies {0} by {1} when the implant is installed.</ABY_ImplantInfo_StatFactorDesc>
+  <ABY_ImplantInfo_BleedingRate>Bleeding rate</ABY_ImplantInfo_BleedingRate>
+  <ABY_ImplantInfo_BleedingRateDesc>Changes total bleeding rate by {0} while the implant is installed.</ABY_ImplantInfo_BleedingRateDesc>
+  <ABY_ImplantInfo_Pain>Pain</ABY_ImplantInfo_Pain>
+  <ABY_ImplantInfo_PainDesc>Changes felt pain by {0} while the implant is installed.</ABY_ImplantInfo_PainDesc>
+  <ABY_ImplantInfo_HungerRate>Hunger rate</ABY_ImplantInfo_HungerRate>
+  <ABY_ImplantInfo_HungerRateDesc>Changes hunger rate by {0} while the implant is installed.</ABY_ImplantInfo_HungerRateDesc>
+</LanguageData>

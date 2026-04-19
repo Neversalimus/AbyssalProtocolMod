@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ImplantInfo_BodyPartEfficiency>Эффективность части тела</ABY_ImplantInfo_BodyPartEfficiency>
+  <ABY_ImplantInfo_BodyPartEfficiencyDesc>Эффективность заменённой или добавленной части тела после установки импланта.</ABY_ImplantInfo_BodyPartEfficiencyDesc>
+  <ABY_ImplantInfo_CapacityDesc>Изменяет {0} на {1} после установки импланта.</ABY_ImplantInfo_CapacityDesc>
+  <ABY_ImplantInfo_StatOffsetDesc>Изменяет {0} на {1} после установки импланта.</ABY_ImplantInfo_StatOffsetDesc>
+  <ABY_ImplantInfo_StatFactorLabel>{0} (множитель)</ABY_ImplantInfo_StatFactorLabel>
+  <ABY_ImplantInfo_StatFactorDesc>Умножает {0} на {1} после установки импланта.</ABY_ImplantInfo_StatFactorDesc>
+  <ABY_ImplantInfo_BleedingRate>Скорость кровотечения</ABY_ImplantInfo_BleedingRate>
+  <ABY_ImplantInfo_BleedingRateDesc>Изменяет общую скорость кровотечения на {0}, пока имплант установлен.</ABY_ImplantInfo_BleedingRateDesc>
+  <ABY_ImplantInfo_Pain>Боль</ABY_ImplantInfo_Pain>
+  <ABY_ImplantInfo_PainDesc>Изменяет ощущаемую боль на {0}, пока имплант установлен.</ABY_ImplantInfo_PainDesc>
+  <ABY_ImplantInfo_HungerRate>Скорость голода</ABY_ImplantInfo_HungerRate>
+  <ABY_ImplantInfo_HungerRateDesc>Изменяет скорость голода на {0}, пока имплант установлен.</ABY_ImplantInfo_HungerRateDesc>
+</LanguageData>

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_AshenLiverLattice</defName>
     <label>ashen liver lattice</label>
@@ -22,6 +21,9 @@
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>6</requiredResidue>
@@ -29,7 +31,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_CinderMandibleSeal</defName>
     <label>cinder mandible seal</label>
@@ -51,6 +52,9 @@
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>7</requiredResidue>
@@ -58,7 +62,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_EmberLungArray</defName>
     <label>ember lung array</label>
@@ -80,6 +83,9 @@
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>8</requiredResidue>
@@ -87,7 +93,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_AshenAnchorNode</defName>
     <label>ashen anchor node</label>
@@ -109,6 +114,9 @@
       <Flammability>0</Flammability>
       <Beauty>-1</Beauty>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>9</requiredResidue>
@@ -116,5 +124,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>
