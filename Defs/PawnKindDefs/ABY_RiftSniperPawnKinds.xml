@@ -15,6 +15,7 @@
         <role>elite</role>
         <budgetCost>450</budgetCost>
         <selectionWeight>0.68</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
           <li>choir_escort</li>

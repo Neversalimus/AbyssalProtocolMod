@@ -10,7 +10,9 @@ namespace AbyssalProtocol
         public string role = "assault";
         public float budgetCost = 100f;
         public float selectionWeight = 1f;
+        public int maxPlanCount = -1;
         public bool allowFutureAutoEscalation = true;
+        public bool forceStatScalingOnAssault = false;
         public List<string> encounterPools = new List<string>();
     }
 }

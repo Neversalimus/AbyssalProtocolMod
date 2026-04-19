@@ -162,6 +162,7 @@ namespace AbyssalProtocol
                 "dominion_wave",
                 baseBudget,
                 plan.Tier,
+                map,
                 seed,
                 minimumRoleCounts,
                 maximumRoleCounts);
@@ -593,6 +594,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (plan.DirectedPlan != null && plan.DirectedPlan.TotalUnits > 0)
+            {
+                ABY_EncounterTelemetryUtility.RecordPlan(plan.DirectedPlan);
+            }
+
             if (focusCell.IsValid)
             {
                 ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", focusCell, map);
@@ -664,6 +670,7 @@ namespace AbyssalProtocol
                 "dominion_gate_support",
                 baseBudget,
                 tier,
+                map,
                 GetDirectorSeed(map, crisis, 6127 + tier),
                 minimumRoleCounts,
                 maximumRoleCounts);
@@ -820,6 +827,11 @@ namespace AbyssalProtocol
             if (!anySpawned)
             {
                 return false;
+            }
+
+            if (plan.DirectedPlan != null && plan.DirectedPlan.TotalUnits > 0)
+            {
+                ABY_EncounterTelemetryUtility.RecordPlan(plan.DirectedPlan);
             }
 
             if (focusCell.IsValid)

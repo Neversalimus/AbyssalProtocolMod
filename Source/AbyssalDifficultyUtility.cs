@@ -236,6 +236,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            bool isAssaultRole = string.Equals(extension.role ?? string.Empty, "assault", StringComparison.OrdinalIgnoreCase);
+            if (isAssaultRole && !extension.forceStatScalingOnAssault)
+            {
+                return;
+            }
+
             string hediffDefName = GetRoleHediffDefName(extension.role);
             if (hediffDefName.NullOrEmpty())
             {

@@ -16,6 +16,7 @@
         <role>elite</role>
         <budgetCost>280</budgetCost>
         <selectionWeight>0.90</selectionWeight>
+        <maxPlanCount>2</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
           <li>unstable_breach_portal</li>

@@ -16,6 +16,7 @@
         <role>assault</role>
         <budgetCost>85</budgetCost>
         <selectionWeight>1.00</selectionWeight>
+        <maxPlanCount>-1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
           <li>unstable_breach_portal</li>

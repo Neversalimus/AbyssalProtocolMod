@@ -24,6 +24,7 @@
         <role>boss</role>
         <budgetCost>650</budgetCost>
         <selectionWeight>1.00</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
           <li>boss_main</li>

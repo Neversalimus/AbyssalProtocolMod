@@ -24,6 +24,7 @@
         <role>support</role>
         <budgetCost>210</budgetCost>
         <selectionWeight>0.95</selectionWeight>
+        <maxPlanCount>3</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
           <li>unstable_breach_portal</li>

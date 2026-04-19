@@ -1911,6 +1911,10 @@ namespace AbyssalProtocol
 
             pendingThreatTier = plan.Tier;
             pendingScaledThreatBudget = plan.ThreatBudget;
+            if (plan.DirectedPlan != null && plan.DirectedPlan.TotalUnits > 0)
+            {
+                ABY_EncounterTelemetryUtility.RecordPlan(plan.DirectedPlan);
+            }
 
             if (string.Equals(summonProps.ritualId, "unstable_breach", System.StringComparison.OrdinalIgnoreCase))
             {
@@ -2042,7 +2046,7 @@ namespace AbyssalProtocol
             if (string.Equals(pendingRitualId, "choir_engine", System.StringComparison.OrdinalIgnoreCase))
             {
                 float supportBudget = pendingScaledThreatBudget > 0 ? pendingScaledThreatBudget : 720f;
-                AbyssalEncounterDirectorUtility.EncounterPlan directedPlan = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", supportBudget, 2);
+                AbyssalEncounterDirectorUtility.EncounterPlan directedPlan = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", supportBudget, 2, Map, null, null, null);
                 entries = directedPlan.ToHostilePackEntries();
             }
 
