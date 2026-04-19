@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -12,6 +13,10 @@ namespace AbyssalProtocol
         private const float SplashRadius = 1.05f;
         private const int SplashDamage = 6;
         private const float SplashArmorPenetration = 0.24f;
+        private const int DirectStructureDamage = 110;
+        private const float DirectStructureArmorPenetration = 2.8f;
+        private const int SplashStructureDamage = 55;
+        private const float SplashStructureArmorPenetration = 1.8f;
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
@@ -63,7 +68,62 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ApplyStructureImpactBonus(hitThing, impactCell, impactMap, instigator);
             GenExplosion.DoExplosion(impactCell, impactMap, SplashRadius, DamageDefOf.Burn, instigator, SplashDamage, SplashArmorPenetration);
+        }
+
+        private static void ApplyStructureImpactBonus(Thing hitThing, IntVec3 impactCell, Map map, Thing instigator)
+        {
+            Building directBuilding = hitThing as Building;
+            if (IsValidStructureTarget(directBuilding))
+            {
+                directBuilding.TakeDamage(new DamageInfo(
+                    DamageDefOf.Bomb,
+                    DirectStructureDamage,
+                    DirectStructureArmorPenetration,
+                    -1f,
+                    instigator,
+                    null,
+                    null,
+                    DamageInfo.SourceCategory.ThingOrUnknown));
+            }
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(impactCell, SplashRadius, true))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Building building = things[i] as Building;
+                    if (!IsValidStructureTarget(building) || building == directBuilding)
+                    {
+                        continue;
+                    }
+
+                    building.TakeDamage(new DamageInfo(
+                        DamageDefOf.Bomb,
+                        SplashStructureDamage,
+                        SplashStructureArmorPenetration,
+                        -1f,
+                        instigator,
+                        null,
+                        null,
+                        DamageInfo.SourceCategory.ThingOrUnknown));
+                }
+            }
+        }
+
+        private static bool IsValidStructureTarget(Building building)
+        {
+            return building != null
+                && building.Spawned
+                && !building.Destroyed
+                && building.def != null
+                && building.def.useHitPoints;
         }
 
         private static void SpawnTrail(Vector3 from, Vector3 to, Map map)

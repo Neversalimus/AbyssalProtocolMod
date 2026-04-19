@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -12,6 +13,8 @@ namespace AbyssalProtocol
         private const float ExplosionRadius = 1.95f;
         private const int ExplosionDamage = 17;
         private const float ExplosionArmorPenetration = 0.42f;
+        private const int StructureDamagePerShell = 70;
+        private const float StructureArmorPenetration = 1.65f;
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
@@ -44,6 +47,46 @@ namespace AbyssalProtocol
             lastExactPosition = ExactPosition;
         }
 
+        private static void ApplyStructureBlastBonus(IntVec3 impactCell, Map map, Thing instigator)
+        {
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(impactCell, ExplosionRadius, true))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Building building = things[i] as Building;
+                    if (!IsValidStructureTarget(building))
+                    {
+                        continue;
+                    }
+
+                    building.TakeDamage(new DamageInfo(
+                        DamageDefOf.Bomb,
+                        StructureDamagePerShell,
+                        StructureArmorPenetration,
+                        -1f,
+                        instigator,
+                        null,
+                        null,
+                        DamageInfo.SourceCategory.ThingOrUnknown));
+                }
+            }
+        }
+
+        private static bool IsValidStructureTarget(Building building)
+        {
+            return building != null
+                && building.Spawned
+                && !building.Destroyed
+                && building.def != null
+                && building.def.useHitPoints;
+        }
+
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
             Map impactMap = Map;
@@ -68,6 +111,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ApplyStructureBlastBonus(impactCell, impactMap, instigator);
             GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Burn, instigator, ExplosionDamage, ExplosionArmorPenetration);
         }
     }

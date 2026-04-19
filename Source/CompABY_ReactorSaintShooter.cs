@@ -32,6 +32,7 @@ namespace AbyssalProtocol
         private float barrageChanceBonus;
         private int barrageShotBonus;
         private int collapseWindowUntilTick = -1;
+        private int nextStructureCrushTick;
 
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
 
@@ -54,6 +55,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref barrageChanceBonus, "barrageChanceBonus", 0f);
             Scribe_Values.Look(ref barrageShotBonus, "barrageShotBonus", 0);
             Scribe_Values.Look(ref collapseWindowUntilTick, "collapseWindowUntilTick", -1);
+            Scribe_Values.Look(ref nextStructureCrushTick, "nextStructureCrushTick", 0);
         }
 
         public override void CompTick()
@@ -68,6 +70,7 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            TryApplyStructureCrushBonus(pawn, ticksGame);
             bool crowdPressure = HasCrowdPressure(pawn);
             if (TryForceCloseQuartersEngagement(pawn))
             {
@@ -1232,6 +1235,52 @@ namespace AbyssalProtocol
 
             pawn.jobs?.StartJob(JobMaker.MakeJob(JobDefOf.AttackMelee, building), JobCondition.InterruptForced, null, false, true);
             return true;
+        }
+
+        private void TryApplyStructureCrushBonus(Pawn pawn, int ticksGame)
+        {
+            if (pawn?.Map == null || ticksGame < nextStructureCrushTick)
+            {
+                return;
+            }
+
+            if (pawn.CurJob == null || pawn.CurJob.def != JobDefOf.AttackMelee)
+            {
+                return;
+            }
+
+            Building building = pawn.CurJob.targetA.Thing as Building;
+            if (!IsValidStructureTarget(building))
+            {
+                return;
+            }
+
+            if (!pawn.Position.AdjacentTo8WayOrInside(building.Position))
+            {
+                return;
+            }
+
+            nextStructureCrushTick = ticksGame + 22;
+            building.TakeDamage(new DamageInfo(
+                DamageDefOf.Blunt,
+                85f,
+                3.4f,
+                -1f,
+                pawn,
+                null,
+                null,
+                DamageInfo.SourceCategory.ThingOrUnknown));
+
+            FleckMaker.ThrowMicroSparks(building.DrawPos, pawn.Map);
+        }
+
+        private static bool IsValidStructureTarget(Building building)
+        {
+            return building != null
+                && building.Spawned
+                && !building.Destroyed
+                && building.def != null
+                && building.def.useHitPoints;
         }
 
         private int GetWarmupTicksForCurrentMode()
