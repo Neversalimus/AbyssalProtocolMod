@@ -117,7 +117,7 @@ namespace AbyssalProtocol
 
             List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).ToList();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
-            float cardHeight = 156f;
+            float cardHeight = 96f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
 
@@ -137,7 +137,7 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleArt.DrawPanel(rect, selected || ready);
             AbyssalSummoningConsoleArt.DrawRitualCardPulse(rect, selected, circle.RitualActive);
 
-            Rect iconRect = new Rect(rect.x + 12f, rect.y + 14f, 46f, 46f);
+            Rect iconRect = new Rect(rect.x + 12f, rect.y + 14f, 42f, 42f);
             ThingDef sigilDef = AbyssalSummoningConsoleUtility.GetSigilDef(ritual);
             if (sigilDef != null && sigilDef.uiIcon != null)
             {
@@ -145,19 +145,15 @@ namespace AbyssalProtocol
                 GUI.DrawTexture(iconRect, sigilDef.uiIcon, ScaleMode.ScaleToFit, true);
             }
 
-            Rect titleRect = new Rect(rect.x + 70f, rect.y + 12f, rect.width - 150f, 22f);
-            Rect tagRect = new Rect(rect.x + 70f, rect.y + 34f, rect.width - 150f, 16f);
-            Rect descRect = new Rect(rect.x + 12f, rect.y + 54f, rect.width - 24f, 58f);
-            Rect metaRect = new Rect(rect.x + 12f, rect.y + 116f, rect.width - 24f, 18f);
-            Rect selectRect = new Rect(rect.xMax - 108f, rect.y + rect.height - 34f, 96f, 28f);
+            Rect titleRect = new Rect(rect.x + 66f, rect.y + 12f, rect.width - 186f, 22f);
+            Rect tagRect = new Rect(rect.x + 66f, rect.y + 34f, rect.width - 186f, 16f);
+            Rect metaRect = new Rect(rect.x + 12f, rect.y + 62f, rect.width - 132f, 18f);
+            Rect selectRect = new Rect(rect.xMax - 108f, rect.y + 54f, 96f, 28f);
 
             Widgets.Label(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Text.Font = GameFont.Tiny;
             Widgets.Label(tagRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
-            GUI.color = Color.white;
-            Text.Font = GameFont.Tiny;
-            Widgets.Label(descRect, AbyssalSummoningConsoleUtility.GetRitualDescription(ritual));
             Text.Font = GameFont.Small;
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
             Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual));
