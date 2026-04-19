@@ -20,7 +20,6 @@ namespace AbyssalProtocol
         private const string NullPriestRaceDefName = "ABY_NullPriest";
         private const string ChoirEngineRaceDefName = "ABY_ChoirEngine";
         private const string ReactorSaintKindDefName = "ABY_ReactorSaint";
-        private const string ReactorSaintManifestationDefName = "ABY_Manifestation_ReactorSaintArrivalControlled";
         private const string ReactorSaintRitualId = "reactor_saint";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
@@ -439,6 +438,7 @@ namespace AbyssalProtocol
                 }
             }
 
+            string localEscortFailReason = null;
             if (AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
                     map,
                     faction,
@@ -446,16 +446,217 @@ namespace AbyssalProtocol
                     bossPawn,
                     980f,
                     bossLabel,
-                    out failReason))
+                    out localEscortFailReason))
             {
+                failReason = null;
                 return true;
             }
 
-            if (failReason.NullOrEmpty())
+            string fallbackEscortFailReason = null;
+            if (TrySpawnReactorSaintFallbackEscort(map, faction, bossPawn, releaseCell, out fallbackEscortFailReason))
             {
-                failReason = lastPortalFailReason.NullOrEmpty()
-                    ? "Reactor Saint escort spawn failed after portal and local fallback attempts."
-                    : lastPortalFailReason;
+                failReason = null;
+                return true;
+            }
+
+            failReason = !fallbackEscortFailReason.NullOrEmpty()
+                ? fallbackEscortFailReason
+                : !localEscortFailReason.NullOrEmpty()
+                    ? localEscortFailReason
+                    : !lastPortalFailReason.NullOrEmpty()
+                        ? lastPortalFailReason
+                        : "Reactor Saint escort spawn failed after portal, local, and manual fallback attempts.";
+
+            return false;
+        }
+
+        private static bool TrySpawnReactorSaintFallbackEscort(Map map, Faction faction, Pawn bossPawn, IntVec3 releaseCell, out string failReason)
+        {
+            failReason = null;
+            if (map == null || faction == null || bossPawn == null || bossPawn.Dead)
+            {
+                failReason = "Missing map, faction, or live Reactor Saint for fallback escort spawn.";
+                return false;
+            }
+
+            string[] fallbackEscortKinds =
+            {
+                "ABY_HaloHusk",
+                "ABY_RiftSniper",
+                "ABY_HexgunThrall",
+                "ABY_ChainZealot"
+            };
+
+            List<Pawn> spawned = new List<Pawn>();
+            string lastFailure = null;
+            for (int i = 0; i < fallbackEscortKinds.Length; i++)
+            {
+                PawnKindDef kindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(fallbackEscortKinds[i]);
+                if (kindDef == null)
+                {
+                    lastFailure = "Missing fallback escort PawnKindDef: " + fallbackEscortKinds[i];
+                    continue;
+                }
+
+                PawnGenerationRequest request = new PawnGenerationRequest(
+                    kindDef,
+                    faction,
+                    PawnGenerationContext.NonPlayer,
+                    map.Tile,
+                    forceGenerateNewPawn: true,
+                    allowDead: false,
+                    allowDowned: false,
+                    canGeneratePawnRelations: false,
+                    mustBeCapableOfViolence: true,
+                    colonistRelationChanceFactor: 0f,
+                    forceAddFreeWarmLayerIfNeeded: false,
+                    allowGay: false,
+                    allowPregnant: false,
+                    allowFood: false,
+                    inhabitant: false,
+                    certainlyBeenInCryptosleep: false,
+                    forceRedressWorldPawnIfFormerColonist: false,
+                    worldPawnFactionDoesntMatter: false,
+                    biocodeWeaponChance: 0f,
+                    biocodeApparelChance: 0f,
+                    extraPawnForExtraRelationChance: null,
+                    relationWithExtraPawnChanceFactor: 0f,
+                    validatorPreGear: null,
+                    validatorPostGear: null,
+                    fixedBirthName: null,
+                    fixedLastName: null,
+                    fixedGender: null,
+                    fixedIdeo: null,
+                    forceNoIdeo: true,
+                    developmentalStages: DevelopmentalStage.Adult);
+
+                Pawn escortPawn = null;
+                try
+                {
+                    escortPawn = PawnGenerator.GeneratePawn(request);
+                }
+                catch (Exception ex)
+                {
+                    lastFailure = "Failed to generate fallback Reactor Saint escort pawn: " + ex.Message;
+                }
+
+                if (escortPawn == null)
+                {
+                    continue;
+                }
+
+                AbyssalThreatPawnUtility.PrepareThreatPawn(escortPawn);
+                AbyssalDifficultyUtility.ApplyDifficultyScaling(escortPawn);
+
+                if (!TryFindReactorSaintFallbackEscortSpawnCell(map, releaseCell, spawned, out IntVec3 spawnCell))
+                {
+                    escortPawn.Destroy(DestroyMode.Vanish);
+                    lastFailure = "Failed to find a safe fallback escort spawn cell for Reactor Saint.";
+                    continue;
+                }
+
+                GenSpawn.Spawn(escortPawn, spawnCell, map, Rot4.Random);
+                spawned.Add(escortPawn);
+                ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
+            }
+
+            if (spawned.Count <= 0)
+            {
+                failReason = lastFailure.NullOrEmpty()
+                    ? "Failed to spawn any fallback Reactor Saint escort pawns."
+                    : lastFailure;
+                return false;
+            }
+
+            List<Pawn> assaultGroup = new List<Pawn>(spawned.Count + 1)
+            {
+                bossPawn
+            };
+            assaultGroup.AddRange(spawned);
+            AbyssalLordUtility.EnsureAssaultLord(assaultGroup, faction, map, sappers: false);
+
+            failReason = null;
+            return true;
+        }
+
+        private static bool TryFindReactorSaintFallbackEscortSpawnCell(Map map, IntVec3 releaseCell, List<Pawn> alreadySpawned, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !releaseCell.IsValid)
+            {
+                return false;
+            }
+
+            IntVec3 colonyAnchor = GetColonyAnchorCell(map, releaseCell);
+            float[] portalMaxRadii = { 10.8f, 12.6f, 14.6f };
+            for (int radiusIndex = 0; radiusIndex < portalMaxRadii.Length; radiusIndex++)
+            {
+                float maxRadius = portalMaxRadii[radiusIndex];
+                foreach (IntVec3 candidate in GenRadial.RadialCellsAround(releaseCell, maxRadius, true))
+                {
+                    if (!candidate.InBounds(map))
+                    {
+                        continue;
+                    }
+
+                    float distance = candidate.DistanceTo(releaseCell);
+                    if (distance < 4.0f || distance > maxRadius)
+                    {
+                        continue;
+                    }
+
+                    if (!IsValidReactorSaintEscortPortalCell(map, candidate, colonyAnchor))
+                    {
+                        continue;
+                    }
+
+                    if (CellHasPawn(map, candidate) || CellReservedByEscort(candidate, alreadySpawned))
+                    {
+                        continue;
+                    }
+
+                    cell = candidate;
+                    return true;
+                }
+            }
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(releaseCell, 7.9f, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                if (!IsValidReactorSaintReleaseCell(map, candidate, colonyAnchor))
+                {
+                    continue;
+                }
+
+                if (CellHasPawn(map, candidate) || CellReservedByEscort(candidate, alreadySpawned))
+                {
+                    continue;
+                }
+
+                cell = candidate;
+                return true;
+            }
+
+            if (CellFinder.TryFindRandomCellNear(
+                releaseCell,
+                map,
+                10,
+                c => c.InBounds(map)
+                    && c.Standable(map)
+                    && c.Walkable(map)
+                    && !c.Fogged(map)
+                    && !c.Roofed(map)
+                    && c.GetEdifice(map) == null
+                    && !CellHasPawn(map, c)
+                    && !CellReservedByEscort(c, alreadySpawned),
+                out IntVec3 randomCell))
+            {
+                cell = randomCell;
+                return true;
             }
 
             return false;
@@ -1002,6 +1203,44 @@ namespace AbyssalProtocol
             {
                 cells.Add(cell);
             }
+        }
+
+        private static bool CellHasPawn(Map map, IntVec3 cell)
+        {
+            if (map == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                if (things[i] is Pawn)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool CellReservedByEscort(IntVec3 cell, List<Pawn> alreadySpawned)
+        {
+            if (alreadySpawned == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < alreadySpawned.Count; i++)
+            {
+                Pawn pawn = alreadySpawned[i];
+                if (pawn != null && pawn.Spawned && pawn.Position == cell)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool HasBlockingPlayerBuildingNearby(Map map, IntVec3 center, float radius)
