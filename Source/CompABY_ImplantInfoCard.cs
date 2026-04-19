@@ -20,151 +20,266 @@ namespace AbyssalProtocol
 
         public override IEnumerable<StatDrawEntry> SpecialDisplayStats()
         {
-            foreach (StatDrawEntry entry in base.SpecialDisplayStats())
+            List<StatDrawEntry> baseEntries = SafeCollectBaseEntries();
+            for (int i = 0; i < baseEntries.Count; i++)
             {
-                yield return entry;
+                StatDrawEntry entry = baseEntries[i];
+                if (entry != null)
+                {
+                    yield return entry;
+                }
             }
 
-            ThingDef implantThingDef = parent != null ? parent.def : null;
-            if (implantThingDef == null)
+            List<StatDrawEntry> customEntries = BuildCustomDisplayEntries();
+            for (int i = 0; i < customEntries.Count; i++)
             {
-                yield break;
+                StatDrawEntry entry = customEntries[i];
+                if (entry != null)
+                {
+                    yield return entry;
+                }
+            }
+        }
+
+        private List<StatDrawEntry> SafeCollectBaseEntries()
+        {
+            List<StatDrawEntry> result = new List<StatDrawEntry>();
+
+            try
+            {
+                IEnumerable<StatDrawEntry> enumerable = base.SpecialDisplayStats();
+                if (enumerable == null)
+                {
+                    return result;
+                }
+
+                foreach (StatDrawEntry entry in enumerable)
+                {
+                    if (entry != null)
+                    {
+                        result.Add(entry);
+                    }
+                }
+            }
+            catch
+            {
             }
 
-            HediffDef implantHediff = ResolveImplantHediff(implantThingDef);
+            return result;
+        }
 
-            StatCategoryDef category = ResolveStatCategory();
-            int displayOrder = 6200;
+        private List<StatDrawEntry> BuildCustomDisplayEntries()
+        {
+            List<StatDrawEntry> result = new List<StatDrawEntry>();
 
-            string implantDescription = ResolveImplantDescription(implantThingDef, implantHediff);
-            if (!implantDescription.NullOrEmpty())
+            try
             {
-                yield return MakeEntry(
+                ThingDef implantThingDef = parent?.def;
+                if (implantThingDef == null)
+                {
+                    return result;
+                }
+
+                HediffDef implantHediff = ResolveImplantHediff(implantThingDef);
+                StatCategoryDef category = ResolveStatCategory();
+                if (category == null)
+                {
+                    return result;
+                }
+
+                int displayOrder = 6200;
+
+                string implantDescription = ResolveImplantDescription(implantThingDef, implantHediff);
+                AddEntry(
+                    result,
                     category,
-                    displayOrder++,
+                    ref displayOrder,
                     TranslateOrFallback("ABY_ImplantInfo_Profile", "Implant profile"),
                     implantDescription,
                     TranslateOrFallback("ABY_ImplantInfo_ProfileDesc", "Summary of what this implant is and how it alters the host."));
-            }
 
-            if (implantHediff == null)
-            {
-                yield break;
-            }
-
-            if (implantHediff.addedPartProps != null && implantHediff.addedPartProps.partEfficiency > 0f)
-            {
-                yield return MakeEntry(
-                    category,
-                    displayOrder++,
-                    TranslateOrFallback("ABY_ImplantInfo_BodyPartEfficiency", "Body part efficiency"),
-                    implantHediff.addedPartProps.partEfficiency.ToStringPercent(),
-                    TranslateOrFallback("ABY_ImplantInfo_BodyPartEfficiencyDesc", "Efficiency of the replaced or added body part after installation."));
-            }
-
-            HediffStage stage = implantHediff.stages != null && implantHediff.stages.Count > 0
-                ? implantHediff.stages[0]
-                : null;
-
-            if (stage == null)
-            {
-                yield break;
-            }
-
-            if (stage.capMods != null)
-            {
-                foreach (PawnCapacityModifier capacityModifier in stage.capMods.Where(mod => mod != null && mod.capacity != null).OrderBy(mod => mod.capacity.label))
+                if (implantHediff == null)
                 {
-                    if (Math.Abs(capacityModifier.offset) < 0.0001f)
-                    {
-                        continue;
-                    }
+                    return result;
+                }
 
-                    string capacityLabel = capacityModifier.capacity.label.CapitalizeFirst();
-                    string offsetValue = FormatPercentOffset(capacityModifier.offset);
-                    yield return MakeEntry(
+                if (implantHediff.addedPartProps != null && implantHediff.addedPartProps.partEfficiency > 0f)
+                {
+                    AddEntry(
+                        result,
                         category,
-                        displayOrder++,
-                        capacityLabel,
-                        offsetValue,
-                        TranslateOrFallback("ABY_ImplantInfo_CapacityDesc", "Changes {0} by {1} when the implant is installed.", capacityLabel, offsetValue));
+                        ref displayOrder,
+                        TranslateOrFallback("ABY_ImplantInfo_BodyPartEfficiency", "Body part efficiency"),
+                        implantHediff.addedPartProps.partEfficiency.ToStringPercent(),
+                        TranslateOrFallback("ABY_ImplantInfo_BodyPartEfficiencyDesc", "Efficiency of the replaced or added body part after installation."));
+                }
+
+                HediffStage stage = implantHediff.stages != null && implantHediff.stages.Count > 0
+                    ? implantHediff.stages[0]
+                    : null;
+
+                if (stage == null)
+                {
+                    return result;
+                }
+
+                AppendCapacityEntries(result, category, stage, ref displayOrder);
+                AppendStatOffsetEntries(result, category, stage, ref displayOrder);
+                AppendStatFactorEntries(result, category, stage, ref displayOrder);
+
+                if (Math.Abs(stage.totalBleedFactor - 1f) > 0.0001f)
+                {
+                    string bleedValue = FormatFactorDelta(stage.totalBleedFactor);
+                    AddEntry(
+                        result,
+                        category,
+                        ref displayOrder,
+                        TranslateOrFallback("ABY_ImplantInfo_BleedingRate", "Bleeding rate"),
+                        bleedValue,
+                        TranslateOrFallback("ABY_ImplantInfo_BleedingRateDesc", "Changes total bleeding rate by {0} while the implant is installed.", bleedValue));
+                }
+
+                if (Math.Abs(stage.painFactor - 1f) > 0.0001f)
+                {
+                    string painValue = FormatFactorDelta(stage.painFactor);
+                    AddEntry(
+                        result,
+                        category,
+                        ref displayOrder,
+                        TranslateOrFallback("ABY_ImplantInfo_Pain", "Pain"),
+                        painValue,
+                        TranslateOrFallback("ABY_ImplantInfo_PainDesc", "Changes felt pain by {0} while the implant is installed.", painValue));
+                }
+
+                if (Math.Abs(stage.hungerRateFactor - 1f) > 0.0001f)
+                {
+                    string hungerValue = FormatFactorDelta(stage.hungerRateFactor);
+                    AddEntry(
+                        result,
+                        category,
+                        ref displayOrder,
+                        TranslateOrFallback("ABY_ImplantInfo_HungerRate", "Hunger rate"),
+                        hungerValue,
+                        TranslateOrFallback("ABY_ImplantInfo_HungerRateDesc", "Changes hunger rate by {0} while the implant is installed.", hungerValue));
                 }
             }
-
-            if (stage.statOffsets != null)
+            catch
             {
-                foreach (StatModifier statModifier in stage.statOffsets.Where(mod => mod != null && mod.stat != null).OrderBy(mod => mod.stat.label))
+            }
+
+            return result;
+        }
+
+        private void AppendCapacityEntries(List<StatDrawEntry> result, StatCategoryDef category, HediffStage stage, ref int displayOrder)
+        {
+            if (stage?.capMods == null)
+            {
+                return;
+            }
+
+            List<PawnCapacityModifier> modifiers = stage.capMods
+                .Where(mod => mod != null && mod.capacity != null)
+                .OrderBy(mod => mod.capacity.label ?? mod.capacity.defName)
+                .ToList();
+
+            for (int i = 0; i < modifiers.Count; i++)
+            {
+                PawnCapacityModifier capacityModifier = modifiers[i];
+                if (Math.Abs(capacityModifier.offset) < 0.0001f)
                 {
-                    if (Math.Abs(statModifier.value) < 0.0001f)
-                    {
-                        continue;
-                    }
-
-                    string statLabel = statModifier.stat.LabelCap;
-                    string offsetValue = FormatStatOffset(statModifier.stat, statModifier.value);
-                    yield return MakeEntry(
-                        category,
-                        displayOrder++,
-                        statLabel,
-                        offsetValue,
-                        TranslateOrFallback("ABY_ImplantInfo_StatOffsetDesc", "Changes {0} by {1} when the implant is installed.", statLabel, offsetValue));
+                    continue;
                 }
+
+                string capacityLabel = (capacityModifier.capacity.label ?? capacityModifier.capacity.defName ?? "Capacity").CapitalizeFirst();
+                string offsetValue = FormatPercentOffset(capacityModifier.offset);
+                AddEntry(
+                    result,
+                    category,
+                    ref displayOrder,
+                    capacityLabel,
+                    offsetValue,
+                    TranslateOrFallback("ABY_ImplantInfo_CapacityDesc", "Changes {0} by {1} when the implant is installed.", capacityLabel, offsetValue));
+            }
+        }
+
+        private void AppendStatOffsetEntries(List<StatDrawEntry> result, StatCategoryDef category, HediffStage stage, ref int displayOrder)
+        {
+            if (stage?.statOffsets == null)
+            {
+                return;
             }
 
-            if (stage.statFactors != null)
+            List<StatModifier> modifiers = stage.statOffsets
+                .Where(mod => mod != null && mod.stat != null)
+                .OrderBy(mod => mod.stat.label ?? mod.stat.defName)
+                .ToList();
+
+            for (int i = 0; i < modifiers.Count; i++)
             {
-                foreach (StatModifier statModifier in stage.statFactors.Where(mod => mod != null && mod.stat != null).OrderBy(mod => mod.stat.label))
+                StatModifier statModifier = modifiers[i];
+                if (Math.Abs(statModifier.value) < 0.0001f)
                 {
-                    float delta = statModifier.value - 1f;
-                    if (Math.Abs(delta) < 0.0001f)
-                    {
-                        continue;
-                    }
-
-                    string statLabel = statModifier.stat.LabelCap;
-                    string factorValue = FormatStatFactor(statModifier.stat, statModifier.value);
-                    string factorLabel = TranslateOrFallback("ABY_ImplantInfo_StatFactorLabel", "{0} factor", statLabel);
-                    yield return MakeEntry(
-                        category,
-                        displayOrder++,
-                        factorLabel,
-                        factorValue,
-                        TranslateOrFallback("ABY_ImplantInfo_StatFactorDesc", "Multiplies {0} by {1} when the implant is installed.", statLabel, statModifier.value.ToStringPercent()));
+                    continue;
                 }
+
+                string statLabel = statModifier.stat.LabelCap.NullOrEmpty()
+                    ? (statModifier.stat.label ?? statModifier.stat.defName ?? "Stat").CapitalizeFirst()
+                    : statModifier.stat.LabelCap;
+                string offsetValue = FormatStatOffset(statModifier.stat, statModifier.value);
+                AddEntry(
+                    result,
+                    category,
+                    ref displayOrder,
+                    statLabel,
+                    offsetValue,
+                    TranslateOrFallback("ABY_ImplantInfo_StatOffsetDesc", "Changes {0} by {1} when the implant is installed.", statLabel, offsetValue));
+            }
+        }
+
+        private void AppendStatFactorEntries(List<StatDrawEntry> result, StatCategoryDef category, HediffStage stage, ref int displayOrder)
+        {
+            if (stage?.statFactors == null)
+            {
+                return;
             }
 
-            if (Math.Abs(stage.totalBleedFactor - 1f) > 0.0001f)
+            List<StatModifier> modifiers = stage.statFactors
+                .Where(mod => mod != null && mod.stat != null)
+                .OrderBy(mod => mod.stat.label ?? mod.stat.defName)
+                .ToList();
+
+            for (int i = 0; i < modifiers.Count; i++)
             {
-                string bleedValue = FormatFactorDelta(stage.totalBleedFactor);
-                yield return MakeEntry(
+                StatModifier statModifier = modifiers[i];
+                float delta = statModifier.value - 1f;
+                if (Math.Abs(delta) < 0.0001f)
+                {
+                    continue;
+                }
+
+                string statLabel = statModifier.stat.LabelCap.NullOrEmpty()
+                    ? (statModifier.stat.label ?? statModifier.stat.defName ?? "Stat").CapitalizeFirst()
+                    : statModifier.stat.LabelCap;
+                string factorValue = FormatStatFactor(statModifier.stat, statModifier.value);
+                string factorLabel = TranslateOrFallback("ABY_ImplantInfo_StatFactorLabel", "{0} factor", statLabel);
+                AddEntry(
+                    result,
                     category,
-                    displayOrder++,
-                    TranslateOrFallback("ABY_ImplantInfo_BleedingRate", "Bleeding rate"),
-                    bleedValue,
-                    TranslateOrFallback("ABY_ImplantInfo_BleedingRateDesc", "Changes total bleeding rate by {0} while the implant is installed.", bleedValue));
+                    ref displayOrder,
+                    factorLabel,
+                    factorValue,
+                    TranslateOrFallback("ABY_ImplantInfo_StatFactorDesc", "Multiplies {0} by {1} when the implant is installed.", statLabel, statModifier.value.ToStringPercent()));
+            }
+        }
+
+        private static void AddEntry(List<StatDrawEntry> result, StatCategoryDef category, ref int displayOrder, string label, string value, string description)
+        {
+            if (result == null || category == null || label.NullOrEmpty() || value.NullOrEmpty())
+            {
+                return;
             }
 
-            if (Math.Abs(stage.painFactor - 1f) > 0.0001f)
-            {
-                string painValue = FormatFactorDelta(stage.painFactor);
-                yield return MakeEntry(
-                    category,
-                    displayOrder++,
-                    TranslateOrFallback("ABY_ImplantInfo_Pain", "Pain"),
-                    painValue,
-                    TranslateOrFallback("ABY_ImplantInfo_PainDesc", "Changes felt pain by {0} while the implant is installed.", painValue));
-            }
-
-            if (Math.Abs(stage.hungerRateFactor - 1f) > 0.0001f)
-            {
-                string hungerValue = FormatFactorDelta(stage.hungerRateFactor);
-                yield return MakeEntry(
-                    category,
-                    displayOrder++,
-                    TranslateOrFallback("ABY_ImplantInfo_HungerRate", "Hunger rate"),
-                    hungerValue,
-                    TranslateOrFallback("ABY_ImplantInfo_HungerRateDesc", "Changes hunger rate by {0} while the implant is installed.", hungerValue));
-            }
+            result.Add(new StatDrawEntry(category, label, value, description ?? string.Empty, displayOrder++));
         }
 
         private static HediffDef ResolveImplantHediff(ThingDef implantThingDef)
@@ -243,11 +358,6 @@ namespace AbyssalProtocol
             }
 
             return null;
-        }
-
-        private static StatDrawEntry MakeEntry(StatCategoryDef category, int displayOrder, string label, string value, string description)
-        {
-            return new StatDrawEntry(category, label, value, description, displayOrder);
         }
 
         private static string ResolveImplantDescription(ThingDef implantThingDef, HediffDef implantHediff)
@@ -349,11 +459,10 @@ namespace AbyssalProtocol
             return TranslateOrFallback("ABY_ImplantInfo_FallbackSummaryGeneric", "A specialized abyssal implant built for disciplined host integration.");
         }
 
-
         private static StatCategoryDef ResolveStatCategory()
         {
             return DefDatabase<StatCategoryDef>.GetNamedSilentFail("Basics")
-                   ?? DefDatabase<StatCategoryDef>.AllDefsListForReading.FirstOrDefault();
+                   ?? DefDatabase<StatCategoryDef>.AllDefsListForReading.FirstOrDefault(def => def != null);
         }
 
         private static string FormatStatOffset(StatDef statDef, float value)

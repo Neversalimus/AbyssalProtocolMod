@@ -28,7 +28,7 @@
         <surgeTolerance>0.88</surgeTolerance>
         <passiveLeakage>0.06</passiveLeakage>
         <allowCoreBay>true</allowCoreBay>
-        <allowAuxiliaryBay>false</allowAuxiliaryBay>
+        <allowAuxiliaryBay>true</allowAuxiliaryBay>
         <mountedTexPath>Things/Building/Capacitors/ABY_SaintCondensationCell_Mounted</mountedTexPath>
         <mountedDrawScale>1.10</mountedDrawScale>
       </li>
