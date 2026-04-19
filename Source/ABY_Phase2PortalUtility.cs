@@ -440,7 +440,13 @@ namespace AbyssalProtocol
                 developmentalStages: DevelopmentalStage.Adult);
 
             pawn = PawnGenerator.GeneratePawn(request);
-            return pawn != null;
+            if (pawn != null)
+            {
+                AbyssalDifficultyUtility.ApplyPawnDifficulty(pawn, kindDef);
+                return true;
+            }
+
+            return false;
         }
 
         public static void GiveAssaultLord(Pawn pawn)

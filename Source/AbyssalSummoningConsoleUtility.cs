@@ -961,14 +961,16 @@ namespace AbyssalProtocol
                         sigilCount,
                         state,
                         crisis.GetCooldownValue(),
-                        crisis.GetReplayStatusValue());
+                        crisis.GetReplayStatusValue())
+                        + "   •   " + TranslateOrFallback("ABY_Difficulty_ProtocolLine", "Protocol: {0}", AbyssalDifficultyUtility.GetCurrentPresetLabel());
                 }
 
                 return TranslateOrFallback(
                     "ABY_DominionRitualMeta",
                     "Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame",
                     sigilCount,
-                    state);
+                    state)
+                    + "   •   " + TranslateOrFallback("ABY_Difficulty_ProtocolLine", "Protocol: {0}", AbyssalDifficultyUtility.GetCurrentPresetLabel());
             }
 
             if (ritual != null && circle?.Map != null && AbyssalT1SummonScalingUtility.IsSupportedRitual(ritual.Id))
@@ -981,11 +983,13 @@ namespace AbyssalProtocol
                         "Sigils on map: {0}   •   {1}   •   Forecast: {2}",
                         sigilCount,
                         AbyssalT1SummonScalingUtility.GetThreatTierLabel(plan.Tier),
-                        AbyssalT1SummonScalingUtility.GetPreviewText(plan));
+                        AbyssalT1SummonScalingUtility.GetPreviewText(plan))
+                        + "   •   " + TranslateOrFallback("ABY_Difficulty_ProtocolLine", "Protocol: {0}", AbyssalDifficultyUtility.GetCurrentPresetLabel());
                 }
             }
 
-            return TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", sigilCount, ritual?.SpawnPoints ?? 0);
+            return TranslateOrFallback("ABY_CircleRitualMeta", "Sigils on map: {0}   •   Threat budget: {1}", sigilCount, AbyssalDifficultyUtility.ScaleEncounterBudget(ritual?.SpawnPoints ?? 0))
+                + "   •   " + TranslateOrFallback("ABY_Difficulty_ProtocolLine", "Protocol: {0}", AbyssalDifficultyUtility.GetCurrentPresetLabel());
         }
 
         public static bool IsDominionUiMode(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
@@ -1777,6 +1781,7 @@ namespace AbyssalProtocol
             }
 
             float baseRisk = ritual != null ? ritual.BaseRisk : 0.25f;
+            baseRisk = AbyssalDifficultyUtility.ScaleRisk(baseRisk);
             int missing = GetStatusEntries(circle, ritual).Count(entry => !entry.Satisfied);
             float capacitorRiskReduction = ritual != null ? AbyssalCircleCapacitorRitualUtility.GetRiskReduction(circle, ritual) : 0f;
             float overchannelRisk = (ritual != null && circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)) ? 0.12f : 0f;

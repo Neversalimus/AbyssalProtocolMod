@@ -60,7 +60,7 @@ namespace AbyssalProtocol
                 RitualId = ritualId,
                 ColonistTier = colonistTier,
                 WealthTier = wealthTier,
-                Tier = Math.Max(colonistTier, wealthTier)
+                Tier = AbyssalDifficultyUtility.ScaleThreatTier(Math.Max(colonistTier, wealthTier))
             };
 
             if (string.Equals(ritualId, UnstableBreachRitualId, StringComparison.OrdinalIgnoreCase))
@@ -180,12 +180,12 @@ namespace AbyssalProtocol
         private static void ApplyUnstableBreachPlan(Map map, ThreatPlan plan)
         {
             int colonists = GetActiveColonistCount(map);
-            plan.PortalImpCount = Math.Min(60, Math.Max(3, colonists * 3));
+            plan.PortalImpCount = AbyssalDifficultyUtility.ScaleCountByRole(Math.Min(60, Math.Max(3, colonists * 3)), "trash", 3, 72);
             plan.PackImpCount = 0;
             plan.HoundCount = 0;
             plan.ThrallCount = 0;
             plan.ZealotCount = 0;
-            plan.ThreatBudget = plan.PortalImpCount * ImpThreatValue;
+            plan.ThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(plan.PortalImpCount * ImpThreatValue);
         }
 
         private static void ApplyEmberHuntPreviewPlan(Map map, ThreatPlan plan)
@@ -193,27 +193,27 @@ namespace AbyssalProtocol
             int colonists = GetActiveColonistCount(map);
             int minCount = Math.Max(1, colonists);
             int maxCount = Math.Min(25, Math.Max(minCount, colonists * 3));
-            plan.HoundCount = Math.Max(1, (minCount + maxCount) / 2);
+            plan.HoundCount = AbyssalDifficultyUtility.ScaleCountByRole(Math.Max(1, (minCount + maxCount) / 2), "assault", 1, 32);
             plan.PortalImpCount = 0;
             plan.PackImpCount = 0;
             plan.ThrallCount = 0;
             plan.ZealotCount = 0;
-            plan.ThreatBudget = plan.HoundCount * HoundThreatValue;
+            plan.ThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(plan.HoundCount * HoundThreatValue);
         }
 
         private static void ApplyChoirEnginePlan(Map map, ThreatPlan plan)
         {
             int colonists = GetActiveColonistCount(map);
-            int totalEscort = Math.Min(30, Math.Max(6, colonists * 6));
+            int totalEscort = AbyssalDifficultyUtility.ScaleCountByRole(Math.Min(30, Math.Max(6, colonists * 6)), "elite", 6, 42);
 
             plan.PortalImpCount = 0;
-            plan.PackImpCount = totalEscort / 2;
-            plan.ThrallCount = totalEscort / 3;
-            plan.ZealotCount = Math.Max(0, totalEscort - plan.PackImpCount - plan.ThrallCount);
+            plan.PackImpCount = AbyssalDifficultyUtility.ScaleCountByRole(totalEscort / 2, "trash", 2, 26);
+            plan.ThrallCount = AbyssalDifficultyUtility.ScaleCountByRole(totalEscort / 3, "support", 2, 18);
+            plan.ZealotCount = Math.Max(0, AbyssalDifficultyUtility.ScaleCountByRole(Math.Max(0, totalEscort - (totalEscort / 2) - (totalEscort / 3)), "elite", 1, 14));
             plan.HoundCount = 0;
-            plan.ThreatBudget = plan.TotalImpCount * ImpThreatValue
+            plan.ThreatBudget = AbyssalDifficultyUtility.ScaleEncounterBudget(plan.TotalImpCount * ImpThreatValue
                 + plan.ThrallCount * ThrallThreatValue
-                + plan.ZealotCount * ZealotThreatValue;
+                + plan.ZealotCount * ZealotThreatValue);
         }
 
         private static string GetCountLabel(int count, string singularKey, string singularFallback, string pluralKey, string pluralFallback)

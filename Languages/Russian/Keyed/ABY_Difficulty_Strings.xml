@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_Difficulty_Header>Протокол abyssal-сложности</ABY_Difficulty_Header>
+  <ABY_Difficulty_Subheader>Задаёт глобальный профиль калибровки призывов. Более высокие режимы усиливают композицию, нестабильность и давление боссов, не обходя прогрессионные гейты.</ABY_Difficulty_Subheader>
+  <ABY_Difficulty_TelemetrySummary>Протокол: {0}  •  Энкаунтеры x{1}  •  Нестабильность x{2}  •  Награды x{3}</ABY_Difficulty_TelemetrySummary>
+  <ABY_Difficulty_Current>Текущий протокол: {0}</ABY_Difficulty_Current>
+  <ABY_Difficulty_CurrentDesc>{0}</ABY_Difficulty_CurrentDesc>
+  <ABY_Difficulty_ButtonHint>Эти настройки поднимают давление и позднюю калибровку, но не открывают будущий контент раньше обычных sigil / boss-drop / research гейтов.</ABY_Difficulty_ButtonHint>
+  <ABY_Difficulty_Normal>Normal</ABY_Difficulty_Normal>
+  <ABY_Difficulty_Normal_Desc>Базовое калиброванное давление призывов.</ABY_Difficulty_Normal_Desc>
+  <ABY_Difficulty_Severe>Severe</ABY_Difficulty_Severe>
+  <ABY_Difficulty_Severe_Desc>Более чистые штурмовые паки, чуть сильнее элиты и жёстче ритуальная нестабильность.</ABY_Difficulty_Severe_Desc>
+  <ABY_Difficulty_Rupture>Rupture</ABY_Difficulty_Rupture>
+  <ABY_Difficulty_Rupture_Desc>Усиливает плотность элит и темп, сохраняя обычный порядок прогрессии.</ABY_Difficulty_Rupture_Desc>
+  <ABY_Difficulty_Dominion>Dominion</ABY_Difficulty_Dominion>
+  <ABY_Difficulty_Dominion_Desc>Эндгейм-профиль давления. Dominion-калибровка становится горячее, а support-составы масштабируются сильнее.</ABY_Difficulty_Dominion_Desc>
+  <ABY_Difficulty_FinalGate>Final Gate</ABY_Difficulty_FinalGate>
+  <ABY_Difficulty_FinalGate_Desc>Пиковая кризисная калибровка с максимальным давлением состава и откатом нестабильности.</ABY_Difficulty_FinalGate_Desc>
+  <ABY_Difficulty_ProtocolLine>Протокол: {0}</ABY_Difficulty_ProtocolLine>
+  <ABY_Difficulty_ConsoleLine>Протокол сложности: {0}</ABY_Difficulty_ConsoleLine>
+  <ABY_Difficulty_ConsoleImpact>Эффект профиля: энкаунтеры x{0}, нестабильность x{1}, награды x{2}</ABY_Difficulty_ConsoleImpact>
+  <ABY_Difficulty_ConsoleThreat>Калибровка угрозы: {0}</ABY_Difficulty_ConsoleThreat>
+</LanguageData>

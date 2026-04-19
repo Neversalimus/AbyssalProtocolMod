@@ -201,10 +201,10 @@ namespace AbyssalProtocol
         {
             RewardProfile profile = new RewardProfile
             {
-                DominionShards = completionIndex >= 4 ? 2 : 1,
-                Residue = 18 + Mathf.Clamp(completionIndex - 1, 0, 6) * 4,
-                HeraldFragments = completionIndex >= 2 ? 2 : 1,
-                SpacerComponents = completionIndex >= 5 ? 1 : 0
+                DominionShards = AbyssalDifficultyUtility.ScaleRewardCount(completionIndex >= 4 ? 2 : 1),
+                Residue = AbyssalDifficultyUtility.ScaleRewardCount(18 + Mathf.Clamp(completionIndex - 1, 0, 6) * 4),
+                HeraldFragments = AbyssalDifficultyUtility.ScaleRewardCount(completionIndex >= 2 ? 2 : 1),
+                SpacerComponents = AbyssalDifficultyUtility.ScaleRewardCount(completionIndex >= 5 ? 1 : 0)
             };
 
             return profile;

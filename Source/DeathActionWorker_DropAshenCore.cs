@@ -38,7 +38,7 @@ namespace AbyssalProtocol
                 Thing residue = ThingMaker.MakeThing(residueDef);
                 if (residue != null)
                 {
-                    residue.stackCount = Math.Min(residueDef.stackLimit, Rand.RangeInclusive(MinResidueDrop, MaxResidueDrop));
+                    residue.stackCount = Math.Min(residueDef.stackLimit, AbyssalDifficultyUtility.ScaleRewardRoll(MinResidueDrop, MaxResidueDrop));
                     if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {
                         droppedAny = true;

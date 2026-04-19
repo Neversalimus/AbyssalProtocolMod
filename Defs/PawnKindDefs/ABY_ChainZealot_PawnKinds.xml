@@ -9,6 +9,15 @@
     <combatPower>280</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>2</contentTier>
+        <role>elite</role>
+        <difficultyFloor>Normal</difficultyFloor>
+        <applyRoleStatScaling>true</applyRoleStatScaling>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+      </li>
+    </modExtensions>
 
     <lifeStages>
       <li>

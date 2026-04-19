@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_Difficulty_Header>Abyssal difficulty protocol</ABY_Difficulty_Header>
+  <ABY_Difficulty_Subheader>Sets the global summon calibration profile. Higher settings intensify composition, instability and boss pressure without bypassing progression gates.</ABY_Difficulty_Subheader>
+  <ABY_Difficulty_TelemetrySummary>Protocol: {0}  •  Encounter x{1}  •  Instability x{2}  •  Rewards x{3}</ABY_Difficulty_TelemetrySummary>
+  <ABY_Difficulty_Current>Current protocol: {0}</ABY_Difficulty_Current>
+  <ABY_Difficulty_CurrentDesc>{0}</ABY_Difficulty_CurrentDesc>
+  <ABY_Difficulty_ButtonHint>These settings raise pressure and late-stage calibration only. They do not unlock future content before its normal sigil / boss-drop / research gates.</ABY_Difficulty_ButtonHint>
+  <ABY_Difficulty_Normal>Normal</ABY_Difficulty_Normal>
+  <ABY_Difficulty_Normal_Desc>Baseline calibrated summon pressure.</ABY_Difficulty_Normal_Desc>
+  <ABY_Difficulty_Severe>Severe</ABY_Difficulty_Severe>
+  <ABY_Difficulty_Severe_Desc>Cleaner assault packs, slightly stronger elites and harsher ritual instability.</ABY_Difficulty_Severe_Desc>
+  <ABY_Difficulty_Rupture>Rupture</ABY_Difficulty_Rupture>
+  <ABY_Difficulty_Rupture_Desc>Escalates elite density and tempo while keeping progression order intact.</ABY_Difficulty_Rupture_Desc>
+  <ABY_Difficulty_Dominion>Dominion</ABY_Difficulty_Dominion>
+  <ABY_Difficulty_Dominion_Desc>Endgame pressure profile. Dominion calibration runs hotter and support cadres scale harder.</ABY_Difficulty_Dominion_Desc>
+  <ABY_Difficulty_FinalGate>Final Gate</ABY_Difficulty_FinalGate>
+  <ABY_Difficulty_FinalGate_Desc>Apex crisis calibration with the strongest composition pressure and instability backlash.</ABY_Difficulty_FinalGate_Desc>
+  <ABY_Difficulty_ProtocolLine>Protocol: {0}</ABY_Difficulty_ProtocolLine>
+  <ABY_Difficulty_ConsoleLine>Difficulty protocol: {0}</ABY_Difficulty_ConsoleLine>
+  <ABY_Difficulty_ConsoleImpact>Profile effect: encounter x{0}, instability x{1}, rewards x{2}</ABY_Difficulty_ConsoleImpact>
+  <ABY_Difficulty_ConsoleThreat>Threat calibration: {0}</ABY_Difficulty_ConsoleThreat>
+</LanguageData>

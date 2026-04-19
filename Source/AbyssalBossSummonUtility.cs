@@ -389,6 +389,7 @@ namespace AbyssalProtocol
             }
 
             PrepareBoss(pawn, bossLabel);
+            AbyssalDifficultyUtility.ApplyPawnDifficulty(pawn, kindDef);
             return true;
         }
 
@@ -408,6 +409,7 @@ namespace AbyssalProtocol
             }
 
             GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
+            AbyssalDifficultyUtility.ApplyPawnDifficulty(pawn);
             ArchonInfernalVFXUtility.DoSummonVFX(map, spawnCell);
             ABY_SoundUtility.PlayAt(arrivalSoundDefName, spawnCell, map);
 

@@ -45,12 +45,14 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 620f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 820f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
 
             list.Gap(4f);
+            DrawDifficultySection(list, s);
+            list.GapLine();
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowHealthNumbers".Translate(), ref s.showHealthNumbers, "ABY_BossBar_ShowHealthNumbersDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowPhaseMarkers".Translate(), ref s.showPhaseMarkers, "ABY_BossBar_ShowPhaseMarkersDesc".Translate());
@@ -100,6 +102,59 @@ namespace AbyssalProtocol
         {
             Settings.ClampValues();
             base.WriteSettings();
+        }
+
+        private static void DrawDifficultySection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
+        {
+            Rect headerRect = list.GetRect(22f);
+            Widgets.Label(headerRect, "ABY_Difficulty_Header".Translate());
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            float subHeight = Text.CalcHeight("ABY_Difficulty_Subheader".Translate(), list.ColumnWidth);
+            Widgets.Label(list.GetRect(subHeight + 4f), "ABY_Difficulty_Subheader".Translate());
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            list.Gap(4f);
+
+            Rect rowRect = list.GetRect(68f);
+            float gap = 6f;
+            float cellWidth = (rowRect.width - gap * 4f) / 5f;
+            ABY_DifficultyPreset[] presets =
+            {
+                ABY_DifficultyPreset.Normal,
+                ABY_DifficultyPreset.Severe,
+                ABY_DifficultyPreset.Rupture,
+                ABY_DifficultyPreset.Dominion,
+                ABY_DifficultyPreset.FinalGate
+            };
+
+            for (int i = 0; i < presets.Length; i++)
+            {
+                Rect buttonRect = new Rect(rowRect.x + (cellWidth + gap) * i, rowRect.y, cellWidth, 32f);
+                ABY_DifficultyPreset preset = presets[i];
+                if (AbyssalStyledWidgets.TextButton(buttonRect, AbyssalDifficultyUtility.GetPresetLabel(preset), true, settingsData.difficultyPreset == preset))
+                {
+                    settingsData.difficultyPreset = preset;
+                }
+            }
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            string currentLabel = "ABY_Difficulty_Current".Translate(AbyssalDifficultyUtility.GetPresetLabel(settingsData.difficultyPreset));
+            Widgets.Label(new Rect(rowRect.x, rowRect.y + 36f, rowRect.width, 14f), currentLabel);
+            string desc = "ABY_Difficulty_CurrentDesc".Translate(AbyssalDifficultyUtility.GetPresetDescription(settingsData.difficultyPreset));
+            Widgets.Label(new Rect(rowRect.x, rowRect.y + 50f, rowRect.width, 18f), desc);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            float hintHeight = Text.CalcHeight("ABY_Difficulty_ButtonHint".Translate(), list.ColumnWidth);
+            Widgets.Label(list.GetRect(hintHeight + 4f), "ABY_Difficulty_ButtonHint".Translate());
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            list.Gap(4f);
         }
 
         private static void DrawAnchorSelector(Listing_Standard list, AbyssalProtocolModSettings settingsData)

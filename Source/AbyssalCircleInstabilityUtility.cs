@@ -57,7 +57,8 @@ namespace AbyssalProtocol
             {
                 gain *= moduleSummary.HeatMultiplier;
             }
-            return Mathf.Clamp(gain, 0.04f, 0.52f);
+            gain = AbyssalDifficultyUtility.ScaleInstability(gain);
+            return Mathf.Clamp(gain, 0.04f, 0.60f);
         }
 
         public static float GetProjectedPostInvokeHeat(Building_AbyssalSummoningCircle circle, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -80,7 +81,8 @@ namespace AbyssalProtocol
             {
                 gain *= moduleSummary.ContaminationMultiplier;
             }
-            return Mathf.Clamp(gain, 0.02f, 0.24f);
+            gain = AbyssalDifficultyUtility.ScaleInstability(gain);
+            return Mathf.Clamp(gain, 0.02f, 0.32f);
         }
 
         public static float GetIdleDecayPerTick(Building_AbyssalSummoningCircle circle)
@@ -126,7 +128,8 @@ namespace AbyssalProtocol
             {
                 amount *= moduleSummary.ContaminationMultiplier;
             }
-            return Mathf.Clamp(amount, 0.002f, 0.024f);
+            amount = AbyssalDifficultyUtility.ScaleInstability(amount);
+            return Mathf.Clamp(amount, 0.002f, 0.032f);
         }
 
         public static float GetPurgeRemovedHeat(Building_AbyssalSummoningCircle circle)
@@ -205,10 +208,10 @@ namespace AbyssalProtocol
             float contamination = circle.ResidualContamination;
             if (circle.RitualActive)
             {
-                return Mathf.Clamp01(circle.InstabilityHeat + GetActivePhasePressure(circle.CurrentRitualPhase) + contamination * 0.20f + readinessPenalty);
+                return AbyssalDifficultyUtility.ScaleRisk(Mathf.Clamp01(circle.InstabilityHeat + GetActivePhasePressure(circle.CurrentRitualPhase) + contamination * 0.20f + readinessPenalty));
             }
 
-            return Mathf.Clamp(GetProjectedPostInvokeHeat(circle, ritual) + GetProjectedContaminationGain(circle, ritual) * 0.45f + contamination * 0.18f + readinessPenalty, 0.05f, 1f);
+            return AbyssalDifficultyUtility.ScaleRisk(Mathf.Clamp(GetProjectedPostInvokeHeat(circle, ritual) + GetProjectedContaminationGain(circle, ritual) * 0.45f + contamination * 0.18f + readinessPenalty, 0.05f, 1f));
         }
     }
 }

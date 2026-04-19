@@ -1,5 +1,6 @@
 using System;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI.Group;
 
@@ -24,7 +25,7 @@ namespace AbyssalProtocol
             droppedAny |= TrySpawnSingle(map, cell, "ABY_ReactorSaintCore");
             droppedAny |= TrySpawnSingle(map, cell, "ComponentSpacer");
 
-            if (Rand.Chance(0.35f))
+            if (Rand.Chance(Mathf.Clamp01(0.35f * AbyssalDifficultyUtility.CurrentProfile.RewardMultiplier)))
             {
                 droppedAny |= TrySpawnSingle(map, cell, "ComponentSpacer");
             }
@@ -35,7 +36,7 @@ namespace AbyssalProtocol
                 Thing residue = ThingMaker.MakeThing(residueDef);
                 if (residue != null)
                 {
-                    residue.stackCount = Math.Min(residueDef.stackLimit, Rand.RangeInclusive(MinBonusResidueDrop, MaxBonusResidueDrop));
+                    residue.stackCount = Math.Min(residueDef.stackLimit, AbyssalDifficultyUtility.ScaleRewardRoll(MinBonusResidueDrop, MaxBonusResidueDrop));
                     if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {
                         droppedAny = true;

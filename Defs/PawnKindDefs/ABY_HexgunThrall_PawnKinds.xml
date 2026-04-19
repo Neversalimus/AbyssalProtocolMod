@@ -9,6 +9,15 @@
     <combatPower>210</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>1</contentTier>
+        <role>assault</role>
+        <difficultyFloor>Normal</difficultyFloor>
+        <applyRoleStatScaling>true</applyRoleStatScaling>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+      </li>
+    </modExtensions>
     <apparelMoney Inherit="False">
       <min>-10</min>
       <max>-10</max>
