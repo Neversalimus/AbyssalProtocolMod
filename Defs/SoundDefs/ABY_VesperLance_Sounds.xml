@@ -3,12 +3,10 @@
 
   <SoundDef>
     <defName>ABY_VesperLanceAim</defName>
-    <sustain>true</sustain>
     <context>MapOnly</context>
     <maxVoices>4</maxVoices>
     <maxSimultaneous>2</maxSimultaneous>
     <priorityMode>PrioritizeNearest</priorityMode>
-    <sustainFadeoutTime>0.06</sustainFadeoutTime>
     <subSounds>
       <li>
         <grains>

@@ -53,4 +53,6 @@
   <ABY_BossBar_Phase_Fury>Ярость</ABY_BossBar_Phase_Fury>
   <ABY_BossBar_CalibrationPreviewActive>Текущая цель превью: {0}</ABY_BossBar_CalibrationPreviewActive>
   <ABY_BossBar_CalibrationPreviewMissing>На этой карте сейчас нет активного поддерживаемого босса. Настраивать layout всё равно можно, но live-превью лучше всего работает, когда активен Archon Beast, Archon of Rupture или Reactor Saint.</ABY_BossBar_CalibrationPreviewMissing>
+  <ABY_WeaponChargeSounds_Enable>Включить звуки зарядки оружия</ABY_WeaponChargeSounds_Enable>
+  <ABY_WeaponChargeSounds_EnableDesc>Включает или выключает abyssal-звуки прогрева / зарядки оружия. По умолчанию отключено. При включении звуки идут через безопасный one-shot, без бесконечного sustain-повтора.</ABY_WeaponChargeSounds_EnableDesc>
 </LanguageData>

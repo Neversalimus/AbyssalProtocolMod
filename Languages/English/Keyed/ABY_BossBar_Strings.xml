@@ -53,4 +53,6 @@
   <ABY_BossBar_Phase_Fury>Fury</ABY_BossBar_Phase_Fury>
   <ABY_BossBar_CalibrationPreviewActive>Preview target: {0}</ABY_BossBar_CalibrationPreviewActive>
   <ABY_BossBar_CalibrationPreviewMissing>No supported active boss is currently available on this map. You can still adjust the layout, but live preview works best while Archon Beast, Archon of Rupture, or Reactor Saint is active.</ABY_BossBar_CalibrationPreviewMissing>
+  <ABY_WeaponChargeSounds_Enable>Enable weapon charge sounds</ABY_WeaponChargeSounds_Enable>
+  <ABY_WeaponChargeSounds_EnableDesc>Turns abyssal weapon warmup / aiming charge sounds on or off. Disabled by default. When enabled, the charge sounds use a safe one-shot path instead of looping sustain audio.</ABY_WeaponChargeSounds_EnableDesc>
 </LanguageData>

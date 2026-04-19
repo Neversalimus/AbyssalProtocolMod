@@ -12,6 +12,11 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && (soundDefName.Contains("Charge") || soundDefName.Contains("Aim")))
+            {
+                return;
+            }
+
             SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
             if (soundDef == null)
             {

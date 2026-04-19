@@ -3,12 +3,10 @@
 
   <SoundDef>
     <defName>ABY_UltraPlasmaCharge</defName>
-    <sustain>true</sustain>
     <context>MapOnly</context>
     <maxVoices>4</maxVoices>
     <maxSimultaneous>2</maxSimultaneous>
     <priorityMode>PrioritizeNearest</priorityMode>
-    <sustainFadeoutTime>0.08</sustainFadeoutTime>
     <subSounds>
       <li>
         <grains>

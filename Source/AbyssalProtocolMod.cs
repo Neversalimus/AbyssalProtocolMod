@@ -29,6 +29,7 @@ namespace AbyssalProtocol
             instance = this;
             settings = GetSettings<AbyssalProtocolModSettings>();
             settings.ClampValues();
+            LongEventHandler.ExecuteWhenFinished(ABY_WeaponChargeSoundUtility.ApplyCurrentSettings);
         }
 
         public static void SaveNow()
@@ -54,6 +55,13 @@ namespace AbyssalProtocol
             list.Gap(4f);
             DrawDifficultySection(list, s);
             list.GapLine();
+
+            bool previousChargeSounds = s.enableWeaponChargeSounds;
+            list.CheckboxLabeled("ABY_WeaponChargeSounds_Enable".Translate(), ref s.enableWeaponChargeSounds, "ABY_WeaponChargeSounds_EnableDesc".Translate());
+            if (previousChargeSounds != s.enableWeaponChargeSounds)
+            {
+                ABY_WeaponChargeSoundUtility.ApplyCurrentSettings();
+            }
 
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowHealthNumbers".Translate(), ref s.showHealthNumbers, "ABY_BossBar_ShowHealthNumbersDesc".Translate());
@@ -104,6 +112,7 @@ namespace AbyssalProtocol
         {
             Settings.ClampValues();
             base.WriteSettings();
+            ABY_WeaponChargeSoundUtility.ApplyCurrentSettings();
         }
 
 
