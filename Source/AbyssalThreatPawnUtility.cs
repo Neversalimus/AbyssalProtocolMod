@@ -15,7 +15,7 @@ namespace AbyssalProtocol
 
         public static void PrepareThreatPawn(Pawn pawn, CompProperties_AbyssalPawnController controllerProps = null)
         {
-            if (pawn == null)
+            if (pawn == null || pawn.Dead || pawn.Destroyed || pawn.Corpse != null)
             {
                 return;
             }

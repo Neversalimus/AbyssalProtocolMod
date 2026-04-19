@@ -107,10 +107,10 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_Hexgun</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.82,0.74)</drawSize>
     </graphicData>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <techLevel>Spacer</techLevel>
+    <destroyOnDrop>true</destroyOnDrop>
     <weaponTags>
       <li>ABY_HexgunWeapon</li>
       <li>Gun</li>
