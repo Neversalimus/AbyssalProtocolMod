@@ -345,6 +345,7 @@ namespace AbyssalProtocol
             FleckMaker.ThrowHeatGlow(Position, Map, 1.85f);
             FleckMaker.ThrowMicroSparks(DrawPos, Map);
             FleckMaker.ThrowMicroSparks(DrawPos, Map);
+            ABY_SoundUtility.PlayAt("ABY_ReactorSaintCharge", Position, Map);
 
             AbyssalBossSummonUtility.FinalizeBossArrival(
                 pawn,

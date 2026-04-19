@@ -527,6 +527,52 @@
   </AbyssalProtocol.ABY_EncounterTemplateDef>
 
   <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_ReactorEscort_AegisGrid</defName>
+    <poolId>reactor_saint_escort</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+    <selectionWeight>1.00</selectionWeight>
+    <budgetMultiplier>0.96</budgetMultiplier>
+    <maxSameKindCount>3</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.78</multiplier></li>
+      <li><role>support</role><multiplier>1.18</multiplier></li>
+      <li><role>elite</role><multiplier>1.08</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_ReactorEscort_HeatRelay</defName>
+    <poolId>reactor_saint_escort</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+    <selectionWeight>0.92</selectionWeight>
+    <budgetMultiplier>1.00</budgetMultiplier>
+    <maxSameKindCount>3</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.74</multiplier></li>
+      <li><role>support</role><multiplier>1.14</multiplier></li>
+      <li><role>elite</role><multiplier>1.14</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
     <defName>ABY_EncounterTemplate_ReactorEscort_Gunline</defName>
     <poolId>reactor_saint_escort</poolId>
     <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>

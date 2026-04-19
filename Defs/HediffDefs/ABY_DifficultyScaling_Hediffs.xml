@@ -15,38 +15,46 @@
       </li>
       <li>
         <minSeverity>1</minSeverity>
+        <statFactors>
+          <MoveSpeed>1.02</MoveSpeed>
+          <MeleeHitChance>1.01</MeleeHitChance>
+          <MaxHitPoints>1.04</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <MoveSpeed>0.02</MoveSpeed>
-          <MeleeHitChance>0.01</MeleeHitChance>
           <ArmorRating_Sharp>0.03</ArmorRating_Sharp>
-          <MaxHitPoints>0.04</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>2</minSeverity>
+        <statFactors>
+          <MoveSpeed>1.04</MoveSpeed>
+          <MeleeHitChance>1.02</MeleeHitChance>
+          <MaxHitPoints>1.08</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <MoveSpeed>0.04</MoveSpeed>
-          <MeleeHitChance>0.02</MeleeHitChance>
           <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
-          <MaxHitPoints>0.08</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>3</minSeverity>
+        <statFactors>
+          <MoveSpeed>1.06</MoveSpeed>
+          <MeleeHitChance>1.03</MeleeHitChance>
+          <MaxHitPoints>1.12</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <MoveSpeed>0.06</MoveSpeed>
-          <MeleeHitChance>0.03</MeleeHitChance>
           <ArmorRating_Sharp>0.09</ArmorRating_Sharp>
-          <MaxHitPoints>0.12</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>4</minSeverity>
+        <statFactors>
+          <MoveSpeed>1.08</MoveSpeed>
+          <MeleeHitChance>1.04</MeleeHitChance>
+          <MaxHitPoints>1.16</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <MoveSpeed>0.08</MoveSpeed>
-          <MeleeHitChance>0.04</MeleeHitChance>
           <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
-          <MaxHitPoints>0.16</MaxHitPoints>
         </statOffsets>
       </li>
     </stages>
@@ -66,38 +74,46 @@
       </li>
       <li>
         <minSeverity>1</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.02</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.97</AimingDelayFactor>
+          <MaxHitPoints>1.04</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
-          <AimingDelayFactor>-0.03</AimingDelayFactor>
           <ArmorRating_Sharp>0.02</ArmorRating_Sharp>
-          <MaxHitPoints>0.04</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>2</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.04</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.95</AimingDelayFactor>
+          <MaxHitPoints>1.08</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-          <AimingDelayFactor>-0.05</AimingDelayFactor>
           <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
-          <MaxHitPoints>0.08</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>3</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.06</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.93</AimingDelayFactor>
+          <MaxHitPoints>1.12</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
-          <AimingDelayFactor>-0.07</AimingDelayFactor>
           <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
-          <MaxHitPoints>0.12</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>4</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.08</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.91</AimingDelayFactor>
+          <MaxHitPoints>1.16</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
-          <AimingDelayFactor>-0.09</AimingDelayFactor>
           <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
-          <MaxHitPoints>0.16</MaxHitPoints>
         </statOffsets>
       </li>
     </stages>
@@ -117,42 +133,50 @@
       </li>
       <li>
         <minSeverity>1</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.02</ShootingAccuracyPawn>
+          <MoveSpeed>1.02</MoveSpeed>
+          <MaxHitPoints>1.06</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
-          <MoveSpeed>0.02</MoveSpeed>
           <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
-          <MaxHitPoints>0.06</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>2</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.04</ShootingAccuracyPawn>
+          <MoveSpeed>1.03</MoveSpeed>
+          <MaxHitPoints>1.12</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-          <MoveSpeed>0.03</MoveSpeed>
           <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.06</ArmorRating_Blunt>
-          <MaxHitPoints>0.12</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>3</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.06</ShootingAccuracyPawn>
+          <MoveSpeed>1.04</MoveSpeed>
+          <MaxHitPoints>1.18</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
-          <MoveSpeed>0.04</MoveSpeed>
           <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.09</ArmorRating_Blunt>
-          <MaxHitPoints>0.18</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>4</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.08</ShootingAccuracyPawn>
+          <MoveSpeed>1.05</MoveSpeed>
+          <MaxHitPoints>1.24</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
-          <MoveSpeed>0.05</MoveSpeed>
           <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
-          <MaxHitPoints>0.24</MaxHitPoints>
         </statOffsets>
       </li>
     </stages>
@@ -172,46 +196,54 @@
       </li>
       <li>
         <minSeverity>1</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.02</ShootingAccuracyPawn>
+          <MoveSpeed>1.02</MoveSpeed>
+          <MaxHitPoints>1.08</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
-          <MoveSpeed>0.02</MoveSpeed>
           <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
           <ArmorRating_Heat>0.04</ArmorRating_Heat>
-          <MaxHitPoints>0.08</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>2</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.04</ShootingAccuracyPawn>
+          <MoveSpeed>1.03</MoveSpeed>
+          <MaxHitPoints>1.16</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
-          <MoveSpeed>0.03</MoveSpeed>
           <ArmorRating_Sharp>0.10</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
           <ArmorRating_Heat>0.08</ArmorRating_Heat>
-          <MaxHitPoints>0.16</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>3</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.06</ShootingAccuracyPawn>
+          <MoveSpeed>1.04</MoveSpeed>
+          <MaxHitPoints>1.24</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
-          <MoveSpeed>0.04</MoveSpeed>
           <ArmorRating_Sharp>0.15</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
           <ArmorRating_Heat>0.12</ArmorRating_Heat>
-          <MaxHitPoints>0.24</MaxHitPoints>
         </statOffsets>
       </li>
       <li>
         <minSeverity>4</minSeverity>
+        <statFactors>
+          <ShootingAccuracyPawn>1.08</ShootingAccuracyPawn>
+          <MoveSpeed>1.05</MoveSpeed>
+          <MaxHitPoints>1.32</MaxHitPoints>
+        </statFactors>
         <statOffsets>
-          <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
-          <MoveSpeed>0.05</MoveSpeed>
           <ArmorRating_Sharp>0.20</ArmorRating_Sharp>
           <ArmorRating_Blunt>0.16</ArmorRating_Blunt>
           <ArmorRating_Heat>0.16</ArmorRating_Heat>
-          <MaxHitPoints>0.32</MaxHitPoints>
         </statOffsets>
       </li>
     </stages>

@@ -111,6 +111,7 @@
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <techLevel>Spacer</techLevel>
     <destroyOnDrop>true</destroyOnDrop>
+    <tradeability>None</tradeability>
     <weaponTags>
       <li>ABY_HexgunWeapon</li>
       <li>Gun</li>

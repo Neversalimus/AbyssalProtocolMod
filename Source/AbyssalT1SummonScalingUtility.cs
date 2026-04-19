@@ -164,7 +164,8 @@ namespace AbyssalProtocol
         {
             int colonists = GetActiveColonistCount(map);
             float baseBudget = Math.Min(60, Math.Max(3, colonists * 3)) * ImpThreatValue;
-            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("unstable_breach_portal", baseBudget, 1, map, null, null, null);
+            int previewSeed = BuildPreviewSeed(map, plan, UnstableBreachRitualId, 1);
+            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("unstable_breach_portal", baseBudget, 1, map, previewSeed, null, null);
 
             plan.DirectedPlan = directed;
             plan.PortalImpCount = directed.GetCount("ABY_RiftImp");
@@ -196,7 +197,8 @@ namespace AbyssalProtocol
             int maxCount = Math.Min(25, Math.Max(minCount, colonists * 3));
             int mid = Math.Max(1, (minCount + maxCount) / 2);
             float baseBudget = mid * HoundThreatValue;
-            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("ember_hunt_pack", baseBudget, 1, map, null, null, null);
+            int previewSeed = BuildPreviewSeed(map, plan, EmberHuntRitualId, 1);
+            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("ember_hunt_pack", baseBudget, 1, map, previewSeed, null, null);
 
             plan.HoundCount = directed.GetCount("ABY_EmberHound");
             plan.DirectedPlan = directed;
@@ -224,7 +226,8 @@ namespace AbyssalProtocol
         {
             int colonists = GetActiveColonistCount(map);
             float baseBudget = Math.Min(30, Math.Max(6, colonists * 6)) * ImpThreatValue;
-            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", baseBudget, 2, map, null, null, null);
+            int previewSeed = BuildPreviewSeed(map, plan, ChoirEngineRitualId, 2);
+            AbyssalEncounterDirectorUtility.EncounterPlan directed = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", baseBudget, 2, map, previewSeed, null, null);
 
             plan.PortalImpCount = 0;
             plan.PackImpCount = directed.GetCount("ABY_RiftImp");
@@ -248,6 +251,24 @@ namespace AbyssalProtocol
                 + plan.ZealotCount * ZealotThreatValue
                 + plan.PriestCount * PriestThreatValue
                 + plan.SniperCount * SniperThreatValue;
+        }
+
+        private static int BuildPreviewSeed(Map map, ThreatPlan plan, string ritualId, int baseContentTier)
+        {
+            int seed = 197531;
+            seed = Gen.HashCombineInt(seed, map != null ? map.uniqueID : 0);
+            seed = Gen.HashCombineInt(seed, plan != null ? plan.ColonistTier : 0);
+            seed = Gen.HashCombineInt(seed, plan != null ? plan.WealthTier : 0);
+            seed = Gen.HashCombineInt(seed, plan != null ? plan.Tier : 0);
+            seed = Gen.HashCombineInt(seed, AbyssalDifficultyUtility.GetCurrentProfileOrder());
+            seed = Gen.HashCombineInt(seed, AbyssalDifficultyUtility.GetProgressionStage(map));
+            seed = Gen.HashCombineInt(seed, baseContentTier);
+            if (!ritualId.NullOrEmpty())
+            {
+                seed = Gen.HashCombineInt(seed, ritualId.GetHashCode());
+            }
+
+            return seed;
         }
 
         private static string BuildForecastText(ThreatPlan plan)

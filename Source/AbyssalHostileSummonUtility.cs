@@ -158,6 +158,7 @@ namespace AbyssalProtocol
             return true;
         }
 
+
         public static bool TrySpawnHostilePackAroundAnchor(
             Map map,
             List<HostilePackEntry> entries,
