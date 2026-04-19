@@ -77,6 +77,7 @@ namespace AbyssalProtocol
                 if (!CanContinueCurrentAttack(pawn))
                 {
                     ResetAttackState();
+                    TryAdvanceTowardDistantThreat(pawn);
                     return;
                 }
 
@@ -102,6 +103,7 @@ namespace AbyssalProtocol
                 if (!CanContinueCurrentAttack(pawn))
                 {
                     ResetAttackState();
+                    TryAdvanceTowardDistantThreat(pawn);
                     return;
                 }
 
@@ -132,6 +134,11 @@ namespace AbyssalProtocol
             Thing target = FindBestTargetThing(pawn);
             if (target == null)
             {
+                if (TryAdvanceTowardDistantThreat(pawn))
+                {
+                    return;
+                }
+
                 TryForceAdjacentBuildingBash(pawn);
                 return;
             }
@@ -345,6 +352,173 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+
+        private Thing FindBestAdvanceTarget(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            Pawn bestPawn = null;
+            float bestPawnDistance = float.MaxValue;
+            List<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            if (pawns != null)
+            {
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Pawn candidate = pawns[i];
+                    if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
+                    {
+                        continue;
+                    }
+
+                    float distance = pawn.Position.DistanceTo(candidate.Position);
+                    if (distance < bestPawnDistance)
+                    {
+                        bestPawnDistance = distance;
+                        bestPawn = candidate;
+                    }
+                }
+            }
+
+            if (bestPawn != null)
+            {
+                return bestPawn;
+            }
+
+            Building bestBuilding = null;
+            float bestBuildingDistance = float.MaxValue;
+            List<Building> colonistBuildings = pawn.Map.listerBuildings?.allBuildingsColonist;
+            if (colonistBuildings == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < colonistBuildings.Count; i++)
+            {
+                Building building = colonistBuildings[i];
+                if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, building))
+                {
+                    continue;
+                }
+
+                float distance = pawn.Position.DistanceTo(building.Position);
+                if (distance < bestBuildingDistance)
+                {
+                    bestBuildingDistance = distance;
+                    bestBuilding = building;
+                }
+            }
+
+            return bestBuilding;
+        }
+
+        private bool TryAdvanceTowardDistantThreat(Pawn pawn)
+        {
+            if (pawn?.Map == null || pawn.jobs == null)
+            {
+                return false;
+            }
+
+            Thing target = FindBestAdvanceTarget(pawn);
+            if (target == null)
+            {
+                return false;
+            }
+
+            IntVec3 targetCell = target.PositionHeld;
+            if (!targetCell.IsValid || !targetCell.InBounds(pawn.Map))
+            {
+                return false;
+            }
+
+            float distance = pawn.Position.DistanceTo(targetCell);
+            float desiredRange = Mathf.Clamp(Props.range * 0.78f, Props.preferredMinRange + 2f, Props.range - 1.5f);
+            if (distance <= desiredRange)
+            {
+                return false;
+            }
+
+            IntVec3 destination = targetCell;
+            if (TryFindAdvanceCell(pawn, targetCell, desiredRange, out IntVec3 approachCell))
+            {
+                destination = approachCell;
+            }
+
+            if (!destination.IsValid || destination == pawn.Position)
+            {
+                return false;
+            }
+
+            if (pawn.CurJob != null && pawn.CurJob.def == JobDefOf.Goto && pawn.CurJob.targetA.IsValid && pawn.CurJob.targetA.Cell == destination)
+            {
+                return true;
+            }
+
+            Job goJob = JobMaker.MakeJob(JobDefOf.Goto, destination);
+            goJob.expiryInterval = 150;
+            goJob.checkOverrideOnExpire = true;
+            goJob.collideWithPawns = true;
+            pawn.jobs.TryTakeOrderedJob(goJob, JobTag.Misc);
+            pawn.rotationTracker?.FaceTarget(targetCell);
+            return true;
+        }
+
+        private bool TryFindAdvanceCell(Pawn pawn, IntVec3 targetCell, float desiredRange, out IntVec3 destination)
+        {
+            destination = IntVec3.Invalid;
+            Map map = pawn?.Map;
+            if (map == null || !targetCell.IsValid || !targetCell.InBounds(map))
+            {
+                return false;
+            }
+
+            float minRange = Mathf.Max(Props.preferredMinRange + 0.8f, 6f);
+            float maxRange = Mathf.Min(Props.range - 1f, Mathf.Max(minRange + 2f, desiredRange + 4f));
+            float bestScore = float.MinValue;
+            int maxCells = Math.Min(GenRadial.NumCellsInRadius(maxRange), GenRadial.RadialPattern.Length);
+            for (int i = 0; i < maxCells; i++)
+            {
+                IntVec3 cell = targetCell + GenRadial.RadialPattern[i];
+                if (!cell.InBounds(map) || !cell.Walkable(map) || !cell.Standable(map) || AbyssalThreatPawnUtility.CellHasOtherPawn(cell, map, pawn))
+                {
+                    continue;
+                }
+
+                float targetDistance = cell.DistanceTo(targetCell);
+                if (targetDistance < minRange || targetDistance > maxRange)
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float moveDistance = pawn.Position.DistanceTo(cell);
+                float score = 120f - moveDistance;
+                if (GenSight.LineOfSight(cell, targetCell, map))
+                {
+                    score += 14f;
+                }
+
+                if (targetDistance >= desiredRange - 1.5f && targetDistance <= desiredRange + 3.5f)
+                {
+                    score += 8f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    destination = cell;
+                }
+            }
+
+            return destination.IsValid;
         }
 
         private static bool IsTurretLike(Building building)
