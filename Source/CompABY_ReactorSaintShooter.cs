@@ -68,7 +68,14 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (TryMaintainSpacing(pawn))
+            bool crowdPressure = HasCrowdPressure(pawn);
+            if (TryForceCloseQuartersEngagement(pawn))
+            {
+                ResetAttackState();
+                return;
+            }
+
+            if (!crowdPressure && TryMaintainSpacing(pawn))
             {
                 ResetAttackState();
                 return;
@@ -249,6 +256,15 @@ namespace AbyssalProtocol
             if (lockedTarget != null)
             {
                 return lockedTarget;
+            }
+
+            if (HasCrowdPressure(pawn))
+            {
+                Pawn crowdTarget = FindNearestThreatWithLineOfSight(pawn, Props.range);
+                if (crowdTarget != null)
+                {
+                    return crowdTarget;
+                }
             }
 
             Pawn pawnTarget = AbyssalThreatPawnUtility.FindBestTarget(
@@ -668,6 +684,93 @@ namespace AbyssalProtocol
                 Props.holdPositionWhenTargeting);
         }
 
+        private bool HasCrowdPressure(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+            {
+                return false;
+            }
+
+            float radius = Mathf.Max(Props.preferredMinRange + 2.5f, 11.5f);
+            int threshold = Props.preferredMinRange >= 9f ? 4 : 5;
+            return CountNearbyHostilePawns(pawn, radius) >= threshold;
+        }
+
+        private int CountNearbyHostilePawns(Pawn pawn, float radius)
+        {
+            if (pawn?.Map == null)
+            {
+                return 0;
+            }
+
+            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            float radiusSq = radius * radius;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn candidate = pawns[i];
+                if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
+                {
+                    continue;
+                }
+
+                if ((candidate.Position - pawn.Position).LengthHorizontalSquared > radiusSq)
+                {
+                    continue;
+                }
+
+                count++;
+            }
+
+            return count;
+        }
+
+        private Pawn FindNearestThreatWithLineOfSight(Pawn pawn, float maxRange)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            Pawn best = null;
+            float bestDistance = maxRange + 0.01f;
+            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn candidate = pawns[i];
+                if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
+                {
+                    continue;
+                }
+
+                float distance = pawn.Position.DistanceTo(candidate.Position);
+                if (distance > bestDistance)
+                {
+                    continue;
+                }
+
+                if (!GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
+                {
+                    continue;
+                }
+
+                bestDistance = distance;
+                best = candidate;
+            }
+
+            return best;
+        }
+
         private bool CollapseWindowActive
         {
             get
@@ -685,6 +788,19 @@ namespace AbyssalProtocol
             if (!primaryReady && !barrageReady)
             {
                 return AttackModeNone;
+            }
+
+            if (HasCrowdPressure(pawn))
+            {
+                if (barrageReady)
+                {
+                    return AttackModeBarrage;
+                }
+
+                if (primaryReady)
+                {
+                    return AttackModePrimary;
+                }
             }
 
             if (barrageReady)

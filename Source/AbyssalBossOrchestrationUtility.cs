@@ -161,6 +161,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            int nearbyEscortCountBefore = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
+
             ABY_EncounterTelemetryUtility.RecordPlan(context.Plan);
             bool spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchor(
                 map,
@@ -191,12 +193,28 @@ namespace AbyssalProtocol
                     out failReason);
             }
 
-            if (spawned && allowFollowupScheduling && !reinforcementMode)
+            int nearbyEscortCountAfter = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
+            bool escortMaterialized = nearbyEscortCountAfter > nearbyEscortCountBefore;
+            if (!escortMaterialized)
+            {
+                if (TrySpawnGuaranteedEscortFallback(context, map, faction, ritualId, bossPawn, packLabel, out string forcedFailReason))
+                {
+                    spawned = true;
+                    nearbyEscortCountAfter = CountNearbyActiveFactionPawns(map, faction, bossPawn, 24.9f);
+                    escortMaterialized = nearbyEscortCountAfter > nearbyEscortCountBefore;
+                }
+                else if (!forcedFailReason.NullOrEmpty())
+                {
+                    failReason = forcedFailReason;
+                }
+            }
+
+            if (spawned && escortMaterialized && allowFollowupScheduling && !reinforcementMode)
             {
                 TryScheduleDelayedReinforcement(context, map, packLabel, bossPawn.PositionHeld);
             }
 
-            return spawned;
+            return spawned && escortMaterialized;
         }
 
         public static bool TrySpawnEscortPackThroughPortal(
@@ -470,6 +488,99 @@ namespace AbyssalProtocol
             }
 
             return candidates[candidates.Count - 1];
+        }
+
+        private static int CountNearbyActiveFactionPawns(Map map, Faction faction, Pawn bossPawn, float radius)
+        {
+            if (map?.mapPawns?.AllPawnsSpawned == null || faction == null || bossPawn == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            float radiusSq = radius * radius;
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn == bossPawn || pawn.Dead || pawn.Downed || !pawn.Spawned)
+                {
+                    continue;
+                }
+
+                if (pawn.Faction != faction)
+                {
+                    continue;
+                }
+
+                if ((pawn.Position - bossPawn.PositionHeld).LengthHorizontalSquared > radiusSq)
+                {
+                    continue;
+                }
+
+                count++;
+            }
+
+            return count;
+        }
+
+        private static bool TrySpawnGuaranteedEscortFallback(
+            BossEscortContext context,
+            Map map,
+            Faction faction,
+            string ritualId,
+            Pawn bossPawn,
+            string packLabel,
+            out string failReason)
+        {
+            failReason = null;
+            if (context == null || map == null || faction == null || bossPawn == null || bossPawn.Dead || !bossPawn.Spawned)
+            {
+                return false;
+            }
+
+            AbyssalEncounterDirectorUtility.EncounterPlan guaranteedPlan = BuildGuaranteedEscortPlan(
+                context.Profile,
+                ritualId,
+                bossPawn.kindDef?.defName,
+                map,
+                Mathf.Max(1f, context.BaseBudget),
+                context.ReinforcementMode);
+            if (guaranteedPlan == null || guaranteedPlan.TotalUnits <= 0)
+            {
+                failReason = "Guaranteed escort fallback could not assemble a direct escort pack.";
+                return false;
+            }
+
+            bool spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchor(
+                map,
+                guaranteedPlan.ToHostilePackEntries(),
+                faction,
+                bossPawn.PositionHeld,
+                packLabel,
+                out failReason);
+            if (spawned)
+            {
+                return true;
+            }
+
+            IntVec3 fallbackArrival = bossPawn.PositionHeld;
+            if ((!fallbackArrival.IsValid || !fallbackArrival.InBounds(map)) && AbyssalBossSummonUtility.TryFindBossArrivalCell(map, out IntVec3 resolvedArrival))
+            {
+                fallbackArrival = resolvedArrival;
+            }
+
+            return AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                map,
+                guaranteedPlan.ToHostilePackEntries(),
+                faction,
+                fallbackArrival,
+                packLabel,
+                null,
+                null,
+                false,
+                out IntVec3 fallbackArrivalCell,
+                out failReason);
         }
 
         private static void TryScheduleDelayedReinforcement(BossEscortContext context, Map map, string packLabel, IntVec3 fallbackCell)
