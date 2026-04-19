@@ -2037,20 +2037,30 @@ namespace AbyssalProtocol
 
         private void TrySpawnPendingSupportPack()
         {
-            if (Map == null || pendingFaction == null || (pendingSupportImpCount <= 0 && pendingSupportThrallCount <= 0 && pendingSupportZealotCount <= 0 && (pendingRareEscortPawnKindDef == null || pendingRareEscortCount <= 0)))
+            if (Map == null || pendingFaction == null)
             {
                 return;
             }
 
+            bool hasLegacyEntries = pendingSupportImpCount > 0
+                || pendingSupportThrallCount > 0
+                || pendingSupportZealotCount > 0
+                || (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0);
+
             List<AbyssalHostileSummonUtility.HostilePackEntry> entries = null;
-            if (string.Equals(pendingRitualId, "choir_engine", System.StringComparison.OrdinalIgnoreCase))
+            float fallbackBudget = GetPendingEscortFallbackBudget();
+
+            if (!pendingRitualId.NullOrEmpty() && AbyssalBossOrchestrationUtility.HasBossEscortProfile(pendingRitualId))
             {
-                float supportBudget = pendingScaledThreatBudget > 0 ? pendingScaledThreatBudget : 720f;
-                AbyssalEncounterDirectorUtility.EncounterPlan directedPlan = AbyssalEncounterDirectorUtility.BuildPlan("choir_escort", supportBudget, 2, Map, null, null, null);
-                entries = directedPlan.ToHostilePackEntries();
+                AbyssalEncounterDirectorUtility.EncounterPlan directedPlan = AbyssalBossOrchestrationUtility.BuildEscortPlan(pendingRitualId, Map, fallbackBudget);
+                if (directedPlan != null && directedPlan.TotalUnits > 0)
+                {
+                    ABY_EncounterTelemetryUtility.RecordPlan(directedPlan);
+                    entries = directedPlan.ToHostilePackEntries();
+                }
             }
 
-            if (entries == null || entries.Count <= 0)
+            if ((entries == null || entries.Count <= 0) && hasLegacyEntries)
             {
                 entries = new List<AbyssalHostileSummonUtility.HostilePackEntry>();
 
@@ -2094,7 +2104,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (entries.Count <= 0)
+            if (entries == null || entries.Count <= 0)
             {
                 return;
             }
@@ -2112,6 +2122,28 @@ namespace AbyssalProtocol
                     out string failReason))
             {
                 Log.Warning("[Abyssal Protocol] Failed to spawn scaled support pack: " + failReason);
+            }
+        }
+
+        private float GetPendingEscortFallbackBudget()
+        {
+            if (pendingScaledThreatBudget > 0f)
+            {
+                return pendingScaledThreatBudget;
+            }
+
+            switch ((pendingRitualId ?? string.Empty).ToLowerInvariant())
+            {
+                case "warden_of_ash":
+                    return 420f;
+                case "archon_beast":
+                    return 620f;
+                case "choir_engine":
+                    return 760f;
+                case "reactor_saint":
+                    return 980f;
+                default:
+                    return 720f;
             }
         }
 

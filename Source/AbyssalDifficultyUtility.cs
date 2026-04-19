@@ -105,6 +105,27 @@ namespace AbyssalProtocol
             return Current.Game != null && Current.Game.GetComponent<ABY_FirstBossProgressionGameComponent>()?.FirstBossKillRecorded == true;
         }
 
+        public static bool HasRecordedReactorSaintKill()
+        {
+            return Current.Game != null && Current.Game.GetComponent<ABY_ReactorSaintProgressionGameComponent>()?.FirstReactorSaintKillRecorded == true;
+        }
+
+        public static int GetProgressionStage(Map map = null)
+        {
+            int stage = 0;
+            if (HasRecordedFirstBossKill())
+            {
+                stage = 1;
+            }
+
+            if (HasRecordedReactorSaintKill())
+            {
+                stage = 2;
+            }
+
+            return stage;
+        }
+
         public static bool CanUseByDifficulty(DefModExtension_AbyssalDifficultyScaling extension, ABY_DifficultyProfileDef profile)
         {
             if (extension == null)

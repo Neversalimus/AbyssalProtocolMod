@@ -84,7 +84,13 @@ namespace AbyssalProtocol
                 BossPortalLingerTicks,
                 bossLabel.NullOrEmpty() ? "Archon Beast" : bossLabel);
 
-            TrySpawnCompanionHoundPortals(map, faction, bossPortalCell);
+            int companionPortalCount = Mathf.Max(1, GetCompanionPortalCount(map) + AbyssalBossOrchestrationUtility.GetCompanionPortalBonus("archon_beast"));
+            TrySpawnCompanionHoundPortals(map, faction, bossPortalCell, 0, companionPortalCount);
+            bool spawnedEscort = AbyssalBossOrchestrationUtility.TrySpawnEscortPack(map, faction, "archon_beast", bossPortalCell, 620f, bossLabel, out _, out string escortFailReason);
+            if (!spawnedEscort && !escortFailReason.NullOrEmpty())
+            {
+                Log.Warning("[Abyssal Protocol] Archon escort plan warning: " + escortFailReason);
+            }
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.20f);
             return true;
         }

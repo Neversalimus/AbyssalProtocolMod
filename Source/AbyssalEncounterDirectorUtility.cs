@@ -20,6 +20,8 @@ namespace AbyssalProtocol
         {
             public string PoolId;
             public string TemplateDefName;
+            public string DoctrineDefName;
+            public string BossProfileDefName;
             public int AllowedContentTier;
             public float Budget;
             public List<DirectedEntry> Entries = new List<DirectedEntry>();
@@ -127,7 +129,7 @@ namespace AbyssalProtocol
 
         public static EncounterPlan BuildPlan(string poolId, float baseBudget, int baseContentTier)
         {
-            return BuildPlan(poolId, baseBudget, baseContentTier, null, null, null, null);
+            return BuildPlan(poolId, baseBudget, baseContentTier, null, null, null, null, null);
         }
 
         public static EncounterPlan BuildPlan(
@@ -138,7 +140,7 @@ namespace AbyssalProtocol
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts)
         {
-            return BuildPlan(poolId, baseBudget, baseContentTier, null, seed, minimumRoleCounts, maximumRoleCounts);
+            return BuildPlan(poolId, baseBudget, baseContentTier, null, seed, minimumRoleCounts, maximumRoleCounts, null);
         }
 
         public static EncounterPlan BuildPlan(
@@ -150,6 +152,19 @@ namespace AbyssalProtocol
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts)
         {
+            return BuildPlan(poolId, baseBudget, baseContentTier, map, seed, minimumRoleCounts, maximumRoleCounts, null);
+        }
+
+        public static EncounterPlan BuildPlan(
+            string poolId,
+            float baseBudget,
+            int baseContentTier,
+            Map map,
+            int? seed,
+            Dictionary<string, int> minimumRoleCounts,
+            Dictionary<string, int> maximumRoleCounts,
+            string bossProfileDefName)
+        {
             if (seed.HasValue)
             {
                 Rand.PushState(seed.Value);
@@ -157,17 +172,24 @@ namespace AbyssalProtocol
 
             try
             {
+                ABY_BossDifficultyProfileDef bossProfile = ResolveBossProfile(bossProfileDefName);
                 ABY_EncounterTemplateDef template = ChooseTemplate(poolId, baseContentTier, map);
+                ABY_ThreatDoctrineDef doctrine = ChooseDoctrine(poolId, baseContentTier, template, bossProfile, map);
+
                 EncounterPlan plan = new EncounterPlan
                 {
                     PoolId = poolId ?? string.Empty,
                     TemplateDefName = template?.defName ?? string.Empty,
-                    AllowedContentTier = GetAllowedTemplateTier(baseContentTier, template),
-                    Budget = Math.Max(1f, baseBudget * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier() * Math.Max(0.25f, template?.budgetMultiplier ?? 1f))
+                    DoctrineDefName = doctrine?.defName ?? string.Empty,
+                    BossProfileDefName = bossProfile?.defName ?? string.Empty,
+                    AllowedContentTier = GetAllowedPlanTier(baseContentTier, template, doctrine),
+                    Budget = Math.Max(1f, baseBudget * AbyssalDifficultyUtility.GetEncounterBudgetMultiplier() * Math.Max(0.25f, template?.budgetMultiplier ?? 1f) * Math.Max(0.25f, doctrine?.budgetMultiplier ?? 1f))
                 };
 
                 Dictionary<string, int> mergedMinimums = MergeRoleCounts(minimumRoleCounts, template?.minimumRoleCounts, true);
+                mergedMinimums = MergeRoleCounts(mergedMinimums, doctrine?.minimumRoleCounts, true);
                 Dictionary<string, int> mergedMaximums = MergeRoleCounts(maximumRoleCounts, template?.maximumRoleCounts, false);
+                mergedMaximums = MergeRoleCounts(mergedMaximums, doctrine?.maximumRoleCounts, false);
 
                 List<Candidate> candidates = GetCandidates(plan.PoolId, baseContentTier, plan.AllowedContentTier);
                 if (candidates.Count == 0)
@@ -176,13 +198,13 @@ namespace AbyssalProtocol
                 }
 
                 float remainingBudget = plan.Budget;
-                ApplyRoleMinimums(plan, candidates, mergedMinimums, mergedMaximums, template, ref remainingBudget);
+                ApplyRoleMinimums(plan, candidates, mergedMinimums, mergedMaximums, template, doctrine, ref remainingBudget);
 
                 int safety = 0;
                 while (remainingBudget > 0.01f && safety < 128)
                 {
                     safety++;
-                    Candidate pick = TryPickCandidate(plan, candidates, remainingBudget, mergedMaximums, template);
+                    Candidate pick = TryPickCandidate(plan, candidates, remainingBudget, mergedMaximums, template, doctrine);
                     if (pick == null)
                     {
                         break;
@@ -201,6 +223,16 @@ namespace AbyssalProtocol
                     Rand.PopState();
                 }
             }
+        }
+
+        private static ABY_BossDifficultyProfileDef ResolveBossProfile(string bossProfileDefName)
+        {
+            if (bossProfileDefName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            return DefDatabase<ABY_BossDifficultyProfileDef>.GetNamedSilentFail(bossProfileDefName);
         }
 
         private static ABY_EncounterTemplateDef ChooseTemplate(string poolId, int baseContentTier, Map map)
@@ -283,7 +315,111 @@ namespace AbyssalProtocol
             return candidates[candidates.Count - 1];
         }
 
-        private static int GetAllowedTemplateTier(int baseContentTier, ABY_EncounterTemplateDef template)
+        private static ABY_ThreatDoctrineDef ChooseDoctrine(string poolId, int baseContentTier, ABY_EncounterTemplateDef template, ABY_BossDifficultyProfileDef bossProfile, Map map)
+        {
+            List<ABY_ThreatDoctrineDef> allDefs = DefDatabase<ABY_ThreatDoctrineDef>.AllDefsListForReading;
+            if (allDefs == null || allDefs.Count == 0)
+            {
+                return null;
+            }
+
+            int currentOrder = AbyssalDifficultyUtility.GetCurrentProfileOrder();
+            int progressionStage = AbyssalDifficultyUtility.GetProgressionStage(map);
+            List<ABY_ThreatDoctrineDef> candidates = new List<ABY_ThreatDoctrineDef>();
+            for (int i = 0; i < allDefs.Count; i++)
+            {
+                ABY_ThreatDoctrineDef doctrine = allDefs[i];
+                if (doctrine == null || !doctrine.MatchesPool(poolId))
+                {
+                    continue;
+                }
+
+                if (currentOrder < AbyssalDifficultyUtility.GetProfileOrder(doctrine.difficultyFloorDefName))
+                {
+                    continue;
+                }
+
+                if (progressionStage < doctrine.minProgressionStage || progressionStage > doctrine.maxProgressionStage)
+                {
+                    continue;
+                }
+
+                if (!doctrine.AllowsBossProfile(bossProfile?.defName))
+                {
+                    continue;
+                }
+
+                candidates.Add(doctrine);
+            }
+
+            if (candidates.Count == 0)
+            {
+                return null;
+            }
+
+            float totalWeight = 0f;
+            float[] weights = new float[candidates.Count];
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                ABY_ThreatDoctrineDef doctrine = candidates[i];
+                float weight = Math.Max(0.01f, doctrine.selectionWeight);
+                int doctrineHits = ABY_EncounterTelemetryUtility.GetRecentDoctrineHits(poolId, doctrine.defName, Math.Max(0, doctrine.recentDoctrineLookback));
+                for (int hit = 0; hit < doctrineHits; hit++)
+                {
+                    weight *= Mathf.Clamp(doctrine.recentDoctrinePenalty, 0.15f, 1f);
+                }
+
+                if (bossProfile != null)
+                {
+                    bool hasBossPreferences = (bossProfile.preferredDoctrineDefNames != null && bossProfile.preferredDoctrineDefNames.Count > 0)
+                        || (bossProfile.secondaryDoctrineDefNames != null && bossProfile.secondaryDoctrineDefNames.Count > 0);
+                    if (bossProfile.IsPreferredDoctrine(doctrine.defName))
+                    {
+                        weight *= Mathf.Max(1f, bossProfile.preferredDoctrineWeightMultiplier);
+                    }
+                    else if (bossProfile.IsSecondaryDoctrine(doctrine.defName))
+                    {
+                        weight *= Mathf.Max(1f, bossProfile.secondaryDoctrineWeightMultiplier);
+                    }
+                    else if (hasBossPreferences)
+                    {
+                        weight *= 0.88f;
+                    }
+                }
+
+                if (doctrine.reduceStackedSniperPressure && ABY_EncounterTelemetryUtility.HadRecentSniperPressure(poolId, Math.Max(1, doctrine.recentDoctrineLookback)))
+                {
+                    weight *= doctrine.GetRoleWeightMultiplier("elite") > 1.12f ? 0.75f : 0.90f;
+                }
+
+                if (doctrine.reduceStackedSupportPressure && ABY_EncounterTelemetryUtility.HadRecentSupportPressure(poolId, Math.Max(1, doctrine.recentDoctrineLookback)))
+                {
+                    weight *= doctrine.GetRoleWeightMultiplier("support") > 1.12f ? 0.80f : 0.92f;
+                }
+
+                if (doctrine.reduceStackedLargeWavePressure && ABY_EncounterTelemetryUtility.HadRecentLargeWavePressure(poolId, Math.Max(1, doctrine.recentDoctrineLookback)))
+                {
+                    weight *= doctrine.budgetMultiplier > 1.02f ? 0.85f : 0.94f;
+                }
+
+                weights[i] = Math.Max(0.01f, weight);
+                totalWeight += weights[i];
+            }
+
+            float roll = Rand.Value * Math.Max(0.01f, totalWeight);
+            for (int i = 0; i < candidates.Count; i++)
+            {
+                roll -= weights[i];
+                if (roll <= 0f)
+                {
+                    return candidates[i];
+                }
+            }
+
+            return candidates[candidates.Count - 1];
+        }
+
+        private static int GetAllowedPlanTier(int baseContentTier, ABY_EncounterTemplateDef template, ABY_ThreatDoctrineDef doctrine)
         {
             int allowed = AbyssalDifficultyUtility.GetAllowedContentTier(baseContentTier);
             if (template != null)
@@ -291,10 +427,15 @@ namespace AbyssalProtocol
                 allowed += Math.Max(0, template.extraContentTier);
             }
 
+            if (doctrine != null)
+            {
+                allowed += Math.Max(0, doctrine.extraContentTier);
+            }
+
             return Math.Max(1, allowed);
         }
 
-        private static Dictionary<string, int> MergeRoleCounts(Dictionary<string, int> baseCounts, List<ABY_EncounterTemplateRoleCount> templateCounts, bool useMaximum)
+        private static Dictionary<string, int> MergeRoleCounts(Dictionary<string, int> baseCounts, List<ABY_EncounterTemplateRoleCount> additionalCounts, bool useMaximum)
         {
             Dictionary<string, int> merged = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             if (baseCounts != null)
@@ -305,11 +446,11 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (templateCounts != null)
+            if (additionalCounts != null)
             {
-                for (int i = 0; i < templateCounts.Count; i++)
+                for (int i = 0; i < additionalCounts.Count; i++)
                 {
-                    ABY_EncounterTemplateRoleCount entry = templateCounts[i];
+                    ABY_EncounterTemplateRoleCount entry = additionalCounts[i];
                     if (entry == null)
                     {
                         continue;
@@ -346,7 +487,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (extension.encounterPools == null || !extension.encounterPools.Contains(poolId))
+                if (extension.encounterPools == null || !ListContainsIgnoreCase(extension.encounterPools, poolId))
                 {
                     continue;
                 }
@@ -384,6 +525,7 @@ namespace AbyssalProtocol
             Dictionary<string, int> minimumRoleCounts,
             Dictionary<string, int> maximumRoleCounts,
             ABY_EncounterTemplateDef template,
+            ABY_ThreatDoctrineDef doctrine,
             ref float remainingBudget)
         {
             if (minimumRoleCounts == null || minimumRoleCounts.Count == 0)
@@ -397,7 +539,7 @@ namespace AbyssalProtocol
                 int required = Math.Max(0, pair.Value);
                 while (plan.GetRoleCount(role) < required && remainingBudget > 0.01f)
                 {
-                    Candidate pick = TryPickRoleCandidate(plan, candidates, role, remainingBudget, maximumRoleCounts, template);
+                    Candidate pick = TryPickRoleCandidate(plan, candidates, role, remainingBudget, maximumRoleCounts, template, doctrine);
                     if (pick == null)
                     {
                         break;
@@ -415,7 +557,8 @@ namespace AbyssalProtocol
             string role,
             float remainingBudget,
             Dictionary<string, int> maximumRoleCounts,
-            ABY_EncounterTemplateDef template)
+            ABY_EncounterTemplateDef template,
+            ABY_ThreatDoctrineDef doctrine)
         {
             Candidate best = null;
             float bestScore = float.MinValue;
@@ -443,7 +586,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float score = GetDynamicCandidateWeight(plan, candidate, template) / budgetCost;
+                float score = GetDynamicCandidateWeight(plan, candidate, template, doctrine) / budgetCost;
                 if (score > bestScore)
                 {
                     bestScore = score;
@@ -459,7 +602,8 @@ namespace AbyssalProtocol
             List<Candidate> candidates,
             float remainingBudget,
             Dictionary<string, int> maximumRoleCounts,
-            ABY_EncounterTemplateDef template)
+            ABY_EncounterTemplateDef template,
+            ABY_ThreatDoctrineDef doctrine)
         {
             float cheapestBudget = GetCheapestBudget(candidates, maximumRoleCounts, plan, template);
             List<Candidate> affordable = new List<Candidate>();
@@ -485,7 +629,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float weight = GetDynamicCandidateWeight(plan, candidate, template);
+                float weight = GetDynamicCandidateWeight(plan, candidate, template, doctrine);
                 if (weight <= 0.001f)
                 {
                     continue;
@@ -514,7 +658,7 @@ namespace AbyssalProtocol
             return affordable[affordable.Count - 1];
         }
 
-        private static float GetDynamicCandidateWeight(EncounterPlan plan, Candidate candidate, ABY_EncounterTemplateDef template)
+        private static float GetDynamicCandidateWeight(EncounterPlan plan, Candidate candidate, ABY_EncounterTemplateDef template, ABY_ThreatDoctrineDef doctrine)
         {
             if (candidate == null || candidate.Extension == null)
             {
@@ -523,6 +667,7 @@ namespace AbyssalProtocol
 
             float weight = Math.Max(0.01f, candidate.EffectiveWeight);
             weight *= Math.Max(0.10f, template?.GetRoleWeightMultiplier(candidate.Extension.role) ?? 1f);
+            weight *= Math.Max(0.10f, doctrine?.GetRoleWeightMultiplier(candidate.Extension.role) ?? 1f);
 
             int recentKindHits = ABY_EncounterTelemetryUtility.GetRecentKindHits(plan.PoolId, candidate.KindDef?.defName, Math.Max(0, template?.recentKindLookback ?? 0));
             float kindPenalty = Mathf.Clamp(template?.recentKindPenalty ?? 0.75f, 0.15f, 1f);
@@ -539,7 +684,8 @@ namespace AbyssalProtocol
                     weight *= 0.72f;
                 }
 
-                if (template != null && template.reduceStackedSupportPressure && ABY_EncounterTelemetryUtility.HadRecentSupportPressure(plan.PoolId, Math.Max(1, template.recentKindLookback)))
+                if ((template != null && template.reduceStackedSupportPressure && ABY_EncounterTelemetryUtility.HadRecentSupportPressure(plan.PoolId, Math.Max(1, template.recentKindLookback)))
+                    || (doctrine != null && doctrine.reduceStackedSupportPressure && ABY_EncounterTelemetryUtility.HadRecentSupportPressure(plan.PoolId, Math.Max(1, doctrine.recentDoctrineLookback))))
                 {
                     weight *= 0.78f;
                 }
@@ -551,9 +697,13 @@ namespace AbyssalProtocol
                     weight *= 0.76f;
                 }
 
-                if (candidate.KindDef != null && candidate.KindDef.defName == "ABY_RiftSniper" && template != null && template.reduceStackedSniperPressure && ABY_EncounterTelemetryUtility.HadRecentSniperPressure(plan.PoolId, Math.Max(1, template.recentKindLookback)))
+                bool recentSniperPressure = ABY_EncounterTelemetryUtility.HadRecentSniperPressure(plan.PoolId, Math.Max(1, Math.Max(template?.recentKindLookback ?? 0, doctrine?.recentDoctrineLookback ?? 0)));
+                if (candidate.KindDef != null && candidate.KindDef.defName == "ABY_RiftSniper" && recentSniperPressure)
                 {
-                    weight *= 0.55f;
+                    if ((template != null && template.reduceStackedSniperPressure) || (doctrine != null && doctrine.reduceStackedSniperPressure))
+                    {
+                        weight *= 0.55f;
+                    }
                 }
             }
 
@@ -647,6 +797,26 @@ namespace AbyssalProtocol
                 BudgetCost = Math.Max(1f, candidate.Extension != null ? candidate.Extension.budgetCost : 100f),
                 Role = candidate.Extension != null ? candidate.Extension.role : "assault"
             });
+        }
+
+        private static bool ListContainsIgnoreCase(List<string> values, string sought)
+        {
+            if (values == null || values.Count == 0 || sought.NullOrEmpty())
+            {
+                return false;
+            }
+
+            string safe = sought.ToLowerInvariant();
+            for (int i = 0; i < values.Count; i++)
+            {
+                string value = values[i];
+                if (!value.NullOrEmpty() && value.ToLowerInvariant() == safe)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

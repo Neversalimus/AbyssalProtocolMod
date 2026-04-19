@@ -13,6 +13,8 @@ namespace AbyssalProtocol
         private int nextScanTick;
         private List<int> processedReactorSaintPawnIds = new List<int>();
 
+        public bool FirstReactorSaintKillRecorded => firstReactorSaintKillRecorded;
+
         public ABY_ReactorSaintProgressionGameComponent(Game game)
         {
         }
