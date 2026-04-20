@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_Harvester</defName>
+    <label>harvester</label>
+    <description>An essence-scavenging abyssal collector built to grow more dangerous as the rest of the host dies around it. Harvesters prowl just behind the first breach line, feeding on fresh allied losses, hardening themselves in the process, and stripping still-hot corpses into more usable infernal residue.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/Harvester/ABY_Harvester</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.92,2.92)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.04</baseBodySize>
+      <baseHealthScale>1.42</baseHealthScale>
+      <baseHungerRate>0.46</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>130</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>760</MaxHitPoints>
+      <MoveSpeed>4.62</MoveSpeed>
+      <MeleeHitChance>0.74</MeleeHitChance>
+      <MeleeDPS>8.6</MeleeDPS>
+      <MeleeDodgeChance>0.10</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.24</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.16</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.44</ArmorRating_Heat>
+      <ComfyTemperatureMin>-18</ComfyTemperatureMin>
+      <ComfyTemperatureMax>190</ComfyTemperatureMax>
+      <Flammability>0.01</Flammability>
+      <PainShockThreshold>0.96</PainShockThreshold>
+      <MarketValue>980</MarketValue>
+      <Mass>0.94</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>reaper claw</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.62</cooldownTime>
+        <chanceFactor>1.02</chanceFactor>
+        <armorPenetration>0.20</armorPenetration>
+      </li>
+      <li>
+        <label>harvest hook</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>1.95</cooldownTime>
+        <chanceFactor>0.84</chanceFactor>
+        <armorPenetration>0.15</armorPenetration>
+      </li>
+    </tools>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+    </killedLeavings>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>HookBruiser</archetype>
+        <minMeleeSkill>12</minMeleeSkill>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_HarvesterEssence">
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <nearbyDeathRadius>12.9</nearbyDeathRadius>
+        <harvestRadius>1.85</harvestRadius>
+        <hostileInterferenceRadius>2.1</hostileInterferenceRadius>
+        <maxEssenceStacks>5</maxEssenceStacks>
+        <stackGainPerDeath>1</stackGainPerDeath>
+        <stackGainPerHarvest>1</stackGainPerHarvest>
+        <corpseRecognitionMaxAgeTicks>1500</corpseRecognitionMaxAgeTicks>
+        <freshCorpseMaxAgeTicks>2600</freshCorpseMaxAgeTicks>
+        <harvestWarmupTicks>120</harvestWarmupTicks>
+        <healInjuryAmount>14.0</healInjuryAmount>
+        <essenceHediffDefName>ABY_HarvesterEssenceSurge</essenceHediffDefName>
+        <glowScale>1.20</glowScale>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>

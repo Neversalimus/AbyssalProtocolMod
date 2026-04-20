@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_Harvester</defName>
+    <label>harvester</label>
+    <race>ABY_Harvester</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>340</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>3</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+        <role>support</role>
+        <budgetCost>340</budgetCost>
+        <selectionWeight>0.72</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>choir_escort</li>
+          <li>archon_boss_escort</li>
+          <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
+          <li>reactor_saint_escort</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/Harvester/ABY_Harvester</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(2.92,2.92)</drawSize>
+          <shadowData>
+            <volume>(0.82, 1.02, 0.82)</volume>
+            <offset>(0, 0, -0.22)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>
