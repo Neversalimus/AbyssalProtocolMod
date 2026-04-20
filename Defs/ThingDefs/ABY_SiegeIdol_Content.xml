@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_SiegeIdol</defName>
+    <label>siege idol</label>
+    <description>A semi-mechanical breach idol built to follow the abyssal line rather than lead it. Siege idols advance behind the first contact wave, plant their weight just outside the kill box, and answer cover, doors, and static gunlines with furnace-bright plasma fire.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/SiegeIdol/ABY_SiegeIdol</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(4.72,4.72)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.52</baseBodySize>
+      <baseHealthScale>1.86</baseHealthScale>
+      <baseHungerRate>0.52</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>180</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>1080</MaxHitPoints>
+      <MoveSpeed>3.74</MoveSpeed>
+      <MeleeHitChance>0.58</MeleeHitChance>
+      <MeleeDPS>4.9</MeleeDPS>
+      <MeleeDodgeChance>0.05</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.44</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.29</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.76</ArmorRating_Heat>
+      <ComfyTemperatureMin>-24</ComfyTemperatureMin>
+      <ComfyTemperatureMax>240</ComfyTemperatureMax>
+      <Flammability>0.00</Flammability>
+      <PainShockThreshold>1.12</PainShockThreshold>
+      <ShootingAccuracyPawn>1.10</ShootingAccuracyPawn>
+      <MarketValue>1520</MarketValue>
+      <Mass>1.52</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>stabilizer ram</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.45</cooldownTime>
+        <chanceFactor>0.92</chanceFactor>
+        <armorPenetration>0.12</armorPenetration>
+      </li>
+    </tools>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+    </killedLeavings>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>SiegeNode</archetype>
+        <minShootingSkill>11</minShootingSkill>
+        <spawnGraceTicks>48</spawnGraceTicks>
+        <lordRetryTicks>60</lordRetryTicks>
+        <preferredMinRange>10.8</preferredMinRange>
+        <retreatSearchRadius>12</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+        <targetMinRange>8.6</targetMinRange>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_SiegeIdolPlasmaBolt</projectileDefName>
+        <aimSoundDefName>ABY_UltraPlasmaCharge</aimSoundDefName>
+        <castSoundDefName>ABY_UltraPlasmaFire</castSoundDefName>
+        <range>31.9</range>
+        <warmupTicks>78</warmupTicks>
+        <cooldownTicks>168</cooldownTicks>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
+        <scanIntervalTicks>18</scanIntervalTicks>
+        <preferredMinRange>10.8</preferredMinRange>
+        <targetMinRange>8.6</targetMinRange>
+        <retreatSearchRadius>12</retreatSearchRadius>
+        <panicMeleeRange>2.9</panicMeleeRange>
+        <panicMeleeJobExpiryTicks>180</panicMeleeJobExpiryTicks>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_SiegeIdolPlasmaBolt</defName>
+    <label>siege plasma bolt</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_SiegeIdolPlasmaBeam</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.40,3.10)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>24</damageAmountBase>
+      <armorPenetrationBase>0.88</armorPenetrationBase>
+      <stoppingPower>1.75</stoppingPower>
+      <speed>52</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+</Defs>

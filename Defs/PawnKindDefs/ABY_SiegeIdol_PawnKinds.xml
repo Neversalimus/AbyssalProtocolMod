@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_SiegeIdol</defName>
+    <label>siege idol</label>
+    <race>ABY_SiegeIdol</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>620</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
+        <role>elite</role>
+        <budgetCost>620</budgetCost>
+        <selectionWeight>0.36</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/SiegeIdol/ABY_SiegeIdol</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(4.72,4.72)</drawSize>
+          <shadowData>
+            <volume>(1.62, 1.18, 1.62)</volume>
+            <offset>(0, 0, -0.30)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_SiegeIdolEscort</defName>
+    <label>siege idol escort</label>
+    <race>ABY_SiegeIdol</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>560</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
+        <role>elite</role>
+        <budgetCost>560</budgetCost>
+        <selectionWeight>0.18</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>dominion_gate_support</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/SiegeIdol/ABY_SiegeIdol</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(4.72,4.72)</drawSize>
+          <shadowData>
+            <volume>(1.62, 1.18, 1.62)</volume>
+            <offset>(0, 0, -0.30)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>
