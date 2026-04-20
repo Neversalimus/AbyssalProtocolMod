@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_GateWardenBrace</defName>
+    <label>brace stance</label>
+    <description>The gate warden locks into a plated holding posture, slowing its own stride to become a harder, denser wall in front of the abyssal node it guards.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(1.00, 0.34, 0.14)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>120</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.10</MoveSpeed>
+          <ArmorRating_Sharp>0.12</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
+          <MeleeDodgeChance>0.02</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.80</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.18</MoveSpeed>
+          <ArmorRating_Sharp>0.20</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.14</ArmorRating_Blunt>
+          <MeleeDodgeChance>0.04</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_GateWardenRush</defName>
+    <label>intercept rush</label>
+    <description>For a few moments, the gate warden surges into an interception run to meet anything pressing too close to its assigned abyssal anchor.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>false</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(1.00, 0.28, 0.10)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>90</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <MoveSpeed>0.14</MoveSpeed>
+          <MeleeHitChance>0.04</MeleeHitChance>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.65</minSeverity>
+        <statOffsets>
+          <MoveSpeed>0.20</MoveSpeed>
+          <MeleeHitChance>0.07</MeleeHitChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_GateWardenBashed</defName>
+    <label>shield-bashed</label>
+    <description>A plated infernal shield slam has disrupted footing, blurred timing, and left the target briefly staggered in front of the abyssal line.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(1.00, 0.22, 0.10)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>180</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.08</MoveSpeed>
+          <MeleeHitChance>-0.03</MeleeHitChance>
+          <ShootingAccuracyPawn>-0.04</ShootingAccuracyPawn>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.65</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.14</MoveSpeed>
+          <MeleeHitChance>-0.05</MeleeHitChance>
+          <ShootingAccuracyPawn>-0.07</ShootingAccuracyPawn>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

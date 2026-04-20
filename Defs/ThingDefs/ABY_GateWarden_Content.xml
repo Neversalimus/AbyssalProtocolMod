@@ -3,14 +3,14 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_GateWarden</defName>
     <label>gate warden</label>
-    <description>An infernal gate warden is not a berserker or a disposable breach beast, but a deliberately plated node-guard forged to stand in front of stronger manifestations. It advances with shielded discipline, absorbs disproportionate punishment, and pins attackers in place so the true abyssal authority behind it can keep operating.</description>
+    <description>An infernal pretorian forged to hold space for stronger abyssal authorities. Gate wardens brace into plated wall-postures, surge into short interception bursts when their assigned node is threatened, and punish anything that reaches them with a crushing shield bash.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
       <texPath>Pawn/GateWarden/ABY_GateWarden</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(3.36,3.36)</drawSize>
+      <drawSize>(3.42,3.42)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>
@@ -25,15 +25,15 @@
         <li>OrganicStandard</li>
       </hediffGiverSets>
       <body>Human</body>
-      <baseBodySize>1.22</baseBodySize>
-      <baseHealthScale>1.88</baseHealthScale>
+      <baseBodySize>1.24</baseBodySize>
+      <baseHealthScale>1.96</baseHealthScale>
       <baseHungerRate>0.54</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>18</gestationPeriodDays>
-      <lifeExpectancy>150</lifeExpectancy>
+      <lifeExpectancy>160</lifeExpectancy>
       <foodType>OmnivoreHuman</foodType>
       <useMeatFrom>Human</useMeatFrom>
       <lifeStageAges Inherit="False">
@@ -44,20 +44,20 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>980</MaxHitPoints>
-      <MoveSpeed>4.18</MoveSpeed>
-      <MeleeHitChance>0.84</MeleeHitChance>
-      <MeleeDPS>11.3</MeleeDPS>
+      <MaxHitPoints>1120</MaxHitPoints>
+      <MoveSpeed>4.12</MoveSpeed>
+      <MeleeHitChance>0.86</MeleeHitChance>
+      <MeleeDPS>11.8</MeleeDPS>
       <MeleeDodgeChance>0.08</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.64</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.52</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.38</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.78</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
-      <ComfyTemperatureMax>220</ComfyTemperatureMax>
+      <ComfyTemperatureMax>230</ComfyTemperatureMax>
       <Flammability>0.01</Flammability>
-      <PainShockThreshold>1.18</PainShockThreshold>
-      <MarketValue>1180</MarketValue>
-      <Mass>1.16</Mass>
+      <PainShockThreshold>1.30</PainShockThreshold>
+      <MarketValue>1360</MarketValue>
+      <Mass>1.20</Mass>
     </statBases>
     <tools>
       <li>
@@ -66,7 +66,7 @@
           <li>Blunt</li>
         </capacities>
         <power>24</power>
-        <cooldownTime>1.98</cooldownTime>
+        <cooldownTime>1.92</cooldownTime>
         <chanceFactor>1.00</chanceFactor>
         <armorPenetration>0.28</armorPenetration>
       </li>
@@ -76,22 +76,63 @@
           <li>Blunt</li>
         </capacities>
         <power>16</power>
-        <cooldownTime>2.34</cooldownTime>
+        <cooldownTime>2.26</cooldownTime>
         <chanceFactor>0.76</chanceFactor>
         <armorPenetration>0.18</armorPenetration>
       </li>
     </tools>
     <killedLeavings Inherit="False">
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
     </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>BossJuggernaut</archetype>
         <minMeleeSkill>12</minMeleeSkill>
-        <spawnGraceTicks>40</spawnGraceTicks>
+        <spawnGraceTicks>30</spawnGraceTicks>
         <lordRetryTicks>45</lordRetryTicks>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_GateWardenEscort">
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <anchorSearchRadius>30.0</anchorSearchRadius>
+        <defendRadius>11.5</defendRadius>
+        <leashDistance>6.4</leashDistance>
+        <returnRadiusMin>1.6</returnRadiusMin>
+        <returnRadiusMax>4.8</returnRadiusMax>
+        <interceptJobExpiryTicks>120</interceptJobExpiryTicks>
+        <returnJobExpiryTicks>90</returnJobExpiryTicks>
+        <rushHediffDefName>ABY_GateWardenRush</rushHediffDefName>
+        <rushSeverity>0.72</rushSeverity>
+        <anchorDefNames>
+          <li>ABY_WardenOfAsh</li>
+          <li>ABY_ChoirEngine</li>
+          <li>ABY_ArchonBeast</li>
+          <li>ABY_ArchonOfRupture</li>
+          <li>ABY_ReactorSaint</li>
+          <li>ABY_DominionGateCore</li>
+        </anchorDefNames>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_GateWardenBrace">
+        <scanIntervalTicks>15</scanIntervalTicks>
+        <triggerEnemyRange>6.6</triggerEnemyRange>
+        <braceHediffDefName>ABY_GateWardenBrace</braceHediffDefName>
+        <braceSeverity>0.64</braceSeverity>
+        <woundedHealthThreshold>0.58</woundedHealthThreshold>
+        <woundedBraceSeverity>0.95</woundedBraceSeverity>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_GateWardenShieldBash">
+        <scanIntervalTicks>12</scanIntervalTicks>
+        <cooldownTicks>210</cooldownTicks>
+        <cooldownJitterTicks>35</cooldownJitterTicks>
+        <bashRange>1.42</bashRange>
+        <bashDamage>11</bashDamage>
+        <bashArmorPenetration>0.18</bashArmorPenetration>
+        <staggerTicks>35</staggerTicks>
+        <bashHediffDefName>ABY_GateWardenBashed</bashHediffDefName>
+        <bashSeverity>0.55</bashSeverity>
+        <bashSoundDefName>ABY_SigilChargePulse</bashSoundDefName>
+        <bashFlashScale>0.82</bashFlashScale>
+      </li>
     </comps>
   </ThingDef>
 </Defs>
