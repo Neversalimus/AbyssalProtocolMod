@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_GateWarden</defName>
+    <label>gate warden</label>
+    <race>ABY_GateWarden</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>460</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+        <role>elite</role>
+        <budgetCost>460</budgetCost>
+        <selectionWeight>0.82</selectionWeight>
+        <maxPlanCount>2</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>archon_boss_escort</li>
+          <li>reactor_saint_escort</li>
+          <li>dominion_gate_support</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/GateWarden/ABY_GateWarden</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(3.36,3.36)</drawSize>
+          <shadowData>
+            <volume>(0.94, 1.08, 0.94)</volume>
+            <offset>(0, 0, -0.24)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>
