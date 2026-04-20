@@ -9,7 +9,7 @@
   <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные rupture-фронты. Обычные abyssal-боевые формы входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
   <ABY_CircleRewardGuaranteed_Horde>Гарантированно: высокий выход residue и широкая cleanup-добыча с армейского прорыва.</ABY_CircleRewardGuaranteed_Horde>
   <ABY_CircleRewardProgression_Horde>Прогрессия: проверяет позднюю многовекторную оборону после Reactor Saint, не перескакивая сразу в dominion crisis.</ABY_CircleRewardProgression_Horde>
-  <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Фронты: {1}   •   Импульсы: {2}   •   Прогноз: {3}   •   Протокол: {4}</ABY_HordeRitualMeta>
+  <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Доктрина: {1}   •   Фронты: {2}   •   Импульсы: {3}   •   Прогноз: {4}   •   Протокол: {5}</ABY_HordeRitualMeta>
   <ABY_CircleFail_HordeLocked>Horde gate остаётся неактивным, пока в этом сейве не зафиксировано первое убийство Reactor Saint.</ABY_CircleFail_HordeLocked>
   <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
   <ABY_CirclePreview_Harvester_Plural>harvesters</ABY_CirclePreview_Harvester_Plural>
@@ -17,4 +17,16 @@
   <ABY_CirclePreview_Brute_Plural>breach brutes</ABY_CirclePreview_Brute_Plural>
   <ABY_CirclePreview_Idol_Singular>siege idol</ABY_CirclePreview_Idol_Singular>
   <ABY_CirclePreview_Idol_Plural>siege idols</ABY_CirclePreview_Idol_Plural>
+  <ABY_HordeDoctrinePreview_Header>Паттерн вторжения</ABY_HordeDoctrinePreview_Header>
+  <ABY_HordeDoctrinePreview_Line>Прогноз доктрины: {0}</ABY_HordeDoctrinePreview_Line>
+  <ABY_HordeDoctrine_Flood_Label>Ravenous Breach</ABY_HordeDoctrine_Flood_Label>
+  <ABY_HordeDoctrine_Flood_Summary>Штурмовая доктрина. Жди быстрый нажим, высокий объём тел и сравнительно лёгкую точечную поддержку.</ABY_HordeDoctrine_Flood_Summary>
+  <ABY_HordeDoctrine_Fireline_Label>Black Procession</ABY_HordeDoctrine_Fireline_Label>
+  <ABY_HordeDoctrine_Fireline_Summary>Огневая доктрина. Ожидаются плотное дальнобойное давление, снайперские пики и более густая поддержка за фронтом.</ABY_HordeDoctrine_Fireline_Summary>
+  <ABY_HordeDoctrine_Grinder_Label>Grinder Host</ABY_HordeDoctrine_Grinder_Label>
+  <ABY_HordeDoctrine_Grinder_Summary>Доктрина прорыва. Прогнозирует больше тяжёлых продавливающих форм, harvest-давление и более медленный, но плотный фронтальный обвал.</ABY_HordeDoctrine_Grinder_Summary>
+  <ABY_HordeDoctrine_Siege_Label>Siege Liturgy</ABY_HordeDoctrine_Siege_Label>
+  <ABY_HordeDoctrine_Siege_Summary>Осадная доктрина. Ожидается более редкая поздняя композиция с элитными якорями и возможной Idol-поддержкой.</ABY_HordeDoctrine_Siege_Summary>
+  <ABY_HordeDoctrine_Unknown_Label>Нестабилизированный прорыв</ABY_HordeDoctrine_Unknown_Label>
+  <ABY_HordeDoctrine_Unknown_Summary>Прогноз доктрины не удалось стабилизировать. Жди смешанный perimeter-прорыв без чистой специализации.</ABY_HordeDoctrine_Unknown_Summary>
 </LanguageData>

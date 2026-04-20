@@ -524,6 +524,27 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x, rect.y + 72f, rect.width, descriptionHeight), ritualDescription);
 
             float rewardY = rect.y + 80f + descriptionHeight;
+            if (AbyssalHordeSigilUtility.IsSupportedRitual(ritual?.Id))
+            {
+                AbyssalHordeSigilUtility.HordePlan hordePlan = AbyssalHordeSigilUtility.GetHordePlan(circle?.Map);
+                string doctrineLine = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Line", "Forecast doctrine: {0}", AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan));
+                string doctrineSummary = AbyssalHordeSigilUtility.GetDoctrineSummary(hordePlan);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Header", "Offensive pattern"));
+                Text.Font = GameFont.Tiny;
+
+                float doctrineLineHeight = Text.CalcHeight(doctrineLine, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, doctrineLineHeight), doctrineLine);
+
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                float doctrineSummaryHeight = Text.CalcHeight(doctrineSummary, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 32f + doctrineLineHeight, rect.width, doctrineSummaryHeight), doctrineSummary);
+                GUI.color = Color.white;
+
+                rewardY += 42f + doctrineLineHeight + doctrineSummaryHeight + 10f;
+            }
+
             Text.Font = GameFont.Small;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), "ABY_CircleRewardsHeader".Translate());
             Text.Font = GameFont.Tiny;
@@ -686,6 +707,14 @@ namespace AbyssalProtocol
                     AbyssalSummoningConsoleUtility.GetRewardVectorFollowUp(ritual)
                 }.Where(line => !line.NullOrEmpty()).ToArray()), width);
             float total = 126f + descriptionHeight + rewardHeight;
+
+            if (AbyssalHordeSigilUtility.IsSupportedRitual(ritual?.Id))
+            {
+                AbyssalHordeSigilUtility.HordePlan hordePlan = AbyssalHordeSigilUtility.GetHordePlan(circle?.Map);
+                string doctrineLine = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Line", "Forecast doctrine: {0}", AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan));
+                string doctrineSummary = AbyssalHordeSigilUtility.GetDoctrineSummary(hordePlan);
+                total += 52f + Text.CalcHeight(doctrineLine, width) + Text.CalcHeight(doctrineSummary, width);
+            }
 
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
             {

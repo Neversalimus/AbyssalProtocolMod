@@ -25,6 +25,10 @@ namespace AbyssalProtocol
             public float TotalBudget;
             public float AveragePulseBudget;
             public string ForecastText;
+            public string PrimaryTemplateDefName;
+            public string PrimaryDoctrineDefName;
+            public string PrimaryDoctrineLabel;
+            public string PrimaryDoctrineSummary;
             public List<AbyssalEncounterDirectorUtility.EncounterPlan> PulsePlans = new List<AbyssalEncounterDirectorUtility.EncounterPlan>();
             public Dictionary<string, int> TotalCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
@@ -110,7 +114,32 @@ namespace AbyssalProtocol
             plan.TotalBudget = BuildTotalBudget(map, band);
             plan.AveragePulseBudget = Mathf.Max(900f, plan.TotalBudget / Math.Max(1, plan.PulseCount));
 
-            for (int pulseIndex = 0; pulseIndex < plan.PulseCount; pulseIndex++)
+            int primarySeed = BuildPreviewSeed(map, plan, 0);
+            float primaryBudget = plan.AveragePulseBudget * GetPulseBudgetMultiplier(0, plan.PulseCount);
+            AbyssalEncounterDirectorUtility.EncounterPlan primaryPulsePlan = AbyssalEncounterDirectorUtility.BuildPlan(
+                EncounterPoolId,
+                primaryBudget,
+                BaseContentTier,
+                map,
+                primarySeed,
+                null,
+                null);
+
+            if (primaryPulsePlan == null || primaryPulsePlan.TotalUnits <= 0)
+            {
+                primaryPulsePlan = BuildFallbackPulsePlan(map, primaryBudget);
+            }
+
+            if (primaryPulsePlan != null && primaryPulsePlan.TotalUnits > 0)
+            {
+                plan.PrimaryTemplateDefName = primaryPulsePlan.TemplateDefName ?? string.Empty;
+                plan.PrimaryDoctrineDefName = primaryPulsePlan.DoctrineDefName ?? string.Empty;
+                ApplyDoctrinePresentation(plan, plan.PrimaryDoctrineDefName);
+                plan.PulsePlans.Add(primaryPulsePlan);
+                MergeCounts(plan.TotalCounts, primaryPulsePlan);
+            }
+
+            for (int pulseIndex = plan.PulsePlans.Count; pulseIndex < plan.PulseCount; pulseIndex++)
             {
                 float pulseBudget = plan.AveragePulseBudget * GetPulseBudgetMultiplier(pulseIndex, plan.PulseCount);
                 int previewSeed = BuildPreviewSeed(map, plan, pulseIndex);
@@ -121,7 +150,11 @@ namespace AbyssalProtocol
                     map,
                     previewSeed,
                     null,
-                    null);
+                    null,
+                    null,
+                    null,
+                    plan.PrimaryTemplateDefName,
+                    plan.PrimaryDoctrineDefName);
 
                 if (pulsePlan == null || pulsePlan.TotalUnits <= 0)
                 {
@@ -131,6 +164,13 @@ namespace AbyssalProtocol
                 if (pulsePlan == null || pulsePlan.TotalUnits <= 0)
                 {
                     continue;
+                }
+
+                if (plan.PrimaryDoctrineLabel.NullOrEmpty() && !pulsePlan.DoctrineDefName.NullOrEmpty())
+                {
+                    plan.PrimaryDoctrineDefName = pulsePlan.DoctrineDefName;
+                    plan.PrimaryTemplateDefName = pulsePlan.TemplateDefName ?? string.Empty;
+                    ApplyDoctrinePresentation(plan, plan.PrimaryDoctrineDefName);
                 }
 
                 plan.PulsePlans.Add(pulsePlan);
@@ -156,6 +196,7 @@ namespace AbyssalProtocol
                 if (fallbackPlan.PulsePlans[0] != null)
                 {
                     MergeCounts(fallbackPlan.TotalCounts, fallbackPlan.PulsePlans[0]);
+                    ApplyDoctrinePresentation(fallbackPlan, fallbackPlan.PrimaryDoctrineDefName);
                     fallbackPlan.ForecastText = BuildForecastText(fallbackPlan);
                 }
 
@@ -186,8 +227,9 @@ namespace AbyssalProtocol
 
             return AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_HordeRitualMeta",
-                "Sigils on map: {0}   •   Fronts: {1}   •   Pulses: {2}   •   Forecast: {3}   •   Protocol: {4}",
+                "Sigils on map: {0}   •   Pattern: {1}   •   Fronts: {2}   •   Pulses: {3}   •   Forecast: {4}   •   Protocol: {5}",
                 sigilCount,
+                GetDoctrineLabel(plan),
                 plan.FrontCount,
                 plan.PulseCount,
                 GetPreviewText(plan),
@@ -386,6 +428,60 @@ namespace AbyssalProtocol
 
                 string key = entry.KindDef.defName ?? string.Empty;
                 totals[key] = totals.TryGetValue(key, out int existing) ? existing + entry.Count : entry.Count;
+            }
+        }
+
+        public static string GetDoctrineLabel(HordePlan plan)
+        {
+            if (plan == null || plan.PrimaryDoctrineLabel.NullOrEmpty())
+            {
+                return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Unknown_Label", "Unshaped breach");
+            }
+
+            return plan.PrimaryDoctrineLabel;
+        }
+
+        public static string GetDoctrineSummary(HordePlan plan)
+        {
+            if (plan == null || plan.PrimaryDoctrineSummary.NullOrEmpty())
+            {
+                return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Unknown_Summary", "Forecast doctrine could not be stabilized. Expect a mixed perimeter breach with no clean specialization.");
+            }
+
+            return plan.PrimaryDoctrineSummary;
+        }
+
+        private static void ApplyDoctrinePresentation(HordePlan plan, string doctrineDefName)
+        {
+            if (plan == null)
+            {
+                return;
+            }
+
+            plan.PrimaryDoctrineDefName = doctrineDefName ?? string.Empty;
+            string safe = (doctrineDefName ?? string.Empty).ToLowerInvariant();
+            switch (safe)
+            {
+                case "aby_doctrine_hordeflood":
+                    plan.PrimaryDoctrineLabel = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Flood_Label", "Ravenous Breach");
+                    plan.PrimaryDoctrineSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Flood_Summary", "Assault-heavy flood. Expects fast pressure, high body count, and relatively light precision support.");
+                    break;
+                case "aby_doctrine_hordefireline":
+                    plan.PrimaryDoctrineLabel = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Fireline_Label", "Black Procession");
+                    plan.PrimaryDoctrineSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Fireline_Summary", "Fireline doctrine. Expect ranged suppression, sniper picks, and denser support pressure behind the front line.");
+                    break;
+                case "aby_doctrine_hordegrinder":
+                    plan.PrimaryDoctrineLabel = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Grinder_Label", "Grinder Host");
+                    plan.PrimaryDoctrineSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Grinder_Summary", "Breakthrough doctrine. Predicts heavier bruisers, harvest pressure, and slower but denser frontal collapse.");
+                    break;
+                case "aby_doctrine_hordesiege":
+                    plan.PrimaryDoctrineLabel = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Siege_Label", "Siege Liturgy");
+                    plan.PrimaryDoctrineSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Siege_Summary", "Siege doctrine. Expects a rarer late-pressure composition with elite anchors and possible Idol-backed support.");
+                    break;
+                default:
+                    plan.PrimaryDoctrineLabel = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Unknown_Label", "Unshaped breach");
+                    plan.PrimaryDoctrineSummary = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrine_Unknown_Summary", "Forecast doctrine could not be stabilized. Expect a mixed perimeter breach with no clean specialization.");
+                    break;
             }
         }
 

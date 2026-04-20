@@ -9,7 +9,7 @@
   <ABY_HordeGateSummonSuccessDesc>Multiple perimeter rupture fronts are opening. Ordinary abyssal warforms are spilling onto the map in repeated portal pulses.</ABY_HordeGateSummonSuccessDesc>
   <ABY_CircleRewardGuaranteed_Horde>Guaranteed: high residue yield and wide cleanup salvage from a full army-scale breach.</ABY_CircleRewardGuaranteed_Horde>
   <ABY_CircleRewardProgression_Horde>Progression: stress-tests multi-front late defense after Reactor Saint without skipping straight into dominion crisis logic.</ABY_CircleRewardProgression_Horde>
-  <ABY_HordeRitualMeta>Sigils on map: {0}   •   Fronts: {1}   •   Pulses: {2}   •   Forecast: {3}   •   Protocol: {4}</ABY_HordeRitualMeta>
+  <ABY_HordeRitualMeta>Sigils on map: {0}   •   Pattern: {1}   •   Fronts: {2}   •   Pulses: {3}   •   Forecast: {4}   •   Protocol: {5}</ABY_HordeRitualMeta>
   <ABY_CircleFail_HordeLocked>The horde gate remains dormant until the first Reactor Saint kill is recorded on this save.</ABY_CircleFail_HordeLocked>
   <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
   <ABY_CirclePreview_Harvester_Plural>harvesters</ABY_CirclePreview_Harvester_Plural>
@@ -17,4 +17,16 @@
   <ABY_CirclePreview_Brute_Plural>breach brutes</ABY_CirclePreview_Brute_Plural>
   <ABY_CirclePreview_Idol_Singular>siege idol</ABY_CirclePreview_Idol_Singular>
   <ABY_CirclePreview_Idol_Plural>siege idols</ABY_CirclePreview_Idol_Plural>
+  <ABY_HordeDoctrinePreview_Header>Offensive pattern</ABY_HordeDoctrinePreview_Header>
+  <ABY_HordeDoctrinePreview_Line>Forecast doctrine: {0}</ABY_HordeDoctrinePreview_Line>
+  <ABY_HordeDoctrine_Flood_Label>Ravenous Breach</ABY_HordeDoctrine_Flood_Label>
+  <ABY_HordeDoctrine_Flood_Summary>Assault-heavy flood. Expects fast pressure, high body count, and relatively light precision support.</ABY_HordeDoctrine_Flood_Summary>
+  <ABY_HordeDoctrine_Fireline_Label>Black Procession</ABY_HordeDoctrine_Fireline_Label>
+  <ABY_HordeDoctrine_Fireline_Summary>Fireline doctrine. Expect ranged suppression, sniper picks, and denser support pressure behind the front line.</ABY_HordeDoctrine_Fireline_Summary>
+  <ABY_HordeDoctrine_Grinder_Label>Grinder Host</ABY_HordeDoctrine_Grinder_Label>
+  <ABY_HordeDoctrine_Grinder_Summary>Breakthrough doctrine. Predicts heavier bruisers, harvest pressure, and slower but denser frontal collapse.</ABY_HordeDoctrine_Grinder_Summary>
+  <ABY_HordeDoctrine_Siege_Label>Siege Liturgy</ABY_HordeDoctrine_Siege_Label>
+  <ABY_HordeDoctrine_Siege_Summary>Siege doctrine. Expects a rarer late-pressure composition with elite anchors and possible Idol-backed support.</ABY_HordeDoctrine_Siege_Summary>
+  <ABY_HordeDoctrine_Unknown_Label>Unshaped breach</ABY_HordeDoctrine_Unknown_Label>
+  <ABY_HordeDoctrine_Unknown_Summary>Forecast doctrine could not be stabilized. Expect a mixed perimeter breach with no clean specialization.</ABY_HordeDoctrine_Unknown_Summary>
 </LanguageData>

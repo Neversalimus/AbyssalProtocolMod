@@ -167,6 +167,22 @@ namespace AbyssalProtocol
             string bossProfileDefName,
             string escalationPackageDefName)
         {
+            return BuildPlan(poolId, baseBudget, baseContentTier, map, seed, minimumRoleCounts, maximumRoleCounts, bossProfileDefName, escalationPackageDefName, null, null);
+        }
+
+        public static EncounterPlan BuildPlan(
+            string poolId,
+            float baseBudget,
+            int baseContentTier,
+            Map map,
+            int? seed,
+            Dictionary<string, int> minimumRoleCounts,
+            Dictionary<string, int> maximumRoleCounts,
+            string bossProfileDefName,
+            string escalationPackageDefName,
+            string forcedTemplateDefName,
+            string forcedDoctrineDefName)
+        {
             if (seed.HasValue)
             {
                 Rand.PushState(seed.Value);
@@ -176,8 +192,8 @@ namespace AbyssalProtocol
             {
                 ABY_BossDifficultyProfileDef bossProfile = ResolveBossProfile(bossProfileDefName);
                 ABY_BossEscalationPackageDef escalationPackage = ResolveBossEscalationPackage(escalationPackageDefName);
-                ABY_EncounterTemplateDef template = ChooseTemplate(poolId, baseContentTier, map);
-                ABY_ThreatDoctrineDef doctrine = ChooseDoctrine(poolId, baseContentTier, template, bossProfile, escalationPackage, map);
+                ABY_EncounterTemplateDef template = ResolveTemplateOverride(poolId, baseContentTier, forcedTemplateDefName) ?? ChooseTemplate(poolId, baseContentTier, map);
+                ABY_ThreatDoctrineDef doctrine = ResolveDoctrineOverride(poolId, forcedDoctrineDefName, bossProfile, map) ?? ChooseDoctrine(poolId, baseContentTier, template, bossProfile, escalationPackage, map);
 
                 EncounterPlan plan = new EncounterPlan
                 {
@@ -249,6 +265,69 @@ namespace AbyssalProtocol
             }
 
             return DefDatabase<ABY_BossEscalationPackageDef>.GetNamedSilentFail(escalationPackageDefName);
+        }
+
+        private static ABY_EncounterTemplateDef ResolveTemplateOverride(string poolId, int baseContentTier, string forcedTemplateDefName)
+        {
+            if (forcedTemplateDefName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            ABY_EncounterTemplateDef template = DefDatabase<ABY_EncounterTemplateDef>.GetNamedSilentFail(forcedTemplateDefName);
+            if (template == null)
+            {
+                return null;
+            }
+
+            if (!string.Equals(template.poolId ?? string.Empty, poolId ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            if (baseContentTier < template.minBaseContentTier || baseContentTier > template.maxBaseContentTier)
+            {
+                return null;
+            }
+
+            if (AbyssalDifficultyUtility.GetCurrentProfileOrder() < AbyssalDifficultyUtility.GetProfileOrder(template.difficultyFloorDefName))
+            {
+                return null;
+            }
+
+            return template;
+        }
+
+        private static ABY_ThreatDoctrineDef ResolveDoctrineOverride(string poolId, string forcedDoctrineDefName, ABY_BossDifficultyProfileDef bossProfile, Map map)
+        {
+            if (forcedDoctrineDefName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            ABY_ThreatDoctrineDef doctrine = DefDatabase<ABY_ThreatDoctrineDef>.GetNamedSilentFail(forcedDoctrineDefName);
+            if (doctrine == null || !doctrine.MatchesPool(poolId))
+            {
+                return null;
+            }
+
+            if (AbyssalDifficultyUtility.GetCurrentProfileOrder() < AbyssalDifficultyUtility.GetProfileOrder(doctrine.difficultyFloorDefName))
+            {
+                return null;
+            }
+
+            int progressionStage = AbyssalDifficultyUtility.GetProgressionStage(map);
+            if (progressionStage < doctrine.minProgressionStage || progressionStage > doctrine.maxProgressionStage)
+            {
+                return null;
+            }
+
+            if (!doctrine.AllowsBossProfile(bossProfile?.defName))
+            {
+                return null;
+            }
+
+            return doctrine;
         }
 
         private static ABY_EncounterTemplateDef ChooseTemplate(string poolId, int baseContentTier, Map map)
