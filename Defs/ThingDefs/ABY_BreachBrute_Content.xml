@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_BreachBrute</defName>
+    <label>breach brute</label>
+    <description>A furnace-heavy abyssal assault mass grown to cross firing lanes and stay upright long after lighter manifestations have burned away. Breach brutes advance with crushing patience, soak disproportionate punishment, and turn any line they reach into a short-range demolition problem.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/BreachBrute/ABY_BreachBrute</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.48,3.48)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.32</baseBodySize>
+      <baseHealthScale>1.95</baseHealthScale>
+      <baseHungerRate>0.60</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>180</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>1180</MaxHitPoints>
+      <MoveSpeed>3.82</MoveSpeed>
+      <MeleeHitChance>0.84</MeleeHitChance>
+      <MeleeDPS>11.4</MeleeDPS>
+      <MeleeDodgeChance>0.06</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.62</ArmorRating_Heat>
+      <ComfyTemperatureMin>-20</ComfyTemperatureMin>
+      <ComfyTemperatureMax>220</ComfyTemperatureMax>
+      <Flammability>0.01</Flammability>
+      <PainShockThreshold>1.18</PainShockThreshold>
+      <MarketValue>980</MarketValue>
+      <Mass>1.28</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>breach ram</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>26</power>
+        <cooldownTime>2.55</cooldownTime>
+        <chanceFactor>0.95</chanceFactor>
+        <armorPenetration>0.29</armorPenetration>
+      </li>
+      <li>
+        <label>furnace fist</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>16</power>
+        <cooldownTime>1.95</cooldownTime>
+        <chanceFactor>0.78</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+    </killedLeavings>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>BossJuggernaut</archetype>
+        <minMeleeSkill>12</minMeleeSkill>
+        <spawnGraceTicks>45</spawnGraceTicks>
+        <lordRetryTicks>60</lordRetryTicks>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+    </comps>
+  </ThingDef>
+</Defs>

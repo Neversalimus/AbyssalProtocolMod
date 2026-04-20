@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_BreachBrute</defName>
+    <label>breach brute</label>
+    <race>ABY_BreachBrute</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>420</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>3</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+        <role>elite</role>
+        <budgetCost>420</budgetCost>
+        <selectionWeight>0.65</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>choir_escort</li>
+          <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
+          <li>warden_boss_escort</li>
+          <li>archon_boss_escort</li>
+          <li>reactor_saint_escort</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/BreachBrute/ABY_BreachBrute</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(3.48,3.48)</drawSize>
+          <shadowData>
+            <volume>(1.42, 1.08, 1.42)</volume>
+            <offset>(0, 0, -0.28)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>
