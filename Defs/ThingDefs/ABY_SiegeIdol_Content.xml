@@ -26,7 +26,7 @@
       </hediffGiverSets>
       <body>Human</body>
       <baseBodySize>1.52</baseBodySize>
-      <baseHealthScale>1.86</baseHealthScale>
+      <baseHealthScale>1.92</baseHealthScale>
       <baseHungerRate>0.52</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
@@ -44,21 +44,21 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>1080</MaxHitPoints>
-      <MoveSpeed>3.74</MoveSpeed>
+      <MaxHitPoints>1120</MaxHitPoints>
+      <MoveSpeed>3.70</MoveSpeed>
       <MeleeHitChance>0.58</MeleeHitChance>
       <MeleeDPS>4.9</MeleeDPS>
       <MeleeDodgeChance>0.05</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.44</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.29</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.76</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.31</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.78</ArmorRating_Heat>
       <ComfyTemperatureMin>-24</ComfyTemperatureMin>
       <ComfyTemperatureMax>240</ComfyTemperatureMax>
       <Flammability>0.00</Flammability>
-      <PainShockThreshold>1.12</PainShockThreshold>
+      <PainShockThreshold>1.14</PainShockThreshold>
       <ShootingAccuracyPawn>1.10</ShootingAccuracyPawn>
-      <MarketValue>1520</MarketValue>
-      <Mass>1.52</Mass>
+      <MarketValue>1560</MarketValue>
+      <Mass>1.56</Mass>
     </statBases>
     <tools>
       <li>
@@ -73,7 +73,7 @@
       </li>
     </tools>
     <killedLeavings Inherit="False">
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
     </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
@@ -92,10 +92,13 @@
         <projectileDefName>ABY_SiegeIdolPlasmaBolt</projectileDefName>
         <aimSoundDefName>ABY_UltraPlasmaCharge</aimSoundDefName>
         <castSoundDefName>ABY_UltraPlasmaFire</castSoundDefName>
+        <breachProjectileDefName>ABY_SiegeIdolBreachShell</breachProjectileDefName>
+        <breachAimSoundDefName>ABY_UltraPlasmaCharge</breachAimSoundDefName>
+        <breachCastSoundDefName>ABY_UltraPlasmaFire</breachCastSoundDefName>
         <range>31.9</range>
         <warmupTicks>92</warmupTicks>
-        <cooldownTicks>176</cooldownTicks>
-        <scanIntervalTicks>20</scanIntervalTicks>
+        <cooldownTicks>180</cooldownTicks>
+        <scanIntervalTicks>18</scanIntervalTicks>
         <deployTicks>42</deployTicks>
         <telegraphIntervalTicks>12</telegraphIntervalTicks>
         <anchoredIdleReleaseTicks>150</anchoredIdleReleaseTicks>
@@ -109,6 +112,11 @@
         <prioritizeTurrets>true</prioritizeTurrets>
         <prioritizeDoors>true</prioritizeDoors>
         <prioritizeCover>true</prioritizeCover>
+        <breachWarmupTicks>138</breachWarmupTicks>
+        <breachCooldownTicks>560</breachCooldownTicks>
+        <breachTelegraphIntervalTicks>9</breachTelegraphIntervalTicks>
+        <breachMinRange>15.2</breachMinRange>
+        <breachRequiresBuildingTarget>true</breachRequiresBuildingTarget>
       </li>
     </comps>
   </ThingDef>
@@ -127,6 +135,25 @@
       <armorPenetrationBase>0.88</armorPenetrationBase>
       <stoppingPower>1.75</stoppingPower>
       <speed>52</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_SiegeIdolBreachShell</defName>
+    <label>siege breach shell</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_SiegeIdolBreachShell</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_AshenScatterShell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.52,0.88)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <armorPenetrationBase>0.70</armorPenetrationBase>
+      <stoppingPower>0.95</stoppingPower>
+      <speed>34</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>

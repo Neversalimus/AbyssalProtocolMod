@@ -5,7 +5,7 @@
     <label>siege idol</label>
     <race>ABY_SiegeIdol</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>620</combatPower>
+    <combatPower>600</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -16,21 +16,6 @@
       <min>0</min>
       <max>0</max>
     </weaponMoney>
-    <modExtensions>
-      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>4</contentTier>
-        <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
-        <role>elite</role>
-        <budgetCost>620</budgetCost>
-        <selectionWeight>0.36</selectionWeight>
-        <maxPlanCount>1</maxPlanCount>
-        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
-        <encounterPools>
-          <li>dominion_wave</li>
-          <li>dominion_gate_support</li>
-        </encounterPools>
-      </li>
-    </modExtensions>
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -51,7 +36,7 @@
     <label>siege idol escort</label>
     <race>ABY_SiegeIdol</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>560</combatPower>
+    <combatPower>540</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -64,11 +49,11 @@
     </weaponMoney>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>4</contentTier>
-        <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
+        <contentTier>5</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>560</budgetCost>
-        <selectionWeight>0.18</selectionWeight>
+        <budgetCost>540</budgetCost>
+        <selectionWeight>0.14</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>

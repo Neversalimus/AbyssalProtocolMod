@@ -12,11 +12,13 @@ namespace AbyssalProtocol
     {
         private int nextSearchTick;
         private int nextReadyTick;
+        private int nextBreachReadyTick;
         private int deployCompleteTick = -1;
         private int warmupCompleteTick = -1;
         private int nextTelegraphTick = -1;
         private int anchorReleaseTick = -1;
         private bool anchored;
+        private bool breachWarmup;
         private Thing currentTarget;
 
         private CompProperties_ABY_SiegeIdolSiegeShooter Props => (CompProperties_ABY_SiegeIdolSiegeShooter)props;
@@ -26,11 +28,13 @@ namespace AbyssalProtocol
             base.PostExposeData();
             Scribe_Values.Look(ref nextSearchTick, "nextSearchTick", 0);
             Scribe_Values.Look(ref nextReadyTick, "nextReadyTick", 0);
+            Scribe_Values.Look(ref nextBreachReadyTick, "nextBreachReadyTick", 0);
             Scribe_Values.Look(ref deployCompleteTick, "deployCompleteTick", -1);
             Scribe_Values.Look(ref warmupCompleteTick, "warmupCompleteTick", -1);
             Scribe_Values.Look(ref nextTelegraphTick, "nextTelegraphTick", -1);
             Scribe_Values.Look(ref anchorReleaseTick, "anchorReleaseTick", -1);
             Scribe_Values.Look(ref anchored, "anchored", false);
+            Scribe_Values.Look(ref breachWarmup, "breachWarmup", false);
             Scribe_References.Look(ref currentTarget, "currentTarget");
         }
 
@@ -46,10 +50,23 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-
-            if (TryBreakForCloseThreat(pawn))
+            if (TryBreakForCloseThreat(pawn, ticksGame))
             {
                 return;
+            }
+
+            if (!anchored && deployCompleteTick < 0 && warmupCompleteTick < 0)
+            {
+                if (AbyssalThreatPawnUtility.TryMaintainSpacing(
+                    pawn,
+                    currentTarget,
+                    Props.preferredMinRange,
+                    Props.retreatSearchRadius,
+                    false))
+                {
+                    nextSearchTick = ticksGame + 18;
+                    return;
+                }
             }
 
             if (deployCompleteTick >= 0)
@@ -57,6 +74,7 @@ namespace AbyssalProtocol
                 if (!CanAnchorAtTarget(pawn, currentTarget))
                 {
                     CancelDeploy();
+                    nextSearchTick = ticksGame + 10;
                     return;
                 }
 
@@ -78,23 +96,33 @@ namespace AbyssalProtocol
             {
                 if (!CanFireAt(pawn, currentTarget))
                 {
-                    CancelWarmup();
+                    CancelWarmup(ticksGame);
                     return;
                 }
 
                 HoldAnchorPose(pawn, currentTarget);
                 if (ticksGame >= nextTelegraphTick)
                 {
-                    ShowTelegraphFX(pawn, currentTarget, false);
-                    nextTelegraphTick = ticksGame + Math.Max(6, Props.telegraphIntervalTicks);
+                    ShowTelegraphFX(pawn, currentTarget, true, breachWarmup);
+                    nextTelegraphTick = ticksGame + Math.Max(6, breachWarmup ? Props.breachTelegraphIntervalTicks : Props.telegraphIntervalTicks);
                 }
 
                 if (ticksGame >= warmupCompleteTick)
                 {
-                    FireShot(pawn, currentTarget);
+                    FireShot(pawn, currentTarget, breachWarmup);
+                    if (breachWarmup)
+                    {
+                        nextBreachReadyTick = ticksGame + Math.Max(120, Props.breachCooldownTicks);
+                        nextReadyTick = ticksGame + Math.Max(1, Props.cooldownTicks + 42);
+                    }
+                    else
+                    {
+                        nextReadyTick = ticksGame + Math.Max(1, Props.cooldownTicks);
+                    }
+
                     warmupCompleteTick = -1;
                     nextTelegraphTick = -1;
-                    nextReadyTick = ticksGame + Math.Max(1, Props.cooldownTicks);
+                    breachWarmup = false;
                     anchorReleaseTick = ticksGame + Math.Max(45, Props.anchoredIdleReleaseTicks);
                 }
 
@@ -127,7 +155,7 @@ namespace AbyssalProtocol
                 {
                     if (ticksGame >= nextReadyTick)
                     {
-                        BeginWarmup(pawn, currentTarget, ticksGame);
+                        BeginWarmup(pawn, currentTarget, ticksGame, ShouldUseBreachShot(pawn, currentTarget, ticksGame));
                     }
 
                     return;
@@ -140,7 +168,7 @@ namespace AbyssalProtocol
 
                 if (ticksGame >= anchorReleaseTick)
                 {
-                    ReleaseAnchor();
+                    ReleaseAnchor(ticksGame);
                 }
 
                 return;
@@ -182,7 +210,9 @@ namespace AbyssalProtocol
             if (warmupCompleteTick >= 0 && Find.TickManager != null)
             {
                 int remaining = Math.Max(0, warmupCompleteTick - Find.TickManager.TicksGame);
-                return "Siege stance: charging (" + remaining.ToStringTicksToPeriod() + ")";
+                return breachWarmup
+                    ? "Siege stance: breach charge (" + remaining.ToStringTicksToPeriod() + ")"
+                    : "Siege stance: charging (" + remaining.ToStringTicksToPeriod() + ")";
             }
 
             if (anchored)
@@ -195,20 +225,17 @@ namespace AbyssalProtocol
 
         private bool CanOperate(Pawn pawn)
         {
-            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
-            {
-                return false;
-            }
-
-            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
-            {
-                return false;
-            }
-
-            return true;
+            return pawn != null
+                && pawn.Map != null
+                && !pawn.Dead
+                && pawn.Spawned
+                && !pawn.Downed
+                && pawn.Faction != null
+                && Faction.OfPlayer != null
+                && pawn.Faction.HostileTo(Faction.OfPlayer);
         }
 
-        private bool TryBreakForCloseThreat(Pawn pawn)
+        private bool TryBreakForCloseThreat(Pawn pawn, int ticksGame)
         {
             if (pawn == null || Props.panicMeleeRange <= 0f)
             {
@@ -228,6 +255,9 @@ namespace AbyssalProtocol
 
             ResetAnchorState();
             currentTarget = nearestThreat;
+            nextReadyTick = Math.Max(nextReadyTick, ticksGame + 24);
+            nextSearchTick = ticksGame + 18;
+            AbyssalThreatPawnUtility.TryMaintainSpacing(pawn, currentTarget, Props.anchorMinRange, Props.retreatSearchRadius, false);
             return true;
         }
 
@@ -245,23 +275,28 @@ namespace AbyssalProtocol
             ShowDeployFX(pawn);
         }
 
-        private void BeginWarmup(Pawn pawn, Thing target, int ticksGame)
+        private void BeginWarmup(Pawn pawn, Thing target, int ticksGame, bool useBreachShot)
         {
             if (pawn == null || target == null)
             {
                 return;
             }
 
-            warmupCompleteTick = ticksGame + Math.Max(1, Props.warmupTicks);
+            breachWarmup = useBreachShot;
+            warmupCompleteTick = ticksGame + Math.Max(1, breachWarmup ? Props.breachWarmupTicks : Props.warmupTicks);
             nextTelegraphTick = ticksGame;
             pawn.rotationTracker?.FaceTarget(target.PositionHeld);
             pawn.pather?.StopDead();
-            if (!Props.aimSoundDefName.NullOrEmpty())
+
+            string aimSound = breachWarmup && !Props.breachAimSoundDefName.NullOrEmpty()
+                ? Props.breachAimSoundDefName
+                : Props.aimSoundDefName;
+            if (!aimSound.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.PositionHeld, pawn.Map);
+                ABY_SoundUtility.PlayAt(aimSound, pawn.PositionHeld, pawn.Map);
             }
 
-            ShowTelegraphFX(pawn, target, true);
+            ShowTelegraphFX(pawn, target, true, breachWarmup);
         }
 
         private void HoldAnchorPose(Pawn pawn, Thing target)
@@ -278,10 +313,11 @@ namespace AbyssalProtocol
             }
         }
 
-        private void ReleaseAnchor()
+        private void ReleaseAnchor(int ticksGame)
         {
             ResetAnchorState();
             currentTarget = null;
+            nextSearchTick = ticksGame + 20;
         }
 
         private void CancelDeploy()
@@ -290,11 +326,12 @@ namespace AbyssalProtocol
             currentTarget = null;
         }
 
-        private void CancelWarmup()
+        private void CancelWarmup(int ticksGame)
         {
             warmupCompleteTick = -1;
             nextTelegraphTick = -1;
-            nextReadyTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + 24;
+            breachWarmup = false;
+            nextReadyTick = ticksGame + 24;
             currentTarget = null;
         }
 
@@ -305,12 +342,14 @@ namespace AbyssalProtocol
             warmupCompleteTick = -1;
             nextTelegraphTick = -1;
             anchorReleaseTick = -1;
+            breachWarmup = false;
         }
 
         private void ResetAll()
         {
             nextSearchTick = 0;
             nextReadyTick = 0;
+            nextBreachReadyTick = 0;
             ResetAnchorState();
             currentTarget = null;
         }
@@ -409,6 +448,11 @@ namespace AbyssalProtocol
             }
 
             score += CountNearbyPlayerPawns(pawn.Map, building.PositionHeld, 4.9f) * 9f;
+            if (ShouldPreferBreachTarget(building))
+            {
+                score += 12f;
+            }
+
             return score;
         }
 
@@ -507,7 +551,51 @@ namespace AbyssalProtocol
                 || defName.IndexOf("Embrasure", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
-        private void FireShot(Pawn pawn, Thing target)
+        private bool ShouldUseBreachShot(Pawn pawn, Thing target, int ticksGame)
+        {
+            if (ticksGame < nextBreachReadyTick)
+            {
+                return false;
+            }
+
+            Building building = target as Building;
+            if (building == null && Props.breachRequiresBuildingTarget)
+            {
+                return false;
+            }
+
+            if (target == null || pawn == null)
+            {
+                return false;
+            }
+
+            float distance = pawn.Position.DistanceTo(target.PositionHeld);
+            if (distance < Props.breachMinRange)
+            {
+                return false;
+            }
+
+            if (building == null)
+            {
+                return false;
+            }
+
+            return ShouldPreferBreachTarget(building)
+                || CountNearbyPlayerPawns(pawn.Map, building.PositionHeld, 5.9f) >= 2
+                || building.HitPoints > 180;
+        }
+
+        private bool ShouldPreferBreachTarget(Building building)
+        {
+            return building != null
+                && (IsTurretLike(building)
+                    || building is Building_Door
+                    || IsCoverLike(building)
+                    || building.def?.Fillage == FillCategory.Full
+                    || building.TryGetComp<CompPowerTrader>() != null);
+        }
+
+        private void FireShot(Pawn pawn, Thing target, bool useBreachShot)
         {
             if (pawn == null || target == null)
             {
@@ -515,12 +603,18 @@ namespace AbyssalProtocol
             }
 
             pawn.rotationTracker?.FaceTarget(target.PositionHeld);
-            if (!Props.castSoundDefName.NullOrEmpty())
+            string castSound = useBreachShot && !Props.breachCastSoundDefName.NullOrEmpty()
+                ? Props.breachCastSoundDefName
+                : Props.castSoundDefName;
+            if (!castSound.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.castSoundDefName, pawn.PositionHeld, pawn.Map);
+                ABY_SoundUtility.PlayAt(castSound, pawn.PositionHeld, pawn.Map);
             }
 
-            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.projectileDefName);
+            string projectileDefName = useBreachShot && !Props.breachProjectileDefName.NullOrEmpty()
+                ? Props.breachProjectileDefName
+                : Props.projectileDefName;
+            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(projectileDefName);
             if (projectileDef == null)
             {
                 return;
@@ -538,8 +632,12 @@ namespace AbyssalProtocol
                 return;
             }
 
-            FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.Map, 1.2f);
+            FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.Map, useBreachShot ? 1.7f : 1.2f);
             FleckMaker.ThrowMicroSparks(target.DrawPos, pawn.Map);
+            if (useBreachShot)
+            {
+                FleckMaker.Static(target.PositionHeld, pawn.Map, FleckDefOf.ExplosionFlash, 1.15f);
+            }
         }
 
         private bool TryLaunchProjectile(Projectile projectile, Pawn pawn, Thing target)
@@ -641,19 +739,21 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(pawn.DrawPos, pawn.Map);
         }
 
-        private void ShowTelegraphFX(Pawn pawn, Thing target, bool initial)
+        private void ShowTelegraphFX(Pawn pawn, Thing target, bool initial, bool useBreachShot)
         {
             if (pawn?.Map == null || target == null || !target.Spawned || target.Map != pawn.Map)
             {
                 return;
             }
 
-            FleckMaker.ThrowLightningGlow(pawn.DrawPos, pawn.Map, initial ? 1.45f : 0.9f);
+            float sourceGlow = initial ? (useBreachShot ? 1.75f : 1.45f) : (useBreachShot ? 1.1f : 0.9f);
+            float targetGlow = initial ? (useBreachShot ? 1.45f : 1.2f) : (useBreachShot ? 0.88f : 0.72f);
+            FleckMaker.ThrowLightningGlow(pawn.DrawPos, pawn.Map, sourceGlow);
             FleckMaker.ThrowMicroSparks(pawn.DrawPos, pawn.Map);
-            FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.Map, initial ? 1.2f : 0.72f);
+            FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.Map, targetGlow);
             if (initial)
             {
-                FleckMaker.Static(target.PositionHeld, pawn.Map, FleckDefOf.ExplosionFlash, 0.9f);
+                FleckMaker.Static(target.PositionHeld, pawn.Map, FleckDefOf.ExplosionFlash, useBreachShot ? 1.08f : 0.9f);
             }
         }
     }
