@@ -45,7 +45,7 @@
     </race>
     <statBases>
       <MaxHitPoints>1180</MaxHitPoints>
-      <MoveSpeed>3.82</MoveSpeed>
+      <MoveSpeed>3.88</MoveSpeed>
       <MeleeHitChance>0.84</MeleeHitChance>
       <MeleeDPS>11.4</MeleeDPS>
       <MeleeDodgeChance>0.06</MeleeDodgeChance>
@@ -55,7 +55,7 @@
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>220</ComfyTemperatureMax>
       <Flammability>0.01</Flammability>
-      <PainShockThreshold>1.18</PainShockThreshold>
+      <PainShockThreshold>1.28</PainShockThreshold>
       <MarketValue>980</MarketValue>
       <Mass>1.28</Mass>
     </statBases>
@@ -92,6 +92,21 @@
         <lordRetryTicks>60</lordRetryTicks>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BreachDirective">
+        <retargetIntervalTicks>24</retargetIntervalTicks>
+        <searchRadius>26.0</searchRadius>
+        <preserveTargetRange>34.0</preserveTargetRange>
+        <meleeThreatOverrideDistance>2.3</meleeThreatOverrideDistance>
+        <siegeSwingCooldownTicks>120</siegeSwingCooldownTicks>
+        <siegeBonusDamage>18.0</siegeBonusDamage>
+        <siegeArmorPenetration>0.28</siegeArmorPenetration>
+        <empStumbleTicks>45</empStumbleTicks>
+        <empReactionCooldownTicks>180</empReactionCooldownTicks>
+        <thinWallMaxHitPoints>320</thinWallMaxHitPoints>
+        <prioritizeTurrets>true</prioritizeTurrets>
+        <prioritizeDoors>true</prioritizeDoors>
+        <prioritizeBarriers>true</prioritizeBarriers>
+      </li>
     </comps>
   </ThingDef>
 </Defs>
