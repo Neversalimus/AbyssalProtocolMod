@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_RiftImp"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_EmberHound"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_HexgunThrall"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_ChainZealot"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_RiftSniper"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_NullPriest"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_BreachBrute"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_Harvester"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_HaloHusk"]/modExtensions/li[@Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling"]/encounterPools</xpath>
+    <value><li>horde_sigil_wave</li></value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/PawnKindDef[defName="ABY_SiegeIdol"]</xpath>
+    <value>
+      <modExtensions>
+        <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+          <contentTier>5</contentTier>
+          <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
+          <role>elite</role>
+          <budgetCost>600</budgetCost>
+          <selectionWeight>0.22</selectionWeight>
+          <maxPlanCount>1</maxPlanCount>
+          <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+          <encounterPools>
+            <li>horde_sigil_wave</li>
+          </encounterPools>
+        </li>
+      </modExtensions>
+    </value>
+  </Operation>
+
+</Patch>

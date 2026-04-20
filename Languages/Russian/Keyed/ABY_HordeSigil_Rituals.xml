@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleRitual_Horde_Label>Открыть Horde Gate</ABY_CircleRitual_Horde_Label>
+  <ABY_CircleRitual_Horde_Subtitle>Пост-Saint многовекторный армейский прорыв</ABY_CircleRitual_Horde_Subtitle>
+  <ABY_CircleRitual_Horde_Desc>Потребляет одну horde gate sigil, направляет колониста к кругу и вскрывает несколько внешних фронтов разлома по периметру карты. Из них волнами идут обычные abyssal-боевые формы. Это не ритуал босса, а первый осознанный army-scale summon после Reactor Saint.</ABY_CircleRitual_Horde_Desc>
+  <ABY_CircleRitual_Horde_Rewards>&#10;• Очень высокий приток residue и широкая зачисточная добыча&#10;• Первый post-saint стресс-тест обороны против целой abyssal-армии&#10;• Использует обычных мобов мода вместо boss/miniboss reward ladder</ABY_CircleRitual_Horde_Rewards>
+  <ABY_CircleRitual_Horde_SideEffects>&#10;• Открывает сразу несколько фронтов разлома по периметру вместо одного локального спавна&#10;• Очень сильно масштабируется от колонии, богатства и протокола сложности&#10;• Даже огромная волна не выдаёт награды уровня boss/miniboss</ABY_CircleRitual_Horde_SideEffects>
+  <ABY_HordeGateSummonSuccessLabel>Horde gate открыт</ABY_HordeGateSummonSuccessLabel>
+  <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные rupture-фронты. Обычные abyssal-боевые формы входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
+  <ABY_CircleRewardGuaranteed_Horde>Гарантированно: высокий выход residue и широкая cleanup-добыча с армейского прорыва.</ABY_CircleRewardGuaranteed_Horde>
+  <ABY_CircleRewardProgression_Horde>Прогрессия: проверяет позднюю многовекторную оборону после Reactor Saint, не перескакивая сразу в dominion crisis.</ABY_CircleRewardProgression_Horde>
+  <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Фронты: {1}   •   Импульсы: {2}   •   Прогноз: {3}   •   Протокол: {4}</ABY_HordeRitualMeta>
+  <ABY_CircleFail_HordeLocked>Horde gate остаётся неактивным, пока в этом сейве не зафиксировано первое убийство Reactor Saint.</ABY_CircleFail_HordeLocked>
+  <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
+  <ABY_CirclePreview_Harvester_Plural>harvesters</ABY_CirclePreview_Harvester_Plural>
+  <ABY_CirclePreview_Brute_Singular>breach brute</ABY_CirclePreview_Brute_Singular>
+  <ABY_CirclePreview_Brute_Plural>breach brutes</ABY_CirclePreview_Brute_Plural>
+  <ABY_CirclePreview_Idol_Singular>siege idol</ABY_CirclePreview_Idol_Singular>
+  <ABY_CirclePreview_Idol_Plural>siege idols</ABY_CirclePreview_Idol_Plural>
+</LanguageData>

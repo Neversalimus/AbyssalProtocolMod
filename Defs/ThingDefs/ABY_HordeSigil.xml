@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_HordeSigil</defName>
+    <label>horde gate sigil</label>
+    <description>A post-saint invocation wafer keyed to massed abyssal breach routing. Carry it to an abyssal summoning circle to tear open several perimeter breach fronts that keep spitting ordinary abyssal warforms into the map. It does not call a boss. It calls an army.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_HordeSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>860</MarketValue>
+      <Mass>0.42</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>open horde gate</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>horde_gate</ritualId>
+        <summonMode>PortalWave</summonMode>
+        <pawnKindDefName>ABY_HexgunThrall</pawnKindDefName>
+        <bossLabel>Perimeter horde breach</bossLabel>
+        <spawnPoints>1480</spawnPoints>
+        <ritualWarmupTicks>225</ritualWarmupTicks>
+        <impPortalWarmupTicks>110</impPortalWarmupTicks>
+        <impSpawnIntervalTicks>20</impSpawnIntervalTicks>
+        <impPortalLingerTicks>210</impPortalLingerTicks>
+        <completionLetterLabelKey>ABY_HordeGateSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_HordeGateSummonSuccessDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

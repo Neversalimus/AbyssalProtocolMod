@@ -142,6 +142,22 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "horde_gate",
+                LabelKey = "ABY_CircleRitual_Horde_Label",
+                SubtitleKey = "ABY_CircleRitual_Horde_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_Horde_Desc",
+                BossLabel = "Perimeter horde breach",
+                SigilThingDefName = "ABY_HordeSigil",
+                PawnKindDefName = "ABY_HexgunThrall",
+                RewardHintKey = "ABY_CircleRitual_Horde_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_Horde_SideEffects",
+                BaseRisk = 0.81f,
+                InstabilityGain = 0.24f,
+                ContaminationGain = 0.11f,
+                SpawnPoints = 1480
+            },
+            new RitualDefinition
+            {
                 Id = "dominion_gate",
                 LabelKey = "ABY_CircleRitual_Dominion_Label",
                 SubtitleKey = "ABY_CircleRitual_Dominion_Subtitle",
@@ -162,10 +178,10 @@ namespace AbyssalProtocol
         {
             if (AbyssalDominionAccessUtility.IsUserFacingDominionContentEnabled())
             {
-                return Rituals;
+                return Rituals.Where(ritual => ritual != null && IsRitualUnlocked(ritual.Id, out _));
             }
 
-            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id));
+            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id) && IsRitualUnlocked(ritual.Id, out _));
         }
 
         public static RitualDefinition GetDefaultRitual()
@@ -178,10 +194,10 @@ namespace AbyssalProtocol
             bool exposeDominion = AbyssalDominionAccessUtility.ShouldExposeDominionRitual(circle);
             if (exposeDominion)
             {
-                return Rituals;
+                return Rituals.Where(ritual => ritual != null && IsRitualUnlocked(ritual.Id, out _));
             }
 
-            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id));
+            return Rituals.Where(ritual => ritual != null && !AbyssalDominionAccessUtility.IsDominionRitualId(ritual.Id) && IsRitualUnlocked(ritual.Id, out _));
         }
 
         public static RitualDefinition GetSuggestedRitual(Building_AbyssalSummoningCircle circle)
@@ -202,6 +218,28 @@ namespace AbyssalProtocol
         public static bool IsDominionRitual(RitualDefinition ritual)
         {
             return ritual != null && ritual.Id == "dominion_gate";
+        }
+
+        public static bool IsRitualUnlocked(RitualDefinition ritual, out string failReason)
+        {
+            return IsRitualUnlocked(ritual?.Id, out failReason);
+        }
+
+        public static bool IsRitualUnlocked(string ritualId, out string failReason)
+        {
+            failReason = null;
+            if (ritualId.NullOrEmpty())
+            {
+                return false;
+            }
+
+            if (AbyssalHordeSigilUtility.IsSupportedRitual(ritualId) && !AbyssalDifficultyUtility.HasRecordedReactorSaintKill())
+            {
+                failReason = TranslateOrFallback("ABY_CircleFail_HordeLocked", "The horde gate remains dormant until the first Reactor Saint kill is recorded on this save.");
+                return false;
+            }
+
+            return true;
         }
 
         public static MapComponent_DominionCrisis GetDominionCrisis(Building_AbyssalSummoningCircle circle)
@@ -607,6 +645,10 @@ namespace AbyssalProtocol
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_ShieldArtillery", "shield artillery"));
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_AreaDenial", "area denial"));
                     break;
+                case "horde_gate":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_PerimeterOverload", "perimeter overload"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_MultiFront", "multi-front"));
+                    break;
                 case "dominion_gate":
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_ObjectiveEncounter", "objective encounter"));
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_WavePressure", "wave pressure"));
@@ -637,6 +679,8 @@ namespace AbyssalProtocol
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Choir", "Guaranteed: 1 Choir Resonance Core and a heavier residue payout.");
                 case "reactor_saint":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Reactor", "Guaranteed: 1 Reactor Saint Core, residue, and spacer-grade salvage.");
+                case "horde_gate":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Horde", "Guaranteed: high residue yield and wide cleanup salvage from a full army-scale breach.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Dominion", "Guaranteed: dominion outcome rewards, shards, and late-stage progression materials if the breach is contained.");
                 default:
@@ -665,6 +709,8 @@ namespace AbyssalProtocol
                     return TranslateOrFallback("ABY_CircleRewardProgression_Choir", "Progression: unlocks the support-oriented reward line built around Choir implants and the Canticle Driver.");
                 case "reactor_saint":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Reactor", "Progression: feeds saint-class fabrication and pushes the colony toward late-game escalation.");
+                case "horde_gate":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Horde", "Progression: stress-tests multi-front late defense after Reactor Saint without skipping straight into dominion crisis logic.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Dominion", "Progression: arms the full dominion crisis ladder and outcome routing.");
                 default:
@@ -719,7 +765,12 @@ namespace AbyssalProtocol
                 return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
             }
 
-            if (!circle.IsReadyForSigil(out string failReason))
+            if (!IsRitualUnlocked(ritual, out string failReason))
+            {
+                return failReason;
+            }
+
+            if (!circle.IsReadyForSigil(out failReason))
             {
                 return failReason;
             }
@@ -972,6 +1023,11 @@ namespace AbyssalProtocol
                     sigilCount,
                     state,
                     AbyssalDifficultyUtility.GetCurrentDifficultyLabel());
+            }
+
+            if (ritual != null && circle?.Map != null && AbyssalHordeSigilUtility.IsSupportedRitual(ritual.Id))
+            {
+                return AbyssalHordeSigilUtility.GetMetaText(circle, ritual, sigilCount);
             }
 
             if (ritual != null && circle?.Map != null && AbyssalT1SummonScalingUtility.IsSupportedRitual(ritual.Id))

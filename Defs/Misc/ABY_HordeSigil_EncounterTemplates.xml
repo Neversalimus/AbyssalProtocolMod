@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_HordeGate_BreachFlood</defName>
+    <poolId>horde_sigil_wave</poolId>
+    <selectionWeight>1.00</selectionWeight>
+    <budgetMultiplier>1.08</budgetMultiplier>
+    <maxSameKindCount>8</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>assault</role><count>3</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>1.30</multiplier></li>
+      <li><role>support</role><multiplier>0.88</multiplier></li>
+      <li><role>elite</role><multiplier>0.86</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_HordeGate_FirelineLattice</defName>
+    <poolId>horde_sigil_wave</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+    <selectionWeight>0.86</selectionWeight>
+    <budgetMultiplier>0.98</budgetMultiplier>
+    <maxSameKindCount>5</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>3</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.86</multiplier></li>
+      <li><role>support</role><multiplier>1.16</multiplier></li>
+      <li><role>elite</role><multiplier>1.10</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_HordeGate_GrinderWedge</defName>
+    <poolId>horde_sigil_wave</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+    <selectionWeight>0.76</selectionWeight>
+    <budgetMultiplier>1.00</budgetMultiplier>
+    <maxSameKindCount>4</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>assault</role><count>2</count></li>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>3</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>1.00</multiplier></li>
+      <li><role>support</role><multiplier>1.04</multiplier></li>
+      <li><role>elite</role><multiplier>1.18</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_HordeGate_SiegeTail</defName>
+    <poolId>horde_sigil_wave</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
+    <selectionWeight>0.52</selectionWeight>
+    <budgetMultiplier>0.94</budgetMultiplier>
+    <extraContentTier>1</extraContentTier>
+    <maxSameKindCount>3</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>2</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>3</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.64</multiplier></li>
+      <li><role>support</role><multiplier>0.96</multiplier></li>
+      <li><role>elite</role><multiplier>1.38</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+</Defs>

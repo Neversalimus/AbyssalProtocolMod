@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CraftHordeSigil.label>выковать сигилу horde gate</ABY_CraftHordeSigil.label>
+  <ABY_CraftHordeSigil.description>Сжимает saint reactor core, residue, пласталь и spacer-компоненты в post-saint сигилу маршрутизации орды. Вместо named-босса этот ритуал вскрывает несколько фронтов периметрального прорыва и выпускает на карту обычные abyssal-боевые формы. Это первый осознанный army-scale ritual после Reactor Saint.</ABY_CraftHordeSigil.description>
+  <ABY_CraftHordeSigil.jobString>Куется сигила horde gate.</ABY_CraftHordeSigil.jobString>
+</LanguageData>

@@ -378,6 +378,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (!AbyssalSummoningConsoleUtility.IsRitualUnlocked(summonProps.ritualId, out failReason))
+            {
+                return false;
+            }
+
             if (!IsReadyForSigil(out failReason))
             {
                 return false;
@@ -1823,14 +1828,32 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!portalWave.TryBeginEmberPortalWave(
+            bool started;
+            IntVec3 firstPortalCell;
+            if (AbyssalHordeSigilUtility.IsSupportedRitual(pendingRitualId))
+            {
+                started = portalWave.TryBeginHordePortalWave(
+                    pendingFaction,
+                    AbyssalHordeSigilUtility.GetHordePlan(Map),
+                    pendingImpPortalWarmupTicks,
+                    pendingImpSpawnIntervalTicks,
+                    pendingImpPortalLingerTicks,
+                    out firstPortalCell,
+                    out failReason);
+            }
+            else
+            {
+                started = portalWave.TryBeginEmberPortalWave(
                     pendingFaction,
                     pendingPawnKindDef,
                     pendingImpPortalWarmupTicks,
                     pendingImpSpawnIntervalTicks,
                     pendingImpPortalLingerTicks,
-                    out IntVec3 firstPortalCell,
-                    out failReason))
+                    out firstPortalCell,
+                    out failReason);
+            }
+
+            if (!started)
             {
                 ResetRitual();
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);

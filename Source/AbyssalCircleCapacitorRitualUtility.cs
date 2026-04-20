@@ -82,6 +82,15 @@ namespace AbyssalProtocol
             MaxRiskReduction = 0.12f
         };
 
+        private static readonly RitualProfile HordeGateProfile = new RitualProfile
+        {
+            RitualId = "horde_gate",
+            StartupChargeRequired = 48f,
+            TotalChargeRequired = 104f,
+            ThroughputRequired = 36f,
+            MaxRiskReduction = 0.13f
+        };
+
         private static readonly RitualProfile DominionGateProfile = new RitualProfile
         {
             RitualId = "dominion_gate",
@@ -145,6 +154,11 @@ namespace AbyssalProtocol
             if (string.Equals(ritualId, ArchonBeastProfile.RitualId, StringComparison.OrdinalIgnoreCase))
             {
                 return ArchonBeastProfile;
+            }
+
+            if (string.Equals(ritualId, HordeGateProfile.RitualId, StringComparison.OrdinalIgnoreCase))
+            {
+                return HordeGateProfile;
             }
 
             if (string.Equals(ritualId, DominionGateProfile.RitualId, StringComparison.OrdinalIgnoreCase))

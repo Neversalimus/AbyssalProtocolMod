@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <AbyssalProtocol.ABY_ThreatDoctrineDef>
+    <defName>ABY_Doctrine_HordeFlood</defName>
+    <poolIds>
+      <li>horde_sigil_wave</li>
+    </poolIds>
+    <selectionWeight>1.00</selectionWeight>
+    <budgetMultiplier>1.06</budgetMultiplier>
+    <minimumRoleCounts>
+      <li><role>assault</role><count>3</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>2</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>1.18</multiplier></li>
+      <li><role>support</role><multiplier>0.88</multiplier></li>
+      <li><role>elite</role><multiplier>0.90</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_ThreatDoctrineDef>
+
+  <AbyssalProtocol.ABY_ThreatDoctrineDef>
+    <defName>ABY_Doctrine_HordeFireline</defName>
+    <poolIds>
+      <li>horde_sigil_wave</li>
+    </poolIds>
+    <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+    <selectionWeight>0.84</selectionWeight>
+    <budgetMultiplier>0.98</budgetMultiplier>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>3</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.82</multiplier></li>
+      <li><role>support</role><multiplier>1.24</multiplier></li>
+      <li><role>elite</role><multiplier>1.08</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_ThreatDoctrineDef>
+
+  <AbyssalProtocol.ABY_ThreatDoctrineDef>
+    <defName>ABY_Doctrine_HordeGrinder</defName>
+    <poolIds>
+      <li>horde_sigil_wave</li>
+    </poolIds>
+    <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+    <selectionWeight>0.72</selectionWeight>
+    <budgetMultiplier>1.02</budgetMultiplier>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>3</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.96</multiplier></li>
+      <li><role>support</role><multiplier>1.06</multiplier></li>
+      <li><role>elite</role><multiplier>1.18</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_ThreatDoctrineDef>
+
+  <AbyssalProtocol.ABY_ThreatDoctrineDef>
+    <defName>ABY_Doctrine_HordeSiege</defName>
+    <poolIds>
+      <li>horde_sigil_wave</li>
+    </poolIds>
+    <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
+    <selectionWeight>0.48</selectionWeight>
+    <budgetMultiplier>0.94</budgetMultiplier>
+    <extraContentTier>1</extraContentTier>
+    <minimumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>2</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>4</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.60</multiplier></li>
+      <li><role>support</role><multiplier>0.96</multiplier></li>
+      <li><role>elite</role><multiplier>1.42</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_ThreatDoctrineDef>
+
+</Defs>
