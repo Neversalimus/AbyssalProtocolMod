@@ -3,7 +3,7 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_SiegeIdol</defName>
     <label>siege idol</label>
-    <description>A semi-mechanical breach idol built to follow the abyssal line rather than lead it. Siege idols advance behind the first contact wave, plant their weight just outside the kill box, and answer cover, doors, and static gunlines with furnace-bright plasma fire.</description>
+    <description>A semi-mechanical breach idol built to follow the abyssal line rather than lead it. Siege idols advance behind the first contact wave, lock their stabilizers into the ground, and answer turrets, doors, cover, and static gunlines with furnace-bright plasma fire.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
@@ -88,23 +88,27 @@
         <targetMinRange>8.6</targetMinRange>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
-      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+      <li Class="AbyssalProtocol.CompProperties_ABY_SiegeIdolSiegeShooter">
         <projectileDefName>ABY_SiegeIdolPlasmaBolt</projectileDefName>
         <aimSoundDefName>ABY_UltraPlasmaCharge</aimSoundDefName>
         <castSoundDefName>ABY_UltraPlasmaFire</castSoundDefName>
         <range>31.9</range>
-        <warmupTicks>78</warmupTicks>
-        <cooldownTicks>168</cooldownTicks>
-        <burstShotCount>1</burstShotCount>
-        <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
-        <scanIntervalTicks>18</scanIntervalTicks>
+        <warmupTicks>92</warmupTicks>
+        <cooldownTicks>176</cooldownTicks>
+        <scanIntervalTicks>20</scanIntervalTicks>
+        <deployTicks>42</deployTicks>
+        <telegraphIntervalTicks>12</telegraphIntervalTicks>
+        <anchoredIdleReleaseTicks>150</anchoredIdleReleaseTicks>
         <preferredMinRange>10.8</preferredMinRange>
         <targetMinRange>8.6</targetMinRange>
+        <anchorMinRange>12.4</anchorMinRange>
         <retreatSearchRadius>12</retreatSearchRadius>
-        <panicMeleeRange>2.9</panicMeleeRange>
-        <panicMeleeJobExpiryTicks>180</panicMeleeJobExpiryTicks>
+        <panicMeleeRange>4.2</panicMeleeRange>
         <preferRangedTargets>true</preferRangedTargets>
-        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+        <preferBuildingTargets>true</preferBuildingTargets>
+        <prioritizeTurrets>true</prioritizeTurrets>
+        <prioritizeDoors>true</prioritizeDoors>
+        <prioritizeCover>true</prioritizeCover>
       </li>
     </comps>
   </ThingDef>
