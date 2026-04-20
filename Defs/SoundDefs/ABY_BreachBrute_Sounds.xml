@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <SoundDef>
+    <defName>ABY_BreachBruteArrival</defName>
+    <context>Any</context>
+    <maxVoices>2</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_PortalOpen</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>32</min>
+          <max>38</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.94</min>
+          <max>0.99</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_BreachBruteStep</defName>
+    <context>Any</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>16</min>
+          <max>22</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.72</min>
+          <max>0.80</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_BreachBruteImpact</defName>
+    <context>Any</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>30</min>
+          <max>36</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.78</min>
+          <max>0.86</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+</Defs>

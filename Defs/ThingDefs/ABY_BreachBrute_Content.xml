@@ -107,6 +107,17 @@
         <prioritizeDoors>true</prioritizeDoors>
         <prioritizeBarriers>true</prioritizeBarriers>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BreachFeedback">
+        <movingStepIntervalTicks>24</movingStepIntervalTicks>
+        <stepDustScale>1.75</stepDustScale>
+        <impactOverlayTicks>18</impactOverlayTicks>
+        <heatOverlayMaxAlpha>0.62</heatOverlayMaxAlpha>
+        <heatOverlayPath>Things/VFX/SeamBreach/ABY_SeamBreach_Rift</heatOverlayPath>
+        <sparkOverlayPath>Things/VFX/SeamBreach/ABY_SeamBreach_Sparks</sparkOverlayPath>
+        <arrivalSoundDefName>ABY_BreachBruteArrival</arrivalSoundDefName>
+        <stepSoundDefName>ABY_BreachBruteStep</stepSoundDefName>
+        <impactSoundDefName>ABY_BreachBruteImpact</impactSoundDefName>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_BreachArrival">
         <lockTicks>56</lockTicks>
         <manifestationWarmupTicks>62</manifestationWarmupTicks>

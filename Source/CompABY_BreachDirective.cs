@@ -166,6 +166,8 @@ namespace AbyssalProtocol
 
             targetBuilding.TakeDamage(damageInfo);
 
+            CompABY_BreachFeedback feedback = pawn.GetComp<CompABY_BreachFeedback>();
+            feedback?.NotifySiegeSwing(targetBuilding);
         }
 
         private Building ResolveAdjacentBuildingTarget(Pawn pawn)
