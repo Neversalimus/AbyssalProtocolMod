@@ -25,8 +25,8 @@
         <li>OrganicStandard</li>
       </hediffGiverSets>
       <body>Human</body>
-      <baseBodySize>1.32</baseBodySize>
-      <baseHealthScale>1.95</baseHealthScale>
+      <baseBodySize>1.38</baseBodySize>
+      <baseHealthScale>2.12</baseHealthScale>
       <baseHungerRate>0.60</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
@@ -44,20 +44,20 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>1180</MaxHitPoints>
-      <MoveSpeed>3.88</MoveSpeed>
-      <MeleeHitChance>0.84</MeleeHitChance>
-      <MeleeDPS>11.4</MeleeDPS>
-      <MeleeDodgeChance>0.06</MeleeDodgeChance>
-      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.34</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.62</ArmorRating_Heat>
+      <MaxHitPoints>1460</MaxHitPoints>
+      <MoveSpeed>4.02</MoveSpeed>
+      <MeleeHitChance>0.86</MeleeHitChance>
+      <MeleeDPS>12.8</MeleeDPS>
+      <MeleeDodgeChance>0.07</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.58</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.44</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.74</ArmorRating_Heat>
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <ComfyTemperatureMax>220</ComfyTemperatureMax>
       <Flammability>0.01</Flammability>
-      <PainShockThreshold>1.28</PainShockThreshold>
-      <MarketValue>980</MarketValue>
-      <Mass>1.28</Mass>
+      <PainShockThreshold>1.46</PainShockThreshold>
+      <MarketValue>1320</MarketValue>
+      <Mass>1.40</Mass>
     </statBases>
     <tools>
       <li>
@@ -65,53 +65,53 @@
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>26</power>
-        <cooldownTime>2.55</cooldownTime>
+        <power>31</power>
+        <cooldownTime>2.45</cooldownTime>
         <chanceFactor>0.95</chanceFactor>
-        <armorPenetration>0.29</armorPenetration>
+        <armorPenetration>0.36</armorPenetration>
       </li>
       <li>
         <label>furnace fist</label>
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>16</power>
-        <cooldownTime>1.95</cooldownTime>
+        <power>18</power>
+        <cooldownTime>1.85</cooldownTime>
         <chanceFactor>0.78</chanceFactor>
-        <armorPenetration>0.18</armorPenetration>
+        <armorPenetration>0.22</armorPenetration>
       </li>
     </tools>
     <killedLeavings Inherit="False">
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
     </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>BossJuggernaut</archetype>
-        <minMeleeSkill>12</minMeleeSkill>
-        <spawnGraceTicks>45</spawnGraceTicks>
-        <lordRetryTicks>60</lordRetryTicks>
+        <minMeleeSkill>13</minMeleeSkill>
+        <spawnGraceTicks>40</spawnGraceTicks>
+        <lordRetryTicks>45</lordRetryTicks>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_BreachDirective">
-        <retargetIntervalTicks>24</retargetIntervalTicks>
-        <searchRadius>26.0</searchRadius>
-        <preserveTargetRange>34.0</preserveTargetRange>
-        <meleeThreatOverrideDistance>2.3</meleeThreatOverrideDistance>
-        <siegeSwingCooldownTicks>120</siegeSwingCooldownTicks>
-        <siegeBonusDamage>18.0</siegeBonusDamage>
-        <siegeArmorPenetration>0.28</siegeArmorPenetration>
-        <empStumbleTicks>45</empStumbleTicks>
-        <empReactionCooldownTicks>180</empReactionCooldownTicks>
-        <thinWallMaxHitPoints>320</thinWallMaxHitPoints>
+        <retargetIntervalTicks>20</retargetIntervalTicks>
+        <searchRadius>32.0</searchRadius>
+        <preserveTargetRange>40.0</preserveTargetRange>
+        <meleeThreatOverrideDistance>1.8</meleeThreatOverrideDistance>
+        <siegeSwingCooldownTicks>90</siegeSwingCooldownTicks>
+        <siegeBonusDamage>26.0</siegeBonusDamage>
+        <siegeArmorPenetration>0.34</siegeArmorPenetration>
+        <empStumbleTicks>30</empStumbleTicks>
+        <empReactionCooldownTicks>240</empReactionCooldownTicks>
+        <thinWallMaxHitPoints>520</thinWallMaxHitPoints>
         <prioritizeTurrets>true</prioritizeTurrets>
         <prioritizeDoors>true</prioritizeDoors>
         <prioritizeBarriers>true</prioritizeBarriers>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_BreachFeedback">
-        <movingStepIntervalTicks>24</movingStepIntervalTicks>
-        <stepDustScale>1.75</stepDustScale>
-        <impactOverlayTicks>18</impactOverlayTicks>
-        <heatOverlayMaxAlpha>0.62</heatOverlayMaxAlpha>
+        <movingStepIntervalTicks>22</movingStepIntervalTicks>
+        <stepDustScale>1.90</stepDustScale>
+        <impactOverlayTicks>22</impactOverlayTicks>
+        <heatOverlayMaxAlpha>0.70</heatOverlayMaxAlpha>
         <heatOverlayPath>Things/VFX/SeamBreach/ABY_SeamBreach_Rift</heatOverlayPath>
         <sparkOverlayPath>Things/VFX/SeamBreach/ABY_SeamBreach_Sparks</sparkOverlayPath>
         <arrivalSoundDefName>ABY_BreachBruteArrival</arrivalSoundDefName>
@@ -119,8 +119,8 @@
         <impactSoundDefName>ABY_BreachBruteImpact</impactSoundDefName>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_BreachArrival">
-        <lockTicks>56</lockTicks>
-        <manifestationWarmupTicks>62</manifestationWarmupTicks>
+        <lockTicks>44</lockTicks>
+        <manifestationWarmupTicks>48</manifestationWarmupTicks>
         <manifestationOffsetCells>1</manifestationOffsetCells>
         <onlyWhenHostileToPlayer>true</onlyWhenHostileToPlayer>
         <manifestationDefName>ABY_Manifestation_BreachBruteArrival</manifestationDefName>

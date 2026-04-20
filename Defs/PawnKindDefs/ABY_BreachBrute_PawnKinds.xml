@@ -5,7 +5,7 @@
     <label>breach brute</label>
     <race>ABY_BreachBrute</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>420</combatPower>
+    <combatPower>560</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -18,11 +18,11 @@
     </weaponMoney>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>3</contentTier>
-        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+        <contentTier>5</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>420</budgetCost>
-        <selectionWeight>0.92</selectionWeight>
+        <budgetCost>560</budgetCost>
+        <selectionWeight>0.72</selectionWeight>
         <maxPlanCount>2</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
@@ -51,7 +51,7 @@
     <label>breach brute escort</label>
     <race>ABY_BreachBrute</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>405</combatPower>
+    <combatPower>520</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -64,18 +64,15 @@
     </weaponMoney>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
-        <contentTier>3</contentTier>
-        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+        <contentTier>5</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>405</budgetCost>
-        <selectionWeight>0.38</selectionWeight>
+        <budgetCost>520</budgetCost>
+        <selectionWeight>0.28</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>
-          <li>choir_escort</li>
-          <li>warden_boss_escort</li>
-          <li>archon_boss_escort</li>
-          <li>reactor_saint_escort</li>
+          <li>dominion_gate_support</li>
         </encounterPools>
       </li>
     </modExtensions>
