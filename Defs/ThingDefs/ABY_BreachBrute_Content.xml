@@ -107,6 +107,13 @@
         <prioritizeDoors>true</prioritizeDoors>
         <prioritizeBarriers>true</prioritizeBarriers>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BreachArrival">
+        <lockTicks>56</lockTicks>
+        <manifestationWarmupTicks>62</manifestationWarmupTicks>
+        <manifestationOffsetCells>1</manifestationOffsetCells>
+        <onlyWhenHostileToPlayer>true</onlyWhenHostileToPlayer>
+        <manifestationDefName>ABY_Manifestation_BreachBruteArrival</manifestationDefName>
+      </li>
     </comps>
   </ThingDef>
 </Defs>
