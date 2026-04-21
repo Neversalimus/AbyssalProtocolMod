@@ -15,7 +15,7 @@ namespace AbyssalProtocol
         private const int ImpThreatValue = 85;
         private const int HoundThreatValue = 190;
         private const int ThrallThreatValue = 160;
-        private const int SapperThreatValue = 260;
+        private const int SapperThreatValue = 285;
         private const int ZealotThreatValue = 235;
         private const int PriestThreatValue = 340;
         private const int SniperThreatValue = 420;
@@ -249,7 +249,7 @@ namespace AbyssalProtocol
                 int fallbackEscort = Math.Min(30, Math.Max(6, colonists * 6));
                 plan.PackImpCount = fallbackEscort / 2;
                 plan.ThrallCount = fallbackEscort / 4;
-                plan.SapperCount = Mathf.Clamp(fallbackEscort / 5, 0, 2);
+                plan.SapperCount = Mathf.Clamp(fallbackEscort / 7, 0, 1);
                 plan.ZealotCount = Math.Max(0, fallbackEscort - plan.PackImpCount - plan.ThrallCount - plan.SapperCount);
             }
 

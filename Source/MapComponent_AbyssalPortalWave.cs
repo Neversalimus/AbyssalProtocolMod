@@ -707,7 +707,7 @@ namespace AbyssalProtocol
             if (string.Equals(doctrine, "ABY_Doctrine_HordeFireline", StringComparison.OrdinalIgnoreCase))
             {
                 entries.Add(("ABY_HexgunThrall", 2 + band));
-                if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
+                if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_RiftSapper", 1));
                 entries.Add(("ABY_RiftSniper", 1));
                 if (band >= 1 || difficultyOrder >= 2) entries.Add(("ABY_NullPriest", 1));
                 if (band >= 2 || difficultyOrder >= 3) entries.Add(("ABY_HaloHusk", 1));
@@ -718,7 +718,7 @@ namespace AbyssalProtocol
             {
                 entries.Add(("ABY_ChainZealot", 2 + band));
                 entries.Add(("ABY_EmberHound", 2 + Mathf.Max(0, band - 1)));
-                if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
+                if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_RiftSapper", 1));
                 if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_BreachBrute", 1));
                 if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_Harvester", 1));
                 return entries;
@@ -736,7 +736,7 @@ namespace AbyssalProtocol
 
             entries.Add(("ABY_RiftImp", 4 + band * 2));
             entries.Add(("ABY_EmberHound", 2 + band));
-            if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
+            if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_RiftSapper", 1));
             entries.Add(("ABY_ChainZealot", 1 + (band >= 2 ? 1 : 0)));
             if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_Harvester", 1));
             return entries;

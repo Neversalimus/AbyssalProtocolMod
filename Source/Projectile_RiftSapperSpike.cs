@@ -8,16 +8,16 @@ namespace AbyssalProtocol
     {
         private const int TrailIntervalTicks = 4;
         private const float TrailGlowSize = 0.18f;
-        private const float ImpactGlowSize = 1.45f;
-        private const float ImpactHeatSize = 0.82f;
-        private const float ExplosionRadius = 1.35f;
-        private const int ExplosionDamage = 7;
-        private const float ExplosionArmorPenetration = 0.22f;
-        private const int StructureDamagePerSpike = 44;
-        private const float StructureArmorPenetration = 1.35f;
-        private const int DoorBonusDamage = 16;
-        private const int TurretBonusDamage = 22;
-        private const int CoverBonusDamage = 18;
+        private const float ImpactGlowSize = 1.30f;
+        private const float ImpactHeatSize = 0.72f;
+        private const float ExplosionRadius = 1.15f;
+        private const int ExplosionDamage = 5;
+        private const float ExplosionArmorPenetration = 0.18f;
+        private const int StructureDamagePerSpike = 34;
+        private const float StructureArmorPenetration = 1.10f;
+        private const int DoorBonusDamage = 12;
+        private const int TurretBonusDamage = 18;
+        private const int CoverBonusDamage = 14;
 
         private int ticksAlive;
 

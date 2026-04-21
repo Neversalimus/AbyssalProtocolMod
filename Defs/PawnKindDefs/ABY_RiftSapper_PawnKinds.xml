@@ -5,7 +5,7 @@
     <label>rift sapper</label>
     <race>ABY_RiftSapper</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>320</combatPower>
+    <combatPower>290</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -21,8 +21,8 @@
         <contentTier>2</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
         <role>assault</role>
-        <budgetCost>260</budgetCost>
-        <selectionWeight>0.78</selectionWeight>
+        <budgetCost>285</budgetCost>
+        <selectionWeight>0.64</selectionWeight>
         <maxPlanCount>2</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
         <encounterPools>

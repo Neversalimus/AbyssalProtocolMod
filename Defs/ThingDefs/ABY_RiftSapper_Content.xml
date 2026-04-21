@@ -44,19 +44,19 @@
       </lifeStageAges>
     </race>
     <statBases>
-      <MaxHitPoints>460</MaxHitPoints>
-      <MoveSpeed>4.44</MoveSpeed>
+      <MaxHitPoints>420</MaxHitPoints>
+      <MoveSpeed>4.36</MoveSpeed>
       <MeleeHitChance>0.68</MeleeHitChance>
       <MeleeDPS>5.4</MeleeDPS>
-      <ArmorRating_Sharp>0.18</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.12</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.46</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.16</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.42</ArmorRating_Heat>
       <ComfyTemperatureMin>-16</ComfyTemperatureMin>
       <ComfyTemperatureMax>180</ComfyTemperatureMax>
       <Flammability>0.02</Flammability>
       <PainShockThreshold>0.90</PainShockThreshold>
-      <ShootingAccuracyPawn>1.00</ShootingAccuracyPawn>
-      <MarketValue>620</MarketValue>
+      <ShootingAccuracyPawn>0.96</ShootingAccuracyPawn>
+      <MarketValue>580</MarketValue>
       <Mass>0.72</Mass>
     </statBases>
     <tools>
@@ -65,7 +65,7 @@
         <capacities>
           <li>Stab</li>
         </capacities>
-        <power>11</power>
+        <power>10</power>
         <cooldownTime>1.80</cooldownTime>
         <chanceFactor>1.00</chanceFactor>
         <armorPenetration>0.14</armorPenetration>
@@ -75,7 +75,7 @@
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>8</power>
+        <power>7</power>
         <cooldownTime>2.10</cooldownTime>
         <chanceFactor>0.78</chanceFactor>
         <armorPenetration>0.10</armorPenetration>
@@ -89,9 +89,9 @@
         <archetype>RangedSkirmisher</archetype>
         <forcedPrimaryDefName>ABY_BreachSpikeProjector</forcedPrimaryDefName>
         <minMeleeSkill>9</minMeleeSkill>
-        <minShootingSkill>9</minShootingSkill>
-        <preferredMinRange>6.8</preferredMinRange>
-        <retreatSearchRadius>8</retreatSearchRadius>
+        <minShootingSkill>8</minShootingSkill>
+        <preferredMinRange>7.2</preferredMinRange>
+        <retreatSearchRadius>9</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <useSapperAssaultLord>true</useSapperAssaultLord>
       </li>
@@ -100,15 +100,15 @@
         <projectileDefName>ABY_RiftSapperSpike</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_AshenScattergunFire</castSoundDefName>
-        <range>19.9</range>
-        <warmupTicks>52</warmupTicks>
-        <cooldownTicks>122</cooldownTicks>
-        <scanIntervalTicks>13</scanIntervalTicks>
-        <preferredMinRange>6.8</preferredMinRange>
-        <targetMinRange>4.2</targetMinRange>
-        <retreatSearchRadius>8</retreatSearchRadius>
-        <panicMeleeRange>2.2</panicMeleeRange>
-        <panicMeleeJobExpiryTicks>150</panicMeleeJobExpiryTicks>
+        <range>18.5</range>
+        <warmupTicks>58</warmupTicks>
+        <cooldownTicks>138</cooldownTicks>
+        <scanIntervalTicks>15</scanIntervalTicks>
+        <preferredMinRange>7.2</preferredMinRange>
+        <targetMinRange>4.6</targetMinRange>
+        <retreatSearchRadius>9</retreatSearchRadius>
+        <panicMeleeRange>2.0</panicMeleeRange>
+        <panicMeleeJobExpiryTicks>135</panicMeleeJobExpiryTicks>
         <preferRangedTargets>true</preferRangedTargets>
         <preferBuildingTargets>true</preferBuildingTargets>
         <prioritizeTurrets>true</prioritizeTurrets>
@@ -145,21 +145,21 @@
       <Plasteel>6</Plasteel>
     </smeltProducts>
     <statBases>
-      <Mass>3.15</Mass>
-      <MarketValue>880</MarketValue>
-      <AccuracyTouch>0.84</AccuracyTouch>
-      <AccuracyShort>0.72</AccuracyShort>
-      <AccuracyMedium>0.54</AccuracyMedium>
-      <AccuracyLong>0.32</AccuracyLong>
-      <RangedWeapon_Cooldown>2.40</RangedWeapon_Cooldown>
+      <Mass>3.05</Mass>
+      <MarketValue>820</MarketValue>
+      <AccuracyTouch>0.82</AccuracyTouch>
+      <AccuracyShort>0.68</AccuracyShort>
+      <AccuracyMedium>0.48</AccuracyMedium>
+      <AccuracyLong>0.26</AccuracyLong>
+      <RangedWeapon_Cooldown>2.65</RangedWeapon_Cooldown>
     </statBases>
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_RiftSapperSpike</defaultProjectile>
-        <warmupTime>1.22</warmupTime>
-        <range>19.9</range>
+        <warmupTime>1.34</warmupTime>
+        <range>18.5</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
         <soundAiming>ABY_RiftCarbineCharge</soundAiming>
@@ -181,9 +181,9 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>10</damageAmountBase>
-      <armorPenetrationBase>0.26</armorPenetrationBase>
-      <stoppingPower>0.95</stoppingPower>
+      <damageAmountBase>9</damageAmountBase>
+      <armorPenetrationBase>0.22</armorPenetrationBase>
+      <stoppingPower>0.82</stoppingPower>
       <speed>40</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
