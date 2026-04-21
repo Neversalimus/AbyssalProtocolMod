@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_RiftSapper.label>rift sapper</ABY_RiftSapper.label>
-  <ABY_RiftSapper.description>Инфернальная сапёрная пехота, созданная для вскрытия укрытий и разрушения удобной геометрии обороны. Rift sappers держатся за первой волной, прощупывают слабые участки линии и подготавливают позицию для остального abyssal-хоста.</ABY_RiftSapper.description>
+  <ABY_RiftSapper.label>рифтовый сапёр</ABY_RiftSapper.label>
+  <ABY_RiftSapper.description>Инфернальная сапёрная пехота, созданная для вскрытия укрытий и разрушения удобной геометрии обороны. Rift sappers держатся за первой волной, прощупывают слабые участки линии и вгоняют раскалённые проломные шипы в баррикады, двери и плотные стрелковые позиции.</ABY_RiftSapper.description>
+  <ABY_BreachSpikeProjector.label>проектор проломного шипа</ABY_BreachSpikeProjector.label>
+  <ABY_BreachSpikeProjector.description>Компактный инфернальный проломный проектор, метающий раскалённые шип-заряды в линии укрытий. Rift sappers используют его, чтобы ломать двери, наказывать плотные огневые позиции и вскрывать защищённых стрелков для остального abyssal-хоста.</ABY_BreachSpikeProjector.description>
+  <ABY_RiftSapperSpike.label>проломный шип-заряд</ABY_RiftSapperSpike.label>
 </LanguageData>

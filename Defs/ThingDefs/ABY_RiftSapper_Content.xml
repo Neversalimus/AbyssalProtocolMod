@@ -3,7 +3,7 @@
   <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_RiftSapper</defName>
     <label>rift sapper</label>
-    <description>A breach-utility abyssal infantry form built to destabilize defended firing lines. Rift sappers advance behind lighter rushers, probe for weak cover, and turn tidy defensive geometry into exposed angles for the rest of the host.</description>
+    <description>A breach-utility abyssal infantry form built to destabilize defended firing lines. Rift sappers advance behind lighter rushers, probe for weak cover, and drive infernal spike charges through barricades, doors and clustered defenders.</description>
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
@@ -55,6 +55,7 @@
       <ComfyTemperatureMax>180</ComfyTemperatureMax>
       <Flammability>0.02</Flammability>
       <PainShockThreshold>0.90</PainShockThreshold>
+      <ShootingAccuracyPawn>1.00</ShootingAccuracyPawn>
       <MarketValue>620</MarketValue>
       <Mass>0.72</Mass>
     </statBases>
@@ -85,11 +86,103 @@
     </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
-        <archetype>None</archetype>
+        <archetype>RangedSkirmisher</archetype>
+        <forcedPrimaryDefName>ABY_BreachSpikeProjector</forcedPrimaryDefName>
         <minMeleeSkill>9</minMeleeSkill>
+        <minShootingSkill>9</minShootingSkill>
+        <preferredMinRange>6.8</preferredMinRange>
+        <retreatSearchRadius>8</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
         <useSapperAssaultLord>false</useSapperAssaultLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_RiftSapperSpike</projectileDefName>
+        <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
+        <castSoundDefName>ABY_AshenScattergunFire</castSoundDefName>
+        <range>19.9</range>
+        <warmupTicks>52</warmupTicks>
+        <cooldownTicks>122</cooldownTicks>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+        <scanIntervalTicks>13</scanIntervalTicks>
+        <preferredMinRange>6.8</preferredMinRange>
+        <retreatSearchRadius>8</retreatSearchRadius>
+        <panicMeleeRange>2.2</panicMeleeRange>
+        <panicMeleeJobExpiryTicks>150</panicMeleeJobExpiryTicks>
+        <preferRangedTargets>true</preferRangedTargets>
+      </li>
     </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_BreachSpikeProjector</defName>
+    <label>breach spike projector</label>
+    <description>A compact infernal breaching armature that hurls heated spike charges into cover lines. Rift sappers use it to break doors, punish clustered firing positions and expose barricaded defenders for the rest of the abyssal host.</description>
+    <graphicData>
+      <texPath>Things/Weapon/ABY_RiftSapperProjector</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+    <destroyOnDrop>true</destroyOnDrop>
+    <tradeability>None</tradeability>
+    <weaponTags>
+      <li>ABY_BreachSpikeProjector</li>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+    <costList>
+      <Steel>45</Steel>
+      <Plasteel>16</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <smeltProducts>
+      <Steel>18</Steel>
+      <Plasteel>6</Plasteel>
+    </smeltProducts>
+    <statBases>
+      <Mass>3.15</Mass>
+      <MarketValue>880</MarketValue>
+      <AccuracyTouch>0.84</AccuracyTouch>
+      <AccuracyShort>0.72</AccuracyShort>
+      <AccuracyMedium>0.54</AccuracyMedium>
+      <AccuracyLong>0.32</AccuracyLong>
+      <RangedWeapon_Cooldown>2.40</RangedWeapon_Cooldown>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_RiftSapperSpike</defaultProjectile>
+        <warmupTime>1.22</warmupTime>
+        <range>19.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+        <soundAiming>ABY_RiftCarbineCharge</soundAiming>
+        <soundCast>ABY_AshenScattergunFire</soundCast>
+        <soundCastTail>ABY_SigilRepeaterTail</soundCastTail>
+        <muzzleFlashScale>8</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_RiftSapperSpike</defName>
+    <label>breach spike charge</label>
+    <thingClass>AbyssalProtocol.Projectile_RiftSapperSpike</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_RiftSapperSpike</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.32,1.26)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <stoppingPower>0.95</stoppingPower>
+      <speed>40</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
   </ThingDef>
 </Defs>
