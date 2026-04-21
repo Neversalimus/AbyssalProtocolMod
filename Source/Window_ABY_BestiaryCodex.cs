@@ -64,7 +64,7 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect summaryRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 84f);
+            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 116f);
             Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 420f, inRect.height - filtersRect.yMax - 10f);
             Rect detailRect = new Rect(listRect.xMax + 10f, filtersRect.yMax + 10f, inRect.width - listRect.width - 10f, inRect.height - filtersRect.yMax - 10f);
 
@@ -130,20 +130,23 @@ namespace AbyssalProtocol
             float y = inner.y;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, y, inner.width, 20f), "ABY_Bestiary_FilterHeader".Translate());
             y += 24f;
-            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f));
-            y += 28f;
+            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f), new[]
+            {
+                FilterMode.All, FilterMode.Locked, FilterMode.Discovered, FilterMode.Studied
+            });
+            y += 30f;
+            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f), new[]
+            {
+                FilterMode.Assault, FilterMode.Elite, FilterMode.Support, FilterMode.Boss
+            });
+            y += 30f;
             DrawSortRow(new Rect(inner.x, y, inner.width, 24f));
         }
 
-        private void DrawFilterRow(Rect rect)
+        private void DrawFilterRow(Rect rect, FilterMode[] filters)
         {
-            FilterMode[] filters =
-            {
-                FilterMode.All, FilterMode.Locked, FilterMode.Discovered, FilterMode.Studied,
-                FilterMode.Assault, FilterMode.Elite, FilterMode.Support, FilterMode.Boss
-            };
             float gap = 6f;
-            float width = (rect.width - gap * (filters.Length - 1)) / filters.Length;
+            float width = (rect.width - gap * (filters.Length - 1)) / Mathf.Max(1, filters.Length);
             for (int i = 0; i < filters.Length; i++)
             {
                 Rect buttonRect = new Rect(rect.x + i * (width + gap), rect.y, width, rect.height);
@@ -188,7 +191,7 @@ namespace AbyssalProtocol
             EnsureSelectedEntry(visibleEntries);
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
-            float cardHeight = 82f;
+            float cardHeight = 98f;
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, visibleEntries.Count * (cardHeight + 6f)));
             Widgets.BeginScrollView(outRect, ref listScrollPosition, viewRect, true);
             for (int i = 0; i < visibleEntries.Count; i++)
@@ -217,19 +220,28 @@ namespace AbyssalProtocol
             string category = ABY_BestiaryUtility.GetCategoryLabel(entry.EntryId);
             string tag = unlocked ? ABY_BestiaryUtility.GetTagline(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedTag", "Kill this hostile once to unseal the archive stub.");
             int kills = ABY_BestiaryUtility.GetKillCount(entry.EntryId);
+            float contentX = rect.x + 82f;
+            float rightColumnWidth = 60f;
+            float textWidth = Mathf.Max(80f, rect.width - (contentX - rect.x) - rightColumnWidth - 12f);
 
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 82f, rect.y + 6f, rect.width - 160f, 22f), title);
+            Widgets.Label(new Rect(contentX, rect.y + 6f, textWidth, 22f), title);
+
             Text.Font = GameFont.Tiny;
             GUI.color = studied ? new Color(0.74f, 1f, 0.76f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 82f, rect.y + 26f, rect.width - 160f, 16f), category + "  •  " + status);
+            Widgets.Label(new Rect(contentX, rect.y + 26f, textWidth, 16f), category + "  •  " + status);
+
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 82f, rect.y + 42f, rect.width - 160f, 30f), tag);
+            Widgets.Label(new Rect(contentX, rect.y + 42f, textWidth, 24f), tag);
+
+            Text.Anchor = TextAnchor.UpperRight;
             GUI.color = selected ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.xMax - 72f, rect.y + 14f, 64f, 16f), "×" + kills);
+            Widgets.Label(new Rect(rect.xMax - rightColumnWidth - 8f, rect.y + 8f, rightColumnWidth, 16f), "×" + kills);
+            Text.Anchor = TextAnchor.UpperLeft;
+
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.xMax - 120f, rect.y + 34f, 112f, 32f), ABY_BestiaryUtility.GetMilestoneSummary(entry.EntryId));
+            Widgets.Label(new Rect(contentX, rect.y + 70f, rect.width - (contentX - rect.x) - 12f, 18f), ABY_BestiaryUtility.GetMilestoneSummary(entry.EntryId));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
