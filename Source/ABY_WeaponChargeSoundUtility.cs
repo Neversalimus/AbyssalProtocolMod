@@ -7,10 +7,16 @@ namespace AbyssalProtocol
 {
     public static class ABY_WeaponChargeSoundUtility
     {
-        private struct DefIndexKey
+        private readonly struct DefIndexKey
         {
-            public string DefName;
-            public int Index;
+            public DefIndexKey(string defName, int index)
+            {
+                DefName = defName;
+                Index = index;
+            }
+
+            public string DefName { get; }
+            public int Index { get; }
         }
 
         private static bool cacheBuilt;
@@ -100,11 +106,7 @@ namespace AbyssalProtocol
                         string soundName = verbs[i]?.soundAiming?.defName;
                         if (ShouldTrackChargeSound(soundName))
                         {
-                            OriginalVerbAimSounds[new DefIndexKey
-                            {
-                                DefName = def.defName,
-                                Index = i
-                            }] = soundName;
+                            OriginalVerbAimSounds[new DefIndexKey(def.defName, i)] = soundName;
                             CacheOriginalSound(soundName);
                         }
                     }
@@ -130,11 +132,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    OriginalCompAimSounds[new DefIndexKey
-                    {
-                        DefName = def.defName,
-                        Index = i
-                    }] = soundName;
+                    OriginalCompAimSounds[new DefIndexKey(def.defName, i)] = soundName;
                     CacheOriginalSound(soundName);
                 }
             }
@@ -157,6 +155,11 @@ namespace AbyssalProtocol
 
             OriginalSoundSustain[soundDefName] = soundDef.sustain;
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
+        }
+
+        private static bool ShouldTrackChargeSound(string soundDefName)
+        {
+            return ABY_SoundUtility.IsAbyssalChargeSoundName(soundDefName);
         }
 
         private static void ApplyChargeSoundSustain(bool enabled)
