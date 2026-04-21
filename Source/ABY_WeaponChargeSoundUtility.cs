@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         private static readonly Dictionary<DefIndexKey, string> OriginalCompAimSounds = new Dictionary<DefIndexKey, string>();
         private static readonly Dictionary<string, bool> OriginalSoundSustain = new Dictionary<string, bool>();
         private static readonly Dictionary<string, float> OriginalSoundSustainFadeout = new Dictionary<string, float>();
+        private static readonly HashSet<string> TrackedChargeSoundNames = new HashSet<string>();
         private static FieldInfo verbsField;
 
         public static void ApplyCurrentSettings()
@@ -104,9 +105,10 @@ namespace AbyssalProtocol
                     for (int i = 0; i < verbs.Count; i++)
                     {
                         string soundName = verbs[i]?.soundAiming?.defName;
-                        if (ShouldTrackChargeSound(soundName))
+                        if (ShouldTrackChargeSound(def, soundName))
                         {
                             OriginalVerbAimSounds[new DefIndexKey(def.defName, i)] = soundName;
+                            TrackedChargeSoundNames.Add(soundName);
                             CacheOriginalSound(soundName);
                         }
                     }
@@ -127,12 +129,13 @@ namespace AbyssalProtocol
                     }
 
                     string soundName = aimField.GetValue(compProps) as string;
-                    if (!ShouldTrackChargeSound(soundName))
+                    if (!ShouldTrackChargeSound(def, soundName))
                     {
                         continue;
                     }
 
                     OriginalCompAimSounds[new DefIndexKey(def.defName, i)] = soundName;
+                    TrackedChargeSoundNames.Add(soundName);
                     CacheOriginalSound(soundName);
                 }
             }
@@ -157,9 +160,49 @@ namespace AbyssalProtocol
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
         }
 
-        private static bool ShouldTrackChargeSound(string soundDefName)
+        public static bool IsTrackedChargeSoundName(string soundDefName)
         {
-            return ABY_SoundUtility.IsAbyssalChargeSoundName(soundDefName);
+            if (soundDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            EnsureCache();
+            return TrackedChargeSoundNames.Contains(soundDefName);
+        }
+
+        private static bool ShouldTrackChargeSound(ThingDef ownerDef, string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            if (IsAbyssalOwnedDef(ownerDef))
+            {
+                return true;
+            }
+
+            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
+            return IsAbyssalOwnedDef(soundDef);
+        }
+
+        private static bool IsAbyssalOwnedDef(Def def)
+        {
+            ModContentPack mod = def?.modContentPack;
+            if (mod == null)
+            {
+                return false;
+            }
+
+            string packageId = mod.PackageId;
+            if (!packageId.NullOrEmpty() && packageId.IndexOf("abyssalprotocol", System.StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+
+            string name = mod.Name;
+            return !name.NullOrEmpty() && name.IndexOf("abyssal", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static void ApplyChargeSoundSustain(bool enabled)

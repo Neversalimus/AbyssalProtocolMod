@@ -12,7 +12,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && IsAbyssalChargeSoundName(soundDefName))
+            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && ABY_WeaponChargeSoundUtility.IsTrackedChargeSoundName(soundDefName))
             {
                 return;
             }
