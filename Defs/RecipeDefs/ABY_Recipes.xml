@@ -1,146 +1,378 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <Defs>
 
-  <RecipeDef>
-    <defName>ABY_CraftResidue</defName>
-    <label>condense abyssal residue</label>
-    <description>Industrial ritual process that converts metal and components into inert abyssal residue. This is the first material step of the summon loop and the fuel for forge communion.</description>
-    <jobString>Condensing abyssal residue.</jobString>
-    <workAmount>1000</workAmount>
-    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
-    <effectWorking>Smith</effectWorking>
-    <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_AbyssalForge</li>
-    </recipeUsers>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Steel</li>
-          </thingDefs>
-        </filter>
-        <count>80</count>
-      </li>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ComponentIndustrial</li>
-          </thingDefs>
-        </filter>
-        <count>2</count>
-      </li>
-    </ingredients>
-    <products>
-      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
-    </products>
-    <modExtensions>
-      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>0</requiredResidue>
-        <category>Core</category>
-      </li>
-    </modExtensions>
-  </RecipeDef>
+ <RecipeDef>
 
-  <RecipeDef>
-    <defName>ABY_CraftUnstableBreachSigil</defName>
-    <label>forge unstable breach sigil</label>
-    <description>Compress a smaller, less-stable summoning key used to prototype hostile breach content before the first boss tier. It is cheaper than a true archon sigil, but still opens a dangerous hostile event.</description>
-    <jobString>Forging unstable breach sigil.</jobString>
-    <workAmount>1500</workAmount>
-    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
-    <effectWorking>Smith</effectWorking>
-    <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_AbyssalForge</li>
-    </recipeUsers>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ABY_AbyssalResidue</li>
-          </thingDefs>
-        </filter>
-        <count>6</count>
-      </li>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Steel</li>
-          </thingDefs>
-        </filter>
-        <count>15</count>
-      </li>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ComponentIndustrial</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
-      </li>
-    </ingredients>
-    <products>
-      <ABY_UnstableBreachSigil>1</ABY_UnstableBreachSigil>
-    </products>
-    <modExtensions>
-      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>10</requiredResidue>
-        <category>Ritual</category>
-      </li>
-    </modExtensions>
-  </RecipeDef>
+ <defName>ABY_CraftResidue</defName>
+ <label>condense abyssal residue</label>
 
-  <RecipeDef>
-    <defName>ABY_CraftArchonSigil</defName>
-    <label>forge archon sigil</label>
-    <description>Compress residue into a stable breach-key used to summon the first boss. Once the forge has tasted enough residue, it can print the first true archon invocation sigil.</description>
-    <jobString>Forging archon sigil.</jobString>
-    <workAmount>2200</workAmount>
-    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
-    <effectWorking>Smith</effectWorking>
-    <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_AbyssalForge</li>
-    </recipeUsers>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ABY_AbyssalResidue</li>
-          </thingDefs>
-        </filter>
-        <count>20</count>
-      </li>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Plasteel</li>
-          </thingDefs>
-        </filter>
-        <count>30</count>
-      </li>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>ComponentIndustrial</li>
-          </thingDefs>
-        </filter>
-        <count>2</count>
-      </li>
-    </ingredients>
-    <products>
-      <ABY_ArchonSigil>1</ABY_ArchonSigil>
-    </products>
-    <modExtensions>
-      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>50</requiredResidue>
-        <category>Ritual</category>
-      </li>
-    </modExtensions>
-  </RecipeDef>
+ <description>Industrial ritual process that converts metal and components into inert abyssal residue.</description>
+
+ <jobString>Condensing abyssal residue.</jobString>
+
+ <workAmount>900</workAmount>
+
+ <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+
+ <workSkill>Crafting</workSkill>
+
+ <effectWorking>Smith</effectWorking>
+
+ <soundWorking>Recipe_Smith</soundWorking>
+
+<recipeUsers>
+
+ <li>ABY_AbyssalForge</li>
+
+</recipeUsers>
+
+ <ingredients>
+
+ <li>
+
+ <filter>
+ <thingDefs>
+
+ <li>Steel</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>40</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ComponentIndustrial</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>1</count>
+
+ </li>
+
+ </ingredients>
+
+ <products>
+
+ <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
+
+ </products>
+
+ </RecipeDef>
+
+ <RecipeDef>
+
+ <defName>ABY_CraftResiduePlasteelSpacer</defName>
+ <label>condense reinforced abyssal residue</label>
+
+ <description>High-pressure forge communion that converts plasteel and advanced components into a denser yield of inert abyssal residue.</description>
+
+ <jobString>Condensing reinforced abyssal residue.</jobString>
+
+ <workAmount>1700</workAmount>
+
+ <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+
+ <workSkill>Crafting</workSkill>
+
+ <effectWorking>Smith</effectWorking>
+
+ <soundWorking>Recipe_Smith</soundWorking>
+
+<recipeUsers>
+
+ <li>ABY_AbyssalForge</li>
+
+</recipeUsers>
+
+ <ingredients>
+
+ <li>
+
+ <filter>
+ <thingDefs>
+
+ <li>Plasteel</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>25</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ComponentSpacer</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>2</count>
+
+ </li>
+
+ </ingredients>
+
+ <products>
+
+ <ABY_AbyssalResidue>42</ABY_AbyssalResidue>
+
+ </products>
+
+ </RecipeDef>
+
+ <RecipeDef>
+
+ <defName>ABY_CraftResiduePreciousMetals</defName>
+ <label>condense gilded abyssal residue</label>
+
+ <description>Ritualized precious-metal compression that converts gold and silver into a refined cache of inert abyssal residue.</description>
+
+ <jobString>Condensing gilded abyssal residue.</jobString>
+
+ <workAmount>1450</workAmount>
+
+ <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+
+ <workSkill>Crafting</workSkill>
+
+ <effectWorking>Smith</effectWorking>
+
+ <soundWorking>Recipe_Smith</soundWorking>
+
+<recipeUsers>
+
+ <li>ABY_AbyssalForge</li>
+
+</recipeUsers>
+
+ <ingredients>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>Gold</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>20</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>Silver</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>120</count>
+
+ </li>
+
+ </ingredients>
+
+ <products>
+
+ <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
+
+ </products>
+
+ </RecipeDef>
+
+ <RecipeDef>
+
+ <defName>ABY_CraftArchonSigil</defName>
+
+ <label>forge archon sigil</label>
+
+ <description>Compress residue into a stable breach-key used to summon the first boss.</description>
+ <jobString>Forging archon sigil.</jobString>
+
+ <workAmount>1600</workAmount>
+
+ <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+
+ <workSkill>Crafting</workSkill>
+
+ <effectWorking>Smith</effectWorking>
+
+ <soundWorking>Recipe_Smith</soundWorking>
+
+<recipeUsers>
+
+ <li>ABY_AbyssalForge</li>
+
+</recipeUsers>
+
+ <ingredients>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ABY_AbyssalResidue</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>18</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>Plasteel</li>
+
+ </thingDefs>
+ </filter>
+
+ <count>25</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ComponentIndustrial</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>2</count>
+
+ </li>
+
+ </ingredients>
+
+ <products>
+
+ <ABY_ArchonSigil>1</ABY_ArchonSigil>
+
+ </products>
+
+ </RecipeDef>
+
+ <RecipeDef>
+
+ <defName>ABY_CraftInfernalEye</defName>
+
+ <label>make infernal eye</label>
+
+ <description>Create an infernal ocular implant using residue, steel and components.</description>
+
+ <jobString>Making infernal eye.</jobString>
+ <workAmount>2600</workAmount>
+
+ <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+
+ <workSkill>Crafting</workSkill>
+
+ <effectWorking>Smith</effectWorking>
+
+ <soundWorking>Recipe_Smith</soundWorking>
+
+<recipeUsers>
+
+ <li>ABY_AbyssalForge</li>
+
+</recipeUsers>
+
+ <ingredients>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ABY_AbyssalResidue</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>10</count>
+
+ </li>
+
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>ComponentIndustrial</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>2</count>
+
+ </li>
+ <li>
+
+ <filter>
+
+ <thingDefs>
+
+ <li>Steel</li>
+
+ </thingDefs>
+
+ </filter>
+
+ <count>30</count>
+
+ </li>
+
+ </ingredients>
+
+ <products>
+
+ <ABY_InfernalEye>1</ABY_InfernalEye>
+
+ </products>
+
+ </RecipeDef>
 
 </Defs>
