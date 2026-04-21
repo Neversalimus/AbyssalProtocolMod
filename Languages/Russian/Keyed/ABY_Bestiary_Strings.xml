@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_BestiaryTitle>abyssal threat codex</ABY_BestiaryTitle>
+  <ABY_BestiarySubtitle>Архив подтверждённых убийствами враждебных паттернов из суммонов, зачисток прорывов и трупов боссов.</ABY_BestiarySubtitle>
+  <ABY_Bestiary_OpenButton>Открыть кодекс угроз</ABY_Bestiary_OpenButton>
+  <ABY_Bestiary_OpenButtonDesc>Открыть abyssal-архив угроз и просмотреть записи, подтверждённые убийствами.</ABY_Bestiary_OpenButtonDesc>
+  <ABY_BestiarySummary_Discovered>Открыто</ABY_BestiarySummary_Discovered>
+  <ABY_BestiarySummary_Studied>Изучено</ABY_BestiarySummary_Studied>
+  <ABY_BestiarySummary_Kills>Подтверждённые убийства</ABY_BestiarySummary_Kills>
+  <ABY_BestiarySummary_Selected>Выбранная запись</ABY_BestiarySummary_Selected>
+  <ABY_BestiaryCategory_All>Все</ABY_BestiaryCategory_All>
+  <ABY_BestiaryCategory_Assault>Штурм</ABY_BestiaryCategory_Assault>
+  <ABY_BestiaryCategory_Support>Поддержка</ABY_BestiaryCategory_Support>
+  <ABY_BestiaryCategory_Elite>Элита</ABY_BestiaryCategory_Elite>
+  <ABY_BestiaryCategory_Boss>Босс</ABY_BestiaryCategory_Boss>
+  <ABY_BestiaryBrowserHeader>Архив враждебных паттернов</ABY_BestiaryBrowserHeader>
+  <ABY_BestiaryDetailHeader>Телеметрия паттерна</ABY_BestiaryDetailHeader>
+  <ABY_BestiaryUnknownName>Неизвестный враждебный паттерн</ABY_BestiaryUnknownName>
+  <ABY_BestiaryStatus_Locked>Закрыто</ABY_BestiaryStatus_Locked>
+  <ABY_BestiaryStatus_Discovered>Открыто</ABY_BestiaryStatus_Discovered>
+  <ABY_BestiaryStatus_Studied>Изучено</ABY_BestiaryStatus_Studied>
+  <ABY_BestiaryCardMeta>Убийств: {0}   •   {1}</ABY_BestiaryCardMeta>
+  <ABY_BestiaryCardLockedMeta>Нужно первое подтверждённое убийство.</ABY_BestiaryCardLockedMeta>
+  <ABY_BestiaryNoSelection>Сейчас не выбрано ни одного враждебного паттерна.</ABY_BestiaryNoSelection>
+  <ABY_BestiaryProgressHeader>Этапы архивации</ABY_BestiaryProgressHeader>
+  <ABY_BestiaryProgressDiscoveryDone>Обнаружение подтверждено — первое убийство заархивировано.</ABY_BestiaryProgressDiscoveryDone>
+  <ABY_BestiaryProgressDiscoveryPending>Обнаружение ещё не подтверждено — нужно первое убийство.</ABY_BestiaryProgressDiscoveryPending>
+  <ABY_BestiaryProgressStudyDone>Порог изучения достигнут — телеметрия стабилизирована.</ABY_BestiaryProgressStudyDone>
+  <ABY_BestiaryProgressStudyPending>Порог изучения: {0} / {1} подтверждённых убийств.</ABY_BestiaryProgressStudyPending>
+  <ABY_BestiaryFooterHeader>Заметка оператора</ABY_BestiaryFooterHeader>
+  <ABY_BestiaryFooterLocked>Надёжной телеметрии по этому паттерну пока нет. Получи одно подтверждённое убийство, чтобы открыть запись и начать накопление данных кодекса.</ABY_BestiaryFooterLocked>
+  <ABY_BestiaryFooterUnlocked>Телеметрия по этому паттерну уже активна. Позднее поверх этого состояния можно безопасно навесить тактические заметки и reward-hooks, не ломая базовый архив.</ABY_BestiaryFooterUnlocked>
+  <ABY_BestiaryFooterStudied>Этот паттерн уже полностью подтверждён для целей кодекса. Следующие пакеты смогут навесить поверх него более глубокие тактические заметки и reward-hooks.</ABY_BestiaryFooterStudied>
+  <ABY_BestiaryTelemetry_Unknown>неизвестно</ABY_BestiaryTelemetry_Unknown>
+  <ABY_BestiaryTelemetry_Unlocked>Категория: {0}
+Состояние архива: {1}
+Подтверждённых убийств: {2}
+Первое архивное событие: {3}
+Последнее архивное событие: {4}
+
+Эта запись строится на save-level телеметрии трупов. Сейчас архив хранит только состояние открытия и глубину убийств; reward-hooks и более глубокие аннотации можно добавить позже без замены backend-слоя.</ABY_BestiaryTelemetry_Unlocked>
+  <ABY_BestiaryTelemetry_Locked>Категория: {0}
+Состояние архива: Закрыто
+Подтверждённых убийств: 0
+
+Этот враждебный паттерн уже есть в индексе кодекса, но на текущем сейве ещё не подтверждён убийством. Получи один подтверждённый труп, чтобы открыть запись и начать накопление телеметрии.</ABY_BestiaryTelemetry_Locked>
+</LanguageData>

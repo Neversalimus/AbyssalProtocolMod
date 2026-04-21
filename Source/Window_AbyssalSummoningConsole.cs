@@ -231,6 +231,19 @@ namespace AbyssalProtocol
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 });
 
+            rowY += 40f;
+            Rect codexRect = new Rect(inner.x, rowY, inner.width, 30f);
+            if (AbyssalStyledWidgets.TextButton(codexRect,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_OpenButton", "Open threat codex"),
+                true,
+                false,
+                null,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_OpenButtonDesc", "Open the abyssal threat archive and review kill-confirmed hostile entries.")))
+            {
+                Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
+
             Rect invokeRect = new Rect(inner.x, inner.yMax - 40f, inner.width, 34f);
             if (dominionUiMode)
             {

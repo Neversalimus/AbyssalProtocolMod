@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_BestiaryTitle>abyssal threat codex</ABY_BestiaryTitle>
+  <ABY_BestiarySubtitle>Kill-confirmed hostile telemetry archived from summon encounters, breach cleanups, and boss remains.</ABY_BestiarySubtitle>
+  <ABY_Bestiary_OpenButton>Open threat codex</ABY_Bestiary_OpenButton>
+  <ABY_Bestiary_OpenButtonDesc>Open the abyssal threat archive and review kill-confirmed hostile entries.</ABY_Bestiary_OpenButtonDesc>
+  <ABY_BestiarySummary_Discovered>Discovered</ABY_BestiarySummary_Discovered>
+  <ABY_BestiarySummary_Studied>Studied</ABY_BestiarySummary_Studied>
+  <ABY_BestiarySummary_Kills>Confirmed kills</ABY_BestiarySummary_Kills>
+  <ABY_BestiarySummary_Selected>Selected entry</ABY_BestiarySummary_Selected>
+  <ABY_BestiaryCategory_All>All</ABY_BestiaryCategory_All>
+  <ABY_BestiaryCategory_Assault>Assault</ABY_BestiaryCategory_Assault>
+  <ABY_BestiaryCategory_Support>Support</ABY_BestiaryCategory_Support>
+  <ABY_BestiaryCategory_Elite>Elite</ABY_BestiaryCategory_Elite>
+  <ABY_BestiaryCategory_Boss>Boss</ABY_BestiaryCategory_Boss>
+  <ABY_BestiaryBrowserHeader>Archived hostile patterns</ABY_BestiaryBrowserHeader>
+  <ABY_BestiaryDetailHeader>Pattern telemetry</ABY_BestiaryDetailHeader>
+  <ABY_BestiaryUnknownName>Unknown hostile pattern</ABY_BestiaryUnknownName>
+  <ABY_BestiaryStatus_Locked>Locked</ABY_BestiaryStatus_Locked>
+  <ABY_BestiaryStatus_Discovered>Discovered</ABY_BestiaryStatus_Discovered>
+  <ABY_BestiaryStatus_Studied>Studied</ABY_BestiaryStatus_Studied>
+  <ABY_BestiaryCardMeta>Kills: {0}   •   {1}</ABY_BestiaryCardMeta>
+  <ABY_BestiaryCardLockedMeta>First confirmed kill required.</ABY_BestiaryCardLockedMeta>
+  <ABY_BestiaryNoSelection>No hostile pattern is currently selected.</ABY_BestiaryNoSelection>
+  <ABY_BestiaryProgressHeader>Archive milestones</ABY_BestiaryProgressHeader>
+  <ABY_BestiaryProgressDiscoveryDone>Discovery confirmed — first kill archived.</ABY_BestiaryProgressDiscoveryDone>
+  <ABY_BestiaryProgressDiscoveryPending>Discovery pending — first confirmed kill required.</ABY_BestiaryProgressDiscoveryPending>
+  <ABY_BestiaryProgressStudyDone>Study threshold reached — telemetry stabilized.</ABY_BestiaryProgressStudyDone>
+  <ABY_BestiaryProgressStudyPending>Study threshold: {0} / {1} confirmed kills.</ABY_BestiaryProgressStudyPending>
+  <ABY_BestiaryFooterHeader>Operator note</ABY_BestiaryFooterHeader>
+  <ABY_BestiaryFooterLocked>No reliable telemetry is available yet. Recover one confirmed kill to reveal the pattern and start codex tracking.</ABY_BestiaryFooterLocked>
+  <ABY_BestiaryFooterUnlocked>Telemetry is live for this hostile pattern. Additional tactical annotation unlocks can be layered later without changing the core archive state.</ABY_BestiaryFooterUnlocked>
+  <ABY_BestiaryFooterStudied>This hostile pattern is now fully kill-confirmed for codex purposes. Later packages can attach deeper tactical notes and reward hooks on top of this archive state.</ABY_BestiaryFooterStudied>
+  <ABY_BestiaryTelemetry_Unknown>unknown</ABY_BestiaryTelemetry_Unknown>
+  <ABY_BestiaryTelemetry_Unlocked>Category: {0}
+Archive state: {1}
+Confirmed kills: {2}
+First archive event: {3}
+Most recent archive event: {4}
+
+This entry is sourced from save-level corpse telemetry. The archive currently tracks reveal state and kill depth only; reward hooks and deeper annotations can be layered later without replacing the archive backend.</ABY_BestiaryTelemetry_Unlocked>
+  <ABY_BestiaryTelemetry_Locked>Category: {0}
+Archive state: Locked
+Confirmed kills: 0
+
+This hostile pattern exists in the codex index but has not yet been kill-confirmed on the current save. Recover one confirmed corpse to reveal the entry and start telemetry accumulation.</ABY_BestiaryTelemetry_Locked>
+</LanguageData>

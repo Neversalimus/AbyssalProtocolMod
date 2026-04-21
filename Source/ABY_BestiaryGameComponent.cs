@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
@@ -29,6 +31,23 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref firstUnlockTick, "firstUnlockTick", -1);
             Scribe_Values.Look(ref lastKillTick, "lastKillTick", -1);
         }
+    }
+
+    public enum ABY_BestiaryCategory
+    {
+        All,
+        Assault,
+        Support,
+        Elite,
+        Boss
+    }
+
+    public sealed class ABY_BestiaryEntryDefinition
+    {
+        public string EntryId;
+        public string FallbackLabel;
+        public string PortraitPath;
+        public ABY_BestiaryCategory Category;
     }
 
     public sealed class ABY_BestiaryGameComponent : GameComponent
@@ -112,9 +131,9 @@ namespace AbyssalProtocol
         {
             EnsureCaches();
             int count = 0;
-            foreach (string entryId in ABY_BestiaryUtility.GetTrackedEntryIds())
+            foreach (ABY_BestiaryEntryDefinition definition in ABY_BestiaryUtility.GetCatalog())
             {
-                if (IsUnlocked(entryId))
+                if (definition != null && IsUnlocked(definition.EntryId))
                 {
                     count++;
                 }
@@ -304,39 +323,114 @@ namespace AbyssalProtocol
 
     public static class ABY_BestiaryUtility
     {
-        private static readonly string[] TrackedEntryIds =
+        public const int StudiedKillThreshold = 15;
+
+        private static readonly List<ABY_BestiaryEntryDefinition> Catalog = new List<ABY_BestiaryEntryDefinition>
         {
-            "ABY_RiftImp",
-            "ABY_EmberHound",
-            "ABY_HexgunThrall",
-            "ABY_ChainZealot",
-            "ABY_RiftSniper",
-            "ABY_NullPriest",
-            "ABY_BreachBrute",
-            "ABY_SiegeIdol",
-            "ABY_Harvester",
-            "ABY_GateWarden",
-            "ABY_WardenOfAsh",
-            "ABY_ChoirEngine",
-            "ABY_ReactorSaint",
-            "ABY_ArchonBeast"
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_RiftImp", FallbackLabel = "Rift imp", PortraitPath = "Pawn/RiftImp/ABY_RiftImp_south", Category = ABY_BestiaryCategory.Assault },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_EmberHound", FallbackLabel = "Ember hound", PortraitPath = "Pawn/EmberHound/ABY_EmberHound_south", Category = ABY_BestiaryCategory.Assault },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_HexgunThrall", FallbackLabel = "Hexgun thrall", PortraitPath = "Pawn/HexgunThrall/ABY_HexgunThrall_south", Category = ABY_BestiaryCategory.Assault },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_ChainZealot", FallbackLabel = "Chain zealot", PortraitPath = "Pawn/ChainZealot/ABY_ChainZealot_south", Category = ABY_BestiaryCategory.Elite },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_RiftSapper", FallbackLabel = "Rift sapper", PortraitPath = "Pawn/RiftSapper/ABY_RiftSapper_south", Category = ABY_BestiaryCategory.Support },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_RiftSniper", FallbackLabel = "Rift sniper", PortraitPath = "Pawn/RiftSniper/ABY_RiftSniper_south", Category = ABY_BestiaryCategory.Support },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_NullPriest", FallbackLabel = "Null Priest", PortraitPath = "Pawn/NullPriest/ABY_NullPriest_south", Category = ABY_BestiaryCategory.Support },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_BreachBrute", FallbackLabel = "Breach Brute", PortraitPath = "Pawn/BreachBrute/ABY_BreachBrute_south", Category = ABY_BestiaryCategory.Elite },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_SiegeIdol", FallbackLabel = "Siege Idol", PortraitPath = "Pawn/SiegeIdol/ABY_SiegeIdol_south", Category = ABY_BestiaryCategory.Support },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_Harvester", FallbackLabel = "Harvester", PortraitPath = "Pawn/Harvester/ABY_Harvester_south", Category = ABY_BestiaryCategory.Elite },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_GateWarden", FallbackLabel = "Gate Warden", PortraitPath = "Pawn/GateWarden/ABY_GateWarden_south", Category = ABY_BestiaryCategory.Elite },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_WardenOfAsh", FallbackLabel = "Warden of Ash", PortraitPath = "Pawn/WardenOfAsh/WardenOfAsh_south", Category = ABY_BestiaryCategory.Boss },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_ChoirEngine", FallbackLabel = "Choir Engine", PortraitPath = "Pawn/ChoirEngine/ABY_ChoirEngine_south", Category = ABY_BestiaryCategory.Boss },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_ReactorSaint", FallbackLabel = "Infernal Reactor Saint", PortraitPath = "Pawn/ReactorSaint/ABY_ReactorSaint_south", Category = ABY_BestiaryCategory.Boss },
+            new ABY_BestiaryEntryDefinition { EntryId = "ABY_ArchonBeast", FallbackLabel = "Archon Beast", PortraitPath = "Pawn/ArchonBeast/ArchonBeast_south", Category = ABY_BestiaryCategory.Boss }
         };
 
-        private static readonly HashSet<string> TrackedEntryLookup = new HashSet<string>(TrackedEntryIds, StringComparer.OrdinalIgnoreCase);
+        private static readonly HashSet<string> TrackedEntryLookup = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, ABY_BestiaryEntryDefinition> CatalogLookup = new Dictionary<string, ABY_BestiaryEntryDefinition>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, Texture2D> PortraitCache = new Dictionary<string, Texture2D>(StringComparer.OrdinalIgnoreCase);
+
+        static ABY_BestiaryUtility()
+        {
+            for (int i = 0; i < Catalog.Count; i++)
+            {
+                ABY_BestiaryEntryDefinition definition = Catalog[i];
+                if (definition == null || definition.EntryId.NullOrEmpty())
+                {
+                    continue;
+                }
+
+                TrackedEntryLookup.Add(definition.EntryId);
+                CatalogLookup[definition.EntryId] = definition;
+            }
+        }
 
         private static ABY_BestiaryGameComponent GetComponent()
         {
             return Current.Game?.GetComponent<ABY_BestiaryGameComponent>();
         }
 
-        public static IEnumerable<string> GetTrackedEntryIds()
+        public static IEnumerable<ABY_BestiaryEntryDefinition> GetCatalog()
         {
-            return TrackedEntryIds;
+            return Catalog;
+        }
+
+        public static IEnumerable<ABY_BestiaryEntryDefinition> GetEntriesForCategory(ABY_BestiaryCategory category)
+        {
+            for (int i = 0; i < Catalog.Count; i++)
+            {
+                ABY_BestiaryEntryDefinition definition = Catalog[i];
+                if (definition == null)
+                {
+                    continue;
+                }
+
+                if (category == ABY_BestiaryCategory.All || definition.Category == category)
+                {
+                    yield return definition;
+                }
+            }
         }
 
         public static int GetTrackedEntryCount()
         {
-            return TrackedEntryIds.Length;
+            return Catalog.Count;
+        }
+
+        public static int GetCategoryEntryCount(ABY_BestiaryCategory category)
+        {
+            int count = 0;
+            foreach (ABY_BestiaryEntryDefinition definition in GetEntriesForCategory(category))
+            {
+                if (definition != null)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public static ABY_BestiaryEntryDefinition GetDefinition(string entryId)
+        {
+            if (entryId.NullOrEmpty())
+            {
+                return null;
+            }
+
+            CatalogLookup.TryGetValue(entryId, out ABY_BestiaryEntryDefinition definition);
+            return definition;
+        }
+
+        public static string GetFirstAvailableEntryId(ABY_BestiaryCategory category)
+        {
+            foreach (ABY_BestiaryEntryDefinition definition in GetEntriesForCategory(category))
+            {
+                if (definition != null)
+                {
+                    return definition.EntryId;
+                }
+            }
+
+            return string.Empty;
         }
 
         public static bool IsTrackedEntryId(string entryId)
@@ -372,6 +466,66 @@ namespace AbyssalProtocol
             return string.Empty;
         }
 
+        public static Texture2D GetPortrait(string entryId)
+        {
+            if (entryId.NullOrEmpty())
+            {
+                return null;
+            }
+
+            if (PortraitCache.TryGetValue(entryId, out Texture2D cached))
+            {
+                return cached;
+            }
+
+            ABY_BestiaryEntryDefinition definition = GetDefinition(entryId);
+            Texture2D texture = definition != null && !definition.PortraitPath.NullOrEmpty()
+                ? ContentFinder<Texture2D>.Get(definition.PortraitPath, false)
+                : null;
+            PortraitCache[entryId] = texture;
+            return texture;
+        }
+
+        public static string GetDisplayLabel(string entryId)
+        {
+            if (entryId.NullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            PawnKindDef pawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(entryId);
+            if (pawnKindDef != null && !pawnKindDef.label.NullOrEmpty())
+            {
+                return pawnKindDef.LabelCap;
+            }
+
+            ThingDef thingDef = DefDatabase<ThingDef>.GetNamedSilentFail(entryId);
+            if (thingDef != null && !thingDef.label.NullOrEmpty())
+            {
+                return thingDef.LabelCap;
+            }
+
+            ABY_BestiaryEntryDefinition definition = GetDefinition(entryId);
+            return definition?.FallbackLabel ?? entryId;
+        }
+
+        public static string GetCategoryLabel(ABY_BestiaryCategory category)
+        {
+            switch (category)
+            {
+                case ABY_BestiaryCategory.Assault:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCategory_Assault", "Assault");
+                case ABY_BestiaryCategory.Support:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCategory_Support", "Support");
+                case ABY_BestiaryCategory.Elite:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCategory_Elite", "Elite");
+                case ABY_BestiaryCategory.Boss:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCategory_Boss", "Boss");
+                default:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCategory_All", "All");
+            }
+        }
+
         public static int GetKillCount(string entryId)
         {
             return GetComponent()?.GetKillCount(entryId) ?? 0;
@@ -382,9 +536,28 @@ namespace AbyssalProtocol
             return GetComponent()?.IsUnlocked(entryId) ?? false;
         }
 
+        public static bool IsStudied(string entryId)
+        {
+            return GetKillCount(entryId) >= StudiedKillThreshold;
+        }
+
         public static int GetUnlockedEntryCount()
         {
             return GetComponent()?.GetUnlockedEntryCount() ?? 0;
+        }
+
+        public static int GetStudiedEntryCount()
+        {
+            int count = 0;
+            foreach (ABY_BestiaryEntryDefinition definition in Catalog)
+            {
+                if (definition != null && IsStudied(definition.EntryId))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public static int GetTotalTrackedKills()
