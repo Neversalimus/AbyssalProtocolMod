@@ -107,12 +107,13 @@ namespace AbyssalProtocol
                     for (int i = 0; i < verbs.Count; i++)
                     {
                         string soundName = verbs[i]?.soundAiming?.defName;
-                        if (ShouldTrackChargeSound(def, soundName))
+                        if (!ShouldTrackChargeSound(def, soundName))
                         {
-                            OriginalVerbAimSounds[new DefIndexKey(def.defName, i)] = soundName;
-                            TrackedChargeSoundNames.Add(soundName);
-                            CacheOriginalSound(soundName);
+                            continue;
                         }
+
+                        OriginalVerbAimSounds[new DefIndexKey(def.defName, i)] = soundName;
+                        RegisterTrackedChargeSound(soundName);
                     }
                 }
 
@@ -137,8 +138,7 @@ namespace AbyssalProtocol
                     }
 
                     OriginalCompAimSounds[new DefIndexKey(def.defName, i)] = soundName;
-                    TrackedChargeSoundNames.Add(soundName);
-                    CacheOriginalSound(soundName);
+                    RegisterTrackedChargeSound(soundName);
                 }
             }
 
@@ -160,6 +160,17 @@ namespace AbyssalProtocol
 
             OriginalSoundSustain[soundDefName] = soundDef.sustain;
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
+        }
+
+        private static void RegisterTrackedChargeSound(string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            TrackedChargeSoundNames.Add(soundDefName);
+            CacheOriginalSound(soundDefName);
         }
 
         public static bool IsTrackedChargeSoundName(string soundDefName)
