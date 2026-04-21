@@ -1,136 +1,136 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-    <ABY_Bestiary_Header>abyssal threat codex</ABY_Bestiary_Header>
-    <ABY_Bestiary_HeaderSubtitle>Indexed hostile archive for confirmed abyssal kills, tactical notes and extraction efficiency.</ABY_Bestiary_HeaderSubtitle>
-    <ABY_Bestiary_Summary_Discovered>Discovered</ABY_Bestiary_Summary_Discovered>
-    <ABY_Bestiary_Summary_Studied>Studied</ABY_Bestiary_Summary_Studied>
-    <ABY_Bestiary_Summary_Kills>Confirmed kills</ABY_Bestiary_Summary_Kills>
-    <ABY_Bestiary_Summary_Extraction>Extraction bonus</ABY_Bestiary_Summary_Extraction>
-    <ABY_Bestiary_FilterHeader>Archive filters</ABY_Bestiary_FilterHeader>
-
-    <ABY_Bestiary_StatusHeader>Status</ABY_Bestiary_StatusHeader>
-    <ABY_Bestiary_CategoryHeader>Category</ABY_Bestiary_CategoryHeader>
-    <ABY_Bestiary_Filter_AllCategories>All categories</ABY_Bestiary_Filter_AllCategories>
-    <ABY_Bestiary_ResetFilters>Reset filters</ABY_Bestiary_ResetFilters>    <ABY_Bestiary_Filter_All>All</ABY_Bestiary_Filter_All>
-    <ABY_Bestiary_Filter_Locked>Locked</ABY_Bestiary_Filter_Locked>
-    <ABY_Bestiary_Filter_Discovered>Discovered</ABY_Bestiary_Filter_Discovered>
-    <ABY_Bestiary_Filter_Studied>Studied</ABY_Bestiary_Filter_Studied>
-    <ABY_Bestiary_Filter_Assault>Assault</ABY_Bestiary_Filter_Assault>
-    <ABY_Bestiary_Filter_Elite>Elite</ABY_Bestiary_Filter_Elite>
-    <ABY_Bestiary_Filter_Support>Support</ABY_Bestiary_Filter_Support>
-    <ABY_Bestiary_Filter_Boss>Boss</ABY_Bestiary_Filter_Boss>
-    <ABY_Bestiary_SortHeader>Sort</ABY_Bestiary_SortHeader>
-    <ABY_Bestiary_Sort_Threat>Threat</ABY_Bestiary_Sort_Threat>
-    <ABY_Bestiary_Sort_Kills>Kills</ABY_Bestiary_Sort_Kills>
-    <ABY_Bestiary_Sort_Name>Name</ABY_Bestiary_Sort_Name>
-    <ABY_Bestiary_Sort_Recent>Recent</ABY_Bestiary_Sort_Recent>
-    <ABY_Bestiary_BrowserHeader>Threat roster</ABY_Bestiary_BrowserHeader>
-    <ABY_Bestiary_UnknownEntry>Unknown hostile pattern</ABY_Bestiary_UnknownEntry>
-    <ABY_Bestiary_LockedTag>Kill this hostile once to unseal the archive stub.</ABY_Bestiary_LockedTag>
-    <ABY_Bestiary_LockedSummary>The archive has only a masked hostile signature. Record a confirmed kill to reveal the entry.</ABY_Bestiary_LockedSummary>
-    <ABY_Bestiary_LockedTactical>Field notes remain sealed until {0} confirmed kills.</ABY_Bestiary_LockedTactical>
-    <ABY_Bestiary_LockedDeep>Deep archive record remains sealed until studied status at {0} confirmed kills.</ABY_Bestiary_LockedDeep>
-    <ABY_Bestiary_Section_Summary>Pattern summary</ABY_Bestiary_Section_Summary>
-    <ABY_Bestiary_Section_Tactical>Tactical note</ABY_Bestiary_Section_Tactical>
-    <ABY_Bestiary_Section_Deep>Deep codex record</ABY_Bestiary_Section_Deep>
-    <ABY_Bestiary_Section_Milestones>Archive milestones</ABY_Bestiary_Section_Milestones>
-    <ABY_Bestiary_Section_Extraction>Archive extraction</ABY_Bestiary_Section_Extraction>
-    <ABY_Bestiary_Detail_Kills>Confirmed kills: {0}</ABY_Bestiary_Detail_Kills>
-    <ABY_Bestiary_Status_Locked>Locked</ABY_Bestiary_Status_Locked>
-    <ABY_Bestiary_Status_Discovered>Discovered</ABY_Bestiary_Status_Discovered>
-    <ABY_Bestiary_Status_Studied>Studied</ABY_Bestiary_Status_Studied>
-    <ABY_Bestiary_Milestone_Tactical>{0} kills until field notes unlock.</ABY_Bestiary_Milestone_Tactical>
-    <ABY_Bestiary_Milestone_Studied>{0} kills until studied status.</ABY_Bestiary_Milestone_Studied>
-    <ABY_Bestiary_Milestone_Complete>Archive thresholds complete.</ABY_Bestiary_Milestone_Complete>
-    <ABY_Bestiary_Milestone_Discover>1 kill — archive reveal</ABY_Bestiary_Milestone_Discover>
-    <ABY_Bestiary_Milestone_Notes>5 kills — field notes unlocked</ABY_Bestiary_Milestone_Notes>
-    <ABY_Bestiary_Milestone_Study>15 kills — studied status and deep record</ABY_Bestiary_Milestone_Study>
-    <ABY_Bestiary_ExtractionScope>Applies only to Abyssal Protocol reward routing: horde caches, dominion payouts and supported boss-side residue/caches.</ABY_Bestiary_ExtractionScope>
-    <ABY_Bestiary_ExtractionSummary_Max>Archive extraction bonus: +{0}% (maxed)</ABY_Bestiary_ExtractionSummary_Max>
-    <ABY_Bestiary_ExtractionSummary_Next>Archive extraction bonus: +{0}% ({1} studied entries until next step)</ABY_Bestiary_ExtractionSummary_Next>
-    <ABY_Bestiary_Category_Assault>Assault</ABY_Bestiary_Category_Assault>
-    <ABY_Bestiary_Category_Elite>Elite</ABY_Bestiary_Category_Elite>
-    <ABY_Bestiary_Category_Support>Support</ABY_Bestiary_Category_Support>
-    <ABY_Bestiary_Category_Boss>Boss</ABY_Bestiary_Category_Boss>
-    <ABY_Bestiary_OpenCodex>Open threat codex</ABY_Bestiary_OpenCodex>
-    <ABY_BestiaryControlSummary>Threat codex: {0}/{1} discovered • {2} studied • extraction bonus +{3}%</ABY_BestiaryControlSummary>
-    <ABY_BestiaryMessage_Unlocked>New threat codex entry unlocked: {0}</ABY_BestiaryMessage_Unlocked>
-    <ABY_BestiaryMessage_FieldNotes>Field notes expanded: {0}</ABY_BestiaryMessage_FieldNotes>
-    <ABY_BestiaryMessage_Studied>Threat codex entry studied: {0}</ABY_BestiaryMessage_Studied>
-    <ABY_BestiaryMessage_BonusUp>Archive extraction bonus increased to +{0}%.</ABY_BestiaryMessage_BonusUp>
-    <ABY_Bestiary_Entry_ABY_RiftImp_Label>Rift Imp</ABY_Bestiary_Entry_ABY_RiftImp_Label>
-    <ABY_Bestiary_Entry_ABY_RiftImp_Tag>Fast expendable breach-form.</ABY_Bestiary_Entry_ABY_RiftImp_Tag>
-    <ABY_Bestiary_Entry_ABY_RiftImp_Summary>Cheap shock fauna pushed through unstable tears to overload firing lines and consume attention.</ABY_Bestiary_Entry_ABY_RiftImp_Summary>
-    <ABY_Bestiary_Entry_ABY_RiftImp_Tactical>Rift Imps are weak alone but dangerous in numbers. Expect them to flood doors, punish isolated shooters and screen heavier abyssal units.</ABY_Bestiary_Entry_ABY_RiftImp_Tactical>
-    <ABY_Bestiary_Entry_ABY_RiftImp_Deep>The codex classifies Rift Imps as disposable breach biomass: not soldiers, but living pressure used to turn a contained engagement into a chaotic opening.</ABY_Bestiary_Entry_ABY_RiftImp_Deep>
-    <ABY_Bestiary_Entry_ABY_EmberHound_Label>Ember Hound</ABY_Bestiary_Entry_ABY_EmberHound_Label>
-    <ABY_Bestiary_Entry_ABY_EmberHound_Tag>Flanking predator bred for pursuit.</ABY_Bestiary_Entry_ABY_EmberHound_Tag>
-    <ABY_Bestiary_Entry_ABY_EmberHound_Summary>Fast abyssal hounds used to reach backlines, punish kiting and force the colony to defend more than its main firing lane.</ABY_Bestiary_Entry_ABY_EmberHound_Summary>
-    <ABY_Bestiary_Entry_ABY_EmberHound_Tactical>Watch for sudden lateral pressure. Ember Hounds excel at collapsing weak side rooms, chasing wounded pawns and punishing overextended ranged teams.</ABY_Bestiary_Entry_ABY_EmberHound_Tactical>
-    <ABY_Bestiary_Entry_ABY_EmberHound_Deep>Unlike imps, hounds are not pure disposable mass. They embody pursuit doctrine: speed, angle denial and panic spread across the colony interior.</ABY_Bestiary_Entry_ABY_EmberHound_Deep>
-    <ABY_Bestiary_Entry_ABY_HexgunThrall_Label>Hexgun Thrall</ABY_Bestiary_Entry_ABY_HexgunThrall_Label>
-    <ABY_Bestiary_Entry_ABY_HexgunThrall_Tag>Disciplined line shooter of the breach.</ABY_Bestiary_Entry_ABY_HexgunThrall_Tag>
-    <ABY_Bestiary_Entry_ABY_HexgunThrall_Summary>Armed cult-infantry that stabilizes abyssal pressure with direct fire, creating a more military breach pattern than feral swarm forms.</ABY_Bestiary_Entry_ABY_HexgunThrall_Summary>
-    <ABY_Bestiary_Entry_ABY_HexgunThrall_Tactical>Thralls are the first sign a breach has shifted from feral pressure to doctrine. Prioritize them if you need to reduce sustained ranged attrition.</ABY_Bestiary_Entry_ABY_HexgunThrall_Tactical>
-    <ABY_Bestiary_Entry_ABY_HexgunThrall_Deep>The archive notes that thralls are important psychologically: they prove the abyss does not merely spawn monsters — it fields obedient armed cadres.</ABY_Bestiary_Entry_ABY_HexgunThrall_Deep>
-    <ABY_Bestiary_Entry_ABY_ChainZealot_Label>Chain Zealot</ABY_Bestiary_Entry_ABY_ChainZealot_Label>
-    <ABY_Bestiary_Entry_ABY_ChainZealot_Tag>Armored fanatic for breach pressure.</ABY_Bestiary_Entry_ABY_ChainZealot_Tag>
-    <ABY_Bestiary_Entry_ABY_ChainZealot_Summary>Mid-tier assault fanatic combining pressure armor, melee threat and morale impact inside narrow approach lanes.</ABY_Bestiary_Entry_ABY_ChainZealot_Summary>
-    <ABY_Bestiary_Entry_ABY_ChainZealot_Tactical>Chain Zealots are most dangerous when imps or hounds already occupy your shooters. Kill their screen first or they will arrive on favorable terms.</ABY_Bestiary_Entry_ABY_ChainZealot_Tactical>
-    <ABY_Bestiary_Entry_ABY_ChainZealot_Deep>Their presence suggests the breach has committed enough value to justify armored doctrinal melee, not just opportunistic swarm attrition.</ABY_Bestiary_Entry_ABY_ChainZealot_Deep>
-    <ABY_Bestiary_Entry_ABY_RiftSniper_Label>Rift Sniper</ABY_Bestiary_Entry_ABY_RiftSniper_Label>
-    <ABY_Bestiary_Entry_ABY_RiftSniper_Tag>Precision eliminator of exposed assets.</ABY_Bestiary_Entry_ABY_RiftSniper_Tag>
-    <ABY_Bestiary_Entry_ABY_RiftSniper_Summary>A long-range abyssal marksman used to punish exposed specialists, turret crews and thinly protected operators.</ABY_Bestiary_Entry_ABY_RiftSniper_Summary>
-    <ABY_Bestiary_Entry_ABY_RiftSniper_Tactical>Treat a Rift Sniper as a force multiplier. Even a single sightline can make ordinary breach pressure dramatically more lethal.</ABY_Bestiary_Entry_ABY_RiftSniper_Tactical>
-    <ABY_Bestiary_Entry_ABY_RiftSniper_Deep>Codex inference: the sniper role indicates the abyss can prosecute selective target denial, not merely broad aggression.</ABY_Bestiary_Entry_ABY_RiftSniper_Deep>
-    <ABY_Bestiary_Entry_ABY_NullPriest_Label>Null Priest</ABY_Bestiary_Entry_ABY_NullPriest_Label>
-    <ABY_Bestiary_Entry_ABY_NullPriest_Tag>Ritual support and field corruption node.</ABY_Bestiary_Entry_ABY_NullPriest_Tag>
-    <ABY_Bestiary_Entry_ABY_NullPriest_Summary>A support conductor that turns a normal firefight into a ritualized pressure zone through debuffs, local distortion and allied support.</ABY_Bestiary_Entry_ABY_NullPriest_Summary>
-    <ABY_Bestiary_Entry_ABY_NullPriest_Tactical>Null Priests are priority disruption targets. Leaving one alive too long usually means every other abyssal pawn becomes harder to cleanly stabilize.</ABY_Bestiary_Entry_ABY_NullPriest_Tactical>
-    <ABY_Bestiary_Entry_ABY_NullPriest_Deep>The archive classifies priests as proof that some abyssal hostiles do not fight for kills alone; they reshape the combat state itself.</ABY_Bestiary_Entry_ABY_NullPriest_Deep>
-    <ABY_Bestiary_Entry_ABY_BreachBrute_Label>Breach Brute</ABY_Bestiary_Entry_ABY_BreachBrute_Label>
-    <ABY_Bestiary_Entry_ABY_BreachBrute_Tag>Heavy breach ram under direct fire.</ABY_Bestiary_Entry_ABY_BreachBrute_Tag>
-    <ABY_Bestiary_Entry_ABY_BreachBrute_Summary>A slow armored brute intended to absorb concentrated punishment while opening room for the rest of the abyssal force.</ABY_Bestiary_Entry_ABY_BreachBrute_Summary>
-    <ABY_Bestiary_Entry_ABY_BreachBrute_Tactical>Brutes punish colonies that rely on a single perfect firing lane. If you cannot burst them down, be ready to rotate and delay.</ABY_Bestiary_Entry_ABY_BreachBrute_Tactical>
-    <ABY_Bestiary_Entry_ABY_BreachBrute_Deep>The codex records breach brutes as living siege mass: a body designed less to duel and more to force the defender to spend ammunition, time and formation discipline.</ABY_Bestiary_Entry_ABY_BreachBrute_Deep>
-    <ABY_Bestiary_Entry_ABY_SiegeIdol_Label>Siege Idol</ABY_Bestiary_Entry_ABY_SiegeIdol_Label>
-    <ABY_Bestiary_Entry_ABY_SiegeIdol_Tag>Artillery node for breach escalation.</ABY_Bestiary_Entry_ABY_SiegeIdol_Tag>
-    <ABY_Bestiary_Entry_ABY_SiegeIdol_Summary>A semi-mechanical support engine that translates abyssal pressure into long-range demolition and positional punishment.</ABY_Bestiary_Entry_ABY_SiegeIdol_Summary>
-    <ABY_Bestiary_Entry_ABY_SiegeIdol_Tactical>Once a Siege Idol is online, cover geometry becomes unstable. Static colonies will bleed value if the idol is not answered quickly.</ABY_Bestiary_Entry_ABY_SiegeIdol_Tactical>
-    <ABY_Bestiary_Entry_ABY_SiegeIdol_Deep>The archive treats idols as an important doctrinal marker: the abyss is not adapting human artillery — it is digesting siege logic into its own ritual machine form.</ABY_Bestiary_Entry_ABY_SiegeIdol_Deep>
-    <ABY_Bestiary_Entry_ABY_Harvester_Label>Harvester</ABY_Bestiary_Entry_ABY_Harvester_Label>
-    <ABY_Bestiary_Entry_ABY_Harvester_Tag>Battlefield recycler of death-state energy.</ABY_Bestiary_Entry_ABY_Harvester_Tag>
-    <ABY_Bestiary_Entry_ABY_Harvester_Summary>A specialist entity that becomes more dangerous as bodies accumulate, exploiting the battlefield as a resource rather than mere terrain.</ABY_Bestiary_Entry_ABY_Harvester_Summary>
-    <ABY_Bestiary_Entry_ABY_Harvester_Tactical>Do not let a Harvester operate uncontested during a messy fight. It thrives when the colony loses tempo and leaves corpses in active lanes.</ABY_Bestiary_Entry_ABY_Harvester_Tactical>
-    <ABY_Bestiary_Entry_ABY_Harvester_Deep>Codex note: Harvesters demonstrate the abyssal principle that slaughter itself is material — not only a result, but a usable throughput.</ABY_Bestiary_Entry_ABY_Harvester_Deep>
-    <ABY_Bestiary_Entry_ABY_GateWarden_Label>Gate Warden</ABY_Bestiary_Entry_ABY_GateWarden_Label>
-    <ABY_Bestiary_Entry_ABY_GateWarden_Tag>Elite frontliner guarding high-value nodes.</ABY_Bestiary_Entry_ABY_GateWarden_Tag>
-    <ABY_Bestiary_Entry_ABY_GateWarden_Summary>A compact elite guardian used to anchor important breach positions and protect boss-side assets from direct retaliation.</ABY_Bestiary_Entry_ABY_GateWarden_Summary>
-    <ABY_Bestiary_Entry_ABY_GateWarden_Tactical>Wardens trade mobility for denial. Expect them near bosses, objectives and high-value breach anchors rather than in expendable waves.</ABY_Bestiary_Entry_ABY_GateWarden_Tactical>
-    <ABY_Bestiary_Entry_ABY_GateWarden_Deep>The archive marks wardens as personalized security, not generic mass: the abyss assigns them where a local right of access must be defended.</ABY_Bestiary_Entry_ABY_GateWarden_Deep>
-    <ABY_Bestiary_Entry_ABY_WardenOfAsh_Label>Warden of Ash</ABY_Bestiary_Entry_ABY_WardenOfAsh_Label>
-    <ABY_Bestiary_Entry_ABY_WardenOfAsh_Tag>First structured mini-boss of the ashbound tier.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Tag>
-    <ABY_Bestiary_Entry_ABY_WardenOfAsh_Summary>An early progression boss that combines armor, area pulse pressure and reinforcement timing into a disciplined breach test.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Summary>
-    <ABY_Bestiary_Entry_ABY_WardenOfAsh_Tactical>This is the point where the abyss stops only probing and starts evaluating. Clustering and lazy melee swarms are especially punishable here.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Tactical>
-    <ABY_Bestiary_Entry_ABY_WardenOfAsh_Deep>The codex treats the Warden of Ash as a threshold administrator: not a supreme entity, but the first hostile expressly built to test readiness for deeper escalation.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Deep>
-    <ABY_Bestiary_Entry_ABY_ChoirEngine_Label>Choir Engine</ABY_Bestiary_Entry_ABY_ChoirEngine_Label>
-    <ABY_Bestiary_Entry_ABY_ChoirEngine_Tag>Support boss that weaponizes coordination.</ABY_Bestiary_Entry_ABY_ChoirEngine_Tag>
-    <ABY_Bestiary_Entry_ABY_ChoirEngine_Summary>A technoritual support engine focused less on raw damage and more on turning surrounding hostiles into a synchronized pressure lattice.</ABY_Bestiary_Entry_ABY_ChoirEngine_Summary>
-    <ABY_Bestiary_Entry_ABY_ChoirEngine_Tactical>The Choir Engine is a priority command target. The longer it remains online, the less any single hostile near it behaves like an isolated threat.</ABY_Bestiary_Entry_ABY_ChoirEngine_Tactical>
-    <ABY_Bestiary_Entry_ABY_ChoirEngine_Deep>Archive inference: the Choir Engine proves the abyssal war-machine contains a coordination layer akin to liturgy, computation and command at once.</ABY_Bestiary_Entry_ABY_ChoirEngine_Deep>
-    <ABY_Bestiary_Entry_ABY_ReactorSaint_Label>Infernal Reactor Saint</ABY_Bestiary_Entry_ABY_ReactorSaint_Label>
-    <ABY_Bestiary_Entry_ABY_ReactorSaint_Tag>Biothermal saint-machine of late escalation.</ABY_Bestiary_Entry_ABY_ReactorSaint_Tag>
-    <ABY_Bestiary_Entry_ABY_ReactorSaint_Summary>A late boss blending sanctified imagery, reactor pressure, defensive layering and artillery-grade punishment.</ABY_Bestiary_Entry_ABY_ReactorSaint_Summary>
-    <ABY_Bestiary_Entry_ABY_ReactorSaint_Tactical>The Reactor Saint punishes static confidence. It forces the colony to answer shields, pressure zones and heavy ranged spikes in one encounter.</ABY_Bestiary_Entry_ABY_ReactorSaint_Tactical>
-    <ABY_Bestiary_Entry_ABY_ReactorSaint_Deep>The codex treats this entity as evidence that the abyss can industrialize sanctity itself, turning reverence, reactor logic and violence into a single chassis.</ABY_Bestiary_Entry_ABY_ReactorSaint_Deep>
-    <ABY_Bestiary_Entry_ABY_ArchonBeast_Label>Archon Beast</ABY_Bestiary_Entry_ABY_ArchonBeast_Label>
-    <ABY_Bestiary_Entry_ABY_ArchonBeast_Tag>Domain boss carrying local law of rupture.</ABY_Bestiary_Entry_ABY_ArchonBeast_Tag>
-    <ABY_Bestiary_Entry_ABY_ArchonBeast_Summary>The first true archon-class boss: a hostile that does not merely attack a map, but attempts to impose a deeper abyssal state upon it.</ABY_Bestiary_Entry_ABY_ArchonBeast_Summary>
-    <ABY_Bestiary_Entry_ABY_ArchonBeast_Tactical>Treat every phase as a state change, not a damage race. The Archon Beast is dangerous because it changes the encounter frame around itself.</ABY_Bestiary_Entry_ABY_ArchonBeast_Tactical>
-    <ABY_Bestiary_Entry_ABY_ArchonBeast_Deep>Archive classification: local administrator of rupture pressure. The visible body is only the readable front of a larger hostile authority.</ABY_Bestiary_Entry_ABY_ArchonBeast_Deep>
-    <ABY_Bestiary_Entry_ABY_RiftSapper_Label>Rift Sapper</ABY_Bestiary_Entry_ABY_RiftSapper_Label>
-    <ABY_Bestiary_Entry_ABY_RiftSapper_Tag>Demolition specialist of breach geometry.</ABY_Bestiary_Entry_ABY_RiftSapper_Tag>
-    <ABY_Bestiary_Entry_ABY_RiftSapper_Summary>A specialist hostile used to destabilize structures, openings and prepared defensive geometry rather than simply trading fire head-on.</ABY_Bestiary_Entry_ABY_RiftSapper_Summary>
-    <ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>Rift Sappers should be intercepted early. Their value comes from changing the map on favorable terms for the rest of the breach package.</ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>
-    <ABY_Bestiary_Entry_ABY_RiftSapper_Deep>The codex tags sappers as applied geometry warfare: proof that abyssal pressure can target fortification logic, not just bodies.</ABY_Bestiary_Entry_ABY_RiftSapper_Deep>
+  <ABY_Bestiary_Header>abyssal threat codex</ABY_Bestiary_Header>
+  <ABY_Bestiary_HeaderSubtitle>Indexed hostile archive for confirmed abyssal kills, tactical notes and extraction efficiency.</ABY_Bestiary_HeaderSubtitle>
+  <ABY_Bestiary_Summary_Discovered>Discovered</ABY_Bestiary_Summary_Discovered>
+  <ABY_Bestiary_Summary_Studied>Studied</ABY_Bestiary_Summary_Studied>
+  <ABY_Bestiary_Summary_Kills>Confirmed kills</ABY_Bestiary_Summary_Kills>
+  <ABY_Bestiary_Summary_Extraction>Extraction bonus</ABY_Bestiary_Summary_Extraction>
+  <ABY_Bestiary_FilterHeader>Archive filters</ABY_Bestiary_FilterHeader>
+  <ABY_Bestiary_Filter_All>All</ABY_Bestiary_Filter_All>
+  <ABY_Bestiary_Filter_Locked>Locked</ABY_Bestiary_Filter_Locked>
+  <ABY_Bestiary_Filter_Discovered>Discovered</ABY_Bestiary_Filter_Discovered>
+  <ABY_Bestiary_Filter_Studied>Studied</ABY_Bestiary_Filter_Studied>
+  <ABY_Bestiary_Filter_Assault>Assault</ABY_Bestiary_Filter_Assault>
+  <ABY_Bestiary_Filter_Elite>Elite</ABY_Bestiary_Filter_Elite>
+  <ABY_Bestiary_Filter_Support>Support</ABY_Bestiary_Filter_Support>
+  <ABY_Bestiary_Filter_Boss>Boss</ABY_Bestiary_Filter_Boss>
+  <ABY_Bestiary_SortHeader>Sort</ABY_Bestiary_SortHeader>
+  <ABY_Bestiary_Sort_Threat>Threat</ABY_Bestiary_Sort_Threat>
+  <ABY_Bestiary_Sort_Kills>Kills</ABY_Bestiary_Sort_Kills>
+  <ABY_Bestiary_Sort_Name>Name</ABY_Bestiary_Sort_Name>
+  <ABY_Bestiary_Sort_Recent>Recent</ABY_Bestiary_Sort_Recent>
+  <ABY_Bestiary_BrowserHeader>Threat roster</ABY_Bestiary_BrowserHeader>
+  <ABY_Bestiary_UnknownEntry>Unknown hostile pattern</ABY_Bestiary_UnknownEntry>
+  <ABY_Bestiary_LockedTag>Kill this hostile once to unseal the archive stub.</ABY_Bestiary_LockedTag>
+  <ABY_Bestiary_LockedSummary>The archive has only a masked hostile signature. Record a confirmed kill to reveal the entry.</ABY_Bestiary_LockedSummary>
+  <ABY_Bestiary_LockedTactical>Field notes remain sealed until {0} confirmed kills.</ABY_Bestiary_LockedTactical>
+  <ABY_Bestiary_LockedDeep>Deep archive record remains sealed until studied status at {0} confirmed kills.</ABY_Bestiary_LockedDeep>
+  <ABY_Bestiary_Section_Summary>Pattern summary</ABY_Bestiary_Section_Summary>
+  <ABY_Bestiary_Section_Tactical>Tactical note</ABY_Bestiary_Section_Tactical>
+  <ABY_Bestiary_Section_Deep>Deep codex record</ABY_Bestiary_Section_Deep>
+  <ABY_Bestiary_Section_Milestones>Archive milestones</ABY_Bestiary_Section_Milestones>
+  <ABY_Bestiary_Section_Extraction>Archive extraction</ABY_Bestiary_Section_Extraction>
+  <ABY_Bestiary_Detail_Kills>Confirmed kills: {0}</ABY_Bestiary_Detail_Kills>
+  <ABY_Bestiary_Status_Locked>Locked</ABY_Bestiary_Status_Locked>
+  <ABY_Bestiary_Status_Discovered>Discovered</ABY_Bestiary_Status_Discovered>
+  <ABY_Bestiary_Status_Studied>Studied</ABY_Bestiary_Status_Studied>
+  <ABY_Bestiary_Milestone_Tactical>{0} kills until field notes unlock.</ABY_Bestiary_Milestone_Tactical>
+  <ABY_Bestiary_Milestone_Studied>{0} kills until studied status.</ABY_Bestiary_Milestone_Studied>
+  <ABY_Bestiary_Milestone_Complete>Archive thresholds complete.</ABY_Bestiary_Milestone_Complete>
+  <ABY_Bestiary_Milestone_Discover>1 kill — archive reveal</ABY_Bestiary_Milestone_Discover>
+  <ABY_Bestiary_Milestone_Notes>5 kills — field notes unlocked</ABY_Bestiary_Milestone_Notes>
+  <ABY_Bestiary_Milestone_Study>15 kills — studied status and deep record</ABY_Bestiary_Milestone_Study>
+  <ABY_Bestiary_ExtractionScope>Applies only to Abyssal Protocol reward routing: horde caches, dominion payouts and supported boss-side residue/caches.</ABY_Bestiary_ExtractionScope>
+  <ABY_Bestiary_ExtractionSummary_Max>Archive extraction bonus: +{0}% (maxed)</ABY_Bestiary_ExtractionSummary_Max>
+  <ABY_Bestiary_ExtractionSummary_Next>Archive extraction bonus: +{0}% ({1} studied entries until next step)</ABY_Bestiary_ExtractionSummary_Next>
+  <ABY_Bestiary_Category_Assault>Assault</ABY_Bestiary_Category_Assault>
+  <ABY_Bestiary_Category_Elite>Elite</ABY_Bestiary_Category_Elite>
+  <ABY_Bestiary_Category_Support>Support</ABY_Bestiary_Category_Support>
+  <ABY_Bestiary_Category_Boss>Boss</ABY_Bestiary_Category_Boss>
+  <ABY_Bestiary_OpenCodex>Open threat codex</ABY_Bestiary_OpenCodex>
+  <ABY_BestiaryControlSummary>Threat codex: {0}/{1} discovered • {2} studied • extraction bonus +{3}%</ABY_BestiaryControlSummary>
+  <ABY_BestiaryMessage_Unlocked>New threat codex entry unlocked: {0}</ABY_BestiaryMessage_Unlocked>
+  <ABY_BestiaryMessage_FieldNotes>Field notes expanded: {0}</ABY_BestiaryMessage_FieldNotes>
+  <ABY_BestiaryMessage_Studied>Threat codex entry studied: {0}</ABY_BestiaryMessage_Studied>
+  <ABY_BestiaryMessage_BonusUp>Archive extraction bonus increased to +{0}%.</ABY_BestiaryMessage_BonusUp>
+  <ABY_Bestiary_Entry_ABY_RiftImp_Label>Rift Imp</ABY_Bestiary_Entry_ABY_RiftImp_Label>
+  <ABY_Bestiary_Entry_ABY_RiftImp_Tag>Fast expendable breach-form.</ABY_Bestiary_Entry_ABY_RiftImp_Tag>
+  <ABY_Bestiary_Entry_ABY_RiftImp_Summary>Cheap shock fauna pushed through unstable tears to overload firing lines and consume attention.</ABY_Bestiary_Entry_ABY_RiftImp_Summary>
+  <ABY_Bestiary_Entry_ABY_RiftImp_Tactical>Rift Imps are weak alone but dangerous in numbers. Expect them to flood doors, punish isolated shooters and screen heavier abyssal units.</ABY_Bestiary_Entry_ABY_RiftImp_Tactical>
+  <ABY_Bestiary_Entry_ABY_RiftImp_Deep>The codex classifies Rift Imps as disposable breach biomass: not soldiers, but living pressure used to turn a contained engagement into a chaotic opening.</ABY_Bestiary_Entry_ABY_RiftImp_Deep>
+  <ABY_Bestiary_Entry_ABY_EmberHound_Label>Ember Hound</ABY_Bestiary_Entry_ABY_EmberHound_Label>
+  <ABY_Bestiary_Entry_ABY_EmberHound_Tag>Flanking predator bred for pursuit.</ABY_Bestiary_Entry_ABY_EmberHound_Tag>
+  <ABY_Bestiary_Entry_ABY_EmberHound_Summary>Fast abyssal hounds used to reach backlines, punish kiting and force the colony to defend more than its main firing lane.</ABY_Bestiary_Entry_ABY_EmberHound_Summary>
+  <ABY_Bestiary_Entry_ABY_EmberHound_Tactical>Watch for sudden lateral pressure. Ember Hounds excel at collapsing weak side rooms, chasing wounded pawns and punishing overextended ranged teams.</ABY_Bestiary_Entry_ABY_EmberHound_Tactical>
+  <ABY_Bestiary_Entry_ABY_EmberHound_Deep>Unlike imps, hounds are not pure disposable mass. They embody pursuit doctrine: speed, angle denial and panic spread across the colony interior.</ABY_Bestiary_Entry_ABY_EmberHound_Deep>
+  <ABY_Bestiary_Entry_ABY_HexgunThrall_Label>Hexgun Thrall</ABY_Bestiary_Entry_ABY_HexgunThrall_Label>
+  <ABY_Bestiary_Entry_ABY_HexgunThrall_Tag>Disciplined line shooter of the breach.</ABY_Bestiary_Entry_ABY_HexgunThrall_Tag>
+  <ABY_Bestiary_Entry_ABY_HexgunThrall_Summary>Armed cult-infantry that stabilizes abyssal pressure with direct fire, creating a more military breach pattern than feral swarm forms.</ABY_Bestiary_Entry_ABY_HexgunThrall_Summary>
+  <ABY_Bestiary_Entry_ABY_HexgunThrall_Tactical>Thralls are the first sign a breach has shifted from feral pressure to doctrine. Prioritize them if you need to reduce sustained ranged attrition.</ABY_Bestiary_Entry_ABY_HexgunThrall_Tactical>
+  <ABY_Bestiary_Entry_ABY_HexgunThrall_Deep>The archive notes that thralls are important psychologically: they prove the abyss does not merely spawn monsters — it fields obedient armed cadres.</ABY_Bestiary_Entry_ABY_HexgunThrall_Deep>
+  <ABY_Bestiary_Entry_ABY_ChainZealot_Label>Chain Zealot</ABY_Bestiary_Entry_ABY_ChainZealot_Label>
+  <ABY_Bestiary_Entry_ABY_ChainZealot_Tag>Armored fanatic for breach pressure.</ABY_Bestiary_Entry_ABY_ChainZealot_Tag>
+  <ABY_Bestiary_Entry_ABY_ChainZealot_Summary>Mid-tier assault fanatic combining pressure armor, melee threat and morale impact inside narrow approach lanes.</ABY_Bestiary_Entry_ABY_ChainZealot_Summary>
+  <ABY_Bestiary_Entry_ABY_ChainZealot_Tactical>Chain Zealots are most dangerous when imps or hounds already occupy your shooters. Kill their screen first or they will arrive on favorable terms.</ABY_Bestiary_Entry_ABY_ChainZealot_Tactical>
+  <ABY_Bestiary_Entry_ABY_ChainZealot_Deep>Their presence suggests the breach has committed enough value to justify armored doctrinal melee, not just opportunistic swarm attrition.</ABY_Bestiary_Entry_ABY_ChainZealot_Deep>
+  <ABY_Bestiary_Entry_ABY_RiftSniper_Label>Rift Sniper</ABY_Bestiary_Entry_ABY_RiftSniper_Label>
+  <ABY_Bestiary_Entry_ABY_RiftSniper_Tag>Precision eliminator of exposed assets.</ABY_Bestiary_Entry_ABY_RiftSniper_Tag>
+  <ABY_Bestiary_Entry_ABY_RiftSniper_Summary>A long-range abyssal marksman used to punish exposed specialists, turret crews and thinly protected operators.</ABY_Bestiary_Entry_ABY_RiftSniper_Summary>
+  <ABY_Bestiary_Entry_ABY_RiftSniper_Tactical>Treat a Rift Sniper as a force multiplier. Even a single sightline can make ordinary breach pressure dramatically more lethal.</ABY_Bestiary_Entry_ABY_RiftSniper_Tactical>
+  <ABY_Bestiary_Entry_ABY_RiftSniper_Deep>Codex inference: the sniper role indicates the abyss can prosecute selective target denial, not merely broad aggression.</ABY_Bestiary_Entry_ABY_RiftSniper_Deep>
+  <ABY_Bestiary_Entry_ABY_NullPriest_Label>Null Priest</ABY_Bestiary_Entry_ABY_NullPriest_Label>
+  <ABY_Bestiary_Entry_ABY_NullPriest_Tag>Ritual support and field corruption node.</ABY_Bestiary_Entry_ABY_NullPriest_Tag>
+  <ABY_Bestiary_Entry_ABY_NullPriest_Summary>A support conductor that turns a normal firefight into a ritualized pressure zone through debuffs, local distortion and allied support.</ABY_Bestiary_Entry_ABY_NullPriest_Summary>
+  <ABY_Bestiary_Entry_ABY_NullPriest_Tactical>Null Priests are priority disruption targets. Leaving one alive too long usually means every other abyssal pawn becomes harder to cleanly stabilize.</ABY_Bestiary_Entry_ABY_NullPriest_Tactical>
+  <ABY_Bestiary_Entry_ABY_NullPriest_Deep>The archive classifies priests as proof that some abyssal hostiles do not fight for kills alone; they reshape the combat state itself.</ABY_Bestiary_Entry_ABY_NullPriest_Deep>
+  <ABY_Bestiary_Entry_ABY_BreachBrute_Label>Breach Brute</ABY_Bestiary_Entry_ABY_BreachBrute_Label>
+  <ABY_Bestiary_Entry_ABY_BreachBrute_Tag>Heavy breach ram under direct fire.</ABY_Bestiary_Entry_ABY_BreachBrute_Tag>
+  <ABY_Bestiary_Entry_ABY_BreachBrute_Summary>A slow armored brute intended to absorb concentrated punishment while opening room for the rest of the abyssal force.</ABY_Bestiary_Entry_ABY_BreachBrute_Summary>
+  <ABY_Bestiary_Entry_ABY_BreachBrute_Tactical>Brutes punish colonies that rely on a single perfect firing lane. If you cannot burst them down, be ready to rotate and delay.</ABY_Bestiary_Entry_ABY_BreachBrute_Tactical>
+  <ABY_Bestiary_Entry_ABY_BreachBrute_Deep>The codex records breach brutes as living siege mass: a body designed less to duel and more to force the defender to spend ammunition, time and formation discipline.</ABY_Bestiary_Entry_ABY_BreachBrute_Deep>
+  <ABY_Bestiary_Entry_ABY_SiegeIdol_Label>Siege Idol</ABY_Bestiary_Entry_ABY_SiegeIdol_Label>
+  <ABY_Bestiary_Entry_ABY_SiegeIdol_Tag>Artillery node for breach escalation.</ABY_Bestiary_Entry_ABY_SiegeIdol_Tag>
+  <ABY_Bestiary_Entry_ABY_SiegeIdol_Summary>A semi-mechanical support engine that translates abyssal pressure into long-range demolition and positional punishment.</ABY_Bestiary_Entry_ABY_SiegeIdol_Summary>
+  <ABY_Bestiary_Entry_ABY_SiegeIdol_Tactical>Once a Siege Idol is online, cover geometry becomes unstable. Static colonies will bleed value if the idol is not answered quickly.</ABY_Bestiary_Entry_ABY_SiegeIdol_Tactical>
+  <ABY_Bestiary_Entry_ABY_SiegeIdol_Deep>The archive treats idols as an important doctrinal marker: the abyss is not adapting human artillery — it is digesting siege logic into its own ritual machine form.</ABY_Bestiary_Entry_ABY_SiegeIdol_Deep>
+  <ABY_Bestiary_Entry_ABY_Harvester_Label>Harvester</ABY_Bestiary_Entry_ABY_Harvester_Label>
+  <ABY_Bestiary_Entry_ABY_Harvester_Tag>Battlefield recycler of death-state energy.</ABY_Bestiary_Entry_ABY_Harvester_Tag>
+  <ABY_Bestiary_Entry_ABY_Harvester_Summary>A specialist entity that becomes more dangerous as bodies accumulate, exploiting the battlefield as a resource rather than mere terrain.</ABY_Bestiary_Entry_ABY_Harvester_Summary>
+  <ABY_Bestiary_Entry_ABY_Harvester_Tactical>Do not let a Harvester operate uncontested during a messy fight. It thrives when the colony loses tempo and leaves corpses in active lanes.</ABY_Bestiary_Entry_ABY_Harvester_Tactical>
+  <ABY_Bestiary_Entry_ABY_Harvester_Deep>Codex note: Harvesters demonstrate the abyssal principle that slaughter itself is material — not only a result, but a usable throughput.</ABY_Bestiary_Entry_ABY_Harvester_Deep>
+  <ABY_Bestiary_Entry_ABY_GateWarden_Label>Gate Warden</ABY_Bestiary_Entry_ABY_GateWarden_Label>
+  <ABY_Bestiary_Entry_ABY_GateWarden_Tag>Elite frontliner guarding high-value nodes.</ABY_Bestiary_Entry_ABY_GateWarden_Tag>
+  <ABY_Bestiary_Entry_ABY_GateWarden_Summary>A compact elite guardian used to anchor important breach positions and protect boss-side assets from direct retaliation.</ABY_Bestiary_Entry_ABY_GateWarden_Summary>
+  <ABY_Bestiary_Entry_ABY_GateWarden_Tactical>Wardens trade mobility for denial. Expect them near bosses, objectives and high-value breach anchors rather than in expendable waves.</ABY_Bestiary_Entry_ABY_GateWarden_Tactical>
+  <ABY_Bestiary_Entry_ABY_GateWarden_Deep>The archive marks wardens as personalized security, not generic mass: the abyss assigns them where a local right of access must be defended.</ABY_Bestiary_Entry_ABY_GateWarden_Deep>
+  <ABY_Bestiary_Entry_ABY_WardenOfAsh_Label>Warden of Ash</ABY_Bestiary_Entry_ABY_WardenOfAsh_Label>
+  <ABY_Bestiary_Entry_ABY_WardenOfAsh_Tag>First structured mini-boss of the ashbound tier.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Tag>
+  <ABY_Bestiary_Entry_ABY_WardenOfAsh_Summary>An early progression boss that combines armor, area pulse pressure and reinforcement timing into a disciplined breach test.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Summary>
+  <ABY_Bestiary_Entry_ABY_WardenOfAsh_Tactical>This is the point where the abyss stops only probing and starts evaluating. Clustering and lazy melee swarms are especially punishable here.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Tactical>
+  <ABY_Bestiary_Entry_ABY_WardenOfAsh_Deep>The codex treats the Warden of Ash as a threshold administrator: not a supreme entity, but the first hostile expressly built to test readiness for deeper escalation.</ABY_Bestiary_Entry_ABY_WardenOfAsh_Deep>
+  <ABY_Bestiary_Entry_ABY_ChoirEngine_Label>Choir Engine</ABY_Bestiary_Entry_ABY_ChoirEngine_Label>
+  <ABY_Bestiary_Entry_ABY_ChoirEngine_Tag>Support boss that weaponizes coordination.</ABY_Bestiary_Entry_ABY_ChoirEngine_Tag>
+  <ABY_Bestiary_Entry_ABY_ChoirEngine_Summary>A technoritual support engine focused less on raw damage and more on turning surrounding hostiles into a synchronized pressure lattice.</ABY_Bestiary_Entry_ABY_ChoirEngine_Summary>
+  <ABY_Bestiary_Entry_ABY_ChoirEngine_Tactical>The Choir Engine is a priority command target. The longer it remains online, the less any single hostile near it behaves like an isolated threat.</ABY_Bestiary_Entry_ABY_ChoirEngine_Tactical>
+  <ABY_Bestiary_Entry_ABY_ChoirEngine_Deep>Archive inference: the Choir Engine proves the abyssal war-machine contains a coordination layer akin to liturgy, computation and command at once.</ABY_Bestiary_Entry_ABY_ChoirEngine_Deep>
+  <ABY_Bestiary_Entry_ABY_ReactorSaint_Label>Infernal Reactor Saint</ABY_Bestiary_Entry_ABY_ReactorSaint_Label>
+  <ABY_Bestiary_Entry_ABY_ReactorSaint_Tag>Biothermal saint-machine of late escalation.</ABY_Bestiary_Entry_ABY_ReactorSaint_Tag>
+  <ABY_Bestiary_Entry_ABY_ReactorSaint_Summary>A late boss blending sanctified imagery, reactor pressure, defensive layering and artillery-grade punishment.</ABY_Bestiary_Entry_ABY_ReactorSaint_Summary>
+  <ABY_Bestiary_Entry_ABY_ReactorSaint_Tactical>The Reactor Saint punishes static confidence. It forces the colony to answer shields, pressure zones and heavy ranged spikes in one encounter.</ABY_Bestiary_Entry_ABY_ReactorSaint_Tactical>
+  <ABY_Bestiary_Entry_ABY_ReactorSaint_Deep>The codex treats this entity as evidence that the abyss can industrialize sanctity itself, turning reverence, reactor logic and violence into a single chassis.</ABY_Bestiary_Entry_ABY_ReactorSaint_Deep>
+  <ABY_Bestiary_Entry_ABY_ArchonBeast_Label>Archon Beast</ABY_Bestiary_Entry_ABY_ArchonBeast_Label>
+  <ABY_Bestiary_Entry_ABY_ArchonBeast_Tag>Domain boss carrying local law of rupture.</ABY_Bestiary_Entry_ABY_ArchonBeast_Tag>
+  <ABY_Bestiary_Entry_ABY_ArchonBeast_Summary>The first true archon-class boss: a hostile that does not merely attack a map, but attempts to impose a deeper abyssal state upon it.</ABY_Bestiary_Entry_ABY_ArchonBeast_Summary>
+  <ABY_Bestiary_Entry_ABY_ArchonBeast_Tactical>Treat every phase as a state change, not a damage race. The Archon Beast is dangerous because it changes the encounter frame around itself.</ABY_Bestiary_Entry_ABY_ArchonBeast_Tactical>
+  <ABY_Bestiary_Entry_ABY_ArchonBeast_Deep>Archive classification: local administrator of rupture pressure. The visible body is only the readable front of a larger hostile authority.</ABY_Bestiary_Entry_ABY_ArchonBeast_Deep>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Label>Rift Sapper</ABY_Bestiary_Entry_ABY_RiftSapper_Label>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Tag>Demolition specialist of breach geometry.</ABY_Bestiary_Entry_ABY_RiftSapper_Tag>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Summary>A specialist hostile used to destabilize structures, openings and prepared defensive geometry rather than simply trading fire head-on.</ABY_Bestiary_Entry_ABY_RiftSapper_Summary>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>Rift Sappers should be intercepted early. Their value comes from changing the map on favorable terms for the rest of the breach package.</ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Deep>The codex tags sappers as applied geometry warfare: proof that abyssal pressure can target fortification logic, not just bodies.</ABY_Bestiary_Entry_ABY_RiftSapper_Deep>
+  <ABY_Bestiary_StatusHeader>Status</ABY_Bestiary_StatusHeader>
+  <ABY_Bestiary_CategoryHeader>Category</ABY_Bestiary_CategoryHeader>
+  <ABY_Bestiary_Filter_AllCategories>All categories</ABY_Bestiary_Filter_AllCategories>
+  <ABY_Bestiary_ResetFilters>Reset filters</ABY_Bestiary_ResetFilters>
 </LanguageData>
