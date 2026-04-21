@@ -1,20 +1,46 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
     public sealed class Window_ABY_BestiaryCodex : Window
     {
-        private readonly Building_AbyssalSummoningCircle sourceCircle;
-        private Vector2 entryScrollPosition = Vector2.zero;
-        private ABY_BestiaryCategory selectedCategory = ABY_BestiaryCategory.All;
-        private string selectedEntryId = string.Empty;
-
-        public Window_ABY_BestiaryCodex(Building_AbyssalSummoningCircle sourceCircle)
+        private enum FilterMode
         {
-            this.sourceCircle = sourceCircle;
+            All,
+            Locked,
+            Discovered,
+            Studied,
+            Assault,
+            Elite,
+            Support,
+            Boss
+        }
+
+        private enum SortMode
+        {
+            Threat,
+            Kills,
+            Name,
+            Recent
+        }
+
+        private readonly Building_AbyssalSummoningCircle circle;
+        private Vector2 listScrollPosition = Vector2.zero;
+        private Vector2 detailScrollPosition = Vector2.zero;
+        private string selectedEntryId;
+        private FilterMode filterMode = FilterMode.All;
+        private SortMode sortMode = SortMode.Threat;
+
+        public Window_ABY_BestiaryCodex(Building_AbyssalSummoningCircle circle)
+        {
+            this.circle = circle;
+            selectedEntryId = ABY_BestiaryUtility.GetTrackedEntries().FirstOrDefault()?.EntryId ?? string.Empty;
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
             doCloseX = true;
@@ -23,415 +49,412 @@ namespace AbyssalProtocol
             preventCameraMotion = false;
             onlyOneOfTypeAllowed = false;
             resizeable = false;
-            selectedEntryId = ABY_BestiaryUtility.GetFirstAvailableEntryId(selectedCategory);
         }
 
-        public override Vector2 InitialSize => new Vector2(1220f, 860f);
+        public override Vector2 InitialSize => new Vector2(1380f, 900f);
 
         public override void DoWindowContents(Rect inRect)
         {
-            AbyssalSummoningConsoleArt.ReducedEffects = sourceCircle != null && sourceCircle.ReducedConsoleEffects;
+            if (circle != null)
+            {
+                AbyssalSummoningConsoleArt.ReducedEffects = circle.ReducedConsoleEffects;
+            }
+
             AbyssalSummoningConsoleArt.DrawBackground(inRect);
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
-            Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect categoryRect = new Rect(inRect.x, stripRect.yMax + 10f, inRect.width, 34f);
-            Rect browserRect = new Rect(inRect.x, categoryRect.yMax + 10f, 468f, inRect.height - categoryRect.yMax - 10f);
-            Rect detailRect = new Rect(browserRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - browserRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
+            Rect summaryRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
+            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 84f);
+            Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 420f, inRect.height - filtersRect.yMax - 10f);
+            Rect detailRect = new Rect(listRect.xMax + 10f, filtersRect.yMax + 10f, inRect.width - listRect.width - 10f, inRect.height - filtersRect.yMax - 10f);
 
             DrawHeader(headerRect);
-            DrawSummaryStrip(stripRect);
-            DrawCategoryTabs(categoryRect);
-            DrawEntryBrowser(browserRect);
-            DrawDetailPanel(detailRect);
+            DrawSummary(summaryRect);
+            DrawFilters(filtersRect);
+            DrawBrowser(listRect);
+            DrawDetails(detailRect);
         }
 
         private void DrawHeader(Rect rect)
         {
-            AbyssalSummoningConsoleArt.DrawHeader(
-                rect,
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTitle", "abyssal threat codex"),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySubtitle", "Kill-confirmed hostile telemetry archived from summon encounters, breach cleanups, and boss remains."),
-                false);
+            string subtitle = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_Bestiary_HeaderSubtitle",
+                "Indexed hostile archive for confirmed abyssal kills, tactical notes and extraction efficiency.");
+            AbyssalSummoningConsoleArt.DrawHeader(rect, "ABY_Bestiary_Header".Translate(), subtitle, false);
         }
 
-        private void DrawSummaryStrip(Rect rect)
+        private void DrawSummary(Rect rect)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(6f);
-            string[] labels =
+            List<AbyssalSummoningConsoleUtility.StatusEntry> entries = new List<AbyssalSummoningConsoleUtility.StatusEntry>
             {
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Discovered", "Discovered"),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Studied", "Studied"),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Kills", "Confirmed kills"),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Extraction", "Extraction bonus"),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Selected", "Selected entry")
-            };
-            string[] values =
-            {
-                ABY_BestiaryUtility.GetUnlockedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
-                ABY_BestiaryUtility.GetStudiedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
-                ABY_BestiaryUtility.GetTotalTrackedKills().ToString(),
-                "+" + ABY_BestiaryRewardUtility.GetExtractionBonusPercent() + "%",
-                GetSelectedSummaryValue()
-            };
-            bool[] good =
-            {
-                ABY_BestiaryUtility.GetUnlockedEntryCount() > 0,
-                ABY_BestiaryUtility.GetStudiedEntryCount() > 0,
-                ABY_BestiaryUtility.GetTotalTrackedKills() > 0,
-                ABY_BestiaryRewardUtility.GetRewardStage() > 0,
-                !values[4].NullOrEmpty()
+                new AbyssalSummoningConsoleUtility.StatusEntry
+                {
+                    Label = "ABY_Bestiary_Summary_Discovered".Translate(),
+                    Value = ABY_BestiaryUtility.GetUnlockedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
+                    Satisfied = ABY_BestiaryUtility.GetUnlockedEntryCount() > 0
+                },
+                new AbyssalSummoningConsoleUtility.StatusEntry
+                {
+                    Label = "ABY_Bestiary_Summary_Studied".Translate(),
+                    Value = ABY_BestiaryUtility.GetStudiedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
+                    Satisfied = ABY_BestiaryUtility.GetStudiedEntryCount() > 0
+                },
+                new AbyssalSummoningConsoleUtility.StatusEntry
+                {
+                    Label = "ABY_Bestiary_Summary_Kills".Translate(),
+                    Value = ABY_BestiaryUtility.GetTotalTrackedKills().ToString(),
+                    Satisfied = ABY_BestiaryUtility.GetTotalTrackedKills() > 0
+                },
+                new AbyssalSummoningConsoleUtility.StatusEntry
+                {
+                    Label = "ABY_Bestiary_Summary_Extraction".Translate(),
+                    Value = "+" + ABY_BestiaryRewardUtility.GetExtractionBonusPercent() + "%",
+                    Satisfied = ABY_BestiaryRewardUtility.GetExtractionBonusPercent() > 0
+                }
             };
 
-            float width = inner.width / labels.Length;
-            for (int i = 0; i < labels.Length; i++)
+            float width = inner.width / entries.Count;
+            for (int i = 0; i < entries.Count; i++)
             {
                 Rect cellRect = new Rect(inner.x + width * i, inner.y, width - 4f, inner.height);
-                AbyssalSummoningConsoleArt.DrawStripCell(cellRect, labels[i], values[i], good[i], i * 0.19f);
+                AbyssalSummoningConsoleArt.DrawStripCell(cellRect, entries[i].Label, entries[i].Value, entries[i].Satisfied, i * 0.15f);
             }
         }
 
-        private void DrawCategoryTabs(Rect rect)
+        private void DrawFilters(Rect rect)
         {
-            ABY_BestiaryCategory[] categories =
-            {
-                ABY_BestiaryCategory.All,
-                ABY_BestiaryCategory.Assault,
-                ABY_BestiaryCategory.Support,
-                ABY_BestiaryCategory.Elite,
-                ABY_BestiaryCategory.Boss
-            };
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(10f);
+            float y = inner.y;
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, y, inner.width, 20f), "ABY_Bestiary_FilterHeader".Translate());
+            y += 24f;
+            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f));
+            y += 28f;
+            DrawSortRow(new Rect(inner.x, y, inner.width, 24f));
+        }
 
-            float gap = 6f;
-            float width = (rect.width - gap * (categories.Length - 1)) / categories.Length;
-            for (int i = 0; i < categories.Length; i++)
+        private void DrawFilterRow(Rect rect)
+        {
+            FilterMode[] filters =
             {
-                ABY_BestiaryCategory category = categories[i];
-                Rect tabRect = new Rect(rect.x + i * (width + gap), rect.y, width, rect.height);
-                string label = ABY_BestiaryUtility.GetCategoryLabel(category) + " (" + ABY_BestiaryUtility.GetCategoryEntryCount(category) + ")";
-                if (AbyssalStyledWidgets.TabButton(tabRect, label, null, selectedCategory == category, true))
+                FilterMode.All, FilterMode.Locked, FilterMode.Discovered, FilterMode.Studied,
+                FilterMode.Assault, FilterMode.Elite, FilterMode.Support, FilterMode.Boss
+            };
+            float gap = 6f;
+            float width = (rect.width - gap * (filters.Length - 1)) / filters.Length;
+            for (int i = 0; i < filters.Length; i++)
+            {
+                Rect buttonRect = new Rect(rect.x + i * (width + gap), rect.y, width, rect.height);
+                FilterMode mode = filters[i];
+                if (AbyssalStyledWidgets.TextButton(buttonRect, GetFilterLabel(mode), true, filterMode == mode))
                 {
-                    selectedCategory = category;
-                    EnsureValidSelection();
+                    filterMode = mode;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             }
         }
 
-        private void DrawEntryBrowser(Rect rect)
+        private void DrawSortRow(Rect rect)
+        {
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x, rect.y + 4f, 70f, rect.height), "ABY_Bestiary_SortHeader".Translate());
+            GUI.color = Color.white;
+
+            SortMode[] sorts = { SortMode.Threat, SortMode.Kills, SortMode.Name, SortMode.Recent };
+            float gap = 6f;
+            float startX = rect.x + 74f;
+            float width = (rect.width - 74f - gap * (sorts.Length - 1)) / sorts.Length;
+            for (int i = 0; i < sorts.Length; i++)
+            {
+                Rect buttonRect = new Rect(startX + i * (width + gap), rect.y, width, rect.height);
+                SortMode mode = sorts[i];
+                if (AbyssalStyledWidgets.TextButton(buttonRect, GetSortLabel(mode), true, sortMode == mode))
+                {
+                    sortMode = mode;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+        }
+
+        private void DrawBrowser(Rect rect)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryBrowserHeader", "Archived hostile patterns"));
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_Bestiary_BrowserHeader".Translate());
 
-            List<ABY_BestiaryEntryDefinition> definitions = GetFilteredEntries();
-            EnsureValidSelection(definitions);
+            List<ABY_BestiaryEntryDefinition> visibleEntries = GetVisibleEntries();
+            EnsureSelectedEntry(visibleEntries);
 
-            Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
-            float cardHeight = 104f;
-            float viewHeight = Mathf.Max(outRect.height, definitions.Count * (cardHeight + 8f));
-            Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), viewHeight);
-
-            Widgets.BeginScrollView(outRect, ref entryScrollPosition, viewRect, true);
-            for (int i = 0; i < definitions.Count; i++)
+            Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
+            float cardHeight = 82f;
+            Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, visibleEntries.Count * (cardHeight + 6f)));
+            Widgets.BeginScrollView(outRect, ref listScrollPosition, viewRect, true);
+            for (int i = 0; i < visibleEntries.Count; i++)
             {
-                Rect cardRect = new Rect(0f, i * (cardHeight + 8f), viewRect.width, cardHeight);
-                DrawEntryCard(cardRect, definitions[i], definitions[i].EntryId == selectedEntryId);
+                DrawBrowserCard(new Rect(0f, i * (cardHeight + 6f), viewRect.width, cardHeight), visibleEntries[i]);
             }
             Widgets.EndScrollView();
         }
 
-        private void DrawEntryCard(Rect rect, ABY_BestiaryEntryDefinition definition, bool selected)
+        private void DrawBrowserCard(Rect rect, ABY_BestiaryEntryDefinition entry)
         {
-            bool unlocked = ABY_BestiaryUtility.IsUnlocked(definition.EntryId);
-            bool tacticalUnlocked = ABY_BestiaryUtility.IsTacticalNoteUnlocked(definition.EntryId);
-            bool studied = ABY_BestiaryUtility.IsStudied(definition.EntryId);
-            int kills = ABY_BestiaryUtility.GetKillCount(definition.EntryId);
+            bool selected = string.Equals(selectedEntryId, entry.EntryId, StringComparison.OrdinalIgnoreCase);
+            bool unlocked = ABY_BestiaryUtility.IsUnlocked(entry.EntryId);
+            bool studied = ABY_BestiaryUtility.IsStudied(entry.EntryId);
+            AbyssalSummoningConsoleArt.DrawPanel(rect, selected);
+            if (Mouse.IsOver(rect))
+            {
+                Widgets.DrawHighlightIfMouseover(rect);
+            }
 
-            AbyssalSummoningConsoleArt.DrawPanel(rect, selected || unlocked);
-            AbyssalSummoningConsoleArt.DrawRitualCardPulse(rect, selected, studied);
+            Rect portraitRect = new Rect(rect.x + 8f, rect.y + 8f, 64f, 64f);
+            DrawPortrait(portraitRect, entry.EntryId, unlocked);
 
-            Rect portraitRect = new Rect(rect.x + 10f, rect.y + 10f, 62f, 62f);
-            DrawPortrait(portraitRect, definition.EntryId, unlocked);
+            string title = unlocked ? ABY_BestiaryUtility.GetEntryLabel(entry.EntryId) : ABY_BestiaryUtility.GetUnknownEntryLabel();
+            string status = ABY_BestiaryUtility.GetStatusLabel(entry.EntryId);
+            string category = ABY_BestiaryUtility.GetCategoryLabel(entry.EntryId);
+            string tag = unlocked ? ABY_BestiaryUtility.GetTagline(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedTag", "Kill this hostile once to unseal the archive stub.");
+            int kills = ABY_BestiaryUtility.GetKillCount(entry.EntryId);
 
-            string title = unlocked
-                ? ABY_BestiaryUtility.GetDisplayLabel(definition.EntryId)
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryUnknownName", "Unknown hostile pattern");
-            string status = ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId);
-            string meta = unlocked
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardMeta", "Kills: {0}   •   {1}", kills, ABY_BestiaryUtility.GetCategoryLabel(definition.Category))
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardLockedMeta", "First confirmed kill required.");
-            string tags = unlocked
-                ? ABY_BestiaryUtility.GetTagLine(definition.EntryId)
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardTagLocked", "Telemetry band unknown.");
-            string progress = studied
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_Studied", "Deep record unlocked.")
-                : tacticalUnlocked
-                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_StudiedPending", "Deep record at {0}/{1} kills.", kills, ABY_BestiaryUtility.StudiedKillThreshold)
-                    : unlocked
-                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_TacticalPending", "Tactical note at {0}/{1} kills.", kills, ABY_BestiaryUtility.TacticalKillThreshold)
-                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_Locked", "First confirmed kill required.");
-
-            Rect titleRect = new Rect(rect.x + 84f, rect.y + 8f, rect.width - 96f, 22f);
-            Rect statusRect = new Rect(rect.x + 84f, rect.y + 30f, rect.width - 96f, 14f);
-            Rect metaRect = new Rect(rect.x + 84f, rect.y + 46f, rect.width - 96f, 14f);
-            Rect tagRect = new Rect(rect.x + 84f, rect.y + 62f, rect.width - 96f, 14f);
-            Rect progressRect = new Rect(rect.x + 84f, rect.y + 78f, rect.width - 96f, 14f);
-
-            Widgets.Label(titleRect, title);
-
-            Text.Font = GameFont.Tiny;
-            GUI.color = studied
-                ? new Color(0.86f, 1f, 0.76f, 1f)
-                : unlocked
-                    ? AbyssalSummoningConsoleArt.TextDimColor
-                    : new Color(0.70f, 0.70f, 0.70f, 0.92f);
-            Widgets.Label(statusRect, status);
-            GUI.color = unlocked ? new Color(1f, 0.76f, 0.58f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(metaRect, meta);
-            GUI.color = unlocked ? new Color(0.78f, 0.90f, 1f, 1f) : new Color(0.58f, 0.58f, 0.58f, 0.92f);
-            Widgets.Label(tagRect, tags);
-            GUI.color = studied
-                ? new Color(0.80f, 1f, 0.80f, 1f)
-                : tacticalUnlocked
-                    ? new Color(1f, 0.86f, 0.60f, 1f)
-                    : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(progressRect, progress);
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x + 82f, rect.y + 6f, rect.width - 160f, 22f), title);
+            Text.Font = GameFont.Tiny;
+            GUI.color = studied ? new Color(0.74f, 1f, 0.76f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x + 82f, rect.y + 26f, rect.width - 160f, 16f), category + "  •  " + status);
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x + 82f, rect.y + 42f, rect.width - 160f, 30f), tag);
+            GUI.color = selected ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.xMax - 72f, rect.y + 14f, 64f, 16f), "×" + kills);
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.xMax - 120f, rect.y + 34f, 112f, 32f), ABY_BestiaryUtility.GetMilestoneSummary(entry.EntryId));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
 
             if (Widgets.ButtonInvisible(rect))
             {
-                selectedEntryId = definition.EntryId;
+                selectedEntryId = entry.EntryId;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
         }
 
-        private void DrawDetailPanel(Rect rect)
+        private void DrawDetails(Rect rect)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, true);
-            Rect inner = rect.ContractedBy(12f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryDetailHeader", "Pattern telemetry"));
-
-            ABY_BestiaryEntryDefinition definition = ABY_BestiaryUtility.GetDefinition(selectedEntryId);
-            if (definition == null)
+            Rect inner = rect.ContractedBy(10f);
+            ABY_BestiaryEntryDefinition entry = ABY_BestiaryUtility.GetEntry(selectedEntryId);
+            if (entry == null)
             {
-                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(inner.x, inner.y + 32f, inner.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryNoSelection", "No hostile pattern is currently selected."));
-                GUI.color = Color.white;
                 return;
             }
 
-            bool unlocked = ABY_BestiaryUtility.IsUnlocked(definition.EntryId);
-            bool tacticalUnlocked = ABY_BestiaryUtility.IsTacticalNoteUnlocked(definition.EntryId);
-            bool studied = ABY_BestiaryUtility.IsStudied(definition.EntryId);
-            int kills = ABY_BestiaryUtility.GetKillCount(definition.EntryId);
-            ABY_BestiaryEntryProgress progress = ABY_BestiaryUtility.GetProgress(definition.EntryId);
+            bool unlocked = ABY_BestiaryUtility.IsUnlocked(entry.EntryId);
+            bool tacticalUnlocked = ABY_BestiaryUtility.HasTacticalData(entry.EntryId);
+            bool studied = ABY_BestiaryUtility.IsStudied(entry.EntryId);
+            int kills = ABY_BestiaryUtility.GetKillCount(entry.EntryId);
 
-            Rect portraitRect = new Rect(inner.x, inner.y + 36f, 228f, 228f);
-            Rect titleRect = new Rect(portraitRect.xMax + 16f, inner.y + 36f, inner.width - portraitRect.width - 16f, 28f);
-            Rect tagRect = new Rect(portraitRect.xMax + 16f, inner.y + 66f, inner.width - portraitRect.width - 16f, 18f);
-            Rect summaryHeaderRect = new Rect(portraitRect.xMax + 16f, inner.y + 94f, inner.width - portraitRect.width - 16f, 18f);
-            Rect summaryBodyRect = new Rect(portraitRect.xMax + 16f, inner.y + 114f, inner.width - portraitRect.width - 16f, 80f);
-            Rect tacticalHeaderRect = new Rect(portraitRect.xMax + 16f, inner.y + 198f, inner.width - portraitRect.width - 16f, 18f);
-            Rect tacticalBodyRect = new Rect(portraitRect.xMax + 16f, inner.y + 218f, inner.width - portraitRect.width - 16f, 46f);
-            Rect progressRect = new Rect(inner.x, portraitRect.yMax + 20f, inner.width, 136f);
-            Rect footerRect = new Rect(inner.x, progressRect.yMax + 12f, inner.width, inner.height - (progressRect.yMax + 12f - inner.y));
+            Rect headerRect = new Rect(inner.x, inner.y, inner.width, 140f);
+            DrawDetailHeader(headerRect, entry, unlocked, kills);
 
-            DrawPortrait(portraitRect, definition.EntryId, unlocked, true);
+            Rect outRect = new Rect(inner.x, headerRect.yMax + 8f, inner.width, inner.height - headerRect.height - 8f);
+            float contentHeight = 600f;
+            Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
+            Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect, true);
 
-            string title = unlocked
-                ? ABY_BestiaryUtility.GetDisplayLabel(definition.EntryId)
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryUnknownName", "Unknown hostile pattern");
-            Widgets.Label(titleRect, title);
+            float y = 0f;
+            y = DrawTextSection(new Rect(0f, y, viewRect.width, 92f), "ABY_Bestiary_Section_Summary".Translate(), unlocked ? ABY_BestiaryUtility.GetSummary(entry.EntryId) : "ABY_Bestiary_LockedSummary".Translate());
+            y += 8f;
+            y = DrawTextSection(new Rect(0f, y, viewRect.width, 110f), "ABY_Bestiary_Section_Tactical".Translate(), tacticalUnlocked ? ABY_BestiaryUtility.GetTacticalNote(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedTactical", "Field notes remain sealed until {0} confirmed kills.", ABY_BestiaryUtility.TacticalThreshold));
+            y += 8f;
+            y = DrawTextSection(new Rect(0f, y, viewRect.width, 140f), "ABY_Bestiary_Section_Deep".Translate(), studied ? ABY_BestiaryUtility.GetDeepRecord(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedDeep", "Deep archive record remains sealed until studied status at {0} confirmed kills.", ABY_BestiaryUtility.StudiedThreshold));
+            y += 8f;
+            y = DrawMilestonesSection(new Rect(0f, y, viewRect.width, 132f), entry.EntryId, kills, unlocked, tacticalUnlocked, studied);
+            y += 8f;
+            DrawExtractionSection(new Rect(0f, y, viewRect.width, 86f));
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = unlocked ? new Color(0.82f, 0.92f, 1f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(tagRect, unlocked ? ABY_BestiaryUtility.GetTagLine(definition.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardTagLocked", "Telemetry band unknown."));
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
-
-            DrawBodySection(summaryHeaderRect, summaryBodyRect,
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_Summary", "Pattern summary"),
-                unlocked
-                    ? ABY_BestiaryUtility.GetSummaryText(definition.EntryId)
-                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummaryLocked", "This hostile pattern is indexed by the codex, but no reliable corpse telemetry has been recovered on the current save yet."),
-                unlocked);
-
-            DrawBodySection(tacticalHeaderRect, tacticalBodyRect,
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_Tactical", "Tactical note"),
-                tacticalUnlocked
-                    ? ABY_BestiaryUtility.GetTacticalText(definition.EntryId)
-                    : unlocked
-                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTacticalLocked", "Additional tactical annotation unlocks at {0} confirmed kills. Current progress: {1} / {0}.", ABY_BestiaryUtility.TacticalKillThreshold, kills)
-                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTacticalLockedNoReveal", "Recover the first confirmed kill to begin tactical annotation for this entry."),
-                tacticalUnlocked);
-
-            DrawProgressPanel(progressRect, kills, unlocked, tacticalUnlocked, studied);
-            DrawFooterPanel(footerRect, definition, unlocked, tacticalUnlocked, studied, kills, progress);
+            Widgets.EndScrollView();
         }
 
-        private void DrawBodySection(Rect headerRect, Rect bodyRect, string header, string body, bool highlighted)
+        private void DrawDetailHeader(Rect rect, ABY_BestiaryEntryDefinition entry, bool unlocked, int kills)
         {
-            AbyssalSummoningConsoleArt.DrawSectionTitle(headerRect, header);
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect portraitRect = new Rect(rect.x + 12f, rect.y + 12f, 116f, 116f);
+            DrawPortrait(portraitRect, entry.EntryId, unlocked);
+
+            string title = unlocked ? ABY_BestiaryUtility.GetEntryLabel(entry.EntryId) : ABY_BestiaryUtility.GetUnknownEntryLabel();
+            string category = ABY_BestiaryUtility.GetCategoryLabel(entry.EntryId);
+            string status = ABY_BestiaryUtility.GetStatusLabel(entry.EntryId);
+            string tag = unlocked ? ABY_BestiaryUtility.GetTagline(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedTag", "Kill this hostile once to unseal the archive stub.");
+
+            Text.Font = GameFont.Medium;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x + 142f, rect.y + 10f, rect.width - 150f, 28f), title);
+            Text.Font = GameFont.Small;
+            GUI.color = new Color(1f, 0.84f, 0.70f, 1f);
+            Widgets.Label(new Rect(rect.x + 142f, rect.y + 40f, rect.width - 150f, 22f), category + "  •  " + status);
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x + 142f, rect.y + 66f, rect.width - 160f, 40f), tag);
+            GUI.color = Color.white;
             Text.Font = GameFont.Tiny;
-            GUI.color = highlighted ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(bodyRect, body);
+            Widgets.Label(new Rect(rect.x + 142f, rect.y + 108f, rect.width - 160f, 16f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_Detail_Kills", "Confirmed kills: {0}", kills));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
         }
 
-        private void DrawProgressPanel(Rect rect, int kills, bool unlocked, bool tacticalUnlocked, bool studied)
+        private float DrawTextSection(Rect rect, string title, string body)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressHeader", "Archive milestones"));
-
-            string discoveryLine = unlocked
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressDiscoveryDone", "Discovery confirmed — first kill archived.")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressDiscoveryPending", "Discovery pending — first confirmed kill required.");
-            string tacticalLine = tacticalUnlocked
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressTacticalDone", "Tactical note unlocked — field annotation restored.")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressTacticalPending", "Tactical note threshold: {0} / {1} confirmed kills.", kills, ABY_BestiaryUtility.TacticalKillThreshold);
-            string studyLine = studied
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyDone", "Study threshold reached — telemetry stabilized.")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyPending", "Study threshold: {0} / {1} confirmed kills.", kills, ABY_BestiaryUtility.StudiedKillThreshold);
-            string extractionLine = ABY_BestiaryRewardUtility.GetStatusSummaryText();
-
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), title);
             Text.Font = GameFont.Tiny;
-            GUI.color = unlocked ? new Color(0.78f, 1f, 0.78f, 1f) : new Color(1f, 0.64f, 0.60f, 1f);
-            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, 16f), discoveryLine);
-            GUI.color = tacticalUnlocked ? new Color(1f, 0.86f, 0.60f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 42f, inner.width, 16f), tacticalLine);
-            GUI.color = studied ? new Color(0.78f, 1f, 0.78f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 60f, inner.width, 16f), studyLine);
-            GUI.color = ABY_BestiaryRewardUtility.GetRewardStage() > 0 ? new Color(0.84f, 0.94f, 1f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 78f, inner.width, 16f), extractionLine);
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, inner.height - 24f), body);
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
-
-            DrawKillProgressBar(new Rect(inner.x, inner.y + 104f, inner.width, 22f), kills, ABY_BestiaryUtility.StudiedKillThreshold);
+            return rect.yMax;
         }
 
-        private void DrawKillProgressBar(Rect rect, int value, int threshold)
-        {
-            AbyssalSummoningConsoleArt.Fill(rect, new Color(0.05f, 0.04f, 0.045f, 1f));
-            float fillPercent = threshold <= 0 ? 1f : Mathf.Clamp01((float)value / threshold);
-            Rect fillRect = new Rect(rect.x + 2f, rect.y + 2f, (rect.width - 4f) * fillPercent, rect.height - 4f);
-            AbyssalSummoningConsoleArt.Fill(fillRect, new Color(1f, 0.34f, 0.16f, 0.88f));
-            AbyssalSummoningConsoleArt.DrawOutline(rect, new Color(1f, 0.40f, 0.20f, 0.76f));
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect, value + " / " + threshold);
-            Text.Anchor = TextAnchor.UpperLeft;
-        }
-
-        private void DrawFooterPanel(Rect rect, ABY_BestiaryEntryDefinition definition, bool unlocked, bool tacticalUnlocked, bool studied, int kills, ABY_BestiaryEntryProgress progress)
+        private float DrawMilestonesSection(Rect rect, string entryId, int kills, bool unlocked, bool tacticalUnlocked, bool studied)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_DeepRecord", "Deep codex record"));
-
-            string firstSeen = progress != null && progress.firstUnlockTick >= 0
-                ? progress.firstUnlockTick.ToStringTicksToPeriod()
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTelemetry_Unknown", "unknown");
-            string lastSeen = progress != null && progress.lastKillTick >= 0
-                ? progress.lastKillTick.ToStringTicksToPeriod()
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTelemetry_Unknown", "unknown");
-            string note = studied
-                ? ABY_BestiaryUtility.GetStudiedText(definition.EntryId)
-                : tacticalUnlocked
-                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStudiedLocked", "Deep record unlocks at {0} confirmed kills. Current progress: {1} / {0}.", ABY_BestiaryUtility.StudiedKillThreshold, kills)
-                    : unlocked
-                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStudiedLockedEarly", "Stabilize the archive first. Tactical notes unlock at {0} kills and the deep record unlocks at {1}.", ABY_BestiaryUtility.TacticalKillThreshold, ABY_BestiaryUtility.StudiedKillThreshold)
-                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterLocked", "No reliable telemetry is available yet. Recover one confirmed kill to reveal the pattern and start codex tracking.");
-
-            string footerText = AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_BestiaryFooterStatusBlock",
-                "Archive state: {0}\nConfirmed kills: {1}\nFirst archive event: {2}\nMost recent archive event: {3}\n\n{4}",
-                ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId),
-                kills,
-                firstSeen,
-                lastSeen,
-                note);
-
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), "ABY_Bestiary_Section_Milestones".Translate());
             Text.Font = GameFont.Tiny;
-            GUI.color = studied ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, rect.height - 28f), footerText);
+            DrawMilestoneLine(new Rect(inner.x, inner.y + 24f, inner.width, 18f), unlocked, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_Milestone_Discover", "1 kill — archive reveal"));
+            DrawMilestoneLine(new Rect(inner.x, inner.y + 44f, inner.width, 18f), tacticalUnlocked, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_Milestone_Notes", "5 kills — field notes unlocked"));
+            DrawMilestoneLine(new Rect(inner.x, inner.y + 64f, inner.width, 18f), studied, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_Milestone_Study", "15 kills — studied status and deep record"));
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 90f, inner.width, 28f), ABY_BestiaryUtility.GetMilestoneSummary(entryId));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            return rect.yMax;
+        }
+
+        private void DrawMilestoneLine(Rect rect, bool active, string label)
+        {
+            GUI.color = active ? new Color(0.74f, 1f, 0.76f, 1f) : new Color(1f, 0.62f, 0.56f, 1f);
+            Widgets.Label(rect, (active ? "● " : "○ ") + label);
+            GUI.color = Color.white;
+        }
+
+        private void DrawExtractionSection(Rect rect)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, true);
+            Rect inner = rect.ContractedBy(10f);
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), "ABY_Bestiary_Section_Extraction".Translate());
+            Text.Font = GameFont.Tiny;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, 18f), ABY_BestiaryRewardUtility.GetSummaryLine());
+            Widgets.Label(new Rect(inner.x, inner.y + 42f, inner.width, 28f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_ExtractionScope", "Applies only to Abyssal Protocol reward routing: horde caches, dominion payouts and supported boss-side residue/caches."));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
         }
 
-        private string GetSelectedSummaryValue()
+        private void DrawPortrait(Rect rect, string entryId, bool unlocked)
         {
-            ABY_BestiaryEntryDefinition definition = ABY_BestiaryUtility.GetDefinition(selectedEntryId);
-            if (definition == null)
+            GUI.color = unlocked ? Color.white : new Color(0.34f, 0.34f, 0.34f, 1f);
+            GUI.DrawTexture(rect, BaseContent.BlackTex);
+            Texture2D texture = ABY_BestiaryUtility.GetPortrait(entryId);
+            if (texture != null)
             {
-                return string.Empty;
+                GUI.DrawTexture(rect.ContractedBy(4f), texture, ScaleMode.ScaleToFit);
+            }
+            else
+            {
+                GUI.color = unlocked ? new Color(0.78f, 0.58f, 0.44f, 0.85f) : new Color(0.32f, 0.32f, 0.32f, 0.85f);
+                GUI.DrawTexture(rect.ContractedBy(10f), BaseContent.WhiteTex);
+            }
+            GUI.color = unlocked ? new Color(1f, 0.42f, 0.16f, 0.75f) : new Color(0.44f, 0.44f, 0.44f, 0.75f);
+            Widgets.DrawBox(rect, 1);
+            GUI.color = Color.white;
+        }
+
+        private List<ABY_BestiaryEntryDefinition> GetVisibleEntries()
+        {
+            IEnumerable<ABY_BestiaryEntryDefinition> query = ABY_BestiaryUtility.GetTrackedEntries();
+            switch (filterMode)
+            {
+                case FilterMode.Locked:
+                    query = query.Where(entry => !ABY_BestiaryUtility.IsUnlocked(entry.EntryId));
+                    break;
+                case FilterMode.Discovered:
+                    query = query.Where(entry => ABY_BestiaryUtility.IsUnlocked(entry.EntryId));
+                    break;
+                case FilterMode.Studied:
+                    query = query.Where(entry => ABY_BestiaryUtility.IsStudied(entry.EntryId));
+                    break;
+                case FilterMode.Assault:
+                    query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Assault);
+                    break;
+                case FilterMode.Elite:
+                    query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Elite);
+                    break;
+                case FilterMode.Support:
+                    query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Support);
+                    break;
+                case FilterMode.Boss:
+                    query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Boss);
+                    break;
             }
 
-            string label = ABY_BestiaryUtility.IsUnlocked(definition.EntryId)
-                ? ABY_BestiaryUtility.GetDisplayLabel(definition.EntryId)
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryUnknownName", "Unknown hostile pattern");
-            return Shorten(label + " • " + ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId), 40);
-        }
-
-        private static string Shorten(string text, int maxLength)
-        {
-            if (text.NullOrEmpty() || text.Length <= maxLength)
+            switch (sortMode)
             {
-                return text ?? string.Empty;
+                case SortMode.Kills:
+                    query = query.OrderByDescending(entry => ABY_BestiaryUtility.GetKillCount(entry.EntryId)).ThenBy(entry => ABY_BestiaryUtility.GetEntryLabel(entry.EntryId));
+                    break;
+                case SortMode.Name:
+                    query = query.OrderBy(entry => ABY_BestiaryUtility.IsUnlocked(entry.EntryId) ? ABY_BestiaryUtility.GetEntryLabel(entry.EntryId) : ABY_BestiaryUtility.GetUnknownEntryLabel());
+                    break;
+                case SortMode.Recent:
+                    query = query.OrderByDescending(entry => ABY_BestiaryUtility.GetProgress(entry.EntryId)?.lastKillTick ?? -1).ThenByDescending(entry => ABY_BestiaryUtility.GetKillCount(entry.EntryId));
+                    break;
+                default:
+                    query = query.OrderBy(entry => (int)entry.Category).ThenBy(entry => ABY_BestiaryUtility.IsUnlocked(entry.EntryId) ? 0 : 1).ThenBy(entry => ABY_BestiaryUtility.GetEntryLabel(entry.EntryId));
+                    break;
             }
 
-            return text.Substring(0, Mathf.Max(0, maxLength - 1)).TrimEnd() + "…";
+            return query.ToList();
         }
 
-        private List<ABY_BestiaryEntryDefinition> GetFilteredEntries()
+        private void EnsureSelectedEntry(List<ABY_BestiaryEntryDefinition> visibleEntries)
         {
-            return ABY_BestiaryUtility.GetEntriesForCategory(selectedCategory).Where(definition => definition != null).ToList();
-        }
-
-        private void EnsureValidSelection()
-        {
-            EnsureValidSelection(GetFilteredEntries());
-        }
-
-        private void EnsureValidSelection(List<ABY_BestiaryEntryDefinition> definitions)
-        {
-            if (definitions == null || definitions.Count == 0)
+            if (visibleEntries == null || visibleEntries.Count == 0)
             {
                 selectedEntryId = string.Empty;
                 return;
             }
 
-            for (int i = 0; i < definitions.Count; i++)
+            if (selectedEntryId.NullOrEmpty() || !visibleEntries.Any(entry => string.Equals(entry.EntryId, selectedEntryId, StringComparison.OrdinalIgnoreCase)))
             {
-                if (definitions[i] != null && definitions[i].EntryId == selectedEntryId)
-                {
-                    return;
-                }
+                selectedEntryId = visibleEntries[0].EntryId;
             }
-
-            selectedEntryId = definitions[0].EntryId;
         }
 
-        private void DrawPortrait(Rect rect, string entryId, bool unlocked, bool large = false)
+        private string GetFilterLabel(FilterMode mode)
         {
-            Texture2D portrait = ABY_BestiaryUtility.GetPortrait(entryId);
-            AbyssalSummoningConsoleArt.Fill(rect, new Color(0.07f, 0.05f, 0.055f, 1f));
-            AbyssalSummoningConsoleArt.DrawOutline(rect, new Color(1f, 0.34f, 0.14f, 0.34f));
-            if (portrait != null)
+            switch (mode)
             {
-                Color oldColor = GUI.color;
-                GUI.color = unlocked ? Color.white : new Color(0.42f, 0.42f, 0.42f, 0.96f);
-                GUI.DrawTexture(rect.ContractedBy(large ? 12f : 6f), portrait, ScaleMode.ScaleToFit, true);
-                GUI.color = oldColor;
+                case FilterMode.Locked: return "ABY_Bestiary_Filter_Locked".Translate();
+                case FilterMode.Discovered: return "ABY_Bestiary_Filter_Discovered".Translate();
+                case FilterMode.Studied: return "ABY_Bestiary_Filter_Studied".Translate();
+                case FilterMode.Assault: return "ABY_Bestiary_Filter_Assault".Translate();
+                case FilterMode.Elite: return "ABY_Bestiary_Filter_Elite".Translate();
+                case FilterMode.Support: return "ABY_Bestiary_Filter_Support".Translate();
+                case FilterMode.Boss: return "ABY_Bestiary_Filter_Boss".Translate();
+                default: return "ABY_Bestiary_Filter_All".Translate();
             }
+        }
 
-            if (!unlocked)
+        private string GetSortLabel(SortMode mode)
+        {
+            switch (mode)
             {
-                Color oldColor = GUI.color;
-                GUI.color = new Color(0f, 0f, 0f, 0.34f);
-                GUI.DrawTexture(rect, BaseContent.WhiteTex);
-                GUI.color = oldColor;
+                case SortMode.Kills: return "ABY_Bestiary_Sort_Kills".Translate();
+                case SortMode.Name: return "ABY_Bestiary_Sort_Name".Translate();
+                case SortMode.Recent: return "ABY_Bestiary_Sort_Recent".Translate();
+                default: return "ABY_Bestiary_Sort_Threat".Translate();
             }
         }
     }

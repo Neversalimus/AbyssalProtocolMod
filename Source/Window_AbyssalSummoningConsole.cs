@@ -198,7 +198,20 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
 
-            float rowY = inner.y + 140f;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 138f, inner.width, 18f),
+                AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_BestiaryControlSummary",
+                    "Threat codex: {0}/{1} discovered • {2} studied • extraction bonus +{3}%",
+                    ABY_BestiaryUtility.GetUnlockedEntryCount(),
+                    ABY_BestiaryUtility.GetTrackedEntryCount(),
+                    ABY_BestiaryUtility.GetStudiedEntryCount(),
+                    ABY_BestiaryRewardUtility.GetExtractionBonusPercent()));
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+
+            float rowY = inner.y + 156f;
             DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CircleReducedEffects".Translate(),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
@@ -231,17 +244,10 @@ namespace AbyssalProtocol
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 });
 
-            rowY += 40f;
-            Rect codexRect = new Rect(inner.x, rowY, inner.width, 30f);
-            if (AbyssalStyledWidgets.TextButton(codexRect,
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_OpenButton", "Open threat codex"),
-                true,
-                false,
-                null,
-                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_OpenButtonDesc", "Open the abyssal threat archive and review kill-confirmed hostile entries.")))
+            Rect codexRect = new Rect(inner.x, inner.yMax - 116f, inner.width, 30f);
+            if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
             {
-                Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
-                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                OpenThreatCodex();
             }
 
             Rect invokeRect = new Rect(inner.x, inner.yMax - 40f, inner.width, 34f);
@@ -1048,6 +1054,12 @@ namespace AbyssalProtocol
             {
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
+        }
+
+        private void OpenThreatCodex()
+        {
+            Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
+            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
         }
 
         private void JumpToSigil(AbyssalSummoningConsoleUtility.RitualDefinition ritual)

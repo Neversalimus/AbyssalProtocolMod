@@ -248,11 +248,12 @@ namespace AbyssalProtocol
             }
 
             profile.Residue = Mathf.Max(1, Mathf.RoundToInt(profile.Residue * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
+            profile.Residue = ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.Residue);
+            profile.HordeFragments = profile.HordeFragments > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.HordeFragments) : 0;
             profile.IndustrialComponents = Mathf.Max(0, Mathf.RoundToInt(profile.IndustrialComponents * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.6f, 1.75f)));
+            profile.IndustrialComponents = profile.IndustrialComponents > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.IndustrialComponents) : 0;
             profile.SpacerComponents = Mathf.Max(0, Mathf.RoundToInt(profile.SpacerComponents * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.6f, 1.75f)));
-            profile.Residue = ABY_BestiaryRewardUtility.ApplyResidueBonus(profile.Residue);
-            profile.IndustrialComponents = ABY_BestiaryRewardUtility.ApplyCacheYieldBonus(profile.IndustrialComponents);
-            profile.SpacerComponents = ABY_BestiaryRewardUtility.ApplyCacheYieldBonus(profile.SpacerComponents);
+            profile.SpacerComponents = profile.SpacerComponents > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.SpacerComponents) : 0;
             return profile;
         }
 
@@ -270,11 +271,12 @@ namespace AbyssalProtocol
             };
 
             profile.Residue = Mathf.Max(1, Mathf.RoundToInt(profile.Residue * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
+            profile.Residue = ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.Residue);
+            profile.HordeFragments = profile.HordeFragments > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.HordeFragments) : 0;
             profile.IndustrialComponents = Mathf.Max(0, Mathf.RoundToInt(profile.IndustrialComponents * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.6f, 1.75f)));
+            profile.IndustrialComponents = profile.IndustrialComponents > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.IndustrialComponents) : 0;
             profile.SpacerComponents = Mathf.Max(0, Mathf.RoundToInt(profile.SpacerComponents * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.6f, 1.75f)));
-            profile.Residue = ABY_BestiaryRewardUtility.ApplyResidueBonus(profile.Residue);
-            profile.IndustrialComponents = ABY_BestiaryRewardUtility.ApplyCacheYieldBonus(profile.IndustrialComponents);
-            profile.SpacerComponents = ABY_BestiaryRewardUtility.ApplyCacheYieldBonus(profile.SpacerComponents);
+            profile.SpacerComponents = profile.SpacerComponents > 0 ? ABY_BestiaryRewardUtility.ApplyExtractionBonus(profile.SpacerComponents) : 0;
             return profile;
         }
 
