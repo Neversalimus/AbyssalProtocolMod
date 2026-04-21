@@ -159,11 +159,6 @@ namespace AbyssalProtocol
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
         }
 
-        private static bool ShouldTrackChargeSound(string soundDefName)
-        {
-            return ABY_SoundUtility.IsAbyssalChargeSoundName(soundDefName);
-        }
-
         private static void ApplyChargeSoundSustain(bool enabled)
         {
             foreach (string soundDefName in OriginalSoundSustain.Keys)
