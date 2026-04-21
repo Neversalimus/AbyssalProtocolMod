@@ -12,7 +12,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && (soundDefName.Contains("Charge") || soundDefName.Contains("Aim")))
+            // Tracked charge-sound ownership/rules are centralized in ABY_WeaponChargeSoundUtility.
+            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && ABY_WeaponChargeSoundUtility.IsTrackedChargeSoundName(soundDefName))
             {
                 return;
             }
