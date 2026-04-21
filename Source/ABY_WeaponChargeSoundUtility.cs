@@ -7,6 +7,8 @@ namespace AbyssalProtocol
 {
     public static class ABY_WeaponChargeSoundUtility
     {
+        private const string AbyssalPackageId = "neversalimus.abyssalprotocol";
+
         private readonly struct DefIndexKey
         {
             public DefIndexKey(string defName, int index)
@@ -196,13 +198,8 @@ namespace AbyssalProtocol
             }
 
             string packageId = mod.PackageId;
-            if (!packageId.NullOrEmpty() && packageId.IndexOf("abyssalprotocol", System.StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-
-            string name = mod.Name;
-            return !name.NullOrEmpty() && name.IndexOf("abyssal", System.StringComparison.OrdinalIgnoreCase) >= 0;
+            return !packageId.NullOrEmpty()
+                && packageId.Equals(AbyssalPackageId, System.StringComparison.OrdinalIgnoreCase);
         }
 
         private static void ApplyChargeSoundSustain(bool enabled)
