@@ -10,12 +10,17 @@ namespace AbyssalProtocol
 {
     public sealed class Window_ABY_BestiaryCodex : Window
     {
-        private enum FilterMode
+        private enum StatusFilterMode
         {
-            All,
+            Any,
             Locked,
             Discovered,
-            Studied,
+            Studied
+        }
+
+        private enum CategoryFilterMode
+        {
+            Any,
             Assault,
             Elite,
             Support,
@@ -34,7 +39,8 @@ namespace AbyssalProtocol
         private Vector2 listScrollPosition = Vector2.zero;
         private Vector2 detailScrollPosition = Vector2.zero;
         private string selectedEntryId;
-        private FilterMode filterMode = FilterMode.All;
+        private StatusFilterMode statusFilterMode = StatusFilterMode.Any;
+        private CategoryFilterMode categoryFilterMode = CategoryFilterMode.Any;
         private SortMode sortMode = SortMode.Threat;
 
         public Window_ABY_BestiaryCodex(Building_AbyssalSummoningCircle circle)
@@ -64,7 +70,7 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect summaryRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 128f);
+            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 92f);
             Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 468f, inRect.height - filtersRect.yMax - 10f);
             Rect detailRect = new Rect(listRect.xMax + 10f, filtersRect.yMax + 10f, inRect.width - listRect.width - 10f, inRect.height - filtersRect.yMax - 10f);
 
@@ -130,54 +136,56 @@ namespace AbyssalProtocol
             float y = inner.y;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, y, inner.width, 20f), "ABY_Bestiary_FilterHeader".Translate());
             y += 24f;
-            DrawFilterRow(new Rect(inner.x, y, inner.width, 28f), new[]
-            {
-                FilterMode.All, FilterMode.Locked, FilterMode.Discovered, FilterMode.Studied
-            });
-            y += 34f;
-            DrawFilterRow(new Rect(inner.x, y, inner.width, 28f), new[]
-            {
-                FilterMode.Assault, FilterMode.Elite, FilterMode.Support, FilterMode.Boss
-            });
-            y += 34f;
-            DrawSortRow(new Rect(inner.x, y, inner.width, 28f));
-        }
 
-        private void DrawFilterRow(Rect rect, FilterMode[] filters)
-        {
-            float gap = 6f;
-            float width = (rect.width - gap * (filters.Length - 1)) / Mathf.Max(1, filters.Length);
-            for (int i = 0; i < filters.Length; i++)
+            float labelWidth = 58f;
+            float gap = 8f;
+            float rowHeight = 28f;
+            float smallButtonWidth = 120f;
+            float dropdownWidth = (inner.width - labelWidth * 2f - smallButtonWidth - gap * 4f) / 2f;
+
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, y + 4f, labelWidth, rowHeight), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_StatusHeader", "Status"));
+            GUI.color = Color.white;
+            Rect statusRect = new Rect(inner.x + labelWidth, y, dropdownWidth, rowHeight);
+            if (DrawReadableStyledButton(statusRect, GetStatusFilterLabel(statusFilterMode) + " ▼", true, statusFilterMode != StatusFilterMode.Any))
             {
-                Rect buttonRect = new Rect(rect.x + i * (width + gap), rect.y, width, rect.height);
-                FilterMode mode = filters[i];
-                if (DrawReadableStyledButton(buttonRect, GetFilterLabel(mode), true, filterMode == mode))
-                {
-                    filterMode = mode;
-                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                }
+                ShowStatusFilterMenu();
             }
+
+            float categoryLabelX = statusRect.xMax + gap;
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(categoryLabelX, y + 4f, labelWidth, rowHeight), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_CategoryHeader", "Category"));
+            GUI.color = Color.white;
+            Rect categoryRect = new Rect(categoryLabelX + labelWidth, y, dropdownWidth, rowHeight);
+            if (DrawReadableStyledButton(categoryRect, GetCategoryFilterLabel(categoryFilterMode) + " ▼", true, categoryFilterMode != CategoryFilterMode.Any))
+            {
+                ShowCategoryFilterMenu();
+            }
+
+            Rect resetRect = new Rect(categoryRect.xMax + gap, y, smallButtonWidth, rowHeight);
+            bool resetActive = statusFilterMode != StatusFilterMode.Any || categoryFilterMode != CategoryFilterMode.Any;
+            if (DrawReadableStyledButton(resetRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_ResetFilters", "Reset filters"), true, resetActive))
+            {
+                statusFilterMode = StatusFilterMode.Any;
+                categoryFilterMode = CategoryFilterMode.Any;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
+
+            y += 34f;
+            DrawSortRow(new Rect(inner.x, y, inner.width, rowHeight));
         }
 
         private void DrawSortRow(Rect rect)
         {
+            float labelWidth = 58f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y + 4f, 70f, rect.height), "ABY_Bestiary_SortHeader".Translate());
+            Widgets.Label(new Rect(rect.x, rect.y + 4f, labelWidth, rect.height), "ABY_Bestiary_SortHeader".Translate());
             GUI.color = Color.white;
 
-            SortMode[] sorts = { SortMode.Threat, SortMode.Kills, SortMode.Name, SortMode.Recent };
-            float gap = 6f;
-            float startX = rect.x + 74f;
-            float width = (rect.width - 74f - gap * (sorts.Length - 1)) / sorts.Length;
-            for (int i = 0; i < sorts.Length; i++)
+            Rect buttonRect = new Rect(rect.x + labelWidth, rect.y, 220f, rect.height);
+            if (DrawReadableStyledButton(buttonRect, GetSortLabel(sortMode) + " ▼", true, sortMode != SortMode.Threat))
             {
-                Rect buttonRect = new Rect(startX + i * (width + gap), rect.y, width, rect.height);
-                SortMode mode = sorts[i];
-                if (DrawReadableStyledButton(buttonRect, GetSortLabel(mode), true, sortMode == mode))
-                {
-                    sortMode = mode;
-                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                }
+                ShowSortMenu();
             }
         }
 
@@ -387,27 +395,32 @@ namespace AbyssalProtocol
         private List<ABY_BestiaryEntryDefinition> GetVisibleEntries()
         {
             IEnumerable<ABY_BestiaryEntryDefinition> query = ABY_BestiaryUtility.GetTrackedEntries();
-            switch (filterMode)
+
+            switch (statusFilterMode)
             {
-                case FilterMode.Locked:
+                case StatusFilterMode.Locked:
                     query = query.Where(entry => !ABY_BestiaryUtility.IsUnlocked(entry.EntryId));
                     break;
-                case FilterMode.Discovered:
+                case StatusFilterMode.Discovered:
                     query = query.Where(entry => ABY_BestiaryUtility.IsUnlocked(entry.EntryId));
                     break;
-                case FilterMode.Studied:
+                case StatusFilterMode.Studied:
                     query = query.Where(entry => ABY_BestiaryUtility.IsStudied(entry.EntryId));
                     break;
-                case FilterMode.Assault:
+            }
+
+            switch (categoryFilterMode)
+            {
+                case CategoryFilterMode.Assault:
                     query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Assault);
                     break;
-                case FilterMode.Elite:
+                case CategoryFilterMode.Elite:
                     query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Elite);
                     break;
-                case FilterMode.Support:
+                case CategoryFilterMode.Support:
                     query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Support);
                     break;
-                case FilterMode.Boss:
+                case CategoryFilterMode.Boss:
                     query = query.Where(entry => entry.Category == ABY_BestiaryCategory.Boss);
                     break;
             }
@@ -445,18 +458,26 @@ namespace AbyssalProtocol
             }
         }
 
-        private string GetFilterLabel(FilterMode mode)
+        private string GetStatusFilterLabel(StatusFilterMode mode)
         {
             switch (mode)
             {
-                case FilterMode.Locked: return "ABY_Bestiary_Filter_Locked".Translate();
-                case FilterMode.Discovered: return "ABY_Bestiary_Filter_Discovered".Translate();
-                case FilterMode.Studied: return "ABY_Bestiary_Filter_Studied".Translate();
-                case FilterMode.Assault: return "ABY_Bestiary_Filter_Assault".Translate();
-                case FilterMode.Elite: return "ABY_Bestiary_Filter_Elite".Translate();
-                case FilterMode.Support: return "ABY_Bestiary_Filter_Support".Translate();
-                case FilterMode.Boss: return "ABY_Bestiary_Filter_Boss".Translate();
+                case StatusFilterMode.Locked: return "ABY_Bestiary_Filter_Locked".Translate();
+                case StatusFilterMode.Discovered: return "ABY_Bestiary_Filter_Discovered".Translate();
+                case StatusFilterMode.Studied: return "ABY_Bestiary_Filter_Studied".Translate();
                 default: return "ABY_Bestiary_Filter_All".Translate();
+            }
+        }
+
+        private string GetCategoryFilterLabel(CategoryFilterMode mode)
+        {
+            switch (mode)
+            {
+                case CategoryFilterMode.Assault: return "ABY_Bestiary_Filter_Assault".Translate();
+                case CategoryFilterMode.Elite: return "ABY_Bestiary_Filter_Elite".Translate();
+                case CategoryFilterMode.Support: return "ABY_Bestiary_Filter_Support".Translate();
+                case CategoryFilterMode.Boss: return "ABY_Bestiary_Filter_Boss".Translate();
+                default: return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_Filter_AllCategories", "All categories");
             }
         }
 
@@ -469,6 +490,82 @@ namespace AbyssalProtocol
                 case SortMode.Recent: return "ABY_Bestiary_Sort_Recent".Translate();
                 default: return "ABY_Bestiary_Sort_Threat".Translate();
             }
+        }
+
+        private void ShowStatusFilterMenu()
+        {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            AddStatusFilterOption(options, StatusFilterMode.Any);
+            AddStatusFilterOption(options, StatusFilterMode.Locked);
+            AddStatusFilterOption(options, StatusFilterMode.Discovered);
+            AddStatusFilterOption(options, StatusFilterMode.Studied);
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private void AddStatusFilterOption(List<FloatMenuOption> options, StatusFilterMode mode)
+        {
+            string label = GetStatusFilterLabel(mode);
+            if (statusFilterMode == mode)
+            {
+                label += "  ✓";
+            }
+
+            options.Add(new FloatMenuOption(label, delegate
+            {
+                statusFilterMode = mode;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }));
+        }
+
+        private void ShowCategoryFilterMenu()
+        {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            AddCategoryFilterOption(options, CategoryFilterMode.Any);
+            AddCategoryFilterOption(options, CategoryFilterMode.Assault);
+            AddCategoryFilterOption(options, CategoryFilterMode.Elite);
+            AddCategoryFilterOption(options, CategoryFilterMode.Support);
+            AddCategoryFilterOption(options, CategoryFilterMode.Boss);
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private void AddCategoryFilterOption(List<FloatMenuOption> options, CategoryFilterMode mode)
+        {
+            string label = GetCategoryFilterLabel(mode);
+            if (categoryFilterMode == mode)
+            {
+                label += "  ✓";
+            }
+
+            options.Add(new FloatMenuOption(label, delegate
+            {
+                categoryFilterMode = mode;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }));
+        }
+
+        private void ShowSortMenu()
+        {
+            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            AddSortOption(options, SortMode.Threat);
+            AddSortOption(options, SortMode.Kills);
+            AddSortOption(options, SortMode.Name);
+            AddSortOption(options, SortMode.Recent);
+            Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private void AddSortOption(List<FloatMenuOption> options, SortMode mode)
+        {
+            string label = GetSortLabel(mode);
+            if (sortMode == mode)
+            {
+                label += "  ✓";
+            }
+
+            options.Add(new FloatMenuOption(label, delegate
+            {
+                sortMode = mode;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }));
         }
 
         private bool DrawReadableStyledButton(Rect rect, string label, bool enabled, bool active)
