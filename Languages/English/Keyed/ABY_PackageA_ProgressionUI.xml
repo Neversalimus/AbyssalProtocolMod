@@ -66,4 +66,6 @@
   <ABY_ProgressRecap_Reactor_Desc>The saint-tier threshold has been broken.
 
 Reactor saint cores now feed {0}, {1}, and the heavier saint-side fabrication line. If {2} is prepared, dominion sigils become forge-reachable at {3} attuned residue for the next deliberate escalation beyond the current boss ladder.</ABY_ProgressRecap_Reactor_Desc>
+  <ABY_CircleRoleTag_PerimeterOverload>perimeter overload</ABY_CircleRoleTag_PerimeterOverload>
+  <ABY_CircleRoleTag_MultiFront>multi-front</ABY_CircleRoleTag_MultiFront>
 </LanguageData>

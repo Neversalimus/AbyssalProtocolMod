@@ -66,4 +66,6 @@
   <ABY_ProgressRecap_Reactor_Desc>Порог saint-tier прорван.
 
 Ядра Reactor Saint теперь питают {0}, {1} и более тяжёлую saint-side ветку крафта. Если готово исследование {2}, dominion sigils становятся достижимыми через forge на {3} attuned residue — это следующий осознанный шаг за пределы текущей лестницы боссов.</ABY_ProgressRecap_Reactor_Desc>
+  <ABY_CircleRoleTag_PerimeterOverload>перегрузка периметра</ABY_CircleRoleTag_PerimeterOverload>
+  <ABY_CircleRoleTag_MultiFront>многофронтовый</ABY_CircleRoleTag_MultiFront>
 </LanguageData>
