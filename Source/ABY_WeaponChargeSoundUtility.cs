@@ -161,18 +161,7 @@ namespace AbyssalProtocol
 
         private static bool ShouldTrackChargeSound(string soundDefName)
         {
-            if (soundDefName.NullOrEmpty())
-            {
-                return false;
-            }
-
-            if (!soundDefName.StartsWith("ABY_"))
-            {
-                return false;
-            }
-
-            return soundDefName.IndexOf("Charge", System.StringComparison.OrdinalIgnoreCase) >= 0
-                || soundDefName.IndexOf("Aim", System.StringComparison.OrdinalIgnoreCase) >= 0;
+            return ABY_SoundUtility.IsAbyssalChargeSoundName(soundDefName);
         }
 
         private static void ApplyChargeSoundSustain(bool enabled)

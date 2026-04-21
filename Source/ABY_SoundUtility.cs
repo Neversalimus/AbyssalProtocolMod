@@ -12,7 +12,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && IsAbyssalChargeSound(soundDefName))
+            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && IsAbyssalChargeSoundName(soundDefName))
             {
                 return;
             }
@@ -34,9 +34,9 @@ namespace AbyssalProtocol
                     MaintenanceType.None));
         }
 
-        private static bool IsAbyssalChargeSound(string soundDefName)
+        public static bool IsAbyssalChargeSoundName(string soundDefName)
         {
-            if (soundDefName.NullOrEmpty() || !soundDefName.StartsWith("ABY_"))
+            if (soundDefName.NullOrEmpty() || !soundDefName.StartsWith("ABY_", System.StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
