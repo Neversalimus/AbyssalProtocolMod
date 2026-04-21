@@ -247,8 +247,7 @@ namespace AbyssalProtocol
                 string studied = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryMessage_Studied", "Threat codex entry studied: {0}", label);
                 if (newBonus > previousBonus)
                 {
-                    studied += "
-" + AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryMessage_BonusUp", "Archive extraction bonus increased to +{0}%.", newBonus);
+                    studied += "\n" + AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryMessage_BonusUp", "Archive extraction bonus increased to +{0}%.", newBonus);
                 }
                 Messages.Message(studied, MessageTypeDefOf.PositiveEvent, false);
             }
