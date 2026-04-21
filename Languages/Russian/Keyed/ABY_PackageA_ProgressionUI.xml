@@ -28,8 +28,8 @@
   <ABY_CircleRoleTag_ObjectiveEncounter>сценарий с целью</ABY_CircleRoleTag_ObjectiveEncounter>
   <ABY_CircleRoleTag_WavePressure>давление волнами</ABY_CircleRoleTag_WavePressure>
 
-  <ABY_CircleRewardGuaranteed_Unstable>Гарантированно: residue и стандартный лут зачистки с контролируемого раннего разлома.</ABY_CircleRewardGuaranteed_Unstable>
-  <ABY_CircleRewardProgression_Unstable>Прогрессия: обучает самому summon-loop до тира первого босса.</ABY_CircleRewardProgression_Unstable>
+  <ABY_CircleRewardGuaranteed_Unstable>Гарантированно: residue и обычный лут малого разлома.</ABY_CircleRewardGuaranteed_Unstable>
+  <ABY_CircleRewardProgression_Unstable>Прогрессия: обучает summon-loop до первого босса.</ABY_CircleRewardProgression_Unstable>
   <ABY_CircleRewardGuaranteed_Ember>Гарантированно: residue, звериный cleanup-лут и более серьёзная репетиция охотничьей стаи.</ABY_CircleRewardGuaranteed_Ember>
   <ABY_CircleRewardProgression_Ember>Прогрессия: проверяет защиту тыла перед переходом к мини-боссам.</ABY_CircleRewardProgression_Ember>
   <ABY_CircleRewardGuaranteed_Warden>Гарантированно: 1 Ashen Core и residue за первый настоящий шаг через мини-босса.</ABY_CircleRewardGuaranteed_Warden>

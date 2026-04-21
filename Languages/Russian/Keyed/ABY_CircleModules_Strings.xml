@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-  <ABY_CircleInspect_Stabilizers>Кольцо стабилизаторов: занято слотов {0} / {1}</ABY_CircleInspect_Stabilizers>
+  <ABY_CircleInspect_Stabilizers>Кольцо: занято слотов {0} / {1}</ABY_CircleInspect_Stabilizers>
 
   <ABY_CircleModuleEdge_North>северном краю</ABY_CircleModuleEdge_North>
   <ABY_CircleModuleEdge_East>восточном краю</ABY_CircleModuleEdge_East>

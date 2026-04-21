@@ -48,7 +48,7 @@
   <ABY_Bestiary_Category_Elite>Элита</ABY_Bestiary_Category_Elite>
   <ABY_Bestiary_Category_Support>Поддержка</ABY_Bestiary_Category_Support>
   <ABY_Bestiary_Category_Boss>Босс</ABY_Bestiary_Category_Boss>
-  <ABY_Bestiary_OpenCodex>Открыть кодекс угроз</ABY_Bestiary_OpenCodex>
+  <ABY_Bestiary_OpenCodex>Кодекс угроз</ABY_Bestiary_OpenCodex>
   <ABY_BestiaryControlSummary>Кодекс угроз: {0}/{1} открыто • {2} изучено • бонус извлечения +{3}%</ABY_BestiaryControlSummary>
   <ABY_BestiaryMessage_Unlocked>Открыта новая запись кодекса угроз: {0}</ABY_BestiaryMessage_Unlocked>
   <ABY_BestiaryMessage_FieldNotes>Полевые заметки расширены: {0}</ABY_BestiaryMessage_FieldNotes>

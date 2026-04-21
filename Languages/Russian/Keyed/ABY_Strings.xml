@@ -87,15 +87,15 @@
   <ABY_SigilPlacementFailed>Сигил не смог найти подходящий круг призыва.</ABY_SigilPlacementFailed>
 
   <ABY_CircleTab_Label>консоль</ABY_CircleTab_Label>
-  <ABY_CircleConsoleTitle>консоль инфернального сопряжения</ABY_CircleConsoleTitle>
-  <ABY_CircleConsoleSubtitle>Контроль разлома и боевого ритуала. Подготовь сигил, проверь готовность круга и запусти призыв через колониста.</ABY_CircleConsoleSubtitle>
+  <ABY_CircleConsoleTitle>инфернальное сопряжение</ABY_CircleConsoleTitle>
+  <ABY_CircleConsoleSubtitle>Управление разломом и ритуалом. Подготовь сигил, проверь круг и запусти призыв.</ABY_CircleConsoleSubtitle>
   <ABY_CircleConsoleSubtitleActive>Ритуал активен. Текущая фаза: {0}.</ABY_CircleConsoleSubtitleActive>
-  <ABY_CircleTab_Subtitle>Краткий ритуальный статус и быстрый доступ к консоли.</ABY_CircleTab_Subtitle>
-  <ABY_CircleTab_Hint>Полная консоль показывает превью ритуала, требования готовности и позволяет автоматически назначить перенос сигила.</ABY_CircleTab_Hint>
-  <ABY_CircleTab_Footer>Круг остаётся опасным эндгейм-триггером. Эта консоль повышает удобство и читаемость, но не делает ритуал безопаснее.</ABY_CircleTab_Footer>
+  <ABY_CircleTab_Subtitle>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_Subtitle>
+  <ABY_CircleTab_Hint>Полная консоль показывает сводку ритуала, готовность и назначение сигила.</ABY_CircleTab_Hint>
+  <ABY_CircleTab_Footer>Круг остаётся опасным триггером. Консоль повышает удобство, но не делает ритуал безопаснее.</ABY_CircleTab_Footer>
 
-  <ABY_CircleCommand_OpenConsole>Открыть консоль призыва</ABY_CircleCommand_OpenConsole>
-  <ABY_CircleCommand_OpenConsoleDesc>Открыть полную консоль ритуала с проверкой готовности, превью угрозы и назначением сигила.</ABY_CircleCommand_OpenConsoleDesc>
+  <ABY_CircleCommand_OpenConsole>Консоль призыва</ABY_CircleCommand_OpenConsole>
+  <ABY_CircleCommand_OpenConsoleDesc>Открыть полную консоль ритуала: готовность, сводка угрозы и назначение сигила.</ABY_CircleCommand_OpenConsoleDesc>
   <ABY_CircleCommand_AssignSigil>Начать призыв</ABY_CircleCommand_AssignSigil>
   <ABY_CircleCommand_JumpToSigil>Найти сигил</ABY_CircleCommand_JumpToSigil>
 
@@ -119,14 +119,14 @@
   <ABY_CircleRisk_Catastrophic>катастрофично</ABY_CircleRisk_Catastrophic>
   <ABY_CircleReadinessSummary>{0} / {1} требований выполнено</ABY_CircleReadinessSummary>
 
-  <ABY_CirclePatternsHeader>Шаблоны инвокации</ABY_CirclePatternsHeader>
-  <ABY_CircleControlHeader>Управление призывом</ABY_CircleControlHeader>
+  <ABY_CirclePatternsHeader>Ритуалы</ABY_CirclePatternsHeader>
+  <ABY_CircleControlHeader>Управление</ABY_CircleControlHeader>
   <ABY_CircleControlState>Текущее состояние разлома</ABY_CircleControlState>
-  <ABY_CircleStatusHeaderLong>Разбор готовности</ABY_CircleStatusHeaderLong>
-  <ABY_CirclePreviewHeader>Превью ритуала</ABY_CirclePreviewHeader>
+  <ABY_CircleStatusHeaderLong>Готовность</ABY_CircleStatusHeaderLong>
+  <ABY_CirclePreviewHeader>Сводка ритуала</ABY_CirclePreviewHeader>
   <ABY_CirclePreviewHost>Вероятная цель призыва: {0}</ABY_CirclePreviewHost>
-  <ABY_CircleRewardsHeader>Вектор наград</ABY_CircleRewardsHeader>
-  <ABY_CircleConsequencesHeader>Последствия и побочные эффекты</ABY_CircleConsequencesHeader>
+  <ABY_CircleRewardsHeader>Награды</ABY_CircleRewardsHeader>
+  <ABY_CircleConsequencesHeader>Риски</ABY_CircleConsequencesHeader>
 
   <ABY_CircleReducedEffects>Сниженные эффекты</ABY_CircleReducedEffects>
   <ABY_GenericEnabled>Включено</ABY_GenericEnabled>
@@ -136,11 +136,11 @@
   <ABY_CircleReducedEffectsDesc>Ослабляет sweep-линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
 
   <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
-  <ABY_CircleUnstableBreachLetterLabel>Открыт нестабильный разлом</ABY_CircleUnstableBreachLetterLabel>
-  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл меньший враждебный разлом. Из нестабильного портала на карту выходят rift imp, а крупные колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleUnstableBreachLetterLabel>Нестабильный разлом открыт</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл малый враждебный разлом. Из портала выходят rift imp, а богатые колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>
   <ABY_CircleRitual_Unstable_Label>Открыть нестабильный разлом</ABY_CircleRitual_Unstable_Label>
-  <ABY_CircleRitual_Unstable_Subtitle>Довражеский шаблон до первого босса</ABY_CircleRitual_Unstable_Subtitle>
-  <ABY_CircleRitual_Unstable_Desc>Расходует один unstable breach sigil, направляет колониста к кругу и вскрывает меньший враждебный рифт для раннего abyssal-столкновения до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
+  <ABY_CircleRitual_Unstable_Subtitle>Тренировка до первого босса</ABY_CircleRitual_Unstable_Subtitle>
+  <ABY_CircleRitual_Unstable_Desc>Тратит одну сигилу нестабильного разлома и открывает малый враждебный рифт. Это раннее столкновение до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
   <ABY_CircleRitual_Unstable_Rewards>• Ранняя репетиция враждебного призыва
 • Меньшее давление разлома до первого босса
 • Более плавный мост между кругом и боем с Archon Beast</ABY_CircleRitual_Unstable_Rewards>
@@ -186,7 +186,7 @@
   <ABY_CircleConsoleFail_JobStart>Не удалось запустить приказ на призыв.</ABY_CircleConsoleFail_JobStart>
 
   <ABY_CircleTab_SubtitleShort>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_SubtitleShort>
-  <ABY_CircleTab_FooterShort>Полная консоль показывает превью ритуала и назначение сигила.</ABY_CircleTab_FooterShort>
+  <ABY_CircleTab_FooterShort>Полная консоль показывает сводку ритуала и назначение сигила.</ABY_CircleTab_FooterShort>
   <ABY_CircleReducedEffectsOn>Эффекты: снижены</ABY_CircleReducedEffectsOn>
   <ABY_CircleReducedEffectsOff>Эффекты: полные</ABY_CircleReducedEffectsOff>
 

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <ABY_CraftUnstableBreachSigil.label>ковать сигилу нестабильного разлома</ABY_CraftUnstableBreachSigil.label>
+  <ABY_CraftUnstableBreachSigil.description>Выковать грубую сигилу раннего разлома для первой боевой репетиции. Это дешёвый малый вызов до тира первого босса, обучающий базовому summon-loop.</ABY_CraftUnstableBreachSigil.description>
+  <ABY_CraftUnstableBreachSigil.jobString>Куется сигила нестабильного разлома.</ABY_CraftUnstableBreachSigil.jobString>
   <ABY_CraftArchonSigil.description>Выковать сигилу архонтского класса из упрочнённой abyssal-материи. Она фиксирует право воспроизводить уже более серьёзный протокол столкновения.</ABY_CraftArchonSigil.description>
   <ABY_CraftAshboundCapacitorModule.description>Изготовить низкоуровневый модуль-капаситор, способный держать первые дисциплинированные состояния заряда у круга призыва.</ABY_CraftAshboundCapacitorModule.description>
   <ABY_CraftCrownCondenserModule.description>Создать коронный модуль-конденсер для самых тяжёлых ритуальных нагрузок и самых опасных состояний круга.</ABY_CraftCrownCondenserModule.description>

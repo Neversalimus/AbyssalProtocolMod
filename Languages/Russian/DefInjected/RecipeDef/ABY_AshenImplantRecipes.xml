@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CraftAshenLiverLattice.label>ковать пепельную печёночную решётку</ABY_CraftAshenLiverLattice.label>
-  <ABY_CraftAshenLiverLattice.description>Сформировать из дисциплинированного пепельного ядра печёночную решётку, оптимизированную под фильтрацию и иммунную устойчивость.</ABY_CraftAshenLiverLattice.description>
-  <ABY_CraftAshenLiverLattice.jobString>Ковка пепельной печёночной решётки.</ABY_CraftAshenLiverLattice.jobString>
-
-  <ABY_CraftCinderMandibleSeal.label>ковать угольную мандибулярную печать</ABY_CraftCinderMandibleSeal.label>
-  <ABY_CraftCinderMandibleSeal.description>Отлить на основе пепельного ядра челюстную печать, укрепляющую болевую устойчивость и дисциплину ближнего боя.</ABY_CraftCinderMandibleSeal.description>
-  <ABY_CraftCinderMandibleSeal.jobString>Ковка угольной мандибулярной печати.</ABY_CraftCinderMandibleSeal.jobString>
-
-  <ABY_CraftEmberLungArray.label>ковать тлеющий лёгочный массив</ABY_CraftEmberLungArray.label>
-  <ABY_CraftEmberLungArray.description>Стабилизировать пепельное ядро внутри высокопоточного респираторного массива и прошить конструкцию бездным сплавом.</ABY_CraftEmberLungArray.description>
-  <ABY_CraftEmberLungArray.jobString>Ковка тлеющего лёгочного массива.</ABY_CraftEmberLungArray.jobString>
-
-  <ABY_CraftAshenAnchorNode.label>ковать пепельный якорный узел</ABY_CraftAshenAnchorNode.label>
-  <ABY_CraftAshenAnchorNode.description>Вытравить из пепельного ядра сдержанный вспомогательный мозговой узел, рассчитанный на долгосрочную бездную когницию, а не на грубый боевой всплеск.</ABY_CraftAshenAnchorNode.description>
-  <ABY_CraftAshenAnchorNode.jobString>Ковка пепельного якорного узла.</ABY_CraftAshenAnchorNode.jobString>
 
   <ABY_InstallAshenLiverLattice.label>установить пепельную печёночную решётку</ABY_InstallAshenLiverLattice.label>
   <ABY_InstallAshenLiverLattice.description>Установить пепельную печёночную решётку.</ABY_InstallAshenLiverLattice.description>

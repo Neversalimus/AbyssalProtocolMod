@@ -122,11 +122,11 @@
   <ABY_CapacitorMode_ForceReady>окно форс-старта</ABY_CapacitorMode_ForceReady>
   <ABY_CapacitorDump_Off>защитный сброс выкл.</ABY_CapacitorDump_Off>
   <ABY_CapacitorDump_Armed>сброс взведён</ABY_CapacitorDump_Armed>
-  <ABY_CapacitorControl_Overchannel>Взвести оверченнел</ABY_CapacitorControl_Overchannel>
+  <ABY_CapacitorControl_Overchannel>Взвести перегруз</ABY_CapacitorControl_Overchannel>
   <ABY_CapacitorControl_OverchannelDesc>Позволяет пограничным решёткам форсировать старт ритуала до полного восстановления резерва. Это повышает риск обратного удара и ослабляет защиту конденсаторов.</ABY_CapacitorControl_OverchannelDesc>
-  <ABY_CapacitorControl_Dump>Взвести аварийный сброс</ABY_CapacitorControl_Dump>
+  <ABY_CapacitorControl_Dump>Взвести сброс</ABY_CapacitorControl_Dump>
   <ABY_CapacitorControl_DumpDesc>Позволяет решётке сбросить остаток заряда в канал разлома, чтобы смягчить грязный оверченнел. Это уменьшает обратный удар, но удлиняет восстановление.</ABY_CapacitorControl_DumpDesc>
-  <ABY_CapacitorCommand_ForceInvoke>Форс-старт через оверченнел</ABY_CapacitorCommand_ForceInvoke>
+  <ABY_CapacitorCommand_ForceInvoke>Форс-старт</ABY_CapacitorCommand_ForceInvoke>
   <ABY_CapacitorConfirm_ForcedInvocation>Назначить подготовленный сигил и форсировать старт {0} через окно оверченнела? Это может вызвать обратный удар конденсаторов и более долгий цикл восстановления.</ABY_CapacitorConfirm_ForcedInvocation>
   <ABY_CapacitorForcedStart_Queued>Оверченнел взведён. Круг попытается форсировать этот ритуал через перегрузку конденсаторов.</ABY_CapacitorForcedStart_Queued>
   <ABY_CapacitorEmergencyDump_Message>Аварийный сброс активирован. Решётка стравливает остаток враждебного заряда прямо в канал разлома.</ABY_CapacitorEmergencyDump_Message>
