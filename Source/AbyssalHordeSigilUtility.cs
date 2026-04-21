@@ -734,6 +734,11 @@ namespace AbyssalProtocol
                 return "fire_support";
             }
 
+            if (string.Equals(defName, "ABY_RiftSapper", StringComparison.OrdinalIgnoreCase))
+            {
+                return "assault";
+            }
+
             if (string.Equals(defName, "ABY_EmberHound", StringComparison.OrdinalIgnoreCase))
             {
                 return "flank";
@@ -1063,10 +1068,12 @@ namespace AbyssalProtocol
             int houndCount = Mathf.Clamp(Mathf.RoundToInt(pulseBudget / 1200f), 1, 5);
             int thrallCount = Mathf.Clamp(Mathf.RoundToInt(pulseBudget / 1650f), 1, string.Equals(phaseId, "marking", StringComparison.OrdinalIgnoreCase) ? 2 : 3);
             int zealotCount = Mathf.Clamp(Mathf.RoundToInt(pulseBudget / 1900f), 1, string.Equals(phaseId, "marking", StringComparison.OrdinalIgnoreCase) ? 2 : 3);
+            int sapperCount = Mathf.Clamp(Mathf.RoundToInt(pulseBudget / 2100f), 0, string.Equals(phaseId, "marking", StringComparison.OrdinalIgnoreCase) ? 1 : 2);
 
             AddFallbackEntry(plan, "ABY_RiftImp", impCount, "assault");
             AddFallbackEntry(plan, "ABY_EmberHound", houndCount, "assault");
             AddFallbackEntry(plan, "ABY_HexgunThrall", thrallCount, "support");
+            AddFallbackEntry(plan, "ABY_RiftSapper", sapperCount, "assault");
             AddFallbackEntry(plan, "ABY_ChainZealot", zealotCount, "elite");
 
             if (string.Equals(phaseId, "surge", StringComparison.OrdinalIgnoreCase))
@@ -1413,6 +1420,7 @@ namespace AbyssalProtocol
             AddCountLabel(parts, plan.GetCount("ABY_EmberHound"), "ABY_CirclePreview_Hound_Singular", "hound", "ABY_CirclePreview_Hound_Plural", "hounds");
             AddCountLabel(parts, plan.GetCount("ABY_RiftImp"), "ABY_CirclePreview_Imp_Singular", "imp", "ABY_CirclePreview_Imp_Plural", "imps");
             AddCountLabel(parts, plan.GetCount("ABY_HexgunThrall"), "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls");
+            AddCountLabel(parts, plan.GetCount("ABY_RiftSapper"), "ABY_CirclePreview_Sapper_Singular", "rift sapper", "ABY_CirclePreview_Sapper_Plural", "rift sappers");
             AddCountLabel(parts, plan.GetCount("ABY_ChainZealot"), "ABY_CirclePreview_Zealot_Singular", "zealot", "ABY_CirclePreview_Zealot_Plural", "zealots");
             AddCountLabel(parts, plan.GetCount("ABY_Harvester"), "ABY_CirclePreview_Harvester_Singular", "harvester", "ABY_CirclePreview_Harvester_Plural", "harvesters");
             AddCountLabel(parts, plan.GetCount("ABY_NullPriest"), "ABY_CirclePreview_Priest_Singular", "null priest", "ABY_CirclePreview_Priest_Plural", "null priests");

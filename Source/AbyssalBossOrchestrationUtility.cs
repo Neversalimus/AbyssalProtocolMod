@@ -542,6 +542,7 @@ namespace AbyssalProtocol
             if (resolvedId == "archon_of_rupture" || string.Equals(bossDefName, "ABY_ArchonOfRupture", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
                 if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
                 {
@@ -555,6 +556,7 @@ namespace AbyssalProtocol
             else if (resolvedId == "archon_beast" || string.Equals(bossDefName, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
                 if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
                 {
@@ -568,6 +570,7 @@ namespace AbyssalProtocol
             else if (resolvedId == "reactor_saint" || string.Equals(bossDefName, "ABY_ReactorSaint", StringComparison.OrdinalIgnoreCase))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
                 if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_Rupture"))
                 {
@@ -585,12 +588,14 @@ namespace AbyssalProtocol
             else
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
             }
 
             if (plan.TotalUnits <= 0)
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HexgunThrall", poolId, allowedContentTier, true);
+                TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_ChainZealot", poolId, allowedContentTier, true);
             }

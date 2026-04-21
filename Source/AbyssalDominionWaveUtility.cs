@@ -33,6 +33,7 @@ namespace AbyssalProtocol
             public int TotalImpCount;
             public int HoundCount;
             public int ThrallCount;
+            public int SapperCount;
             public int PriestCount;
             public int ZealotCount;
             public int SniperCount;
@@ -49,6 +50,7 @@ namespace AbyssalProtocol
             public int TotalUnits => Math.Max(0, TotalImpCount)
                 + Math.Max(0, HoundCount)
                 + Math.Max(0, ThrallCount)
+                + Math.Max(0, SapperCount)
                 + Math.Max(0, PriestCount)
                 + Math.Max(0, ZealotCount)
                 + Math.Max(0, SniperCount)
@@ -205,6 +207,7 @@ namespace AbyssalProtocol
             plan.TotalImpCount = directed.GetCount(RiftImpPawnKindDefName);
             plan.HoundCount = directed.GetCount(EmberHoundPawnKindDefName);
             plan.ThrallCount = directed.GetCount(HexgunThrallPawnKindDefName);
+            plan.SapperCount = directed.GetCount("ABY_RiftSapper");
             plan.PriestCount = directed.GetCount(NullPriestPawnKindDefName);
             plan.ZealotCount = directed.GetCount("ABY_ChainZealot");
             plan.SniperCount = directed.GetCount("ABY_RiftSniper");
@@ -1182,6 +1185,11 @@ namespace AbyssalProtocol
             if (plan.ThrallCount > 0)
             {
                 parts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
+            }
+
+            if (plan.SapperCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.SapperCount, "ABY_CirclePreview_Sapper_Singular", "rift sapper", "ABY_CirclePreview_Sapper_Plural", "rift sappers"));
             }
 
             if (plan.SniperCount > 0)

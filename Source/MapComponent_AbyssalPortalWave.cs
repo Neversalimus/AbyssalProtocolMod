@@ -707,6 +707,7 @@ namespace AbyssalProtocol
             if (string.Equals(doctrine, "ABY_Doctrine_HordeFireline", StringComparison.OrdinalIgnoreCase))
             {
                 entries.Add(("ABY_HexgunThrall", 2 + band));
+                if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
                 entries.Add(("ABY_RiftSniper", 1));
                 if (band >= 1 || difficultyOrder >= 2) entries.Add(("ABY_NullPriest", 1));
                 if (band >= 2 || difficultyOrder >= 3) entries.Add(("ABY_HaloHusk", 1));
@@ -717,6 +718,7 @@ namespace AbyssalProtocol
             {
                 entries.Add(("ABY_ChainZealot", 2 + band));
                 entries.Add(("ABY_EmberHound", 2 + Mathf.Max(0, band - 1)));
+                if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
                 if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_BreachBrute", 1));
                 if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_Harvester", 1));
                 return entries;
@@ -725,6 +727,7 @@ namespace AbyssalProtocol
             if (string.Equals(doctrine, "ABY_Doctrine_HordeSiege", StringComparison.OrdinalIgnoreCase))
             {
                 entries.Add(("ABY_HexgunThrall", 2 + band));
+                entries.Add(("ABY_RiftSapper", 1));
                 entries.Add(("ABY_HaloHusk", 1));
                 if (band >= 1 || difficultyOrder >= 2) entries.Add(("ABY_BreachBrute", 1));
                 if (remainingCommandBursts <= 1 && (band >= 3 || difficultyOrder >= 3)) entries.Add(("ABY_SiegeIdol", 1));
@@ -733,6 +736,7 @@ namespace AbyssalProtocol
 
             entries.Add(("ABY_RiftImp", 4 + band * 2));
             entries.Add(("ABY_EmberHound", 2 + band));
+            if (band >= 1 || difficultyOrder >= 1) entries.Add(("ABY_RiftSapper", 1));
             entries.Add(("ABY_ChainZealot", 1 + (band >= 2 ? 1 : 0)));
             if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_Harvester", 1));
             return entries;
@@ -927,7 +931,8 @@ namespace AbyssalProtocol
                 return 2;
             }
 
-            if (string.Equals(defName, "ABY_HexgunThrall", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(defName, "ABY_HexgunThrall", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(defName, "ABY_RiftSapper", StringComparison.OrdinalIgnoreCase))
             {
                 return 1;
             }
@@ -948,6 +953,7 @@ namespace AbyssalProtocol
             }
 
             if (string.Equals(pawnKindDefName, "ABY_HexgunThrall", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(pawnKindDefName, "ABY_RiftSapper", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(pawnKindDefName, "ABY_ChainZealot", StringComparison.OrdinalIgnoreCase))
             {
                 return 3;

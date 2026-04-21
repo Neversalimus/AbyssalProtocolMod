@@ -31,6 +31,8 @@
 
   <ABY_CirclePreview_Sniper_Singular>rift sniper</ABY_CirclePreview_Sniper_Singular>
   <ABY_CirclePreview_Sniper_Plural>rift snipers</ABY_CirclePreview_Sniper_Plural>
+  <ABY_CirclePreview_Sapper_Singular>rift sapper</ABY_CirclePreview_Sapper_Singular>
+  <ABY_CirclePreview_Sapper_Plural>rift sappers</ABY_CirclePreview_Sapper_Plural>
   <ABY_CirclePreview_HaloHusk_Singular>halo husk</ABY_CirclePreview_HaloHusk_Singular>
   <ABY_CirclePreview_HaloHusk_Plural>halo husks</ABY_CirclePreview_HaloHusk_Plural>
 </LanguageData>

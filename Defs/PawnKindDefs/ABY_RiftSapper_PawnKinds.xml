@@ -21,10 +21,20 @@
         <contentTier>2</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
         <role>assault</role>
-        <budgetCost>320</budgetCost>
-        <selectionWeight>0.88</selectionWeight>
-        <maxPlanCount>3</maxPlanCount>
+        <budgetCost>260</budgetCost>
+        <selectionWeight>0.78</selectionWeight>
+        <maxPlanCount>2</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>unstable_breach_portal</li>
+          <li>choir_escort</li>
+          <li>warden_boss_escort</li>
+          <li>archon_boss_escort</li>
+          <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
+          <li>reactor_saint_escort</li>
+          <li>horde_sigil_wave</li>
+        </encounterPools>
       </li>
     </modExtensions>
     <lifeStages>

@@ -106,6 +106,7 @@ namespace AbyssalProtocol
         private int pendingImpPortalLingerTicks;
         private int pendingSupportImpCount;
         private int pendingSupportThrallCount;
+        private int pendingSupportSapperCount;
         private int pendingSupportZealotCount;
         private PawnKindDef pendingRareEscortPawnKindDef;
         private int pendingRareEscortCount;
@@ -203,6 +204,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pendingImpPortalLingerTicks, "pendingImpPortalLingerTicks", 0);
             Scribe_Values.Look(ref pendingSupportImpCount, "pendingSupportImpCount", 0);
             Scribe_Values.Look(ref pendingSupportThrallCount, "pendingSupportThrallCount", 0);
+            Scribe_Values.Look(ref pendingSupportSapperCount, "pendingSupportSapperCount", 0);
             Scribe_Values.Look(ref pendingSupportZealotCount, "pendingSupportZealotCount", 0);
             Scribe_Defs.Look(ref pendingRareEscortPawnKindDef, "pendingRareEscortPawnKindDef");
             Scribe_Values.Look(ref pendingRareEscortCount, "pendingRareEscortCount", 0);
@@ -430,6 +432,7 @@ namespace AbyssalProtocol
             pendingImpPortalLingerTicks = 0;
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
+            pendingSupportSapperCount = 0;
             pendingSupportZealotCount = 0;
             pendingRareEscortPawnKindDef = null;
             pendingRareEscortCount = 0;
@@ -1962,6 +1965,7 @@ namespace AbyssalProtocol
                 pendingImpCount = Mathf.Max(1, plan.PortalImpCount);
                 pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
                 pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportSapperCount = Mathf.Max(0, plan.SapperCount);
                 pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
                 pendingRareEscortPawnKindDef = null;
                 pendingRareEscortCount = 0;
@@ -1985,6 +1989,7 @@ namespace AbyssalProtocol
                 pendingImpCount = Mathf.Max(1, plan.HoundCount);
                 pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
                 pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportSapperCount = Mathf.Max(0, plan.SapperCount);
                 pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
                 pendingRareEscortPawnKindDef = null;
                 pendingRareEscortCount = 0;
@@ -2006,6 +2011,7 @@ namespace AbyssalProtocol
             {
                 pendingSupportImpCount = Mathf.Max(0, plan.PackImpCount);
                 pendingSupportThrallCount = Mathf.Max(0, plan.ThrallCount);
+                pendingSupportSapperCount = Mathf.Max(0, plan.SapperCount);
                 pendingSupportZealotCount = Mathf.Max(0, plan.ZealotCount);
                 pendingRareEscortPawnKindDef = null;
                 pendingRareEscortCount = 0;
@@ -2054,6 +2060,16 @@ namespace AbyssalProtocol
                 });
             }
 
+            PawnKindDef sapperKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSapper");
+            if (sapperKind != null && pendingSupportSapperCount > 0)
+            {
+                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                {
+                    KindDef = sapperKind,
+                    Count = pendingSupportSapperCount
+                });
+            }
+
             PawnKindDef zealotKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_ChainZealot");
             if (zealotKind != null && pendingSupportZealotCount > 0)
             {
@@ -2085,6 +2101,7 @@ namespace AbyssalProtocol
 
             bool hasLegacyEntries = pendingSupportImpCount > 0
                 || pendingSupportThrallCount > 0
+                || pendingSupportSapperCount > 0
                 || pendingSupportZealotCount > 0
                 || (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0);
 
@@ -2122,6 +2139,16 @@ namespace AbyssalProtocol
                     {
                         KindDef = thrallKind,
                         Count = pendingSupportThrallCount
+                    });
+                }
+
+                PawnKindDef sapperKind = DefDatabase<PawnKindDef>.GetNamedSilentFail("ABY_RiftSapper");
+                if (sapperKind != null && pendingSupportSapperCount > 0)
+                {
+                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+                    {
+                        KindDef = sapperKind,
+                        Count = pendingSupportSapperCount
                     });
                 }
 
@@ -2402,6 +2429,7 @@ namespace AbyssalProtocol
             pendingImpPortalLingerTicks = 0;
             pendingSupportImpCount = 0;
             pendingSupportThrallCount = 0;
+            pendingSupportSapperCount = 0;
             pendingSupportZealotCount = 0;
             pendingRareEscortPawnKindDef = null;
             pendingRareEscortCount = 0;

@@ -15,6 +15,7 @@ namespace AbyssalProtocol
         private const int ImpThreatValue = 85;
         private const int HoundThreatValue = 190;
         private const int ThrallThreatValue = 160;
+        private const int SapperThreatValue = 260;
         private const int ZealotThreatValue = 235;
         private const int PriestThreatValue = 340;
         private const int SniperThreatValue = 420;
@@ -30,6 +31,7 @@ namespace AbyssalProtocol
             public int PackImpCount;
             public int HoundCount;
             public int ThrallCount;
+            public int SapperCount;
             public int ZealotCount;
             public int PriestCount;
             public int SniperCount;
@@ -37,7 +39,7 @@ namespace AbyssalProtocol
             public AbyssalEncounterDirectorUtility.EncounterPlan DirectedPlan;
 
             public int TotalImpCount => Math.Max(0, PortalImpCount) + Math.Max(0, PackImpCount);
-            public int TotalEscortCount => Math.Max(0, HoundCount) + TotalImpCount + Math.Max(0, ThrallCount) + Math.Max(0, ZealotCount) + Math.Max(0, PriestCount) + Math.Max(0, SniperCount);
+            public int TotalEscortCount => Math.Max(0, HoundCount) + TotalImpCount + Math.Max(0, ThrallCount) + Math.Max(0, SapperCount) + Math.Max(0, ZealotCount) + Math.Max(0, PriestCount) + Math.Max(0, SniperCount);
         }
 
         public static bool IsSupportedRitual(string ritualId)
@@ -173,6 +175,7 @@ namespace AbyssalProtocol
             plan.DirectedPlan = directed;
             plan.HoundCount = directed.GetCount("ABY_EmberHound");
             plan.ThrallCount = directed.GetCount("ABY_HexgunThrall");
+            plan.SapperCount = directed.GetCount("ABY_RiftSapper");
             plan.ZealotCount = directed.GetCount("ABY_ChainZealot");
             plan.PriestCount = directed.GetCount("ABY_NullPriest");
             plan.SniperCount = directed.GetCount("ABY_RiftSniper");
@@ -185,6 +188,7 @@ namespace AbyssalProtocol
             plan.ThreatBudget = plan.TotalImpCount * ImpThreatValue
                 + plan.HoundCount * HoundThreatValue
                 + plan.ThrallCount * ThrallThreatValue
+                + plan.SapperCount * SapperThreatValue
                 + plan.ZealotCount * ZealotThreatValue
                 + plan.PriestCount * PriestThreatValue
                 + plan.SniperCount * SniperThreatValue;
@@ -205,6 +209,7 @@ namespace AbyssalProtocol
             plan.PortalImpCount = 0;
             plan.PackImpCount = directed.GetCount("ABY_RiftImp");
             plan.ThrallCount = directed.GetCount("ABY_HexgunThrall");
+            plan.SapperCount = directed.GetCount("ABY_RiftSapper");
             plan.ZealotCount = directed.GetCount("ABY_ChainZealot");
             plan.PriestCount = directed.GetCount("ABY_NullPriest");
             plan.SniperCount = directed.GetCount("ABY_RiftSniper");
@@ -217,6 +222,7 @@ namespace AbyssalProtocol
             plan.ThreatBudget = plan.TotalImpCount * ImpThreatValue
                 + plan.HoundCount * HoundThreatValue
                 + plan.ThrallCount * ThrallThreatValue
+                + plan.SapperCount * SapperThreatValue
                 + plan.ZealotCount * ZealotThreatValue
                 + plan.PriestCount * PriestThreatValue
                 + plan.SniperCount * SniperThreatValue;
@@ -233,6 +239,7 @@ namespace AbyssalProtocol
             plan.PackImpCount = directed.GetCount("ABY_RiftImp");
             plan.HoundCount = directed.GetCount("ABY_EmberHound");
             plan.ThrallCount = directed.GetCount("ABY_HexgunThrall");
+            plan.SapperCount = directed.GetCount("ABY_RiftSapper");
             plan.ZealotCount = directed.GetCount("ABY_ChainZealot");
             plan.PriestCount = directed.GetCount("ABY_NullPriest");
             plan.SniperCount = directed.GetCount("ABY_RiftSniper");
@@ -241,13 +248,15 @@ namespace AbyssalProtocol
             {
                 int fallbackEscort = Math.Min(30, Math.Max(6, colonists * 6));
                 plan.PackImpCount = fallbackEscort / 2;
-                plan.ThrallCount = fallbackEscort / 3;
-                plan.ZealotCount = Math.Max(0, fallbackEscort - plan.PackImpCount - plan.ThrallCount);
+                plan.ThrallCount = fallbackEscort / 4;
+                plan.SapperCount = Mathf.Clamp(fallbackEscort / 5, 0, 2);
+                plan.ZealotCount = Math.Max(0, fallbackEscort - plan.PackImpCount - plan.ThrallCount - plan.SapperCount);
             }
 
             plan.ThreatBudget = plan.TotalImpCount * ImpThreatValue
                 + plan.HoundCount * HoundThreatValue
                 + plan.ThrallCount * ThrallThreatValue
+                + plan.SapperCount * SapperThreatValue
                 + plan.ZealotCount * ZealotThreatValue
                 + plan.PriestCount * PriestThreatValue
                 + plan.SniperCount * SniperThreatValue;
@@ -288,6 +297,11 @@ namespace AbyssalProtocol
             if (plan.ThrallCount > 0)
             {
                 parts.Add(GetCountLabel(plan.ThrallCount, "ABY_CirclePreview_Thrall_Singular", "thrall", "ABY_CirclePreview_Thrall_Plural", "thralls"));
+            }
+
+            if (plan.SapperCount > 0)
+            {
+                parts.Add(GetCountLabel(plan.SapperCount, "ABY_CirclePreview_Sapper_Singular", "rift sapper", "ABY_CirclePreview_Sapper_Plural", "rift sappers"));
             }
 
             if (plan.ZealotCount > 0)
