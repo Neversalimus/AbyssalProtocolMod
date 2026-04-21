@@ -33,6 +33,9 @@ namespace AbyssalProtocol
         private int barrageShotBonus;
         private int collapseWindowUntilTick = -1;
         private int nextStructureCrushTick;
+        private int forcedAdvanceUntilTick = -1;
+        private int lastPositionChangeTick = -1;
+        private IntVec3 lastTrackedPosition = IntVec3.Invalid;
 
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
 
@@ -56,6 +59,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref barrageShotBonus, "barrageShotBonus", 0);
             Scribe_Values.Look(ref collapseWindowUntilTick, "collapseWindowUntilTick", -1);
             Scribe_Values.Look(ref nextStructureCrushTick, "nextStructureCrushTick", 0);
+            Scribe_Values.Look(ref forcedAdvanceUntilTick, "forcedAdvanceUntilTick", -1);
+            Scribe_Values.Look(ref lastPositionChangeTick, "lastPositionChangeTick", -1);
+            Scribe_Values.Look(ref lastTrackedPosition, "lastTrackedPosition");
         }
 
         public override void CompTick()
@@ -65,14 +71,24 @@ namespace AbyssalProtocol
             Pawn pawn = parent as Pawn;
             if (!CanOperate(pawn))
             {
+                forcedAdvanceUntilTick = -1;
+                lastTrackedPosition = IntVec3.Invalid;
                 ResetAttackState();
                 return;
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            UpdateMovementProgress(pawn, ticksGame);
             TryApplyStructureCrushBonus(pawn, ticksGame);
             bool crowdPressure = HasCrowdPressure(pawn);
             if (TryForceCloseQuartersEngagement(pawn))
+            {
+                forcedAdvanceUntilTick = -1;
+                ResetAttackState();
+                return;
+            }
+
+            if (TryHandleForcedAdvance(pawn, ticksGame))
             {
                 ResetAttackState();
                 return;
@@ -194,6 +210,7 @@ namespace AbyssalProtocol
             warmupCompleteTick = ticksGame + GetWarmupTicksForCurrentMode();
             nextBurstShotTick = -1;
             burstShotsRemaining = 0;
+            forcedAdvanceUntilTick = -1;
 
             if (!Props.aimSoundDefName.NullOrEmpty())
             {
@@ -230,6 +247,97 @@ namespace AbyssalProtocol
             nextBarrageReadyTick = Math.Max(nextBarrageReadyTick, ticksGame + Math.Max(60, durationTicks));
             nextSearchTick = Math.Max(nextSearchTick, ticksGame + 15);
             ResetAttackState();
+        }
+
+        private void UpdateMovementProgress(Pawn pawn, int ticksGame)
+        {
+            if (pawn == null || !pawn.Spawned)
+            {
+                lastTrackedPosition = IntVec3.Invalid;
+                return;
+            }
+
+            if (!lastTrackedPosition.IsValid || pawn.Position != lastTrackedPosition)
+            {
+                lastTrackedPosition = pawn.Position;
+                lastPositionChangeTick = ticksGame;
+            }
+        }
+
+        private bool TryHandleForcedAdvance(Pawn pawn, int ticksGame)
+        {
+            if (pawn?.Map == null)
+            {
+                forcedAdvanceUntilTick = -1;
+                return false;
+            }
+
+            if (ShouldStartForcedAdvance(pawn, ticksGame))
+            {
+                forcedAdvanceUntilTick = ticksGame + 180;
+            }
+
+            if (ticksGame >= forcedAdvanceUntilTick)
+            {
+                return false;
+            }
+
+            Thing target = FindBestAdvanceTarget(pawn);
+            if (target == null)
+            {
+                forcedAdvanceUntilTick = -1;
+                return false;
+            }
+
+            IntVec3 targetCell = target.PositionHeld;
+            if (!targetCell.IsValid || !targetCell.InBounds(pawn.Map))
+            {
+                forcedAdvanceUntilTick = -1;
+                return false;
+            }
+
+            float desiredRange = Mathf.Clamp(Props.range * 0.78f, Props.preferredMinRange + 2f, Props.range - 1.5f);
+            if (pawn.Position.DistanceTo(targetCell) <= desiredRange && GenSight.LineOfSight(pawn.Position, targetCell, pawn.Map))
+            {
+                forcedAdvanceUntilTick = -1;
+                return false;
+            }
+
+            if (TryAdvanceTowardDistantThreat(pawn))
+            {
+                return true;
+            }
+
+            return TryForceAdjacentBuildingBash(pawn);
+        }
+
+        private bool ShouldStartForcedAdvance(Pawn pawn, int ticksGame)
+        {
+            if (warmupCompleteTick >= 0 || burstShotsRemaining > 0 || currentAttackMode != AttackModeNone)
+            {
+                return false;
+            }
+
+            Thing target = FindBestAdvanceTarget(pawn);
+            if (target == null)
+            {
+                return false;
+            }
+
+            IntVec3 targetCell = target.PositionHeld;
+            if (!targetCell.IsValid || !targetCell.InBounds(pawn.Map))
+            {
+                return false;
+            }
+
+            float desiredRange = Mathf.Clamp(Props.range * 0.78f, Props.preferredMinRange + 2f, Props.range - 1.5f);
+            if (pawn.Position.DistanceTo(targetCell) <= desiredRange)
+            {
+                return false;
+            }
+
+            int stalledTicks = lastPositionChangeTick < 0 ? 0 : ticksGame - lastPositionChangeTick;
+            return stalledTicks >= 150;
         }
 
         public override string CompInspectStringExtra()
