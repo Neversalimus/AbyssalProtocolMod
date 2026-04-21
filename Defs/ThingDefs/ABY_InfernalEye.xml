@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_InfernalEye</defName>
+    <label>infernal eye</label>
+    <description>A stabilized abyssal ocular implant tuned for target acquisition and battlefield precision. It is stronger than standard spacer-grade replacements, but well below herald-tier grafts.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HeraldEye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.12</Mass>
+      <WorkToMake>18000</WorkToMake>
+      <MarketValue>920</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>35</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallInfernalEye</defName>
+    <label>install infernal eye</label>
+    <description>Install an infernal eye.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_InfernalEye</ThingDef>
+      <HediffDef>ABY_InfernalEye_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing infernal eye.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_InfernalEye</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Eye</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_InfernalEye_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>

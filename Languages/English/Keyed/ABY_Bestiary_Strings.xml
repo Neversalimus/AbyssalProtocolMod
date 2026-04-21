@@ -7,7 +7,11 @@
     <ABY_Bestiary_Summary_Kills>Confirmed kills</ABY_Bestiary_Summary_Kills>
     <ABY_Bestiary_Summary_Extraction>Extraction bonus</ABY_Bestiary_Summary_Extraction>
     <ABY_Bestiary_FilterHeader>Archive filters</ABY_Bestiary_FilterHeader>
-    <ABY_Bestiary_Filter_All>All</ABY_Bestiary_Filter_All>
+
+    <ABY_Bestiary_StatusHeader>Status</ABY_Bestiary_StatusHeader>
+    <ABY_Bestiary_CategoryHeader>Category</ABY_Bestiary_CategoryHeader>
+    <ABY_Bestiary_Filter_AllCategories>All categories</ABY_Bestiary_Filter_AllCategories>
+    <ABY_Bestiary_ResetFilters>Reset filters</ABY_Bestiary_ResetFilters>    <ABY_Bestiary_Filter_All>All</ABY_Bestiary_Filter_All>
     <ABY_Bestiary_Filter_Locked>Locked</ABY_Bestiary_Filter_Locked>
     <ABY_Bestiary_Filter_Discovered>Discovered</ABY_Bestiary_Filter_Discovered>
     <ABY_Bestiary_Filter_Studied>Studied</ABY_Bestiary_Filter_Studied>

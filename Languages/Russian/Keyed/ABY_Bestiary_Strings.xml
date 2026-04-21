@@ -7,7 +7,11 @@
     <ABY_Bestiary_Summary_Kills>Подтверждённые убийства</ABY_Bestiary_Summary_Kills>
     <ABY_Bestiary_Summary_Extraction>Бонус извлечения</ABY_Bestiary_Summary_Extraction>
     <ABY_Bestiary_FilterHeader>Фильтры архива</ABY_Bestiary_FilterHeader>
-    <ABY_Bestiary_Filter_All>Все</ABY_Bestiary_Filter_All>
+
+    <ABY_Bestiary_StatusHeader>Статус</ABY_Bestiary_StatusHeader>
+    <ABY_Bestiary_CategoryHeader>Категория</ABY_Bestiary_CategoryHeader>
+    <ABY_Bestiary_Filter_AllCategories>Все категории</ABY_Bestiary_Filter_AllCategories>
+    <ABY_Bestiary_ResetFilters>Сбросить фильтры</ABY_Bestiary_ResetFilters>    <ABY_Bestiary_Filter_All>Все</ABY_Bestiary_Filter_All>
     <ABY_Bestiary_Filter_Locked>Скрытые</ABY_Bestiary_Filter_Locked>
     <ABY_Bestiary_Filter_Discovered>Открытые</ABY_Bestiary_Filter_Discovered>
     <ABY_Bestiary_Filter_Studied>Изученные</ABY_Bestiary_Filter_Studied>
