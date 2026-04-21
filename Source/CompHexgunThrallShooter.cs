@@ -133,7 +133,7 @@ namespace AbyssalProtocol
             nextWarmupTelegraphTick = ticksGame + 12;
             if (!Props.aimSoundDefName.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
+                ABY_SoundUtility.PlayChargeAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
             if (Props.holdPositionWhenTargeting)
@@ -264,7 +264,7 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(target.Position);
             if (!Props.castSoundDefName.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.castSoundDefName, pawn.Position, pawn.Map);
+                ABY_SoundUtility.PlayOneShotAt(Props.castSoundDefName, pawn.Position, pawn.Map);
             }
 
             ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.projectileDefName);

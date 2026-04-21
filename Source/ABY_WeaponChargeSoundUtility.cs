@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using System;
 using Verse;
 using Verse.Sound;
 
@@ -7,27 +8,45 @@ namespace AbyssalProtocol
 {
     public static class ABY_WeaponChargeSoundUtility
     {
+        private const string AbyssalPackageId = "neversalimus.abyssalprotocol";
+
+        private readonly struct DefIndexKey
+        {
+            public DefIndexKey(string defName, int index)
+            {
+                DefName = defName;
+                Index = index;
+            }
+
+            public string DefName { get; }
+            public int Index { get; }
+        }
+
         private static bool cacheBuilt;
-        private static readonly Dictionary<string, string> OriginalVerbAimSounds = new Dictionary<string, string>();
-        private static readonly Dictionary<string, string> OriginalCompAimSounds = new Dictionary<string, string>();
+        private static readonly Dictionary<DefIndexKey, string> OriginalVerbAimSounds = new Dictionary<DefIndexKey, string>();
+        private static readonly Dictionary<DefIndexKey, string> OriginalCompAimSounds = new Dictionary<DefIndexKey, string>();
         private static readonly Dictionary<string, bool> OriginalSoundSustain = new Dictionary<string, bool>();
         private static readonly Dictionary<string, float> OriginalSoundSustainFadeout = new Dictionary<string, float>();
+        private static readonly HashSet<string> TrackedChargeSoundNames = new HashSet<string>();
+        private static readonly Dictionary<Type, AimSoundAccessor> AimSoundAccessorsByType = new Dictionary<Type, AimSoundAccessor>();
+        private static readonly HashSet<Type> WarnedUnsupportedAimSoundTypes = new HashSet<Type>();
         private static FieldInfo verbsField;
+
+        private sealed class AimSoundAccessor
+        {
+            public FieldInfo Field;
+            public PropertyInfo Property;
+            public bool CanWrite;
+        }
 
         public static void ApplyCurrentSettings()
         {
-            EnsureCache();
+            RebuildCache();
             bool enabled = AbyssalProtocolMod.Settings?.enableWeaponChargeSounds ?? false;
 
-            foreach (KeyValuePair<string, string> entry in OriginalVerbAimSounds)
+            foreach (KeyValuePair<DefIndexKey, string> entry in OriginalVerbAimSounds)
             {
-                string[] parts = entry.Key.Split('|');
-                if (parts.Length != 2)
-                {
-                    continue;
-                }
-
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(parts[0]);
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(entry.Key.DefName);
                 if (def == null)
                 {
                     continue;
@@ -39,7 +58,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (!int.TryParse(parts[1], out int verbIndex) || verbIndex < 0 || verbIndex >= verbs.Count)
+                int verbIndex = entry.Key.Index;
+                if (verbIndex < 0 || verbIndex >= verbs.Count)
                 {
                     continue;
                 }
@@ -49,36 +69,28 @@ namespace AbyssalProtocol
                     : null;
             }
 
-            foreach (KeyValuePair<string, string> entry in OriginalCompAimSounds)
+            foreach (KeyValuePair<DefIndexKey, string> entry in OriginalCompAimSounds)
             {
-                string[] parts = entry.Key.Split('|');
-                if (parts.Length != 2)
-                {
-                    continue;
-                }
-
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(parts[0]);
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(entry.Key.DefName);
                 if (def == null || def.comps == null)
                 {
                     continue;
                 }
 
-                if (!int.TryParse(parts[1], out int compIndex) || compIndex < 0 || compIndex >= def.comps.Count)
+                int compIndex = entry.Key.Index;
+                if (compIndex < 0 || compIndex >= def.comps.Count)
                 {
                     continue;
                 }
 
                 CompProperties compProps = def.comps[compIndex];
-                FieldInfo aimField = compProps?.GetType().GetField("aimSoundDefName", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (aimField == null || aimField.FieldType != typeof(string))
+                if (compProps == null || !TrySetAimSoundDefName(compProps, enabled ? entry.Value : null))
                 {
                     continue;
                 }
-
-                aimField.SetValue(compProps, enabled ? entry.Value : null);
             }
 
-            NormalizeChargeSounds();
+            ApplyChargeSoundSustain(enabled);
         }
 
         private static void EnsureCache()
@@ -91,7 +103,7 @@ namespace AbyssalProtocol
             verbsField = typeof(ThingDef).GetField("verbs", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
             {
-                if (def == null || def.defName.NullOrEmpty() || !def.defName.StartsWith("ABY_"))
+                if (def == null || def.defName.NullOrEmpty())
                 {
                     continue;
                 }
@@ -102,11 +114,13 @@ namespace AbyssalProtocol
                     for (int i = 0; i < verbs.Count; i++)
                     {
                         string soundName = verbs[i]?.soundAiming?.defName;
-                        if (!soundName.NullOrEmpty())
+                        if (!ShouldTrackChargeSound(def, soundName))
                         {
-                            OriginalVerbAimSounds[def.defName + "|" + i] = soundName;
-                            CacheOriginalSound(soundName);
+                            continue;
                         }
+
+                        OriginalVerbAimSounds[new DefIndexKey(def.defName, i)] = soundName;
+                        RegisterTrackedChargeSound(soundName);
                     }
                 }
 
@@ -118,24 +132,34 @@ namespace AbyssalProtocol
                 for (int i = 0; i < def.comps.Count; i++)
                 {
                     CompProperties compProps = def.comps[i];
-                    FieldInfo aimField = compProps?.GetType().GetField("aimSoundDefName", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (aimField == null || aimField.FieldType != typeof(string))
+                    if (!TryGetAimSoundDefName(compProps, out string soundName))
                     {
                         continue;
                     }
 
-                    string soundName = aimField.GetValue(compProps) as string;
-                    if (soundName.NullOrEmpty())
+                    if (!ShouldTrackChargeSound(def, soundName))
                     {
                         continue;
                     }
 
-                    OriginalCompAimSounds[def.defName + "|" + i] = soundName;
-                    CacheOriginalSound(soundName);
+                    OriginalCompAimSounds[new DefIndexKey(def.defName, i)] = soundName;
+                    RegisterTrackedChargeSound(soundName);
                 }
             }
 
             cacheBuilt = true;
+        }
+
+        private static void RebuildCache()
+        {
+            cacheBuilt = false;
+            OriginalVerbAimSounds.Clear();
+            OriginalCompAimSounds.Clear();
+            OriginalSoundSustain.Clear();
+            OriginalSoundSustainFadeout.Clear();
+            TrackedChargeSoundNames.Clear();
+
+            EnsureCache();
         }
 
         private static void CacheOriginalSound(string soundDefName)
@@ -155,13 +179,187 @@ namespace AbyssalProtocol
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
         }
 
-        private static void NormalizeChargeSounds()
+        private static void RegisterTrackedChargeSound(string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            TrackedChargeSoundNames.Add(soundDefName);
+            CacheOriginalSound(soundDefName);
+        }
+
+        public static bool IsTrackedChargeSoundName(string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            EnsureCache();
+            return TrackedChargeSoundNames.Contains(soundDefName);
+        }
+
+        private static bool ShouldTrackChargeSound(ThingDef ownerDef, string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            if (IsAbyssalOwnedDef(ownerDef))
+            {
+                return true;
+            }
+
+            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
+            return IsAbyssalOwnedDef(soundDef);
+        }
+
+        private static bool IsAbyssalOwnedDef(Def def)
+        {
+            ModContentPack mod = def?.modContentPack;
+            if (mod == null)
+            {
+                return false;
+            }
+
+            string packageId = mod.PackageId;
+            return !packageId.NullOrEmpty()
+                && packageId.Equals(AbyssalPackageId, System.StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool TryGetAimSoundDefName(CompProperties compProps, out string soundDefName)
+        {
+            soundDefName = null;
+            if (compProps == null)
+            {
+                return false;
+            }
+
+            AimSoundAccessor accessor = ResolveAimSoundAccessor(compProps.GetType());
+            if (accessor == null)
+            {
+                return false;
+            }
+
+            object value = null;
+            try
+            {
+                if (accessor.Field != null)
+                {
+                    value = accessor.Field.GetValue(compProps);
+                }
+                else if (accessor.Property != null)
+                {
+                    value = accessor.Property.GetValue(compProps, null);
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            soundDefName = value as string;
+            return !soundDefName.NullOrEmpty();
+        }
+
+        private static bool TrySetAimSoundDefName(CompProperties compProps, string soundDefName)
+        {
+            if (compProps == null)
+            {
+                return false;
+            }
+
+            AimSoundAccessor accessor = ResolveAimSoundAccessor(compProps.GetType());
+            if (accessor == null || !accessor.CanWrite)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (accessor.Field != null)
+                {
+                    accessor.Field.SetValue(compProps, soundDefName);
+                    return true;
+                }
+
+                accessor.Property.SetValue(compProps, soundDefName, null);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static AimSoundAccessor ResolveAimSoundAccessor(Type compType)
+        {
+            if (compType == null)
+            {
+                return null;
+            }
+
+            if (AimSoundAccessorsByType.TryGetValue(compType, out AimSoundAccessor cached))
+            {
+                return cached;
+            }
+
+            const BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+            AimSoundAccessor accessor = new AimSoundAccessor();
+
+            FieldInfo field = compType.GetField("aimSoundDefName", flags);
+            if (field != null && field.FieldType == typeof(string))
+            {
+                accessor.Field = field;
+                accessor.CanWrite = true;
+                AimSoundAccessorsByType[compType] = accessor;
+                return accessor;
+            }
+
+            PropertyInfo property = compType.GetProperty("aimSoundDefName", flags);
+            if (property != null && property.PropertyType == typeof(string) && property.GetIndexParameters().Length == 0)
+            {
+                accessor.Property = property;
+                accessor.CanWrite = property.CanWrite;
+                AimSoundAccessorsByType[compType] = accessor;
+                return accessor;
+            }
+
+            if (!WarnedUnsupportedAimSoundTypes.Contains(compType))
+            {
+                WarnedUnsupportedAimSoundTypes.Add(compType);
+                Log.Warning("[Abyssal Protocol] Unable to access aimSoundDefName on comp type: " + compType.FullName);
+            }
+
+            AimSoundAccessorsByType[compType] = null;
+            return null;
+        }
+
+        private static void ApplyChargeSoundSustain(bool enabled)
         {
             foreach (string soundDefName in OriginalSoundSustain.Keys)
             {
                 SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
                 if (soundDef == null)
                 {
+                    continue;
+                }
+
+                if (!enabled)
+                {
+                    if (OriginalSoundSustain.TryGetValue(soundDefName, out bool originalSustain))
+                    {
+                        soundDef.sustain = originalSustain;
+                    }
+
+                    if (OriginalSoundSustainFadeout.TryGetValue(soundDefName, out float originalFadeout))
+                    {
+                        soundDef.sustainFadeoutTime = originalFadeout;
+                    }
+
                     continue;
                 }
 
