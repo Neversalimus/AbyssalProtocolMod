@@ -608,7 +608,7 @@ namespace AbyssalProtocol
                 : Props.castSoundDefName;
             if (!castSound.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(castSound, pawn.PositionHeld, pawn.Map);
+                ABY_SoundUtility.PlayOneShotAt(castSound, pawn.PositionHeld, pawn.Map);
             }
 
             string projectileDefName = useBreachShot && !Props.breachProjectileDefName.NullOrEmpty()

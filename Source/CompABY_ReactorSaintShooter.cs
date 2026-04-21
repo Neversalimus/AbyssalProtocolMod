@@ -898,7 +898,7 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(targetCell);
             if (!Props.primaryFireSoundDefName.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.primaryFireSoundDefName, pawn.Position, pawn.Map);
+                ABY_SoundUtility.PlayOneShotAt(Props.primaryFireSoundDefName, pawn.Position, pawn.Map);
             }
 
             ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.directProjectileDefName);
@@ -950,7 +950,7 @@ namespace AbyssalProtocol
             pawn.rotationTracker?.FaceTarget(targetCell);
             if (!Props.barrageFireSoundDefName.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.barrageFireSoundDefName, pawn.Position, pawn.Map);
+                ABY_SoundUtility.PlayOneShotAt(Props.barrageFireSoundDefName, pawn.Position, pawn.Map);
             }
 
             ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.barrageProjectileDefName);
