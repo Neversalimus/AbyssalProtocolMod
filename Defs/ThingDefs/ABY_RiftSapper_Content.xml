@@ -93,24 +93,27 @@
         <preferredMinRange>6.8</preferredMinRange>
         <retreatSearchRadius>8</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
-        <useSapperAssaultLord>false</useSapperAssaultLord>
+        <useSapperAssaultLord>true</useSapperAssaultLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
-      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+      <li Class="AbyssalProtocol.CompProperties_ABY_RiftSapperShooter">
         <projectileDefName>ABY_RiftSapperSpike</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_AshenScattergunFire</castSoundDefName>
         <range>19.9</range>
         <warmupTicks>52</warmupTicks>
         <cooldownTicks>122</cooldownTicks>
-        <burstShotCount>1</burstShotCount>
-        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
         <scanIntervalTicks>13</scanIntervalTicks>
         <preferredMinRange>6.8</preferredMinRange>
+        <targetMinRange>4.2</targetMinRange>
         <retreatSearchRadius>8</retreatSearchRadius>
         <panicMeleeRange>2.2</panicMeleeRange>
         <panicMeleeJobExpiryTicks>150</panicMeleeJobExpiryTicks>
         <preferRangedTargets>true</preferRangedTargets>
+        <preferBuildingTargets>true</preferBuildingTargets>
+        <prioritizeTurrets>true</prioritizeTurrets>
+        <prioritizeDoors>true</prioritizeDoors>
+        <prioritizeCover>true</prioritizeCover>
       </li>
     </comps>
   </ThingDef>

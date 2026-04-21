@@ -17,6 +17,7 @@ namespace AbyssalProtocol
         private const float StructureArmorPenetration = 1.35f;
         private const int DoorBonusDamage = 16;
         private const int TurretBonusDamage = 22;
+        private const int CoverBonusDamage = 18;
 
         private int ticksAlive;
 
@@ -84,7 +85,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < things.Count; i++)
                 {
                     Building building = things[i] as Building;
-                    if (!IsValidStructureTarget(building))
+                    if (!IsValidStructureTarget(building, instigator))
                     {
                         continue;
                     }
@@ -97,6 +98,11 @@ namespace AbyssalProtocol
                     else if (building is Building_Turret)
                     {
                         damage += TurretBonusDamage;
+                    }
+
+                    if (IsCoverLike(building))
+                    {
+                        damage += CoverBonusDamage;
                     }
 
                     building.TakeDamage(new DamageInfo(
@@ -112,13 +118,37 @@ namespace AbyssalProtocol
             }
         }
 
-        private static bool IsValidStructureTarget(Building building)
+        private static bool IsValidStructureTarget(Building building, Thing instigator)
         {
-            return building != null
-                && building.Spawned
-                && !building.Destroyed
-                && building.def != null
-                && building.def.useHitPoints;
+            if (building == null
+                || !building.Spawned
+                || building.Destroyed
+                || building.def == null
+                || !building.def.useHitPoints)
+            {
+                return false;
+            }
+
+            if (instigator?.Faction == null || building.Faction == null)
+            {
+                return false;
+            }
+
+            return instigator.Faction.HostileTo(building.Faction);
+        }
+
+        private static bool IsCoverLike(Building building)
+        {
+            string defName = building?.def?.defName;
+            if (defName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            return defName.IndexOf("Sandbag", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Barricade", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Barrier", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("Embrasure", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
     }
 }
