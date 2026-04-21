@@ -328,12 +328,9 @@ namespace AbyssalProtocol
                 return accessor;
             }
 
-            if (!WarnedUnsupportedAimSoundTypes.Contains(compType))
-            {
-                WarnedUnsupportedAimSoundTypes.Add(compType);
-                Log.Warning("[Abyssal Protocol] Unable to access aimSoundDefName on comp type: " + compType.FullName);
-            }
-
+            // Most CompProperties types legitimately do not expose aimSoundDefName.
+            // Treat unsupported types as a silent cache miss instead of warning spam.
+            WarnedUnsupportedAimSoundTypes.Add(compType);
             AimSoundAccessorsByType[compType] = null;
             return null;
         }
