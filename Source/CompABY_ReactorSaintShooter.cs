@@ -187,7 +187,7 @@ namespace AbyssalProtocol
 
             if (!Props.aimSoundDefName.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
+                ABY_SoundUtility.PlayChargeAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
             if (Props.holdPositionWhenTargeting)

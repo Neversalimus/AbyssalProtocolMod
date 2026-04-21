@@ -293,7 +293,7 @@ namespace AbyssalProtocol
                 : Props.aimSoundDefName;
             if (!aimSound.NullOrEmpty())
             {
-                ABY_SoundUtility.PlayAt(aimSound, pawn.PositionHeld, pawn.Map);
+                ABY_SoundUtility.PlayChargeAt(aimSound, pawn.PositionHeld, pawn.Map);
             }
 
             ShowTelegraphFX(pawn, target, true, breachWarmup);
