@@ -224,12 +224,7 @@ namespace AbyssalProtocol
 
             nextPortalOpenTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + Mathf.Max(8, initialDelay);
             Messages.Message(
-                AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                    "ABY_HordeOperation_Begin",
-                    "{0} stabilizes: {1}. {2}.",
-                    AbyssalHordeSigilUtility.GetDoctrineLabel(resolvedPlan),
-                    AbyssalHordeSigilUtility.GetOperationBulletin(resolvedPlan),
-                    AbyssalHordeSigilUtility.GetDoctrineWarning(resolvedPlan)),
+                "ABY_CircleEmberHoundLetterDesc".Translate(),
                 new TargetInfo(firstPortalCell, map),
                 MessageTypeDefOf.ThreatBig);
             return true;

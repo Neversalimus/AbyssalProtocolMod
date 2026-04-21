@@ -828,6 +828,7 @@ namespace AbyssalProtocol
             if (AbyssalHordeSigilUtility.IsSupportedRitual(ritual?.Id))
             {
                 AbyssalHordeSigilUtility.HordePlan hordePlan = AbyssalHordeSigilUtility.GetHordePlan(circle?.Map);
+                AbyssalHordeRewardUtility.RewardSnapshot rewardSnapshot = AbyssalHordeRewardUtility.BuildSnapshot(hordePlan);
                 string doctrineLine = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Line", "Forecast doctrine: {0}", AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan));
                 string doctrineSummary = AbyssalHordeSigilUtility.GetDoctrineSummary(hordePlan);
                 string phaseSummary = AbyssalHordeSigilUtility.GetPhaseFlowSummary(hordePlan);
