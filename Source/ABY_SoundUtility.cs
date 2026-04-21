@@ -5,14 +5,21 @@ namespace AbyssalProtocol
 {
     public static class ABY_SoundUtility
     {
-        public static void PlayAt(string soundDefName, IntVec3 cell, Map map)
+        public static void PlayChargeAt(string soundDefName, IntVec3 cell, Map map)
         {
-            if (soundDefName.NullOrEmpty() || map == null || !cell.IsValid)
+            // Safer than name-only suppression: charge sound muting is now explicit at true charge/aim call sites,
+            // so unrelated gameplay uses of the same SoundDef are not accidentally muted.
+            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds)
             {
                 return;
             }
 
-            if (!AbyssalProtocolMod.Settings.enableWeaponChargeSounds && (soundDefName.Contains("Charge") || soundDefName.Contains("Aim")))
+            PlayAt(soundDefName, cell, map);
+        }
+
+        public static void PlayAt(string soundDefName, IntVec3 cell, Map map)
+        {
+            if (soundDefName.NullOrEmpty() || map == null || !cell.IsValid)
             {
                 return;
             }
