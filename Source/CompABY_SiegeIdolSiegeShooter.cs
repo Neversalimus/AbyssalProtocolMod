@@ -19,6 +19,7 @@ namespace AbyssalProtocol
         private int anchorReleaseTick = -1;
         private bool anchored;
         private bool breachWarmup;
+        private int anchoredRotationInt = -1;
         private Thing currentTarget;
 
         private CompProperties_ABY_SiegeIdolSiegeShooter Props => (CompProperties_ABY_SiegeIdolSiegeShooter)props;
@@ -35,6 +36,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref anchorReleaseTick, "anchorReleaseTick", -1);
             Scribe_Values.Look(ref anchored, "anchored", false);
             Scribe_Values.Look(ref breachWarmup, "breachWarmup", false);
+            Scribe_Values.Look(ref anchoredRotationInt, "anchoredRotationInt", -1);
             Scribe_References.Look(ref currentTarget, "currentTarget");
         }
 
@@ -270,7 +272,8 @@ namespace AbyssalProtocol
 
             deployCompleteTick = ticksGame + Math.Max(1, Props.deployTicks);
             anchorReleaseTick = -1;
-            pawn.rotationTracker?.FaceTarget(target.PositionHeld);
+            anchoredRotationInt = ResolveSiegeRotation(pawn, target).AsInt;
+            ApplyAnchoredRotation(pawn);
             pawn.pather?.StopDead();
             ShowDeployFX(pawn);
         }
@@ -285,7 +288,12 @@ namespace AbyssalProtocol
             breachWarmup = useBreachShot;
             warmupCompleteTick = ticksGame + Math.Max(1, breachWarmup ? Props.breachWarmupTicks : Props.warmupTicks);
             nextTelegraphTick = ticksGame;
-            pawn.rotationTracker?.FaceTarget(target.PositionHeld);
+            if (anchoredRotationInt < 0)
+            {
+                anchoredRotationInt = ResolveSiegeRotation(pawn, target).AsInt;
+            }
+
+            ApplyAnchoredRotation(pawn);
             pawn.pather?.StopDead();
 
             string aimSound = breachWarmup && !Props.breachAimSoundDefName.NullOrEmpty()
@@ -306,11 +314,13 @@ namespace AbyssalProtocol
                 return;
             }
 
-            pawn.pather?.StopDead();
-            if (target != null)
+            if (anchoredRotationInt < 0 && target != null)
             {
-                pawn.rotationTracker?.FaceTarget(target.PositionHeld);
+                anchoredRotationInt = ResolveSiegeRotation(pawn, target).AsInt;
             }
+
+            pawn.pather?.StopDead();
+            ApplyAnchoredRotation(pawn);
         }
 
         private void ReleaseAnchor(int ticksGame)
@@ -323,6 +333,7 @@ namespace AbyssalProtocol
         private void CancelDeploy()
         {
             deployCompleteTick = -1;
+            anchoredRotationInt = -1;
             currentTarget = null;
         }
 
@@ -332,6 +343,7 @@ namespace AbyssalProtocol
             nextTelegraphTick = -1;
             breachWarmup = false;
             nextReadyTick = ticksGame + 24;
+            anchoredRotationInt = -1;
             currentTarget = null;
         }
 
@@ -343,6 +355,7 @@ namespace AbyssalProtocol
             nextTelegraphTick = -1;
             anchorReleaseTick = -1;
             breachWarmup = false;
+            anchoredRotationInt = -1;
         }
 
         private void ResetAll()
@@ -510,6 +523,43 @@ namespace AbyssalProtocol
             return distance >= Mathf.Max(0f, Props.anchorMinRange);
         }
 
+        private Rot4 ResolveSiegeRotation(Pawn pawn, Thing target)
+        {
+            if (pawn == null)
+            {
+                return Rot4.South;
+            }
+
+            if (target == null || !target.PositionHeld.IsValid)
+            {
+                return pawn.Rotation;
+            }
+
+            IntVec3 delta = target.PositionHeld - pawn.PositionHeld;
+            if (Math.Abs(delta.x) > Math.Abs(delta.z))
+            {
+                return delta.x >= 0 ? Rot4.East : Rot4.West;
+            }
+
+            if (Math.Abs(delta.z) > 0)
+            {
+                return delta.z >= 0 ? Rot4.North : Rot4.South;
+            }
+
+            return pawn.Rotation;
+        }
+
+        private void ApplyAnchoredRotation(Pawn pawn)
+        {
+            if (pawn == null || anchoredRotationInt < 0)
+            {
+                return;
+            }
+
+            Rot4 rotation = new Rot4(anchoredRotationInt);
+            pawn.rotationTracker?.FaceCell(pawn.PositionHeld + rotation.FacingCell);
+        }
+
         private bool CanFireAt(Pawn shooter, Thing target)
         {
             if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(shooter, target))
@@ -602,7 +652,12 @@ namespace AbyssalProtocol
                 return;
             }
 
-            pawn.rotationTracker?.FaceTarget(target.PositionHeld);
+            if (anchoredRotationInt < 0)
+            {
+                anchoredRotationInt = ResolveSiegeRotation(pawn, target).AsInt;
+            }
+
+            ApplyAnchoredRotation(pawn);
             string castSound = useBreachShot && !Props.breachCastSoundDefName.NullOrEmpty()
                 ? Props.breachCastSoundDefName
                 : Props.castSoundDefName;

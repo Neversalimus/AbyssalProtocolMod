@@ -51,7 +51,7 @@ namespace AbyssalProtocol
             resizeable = false;
         }
 
-        public override Vector2 InitialSize => new Vector2(1380f, 900f);
+        public override Vector2 InitialSize => new Vector2(1420f, 920f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -64,8 +64,8 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect summaryRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 116f);
-            Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 420f, inRect.height - filtersRect.yMax - 10f);
+            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 128f);
+            Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 468f, inRect.height - filtersRect.yMax - 10f);
             Rect detailRect = new Rect(listRect.xMax + 10f, filtersRect.yMax + 10f, inRect.width - listRect.width - 10f, inRect.height - filtersRect.yMax - 10f);
 
             DrawHeader(headerRect);
@@ -130,17 +130,17 @@ namespace AbyssalProtocol
             float y = inner.y;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, y, inner.width, 20f), "ABY_Bestiary_FilterHeader".Translate());
             y += 24f;
-            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f), new[]
+            DrawFilterRow(new Rect(inner.x, y, inner.width, 28f), new[]
             {
                 FilterMode.All, FilterMode.Locked, FilterMode.Discovered, FilterMode.Studied
             });
-            y += 30f;
-            DrawFilterRow(new Rect(inner.x, y, inner.width, 24f), new[]
+            y += 34f;
+            DrawFilterRow(new Rect(inner.x, y, inner.width, 28f), new[]
             {
                 FilterMode.Assault, FilterMode.Elite, FilterMode.Support, FilterMode.Boss
             });
-            y += 30f;
-            DrawSortRow(new Rect(inner.x, y, inner.width, 24f));
+            y += 34f;
+            DrawSortRow(new Rect(inner.x, y, inner.width, 28f));
         }
 
         private void DrawFilterRow(Rect rect, FilterMode[] filters)
@@ -151,7 +151,7 @@ namespace AbyssalProtocol
             {
                 Rect buttonRect = new Rect(rect.x + i * (width + gap), rect.y, width, rect.height);
                 FilterMode mode = filters[i];
-                if (AbyssalStyledWidgets.TextButton(buttonRect, GetFilterLabel(mode), true, filterMode == mode))
+                if (DrawReadableStyledButton(buttonRect, GetFilterLabel(mode), true, filterMode == mode))
                 {
                     filterMode = mode;
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -173,7 +173,7 @@ namespace AbyssalProtocol
             {
                 Rect buttonRect = new Rect(startX + i * (width + gap), rect.y, width, rect.height);
                 SortMode mode = sorts[i];
-                if (AbyssalStyledWidgets.TextButton(buttonRect, GetSortLabel(mode), true, sortMode == mode))
+                if (DrawReadableStyledButton(buttonRect, GetSortLabel(mode), true, sortMode == mode))
                 {
                     sortMode = mode;
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
@@ -191,7 +191,7 @@ namespace AbyssalProtocol
             EnsureSelectedEntry(visibleEntries);
 
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
-            float cardHeight = 98f;
+            float cardHeight = 118f;
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, visibleEntries.Count * (cardHeight + 6f)));
             Widgets.BeginScrollView(outRect, ref listScrollPosition, viewRect, true);
             for (int i = 0; i < visibleEntries.Count; i++)
@@ -212,7 +212,7 @@ namespace AbyssalProtocol
                 Widgets.DrawHighlightIfMouseover(rect);
             }
 
-            Rect portraitRect = new Rect(rect.x + 8f, rect.y + 8f, 64f, 64f);
+            Rect portraitRect = new Rect(rect.x + 10f, rect.y + 10f, 72f, 72f);
             DrawPortrait(portraitRect, entry.EntryId, unlocked);
 
             string title = unlocked ? ABY_BestiaryUtility.GetEntryLabel(entry.EntryId) : ABY_BestiaryUtility.GetUnknownEntryLabel();
@@ -220,28 +220,29 @@ namespace AbyssalProtocol
             string category = ABY_BestiaryUtility.GetCategoryLabel(entry.EntryId);
             string tag = unlocked ? ABY_BestiaryUtility.GetTagline(entry.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_LockedTag", "Kill this hostile once to unseal the archive stub.");
             int kills = ABY_BestiaryUtility.GetKillCount(entry.EntryId);
-            float contentX = rect.x + 82f;
-            float rightColumnWidth = 60f;
-            float textWidth = Mathf.Max(80f, rect.width - (contentX - rect.x) - rightColumnWidth - 12f);
+            float contentX = rect.x + 94f;
+            float rightColumnWidth = 54f;
+            float textWidth = Mathf.Max(96f, rect.width - (contentX - rect.x) - rightColumnWidth - 14f);
 
+            Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(contentX, rect.y + 6f, textWidth, 22f), title);
+            Widgets.Label(new Rect(contentX, rect.y + 8f, textWidth, 22f), title);
 
             Text.Font = GameFont.Tiny;
             GUI.color = studied ? new Color(0.74f, 1f, 0.76f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(contentX, rect.y + 26f, textWidth, 16f), category + "  •  " + status);
+            Widgets.Label(new Rect(contentX, rect.y + 30f, textWidth, 16f), category + "  •  " + status);
 
             GUI.color = Color.white;
-            Widgets.Label(new Rect(contentX, rect.y + 42f, textWidth, 24f), tag);
+            Widgets.Label(new Rect(contentX, rect.y + 50f, textWidth, 32f), tag);
 
             Text.Anchor = TextAnchor.UpperRight;
             GUI.color = selected ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.xMax - rightColumnWidth - 8f, rect.y + 8f, rightColumnWidth, 16f), "×" + kills);
+            Widgets.Label(new Rect(rect.xMax - rightColumnWidth - 10f, rect.y + 10f, rightColumnWidth, 16f), "×" + kills);
             Text.Anchor = TextAnchor.UpperLeft;
 
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(contentX, rect.y + 70f, rect.width - (contentX - rect.x) - 12f, 18f), ABY_BestiaryUtility.GetMilestoneSummary(entry.EntryId));
+            Widgets.Label(new Rect(contentX, rect.y + 86f, rect.width - (contentX - rect.x) - 14f, 22f), ABY_BestiaryUtility.GetMilestoneSummary(entry.EntryId));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
@@ -468,6 +469,40 @@ namespace AbyssalProtocol
                 case SortMode.Recent: return "ABY_Bestiary_Sort_Recent".Translate();
                 default: return "ABY_Bestiary_Sort_Threat".Translate();
             }
+        }
+
+        private bool DrawReadableStyledButton(Rect rect, string label, bool enabled, bool active)
+        {
+            bool clicked = AbyssalStyledWidgets.TextButton(rect, string.Empty, enabled, active);
+
+            Color oldColor = GUI.color;
+            GUI.color = new Color(0f, 0f, 0f, active ? 0.12f : 0.18f);
+            GUI.DrawTexture(rect.ContractedBy(8f), BaseContent.WhiteTex);
+            GUI.color = oldColor;
+
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldTextColor = GUI.color;
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Small;
+            if (Text.CalcSize(label).x > rect.width - 18f)
+            {
+                Text.Font = GameFont.Tiny;
+            }
+
+            Rect labelRect = rect.ContractedBy(8f);
+            GUI.color = new Color(0f, 0f, 0f, 0.85f);
+            Widgets.Label(new Rect(labelRect.x + 1f, labelRect.y + 1f, labelRect.width, labelRect.height), label);
+            GUI.color = !enabled
+                ? new Color(0.58f, 0.56f, 0.54f, 1f)
+                : (active ? new Color(1f, 0.90f, 0.80f, 1f) : Color.white);
+            Widgets.Label(labelRect, label);
+
+            GUI.color = oldTextColor;
+            Text.Font = oldFont;
+            Text.Anchor = oldAnchor;
+            return clicked;
         }
     }
 }
