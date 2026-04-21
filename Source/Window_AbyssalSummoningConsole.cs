@@ -268,11 +268,11 @@ namespace AbyssalProtocol
             if (dominionUiMode)
             {
                 float halfWidth = (inner.width - 6f) * 0.5f;
-                Rect sigilRect = new Rect(inner.x, inner.yMax - 78f, halfWidth, 30f);
-                Rect objectiveRect = new Rect(sigilRect.xMax + 6f, inner.yMax - 78f, halfWidth, 30f);
-                if (AbyssalStyledWidgets.TextButton(sigilRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
+                Rect codexRect = new Rect(inner.x, inner.yMax - 78f, halfWidth, 30f);
+                Rect objectiveRect = new Rect(codexRect.xMax + 6f, inner.yMax - 78f, halfWidth, 30f);
+                if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
                 {
-                    JumpToSigil(ritual);
+                    OpenThreatCodex();
                 }
 
                 if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
@@ -283,9 +283,9 @@ namespace AbyssalProtocol
             else
             {
                 Rect openRect = new Rect(inner.x, inner.yMax - 78f, inner.width, 30f);
-                if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.GetJumpToSigilLabel()))
+                if (AbyssalStyledWidgets.TextButton(openRect, "ABY_Bestiary_OpenCodex".Translate()))
                 {
-                    JumpToSigil(ritual);
+                    OpenThreatCodex();
                 }
             }
 
@@ -1068,6 +1068,12 @@ namespace AbyssalProtocol
             {
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
+        }
+
+        private void OpenThreatCodex()
+        {
+            Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
+            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
         }
 
         private void JumpToSigil(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
