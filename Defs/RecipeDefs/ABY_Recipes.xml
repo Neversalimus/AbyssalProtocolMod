@@ -147,5 +147,10 @@
     <products>
       <ABY_ArchonSigil>1</ABY_ArchonSigil>
     </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
 </Defs>
