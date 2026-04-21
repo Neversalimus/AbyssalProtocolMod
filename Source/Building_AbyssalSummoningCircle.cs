@@ -1862,6 +1862,10 @@ namespace AbyssalProtocol
 
             IntVec3 letterCell = firstPortalCell.IsValid ? firstPortalCell : RitualFocusCell;
             ApplyRitualInstability();
+            if (AbyssalHordeSigilUtility.IsSupportedRitual(pendingRitualId))
+            {
+                AbyssalHordeRewardUtility.ApplyAdditionalBacklash(this, AbyssalHordeRewardUtility.BuildSnapshot(AbyssalHordeSigilUtility.GetHordePlan(Map)));
+            }
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", letterCell, Map);
             Find.LetterStack.ReceiveLetter(
@@ -2337,6 +2341,16 @@ namespace AbyssalProtocol
             {
                 Map?.GetComponent<MapComponent_AbyssalCircleInstability>()?.AddContamination(contaminationGain);
             }
+        }
+
+        public void DebugAdjustInstabilityHeat(float amount)
+        {
+            if (Mathf.Abs(amount) < 0.0001f)
+            {
+                return;
+            }
+
+            instabilityHeat = Mathf.Clamp01(instabilityHeat + amount);
         }
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetPendingRitualDefinition()

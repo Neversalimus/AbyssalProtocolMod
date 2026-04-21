@@ -7,9 +7,9 @@
   <ABY_CircleRitual_Horde_SideEffects>&#10;• Opens multiple perimeter breach fronts instead of one local spawn&#10;• Pressure scales hard with colony size, wealth, and protocol difficulty&#10;• Does not grant boss or mini-boss drops even when the wave becomes enormous</ABY_CircleRitual_Horde_SideEffects>
   <ABY_HordeGateSummonSuccessLabel>Horde gate breached</ABY_HordeGateSummonSuccessLabel>
   <ABY_HordeGateSummonSuccessDesc>Multiple perimeter rupture fronts are opening. Ordinary abyssal warforms are spilling onto the map in repeated portal pulses.</ABY_HordeGateSummonSuccessDesc>
-  <ABY_CircleRewardGuaranteed_Horde>Guaranteed: high residue yield and wide cleanup salvage from a full army-scale breach.</ABY_CircleRewardGuaranteed_Horde>
-  <ABY_CircleRewardProgression_Horde>Progression: stress-tests multi-front late defense after Reactor Saint without skipping straight into dominion crisis logic.</ABY_CircleRewardProgression_Horde>
-  <ABY_HordeRitualMeta>Sigils on map: {0}   •   Pattern: {1}   •   Fronts: {2}   •   Pulses: {3}   •   Forecast: {4}   •   Protocol: {5}</ABY_HordeRitualMeta>
+  <ABY_CircleRewardGuaranteed_Horde>Guaranteed: a breach-closure cache with high residue, horde fragments, and salvage routed out of the army-scale lattice. Command node kills spill an extra bonus when present.</ABY_CircleRewardGuaranteed_Horde>
+  <ABY_CircleRewardProgression_Horde>Progression: stress-tests multi-front late defense after Reactor Saint while feeding a distinct post-saint economy layer instead of boss-tier cores.</ABY_CircleRewardProgression_Horde>
+  <ABY_HordeRitualMeta>Sigils on map: {0}   •   Pattern: {1}   •   Fronts: {2}   •   Pulses: {3}   •   Command gate: {4}   •   Forecast: {5}   •   Protocol: {6}</ABY_HordeRitualMeta>
   <ABY_CircleFail_HordeLocked>The horde gate remains dormant until the first Reactor Saint kill is recorded on this save.</ABY_CircleFail_HordeLocked>
   <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
   <ABY_CirclePreview_Harvester_Plural>harvesters</ABY_CirclePreview_Harvester_Plural>
@@ -17,6 +17,32 @@
   <ABY_CirclePreview_Brute_Plural>breach brutes</ABY_CirclePreview_Brute_Plural>
   <ABY_CirclePreview_Idol_Singular>siege idol</ABY_CirclePreview_Idol_Singular>
   <ABY_CirclePreview_Idol_Plural>siege idols</ABY_CirclePreview_Idol_Plural>
+  <ABY_HordeBulletin_Header>Combat bulletin</ABY_HordeBulletin_Header>
+  <ABY_HordeBulletin_CellDoctrine>Doctrine</ABY_HordeBulletin_CellDoctrine>
+  <ABY_HordeBulletin_CellFronts>Fronts</ABY_HordeBulletin_CellFronts>
+  <ABY_HordeBulletin_CellPhases>Phases</ABY_HordeBulletin_CellPhases>
+  <ABY_HordeBulletin_CellCommand>Command</ABY_HordeBulletin_CellCommand>
+  <ABY_HordeBulletin_CellSiege>Siege</ABY_HordeBulletin_CellSiege>
+  <ABY_HordeBulletin_CellClosure>Closure</ABY_HordeBulletin_CellClosure>
+  <ABY_HordeBulletin_Fronts>{0} fronts</ABY_HordeBulletin_Fronts>
+  <ABY_HordeBulletin_Fronts_Unknown>unstable</ABY_HordeBulletin_Fronts_Unknown>
+  <ABY_HordeBulletin_Phases>{0} phases</ABY_HordeBulletin_Phases>
+  <ABY_HordeBulletin_Phases_Unknown>unstable</ABY_HordeBulletin_Phases_Unknown>
+  <ABY_HordeBulletin_Command_Expected>Node +{0} bursts</ABY_HordeBulletin_Command_Expected>
+  <ABY_HordeBulletin_Command_None>No node</ABY_HordeBulletin_Command_None>
+  <ABY_HordeBulletin_Command_Unknown>unstable</ABY_HordeBulletin_Command_Unknown>
+  <ABY_HordeBulletin_Siege_Likely>Likely</ABY_HordeBulletin_Siege_Likely>
+  <ABY_HordeBulletin_Siege_Possible>Possible</ABY_HordeBulletin_Siege_Possible>
+  <ABY_HordeBulletin_Siege_Low>Low</ABY_HordeBulletin_Siege_Low>
+  <ABY_HordeBulletin_Siege_Unknown>unstable</ABY_HordeBulletin_Siege_Unknown>
+  <ABY_HordeOperationBulletin>{0} doctrine. {1}. {2}. Command status: {3}. Siege pressure: {4}.</ABY_HordeOperationBulletin>
+  <ABY_HordeOperationBulletin_Unknown>Operation bulletin could not be stabilized.</ABY_HordeOperationBulletin_Unknown>
+  <ABY_HordeOperation_Begin>{0} stabilizes: {1}. {2}.</ABY_HordeOperation_Begin>
+  <ABY_HordeDoctrineWarning_Flood>Warning: the opening flood wants to pin defenders with speed and body count. Do not overextend on the first breach.</ABY_HordeDoctrineWarning_Flood>
+  <ABY_HordeDoctrineWarning_Fireline>Warning: this pattern punishes static firing lines. Snipers and priests will try to hold open lanes behind the front.</ABY_HordeDoctrineWarning_Fireline>
+  <ABY_HordeDoctrineWarning_Grinder>Warning: the grinder host wants a dense frontal collapse. Do not let heavy bodies stack on a single doorway.</ABY_HordeDoctrineWarning_Grinder>
+  <ABY_HordeDoctrineWarning_Siege>Warning: late heavy anchors are more likely here. Leaving open ground unchecked increases the chance of siege pressure stabilizing.</ABY_HordeDoctrineWarning_Siege>
+  <ABY_HordeDoctrineWarning_Unknown>Warning: the breach pattern is unstable. Expect mixed pressure with no clean specialization.</ABY_HordeDoctrineWarning_Unknown>
   <ABY_HordeDoctrinePreview_Header>Offensive pattern</ABY_HordeDoctrinePreview_Header>
   <ABY_HordeDoctrinePreview_Line>Forecast doctrine: {0}</ABY_HordeDoctrinePreview_Line>
   <ABY_HordeDoctrine_Flood_Label>Ravenous Breach</ABY_HordeDoctrine_Flood_Label>
@@ -29,4 +55,59 @@
   <ABY_HordeDoctrine_Siege_Summary>Siege doctrine. Expects a rarer late-pressure composition with elite anchors and possible Idol-backed support.</ABY_HordeDoctrine_Siege_Summary>
   <ABY_HordeDoctrine_Unknown_Label>Unshaped breach</ABY_HordeDoctrine_Unknown_Label>
   <ABY_HordeDoctrine_Unknown_Summary>Forecast doctrine could not be stabilized. Expect a mixed perimeter breach with no clean specialization.</ABY_HordeDoctrine_Unknown_Summary>
+  <ABY_HordePhasesPreview_Header>Phase flow</ABY_HordePhasesPreview_Header>
+  <ABY_HordePhasesPreview_Summary>{0} phases routed: {1}</ABY_HordePhasesPreview_Summary>
+  <ABY_HordePhasesPreview_Line>{0}: {1} Fronts {2}. Pulses {3}.</ABY_HordePhasesPreview_Line>
+  <ABY_HordePhasesPreview_Unknown>Phase routing could not be stabilized. Expect a rough multi-front breach.</ABY_HordePhasesPreview_Unknown>
+  <ABY_HordePhase_Marking_Label>Breach marking</ABY_HordePhase_Marking_Label>
+  <ABY_HordePhase_Marking_Summary>Initial probing cuts. Lighter perimeter breaches map approach lanes and expose the colony before the full offensive commits.</ABY_HordePhase_Marking_Summary>
+  <ABY_HordePhase_Lattice_Label>Offensive lattice</ABY_HordePhase_Lattice_Label>
+  <ABY_HordePhase_Lattice_Summary>Main offensive phase. Multiple fronts stay active and the doctrine profile stabilizes into the bulk of the attack.</ABY_HordePhase_Lattice_Summary>
+  <ABY_HordePhase_Surge_Label>Last surge</ABY_HordePhase_Surge_Label>
+  <ABY_HordePhase_Surge_Summary>Concentrated final drive. Fewer but denser portals accelerate elite or support pressure into a late push.</ABY_HordePhase_Surge_Summary>
+  <ABY_HordePhase_Collapse_Label>Collapse tail</ABY_HordePhase_Collapse_Label>
+  <ABY_HordePhase_Collapse_Summary>Dissipation window. Remaining rupture fronts spit out a smaller tail while the breach starts folding shut.</ABY_HordePhase_Collapse_Summary>
+  <ABY_HordePhase_Unknown_Label>Unstable phase</ABY_HordePhase_Unknown_Label>
+  <ABY_HordePhase_Unknown_Summary>Phase routing could not be stabilized. Expect an uneven multi-front breach.</ABY_HordePhase_Unknown_Summary>
+
+  <ABY_HordePerimeter_Header>Perimeter intelligence</ABY_HordePerimeter_Header>
+  <ABY_HordePerimeter_Summary>Perimeter intelligence is active. Fronts are assigned to approach lanes, internal colony cells are avoided, and heavy pressure is split across distinct edges when possible.</ABY_HordePerimeter_Summary>
+  <ABY_HordePerimeter_Unknown>Perimeter routing could not be stabilized. Expect a rough multi-front breach.</ABY_HordePerimeter_Unknown>
+  <ABY_HordePerimeter_Line>Front {0}: {1} lane on the {2} perimeter.</ABY_HordePerimeter_Line>
+  <ABY_HordePerimeter_Line_Command>Front {0}: {1} lane on the {2} perimeter. Command-linked pressure is routed through this edge.</ABY_HordePerimeter_Line_Command>
+  <ABY_HordeFrontRole_Assault>Assault</ABY_HordeFrontRole_Assault>
+  <ABY_HordeFrontRole_Flank>Flank</ABY_HordeFrontRole_Flank>
+  <ABY_HordeFrontRole_FireSupport>Fire support</ABY_HordeFrontRole_FireSupport>
+  <ABY_HordeFrontRole_Siege>Siege</ABY_HordeFrontRole_Siege>
+  <ABY_HordeSide_West>west</ABY_HordeSide_West>
+  <ABY_HordeSide_East>east</ABY_HordeSide_East>
+  <ABY_HordeSide_South>south</ABY_HordeSide_South>
+  <ABY_HordeSide_North>north</ABY_HordeSide_North>
+  <ABY_HordeSide_Unknown>unstable edge</ABY_HordeSide_Unknown>
+
+  <ABY_HordeCommandGate_Header>Command gate node</ABY_HordeCommandGate_Header>
+  <ABY_HordeCommandGate_Label>Command gate node</ABY_HordeCommandGate_Label>
+  <ABY_HordeCommandGate_Summary>Secondary objective expected. While intact, one perimeter command node accelerates the offensive and keeps {0} reserved reinforcement bursts routed through its front. Destroying it cancels those command-linked bursts and slows the breach cadence.</ABY_HordeCommandGate_Summary>
+  <ABY_HordeCommandGate_AbsentShort>no</ABY_HordeCommandGate_AbsentShort>
+  <ABY_HordeCommandGate_AbsentSummary>No secondary command node is expected for this breach forecast.</ABY_HordeCommandGate_AbsentSummary>
+  <ABY_HordeCommandGate_LineBursts>Reserved bursts: {0}</ABY_HordeCommandGate_LineBursts>
+  <ABY_HordeCommandGate_LineCadence>Intact cadence factor: {0}% of normal portal delay on the command front.</ABY_HordeCommandGate_LineCadence>
+  <ABY_HordeCommandGate_LineCollapse>Destroying it immediately cancels remaining command-linked reinforcements.</ABY_HordeCommandGate_LineCollapse>
+  <ABY_HordeCommandGate_Spawned>A {0} command gate node stabilizes on the {1} perimeter. Destroying it cancels reserved reinforcements and slows the offensive.</ABY_HordeCommandGate_Spawned>
+  <ABY_HordeCommandGate_Destroyed>The {0} command gate collapses. Remaining command-linked reinforcements are severed and the breach loses tempo.</ABY_HordeCommandGate_Destroyed>
+  <ABY_HordeCommandGate_Inspect>Command gate node. Doctrine: {0}. Remaining command bursts: {1}. While intact it accelerates portal cadence on its front and preserves reserved reinforcements.</ABY_HordeCommandGate_Inspect>
+  <ABY_HordeCommandGate_InspectReward>If destroyed it spills a command salvage bonus tied to remaining bursts.</ABY_HordeCommandGate_InspectReward>
+  <ABY_HordeEconomy_Header>Reward routing</ABY_HordeEconomy_Header>
+  <ABY_HordeEconomy_Summary>Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual.</ABY_HordeEconomy_Summary>
+  <ABY_HordeEconomy_Unknown>Reward routing could not be stabilized. Expect residue-heavy salvage without boss-tier drops.</ABY_HordeEconomy_Unknown>
+  <ABY_HordeEconomy_CommandNone>no command bonus expected</ABY_HordeEconomy_CommandNone>
+  <ABY_HordeEconomy_LineClosure>Breach closure cache: {0}</ABY_HordeEconomy_LineClosure>
+  <ABY_HordeEconomy_LineCommand>Command node kill bonus: {0}</ABY_HordeEconomy_LineCommand>
+  <ABY_HordeEconomy_LineCommandAbsent>No command node bonus is expected for this forecast.</ABY_HordeEconomy_LineCommandAbsent>
+  <ABY_HordeEconomy_LineNoBoss>No boss cores, saint caches, or miniboss-unique drops are routed through Horde payouts.</ABY_HordeEconomy_LineNoBoss>
+  <ABY_HordeEconomy_LineBacklash>Additional backlash: +{0}% instability heat and +{1}% contamination pressure on invocation.</ABY_HordeEconomy_LineBacklash>
+  <ABY_HordeEconomy_BulletinClosure>{0} residue + {1} fragments</ABY_HordeEconomy_BulletinClosure>
+  <ABY_HordeEconomy_BulletinBacklash>Heat +{0}% / Contam +{1}%</ABY_HordeEconomy_BulletinBacklash>
+  <ABY_HordeEconomy_ClosureSpawned>The {0} operation starts folding shut. Condensed horde salvage spills out near the last active front.</ABY_HordeEconomy_ClosureSpawned>
+  <ABY_HordeEconomy_CommandSpawned>The {0} command gate ruptures into salvage. Its condensed war-lattice fragments and routed supply caches spill onto the field.</ABY_HordeEconomy_CommandSpawned>
 </LanguageData>

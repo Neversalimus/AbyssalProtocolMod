@@ -680,7 +680,7 @@ namespace AbyssalProtocol
                 case "reactor_saint":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Reactor", "Guaranteed: 1 Reactor Saint Core, residue, and spacer-grade salvage.");
                 case "horde_gate":
-                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Horde", "Guaranteed: high residue yield and wide cleanup salvage from a full army-scale breach.");
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_Horde", "Guaranteed: a breach-closure cache with high residue, horde fragments, and salvage routed out of the army-scale lattice. Command node kills spill an extra bonus when present.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Dominion", "Guaranteed: dominion outcome rewards, shards, and late-stage progression materials if the breach is contained.");
                 default:
@@ -710,7 +710,7 @@ namespace AbyssalProtocol
                 case "reactor_saint":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Reactor", "Progression: feeds saint-class fabrication and pushes the colony toward late-game escalation.");
                 case "horde_gate":
-                    return TranslateOrFallback("ABY_CircleRewardProgression_Horde", "Progression: stress-tests multi-front late defense after Reactor Saint without skipping straight into dominion crisis logic.");
+                    return TranslateOrFallback("ABY_CircleRewardProgression_Horde", "Progression: stress-tests multi-front late defense after Reactor Saint while feeding a distinct post-saint economy layer instead of boss-tier cores.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Dominion", "Progression: arms the full dominion crisis ladder and outcome routing.");
                 default:

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_HordeFragment</defName>
+    <label>horde fragment</label>
+    <description>A condensed war-lattice shard left behind when a horde breach folds in on itself. It is not a boss core, but it still carries the disciplined routing logic of a full abyssal offensive.</description>
+    <graphicData>
+      <texPath>Things/Item/ABY_HordeFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tradeability>Buyable</tradeability>
+    <stackLimit>30</stackLimit>
+    <statBases>
+      <MarketValue>44</MarketValue>
+      <Mass>0.06</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

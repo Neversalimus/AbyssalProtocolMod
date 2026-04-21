@@ -527,8 +527,37 @@ namespace AbyssalProtocol
             if (AbyssalHordeSigilUtility.IsSupportedRitual(ritual?.Id))
             {
                 AbyssalHordeSigilUtility.HordePlan hordePlan = AbyssalHordeSigilUtility.GetHordePlan(circle?.Map);
+                AbyssalHordeRewardUtility.RewardSnapshot rewardSnapshot = AbyssalHordeRewardUtility.BuildSnapshot(hordePlan);
                 string doctrineLine = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Line", "Forecast doctrine: {0}", AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan));
                 string doctrineSummary = AbyssalHordeSigilUtility.GetDoctrineSummary(hordePlan);
+                string operationBulletin = AbyssalHordeSigilUtility.GetOperationBulletin(hordePlan);
+                string doctrineWarning = AbyssalHordeSigilUtility.GetDoctrineWarning(hordePlan);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_Header", "Combat bulletin"));
+                Text.Font = GameFont.Tiny;
+
+                float bulletinTop = rewardY + 28f;
+                float gap = 6f;
+                float cellWidth = (rect.width - gap * 2f) / 3f;
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x, bulletinTop, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellDoctrine", "Doctrine"), AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan), true, 0.03f);
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x + cellWidth + gap, bulletinTop, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellFronts", "Fronts"), AbyssalHordeSigilUtility.GetFrontsBulletin(hordePlan), true, 0.21f);
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x + (cellWidth + gap) * 2f, bulletinTop, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellPhases", "Phases"), AbyssalHordeSigilUtility.GetPhasesBulletin(hordePlan), true, 0.39f);
+
+                float bulletinRow2 = bulletinTop + 46f;
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x, bulletinRow2, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellCommand", "Command"), AbyssalHordeSigilUtility.GetCommandBulletin(hordePlan), hordePlan != null && hordePlan.UsesCommandGate, 0.12f);
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x + cellWidth + gap, bulletinRow2, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellSiege", "Siege"), AbyssalHordeSigilUtility.GetSiegeBulletin(hordePlan), true, 0.30f);
+                AbyssalSummoningConsoleArt.DrawStripCell(new Rect(rect.x + (cellWidth + gap) * 2f, bulletinRow2, cellWidth, 40f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeBulletin_CellClosure", "Closure"), AbyssalHordeRewardUtility.GetClosureBulletin(rewardSnapshot), true, 0.48f);
+
+                float bulletinSummaryY = bulletinRow2 + 46f;
+                float operationBulletinHeight = Text.CalcHeight(operationBulletin, rect.width);
+                Widgets.Label(new Rect(rect.x, bulletinSummaryY, rect.width, operationBulletinHeight), operationBulletin);
+                GUI.color = new Color(1f, 0.72f, 0.56f, 1f);
+                float doctrineWarningHeight = Text.CalcHeight(doctrineWarning, rect.width);
+                Widgets.Label(new Rect(rect.x, bulletinSummaryY + operationBulletinHeight + 4f, rect.width, doctrineWarningHeight), doctrineWarning);
+                GUI.color = Color.white;
+
+                rewardY = bulletinSummaryY + operationBulletinHeight + doctrineWarningHeight + 14f;
 
                 Text.Font = GameFont.Small;
                 AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Header", "Offensive pattern"));
@@ -543,6 +572,94 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
 
                 rewardY += 42f + doctrineLineHeight + doctrineSummaryHeight + 10f;
+
+                string phaseSummary = AbyssalHordeSigilUtility.GetPhaseFlowSummary(hordePlan);
+                List<string> phaseLines = AbyssalHordeSigilUtility.GetPhaseLines(hordePlan);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordePhasesPreview_Header", "Phase flow"));
+                Text.Font = GameFont.Tiny;
+
+                float phaseSummaryHeight = Text.CalcHeight(phaseSummary, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, phaseSummaryHeight), phaseSummary);
+
+                float phaseLineY = rewardY + 32f + phaseSummaryHeight;
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < phaseLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(phaseLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, phaseLineY, rect.width, lineHeight), phaseLines[i]);
+                    phaseLineY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+
+                rewardY = phaseLineY + 10f;
+
+                string perimeterSummary = AbyssalHordeSigilUtility.GetPerimeterSummary(hordePlan);
+                List<string> perimeterLines = AbyssalHordeSigilUtility.GetPerimeterLines(hordePlan);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordePerimeter_Header", "Perimeter intelligence"));
+                Text.Font = GameFont.Tiny;
+
+                float perimeterSummaryHeight = Text.CalcHeight(perimeterSummary, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, perimeterSummaryHeight), perimeterSummary);
+
+                float perimeterLineY = rewardY + 32f + perimeterSummaryHeight;
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < perimeterLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(perimeterLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, perimeterLineY, rect.width, lineHeight), perimeterLines[i]);
+                    perimeterLineY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+
+                rewardY = perimeterLineY + 10f;
+
+                string commandGateSummary = AbyssalHordeSigilUtility.GetCommandGateSummary(hordePlan);
+                List<string> commandGateLines = AbyssalHordeSigilUtility.GetCommandGateLines(hordePlan);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeCommandGate_Header", "Command gate node"));
+                Text.Font = GameFont.Tiny;
+
+                float commandSummaryHeight = Text.CalcHeight(commandGateSummary, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, commandSummaryHeight), commandGateSummary);
+
+                float commandLineY = rewardY + 32f + commandSummaryHeight;
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < commandGateLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(commandGateLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, commandLineY, rect.width, lineHeight), commandGateLines[i]);
+                    commandLineY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+
+                rewardY = commandLineY + 10f;
+
+                string economySummary = AbyssalHordeRewardUtility.GetForecastSummary(rewardSnapshot);
+                List<string> economyLines = AbyssalHordeRewardUtility.GetForecastLines(rewardSnapshot);
+
+                Text.Font = GameFont.Small;
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rewardY, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_Header", "Reward routing"));
+                Text.Font = GameFont.Tiny;
+
+                float economySummaryHeight = Text.CalcHeight(economySummary, rect.width);
+                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, economySummaryHeight), economySummary);
+
+                float economyLineY = rewardY + 32f + economySummaryHeight;
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                for (int i = 0; i < economyLines.Count; i++)
+                {
+                    float lineHeight = Text.CalcHeight(economyLines[i], rect.width);
+                    Widgets.Label(new Rect(rect.x, economyLineY, rect.width, lineHeight), economyLines[i]);
+                    economyLineY += lineHeight + 4f;
+                }
+                GUI.color = Color.white;
+
+                rewardY = economyLineY + 10f;
             }
 
             Text.Font = GameFont.Small;
@@ -713,7 +830,35 @@ namespace AbyssalProtocol
                 AbyssalHordeSigilUtility.HordePlan hordePlan = AbyssalHordeSigilUtility.GetHordePlan(circle?.Map);
                 string doctrineLine = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeDoctrinePreview_Line", "Forecast doctrine: {0}", AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan));
                 string doctrineSummary = AbyssalHordeSigilUtility.GetDoctrineSummary(hordePlan);
+                string phaseSummary = AbyssalHordeSigilUtility.GetPhaseFlowSummary(hordePlan);
+                List<string> phaseLines = AbyssalHordeSigilUtility.GetPhaseLines(hordePlan);
+                string perimeterSummary = AbyssalHordeSigilUtility.GetPerimeterSummary(hordePlan);
+                List<string> perimeterLines = AbyssalHordeSigilUtility.GetPerimeterLines(hordePlan);
+                string commandGateSummary = AbyssalHordeSigilUtility.GetCommandGateSummary(hordePlan);
+                List<string> commandGateLines = AbyssalHordeSigilUtility.GetCommandGateLines(hordePlan);
+                string economySummary = AbyssalHordeRewardUtility.GetForecastSummary(rewardSnapshot);
+                List<string> economyLines = AbyssalHordeRewardUtility.GetForecastLines(rewardSnapshot);
                 total += 52f + Text.CalcHeight(doctrineLine, width) + Text.CalcHeight(doctrineSummary, width);
+                total += 56f + Text.CalcHeight(phaseSummary, width);
+                for (int i = 0; i < phaseLines.Count; i++)
+                {
+                    total += Text.CalcHeight(phaseLines[i], width) + 4f;
+                }
+                total += 56f + Text.CalcHeight(perimeterSummary, width);
+                for (int i = 0; i < perimeterLines.Count; i++)
+                {
+                    total += Text.CalcHeight(perimeterLines[i], width) + 4f;
+                }
+                total += 56f + Text.CalcHeight(commandGateSummary, width);
+                for (int i = 0; i < commandGateLines.Count; i++)
+                {
+                    total += Text.CalcHeight(commandGateLines[i], width) + 4f;
+                }
+                total += 56f + Text.CalcHeight(economySummary, width);
+                for (int i = 0; i < economyLines.Count; i++)
+                {
+                    total += Text.CalcHeight(economyLines[i], width) + 4f;
+                }
             }
 
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))

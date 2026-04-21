@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_HordeCommandGate</defName>
+    <label>command gate node</label>
+    <description>An abyssal command node stabilized on one breach front. While it remains intact, the horde offensive keeps its reserved reinforcement bursts online and drives a faster portal cadence through the linked front.</description>
+    <thingClass>AbyssalProtocol.Building_AbyssalHordeCommandGate</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/Horde/ABY_HordeCommandGate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>980</MaxHitPoints>
+      <Mass>68</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+</Defs>

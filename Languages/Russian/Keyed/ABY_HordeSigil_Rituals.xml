@@ -7,9 +7,9 @@
   <ABY_CircleRitual_Horde_SideEffects>&#10;• Открывает сразу несколько фронтов разлома по периметру вместо одного локального спавна&#10;• Очень сильно масштабируется от колонии, богатства и протокола сложности&#10;• Даже огромная волна не выдаёт награды уровня boss/miniboss</ABY_CircleRitual_Horde_SideEffects>
   <ABY_HordeGateSummonSuccessLabel>Horde gate открыт</ABY_HordeGateSummonSuccessLabel>
   <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные rupture-фронты. Обычные abyssal-боевые формы входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
-  <ABY_CircleRewardGuaranteed_Horde>Гарантированно: высокий выход residue и широкая cleanup-добыча с армейского прорыва.</ABY_CircleRewardGuaranteed_Horde>
-  <ABY_CircleRewardProgression_Horde>Прогрессия: проверяет позднюю многовекторную оборону после Reactor Saint, не перескакивая сразу в dominion crisis.</ABY_CircleRewardProgression_Horde>
-  <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Доктрина: {1}   •   Фронты: {2}   •   Импульсы: {3}   •   Прогноз: {4}   •   Протокол: {5}</ABY_HordeRitualMeta>
+  <ABY_CircleRewardGuaranteed_Horde>Гарантированно: кэш схлопывания прорыва с высоким выходом residue, осколками орды и salvage-добычей. При наличии command gate его уничтожение даёт отдельный бонус.</ABY_CircleRewardGuaranteed_Horde>
+  <ABY_CircleRewardProgression_Horde>Прогрессия: проверяет позднюю многовекторную оборону после Reactor Saint и питает отдельный post-saint economy-слой, а не boss-tier ядра.</ABY_CircleRewardProgression_Horde>
+  <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Доктрина: {1}   •   Фронты: {2}   •   Импульсы: {3}   •   Command gate: {4}   •   Прогноз: {5}   •   Протокол: {6}</ABY_HordeRitualMeta>
   <ABY_CircleFail_HordeLocked>Horde gate остаётся неактивным, пока в этом сейве не зафиксировано первое убийство Reactor Saint.</ABY_CircleFail_HordeLocked>
   <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
   <ABY_CirclePreview_Harvester_Plural>harvesters</ABY_CirclePreview_Harvester_Plural>
@@ -17,6 +17,32 @@
   <ABY_CirclePreview_Brute_Plural>breach brutes</ABY_CirclePreview_Brute_Plural>
   <ABY_CirclePreview_Idol_Singular>siege idol</ABY_CirclePreview_Idol_Singular>
   <ABY_CirclePreview_Idol_Plural>siege idols</ABY_CirclePreview_Idol_Plural>
+  <ABY_HordeBulletin_Header>Боевой бюллетень</ABY_HordeBulletin_Header>
+  <ABY_HordeBulletin_CellDoctrine>Доктрина</ABY_HordeBulletin_CellDoctrine>
+  <ABY_HordeBulletin_CellFronts>Фронты</ABY_HordeBulletin_CellFronts>
+  <ABY_HordeBulletin_CellPhases>Фазы</ABY_HordeBulletin_CellPhases>
+  <ABY_HordeBulletin_CellCommand>Командование</ABY_HordeBulletin_CellCommand>
+  <ABY_HordeBulletin_CellSiege>Осадный риск</ABY_HordeBulletin_CellSiege>
+  <ABY_HordeBulletin_CellClosure>Плата за схлопывание</ABY_HordeBulletin_CellClosure>
+  <ABY_HordeBulletin_Fronts>{0} фронта</ABY_HordeBulletin_Fronts>
+  <ABY_HordeBulletin_Fronts_Unknown>нестабильно</ABY_HordeBulletin_Fronts_Unknown>
+  <ABY_HordeBulletin_Phases>{0} фазы</ABY_HordeBulletin_Phases>
+  <ABY_HordeBulletin_Phases_Unknown>нестабильно</ABY_HordeBulletin_Phases_Unknown>
+  <ABY_HordeBulletin_Command_Expected>Узел +{0} burst</ABY_HordeBulletin_Command_Expected>
+  <ABY_HordeBulletin_Command_None>Без узла</ABY_HordeBulletin_Command_None>
+  <ABY_HordeBulletin_Command_Unknown>нестабильно</ABY_HordeBulletin_Command_Unknown>
+  <ABY_HordeBulletin_Siege_Likely>Высокий</ABY_HordeBulletin_Siege_Likely>
+  <ABY_HordeBulletin_Siege_Possible>Возможен</ABY_HordeBulletin_Siege_Possible>
+  <ABY_HordeBulletin_Siege_Low>Низкий</ABY_HordeBulletin_Siege_Low>
+  <ABY_HordeBulletin_Siege_Unknown>нестабильно</ABY_HordeBulletin_Siege_Unknown>
+  <ABY_HordeOperationBulletin>Доктрина {0}. {1}. {2}. Статус command-узла: {3}. Осадное давление: {4}.</ABY_HordeOperationBulletin>
+  <ABY_HordeOperationBulletin_Unknown>Не удалось стабилизировать боевой бюллетень.</ABY_HordeOperationBulletin_Unknown>
+  <ABY_HordeOperation_Begin>Стабилизируется {0}: {1}. {2}.</ABY_HordeOperation_Begin>
+  <ABY_HordeDoctrineWarning_Flood>Предупреждение: стартовый flood пытается связать защитников скоростью и массой тел. Не перерастягивайся на первом прорыве.</ABY_HordeDoctrineWarning_Flood>
+  <ABY_HordeDoctrineWarning_Fireline>Предупреждение: этот паттерн наказывает статичные огневые линии. Снайперы и жрецы будут удерживать открытые прострелы за фронтом.</ABY_HordeDoctrineWarning_Fireline>
+  <ABY_HordeDoctrineWarning_Grinder>Предупреждение: grinder host хочет плотного фронтального смятия. Не позволяй тяжёлым телам складываться в одну дверь.</ABY_HordeDoctrineWarning_Grinder>
+  <ABY_HordeDoctrineWarning_Siege>Предупреждение: здесь выше шанс поздних тяжёлых якорей. Оставленный без контроля открытый грунт повышает вероятность стабилизации осадного давления.</ABY_HordeDoctrineWarning_Siege>
+  <ABY_HordeDoctrineWarning_Unknown>Предупреждение: паттерн прорыва нестабилен. Ожидай смешанное давление без чистой специализации.</ABY_HordeDoctrineWarning_Unknown>
   <ABY_HordeDoctrinePreview_Header>Паттерн вторжения</ABY_HordeDoctrinePreview_Header>
   <ABY_HordeDoctrinePreview_Line>Прогноз доктрины: {0}</ABY_HordeDoctrinePreview_Line>
   <ABY_HordeDoctrine_Flood_Label>Ravenous Breach</ABY_HordeDoctrine_Flood_Label>
@@ -29,4 +55,59 @@
   <ABY_HordeDoctrine_Siege_Summary>Осадная доктрина. Ожидается более редкая поздняя композиция с элитными якорями и возможной Idol-поддержкой.</ABY_HordeDoctrine_Siege_Summary>
   <ABY_HordeDoctrine_Unknown_Label>Нестабилизированный прорыв</ABY_HordeDoctrine_Unknown_Label>
   <ABY_HordeDoctrine_Unknown_Summary>Прогноз доктрины не удалось стабилизировать. Жди смешанный perimeter-прорыв без чистой специализации.</ABY_HordeDoctrine_Unknown_Summary>
+  <ABY_HordePhasesPreview_Header>Фазовый поток</ABY_HordePhasesPreview_Header>
+  <ABY_HordePhasesPreview_Summary>Фаз подготовлено: {0}. Поток: {1}</ABY_HordePhasesPreview_Summary>
+  <ABY_HordePhasesPreview_Line>{0}: {1} Фронты {2}. Импульсы {3}.</ABY_HordePhasesPreview_Line>
+  <ABY_HordePhasesPreview_Unknown>Не удалось стабилизировать фазовую маршрутизацию. Жди грубый многофронтовый прорыв.</ABY_HordePhasesPreview_Unknown>
+  <ABY_HordePhase_Marking_Label>Разметка прорыва</ABY_HordePhase_Marking_Label>
+  <ABY_HordePhase_Marking_Summary>Начальные probing-разрезы. Более лёгкие perimeter-прорывы размечают подходы и вскрывают колонию до полного развёртывания наступления.</ABY_HordePhase_Marking_Summary>
+  <ABY_HordePhase_Lattice_Label>Наступательная решётка</ABY_HordePhase_Lattice_Label>
+  <ABY_HordePhase_Lattice_Summary>Главная наступательная фаза. Несколько фронтов остаются активными, и доктрина стабилизируется в основной массе атаки.</ABY_HordePhase_Lattice_Summary>
+  <ABY_HordePhase_Surge_Label>Последний нажим</ABY_HordePhase_Surge_Label>
+  <ABY_HordePhase_Surge_Summary>Сконцентрированный финальный рывок. Меньшее число, но более плотные порталы ускоряют элитное и support-давление в позднем добивающем толчке.</ABY_HordePhase_Surge_Summary>
+  <ABY_HordePhase_Collapse_Label>Хвост схлопывания</ABY_HordePhase_Collapse_Label>
+  <ABY_HordePhase_Collapse_Summary>Окно рассеивания. Оставшиеся rupture-фронты выплёвывают уменьшенный хвост, пока прорыв начинает складываться обратно.</ABY_HordePhase_Collapse_Summary>
+  <ABY_HordePhase_Unknown_Label>Нестабильная фаза</ABY_HordePhase_Unknown_Label>
+  <ABY_HordePhase_Unknown_Summary>Не удалось стабилизировать фазовую маршрутизацию. Жди неровный многофронтовый прорыв.</ABY_HordePhase_Unknown_Summary>
+
+  <ABY_HordePerimeter_Header>Разведка периметра</ABY_HordePerimeter_Header>
+  <ABY_HordePerimeter_Summary>Интеллект периметра активен. Фронты распределяются по вероятным направлениям подхода, внутренние клетки базы избегаются, а тяжёлое давление по возможности разводится по разным краям карты.</ABY_HordePerimeter_Summary>
+  <ABY_HordePerimeter_Unknown>Не удалось стабилизировать маршрутизацию периметра. Ожидается грубый многофронтовый прорыв.</ABY_HordePerimeter_Unknown>
+  <ABY_HordePerimeter_Line>Фронт {0}: {1} направление на {2} периметре.</ABY_HordePerimeter_Line>
+  <ABY_HordePerimeter_Line_Command>Фронт {0}: {1} направление на {2} периметре. Через этот край идёт командное давление.</ABY_HordePerimeter_Line_Command>
+  <ABY_HordeFrontRole_Assault>Штурм</ABY_HordeFrontRole_Assault>
+  <ABY_HordeFrontRole_Flank>Фланг</ABY_HordeFrontRole_Flank>
+  <ABY_HordeFrontRole_FireSupport>Огневая поддержка</ABY_HordeFrontRole_FireSupport>
+  <ABY_HordeFrontRole_Siege>Осадный</ABY_HordeFrontRole_Siege>
+  <ABY_HordeSide_West>западном</ABY_HordeSide_West>
+  <ABY_HordeSide_East>восточном</ABY_HordeSide_East>
+  <ABY_HordeSide_South>южном</ABY_HordeSide_South>
+  <ABY_HordeSide_North>северном</ABY_HordeSide_North>
+  <ABY_HordeSide_Unknown>нестабильном крае</ABY_HordeSide_Unknown>
+
+  <ABY_HordeCommandGate_Header>Узел command gate</ABY_HordeCommandGate_Header>
+  <ABY_HordeCommandGate_Label>Узел command gate</ABY_HordeCommandGate_Label>
+  <ABY_HordeCommandGate_Summary>Ожидается вторичная цель. Пока один perimeter-командный узел цел, он ускоряет наступление и удерживает {0} зарезервированных reinforcement-burst через свой фронт. Его уничтожение отменяет эти command-linked burst и замедляет темп прорыва.</ABY_HordeCommandGate_Summary>
+  <ABY_HordeCommandGate_AbsentShort>нет</ABY_HordeCommandGate_AbsentShort>
+  <ABY_HordeCommandGate_AbsentSummary>Для этого прогноза прорыва вторичный командный узел не ожидается.</ABY_HordeCommandGate_AbsentSummary>
+  <ABY_HordeCommandGate_LineBursts>Зарезервированные burst: {0}</ABY_HordeCommandGate_LineBursts>
+  <ABY_HordeCommandGate_LineCadence>Коэффициент темпа в целостном состоянии: {0}% от обычной задержки порталов на командном фронте.</ABY_HordeCommandGate_LineCadence>
+  <ABY_HordeCommandGate_LineCollapse>Его уничтожение сразу отменяет оставшиеся command-linked подкрепления.</ABY_HordeCommandGate_LineCollapse>
+  <ABY_HordeCommandGate_Spawned>На {1} периметре стабилизировался узел command gate доктрины {0}. Его уничтожение отменит резервные подкрепления и замедлит наступление.</ABY_HordeCommandGate_Spawned>
+  <ABY_HordeCommandGate_Destroyed>{0} схлопывается. Оставшиеся command-linked подкрепления обрываются, и прорыв теряет темп.</ABY_HordeCommandGate_Destroyed>
+  <ABY_HordeCommandGate_Inspect>Узел command gate. Доктрина: {0}. Оставшиеся command-burst: {1}. Пока он цел, он ускоряет cadence порталов на своём фронте и удерживает резервные подкрепления.</ABY_HordeCommandGate_Inspect>
+  <ABY_HordeCommandGate_InspectReward>При уничтожении выбрасывает бонусный salvage-пакет, зависящий от оставшихся burst.</ABY_HordeCommandGate_InspectReward>
+  <ABY_HordeEconomy_Header>Маршрутизация наград</ABY_HordeEconomy_Header>
+  <ABY_HordeEconomy_Summary>Плата за схлопывание: {0}. Бонус за уничтожение command node: {1}. Через этот ритуал не идут ядра boss/miniboss.</ABY_HordeEconomy_Summary>
+  <ABY_HordeEconomy_Unknown>Не удалось стабилизировать маршрутизацию наград. Ожидается residue-heavy добыча без boss-tier дропа.</ABY_HordeEconomy_Unknown>
+  <ABY_HordeEconomy_CommandNone>бонус command node не ожидается</ABY_HordeEconomy_CommandNone>
+  <ABY_HordeEconomy_LineClosure>Кэш схлопывания прорыва: {0}</ABY_HordeEconomy_LineClosure>
+  <ABY_HordeEconomy_LineCommand>Бонус за убийство command node: {0}</ABY_HordeEconomy_LineCommand>
+  <ABY_HordeEconomy_LineCommandAbsent>Для этого прогноза бонусный command node не ожидается.</ABY_HordeEconomy_LineCommandAbsent>
+  <ABY_HordeEconomy_LineNoBoss>Через Horde payout не идут ядра боссов, saint cache и уникальные награды минибоссов.</ABY_HordeEconomy_LineNoBoss>
+  <ABY_HordeEconomy_LineBacklash>Дополнительный откат: +{0}% instability heat и +{1}% contamination pressure при запуске.</ABY_HordeEconomy_LineBacklash>
+  <ABY_HordeEconomy_BulletinClosure>{0} residue + {1} осколка</ABY_HordeEconomy_BulletinClosure>
+  <ABY_HordeEconomy_BulletinBacklash>Heat +{0}% / Contam +{1}%</ABY_HordeEconomy_BulletinBacklash>
+  <ABY_HordeEconomy_ClosureSpawned>Операция {0} начинает схлопываться. У последнего активного фронта выплёскивается конденсированная horde-добыча.</ABY_HordeEconomy_ClosureSpawned>
+  <ABY_HordeEconomy_CommandSpawned>Command gate доктрины {0} разрывается в salvage-добычу. Его конденсированные военные фрагменты и маршрутизированные supply-кэши высыпаются на поле боя.</ABY_HordeEconomy_CommandSpawned>
 </LanguageData>

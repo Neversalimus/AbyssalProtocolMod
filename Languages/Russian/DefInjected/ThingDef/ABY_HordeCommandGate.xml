@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_HordeCommandGate.label>узел command gate</ABY_HordeCommandGate.label>
+  <ABY_HordeCommandGate.description>Бездна стабилизировала на этом фронте командный узел. Пока он цел, наступление сохраняет резервные reinforcement-burst и более быстрый темп открытия порталов по связанному направлению.</ABY_HordeCommandGate.description>
+</LanguageData>
