@@ -19,6 +19,11 @@
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker Inherit="False" />
+    <costList>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Steel>20</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
     </comps>
