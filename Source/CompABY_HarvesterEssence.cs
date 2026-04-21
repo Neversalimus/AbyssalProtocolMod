@@ -161,7 +161,7 @@ namespace AbyssalProtocol
             {
                 FleckMaker.ThrowLightningGlow(corpseCell.ToVector3Shifted(), map, Props.glowScale);
                 FleckMaker.ThrowMicroSparks(corpseCell.ToVector3Shifted(), map);
-                MoteMaker.ThrowDustPuff(corpseCell.ToVector3Shifted(), map, 1.1f);
+                FleckMaker.ThrowDustPuff(corpseCell.ToVector3Shifted(), map, 1.1f);
             }
         }
 
@@ -331,7 +331,7 @@ namespace AbyssalProtocol
             }
 
             float maxDistance = Math.Max(0.8f, radius);
-            List<Pawn> pawns = pawn.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];

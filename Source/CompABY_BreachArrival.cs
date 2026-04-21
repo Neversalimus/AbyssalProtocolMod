@@ -179,7 +179,12 @@ namespace AbyssalProtocol
                 return preferred;
             }
 
-            if (CellFinder.TryFindRandomClosewalkCellNear(pawn.Position, pawn.MapHeld, 2, out IntVec3 fallback))
+            if (CellFinder.TryFindRandomCellNear(
+                pawn.Position,
+                pawn.MapHeld,
+                2,
+                c => c.InBounds(pawn.MapHeld) && c.Walkable(pawn.MapHeld),
+                out IntVec3 fallback))
             {
                 return fallback;
             }

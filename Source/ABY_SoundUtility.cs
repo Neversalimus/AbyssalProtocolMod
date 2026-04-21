@@ -41,6 +41,12 @@ namespace AbyssalProtocol
                     MaintenanceType.None));
         }
 
+
+        public static void PlayAt(string soundDefName, IntVec3 cell, Map map)
+        {
+            PlayOneShotAt(soundDefName, cell, map);
+        }
+
         public static bool IsAbyssalChargeSoundName(string soundDefName)
         {
             if (soundDefName.NullOrEmpty() || !soundDefName.StartsWith("ABY_", System.StringComparison.OrdinalIgnoreCase))
