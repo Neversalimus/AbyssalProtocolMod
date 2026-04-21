@@ -25,7 +25,7 @@ namespace AbyssalProtocol
             droppedAny |= TrySpawnSingle(map, cell, "ABY_ReactorSaintCore");
             droppedAny |= TrySpawnSingle(map, cell, "ComponentSpacer");
 
-            if (Rand.Chance(0.35f * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.5f, 1.75f)))
+            if (Rand.Chance(ABY_BestiaryRewardUtility.ApplyBonusRollChance(0.35f * Mathf.Clamp(AbyssalDifficultyUtility.GetBonusLootMultiplier(), 0.5f, 1.75f))))
             {
                 droppedAny |= TrySpawnSingle(map, cell, "ComponentSpacer");
             }
@@ -38,6 +38,7 @@ namespace AbyssalProtocol
                 {
                     int residueCount = Rand.RangeInclusive(MinBonusResidueDrop, MaxBonusResidueDrop);
                     residueCount = Math.Max(1, Mathf.RoundToInt(residueCount * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
+                    residueCount = ABY_BestiaryRewardUtility.ApplyResidueBonus(residueCount);
                     residue.stackCount = Math.Min(residueDef.stackLimit, residueCount);
                     if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {

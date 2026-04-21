@@ -209,6 +209,8 @@ namespace AbyssalProtocol
 
             profile.Residue = Mathf.Max(profile.Residue, Mathf.RoundToInt(profile.Residue * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
             profile.SpacerComponents = Mathf.Max(profile.SpacerComponents, Mathf.RoundToInt(profile.SpacerComponents * AbyssalDifficultyUtility.GetBonusLootMultiplier()));
+            profile.Residue = ABY_BestiaryRewardUtility.ApplyResidueBonus(profile.Residue);
+            profile.SpacerComponents = ABY_BestiaryRewardUtility.ApplyCacheYieldBonus(profile.SpacerComponents);
             return profile;
         }
 

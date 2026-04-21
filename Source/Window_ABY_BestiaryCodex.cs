@@ -64,6 +64,7 @@ namespace AbyssalProtocol
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Discovered", "Discovered"),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Studied", "Studied"),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Kills", "Confirmed kills"),
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Extraction", "Extraction bonus"),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Selected", "Selected entry")
             };
             string[] values =
@@ -71,6 +72,7 @@ namespace AbyssalProtocol
                 ABY_BestiaryUtility.GetUnlockedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
                 ABY_BestiaryUtility.GetStudiedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
                 ABY_BestiaryUtility.GetTotalTrackedKills().ToString(),
+                "+" + ABY_BestiaryRewardUtility.GetExtractionBonusPercent() + "%",
                 GetSelectedSummaryValue()
             };
             bool[] good =
@@ -78,7 +80,8 @@ namespace AbyssalProtocol
                 ABY_BestiaryUtility.GetUnlockedEntryCount() > 0,
                 ABY_BestiaryUtility.GetStudiedEntryCount() > 0,
                 ABY_BestiaryUtility.GetTotalTrackedKills() > 0,
-                !values[3].NullOrEmpty()
+                ABY_BestiaryRewardUtility.GetRewardStage() > 0,
+                !values[4].NullOrEmpty()
             };
 
             float width = inner.width / labels.Length;
@@ -292,6 +295,7 @@ namespace AbyssalProtocol
             string studyLine = studied
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyDone", "Study threshold reached — telemetry stabilized.")
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyPending", "Study threshold: {0} / {1} confirmed kills.", kills, ABY_BestiaryUtility.StudiedKillThreshold);
+            string extractionLine = ABY_BestiaryRewardUtility.GetStatusSummaryText();
 
             Text.Font = GameFont.Tiny;
             GUI.color = unlocked ? new Color(0.78f, 1f, 0.78f, 1f) : new Color(1f, 0.64f, 0.60f, 1f);
@@ -300,10 +304,12 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(inner.x, inner.y + 42f, inner.width, 16f), tacticalLine);
             GUI.color = studied ? new Color(0.78f, 1f, 0.78f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(inner.x, inner.y + 60f, inner.width, 16f), studyLine);
+            GUI.color = ABY_BestiaryRewardUtility.GetRewardStage() > 0 ? new Color(0.84f, 0.94f, 1f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 78f, inner.width, 16f), extractionLine);
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            DrawKillProgressBar(new Rect(inner.x, inner.y + 88f, inner.width, 24f), kills, ABY_BestiaryUtility.StudiedKillThreshold);
+            DrawKillProgressBar(new Rect(inner.x, inner.y + 104f, inner.width, 22f), kills, ABY_BestiaryUtility.StudiedKillThreshold);
         }
 
         private void DrawKillProgressBar(Rect rect, int value, int threshold)

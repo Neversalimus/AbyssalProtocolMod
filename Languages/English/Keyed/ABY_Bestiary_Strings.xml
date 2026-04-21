@@ -125,4 +125,8 @@ Most recent archive event: {3}
   <ABY_BestiaryEntry_ArchonBeast_Summary>A colossal infernal war-beast grown as the living herald of a deeper rupture. It is not the true archon, only the chained predator sent ahead of it.</ABY_BestiaryEntry_ArchonBeast_Summary>
   <ABY_BestiaryEntry_ArchonBeast_Tactical>Respect every phase transition. The beast is most lethal when defenders assume the current rhythm will continue and fail to reposition before the next rupture sequence.</ABY_BestiaryEntry_ArchonBeast_Tactical>
   <ABY_BestiaryEntry_ArchonBeast_Studied>The archive reads the beast as a herald predator, not a final authority. Even in death it implies that something higher delegated it forward.</ABY_BestiaryEntry_ArchonBeast_Studied>
+
+  <ABY_BestiarySummary_Extraction>Extraction bonus</ABY_BestiarySummary_Extraction>
+  <ABY_BestiaryRewardStatus_Progress>Archive extraction bonus: +{0}% • next increase at {1}/{2} studied entries.</ABY_BestiaryRewardStatus_Progress>
+  <ABY_BestiaryRewardStatus_Maxed>Archive extraction bonus: +{0}% (maximum).</ABY_BestiaryRewardStatus_Maxed>
 </LanguageData>

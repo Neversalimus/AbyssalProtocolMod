@@ -41,6 +41,7 @@ namespace AbyssalProtocol
                 {
                     int residueCount = Rand.RangeInclusive(MinResidueDrop, MaxResidueDrop);
                     residueCount = Math.Max(1, Mathf.RoundToInt(residueCount * AbyssalDifficultyUtility.GetResidueRewardMultiplier()));
+                    residueCount = ABY_BestiaryRewardUtility.ApplyResidueBonus(residueCount);
                     residue.stackCount = Math.Min(residueDef.stackLimit, residueCount);
                     if (GenPlace.TryPlaceThing(residue, cell, map, ThingPlaceMode.Near))
                     {

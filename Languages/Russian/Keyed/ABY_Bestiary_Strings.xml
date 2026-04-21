@@ -125,4 +125,8 @@
   <ABY_BestiaryEntry_ArchonBeast_Summary>Колоссальный infernal war-beast, выращенный как живой herald более глубокого разлома. Это не настоящий archon, а лишь закованный хищник, посланный вперёд него.</ABY_BestiaryEntry_ArchonBeast_Summary>
   <ABY_BestiaryEntry_ArchonBeast_Tactical>Уважай каждый phase transition. Beast опаснее всего в тот момент, когда защитники думают, будто текущий ритм сохранится, и не успевают перестроиться перед следующей rupture-последовательностью.</ABY_BestiaryEntry_ArchonBeast_Tactical>
   <ABY_BestiaryEntry_ArchonBeast_Studied>Архив читает beast'а как herald-хищника, а не как конечную власть. Даже после смерти он намекает, что вперёд его отправило нечто стоящее выше.</ABY_BestiaryEntry_ArchonBeast_Studied>
+
+  <ABY_BestiarySummary_Extraction>Бонус извлечения</ABY_BestiarySummary_Extraction>
+  <ABY_BestiaryRewardStatus_Progress>Бонус архивного извлечения: +{0}% • следующий рост на {1}/{2} изученных записях.</ABY_BestiaryRewardStatus_Progress>
+  <ABY_BestiaryRewardStatus_Maxed>Бонус архивного извлечения: +{0}% (максимум).</ABY_BestiaryRewardStatus_Maxed>
 </LanguageData>
