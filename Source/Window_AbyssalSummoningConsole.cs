@@ -55,13 +55,13 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 520f, 420f);
+            Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 556f, 420f);
             Rect overviewRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 420f);
             Rect systemsRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
-            float controlWidth = Mathf.Min(332f, overviewRect.width * 0.38f);
+            float controlWidth = Mathf.Min(316f, overviewRect.width * 0.36f);
             Rect controlRect = new Rect(overviewRect.x, overviewRect.y, controlWidth, overviewRect.height);
             Rect previewRect = new Rect(controlRect.xMax + 10f, overviewRect.y, overviewRect.width - controlWidth - 10f, overviewRect.height);
 
@@ -117,7 +117,7 @@ namespace AbyssalProtocol
 
             List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).ToList();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
-            float cardHeight = 96f;
+            float cardHeight = 110f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
 
@@ -130,6 +130,7 @@ namespace AbyssalProtocol
             }
             Widgets.EndScrollView();
         }
+
 
         private void DrawRitualCard(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual, bool selected)
         {
@@ -145,25 +146,57 @@ namespace AbyssalProtocol
                 GUI.DrawTexture(iconRect, sigilDef.uiIcon, ScaleMode.ScaleToFit, true);
             }
 
-            Rect titleRect = new Rect(rect.x + 66f, rect.y + 12f, rect.width - 186f, 22f);
-            Rect tagRect = new Rect(rect.x + 66f, rect.y + 34f, rect.width - 186f, 16f);
-            Rect metaRect = new Rect(rect.x + 12f, rect.y + 62f, rect.width - 132f, 18f);
-            Rect selectRect = new Rect(rect.xMax - 108f, rect.y + 54f, 96f, 28f);
+            float contentX = rect.x + 66f;
+            float buttonWidth = 104f;
+            float rightInset = 12f;
+            float textWidth = Mathf.Max(120f, rect.width - (contentX - rect.x) - buttonWidth - rightInset - 10f);
 
+            Rect titleRect = new Rect(contentX, rect.y + 10f, textWidth, 22f);
+            Rect tagRect = new Rect(contentX, rect.y + 32f, textWidth, 16f);
+            Rect metaRect = new Rect(contentX, rect.y + 54f, textWidth, 34f);
+            Rect selectRect = new Rect(rect.xMax - buttonWidth - 12f, rect.y + rect.height - 38f, buttonWidth, 30f);
+
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
             Widgets.Label(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Text.Font = GameFont.Tiny;
             Widgets.Label(tagRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
-            Text.Font = GameFont.Small;
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
-            Widgets.Label(metaRect, AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual));
+            Widgets.Label(metaRect, FormatRitualMetaForCard(AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual)));
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
 
             if (AbyssalStyledWidgets.TextButton(selectRect, selected ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected", "Selected") : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelect", "Select"), !selected, selected))
             {
                 selectedRitualId = ritual.Id;
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
+        }
+
+        private string FormatRitualMetaForCard(string meta)
+        {
+            if (meta.NullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            string[] separators = new[] { "•" };
+            List<string> parts = meta.Split(separators, System.StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => part.Trim())
+                .Where(part => !part.NullOrEmpty())
+                .ToList();
+
+            if (parts.Count <= 2)
+            {
+                return string.Join("   •   ", parts.ToArray());
+            }
+
+            int firstLineCount = Mathf.CeilToInt(parts.Count / 2f);
+            string firstLine = string.Join("   •   ", parts.Take(firstLineCount).ToArray());
+            string secondLine = string.Join("   •   ", parts.Skip(firstLineCount).ToArray());
+            return secondLine.NullOrEmpty() ? firstLine : firstLine + "\n" + secondLine;
         }
 
         private void DrawControlPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -198,20 +231,7 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
 
-            Text.Font = GameFont.Tiny;
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 138f, inner.width, 18f),
-                AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                    "ABY_BestiaryControlSummary",
-                    "Threat codex: {0}/{1} discovered • {2} studied • extraction bonus +{3}%",
-                    ABY_BestiaryUtility.GetUnlockedEntryCount(),
-                    ABY_BestiaryUtility.GetTrackedEntryCount(),
-                    ABY_BestiaryUtility.GetStudiedEntryCount(),
-                    ABY_BestiaryRewardUtility.GetExtractionBonusPercent()));
-            Text.Font = GameFont.Small;
-            GUI.color = Color.white;
-
-            float rowY = inner.y + 156f;
+            float rowY = inner.y + 140f;
             DrawBooleanControlRow(new Rect(inner.x, rowY, inner.width, 30f),
                 "ABY_CircleReducedEffects".Translate(),
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
@@ -243,12 +263,6 @@ namespace AbyssalProtocol
                     circle.SetCapacitorEmergencyDumpEnabled(value);
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 });
-
-            Rect codexRect = new Rect(inner.x, inner.yMax - 116f, inner.width, 30f);
-            if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
-            {
-                OpenThreatCodex();
-            }
 
             Rect invokeRect = new Rect(inner.x, inner.yMax - 40f, inner.width, 34f);
             if (dominionUiMode)
@@ -409,17 +423,17 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             float rowsY = rect.y + 48f;
-            float rowHeight = 24f;
+            float rowHeight = 28f;
             int rowIndex = 0;
             foreach (AbyssalCircleCapacitorBay bay in AbyssalCircleCapacitorUtility.GetOrderedBays())
             {
-                Rect rowRect = new Rect(rect.x, rowsY + rowIndex * (rowHeight + 4f), rect.width, rowHeight);
+                Rect rowRect = new Rect(rect.x, rowsY + rowIndex * (rowHeight + 6f), rect.width, rowHeight);
                 DrawCapacitorSlotRow(rowRect, bay);
                 rowIndex++;
             }
 
             AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport report = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
-            float summaryY = rowsY + rowIndex * (rowHeight + 4f) + 8f;
+            float summaryY = rowsY + rowIndex * (rowHeight + 6f) + 10f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report));
             Text.Font = GameFont.Tiny;
@@ -447,13 +461,13 @@ namespace AbyssalProtocol
         {
             AbyssalCircleCapacitorSlot slot = circle.GetCapacitorSlot(bay);
             ThingDef installedDef = slot?.InstalledThingDef;
-            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 96f, rect.height);
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 118f, rect.height);
             GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
             Widgets.Label(labelRect, AbyssalCircleCapacitorUtility.GetSlotRowText(slot, bay));
             GUI.color = Color.white;
             TooltipHandler.TipRegion(labelRect, AbyssalCircleCapacitorUtility.GetBayTooltip(circle, bay));
 
-            Rect actionRect = new Rect(rect.xMax - 98f, rect.y - 1f, 98f, rect.height + 2f);
+            Rect actionRect = new Rect(rect.xMax - 112f, rect.y - 1f, 112f, rect.height + 2f);
             if (installedDef == null)
             {
                 if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CapacitorCommand_Install".Translate(), !circle.RitualActive, false))
@@ -490,16 +504,16 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             float rowsY = rect.y + 48f;
-            float rowHeight = 24f;
+            float rowHeight = 28f;
             int rowIndex = 0;
             foreach (AbyssalCircleModuleEdge edge in AbyssalCircleModuleUtility.GetOrderedEdges())
             {
-                Rect rowRect = new Rect(rect.x, rowsY + rowIndex * (rowHeight + 3f), rect.width, rowHeight);
+                Rect rowRect = new Rect(rect.x, rowsY + rowIndex * (rowHeight + 5f), rect.width, rowHeight);
                 DrawModuleSlotRow(rowRect, edge);
                 rowIndex++;
             }
 
-            float summaryY = rowsY + rowIndex * (rowHeight + 3f) + 8f;
+            float summaryY = rowsY + rowIndex * (rowHeight + 5f) + 10f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
             Text.Font = GameFont.Tiny;
@@ -820,15 +834,15 @@ namespace AbyssalProtocol
         private float GetCapacitorContentHeight(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
         {
             int bayCount = AbyssalCircleCapacitorUtility.GetOrderedBays().Count();
-            float rowsHeight = bayCount * 28f;
-            return 48f + rowsHeight + 260f;
+            float rowsHeight = bayCount * 34f;
+            return 48f + rowsHeight + 268f;
         }
 
         private float GetModuleContentHeight()
         {
             int edgeCount = AbyssalCircleModuleUtility.GetOrderedEdges().Count();
-            float rowsHeight = edgeCount * 27f;
-            return 48f + rowsHeight + 140f;
+            float rowsHeight = edgeCount * 33f;
+            return 48f + rowsHeight + 146f;
         }
 
         private float GetRitualPreviewContentHeight(AbyssalSummoningConsoleUtility.RitualDefinition ritual, float width)
@@ -949,12 +963,12 @@ namespace AbyssalProtocol
             ThingDef installedDef = slot?.InstalledThingDef;
             string edgeLabel = AbyssalCircleModuleUtility.GetEdgeLabel(edge);
             string slotLabel = installedDef == null ? "ABY_CircleModuleSlotEmpty".Translate(edgeLabel) : "ABY_CircleModuleSlotInstalled".Translate(edgeLabel, installedDef.label.CapitalizeFirst(), AbyssalCircleModuleUtility.GetTierLabel(installedDef));
-            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 98f, rect.height);
+            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 118f, rect.height);
             GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
             Widgets.Label(labelRect, slotLabel);
             GUI.color = Color.white;
             TooltipHandler.TipRegion(rect, AbyssalSummoningConsoleUtility.GetModuleSlotTooltip(circle, edge));
-            Rect actionRect = new Rect(rect.xMax - 96f, rect.y - 1f, 96f, rect.height + 2f);
+            Rect actionRect = new Rect(rect.xMax - 112f, rect.y - 1f, 112f, rect.height + 2f);
             if (installedDef == null)
             {
                 if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CircleModuleCommand_Install".Translate(), !circle.RitualActive, false))
@@ -1054,12 +1068,6 @@ namespace AbyssalProtocol
             {
                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
             }
-        }
-
-        private void OpenThreatCodex()
-        {
-            Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
-            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
         }
 
         private void JumpToSigil(AbyssalSummoningConsoleUtility.RitualDefinition ritual)

@@ -70,7 +70,7 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect summaryRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 92f);
+            Rect filtersRect = new Rect(inRect.x, summaryRect.yMax + 10f, inRect.width, 58f);
             Rect listRect = new Rect(inRect.x, filtersRect.yMax + 10f, 468f, inRect.height - filtersRect.yMax - 10f);
             Rect detailRect = new Rect(listRect.xMax + 10f, filtersRect.yMax + 10f, inRect.width - listRect.width - 10f, inRect.height - filtersRect.yMax - 10f);
 
@@ -129,65 +129,57 @@ namespace AbyssalProtocol
             }
         }
 
+
         private void DrawFilters(Rect rect)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            float y = inner.y;
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, y, inner.width, 20f), "ABY_Bestiary_FilterHeader".Translate());
-            y += 24f;
-
-            float labelWidth = 58f;
-            float gap = 8f;
             float rowHeight = 28f;
-            float smallButtonWidth = 120f;
-            float dropdownWidth = (inner.width - labelWidth * 2f - smallButtonWidth - gap * 4f) / 2f;
+            Rect titleRect = new Rect(inner.x, inner.y + 4f, 152f, 20f);
+            AbyssalSummoningConsoleArt.DrawSectionTitle(titleRect, "ABY_Bestiary_FilterHeader".Translate());
 
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, y + 4f, labelWidth, rowHeight), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_StatusHeader", "Status"));
-            GUI.color = Color.white;
-            Rect statusRect = new Rect(inner.x + labelWidth, y, dropdownWidth, rowHeight);
-            if (DrawReadableStyledButton(statusRect, GetStatusFilterLabel(statusFilterMode) + " ▼", true, statusFilterMode != StatusFilterMode.Any))
+            float controlsX = titleRect.xMax + 12f;
+            float gap = 8f;
+            float availableWidth = inner.xMax - controlsX;
+            float statusWidth = 230f;
+            float categoryWidth = 280f;
+            float sortWidth = 190f;
+            float resetWidth = Mathf.Max(118f, availableWidth - statusWidth - categoryWidth - sortWidth - gap * 3f);
+
+            Rect statusRect = new Rect(controlsX, inner.y, statusWidth, rowHeight);
+            if (DrawReadableStyledButton(statusRect, BuildCompactFilterLabel(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_StatusHeader", "Status"), GetStatusFilterLabel(statusFilterMode)), true, statusFilterMode != StatusFilterMode.Any))
             {
                 ShowStatusFilterMenu();
             }
 
-            float categoryLabelX = statusRect.xMax + gap;
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(categoryLabelX, y + 4f, labelWidth, rowHeight), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_CategoryHeader", "Category"));
-            GUI.color = Color.white;
-            Rect categoryRect = new Rect(categoryLabelX + labelWidth, y, dropdownWidth, rowHeight);
-            if (DrawReadableStyledButton(categoryRect, GetCategoryFilterLabel(categoryFilterMode) + " ▼", true, categoryFilterMode != CategoryFilterMode.Any))
+            Rect categoryRect = new Rect(statusRect.xMax + gap, inner.y, categoryWidth, rowHeight);
+            if (DrawReadableStyledButton(categoryRect, BuildCompactFilterLabel(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_CategoryHeader", "Category"), GetCategoryFilterLabel(categoryFilterMode)), true, categoryFilterMode != CategoryFilterMode.Any))
             {
                 ShowCategoryFilterMenu();
             }
 
-            Rect resetRect = new Rect(categoryRect.xMax + gap, y, smallButtonWidth, rowHeight);
-            bool resetActive = statusFilterMode != StatusFilterMode.Any || categoryFilterMode != CategoryFilterMode.Any;
+            Rect sortRect = new Rect(categoryRect.xMax + gap, inner.y, sortWidth, rowHeight);
+            if (DrawReadableStyledButton(sortRect, BuildCompactFilterLabel("ABY_Bestiary_SortHeader".Translate(), GetSortLabel(sortMode)), true, sortMode != SortMode.Threat))
+            {
+                ShowSortMenu();
+            }
+
+            bool resetActive = statusFilterMode != StatusFilterMode.Any || categoryFilterMode != CategoryFilterMode.Any || sortMode != SortMode.Threat;
+            Rect resetRect = new Rect(sortRect.xMax + gap, inner.y, resetWidth, rowHeight);
             if (DrawReadableStyledButton(resetRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Bestiary_ResetFilters", "Reset filters"), true, resetActive))
             {
                 statusFilterMode = StatusFilterMode.Any;
                 categoryFilterMode = CategoryFilterMode.Any;
+                sortMode = SortMode.Threat;
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
-
-            y += 34f;
-            DrawSortRow(new Rect(inner.x, y, inner.width, rowHeight));
         }
 
-        private void DrawSortRow(Rect rect)
+        private string BuildCompactFilterLabel(string prefix, string value)
         {
-            float labelWidth = 58f;
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y + 4f, labelWidth, rect.height), "ABY_Bestiary_SortHeader".Translate());
-            GUI.color = Color.white;
-
-            Rect buttonRect = new Rect(rect.x + labelWidth, rect.y, 220f, rect.height);
-            if (DrawReadableStyledButton(buttonRect, GetSortLabel(sortMode) + " ▼", true, sortMode != SortMode.Threat))
-            {
-                ShowSortMenu();
-            }
+            return prefix + ": " + value + " ▼";
         }
+
 
         private void DrawBrowser(Rect rect)
         {

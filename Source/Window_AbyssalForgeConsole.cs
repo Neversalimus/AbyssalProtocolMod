@@ -228,14 +228,13 @@ namespace AbyssalProtocol
                     Widgets.Label(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
                 }
             }
+
             Text.Font = GameFont.Small;
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rightRect.x, rightRect.y + 126f, rightRect.width, 28f), "ABY_ForgeReducedEffectsDesc".Translate());
             GUI.color = Color.white;
 
             bool reduced = progress.ReducedVisualEffects;
             bool newReduced = reduced;
-            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 156f, Mathf.Min(186f, rightRect.width), 24f);
+            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 126f, Mathf.Min(220f, rightRect.width), 24f);
             Widgets.CheckboxLabeled(checkboxRect, "ABY_ForgeReducedEffectsToggle".Translate(), ref newReduced, false, null, null, false);
             if (newReduced != reduced)
             {
