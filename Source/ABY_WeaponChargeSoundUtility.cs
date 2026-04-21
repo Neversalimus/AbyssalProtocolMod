@@ -78,7 +78,7 @@ namespace AbyssalProtocol
                 aimField.SetValue(compProps, enabled ? entry.Value : null);
             }
 
-            NormalizeChargeSounds();
+            ApplyChargeSoundSustain(enabled);
         }
 
         private static void EnsureCache()
@@ -155,13 +155,28 @@ namespace AbyssalProtocol
             OriginalSoundSustainFadeout[soundDefName] = soundDef.sustainFadeoutTime;
         }
 
-        private static void NormalizeChargeSounds()
+        private static void ApplyChargeSoundSustain(bool enabled)
         {
             foreach (string soundDefName in OriginalSoundSustain.Keys)
             {
                 SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
                 if (soundDef == null)
                 {
+                    continue;
+                }
+
+                if (!enabled)
+                {
+                    if (OriginalSoundSustain.TryGetValue(soundDefName, out bool originalSustain))
+                    {
+                        soundDef.sustain = originalSustain;
+                    }
+
+                    if (OriginalSoundSustainFadeout.TryGetValue(soundDefName, out float originalFadeout))
+                    {
+                        soundDef.sustainFadeoutTime = originalFadeout;
+                    }
+
                     continue;
                 }
 
