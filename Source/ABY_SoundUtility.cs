@@ -40,5 +40,16 @@ namespace AbyssalProtocol
                     new TargetInfo(cell, map, false),
                     MaintenanceType.None));
         }
+
+        public static bool IsAbyssalChargeSoundName(string soundDefName)
+        {
+            if (soundDefName.NullOrEmpty() || !soundDefName.StartsWith("ABY_", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            return soundDefName.IndexOf("Charge", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || soundDefName.IndexOf("Aim", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
     }
 }
