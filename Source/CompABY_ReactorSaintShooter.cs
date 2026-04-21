@@ -144,6 +144,11 @@ namespace AbyssalProtocol
                     return;
                 }
 
+                if (TryAdvanceTowardDistantThreat(pawn))
+                {
+                    return;
+                }
+
                 return;
             }
 
@@ -169,6 +174,11 @@ namespace AbyssalProtocol
             if (attackMode == AttackModeNone)
             {
                 if (TryForceCloseQuartersEngagement(pawn))
+                {
+                    return;
+                }
+
+                if (TryAdvanceTowardDistantThreat(pawn))
                 {
                     return;
                 }
