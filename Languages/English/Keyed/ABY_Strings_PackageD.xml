@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_HeraldAnalysisCompleteLabel>Herald fragment analysis complete</ABY_HeraldAnalysisCompleteLabel>
-  <ABY_HeraldAnalysisCompleteDesc>The recovered fragment has been decoded. {0} and {1} can now be researched in the Abyssal Protocol tab.</ABY_HeraldAnalysisCompleteDesc>
-  <ABY_HeraldAnalysisAlreadyKnown>Herald fragment analysis is already complete.</ABY_HeraldAnalysisAlreadyKnown>
-  <ABY_HeraldAnalysisFailedMissingProject>Herald fragment analysis could not be resolved because the target research project is missing.</ABY_HeraldAnalysisFailedMissingProject>
 </LanguageData>
