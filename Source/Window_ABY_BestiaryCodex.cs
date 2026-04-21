@@ -36,7 +36,7 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
             Rect categoryRect = new Rect(inRect.x, stripRect.yMax + 10f, inRect.width, 34f);
-            Rect browserRect = new Rect(inRect.x, categoryRect.yMax + 10f, 458f, inRect.height - categoryRect.yMax - 10f);
+            Rect browserRect = new Rect(inRect.x, categoryRect.yMax + 10f, 468f, inRect.height - categoryRect.yMax - 10f);
             Rect detailRect = new Rect(browserRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - browserRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
 
             DrawHeader(headerRect);
@@ -59,7 +59,6 @@ namespace AbyssalProtocol
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(6f);
-            string selectedStatus = GetSelectedStatusText();
             string[] labels =
             {
                 AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummary_Discovered", "Discovered"),
@@ -72,14 +71,14 @@ namespace AbyssalProtocol
                 ABY_BestiaryUtility.GetUnlockedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
                 ABY_BestiaryUtility.GetStudiedEntryCount() + " / " + ABY_BestiaryUtility.GetTrackedEntryCount(),
                 ABY_BestiaryUtility.GetTotalTrackedKills().ToString(),
-                selectedStatus
+                GetSelectedSummaryValue()
             };
             bool[] good =
             {
                 ABY_BestiaryUtility.GetUnlockedEntryCount() > 0,
                 ABY_BestiaryUtility.GetStudiedEntryCount() > 0,
                 ABY_BestiaryUtility.GetTotalTrackedKills() > 0,
-                !selectedStatus.NullOrEmpty()
+                !values[3].NullOrEmpty()
             };
 
             float width = inner.width / labels.Length;
@@ -126,7 +125,7 @@ namespace AbyssalProtocol
             EnsureValidSelection(definitions);
 
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
-            float cardHeight = 86f;
+            float cardHeight = 104f;
             float viewHeight = Mathf.Max(outRect.height, definitions.Count * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), viewHeight);
 
@@ -142,6 +141,7 @@ namespace AbyssalProtocol
         private void DrawEntryCard(Rect rect, ABY_BestiaryEntryDefinition definition, bool selected)
         {
             bool unlocked = ABY_BestiaryUtility.IsUnlocked(definition.EntryId);
+            bool tacticalUnlocked = ABY_BestiaryUtility.IsTacticalNoteUnlocked(definition.EntryId);
             bool studied = ABY_BestiaryUtility.IsStudied(definition.EntryId);
             int kills = ABY_BestiaryUtility.GetKillCount(definition.EntryId);
 
@@ -154,28 +154,46 @@ namespace AbyssalProtocol
             string title = unlocked
                 ? ABY_BestiaryUtility.GetDisplayLabel(definition.EntryId)
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryUnknownName", "Unknown hostile pattern");
-            string status = studied
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Studied", "Studied")
-                : unlocked
-                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Discovered", "Discovered")
-                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Locked", "Locked");
+            string status = ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId);
             string meta = unlocked
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardMeta", "Kills: {0}   •   {1}", kills, ABY_BestiaryUtility.GetCategoryLabel(definition.Category))
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardLockedMeta", "First confirmed kill required.");
+            string tags = unlocked
+                ? ABY_BestiaryUtility.GetTagLine(definition.EntryId)
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardTagLocked", "Telemetry band unknown.");
+            string progress = studied
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_Studied", "Deep record unlocked.")
+                : tacticalUnlocked
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_StudiedPending", "Deep record at {0}/{1} kills.", kills, ABY_BestiaryUtility.StudiedKillThreshold)
+                    : unlocked
+                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_TacticalPending", "Tactical note at {0}/{1} kills.", kills, ABY_BestiaryUtility.TacticalKillThreshold)
+                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardProgress_Locked", "First confirmed kill required.");
 
-            Rect titleRect = new Rect(rect.x + 84f, rect.y + 10f, rect.width - 96f, 22f);
-            Rect statusRect = new Rect(rect.x + 84f, rect.y + 32f, rect.width - 96f, 16f);
-            Rect metaRect = new Rect(rect.x + 84f, rect.y + 52f, rect.width - 96f, 18f);
+            Rect titleRect = new Rect(rect.x + 84f, rect.y + 8f, rect.width - 96f, 22f);
+            Rect statusRect = new Rect(rect.x + 84f, rect.y + 30f, rect.width - 96f, 14f);
+            Rect metaRect = new Rect(rect.x + 84f, rect.y + 46f, rect.width - 96f, 14f);
+            Rect tagRect = new Rect(rect.x + 84f, rect.y + 62f, rect.width - 96f, 14f);
+            Rect progressRect = new Rect(rect.x + 84f, rect.y + 78f, rect.width - 96f, 14f);
+
             Widgets.Label(titleRect, title);
+
+            Text.Font = GameFont.Tiny;
             GUI.color = studied
                 ? new Color(0.86f, 1f, 0.76f, 1f)
                 : unlocked
                     ? AbyssalSummoningConsoleArt.TextDimColor
                     : new Color(0.70f, 0.70f, 0.70f, 0.92f);
-            Text.Font = GameFont.Tiny;
             Widgets.Label(statusRect, status);
             GUI.color = unlocked ? new Color(1f, 0.76f, 0.58f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
             Widgets.Label(metaRect, meta);
+            GUI.color = unlocked ? new Color(0.78f, 0.90f, 1f, 1f) : new Color(0.58f, 0.58f, 0.58f, 0.92f);
+            Widgets.Label(tagRect, tags);
+            GUI.color = studied
+                ? new Color(0.80f, 1f, 0.80f, 1f)
+                : tacticalUnlocked
+                    ? new Color(1f, 0.86f, 0.60f, 1f)
+                    : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(progressRect, progress);
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
 
@@ -201,14 +219,19 @@ namespace AbyssalProtocol
             }
 
             bool unlocked = ABY_BestiaryUtility.IsUnlocked(definition.EntryId);
+            bool tacticalUnlocked = ABY_BestiaryUtility.IsTacticalNoteUnlocked(definition.EntryId);
             bool studied = ABY_BestiaryUtility.IsStudied(definition.EntryId);
             int kills = ABY_BestiaryUtility.GetKillCount(definition.EntryId);
             ABY_BestiaryEntryProgress progress = ABY_BestiaryUtility.GetProgress(definition.EntryId);
 
             Rect portraitRect = new Rect(inner.x, inner.y + 36f, 228f, 228f);
             Rect titleRect = new Rect(portraitRect.xMax + 16f, inner.y + 36f, inner.width - portraitRect.width - 16f, 28f);
-            Rect bodyRect = new Rect(portraitRect.xMax + 16f, inner.y + 68f, inner.width - portraitRect.width - 16f, 190f);
-            Rect progressRect = new Rect(inner.x, portraitRect.yMax + 20f, inner.width, 118f);
+            Rect tagRect = new Rect(portraitRect.xMax + 16f, inner.y + 66f, inner.width - portraitRect.width - 16f, 18f);
+            Rect summaryHeaderRect = new Rect(portraitRect.xMax + 16f, inner.y + 94f, inner.width - portraitRect.width - 16f, 18f);
+            Rect summaryBodyRect = new Rect(portraitRect.xMax + 16f, inner.y + 114f, inner.width - portraitRect.width - 16f, 80f);
+            Rect tacticalHeaderRect = new Rect(portraitRect.xMax + 16f, inner.y + 198f, inner.width - portraitRect.width - 16f, 18f);
+            Rect tacticalBodyRect = new Rect(portraitRect.xMax + 16f, inner.y + 218f, inner.width - portraitRect.width - 16f, 46f);
+            Rect progressRect = new Rect(inner.x, portraitRect.yMax + 20f, inner.width, 136f);
             Rect footerRect = new Rect(inner.x, progressRect.yMax + 12f, inner.width, inner.height - (progressRect.yMax + 12f - inner.y));
 
             DrawPortrait(portraitRect, definition.EntryId, unlocked, true);
@@ -219,19 +242,42 @@ namespace AbyssalProtocol
             Widgets.Label(titleRect, title);
 
             Text.Font = GameFont.Tiny;
-            GUI.color = unlocked ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            string telemetry = unlocked
-                ? BuildUnlockedTelemetry(definition, studied, kills, progress)
-                : BuildLockedTelemetry(definition);
-            Widgets.Label(bodyRect, telemetry);
-            Text.Font = GameFont.Small;
+            GUI.color = unlocked ? new Color(0.82f, 0.92f, 1f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(tagRect, unlocked ? ABY_BestiaryUtility.GetTagLine(definition.EntryId) : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryCardTagLocked", "Telemetry band unknown."));
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
 
-            DrawProgressPanel(progressRect, kills, unlocked, studied);
-            DrawFooterPanel(footerRect, unlocked, studied, kills);
+            DrawBodySection(summaryHeaderRect, summaryBodyRect,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_Summary", "Pattern summary"),
+                unlocked
+                    ? ABY_BestiaryUtility.GetSummaryText(definition.EntryId)
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySummaryLocked", "This hostile pattern is indexed by the codex, but no reliable corpse telemetry has been recovered on the current save yet."),
+                unlocked);
+
+            DrawBodySection(tacticalHeaderRect, tacticalBodyRect,
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_Tactical", "Tactical note"),
+                tacticalUnlocked
+                    ? ABY_BestiaryUtility.GetTacticalText(definition.EntryId)
+                    : unlocked
+                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTacticalLocked", "Additional tactical annotation unlocks at {0} confirmed kills. Current progress: {1} / {0}.", ABY_BestiaryUtility.TacticalKillThreshold, kills)
+                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTacticalLockedNoReveal", "Recover the first confirmed kill to begin tactical annotation for this entry."),
+                tacticalUnlocked);
+
+            DrawProgressPanel(progressRect, kills, unlocked, tacticalUnlocked, studied);
+            DrawFooterPanel(footerRect, definition, unlocked, tacticalUnlocked, studied, kills, progress);
         }
 
-        private void DrawProgressPanel(Rect rect, int kills, bool unlocked, bool studied)
+        private void DrawBodySection(Rect headerRect, Rect bodyRect, string header, string body, bool highlighted)
+        {
+            AbyssalSummoningConsoleArt.DrawSectionTitle(headerRect, header);
+            Text.Font = GameFont.Tiny;
+            GUI.color = highlighted ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(bodyRect, body);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+        }
+
+        private void DrawProgressPanel(Rect rect, int kills, bool unlocked, bool tacticalUnlocked, bool studied)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
@@ -240,6 +286,9 @@ namespace AbyssalProtocol
             string discoveryLine = unlocked
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressDiscoveryDone", "Discovery confirmed — first kill archived.")
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressDiscoveryPending", "Discovery pending — first confirmed kill required.");
+            string tacticalLine = tacticalUnlocked
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressTacticalDone", "Tactical note unlocked — field annotation restored.")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressTacticalPending", "Tactical note threshold: {0} / {1} confirmed kills.", kills, ABY_BestiaryUtility.TacticalKillThreshold);
             string studyLine = studied
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyDone", "Study threshold reached — telemetry stabilized.")
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryProgressStudyPending", "Study threshold: {0} / {1} confirmed kills.", kills, ABY_BestiaryUtility.StudiedKillThreshold);
@@ -247,12 +296,14 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             GUI.color = unlocked ? new Color(0.78f, 1f, 0.78f, 1f) : new Color(1f, 0.64f, 0.60f, 1f);
             Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, 16f), discoveryLine);
+            GUI.color = tacticalUnlocked ? new Color(1f, 0.86f, 0.60f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 42f, inner.width, 16f), tacticalLine);
             GUI.color = studied ? new Color(0.78f, 1f, 0.78f, 1f) : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 42f, inner.width, 16f), studyLine);
+            Widgets.Label(new Rect(inner.x, inner.y + 60f, inner.width, 16f), studyLine);
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            DrawKillProgressBar(new Rect(inner.x, inner.y + 70f, inner.width, 24f), kills, ABY_BestiaryUtility.StudiedKillThreshold);
+            DrawKillProgressBar(new Rect(inner.x, inner.y + 88f, inner.width, 24f), kills, ABY_BestiaryUtility.StudiedKillThreshold);
         }
 
         private void DrawKillProgressBar(Rect rect, int value, int threshold)
@@ -263,60 +314,47 @@ namespace AbyssalProtocol
             AbyssalSummoningConsoleArt.Fill(fillRect, new Color(1f, 0.34f, 0.16f, 0.88f));
             AbyssalSummoningConsoleArt.DrawOutline(rect, new Color(1f, 0.40f, 0.20f, 0.76f));
             Text.Anchor = TextAnchor.MiddleCenter;
-            GUI.color = Color.white;
             Widgets.Label(rect, value + " / " + threshold);
-            GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }
 
-        private void DrawFooterPanel(Rect rect, bool unlocked, bool studied, int kills)
+        private void DrawFooterPanel(Rect rect, ABY_BestiaryEntryDefinition definition, bool unlocked, bool tacticalUnlocked, bool studied, int kills, ABY_BestiaryEntryProgress progress)
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterHeader", "Operator note"));
-            Text.Font = GameFont.Tiny;
-            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            string note = unlocked
-                ? studied
-                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterStudied", "This hostile pattern is now fully kill-confirmed for codex purposes. Later packages can attach deeper tactical notes and reward hooks on top of this archive state.")
-                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterUnlocked", "Telemetry is live for this hostile pattern. Additional tactical annotation unlocks can be layered later without changing the core archive state.")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterLocked", "No reliable telemetry is available yet. Recover one confirmed kill to reveal the pattern and start codex tracking.");
-            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, rect.height - 28f), note);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
-        }
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 20f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiarySection_DeepRecord", "Deep codex record"));
 
-        private string BuildUnlockedTelemetry(ABY_BestiaryEntryDefinition definition, bool studied, int kills, ABY_BestiaryEntryProgress progress)
-        {
             string firstSeen = progress != null && progress.firstUnlockTick >= 0
                 ? progress.firstUnlockTick.ToStringTicksToPeriod()
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTelemetry_Unknown", "unknown");
             string lastSeen = progress != null && progress.lastKillTick >= 0
                 ? progress.lastKillTick.ToStringTicksToPeriod()
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryTelemetry_Unknown", "unknown");
-            string status = studied
-                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Studied", "Studied")
-                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Discovered", "Discovered");
+            string note = studied
+                ? ABY_BestiaryUtility.GetStudiedText(definition.EntryId)
+                : tacticalUnlocked
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStudiedLocked", "Deep record unlocks at {0} confirmed kills. Current progress: {1} / {0}.", ABY_BestiaryUtility.StudiedKillThreshold, kills)
+                    : unlocked
+                        ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStudiedLockedEarly", "Stabilize the archive first. Tactical notes unlock at {0} kills and the deep record unlocks at {1}.", ABY_BestiaryUtility.TacticalKillThreshold, ABY_BestiaryUtility.StudiedKillThreshold)
+                        : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryFooterLocked", "No reliable telemetry is available yet. Recover one confirmed kill to reveal the pattern and start codex tracking.");
 
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_BestiaryTelemetry_Unlocked",
-                "Category: {0}\nArchive state: {1}\nConfirmed kills: {2}\nFirst archive event: {3}\nMost recent archive event: {4}\n\nThis entry is sourced from save-level corpse telemetry. The archive currently tracks reveal state and kill depth only; reward hooks and deeper annotations can be layered later without replacing the archive backend.",
-                ABY_BestiaryUtility.GetCategoryLabel(definition.Category),
-                status,
+            string footerText = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_BestiaryFooterStatusBlock",
+                "Archive state: {0}\nConfirmed kills: {1}\nFirst archive event: {2}\nMost recent archive event: {3}\n\n{4}",
+                ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId),
                 kills,
                 firstSeen,
-                lastSeen);
+                lastSeen,
+                note);
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = studied ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(inner.x, inner.y + 24f, inner.width, rect.height - 28f), footerText);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
         }
 
-        private string BuildLockedTelemetry(ABY_BestiaryEntryDefinition definition)
-        {
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_BestiaryTelemetry_Locked",
-                "Category: {0}\nArchive state: Locked\nConfirmed kills: 0\n\nThis hostile pattern exists in the codex index but has not yet been kill-confirmed on the current save. Recover one confirmed corpse to reveal the entry and start telemetry accumulation.",
-                ABY_BestiaryUtility.GetCategoryLabel(definition.Category));
-        }
-
-        private string GetSelectedStatusText()
+        private string GetSelectedSummaryValue()
         {
             ABY_BestiaryEntryDefinition definition = ABY_BestiaryUtility.GetDefinition(selectedEntryId);
             if (definition == null)
@@ -324,17 +362,20 @@ namespace AbyssalProtocol
                 return string.Empty;
             }
 
-            if (ABY_BestiaryUtility.IsStudied(definition.EntryId))
+            string label = ABY_BestiaryUtility.IsUnlocked(definition.EntryId)
+                ? ABY_BestiaryUtility.GetDisplayLabel(definition.EntryId)
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryUnknownName", "Unknown hostile pattern");
+            return Shorten(label + " • " + ABY_BestiaryUtility.GetArchiveStateLabel(definition.EntryId), 40);
+        }
+
+        private static string Shorten(string text, int maxLength)
+        {
+            if (text.NullOrEmpty() || text.Length <= maxLength)
             {
-                return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Studied", "Studied");
+                return text ?? string.Empty;
             }
 
-            if (ABY_BestiaryUtility.IsUnlocked(definition.EntryId))
-            {
-                return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Discovered", "Discovered");
-            }
-
-            return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BestiaryStatus_Locked", "Locked");
+            return text.Substring(0, Mathf.Max(0, maxLength - 1)).TrimEnd() + "…";
         }
 
         private List<ABY_BestiaryEntryDefinition> GetFilteredEntries()

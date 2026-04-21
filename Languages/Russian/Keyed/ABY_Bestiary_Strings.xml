@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_BestiaryTitle>abyssal threat codex</ABY_BestiaryTitle>
-  <ABY_BestiarySubtitle>Архив подтверждённых убийствами враждебных паттернов из суммонов, зачисток прорывов и трупов боссов.</ABY_BestiarySubtitle>
+  <ABY_BestiaryTitle>кодекс abyssal-угроз</ABY_BestiaryTitle>
+  <ABY_BestiarySubtitle>Архив подтверждённых убийствами враждебных паттернов, собранный по призывам, зачисткам прорывов и останкам боссов.</ABY_BestiarySubtitle>
   <ABY_Bestiary_OpenButton>Открыть кодекс угроз</ABY_Bestiary_OpenButton>
   <ABY_Bestiary_OpenButtonDesc>Открыть abyssal-архив угроз и просмотреть записи, подтверждённые убийствами.</ABY_Bestiary_OpenButtonDesc>
   <ABY_BestiarySummary_Discovered>Открыто</ABY_BestiarySummary_Discovered>
   <ABY_BestiarySummary_Studied>Изучено</ABY_BestiarySummary_Studied>
-  <ABY_BestiarySummary_Kills>Подтверждённые убийства</ABY_BestiarySummary_Kills>
+  <ABY_BestiarySummary_Kills>Подтв. убийства</ABY_BestiarySummary_Kills>
   <ABY_BestiarySummary_Selected>Выбранная запись</ABY_BestiarySummary_Selected>
   <ABY_BestiaryCategory_All>Все</ABY_BestiaryCategory_All>
   <ABY_BestiaryCategory_Assault>Штурм</ABY_BestiaryCategory_Assault>
@@ -16,32 +16,113 @@
   <ABY_BestiaryBrowserHeader>Архив враждебных паттернов</ABY_BestiaryBrowserHeader>
   <ABY_BestiaryDetailHeader>Телеметрия паттерна</ABY_BestiaryDetailHeader>
   <ABY_BestiaryUnknownName>Неизвестный враждебный паттерн</ABY_BestiaryUnknownName>
-  <ABY_BestiaryStatus_Locked>Закрыто</ABY_BestiaryStatus_Locked>
+  <ABY_BestiaryStatus_Locked>Скрыто</ABY_BestiaryStatus_Locked>
   <ABY_BestiaryStatus_Discovered>Открыто</ABY_BestiaryStatus_Discovered>
   <ABY_BestiaryStatus_Studied>Изучено</ABY_BestiaryStatus_Studied>
-  <ABY_BestiaryCardMeta>Убийств: {0}   •   {1}</ABY_BestiaryCardMeta>
+  <ABY_BestiaryCardMeta>Убийства: {0}   •   {1}</ABY_BestiaryCardMeta>
   <ABY_BestiaryCardLockedMeta>Нужно первое подтверждённое убийство.</ABY_BestiaryCardLockedMeta>
-  <ABY_BestiaryNoSelection>Сейчас не выбрано ни одного враждебного паттерна.</ABY_BestiaryNoSelection>
-  <ABY_BestiaryProgressHeader>Этапы архивации</ABY_BestiaryProgressHeader>
-  <ABY_BestiaryProgressDiscoveryDone>Обнаружение подтверждено — первое убийство заархивировано.</ABY_BestiaryProgressDiscoveryDone>
-  <ABY_BestiaryProgressDiscoveryPending>Обнаружение ещё не подтверждено — нужно первое убийство.</ABY_BestiaryProgressDiscoveryPending>
+  <ABY_BestiaryCardTagLocked>Диапазон телеметрии неизвестен.</ABY_BestiaryCardTagLocked>
+  <ABY_BestiaryCardProgress_Locked>Нужно первое подтверждённое убийство.</ABY_BestiaryCardProgress_Locked>
+  <ABY_BestiaryCardProgress_TacticalPending>Тактическая заметка на {0}/{1} убийствах.</ABY_BestiaryCardProgress_TacticalPending>
+  <ABY_BestiaryCardProgress_StudiedPending>Глубокая запись на {0}/{1} убийствах.</ABY_BestiaryCardProgress_StudiedPending>
+  <ABY_BestiaryCardProgress_Studied>Глубокая запись разблокирована.</ABY_BestiaryCardProgress_Studied>
+  <ABY_BestiaryNoSelection>Сейчас не выбран ни один враждебный паттерн.</ABY_BestiaryNoSelection>
+  <ABY_BestiarySection_Summary>Сводка по паттерну</ABY_BestiarySection_Summary>
+  <ABY_BestiarySection_Tactical>Тактическая заметка</ABY_BestiarySection_Tactical>
+  <ABY_BestiarySection_DeepRecord>Глубокая запись кодекса</ABY_BestiarySection_DeepRecord>
+  <ABY_BestiarySummaryLocked>Этот враждебный паттерн уже внесён в индекс кодекса, но на текущем сейве по нему ещё не восстановлена надёжная телеметрия с трупов.</ABY_BestiarySummaryLocked>
+  <ABY_BestiaryTacticalLocked>Дополнительная тактическая аннотация открывается на {0} подтверждённых убийствах. Текущий прогресс: {1} / {0}.</ABY_BestiaryTacticalLocked>
+  <ABY_BestiaryTacticalLockedNoReveal>Добудь первое подтверждённое убийство, чтобы начать тактическую аннотацию этой записи.</ABY_BestiaryTacticalLockedNoReveal>
+  <ABY_BestiaryStudiedLocked>Глубокая запись открывается на {0} подтверждённых убийствах. Текущий прогресс: {1} / {0}.</ABY_BestiaryStudiedLocked>
+  <ABY_BestiaryStudiedLockedEarly>Сначала стабилизируй архив. Тактические заметки открываются на {0} убийствах, а глубокая запись — на {1}.</ABY_BestiaryStudiedLockedEarly>
+  <ABY_BestiaryProgressHeader>Вехи архива</ABY_BestiaryProgressHeader>
+  <ABY_BestiaryProgressDiscoveryDone>Открытие подтверждено — первое убийство занесено в архив.</ABY_BestiaryProgressDiscoveryDone>
+  <ABY_BestiaryProgressDiscoveryPending>Открытие ожидает первого подтверждённого убийства.</ABY_BestiaryProgressDiscoveryPending>
+  <ABY_BestiaryProgressTacticalDone>Тактическая заметка открыта — полевая аннотация восстановлена.</ABY_BestiaryProgressTacticalDone>
+  <ABY_BestiaryProgressTacticalPending>Порог тактической заметки: {0} / {1} подтверждённых убийств.</ABY_BestiaryProgressTacticalPending>
   <ABY_BestiaryProgressStudyDone>Порог изучения достигнут — телеметрия стабилизирована.</ABY_BestiaryProgressStudyDone>
   <ABY_BestiaryProgressStudyPending>Порог изучения: {0} / {1} подтверждённых убийств.</ABY_BestiaryProgressStudyPending>
-  <ABY_BestiaryFooterHeader>Заметка оператора</ABY_BestiaryFooterHeader>
-  <ABY_BestiaryFooterLocked>Надёжной телеметрии по этому паттерну пока нет. Получи одно подтверждённое убийство, чтобы открыть запись и начать накопление данных кодекса.</ABY_BestiaryFooterLocked>
-  <ABY_BestiaryFooterUnlocked>Телеметрия по этому паттерну уже активна. Позднее поверх этого состояния можно безопасно навесить тактические заметки и reward-hooks, не ломая базовый архив.</ABY_BestiaryFooterUnlocked>
-  <ABY_BestiaryFooterStudied>Этот паттерн уже полностью подтверждён для целей кодекса. Следующие пакеты смогут навесить поверх него более глубокие тактические заметки и reward-hooks.</ABY_BestiaryFooterStudied>
+  <ABY_BestiaryFooterLocked>Надёжной телеметрии пока нет. Добудь одно подтверждённое убийство, чтобы раскрыть паттерн и запустить накопление данных кодекса.</ABY_BestiaryFooterLocked>
+  <ABY_BestiaryFooterStatusBlock>Состояние архива: {0}
+Подтв. убийства: {1}
+Первое событие архива: {2}
+Последнее событие архива: {3}
+
+{4}</ABY_BestiaryFooterStatusBlock>
   <ABY_BestiaryTelemetry_Unknown>неизвестно</ABY_BestiaryTelemetry_Unknown>
-  <ABY_BestiaryTelemetry_Unlocked>Категория: {0}
-Состояние архива: {1}
-Подтверждённых убийств: {2}
-Первое архивное событие: {3}
-Последнее архивное событие: {4}
 
-Эта запись строится на save-level телеметрии трупов. Сейчас архив хранит только состояние открытия и глубину убийств; reward-hooks и более глубокие аннотации можно добавить позже без замены backend-слоя.</ABY_BestiaryTelemetry_Unlocked>
-  <ABY_BestiaryTelemetry_Locked>Категория: {0}
-Состояние архива: Закрыто
-Подтверждённых убийств: 0
+  <ABY_BestiaryEntry_RiftImp_Tags>рой / рывок / заполнитель прорыва</ABY_BestiaryEntry_RiftImp_Tags>
+  <ABY_BestiaryEntry_RiftImp_Summary>Самый расходный abyssal-паттерн в архиве. Rift imp'ы выливаются через слабые прорывы, быстро сокращают дистанцию и превращают тонкий периметр в проблему ближнего боя.</ABY_BestiaryEntry_RiftImp_Summary>
+  <ABY_BestiaryEntry_RiftImp_Tactical>Не трать долгие разгоны на одиночных imp'ов. Убивай их в коридорах, перекрывай двери и держи стрелков прикрытыми, чтобы рой не цеплял бой один за другим.</ABY_BestiaryEntry_RiftImp_Tactical>
+  <ABY_BestiaryEntry_RiftImp_Studied>Rift imp'ов посылают не для чистой победы. Их задача — перегрузить время реакции, вскрыть слабые сектора и купить пространство для более тяжёлых паттернов позади.</ABY_BestiaryEntry_RiftImp_Studied>
 
-Этот враждебный паттерн уже есть в индексе кодекса, но на текущем сейве ещё не подтверждён убийством. Получи один подтверждённый труп, чтобы открыть запись и начать накопление телеметрии.</ABY_BestiaryTelemetry_Locked>
+  <ABY_BestiaryEntry_EmberHound_Tags>фланкер / охотник / давление на тыл</ABY_BestiaryEntry_EmberHound_Tags>
+  <ABY_BestiaryEntry_EmberHound_Summary>Быстрый инферно-охотник, созданный ломать ритм стрельбы. Ember hound'ы заходят к открытым стрелкам и карают любой разрыв между фронтом и внутренней зоной колонии.</ABY_BestiaryEntry_EmberHound_Summary>
+  <ABY_BestiaryEntry_EmberHound_Tactical>Они заметно слабее, когда их заставляют идти в лоб. Ступенчатые choke points, боковые блокеры и ближние перехватчики не дают им добраться до уязвимых стволов.</ABY_BestiaryEntry_EmberHound_Tactical>
+  <ABY_BestiaryEntry_EmberHound_Studied>Ember hound'ы нужны, чтобы дистанция перестала ощущаться безопасной. Это не столько фронтальный штурм, сколько оружие темпа, паники и срыва позиции.</ABY_BestiaryEntry_EmberHound_Studied>
+
+  <ABY_BestiaryEntry_HexgunThrall_Tags>дальняя линия / подавление / метки целей</ABY_BestiaryEntry_HexgunThrall_Tags>
+  <ABY_BestiaryEntry_HexgunThrall_Summary>Дисциплинированный инфернальный gun-servitor, который поддерживает прорыв со средней дистанции. Hexgun thrall'ы наказывают открытых защитников и держат стабильный огонь по любому сектору, который host пытается забрать.</ABY_BestiaryEntry_HexgunThrall_Summary>
+  <ABY_BestiaryEntry_HexgunThrall_Tactical>Считай их клеем построения, а не безобидным фоном. Сбивай им линию обзора, ломай прицеливание и быстро складывай их вблизи — это резко режет входящее давление.</ABY_BestiaryEntry_HexgunThrall_Tactical>
+  <ABY_BestiaryEntry_HexgunThrall_Studied>Thrall-паттерн — первое прямое доказательство, что host не опирается только на звероподобные формы. Это строевая инфантерия: достаточно дешёвая, чтобы спамить, и достаточно дисциплинированная, чтобы держать остальной строй.</ABY_BestiaryEntry_HexgunThrall_Studied>
+
+  <ABY_BestiaryEntry_ChainZealot_Tags>шоковый мили / стягивание / ломатель линии</ABY_BestiaryEntry_ChainZealot_Tags>
+  <ABY_BestiaryEntry_ChainZealot_Summary>Скованный фанатик, созданный для прямого врыва в защищённые сектора. Chain zealot'ы принимают первый фокус, а затем держат стрелков на месте, пока остальной прорыв не подойдёт вплотную.</ABY_BestiaryEntry_ChainZealot_Summary>
+  <ABY_BestiaryEntry_ChainZealot_Tactical>Не встречай их изолированными стрелками. Сфокусированный burst, многослойные мили-блокеры и чистые пути отхода важнее, чем голый kiting, когда zealot уже вошёл в контакт.</ABY_BestiaryEntry_ChainZealot_Tactical>
+  <ABY_BestiaryEntry_ChainZealot_Studied>Zealot-паттерн заточен не под дуэль, а под срыв. Его задача — вытащить тела из укрытий, сломать красивую геометрию стрельбы и открыть дыру для других.</ABY_BestiaryEntry_ChainZealot_Studied>
+
+  <ABY_BestiaryEntry_RiftSapper_Tags>инженер прорыва / ломатель укрытий / demolition</ABY_BestiaryEntry_RiftSapper_Tags>
+  <ABY_BestiaryEntry_RiftSapper_Summary>Инженерная abyssal-пехота, созданная для дестабилизации защищённых огневых линий. Rift sapper'ы идут за более лёгкими rushers, ищут слабое укрытие и вгоняют infernal spike-заряды в баррикады, двери и скученные позиции.</ABY_BestiaryEntry_RiftSapper_Summary>
+  <ABY_BestiaryEntry_RiftSapper_Tactical>Если оставить их без ответа, sapper-огонь выгрызет двери, турели и мешки с песком, пока более безопасные юниты не войдут внутрь. Приоритетны всякий раз, когда оборона держится на статичном cover.</ABY_BestiaryEntry_RiftSapper_Tactical>
+  <ABY_BestiaryEntry_RiftSapper_Studied>Sapper'ы — это слой support-demolition, а не чистая штурмовая форма. Они приходят, чтобы существующие укрепления перестали работать так, как ты рассчитывал.</ABY_BestiaryEntry_RiftSapper_Studied>
+
+  <ABY_BestiaryEntry_RiftSniper_Tags>дальний бой / точечное убийство / срыв зрения</ABY_BestiaryEntry_RiftSniper_Tags>
+  <ABY_BestiaryEntry_RiftSniper_Summary>Элитный abyssal-марсман, выращенный для дисциплинированного огня с предельных углов. Rift sniper'ы держат экстремальную дистанцию, фиксируют цель и карают открытых стрелков искажающими lance-rounds, которые рвут прицел и зрение.</ABY_BestiaryEntry_RiftSniper_Summary>
+  <ABY_BestiaryEntry_RiftSniper_Tactical>Никогда не давай им спокойную линию. Smoke, ротация по жёсткому укрытию и давление на угол стрельбы важнее брони, когда sniper успевает встать в target lock.</ABY_BestiaryEntry_RiftSniper_Tactical>
+  <ABY_BestiaryEntry_RiftSniper_Studied>Sniper-паттерн показывает, что abyssal-эскалация спокойно умеет ждать. Его смысл — наказывать колонии, которые поверили, что дистанция сама по себе безопасна.</ABY_BestiaryEntry_RiftSniper_Studied>
+
+  <ABY_BestiaryEntry_NullPriest_Tags>кастер поддержки / снятие защиты / катализатор флангов</ABY_BestiaryEntry_NullPriest_Tags>
+  <ABY_BestiaryEntry_NullPriest_Summary>Среднетирный abyssal-полевой жрец, созданный делать весь прорыв опаснее, не будучи сам по себе raw damage-монстром. Null priest'ы укрепляют тела союзников, разворачивают защиту приоритетных целей и открывают краткоживущие micro-rifts, которые проливают фланговое давление в иначе стабильные линии.</ABY_BestiaryEntry_NullPriest_Summary>
+  <ABY_BestiaryEntry_NullPriest_Tactical>Убийство priest'а часто ослабляет весь локальный нажим. Когда он появляется, следи за бафом союзников и микрорифтами, а не только за фронтлайном.</ABY_BestiaryEntry_NullPriest_Tactical>
+  <ABY_BestiaryEntry_NullPriest_Studied>Null priest'ы — force multiplier'ы. Они редко выигрывают прорыв чистым уроном, но заставляют каждого ближайшего hostile работать выше базового уровня.</ABY_BestiaryEntry_NullPriest_Studied>
+
+  <ABY_BestiaryEntry_BreachBrute_Tags>тяжёлый фронтлайн / soak / продавливание</ABY_BestiaryEntry_BreachBrute_Tags>
+  <ABY_BestiaryEntry_BreachBrute_Summary>Печь-тяжёлая abyssal-штурмовая масса, выращенная, чтобы пересекать огневые зоны и оставаться на ногах ещё долго после того, как более лёгкие проявления уже сгорели. Breach brute'ы идут с crushing patience, впитывают непропорциональный фокус и превращают достигнутую линию в проблему demolition на короткой дистанции.</ABY_BestiaryEntry_BreachBrute_Summary>
+  <ABY_BestiaryEntry_BreachBrute_Tactical>Не паникуй, если brute продолжает идти под огнём — в этом и смысл. Замедляй, уводи и сноси поддержку позади него, пока он не вошёл в короткую demolition-дистанцию.</ABY_BestiaryEntry_BreachBrute_Tactical>
+  <ABY_BestiaryEntry_BreachBrute_Studied>Brute-паттерн — это тест на терпение в движении. Ему не нужно быть эффективным; ему нужно лишь прожить достаточно долго, чтобы остальные унаследовали сектор.</ABY_BestiaryEntry_BreachBrute_Studied>
+
+  <ABY_BestiaryEntry_SiegeIdol_Tags>осадная поддержка / давление на турели / плазменный якорь</ABY_BestiaryEntry_SiegeIdol_Tags>
+  <ABY_BestiaryEntry_SiegeIdol_Summary>Полумеханический идол прорыва, созданный идти за abyssal-линией, а не вести её. Siege idol'ы продвигаются за первой волной контакта, вкапывают стабилизаторы в землю и отвечают по турелям, дверям, укрытиям и статичным gunline'ам furnace-bright плазмой.</ABY_BestiaryEntry_SiegeIdol_Summary>
+  <ABY_BestiaryEntry_SiegeIdol_Tactical>Идол становится намного опаснее, если ему дают встать и стрелять сериями. Ломай ему линию, вынуждай смещаться или alpha'й его до стабилизации позади прорыва.</ABY_BestiaryEntry_SiegeIdol_Tactical>
+  <ABY_BestiaryEntry_SiegeIdol_Studied>Идол — это инфраструктура в шагающем виде. Он сопровождает штурм, чтобы решить проблему статичной обороны, а не вести атаку лично.</ABY_BestiaryEntry_SiegeIdol_Studied>
+
+  <ABY_BestiaryEntry_Harvester_Tags>сборщик эскалации / подпитка residue / поздняя угроза</ABY_BestiaryEntry_Harvester_Tags>
+  <ABY_BestiaryEntry_Harvester_Summary>Собиратель abyssal-сущности, созданный становиться опаснее по мере смерти остального host'а вокруг него. Harvester'ы бродят сразу за первой линией, питаются свежими потерями союзников, крепнут в процессе и перерабатывают ещё горячие трупы в более полезный infernal residue.</ABY_BestiaryEntry_Harvester_Summary>
+  <ABY_BestiaryEntry_Harvester_Tactical>Чем дольше вокруг него лежат союзные трупы, тем хуже становится бой. Убирай harvester'а как можно раньше, если драка уже забивается abyssal-телами.</ABY_BestiaryEntry_Harvester_Tactical>
+  <ABY_BestiaryEntry_Harvester_Studied>Harvester превращает attrition в экономику. Это паттерн кодекса, который наиболее открыто строится на выгоде от самой бойни.</ABY_BestiaryEntry_Harvester_Studied>
+
+  <ABY_BestiaryEntry_GateWarden_Tags>элитный страж / щитовая стена / перехват</ABY_BestiaryEntry_GateWarden_Tags>
+  <ABY_BestiaryEntry_GateWarden_Summary>Инфернальный преторианец, выкованный держать пространство для более сильных abyssal-авторитетов. Gate warden'ы встают в plated wall-позы, срываются в короткие перехваты, когда их узлу грозит угроза, и карают всё, что до них дошло, crushing shield bash'ем.</ABY_BestiaryEntry_GateWarden_Summary>
+  <ABY_BestiaryEntry_GateWarden_Tactical>С warden'ами проще, пока они ещё не заякорились вокруг защищаемой цели или босса. Вытаскивай их с поста или быстро взрывай, пока за ними не спрятался весь encounter.</ABY_BestiaryEntry_GateWarden_Tactical>
+  <ABY_BestiaryEntry_GateWarden_Studied>Это паттерн custody. Gate warden'ы существуют, чтобы удерживать пространство ради чего-то важнее самих себя.</ABY_BestiaryEntry_GateWarden_Studied>
+
+  <ABY_BestiaryEntry_WardenOfAsh_Tags>мини-босс / anti-cluster / ash pulse</ABY_BestiaryEntry_WardenOfAsh_Tags>
+  <ABY_BestiaryEntry_WardenOfAsh_Summary>Инфернальный techno-warden, созданный как первый дисциплинированный overseer abyssal-давления. Его броня пепельно-чёрная и пече-тяжёлая, а встроенный в грудь удерживаемый портал сразу выдаёт в нём и палача, и живой gate-node.</ABY_BestiaryEntry_WardenOfAsh_Summary>
+  <ABY_BestiaryEntry_WardenOfAsh_Tactical>Здесь важнее spacing, чем храбрость. Локальное ash-pressure и поведения с подкреплениями карают колонии, которые скучиваются в один плотный огневой узел.</ABY_BestiaryEntry_WardenOfAsh_Tactical>
+  <ABY_BestiaryEntry_WardenOfAsh_Studied>Warden — первый по-настоящему overseer-tier паттерн в архиве: ещё не полноценный domain boss, но уже явно созданный командовать прорывом, а не просто участвовать в нём.</ABY_BestiaryEntry_WardenOfAsh_Studied>
+
+  <ABY_BestiaryEntry_ChoirEngine_Tags>командный ретранслятор / signal noise / подавление поддержки</ABY_BestiaryEntry_ChoirEngine_Tags>
+  <ABY_BestiaryEntry_ChoirEngine_Summary>Пост-первобоссовый techno-infernal relay-узел, входящий в бой как walking command choir, а не как чистая kill-form. Choir engine'ы делают ближайшие abyssal-юниты собраннее и смертоноснее, одновременно заливая защитников, турели и локальную электронику враждебным signal noise.</ABY_BestiaryEntry_ChoirEngine_Summary>
+  <ABY_BestiaryEntry_ChoirEngine_Tactical>Опасность нарастает с каждой секундой. Пока choir engine жив, каждый nearby abyssal pawn становится аккуратнее и страшнее, а твоя электроника работает хуже.</ABY_BestiaryEntry_ChoirEngine_Tactical>
+  <ABY_BestiaryEntry_ChoirEngine_Studied>Choir engine — это командная архитектура на ногах. Его назначение — координация, signal warfare и навязывание боя сразу со всем строем целиком.</ABY_BestiaryEntry_ChoirEngine_Studied>
+
+  <ABY_BestiaryEntry_ReactorSaint_Tags>полноценный босс / phase shield / артиллерийская решётка</ABY_BestiaryEntry_ReactorSaint_Tags>
+  <ABY_BestiaryEntry_ReactorSaint_Summary>Колоссальный techno-infernal saint, построенный вокруг связанного reactor-heart и бронированных ракетных плеч. Его phase shield, saturation field и artillery lattice сразу выдают во втором тире полноценного босса, стоящего на голову выше обычных abyssal-войск и карающего статичную оборону.</ABY_BestiaryEntry_ReactorSaint_Summary>
+  <ABY_BestiaryEntry_ReactorSaint_Tactical>Статичная оборона и скученные стрелки дают saint'у именно то поле боя, которое ему нужно. Используй spread, rotation и моменты пробития shield'а вместо попытки в лоб пережить saturation field.</ABY_BestiaryEntry_ReactorSaint_Tactical>
+  <ABY_BestiaryEntry_ReactorSaint_Studied>Saint — не просто более крупный паттерн, а ответ другого тира. Он совмещает boss-живучесть, контроль поля и осадную логику в одном chassis.</ABY_BestiaryEntry_ReactorSaint_Studied>
+
+  <ABY_BestiaryEntry_ArchonBeast_Tags>полноценный босс / herald разлома / фазовый штурм</ABY_BestiaryEntry_ArchonBeast_Tags>
+  <ABY_BestiaryEntry_ArchonBeast_Summary>Колоссальный infernal war-beast, выращенный как живой herald более глубокого разлома. Это не настоящий archon, а лишь закованный хищник, посланный вперёд него.</ABY_BestiaryEntry_ArchonBeast_Summary>
+  <ABY_BestiaryEntry_ArchonBeast_Tactical>Уважай каждый phase transition. Beast опаснее всего в тот момент, когда защитники думают, будто текущий ритм сохранится, и не успевают перестроиться перед следующей rupture-последовательностью.</ABY_BestiaryEntry_ArchonBeast_Tactical>
+  <ABY_BestiaryEntry_ArchonBeast_Studied>Архив читает beast'а как herald-хищника, а не как конечную власть. Даже после смерти он намекает, что вперёд его отправило нечто стоящее выше.</ABY_BestiaryEntry_ArchonBeast_Studied>
 </LanguageData>
