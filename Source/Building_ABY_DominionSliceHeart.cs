@@ -76,11 +76,12 @@ namespace AbyssalProtocol
             }
         }
 
-        public override DamageWorker.DamageResult TakeDamage(DamageInfo dinfo)
+        public override void PreApplyDamage(DamageInfo dinfo, out bool absorbed)
         {
             MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
             if (encounter != null && !encounter.IsHeartExposed)
             {
+                absorbed = true;
                 int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
                 if (now - lastBlockedMessageTick > 120)
                 {
@@ -89,10 +90,10 @@ namespace AbyssalProtocol
                 }
 
                 FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.3f);
-                return new DamageWorker.DamageResult();
+                return;
             }
 
-            return base.TakeDamage(dinfo);
+            base.PreApplyDamage(dinfo, out absorbed);
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -112,27 +113,19 @@ namespace AbyssalProtocol
         public override string GetInspectString()
         {
             string baseText = base.GetInspectString();
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            if (!baseText.NullOrEmpty())
-            {
-                sb.Append(baseText.TrimEnd());
-                sb.AppendLine();
-            }
-
+            string stateText = "ABY_DominionSliceHeart_InspectShielded".Translate();
             MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
             if (encounter != null && encounter.IsHeartExposed)
             {
-                sb.Append("ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta()));
-                sb.AppendLine();
-                sb.Append("ABY_DominionSliceHeart_InspectRewards".Translate(encounter.GetRewardForecastValue()));
-            }
-            else
-            {
-                int remainingAnchors = encounter != null ? encounter.LiveAnchorCount : 0;
-                sb.Append("ABY_DominionSliceHeart_InspectShieldedDetailed".Translate(remainingAnchors));
+                stateText = "ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta());
             }
 
-            return sb.ToString().TrimEnd();
+            if (baseText.NullOrEmpty())
+            {
+                return stateText;
+            }
+
+            return baseText.TrimEnd() + "\n" + stateText;
         }
     }
 }
