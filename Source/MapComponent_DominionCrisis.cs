@@ -449,6 +449,7 @@ namespace AbyssalProtocol
 
         public bool TryGetActivePocketSession(out ABY_DominionPocketSession session)
         {
+            session = null;
             ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
             return runtime != null && runtime.TryGetActiveSessionForSourceMap(map, out session);
         }
