@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using RimWorld;
 using Verse;
 
@@ -149,6 +150,8 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
+
+            EnsurePocketMapWorldBinding(pocketMap, gate.Map);
 
             IntVec3 returnCell = ResolveReturnCell(gate);
             session = new ABY_DominionPocketSession
@@ -578,7 +581,6 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
         private static List<MapGeneratorDef> ResolveGeneratorDefs()
         {
             List<MapGeneratorDef> result = new List<MapGeneratorDef>();
-            AddGeneratorDef(result, "SpacePocket");
             AddGeneratorDef(result, "Base_Player");
             AddGeneratorDef(result, "Base_Faction");
             return result;
@@ -596,6 +598,114 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             {
                 result.Add(def);
             }
+        }
+
+        private static void EnsurePocketMapWorldBinding(Map pocketMap, Map sourceMap)
+        {
+            if (pocketMap == null || sourceMap == null)
+            {
+                return;
+            }
+
+            int sourceTile = sourceMap.Tile;
+            if (sourceTile < 0 && sourceMap.Parent != null)
+            {
+                sourceTile = TryGetTileValue(sourceMap.Parent);
+            }
+
+            if (sourceTile < 0)
+            {
+                return;
+            }
+
+            TrySetTileValue(pocketMap.Parent, sourceTile);
+            TrySetTileValue(pocketMap, sourceTile);
+        }
+
+        private static int TryGetTileValue(object obj)
+        {
+            if (obj == null)
+            {
+                return -1;
+            }
+
+            Type type = obj.GetType();
+            PropertyInfo property = type.GetProperty("Tile", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (property != null && property.CanRead && property.PropertyType == typeof(int))
+            {
+                try
+                {
+                    return (int)property.GetValue(obj, null);
+                }
+                catch
+                {
+                }
+            }
+
+            FieldInfo field = FindIntField(type, new[] { "tileInt", "tile", "Tile" });
+            if (field != null)
+            {
+                try
+                {
+                    return (int)field.GetValue(obj);
+                }
+                catch
+                {
+                }
+            }
+
+            return -1;
+        }
+
+        private static void TrySetTileValue(object obj, int tile)
+        {
+            if (obj == null || tile < 0)
+            {
+                return;
+            }
+
+            Type type = obj.GetType();
+            PropertyInfo property = type.GetProperty("Tile", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (property != null && property.CanWrite && property.PropertyType == typeof(int))
+            {
+                try
+                {
+                    property.SetValue(obj, tile, null);
+                    return;
+                }
+                catch
+                {
+                }
+            }
+
+            FieldInfo field = FindIntField(type, new[] { "tileInt", "tile", "Tile" });
+            if (field != null)
+            {
+                try
+                {
+                    field.SetValue(obj, tile);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        private static FieldInfo FindIntField(Type type, string[] candidateNames)
+        {
+            for (Type current = type; current != null; current = current.BaseType)
+            {
+                for (int i = 0; i < candidateNames.Length; i++)
+                {
+                    FieldInfo field = current.GetField(candidateNames[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (field != null && field.FieldType == typeof(int))
+                    {
+                        return field;
+                    }
+                }
+            }
+
+            return null;
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
