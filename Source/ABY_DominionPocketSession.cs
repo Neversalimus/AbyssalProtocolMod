@@ -34,9 +34,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref createdTick, "createdTick", 0);
             Scribe_Values.Look(ref active, "active", true);
             Scribe_Values.Look(ref cleanupQueued, "cleanupQueued", false);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && anchorCells == null)
             {
-                anchorCells ??= new List<IntVec3>();
+                anchorCells = new List<IntVec3>();
             }
         }
     }

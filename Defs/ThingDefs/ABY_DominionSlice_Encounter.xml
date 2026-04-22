@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionSliceAnchor_Seal</defName>
+    <label>seal anchor</label>
+    <description>A dominion anchor that holds the Crown-Heart under a shielding law. While any seal anchor remains, the heart rejects direct damage.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_DominionSliceAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>720</MaxHitPoints>
+      <Mass>68</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
+        <role>Seal</role>
+        <pulseIntervalTicks>225</pulseIntervalTicks>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression_Glow</glowTexPath>
+        <glowDrawScale>2.44</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionSliceAnchor_Choir</defName>
+    <label>choir anchor</label>
+    <description>A dominion anchor that synchronizes the slice with hostile reinforcements. Left alone, it accelerates the rhythm of incoming support waves.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_DominionSliceAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>690</MaxHitPoints>
+      <Mass>66</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
+        <role>Choir</role>
+        <pulseIntervalTicks>210</pulseIntervalTicks>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward_Glow</glowTexPath>
+        <glowDrawScale>2.42</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionSliceAnchor_Law</defName>
+    <label>law anchor</label>
+    <description>A dominion anchor that sharpens the geometry of the slice itself. While it stands, the heart pulses become more punishing.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_DominionSliceAnchor</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.28</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.2,2.2)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>670</MaxHitPoints>
+      <Mass>64</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
+        <role>Law</role>
+        <pulseIntervalTicks>240</pulseIntervalTicks>
+        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach_Glow</glowTexPath>
+        <glowDrawScale>2.46</glowDrawScale>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionSliceHeart</defName>
+    <label>crown-heart of the gate</label>
+    <description>The exposed heart-core of the Crowned Gate. It only becomes vulnerable once the dominion anchors binding it are destroyed.</description>
+    <thingClass>AbyssalProtocol.Building_ABY_DominionSliceHeart</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.42</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.6,3.6)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>2600</MaxHitPoints>
+      <Mass>140</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(2,2)</size>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+</Defs>

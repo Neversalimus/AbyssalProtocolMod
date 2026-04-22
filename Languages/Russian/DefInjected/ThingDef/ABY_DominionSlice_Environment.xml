@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_DominionSliceBastion.label>осколок бастиона доминиона</ABY_DominionSliceBastion.label>
-  <ABY_DominionSliceBastion.description>Плотный фрагмент оболочки инфернальных врат, вбитый в срез доминиона как блокирующая опора и визуальный контрфорс.</ABY_DominionSliceBastion.description>
+  <ABY_DominionSliceBastion.label>фрагмент бастиона доминиона</ABY_DominionSliceBastion.label>
+  <ABY_DominionSliceBastion.description>Плотный осколок оболочки инфернальных врат, вросший в срез доминиона как барьер и визуальная опора.</ABY_DominionSliceBastion.description>
   <ABY_DominionSliceSpire.label>шпиль доминиона</ABY_DominionSliceSpire.label>
-  <ABY_DominionSliceSpire.description>Ритуально-индустриальный пилон, выращенный в срезе для оформления маршрутов, линий обзора и ощущения враждебной инфраструктуры вместо природного ландшафта.</ABY_DominionSliceSpire.description>
+  <ABY_DominionSliceSpire.description>Ритуально-индустриальный пилон, врощенный в срез, чтобы формировать линии прохода и делать пространство враждебной инфраструктурой, а не природным местом.</ABY_DominionSliceSpire.description>
   <ABY_DominionSliceSigilPad.label>сигильная платформа доминиона</ABY_DominionSliceSigilPad.label>
-  <ABY_DominionSliceSigilPad.description>Стабилизированная сигильная плита, отмечающая точки эвакуации, будущих якорей и сердца внутри среза доминиона.</ABY_DominionSliceSigilPad.description>
+  <ABY_DominionSliceSigilPad.description>Стабилизированная сигильная платформа, отмечающая точки эвакуации, якорей и сердца внутри среза доминиона.</ABY_DominionSliceSigilPad.description>
+  <ABY_DominionSliceAnchor_Seal.label>якорь печати</ABY_DominionSliceAnchor_Seal.label>
+  <ABY_DominionSliceAnchor_Seal.description>Якорь доминиона, удерживающий Корону-сердце под законом экранирования. Пока хотя бы один такой якорь цел, сердце отвергает прямой урон.</ABY_DominionSliceAnchor_Seal.description>
+  <ABY_DominionSliceAnchor_Choir.label>якорь хора</ABY_DominionSliceAnchor_Choir.label>
+  <ABY_DominionSliceAnchor_Choir.description>Якорь доминиона, синхронизирующий срез с вражескими подкреплениями. Если оставить его в строю, он ускоряет ритм входящих волн.</ABY_DominionSliceAnchor_Choir.description>
+  <ABY_DominionSliceAnchor_Law.label>якорь закона</ABY_DominionSliceAnchor_Law.label>
+  <ABY_DominionSliceAnchor_Law.description>Якорь доминиона, заостряющий саму геометрию среза. Пока он стоит, пульсы сердца становятся опаснее.</ABY_DominionSliceAnchor_Law.description>
+  <ABY_DominionSliceHeart.label>корона-сердце врат</ABY_DominionSliceHeart.label>
+  <ABY_DominionSliceHeart.description>Раскрытое сердечное ядро Коронованных врат. Оно становится уязвимым только после уничтожения якорей доминиона, связывающих его.</ABY_DominionSliceHeart.description>
 </LanguageData>

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_DominionSliceBastion.label>dominion bastion fragment</ABY_DominionSliceBastion.label>
-  <ABY_DominionSliceBastion.description>A dense shard of the infernal gate shell, embedded into the dominion slice as a pathing barrier and visual buttress.</ABY_DominionSliceBastion.description>
+  <ABY_DominionSliceBastion.description>A dense shard of the infernal gate shell embedded into the dominion slice as a pathing barrier and visual buttress.</ABY_DominionSliceBastion.description>
   <ABY_DominionSliceSpire.label>dominion spire</ABY_DominionSliceSpire.label>
-  <ABY_DominionSliceSpire.description>A ritual-industrial pylon grown into the slice to frame lanes, anchor sightlines and make the space feel like hostile infrastructure rather than natural terrain.</ABY_DominionSliceSpire.description>
+  <ABY_DominionSliceSpire.description>A ritual-industrial pylon grown into the slice to frame lanes and make the space feel like hostile infrastructure rather than natural terrain.</ABY_DominionSliceSpire.description>
   <ABY_DominionSliceSigilPad.label>dominion sigil pad</ABY_DominionSliceSigilPad.label>
   <ABY_DominionSliceSigilPad.description>A stabilized sigil plate marking extraction, anchor and heart positions inside the dominion slice.</ABY_DominionSliceSigilPad.description>
+  <ABY_DominionSliceAnchor_Seal.label>seal anchor</ABY_DominionSliceAnchor_Seal.label>
+  <ABY_DominionSliceAnchor_Seal.description>A dominion anchor that holds the Crown-Heart under a shielding law. While any seal anchor remains, the heart rejects direct damage.</ABY_DominionSliceAnchor_Seal.description>
+  <ABY_DominionSliceAnchor_Choir.label>choir anchor</ABY_DominionSliceAnchor_Choir.label>
+  <ABY_DominionSliceAnchor_Choir.description>A dominion anchor that synchronizes the slice with hostile reinforcements. Left alone, it accelerates the rhythm of incoming support waves.</ABY_DominionSliceAnchor_Choir.description>
+  <ABY_DominionSliceAnchor_Law.label>law anchor</ABY_DominionSliceAnchor_Law.label>
+  <ABY_DominionSliceAnchor_Law.description>A dominion anchor that sharpens the geometry of the slice itself. While it stands, the heart pulses become more punishing.</ABY_DominionSliceAnchor_Law.description>
+  <ABY_DominionSliceHeart.label>crown-heart of the gate</ABY_DominionSliceHeart.label>
+  <ABY_DominionSliceHeart.description>The exposed heart-core of the Crowned Gate. It only becomes vulnerable once the dominion anchors binding it are destroyed.</ABY_DominionSliceHeart.description>
 </LanguageData>

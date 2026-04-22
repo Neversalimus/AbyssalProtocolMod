@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionSliceEncounter_Breach>Срез доминиона сформирован. Удержите порог и прорвитесь к якорной решётке.</ABY_DominionSliceEncounter_Breach>
+  <ABY_DominionSliceEncounter_Anchorfall>Якорная решётка активна. Уничтожьте оставшиеся якоря: {0}.</ABY_DominionSliceEncounter_Anchorfall>
+  <ABY_DominionSliceEncounter_AnchorDestroyed>Якорь доминиона уничтожен. Осталось якорей: {0}.</ABY_DominionSliceEncounter_AnchorDestroyed>
+  <ABY_DominionSliceEncounter_HeartExposed>Корона-сердце раскрыто. Разрушьте его, пока срез не перестроился.</ABY_DominionSliceEncounter_HeartExposed>
+  <ABY_DominionSliceEncounter_CollapseStarted>Корона-сердце разорвано. До схлопывания осталось: {0}.</ABY_DominionSliceEncounter_CollapseStarted>
+  <ABY_DominionSliceEncounter_Failed>Срез доминиона схлопывается из-за провала.</ABY_DominionSliceEncounter_Failed>
+  <ABY_DominionSliceEncounter_Wave>Волна поддержки доминиона вступила в бой: {0} противников. Волна №{1}.</ABY_DominionSliceEncounter_Wave>
+  <ABY_DominionSliceEncounter_CollapseInactive>не запущено</ABY_DominionSliceEncounter_CollapseInactive>
+  <ABY_DominionSliceAnchor_Inspect>Роль якоря: {0}.</ABY_DominionSliceAnchor_Inspect>
+  <ABY_DominionSliceAnchorRole_Seal>Печать</ABY_DominionSliceAnchorRole_Seal>
+  <ABY_DominionSliceAnchorRole_Choir>Хор</ABY_DominionSliceAnchorRole_Choir>
+  <ABY_DominionSliceAnchorRole_Law>Закон</ABY_DominionSliceAnchorRole_Law>
+  <ABY_DominionSliceHeart_Shielded>Корона-сердце всё ещё защищено якорями доминиона.</ABY_DominionSliceHeart_Shielded>
+  <ABY_DominionSliceHeart_InspectShielded>Сердце защищено. Сначала уничтожьте якоря доминиона.</ABY_DominionSliceHeart_InspectShielded>
+  <ABY_DominionSliceHeart_InspectExposed>Сердце раскрыто. До схлопывания: {0}.</ABY_DominionSliceHeart_InspectExposed>
+</LanguageData>

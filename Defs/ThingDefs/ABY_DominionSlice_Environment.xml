@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceBastion</defName>
     <label>dominion bastion fragment</label>
-    <description>A dense shard of the infernal gate shell, embedded into the dominion slice as a pathing barrier and visual buttress.</description>
+    <description>A dense shard of the infernal gate shell embedded into the dominion slice as a pathing barrier and visual buttress.</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>
@@ -33,7 +33,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceSpire</defName>
     <label>dominion spire</label>
-    <description>A ritual-industrial pylon grown into the slice to frame lanes, anchor sightlines and make the space feel like hostile infrastructure rather than natural terrain.</description>
+    <description>A ritual-industrial pylon grown into the slice to frame lanes and make the space feel like hostile infrastructure rather than natural terrain.</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>

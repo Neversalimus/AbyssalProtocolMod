@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionSliceEncounter_Breach>The dominion slice has formed. Secure the threshold and push toward the anchor lattice.</ABY_DominionSliceEncounter_Breach>
+  <ABY_DominionSliceEncounter_Anchorfall>The anchor lattice is live. Destroy the remaining anchors: {0}.</ABY_DominionSliceEncounter_Anchorfall>
+  <ABY_DominionSliceEncounter_AnchorDestroyed>Dominion anchor destroyed. Remaining anchors: {0}.</ABY_DominionSliceEncounter_AnchorDestroyed>
+  <ABY_DominionSliceEncounter_HeartExposed>The Crown-Heart is exposed. Break it before the slice reorganizes.</ABY_DominionSliceEncounter_HeartExposed>
+  <ABY_DominionSliceEncounter_CollapseStarted>The Crown-Heart has ruptured. Extraction window remaining: {0}.</ABY_DominionSliceEncounter_CollapseStarted>
+  <ABY_DominionSliceEncounter_Failed>The dominion slice is collapsing in failure.</ABY_DominionSliceEncounter_Failed>
+  <ABY_DominionSliceEncounter_Wave>Dominion support wave engaged: {0} hostiles. Wave #{1}.</ABY_DominionSliceEncounter_Wave>
+  <ABY_DominionSliceEncounter_CollapseInactive>not started</ABY_DominionSliceEncounter_CollapseInactive>
+  <ABY_DominionSliceAnchor_Inspect>Anchor role: {0}.</ABY_DominionSliceAnchor_Inspect>
+  <ABY_DominionSliceAnchorRole_Seal>Seal</ABY_DominionSliceAnchorRole_Seal>
+  <ABY_DominionSliceAnchorRole_Choir>Choir</ABY_DominionSliceAnchorRole_Choir>
+  <ABY_DominionSliceAnchorRole_Law>Law</ABY_DominionSliceAnchorRole_Law>
+  <ABY_DominionSliceHeart_Shielded>The Crown-Heart is still shielded by dominion anchors.</ABY_DominionSliceHeart_Shielded>
+  <ABY_DominionSliceHeart_InspectShielded>The heart remains shielded. Destroy the dominion anchors first.</ABY_DominionSliceHeart_InspectShielded>
+  <ABY_DominionSliceHeart_InspectExposed>The heart is exposed. Collapse in: {0}.</ABY_DominionSliceHeart_InspectExposed>
+</LanguageData>

@@ -82,6 +82,28 @@ namespace AbyssalProtocol
             return false;
         }
 
+
+        public bool TryGetSessionByPocketMap(Map pocketMap, out ABY_DominionPocketSession session)
+        {
+            session = null;
+            if (pocketMap == null || sessions == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < sessions.Count; i++)
+            {
+                ABY_DominionPocketSession candidate = sessions[i];
+                if (candidate != null && candidate.active && candidate.pocketMapId == pocketMap.uniqueID)
+                {
+                    session = candidate;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public bool TryGetSessionById(string sessionId, out ABY_DominionPocketSession session)
         {
             session = null;

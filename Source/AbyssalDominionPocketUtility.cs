@@ -161,6 +161,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            MapComponent_DominionSliceEncounter encounter = pocketMap.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                encounter.TryInitialize(session);
+            }
+
+            IntVec3 entryCell = session.pocketEntryCell.IsValid ? session.pocketEntryCell : pocketMap.Center;
             for (int i = 0; i < entryPawns.Count; i++)
             {
                 TransferPawnToMap(entryPawns[i], pocketMap, entryCell);
@@ -271,6 +278,12 @@ namespace AbyssalProtocol
             if (focusThing != null)
             {
                 CameraJumper.TryJumpAndSelect(focusThing);
+                return true;
+            }
+
+            if (session.heartCell.IsValid)
+            {
+                CameraJumper.TryJump(session.heartCell, pocketMap);
                 return true;
             }
 
