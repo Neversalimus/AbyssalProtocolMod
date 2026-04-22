@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace AbyssalProtocol
@@ -10,8 +11,9 @@ namespace AbyssalProtocol
     public static class AbyssalDominionPocketUtility
     {
         private const string ExitThingDefName = "ABY_DominionPocketExit";
-        private const int PocketMapWidth = 120;
-        private const int PocketMapHeight = 120;
+        private const string SliceWorldObjectDefName = "ABY_DominionSliceSite";
+        private const int SliceMapWidth = 120;
+        private const int SliceMapHeight = 120;
 
         public static List<Pawn> GetSelectedColonistsForPocketEntry(Map map)
         {
@@ -76,8 +78,7 @@ namespace AbyssalProtocol
             return result;
         }
 
-        
-public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumerable<Pawn> pawns, out ABY_DominionPocketSession session, out string failReason)
+        public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumerable<Pawn> pawns, out ABY_DominionPocketSession session, out string failReason)
         {
             session = null;
             failReason = null;
@@ -101,72 +102,24 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 return false;
             }
 
-            List<MapGeneratorDef> generatorDefs = ResolveGeneratorDefs();
-            if (generatorDefs.Count == 0)
+            if (!TryCreateSliceMap(gate.Map, out Map sliceMap, out int sliceTile, out failReason))
             {
-                failReason = "ABY_DominionPocketRuntimeFail_NoGenerator".Translate();
                 return false;
             }
-
-            Map pocketMap = null;
-            Exception lastException = null;
-            for (int generatorIndex = 0; generatorIndex < generatorDefs.Count; generatorIndex++)
-            {
-                MapGeneratorDef generatorDef = generatorDefs[generatorIndex];
-                if (generatorDef == null)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    pocketMap = PocketMapUtility.GeneratePocketMap(
-                        new IntVec3(PocketMapWidth, 1, PocketMapHeight),
-                        generatorDef,
-                        Enumerable.Empty<GenStepWithParams>(),
-                        gate.Map);
-                    if (pocketMap != null)
-                    {
-                        if (generatorIndex > 0)
-                        {
-                            Log.Warning($"[Abyssal Protocol] Dominion pocket map used fallback shell generator {generatorDef.defName}.");
-                        }
-                        break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    lastException = ex;
-                    Log.Warning($"[Abyssal Protocol] Dominion pocket shell generator failed: {generatorDef.defName}. Trying next shell if available. Exception: {ex.GetType().Name}: {ex.Message}");
-                }
-            }
-
-            if (pocketMap == null)
-            {
-                if (lastException != null)
-                {
-                    Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map with all neutral shell generators: {lastException}");
-                }
-                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
-                return false;
-            }
-
-            EnsurePocketMapWorldBinding(pocketMap, gate.Map);
 
             IntVec3 returnCell = ResolveReturnCell(gate);
             session = new ABY_DominionPocketSession
             {
                 sessionId = Guid.NewGuid().ToString("N"),
                 sourceMapId = gate.Map.uniqueID,
-                pocketMapId = pocketMap.uniqueID,
+                pocketMapId = sliceMap.uniqueID,
                 sourceGateThingId = gate.thingIDNumber,
                 sourceReturnCell = returnCell,
+                sliceTile = sliceTile,
                 pocketEntryCell = IntVec3.Invalid,
                 extractionCell = IntVec3.Invalid,
                 heartCell = IntVec3.Invalid,
                 createdTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
-                initialStrikeTeamCount = entryPawns.Count,
-                lastKnownPocketPawnCount = entryPawns.Count,
                 victoryAchieved = false,
                 rewardsGranted = false,
                 collapseAtTick = 0,
@@ -175,44 +128,46 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 cleanupQueued = false
             };
 
-            if (!AbyssalDominionSliceBuilder.TryPrepareDominionSlice(pocketMap, session, out failReason))
+            if (!AbyssalDominionSliceBuilder.TryPrepareDominionSlice(sliceMap, session, out failReason))
             {
-                SafeDestroyPocketMap(pocketMap);
+                SafeDestroyPocketMap(sliceMap, session);
                 session = null;
                 return false;
             }
 
             runtime?.RegisterSession(session);
 
-            if (!TrySpawnPocketExit(session, pocketMap, out failReason))
+            if (!TrySpawnPocketExit(session, sliceMap, out failReason))
             {
                 runtime?.ForgetSession(session.sessionId);
-                SafeDestroyPocketMap(pocketMap);
+                SafeDestroyPocketMap(sliceMap, session);
                 session = null;
                 return false;
             }
 
-            MapComponent_DominionSliceEncounter encounter = pocketMap.GetComponent<MapComponent_DominionSliceEncounter>();
+            MapComponent_DominionSliceEncounter encounter = sliceMap.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter != null)
             {
                 encounter.TryInitialize(session);
             }
 
-            IntVec3 entryCell = session.pocketEntryCell.IsValid ? session.pocketEntryCell : pocketMap.Center;
+            IntVec3 entryCell = session.pocketEntryCell.IsValid ? session.pocketEntryCell : sliceMap.Center;
             for (int i = 0; i < entryPawns.Count; i++)
             {
-                TransferPawnToMap(entryPawns[i], pocketMap, entryCell);
+                TransferPawnToMap(entryPawns[i], sliceMap, entryCell);
             }
 
             Messages.Message(
-                "ABY_DominionPocketRuntimeOpened".Translate(entryPawns.Count, pocketMap.Size.x, pocketMap.Size.z),
+                "ABY_DominionPocketRuntimeOpened".Translate(entryPawns.Count, sliceMap.Size.x, sliceMap.Size.z),
                 MessageTypeDefOf.PositiveEvent,
                 false);
-            Thing focusThing = ResolveExitThing(session, pocketMap);
+
+            Thing focusThing = ResolveExitThing(session, sliceMap);
             if (focusThing != null)
             {
                 CameraJumper.TryJumpAndSelect(focusThing);
             }
+
             return true;
         }
 
@@ -240,7 +195,6 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             }
 
             List<Pawn> pawns = GetPocketPlayerPawns(pocketMap);
-            session.lastKnownPocketPawnCount = pawns.Count;
             if (pawns.Count == 0)
             {
                 if (destroyPocketMap)
@@ -339,11 +293,6 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
 
         public static void FailAndCollapsePocketSlice(ABY_DominionPocketSession session, Map pocketMap, string reason, bool silent)
         {
-            if (session != null && !reason.NullOrEmpty())
-            {
-                session.lastOutcomeReason = reason;
-            }
-
             ResolvePocketFailureToSourceMap(session, reason);
             CollapsePocketSlice(session, pocketMap, silent);
         }
@@ -356,16 +305,71 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 session.cleanupQueued = false;
             }
 
-            if (pocketMap != null)
-            {
-                SafeDestroyPocketMap(pocketMap);
-            }
-
+            SafeDestroyPocketMap(pocketMap, session);
             ABY_DominionPocketRuntimeGameComponent.Get()?.ForgetSession(session?.sessionId);
+
             if (!silent)
             {
                 Messages.Message("ABY_DominionPocketRuntimeCollapsed".Translate(), MessageTypeDefOf.CautionInput, false);
             }
+        }
+
+        private static bool TryCreateSliceMap(Map sourceMap, out Map map, out int tile, out string failReason)
+        {
+            map = null;
+            tile = -1;
+            failReason = null;
+
+            if (sourceMap == null)
+            {
+                failReason = "ABY_DominionPocketRuntimeFail_NoSourceMap".Translate();
+                return false;
+            }
+
+            WorldObjectDef worldObjectDef = DefDatabase<WorldObjectDef>.GetNamedSilentFail(SliceWorldObjectDefName);
+            if (worldObjectDef == null)
+            {
+                failReason = "Missing world object def: " + SliceWorldObjectDefName;
+                return false;
+            }
+
+            if (!TryFindSliceTile(sourceMap, out tile))
+            {
+                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
+                return false;
+            }
+
+            WorldObject_ABY_DominionSliceSite worldObject = WorldObjectMaker.MakeWorldObject(worldObjectDef) as WorldObject_ABY_DominionSliceSite;
+            if (worldObject == null)
+            {
+                failReason = "Failed to create dominion slice world object.";
+                return false;
+            }
+
+            worldObject.Tile = tile;
+            TrySetWorldObjectFaction(worldObject, Faction.OfPlayer);
+            Find.WorldObjects.Add(worldObject);
+
+            try
+            {
+                map = InvokeGetOrGenerateMap(tile, new IntVec3(SliceMapWidth, 1, SliceMapHeight), worldObjectDef);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("[Abyssal Protocol] Failed to generate dominion slice normal map: " + ex);
+                TryRemoveWorldObject(tile);
+                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
+                return false;
+            }
+
+            if (map == null)
+            {
+                TryRemoveWorldObject(tile);
+                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
+                return false;
+            }
+
+            return true;
         }
 
         private static void ResolvePocketVictoryToSourceMap(ABY_DominionPocketSession session, Map pocketMap, Map sourceMap, IntVec3 returnCell)
@@ -381,7 +385,6 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 if (!summary.NullOrEmpty())
                 {
                     session.rewardSummary = summary;
-                session.lastOutcomeReason = "ABY_DominionPocketOutcome_Victory".Translate();
                 }
             }
 
@@ -400,9 +403,7 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
 
             if (TryResolveSourceCrisis(session, out MapComponent_DominionCrisis crisis))
             {
-                string resolvedReason = reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason;
-                session.lastOutcomeReason = resolvedReason;
-                crisis.TryResolvePocketFailure(resolvedReason);
+                crisis.TryResolvePocketFailure(reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason);
             }
         }
 
@@ -465,98 +466,7 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
 
         public static bool HasAnyPlayerPawnsOnMap(Map map)
         {
-            return GetPocketPlayerCount(map) > 0;
-        }
-
-        public static int GetPocketPlayerCount(Map map)
-        {
-            return GetPocketPlayerPawns(map).Count;
-        }
-
-        public static string GetPocketCollapseEta(ABY_DominionPocketSession session)
-        {
-            if (session == null || !session.victoryAchieved || Find.TickManager == null || session.collapseAtTick <= 0)
-            {
-                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
-            }
-
-            return System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
-        }
-
-        public static string GetPocketSessionStatusValue(ABY_DominionPocketSession session, Map pocketMap)
-        {
-            if (session == null)
-            {
-                return "ABY_DominionPocketFlowStatus_Locked".Translate();
-            }
-
-            int teamCount = pocketMap != null ? GetPocketPlayerCount(pocketMap) : session.lastKnownPocketPawnCount;
-            if (teamCount <= 0)
-            {
-                teamCount = session.initialStrikeTeamCount;
-            }
-
-            if (session.victoryAchieved)
-            {
-                return "ABY_DominionPocketFlowStatus_ExtractArmed".Translate(teamCount, GetPocketCollapseEta(session));
-            }
-
-            return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(teamCount);
-        }
-
-        public static string GetPocketObjectiveValue(ABY_DominionPocketSession session, Map pocketMap)
-        {
-            if (session == null)
-            {
-                return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
-            }
-
-            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
-            if (encounter != null)
-            {
-                return encounter.GetTelemetryObjectiveLabel();
-            }
-
-            if (session.victoryAchieved)
-            {
-                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetPocketCollapseEta(session));
-            }
-
-            return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
-        }
-
-        public static string GetPocketRewardValue(ABY_DominionPocketSession session, Map pocketMap)
-        {
-            if (session == null)
-            {
-                return "ABY_DominionSliceRewardForecast_None".Translate();
-            }
-
-            if (!session.rewardSummary.NullOrEmpty())
-            {
-                return session.rewardSummary;
-            }
-
-            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
-            if (encounter != null)
-            {
-                return encounter.GetRewardForecastValue();
-            }
-
-            return "ABY_DominionSliceRewardForecast_None".Translate();
-        }
-
-        public static string GetPocketEncounterTelemetry(ABY_DominionPocketSession session, Map pocketMap)
-        {
-            if (session == null)
-            {
-                return "ABY_DominionPocketTelemetry_Dormant".Translate();
-            }
-
-            string objective = GetPocketObjectiveValue(session, pocketMap);
-            string team = GetPocketSessionStatusValue(session, pocketMap);
-            string rewards = GetPocketRewardValue(session, pocketMap);
-            return "ABY_DominionPocketTelemetry_Report".Translate(objective, team, rewards);
+            return GetPocketPlayerPawns(map).Count > 0;
         }
 
         public static string GetSourceMapLabel(ABY_DominionPocketSession session)
@@ -575,115 +485,90 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 && pawn.Spawned
                 && pawn.MapHeld == map
                 && pawn.IsColonistPlayerControlled
-                && !pawn.InMentalState
-                && !pawn.Downed;
-        }
-        private static List<MapGeneratorDef> ResolveGeneratorDefs()
-        {
-            List<MapGeneratorDef> result = new List<MapGeneratorDef>();
-            AddGeneratorDef(result, "Base_Player");
-            AddGeneratorDef(result, "Base_Faction");
-            return result;
+                && !pawn.InMentalState;
         }
 
-        private static void AddGeneratorDef(List<MapGeneratorDef> result, string defName)
+        private static bool TryFindSliceTile(Map sourceMap, out int tile)
         {
-            if (result == null || defName.NullOrEmpty())
+            tile = -1;
+            if (sourceMap == null || Find.WorldGrid == null)
             {
-                return;
-            }
-
-            MapGeneratorDef def = DefDatabase<MapGeneratorDef>.GetNamedSilentFail(defName);
-            if (def != null && !result.Contains(def))
-            {
-                result.Add(def);
-            }
-        }
-
-        private static void EnsurePocketMapWorldBinding(Map pocketMap, Map sourceMap)
-        {
-            if (pocketMap == null || sourceMap == null)
-            {
-                return;
+                return false;
             }
 
             int sourceTile = sourceMap.Tile;
-            if (sourceTile < 0 && sourceMap.Parent != null)
+            List<int> candidateTiles = new List<int>();
+            MethodInfo getNeighbors = Find.WorldGrid.GetType().GetMethod("GetTileNeighbors", new[] { typeof(int), typeof(List<int>) });
+            if (getNeighbors != null)
             {
-                sourceTile = TryGetTileValue(sourceMap.Parent);
+                try
+                {
+                    getNeighbors.Invoke(Find.WorldGrid, new object[] { sourceTile, candidateTiles });
+                }
+                catch
+                {
+                }
             }
 
-            if (sourceTile < 0)
+            for (int i = 0; i < candidateTiles.Count; i++)
+            {
+                int candidate = candidateTiles[i];
+                if (candidate < 0 || candidate == sourceTile || AnyMapParentAt(candidate))
+                {
+                    continue;
+                }
+
+                tile = candidate;
+                return true;
+            }
+
+            for (int candidate = 0; candidate < Find.WorldGrid.TilesCount; candidate++)
+            {
+                if (candidate == sourceTile || AnyMapParentAt(candidate))
+                {
+                    continue;
+                }
+
+                tile = candidate;
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool AnyMapParentAt(int tile)
+        {
+            if (tile < 0 || Find.WorldObjects == null)
+            {
+                return false;
+            }
+
+            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
+            for (int i = 0; i < all.Count; i++)
+            {
+                WorldObject worldObject = all[i];
+                if (worldObject is MapParent && worldObject.Tile == tile)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static void TrySetWorldObjectFaction(WorldObject worldObject, Faction faction)
+        {
+            if (worldObject == null || faction == null)
             {
                 return;
             }
 
-            TrySetTileValue(pocketMap.Parent, sourceTile);
-            TrySetTileValue(pocketMap, sourceTile);
-        }
-
-        private static int TryGetTileValue(object obj)
-        {
-            if (obj == null)
-            {
-                return -1;
-            }
-
-            Type type = obj.GetType();
-            PropertyInfo property = type.GetProperty("Tile", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (property != null && property.CanRead && property.PropertyType == typeof(int))
+            MethodInfo method = worldObject.GetType().GetMethod("SetFaction", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (method != null)
             {
                 try
                 {
-                    return (int)property.GetValue(obj, null);
-                }
-                catch
-                {
-                }
-            }
-
-            FieldInfo field = FindIntField(type, new[] { "tileInt", "tile", "Tile" });
-            if (field != null)
-            {
-                try
-                {
-                    return (int)field.GetValue(obj);
-                }
-                catch
-                {
-                }
-            }
-
-            return -1;
-        }
-
-        private static void TrySetTileValue(object obj, int tile)
-        {
-            if (obj == null || tile < 0)
-            {
-                return;
-            }
-
-            Type type = obj.GetType();
-            PropertyInfo property = type.GetProperty("Tile", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            if (property != null && property.CanWrite && property.PropertyType == typeof(int))
-            {
-                try
-                {
-                    property.SetValue(obj, tile, null);
-                    return;
-                }
-                catch
-                {
-                }
-            }
-
-            FieldInfo field = FindIntField(type, new[] { "tileInt", "tile", "Tile" });
-            if (field != null)
-            {
-                try
-                {
-                    field.SetValue(obj, tile);
+                    method.Invoke(worldObject, new object[] { faction });
                 }
                 catch
                 {
@@ -691,21 +576,28 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             }
         }
 
-        private static FieldInfo FindIntField(Type type, string[] candidateNames)
+        private static Map InvokeGetOrGenerateMap(int tile, IntVec3 size, WorldObjectDef worldObjectDef)
         {
-            for (Type current = type; current != null; current = current.BaseType)
+            MethodInfo[] methods = typeof(GetOrGenerateMapUtility).GetMethods(BindingFlags.Static | BindingFlags.Public);
+            for (int i = 0; i < methods.Length; i++)
             {
-                for (int i = 0; i < candidateNames.Length; i++)
+                MethodInfo method = methods[i];
+                if (method.Name != "GetOrGenerateMap")
                 {
-                    FieldInfo field = current.GetField(candidateNames[i], BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                    if (field != null && field.FieldType == typeof(int))
-                    {
-                        return field;
-                    }
+                    continue;
+                }
+
+                ParameterInfo[] parameters = method.GetParameters();
+                if (parameters.Length == 3
+                    && parameters[0].ParameterType == typeof(int)
+                    && parameters[1].ParameterType == typeof(IntVec3)
+                    && parameters[2].ParameterType == typeof(WorldObjectDef))
+                {
+                    return method.Invoke(null, new object[] { tile, size, worldObjectDef }) as Map;
                 }
             }
 
-            return null;
+            throw new MissingMethodException("GetOrGenerateMapUtility.GetOrGenerateMap(int, IntVec3, WorldObjectDef) was not found.");
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
@@ -775,6 +667,7 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                     failReason = "ABY_DominionPocketRuntimeFail_NoEntryCell".Translate();
                     return false;
                 }
+
                 session.pocketEntryCell = spawnCell;
             }
 
@@ -857,20 +750,69 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             return result;
         }
 
-        private static void SafeDestroyPocketMap(Map pocketMap)
+        private static void SafeDestroyPocketMap(Map pocketMap, ABY_DominionPocketSession session)
         {
-            if (pocketMap == null)
+            if (pocketMap != null)
+            {
+                try
+                {
+                    MethodInfo[] methods = typeof(Game).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    MethodInfo chosen = null;
+                    for (int i = 0; i < methods.Length; i++)
+                    {
+                        MethodInfo method = methods[i];
+                        if (method.Name != "DeinitAndRemoveMap")
+                        {
+                            continue;
+                        }
+
+                        ParameterInfo[] parameters = method.GetParameters();
+                        if (parameters.Length >= 1 && parameters[0].ParameterType == typeof(Map))
+                        {
+                            chosen = method;
+                            break;
+                        }
+                    }
+
+                    if (chosen != null && Current.Game != null)
+                    {
+                        ParameterInfo[] parameters = chosen.GetParameters();
+                        object[] args = new object[parameters.Length];
+                        args[0] = pocketMap;
+                        for (int i = 1; i < parameters.Length; i++)
+                        {
+                            args[i] = parameters[i].ParameterType == typeof(bool) ? (object)false : Type.Missing;
+                        }
+                        chosen.Invoke(Current.Game, args);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("[Abyssal Protocol] Failed to destroy dominion slice normal map " + pocketMap + ": " + ex);
+                }
+            }
+
+            if (session != null && session.sliceTile >= 0)
+            {
+                TryRemoveWorldObject(session.sliceTile);
+            }
+        }
+
+        private static void TryRemoveWorldObject(int tile)
+        {
+            if (tile < 0 || Find.WorldObjects == null)
             {
                 return;
             }
 
-            try
+            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
+            for (int i = all.Count - 1; i >= 0; i--)
             {
-                PocketMapUtility.DestroyPocketMap(pocketMap);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"[Abyssal Protocol] Failed to destroy dominion pocket map {pocketMap}: {ex}");
+                WorldObject worldObject = all[i];
+                if (worldObject is WorldObject_ABY_DominionSliceSite && worldObject.Tile == tile)
+                {
+                    Find.WorldObjects.Remove(worldObject);
+                }
             }
         }
     }

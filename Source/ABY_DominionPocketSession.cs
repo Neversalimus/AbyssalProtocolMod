@@ -10,6 +10,7 @@ namespace AbyssalProtocol
         public int pocketMapId = -1;
         public int sourceGateThingId = -1;
         public int pocketExitThingId = -1;
+        public int sliceTile = -1;
         public IntVec3 sourceReturnCell = IntVec3.Invalid;
         public IntVec3 pocketEntryCell = IntVec3.Invalid;
         public IntVec3 extractionCell = IntVec3.Invalid;
@@ -33,6 +34,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref pocketMapId, "pocketMapId", -1);
             Scribe_Values.Look(ref sourceGateThingId, "sourceGateThingId", -1);
             Scribe_Values.Look(ref pocketExitThingId, "pocketExitThingId", -1);
+            Scribe_Values.Look(ref sliceTile, "sliceTile", -1);
             Scribe_Values.Look(ref sourceReturnCell, "sourceReturnCell", IntVec3.Invalid);
             Scribe_Values.Look(ref pocketEntryCell, "pocketEntryCell", IntVec3.Invalid);
             Scribe_Values.Look(ref extractionCell, "extractionCell", IntVec3.Invalid);
