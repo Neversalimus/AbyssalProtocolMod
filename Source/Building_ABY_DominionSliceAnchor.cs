@@ -138,6 +138,8 @@ namespace AbyssalProtocol
             }
 
             sb.Append("ABY_DominionSliceAnchor_Inspect".Translate(GetRoleLabel()));
+            sb.AppendLine();
+            sb.Append(GetRoleEffectLabel());
             return sb.ToString().TrimEnd();
         }
 
@@ -151,6 +153,19 @@ namespace AbyssalProtocol
                     return "ABY_DominionSliceAnchorRole_Law".Translate();
                 default:
                     return "ABY_DominionSliceAnchorRole_Seal".Translate();
+            }
+        }
+
+        private string GetRoleEffectLabel()
+        {
+            switch (AnchorRole)
+            {
+                case DominionSliceAnchorRole.Choir:
+                    return "ABY_DominionSliceAnchor_ChoirEffect".Translate();
+                case DominionSliceAnchorRole.Law:
+                    return "ABY_DominionSliceAnchor_LawEffect".Translate();
+                default:
+                    return "ABY_DominionSliceAnchor_SealEffect".Translate();
             }
         }
 

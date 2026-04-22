@@ -31,6 +31,8 @@ namespace AbyssalProtocol
         private int hazardPressure;
         private float heartShieldBonus;
         private int wavesTriggered;
+        private string lastWaveLabel;
+        private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
         private List<Building_ABY_DominionSliceAnchor> anchors = new List<Building_ABY_DominionSliceAnchor>();
 
@@ -49,6 +51,31 @@ namespace AbyssalProtocol
             get { return phase == SlicePhase.HeartExposed || phase == SlicePhase.Collapse; }
         }
 
+        public SlicePhase CurrentPhase
+        {
+            get { return phase; }
+        }
+
+        public int HazardPressure
+        {
+            get { return hazardPressure; }
+        }
+
+        public int WavesTriggeredCount
+        {
+            get { return wavesTriggered; }
+        }
+
+        public string LastWaveLabel
+        {
+            get { return lastWaveLabel; }
+        }
+
+        public string LastWaveSummary
+        {
+            get { return lastWaveSummary; }
+        }
+
         public MapComponent_DominionSliceEncounter(Map map) : base(map)
         {
         }
@@ -64,6 +91,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref hazardPressure, "hazardPressure", 0);
             Scribe_Values.Look(ref heartShieldBonus, "heartShieldBonus", 0f);
             Scribe_Values.Look(ref wavesTriggered, "wavesTriggered", 0);
+            Scribe_Values.Look(ref lastWaveLabel, "lastWaveLabel");
+            Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_References.Look(ref heart, "heart");
             Scribe_Collections.Look(ref anchors, "anchors", LookMode.Reference);
 
@@ -175,6 +204,8 @@ namespace AbyssalProtocol
             hazardPressure = 0;
             heartShieldBonus = 0f;
             wavesTriggered = 0;
+            lastWaveLabel = null;
+            lastWaveSummary = null;
             anchors.Clear();
             heart = null;
 
@@ -325,6 +356,13 @@ namespace AbyssalProtocol
             }
         }
 
+        private bool TryResolveSession(out ABY_DominionPocketSession session)
+        {
+            session = null;
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            return runtime != null && runtime.TryGetSessionById(sessionId, out session);
+        }
+
         private void SpawnEncounterObjects(ABY_DominionPocketSession session)
         {
             if (session == null)
@@ -370,7 +408,7 @@ namespace AbyssalProtocol
         {
             phase = SlicePhase.Anchorfall;
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            nextWaveTick = phaseStartedTick + 420;
+            nextWaveTick = phaseStartedTick + AbyssalDominionSliceWaveDirector.GetNextWaveDelayTicks(phase, wavesTriggered, hazardPressure, GetLiveAnchorCount());
             Messages.Message("ABY_DominionSliceEncounter_Anchorfall".Translate(GetLiveAnchorCount()), new TargetInfo(map.Center, map), MessageTypeDefOf.ThreatBig, false);
         }
 
@@ -378,7 +416,7 @@ namespace AbyssalProtocol
         {
             phase = SlicePhase.HeartExposed;
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            nextWaveTick = phaseStartedTick + 540;
+            nextWaveTick = phaseStartedTick + AbyssalDominionSliceWaveDirector.GetNextWaveDelayTicks(phase, wavesTriggered, hazardPressure, GetLiveAnchorCount());
             Messages.Message("ABY_DominionSliceEncounter_HeartExposed".Translate(), new TargetInfo(heart != null ? heart.PositionHeld : map.Center, map), MessageTypeDefOf.ThreatBig, false);
         }
 
@@ -423,20 +461,38 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<PawnKindDef> kinds = BuildWaveKinds();
-            List<Pawn> spawned = new List<Pawn>();
-            IntVec3 focus = heart != null && !heart.Destroyed ? heart.PositionHeld : map.Center;
+            ABY_DominionPocketSession session;
+            TryResolveSession(out session);
 
-            for (int i = 0; i < kinds.Count; i++)
+            AbyssalDominionSliceWaveDirector.DominionSliceWavePlan plan =
+                AbyssalDominionSliceWaveDirector.BuildPlan(
+                    map,
+                    phase,
+                    wavesTriggered,
+                    hazardPressure,
+                    GetLiveAnchorCount(),
+                    anchors,
+                    heart,
+                    session);
+
+            if (plan == null || plan.PawnKinds.Count == 0)
+            {
+                return;
+            }
+
+            List<Pawn> spawned = new List<Pawn>();
+            IntVec3 focus = plan.FocusCell.IsValid ? plan.FocusCell : (heart != null && !heart.Destroyed ? heart.PositionHeld : map.Center);
+
+            for (int i = 0; i < plan.PawnKinds.Count; i++)
             {
                 Pawn pawn;
-                if (!TryGeneratePawn(kinds[i], faction, out pawn) || pawn == null)
+                if (!TryGeneratePawn(plan.PawnKinds[i], faction, out pawn) || pawn == null)
                 {
                     continue;
                 }
 
                 IntVec3 spawnCell;
-                if (!TryFindWaveSpawnCell(focus, out spawnCell))
+                if (!TryFindWaveSpawnCell(focus, plan.MinSpawnRadius, plan.MaxSpawnRadius, out spawnCell))
                 {
                     pawn.Destroy(DestroyMode.Vanish);
                     continue;
@@ -451,7 +507,14 @@ namespace AbyssalProtocol
             {
                 AbyssalLordUtility.EnsureAssaultLord(spawned, faction, map, false);
                 wavesTriggered++;
-                Messages.Message("ABY_DominionSliceEncounter_Wave".Translate(spawned.Count, wavesTriggered), new TargetInfo(focus, map), MessageTypeDefOf.ThreatSmall, false);
+                lastWaveLabel = plan.GetLabel();
+                lastWaveSummary = "ABY_DominionSliceEncounter_WaveSummary".Translate(lastWaveLabel, spawned.Count, wavesTriggered);
+                Messages.Message(lastWaveSummary, new TargetInfo(focus, map), MessageTypeDefOf.ThreatSmall, false);
+            }
+            else
+            {
+                lastWaveLabel = plan.GetLabel();
+                lastWaveSummary = null;
             }
         }
 
@@ -539,17 +602,21 @@ namespace AbyssalProtocol
             return pawn != null;
         }
 
-        private bool TryFindWaveSpawnCell(IntVec3 focus, out IntVec3 cell)
+        private bool TryFindWaveSpawnCell(IntVec3 focus, int minRadius, int maxRadius, out IntVec3 cell)
         {
-            for (int i = 0; i < 30; i++)
+            int resolvedMinRadius = System.Math.Max(5, minRadius);
+            int resolvedMaxRadius = System.Math.Max(resolvedMinRadius + 2, maxRadius);
+
+            for (int i = 0; i < 40; i++)
             {
                 IntVec3 candidate;
-                if (!CellFinder.TryFindRandomCellNear(focus, map, 14, c => c.Standable(map) && !c.Fogged(map), out candidate))
+                if (!CellFinder.TryFindRandomCellNear(focus, map, resolvedMaxRadius, c => c.Standable(map) && !c.Fogged(map), out candidate))
                 {
                     continue;
                 }
 
-                if (candidate.DistanceTo(focus) >= 6f)
+                float distance = candidate.DistanceTo(focus);
+                if (distance >= resolvedMinRadius && distance <= resolvedMaxRadius)
                 {
                     cell = candidate;
                     return true;

@@ -15,4 +15,15 @@
   <ABY_DominionSliceHeart_Shielded>The Crown-Heart is still shielded by dominion anchors.</ABY_DominionSliceHeart_Shielded>
   <ABY_DominionSliceHeart_InspectShielded>The heart remains shielded. Destroy the dominion anchors first.</ABY_DominionSliceHeart_InspectShielded>
   <ABY_DominionSliceHeart_InspectExposed>The heart is exposed. Collapse in: {0}.</ABY_DominionSliceHeart_InspectExposed>
+  <ABY_DominionSliceEncounter_WaveSummary>{0} engaged. Hostiles: {1}. Wave #{2}.</ABY_DominionSliceEncounter_WaveSummary>
+  <ABY_DominionSliceWaveLabel_ThresholdHunters>Threshold hunters</ABY_DominionSliceWaveLabel_ThresholdHunters>
+  <ABY_DominionSliceWaveLabel_BreachCell>Breach cell</ABY_DominionSliceWaveLabel_BreachCell>
+  <ABY_DominionSliceWaveLabel_ChoirEscort>Choir escort</ABY_DominionSliceWaveLabel_ChoirEscort>
+  <ABY_DominionSliceWaveLabel_LawPunishers>Law punishers</ABY_DominionSliceWaveLabel_LawPunishers>
+  <ABY_DominionSliceWaveLabel_AnchorWardens>Anchor wardens</ABY_DominionSliceWaveLabel_AnchorWardens>
+  <ABY_DominionSliceWaveLabel_CrownRetinue>Crown retinue</ABY_DominionSliceWaveLabel_CrownRetinue>
+  <ABY_DominionSliceWaveLabel_CrownEnforcers>Crown enforcers</ABY_DominionSliceWaveLabel_CrownEnforcers>
+  <ABY_DominionSliceAnchor_SealEffect>Pulse effect: reinforces the Crown-Heart barrier and extends shield pressure.</ABY_DominionSliceAnchor_SealEffect>
+  <ABY_DominionSliceAnchor_ChoirEffect>Pulse effect: accelerates incoming support waves and attracts escort cells.</ABY_DominionSliceAnchor_ChoirEffect>
+  <ABY_DominionSliceAnchor_LawEffect>Pulse effect: intensifies ambient punishment and biases the slice toward sniper and warden pressure.</ABY_DominionSliceAnchor_LawEffect>
 </LanguageData>

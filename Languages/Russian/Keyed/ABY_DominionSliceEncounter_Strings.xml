@@ -15,4 +15,15 @@
   <ABY_DominionSliceHeart_Shielded>Корона-сердце всё ещё защищено якорями доминиона.</ABY_DominionSliceHeart_Shielded>
   <ABY_DominionSliceHeart_InspectShielded>Сердце защищено. Сначала уничтожьте якоря доминиона.</ABY_DominionSliceHeart_InspectShielded>
   <ABY_DominionSliceHeart_InspectExposed>Сердце раскрыто. До схлопывания: {0}.</ABY_DominionSliceHeart_InspectExposed>
+  <ABY_DominionSliceEncounter_WaveSummary>{0} задействованы. Враждебных целей: {1}. Волна №{2}.</ABY_DominionSliceEncounter_WaveSummary>
+  <ABY_DominionSliceWaveLabel_ThresholdHunters>Пороговые охотники</ABY_DominionSliceWaveLabel_ThresholdHunters>
+  <ABY_DominionSliceWaveLabel_BreachCell>Ячейка прорыва</ABY_DominionSliceWaveLabel_BreachCell>
+  <ABY_DominionSliceWaveLabel_ChoirEscort>Эскорт хора</ABY_DominionSliceWaveLabel_ChoirEscort>
+  <ABY_DominionSliceWaveLabel_LawPunishers>Каратели закона</ABY_DominionSliceWaveLabel_LawPunishers>
+  <ABY_DominionSliceWaveLabel_AnchorWardens>Стражи якорей</ABY_DominionSliceWaveLabel_AnchorWardens>
+  <ABY_DominionSliceWaveLabel_CrownRetinue>Свитa короны</ABY_DominionSliceWaveLabel_CrownRetinue>
+  <ABY_DominionSliceWaveLabel_CrownEnforcers>Коронные каратели</ABY_DominionSliceWaveLabel_CrownEnforcers>
+  <ABY_DominionSliceAnchor_SealEffect>Эффект импульса: усиливает барьер Crown-Heart и продлевает давление щита.</ABY_DominionSliceAnchor_SealEffect>
+  <ABY_DominionSliceAnchor_ChoirEffect>Эффект импульса: ускоряет входящие волны поддержки и притягивает эскортные ячейки.</ABY_DominionSliceAnchor_ChoirEffect>
+  <ABY_DominionSliceAnchor_LawEffect>Эффект импульса: усиливает окружающее наказание и смещает состав среза к давлению снайперов и стражей.</ABY_DominionSliceAnchor_LawEffect>
 </LanguageData>
