@@ -18,4 +18,5 @@
   <ABY_DominionPocketRuntimeExitInspect>Linked return vector: {0}.</ABY_DominionPocketRuntimeExitInspect>
   <ABY_DominionPocketRuntimeExitInspect_Unlinked>This extraction anchor is no longer linked to a live dominion slice session.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
   <ABY_DominionPocketRuntimeSource_Unknown>unknown source map</ABY_DominionPocketRuntimeSource_Unknown>
+  <ABY_DominionPocketRuntimeFail_EnvironmentBuild>The dominion slice environment could not be stabilized.</ABY_DominionPocketRuntimeFail_EnvironmentBuild>
 </LanguageData>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionSliceBastion.label>dominion bastion fragment</ABY_DominionSliceBastion.label>
+  <ABY_DominionSliceBastion.description>A dense shard of the infernal gate shell, embedded into the dominion slice as a pathing barrier and visual buttress.</ABY_DominionSliceBastion.description>
+  <ABY_DominionSliceSpire.label>dominion spire</ABY_DominionSliceSpire.label>
+  <ABY_DominionSliceSpire.description>A ritual-industrial pylon grown into the slice to frame lanes, anchor sightlines and make the space feel like hostile infrastructure rather than natural terrain.</ABY_DominionSliceSpire.description>
+  <ABY_DominionSliceSigilPad.label>dominion sigil pad</ABY_DominionSliceSigilPad.label>
+  <ABY_DominionSliceSigilPad.description>A stabilized sigil plate marking extraction, anchor and heart positions inside the dominion slice.</ABY_DominionSliceSigilPad.description>
+</LanguageData>

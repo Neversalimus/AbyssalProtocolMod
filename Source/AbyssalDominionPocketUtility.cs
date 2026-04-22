@@ -128,13 +128,6 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!TryFindPocketEntryCell(pocketMap, out IntVec3 entryCell))
-            {
-                SafeDestroyPocketMap(pocketMap);
-                failReason = "ABY_DominionPocketRuntimeFail_NoEntryCell".Translate();
-                return false;
-            }
-
             IntVec3 returnCell = ResolveReturnCell(gate);
             session = new ABY_DominionPocketSession
             {
@@ -143,11 +136,20 @@ namespace AbyssalProtocol
                 pocketMapId = pocketMap.uniqueID,
                 sourceGateThingId = gate.thingIDNumber,
                 sourceReturnCell = returnCell,
-                pocketEntryCell = entryCell,
+                pocketEntryCell = IntVec3.Invalid,
+                extractionCell = IntVec3.Invalid,
+                heartCell = IntVec3.Invalid,
                 createdTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
                 active = true,
                 cleanupQueued = false
             };
+
+            if (!AbyssalDominionSliceBuilder.TryPrepareDominionSlice(pocketMap, session, out failReason))
+            {
+                SafeDestroyPocketMap(pocketMap);
+                session = null;
+                return false;
+            }
 
             runtime?.RegisterSession(session);
 
@@ -423,7 +425,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IntVec3 spawnCell = session.pocketEntryCell;
+            IntVec3 spawnCell = session.extractionCell.IsValid ? session.extractionCell : session.pocketEntryCell;
             if (!spawnCell.IsValid || !spawnCell.InBounds(pocketMap) || !spawnCell.Standable(pocketMap))
             {
                 if (!TryFindPocketEntryCell(pocketMap, out spawnCell))

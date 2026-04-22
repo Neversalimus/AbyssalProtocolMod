@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionSliceBastion.label>осколок бастиона доминиона</ABY_DominionSliceBastion.label>
+  <ABY_DominionSliceBastion.description>Плотный фрагмент оболочки инфернальных врат, вбитый в срез доминиона как блокирующая опора и визуальный контрфорс.</ABY_DominionSliceBastion.description>
+  <ABY_DominionSliceSpire.label>шпиль доминиона</ABY_DominionSliceSpire.label>
+  <ABY_DominionSliceSpire.description>Ритуально-индустриальный пилон, выращенный в срезе для оформления маршрутов, линий обзора и ощущения враждебной инфраструктуры вместо природного ландшафта.</ABY_DominionSliceSpire.description>
+  <ABY_DominionSliceSigilPad.label>сигильная платформа доминиона</ABY_DominionSliceSigilPad.label>
+  <ABY_DominionSliceSigilPad.description>Стабилизированная сигильная плита, отмечающая точки эвакуации, будущих якорей и сердца внутри среза доминиона.</ABY_DominionSliceSigilPad.description>
+</LanguageData>

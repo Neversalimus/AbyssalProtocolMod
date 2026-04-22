@@ -18,4 +18,5 @@
   <ABY_DominionPocketRuntimeExitInspect>Связанный вектор возврата: {0}.</ABY_DominionPocketRuntimeExitInspect>
   <ABY_DominionPocketRuntimeExitInspect_Unlinked>Этот якорь эвакуации больше не связан с живой сессией среза доминиона.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
   <ABY_DominionPocketRuntimeSource_Unknown>неизвестная исходная карта</ABY_DominionPocketRuntimeSource_Unknown>
+  <ABY_DominionPocketRuntimeFail_EnvironmentBuild>Не удалось стабилизировать окружение среза доминиона.</ABY_DominionPocketRuntimeFail_EnvironmentBuild>
 </LanguageData>
