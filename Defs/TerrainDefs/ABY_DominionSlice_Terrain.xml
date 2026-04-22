@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TerrainDef>
+    <defName>ABY_DominionAshMetal</defName>
+    <label>ash-metal plating</label>
+    <description>Blackened infernal plating dusted with dead ash.</description>
+    <texturePath>Terrain/ABY_DominionAshMetal</texturePath>
+    <renderPrecedence>335</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
+    <edgeType>Hard</edgeType>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionScorchedPlate</defName>
+    <label>scorched dominion plate</label>
+    <description>Heat-scarred platework from a hostile infernal machine-temple.</description>
+    <texturePath>Terrain/ABY_DominionScorchedPlate</texturePath>
+    <renderPrecedence>338</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
+    <edgeType>Hard</edgeType>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionBloodChannel</defName>
+    <label>blood-channel plating</label>
+    <description>Hot, vein-like channels burned into infernal plate.</description>
+    <texturePath>Terrain/ABY_DominionBloodChannel</texturePath>
+    <renderPrecedence>342</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
+    <edgeType>Hard</edgeType>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionBrassSigil</defName>
+    <label>brass-sigil dais</label>
+    <description>A bright infernal inlay for anchor and heart platforms.</description>
+    <texturePath>Terrain/ABY_DominionBrassSigil</texturePath>
+    <renderPrecedence>345</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
+    <edgeType>Hard</edgeType>
+  </TerrainDef>
+
+</Defs>

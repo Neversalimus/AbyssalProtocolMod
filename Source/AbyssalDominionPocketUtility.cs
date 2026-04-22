@@ -577,12 +577,15 @@ namespace AbyssalProtocol
         {
             List<MapGeneratorDef> defs = new List<MapGeneratorDef>();
 
-            // Encounter is not safe here: on the current game/API it can NRE inside
-            // MapGenerator.GenerateMap when used through PocketMapUtility. Prefer real
-            // pocket-map generators first, then fall back only if needed.
+            // Use a neutral generator first so the dominion slice is not born with
+            // pit gates, cave exits or anomaly finale infrastructure already wired in.
+            AddGeneratorIfMissing(defs, DefDatabase<MapGeneratorDef>.GetNamedSilentFail("BasicMap"));
+            AddGeneratorIfMissing(defs, DefDatabase<MapGeneratorDef>.GetNamedSilentFail("EmptyMap"));
+
+            // Keep these only as late fallbacks for edge cases.
+            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Encounter);
             AddGeneratorIfMissing(defs, MapGeneratorDefOf.Undercave);
             AddGeneratorIfMissing(defs, MapGeneratorDefOf.MetalHell);
-            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Encounter);
 
             return defs;
         }

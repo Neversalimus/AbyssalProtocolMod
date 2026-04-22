@@ -56,7 +56,19 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                thing.Destroy(DestroyMode.Vanish);
+                if (ShouldPreserveThing(thing))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    thing.Destroy(DestroyMode.Vanish);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning($"[Abyssal Protocol] Dominion slice cleanup skipped {thing.LabelCap}: {ex.GetType().Name}");
+                }
             }
 
             CellRect whole = new CellRect(0, 0, map.Size.x, map.Size.z);
@@ -86,10 +98,10 @@ namespace AbyssalProtocol
 
         private static void BuildLayout(Map map, ABY_DominionPocketSession session)
         {
-            TerrainDef baseTerrain = ResolveTerrain("SterileTile", "MetalTile", "Concrete");
-            TerrainDef laneTerrain = ResolveTerrain("MetalTile", "PavedTile", "Concrete");
-            TerrainDef focalTerrain = ResolveTerrain("SilverTile", "SterileTile", "MetalTile");
-            TerrainDef supportTerrain = ResolveTerrain("Concrete", "PavedTile", "MetalTile");
+            TerrainDef baseTerrain = ResolveTerrain("ABY_DominionAshMetal", "Concrete", "MetalTile");
+            TerrainDef laneTerrain = ResolveTerrain("ABY_DominionBloodChannel", "MetalTile", "PavedTile");
+            TerrainDef focalTerrain = ResolveTerrain("ABY_DominionBrassSigil", "SilverTile", "SterileTile");
+            TerrainDef supportTerrain = ResolveTerrain("ABY_DominionScorchedPlate", "Concrete", "PavedTile");
 
             PaintWholeMap(map, baseTerrain);
 
@@ -128,6 +140,22 @@ namespace AbyssalProtocol
 
             SpawnShellFragments(map, center);
             SpawnLaneSupports(map, extraction, center, anchorA, anchorB, anchorC, sidePocket);
+        }
+
+        private static bool ShouldPreserveThing(Thing thing)
+        {
+            if (thing == null || thing.def == null)
+            {
+                return true;
+            }
+
+            string defName = thing.def.defName ?? string.Empty;
+            if (defName.Contains("CaveExit") || defName.Contains("PocketMapExit") || defName.Contains("PitGate"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private static TerrainDef ResolveTerrain(params string[] names)
