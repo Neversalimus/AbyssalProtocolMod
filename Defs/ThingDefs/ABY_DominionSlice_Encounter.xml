@@ -17,23 +17,23 @@
     <useHitPoints>true</useHitPoints>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression</texPath>
+      <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Seal</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.2,2.2)</drawSize>
+      <drawSize>(7.92,7.92)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>720</MaxHitPoints>
       <Mass>68</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
         <role>Seal</role>
         <pulseIntervalTicks>225</pulseIntervalTicks>
-        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression_Glow</glowTexPath>
-        <glowDrawScale>2.44</glowDrawScale>
+        <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Seal_Glow</glowTexPath>
+        <glowDrawScale>8.72</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -54,23 +54,23 @@
     <useHitPoints>true</useHitPoints>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward</texPath>
+      <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Choir</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.2,2.2)</drawSize>
+      <drawSize>(7.92,7.92)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>690</MaxHitPoints>
       <Mass>66</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
         <role>Choir</role>
         <pulseIntervalTicks>210</pulseIntervalTicks>
-        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward_Glow</glowTexPath>
-        <glowDrawScale>2.42</glowDrawScale>
+        <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Choir_Glow</glowTexPath>
+        <glowDrawScale>8.72</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -91,23 +91,23 @@
     <useHitPoints>true</useHitPoints>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach</texPath>
+      <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Law</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.2,2.2)</drawSize>
+      <drawSize>(7.92,7.92)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>670</MaxHitPoints>
       <Mass>64</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionSliceAnchor">
         <role>Law</role>
         <pulseIntervalTicks>240</pulseIntervalTicks>
-        <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach_Glow</glowTexPath>
-        <glowDrawScale>2.46</glowDrawScale>
+        <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Law_Glow</glowTexPath>
+        <glowDrawScale>8.93</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
