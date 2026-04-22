@@ -176,7 +176,7 @@ namespace AbyssalProtocol
 
             if (crisis.IsGateEntryReady())
             {
-                yield return new Command_Action
+                Command_Action enterCommand = new Command_Action
                 {
                     defaultLabel = "ABY_DominionPocketCommand_Enter".Translate(),
                     defaultDesc = "ABY_DominionPocketCommand_EnterDesc".Translate(),
@@ -189,6 +189,13 @@ namespace AbyssalProtocol
                         }
                     }
                 };
+
+                if (AbyssalDominionPocketUtility.GetSelectedColonistsForPocketEntry(Map).Count <= 0)
+                {
+                    enterCommand.Disable("ABY_DominionPocketFlowFail_NoStrikeTeam".Translate());
+                }
+
+                yield return enterCommand;
             }
         }
 
@@ -239,6 +246,11 @@ namespace AbyssalProtocol
             if (crisis != null)
             {
                 lines.Add("ABY_DominionPocketGate_Inspect".Translate(crisis.GetPocketFlowStatusValue()));
+                if (crisis.TryGetActivePocketSession(out ABY_DominionPocketSession session) && session != null)
+                {
+                    Map pocketMap = AbyssalDominionPocketUtility.ResolveMap(session.pocketMapId);
+                    lines.Add("ABY_DominionPocketGate_InspectTeam".Translate(AbyssalDominionPocketUtility.GetPocketSessionStatusValue(session, pocketMap)));
+                }
             }
             return string.Join("\n", lines);
         }

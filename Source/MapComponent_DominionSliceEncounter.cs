@@ -105,9 +105,10 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref heart, "heart");
             Scribe_Collections.Look(ref anchors, "anchors", LookMode.Reference);
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && anchors == null)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                anchors = new List<Building_ABY_DominionSliceAnchor>();
+                anchors ??= new List<Building_ABY_DominionSliceAnchor>();
+                RestoreReferencesFromMap();
             }
         }
 
@@ -126,6 +127,7 @@ namespace AbyssalProtocol
             }
 
             CleanupReferences();
+            RestoreReferencesFromMap();
             int now = Find.TickManager.TicksGame;
 
             if (phase == SlicePhase.Breach)
@@ -468,6 +470,41 @@ namespace AbyssalProtocol
             }
         }
 
+        private void RestoreReferencesFromMap()
+        {
+            if (map?.listerThings?.AllThings == null)
+            {
+                return;
+            }
+
+            anchors ??= new List<Building_ABY_DominionSliceAnchor>();
+            if (anchors.Count >= 3 && heart != null)
+            {
+                return;
+            }
+
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed)
+                {
+                    continue;
+                }
+
+                if (thing is Building_ABY_DominionSliceAnchor anchor && !anchors.Contains(anchor))
+                {
+                    anchors.Add(anchor);
+                    continue;
+                }
+
+                if (thing is Building_ABY_DominionSliceHeart candidateHeart && heart == null)
+                {
+                    heart = candidateHeart;
+                }
+            }
+        }
+
         private int GetLiveAnchorCount()
         {
             CleanupReferences();
@@ -476,6 +513,11 @@ namespace AbyssalProtocol
 
         private void TriggerWave()
         {
+            if (!AbyssalDominionPocketUtility.HasAnyPlayerPawnsOnMap(map))
+            {
+                return;
+            }
+
             Faction faction = ResolveAbyssalFaction();
             if (faction == null)
             {

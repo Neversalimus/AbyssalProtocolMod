@@ -159,13 +159,30 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                Map sourceMap = AbyssalDominionPocketUtility.ResolveMap(session.sourceMapId);
+                if (sourceMap == null)
+                {
+                    AbyssalDominionPocketUtility.CollapsePocketSlice(session, pocketMap, true);
+                    sessions.RemoveAt(i);
+                    continue;
+                }
+
                 if (!session.active)
                 {
                     continue;
                 }
 
+                session.lastKnownPocketPawnCount = AbyssalDominionPocketUtility.GetPocketPlayerCount(pocketMap);
                 AbyssalDominionPocketUtility.TryEnsurePocketExit(session, pocketMap);
-                if (!AbyssalDominionPocketUtility.HasAnyPlayerPawnsOnMap(pocketMap))
+
+                MapComponent_DominionCrisis crisis = sourceMap.GetComponent<MapComponent_DominionCrisis>();
+                if (crisis != null && crisis.IsTerminal && !session.victoryAchieved)
+                {
+                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, pocketMap, "ABY_DominionPocketOutcome_FailureLost".Translate(), false);
+                    continue;
+                }
+
+                if (session.lastKnownPocketPawnCount <= 0)
                 {
                     string failureKey = session.victoryAchieved
                         ? "ABY_DominionPocketOutcome_FailureNoExtraction"

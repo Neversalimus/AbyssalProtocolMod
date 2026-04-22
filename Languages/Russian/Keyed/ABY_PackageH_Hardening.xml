@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketFlowFail_NoStrikeTeam>Перед входом в Великие адские врата задрафть или выдели хотя бы одного стоящего колониста.</ABY_DominionPocketFlowFail_NoStrikeTeam>
+  <ABY_DominionPocketFlowStatus_DeployedCount>ударная группа внутри среза доминиона: {0}</ABY_DominionPocketFlowStatus_DeployedCount>
+  <ABY_DominionPocketFlowStatus_ExtractArmed>победа достигнута • эвакуируй колонистов: {0}, до схлопывания: {1}</ABY_DominionPocketFlowStatus_ExtractArmed>
+  <ABY_DominionPocketGate_InspectTeam>Статус среза: {0}</ABY_DominionPocketGate_InspectTeam>
+  <ABY_DominionPocketRuntimeReturnDisabled>У врат эвакуации больше не осталось пешек игрока.</ABY_DominionPocketRuntimeReturnDisabled>
+  <ABY_DominionPocketRuntimeExitInspect_Team>Ударная группа в срезе: {0}.</ABY_DominionPocketRuntimeExitInspect_Team>
+  <ABY_DominionPocketRuntimeExitInspect_State>Состояние encounter-а: {0}.</ABY_DominionPocketRuntimeExitInspect_State>
+</LanguageData>

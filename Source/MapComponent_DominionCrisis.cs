@@ -474,6 +474,12 @@ namespace AbyssalProtocol
             }
 
             List<Pawn> pawns = AbyssalDominionPocketUtility.GetSelectedColonistsForPocketEntry(map);
+            if (pawns.Count <= 0)
+            {
+                failReason = "ABY_DominionPocketFlowFail_NoStrikeTeam".Translate();
+                return false;
+            }
+
             return AbyssalDominionPocketUtility.TryOpenPocketSlice(gateCore, pawns, out _, out failReason);
         }
 
@@ -507,12 +513,7 @@ namespace AbyssalProtocol
         {
             if (TryGetActivePocketSession(out ABY_DominionPocketSession session))
             {
-                if (session != null && session.victoryAchieved)
-                {
-                    return "ABY_DominionPocketFlowStatus_Extract".Translate(GetPocketExtractionEtaValue());
-                }
-
-                return "ABY_DominionPocketFlowStatus_Deployed".Translate();
+                return AbyssalDominionPocketUtility.GetPocketSessionStatusValue(session, AbyssalDominionPocketUtility.ResolveMap(session != null ? session.pocketMapId : -1));
             }
 
             if (IsGateEntryReady())
@@ -541,7 +542,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < colonists.Count; i++)
             {
                 Pawn pawn = colonists[i];
-                if (pawn != null && !pawn.Dead && pawn.Spawned && pawn.drafter != null && pawn.drafter.Drafted && !pawn.InMentalState)
+                if (pawn != null && !pawn.Dead && !pawn.Downed && pawn.Spawned && pawn.drafter != null && pawn.drafter.Drafted && !pawn.InMentalState)
                 {
                     count++;
                 }

@@ -39,7 +39,7 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            yield return new Command_Action
+            Command_Action returnCommand = new Command_Action
             {
                 defaultLabel = "ABY_DominionPocketRuntimeCommand_Return".Translate(),
                 defaultDesc = "ABY_DominionPocketRuntimeCommand_ReturnDesc".Translate(),
@@ -60,6 +60,15 @@ namespace AbyssalProtocol
                     }
                 }
             };
+
+            if (ABY_DominionPocketRuntimeGameComponent.Get() is ABY_DominionPocketRuntimeGameComponent runtimeCheck
+                && runtimeCheck.TryGetSessionById(sessionId, out ABY_DominionPocketSession activeSession)
+                && AbyssalDominionPocketUtility.GetPocketPlayerCount(Map) <= 0)
+            {
+                returnCommand.Disable("ABY_DominionPocketRuntimeReturnDisabled".Translate());
+            }
+
+            yield return returnCommand;
 
             if (Prefs.DevMode)
             {
@@ -93,6 +102,8 @@ namespace AbyssalProtocol
             if (runtime != null && runtime.TryGetSessionById(sessionId, out ABY_DominionPocketSession session))
             {
                 lines.Add("ABY_DominionPocketRuntimeExitInspect".Translate(AbyssalDominionPocketUtility.GetSourceMapLabel(session)));
+                lines.Add("ABY_DominionPocketRuntimeExitInspect_Team".Translate(AbyssalDominionPocketUtility.GetPocketPlayerCount(Map)));
+                lines.Add("ABY_DominionPocketRuntimeExitInspect_State".Translate(AbyssalDominionPocketUtility.GetPocketSessionStatusValue(session, Map)));
             }
             else
             {

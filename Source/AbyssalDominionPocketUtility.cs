@@ -140,6 +140,8 @@ namespace AbyssalProtocol
                 extractionCell = IntVec3.Invalid,
                 heartCell = IntVec3.Invalid,
                 createdTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
+                initialStrikeTeamCount = entryPawns.Count,
+                lastKnownPocketPawnCount = entryPawns.Count,
                 victoryAchieved = false,
                 rewardsGranted = false,
                 collapseAtTick = 0,
@@ -213,6 +215,7 @@ namespace AbyssalProtocol
             }
 
             List<Pawn> pawns = GetPocketPlayerPawns(pocketMap);
+            session.lastKnownPocketPawnCount = pawns.Count;
             if (pawns.Count == 0)
             {
                 if (destroyPocketMap)
@@ -311,6 +314,11 @@ namespace AbyssalProtocol
 
         public static void FailAndCollapsePocketSlice(ABY_DominionPocketSession session, Map pocketMap, string reason, bool silent)
         {
+            if (session != null && !reason.NullOrEmpty())
+            {
+                session.lastOutcomeReason = reason;
+            }
+
             ResolvePocketFailureToSourceMap(session, reason);
             CollapsePocketSlice(session, pocketMap, silent);
         }
@@ -348,6 +356,7 @@ namespace AbyssalProtocol
                 if (!summary.NullOrEmpty())
                 {
                     session.rewardSummary = summary;
+                session.lastOutcomeReason = "ABY_DominionPocketOutcome_Victory".Translate();
                 }
             }
 
@@ -366,7 +375,9 @@ namespace AbyssalProtocol
 
             if (TryResolveSourceCrisis(session, out MapComponent_DominionCrisis crisis))
             {
-                crisis.TryResolvePocketFailure(reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason);
+                string resolvedReason = reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason;
+                session.lastOutcomeReason = resolvedReason;
+                crisis.TryResolvePocketFailure(resolvedReason);
             }
         }
 
@@ -429,7 +440,43 @@ namespace AbyssalProtocol
 
         public static bool HasAnyPlayerPawnsOnMap(Map map)
         {
-            return GetPocketPlayerPawns(map).Count > 0;
+            return GetPocketPlayerCount(map) > 0;
+        }
+
+        public static int GetPocketPlayerCount(Map map)
+        {
+            return GetPocketPlayerPawns(map).Count;
+        }
+
+        public static string GetPocketCollapseEta(ABY_DominionPocketSession session)
+        {
+            if (session == null || !session.victoryAchieved || Find.TickManager == null || session.collapseAtTick <= 0)
+            {
+                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+            }
+
+            return System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
+        }
+
+        public static string GetPocketSessionStatusValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionPocketFlowStatus_Locked".Translate();
+            }
+
+            int teamCount = pocketMap != null ? GetPocketPlayerCount(pocketMap) : session.lastKnownPocketPawnCount;
+            if (teamCount <= 0)
+            {
+                teamCount = session.initialStrikeTeamCount;
+            }
+
+            if (session.victoryAchieved)
+            {
+                return "ABY_DominionPocketFlowStatus_ExtractArmed".Translate(teamCount, GetPocketCollapseEta(session));
+            }
+
+            return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(teamCount);
         }
 
         public static string GetSourceMapLabel(ABY_DominionPocketSession session)
@@ -448,7 +495,8 @@ namespace AbyssalProtocol
                 && pawn.Spawned
                 && pawn.MapHeld == map
                 && pawn.IsColonistPlayerControlled
-                && !pawn.InMentalState;
+                && !pawn.InMentalState
+                && !pawn.Downed;
         }
 
         private static MapGeneratorDef ResolveGeneratorDef()

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketFlowFail_NoStrikeTeam>Draft or select at least one standing colonist before entering the Great Infernal Gate.</ABY_DominionPocketFlowFail_NoStrikeTeam>
+  <ABY_DominionPocketFlowStatus_DeployedCount>strike team deployed inside dominion slice: {0}</ABY_DominionPocketFlowStatus_DeployedCount>
+  <ABY_DominionPocketFlowStatus_ExtractArmed>victory secured • extract {0} colonists before collapse: {1}</ABY_DominionPocketFlowStatus_ExtractArmed>
+  <ABY_DominionPocketGate_InspectTeam>Slice status: {0}</ABY_DominionPocketGate_InspectTeam>
+  <ABY_DominionPocketRuntimeReturnDisabled>No player pawns remain at the extraction gate.</ABY_DominionPocketRuntimeReturnDisabled>
+  <ABY_DominionPocketRuntimeExitInspect_Team>Strike team on slice: {0}.</ABY_DominionPocketRuntimeExitInspect_Team>
+  <ABY_DominionPocketRuntimeExitInspect_State>Encounter state: {0}.</ABY_DominionPocketRuntimeExitInspect_State>
+</LanguageData>
