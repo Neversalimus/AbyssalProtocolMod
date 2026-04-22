@@ -14,8 +14,32 @@ namespace AbyssalProtocol
             public float Score;
         }
 
-        private const string RingTexPath = "Things/Building/DominionGate/ABY_DominionGate_Ring";
-        private const string GlowTexPath = "Things/Building/DominionGate/ABY_DominionGate_Glow";
+        private static readonly string[] CoreFrameTexPaths =
+        {
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame0",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame1",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame2",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame3"
+        };
+
+        private static readonly string[] CoreGlowFrameTexPaths =
+        {
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame0",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame1",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame2",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame3"
+        };
+
+        private static readonly string[] ExitFrameTexPaths =
+        {
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame0",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame1",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame2",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3"
+        };
+
+        private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get(CoreFrameTexPaths[0], true);
+        private static readonly Texture2D ExtractCommandIcon = ContentFinder<Texture2D>.Get(ExitFrameTexPaths[0], true);
 
         private int nextSuppressionTick = -1;
         private int nextIgnitionTick = -1;
@@ -148,7 +172,7 @@ namespace AbyssalProtocol
                 {
                     defaultLabel = "ABY_DominionPocketCommand_Jump".Translate(),
                     defaultDesc = "ABY_DominionPocketCommand_JumpDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get(GlowTexPath, true),
+                    icon = JumpCommandIcon,
                     action = delegate
                     {
                         if (!crisis.TryJumpToPocketSlice(out string failReason) && !failReason.NullOrEmpty())
@@ -162,7 +186,7 @@ namespace AbyssalProtocol
                 {
                     defaultLabel = "ABY_DominionPocketCommand_Extract".Translate(),
                     defaultDesc = "ABY_DominionPocketCommand_ExtractDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get(RingTexPath, true),
+                    icon = ExtractCommandIcon,
                     action = delegate
                     {
                         if (!crisis.TryReturnPocketStrikeTeam(out string failReason) && !failReason.NullOrEmpty())
@@ -180,7 +204,7 @@ namespace AbyssalProtocol
                 {
                     defaultLabel = "ABY_DominionPocketCommand_Enter".Translate(),
                     defaultDesc = "ABY_DominionPocketCommand_EnterDesc".Translate(),
-                    icon = ContentFinder<Texture2D>.Get(RingTexPath, true),
+                    icon = JumpCommandIcon,
                     action = delegate
                     {
                         if (!crisis.TryOpenPocketSliceFromPlayerFlow(out string failReason) && !failReason.NullOrEmpty())
@@ -207,29 +231,13 @@ namespace AbyssalProtocol
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            base.DrawAt(drawLoc, flip);
             if (!Spawned || Map == null)
             {
                 return;
             }
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            float pulseA = 0.5f + 0.5f * Mathf.Sin((ticks + pulseSeed) * 0.046f);
-            float pulseB = 0.5f + 0.5f * Mathf.Sin((ticks + pulseSeed) * 0.073f + 1.8f);
-            float integrity = MaxHitPoints > 0 ? Mathf.Clamp01((float)HitPoints / MaxHitPoints) : 1f;
-            Vector3 loc = drawLoc;
-            loc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.034f;
-
-            float ringScale = 4.4f * (0.94f + pulseA * 0.09f);
-            float innerScale = 3.2f * (0.92f + pulseB * 0.12f);
-            float glowScale = 4.8f * (0.90f + pulseA * 0.10f);
-            float angleA = (ticks + pulseSeed) * 0.82f;
-            float angleB = -(ticks + pulseSeed) * 0.44f;
-            float glowAlpha = Mathf.Lerp(0.48f, 0.86f, integrity);
-
-            DrawPlane(GlowTexPath, loc, glowScale, angleA * 0.12f, new Color(0.95f, 0.18f, 0.22f, glowAlpha));
-            DrawPlane(RingTexPath, loc, ringScale, angleA, new Color(1f, 0.30f, 0.34f, 0.92f));
-            DrawPlane(RingTexPath, loc + new Vector3(0f, 0.006f, 0f), innerScale, angleB, new Color(0.58f, 0.04f, 0.08f, 0.62f));
+            ABY_GateAnimationUtility.DrawAnimatedPortal(CoreFrameTexPaths, CoreGlowFrameTexPaths, drawLoc, 4.8f, ticks, pulseSeed, 6, 0.055f, 0.28f, 0.82f, 0.036f);
         }
 
         public override string GetInspectString()
@@ -535,17 +543,5 @@ namespace AbyssalProtocol
             return cells;
         }
 
-        private static void DrawPlane(string texPath, Vector3 loc, float scale, float angle, Color color)
-        {
-            if (string.IsNullOrEmpty(texPath))
-            {
-                return;
-            }
-
-            Material material = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight, color);
-            Matrix4x4 matrix = Matrix4x4.identity;
-            matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(scale, 1f, scale));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
-        }
     }
 }

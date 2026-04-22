@@ -18,7 +18,7 @@
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <canOverlapZones>true</canOverlapZones>
     <graphicData>
-      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core</texPath>
+      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core_Frame0</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(4.8,4.8)</drawSize>
     </graphicData>

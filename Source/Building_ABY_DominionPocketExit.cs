@@ -8,18 +8,46 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public class Building_ABY_DominionPocketExit : Building
     {
-        private static readonly Texture2D ExitCommandIcon = ContentFinder<Texture2D>.Get("Things/Building/DominionGate/ABY_DominionGate_Ring", true);
+        private static readonly string[] ExitFrameTexPaths =
+        {
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame0",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame1",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame2",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3"
+        };
+
+        private static readonly string[] ExitGlowFrameTexPaths =
+        {
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame0",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame1",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame2",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame3"
+        };
+
+        private static readonly Texture2D ExitCommandIcon = ContentFinder<Texture2D>.Get(ExitFrameTexPaths[0], true);
         private string sessionId;
+        private int pulseSeed;
 
         public void BindSession(string value)
         {
             sessionId = value ?? string.Empty;
         }
 
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+
+            if (pulseSeed == 0)
+            {
+                pulseSeed = thingIDNumber >= 0 ? thingIDNumber : Rand.Range(1, 1000000);
+            }
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref sessionId, "sessionId");
+            Scribe_Values.Look(ref pulseSeed, "pulseSeed", 0);
         }
 
         public override AcceptanceReport ClaimableBy(Faction by)
@@ -87,6 +115,17 @@ namespace AbyssalProtocol
                     }
                 };
             }
+        }
+
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            if (!Spawned || Map == null)
+            {
+                return;
+            }
+
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            ABY_GateAnimationUtility.DrawAnimatedPortal(ExitFrameTexPaths, ExitGlowFrameTexPaths, drawLoc, 4.8f, ticks, pulseSeed, 7, 0.06f, 0.26f, 0.84f, 0.034f);
         }
 
         public override string GetInspectString()

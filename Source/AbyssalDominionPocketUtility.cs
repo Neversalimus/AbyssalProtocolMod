@@ -888,17 +888,18 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IntVec3 spawnCell = session.extractionCell.IsValid ? session.extractionCell : session.pocketEntryCell;
-            if (!spawnCell.IsValid || !spawnCell.InBounds(pocketMap) || !spawnCell.Standable(pocketMap))
+            IntVec3 desiredCell = session.extractionCell.IsValid ? session.extractionCell : session.pocketEntryCell;
+            if (!TryFindPocketExitSpawnCell(pocketMap, def.Size, desiredCell, out IntVec3 spawnCell))
             {
-                if (!TryFindPocketEntryCell(pocketMap, out spawnCell))
-                {
-                    failReason = "ABY_DominionPocketRuntimeFail_NoEntryCell".Translate();
-                    return false;
-                }
+                failReason = "ABY_DominionPocketRuntimeFail_NoEntryCell".Translate();
+                return false;
+            }
 
+            if (!session.pocketEntryCell.IsValid)
+            {
                 session.pocketEntryCell = spawnCell;
             }
+            session.extractionCell = GenAdj.OccupiedRect(spawnCell, Rot4.North, def.Size).CenterCell;
 
             Thing existing = ResolveExitThing(session, pocketMap);
             if (existing != null && !existing.Destroyed)
@@ -917,6 +918,85 @@ namespace AbyssalProtocol
             exit.BindSession(session.sessionId);
             session.pocketExitThingId = exit.thingIDNumber;
             return true;
+        }
+
+        private static bool TryFindPocketExitSpawnCell(Map pocketMap, IntVec2 size, IntVec3 preferredCell, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (pocketMap == null)
+            {
+                return false;
+            }
+
+            IntVec3 origin = preferredCell.IsValid ? preferredCell : pocketMap.Center;
+            IntVec3 bestCell = IntVec3.Invalid;
+            float bestScore = float.MinValue;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, 12f, true))
+            {
+                if (!candidate.InBounds(pocketMap))
+                {
+                    continue;
+                }
+
+                CellRect rect = GenAdj.OccupiedRect(candidate, Rot4.North, size);
+                if (!CanUsePocketRect(pocketMap, rect))
+                {
+                    continue;
+                }
+
+                float score = 0f;
+                score -= candidate.DistanceToSquared(origin) * 0.12f;
+                score += CountPocketExitAdjacentStandableCells(pocketMap, rect.CenterCell) * 0.18f;
+                score += !rect.CenterCell.Roofed(pocketMap) ? 0.4f : -0.1f;
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestCell = candidate;
+                }
+            }
+
+            if (!bestCell.IsValid)
+            {
+                return false;
+            }
+
+            cell = bestCell;
+            return true;
+        }
+
+        private static bool CanUsePocketRect(Map map, CellRect rect)
+        {
+            foreach (IntVec3 rectCell in rect.Cells)
+            {
+                if (!rectCell.InBounds(map) || !rectCell.Standable(map))
+                {
+                    return false;
+                }
+
+                if (rectCell.GetEdifice(map) != null || rectCell.GetFirstPawn(map) != null)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static int CountPocketExitAdjacentStandableCells(Map map, IntVec3 center)
+        {
+            int count = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                IntVec3 cell = center + GenAdj.CardinalDirections[i];
+                if (cell.InBounds(map) && cell.Standable(map))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         private static void TransferPawnToMap(Pawn pawn, Map targetMap, IntVec3 nearCell)

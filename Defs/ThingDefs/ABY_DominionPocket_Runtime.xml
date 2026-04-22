@@ -7,7 +7,7 @@
     <description>A temporary extraction anchor formed inside the dominion slice. It is not the final version of the encounter, but it allows a strike team to return to the colony during runtime testing.</description>
     <thingClass>AbyssalProtocol.Building_ABY_DominionPocketExit</thingClass>
     <category>Building</category>
-    <drawerType>MapMeshOnly</drawerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
     <tickerType>Normal</tickerType>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
@@ -18,16 +18,16 @@
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <canOverlapZones>true</canOverlapZones>
     <graphicData>
-      <texPath>Things/Building/DominionGate/ABY_DominionGate_Ring</texPath>
+      <texPath>Things/Building/DominionGate/ABY_DominionGate_Ring_Frame0</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.8,1.8)</drawSize>
+      <drawSize>(4.8,4.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>9999</MaxHitPoints>
       <Mass>10</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(3,3)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 
