@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>ABY_DominionGateBootstrapping</defName>
     <label>dominion gate bootstrapping</label>
-    <description>Hardens the circle lattice for first-stage dominion synchronization. It does not finish the Crowned Gate crisis, but it lets the colony intentionally arm the breach core, hold it in standby, and build the systemic base for the full endgame collapse packages.</description>
+    <description>Hardens the circle lattice for first-stage dominion synchronization. It does not grant the full Crowned Gate boss encounter yet, but it lets the colony intentionally arm a Great Infernal Gate staging sequence, hold it stable, and build the systemic base for later portal-entry packages.</description>
     <baseCost>4200</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>

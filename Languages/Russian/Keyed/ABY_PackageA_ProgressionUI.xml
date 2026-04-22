@@ -40,8 +40,8 @@
   <ABY_CircleRewardProgression_Choir>Прогрессия: открывает ветку наград поддержки вокруг Choir-имплантов и Canticle Driver.</ABY_CircleRewardProgression_Choir>
   <ABY_CircleRewardGuaranteed_Reactor>Гарантированно: 1 Reactor Saint Core, residue и spacer-grade salvage.</ABY_CircleRewardGuaranteed_Reactor>
   <ABY_CircleRewardProgression_Reactor>Прогрессия: питает saint-class fabrication и ведёт колонию в позднюю эскалацию.</ABY_CircleRewardProgression_Reactor>
-  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: dominion-итоговые награды, shard-материалы и поздние progression drops при успешном удержании прорыва.</ABY_CircleRewardGuaranteed_Dominion>
-  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает всю dominion-лестницу кризиса и её исходы.</ABY_CircleRewardProgression_Dominion>
+  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: награды этапа Великого адского портала, shard-материалы, телеметрия прорыва и поздние progression drops при успешном удержании прорыва.</ABY_CircleRewardGuaranteed_Dominion>
+  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает пролог Великого адского портала и сохраняет dominion-маршрутизацию наград / исходов для следующих пакетов.</ABY_CircleRewardProgression_Dominion>
   <ABY_CircleRewardFollowUp_Generic>Следом: следующий чистый шаг эскалации — {0}.</ABY_CircleRewardFollowUp_Generic>
   <ABY_CircleRewardFollowUp_Final>Следом: это уже текущая вершина ритуальной ветки.</ABY_CircleRewardFollowUp_Final>
 

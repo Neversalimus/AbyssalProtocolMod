@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_DominionCrownShard</defName>
     <label>dominion crown shard</label>
-    <description>A fractured crown-weight lattice recovered only from a collapsed dominion breach. It is not residue or a mere boss organ; it is a splinter of the hostile administrative logic that held the Crowned Gate together.</description>
+    <description>A fractured crown-weight lattice recovered from a contained Great Infernal Gate staging. It is not residue or a mere boss organ; it is a splinter of the hostile administrative logic that briefly held the dominion breach together.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>

@@ -3,8 +3,8 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionGateCore</defName>
-    <label>crowned gate</label>
-    <description>The condensed heart of a dominion breach. Once the anchor lattice breaks, the tear in reality folds inward and manifests as a hostile Crowned Gate core that lashes the colony directly until it is destroyed.</description>
+    <label>great infernal gate</label>
+    <description>The outer gate stage of a dominion breach. Once the anchor lattice breaks, the tear in reality folds inward and manifests as a Great Infernal Gate. In this package it is not yet the full boss fight; it is a hostile staging breach that must be held stable until entry calibration completes.</description>
     <thingClass>AbyssalProtocol.Building_AbyssalDominionGate</thingClass>
     <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>

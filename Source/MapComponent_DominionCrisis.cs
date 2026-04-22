@@ -274,13 +274,13 @@ namespace AbyssalProtocol
             {
                 if (gateCore == null || gateCore.Destroyed || gateCore.Map != map)
                 {
-                    SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                    ForceFail("ABY_DominionCrisisFail_GateLost".Translate(), true);
                     return;
                 }
 
                 if (now >= phaseEndsTick)
                 {
-                    ForceFail("ABY_DominionCrisisFail_GatePersisted".Translate(), true);
+                    SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
                     return;
                 }
 
@@ -690,7 +690,7 @@ namespace AbyssalProtocol
 
             if (phase == DominionCrisisPhase.Gatecore)
             {
-                SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                ForceFail("ABY_DominionCrisisFail_GateLost".Translate(), true);
             }
         }
 
@@ -972,7 +972,7 @@ namespace AbyssalProtocol
 
             if (phase == DominionCrisisPhase.Gatecore)
             {
-                SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                ForceFail("ABY_DominionCrisisFail_GateLost".Translate(), true);
             }
         }
 
@@ -1143,12 +1143,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
             GenSpawn.Spawn(gate, cell, map, Rot4.North);
-            if (hostileFaction != null)
-            {
-                gate.SetFaction(hostileFaction);
-            }
+            gate.SetFaction(null);
 
             RegisterGate(gate);
             FleckMaker.ThrowLightningGlow(gate.DrawPos, map, 2.8f);

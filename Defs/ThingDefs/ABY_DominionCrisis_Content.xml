@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_DominionSigil</defName>
     <label>dominion sigil</label>
-    <description>An endgame crown-lattice invocation key. Carry it to an abyssal summoning circle to bootstrap the first dominion crisis package and initialize the Crowned Gate breach core.</description>
+    <description>An endgame crown-lattice invocation key. Carry it to an abyssal summoning circle to bootstrap the Great Infernal Gate staging sequence and initialize the first dominion breach package.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -24,12 +24,12 @@
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>open dominion gate</useLabel>
+        <useLabel>bootstrap great infernal gate</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <ritualId>dominion_gate</ritualId>
         <summonMode>DominionCrisis</summonMode>
-        <bossLabel>Crowned Gate breach</bossLabel>
+        <bossLabel>Great Infernal Gate staging</bossLabel>
         <spawnPoints>1600</spawnPoints>
         <ritualWarmupTicks>210</ritualWarmupTicks>
       </li>

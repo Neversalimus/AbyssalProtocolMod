@@ -2,17 +2,18 @@
 <LanguageData>
   <ABY_DominionSigilDisabled>Dominion sigils are currently disabled outside dev mode.</ABY_DominionSigilDisabled>
 
-  <ABY_CircleRitual_Dominion_Label>Open dominion gate</ABY_CircleRitual_Dominion_Label>
-  <ABY_CircleRitual_Dominion_Subtitle>Endgame crisis bootstrap</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Crowned Gate crisis core. Package 4 now unfolds the full Gate-core phase after anchorfall: once the anchor lattice is destroyed, the breach manifests a central Crowned Gate that must be broken before dominion convergence completes.</ABY_CircleRitual_Dominion_Desc>
-  <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame crisis framework in-world
+  <ABY_CircleRitual_Dominion_Label>Bootstrap great infernal gate</ABY_CircleRitual_Dominion_Label>
+  <ABY_CircleRitual_Dominion_Subtitle>Outer gate staging</ABY_CircleRitual_Dominion_Subtitle>
+  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to bootstrap the Great Infernal Gate staging layer. In Package A this is no longer the final boss resolution: once the anchor lattice is destroyed, the breach manifests a Great Infernal Gate that must be held stable until entry calibration completes.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame dominion framework in-world
 • Drives recurring hostile pulses while the anchor lattice survives
-• Unfolds a real Crowned Gate core that enters play after anchors are broken and must be destroyed to finish the package</ABY_CircleRitual_Dominion_Rewards>
+• Unfolds a real Great Infernal Gate staging layer after the anchors are broken
+• Preserves reward, shard, and telemetry hooks for later portal-entry packages</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Requires full stabilizer coverage and both capacitor bays online
-• Blocks other abyssal encounters while the crisis core is active
-• After anchors fall, the Crowned Gate begins direct suppression, ignition strikes, and reinforcement pulses until it is destroyed or the breach stabilizes</ABY_CircleRitual_Dominion_SideEffects>
+• Blocks other abyssal encounters while the dominion staging layer is active
+• After anchors fall, the Great Infernal Gate begins direct suppression, ignition strikes, and reinforcement pulses until the staging timer is held to completion or the gate is lost</ABY_CircleRitual_Dominion_SideEffects>
 
-  <ABY_CircleConsoleSubtitleDominion>Dominion crisis core active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
+  <ABY_CircleConsoleSubtitleDominion>Great Infernal Gate telemetry active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame</ABY_DominionRitualMeta>
   <ABY_DominionRitualMetaActive>Sigils on map: {0}   •   Crisis state: {1}   •   Anchors: {2}   •   Wave ETA: {3}</ABY_DominionRitualMetaActive>
   <ABY_CircleStatus_Dominion>Dominion</ABY_CircleStatus_Dominion>
@@ -20,11 +21,11 @@
   <ABY_CircleStatus_AnchorPressure>Anchor pressure</ABY_CircleStatus_AnchorPressure>
 
   <ABY_DominionCrisisAbortCommand>Abort dominion staging</ABY_DominionCrisisAbortCommand>
-  <ABY_DominionCrisisConfirmAbort>Abort the dominion crisis core on this map? This ends the current staging window and marks the run as cancelled.</ABY_DominionCrisisConfirmAbort>
+  <ABY_DominionCrisisConfirmAbort>Abort the Great Infernal Gate staging layer on this map? This ends the current staging window and marks the run as cancelled.</ABY_DominionCrisisConfirmAbort>
   <ABY_DominionCrisisAbortStarted>Dominion staging aborted.</ABY_DominionCrisisAbortStarted>
 
-  <ABY_DominionCrisisStartLabel>Dominion gate armed</ABY_DominionCrisisStartLabel>
-  <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach core is unstable but not yet fully unfolded.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisStartLabel>Great infernal gate armed</ABY_DominionCrisisStartLabel>
+  <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach is unstable, but the Great Infernal Gate has not unfolded yet.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Dominion anchors manifested</ABY_DominionCrisisAnchorfallLabel>
   <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into anchorfall. {1} dominion anchors have materialized across the map, recurring abyssal pulses are now routing through them, and the breach will intensify until the anchors are destroyed.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Dominion core synchronized</ABY_DominionCrisisStandbyLabel>
@@ -32,11 +33,11 @@
   <ABY_DominionCrisisCancelledLabel>Dominion staging cancelled</ABY_DominionCrisisCancelledLabel>
   <ABY_DominionCrisisCancelledDesc>The dominion crisis core was intentionally shut down. Outcome: {0}</ABY_DominionCrisisCancelledDesc>
   <ABY_DominionCrisisCancelledReason>manual abort</ABY_DominionCrisisCancelledReason>
-  <ABY_DominionCrisisCompletedLabel>Crowned Gate collapsed</ABY_DominionCrisisCompletedLabel>
-  <ABY_DominionCrisisCompletedDesc>The anchor lattice was broken, the Crowned Gate manifested, and the gate core was destroyed before dominion convergence completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>Crowned Gate core destroyed before dominion convergence completed</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedLabel>Great infernal gate stabilized</ABY_DominionCrisisCompletedLabel>
+  <ABY_DominionCrisisCompletedDesc>The anchor lattice was broken, the Great Infernal Gate manifested, and the colony held the staging window until entry calibration completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>Great Infernal Gate staging held until entry calibration completed</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Dominion staging failed</ABY_DominionCrisisFailedLabel>
-  <ABY_DominionCrisisFailedDesc>The dominion crisis core destabilized before the later packages could take over. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
+  <ABY_DominionCrisisFailedDesc>The Great Infernal Gate staging layer destabilized before the later portal-entry packages could take over. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Dominion standby remains armed for {0}.</ABY_DominionCrisisReminder>
   <ABY_DominionCrisisReminderAnchors>{0} / {1} dominion anchors remain active. Collapse window in {2}.</ABY_DominionCrisisReminderAnchors>
   <ABY_DominionCrisisAnchorDestroyed>{0} destroyed. Active anchors remaining: {1} / {2}.</ABY_DominionCrisisAnchorDestroyed>
@@ -138,31 +139,32 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
   <ABY_DominionWaveComposition_Imps>{0} via {1}</ABY_DominionWaveComposition_Imps>
 
 
-  <ABY_DominionRitualMetaGate>Sigils on map: {0}   •   Crisis state: {1}   •   Gate integrity: {2}   •   Next surge: {3}</ABY_DominionRitualMetaGate>
-  <ABY_CircleStatus_Gate>Gate core</ABY_CircleStatus_Gate>
-  <ABY_CircleStatus_GateIntegrity>Gate integrity</ABY_CircleStatus_GateIntegrity>
+  <ABY_DominionRitualMetaGate>Sigils on map: {0}   •   Crisis state: {1}   •   Great gate stability: {2}   •   Next surge: {3}</ABY_DominionRitualMetaGate>
+  <ABY_CircleStatus_Gate>Great gate</ABY_CircleStatus_Gate>
+  <ABY_CircleStatus_GateIntegrity>Great gate stability</ABY_CircleStatus_GateIntegrity>
 
-  <ABY_DominionCrisisGateLabel>Crowned Gate manifested</ABY_DominionCrisisGateLabel>
-  <ABY_DominionCrisisGateDesc>{0} has torn the breach fully open. The anchor lattice is gone, but a hostile Crowned Gate has manifested near the ritual site. Destroy it before dominion convergence completes.</ABY_DominionCrisisGateDesc>
-  <ABY_DominionCrisisReminderGate>Crowned Gate integrity: {0}. Next surge: {1}. Collapse window in {2}.</ABY_DominionCrisisReminderGate>
-  <ABY_DominionCrisisFail_NoGateCell>No valid cells were available for the Crowned Gate core to manifest.</ABY_DominionCrisisFail_NoGateCell>
-  <ABY_DominionCrisisFail_GatePersisted>The Crowned Gate remained active until dominion convergence completed.</ABY_DominionCrisisFail_GatePersisted>
+  <ABY_DominionCrisisGateLabel>Great infernal gate manifested</ABY_DominionCrisisGateLabel>
+  <ABY_DominionCrisisGateDesc>{0} has torn the breach fully open. The anchor lattice is gone, and a Great Infernal Gate has manifested near the ritual site. In Package A this is still an outer staging layer: hold it stable until entry calibration completes.</ABY_DominionCrisisGateDesc>
+  <ABY_DominionCrisisReminderGate>Great Infernal Gate stability: {0}. Next surge: {1}. Entry calibration in {2}.</ABY_DominionCrisisReminderGate>
+  <ABY_DominionCrisisFail_NoGateCell>No valid cells were available for the Great Infernal Gate to manifest.</ABY_DominionCrisisFail_NoGateCell>
+  <ABY_DominionCrisisFail_GatePersisted>The Great Infernal Gate remained unstable until the staging window collapsed.</ABY_DominionCrisisFail_GatePersisted>
+  <ABY_DominionCrisisFail_GateLost>The Great Infernal Gate was lost before entry calibration completed.</ABY_DominionCrisisFail_GateLost>
 
-  <ABY_DominionCrisisPhase_Gatecore>gatecore</ABY_DominionCrisisPhase_Gatecore>
-  <ABY_DominionCrisisStatusLine_Gate>Dominion crisis: {0} • gate {1} • next surge {2} • {3} remaining</ABY_DominionCrisisStatusLine_Gate>
+  <ABY_DominionCrisisPhase_Gatecore>great gate staging</ABY_DominionCrisisPhase_Gatecore>
+  <ABY_DominionCrisisStatusLine_Gate>Dominion crisis: {0} • great gate {1} • next surge {2} • {3} remaining</ABY_DominionCrisisStatusLine_Gate>
 
-  <ABY_DominionAnchorPreviewSummaryGate>Anchor state: broken. Crowned Gate state: {0}. Integrity: {1}. Collapse window: {2}.</ABY_DominionAnchorPreviewSummaryGate>
-  <ABY_DominionAnchor_ConsoleGatecore>The anchor lattice has been broken. The breach is now feeding directly into a manifested Crowned Gate core.</ABY_DominionAnchor_ConsoleGatecore>
+  <ABY_DominionAnchorPreviewSummaryGate>Anchor state: broken. Great Infernal Gate state: {0}. Stability: {1}. Entry calibration: {2}.</ABY_DominionAnchorPreviewSummaryGate>
+  <ABY_DominionAnchor_ConsoleGatecore>The anchor lattice has been broken. The breach is now feeding directly into the manifested Great Infernal Gate staging layer.</ABY_DominionAnchor_ConsoleGatecore>
   <ABY_DominionAnchor_StatusShort_Cleared>anchor lattice broken</ABY_DominionAnchor_StatusShort_Cleared>
   <ABY_DominionAnchor_StatusValue_Cleared>broken / exposed</ABY_DominionAnchor_StatusValue_Cleared>
 
-  <ABY_DominionWavePreviewStatus_Gatebound>rerouted through the Crowned Gate</ABY_DominionWavePreviewStatus_Gatebound>
-  <ABY_DominionWavePreviewSummaryGate>Support pulses are now routed by the Crowned Gate. Pattern: {0}. Next surge: {1}.</ABY_DominionWavePreviewSummaryGate>
-  <ABY_DominionWaveConsoleGatecore>Wave routing is now slaved directly to the Crowned Gate core.</ABY_DominionWaveConsoleGatecore>
+  <ABY_DominionWavePreviewStatus_Gatebound>rerouted through the Great Infernal Gate</ABY_DominionWavePreviewStatus_Gatebound>
+  <ABY_DominionWavePreviewSummaryGate>Support pulses are now routed by the Great Infernal Gate. Pattern: {0}. Next surge: {1}.</ABY_DominionWavePreviewSummaryGate>
+  <ABY_DominionWaveConsoleGatecore>Wave routing is now slaved directly to the Great Infernal Gate staging layer.</ABY_DominionWaveConsoleGatecore>
 
-  <ABY_DominionGatePreviewHeader>Crowned Gate core</ABY_DominionGatePreviewHeader>
-  <ABY_DominionGatePreviewSummary>Gate state: {0}. Integrity: {1}. Next surge: {2}. Collapse window: {3}.</ABY_DominionGatePreviewSummary>
-  <ABY_DominionGatePreviewSummaryIdle>No manifested Crowned Gate is active yet. Once the anchor lattice is broken, the breach will condense into a central gate-core objective.</ABY_DominionGatePreviewSummaryIdle>
+  <ABY_DominionGatePreviewHeader>Great Infernal Gate</ABY_DominionGatePreviewHeader>
+  <ABY_DominionGatePreviewSummary>Gate state: {0}. Stability: {1}. Next surge: {2}. Entry calibration: {3}.</ABY_DominionGatePreviewSummary>
+  <ABY_DominionGatePreviewSummaryIdle>No manifested Great Infernal Gate is active yet. Once the anchor lattice is broken, the breach will condense into the outer staging gate that later packages will turn into a true entry point.</ABY_DominionGatePreviewSummaryIdle>
   <ABY_DominionGate_Status_Dormant>dormant</ABY_DominionGate_Status_Dormant>
   <ABY_DominionGate_Status_Stable>stable</ABY_DominionGate_Status_Stable>
   <ABY_DominionGate_Status_Shaken>shaken</ABY_DominionGate_Status_Shaken>
@@ -171,19 +173,19 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
   <ABY_DominionGate_Integrity_Value>{0}% • {1}/{2} HP</ABY_DominionGate_Integrity_Value>
   <ABY_DominionGate_PulseEta_Pending>charging</ABY_DominionGate_PulseEta_Pending>
   <ABY_DominionGate_PulseEta_Imminent>imminent</ABY_DominionGate_PulseEta_Imminent>
-  <ABY_DominionGate_ConsoleIdle>No manifested Crowned Gate is active on this map.</ABY_DominionGate_ConsoleIdle>
+  <ABY_DominionGate_ConsoleIdle>No manifested Great Infernal Gate is active on this map.</ABY_DominionGate_ConsoleIdle>
   <ABY_DominionGate_ConsoleStatus>State: {0}</ABY_DominionGate_ConsoleStatus>
-  <ABY_DominionGate_ConsoleIntegrity>Integrity: {0}</ABY_DominionGate_ConsoleIntegrity>
+  <ABY_DominionGate_ConsoleIntegrity>Stability: {0}</ABY_DominionGate_ConsoleIntegrity>
   <ABY_DominionGate_ConsoleNextPulse>Next surge: {0}</ABY_DominionGate_ConsoleNextPulse>
   <ABY_DominionGate_ConsoleAbilities>Core pattern: {0} • {1} • {2}</ABY_DominionGate_ConsoleAbilities>
   <ABY_DominionGate_Ability_Suppression>suppression pulse</ABY_DominionGate_Ability_Suppression>
   <ABY_DominionGate_Ability_Ignition>rift ignition</ABY_DominionGate_Ability_Ignition>
   <ABY_DominionGate_Ability_Call>call of dominion</ABY_DominionGate_Ability_Call>
   <ABY_DominionGate_Inspect>State: {0}
-Integrity: {1}
+Stability: {1}
 Next surge: {2}</ABY_DominionGate_Inspect>
-  <ABY_DominionGateCall_Message>Crowned Gate surge routed: {0}. Next surge in roughly {1}.</ABY_DominionGateCall_Message>
-  <ABY_DominionGate_CallSummary>gate reinforcements</ABY_DominionGate_CallSummary>
+  <ABY_DominionGateCall_Message>Great Infernal Gate surge routed: {0}. Next surge in roughly {1}.</ABY_DominionGateCall_Message>
+  <ABY_DominionGate_CallSummary>great-gate reinforcements</ABY_DominionGate_CallSummary>
 
   <ABY_DominionStatusHeader>Crisis telemetry</ABY_DominionStatusHeader>
   <ABY_DominionOpsSummary>Objective: {0}
@@ -191,16 +193,16 @@ Directive: {1}</ABY_DominionOpsSummary>
   <ABY_DominionOpsObjective_Dormant>No active dominion breach on this map.</ABY_DominionOpsObjective_Dormant>
   <ABY_DominionOpsObjective_Sync>Keep the source circle online until anchorfall manifests.</ABY_DominionOpsObjective_Sync>
   <ABY_DominionOpsObjective_Anchors>Break the anchor lattice before the collapse window expires.</ABY_DominionOpsObjective_Anchors>
-  <ABY_DominionOpsObjective_Gate>Destroy the Crowned Gate core before dominion convergence completes.</ABY_DominionOpsObjective_Gate>
+  <ABY_DominionOpsObjective_Gate>Hold the Great Infernal Gate until entry calibration completes.</ABY_DominionOpsObjective_Gate>
   <ABY_DominionOpsDirective_Sync>Keep the circle powered, unobstructed, and ready for the first anchorfall transition.</ABY_DominionOpsDirective_Sync>
   <ABY_DominionOpsDirective_Anchors>{0}/{1} anchors remain active. Wave pressure: {2}.</ABY_DominionOpsDirective_Anchors>
-  <ABY_DominionOpsDirective_Gate>Gate integrity: {0}. Next surge: {1}.</ABY_DominionOpsDirective_Gate>
+  <ABY_DominionOpsDirective_Gate>Gate stability: {0}. Next surge: {1}.</ABY_DominionOpsDirective_Gate>
   <ABY_DominionCommand_TrackObjective>Track objective</ABY_DominionCommand_TrackObjective>
   <ABY_DominionCommand_TrackAnchor>Track anchor lattice</ABY_DominionCommand_TrackAnchor>
-  <ABY_DominionCommand_TrackGate>Track gate core</ABY_DominionCommand_TrackGate>
+  <ABY_DominionCommand_TrackGate>Track great gate</ABY_DominionCommand_TrackGate>
   <ABY_DominionCommand_NoObjective>No dominion objective is currently available on this map.</ABY_DominionCommand_NoObjective>
   <ABY_DominionCompactHint>Dominion crisis telemetry is being routed through the circle.</ABY_DominionCompactHint>
-  <ABY_DominionCompactFooter>Dominion breach active. Use the full console for anchor and gate tracking.</ABY_DominionCompactFooter>
+  <ABY_DominionCompactFooter>Dominion breach active. Use the full console for anchor and Great Infernal Gate tracking.</ABY_DominionCompactFooter>
 
   <ABY_DominionRitualMetaCooldown>Sigils on map: {0}   •   Crisis state: {1}   •   Rearm: {2}   •   Record: {3}</ABY_DominionRitualMetaCooldown>
   <ABY_DominionCompactHintCooldown>Dominion lattice recovery in progress. Rearm available in {0}.</ABY_DominionCompactHintCooldown>
@@ -225,7 +227,7 @@ Directive: {1}</ABY_DominionOpsSummary>
   <ABY_DominionRewardConsoleLast>Last outcome: {0}</ABY_DominionRewardConsoleLast>
   <ABY_DominionOutcome_RewardLine>Reward / aftermath: {0}</ABY_DominionOutcome_RewardLine>
   <ABY_DominionOutcome_CooldownLine>Rearm window: {0}</ABY_DominionOutcome_CooldownLine>
-  <ABY_DominionOutcome_CompletedSummary>Recovered {0}</ABY_DominionOutcome_CompletedSummary>
+  <ABY_DominionOutcome_CompletedSummary>Recovered staging salvage: {0}</ABY_DominionOutcome_CompletedSummary>
   <ABY_DominionOutcome_FailedSummary>Backlash routed a breach leak, scorched nearby infrastructure, and forced a cooldown window.</ABY_DominionOutcome_FailedSummary>
   <ABY_DominionOutcome_FailedSummarySoft>Backlash scorched nearby infrastructure, raised contamination, and forced a cooldown window.</ABY_DominionOutcome_FailedSummarySoft>
   <ABY_DominionOutcome_CancelledSummary>The breach was damped early, but the lattice still needs time to cool and purge contamination.</ABY_DominionOutcome_CancelledSummary>

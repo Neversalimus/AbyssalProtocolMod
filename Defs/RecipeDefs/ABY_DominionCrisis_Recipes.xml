@@ -4,7 +4,7 @@
   <RecipeDef>
     <defName>ABY_CraftDominionSigil</defName>
     <label>forge dominion sigil</label>
-    <description>Condenses a crown-tier invocation wafer used to bootstrap the dominion crisis core. This is not a normal summon key. It arms the circle for a full-scale endgame breach sequence.</description>
+    <description>Condenses a crown-tier invocation wafer used to bootstrap the Great Infernal Gate staging sequence. This is not a normal summon key. It arms the circle for a full-scale endgame breach and later portal-entry escalation.</description>
     <jobString>Forging dominion sigil.</jobString>
     <workAmount>3600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
