@@ -115,7 +115,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceHeart</defName>
     <label>crown-heart of the gate</label>
-    <description>The exposed heart-core of the Crowned Gate. It only becomes vulnerable once the dominion anchors binding it are destroyed.</description>
+    <description>The unique crown-heart embedded in the dominion slice. It is not a reused portal core: it is the revealed command-organ of the encounter, exposed only after the dominion anchors are destroyed.</description>
     <thingClass>AbyssalProtocol.Building_ABY_DominionSliceHeart</thingClass>
     <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -128,9 +128,9 @@
     <useHitPoints>true</useHitPoints>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core</texPath>
+      <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Heart</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.6,3.6)</drawSize>
+      <drawSize>(4.4,4.4)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2600</MaxHitPoints>

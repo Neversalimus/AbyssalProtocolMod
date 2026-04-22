@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceBastion</defName>
     <label>dominion bastion fragment</label>
-    <description>A dense shard of the infernal gate shell embedded into the dominion slice as a pathing barrier and visual buttress.</description>
+    <description>A jagged fragment of dominion architecture, used to frame the slice as a shattered machine-temple rather than a copied void finale.</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>
@@ -17,9 +17,9 @@
     <canOverlapZones>true</canOverlapZones>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionGate/ABY_DominionGate_Core</texPath>
+      <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Bastion</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.2,2.2)</drawSize>
+      <drawSize>(2.8,2.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2000</MaxHitPoints>
@@ -33,7 +33,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceSpire</defName>
     <label>dominion spire</label>
-    <description>A ritual-industrial pylon grown into the slice to frame lanes and make the space feel like hostile infrastructure rather than natural terrain.</description>
+    <description>A crown-spire of the dominion slice. It marks routes, breaks sight lines and reinforces the feeling of a hostile infernal processing chamber.</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>
@@ -46,9 +46,9 @@
     <canOverlapZones>true</canOverlapZones>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach</texPath>
+      <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Spire</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.8,2.4)</drawSize>
+      <drawSize>(2.2,3.0)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
@@ -62,7 +62,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionSliceSigilPad</defName>
     <label>dominion sigil pad</label>
-    <description>A stabilized sigil plate marking extraction, anchor and heart positions inside the dominion slice.</description>
+    <description>A plated sigil dais used to mark entry, extraction, anchor and heart positions inside the dominion slice.</description>
     <thingClass>Building</thingClass>
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>
@@ -75,9 +75,9 @@
     <canOverlapZones>true</canOverlapZones>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <graphicData>
-      <texPath>Things/Building/DominionGate/ABY_DominionGate_Ring</texPath>
+      <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Pad</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.6,2.6)</drawSize>
+      <drawSize>(3.2,3.2)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>400</MaxHitPoints>

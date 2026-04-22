@@ -556,7 +556,9 @@ namespace AbyssalProtocol
 
         private static MapGeneratorDef ResolveGeneratorDef()
         {
-            return MapGeneratorDefOf.MetalHell ?? MapGeneratorDefOf.Undercave ?? MapGeneratorDefOf.Encounter;
+            // Use a neutral shell for the dominion slice. The map is fully repainted by
+            // AbyssalDominionSliceBuilder, so inheriting MetalHell only leaks Anomaly finale visuals.
+            return MapGeneratorDefOf.Encounter ?? MapGeneratorDefOf.Undercave;
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
