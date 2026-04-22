@@ -62,7 +62,12 @@ namespace AbyssalProtocol
                 }
 
                 string defName = thing.def.defName ?? string.Empty;
-                if (!thing.def.useHitPoints || defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
+                if (defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
+                {
+                    continue;
+                }
+
+                if (!thing.def.destroyable)
                 {
                     continue;
                 }
@@ -99,6 +104,11 @@ namespace AbyssalProtocol
                 {
                     map.snowGrid.SetDepth(cell, 0f);
                 }
+
+                if (map.terrainGrid?.TerrainAt(cell) != null && map.terrainGrid.TerrainAt(cell).IsWater)
+                {
+                    map.terrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);
+                }
             }
         }
 
@@ -111,14 +121,14 @@ namespace AbyssalProtocol
 
             PaintWholeMap(map, baseTerrain);
 
-            IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 6));
+            IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 4));
             IntVec3 entry = ClampToInterior(map, new IntVec3(center.x, 0, center.z - 42));
             IntVec3 extraction = ClampToInterior(map, entry + new IntVec3(0, 0, 7));
 
-            IntVec3 anchorWest = ClampToInterior(map, new IntVec3(center.x - 28, 0, center.z + 10));
-            IntVec3 anchorEast = ClampToInterior(map, new IntVec3(center.x + 28, 0, center.z + 10));
-            IntVec3 anchorNorth = ClampToInterior(map, new IntVec3(center.x, 0, center.z + 34));
-            IntVec3 rewardPocket = ClampToInterior(map, new IntVec3(center.x - 34, 0, center.z - 6));
+            IntVec3 anchorWest = ClampToInterior(map, new IntVec3(center.x - 30, 0, center.z + 7));
+            IntVec3 anchorEast = ClampToInterior(map, new IntVec3(center.x + 26, 0, center.z + 13));
+            IntVec3 anchorNorth = ClampToInterior(map, new IntVec3(center.x + 4, 0, center.z + 33));
+            IntVec3 rewardPocket = ClampToInterior(map, new IntVec3(center.x - 36, 0, center.z - 9));
 
             session.pocketEntryCell = entry;
             session.extractionCell = extraction;
@@ -219,10 +229,10 @@ namespace AbyssalProtocol
         private static void PaintHeartDais(Map map, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
         {
             PaintCircle(map, center, 16, plate);
-            PaintCircle(map, center, 12, sigil);
+            PaintCircle(map, center, 11, sigil);
             PaintCircle(map, center, 8, plate);
-            PaintCircle(map, center, 4, sigil);
-            PaintCircle(map, center, 2, plate);
+            PaintCircle(map, center, 3, sigil);
+            PaintCircle(map, center, 2, sigil);
 
             for (int i = 0; i < 6; i++)
             {
@@ -236,7 +246,7 @@ namespace AbyssalProtocol
         {
             PaintCircle(map, center, 7, plate);
             PaintCircle(map, center, 5, sigil);
-            PaintCircle(map, center, 2, plate);
+            PaintCircle(map, center, 2, sigil);
             IntVec3 front = center + facing.FacingCell * 4;
             PaintCorridor(map, center, front, 1, channel);
         }
