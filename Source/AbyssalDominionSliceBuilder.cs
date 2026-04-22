@@ -46,28 +46,36 @@ namespace AbyssalProtocol
             for (int i = all.Count - 1; i >= 0; i--)
             {
                 Thing thing = all[i];
-                if (thing == null || thing.Destroyed || thing is Pawn)
+                if (thing == null || thing.Destroyed)
                 {
                     continue;
                 }
 
-                if (thing.def == null)
+                ThingDef def = thing.def;
+                if (def == null)
                 {
                     continue;
                 }
 
-                if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
+                if (def.category == ThingCategory.Mote || def.category == ThingCategory.Attachment)
                 {
                     continue;
                 }
 
-                string defName = thing.def.defName ?? string.Empty;
+                string defName = def.defName ?? string.Empty;
                 if (defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
                 {
                     continue;
                 }
 
-                if (!thing.def.destroyable)
+                bool purgeAmbientThing = thing is Pawn
+                    || thing is Corpse
+                    || def.category == ThingCategory.Plant
+                    || def.category == ThingCategory.Filth
+                    || def.mineable
+                    || defName == "SteamGeyser";
+
+                if (!def.destroyable && !purgeAmbientThing)
                 {
                     continue;
                 }
@@ -78,6 +86,17 @@ namespace AbyssalProtocol
                 }
                 catch (Exception ex)
                 {
+                    try
+                    {
+                        if (thing.Spawned)
+                        {
+                            thing.DeSpawn(DestroyMode.Vanish);
+                        }
+                    }
+                    catch
+                    {
+                    }
+
                     Log.Warning($"[Abyssal Protocol] Dominion slice cleanup skipped {thing.LabelCap}: {ex.GetType().Name}");
                 }
             }

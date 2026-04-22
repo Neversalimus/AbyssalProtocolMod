@@ -10,7 +10,8 @@ namespace AbyssalProtocol
         {
             get
             {
-                return DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Encounter")
+                return DefDatabase<MapGeneratorDef>.GetNamedSilentFail("ABY_DominionSlicePocketMap")
+                    ?? DefDatabase<MapGeneratorDef>.GetNamedSilentFail("Encounter")
                     ?? DefDatabase<MapGeneratorDef>.AllDefsListForReading.FirstOrDefault();
             }
         }
