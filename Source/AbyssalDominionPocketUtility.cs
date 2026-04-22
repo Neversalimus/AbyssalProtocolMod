@@ -103,7 +103,7 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             MapGeneratorDef generatorDef = ResolveGeneratorDef();
             if (generatorDef == null)
             {
-                failReason = "ABY_DominionPocketRuntimeFail_NoGenerator".Translate();
+                failReason = "ABY_DominionPocketRuntimeFail_NoGenerator".Translate() + " (ABY_DominionSlicePocketMap)";
                 return false;
             }
 

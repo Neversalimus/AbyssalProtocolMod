@@ -51,7 +51,18 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                if (thing.def == null)
+                {
+                    continue;
+                }
+
                 if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
+                {
+                    continue;
+                }
+
+                string defName = thing.def.defName ?? string.Empty;
+                if (!thing.def.useHitPoints || defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
                 {
                     continue;
                 }
@@ -93,43 +104,46 @@ namespace AbyssalProtocol
 
         private static void BuildLayout(Map map, ABY_DominionPocketSession session)
         {
-            TerrainDef ashTerrain = ResolveTerrain("ABY_DominionAshMetal", "Concrete", "MetalTile");
+            TerrainDef baseTerrain = ResolveTerrain("ABY_DominionAshMetal", "Concrete");
             TerrainDef plateTerrain = ResolveTerrain("ABY_DominionScorchedPlate", "PavedTile", "Concrete");
             TerrainDef channelTerrain = ResolveTerrain("ABY_DominionBloodChannel", "MetalTile", "PavedTile");
-            TerrainDef sigilTerrain = ResolveTerrain("ABY_DominionBrassSigil", "MetalTile", "SilverTile");
+            TerrainDef sigilTerrain = ResolveTerrain("ABY_DominionBrassSigil", "MetalTile", "PavedTile");
 
-            PaintWholeMap(map, ashTerrain);
+            PaintWholeMap(map, baseTerrain);
 
-            IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 4));
-            IntVec3 entry = ClampToInterior(map, new IntVec3(center.x, 0, center.z - 40));
-            IntVec3 extraction = ClampToInterior(map, entry + new IntVec3(0, 0, 5));
-            IntVec3 anchorWest = ClampToInterior(map, new IntVec3(center.x - 26, 0, center.z + 10));
-            IntVec3 anchorEast = ClampToInterior(map, new IntVec3(center.x + 25, 0, center.z + 12));
-            IntVec3 anchorNorth = ClampToInterior(map, new IntVec3(center.x + 4, 0, center.z + 33));
-            IntVec3 rewardPocket = ClampToInterior(map, new IntVec3(center.x - 32, 0, center.z - 8));
+            IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 6));
+            IntVec3 entry = ClampToInterior(map, new IntVec3(center.x, 0, center.z - 42));
+            IntVec3 extraction = ClampToInterior(map, entry + new IntVec3(0, 0, 7));
+
+            IntVec3 anchorWest = ClampToInterior(map, new IntVec3(center.x - 28, 0, center.z + 10));
+            IntVec3 anchorEast = ClampToInterior(map, new IntVec3(center.x + 28, 0, center.z + 10));
+            IntVec3 anchorNorth = ClampToInterior(map, new IntVec3(center.x, 0, center.z + 34));
+            IntVec3 rewardPocket = ClampToInterior(map, new IntVec3(center.x - 34, 0, center.z - 6));
 
             session.pocketEntryCell = entry;
             session.extractionCell = extraction;
             session.heartCell = center;
             session.anchorCells = new List<IntVec3> { anchorWest, anchorEast, anchorNorth };
 
-            PaintEntryCauseway(map, entry, extraction, center, plateTerrain, channelTerrain, sigilTerrain);
+            PaintPerimeterVoid(map, center, 54, 48, baseTerrain);
+            PaintEntryBridge(map, entry, extraction, center, plateTerrain, channelTerrain, sigilTerrain);
             PaintHeartDais(map, center, plateTerrain, channelTerrain, sigilTerrain);
             PaintAnchorPlatform(map, anchorWest, plateTerrain, channelTerrain, sigilTerrain, Rot4.West);
             PaintAnchorPlatform(map, anchorEast, plateTerrain, channelTerrain, sigilTerrain, Rot4.East);
             PaintAnchorPlatform(map, anchorNorth, plateTerrain, channelTerrain, sigilTerrain, Rot4.North);
             PaintRewardPocket(map, rewardPocket, plateTerrain, sigilTerrain);
 
-            PaintCorridor(map, center + new IntVec3(-10, 0, 4), anchorWest, 3, plateTerrain);
-            PaintCorridor(map, center + new IntVec3(10, 0, 4), anchorEast, 3, plateTerrain);
-            PaintCorridor(map, center + new IntVec3(0, 0, 12), anchorNorth, 3, plateTerrain);
-            PaintCorridor(map, center + new IntVec3(-16, 0, -2), rewardPocket, 2, plateTerrain);
+            PaintCorridor(map, center + new IntVec3(-13, 0, 6), anchorWest, 4, plateTerrain);
+            PaintCorridor(map, center + new IntVec3(13, 0, 6), anchorEast, 4, plateTerrain);
+            PaintCorridor(map, center + new IntVec3(0, 0, 15), anchorNorth, 4, plateTerrain);
+            PaintCorridor(map, center + new IntVec3(-18, 0, -4), rewardPocket, 3, plateTerrain);
 
             PaintCorridor(map, center + new IntVec3(-10, 0, 4), anchorWest, 1, channelTerrain);
             PaintCorridor(map, center + new IntVec3(10, 0, 4), anchorEast, 1, channelTerrain);
             PaintCorridor(map, center + new IntVec3(0, 0, 12), anchorNorth, 1, channelTerrain);
-            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -14), 1, channelTerrain);
+            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -15), 1, channelTerrain);
 
+            ScatterBurnScars(map, center, plateTerrain, baseTerrain);
             SpawnPad(map, extraction);
             SpawnPad(map, center);
             SpawnPad(map, anchorWest);
@@ -174,43 +188,79 @@ namespace AbyssalProtocol
             }
         }
 
-        private static void PaintEntryCauseway(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
+        private static void PaintPerimeterVoid(Map map, IntVec3 center, int outerRadius, int innerRadius, TerrainDef terrain)
         {
-            PaintRect(map, new CellRect(entry.x - 8, entry.z - 4, 16, 11), plate);
-            PaintRect(map, new CellRect(entry.x - 4, entry.z - 2, 8, 7), sigil);
-            PaintCircle(map, extraction, 4, sigil);
-            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -14), 4, plate);
-            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -14), 1, channel);
+            foreach (IntVec3 cell in CellRect.CenteredOn(center, outerRadius))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                int dx = cell.x - center.x;
+                int dz = cell.z - center.z;
+                int distSq = dx * dx + dz * dz;
+                if (distSq > innerRadius * innerRadius && distSq <= outerRadius * outerRadius)
+                {
+                    map.terrainGrid.SetTerrain(cell, terrain);
+                }
+            }
+        }
+
+        private static void PaintEntryBridge(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
+        {
+            PaintRect(map, new CellRect(entry.x - 7, entry.z - 4, 14, 11), plate);
+            PaintRect(map, new CellRect(entry.x - 3, entry.z - 1, 6, 5), sigil);
+            PaintCircle(map, extraction, 5, sigil);
+            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -16), 5, plate);
+            PaintCorridor(map, extraction, center + new IntVec3(0, 0, -16), 1, channel);
         }
 
         private static void PaintHeartDais(Map map, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
         {
-            PaintCircle(map, center, 14, plate);
-            PaintCircle(map, center, 10, sigil);
-            PaintCircle(map, center, 6, plate);
-            PaintCircle(map, center, 3, sigil);
+            PaintCircle(map, center, 16, plate);
+            PaintCircle(map, center, 12, sigil);
+            PaintCircle(map, center, 8, plate);
+            PaintCircle(map, center, 4, sigil);
+            PaintCircle(map, center, 2, plate);
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 6; i++)
             {
-                float angle = i * 45f * Mathf.Deg2Rad;
-                IntVec3 tip = new IntVec3(center.x + GenMath.RoundRandom(Mathf.Cos(angle) * 14f), 0, center.z + GenMath.RoundRandom(Mathf.Sin(angle) * 14f));
-                PaintCorridor(map, center, tip, i % 2 == 0 ? 1 : 0, channel);
+                float angle = (i * 60f + 30f) * Mathf.Deg2Rad;
+                IntVec3 tip = new IntVec3(center.x + GenMath.RoundRandom(Mathf.Cos(angle) * 16f), 0, center.z + GenMath.RoundRandom(Mathf.Sin(angle) * 16f));
+                PaintCorridor(map, center, tip, 1, channel);
             }
         }
 
         private static void PaintAnchorPlatform(Map map, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil, Rot4 facing)
         {
-            PaintCircle(map, center, 6, plate);
-            PaintCircle(map, center, 4, sigil);
+            PaintCircle(map, center, 7, plate);
+            PaintCircle(map, center, 5, sigil);
             PaintCircle(map, center, 2, plate);
-            IntVec3 front = center + facing.FacingCell * 3;
+            IntVec3 front = center + facing.FacingCell * 4;
             PaintCorridor(map, center, front, 1, channel);
         }
 
         private static void PaintRewardPocket(Map map, IntVec3 center, TerrainDef plate, TerrainDef sigil)
         {
             PaintRect(map, new CellRect(center.x - 6, center.z - 5, 12, 10), plate);
-            PaintRect(map, new CellRect(center.x - 3, center.z - 2, 6, 4), sigil);
+            PaintRect(map, new CellRect(center.x - 2, center.z - 1, 4, 2), sigil);
+            PaintCircle(map, center + new IntVec3(-2,0,2), 2, sigil);
+        }
+
+        private static void ScatterBurnScars(Map map, IntVec3 center, TerrainDef scarTerrain, TerrainDef baseTerrain)
+        {
+            IntRange radiusRange = new IntRange(18, 44);
+            for (int i = 0; i < 24; i++)
+            {
+                int radius = radiusRange.RandomInRange;
+                float angle = Rand.Range(0f, 360f) * Mathf.Deg2Rad;
+                IntVec3 scar = ClampToInterior(map, new IntVec3(
+                    center.x + GenMath.RoundRandom(Mathf.Cos(angle) * radius),
+                    0,
+                    center.z + GenMath.RoundRandom(Mathf.Sin(angle) * radius)));
+                PaintCircle(map, scar, Rand.RangeInclusive(1, 2), Rand.Chance(0.65f) ? scarTerrain : baseTerrain);
+            }
         }
 
         private static void PaintCircle(Map map, IntVec3 center, int radius, TerrainDef terrain)
@@ -263,23 +313,23 @@ namespace AbyssalProtocol
 
         private static void SpawnPerimeterShell(Map map, IntVec3 center)
         {
-            SpawnArc(map, center, 34f, 198f, 338f, 20f, BastionDefName);
-            SpawnArc(map, center, 42f, 210f, 324f, 28f, SpireDefName);
-            SpawnArc(map, center, 29f, 32f, 146f, 23f, SpireDefName);
+            SpawnArc(map, center, 36f, 205f, 335f, 18f, BastionDefName);
+            SpawnArc(map, center, 44f, 214f, 325f, 24f, SpireDefName);
+            SpawnArc(map, center, 30f, 24f, 156f, 22f, SpireDefName);
         }
 
         private static void SpawnLaneSupports(Map map, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
         {
-            SpawnProp(map, BastionDefName, extraction + new IntVec3(-7, 0, 1), Rot4.West);
-            SpawnProp(map, BastionDefName, extraction + new IntVec3(7, 0, 1), Rot4.East);
-            SpawnProp(map, SpireDefName, center + new IntVec3(-15, 0, -6), Rot4.West);
-            SpawnProp(map, SpireDefName, center + new IntVec3(15, 0, -6), Rot4.East);
-            SpawnProp(map, SpireDefName, center + new IntVec3(-15, 0, 11), Rot4.West);
-            SpawnProp(map, SpireDefName, center + new IntVec3(15, 0, 11), Rot4.East);
-            SpawnProp(map, BastionDefName, north + new IntVec3(-4, 0, 6), Rot4.North);
-            SpawnProp(map, BastionDefName, north + new IntVec3(4, 0, 6), Rot4.North);
-            SpawnProp(map, BastionDefName, west + new IntVec3(-6, 0, 2), Rot4.West);
-            SpawnProp(map, BastionDefName, east + new IntVec3(6, 0, 2), Rot4.East);
+            SpawnProp(map, BastionDefName, extraction + new IntVec3(-8, 0, 1), Rot4.West);
+            SpawnProp(map, BastionDefName, extraction + new IntVec3(8, 0, 1), Rot4.East);
+            SpawnProp(map, SpireDefName, center + new IntVec3(-18, 0, -6), Rot4.West);
+            SpawnProp(map, SpireDefName, center + new IntVec3(18, 0, -6), Rot4.East);
+            SpawnProp(map, SpireDefName, center + new IntVec3(-17, 0, 12), Rot4.West);
+            SpawnProp(map, SpireDefName, center + new IntVec3(17, 0, 12), Rot4.East);
+            SpawnProp(map, BastionDefName, north + new IntVec3(-5, 0, 7), Rot4.North);
+            SpawnProp(map, BastionDefName, north + new IntVec3(5, 0, 7), Rot4.North);
+            SpawnProp(map, BastionDefName, west + new IntVec3(-7, 0, 2), Rot4.West);
+            SpawnProp(map, BastionDefName, east + new IntVec3(7, 0, 2), Rot4.East);
             SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(-4, 0, 4), Rot4.West);
             SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(4, 0, -4), Rot4.East);
         }
@@ -321,12 +371,18 @@ namespace AbyssalProtocol
             for (int i = things.Count - 1; i >= 0; i--)
             {
                 Thing thing = things[i];
-                if (thing == null || thing.Destroyed || thing is Pawn)
+                if (thing == null || thing.Destroyed || thing is Pawn || thing.def == null)
                 {
                     continue;
                 }
 
                 if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
+                {
+                    continue;
+                }
+
+                string existingDefName = thing.def.defName ?? string.Empty;
+                if (!thing.def.useHitPoints || existingDefName == "PocketMapExit" || existingDefName == "CaveExit" || existingDefName == "PitGate")
                 {
                     continue;
                 }
