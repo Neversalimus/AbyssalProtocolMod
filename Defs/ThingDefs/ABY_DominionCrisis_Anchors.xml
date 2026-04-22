@@ -19,7 +19,7 @@
     <graphicData>
       <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.4,3.4)</drawSize>
+      <drawSize>(6.6,6.6)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>560</MaxHitPoints>
@@ -37,7 +37,7 @@
         <maxAffectedTargets>5</maxAffectedTargets>
         <contaminationPulse>0.010</contaminationPulse>
         <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Suppression_Glow</glowTexPath>
-        <glowDrawScale>3.70</glowDrawScale>
+        <glowDrawScale>7.26</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -60,7 +60,7 @@
     <graphicData>
       <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Drain</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.4,3.4)</drawSize>
+      <drawSize>(6.6,6.6)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>540</MaxHitPoints>
@@ -78,7 +78,7 @@
         <maxAffectedTargets>4</maxAffectedTargets>
         <contaminationPulse>0.016</contaminationPulse>
         <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Drain_Glow</glowTexPath>
-        <glowDrawScale>3.72</glowDrawScale>
+        <glowDrawScale>7.32</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -101,7 +101,7 @@
     <graphicData>
       <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.4,3.4)</drawSize>
+      <drawSize>(6.6,6.6)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>610</MaxHitPoints>
@@ -118,7 +118,7 @@
         <healAmount>18</healAmount>
         <contaminationPulse>0.011</contaminationPulse>
         <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Ward_Glow</glowTexPath>
-        <glowDrawScale>3.70</glowDrawScale>
+        <glowDrawScale>7.26</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -141,7 +141,7 @@
     <graphicData>
       <texPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(3.4,3.4)</drawSize>
+      <drawSize>(6.6,6.6)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>520</MaxHitPoints>
@@ -158,7 +158,7 @@
         <contaminationPulse>0.020</contaminationPulse>
         <timerDrainTicks>150</timerDrainTicks>
         <glowTexPath>Things/Building/DominionAnchors/ABY_DominionAnchor_Breach_Glow</glowTexPath>
-        <glowDrawScale>3.80</glowDrawScale>
+        <glowDrawScale>7.44</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
