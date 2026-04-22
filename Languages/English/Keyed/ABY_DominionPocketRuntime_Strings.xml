@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketRuntimeFail_NoGate>No active Great Infernal Gate was found for dominion slice generation.</ABY_DominionPocketRuntimeFail_NoGate>
+  <ABY_DominionPocketRuntimeFail_NoPawns>Select at least one colonist on the current map before opening a dominion slice.</ABY_DominionPocketRuntimeFail_NoPawns>
+  <ABY_DominionPocketRuntimeFail_AlreadyOpen>A dominion slice is already active for this map.</ABY_DominionPocketRuntimeFail_AlreadyOpen>
+  <ABY_DominionPocketRuntimeFail_NoGenerator>No pocket map generator could be resolved for the dominion slice runtime.</ABY_DominionPocketRuntimeFail_NoGenerator>
+  <ABY_DominionPocketRuntimeFail_MapCreate>The dominion slice could not be generated.</ABY_DominionPocketRuntimeFail_MapCreate>
+  <ABY_DominionPocketRuntimeFail_NoEntryCell>No valid entry cell could be found inside the dominion slice.</ABY_DominionPocketRuntimeFail_NoEntryCell>
+  <ABY_DominionPocketRuntimeFail_NoSession>No dominion slice session is linked to this command.</ABY_DominionPocketRuntimeFail_NoSession>
+  <ABY_DominionPocketRuntimeFail_NoSourceMap>The source colony map for this dominion slice could not be resolved.</ABY_DominionPocketRuntimeFail_NoSourceMap>
+  <ABY_DominionPocketRuntimeFail_NoPocketMap>The dominion slice map could not be resolved.</ABY_DominionPocketRuntimeFail_NoPocketMap>
+  <ABY_DominionPocketRuntimeFail_NoPlayerPawns>No player pawns remain inside this dominion slice.</ABY_DominionPocketRuntimeFail_NoPlayerPawns>
+  <ABY_DominionPocketRuntimeOpened>Dominion slice runtime opened. Strike team inserted: {0}. Pocket size: {1}x{2}.</ABY_DominionPocketRuntimeOpened>
+  <ABY_DominionPocketRuntimeReturned>Strike team extracted: {0}.</ABY_DominionPocketRuntimeReturned>
+  <ABY_DominionPocketRuntimeCollapsed>The temporary dominion slice has collapsed.</ABY_DominionPocketRuntimeCollapsed>
+  <ABY_DominionPocketRuntimeCommand_Return>Return strike team</ABY_DominionPocketRuntimeCommand_Return>
+  <ABY_DominionPocketRuntimeCommand_ReturnDesc>Return all player pawns currently inside this dominion slice to the source colony map and collapse the temporary runtime map.</ABY_DominionPocketRuntimeCommand_ReturnDesc>
+  <ABY_DominionPocketRuntimeExitInspect>Linked return vector: {0}.</ABY_DominionPocketRuntimeExitInspect>
+  <ABY_DominionPocketRuntimeExitInspect_Unlinked>This extraction anchor is no longer linked to a live dominion slice session.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
+  <ABY_DominionPocketRuntimeSource_Unknown>unknown source map</ABY_DominionPocketRuntimeSource_Unknown>
+</LanguageData>

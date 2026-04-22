@@ -325,6 +325,66 @@ namespace AbyssalProtocol
                         Map.GetComponent<MapComponent_DominionCrisis>()?.DebugReset();
                     }
                 };
+
+                if (Map.GetComponent<MapComponent_DominionCrisis>()?.IsGatePhaseActive == true
+                    && Map.GetComponent<MapComponent_DominionCrisis>()?.GateCore != null)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: open dominion slice",
+                        defaultDesc = "Generate the temporary dominion pocket map runtime and insert the currently selected colonists.",
+                        action = delegate
+                        {
+                            MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
+                            Building_AbyssalDominionGate gate = crisis?.GateCore;
+                            if (gate == null || gate.Destroyed)
+                            {
+                                Messages.Message("ABY_DominionPocketRuntimeFail_NoGate".Translate(), MessageTypeDefOf.RejectInput, false);
+                                return;
+                            }
+
+                            List<Pawn> pawns = AbyssalDominionPocketUtility.GetSelectedColonistsForPocketEntry(Map);
+                            if (AbyssalDominionPocketUtility.TryOpenPocketSlice(gate, pawns, out _, out string failReason))
+                            {
+                                Messages.Message("Dominion slice runtime opened.", MessageTypeDefOf.PositiveEvent, false);
+                            }
+                            else if (!failReason.NullOrEmpty())
+                            {
+                                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                            }
+                        }
+                    };
+                }
+
+                ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+                if (runtime != null && runtime.TryGetActiveSessionForSourceMap(Map, out ABY_DominionPocketSession activePocketSession))
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: jump to dominion slice",
+                        defaultDesc = "Jump to the active temporary dominion slice linked to this colony map.",
+                        action = delegate
+                        {
+                            if (!AbyssalDominionPocketUtility.TryJumpToPocketSlice(activePocketSession, out string failReason) && !failReason.NullOrEmpty())
+                            {
+                                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                            }
+                        }
+                    };
+
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "DEV: return dominion strike team",
+                        defaultDesc = "Return all player pawns from the active temporary dominion slice and collapse it.",
+                        action = delegate
+                        {
+                            if (!AbyssalDominionPocketUtility.TryReturnPocketSlice(activePocketSession, true, out string failReason) && !failReason.NullOrEmpty())
+                            {
+                                Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                            }
+                        }
+                    };
+                }
             }
         }
 

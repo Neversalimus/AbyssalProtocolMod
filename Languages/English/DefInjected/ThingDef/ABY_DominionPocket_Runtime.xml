@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketExit.label>dominion extraction gate</ABY_DominionPocketExit.label>
+  <ABY_DominionPocketExit.description>A temporary extraction anchor formed inside the dominion slice. It is not the final version of the encounter, but it allows a strike team to return to the colony during runtime testing.</ABY_DominionPocketExit.description>
+</LanguageData>

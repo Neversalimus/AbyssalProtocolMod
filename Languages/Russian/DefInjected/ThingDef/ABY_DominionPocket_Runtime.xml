@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketExit.label>врата эвакуации доминиона</ABY_DominionPocketExit.label>
+  <ABY_DominionPocketExit.description>Временный якорь эвакуации, сформированный внутри среза доминиона. Это ещё не финальная версия encounter-а, но он позволяет ударной группе вернуться в колонию во время runtime-тестов.</ABY_DominionPocketExit.description>
+</LanguageData>

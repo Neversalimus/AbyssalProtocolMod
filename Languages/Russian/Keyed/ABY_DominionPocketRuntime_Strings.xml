@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketRuntimeFail_NoGate>Активные Великие адские врата для генерации среза доминиона не найдены.</ABY_DominionPocketRuntimeFail_NoGate>
+  <ABY_DominionPocketRuntimeFail_NoPawns>Перед открытием среза доминиона выделите хотя бы одного колониста на текущей карте.</ABY_DominionPocketRuntimeFail_NoPawns>
+  <ABY_DominionPocketRuntimeFail_AlreadyOpen>Для этой карты уже активен один срез доминиона.</ABY_DominionPocketRuntimeFail_AlreadyOpen>
+  <ABY_DominionPocketRuntimeFail_NoGenerator>Для runtime-среза доминиона не удалось определить генератор pocket map.</ABY_DominionPocketRuntimeFail_NoGenerator>
+  <ABY_DominionPocketRuntimeFail_MapCreate>Не удалось сгенерировать срез доминиона.</ABY_DominionPocketRuntimeFail_MapCreate>
+  <ABY_DominionPocketRuntimeFail_NoEntryCell>Внутри среза доминиона не удалось найти допустимую точку входа.</ABY_DominionPocketRuntimeFail_NoEntryCell>
+  <ABY_DominionPocketRuntimeFail_NoSession>С этой командой не связана активная сессия среза доминиона.</ABY_DominionPocketRuntimeFail_NoSession>
+  <ABY_DominionPocketRuntimeFail_NoSourceMap>Не удалось определить исходную карту колонии для этого среза доминиона.</ABY_DominionPocketRuntimeFail_NoSourceMap>
+  <ABY_DominionPocketRuntimeFail_NoPocketMap>Не удалось определить карту среза доминиона.</ABY_DominionPocketRuntimeFail_NoPocketMap>
+  <ABY_DominionPocketRuntimeFail_NoPlayerPawns>Внутри этого среза доминиона больше не осталось пешек игрока.</ABY_DominionPocketRuntimeFail_NoPlayerPawns>
+  <ABY_DominionPocketRuntimeOpened>Runtime-срез доминиона открыт. Ударная группа введена: {0}. Размер pocket map: {1}x{2}.</ABY_DominionPocketRuntimeOpened>
+  <ABY_DominionPocketRuntimeReturned>Ударная группа эвакуирована: {0}.</ABY_DominionPocketRuntimeReturned>
+  <ABY_DominionPocketRuntimeCollapsed>Временный срез доминиона схлопнулся.</ABY_DominionPocketRuntimeCollapsed>
+  <ABY_DominionPocketRuntimeCommand_Return>Вернуть ударную группу</ABY_DominionPocketRuntimeCommand_Return>
+  <ABY_DominionPocketRuntimeCommand_ReturnDesc>Вернуть всех пешек игрока, находящихся внутри этого среза доминиона, на исходную карту колонии и схлопнуть временную runtime-карту.</ABY_DominionPocketRuntimeCommand_ReturnDesc>
+  <ABY_DominionPocketRuntimeExitInspect>Связанный вектор возврата: {0}.</ABY_DominionPocketRuntimeExitInspect>
+  <ABY_DominionPocketRuntimeExitInspect_Unlinked>Этот якорь эвакуации больше не связан с живой сессией среза доминиона.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
+  <ABY_DominionPocketRuntimeSource_Unknown>неизвестная исходная карта</ABY_DominionPocketRuntimeSource_Unknown>
+</LanguageData>
