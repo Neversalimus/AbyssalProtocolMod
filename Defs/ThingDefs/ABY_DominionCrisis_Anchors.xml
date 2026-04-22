@@ -26,7 +26,7 @@
       <Mass>60</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
@@ -67,7 +67,7 @@
       <Mass>58</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
@@ -108,7 +108,7 @@
       <Mass>62</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">
@@ -148,7 +148,7 @@
       <Mass>56</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_DominionAnchor">

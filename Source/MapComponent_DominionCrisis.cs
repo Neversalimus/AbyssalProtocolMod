@@ -1470,7 +1470,7 @@ namespace AbyssalProtocol
             };
 
             Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
-            List<IntVec3> usedCells = new List<IntVec3>();
+            List<CellRect> usedRects = new List<CellRect>();
 
             for (int i = 0; i < roles.Count; i++)
             {
@@ -1483,7 +1483,7 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                if (!TryFindAnchorSpawnCell(role, usedCells, out IntVec3 cell))
+                if (!TryFindAnchorSpawnCell(role, def.size, usedRects, out IntVec3 cell))
                 {
                     failReason = "ABY_DominionCrisisFail_NoAnchorCell".Translate();
                     DestroyTrackedAnchors(false);
@@ -1504,7 +1504,7 @@ namespace AbyssalProtocol
                 }
 
                 RegisterAnchor(anchor);
-                usedCells.Add(cell);
+                usedRects.Add(GenAdj.OccupiedRect(cell, Rot4.North, def.size));
 
                 FleckMaker.ThrowLightningGlow(anchor.DrawPos, map, 1.8f);
                 FleckMaker.ThrowMicroSparks(anchor.DrawPos, map);
@@ -1515,7 +1515,7 @@ namespace AbyssalProtocol
             return initialAnchorCount > 0;
         }
 
-        private bool TryFindAnchorSpawnCell(DominionAnchorRole role, List<IntVec3> usedCells, out IntVec3 cell)
+        private bool TryFindAnchorSpawnCell(DominionAnchorRole role, IntVec2 size, List<CellRect> usedRects, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
             if (map == null || !sourceCell.IsValid)
@@ -1531,26 +1531,28 @@ namespace AbyssalProtocol
 
             foreach (IntVec3 candidate in GenRadial.RadialCellsAround(sourceCell, maxRadius, true))
             {
-                if (!candidate.InBounds(map) || candidate.Fogged(map) || !candidate.Standable(map))
+                if (!candidate.InBounds(map))
                 {
                     continue;
                 }
 
-                float distance = candidate.DistanceTo(sourceCell);
+                CellRect rect = GenAdj.OccupiedRect(candidate, Rot4.North, size);
+                if (!CanUseAnchorRect(rect))
+                {
+                    continue;
+                }
+
+                IntVec3 centerCell = rect.CenterCell;
+                float distance = centerCell.DistanceTo(sourceCell);
                 if (distance < minRadius || distance > maxRadius)
                 {
                     continue;
                 }
 
-                if (candidate.GetEdifice(map) != null || candidate.GetFirstPawn(map) != null)
-                {
-                    continue;
-                }
-
                 bool tooClose = false;
-                for (int i = 0; i < usedCells.Count; i++)
+                for (int i = 0; i < usedRects.Count; i++)
                 {
-                    if (usedCells[i].DistanceTo(candidate) < 10.5f)
+                    if (usedRects[i].CenterCell.DistanceTo(centerCell) < 10.5f)
                     {
                         tooClose = true;
                         break;
@@ -1564,25 +1566,25 @@ namespace AbyssalProtocol
 
                 float score = 0f;
                 score -= Mathf.Abs(distance - preferredRadius);
-                score += CountAdjacentStandableCells(candidate) * 0.08f;
-                score += !candidate.Roofed(map) ? 0.55f : -0.15f;
-                score += DistanceToNearestEdge(candidate) * 0.018f;
+                score += CountAdjacentStandableCells(centerCell) * 0.08f;
+                score += !centerCell.Roofed(map) ? 0.55f : -0.15f;
+                score += DistanceToNearestEdge(centerCell) * 0.018f;
 
                 if (role == DominionAnchorRole.Suppression)
                 {
-                    score += CountNearbyTurrets(candidate, 12f) * 0.8f;
+                    score += CountNearbyTurrets(centerCell, 12f) * 0.8f;
                 }
                 else if (role == DominionAnchorRole.Drain)
                 {
-                    score += CountNearbyPowerBuildings(candidate, 12f) * 0.7f;
+                    score += CountNearbyPowerBuildings(centerCell, 12f) * 0.7f;
                 }
                 else if (role == DominionAnchorRole.Ward)
                 {
-                    score -= candidate.DistanceTo(sourceCell) * 0.12f;
+                    score -= centerCell.DistanceTo(sourceCell) * 0.12f;
                 }
                 else if (role == DominionAnchorRole.Breach)
                 {
-                    score += !candidate.Roofed(map) ? 0.8f : 0f;
+                    score += !centerCell.Roofed(map) ? 0.8f : 0f;
                     score += distance * 0.04f;
                 }
 
@@ -1599,6 +1601,29 @@ namespace AbyssalProtocol
             }
 
             cell = bestCell;
+            return true;
+        }
+
+        private bool CanUseAnchorRect(CellRect rect)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            foreach (IntVec3 rectCell in rect)
+            {
+                if (!rectCell.InBounds(map) || rectCell.Fogged(map) || !rectCell.Standable(map))
+                {
+                    return false;
+                }
+
+                if (rectCell.GetEdifice(map) != null || rectCell.GetFirstPawn(map) != null)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
 
