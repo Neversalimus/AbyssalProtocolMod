@@ -1087,6 +1087,17 @@ namespace AbyssalProtocol
                     TranslateOrFallback("ABY_DominionOpsObjective_Dormant", "No active dominion breach on this map."));
             }
 
+            if (crisis.TryGetActivePocketSession(out ABY_DominionPocketSession session) && session != null)
+            {
+                Map pocketMap = AbyssalDominionPocketUtility.ResolveMap(session.pocketMapId);
+                return TranslateOrFallback(
+                    "ABY_DominionOpsSummary_Pocket",
+                    "Objective: {0}\nDirective: {1}\nPocket telemetry: {2}",
+                    crisis.GetPrimaryObjectiveLabel(),
+                    crisis.GetDirectiveSummary(),
+                    AbyssalDominionPocketUtility.GetPocketEncounterTelemetry(session, pocketMap));
+            }
+
             return TranslateOrFallback("ABY_DominionOpsSummary", "Objective: {0}\nDirective: {1}", crisis.GetPrimaryObjectiveLabel(), crisis.GetDirectiveSummary());
         }
 

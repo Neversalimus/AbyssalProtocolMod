@@ -112,19 +112,27 @@ namespace AbyssalProtocol
         public override string GetInspectString()
         {
             string baseText = base.GetInspectString();
-            string stateText = "ABY_DominionSliceHeart_InspectShielded".Translate();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (!baseText.NullOrEmpty())
+            {
+                sb.Append(baseText.TrimEnd());
+                sb.AppendLine();
+            }
+
             MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
             if (encounter != null && encounter.IsHeartExposed)
             {
-                stateText = "ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta());
+                sb.Append("ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta()));
+                sb.AppendLine();
+                sb.Append("ABY_DominionSliceHeart_InspectRewards".Translate(encounter.GetRewardForecastValue()));
             }
-
-            if (baseText.NullOrEmpty())
+            else
             {
-                return stateText;
+                int remainingAnchors = encounter != null ? encounter.LiveAnchorCount : 0;
+                sb.Append("ABY_DominionSliceHeart_InspectShieldedDetailed".Translate(remainingAnchors));
             }
 
-            return baseText.TrimEnd() + "\n" + stateText;
+            return sb.ToString().TrimEnd();
         }
     }
 }

@@ -104,6 +104,8 @@ namespace AbyssalProtocol
                 lines.Add("ABY_DominionPocketRuntimeExitInspect".Translate(AbyssalDominionPocketUtility.GetSourceMapLabel(session)));
                 lines.Add("ABY_DominionPocketRuntimeExitInspect_Team".Translate(AbyssalDominionPocketUtility.GetPocketPlayerCount(Map)));
                 lines.Add("ABY_DominionPocketRuntimeExitInspect_State".Translate(AbyssalDominionPocketUtility.GetPocketSessionStatusValue(session, Map)));
+                lines.Add("ABY_DominionPocketRuntimeExitInspect_Objective".Translate(AbyssalDominionPocketUtility.GetPocketObjectiveValue(session, Map)));
+                lines.Add("ABY_DominionPocketRuntimeExitInspect_Rewards".Translate(AbyssalDominionPocketUtility.GetPocketRewardValue(session, Map)));
             }
             else
             {

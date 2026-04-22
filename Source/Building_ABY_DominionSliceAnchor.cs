@@ -140,6 +140,14 @@ namespace AbyssalProtocol
             sb.Append("ABY_DominionSliceAnchor_Inspect".Translate(GetRoleLabel()));
             sb.AppendLine();
             sb.Append(GetRoleEffectLabel());
+
+            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null)
+            {
+                sb.AppendLine();
+                sb.Append("ABY_DominionSliceAnchor_InspectTelemetry".Translate(encounter.LiveAnchorCount, encounter.GetNextWaveEtaValue()));
+            }
+
             return sb.ToString().TrimEnd();
         }
 

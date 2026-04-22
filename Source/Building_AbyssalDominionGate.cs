@@ -250,6 +250,8 @@ namespace AbyssalProtocol
                 {
                     Map pocketMap = AbyssalDominionPocketUtility.ResolveMap(session.pocketMapId);
                     lines.Add("ABY_DominionPocketGate_InspectTeam".Translate(AbyssalDominionPocketUtility.GetPocketSessionStatusValue(session, pocketMap)));
+                    lines.Add("ABY_DominionPocketGate_InspectObjective".Translate(AbyssalDominionPocketUtility.GetPocketObjectiveValue(session, pocketMap)));
+                    lines.Add("ABY_DominionPocketGate_InspectRewards".Translate(AbyssalDominionPocketUtility.GetPocketRewardValue(session, pocketMap)));
                 }
             }
             return string.Join("\n", lines);

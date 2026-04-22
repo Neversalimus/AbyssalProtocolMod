@@ -365,7 +365,8 @@ namespace AbyssalProtocol
             List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
             List<string> difficultyLines = AbyssalDifficultyUtility.GetDiagnosticsLines();
             bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
-            float summaryHeight = dominionUiMode ? 54f : 0f;
+            string dominionSummaryText = dominionUiMode ? AbyssalSummoningConsoleUtility.GetDominionOpsSummary(circle) : null;
+            float summaryHeight = dominionUiMode ? Mathf.Max(54f, Text.CalcHeight(dominionSummaryText, Mathf.Max(1f, inner.width - 16f)) + 18f) : 0f;
             float difficultyHeight = difficultyLines.Count * 18f + (difficultyLines.Count > 0 ? 10f : 0f);
             float contentHeight = 8f + summaryHeight + difficultyHeight + entries.Count * 22f;
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
@@ -381,9 +382,10 @@ namespace AbyssalProtocol
                 Widgets.Label(new Rect(8f, 4f, viewRect.width - 16f, 16f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionStatusHeader", "Crisis telemetry"));
                 GUI.color = Color.white;
                 Text.Font = GameFont.Tiny;
-                Widgets.Label(new Rect(8f, 20f, viewRect.width - 16f, 28f), AbyssalSummoningConsoleUtility.GetDominionOpsSummary(circle));
+                float dominionSummaryBlockHeight = Mathf.Max(28f, Text.CalcHeight(dominionSummaryText, viewRect.width - 16f));
+                Widgets.Label(new Rect(8f, 20f, viewRect.width - 16f, dominionSummaryBlockHeight), dominionSummaryText);
                 Text.Font = GameFont.Small;
-                y += 58f;
+                y += summaryHeight + 4f;
             }
 
             if (difficultyLines.Count > 0)

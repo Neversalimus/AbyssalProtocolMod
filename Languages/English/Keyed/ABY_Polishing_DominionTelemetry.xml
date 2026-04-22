@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionOpsSummary_Pocket>Objective: {0}
+Directive: {1}
+Pocket telemetry: {2}</ABY_DominionOpsSummary_Pocket>
+  <ABY_DominionPocketTelemetry_Dormant>pocket telemetry unavailable</ABY_DominionPocketTelemetry_Dormant>
+  <ABY_DominionPocketTelemetry_Report>{0} | {1} | Reward forecast: {2}</ABY_DominionPocketTelemetry_Report>
+  <ABY_DominionPocketTelemetry_Status>{0} | Next wave: {1} | Reward forecast: {2}</ABY_DominionPocketTelemetry_Status>
+  <ABY_DominionPocketTelemetry_ObjectiveDormant>dominion slice telemetry is dormant</ABY_DominionPocketTelemetry_ObjectiveDormant>
+  <ABY_DominionPocketTelemetry_ObjectiveBreach>secure the breach pocket and prepare for anchorfall</ABY_DominionPocketTelemetry_ObjectiveBreach>
+  <ABY_DominionPocketTelemetry_ObjectiveAnchors>destroy the dominion anchors ({0} remaining)</ABY_DominionPocketTelemetry_ObjectiveAnchors>
+  <ABY_DominionPocketTelemetry_ObjectiveHeart>destroy the Crown-Heart before extraction closes ({0})</ABY_DominionPocketTelemetry_ObjectiveHeart>
+  <ABY_DominionPocketTelemetry_ObjectiveExtract>extract the strike team before collapse ({0})</ABY_DominionPocketTelemetry_ObjectiveExtract>
+  <ABY_DominionPocketTelemetry_ObjectiveFailed>the dominion slice has failed and is collapsing</ABY_DominionPocketTelemetry_ObjectiveFailed>
+  <ABY_DominionPocketGate_InspectObjective>Objective: {0}</ABY_DominionPocketGate_InspectObjective>
+  <ABY_DominionPocketGate_InspectRewards>Reward forecast: {0}</ABY_DominionPocketGate_InspectRewards>
+  <ABY_DominionPocketRuntimeExitInspect_Objective>Objective: {0}</ABY_DominionPocketRuntimeExitInspect_Objective>
+  <ABY_DominionPocketRuntimeExitInspect_Rewards>Reward forecast: {0}</ABY_DominionPocketRuntimeExitInspect_Rewards>
+  <ABY_DominionSliceHeart_InspectShieldedDetailed>The Crown-Heart remains sealed while dominion anchors stand. Anchors remaining: {0}.</ABY_DominionSliceHeart_InspectShieldedDetailed>
+  <ABY_DominionSliceHeart_InspectRewards>Reward forecast: {0}</ABY_DominionSliceHeart_InspectRewards>
+  <ABY_DominionSliceAnchor_InspectTelemetry>Anchors still standing: {0}. Next wave: {1}.</ABY_DominionSliceAnchor_InspectTelemetry>
+</LanguageData>

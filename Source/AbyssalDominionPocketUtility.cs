@@ -479,6 +479,61 @@ namespace AbyssalProtocol
             return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(teamCount);
         }
 
+        public static string GetPocketObjectiveValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            }
+
+            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null)
+            {
+                return encounter.GetTelemetryObjectiveLabel();
+            }
+
+            if (session.victoryAchieved)
+            {
+                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetPocketCollapseEta(session));
+            }
+
+            return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+        }
+
+        public static string GetPocketRewardValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionSliceRewardForecast_None".Translate();
+            }
+
+            if (!session.rewardSummary.NullOrEmpty())
+            {
+                return session.rewardSummary;
+            }
+
+            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null)
+            {
+                return encounter.GetRewardForecastValue();
+            }
+
+            return "ABY_DominionSliceRewardForecast_None".Translate();
+        }
+
+        public static string GetPocketEncounterTelemetry(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionPocketTelemetry_Dormant".Translate();
+            }
+
+            string objective = GetPocketObjectiveValue(session, pocketMap);
+            string team = GetPocketSessionStatusValue(session, pocketMap);
+            string rewards = GetPocketRewardValue(session, pocketMap);
+            return "ABY_DominionPocketTelemetry_Report".Translate(objective, team, rewards);
+        }
+
         public static string GetSourceMapLabel(ABY_DominionPocketSession session)
         {
             Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;

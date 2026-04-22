@@ -56,6 +56,11 @@ namespace AbyssalProtocol
             get { return phase; }
         }
 
+        public int LiveAnchorCount
+        {
+            get { return GetLiveAnchorCount(); }
+        }
+
         public int HazardPressure
         {
             get { return hazardPressure; }
@@ -353,6 +358,46 @@ namespace AbyssalProtocol
             }
 
             return (collapseAtTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
+        }
+
+        public string GetNextWaveEtaValue()
+        {
+            if (!IsActiveEncounter || nextWaveTick <= 0 || Find.TickManager == null)
+            {
+                return "ABY_DominionWaveEta_Pending".Translate();
+            }
+
+            int ticks = System.Math.Max(0, nextWaveTick - Find.TickManager.TicksGame);
+            if (ticks <= 90)
+            {
+                return "ABY_DominionWaveEta_Imminent".Translate();
+            }
+
+            return "ABY_DominionWaveEta_Queued".Translate(ticks.ToStringTicksToPeriod());
+        }
+
+        public string GetTelemetryObjectiveLabel()
+        {
+            switch (phase)
+            {
+                case SlicePhase.Breach:
+                    return "ABY_DominionPocketTelemetry_ObjectiveBreach".Translate();
+                case SlicePhase.Anchorfall:
+                    return "ABY_DominionPocketTelemetry_ObjectiveAnchors".Translate(GetLiveAnchorCount());
+                case SlicePhase.HeartExposed:
+                    return "ABY_DominionPocketTelemetry_ObjectiveHeart".Translate(GetCollapseEta());
+                case SlicePhase.Collapse:
+                    return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetCollapseEta());
+                case SlicePhase.Failed:
+                    return "ABY_DominionPocketTelemetry_ObjectiveFailed".Translate();
+                default:
+                    return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            }
+        }
+
+        public string GetTelemetryStatusLabel()
+        {
+            return "ABY_DominionPocketTelemetry_Status".Translate(GetTelemetryObjectiveLabel(), GetNextWaveEtaValue(), GetRewardForecastValue());
         }
 
         private void TryAutoResolveSession()
