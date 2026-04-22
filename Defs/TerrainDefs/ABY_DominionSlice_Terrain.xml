@@ -4,53 +4,61 @@
   <TerrainDef>
     <defName>ABY_DominionAshMetal</defName>
     <label>ash-metal plating</label>
-    <description>Blackened infernal plating dusted with dead ash.</description>
+    <description>Dark infernal plating powdered by cold ash and reactor soot.</description>
     <texturePath>Terrain/ABY_DominionAshMetal</texturePath>
     <renderPrecedence>335</renderPrecedence>
     <fertility>0</fertility>
     <pathCost>0</pathCost>
     <takeFootprints>false</takeFootprints>
-    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
     <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
   </TerrainDef>
 
   <TerrainDef>
     <defName>ABY_DominionScorchedPlate</defName>
     <label>scorched dominion plate</label>
-    <description>Heat-scarred platework from a hostile infernal machine-temple.</description>
+    <description>Heat-flayed platework from a hostile infernal machine-temple.</description>
     <texturePath>Terrain/ABY_DominionScorchedPlate</texturePath>
     <renderPrecedence>338</renderPrecedence>
     <fertility>0</fertility>
     <pathCost>0</pathCost>
     <takeFootprints>false</takeFootprints>
-    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
     <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
   </TerrainDef>
 
   <TerrainDef>
     <defName>ABY_DominionBloodChannel</defName>
-    <label>blood-channel plating</label>
-    <description>Hot, vein-like channels burned into infernal plate.</description>
+    <label>blood-channel conduit</label>
+    <description>Narrow crimson conduits that pulse through the slice like capillaries in plated hellsteel.</description>
     <texturePath>Terrain/ABY_DominionBloodChannel</texturePath>
     <renderPrecedence>342</renderPrecedence>
     <fertility>0</fertility>
     <pathCost>0</pathCost>
     <takeFootprints>false</takeFootprints>
-    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
     <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
   </TerrainDef>
 
   <TerrainDef>
     <defName>ABY_DominionBrassSigil</defName>
     <label>brass-sigil dais</label>
-    <description>A bright infernal inlay for anchor and heart platforms.</description>
+    <description>Engraved infernal brass used on the heart dais and anchor platforms.</description>
     <texturePath>Terrain/ABY_DominionBrassSigil</texturePath>
     <renderPrecedence>345</renderPrecedence>
     <fertility>0</fertility>
     <pathCost>0</pathCost>
     <takeFootprints>false</takeFootprints>
-    <acceptTerrainSourceFilth>true</acceptTerrainSourceFilth>
     <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
   </TerrainDef>
 
 </Defs>

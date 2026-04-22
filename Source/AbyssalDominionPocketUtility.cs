@@ -75,7 +75,8 @@ namespace AbyssalProtocol
             return result;
         }
 
-        public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumerable<Pawn> pawns, out ABY_DominionPocketSession session, out string failReason)
+        
+public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumerable<Pawn> pawns, out ABY_DominionPocketSession session, out string failReason)
         {
             session = null;
             failReason = null;
@@ -99,50 +100,31 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<MapGeneratorDef> generatorDefs = ResolveGeneratorDefs();
-            if (generatorDefs.Count == 0)
+            MapGeneratorDef generatorDef = ResolveGeneratorDef();
+            if (generatorDef == null)
             {
                 failReason = "ABY_DominionPocketRuntimeFail_NoGenerator".Translate();
                 return false;
             }
 
             Map pocketMap = null;
-            Exception lastException = null;
-            for (int generatorIndex = 0; generatorIndex < generatorDefs.Count; generatorIndex++)
+            try
             {
-                MapGeneratorDef generatorDef = generatorDefs[generatorIndex];
-                if (generatorDef == null)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    pocketMap = PocketMapUtility.GeneratePocketMap(
-                        new IntVec3(PocketMapWidth, 1, PocketMapHeight),
-                        generatorDef,
-                        Enumerable.Empty<GenStepWithParams>(),
-                        gate.Map);
-                }
-                catch (Exception ex)
-                {
-                    lastException = ex;
-                    Log.Warning($"[Abyssal Protocol] Dominion pocket map generator failed: {generatorDef.defName}. Falling back if possible. Exception: {ex.GetType().Name}: {ex.Message}");
-                    pocketMap = null;
-                }
-
-                if (pocketMap != null)
-                {
-                    break;
-                }
+                pocketMap = PocketMapUtility.GeneratePocketMap(
+                    new IntVec3(PocketMapWidth, 1, PocketMapHeight),
+                    generatorDef,
+                    Enumerable.Empty<GenStepWithParams>(),
+                    gate.Map);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map with custom generator {generatorDef.defName}: {ex}");
+                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
+                return false;
             }
 
             if (pocketMap == null)
             {
-                if (lastException != null)
-                {
-                    Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map after all generator fallbacks: {lastException}");
-                }
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
@@ -573,29 +555,10 @@ namespace AbyssalProtocol
                 && !pawn.Downed;
         }
 
-        private static List<MapGeneratorDef> ResolveGeneratorDefs()
+        
+private static MapGeneratorDef ResolveGeneratorDef()
         {
-            List<MapGeneratorDef> defs = new List<MapGeneratorDef>();
-
-            // Use a neutral generator first so the dominion slice is not born with
-            // pit gates, cave exits or anomaly finale infrastructure already wired in.
-            AddGeneratorIfMissing(defs, DefDatabase<MapGeneratorDef>.GetNamedSilentFail("BasicMap"));
-            AddGeneratorIfMissing(defs, DefDatabase<MapGeneratorDef>.GetNamedSilentFail("EmptyMap"));
-
-            // Keep these only as late fallbacks for edge cases.
-            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Encounter);
-            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Undercave);
-            AddGeneratorIfMissing(defs, MapGeneratorDefOf.MetalHell);
-
-            return defs;
-        }
-
-        private static void AddGeneratorIfMissing(List<MapGeneratorDef> defs, MapGeneratorDef def)
-        {
-            if (def != null && !defs.Contains(def))
-            {
-                defs.Add(def);
-            }
+            return DefDatabase<MapGeneratorDef>.GetNamedSilentFail("ABY_DominionSlicePocketMap");
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
