@@ -1119,6 +1119,11 @@ namespace AbyssalProtocol
         public static string GetDominionPocketPrimaryLabel(Building_AbyssalSummoningCircle circle)
         {
             MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.IsPocketExtractionReady())
+            {
+                return TranslateOrFallback("ABY_DominionPocketCommand_Extract", "Extract strike team");
+            }
+
             if (crisis != null && crisis.HasActivePocketSession())
             {
                 return TranslateOrFallback("ABY_DominionPocketCommand_Jump", "Jump to strike team");
@@ -1135,6 +1140,11 @@ namespace AbyssalProtocol
             {
                 failReason = TranslateOrFallback("ABY_DominionPocketFlowFail_NotReady", "The Great Infernal Gate is not ready for strike-team entry on this map.");
                 return false;
+            }
+
+            if (crisis.IsPocketExtractionReady())
+            {
+                return crisis.TryReturnPocketStrikeTeam(out failReason);
             }
 
             if (crisis.HasActivePocketSession())

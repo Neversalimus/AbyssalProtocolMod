@@ -447,6 +447,17 @@ namespace AbyssalProtocol
             return runtime != null && runtime.TryGetActiveSessionForSourceMap(map, out _);
         }
 
+        public bool TryGetActivePocketSession(out ABY_DominionPocketSession session)
+        {
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            return runtime != null && runtime.TryGetActiveSessionForSourceMap(map, out session);
+        }
+
+        public bool IsPocketExtractionReady()
+        {
+            return TryGetActivePocketSession(out ABY_DominionPocketSession session) && session != null && session.victoryAchieved;
+        }
+
         public bool TryOpenPocketSliceFromPlayerFlow(out string failReason)
         {
             failReason = null;
@@ -494,8 +505,13 @@ namespace AbyssalProtocol
 
         public string GetPocketFlowStatusValue()
         {
-            if (HasActivePocketSession())
+            if (TryGetActivePocketSession(out ABY_DominionPocketSession session))
             {
+                if (session != null && session.victoryAchieved)
+                {
+                    return "ABY_DominionPocketFlowStatus_Extract".Translate(GetPocketExtractionEtaValue());
+                }
+
                 return "ABY_DominionPocketFlowStatus_Deployed".Translate();
             }
 
@@ -532,6 +548,21 @@ namespace AbyssalProtocol
             }
 
             return count;
+        }
+
+        public string GetPocketExtractionEtaValue()
+        {
+            if (!TryGetActivePocketSession(out ABY_DominionPocketSession session) || session == null || !session.victoryAchieved)
+            {
+                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+            }
+
+            if (Find.TickManager == null || session.collapseAtTick <= 0)
+            {
+                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+            }
+
+            return System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
         }
 
 
@@ -644,9 +675,11 @@ namespace AbyssalProtocol
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsDirective_Gate".Translate(GetGateIntegrityValue(), GetGatePulseEtaValue());
                 case DominionCrisisPhase.Standby:
-                    return HasActivePocketSession()
-                        ? "ABY_DominionOpsDirective_EntryDeployed".Translate()
-                        : "ABY_DominionOpsDirective_Entry".Translate(GetPocketFlowStatusValue());
+                    return IsPocketExtractionReady()
+                        ? "ABY_DominionOpsDirective_Extraction".Translate(GetPocketExtractionEtaValue())
+                        : HasActivePocketSession()
+                            ? "ABY_DominionOpsDirective_EntryDeployed".Translate()
+                            : "ABY_DominionOpsDirective_Entry".Translate(GetPocketFlowStatusValue());
                 case DominionCrisisPhase.Cancelled:
                 case DominionCrisisPhase.Failed:
                 case DominionCrisisPhase.Completed:
@@ -771,6 +804,12 @@ namespace AbyssalProtocol
 
         public string GetRewardForecastValue()
         {
+            string sliceForecast = AbyssalDominionSliceRewardUtility.GetRewardForecastText(this);
+            if (!sliceForecast.NullOrEmpty())
+            {
+                return sliceForecast;
+            }
+
             return AbyssalDominionRewardUtility.GetRewardForecastText(this);
         }
 
@@ -797,6 +836,32 @@ namespace AbyssalProtocol
         public string GetFxModeValue()
         {
             return AbyssalDominionBalanceUtility.GetFxModeValue(map, this);
+        }
+
+        public bool TryResolvePocketVictory(string rewardSummary)
+        {
+            if (IsTerminal)
+            {
+                return false;
+            }
+
+            SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionPocketOutcome_Victory".Translate(), true);
+            if (!rewardSummary.NullOrEmpty())
+            {
+                lastRewardSummary = lastRewardSummary.NullOrEmpty() ? rewardSummary : lastRewardSummary + "; " + rewardSummary;
+            }
+            return true;
+        }
+
+        public bool TryResolvePocketFailure(string reason)
+        {
+            if (IsTerminal)
+            {
+                return false;
+            }
+
+            SetTerminalState(DominionCrisisPhase.Failed, reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason, true);
+            return true;
         }
 
         public void DebugAdvancePhase()

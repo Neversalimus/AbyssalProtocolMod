@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketRuntimeReturnedVictory>Ударная группа эвакуирована, трофеи после прорыва Короны-сердца закреплены: {0}.</ABY_DominionPocketRuntimeReturnedVictory>
+  <ABY_DominionPocketOutcome_Victory>Ударная группа прорвала Корону-сердце, эвакуировалась из среза доминиона и вернулась с доказательством прохода.</ABY_DominionPocketOutcome_Victory>
+  <ABY_DominionPocketOutcome_Retreat>Ударная группа отступила из среза доминиона до прорыва Короны-сердца.</ABY_DominionPocketOutcome_Retreat>
+  <ABY_DominionPocketOutcome_FailureLost>Ударная группа была потеряна внутри среза доминиона до завершения эвакуации.</ABY_DominionPocketOutcome_FailureLost>
+  <ABY_DominionPocketOutcome_FailureCollapse>Срез доминиона схлопнулся до того, как ударная группа смогла закрепить маршрут эвакуации.</ABY_DominionPocketOutcome_FailureCollapse>
+  <ABY_DominionPocketOutcome_FailureNoExtraction>Корона-сердце было разрушено, но ударная группа не успела эвакуироваться до схлопывания среза доминиона.</ABY_DominionPocketOutcome_FailureNoExtraction>
+  <ABY_DominionPocketFlowStatus_Extract>эвакуация готова • до схлопывания {0}</ABY_DominionPocketFlowStatus_Extract>
+  <ABY_DominionPocketFlowStatus_NoExtraction>ожидание</ABY_DominionPocketFlowStatus_NoExtraction>
+  <ABY_DominionOpsDirective_Extraction>Эвакуируйте ударную группу до схлопывания среза. Остаток окна: {0}.</ABY_DominionOpsDirective_Extraction>
+  <ABY_DominionSliceRewardForecast_Standard>Прогноз: {0}</ABY_DominionSliceRewardForecast_Standard>
+  <ABY_DominionSliceRewardForecast_ExtractionReady>Награда за эвакуацию готова: {0}</ABY_DominionSliceRewardForecast_ExtractionReady>
+  <ABY_DominionSliceRewardForecast_None>маршрутизированных наград доминиона нет</ABY_DominionSliceRewardForecast_None>
+</LanguageData>

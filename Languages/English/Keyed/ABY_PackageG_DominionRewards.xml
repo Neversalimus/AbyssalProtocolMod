@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionPocketRuntimeReturnedVictory>Strike team extracted with Crown-Heart breach rewards secured: {0}.</ABY_DominionPocketRuntimeReturnedVictory>
+  <ABY_DominionPocketOutcome_Victory>The strike team breached the Crown-Heart, extracted from the dominion slice, and returned with proof of passage.</ABY_DominionPocketOutcome_Victory>
+  <ABY_DominionPocketOutcome_Retreat>The strike team withdrew from the dominion slice before breaching the Crown-Heart.</ABY_DominionPocketOutcome_Retreat>
+  <ABY_DominionPocketOutcome_FailureLost>The strike team was lost inside the dominion slice before extraction could be completed.</ABY_DominionPocketOutcome_FailureLost>
+  <ABY_DominionPocketOutcome_FailureCollapse>The dominion slice collapsed before the strike team could secure an extraction route.</ABY_DominionPocketOutcome_FailureCollapse>
+  <ABY_DominionPocketOutcome_FailureNoExtraction>The Crown-Heart was broken, but the strike team failed to extract before the dominion slice collapsed.</ABY_DominionPocketOutcome_FailureNoExtraction>
+  <ABY_DominionPocketFlowStatus_Extract>extraction ready • collapse in {0}</ABY_DominionPocketFlowStatus_Extract>
+  <ABY_DominionPocketFlowStatus_NoExtraction>pending</ABY_DominionPocketFlowStatus_NoExtraction>
+  <ABY_DominionOpsDirective_Extraction>Extract the strike team before the slice collapses. Window remaining: {0}.</ABY_DominionOpsDirective_Extraction>
+  <ABY_DominionSliceRewardForecast_Standard>Forecast: {0}</ABY_DominionSliceRewardForecast_Standard>
+  <ABY_DominionSliceRewardForecast_ExtractionReady>Extraction payout ready: {0}</ABY_DominionSliceRewardForecast_ExtractionReady>
+  <ABY_DominionSliceRewardForecast_None>no routed dominion rewards</ABY_DominionSliceRewardForecast_None>
+</LanguageData>

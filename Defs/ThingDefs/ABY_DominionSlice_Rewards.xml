@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_CrownedCoreFragment</defName>
+    <label>crowned core fragment</label>
+    <description>A pressure-stable splinter taken from the Crown-Heart after the dominion slice begins to collapse. It retains more coherent administrative structure than ordinary boss tissue and serves as proof that the strike team reached the heart of the gate.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_HeraldCoreFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <color>(255,90,62)</color>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1200</MarketValue>
+      <Mass>0.18</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_CrownedGateSigil</defName>
+    <label>crowned gate sigil</label>
+    <description>A late dominion access-key recovered only by breaching the inner slice and surviving extraction. It marks that the colony no longer merely bootstrapped a Great Infernal Gate: it crossed the threshold and came back carrying proof.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_DominionSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1400</MarketValue>
+      <Mass>0.34</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

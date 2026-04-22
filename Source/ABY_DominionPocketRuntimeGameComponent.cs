@@ -167,7 +167,10 @@ namespace AbyssalProtocol
                 AbyssalDominionPocketUtility.TryEnsurePocketExit(session, pocketMap);
                 if (!AbyssalDominionPocketUtility.HasAnyPlayerPawnsOnMap(pocketMap))
                 {
-                    AbyssalDominionPocketUtility.CollapsePocketSlice(session, pocketMap, false);
+                    string failureKey = session.victoryAchieved
+                        ? "ABY_DominionPocketOutcome_FailureNoExtraction"
+                        : "ABY_DominionPocketOutcome_FailureLost";
+                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, pocketMap, failureKey.Translate(), false);
                 }
             }
         }

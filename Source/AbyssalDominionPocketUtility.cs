@@ -140,6 +140,10 @@ namespace AbyssalProtocol
                 extractionCell = IntVec3.Invalid,
                 heartCell = IntVec3.Invalid,
                 createdTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
+                victoryAchieved = false,
+                rewardsGranted = false,
+                collapseAtTick = 0,
+                rewardSummary = null,
                 active = true,
                 cleanupQueued = false
             };
@@ -213,7 +217,7 @@ namespace AbyssalProtocol
             {
                 if (destroyPocketMap)
                 {
-                    CollapsePocketSlice(session, pocketMap, true);
+                    FailAndCollapsePocketSlice(session, pocketMap, "ABY_DominionPocketOutcome_FailureLost".Translate(), true);
                 }
                 failReason = "ABY_DominionPocketRuntimeFail_NoPlayerPawns".Translate();
                 return false;
@@ -233,12 +237,26 @@ namespace AbyssalProtocol
                 TransferPawnToMap(pawns[i], sourceMap, returnCell);
             }
 
+            if (session.victoryAchieved)
+            {
+                ResolvePocketVictoryToSourceMap(session, pocketMap, sourceMap, returnCell);
+            }
+            else
+            {
+                ResolvePocketFailureToSourceMap(session, "ABY_DominionPocketOutcome_Retreat".Translate());
+            }
+
             if (destroyPocketMap)
             {
                 CollapsePocketSlice(session, pocketMap, true);
             }
 
-            Messages.Message("ABY_DominionPocketRuntimeReturned".Translate(pawns.Count), MessageTypeDefOf.PositiveEvent, false);
+            Messages.Message(
+                session.victoryAchieved
+                    ? "ABY_DominionPocketRuntimeReturnedVictory".Translate(pawns.Count)
+                    : "ABY_DominionPocketRuntimeReturned".Translate(pawns.Count),
+                MessageTypeDefOf.PositiveEvent,
+                false);
             return true;
         }
 
@@ -291,6 +309,12 @@ namespace AbyssalProtocol
             return true;
         }
 
+        public static void FailAndCollapsePocketSlice(ABY_DominionPocketSession session, Map pocketMap, string reason, bool silent)
+        {
+            ResolvePocketFailureToSourceMap(session, reason);
+            CollapsePocketSlice(session, pocketMap, silent);
+        }
+
         public static void CollapsePocketSlice(ABY_DominionPocketSession session, Map pocketMap, bool silent)
         {
             if (session != null)
@@ -309,6 +333,59 @@ namespace AbyssalProtocol
             {
                 Messages.Message("ABY_DominionPocketRuntimeCollapsed".Translate(), MessageTypeDefOf.CautionInput, false);
             }
+        }
+
+        private static void ResolvePocketVictoryToSourceMap(ABY_DominionPocketSession session, Map pocketMap, Map sourceMap, IntVec3 returnCell)
+        {
+            if (session == null || sourceMap == null)
+            {
+                return;
+            }
+
+            if (!session.rewardsGranted)
+            {
+                AbyssalDominionSliceRewardUtility.TryAwardVictoryRewards(session, pocketMap, sourceMap, returnCell, out string summary);
+                if (!summary.NullOrEmpty())
+                {
+                    session.rewardSummary = summary;
+                }
+            }
+
+            if (TryResolveSourceCrisis(session, out MapComponent_DominionCrisis crisis))
+            {
+                crisis.TryResolvePocketVictory(session.rewardSummary);
+            }
+        }
+
+        private static void ResolvePocketFailureToSourceMap(ABY_DominionPocketSession session, string reason)
+        {
+            if (session == null)
+            {
+                return;
+            }
+
+            if (TryResolveSourceCrisis(session, out MapComponent_DominionCrisis crisis))
+            {
+                crisis.TryResolvePocketFailure(reason.NullOrEmpty() ? "ABY_DominionPocketOutcome_FailureLost".Translate() : reason);
+            }
+        }
+
+        private static bool TryResolveSourceCrisis(ABY_DominionPocketSession session, out MapComponent_DominionCrisis crisis)
+        {
+            crisis = null;
+            if (session == null)
+            {
+                return false;
+            }
+
+            Map sourceMap = ResolveMap(session.sourceMapId);
+            if (sourceMap == null)
+            {
+                return false;
+            }
+
+            crisis = sourceMap.GetComponent<MapComponent_DominionCrisis>();
+            return crisis != null;
         }
 
         public static Map ResolveMap(int mapId)

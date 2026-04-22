@@ -76,6 +76,15 @@ namespace AbyssalProtocol
             get { return lastWaveSummary; }
         }
 
+        public string GetRewardForecastValue()
+        {
+            ABY_DominionPocketSession session;
+            TryResolveSession(out session);
+            return AbyssalDominionSliceRewardUtility.FormatRewardProfile(
+                AbyssalDominionSliceRewardUtility.BuildRewardProfile(this, session),
+                session != null && session.victoryAchieved);
+        }
+
         public MapComponent_DominionSliceEncounter(Map map) : base(map)
         {
         }
@@ -180,7 +189,10 @@ namespace AbyssalProtocol
                 ABY_DominionPocketSession session;
                 if (runtime != null && runtime.TryGetSessionById(sessionId, out session))
                 {
-                    AbyssalDominionPocketUtility.CollapsePocketSlice(session, map, false);
+                    string reason = session.victoryAchieved
+                        ? "ABY_DominionPocketOutcome_FailureNoExtraction".Translate()
+                        : "ABY_DominionPocketOutcome_FailureCollapse".Translate();
+                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, map, reason, false);
                 }
                 else
                 {
@@ -426,6 +438,15 @@ namespace AbyssalProtocol
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             collapseAtTick = phaseStartedTick + 3600;
             nextWaveTick = 0;
+
+            ABY_DominionPocketSession session;
+            if (TryResolveSession(out session) && session != null)
+            {
+                session.victoryAchieved = victory;
+                session.collapseAtTick = collapseAtTick;
+                session.rewardSummary = GetRewardForecastValue();
+            }
+
             Messages.Message(
                 victory ? "ABY_DominionSliceEncounter_CollapseStarted".Translate(GetCollapseEta()) : "ABY_DominionSliceEncounter_Failed".Translate(),
                 new TargetInfo(map.Center, map),
