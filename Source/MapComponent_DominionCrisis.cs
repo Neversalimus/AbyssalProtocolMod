@@ -1497,7 +1497,7 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                GenSpawn.Spawn(anchor, cell, map, Rot4.Random);
+                GenSpawn.Spawn(anchor, cell, map, Rot4.North);
                 if (hostileFaction != null)
                 {
                     anchor.SetFaction(hostileFaction);
