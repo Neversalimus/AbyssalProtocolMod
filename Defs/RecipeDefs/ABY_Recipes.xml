@@ -199,6 +199,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>65</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>
