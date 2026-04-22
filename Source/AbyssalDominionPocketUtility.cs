@@ -829,21 +829,6 @@ namespace AbyssalProtocol
 
             return false;
         }
-
-
-                ParameterInfo[] parameters = method.GetParameters();
-                if (parameters.Length == 3
-                    && parameters[0].ParameterType == typeof(int)
-                    && parameters[1].ParameterType == typeof(IntVec3)
-                    && parameters[2].ParameterType == typeof(WorldObjectDef))
-                {
-                    return method.Invoke(null, new object[] { tile, size, worldObjectDef }) as Map;
-                }
-            }
-
-            throw new MissingMethodException("GetOrGenerateMapUtility.GetOrGenerateMap(int, IntVec3, WorldObjectDef) was not found.");
-        }
-
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
         {
             entryCell = IntVec3.Invalid;
