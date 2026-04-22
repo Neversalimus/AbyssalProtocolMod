@@ -108,10 +108,15 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
             }
 
             Map pocketMap = null;
-            Exception lastGenerationException = null;
-            for (int i = 0; i < generatorDefs.Count; i++)
+            Exception lastException = null;
+            for (int generatorIndex = 0; generatorIndex < generatorDefs.Count; generatorIndex++)
             {
-                MapGeneratorDef generatorDef = generatorDefs[i];
+                MapGeneratorDef generatorDef = generatorDefs[generatorIndex];
+                if (generatorDef == null)
+                {
+                    continue;
+                }
+
                 try
                 {
                     pocketMap = PocketMapUtility.GeneratePocketMap(
@@ -119,30 +124,28 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                         generatorDef,
                         Enumerable.Empty<GenStepWithParams>(),
                         gate.Map);
-
                     if (pocketMap != null)
                     {
-                        if (Prefs.DevMode)
+                        if (generatorIndex > 0)
                         {
-                            Log.Message($"[Abyssal Protocol] Dominion slice shell generator: {generatorDef.defName}");
+                            Log.Warning($"[Abyssal Protocol] Dominion pocket map used fallback shell generator {generatorDef.defName}.");
                         }
                         break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    lastGenerationException = ex;
-                    Log.Warning($"[Abyssal Protocol] Dominion slice shell generator failed: {generatorDef.defName}. Trying next shell if available. Exception: {ex.GetType().Name}: {ex.Message}");
+                    lastException = ex;
+                    Log.Warning($"[Abyssal Protocol] Dominion pocket shell generator failed: {generatorDef.defName}. Trying next shell if available. Exception: {ex.GetType().Name}: {ex.Message}");
                 }
             }
 
             if (pocketMap == null)
             {
-                if (lastGenerationException != null)
+                if (lastException != null)
                 {
-                    Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map with all shell generators. Last exception: {lastGenerationException}");
+                    Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map with all neutral shell generators: {lastException}");
                 }
-
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
@@ -572,95 +575,28 @@ public static bool TryOpenPocketSlice(Building_AbyssalDominionGate gate, IEnumer
                 && !pawn.InMentalState
                 && !pawn.Downed;
         }
-
         private static List<MapGeneratorDef> ResolveGeneratorDefs()
         {
             List<MapGeneratorDef> result = new List<MapGeneratorDef>();
-            AddGeneratorIfPresent(result, "Base_Player");
-            AddGeneratorIfPresent(result, "Base_Faction");
-            AddGeneratorIfPresent(result, "Base_Empty");
-            AddGeneratorIfPresent(result, "Base");
-            AddGeneratorIfPresent(result, "Encounter");
-
-            if (result.Count == 0)
-            {
-                List<MapGeneratorDef> allDefs = DefDatabase<MapGeneratorDef>.AllDefsListForReading;
-                for (int i = 0; i < allDefs.Count; i++)
-                {
-                    MapGeneratorDef def = allDefs[i];
-                    if (def == null || IsForbiddenShellGenerator(def))
-                    {
-                        continue;
-                    }
-
-                    if (LooksLikeNeutralShell(def))
-                    {
-                        result.Add(def);
-                    }
-                }
-            }
-
-            if (result.Count == 0)
-            {
-                List<MapGeneratorDef> allDefs = DefDatabase<MapGeneratorDef>.AllDefsListForReading;
-                for (int i = 0; i < allDefs.Count; i++)
-                {
-                    MapGeneratorDef def = allDefs[i];
-                    if (def == null || IsForbiddenShellGenerator(def))
-                    {
-                        continue;
-                    }
-
-                    result.Add(def);
-                }
-            }
-
-            return result.Distinct().ToList();
+            AddGeneratorDef(result, "SpacePocket");
+            AddGeneratorDef(result, "Base_Player");
+            AddGeneratorDef(result, "Base_Faction");
+            return result;
         }
 
-        private static void AddGeneratorIfPresent(List<MapGeneratorDef> list, string defName)
+        private static void AddGeneratorDef(List<MapGeneratorDef> result, string defName)
         {
-            if (list == null || defName.NullOrEmpty())
+            if (result == null || defName.NullOrEmpty())
             {
                 return;
             }
 
             MapGeneratorDef def = DefDatabase<MapGeneratorDef>.GetNamedSilentFail(defName);
-            if (def != null && !IsForbiddenShellGenerator(def) && !list.Contains(def))
+            if (def != null && !result.Contains(def))
             {
-                list.Add(def);
+                result.Add(def);
             }
         }
-
-        private static bool LooksLikeNeutralShell(MapGeneratorDef def)
-        {
-            string name = def?.defName ?? string.Empty;
-            string lower = name.ToLowerInvariant();
-            return lower.Contains("base")
-                || lower.Contains("player")
-                || lower.Contains("faction")
-                || lower.Contains("encounter");
-        }
-
-        private static bool IsForbiddenShellGenerator(MapGeneratorDef def)
-        {
-            string name = def?.defName ?? string.Empty;
-            if (name.NullOrEmpty())
-            {
-                return true;
-            }
-
-            string lower = name.ToLowerInvariant();
-            return lower.Contains("undercave")
-                || lower.Contains("metalhell")
-                || lower.Contains("pit")
-                || lower.Contains("cave")
-                || lower.Contains("labyrinth")
-                || lower.Contains("flesh")
-                || lower.Contains("anomaly")
-                || lower.Contains("abydominionslicepocketmap");
-        }
-
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
         {
