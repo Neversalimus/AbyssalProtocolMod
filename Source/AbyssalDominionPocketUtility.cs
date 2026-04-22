@@ -464,6 +464,114 @@ namespace AbyssalProtocol
             return GetPocketPlayerPawns(map).Count > 0;
         }
 
+
+        public static int GetPocketPlayerCount(Map pocketMap)
+        {
+            return GetPocketPlayerPawns(pocketMap).Count;
+        }
+
+        public static string GetPocketSessionStatusValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionPocketFlowStatus_Locked".Translate();
+            }
+
+            if (!session.active)
+            {
+                return session.lastOutcomeReason.NullOrEmpty()
+                    ? "ABY_DominionPocketFlowStatus_Locked".Translate()
+                    : session.lastOutcomeReason;
+            }
+
+            int playerCount = pocketMap != null ? GetPocketPlayerCount(pocketMap) : session.lastKnownPocketPawnCount;
+            if (session.victoryAchieved)
+            {
+                string collapseEta = GetPocketCollapseEta(session, pocketMap);
+                return "ABY_DominionPocketFlowStatus_ExtractArmed".Translate(playerCount, collapseEta);
+            }
+
+            if (playerCount > 0)
+            {
+                return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(playerCount);
+            }
+
+            return "ABY_DominionPocketFlowStatus_Deployed".Translate();
+        }
+
+        public static string GetPocketObjectiveValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetTelemetryObjectiveLabel();
+            }
+
+            if (session == null)
+            {
+                return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            }
+
+            if (session.victoryAchieved)
+            {
+                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetPocketCollapseEta(session, pocketMap));
+            }
+
+            return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+        }
+
+        public static string GetPocketRewardValue(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null)
+            {
+                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+            }
+
+            if (!session.rewardSummary.NullOrEmpty())
+            {
+                return session.rewardSummary;
+            }
+
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetRewardForecastValue();
+            }
+
+            return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+        }
+
+        public static string GetPocketEncounterTelemetry(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetTelemetryStatusLabel();
+            }
+
+            return "ABY_DominionPocketTelemetry_Status".Translate(
+                GetPocketObjectiveValue(session, pocketMap),
+                "ABY_DominionWaveEta_Pending".Translate(),
+                GetPocketRewardValue(session, pocketMap));
+        }
+
+        private static string GetPocketCollapseEta(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetCollapseEta();
+            }
+
+            if (session == null || session.collapseAtTick <= 0 || Find.TickManager == null)
+            {
+                return "ABY_DominionSliceEncounter_CollapseInactive".Translate();
+            }
+
+            int ticks = System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame);
+            return ticks.ToStringTicksToPeriod();
+        }
+
         public static string GetSourceMapLabel(ABY_DominionPocketSession session)
         {
             Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;
