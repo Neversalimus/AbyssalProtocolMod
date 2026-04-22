@@ -99,31 +99,50 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            MapGeneratorDef generatorDef = ResolveGeneratorDef();
-            if (generatorDef == null)
+            List<MapGeneratorDef> generatorDefs = ResolveGeneratorDefs();
+            if (generatorDefs.Count == 0)
             {
                 failReason = "ABY_DominionPocketRuntimeFail_NoGenerator".Translate();
                 return false;
             }
 
-            Map pocketMap;
-            try
+            Map pocketMap = null;
+            Exception lastException = null;
+            for (int generatorIndex = 0; generatorIndex < generatorDefs.Count; generatorIndex++)
             {
-                pocketMap = PocketMapUtility.GeneratePocketMap(
-                    new IntVec3(PocketMapWidth, 1, PocketMapHeight),
-                    generatorDef,
-                    Enumerable.Empty<GenStepWithParams>(),
-                    gate.Map);
-            }
-            catch (Exception ex)
-            {
-                Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map: {ex}");
-                failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
-                return false;
+                MapGeneratorDef generatorDef = generatorDefs[generatorIndex];
+                if (generatorDef == null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    pocketMap = PocketMapUtility.GeneratePocketMap(
+                        new IntVec3(PocketMapWidth, 1, PocketMapHeight),
+                        generatorDef,
+                        Enumerable.Empty<GenStepWithParams>(),
+                        gate.Map);
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
+                    Log.Warning($"[Abyssal Protocol] Dominion pocket map generator failed: {generatorDef.defName}. Falling back if possible. Exception: {ex.GetType().Name}: {ex.Message}");
+                    pocketMap = null;
+                }
+
+                if (pocketMap != null)
+                {
+                    break;
+                }
             }
 
             if (pocketMap == null)
             {
+                if (lastException != null)
+                {
+                    Log.Error($"[Abyssal Protocol] Failed to generate dominion pocket map after all generator fallbacks: {lastException}");
+                }
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
@@ -554,11 +573,26 @@ namespace AbyssalProtocol
                 && !pawn.Downed;
         }
 
-        private static MapGeneratorDef ResolveGeneratorDef()
+        private static List<MapGeneratorDef> ResolveGeneratorDefs()
         {
-            // Use a neutral shell for the dominion slice. The map is fully repainted by
-            // AbyssalDominionSliceBuilder, so inheriting MetalHell only leaks Anomaly finale visuals.
-            return MapGeneratorDefOf.Encounter ?? MapGeneratorDefOf.Undercave;
+            List<MapGeneratorDef> defs = new List<MapGeneratorDef>();
+
+            // Encounter is not safe here: on the current game/API it can NRE inside
+            // MapGenerator.GenerateMap when used through PocketMapUtility. Prefer real
+            // pocket-map generators first, then fall back only if needed.
+            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Undercave);
+            AddGeneratorIfMissing(defs, MapGeneratorDefOf.MetalHell);
+            AddGeneratorIfMissing(defs, MapGeneratorDefOf.Encounter);
+
+            return defs;
+        }
+
+        private static void AddGeneratorIfMissing(List<MapGeneratorDef> defs, MapGeneratorDef def)
+        {
+            if (def != null && !defs.Contains(def))
+            {
+                defs.Add(def);
+            }
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)
