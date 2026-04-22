@@ -16,4 +16,7 @@
   <ABY_InstallArchonTendonSpine.description>Имплантировать archon-pattern сухожильно-позвоночный каркас для усиления движения, управления телом и устойчивости в бою.</ABY_InstallArchonTendonSpine.description>
   <ABY_InstallHeraldCarapaceMesh.description>Вплести под кожу herald carapace mesh и научить плоть принимать reinforcement abyssal-стандарта.</ABY_InstallHeraldCarapaceMesh.description>
   <ABY_InstallHeraldEye.description>Установить ocular-имплант вестнического класса и заменить обычное зрение логикой наведения, унаследованной от боссового уровня.</ABY_InstallHeraldEye.description>
+  <ABY_CraftWardenOfAshSigil.label>ковать печать надсмотрщика</ABY_CraftWardenOfAshSigil.label>
+  <ABY_CraftWardenOfAshSigil.description>Выковать сигилу надсмотрщика, настроенную на первый ash-mini-boss. Это дисциплинированный враждебный ритуал между ранними учебными столкновениями и archon-tier призывом.</ABY_CraftWardenOfAshSigil.description>
+  <ABY_CraftWardenOfAshSigil.jobString>Куется печать надсмотрщика.</ABY_CraftWardenOfAshSigil.jobString>
 </LanguageData>

@@ -156,6 +156,56 @@
   </RecipeDef>
 
   <RecipeDef>
+    <defName>ABY_CraftWardenOfAshSigil</defName>
+    <label>forge mark of the warden</label>
+    <description>Compress residue into an overseer-grade breach sigil keyed to the first ash mini-boss. This prepares a disciplined hostile summoning pattern that sits between the early rehearsal rites and the first archon-class encounter.</description>
+    <jobString>Forging mark of the warden.</jobString>
+    <workAmount>1450</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>40</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_WardenOfAshSigil>1</ABY_WardenOfAshSigil>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>50</requiredResidue>
+        <category>Ritual</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
     <defName>ABY_CraftArchonSigil</defName>
     <label>forge archon sigil</label>
     <description>Compress residue into a stable breach-key used to summon the first boss.</description>
