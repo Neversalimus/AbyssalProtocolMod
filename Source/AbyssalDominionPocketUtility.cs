@@ -339,6 +339,17 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            WorldObject_ABY_DominionSliceSite worldObject = WorldObjectMaker.MakeWorldObject(worldObjectDef) as WorldObject_ABY_DominionSliceSite;
+            if (worldObject == null)
+            {
+                failReason = "Failed to create dominion slice world object.";
+                return false;
+            }
+
+            worldObject.Tile = tile;
+            TrySetWorldObjectFaction(worldObject, Faction.OfPlayer);
+            Find.WorldObjects.Add(worldObject);
+
             try
             {
                 map = InvokeGetOrGenerateMap(tile, new IntVec3(SliceMapWidth, 1, SliceMapHeight), worldObjectDef);
@@ -356,12 +367,6 @@ namespace AbyssalProtocol
                 TryRemoveWorldObject(tile);
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
-            }
-
-            WorldObject_ABY_DominionSliceSite worldObject = FindSliceSiteAtTile(tile);
-            if (worldObject != null)
-            {
-                TrySetWorldObjectFaction(worldObject, Faction.OfPlayer);
             }
 
             return true;
@@ -464,6 +469,14 @@ namespace AbyssalProtocol
             return GetPocketPlayerPawns(map).Count > 0;
         }
 
+        public static string GetSourceMapLabel(ABY_DominionPocketSession session)
+        {
+            Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;
+            return sourceMap != null
+                ? sourceMap.Parent?.LabelCap ?? sourceMap.ToString()
+                : "ABY_DominionPocketRuntimeSource_Unknown".Translate();
+        }
+
 
         public static int GetPocketPlayerCount(Map pocketMap)
         {
@@ -474,60 +487,64 @@ namespace AbyssalProtocol
         {
             if (session == null)
             {
-                return "ABY_DominionPocketFlowStatus_Locked".Translate();
+                return "ABY_DominionPocketTelemetry_NoSession".Translate();
             }
 
-            if (!session.active)
+            if (session.lastOutcomeReason.NullOrEmpty() == false)
             {
-                return session.lastOutcomeReason.NullOrEmpty()
-                    ? "ABY_DominionPocketFlowStatus_Locked".Translate()
-                    : session.lastOutcomeReason;
+                return session.lastOutcomeReason;
             }
 
-            int playerCount = pocketMap != null ? GetPocketPlayerCount(pocketMap) : session.lastKnownPocketPawnCount;
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetTelemetryStatusLabel();
+            }
+
             if (session.victoryAchieved)
             {
-                string collapseEta = GetPocketCollapseEta(session, pocketMap);
-                return "ABY_DominionPocketFlowStatus_ExtractArmed".Translate(playerCount, collapseEta);
+                return "ABY_DominionPocketOutcome_Victory".Translate();
             }
 
-            if (playerCount > 0)
+            if (session.active)
             {
-                return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(playerCount);
+                return "ABY_DominionPocketTelemetry_StatusAwaiting".Translate();
             }
 
-            return "ABY_DominionPocketFlowStatus_Deployed".Translate();
+            return "ABY_DominionPocketTelemetry_NoSession".Translate();
         }
 
         public static string GetPocketObjectiveValue(ABY_DominionPocketSession session, Map pocketMap)
         {
+            if (session == null)
+            {
+                return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            }
+
             MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter != null)
             {
                 return encounter.GetTelemetryObjectiveLabel();
             }
 
-            if (session == null)
-            {
-                return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
-            }
-
             if (session.victoryAchieved)
             {
-                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetPocketCollapseEta(session, pocketMap));
+                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate("0s");
             }
 
-            return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            return session.active
+                ? "ABY_DominionPocketTelemetry_ObjectiveBreach".Translate()
+                : "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
         }
 
         public static string GetPocketRewardValue(ABY_DominionPocketSession session, Map pocketMap)
         {
             if (session == null)
             {
-                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+                return "ABY_DominionPocketTelemetry_RewardsUnknown".Translate();
             }
 
-            if (!session.rewardSummary.NullOrEmpty())
+            if (session.rewardSummary.NullOrEmpty() == false)
             {
                 return session.rewardSummary;
             }
@@ -538,46 +555,16 @@ namespace AbyssalProtocol
                 return encounter.GetRewardForecastValue();
             }
 
-            return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
+            return "ABY_DominionPocketTelemetry_RewardsUnknown".Translate();
         }
 
         public static string GetPocketEncounterTelemetry(ABY_DominionPocketSession session, Map pocketMap)
         {
-            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
-            if (encounter != null)
-            {
-                return encounter.GetTelemetryStatusLabel();
-            }
-
-            return "ABY_DominionPocketTelemetry_Status".Translate(
-                GetPocketObjectiveValue(session, pocketMap),
-                "ABY_DominionWaveEta_Pending".Translate(),
-                GetPocketRewardValue(session, pocketMap));
-        }
-
-        private static string GetPocketCollapseEta(ABY_DominionPocketSession session, Map pocketMap)
-        {
-            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
-            if (encounter != null)
-            {
-                return encounter.GetCollapseEta();
-            }
-
-            if (session == null || session.collapseAtTick <= 0 || Find.TickManager == null)
-            {
-                return "ABY_DominionSliceEncounter_CollapseInactive".Translate();
-            }
-
-            int ticks = System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame);
-            return ticks.ToStringTicksToPeriod();
-        }
-
-        public static string GetSourceMapLabel(ABY_DominionPocketSession session)
-        {
-            Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;
-            return sourceMap != null
-                ? sourceMap.Parent?.LabelCap ?? sourceMap.ToString()
-                : "ABY_DominionPocketRuntimeSource_Unknown".Translate();
+            string team = "ABY_DominionPocketTelemetry_Team".Translate(GetPocketPlayerCount(pocketMap));
+            string status = "ABY_DominionPocketTelemetry_State".Translate(GetPocketSessionStatusValue(session, pocketMap));
+            string objective = "ABY_DominionPocketTelemetry_Objective".Translate(GetPocketObjectiveValue(session, pocketMap));
+            string rewards = "ABY_DominionPocketTelemetry_Rewards".Translate(GetPocketRewardValue(session, pocketMap));
+            return string.Join(" | ", new[] { team, status, objective, rewards });
         }
 
         private static bool CanUseEntryPawn(Pawn pawn, Map map)
@@ -657,25 +644,6 @@ namespace AbyssalProtocol
             }
 
             return false;
-        }
-
-        private static WorldObject_ABY_DominionSliceSite FindSliceSiteAtTile(int tile)
-        {
-            if (tile < 0 || Find.WorldObjects == null)
-            {
-                return null;
-            }
-
-            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] is WorldObject_ABY_DominionSliceSite sliceSite && sliceSite.Tile == tile)
-                {
-                    return sliceSite;
-                }
-            }
-
-            return null;
         }
 
         private static void TrySetWorldObjectFaction(WorldObject worldObject, Faction faction)
