@@ -1058,7 +1058,12 @@ namespace AbyssalProtocol
             MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
             if (crisis != null)
             {
-                if (crisis.IsGatePhaseActive)
+                if (crisis.HasActivePocketSession())
+                {
+                    return TranslateOrFallback("ABY_DominionCommand_TrackStrikeTeam", "Track strike team");
+                }
+
+                if (crisis.IsGatePhaseActive || crisis.IsStandbyPhaseActive)
                 {
                     return TranslateOrFallback("ABY_DominionCommand_TrackGate", "Track gate core");
                 }
@@ -1089,6 +1094,11 @@ namespace AbyssalProtocol
         {
             failReason = null;
             MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.HasActivePocketSession())
+            {
+                return crisis.TryJumpToPocketSlice(out failReason);
+            }
+
             Thing target = crisis?.GetPrimaryObjectiveThing();
             if (target == null)
             {
@@ -1098,6 +1108,41 @@ namespace AbyssalProtocol
 
             CameraJumper.TryJumpAndSelect(target);
             return true;
+        }
+
+        public static bool HasDominionPocketControls(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            return crisis != null && (crisis.IsGateEntryReady() || crisis.HasActivePocketSession());
+        }
+
+        public static string GetDominionPocketPrimaryLabel(Building_AbyssalSummoningCircle circle)
+        {
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis != null && crisis.HasActivePocketSession())
+            {
+                return TranslateOrFallback("ABY_DominionPocketCommand_Jump", "Jump to strike team");
+            }
+
+            return TranslateOrFallback("ABY_DominionPocketCommand_Enter", "Enter Great Infernal Gate");
+        }
+
+        public static bool TryExecuteDominionPocketPrimary(Building_AbyssalSummoningCircle circle, out string failReason)
+        {
+            failReason = null;
+            MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
+            if (crisis == null)
+            {
+                failReason = TranslateOrFallback("ABY_DominionPocketFlowFail_NotReady", "The Great Infernal Gate is not ready for strike-team entry on this map.");
+                return false;
+            }
+
+            if (crisis.HasActivePocketSession())
+            {
+                return crisis.TryJumpToPocketSlice(out failReason);
+            }
+
+            return crisis.TryOpenPocketSliceFromPlayerFlow(out failReason);
         }
 
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionOpsObjective_Entry>Strike-team ingress</ABY_DominionOpsObjective_Entry>
+  <ABY_DominionOpsDirective_Entry>Great Infernal Gate is calibrated. Draft the strike team, then order entry. Current flow: {0}.</ABY_DominionOpsDirective_Entry>
+  <ABY_DominionOpsDirective_EntryDeployed>Strike team is already inside the dominion slice. Jump to them or extract them before disarming the gate.</ABY_DominionOpsDirective_EntryDeployed>
+  <ABY_DominionCrisisStatusLine_Standby>Dominion crisis: {0} • great gate {1} • ingress {2}</ABY_DominionCrisisStatusLine_Standby>
+  <ABY_DominionCrisisReminderStandby>Great Infernal Gate remains calibrated. Stability: {0}. Strike-team flow: {1}.</ABY_DominionCrisisReminderStandby>
+  <ABY_DominionPocketFlowFail_NotReady>The Great Infernal Gate is not ready for strike-team entry on this map.</ABY_DominionPocketFlowFail_NotReady>
+  <ABY_DominionPocketFlowFail_NoSession>No active dominion strike team is linked to this map.</ABY_DominionPocketFlowFail_NoSession>
+  <ABY_DominionPocketFlowStatus_Locked>gate entry not ready</ABY_DominionPocketFlowStatus_Locked>
+  <ABY_DominionPocketFlowStatus_AwaitingDraft>awaiting drafted strike team</ABY_DominionPocketFlowStatus_AwaitingDraft>
+  <ABY_DominionPocketFlowStatus_Ready>{0} drafted colonists ready</ABY_DominionPocketFlowStatus_Ready>
+  <ABY_DominionPocketFlowStatus_Deployed>strike team deployed inside dominion slice</ABY_DominionPocketFlowStatus_Deployed>
+  <ABY_DominionPocketCommand_Enter>Enter Great Infernal Gate</ABY_DominionPocketCommand_Enter>
+  <ABY_DominionPocketCommand_EnterDesc>Insert the drafted strike team into the temporary dominion slice. If no drafted colonists are available, selected colonists are used as a fallback.</ABY_DominionPocketCommand_EnterDesc>
+  <ABY_DominionPocketCommand_Jump>Jump to strike team</ABY_DominionPocketCommand_Jump>
+  <ABY_DominionPocketCommand_JumpDesc>Jump to the active dominion slice linked to this Great Infernal Gate.</ABY_DominionPocketCommand_JumpDesc>
+  <ABY_DominionPocketCommand_Extract>Extract strike team</ABY_DominionPocketCommand_Extract>
+  <ABY_DominionPocketCommand_ExtractDesc>Recall all player pawns from the active dominion slice and collapse the temporary runtime map.</ABY_DominionPocketCommand_ExtractDesc>
+  <ABY_DominionCommand_TrackStrikeTeam>Track strike team</ABY_DominionCommand_TrackStrikeTeam>
+  <ABY_DominionPocketGate_Inspect>Strike-team flow: {0}</ABY_DominionPocketGate_Inspect>
+  <ABY_DominionGate_ConsoleEntry>Ingress: {0}</ABY_DominionGate_ConsoleEntry>
+</LanguageData>

@@ -64,9 +64,10 @@ namespace AbyssalProtocol
         }
 
         public DominionCrisisPhase Phase => phase;
-        public bool IsActive => phase == DominionCrisisPhase.Synchronizing || phase == DominionCrisisPhase.Anchorfall || phase == DominionCrisisPhase.Gatecore;
+        public bool IsActive => phase == DominionCrisisPhase.Synchronizing || phase == DominionCrisisPhase.Anchorfall || phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby;
         public bool IsAnchorPhaseActive => phase == DominionCrisisPhase.Anchorfall;
         public bool IsGatePhaseActive => phase == DominionCrisisPhase.Gatecore;
+        public bool IsStandbyPhaseActive => phase == DominionCrisisPhase.Standby;
         public bool IsTerminal => phase == DominionCrisisPhase.Cancelled || phase == DominionCrisisPhase.Failed || phase == DominionCrisisPhase.Completed;
         public Building_AbyssalSummoningCircle SourceCircle => sourceCircle;
         public IntVec3 SourceCell => sourceCell;
@@ -280,7 +281,7 @@ namespace AbyssalProtocol
 
                 if (now >= phaseEndsTick)
                 {
-                    SetTerminalState(DominionCrisisPhase.Completed, "ABY_DominionCrisisCompletedReason".Translate(), true);
+                    EnterStandby();
                     return;
                 }
 
@@ -288,6 +289,23 @@ namespace AbyssalProtocol
                 {
                     nextReminderTick = now + GateReminderIntervalTicks;
                     SendGateReminder();
+                }
+
+                return;
+            }
+
+            if (phase == DominionCrisisPhase.Standby)
+            {
+                if (gateCore == null || gateCore.Destroyed || gateCore.Map != map)
+                {
+                    ForceFail("ABY_DominionCrisisFail_GateLost".Translate(), true);
+                    return;
+                }
+
+                if (now >= nextReminderTick)
+                {
+                    nextReminderTick = now + GateReminderIntervalTicks;
+                    SendStandbyReminder();
                 }
             }
         }
@@ -414,6 +432,108 @@ namespace AbyssalProtocol
             SetTerminalState(DominionCrisisPhase.Cancelled, "ABY_DominionCrisisCancelledReason".Translate(), true);
             return true;
         }
+        public bool IsGateEntryReady()
+        {
+            CleanupGateReference();
+            return (phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby)
+                && gateCore != null
+                && !gateCore.Destroyed
+                && gateCore.Map == map;
+        }
+
+        public bool HasActivePocketSession()
+        {
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            return runtime != null && runtime.TryGetActiveSessionForSourceMap(map, out _);
+        }
+
+        public bool TryOpenPocketSliceFromPlayerFlow(out string failReason)
+        {
+            failReason = null;
+            if (!IsGateEntryReady())
+            {
+                failReason = "ABY_DominionPocketFlowFail_NotReady".Translate();
+                return false;
+            }
+
+            if (HasActivePocketSession())
+            {
+                failReason = "ABY_DominionPocketRuntimeFail_AlreadyOpen".Translate();
+                return false;
+            }
+
+            List<Pawn> pawns = AbyssalDominionPocketUtility.GetSelectedColonistsForPocketEntry(map);
+            return AbyssalDominionPocketUtility.TryOpenPocketSlice(gateCore, pawns, out _, out failReason);
+        }
+
+        public bool TryJumpToPocketSlice(out string failReason)
+        {
+            failReason = null;
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            if (runtime == null || !runtime.TryGetActiveSessionForSourceMap(map, out ABY_DominionPocketSession session))
+            {
+                failReason = "ABY_DominionPocketFlowFail_NoSession".Translate();
+                return false;
+            }
+
+            return AbyssalDominionPocketUtility.TryJumpToPocketSlice(session, out failReason);
+        }
+
+        public bool TryReturnPocketStrikeTeam(out string failReason)
+        {
+            failReason = null;
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            if (runtime == null || !runtime.TryGetActiveSessionForSourceMap(map, out ABY_DominionPocketSession session))
+            {
+                failReason = "ABY_DominionPocketFlowFail_NoSession".Translate();
+                return false;
+            }
+
+            return AbyssalDominionPocketUtility.TryReturnPocketSlice(session, true, out failReason);
+        }
+
+        public string GetPocketFlowStatusValue()
+        {
+            if (HasActivePocketSession())
+            {
+                return "ABY_DominionPocketFlowStatus_Deployed".Translate();
+            }
+
+            if (IsGateEntryReady())
+            {
+                int drafted = CountDraftedStrikeTeam();
+                if (drafted > 0)
+                {
+                    return "ABY_DominionPocketFlowStatus_Ready".Translate(drafted);
+                }
+
+                return "ABY_DominionPocketFlowStatus_AwaitingDraft".Translate();
+            }
+
+            return "ABY_DominionPocketFlowStatus_Locked".Translate();
+        }
+
+        private int CountDraftedStrikeTeam()
+        {
+            if (map?.mapPawns?.FreeColonistsSpawned == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
+            for (int i = 0; i < colonists.Count; i++)
+            {
+                Pawn pawn = colonists[i];
+                if (pawn != null && !pawn.Dead && pawn.Spawned && pawn.drafter != null && pawn.drafter.Drafted && !pawn.InMentalState)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
 
         public void RegisterAnchor(Building_AbyssalDominionAnchor anchor)
         {
@@ -470,7 +590,7 @@ namespace AbyssalProtocol
             CleanupAnchorReferences();
             CleanupGateReference();
 
-            if (phase == DominionCrisisPhase.Gatecore && gateCore != null && !gateCore.Destroyed)
+            if ((phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby) && gateCore != null && !gateCore.Destroyed)
             {
                 return gateCore;
             }
@@ -502,6 +622,8 @@ namespace AbyssalProtocol
                     return "ABY_DominionOpsObjective_Anchors".Translate();
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsObjective_Gate".Translate();
+                case DominionCrisisPhase.Standby:
+                    return "ABY_DominionOpsObjective_Entry".Translate();
                 case DominionCrisisPhase.Cancelled:
                 case DominionCrisisPhase.Failed:
                 case DominionCrisisPhase.Completed:
@@ -521,6 +643,10 @@ namespace AbyssalProtocol
                     return "ABY_DominionOpsDirective_Anchors".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), GetWavePressureLabel());
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsDirective_Gate".Translate(GetGateIntegrityValue(), GetGatePulseEtaValue());
+                case DominionCrisisPhase.Standby:
+                    return HasActivePocketSession()
+                        ? "ABY_DominionOpsDirective_EntryDeployed".Translate()
+                        : "ABY_DominionOpsDirective_Entry".Translate(GetPocketFlowStatusValue());
                 case DominionCrisisPhase.Cancelled:
                 case DominionCrisisPhase.Failed:
                 case DominionCrisisPhase.Completed:
@@ -772,6 +898,11 @@ namespace AbyssalProtocol
                 return "ABY_DominionCrisisStatusLine_Gate".Translate(GetPhaseLabel(), GetGateIntegrityValue(), GetGatePulseEtaValue(), TicksRemaining.ToStringTicksToPeriod());
             }
 
+            if (phase == DominionCrisisPhase.Standby)
+            {
+                return "ABY_DominionCrisisStatusLine_Standby".Translate(GetPhaseLabel(), GetGateIntegrityValue(), GetPocketFlowStatusValue());
+            }
+
             if (IsActive)
             {
                 return "ABY_DominionCrisisStatusLine_Active".Translate(GetPhaseLabel(), TicksRemaining.ToStringTicksToPeriod());
@@ -970,7 +1101,7 @@ namespace AbyssalProtocol
                 gateCore = null;
             }
 
-            if (phase == DominionCrisisPhase.Gatecore)
+            if (phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby)
             {
                 ForceFail("ABY_DominionCrisisFail_GateLost".Translate(), true);
             }
@@ -978,7 +1109,7 @@ namespace AbyssalProtocol
 
         public string GetGateStatusValue()
         {
-            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            if ((phase != DominionCrisisPhase.Gatecore && phase != DominionCrisisPhase.Standby) || gateCore == null || gateCore.Destroyed)
             {
                 return "ABY_DominionGate_Status_Dormant".Translate();
             }
@@ -988,7 +1119,7 @@ namespace AbyssalProtocol
 
         public string GetGateIntegrityValue()
         {
-            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            if ((phase != DominionCrisisPhase.Gatecore && phase != DominionCrisisPhase.Standby) || gateCore == null || gateCore.Destroyed)
             {
                 return "ABY_DominionGate_Integrity_Dormant".Translate();
             }
@@ -998,7 +1129,7 @@ namespace AbyssalProtocol
 
         public string GetGatePulseEtaValue()
         {
-            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            if ((phase != DominionCrisisPhase.Gatecore && phase != DominionCrisisPhase.Standby) || gateCore == null || gateCore.Destroyed)
             {
                 return "ABY_DominionGate_PulseEta_Pending".Translate();
             }
@@ -1008,7 +1139,7 @@ namespace AbyssalProtocol
 
         public List<string> GetGateConsoleLines()
         {
-            if (phase != DominionCrisisPhase.Gatecore || gateCore == null || gateCore.Destroyed)
+            if ((phase != DominionCrisisPhase.Gatecore && phase != DominionCrisisPhase.Standby) || gateCore == null || gateCore.Destroyed)
             {
                 return new List<string> { "ABY_DominionGate_ConsoleIdle".Translate() };
             }
@@ -1117,6 +1248,38 @@ namespace AbyssalProtocol
                 "ABY_DominionCrisisGateDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle"),
                 LetterDefOf.ThreatBig,
                 new TargetInfo(gateCore != null ? gateCore.PositionHeld : sourceCell, map));
+        }
+
+        private void EnterStandby()
+        {
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            phase = DominionCrisisPhase.Standby;
+            phaseStartedTick = now;
+            phaseEndsTick = 0;
+            nextReminderTick = now + GateReminderIntervalTicks;
+            nextWaveTick = 0;
+            lastWaveTick = 0;
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.12f);
+
+            Find.LetterStack.ReceiveLetter(
+                "ABY_DominionCrisisStandbyLabel".Translate(),
+                "ABY_DominionCrisisStandbyDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle"),
+                LetterDefOf.PositiveEvent,
+                new TargetInfo(gateCore != null ? gateCore.PositionHeld : sourceCell, map));
+        }
+
+        private void SendStandbyReminder()
+        {
+            if (gateCore == null || gateCore.Destroyed || map == null)
+            {
+                return;
+            }
+
+            Messages.Message(
+                "ABY_DominionCrisisReminderStandby".Translate(GetGateIntegrityValue(), GetPocketFlowStatusValue()),
+                new TargetInfo(gateCore.PositionHeld, map),
+                MessageTypeDefOf.NeutralEvent,
+                false);
         }
 
         private bool TrySpawnGateCore(out string failReason)

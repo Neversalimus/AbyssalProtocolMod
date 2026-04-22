@@ -267,17 +267,49 @@ namespace AbyssalProtocol
             Rect invokeRect = new Rect(inner.x, inner.yMax - 40f, inner.width, 34f);
             if (dominionUiMode)
             {
-                float halfWidth = (inner.width - 6f) * 0.5f;
-                Rect codexRect = new Rect(inner.x, inner.yMax - 78f, halfWidth, 30f);
-                Rect objectiveRect = new Rect(codexRect.xMax + 6f, inner.yMax - 78f, halfWidth, 30f);
-                if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
+                bool pocketControls = AbyssalSummoningConsoleUtility.HasDominionPocketControls(circle);
+                if (pocketControls)
                 {
-                    OpenThreatCodex();
-                }
+                    float thirdWidth = (inner.width - 12f) / 3f;
+                    Rect codexRect = new Rect(inner.x, inner.yMax - 78f, thirdWidth, 30f);
+                    Rect objectiveRect = new Rect(codexRect.xMax + 6f, inner.yMax - 78f, thirdWidth, 30f);
+                    Rect gateRect = new Rect(objectiveRect.xMax + 6f, inner.yMax - 78f, thirdWidth, 30f);
+                    if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
+                    {
+                        OpenThreatCodex();
+                    }
 
-                if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                    if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                    {
+                        JumpToDominionObjective();
+                    }
+
+                    if (AbyssalStyledWidgets.TextButton(gateRect, AbyssalSummoningConsoleUtility.GetDominionPocketPrimaryLabel(circle), true, true))
+                    {
+                        if (AbyssalSummoningConsoleUtility.TryExecuteDominionPocketPrimary(circle, out string failReason))
+                        {
+                            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                        }
+                        else if (!failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                }
+                else
                 {
-                    JumpToDominionObjective();
+                    float halfWidth = (inner.width - 6f) * 0.5f;
+                    Rect codexRect = new Rect(inner.x, inner.yMax - 78f, halfWidth, 30f);
+                    Rect objectiveRect = new Rect(codexRect.xMax + 6f, inner.yMax - 78f, halfWidth, 30f);
+                    if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate()))
+                    {
+                        OpenThreatCodex();
+                    }
+
+                    if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                    {
+                        JumpToDominionObjective();
+                    }
                 }
             }
             else

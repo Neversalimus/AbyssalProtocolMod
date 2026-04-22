@@ -99,7 +99,33 @@ namespace AbyssalProtocol
             bool canInvoke = !circle.RitualActive;
             if (dominionActive)
             {
-                if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 86f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), true, true))
+                if (AbyssalSummoningConsoleUtility.HasDominionPocketControls(circle))
+                {
+                    if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 86f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetDominionPocketPrimaryLabel(circle), true, true))
+                    {
+                        if (AbyssalSummoningConsoleUtility.TryExecuteDominionPocketPrimary(circle, out string failReason))
+                        {
+                            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                        }
+                        else if (!failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+
+                    if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 122f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), true, true))
+                    {
+                        if (AbyssalSummoningConsoleUtility.TryJumpToDominionObjective(circle, out string failReason))
+                        {
+                            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                        }
+                        else if (!failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                }
+                else if (AbyssalStyledWidgets.TextButton(new Rect(rightInner.x, rightInner.y + 86f, rightInner.width, 32f), AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), true, true))
                 {
                     if (AbyssalSummoningConsoleUtility.TryJumpToDominionObjective(circle, out string failReason))
                     {

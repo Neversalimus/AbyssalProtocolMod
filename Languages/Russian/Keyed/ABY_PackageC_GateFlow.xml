@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_DominionOpsObjective_Entry>Ввод ударной группы</ABY_DominionOpsObjective_Entry>
+  <ABY_DominionOpsDirective_Entry>Великие адские врата откалиброваны. Задрафть ударную группу, затем отдай приказ на вход. Текущий статус: {0}.</ABY_DominionOpsDirective_Entry>
+  <ABY_DominionOpsDirective_EntryDeployed>Ударная группа уже находится внутри среза доминиона. Перейди к ней или эвакуируй её перед разоружением врат.</ABY_DominionOpsDirective_EntryDeployed>
+  <ABY_DominionCrisisStatusLine_Standby>Кризис доминиона: {0} • великие врата {1} • ввод {2}</ABY_DominionCrisisStatusLine_Standby>
+  <ABY_DominionCrisisReminderStandby>Великие адские врата остаются откалиброванными. Стабильность: {0}. Статус ударной группы: {1}.</ABY_DominionCrisisReminderStandby>
+  <ABY_DominionPocketFlowFail_NotReady>Великие адские врата на этой карте ещё не готовы к вводу ударной группы.</ABY_DominionPocketFlowFail_NotReady>
+  <ABY_DominionPocketFlowFail_NoSession>С этой картой не связана активная ударная группа доминиона.</ABY_DominionPocketFlowFail_NoSession>
+  <ABY_DominionPocketFlowStatus_Locked>вход во врата ещё не готов</ABY_DominionPocketFlowStatus_Locked>
+  <ABY_DominionPocketFlowStatus_AwaitingDraft>ожидается задрафченная ударная группа</ABY_DominionPocketFlowStatus_AwaitingDraft>
+  <ABY_DominionPocketFlowStatus_Ready>задрафчено колонистов: {0}</ABY_DominionPocketFlowStatus_Ready>
+  <ABY_DominionPocketFlowStatus_Deployed>ударная группа уже внутри среза доминиона</ABY_DominionPocketFlowStatus_Deployed>
+  <ABY_DominionPocketCommand_Enter>Войти в Великие адские врата</ABY_DominionPocketCommand_Enter>
+  <ABY_DominionPocketCommand_EnterDesc>Отправить задрафченную ударную группу во временный срез доминиона. Если задрафченных колонистов нет, в качестве запасного варианта будут использованы выделенные колонисты.</ABY_DominionPocketCommand_EnterDesc>
+  <ABY_DominionPocketCommand_Jump>Перейти к ударной группе</ABY_DominionPocketCommand_Jump>
+  <ABY_DominionPocketCommand_JumpDesc>Переместить камеру к активному срезу доминиона, связанному с этими Великими адскими вратами.</ABY_DominionPocketCommand_JumpDesc>
+  <ABY_DominionPocketCommand_Extract>Эвакуировать ударную группу</ABY_DominionPocketCommand_Extract>
+  <ABY_DominionPocketCommand_ExtractDesc>Вернуть всех пешек игрока из активного среза доминиона и схлопнуть временную runtime-карту.</ABY_DominionPocketCommand_ExtractDesc>
+  <ABY_DominionCommand_TrackStrikeTeam>Отследить ударную группу</ABY_DominionCommand_TrackStrikeTeam>
+  <ABY_DominionPocketGate_Inspect>Статус ударной группы: {0}</ABY_DominionPocketGate_Inspect>
+  <ABY_DominionGate_ConsoleEntry>Ввод: {0}</ABY_DominionGate_ConsoleEntry>
+</LanguageData>

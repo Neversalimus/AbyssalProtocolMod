@@ -15,7 +15,35 @@ namespace AbyssalProtocol
         public static List<Pawn> GetSelectedColonistsForPocketEntry(Map map)
         {
             List<Pawn> result = new List<Pawn>();
-            if (map == null || Find.Selector == null)
+            if (map == null)
+            {
+                return result;
+            }
+
+            if (map.mapPawns?.FreeColonistsSpawned != null)
+            {
+                List<Pawn> colonists = map.mapPawns.FreeColonistsSpawned;
+                for (int i = 0; i < colonists.Count; i++)
+                {
+                    Pawn pawn = colonists[i];
+                    if (!CanUseEntryPawn(pawn, map))
+                    {
+                        continue;
+                    }
+
+                    if (pawn.drafter != null && pawn.drafter.Drafted && !result.Contains(pawn))
+                    {
+                        result.Add(pawn);
+                    }
+                }
+            }
+
+            if (result.Count > 0)
+            {
+                return result;
+            }
+
+            if (Find.Selector == null)
             {
                 return result;
             }

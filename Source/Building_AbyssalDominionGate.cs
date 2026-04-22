@@ -91,7 +91,7 @@ namespace AbyssalProtocol
             }
 
             MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
-            if (crisis == null || !crisis.IsGatePhaseActive || !crisis.IsRegisteredGate(this))
+            if (crisis == null || !(crisis.IsGatePhaseActive || crisis.IsStandbyPhaseActive) || !crisis.IsRegisteredGate(this))
             {
                 return;
             }
@@ -126,6 +126,69 @@ namespace AbyssalProtocol
             {
                 nextCallTick = now + GetCallInterval();
                 ExecuteCallOfDominion(crisis);
+            }
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                yield return gizmo;
+            }
+
+            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            if (crisis == null)
+            {
+                yield break;
+            }
+
+            if (crisis.HasActivePocketSession())
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "ABY_DominionPocketCommand_Jump".Translate(),
+                    defaultDesc = "ABY_DominionPocketCommand_JumpDesc".Translate(),
+                    icon = ContentFinder<Texture2D>.Get(GlowTexPath, true),
+                    action = delegate
+                    {
+                        if (!crisis.TryJumpToPocketSlice(out string failReason) && !failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "ABY_DominionPocketCommand_Extract".Translate(),
+                    defaultDesc = "ABY_DominionPocketCommand_ExtractDesc".Translate(),
+                    icon = ContentFinder<Texture2D>.Get(RingTexPath, true),
+                    action = delegate
+                    {
+                        if (!crisis.TryReturnPocketStrikeTeam(out string failReason) && !failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                };
+                yield break;
+            }
+
+            if (crisis.IsGateEntryReady())
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "ABY_DominionPocketCommand_Enter".Translate(),
+                    defaultDesc = "ABY_DominionPocketCommand_EnterDesc".Translate(),
+                    icon = ContentFinder<Texture2D>.Get(RingTexPath, true),
+                    action = delegate
+                    {
+                        if (!crisis.TryOpenPocketSliceFromPlayerFlow(out string failReason) && !failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                };
             }
         }
 
@@ -172,6 +235,11 @@ namespace AbyssalProtocol
             }
 
             lines.Add("ABY_DominionGate_Inspect".Translate(GetStatusValue(), GetIntegrityValue(), GetNextPulseEtaValue()));
+            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            if (crisis != null)
+            {
+                lines.Add("ABY_DominionPocketGate_Inspect".Translate(crisis.GetPocketFlowStatusValue()));
+            }
             return string.Join("\n", lines);
         }
 
@@ -228,7 +296,8 @@ namespace AbyssalProtocol
                 "ABY_DominionGate_ConsoleAbilities".Translate(
                     "ABY_DominionGate_Ability_Suppression".Translate(),
                     "ABY_DominionGate_Ability_Ignition".Translate(),
-                    "ABY_DominionGate_Ability_Call".Translate())
+                    "ABY_DominionGate_Ability_Call".Translate()),
+                "ABY_DominionGate_ConsoleEntry".Translate(Map?.GetComponent<MapComponent_DominionCrisis>()?.GetPocketFlowStatusValue() ?? "ABY_DominionPocketFlowStatus_Locked".Translate())
             };
         }
 
