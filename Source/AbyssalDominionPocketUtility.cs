@@ -339,9 +339,20 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            WorldObject_ABY_DominionSliceSite worldObject = WorldObjectMaker.MakeWorldObject(worldObjectDef) as WorldObject_ABY_DominionSliceSite;
+            if (worldObject == null)
+            {
+                failReason = "Failed to create dominion slice world object.";
+                return false;
+            }
+
+            worldObject.Tile = tile;
+            TrySetWorldObjectFaction(worldObject, Faction.OfPlayer);
+            Find.WorldObjects.Add(worldObject);
+
             try
             {
-                map = InvokeGetOrGenerateMap(tile, new IntVec3(SliceMapWidth, 1, SliceMapHeight), worldObjectDef);
+                map = InvokeGetOrGenerateMap(tile, new IntVec3(SliceMapWidth, 1, SliceMapHeight), worldObject);
             }
             catch (Exception ex)
             {
@@ -356,12 +367,6 @@ namespace AbyssalProtocol
                 TryRemoveWorldObject(tile);
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
-            }
-
-            WorldObject_ABY_DominionSliceSite worldObject = FindSliceSiteAtTile(tile);
-            if (worldObject != null)
-            {
-                TrySetWorldObjectFaction(worldObject, Faction.OfPlayer);
             }
 
             return true;
@@ -464,45 +469,49 @@ namespace AbyssalProtocol
             return GetPocketPlayerPawns(map).Count > 0;
         }
 
-        public static bool HasAnyPlayerPawnsOnMap(Map map)
+        public static string GetSourceMapLabel(ABY_DominionPocketSession session)
         {
-            return GetPocketPlayerCount(map) > 0;
+            Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;
+            return sourceMap != null
+                ? sourceMap.Parent?.LabelCap ?? sourceMap.ToString()
+                : "ABY_DominionPocketRuntimeSource_Unknown".Translate();
         }
 
-        public static int GetPocketPlayerCount(Map map)
-        {
-            return GetPocketPlayerPawns(map).Count;
-        }
 
-        public static string GetPocketCollapseEta(ABY_DominionPocketSession session)
+        public static int GetPocketPlayerCount(Map pocketMap)
         {
-            if (session == null || !session.victoryAchieved || Find.TickManager == null || session.collapseAtTick <= 0)
-            {
-                return "ABY_DominionPocketFlowStatus_NoExtraction".Translate();
-            }
-
-            return System.Math.Max(0, session.collapseAtTick - Find.TickManager.TicksGame).ToStringTicksToPeriod();
+            return GetPocketPlayerPawns(pocketMap).Count;
         }
 
         public static string GetPocketSessionStatusValue(ABY_DominionPocketSession session, Map pocketMap)
         {
             if (session == null)
             {
-                return "ABY_DominionPocketFlowStatus_Locked".Translate();
+                return "ABY_DominionPocketTelemetry_NoSession".Translate();
             }
 
-            int teamCount = pocketMap != null ? GetPocketPlayerCount(pocketMap) : session.lastKnownPocketPawnCount;
-            if (teamCount <= 0)
+            if (session.lastOutcomeReason.NullOrEmpty() == false)
             {
-                teamCount = session.initialStrikeTeamCount;
+                return session.lastOutcomeReason;
+            }
+
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter != null)
+            {
+                return encounter.GetTelemetryStatusLabel();
             }
 
             if (session.victoryAchieved)
             {
-                return "ABY_DominionPocketFlowStatus_ExtractArmed".Translate(teamCount, GetPocketCollapseEta(session));
+                return "ABY_DominionPocketOutcome_Victory".Translate();
             }
 
-            return "ABY_DominionPocketFlowStatus_DeployedCount".Translate(teamCount);
+            if (session.active)
+            {
+                return "ABY_DominionPocketTelemetry_StatusAwaiting".Translate();
+            }
+
+            return "ABY_DominionPocketTelemetry_NoSession".Translate();
         }
 
         public static string GetPocketObjectiveValue(ABY_DominionPocketSession session, Map pocketMap)
@@ -512,7 +521,7 @@ namespace AbyssalProtocol
                 return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
             }
 
-            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter != null)
             {
                 return encounter.GetTelemetryObjectiveLabel();
@@ -520,52 +529,42 @@ namespace AbyssalProtocol
 
             if (session.victoryAchieved)
             {
-                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate(GetPocketCollapseEta(session));
+                return "ABY_DominionPocketTelemetry_ObjectiveExtract".Translate("0s");
             }
 
-            return "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
+            return session.active
+                ? "ABY_DominionPocketTelemetry_ObjectiveBreach".Translate()
+                : "ABY_DominionPocketTelemetry_ObjectiveDormant".Translate();
         }
 
         public static string GetPocketRewardValue(ABY_DominionPocketSession session, Map pocketMap)
         {
             if (session == null)
             {
-                return "ABY_DominionSliceRewardForecast_None".Translate();
+                return "ABY_DominionPocketTelemetry_RewardsUnknown".Translate();
             }
 
-            if (!session.rewardSummary.NullOrEmpty())
+            if (session.rewardSummary.NullOrEmpty() == false)
             {
                 return session.rewardSummary;
             }
 
-            MapComponent_DominionSliceEncounter encounter = pocketMap != null ? pocketMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = pocketMap?.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter != null)
             {
                 return encounter.GetRewardForecastValue();
             }
 
-            return "ABY_DominionSliceRewardForecast_None".Translate();
+            return "ABY_DominionPocketTelemetry_RewardsUnknown".Translate();
         }
 
         public static string GetPocketEncounterTelemetry(ABY_DominionPocketSession session, Map pocketMap)
         {
-            if (session == null)
-            {
-                return "ABY_DominionPocketTelemetry_Dormant".Translate();
-            }
-
-            string objective = GetPocketObjectiveValue(session, pocketMap);
-            string team = GetPocketSessionStatusValue(session, pocketMap);
-            string rewards = GetPocketRewardValue(session, pocketMap);
-            return "ABY_DominionPocketTelemetry_Report".Translate(objective, team, rewards);
-        }
-
-        public static string GetSourceMapLabel(ABY_DominionPocketSession session)
-        {
-            Map sourceMap = session != null ? ResolveMap(session.sourceMapId) : null;
-            return sourceMap != null
-                ? sourceMap.Parent?.LabelCap ?? sourceMap.ToString()
-                : "ABY_DominionPocketRuntimeSource_Unknown".Translate();
+            string team = "ABY_DominionPocketTelemetry_Team".Translate(GetPocketPlayerCount(pocketMap));
+            string status = "ABY_DominionPocketTelemetry_State".Translate(GetPocketSessionStatusValue(session, pocketMap));
+            string objective = "ABY_DominionPocketTelemetry_Objective".Translate(GetPocketObjectiveValue(session, pocketMap));
+            string rewards = "ABY_DominionPocketTelemetry_Rewards".Translate(GetPocketRewardValue(session, pocketMap));
+            return string.Join(" | ", new[] { team, status, objective, rewards });
         }
 
         private static bool CanUseEntryPawn(Pawn pawn, Map map)
@@ -647,25 +646,6 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private static WorldObject_ABY_DominionSliceSite FindSliceSiteAtTile(int tile)
-        {
-            if (tile < 0 || Find.WorldObjects == null)
-            {
-                return null;
-            }
-
-            List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
-            for (int i = 0; i < all.Count; i++)
-            {
-                if (all[i] is WorldObject_ABY_DominionSliceSite sliceSite && sliceSite.Tile == tile)
-                {
-                    return sliceSite;
-                }
-            }
-
-            return null;
-        }
-
         private static void TrySetWorldObjectFaction(WorldObject worldObject, Faction faction)
         {
             if (worldObject == null || faction == null)
@@ -686,14 +666,12 @@ namespace AbyssalProtocol
             }
         }
 
-        private static Map InvokeGetOrGenerateMap(int tile, IntVec3 size, WorldObjectDef worldObjectDef)
+        
+        private static Map InvokeGetOrGenerateMap(int tile, IntVec3 size, WorldObject_ABY_DominionSliceSite worldObject)
         {
-            PlanetTile planetTile = new PlanetTile(tile);
-            IEnumerable<GenStepWithParams> extraGenSteps = Enumerable.Empty<GenStepWithParams>();
+            MethodInfo[] methods = typeof(GetOrGenerateMapUtility).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            List<Exception> failures = new List<Exception>();
 
-            MethodInfo[] methods = typeof(GetOrGenerateMapUtility).GetMethods(BindingFlags.Static | BindingFlags.Public);
-            MethodInfo sizedOverload = null;
-            MethodInfo defaultOverload = null;
             for (int i = 0; i < methods.Length; i++)
             {
                 MethodInfo method = methods[i];
@@ -703,42 +681,167 @@ namespace AbyssalProtocol
                 }
 
                 ParameterInfo[] parameters = method.GetParameters();
-                if (parameters.Length == 5
-                    && parameters[0].ParameterType == typeof(PlanetTile)
-                    && parameters[1].ParameterType == typeof(IntVec3)
-                    && parameters[2].ParameterType == typeof(WorldObjectDef))
+                if (parameters.Length < 2)
                 {
-                    sizedOverload = method;
+                    continue;
                 }
-                else if (parameters.Length == 3
-                    && parameters[0].ParameterType == typeof(PlanetTile)
-                    && parameters[1].ParameterType == typeof(WorldObjectDef))
+
+                if (!TryBuildGetOrGenerateArguments(parameters, tile, size, worldObject, out object[] args))
                 {
-                    defaultOverload = method;
+                    continue;
+                }
+
+                try
+                {
+                    object result = method.Invoke(null, args);
+                    if (result is Map map)
+                    {
+                        return map;
+                    }
+                }
+                catch (TargetInvocationException tie)
+                {
+                    failures.Add(tie.InnerException ?? tie);
+                }
+                catch (Exception ex)
+                {
+                    failures.Add(ex);
                 }
             }
 
-            if (sizedOverload != null)
+            if (failures.Count > 0)
+            {
+                throw new AggregateException("No compatible GetOrGenerateMap overload succeeded.", failures);
+            }
+
+            throw new MissingMethodException("No compatible GetOrGenerateMap overload was found.");
+        }
+
+        private static bool TryBuildGetOrGenerateArguments(ParameterInfo[] parameters, int tile, IntVec3 size, WorldObject_ABY_DominionSliceSite worldObject, out object[] args)
+        {
+            args = new object[parameters.Length];
+            bool assignedTile = false;
+            bool assignedSize = false;
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                ParameterInfo parameter = parameters[i];
+                Type type = parameter.ParameterType;
+
+                if (!assignedTile && TryBuildTileArgument(type, tile, out object tileArg))
+                {
+                    args[i] = tileArg;
+                    assignedTile = true;
+                    continue;
+                }
+
+                if (!assignedSize && type == typeof(IntVec3))
+                {
+                    args[i] = size;
+                    assignedSize = true;
+                    continue;
+                }
+
+                if (worldObject != null && type.IsInstanceOfType(worldObject))
+                {
+                    args[i] = worldObject;
+                    continue;
+                }
+
+                if (worldObject != null && type.IsInstanceOfType(worldObject.def))
+                {
+                    args[i] = worldObject.def;
+                    continue;
+                }
+
+                if (type == typeof(string))
+                {
+                    args[i] = worldObject?.Label ?? "dominion slice";
+                    continue;
+                }
+
+                if (parameter.IsOptional)
+                {
+                    args[i] = parameter.DefaultValue;
+                    continue;
+                }
+
+                if (type == typeof(bool))
+                {
+                    args[i] = false;
+                    continue;
+                }
+
+                if (type == typeof(int))
+                {
+                    args[i] = 0;
+                    continue;
+                }
+
+                if (type.IsValueType)
+                {
+                    args[i] = Activator.CreateInstance(type);
+                    continue;
+                }
+
+                args[i] = null;
+            }
+
+            return assignedTile && assignedSize;
+        }
+
+        private static bool TryBuildTileArgument(Type type, int tile, out object value)
+        {
+            value = null;
+            if (type == typeof(int))
+            {
+                value = tile;
+                return true;
+            }
+
+            string fullName = type.FullName;
+            if (fullName == "RimWorld.Planet.PlanetTile")
             {
                 try
                 {
-                    return sizedOverload.Invoke(null, new object[] { planetTile, size, worldObjectDef, extraGenSteps, false }) as Map;
-                }
-                catch (TargetInvocationException)
-                {
-                    if (defaultOverload == null)
+                    MethodInfo implicitOp = type.GetMethod("op_Implicit", BindingFlags.Static | BindingFlags.Public, null, new[] { typeof(int) }, null);
+                    if (implicitOp != null)
                     {
-                        throw;
+                        value = implicitOp.Invoke(null, new object[] { tile });
+                        return true;
                     }
+
+                    ConstructorInfo ctor = type.GetConstructor(new[] { typeof(int) });
+                    if (ctor != null)
+                    {
+                        value = ctor.Invoke(new object[] { tile });
+                        return true;
+                    }
+
+                    value = Activator.CreateInstance(type, new object[] { tile });
+                    return true;
+                }
+                catch
+                {
+                    return false;
                 }
             }
 
-            if (defaultOverload != null)
-            {
-                return defaultOverload.Invoke(null, new object[] { planetTile, worldObjectDef, extraGenSteps }) as Map;
+            return false;
+        }
+
+
+                ParameterInfo[] parameters = method.GetParameters();
+                if (parameters.Length == 3
+                    && parameters[0].ParameterType == typeof(int)
+                    && parameters[1].ParameterType == typeof(IntVec3)
+                    && parameters[2].ParameterType == typeof(WorldObjectDef))
+                {
+                    return method.Invoke(null, new object[] { tile, size, worldObjectDef }) as Map;
+                }
             }
 
-            throw new MissingMethodException("No compatible GetOrGenerateMapUtility.GetOrGenerateMap overload for PlanetTile was found.");
+            throw new MissingMethodException("GetOrGenerateMapUtility.GetOrGenerateMap(int, IntVec3, WorldObjectDef) was not found.");
         }
 
         private static bool TryFindPocketEntryCell(Map pocketMap, out IntVec3 entryCell)

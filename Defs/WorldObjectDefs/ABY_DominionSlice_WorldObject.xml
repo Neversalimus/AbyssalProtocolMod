@@ -7,6 +7,6 @@
     <worldObjectClass>AbyssalProtocol.WorldObject_ABY_DominionSliceSite</worldObjectClass>
     <texture>World/WorldObjects/Sites/AncientComplex</texture>
     <expandingIconTexture>World/WorldObjects/Sites/AncientComplex</expandingIconTexture>
-  </WorldObjectDef>
+</WorldObjectDef>
 
 </Defs>
