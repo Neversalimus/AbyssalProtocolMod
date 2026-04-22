@@ -76,24 +76,22 @@ namespace AbyssalProtocol
             }
         }
 
-        public override void PreApplyDamage(DamageInfo dinfo, out bool absorbed)
+        public void NotifyShieldBlocked()
         {
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
-            if (encounter != null && !encounter.IsHeartExposed)
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (now - lastBlockedMessageTick > 120)
             {
-                absorbed = true;
-                int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-                if (now - lastBlockedMessageTick > 120)
+                lastBlockedMessageTick = now;
+                if (Map != null)
                 {
-                    lastBlockedMessageTick = now;
                     Messages.Message("ABY_DominionSliceHeart_Shielded".Translate(), new TargetInfo(PositionHeld, Map), MessageTypeDefOf.RejectInput, false);
                 }
-
-                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.3f);
-                return;
             }
 
-            base.PreApplyDamage(dinfo, out absorbed);
+            if (Map != null)
+            {
+                FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.3f);
+            }
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)

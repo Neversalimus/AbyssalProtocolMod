@@ -137,6 +137,9 @@
       <Mass>140</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_DominionHeartShield" />
+    </comps>
     <size>(2,2)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
