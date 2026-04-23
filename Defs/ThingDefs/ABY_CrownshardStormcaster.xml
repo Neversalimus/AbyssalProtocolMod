@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownshardStormcaster</defName>
     <label>crownshard stormcaster</label>
-    <description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures on impact into a controlled shard-burst. This first forge pattern is tuned as a heavy late-tier area denial caster; deeper storm-node behavior is handled by the next integration layer.</description>
+    <description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures on impact into a controlled field of cutting crown fragments. It is not a dueling rail weapon; it denies ground, punishes clustered hostiles and resonates harshly against mechanoid frames and fortified systems.</description>
     <techLevel>Spacer</techLevel>
     <tradeability>Sellable</tradeability>
     <generateCommonality>0</generateCommonality>
@@ -92,7 +92,7 @@
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_CrownshardStormSeed</defName>
     <label>crownshard storm seed</label>
-    <thingClass>Bullet</thingClass>
+    <thingClass>AbyssalProtocol.Projectile_CrownshardStormSeed</thingClass>
     <graphicData>
       <texPath>Things/Projectile/ABY_CrownshardStormSeed</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -100,12 +100,30 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>24</damageAmountBase>
-      <armorPenetrationBase>0.55</armorPenetrationBase>
-      <stoppingPower>1.40</stoppingPower>
+      <damageAmountBase>12</damageAmountBase>
+      <armorPenetrationBase>0.45</armorPenetrationBase>
+      <stoppingPower>1.10</stoppingPower>
       <speed>54</speed>
       <soundImpactAnticipate>ABY_CrownshardStormcasterImpact</soundImpactAnticipate>
     </projectile>
+  </ThingDef>
+
+  <ThingDef>
+    <defName>ABY_CrownshardStormNode</defName>
+    <label>crownshard storm node</label>
+    <thingClass>AbyssalProtocol.Thing_CrownshardStormNode</thingClass>
+    <category>Thing</category>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <tickerType>Normal</tickerType>
+    <selectable>false</selectable>
+    <drawerType>MapMeshOnly</drawerType>
+    <useHitPoints>false</useHitPoints>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownshardStormSeed</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.70,0.70)</drawSize>
+    </graphicData>
   </ThingDef>
 
 </Defs>
