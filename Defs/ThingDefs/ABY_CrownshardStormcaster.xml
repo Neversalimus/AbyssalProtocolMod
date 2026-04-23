@@ -112,7 +112,7 @@
     <defName>ABY_CrownshardStormNode</defName>
     <label>crownshard storm node</label>
     <thingClass>AbyssalProtocol.Thing_CrownshardStormNode</thingClass>
-    <category>Thing</category>
+    <category>Ethereal</category>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <tickerType>Normal</tickerType>
     <selectable>false</selectable>
