@@ -7,8 +7,8 @@
   <ABY_CircleRitual_Horde_SideEffects>&#10;• Opens multiple perimeter breach fronts instead of one local spawn&#10;• Pressure scales hard with colony size, wealth, and protocol difficulty&#10;• Does not grant boss or mini-boss drops even when the wave becomes enormous</ABY_CircleRitual_Horde_SideEffects>
   <ABY_HordeGateSummonSuccessLabel>Horde gate breached</ABY_HordeGateSummonSuccessLabel>
   <ABY_HordeGateSummonSuccessDesc>Multiple perimeter rupture fronts are opening. Ordinary abyssal warforms are spilling onto the map in repeated portal pulses.</ABY_HordeGateSummonSuccessDesc>
-  <ABY_CircleRewardGuaranteed_Horde>Guaranteed: a breach-closure cache with high residue, horde fragments, and salvage routed out of the army-scale lattice. Command node kills spill an extra bonus when present.</ABY_CircleRewardGuaranteed_Horde>
-  <ABY_CircleRewardProgression_Horde>Progression: stress-tests multi-front late defense after Reactor Saint while feeding a distinct post-saint economy layer instead of boss-tier cores.</ABY_CircleRewardProgression_Horde>
+  <ABY_CircleRewardGuaranteed_Horde>Guaranteed: a breach-closure cache with high residue, horde fragments, and salvage routed out of the army-scale lattice. Command node kills spill an extra bonus when present, and the fragment stream now feeds both the Litany Grinder and the Phalanx Driver forge branch.</ABY_CircleRewardGuaranteed_Horde>
+  <ABY_CircleRewardProgression_Horde>Progression: stress-tests multi-front late defense after Reactor Saint while feeding a distinct post-saint economy layer. Horde fragments now escalate from raw salvage into a dedicated forge branch instead of boss-tier cores.</ABY_CircleRewardProgression_Horde>
   <ABY_HordeRitualMeta>Sigils on map: {0}   •   Pattern: {1}   •   Fronts: {2}   •   Pulses: {3}   •   Command gate: {4}   •   Forecast: {5}   •   Protocol: {6}</ABY_HordeRitualMeta>
   <ABY_CircleFail_HordeLocked>The horde gate remains dormant until the first Reactor Saint kill is recorded on this save.</ABY_CircleFail_HordeLocked>
   <ABY_CirclePreview_Harvester_Singular>harvester</ABY_CirclePreview_Harvester_Singular>
@@ -98,14 +98,14 @@
   <ABY_HordeCommandGate_Inspect>Command gate node. Doctrine: {0}. Remaining command bursts: {1}. While intact it accelerates portal cadence on its front and preserves reserved reinforcements.</ABY_HordeCommandGate_Inspect>
   <ABY_HordeCommandGate_InspectReward>If destroyed it spills a command salvage bonus tied to remaining bursts.</ABY_HordeCommandGate_InspectReward>
   <ABY_HordeEconomy_Header>Reward routing</ABY_HordeEconomy_Header>
-  <ABY_HordeEconomy_Summary>Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual, but horde fragments can be forged into {2} once the forge reaches 1000 residue.</ABY_HordeEconomy_Summary>
+  <ABY_HordeEconomy_Summary>Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual. Horde fragments can be reforged into the Litany Grinder and the Phalanx Driver once the forge reaches the proper fragment tiers.</ABY_HordeEconomy_Summary>
   <ABY_HordeEconomy_Unknown>Reward routing could not be stabilized. Expect residue-heavy salvage without boss-tier drops.</ABY_HordeEconomy_Unknown>
   <ABY_HordeEconomy_CommandNone>no command bonus expected</ABY_HordeEconomy_CommandNone>
   <ABY_HordeEconomy_LineClosure>Breach closure cache: {0}</ABY_HordeEconomy_LineClosure>
   <ABY_HordeEconomy_LineCommand>Command node kill bonus: {0}</ABY_HordeEconomy_LineCommand>
   <ABY_HordeEconomy_LineCommandAbsent>No command node bonus is expected for this forecast.</ABY_HordeEconomy_LineCommandAbsent>
   <ABY_HordeEconomy_LineNoBoss>No boss cores, saint caches, or miniboss-unique drops are routed through Horde payouts.</ABY_HordeEconomy_LineNoBoss>
-  <ABY_HordeEconomy_LineFragments>War-lattice fragments from this rite feed the {0} heavy weapon pattern once the forge reaches 1000 residue.</ABY_HordeEconomy_LineFragments>
+  <ABY_HordeEconomy_LineForge>Forge routing: horde fragments can be refined into the Litany Grinder at the horde tier and the Phalanx Driver once deeper fragment access is unlocked.</ABY_HordeEconomy_LineForge>
   <ABY_HordeEconomy_LineBacklash>Additional backlash: +{0}% instability heat and +{1}% contamination pressure on invocation.</ABY_HordeEconomy_LineBacklash>
   <ABY_HordeEconomy_BulletinClosure>{0} residue + {1} fragments</ABY_HordeEconomy_BulletinClosure>
   <ABY_HordeEconomy_BulletinBacklash>Heat +{0}% / Contam +{1}%</ABY_HordeEconomy_BulletinBacklash>

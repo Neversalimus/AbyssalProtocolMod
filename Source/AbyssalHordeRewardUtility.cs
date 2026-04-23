@@ -9,7 +9,6 @@ namespace AbyssalProtocol
     public static class AbyssalHordeRewardUtility
     {
         public const string HordeFragmentThingDefName = "ABY_HordeFragment";
-        public const string LitanyGrinderThingDefName = "ABY_LitanyGrinder";
         private const string ResidueThingDefName = "ABY_AbyssalResidue";
         private const string IndustrialComponentThingDefName = "ComponentIndustrial";
         private const string SpacerComponentThingDefName = "ComponentSpacer";
@@ -102,10 +101,9 @@ namespace AbyssalProtocol
 
             return AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_HordeEconomy_Summary",
-                "Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual, but horde fragments can be forged into {2} once the forge reaches 1000 residue.",
+                "Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual. Horde fragments can be reforged into the Litany Grinder and the Phalanx Driver once the forge reaches the proper fragment tiers.",
                 closureLabel,
-                commandLabel,
-                GetLitanyGrinderLabel());
+                commandLabel);
         }
 
         public static List<string> GetForecastLines(RewardSnapshot snapshot)
@@ -130,10 +128,7 @@ namespace AbyssalProtocol
             }
 
             lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineNoBoss", "No boss cores, saint caches, or miniboss-unique drops are routed through Horde payouts."));
-            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_HordeEconomy_LineFragments",
-                "War-lattice fragments from this rite feed the {0} heavy weapon pattern once the forge reaches 1000 residue.",
-                GetLitanyGrinderLabel()));
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineForge", "Forge routing: horde fragments can be refined into the Litany Grinder at the horde tier and the Phalanx Driver once deeper fragment access is unlocked."));
             lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_HordeEconomy_LineBacklash",
                 "Additional backlash: +{0}% instability heat and +{1}% contamination pressure on invocation.",
@@ -198,12 +193,6 @@ namespace AbyssalProtocol
                     new TargetInfo(dropCell, map),
                     MessageTypeDefOf.PositiveEvent);
             }
-        }
-
-        private static string GetLitanyGrinderLabel()
-        {
-            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(LitanyGrinderThingDefName);
-            return def != null ? def.LabelCap : "Litany Grinder";
         }
 
         private static string GetDoctrineLabel(RewardSnapshot snapshot)
