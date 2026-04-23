@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_CohortSyncSubnode_Implant</defName>
+    <label>cohort sync subnode</label>
+    <description>An auxiliary horde-pattern cognition module seated beside the brain instead of replacing it.</description>
+    <spawnThingOnRemoved>ABY_CohortSyncSubnode</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.04</offset>
+          </li>
+          <li>
+            <capacity>Hearing</capacity>
+            <offset>0.25</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MentalBreakThreshold>0.08</MentalBreakThreshold>
+          <SocialImpact>0.10</SocialImpact>
+          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.03</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_BoundClawArray_Implant</defName>
+    <label>bound claw array</label>
+    <description>An assault forearm lattice tuned for close-quarters lethality and disciplined strike commitment.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_BoundClawArray</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.08</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MeleeHitChance>0.06</MeleeHitChance>
+          <MeleeDodgeChance>0.03</MeleeDodgeChance>
+          <PainShockThreshold>0.04</PainShockThreshold>
+          <PawnBeauty>-0.30</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_BreachTendonWeave_Implant</defName>
+    <label>breach tendon weave</label>
+    <description>A leg-bound war-lattice tendon sheath built to accelerate breach movement and evasive footwork.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.14</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_BreachTendonWeave</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.12</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.08</MoveSpeed>
+          <MeleeDodgeChance>0.05</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_NullChorusCollar_Implant</defName>
+    <label>null chorus collar</label>
+    <description>A damped throat collar that filters panic, hostile signal pressure and pain cascade under infernal strain.</description>
+    <spawnThingOnRemoved>ABY_NullChorusCollar</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <MentalBreakThreshold>0.10</MentalBreakThreshold>
+          <PainShockThreshold>0.12</PainShockThreshold>
+          <PsychicSensitivity>-0.10</PsychicSensitivity>
+          <PawnBeauty>-0.10</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

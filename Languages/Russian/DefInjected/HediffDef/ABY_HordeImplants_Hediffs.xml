@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CohortSyncSubnode_Implant.label>узел синхронизации когорты</ABY_CohortSyncSubnode_Implant.label>
+  <ABY_CohortSyncSubnode_Implant.description>Вспомогательный horde-паттерн когнитивного модуля, посаженный рядом с мозгом, а не вместо него.</ABY_CohortSyncSubnode_Implant.description>
+
+  <ABY_BoundClawArray_Implant.label>массив связанных когтей</ABY_BoundClawArray_Implant.label>
+  <ABY_BoundClawArray_Implant.description>Штурмовая предплечная lattice-система, настроенная на ближнюю летальность и дисциплинированную жёсткость удара.</ABY_BoundClawArray_Implant.description>
+
+  <ABY_BreachTendonWeave_Implant.label>связка разломных сухожилий</ABY_BreachTendonWeave_Implant.label>
+  <ABY_BreachTendonWeave_Implant.description>War-lattice сухожильная связка для ног, ускоряющая breach-движение и уклончивую работу корпуса.</ABY_BreachTendonWeave_Implant.description>
+
+  <ABY_NullChorusCollar_Implant.label>ошейник нулевого хора</ABY_NullChorusCollar_Implant.label>
+  <ABY_NullChorusCollar_Implant.description>Заглушённый горловой collar-узел, фильтрующий панику, сигнальное давление и болевой каскад под инфернальной нагрузкой.</ABY_NullChorusCollar_Implant.description>
+</LanguageData>

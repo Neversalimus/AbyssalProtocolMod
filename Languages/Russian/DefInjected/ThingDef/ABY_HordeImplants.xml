@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CohortSyncSubnode.label>узел синхронизации когорты</ABY_CohortSyncSubnode.label>
+  <ABY_CohortSyncSubnode.description>Вспомогательный мозговой war-lattice модуль, выкованный из стабилизированного horde-фрагмента. Он не заменяет сознание, а гнездится рядом с ним, удерживая в порядке враждебное давление, тайминг отряда и ритм наведения.</ABY_CohortSyncSubnode.description>
+
+  <ABY_BoundClawArray.label>массив связанных когтей</ABY_BoundClawArray.label>
+  <ABY_BoundClawArray.description>Штурмовая предплечная lattice-система, собранная вокруг horde-фрагмента и вписанная в атаку носителя. Она не даёт отдельный weapon verb, но заметно усиливает манипуляцию, жёсткость удара и ближнюю летальность по сравнению с обычными протезами.</ABY_BoundClawArray.description>
+
+  <ABY_BreachTendonWeave.label>связка разломных сухожилий</ABY_BreachTendonWeave.label>
+  <ABY_BreachTendonWeave.description>Нижнетелая war-lattice связка сухожилий, натянутая через захваченный horde-фрагмент. Она создана не для грубой saint-мощи, а для контролируемого рывка вперёд, более быстрого breach-step и устойчивой уклончивой работы ног.</ABY_BreachTendonWeave.description>
+
+  <ABY_NullChorusCollar.label>ошейник нулевого хора</ABY_NullChorusCollar.label>
+  <ABY_NullChorusCollar.description>Горловой и позвоночный фиксатор, обёрнутый вокруг заглушенного horde-фрагмента. Он срезает панику, сглаживает враждебный psychic-шум и не даёт боли свалить носителя в каскадный срыв под длительным инфернальным давлением.</ABY_NullChorusCollar.description>
+</LanguageData>

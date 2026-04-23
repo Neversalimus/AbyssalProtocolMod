@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CohortSyncSubnode</defName>
+    <label>cohort sync subnode</label>
+    <description>An auxiliary war-lattice brain module forged from a stabilized horde fragment. Rather than replacing the mind, it nests beside it and keeps hostile pressure, squad timing and targeting rhythm in ordered alignment.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CohortSyncSubnode</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.16</Mass>
+      <WorkToMake>38000</WorkToMake>
+      <MarketValue>2240</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+      <Plasteel>20</Plasteel>
+      <Gold>8</Gold>
+      <Silver>30</Silver>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BoundClawArray</defName>
+    <label>bound claw array</label>
+    <description>An assault-pattern forearm lattice built around a horde fragment and locked into the host's attack chain. It does not grant a literal weapon verb, but it hardens manipulation, strike commitment and close-quarters lethality in a way ordinary prosthetics do not.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BoundClawArray</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.34</Mass>
+      <WorkToMake>40000</WorkToMake>
+      <MarketValue>2320</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+      <Plasteel>24</Plasteel>
+      <Steel>28</Steel>
+      <Uranium>10</Uranium>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BreachTendonWeave</defName>
+    <label>breach tendon weave</label>
+    <description>A lower-body war-lattice tendon sheath tensioned through a captured horde fragment. It is tuned for controlled surges of forward force rather than raw saint-grade power, giving the bearer a faster breach step and steadier evasive footwork.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BreachTendonWeave</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.30</Mass>
+      <WorkToMake>39000</WorkToMake>
+      <MarketValue>2180</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Plasteel>20</Plasteel>
+      <Steel>32</Steel>
+      <Uranium>8</Uranium>
+      <Silver>20</Silver>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_NullChorusCollar</defName>
+    <label>null chorus collar</label>
+    <description>A throat-and-spine restraint collar wrapped around a damped horde fragment. It trims panic, flattens hostile psychic noise and prevents pain cascades from overwhelming the bearer during sustained infernal pressure.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_NullChorusCollar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.18</Mass>
+      <WorkToMake>36000</WorkToMake>
+      <MarketValue>2060</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>11</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+      <Plasteel>16</Plasteel>
+      <Gold>10</Gold>
+      <Silver>40</Silver>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

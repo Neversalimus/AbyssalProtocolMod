@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>ABY_InstallCohortSyncSubnode</defName>
+    <label>install cohort sync subnode</label>
+    <description>Install a cohort sync subnode.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_CohortSyncSubnode</ThingDef>
+      <HediffDef>ABY_CohortSyncSubnode_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing cohort sync subnode.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CohortSyncSubnode</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_CohortSyncSubnode_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallBoundClawArray</defName>
+    <label>install bound claw array</label>
+    <description>Install a bound claw array.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_BoundClawArray</ThingDef>
+      <HediffDef>ABY_BoundClawArray_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing bound claw array.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_BoundClawArray</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Arm</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_BoundClawArray_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallBreachTendonWeave</defName>
+    <label>install breach tendon weave</label>
+    <description>Install a breach tendon weave.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_BreachTendonWeave</ThingDef>
+      <HediffDef>ABY_BreachTendonWeave_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing breach tendon weave.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_BreachTendonWeave</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Leg</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_BreachTendonWeave_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>ABY_InstallNullChorusCollar</defName>
+    <label>install null chorus collar</label>
+    <description>Install a null chorus collar.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_NullChorusCollar</ThingDef>
+      <HediffDef>ABY_NullChorusCollar_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing null chorus collar.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_NullChorusCollar</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Neck</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_NullChorusCollar_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>

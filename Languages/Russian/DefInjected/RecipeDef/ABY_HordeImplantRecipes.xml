@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_InstallCohortSyncSubnode.label>установить узел синхронизации когорты</ABY_InstallCohortSyncSubnode.label>
+  <ABY_InstallCohortSyncSubnode.description>Установить узел синхронизации когорты.</ABY_InstallCohortSyncSubnode.description>
+  <ABY_InstallCohortSyncSubnode.jobString>Установка узла синхронизации когорты.</ABY_InstallCohortSyncSubnode.jobString>
+
+  <ABY_InstallBoundClawArray.label>установить массив связанных когтей</ABY_InstallBoundClawArray.label>
+  <ABY_InstallBoundClawArray.description>Установить массив связанных когтей.</ABY_InstallBoundClawArray.description>
+  <ABY_InstallBoundClawArray.jobString>Установка массива связанных когтей.</ABY_InstallBoundClawArray.jobString>
+
+  <ABY_InstallBreachTendonWeave.label>установить связку разломных сухожилий</ABY_InstallBreachTendonWeave.label>
+  <ABY_InstallBreachTendonWeave.description>Установить связку разломных сухожилий.</ABY_InstallBreachTendonWeave.description>
+  <ABY_InstallBreachTendonWeave.jobString>Установка связки разломных сухожилий.</ABY_InstallBreachTendonWeave.jobString>
+
+  <ABY_InstallNullChorusCollar.label>установить ошейник нулевого хора</ABY_InstallNullChorusCollar.label>
+  <ABY_InstallNullChorusCollar.description>Установить ошейник нулевого хора.</ABY_InstallNullChorusCollar.description>
+  <ABY_InstallNullChorusCollar.jobString>Установка ошейника нулевого хора.</ABY_InstallNullChorusCollar.jobString>
+</LanguageData>
