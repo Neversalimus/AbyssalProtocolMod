@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownspikeRail</defName>
     <label>crownspike rail</label>
-    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether; it aligns, sanctions and deletes a single target with terrifying reach. When the firing rails close, the shot resolves as a blinding crownspike beam that arrives almost instantly and lands with a harsh anti-system kick.</description>
+    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether; it aligns, sanctions and deletes a single target with terrifying reach. When the firing rails close, the shot resolves as a blinding crownspike beam that arrives almost instantly and lands with a harsh anti-system kick. Its crownspike discharge can overpenetrate a short line of secondary targets and resonates violently against shields, mechanoids and dense structures.</description>
     <techLevel>Spacer</techLevel>
     <tradeability>Sellable</tradeability>
     <generateCommonality>0</generateCommonality>
@@ -55,7 +55,7 @@
 
     <verbs>
       <li>
-        <verbClass>Verb_Shoot</verbClass>
+        <verbClass>AbyssalProtocol.Verb_ShootCrownspikeRail</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_CrownspikeBolt</defaultProjectile>
         <warmupTime>2.90</warmupTime>
