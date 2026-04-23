@@ -118,11 +118,12 @@
     <selectable>false</selectable>
     <drawerType>MapMeshOnly</drawerType>
     <useHitPoints>false</useHitPoints>
+    <drawOffscreen>true</drawOffscreen>
     <graphicData>
-      <texPath>Things/Projectile/ABY_CrownshardStormSeed</texPath>
+      <texPath>Things/VFX/CrownshardStorm/Crownstorm_Core</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.70,0.70)</drawSize>
+      <drawSize>(0.92,0.92)</drawSize>
     </graphicData>
   </ThingDef>
 

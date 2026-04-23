@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
-using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -81,8 +80,14 @@ namespace AbyssalProtocol
             ageTicks++;
             if (ageTicks >= durationTicks)
             {
+                CrownshardStormVfxUtility.SpawnStormCollapse(Position, Map, shieldDampened);
                 Destroy(DestroyMode.Vanish);
                 return;
+            }
+
+            if (ageTicks % 10 == 0)
+            {
+                CrownshardStormVfxUtility.SpawnNodeSustain(Position, Map, ageTicks, durationTicks, shieldDampened);
             }
 
             if (ageTicks >= nextPulseTick)
@@ -218,7 +223,8 @@ namespace AbyssalProtocol
                 -1f,
                 launcher,
                 null,
-                weaponDef);
+                weaponDef,
+                DamageInfo.SourceCategory.ThingOrUnknown);
 
             target.TakeDamage(damageInfo);
             CrownshardStormVfxUtility.SpawnShardImpact(Position, target, denseTarget);
