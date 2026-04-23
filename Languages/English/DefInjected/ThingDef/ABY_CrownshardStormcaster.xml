@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownshardStormcaster.label>crownshard stormcaster</ABY_CrownshardStormcaster.label>
+  <ABY_CrownshardStormcaster.description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures into a controlled field of cutting fragments, denying ground rather than deleting a single target. It is at its best against clustered hostiles, mechanoid frames and fortified systems, while dedicated duel weapons still outperform it against isolated bosses.</ABY_CrownshardStormcaster.description>
+
+  <ABY_CrownshardStormSeed.label>crownshard storm seed</ABY_CrownshardStormSeed.label>
+  <ABY_CrownshardStormNode.label>crownshard storm node</ABY_CrownshardStormNode.label>
+
+</LanguageData>

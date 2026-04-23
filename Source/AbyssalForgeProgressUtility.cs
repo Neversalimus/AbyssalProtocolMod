@@ -299,6 +299,12 @@ namespace AbyssalProtocol
 
         public static string GetPatternBrowserSummary(RecipeDef recipe)
         {
+            ThingDef product = GetPrimaryProduct(recipe);
+            if (product != null && product.defName == "ABY_CrownshardStormcaster")
+            {
+                return TranslateOrFallback("ABY_ForgePatternSummary_CrownshardStormcaster", "Dominion storm weapon · area denial");
+            }
+
             switch (GetCategory(recipe))
             {
                 case CoreCategory:

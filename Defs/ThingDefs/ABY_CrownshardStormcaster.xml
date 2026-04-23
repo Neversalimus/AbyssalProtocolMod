@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownshardStormcaster</defName>
     <label>crownshard stormcaster</label>
-    <description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures on impact into a controlled field of cutting crown fragments. It is not a dueling rail weapon; it denies ground, punishes clustered hostiles and resonates harshly against mechanoid frames and fortified systems.</description>
+    <description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures into a controlled field of cutting fragments, denying ground rather than deleting a single target. It is at its best against clustered hostiles, mechanoid frames and fortified systems, while dedicated duel weapons still outperform it against isolated bosses.</description>
     <techLevel>Spacer</techLevel>
     <tradeability>Sellable</tradeability>
     <generateCommonality>0</generateCommonality>
@@ -43,14 +43,14 @@
     </costList>
 
     <statBases>
-      <WorkToMake>155000</WorkToMake>
-      <Mass>6.2</Mass>
-      <MarketValue>4300</MarketValue>
+      <WorkToMake>165000</WorkToMake>
+      <Mass>6.4</Mass>
+      <MarketValue>4550</MarketValue>
       <AccuracyTouch>0.70</AccuracyTouch>
       <AccuracyShort>0.84</AccuracyShort>
       <AccuracyMedium>0.92</AccuracyMedium>
       <AccuracyLong>0.88</AccuracyLong>
-      <RangedWeapon_Cooldown>4.65</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>4.85</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -65,7 +65,7 @@
         <soundAiming>ABY_CrownshardStormcasterAim</soundAiming>
         <soundCast>ABY_CrownshardStormcasterFire</soundCast>
         <soundCastTail>ABY_CrownshardStormcasterTail</soundCastTail>
-        <muzzleFlashScale>12</muzzleFlashScale>
+        <muzzleFlashScale>13.5</muzzleFlashScale>
       </li>
     </verbs>
 

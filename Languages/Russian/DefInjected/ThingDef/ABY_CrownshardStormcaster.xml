@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownshardStormcaster.label>короноосколочный штормокастер</ABY_CrownshardStormcaster.label>
+  <ABY_CrownshardStormcaster.description>Доминионное коронное оружие, построенное вокруг запечатанной штормовой камеры и решётки санкционированных короноосколков. Каждый выстрел запускает компактное штормовое зерно, которое раскрывается в управляемое поле режущих фрагментов: оно не удаляет одиночную цель, а отсекает участок поля боя. Лучше всего работает против плотных групп, механоидных рам и укреплённых систем; против одиночных боссов специализированное дуэльное оружие всё ещё эффективнее.</ABY_CrownshardStormcaster.description>
+
+  <ABY_CrownshardStormSeed.label>короноосколочное штормовое зерно</ABY_CrownshardStormSeed.label>
+  <ABY_CrownshardStormNode.label>короноосколочный штормовой узел</ABY_CrownshardStormNode.label>
+
+</LanguageData>
