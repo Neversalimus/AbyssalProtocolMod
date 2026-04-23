@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownspikeRail</defName>
     <label>crownspike rail</label>
-    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether. It aligns, sanctions and deletes a single target with terrifying reach. Package D finishes the integration pass by correcting the projectile beam art and adding a small crown-tier side effect on impact: a brief anti-system EMP kick that helps the shot read as an apex sanction rather than a generic high-damage rifle round.</description>
+    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether; it aligns, sanctions and deletes a single target with terrifying reach. When the firing rails close, the shot resolves as a blinding crownspike beam that arrives almost instantly and lands with a harsh anti-system kick.</description>
     <techLevel>Spacer</techLevel>
     <tradeability>Sellable</tradeability>
     <generateCommonality>0</generateCommonality>
