@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_PhalanxDriverAim</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/PhalanxDriver_Aim</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>20</min>
+          <max>24</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.01</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_PhalanxDriverFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/PhalanxDriver_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>35</min>
+          <max>40</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.02</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_PhalanxDriverTail</defName>
+    <context>MapOnly</context>
+    <maxVoices>5</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/PhalanxDriver_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>18</min>
+          <max>22</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.01</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_PhalanxDriverImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/PhalanxDriver_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>23</min>
+          <max>27</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.99</min>
+          <max>1.01</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
