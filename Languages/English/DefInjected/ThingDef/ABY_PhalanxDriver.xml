@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_PhalanxDriver.label>phalanx driver</ABY_PhalanxDriver.label>
+  <ABY_PhalanxDriver.description>A disciplined horde-pattern spike rifle built from war-lattice fragments. Instead of flooding the field with fire, it drives a short sequence of infernal penetrators through the target line, excelling at cracking dense frontliners and punishing static cover fights.</ABY_PhalanxDriver.description>
+
+  <ABY_PhalanxSpikeProjectile.label>phalanx spike</ABY_PhalanxSpikeProjectile.label>
+
+</LanguageData>
