@@ -149,7 +149,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>8</requiredResidue>
+        <requiredResidue>10</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>
@@ -199,7 +199,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>50</requiredResidue>
+        <requiredResidue>150</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>
@@ -249,7 +249,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>65</requiredResidue>
+        <requiredResidue>300</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>

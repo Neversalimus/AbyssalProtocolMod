@@ -84,7 +84,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>440</requiredResidue>
+        <requiredResidue>5000</requiredResidue>
         <category>Herald</category>
       </li>
     </modExtensions>

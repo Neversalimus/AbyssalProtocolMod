@@ -33,7 +33,7 @@
         <mountedDrawScale>1.00</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>35</requiredResidue>
+        <requiredResidue>100</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>
@@ -71,7 +71,7 @@
         <mountedDrawScale>1.04</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>80</requiredResidue>
+        <requiredResidue>300</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>
@@ -109,7 +109,7 @@
         <mountedDrawScale>1.08</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>145</requiredResidue>
+        <requiredResidue>500</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>

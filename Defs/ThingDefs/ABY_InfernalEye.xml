@@ -29,7 +29,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>35</requiredResidue>
+        <requiredResidue>100</requiredResidue>
         <category>Implants</category>
       </li>
     </modExtensions>

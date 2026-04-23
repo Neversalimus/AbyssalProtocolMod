@@ -46,7 +46,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>25</requiredResidue>
+        <requiredResidue>100</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>
@@ -105,7 +105,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>70</requiredResidue>
+        <requiredResidue>500</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>
@@ -172,7 +172,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>130</requiredResidue>
+        <requiredResidue>1500</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>

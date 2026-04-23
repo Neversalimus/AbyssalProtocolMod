@@ -59,7 +59,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>150</requiredResidue>
+        <requiredResidue>250</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>
@@ -113,7 +113,7 @@
         <requireLineOfSight>true</requireLineOfSight>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>120</requiredResidue>
+        <requiredResidue>50</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>

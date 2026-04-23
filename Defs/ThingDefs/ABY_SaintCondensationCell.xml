@@ -33,7 +33,7 @@
         <mountedDrawScale>1.10</mountedDrawScale>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>470</requiredResidue>
+        <requiredResidue>600</requiredResidue>
         <category>Core</category>
       </li>
     </modExtensions>

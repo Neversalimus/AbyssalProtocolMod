@@ -84,8 +84,8 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>600</requiredResidue>
-        <category>Weapons</category>
+        <requiredResidue>10000</requiredResidue>
+        <category>Herald</category>
       </li>
     </modExtensions>
   </ThingDef>
@@ -110,8 +110,8 @@
     </statBases>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>600</requiredResidue>
-        <category>Weapons</category>
+        <requiredResidue>10000</requiredResidue>
+        <category>Herald</category>
       </li>
     </modExtensions>
   </ThingDef>

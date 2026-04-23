@@ -70,7 +70,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>500</requiredResidue>
+        <requiredResidue>600</requiredResidue>
         <category>Armor</category>
       </li>
     </modExtensions>
@@ -137,7 +137,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>470</requiredResidue>
+        <requiredResidue>600</requiredResidue>
         <category>Armor</category>
       </li>
     </modExtensions>

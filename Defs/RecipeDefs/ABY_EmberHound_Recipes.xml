@@ -45,7 +45,7 @@
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>26</requiredResidue>
+        <requiredResidue>50</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>

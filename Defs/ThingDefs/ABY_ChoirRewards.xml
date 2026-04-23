@@ -57,7 +57,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>150</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Implants</category>
       </li>
     </modExtensions>
@@ -101,7 +101,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>165</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Implants</category>
       </li>
     </modExtensions>
@@ -144,7 +144,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>180</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Implants</category>
       </li>
     </modExtensions>
@@ -187,7 +187,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>170</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Implants</category>
       </li>
     </modExtensions>
@@ -250,7 +250,7 @@
     </verbs>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>190</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>
