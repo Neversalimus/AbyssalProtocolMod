@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_CrownshardStormcaster</defName>
+    <label>crownshard stormcaster</label>
+    <description>A dominion-grade crown weapon built around a sealed storm chamber and a lattice of sanctioned crown-shards. Each discharge launches a compact storm seed that ruptures on impact into a controlled shard-burst. This first forge pattern is tuned as a heavy late-tier area denial caster; deeper storm-node behavior is handled by the next integration layer.</description>
+    <techLevel>Spacer</techLevel>
+    <tradeability>Sellable</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CrownshardStormcaster</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.72,0.62)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>165</ABY_AbyssalResidue>
+      <Plasteel>105</Plasteel>
+      <Uranium>30</Uranium>
+      <Gold>24</Gold>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentSpacer>5</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>155000</WorkToMake>
+      <Mass>6.2</Mass>
+      <MarketValue>4300</MarketValue>
+      <AccuracyTouch>0.70</AccuracyTouch>
+      <AccuracyShort>0.84</AccuracyShort>
+      <AccuracyMedium>0.92</AccuracyMedium>
+      <AccuracyLong>0.88</AccuracyLong>
+      <RangedWeapon_Cooldown>4.65</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_CrownshardStormSeed</defaultProjectile>
+        <warmupTime>2.15</warmupTime>
+        <range>36.0</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_CrownshardStormcasterAim</soundAiming>
+        <soundCast>ABY_CrownshardStormcasterFire</soundCast>
+        <soundCastTail>ABY_CrownshardStormcasterTail</soundCastTail>
+        <muzzleFlashScale>12</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>crowned frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Herald</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownshardStormSeed</defName>
+    <label>crownshard storm seed</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownshardStormSeed</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.58,0.24)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>24</damageAmountBase>
+      <armorPenetrationBase>0.55</armorPenetrationBase>
+      <stoppingPower>1.40</stoppingPower>
+      <speed>54</speed>
+      <soundImpactAnticipate>ABY_CrownshardStormcasterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

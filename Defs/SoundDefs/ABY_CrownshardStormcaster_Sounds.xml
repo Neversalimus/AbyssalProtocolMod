@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_CrownshardStormcasterAim</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Charge</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>24</min>
+          <max>28</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.05</min>
+          <max>1.10</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CrownshardStormcasterFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/VesperLance_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>34</min>
+          <max>39</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.08</min>
+          <max>1.13</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CrownshardStormcasterTail</defName>
+    <context>MapOnly</context>
+    <maxVoices>5</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>19</min>
+          <max>23</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.03</min>
+          <max>1.08</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CrownshardStormcasterImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/VesperLance_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>22</min>
+          <max>26</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.08</min>
+          <max>1.14</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
