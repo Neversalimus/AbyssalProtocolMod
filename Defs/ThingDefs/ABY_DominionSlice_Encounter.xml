@@ -130,7 +130,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Heart</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(4.4,4.4)</drawSize>
+      <drawSize>(13.2,13.2)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2600</MaxHitPoints>
@@ -140,7 +140,7 @@
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_DominionHeartShield" />
     </comps>
-    <size>(2,2)</size>
+    <size>(6,6)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 

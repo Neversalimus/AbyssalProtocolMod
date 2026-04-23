@@ -19,14 +19,14 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Bastion</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.8,2.8)</drawSize>
+      <drawSize>(5.8,5.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2000</MaxHitPoints>
       <Mass>25</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 
@@ -48,14 +48,14 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Spire</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.2,3.0)</drawSize>
+      <drawSize>(5.4,7.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
       <Mass>18</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(1,1)</size>
+    <size>(2,2)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 

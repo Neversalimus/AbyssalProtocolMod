@@ -390,6 +390,11 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (defName == SpireDefName)
+            {
+                rot = Rot4.North;
+            }
+
             ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
             if (def == null)
             {
