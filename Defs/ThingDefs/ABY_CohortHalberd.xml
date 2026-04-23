@@ -13,6 +13,13 @@
       <drawSize>(1.88,0.60)</drawSize>
     </graphicData>
 
+    <soundInteract>ABY_CohortHalberdEquip</soundInteract>
+    <soundMeleeHitSharp>ABY_CohortHalberdHitSharp</soundMeleeHitSharp>
+    <soundMeleeHitPawn>ABY_CohortHalberdHitPawn</soundMeleeHitPawn>
+    <soundMeleeHitBuilding>ABY_CohortHalberdHitBuilding</soundMeleeHitBuilding>
+    <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+    <soundMeleeDodge>ABY_CohortHalberdMiss</soundMeleeDodge>
+
     <recipeMaker>
       <skillRequirements>
         <Crafting>10</Crafting>

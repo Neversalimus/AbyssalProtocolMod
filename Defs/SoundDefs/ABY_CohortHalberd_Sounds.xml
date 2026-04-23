@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_CohortHalberdEquip</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_CohortHalberd_Equip</clipPath>
+          </li>
+        </grains>
+        <volumeRange>16~20</volumeRange>
+        <pitchRange>0.99~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CohortHalberdHitSharp</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_CohortHalberd_HitSharp</clipPath>
+          </li>
+        </grains>
+        <volumeRange>24~30</volumeRange>
+        <pitchRange>0.98~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CohortHalberdHitPawn</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_CohortHalberd_HitPawn</clipPath>
+          </li>
+        </grains>
+        <volumeRange>22~28</volumeRange>
+        <pitchRange>0.99~1.04</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CohortHalberdHitBuilding</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_CohortHalberd_HitBuilding</clipPath>
+          </li>
+        </grains>
+        <volumeRange>24~30</volumeRange>
+        <pitchRange>0.97~1.01</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_CohortHalberdMiss</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_CohortHalberd_Miss</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~24</volumeRange>
+        <pitchRange>0.99~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
