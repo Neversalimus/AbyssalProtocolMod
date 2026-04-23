@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CrownCortexSubnode</defName>
+    <label>crown cortex subnode</label>
+    <description>An auxiliary dominion cognition module forged around a crown shard and seated beside the brain instead of replacing it. It deepens ordered thought, pattern recognition and calm pre-combat timing while leaving the host's original mind intact.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CrownCortexSubnode</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.18</Mass>
+      <WorkToMake>52000</WorkToMake>
+      <MarketValue>3520</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <Plasteel>30</Plasteel>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>20</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionPulseHeart</defName>
+    <label>dominion pulse heart</label>
+    <description>A crown-fed combat heart that forces the body into a colder, more stable rhythm under pressure. It strengthens circulation, movement and heat tolerance in a way that feels less biological than administrative.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionPulseHeart</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.40</Mass>
+      <WorkToMake>56000</WorkToMake>
+      <MarketValue>3740</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <Plasteel>36</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_VerdictTendonSpine</defName>
+    <label>verdict tendon spine</label>
+    <description>A dominion spinal lattice tensioned around a crown shard and plated with heavy anchor ribs. It improves breach movement, evasive stability and hauling force without sacrificing the sense that the host has become part of a larger war-machine.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_VerdictTendonSpine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.44</Mass>
+      <WorkToMake>54000</WorkToMake>
+      <MarketValue>3460</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <Plasteel>40</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Silver>40</Silver>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_LawwovenCarapaceMesh</defName>
+    <label>lawwoven carapace mesh</label>
+    <description>A crown-shard subdermal lattice that spreads force and heat through a rigid dominion weave. It is heavier and harsher than herald mesh, but it grants a level of built-in protection that feels close to wearing doctrine under the skin.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_LawwovenCarapaceMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <Mass>0.28</Mass>
+      <WorkToMake>58000</WorkToMake>
+      <MarketValue>3680</MarketValue>
+      <Flammability>0</Flammability>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <Plasteel>45</Plasteel>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>20</Uranium>
+      <Gold>14</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

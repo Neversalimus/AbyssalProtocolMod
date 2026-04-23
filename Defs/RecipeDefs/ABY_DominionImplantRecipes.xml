@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>ABY_InstallCrownCortexSubnode</defName>
+    <label>install crown cortex subnode</label>
+    <description>Install a crown cortex subnode.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_CrownCortexSubnode</ThingDef>
+      <HediffDef>ABY_CrownCortexSubnode_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing crown cortex subnode.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownCortexSubnode</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Brain</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_CrownCortexSubnode_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallDominionPulseHeart</defName>
+    <label>install dominion pulse heart</label>
+    <description>Install a dominion pulse heart.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_DominionPulseHeart</ThingDef>
+      <HediffDef>ABY_DominionPulseHeart_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing dominion pulse heart.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_DominionPulseHeart</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Heart</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_DominionPulseHeart_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallBodyPartProstheticBase">
+    <defName>ABY_InstallVerdictTendonSpine</defName>
+    <label>install verdict tendon spine</label>
+    <description>Install a verdict tendon spine.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_VerdictTendonSpine</ThingDef>
+      <HediffDef>ABY_VerdictTendonSpine_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing verdict tendon spine.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_VerdictTendonSpine</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Spine</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_VerdictTendonSpine_Implant</addsHediff>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <RecipeDef ParentName="SurgeryInstallImplantBase">
+    <defName>ABY_InstallLawwovenCarapaceMesh</defName>
+    <label>install lawwoven carapace mesh</label>
+    <description>Install a lawwoven carapace mesh.</description>
+    <descriptionHyperlinks>
+      <ThingDef>ABY_LawwovenCarapaceMesh</ThingDef>
+      <HediffDef>ABY_LawwovenCarapaceMesh_Implant</HediffDef>
+    </descriptionHyperlinks>
+    <jobString>Installing lawwoven carapace mesh.</jobString>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_LawwovenCarapaceMesh</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <appliedOnFixedBodyParts>
+      <li>Torso</li>
+    </appliedOnFixedBodyParts>
+    <addsHediff>ABY_LawwovenCarapaceMesh_Implant</addsHediff>
+    <incompatibleWithHediffTags>
+      <li>ArmorGland</li>
+    </incompatibleWithHediffTags>
+    <recipeUsers Inherit="False">
+      <li>Human</li>
+      <li MayRequire="Ludeon.RimWorld.Anomaly">CreepJoiner</li>
+    </recipeUsers>
+  </RecipeDef>
+
+</Defs>

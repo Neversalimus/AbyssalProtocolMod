@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_CrownCortexSubnode_Implant</defName>
+    <label>crown cortex subnode</label>
+    <description>An auxiliary dominion cognition module seated beside the brain instead of replacing it.</description>
+    <spawnThingOnRemoved>ABY_CrownCortexSubnode</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.10</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ResearchSpeed>0.19</ResearchSpeed>
+          <GlobalLearningFactor>0.13</GlobalLearningFactor>
+          <AimingDelayFactor>-0.06</AimingDelayFactor>
+          <PsychicSensitivity>0.10</PsychicSensitivity>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.10</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionPulseHeart_Implant</defName>
+    <label>dominion pulse heart</label>
+    <description>A crown-fed combat heart that stabilizes circulation, movement and heat endurance under extreme pressure.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.26</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionPulseHeart</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.33</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.06</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.06</MoveSpeed>
+          <PainShockThreshold>0.13</PainShockThreshold>
+          <ArmorRating_Heat>0.10</ArmorRating_Heat>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.05</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_VerdictTendonSpine_Implant</defName>
+    <label>verdict tendon spine</label>
+    <description>A dominion spinal lattice tuned for fast breach movement, heavier load tolerance and steadier evasive motion.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.20</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_VerdictTendonSpine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.18</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.13</MoveSpeed>
+          <CarryingCapacity>25</CarryingCapacity>
+          <MeleeDodgeChance>0.05</MeleeDodgeChance>
+          <PainShockThreshold>0.06</PainShockThreshold>
+          <PawnBeauty>-0.25</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_LawwovenCarapaceMesh_Implant</defName>
+    <label>lawwoven carapace mesh</label>
+    <description>A crown-shard subdermal lattice that spreads force and heat through a rigid dominion weave.</description>
+    <spawnThingOnRemoved>ABY_LawwovenCarapaceMesh</spawnThingOnRemoved>
+    <tags>
+      <li>ArmorGland</li>
+    </tags>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.28</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.18</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.25</ArmorRating_Heat>
+          <PainShockThreshold>0.05</PainShockThreshold>
+          <MoveSpeed>-0.03</MoveSpeed>
+          <PawnBeauty>-0.55</PawnBeauty>
+        </statOffsets>
+        <totalBleedFactor>0.75</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>
