@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>ABY_CohortHalberd</defName>
+    <label>cohort halberd</label>
+    <description>A disciplined war-lattice halberd forged from horde fragments. Built for breach-line fighters, it trades agility for armor pressure, punishing hooks and brutal holding power once the fight collapses into close quarters.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CohortHalberd</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.88,0.60)</drawSize>
+    </graphicData>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_HordeFragment>6</ABY_HordeFragment>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Steel>55</Steel>
+      <Plasteel>26</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+
+    <tools>
+      <li>
+        <label>hook blade</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>29</power>
+        <cooldownTime>2.45</cooldownTime>
+        <armorPenetration>0.54</armorPenetration>
+      </li>
+      <li>
+        <label>thrust tine</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>24</power>
+        <cooldownTime>1.95</cooldownTime>
+        <armorPenetration>0.72</armorPenetration>
+      </li>
+      <li>
+        <label>counterweight</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.10</cooldownTime>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>36000</WorkToMake>
+      <Mass>4.4</Mass>
+      <MarketValue>2350</MarketValue>
+    </statBases>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1250</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
