@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownspikeRail</defName>
     <label>crownspike rail</label>
-    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether. It aligns, sanctions and deletes a single target with terrifying reach. This first package uses a fast interim beam-bolt presentation; the dedicated thick rail-flash pass belongs to the next VFX package.</description>
+    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether. It aligns, sanctions and deletes a single target with terrifying reach. Package B swaps the interim beam-bolt for a true rail presentation: a very fast, thick laser-like shot with a heavy beam profile meant to read instantly on screen.</description>
     <techLevel>Spacer</techLevel>
     <tradeability>Sellable</tradeability>
     <generateCommonality>0</generateCommonality>
@@ -65,7 +65,7 @@
         <soundAiming>ABY_VesperLanceAim</soundAiming>
         <soundCast>ABY_VesperLanceFire</soundCast>
         <soundCastTail>ABY_VesperLanceTail</soundCastTail>
-        <muzzleFlashScale>13.5</muzzleFlashScale>
+        <muzzleFlashScale>16.5</muzzleFlashScale>
       </li>
     </verbs>
 
@@ -94,16 +94,16 @@
     <label>crownspike bolt</label>
     <thingClass>Bullet</thingClass>
     <graphicData>
-      <texPath>Things/Projectile/ABY_VesperLanceBeam_Long</texPath>
+      <texPath>Things/Projectile/ABY_CrownspikeRailBeam</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.42,3.35)</drawSize>
+      <drawSize>(1.08,5.80)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
       <damageAmountBase>62</damageAmountBase>
       <armorPenetrationBase>1.45</armorPenetrationBase>
       <stoppingPower>3.20</stoppingPower>
-      <speed>130</speed>
+      <speed>900</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
