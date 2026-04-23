@@ -11,6 +11,7 @@ namespace AbyssalProtocol
         private const string BastionDefName = "ABY_DominionSliceBastion";
         private const string SpireDefName = "ABY_DominionSliceSpire";
         private const string SigilPadDefName = "ABY_DominionSliceSigilPad";
+        private const string PerimeterWallDefName = "ABY_DominionSlicePerimeterWall";
 
         public static bool TryPrepareDominionSlice(Map map, ABY_DominionPocketSession session, out string failReason)
         {
@@ -46,36 +47,28 @@ namespace AbyssalProtocol
             for (int i = all.Count - 1; i >= 0; i--)
             {
                 Thing thing = all[i];
-                if (thing == null || thing.Destroyed)
+                if (thing == null || thing.Destroyed || thing is Pawn)
                 {
                     continue;
                 }
 
-                ThingDef def = thing.def;
-                if (def == null)
+                if (thing.def == null)
                 {
                     continue;
                 }
 
-                if (def.category == ThingCategory.Mote || def.category == ThingCategory.Attachment)
+                if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
                 {
                     continue;
                 }
 
-                string defName = def.defName ?? string.Empty;
+                string defName = thing.def.defName ?? string.Empty;
                 if (defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
                 {
                     continue;
                 }
 
-                bool purgeAmbientThing = thing is Pawn
-                    || thing is Corpse
-                    || def.category == ThingCategory.Plant
-                    || def.category == ThingCategory.Filth
-                    || def.mineable
-                    || defName == "SteamGeyser";
-
-                if (!def.destroyable && !purgeAmbientThing)
+                if (!thing.def.destroyable)
                 {
                     continue;
                 }
@@ -86,17 +79,6 @@ namespace AbyssalProtocol
                 }
                 catch (Exception ex)
                 {
-                    try
-                    {
-                        if (thing.Spawned)
-                        {
-                            thing.DeSpawn(DestroyMode.Vanish);
-                        }
-                    }
-                    catch
-                    {
-                    }
-
                     Log.Warning($"[Abyssal Protocol] Dominion slice cleanup skipped {thing.LabelCap}: {ex.GetType().Name}");
                 }
             }
@@ -139,6 +121,7 @@ namespace AbyssalProtocol
             TerrainDef sigilTerrain = ResolveTerrain("ABY_DominionBrassSigil", "MetalTile", "PavedTile");
 
             PaintWholeMap(map, baseTerrain);
+            SpawnEdgePerimeterWalls(map, 6);
 
             IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 4));
             IntVec3 entry = ClampToInterior(map, new IntVec3(center.x, 0, center.z - 42));
@@ -235,6 +218,42 @@ namespace AbyssalProtocol
                 }
             }
         }
+
+        private static void SpawnEdgePerimeterWalls(Map map, int layers)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            int safeLayers = Mathf.Clamp(layers, 1, Mathf.Min(map.Size.x, map.Size.z) / 2);
+            for (int layer = 0; layer < safeLayers; layer++)
+            {
+                int minX = layer;
+                int maxX = map.Size.x - 1 - layer;
+                int minZ = layer;
+                int maxZ = map.Size.z - 1 - layer;
+
+                for (int x = minX; x <= maxX; x++)
+                {
+                    SpawnProp(map, PerimeterWallDefName, new IntVec3(x, 0, minZ), Rot4.North);
+                    if (maxZ != minZ)
+                    {
+                        SpawnProp(map, PerimeterWallDefName, new IntVec3(x, 0, maxZ), Rot4.North);
+                    }
+                }
+
+                for (int z = minZ + 1; z < maxZ; z++)
+                {
+                    SpawnProp(map, PerimeterWallDefName, new IntVec3(minX, 0, z), Rot4.North);
+                    if (maxX != minX)
+                    {
+                        SpawnProp(map, PerimeterWallDefName, new IntVec3(maxX, 0, z), Rot4.North);
+                    }
+                }
+            }
+        }
+
 
         private static void PaintEntryBridge(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
         {
@@ -388,11 +407,6 @@ namespace AbyssalProtocol
             if (map == null || !cell.InBounds(map))
             {
                 return;
-            }
-
-            if (defName == SpireDefName)
-            {
-                rot = Rot4.North;
             }
 
             ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);

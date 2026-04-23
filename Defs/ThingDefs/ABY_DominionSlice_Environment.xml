@@ -19,14 +19,14 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Bastion</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(5.8,5.8)</drawSize>
+      <drawSize>(2.8,2.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2000</MaxHitPoints>
       <Mass>25</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(2,2)</size>
+    <size>(1,1)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 
@@ -48,14 +48,43 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Spire</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(5.4,7.8)</drawSize>
+      <drawSize>(2.2,3.0)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>1800</MaxHitPoints>
       <Mass>18</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <size>(2,2)</size>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionSlicePerimeterWall</defName>
+    <label>dominion perimeter wall</label>
+    <description>A dense dominion barrier segment fused into the slice boundary. It exists to deny escape through the map edge and hold the encounter inside the infernal machine-domain.</description>
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/ABY_DominionSlice_PerimeterWall</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.0,1.0)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>15000</MaxHitPoints>
+      <Mass>70</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
     <thingCategories Inherit="False" />
   </ThingDef>
 

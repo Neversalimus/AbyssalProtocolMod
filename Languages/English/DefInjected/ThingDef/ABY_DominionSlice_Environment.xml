@@ -14,4 +14,6 @@
   <ABY_DominionSliceAnchor_Law.description>A dominion anchor that sharpens the geometry of the slice itself. While it stands, the heart pulses become more punishing.</ABY_DominionSliceAnchor_Law.description>
   <ABY_DominionSliceHeart.label>crown-heart of the gate</ABY_DominionSliceHeart.label>
   <ABY_DominionSliceHeart.description>The unique crown-heart embedded in the dominion slice. It is not a reused portal core: it is the revealed command-organ of the encounter, exposed only after the dominion anchors are destroyed.</ABY_DominionSliceHeart.description>
+  <ABY_DominionSlicePerimeterWall.label>dominion perimeter wall</ABY_DominionSlicePerimeterWall.label>
+  <ABY_DominionSlicePerimeterWall.description>A dense dominion barrier segment fused into the slice boundary. It exists to deny escape through the map edge and hold the encounter inside the infernal machine-domain.</ABY_DominionSlicePerimeterWall.description>
 </LanguageData>

@@ -14,4 +14,6 @@
   <ABY_DominionSliceAnchor_Law.description>Якорь доминиона, заостряющий саму геометрию среза. Пока он стоит, пульсы сердца становятся опаснее.</ABY_DominionSliceAnchor_Law.description>
   <ABY_DominionSliceHeart.label>корона-сердце врат</ABY_DominionSliceHeart.label>
   <ABY_DominionSliceHeart.description>Уникальное корона-сердце, встроенное в срез доминиона. Это не переиспользованное ядро портала, а раскрытый командный орган encounter-а, доступный только после уничтожения якорей.</ABY_DominionSliceHeart.description>
+  <ABY_DominionSlicePerimeterWall.label>периметральная стена доминиона</ABY_DominionSlicePerimeterWall.label>
+  <ABY_DominionSlicePerimeterWall.description>Плотный сегмент барьера доминиона, вплавленный в границу среза. Он нужен, чтобы перекрыть побег через край карты и удержать encounter внутри инфернального машинного домена.</ABY_DominionSlicePerimeterWall.description>
 </LanguageData>
