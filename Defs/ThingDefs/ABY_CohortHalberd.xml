@@ -14,11 +14,6 @@
     </graphicData>
 
     <soundInteract>ABY_CohortHalberdEquip</soundInteract>
-    <soundMeleeHitSharp>ABY_CohortHalberdHitSharp</soundMeleeHitSharp>
-    <soundMeleeHitPawn>ABY_CohortHalberdHitPawn</soundMeleeHitPawn>
-    <soundMeleeHitBuilding>ABY_CohortHalberdHitBuilding</soundMeleeHitBuilding>
-    <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
-    <soundMeleeDodge>ABY_CohortHalberdMiss</soundMeleeDodge>
 
     <recipeMaker>
       <skillRequirements>
@@ -46,6 +41,8 @@
         <power>29</power>
         <cooldownTime>2.45</cooldownTime>
         <armorPenetration>0.54</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>
       <li>
         <label>thrust tine</label>
@@ -55,6 +52,8 @@
         <power>24</power>
         <cooldownTime>1.95</cooldownTime>
         <armorPenetration>0.72</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>
       <li>
         <label>counterweight</label>
@@ -63,6 +62,8 @@
         </capacities>
         <power>11</power>
         <cooldownTime>2.10</cooldownTime>
+        <soundMeleeHit>ABY_CohortHalberdHitBuilding</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>
     </tools>
 
