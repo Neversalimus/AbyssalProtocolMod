@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_LitanyGrinder</defName>
+    <label>litany grinder</label>
+    <description>A horde-pattern infernal rotary gun forged from condensed war-lattice fragments. It trades armor finesse and elegance for disciplined volume of fire, chewing through exposed infantry and breach swarms in a relentless ember-lit stream.</description>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_LitanyGrinder</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.58,0.58)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_HordeFragment>12</ABY_HordeFragment>
+      <ABY_AbyssalResidue>40</ABY_AbyssalResidue>
+      <Steel>130</Steel>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>56000</WorkToMake>
+      <Mass>8.8</Mass>
+      <MarketValue>3400</MarketValue>
+      <AccuracyTouch>0.74</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.60</AccuracyMedium>
+      <AccuracyLong>0.34</AccuracyLong>
+      <RangedWeapon_Cooldown>4.6</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_LitanyRoundProjectile</defaultProjectile>
+        <warmupTime>1.85</warmupTime>
+        <range>27.9</range>
+        <burstShotCount>18</burstShotCount>
+        <ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+        <soundCast>ABY_SigilRepeaterFire</soundCast>
+        <soundCastTail>ABY_SigilRepeaterTail</soundCastTail>
+        <muzzleFlashScale>9.6</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_LitanyRoundProjectile</defName>
+    <label>litany round</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_SigilNeedle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.26,1.52)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>7</damageAmountBase>
+      <armorPenetrationBase>0.18</armorPenetrationBase>
+      <stoppingPower>0.65</stoppingPower>
+      <speed>64</speed>
+      <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
