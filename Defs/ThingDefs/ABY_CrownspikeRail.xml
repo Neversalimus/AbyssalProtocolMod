@@ -92,11 +92,11 @@
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_CrownspikeBolt</defName>
     <label>crownspike bolt</label>
-    <thingClass>Bullet</thingClass>
+    <thingClass>AbyssalProtocol.Projectile_CrownspikeRailBolt</thingClass>
     <graphicData>
       <texPath>Things/Projectile/ABY_CrownspikeRailBeam</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.92,6.20)</drawSize>
+      <drawSize>(0.16,0.16)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
