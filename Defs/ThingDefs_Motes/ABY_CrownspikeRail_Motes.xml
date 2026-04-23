@@ -1,25 +1,53 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="MoteBase">
-    <defName>ABY_Mote_CrownspikeRailOuter</defName>
-    <label>crownspike rail outer glow</label>
-    <thingClass>MoteThrown</thingClass>
+    <defName>ABY_Mote_CrownspikeRailHalo</defName>
+    <label>crownspike rail halo beam</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_OuterGlow</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(0.82,0.82)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.025</solidTime><fadeOutTime>0.075</fadeOutTime><growthRate>0.10</growthRate></mote>
+    <graphicData>
+      <texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamHalo</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.055</solidTime><fadeOutTime>0.085</fadeOutTime><growthRate>0</growthRate></mote>
   </ThingDef>
+
   <ThingDef ParentName="MoteBase">
-    <defName>ABY_Mote_CrownspikeRailCore</defName>
-    <label>crownspike rail white core</label>
-    <thingClass>MoteThrown</thingClass>
+    <defName>ABY_Mote_CrownspikeRailBeam</defName>
+    <label>crownspike rail beam glow</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_Core</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(0.34,0.34)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.018</solidTime><fadeOutTime>0.052</fadeOutTime><growthRate>-0.02</growthRate></mote>
+    <graphicData>
+      <texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamGlow</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.045</solidTime><fadeOutTime>0.075</fadeOutTime><growthRate>0</growthRate></mote>
   </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_CrownspikeRailCoreBeam</defName>
+    <label>crownspike rail white core beam</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.030</solidTime><fadeOutTime>0.060</fadeOutTime><growthRate>0</growthRate></mote>
+  </ThingDef>
+
   <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_CrownspikeRailMuzzle</defName>
     <label>crownspike rail muzzle flare</label>
@@ -27,9 +55,10 @@
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_MuzzleFlash</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.20,1.20)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.030</solidTime><fadeOutTime>0.090</fadeOutTime><growthRate>0.18</growthRate></mote>
+    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_MuzzleFlash</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.38,1.38)</drawSize></graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.040</solidTime><fadeOutTime>0.110</fadeOutTime><growthRate>0.20</growthRate></mote>
   </ThingDef>
+
   <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_CrownspikeRailImpact</defName>
     <label>crownspike rail impact flare</label>
@@ -37,9 +66,10 @@
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_ImpactFlare</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.10,1.10)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.035</solidTime><fadeOutTime>0.130</fadeOutTime><growthRate>0.16</growthRate></mote>
+    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_ImpactFlare</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.22,1.22)</drawSize></graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.045</solidTime><fadeOutTime>0.150</fadeOutTime><growthRate>0.18</growthRate></mote>
   </ThingDef>
+
   <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_CrownspikeRailShieldImpact</defName>
     <label>crownspike rail shield reaction</label>
@@ -47,9 +77,10 @@
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_ShieldImpact</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.20,1.20)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.045</solidTime><fadeOutTime>0.150</fadeOutTime><growthRate>0.10</growthRate></mote>
+    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_ShieldImpact</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.42,1.42)</drawSize></graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.055</solidTime><fadeOutTime>0.170</fadeOutTime><growthRate>0.12</growthRate></mote>
   </ThingDef>
+
   <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_CrownspikeRailDenseImpact</defName>
     <label>crownspike rail dense impact flare</label>
@@ -57,7 +88,7 @@
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
     <tickerType>Normal</tickerType>
-    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_DenseImpact</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.30,1.30)</drawSize></graphicData>
-    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.045</solidTime><fadeOutTime>0.145</fadeOutTime><growthRate>0.18</growthRate></mote>
+    <graphicData><texPath>Things/VFX/CrownspikeRail/ABY_CrownspikeRail_DenseImpact</texPath><graphicClass>Graphic_Single</graphicClass><shaderType>MoteGlow</shaderType><drawSize>(1.54,1.54)</drawSize></graphicData>
+    <mote><fadeInTime>0.00</fadeInTime><solidTime>0.055</solidTime><fadeOutTime>0.165</fadeOutTime><growthRate>0.20</growthRate></mote>
   </ThingDef>
 </Defs>

@@ -6,22 +6,25 @@ namespace AbyssalProtocol
 {
     public static class CrownspikeRailVfxUtility
     {
-        private const string RailOuterMoteDefName = "ABY_Mote_CrownspikeRailOuter";
-        private const string RailCoreMoteDefName = "ABY_Mote_CrownspikeRailCore";
+        private const string RailBeamThingDefName = "ABY_Mote_CrownspikeRailBeam";
+        private const string RailHaloThingDefName = "ABY_Mote_CrownspikeRailHalo";
+        private const string RailCoreThingDefName = "ABY_Mote_CrownspikeRailCoreBeam";
         private const string MuzzleMoteDefName = "ABY_Mote_CrownspikeRailMuzzle";
         private const string ImpactMoteDefName = "ABY_Mote_CrownspikeRailImpact";
         private const string ShieldMoteDefName = "ABY_Mote_CrownspikeRailShieldImpact";
         private const string DenseImpactMoteDefName = "ABY_Mote_CrownspikeRailDenseImpact";
 
-        private static ThingDef railOuterMoteDef;
-        private static ThingDef railCoreMoteDef;
+        private static ThingDef railBeamDef;
+        private static ThingDef railHaloDef;
+        private static ThingDef railCoreDef;
         private static ThingDef muzzleMoteDef;
         private static ThingDef impactMoteDef;
         private static ThingDef shieldMoteDef;
         private static ThingDef denseImpactMoteDef;
 
-        private static ThingDef RailOuterMoteDef => railOuterMoteDef ?? (railOuterMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RailOuterMoteDefName));
-        private static ThingDef RailCoreMoteDef => railCoreMoteDef ?? (railCoreMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RailCoreMoteDefName));
+        private static ThingDef RailBeamDef => railBeamDef ?? (railBeamDef = DefDatabase<ThingDef>.GetNamedSilentFail(RailBeamThingDefName));
+        private static ThingDef RailHaloDef => railHaloDef ?? (railHaloDef = DefDatabase<ThingDef>.GetNamedSilentFail(RailHaloThingDefName));
+        private static ThingDef RailCoreDef => railCoreDef ?? (railCoreDef = DefDatabase<ThingDef>.GetNamedSilentFail(RailCoreThingDefName));
         private static ThingDef MuzzleMoteDef => muzzleMoteDef ?? (muzzleMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(MuzzleMoteDefName));
         private static ThingDef ImpactMoteDef => impactMoteDef ?? (impactMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ImpactMoteDefName));
         private static ThingDef ShieldMoteDef => shieldMoteDef ?? (shieldMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ShieldMoteDefName));
@@ -47,13 +50,15 @@ namespace AbyssalProtocol
             ThingDef muzzleDef = MuzzleMoteDef;
             if (muzzleDef != null)
             {
-                MakeStaticMote(source, map, muzzleDef, 1.38f);
-                MakeStaticMote(Vector3.Lerp(source, target, 0.035f), map, muzzleDef, 0.74f);
+                MakeStaticMote(source, map, muzzleDef, 1.62f);
+                MakeStaticMote(Vector3.Lerp(source, target, 0.028f), map, muzzleDef, 0.92f);
+                MakeStaticMote(Vector3.Lerp(source, target, 0.058f), map, muzzleDef, 0.48f);
             }
 
-            FleckMaker.ThrowLightningGlow(source, map, 1.85f);
+            FleckMaker.ThrowLightningGlow(source, map, 2.25f);
             FleckMaker.ThrowMicroSparks(source, map);
-            if (Rand.Chance(0.75f))
+            FleckMaker.ThrowMicroSparks(source, map);
+            if (Rand.Chance(0.55f))
             {
                 FleckMaker.ThrowMicroSparks(source, map);
             }
@@ -68,30 +73,21 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int steps = Mathf.Clamp(Mathf.CeilToInt(distance * 3.15f), 5, 42);
-            ThingDef outerDef = RailOuterMoteDef;
-            ThingDef coreDef = RailCoreMoteDef;
+            SpawnBeamThing(RailHaloDef, source, target, map, 0.96f, 8, "Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamHalo", true);
+            SpawnBeamThing(RailBeamDef, source, target, map, 0.48f, 7, "Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamGlow", true);
+            SpawnBeamThing(RailCoreDef, source, target, map, 0.16f, 5, "Things/VFX/CrownspikeRail/ABY_CrownspikeRail_BeamCore", false);
 
-            for (int i = 1; i <= steps; i++)
+            int sparkleSteps = Mathf.Clamp(Mathf.CeilToInt(distance * 0.42f), 3, 13);
+            for (int i = 1; i <= sparkleSteps; i++)
             {
-                float t = i / (float)(steps + 1);
+                float t = i / (float)(sparkleSteps + 1);
                 Vector3 point = Vector3.Lerp(source, target, t);
+                point += new Vector3(Rand.Range(-0.045f, 0.045f), 0f, Rand.Range(-0.045f, 0.045f));
                 point.y = AltitudeLayer.MoteOverhead.AltitudeFor();
 
-                float pulse = 1f + Mathf.Sin(t * Mathf.PI) * 0.28f;
-                if (outerDef != null)
+                if (i % 2 == 0)
                 {
-                    MakeStaticMote(point, map, outerDef, Mathf.Lerp(0.46f, 0.78f, pulse - 1f));
-                }
-
-                if (coreDef != null)
-                {
-                    MakeStaticMote(point, map, coreDef, Mathf.Lerp(0.22f, 0.34f, pulse - 1f));
-                }
-
-                if (i % 4 == 0)
-                {
-                    FleckMaker.ThrowLightningGlow(point, map, 0.38f * pulse);
+                    FleckMaker.ThrowLightningGlow(point, map, 0.50f);
                 }
             }
         }
@@ -100,22 +96,60 @@ namespace AbyssalProtocol
         {
             bool denseTarget = IsDenseTarget(hitThing);
             ThingDef impactDef = blockedByShield ? ShieldMoteDef : denseTarget ? DenseImpactMoteDef : ImpactMoteDef;
-            float baseScale = blockedByShield ? 1.28f : denseTarget ? 1.48f : 1.22f;
+            float baseScale = blockedByShield ? 1.48f : denseTarget ? 1.74f : 1.34f;
 
             if (impactDef != null)
             {
                 MakeStaticMote(target, map, impactDef, baseScale);
-                MakeStaticMote(target + new Vector3(Rand.Range(-0.10f, 0.10f), 0f, Rand.Range(-0.10f, 0.10f)), map, impactDef, baseScale * 0.62f);
+                MakeStaticMote(target + new Vector3(Rand.Range(-0.10f, 0.10f), 0f, Rand.Range(-0.10f, 0.10f)), map, impactDef, baseScale * 0.55f);
             }
 
-            FleckMaker.ThrowLightningGlow(target, map, blockedByShield ? 2.00f : denseTarget ? 2.35f : 1.78f);
+            FleckMaker.ThrowLightningGlow(target, map, blockedByShield ? 2.40f : denseTarget ? 2.85f : 2.05f);
             FleckMaker.ThrowMicroSparks(target, map);
             FleckMaker.ThrowMicroSparks(target, map);
             if (blockedByShield || denseTarget)
             {
                 FleckMaker.ThrowMicroSparks(target, map);
                 FleckMaker.ThrowMicroSparks(target, map);
+                if (Rand.Chance(0.70f))
+                {
+                    FleckMaker.ThrowMicroSparks(target, map);
+                }
             }
+        }
+
+        private static void SpawnBeamThing(ThingDef def, Vector3 source, Vector3 target, Map map, float width, int ticks, string texturePath, bool pulse)
+        {
+            if (def == null || map == null)
+            {
+                return;
+            }
+
+            Mote_CrownspikeRailBeam beam = ThingMaker.MakeThing(def) as Mote_CrownspikeRailBeam;
+            if (beam == null)
+            {
+                return;
+            }
+
+            beam.start = source;
+            beam.end = target;
+            beam.width = width;
+            beam.ticksLeft = ticks;
+            beam.startingTicks = ticks;
+            beam.texturePath = texturePath;
+            beam.additivePulse = pulse;
+
+            IntVec3 spawnCell = source.ToIntVec3();
+            if (!spawnCell.InBounds(map))
+            {
+                spawnCell = target.ToIntVec3();
+            }
+            if (!spawnCell.InBounds(map))
+            {
+                return;
+            }
+
+            GenSpawn.Spawn(beam, spawnCell, map);
         }
 
         private static bool IsDenseTarget(Thing hitThing)
