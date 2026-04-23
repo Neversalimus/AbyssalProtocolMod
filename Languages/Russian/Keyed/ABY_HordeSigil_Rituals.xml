@@ -98,13 +98,14 @@
   <ABY_HordeCommandGate_Inspect>Узел command gate. Доктрина: {0}. Оставшиеся command-burst: {1}. Пока он цел, он ускоряет cadence порталов на своём фронте и удерживает резервные подкрепления.</ABY_HordeCommandGate_Inspect>
   <ABY_HordeCommandGate_InspectReward>При уничтожении выбрасывает бонусный salvage-пакет, зависящий от оставшихся burst.</ABY_HordeCommandGate_InspectReward>
   <ABY_HordeEconomy_Header>Маршрутизация наград</ABY_HordeEconomy_Header>
-  <ABY_HordeEconomy_Summary>Плата за схлопывание: {0}. Бонус за уничтожение command node: {1}. Через этот ритуал не идут ядра boss/miniboss.</ABY_HordeEconomy_Summary>
+  <ABY_HordeEconomy_Summary>Плата за схлопывание: {0}. Бонус за уничтожение command node: {1}. Через этот ритуал не идут ядра boss/miniboss, но horde-фрагменты можно перековать в {2}, когда forge достигнет 1000 residue.</ABY_HordeEconomy_Summary>
   <ABY_HordeEconomy_Unknown>Не удалось стабилизировать маршрутизацию наград. Ожидается residue-heavy добыча без boss-tier дропа.</ABY_HordeEconomy_Unknown>
   <ABY_HordeEconomy_CommandNone>бонус command node не ожидается</ABY_HordeEconomy_CommandNone>
   <ABY_HordeEconomy_LineClosure>Кэш схлопывания прорыва: {0}</ABY_HordeEconomy_LineClosure>
   <ABY_HordeEconomy_LineCommand>Бонус за убийство command node: {0}</ABY_HordeEconomy_LineCommand>
   <ABY_HordeEconomy_LineCommandAbsent>Для этого прогноза бонусный command node не ожидается.</ABY_HordeEconomy_LineCommandAbsent>
   <ABY_HordeEconomy_LineNoBoss>Через Horde payout не идут ядра боссов, saint cache и уникальные награды минибоссов.</ABY_HordeEconomy_LineNoBoss>
+  <ABY_HordeEconomy_LineFragments>War-lattice фрагменты из этого ритуала питают шаблон тяжёлого оружия {0}, когда forge достигнет 1000 residue.</ABY_HordeEconomy_LineFragments>
   <ABY_HordeEconomy_LineBacklash>Дополнительный откат: +{0}% instability heat и +{1}% contamination pressure при запуске.</ABY_HordeEconomy_LineBacklash>
   <ABY_HordeEconomy_BulletinClosure>{0} residue + {1} осколка</ABY_HordeEconomy_BulletinClosure>
   <ABY_HordeEconomy_BulletinBacklash>Heat +{0}% / Contam +{1}%</ABY_HordeEconomy_BulletinBacklash>

@@ -98,13 +98,14 @@
   <ABY_HordeCommandGate_Inspect>Command gate node. Doctrine: {0}. Remaining command bursts: {1}. While intact it accelerates portal cadence on its front and preserves reserved reinforcements.</ABY_HordeCommandGate_Inspect>
   <ABY_HordeCommandGate_InspectReward>If destroyed it spills a command salvage bonus tied to remaining bursts.</ABY_HordeCommandGate_InspectReward>
   <ABY_HordeEconomy_Header>Reward routing</ABY_HordeEconomy_Header>
-  <ABY_HordeEconomy_Summary>Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual.</ABY_HordeEconomy_Summary>
+  <ABY_HordeEconomy_Summary>Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual, but horde fragments can be forged into {2} once the forge reaches 1000 residue.</ABY_HordeEconomy_Summary>
   <ABY_HordeEconomy_Unknown>Reward routing could not be stabilized. Expect residue-heavy salvage without boss-tier drops.</ABY_HordeEconomy_Unknown>
   <ABY_HordeEconomy_CommandNone>no command bonus expected</ABY_HordeEconomy_CommandNone>
   <ABY_HordeEconomy_LineClosure>Breach closure cache: {0}</ABY_HordeEconomy_LineClosure>
   <ABY_HordeEconomy_LineCommand>Command node kill bonus: {0}</ABY_HordeEconomy_LineCommand>
   <ABY_HordeEconomy_LineCommandAbsent>No command node bonus is expected for this forecast.</ABY_HordeEconomy_LineCommandAbsent>
   <ABY_HordeEconomy_LineNoBoss>No boss cores, saint caches, or miniboss-unique drops are routed through Horde payouts.</ABY_HordeEconomy_LineNoBoss>
+  <ABY_HordeEconomy_LineFragments>War-lattice fragments from this rite feed the {0} heavy weapon pattern once the forge reaches 1000 residue.</ABY_HordeEconomy_LineFragments>
   <ABY_HordeEconomy_LineBacklash>Additional backlash: +{0}% instability heat and +{1}% contamination pressure on invocation.</ABY_HordeEconomy_LineBacklash>
   <ABY_HordeEconomy_BulletinClosure>{0} residue + {1} fragments</ABY_HordeEconomy_BulletinClosure>
   <ABY_HordeEconomy_BulletinBacklash>Heat +{0}% / Contam +{1}%</ABY_HordeEconomy_BulletinBacklash>
