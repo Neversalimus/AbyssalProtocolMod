@@ -101,7 +101,7 @@ namespace AbyssalProtocol
 
             return AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_HordeEconomy_Summary",
-                "Closure payout: {0}. Command node kill bonus: {1}. No boss or miniboss cores are routed through this ritual. Horde fragments can be reforged into the Litany Grinder and the Phalanx Driver once the forge reaches the proper fragment tiers.",
+                "Closure payout: {0}. Command node kill bonus: {1}. Horde fragments can be reforged into the Litany Grinder, Phalanx Driver, and Cohort Halberd once their forge tiers are unlocked. No boss or miniboss cores are routed through this ritual.",
                 closureLabel,
                 commandLabel);
         }
@@ -127,8 +127,8 @@ namespace AbyssalProtocol
                 lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineCommandAbsent", "No command node bonus is expected for this forecast."));
             }
 
+            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineFragmentArms", "Fragment reforging branch: Litany Grinder suppresses massed fronts, Phalanx Driver breaks heavy lines, and Cohort Halberd anchors armored melee response."));
             lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineNoBoss", "No boss cores, saint caches, or miniboss-unique drops are routed through Horde payouts."));
-            lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HordeEconomy_LineForge", "Forge routing: horde fragments can be refined into the Litany Grinder at the horde tier and the Phalanx Driver once deeper fragment access is unlocked."));
             lines.Add(AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_HordeEconomy_LineBacklash",
                 "Additional backlash: +{0}% instability heat and +{1}% contamination pressure on invocation.",

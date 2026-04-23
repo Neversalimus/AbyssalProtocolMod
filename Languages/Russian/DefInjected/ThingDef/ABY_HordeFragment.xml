@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_HordeFragment.label>осколок орды</ABY_HordeFragment.label>
-  <ABY_HordeFragment.description>Сконденсированный осколок боевой решётки, остающийся после схлопывания horde-прорыва. Это не ядро босса, но в нём всё ещё удерживается дисциплинированная маршрутизация целого abyssal-наступления, и его можно перековать в Litany Grinder на horde-tier или в Phalanx Driver после открытия более глубокого fragment-доступа в Abyssal Forge.</ABY_HordeFragment.description>
+  <ABY_HordeFragment.description>Сконденсированный осколок боевой решётки, остающийся после схлопывания horde-прорыва. Это не ядро босса, но в нём всё ещё удерживается дисциплинированная маршрутизация целого abyssal-наступления, и при нужном horde-tier Abyssal Forge его можно перековать в Litany Grinder, Phalanx Driver или Cohort Halberd.</ABY_HordeFragment.description>
 </LanguageData>
