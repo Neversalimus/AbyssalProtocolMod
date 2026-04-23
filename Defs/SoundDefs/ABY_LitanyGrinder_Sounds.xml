@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_LitanyGrinderAim</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_LitanyGrinder_Aim</clipPath>
+          </li>
+        </grains>
+        <volumeRange>20~24</volumeRange>
+        <pitchRange>0.98~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_LitanyGrinderFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_LitanyGrinder_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>36~40</volumeRange>
+        <pitchRange>0.99~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_LitanyGrinderTail</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_LitanyGrinder_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~22</volumeRange>
+        <pitchRange>0.98~1.02</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_LitanyGrinderImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/ABY_LitanyGrinder_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~24</volumeRange>
+        <pitchRange>1.00~1.04</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -58,8 +58,9 @@
         <range>27.9</range>
         <burstShotCount>18</burstShotCount>
         <ticksBetweenBurstShots>4</ticksBetweenBurstShots>
-        <soundCast>ABY_SigilRepeaterFire</soundCast>
-        <soundCastTail>ABY_SigilRepeaterTail</soundCastTail>
+        <soundAiming>ABY_LitanyGrinderAim</soundAiming>
+        <soundCast>ABY_LitanyGrinderFire</soundCast>
+        <soundCastTail>ABY_LitanyGrinderTail</soundCastTail>
         <muzzleFlashScale>9.6</muzzleFlashScale>
       </li>
     </verbs>
@@ -76,9 +77,9 @@
     <defName>ABY_LitanyRoundProjectile</defName>
     <label>litany round</label>
     <graphicData>
-      <texPath>Things/Projectile/ABY_SigilNeedle</texPath>
+      <texPath>Things/Projectile/ABY_LitanyRound</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.26,1.52)</drawSize>
+      <drawSize>(0.34,1.86)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
@@ -86,7 +87,7 @@
       <armorPenetrationBase>0.18</armorPenetrationBase>
       <stoppingPower>0.65</stoppingPower>
       <speed>64</speed>
-      <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
+      <soundImpactAnticipate>ABY_LitanyGrinderImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
 
