@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_CrownspikeRail</defName>
+    <label>crownspike rail</label>
+    <description>A dominion-grade rail rifle forged around crown-shard lattice geometry and a residue-fed acceleration spine. It does not spray infernal fire or sustain a tether. It aligns, sanctions and deletes a single target with terrifying reach. This first package uses a fast interim beam-bolt presentation; the dedicated thick rail-flash pass belongs to the next VFX package.</description>
+    <techLevel>Spacer</techLevel>
+    <tradeability>Sellable</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Item/Equipment/WeaponRanged/ABY_CrownspikeRail</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.72,0.44)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_DominionCrownShard>2</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>120</ABY_AbyssalResidue>
+      <Plasteel>80</Plasteel>
+      <Uranium>40</Uranium>
+      <Gold>20</Gold>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>145000</WorkToMake>
+      <Mass>6.8</Mass>
+      <MarketValue>4680</MarketValue>
+      <AccuracyTouch>0.72</AccuracyTouch>
+      <AccuracyShort>0.88</AccuracyShort>
+      <AccuracyMedium>0.95</AccuracyMedium>
+      <AccuracyLong>0.99</AccuracyLong>
+      <RangedWeapon_Cooldown>3.40</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_CrownspikeBolt</defaultProjectile>
+        <warmupTime>2.70</warmupTime>
+        <range>60.0</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_VesperLanceAim</soundAiming>
+        <soundCast>ABY_VesperLanceFire</soundCast>
+        <soundCastTail>ABY_VesperLanceTail</soundCastTail>
+        <muzzleFlashScale>13.5</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Herald</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownspikeBolt</defName>
+    <label>crownspike bolt</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_VesperLanceBeam_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.42,3.35)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>62</damageAmountBase>
+      <armorPenetrationBase>1.45</armorPenetrationBase>
+      <stoppingPower>3.20</stoppingPower>
+      <speed>130</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
