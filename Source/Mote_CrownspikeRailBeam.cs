@@ -15,7 +15,7 @@ namespace AbyssalProtocol
 
         private Material cachedMaterial;
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
             ticksLeft--;
@@ -25,7 +25,7 @@ namespace AbyssalProtocol
             }
         }
 
-        public override void DrawAt(Vector3 drawLoc, bool flip = false)
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             if (start == default(Vector3) || end == default(Vector3))
             {
