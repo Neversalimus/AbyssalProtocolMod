@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceVoidRim</defName>
+    <label>dominion void rim glow</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_VoidRim</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.060</fadeInTime>
+      <solidTime>0.220</solidTime>
+      <fadeOutTime>0.680</fadeOutTime>
+      <growthRate>0.025</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceVoidCrack</defName>
+    <label>dominion void crack</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_VoidCrack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.150</solidTime>
+      <fadeOutTime>0.420</fadeOutTime>
+      <growthRate>0.060</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceBoundaryRift</defName>
+    <label>dominion boundary rift</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_BoundaryRift</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.030</fadeInTime>
+      <solidTime>0.190</solidTime>
+      <fadeOutTime>0.560</fadeOutTime>
+      <growthRate>0.045</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceEdgeShard</defName>
+    <label>dominion edge shard</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_EdgeShard</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.000</fadeInTime>
+      <solidTime>0.100</solidTime>
+      <fadeOutTime>0.310</fadeOutTime>
+      <growthRate>0.035</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
