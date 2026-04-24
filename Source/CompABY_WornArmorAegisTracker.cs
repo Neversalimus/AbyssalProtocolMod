@@ -10,6 +10,7 @@ namespace AbyssalProtocol
     {
         private float currentShieldPoints = -1f;
         private int lastHitTick = -999999;
+        private int lastRechargeTick = -999999;
         private int lastArmorChangeTick = -999999;
         private string trackedArmorDefName = string.Empty;
         private bool wasCollapsed;
@@ -22,6 +23,7 @@ namespace AbyssalProtocol
             base.PostExposeData();
             Scribe_Values.Look(ref currentShieldPoints, "currentShieldPoints", -1f);
             Scribe_Values.Look(ref lastHitTick, "lastHitTick", -999999);
+            Scribe_Values.Look(ref lastRechargeTick, "lastRechargeTick", -999999);
             Scribe_Values.Look(ref lastArmorChangeTick, "lastArmorChangeTick", -999999);
             Scribe_Values.Look(ref trackedArmorDefName, "trackedArmorDefName", string.Empty);
             Scribe_Values.Look(ref wasCollapsed, "wasCollapsed", false);
@@ -54,31 +56,7 @@ namespace AbyssalProtocol
             }
 
             wasSuppressed = false;
-            if (!parent.IsHashIntervalTick(ext.RechargeIntervalTicksSafe))
-            {
-                return;
-            }
-
-            if (currentShieldPoints >= ext.MaxShieldPointsSafe)
-            {
-                currentShieldPoints = ext.MaxShieldPointsSafe;
-                wasCollapsed = false;
-                return;
-            }
-
-            int ticksGame = CurrentTick;
-            if (ticksGame - lastHitTick < ext.RechargeDelayTicksSafe)
-            {
-                return;
-            }
-
-            bool wasInactive = currentShieldPoints <= 0.5f;
-            currentShieldPoints = Mathf.Min(ext.MaxShieldPointsSafe, currentShieldPoints + ext.RechargePerIntervalSafe);
-            if (wasInactive && currentShieldPoints > 0.5f)
-            {
-                wasCollapsed = false;
-                TriggerRestoreFeedback(pawn, ext);
-            }
+            ApplyRecharge(pawn, ext);
         }
 
         public override void PostPreApplyDamage(ref DamageInfo dinfo, out bool absorbed)
@@ -107,6 +85,8 @@ namespace AbyssalProtocol
             }
 
             wasSuppressed = false;
+            ApplyRecharge(pawn, ext);
+
             if (currentShieldPoints <= 0.5f || !ShouldAbsorbDamage(pawn, dinfo, ext))
             {
                 return;
@@ -120,6 +100,7 @@ namespace AbyssalProtocol
 
             currentShieldPoints = Mathf.Max(0f, currentShieldPoints - drain);
             lastHitTick = CurrentTick;
+            lastRechargeTick = CurrentTick;
             absorbed = true;
             TriggerHitFeedback(pawn, ext);
 
@@ -152,6 +133,7 @@ namespace AbyssalProtocol
                 return label + ": " + ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield");
             }
 
+            ApplyRecharge(pawn, ext);
             string state = CurrentStateLabel(ext);
             return label + ": " + ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe) + " — " + state;
         }
@@ -177,6 +159,11 @@ namespace AbyssalProtocol
 
             SyncTrackedArmor(armor, ext);
             bool suppressed = IsSuppressedByExternalShield(pawn, armor, ext);
+            if (!suppressed)
+            {
+                ApplyRecharge(pawn, ext);
+            }
+
             string label = ABY_ApparelAegisUtility.AegisLabel(ext);
             string points = ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe);
             string state = suppressed ? ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield") : CurrentStateLabel(ext);
@@ -220,8 +207,68 @@ namespace AbyssalProtocol
             currentShieldPoints = ext.MaxShieldPointsSafe;
             lastArmorChangeTick = CurrentTick;
             lastHitTick = -999999;
+            lastRechargeTick = CurrentTick;
             wasCollapsed = false;
             wasSuppressed = false;
+        }
+
+        private void ApplyRecharge(Pawn pawn, DefModExtension_ABY_ApparelAegis ext)
+        {
+            if (ext == null || currentShieldPoints < 0f)
+            {
+                return;
+            }
+
+            float max = ext.MaxShieldPointsSafe;
+            if (currentShieldPoints >= max - 0.01f)
+            {
+                currentShieldPoints = max;
+                wasCollapsed = false;
+                lastRechargeTick = CurrentTick;
+                return;
+            }
+
+            int tick = CurrentTick;
+            int rechargeStartTick = lastHitTick + ext.RechargeDelayTicksSafe;
+            if (tick < rechargeStartTick)
+            {
+                return;
+            }
+
+            int interval = ext.RechargeIntervalTicksSafe;
+            int effectiveFrom = Mathf.Max(lastRechargeTick, rechargeStartTick);
+            if (effectiveFrom < rechargeStartTick)
+            {
+                effectiveFrom = rechargeStartTick;
+            }
+
+            int elapsed = tick - effectiveFrom;
+            if (elapsed < interval)
+            {
+                return;
+            }
+
+            int intervals = elapsed / interval;
+            if (intervals <= 0)
+            {
+                return;
+            }
+
+            bool wasInactive = currentShieldPoints <= 0.5f;
+            currentShieldPoints = Mathf.Min(max, currentShieldPoints + intervals * ext.RechargePerIntervalSafe);
+            lastRechargeTick = effectiveFrom + intervals * interval;
+
+            if (currentShieldPoints >= max - 0.01f)
+            {
+                currentShieldPoints = max;
+                wasCollapsed = false;
+            }
+
+            if (wasInactive && currentShieldPoints > 0.5f)
+            {
+                wasCollapsed = false;
+                TriggerRestoreFeedback(pawn, ext);
+            }
         }
 
         private static Apparel ResolveAegisArmor(Pawn pawn, out DefModExtension_ABY_ApparelAegis ext)
