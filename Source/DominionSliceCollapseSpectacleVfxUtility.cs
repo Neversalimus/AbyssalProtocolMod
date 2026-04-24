@@ -8,21 +8,25 @@ namespace AbyssalProtocol
     {
         private const string ShockwaveMoteDefName = "ABY_Mote_DominionSliceCollapseShockwave";
         private const string ExtractionBeaconMoteDefName = "ABY_Mote_DominionSliceExtractionBeacon";
-        private const string RewardBeaconMoteDefName = "ABY_Mote_DominionSliceRewardBeacon";
-        private const string EdgeInstabilityMoteDefName = "ABY_Mote_DominionSliceEdgeInstability";
-        private const string WarningPulseMoteDefName = "ABY_Mote_DominionSliceCollapseWarningPulse";
         private const string ExtractionGuideMoteDefName = "ABY_Mote_DominionSliceExtractionGuide";
+        private const string ExtractionSafeRingMoteDefName = "ABY_Mote_DominionSliceExtractionSafeRing";
+        private const string ExtractionColumnMoteDefName = "ABY_Mote_DominionSliceExtractionColumn";
+        private const string RewardBeaconMoteDefName = "ABY_Mote_DominionSliceRewardBeacon";
         private const string RewardGuideMoteDefName = "ABY_Mote_DominionSliceRewardGuide";
         private const string GuidanceTrailMoteDefName = "ABY_Mote_DominionSliceGuidanceTrail";
+        private const string EdgeInstabilityMoteDefName = "ABY_Mote_DominionSliceEdgeInstability";
+        private const string WarningPulseMoteDefName = "ABY_Mote_DominionSliceCollapseWarningPulse";
 
         private static ThingDef shockwaveMoteDef;
         private static ThingDef extractionBeaconMoteDef;
-        private static ThingDef rewardBeaconMoteDef;
-        private static ThingDef edgeInstabilityMoteDef;
-        private static ThingDef warningPulseMoteDef;
         private static ThingDef extractionGuideMoteDef;
+        private static ThingDef extractionSafeRingMoteDef;
+        private static ThingDef extractionColumnMoteDef;
+        private static ThingDef rewardBeaconMoteDef;
         private static ThingDef rewardGuideMoteDef;
         private static ThingDef guidanceTrailMoteDef;
+        private static ThingDef edgeInstabilityMoteDef;
+        private static ThingDef warningPulseMoteDef;
 
         private static ThingDef ShockwaveMoteDef
         {
@@ -34,24 +38,24 @@ namespace AbyssalProtocol
             get { return extractionBeaconMoteDef ?? (extractionBeaconMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ExtractionBeaconMoteDefName)); }
         }
 
-        private static ThingDef RewardBeaconMoteDef
-        {
-            get { return rewardBeaconMoteDef ?? (rewardBeaconMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardBeaconMoteDefName)); }
-        }
-
-        private static ThingDef EdgeInstabilityMoteDef
-        {
-            get { return edgeInstabilityMoteDef ?? (edgeInstabilityMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(EdgeInstabilityMoteDefName)); }
-        }
-
-        private static ThingDef WarningPulseMoteDef
-        {
-            get { return warningPulseMoteDef ?? (warningPulseMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(WarningPulseMoteDefName)); }
-        }
-
         private static ThingDef ExtractionGuideMoteDef
         {
             get { return extractionGuideMoteDef ?? (extractionGuideMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ExtractionGuideMoteDefName)); }
+        }
+
+        private static ThingDef ExtractionSafeRingMoteDef
+        {
+            get { return extractionSafeRingMoteDef ?? (extractionSafeRingMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ExtractionSafeRingMoteDefName)); }
+        }
+
+        private static ThingDef ExtractionColumnMoteDef
+        {
+            get { return extractionColumnMoteDef ?? (extractionColumnMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ExtractionColumnMoteDefName)); }
+        }
+
+        private static ThingDef RewardBeaconMoteDef
+        {
+            get { return rewardBeaconMoteDef ?? (rewardBeaconMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardBeaconMoteDefName)); }
         }
 
         private static ThingDef RewardGuideMoteDef
@@ -62,6 +66,16 @@ namespace AbyssalProtocol
         private static ThingDef GuidanceTrailMoteDef
         {
             get { return guidanceTrailMoteDef ?? (guidanceTrailMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(GuidanceTrailMoteDefName)); }
+        }
+
+        private static ThingDef EdgeInstabilityMoteDef
+        {
+            get { return edgeInstabilityMoteDef ?? (edgeInstabilityMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(EdgeInstabilityMoteDefName)); }
+        }
+
+        private static ThingDef WarningPulseMoteDef
+        {
+            get { return warningPulseMoteDef ?? (warningPulseMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(WarningPulseMoteDefName)); }
         }
 
         public static void SpawnCollapseStartBurst(IntVec3 heartCell, Map map)
@@ -101,13 +115,21 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Vector3 pos = extractionCell.ToVector3Shifted();
             float clampedUrgency = Mathf.Clamp01(urgency);
-            SpawnStaticMote(pos, map, ExtractionBeaconMoteDef, Mathf.Lerp(1.85f, 2.85f, clampedUrgency));
-            SpawnStaticMote(pos + new Vector3(0f, 0.004f, 0f), map, ExtractionGuideMoteDef, Mathf.Lerp(1.55f, 2.35f, clampedUrgency));
-            if (Rand.Chance(0.35f + clampedUrgency * 0.35f))
+            Vector3 pos = extractionCell.ToVector3Shifted();
+            SpawnStaticMote(pos, map, ExtractionSafeRingMoteDef, Mathf.Lerp(2.45f, 3.75f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.003f, 0f), map, ExtractionBeaconMoteDef, Mathf.Lerp(2.10f, 3.35f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.006f, 0f), map, ExtractionColumnMoteDef, Mathf.Lerp(1.65f, 2.85f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.009f, 0f), map, ExtractionGuideMoteDef, Mathf.Lerp(1.75f, 2.75f, clampedUrgency));
+
+            if (Rand.Chance(0.42f + clampedUrgency * 0.40f))
             {
-                FleckMaker.ThrowLightningGlow(pos, map, 1.55f + clampedUrgency * 1.25f);
+                FleckMaker.ThrowLightningGlow(pos, map, 1.85f + clampedUrgency * 1.45f);
+            }
+
+            if (Rand.Chance(0.18f + clampedUrgency * 0.20f))
+            {
+                FleckMaker.ThrowMicroSparks(pos, map);
             }
         }
 
@@ -203,8 +225,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int count = urgency >= 0.75f ? 7 : 5;
             float clampedUrgency = Mathf.Clamp01(urgency);
+            int count = rewardToExit ? (clampedUrgency >= 0.75f ? 7 : 5) : (clampedUrgency >= 0.75f ? 10 : 7);
             for (int i = 1; i <= count; i++)
             {
                 float t = i / (float)(count + 1);
@@ -219,9 +241,14 @@ namespace AbyssalProtocol
                 }
 
                 Vector3 pos = cell.ToVector3Shifted();
-                float scale = Mathf.Lerp(rewardToExit ? 0.88f : 0.72f, rewardToExit ? 1.28f : 1.12f, clampedUrgency);
+                float scale = Mathf.Lerp(rewardToExit ? 0.88f : 0.82f, rewardToExit ? 1.28f : 1.36f, clampedUrgency);
                 SpawnStaticMote(pos, map, GuidanceTrailMoteDef, scale);
-                if (Rand.Chance((rewardToExit ? 0.18f : 0.12f) + clampedUrgency * 0.12f))
+                if (!rewardToExit && i == count)
+                {
+                    SpawnStaticMote(pos + new Vector3(0f, 0.003f, 0f), map, ExtractionGuideMoteDef, Mathf.Lerp(0.80f, 1.22f, clampedUrgency));
+                }
+
+                if (Rand.Chance((rewardToExit ? 0.18f : 0.16f) + clampedUrgency * 0.14f))
                 {
                     FleckMaker.ThrowMicroSparks(pos, map);
                 }

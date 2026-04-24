@@ -72,17 +72,23 @@ namespace AbyssalProtocol
 
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             nextShockwaveTick = now;
-            nextExtractionGlowTick = now + 35;
+            nextExtractionGlowTick = now + 20;
             nextRewardGlowTick = now + 80;
             nextEdgeInstabilityTick = now + 70;
             nextWarningPulseTick = now + 180;
-            nextExtractionGuideTick = now + 55;
+            nextExtractionGuideTick = now + 45;
             nextRewardGuideTick = now + 120;
             collapseStartBurstDone = false;
 
             ABY_DominionPocketSession session = ResolveSession();
             IntVec3 heartCell = ResolveHeartCell(encounter, session);
+            IntVec3 extraction = ResolveExtractionCell(session);
             DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(heartCell, map);
+            if (extraction.IsValid)
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, 0.72f);
+                DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, 0.72f);
+            }
             collapseStartBurstDone = true;
         }
 
@@ -117,7 +123,7 @@ namespace AbyssalProtocol
                     DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, urgency);
                 }
 
-                nextExtractionGlowTick = now + (urgency >= 0.75f ? 72 : 118);
+                nextExtractionGlowTick = now + (urgency >= 0.75f ? 58 : 96);
             }
 
             if (now >= nextExtractionGuideTick)
@@ -127,7 +133,7 @@ namespace AbyssalProtocol
                     DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, urgency);
                 }
 
-                nextExtractionGuideTick = now + (urgency >= 0.75f ? 145 : 230);
+                nextExtractionGuideTick = now + (urgency >= 0.75f ? 118 : 185);
             }
 
             if (victory && now >= nextRewardGlowTick)

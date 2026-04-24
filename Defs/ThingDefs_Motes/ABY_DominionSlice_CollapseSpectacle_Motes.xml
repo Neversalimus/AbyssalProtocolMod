@@ -36,9 +36,72 @@
       <drawSize>(1.00,1.00)</drawSize>
     </graphicData>
     <mote>
-      <fadeInTime>0.025</fadeInTime>
-      <solidTime>0.340</solidTime>
+      <fadeInTime>0.015</fadeInTime>
+      <solidTime>0.430</solidTime>
+      <fadeOutTime>0.700</fadeOutTime>
+      <growthRate>0.040</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceExtractionGuide</defName>
+    <label>dominion extraction guide</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_ExtractionGuide</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.010</fadeInTime>
+      <solidTime>0.260</solidTime>
       <fadeOutTime>0.620</fadeOutTime>
+      <growthRate>0.090</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceExtractionSafeRing</defName>
+    <label>dominion extraction safe ring</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_ExtractionSafeRing</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.420</solidTime>
+      <fadeOutTime>0.760</fadeOutTime>
+      <growthRate>0.050</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceExtractionColumn</defName>
+    <label>dominion extraction column</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_ExtractionColumn</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.000</fadeInTime>
+      <solidTime>0.220</solidTime>
+      <fadeOutTime>0.520</fadeOutTime>
       <growthRate>0.035</growthRate>
     </mote>
   </ThingDef>
@@ -61,27 +124,6 @@
       <solidTime>0.300</solidTime>
       <fadeOutTime>0.540</fadeOutTime>
       <growthRate>0.040</growthRate>
-    </mote>
-  </ThingDef>
-
-  <ThingDef ParentName="MoteBase">
-    <defName>ABY_Mote_DominionSliceExtractionGuide</defName>
-    <label>dominion extraction guide</label>
-    <thingClass>MoteThrown</thingClass>
-    <altitudeLayer>MoteOverhead</altitudeLayer>
-    <drawOffscreen>true</drawOffscreen>
-    <tickerType>Normal</tickerType>
-    <graphicData>
-      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_ExtractionGuide</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shaderType>MoteGlow</shaderType>
-      <drawSize>(1.00,1.00)</drawSize>
-    </graphicData>
-    <mote>
-      <fadeInTime>0.020</fadeInTime>
-      <solidTime>0.180</solidTime>
-      <fadeOutTime>0.540</fadeOutTime>
-      <growthRate>0.080</growthRate>
     </mote>
   </ThingDef>
 
@@ -121,9 +163,9 @@
     </graphicData>
     <mote>
       <fadeInTime>0.000</fadeInTime>
-      <solidTime>0.130</solidTime>
-      <fadeOutTime>0.360</fadeOutTime>
-      <growthRate>0.045</growthRate>
+      <solidTime>0.150</solidTime>
+      <fadeOutTime>0.420</fadeOutTime>
+      <growthRate>0.055</growthRate>
     </mote>
   </ThingDef>
 
