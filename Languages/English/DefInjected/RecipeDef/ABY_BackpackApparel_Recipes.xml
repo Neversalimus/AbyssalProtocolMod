@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshboundFieldPack.label>forge ashbound field pack</ABY_CraftAshboundFieldPack.label>
+  <ABY_CraftAshboundFieldPack.description>Assemble a crude abyssal field pack from steel, industrial components and a small residue charge. The result is a low-tier harness for carrying more breach gear without committing to a full armor frame.</ABY_CraftAshboundFieldPack.description>
+  <ABY_CraftAshboundFieldPack.jobString>Forging ashbound field pack.</ABY_CraftAshboundFieldPack.jobString>
+  <ABY_CraftRiftRelayPack.label>forge rift relay pack</ABY_CraftRiftRelayPack.label>
+  <ABY_CraftRiftRelayPack.description>Bind plasteel plates, advanced components and a stabilized residue channel into a rift relay pack. The pattern is stronger and more mobile than the ashbound field pack, but the carrier remains exposed to a faint psychic resonance.</ABY_CraftRiftRelayPack.description>
+  <ABY_CraftRiftRelayPack.jobString>Forging rift relay pack.</ABY_CraftRiftRelayPack.jobString>
+  <ABY_CraftCrownConduitPack.label>forge crown conduit pack</ABY_CraftCrownConduitPack.label>
+  <ABY_CraftCrownConduitPack.description>Install a crowned core fragment into a sealed back-mounted conduit frame. This is a late armor-support pattern for operators who need to carry dominion-grade equipment without being slowed to a crawl.</ABY_CraftCrownConduitPack.description>
+  <ABY_CraftCrownConduitPack.jobString>Forging crown conduit pack.</ABY_CraftCrownConduitPack.jobString>
+</LanguageData>

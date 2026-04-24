@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AshboundFieldPack</defName>
+    <thingClass>Apparel</thingClass>
+    <label>ashbound field pack</label>
+    <description>A crude abyssal field pack built from residue-lined metal, sealed ember canisters and reinforced harness anchors. It is not a true reactor: it is a low-tier logistics frame that lets an operator carry more breach gear without turning the wearer into a walking altar.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AshboundFieldPack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.88,0.88)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_AshboundFieldPack</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>14</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <CarryingCapacity>20</CarryingCapacity>
+      <MoveSpeed>0.08</MoveSpeed>
+      <WorkSpeedGlobal>0.04</WorkSpeedGlobal>
+      <MeleeDodgeChance>-0.03</MeleeDodgeChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1300</WorkToMake>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Mass>4.0</Mass>
+      <MarketValue>450</MarketValue>
+      <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.06</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.08</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_RiftRelayPack</defName>
+    <thingClass>Apparel</thingClass>
+    <label>rift relay pack</label>
+    <description>A stabilized mid-tier relay pack that routes abyssal pressure through a compact back-mounted lattice. The frame improves mobility and load handling, but its controlled rift resonance makes the wearer slightly more receptive to hostile psychic pressure.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_RiftRelayPack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.94,0.94)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_RiftRelayPack</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <CarryingCapacity>35</CarryingCapacity>
+      <MoveSpeed>0.15</MoveSpeed>
+      <WorkSpeedGlobal>0.06</WorkSpeedGlobal>
+      <PsychicSensitivity>0.05</PsychicSensitivity>
+      <MeleeDodgeChance>-0.04</MeleeDodgeChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2600</WorkToMake>
+      <MaxHitPoints>240</MaxHitPoints>
+      <Mass>6.0</Mass>
+      <MarketValue>1100</MarketValue>
+      <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.18</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownConduitPack</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crown conduit pack</label>
+    <description>A dominion-grade conduit pack built around a crowned core fragment and a sealed back-mounted power spine. It functions as a wearable logistics authority: heavier than the lower packs, but strong enough to let a fully equipped operator move under the weight of late abyssal wargear.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownConduitPack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Waist</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_CrownConduitPack</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>30</Plasteel>
+      <Uranium>8</Uranium>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>4</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <CarryingCapacity>55</CarryingCapacity>
+      <MoveSpeed>0.22</MoveSpeed>
+      <WorkSpeedGlobal>0.08</WorkSpeedGlobal>
+      <PsychicSensitivity>0.10</PsychicSensitivity>
+      <MeleeDodgeChance>-0.05</MeleeDodgeChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>5200</WorkToMake>
+      <MaxHitPoints>330</MaxHitPoints>
+      <Mass>8.5</Mass>
+      <MarketValue>2600</MarketValue>
+      <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.28</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>

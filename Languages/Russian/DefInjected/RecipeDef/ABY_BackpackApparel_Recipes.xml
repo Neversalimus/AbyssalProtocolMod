@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshboundFieldPack.label>выковать полевой ранец пепельной привязки</ABY_CraftAshboundFieldPack.label>
+  <ABY_CraftAshboundFieldPack.description>Собрать грубый бездный полевой ранец из стали, промышленных компонентов и малого заряда residue. Получается низкотирная упряжь для переноски снаряжения разлома без перехода к полноценному боевому каркасу.</ABY_CraftAshboundFieldPack.description>
+  <ABY_CraftAshboundFieldPack.jobString>Ковка полевого ранца пепельной привязки.</ABY_CraftAshboundFieldPack.jobString>
+  <ABY_CraftRiftRelayPack.label>выковать ретрансляторный ранец разлома</ABY_CraftRiftRelayPack.label>
+  <ABY_CraftRiftRelayPack.description>Связать пласталевые пластины, продвинутые компоненты и стабилизированный канал residue в ретрансляторный ранец разлома. Этот паттерн сильнее и мобильнее пепельного ранца, но носитель остаётся открыт слабому психическому резонансу.</ABY_CraftRiftRelayPack.description>
+  <ABY_CraftRiftRelayPack.jobString>Ковка ретрансляторного ранца разлома.</ABY_CraftRiftRelayPack.jobString>
+  <ABY_CraftCrownConduitPack.label>выковать коронный проводящий ранец</ABY_CraftCrownConduitPack.label>
+  <ABY_CraftCrownConduitPack.description>Встроить коронный фрагмент ядра в герметичный наспинный проводящий каркас. Это поздний броне-support паттерн для операторов, которым нужно нести доминионное снаряжение и не терять подвижность полностью.</ABY_CraftCrownConduitPack.description>
+  <ABY_CraftCrownConduitPack.jobString>Ковка коронного проводящего ранца.</ABY_CraftCrownConduitPack.jobString>
+</LanguageData>
