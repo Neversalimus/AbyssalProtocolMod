@@ -11,6 +11,8 @@ namespace AbyssalProtocol
         private int nextRewardGlowTick;
         private int nextEdgeInstabilityTick;
         private int nextWarningPulseTick;
+        private int nextExtractionGuideTick;
+        private int nextRewardGuideTick;
         private bool collapseStartBurstDone;
 
         public MapComponent_DominionSliceCollapseSpectacle(Map map) : base(map)
@@ -26,6 +28,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextRewardGlowTick, "nextRewardGlowTick", 0);
             Scribe_Values.Look(ref nextEdgeInstabilityTick, "nextEdgeInstabilityTick", 0);
             Scribe_Values.Look(ref nextWarningPulseTick, "nextWarningPulseTick", 0);
+            Scribe_Values.Look(ref nextExtractionGuideTick, "nextExtractionGuideTick", 0);
+            Scribe_Values.Look(ref nextRewardGuideTick, "nextRewardGuideTick", 0);
             Scribe_Values.Look(ref collapseStartBurstDone, "collapseStartBurstDone", false);
         }
 
@@ -68,10 +72,12 @@ namespace AbyssalProtocol
 
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             nextShockwaveTick = now;
-            nextExtractionGlowTick = now + 45;
-            nextRewardGlowTick = now + 95;
+            nextExtractionGlowTick = now + 35;
+            nextRewardGlowTick = now + 80;
             nextEdgeInstabilityTick = now + 70;
             nextWarningPulseTick = now + 180;
+            nextExtractionGuideTick = now + 55;
+            nextRewardGuideTick = now + 120;
             collapseStartBurstDone = false;
 
             ABY_DominionPocketSession session = ResolveSession();
@@ -93,33 +99,55 @@ namespace AbyssalProtocol
 
             int remaining = session != null && session.collapseAtTick > 0 ? session.collapseAtTick - now : 3600;
             float urgency = GetUrgency(remaining);
+            IntVec3 heartCell = ResolveHeartCell(encounter, session);
+            IntVec3 extraction = ResolveExtractionCell(session);
+            IntVec3 reward = ResolveRewardPocketCell(session);
+            bool victory = session != null && session.victoryAchieved;
 
             if (now >= nextShockwaveTick)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnHeartShockwave(ResolveHeartCell(encounter, session), map, urgency);
+                DominionSliceCollapseSpectacleVfxUtility.SpawnHeartShockwave(heartCell, map, urgency);
                 nextShockwaveTick = now + (urgency >= 0.75f ? 210 : 330);
             }
 
             if (now >= nextExtractionGlowTick)
             {
-                IntVec3 extraction = ResolveExtractionCell(session);
                 if (extraction.IsValid)
                 {
                     DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, urgency);
                 }
 
-                nextExtractionGlowTick = now + (urgency >= 0.75f ? 95 : 150);
+                nextExtractionGlowTick = now + (urgency >= 0.75f ? 72 : 118);
             }
 
-            if (session != null && session.victoryAchieved && now >= nextRewardGlowTick)
+            if (now >= nextExtractionGuideTick)
             {
-                IntVec3 reward = ResolveRewardPocketCell(session);
+                if (extraction.IsValid)
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, urgency);
+                }
+
+                nextExtractionGuideTick = now + (urgency >= 0.75f ? 145 : 230);
+            }
+
+            if (victory && now >= nextRewardGlowTick)
+            {
                 if (reward.IsValid)
                 {
                     DominionSliceCollapseSpectacleVfxUtility.SpawnRewardBeacon(reward, map, urgency);
                 }
 
-                nextRewardGlowTick = now + 210;
+                nextRewardGlowTick = now + (urgency >= 0.75f ? 135 : 210);
+            }
+
+            if (victory && now >= nextRewardGuideTick)
+            {
+                if (reward.IsValid && extraction.IsValid)
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnRewardGuidance(reward, extraction, map, urgency);
+                }
+
+                nextRewardGuideTick = now + (urgency >= 0.75f ? 170 : 260);
             }
 
             if (now >= nextEdgeInstabilityTick)
@@ -130,7 +158,7 @@ namespace AbyssalProtocol
 
             if (now >= nextWarningPulseTick)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseWarningPulse(ResolveHeartCell(encounter, session), map, urgency);
+                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseWarningPulse(heartCell, map, urgency);
                 nextWarningPulseTick = now + (urgency >= 0.75f ? 240 : 420);
             }
         }
