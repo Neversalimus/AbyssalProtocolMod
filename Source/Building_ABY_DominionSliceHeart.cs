@@ -70,6 +70,7 @@ namespace AbyssalProtocol
 
             nextPulseTick = now + (encounter.IsHeartExposed ? 180 : 240);
             FleckMaker.ThrowLightningGlow(DrawPos, Map, encounter.IsHeartExposed ? 2.1f : 1.5f);
+            DominionSliceHeartSetpieceVfxUtility.SpawnHeartbeatPulse(DrawPos, Map, encounter.IsHeartExposed);
             if (encounter.IsHeartExposed)
             {
                 encounter.EmitHeartPulse(this);
@@ -83,6 +84,11 @@ namespace AbyssalProtocol
             if (encounter != null && encounter.ShouldDrawHeartShield)
             {
                 DominionSliceVfxUtility.DrawHeartShield(drawLoc, Map, encounter.LiveAnchorCount, thingIDNumber);
+            }
+
+            if (encounter != null && encounter.IsActiveEncounter)
+            {
+                DominionSliceHeartSetpieceVfxUtility.DrawHeartSetpiece(drawLoc, Map, encounter, thingIDNumber);
             }
         }
 
@@ -134,7 +140,8 @@ namespace AbyssalProtocol
                 return stateText;
             }
 
-            return baseText.TrimEnd() + "\n" + stateText;
+            return baseText.TrimEnd() + "
+" + stateText;
         }
     }
 }
