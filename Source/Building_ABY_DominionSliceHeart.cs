@@ -76,6 +76,16 @@ namespace AbyssalProtocol
             }
         }
 
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            base.DrawAt(drawLoc, flip);
+            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null && encounter.ShouldDrawHeartShield)
+            {
+                DominionSliceVfxUtility.DrawHeartShield(drawLoc, Map, encounter.LiveAnchorCount, thingIDNumber);
+            }
+        }
+
         public void NotifyShieldBlocked()
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
@@ -91,6 +101,7 @@ namespace AbyssalProtocol
             if (Map != null)
             {
                 FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.3f);
+                DominionSliceVfxUtility.SpawnHeartShieldBlockFlare(DrawPos, Map);
             }
         }
 

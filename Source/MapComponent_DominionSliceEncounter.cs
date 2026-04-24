@@ -71,6 +71,26 @@ namespace AbyssalProtocol
             get { return wavesTriggered; }
         }
 
+        public Building_ABY_DominionSliceHeart HeartBuilding
+        {
+            get
+            {
+                CleanupReferences();
+                RestoreReferencesFromMap();
+                return heart;
+            }
+        }
+
+        public bool ShouldDrawAnchorLinks
+        {
+            get { return phase == SlicePhase.Anchorfall && GetLiveAnchorCount() > 0 && HeartBuilding != null; }
+        }
+
+        public bool ShouldDrawHeartShield
+        {
+            get { return IsActiveEncounter && !IsHeartExposed && GetLiveAnchorCount() > 0; }
+        }
+
         public string LastWaveLabel
         {
             get { return lastWaveLabel; }
@@ -477,6 +497,10 @@ namespace AbyssalProtocol
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             nextWaveTick = phaseStartedTick + AbyssalDominionSliceWaveDirector.GetNextWaveDelayTicks(phase, wavesTriggered, hazardPressure, GetLiveAnchorCount());
             Messages.Message("ABY_DominionSliceEncounter_HeartExposed".Translate(), new TargetInfo(heart != null ? heart.PositionHeld : map.Center, map), MessageTypeDefOf.ThreatBig, false);
+            if (heart != null && !heart.Destroyed)
+            {
+                DominionSliceVfxUtility.SpawnHeartExposedBurst(heart.DrawPos, map);
+            }
         }
 
         private void BeginCollapse(bool victory)
