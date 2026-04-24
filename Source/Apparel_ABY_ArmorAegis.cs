@@ -33,7 +33,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref wasCollapsed, "wasCollapsed", false);
         }
 
-        public override void Tick()
+        protected override void Tick()
         {
             base.Tick();
 
