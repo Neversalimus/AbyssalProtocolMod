@@ -227,19 +227,21 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            Thing instigator = dinfo.Instigator;
-            if (instigator == null || instigator == wearer)
-            {
-                return false;
-            }
-
-            Pawn instigatorPawn = instigator as Pawn;
-            if (instigatorPawn != null && wearer.Faction != null && instigatorPawn.Faction != null && !wearer.Faction.HostileTo(instigatorPawn.Faction))
-            {
-                return false;
-            }
-
             if (dinfo.Weapon != null && dinfo.Weapon.IsRangedWeapon)
+            {
+                return ext.absorbRanged;
+            }
+
+            Thing instigator = dinfo.Instigator;
+            if (instigator == wearer)
+            {
+                return false;
+            }
+
+            // Some projectile and modded damage paths arrive without a stable instigator/weapon.
+            // Treat unknown non-EMP, non-explosive incoming damage as ranged-like so the aegis
+            // actually protects against modded projectiles and dev-test shots.
+            if (instigator == null)
             {
                 return ext.absorbRanged;
             }
