@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AshboundTreadBoots</defName>
+    <thingClass>Apparel</thingClass>
+    <label>ashbound tread boots</label>
+    <description>Early abyssal tread boots built from steel sole plates, residue-laced shock pads and crude ember stabilizers. They are not elegant, but they let a colonist carry more, move faster and keep their footing near machines that were never meant to be safe.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AshboundTreadBoots</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.82,0.82)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Legs</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>10</Steel>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>0.08</MoveSpeed>
+      <CarryingCapacity>8</CarryingCapacity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>950</WorkToMake>
+      <MaxHitPoints>135</MaxHitPoints>
+      <Mass>0.95</Mass>
+      <MarketValue>320</MarketValue>
+      <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.06</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_RiftstepGreaves</defName>
+    <thingClass>Apparel</thingClass>
+    <label>riftstep greaves</label>
+    <description>Mid-tier riftstep greaves with plasteel calf braces, stabilized heel conduits and violet-red phase anchors under the sole. They do not teleport the wearer; they simply make every step feel as if the ground has been ordered to cooperate.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_RiftstepGreaves</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.88,0.88)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Legs</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>0.14</MoveSpeed>
+      <CarryingCapacity>14</CarryingCapacity>
+      <PsychicSensitivity>0.03</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1750</WorkToMake>
+      <MaxHitPoints>190</MaxHitPoints>
+      <Mass>1.35</Mass>
+      <MarketValue>920</MarketValue>
+      <ArmorRating_Sharp>0.07</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.10</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownpathSabatons</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crownpath sabatons</label>
+    <description>Late-line sabatons grown around a compact crownpath lattice. Their plated soles behave less like footwear and more like a portable claim of passage: each step is stabilized, authorized and quietly hostile to the terrain beneath it.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownpathSabatons</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.94,0.94)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Legs</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>18</Plasteel>
+      <Gold>2</Gold>
+      <ComponentSpacer>1</ComponentSpacer>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>0.20</MoveSpeed>
+      <CarryingCapacity>22</CarryingCapacity>
+      <PsychicSensitivity>0.06</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>3200</WorkToMake>
+      <MaxHitPoints>270</MaxHitPoints>
+      <Mass>1.75</Mass>
+      <MarketValue>2100</MarketValue>
+      <ArmorRating_Sharp>0.11</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.15</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>

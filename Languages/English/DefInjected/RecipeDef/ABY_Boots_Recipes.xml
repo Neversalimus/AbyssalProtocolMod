@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshboundTreadBoots.label>forge ashbound tread boots</ABY_CraftAshboundTreadBoots.label>
+  <ABY_CraftAshboundTreadBoots.description>Assemble early abyssal tread boots from steel sole plates, residue shock pads and crude ember stabilizers.</ABY_CraftAshboundTreadBoots.description>
+  <ABY_CraftAshboundTreadBoots.jobString>Forging ashbound tread boots.</ABY_CraftAshboundTreadBoots.jobString>
+  <ABY_CraftRiftstepGreaves.label>forge riftstep greaves</ABY_CraftRiftstepGreaves.label>
+  <ABY_CraftRiftstepGreaves.description>Build mid-tier riftstep greaves around plasteel calf braces, stabilized heel conduits and phase-anchor soles.</ABY_CraftRiftstepGreaves.description>
+  <ABY_CraftRiftstepGreaves.jobString>Forging riftstep greaves.</ABY_CraftRiftstepGreaves.jobString>
+  <ABY_CraftCrownpathSabatons.label>forge crownpath sabatons</ABY_CraftCrownpathSabatons.label>
+  <ABY_CraftCrownpathSabatons.description>Fold late-line sabatons around a crownpath lattice, spacer-grade anchors and a crowned core fragment.</ABY_CraftCrownpathSabatons.description>
+  <ABY_CraftCrownpathSabatons.jobString>Forging crownpath sabatons.</ABY_CraftCrownpathSabatons.jobString>
+</LanguageData>

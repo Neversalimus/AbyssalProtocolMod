@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshboundTreadBoots.label>выковать пепельные маршевые ботинки</ABY_CraftAshboundTreadBoots.label>
+  <ABY_CraftAshboundTreadBoots.description>Собрать ранние бездные маршевые ботинки из стальных подошвенных пластин, residue-амортизаторов и грубых ember-стабилизаторов.</ABY_CraftAshboundTreadBoots.description>
+  <ABY_CraftAshboundTreadBoots.jobString>Ковка пепельных маршевых ботинок.</ABY_CraftAshboundTreadBoots.jobString>
+  <ABY_CraftRiftstepGreaves.label>выковать поножи шага разлома</ABY_CraftRiftstepGreaves.label>
+  <ABY_CraftRiftstepGreaves.description>Собрать поножи среднего тира вокруг пласталевых опор, стабилизированных пятковых проводников и подошв с фазовыми якорями.</ABY_CraftRiftstepGreaves.description>
+  <ABY_CraftRiftstepGreaves.jobString>Ковка поножей шага разлома.</ABY_CraftRiftstepGreaves.jobString>
+  <ABY_CraftCrownpathSabatons.label>выковать коронные сабатоны пути</ABY_CraftCrownpathSabatons.label>
+  <ABY_CraftCrownpathSabatons.description>Сложить поздние сабатоны вокруг lattice-схемы коронного пути, spacer-якорей и фрагмента коронного ядра.</ABY_CraftCrownpathSabatons.description>
+  <ABY_CraftCrownpathSabatons.jobString>Ковка коронных сабатонов пути.</ABY_CraftCrownpathSabatons.jobString>
+</LanguageData>
