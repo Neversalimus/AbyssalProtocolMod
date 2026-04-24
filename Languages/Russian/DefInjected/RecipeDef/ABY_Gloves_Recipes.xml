@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshenGripGloves.label>выковать пепельные хватные перчатки</ABY_CraftAshenGripGloves.label>
+  <ABY_CraftAshenGripGloves.description>Собрать ранние бездные рабочие наручи из стальных костяшечных пластин, residue-хватов и грубых ember-проводников.</ABY_CraftAshenGripGloves.description>
+  <ABY_CraftAshenGripGloves.jobString>Ковка пепельных хватных перчаток.</ABY_CraftAshenGripGloves.jobString>
+  <ABY_CraftRiftConduitGloves.label>выковать проводниковые перчатки разлома</ABY_CraftRiftConduitGloves.label>
+  <ABY_CraftRiftConduitGloves.description>Собрать проводниковые перчатки среднего тира вокруг пласталевых кистевых пластин и стабилизированной решётки обратной связи разлома.</ABY_CraftRiftConduitGloves.description>
+  <ABY_CraftRiftConduitGloves.jobString>Ковка проводниковых перчаток разлома.</ABY_CraftRiftConduitGloves.jobString>
+  <ABY_CraftCrownsealGauntlets.label>выковать короннопечатные рукавицы</ABY_CraftCrownsealGauntlets.label>
+  <ABY_CraftCrownsealGauntlets.description>Сложить рукавицы поздней линии вокруг решётки коронной печати, spacer-компонентов и фрагмента коронного ядра.</ABY_CraftCrownsealGauntlets.description>
+  <ABY_CraftCrownsealGauntlets.jobString>Ковка короннопечатных рукавиц.</ABY_CraftCrownsealGauntlets.jobString>
+</LanguageData>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AshenGripGloves</defName>
+    <thingClass>Apparel</thingClass>
+    <label>ashen grip gloves</label>
+    <description>Early abyssal work-gauntlets built from steel knuckle plates, residue-threaded grip pads and crude ember conduits. They were made for forge operators who still need human hands after handling materials that do not want to stay real.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AshenGripGloves</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.78,0.78)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Hands</li>
+      </bodyPartGroups>
+      <layers>
+        <li>OnSkin</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>8</Steel>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.04</GeneralLaborSpeed>
+      <MeleeHitChance>0.02</MeleeHitChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>850</WorkToMake>
+      <MaxHitPoints>125</MaxHitPoints>
+      <Mass>0.55</Mass>
+      <MarketValue>260</MarketValue>
+      <ArmorRating_Sharp>0.04</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.02</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.06</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_RiftConduitGloves</defName>
+    <thingClass>Apparel</thingClass>
+    <label>rift conduit gloves</label>
+    <description>Mid-tier conduit gloves that stabilize a weapon, tool or ritual implement through the hands instead of the bench. Violet-red microchannels run across the knuckles, improving precision while quietly teaching the wearer to trust abyssal feedback.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_RiftConduitGloves</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.84,0.84)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Hands</li>
+      </bodyPartGroups>
+      <layers>
+        <li>OnSkin</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>10</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.05</GeneralLaborSpeed>
+      <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+      <MeleeHitChance>0.03</MeleeHitChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1550</WorkToMake>
+      <MaxHitPoints>175</MaxHitPoints>
+      <Mass>0.82</Mass>
+      <MarketValue>820</MarketValue>
+      <ArmorRating_Sharp>0.06</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.10</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownsealGauntlets</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crownseal gauntlets</label>
+    <description>Late-line gauntlets folded around a crown-seal lattice. Their plates do not simply reinforce the hand; they authorize contact, grip and recoil as small acts of dominion. Colonists wearing them are no longer merely holding abyssal tools. They are being accepted by them.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownsealGauntlets</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.90,0.90)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Hands</li>
+      </bodyPartGroups>
+      <layers>
+        <li>OnSkin</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>16</Plasteel>
+      <Gold>2</Gold>
+      <ComponentSpacer>1</ComponentSpacer>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.07</GeneralLaborSpeed>
+      <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+      <MeleeHitChance>0.04</MeleeHitChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2850</WorkToMake>
+      <MaxHitPoints>245</MaxHitPoints>
+      <Mass>1.05</Mass>
+      <MarketValue>1850</MarketValue>
+      <ArmorRating_Sharp>0.09</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.14</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>

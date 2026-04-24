@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshenGripGloves.label>forge ashen grip gloves</ABY_CraftAshenGripGloves.label>
+  <ABY_CraftAshenGripGloves.description>Assemble early abyssal work-gauntlets from steel knuckle plates, residue grip pads and crude ember conduits.</ABY_CraftAshenGripGloves.description>
+  <ABY_CraftAshenGripGloves.jobString>Forging ashen grip gloves.</ABY_CraftAshenGripGloves.jobString>
+  <ABY_CraftRiftConduitGloves.label>forge rift conduit gloves</ABY_CraftRiftConduitGloves.label>
+  <ABY_CraftRiftConduitGloves.description>Build mid-tier conduit gloves around plasteel hand plates and a stabilized rift feedback lattice.</ABY_CraftRiftConduitGloves.description>
+  <ABY_CraftRiftConduitGloves.jobString>Forging rift conduit gloves.</ABY_CraftRiftConduitGloves.jobString>
+  <ABY_CraftCrownsealGauntlets.label>forge crownseal gauntlets</ABY_CraftCrownsealGauntlets.label>
+  <ABY_CraftCrownsealGauntlets.description>Fold late-line gauntlets around a crown-seal lattice, spacer components and a crowned core fragment.</ABY_CraftCrownsealGauntlets.description>
+  <ABY_CraftCrownsealGauntlets.jobString>Forging crownseal gauntlets.</ABY_CraftCrownsealGauntlets.jobString>
+</LanguageData>
