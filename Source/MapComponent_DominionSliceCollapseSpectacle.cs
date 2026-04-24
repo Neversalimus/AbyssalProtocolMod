@@ -1,0 +1,223 @@
+using RimWorld;
+using Verse;
+
+namespace AbyssalProtocol
+{
+    public class MapComponent_DominionSliceCollapseSpectacle : MapComponent
+    {
+        private MapComponent_DominionSliceEncounter.SlicePhase lastPhase = MapComponent_DominionSliceEncounter.SlicePhase.Dormant;
+        private int nextShockwaveTick;
+        private int nextExtractionGlowTick;
+        private int nextRewardGlowTick;
+        private int nextEdgeInstabilityTick;
+        private int nextWarningPulseTick;
+        private bool collapseStartBurstDone;
+
+        public MapComponent_DominionSliceCollapseSpectacle(Map map) : base(map)
+        {
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref lastPhase, "lastPhase", MapComponent_DominionSliceEncounter.SlicePhase.Dormant);
+            Scribe_Values.Look(ref nextShockwaveTick, "nextShockwaveTick", 0);
+            Scribe_Values.Look(ref nextExtractionGlowTick, "nextExtractionGlowTick", 0);
+            Scribe_Values.Look(ref nextRewardGlowTick, "nextRewardGlowTick", 0);
+            Scribe_Values.Look(ref nextEdgeInstabilityTick, "nextEdgeInstabilityTick", 0);
+            Scribe_Values.Look(ref nextWarningPulseTick, "nextWarningPulseTick", 0);
+            Scribe_Values.Look(ref collapseStartBurstDone, "collapseStartBurstDone", false);
+        }
+
+        public override void MapComponentTick()
+        {
+            base.MapComponentTick();
+            if (Find.TickManager == null || map == null)
+            {
+                return;
+            }
+
+            MapComponent_DominionSliceEncounter encounter = map.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter == null)
+            {
+                return;
+            }
+
+            MapComponent_DominionSliceEncounter.SlicePhase phase = encounter.CurrentPhase;
+            if (phase != lastPhase)
+            {
+                NotifyPhaseChanged(encounter, phase);
+                lastPhase = phase;
+            }
+
+            if (phase != MapComponent_DominionSliceEncounter.SlicePhase.Collapse)
+            {
+                collapseStartBurstDone = false;
+                return;
+            }
+
+            TickCollapseSpectacle(encounter);
+        }
+
+        private void NotifyPhaseChanged(MapComponent_DominionSliceEncounter encounter, MapComponent_DominionSliceEncounter.SlicePhase phase)
+        {
+            if (phase != MapComponent_DominionSliceEncounter.SlicePhase.Collapse)
+            {
+                return;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            nextShockwaveTick = now;
+            nextExtractionGlowTick = now + 45;
+            nextRewardGlowTick = now + 95;
+            nextEdgeInstabilityTick = now + 70;
+            nextWarningPulseTick = now + 180;
+            collapseStartBurstDone = false;
+
+            ABY_DominionPocketSession session = ResolveSession();
+            IntVec3 heartCell = ResolveHeartCell(encounter, session);
+            DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(heartCell, map);
+            collapseStartBurstDone = true;
+        }
+
+        private void TickCollapseSpectacle(MapComponent_DominionSliceEncounter encounter)
+        {
+            int now = Find.TickManager.TicksGame;
+            ABY_DominionPocketSession session = ResolveSession();
+
+            if (!collapseStartBurstDone)
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(ResolveHeartCell(encounter, session), map);
+                collapseStartBurstDone = true;
+            }
+
+            int remaining = session != null && session.collapseAtTick > 0 ? session.collapseAtTick - now : 3600;
+            float urgency = GetUrgency(remaining);
+
+            if (now >= nextShockwaveTick)
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnHeartShockwave(ResolveHeartCell(encounter, session), map, urgency);
+                nextShockwaveTick = now + (urgency >= 0.75f ? 210 : 330);
+            }
+
+            if (now >= nextExtractionGlowTick)
+            {
+                IntVec3 extraction = ResolveExtractionCell(session);
+                if (extraction.IsValid)
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, urgency);
+                }
+
+                nextExtractionGlowTick = now + (urgency >= 0.75f ? 95 : 150);
+            }
+
+            if (session != null && session.victoryAchieved && now >= nextRewardGlowTick)
+            {
+                IntVec3 reward = ResolveRewardPocketCell(session);
+                if (reward.IsValid)
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnRewardBeacon(reward, map, urgency);
+                }
+
+                nextRewardGlowTick = now + 210;
+            }
+
+            if (now >= nextEdgeInstabilityTick)
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnEdgeInstability(map, urgency);
+                nextEdgeInstabilityTick = now + (urgency >= 0.75f ? 55 : 95);
+            }
+
+            if (now >= nextWarningPulseTick)
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseWarningPulse(ResolveHeartCell(encounter, session), map, urgency);
+                nextWarningPulseTick = now + (urgency >= 0.75f ? 240 : 420);
+            }
+        }
+
+        private ABY_DominionPocketSession ResolveSession()
+        {
+            ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+            if (runtime == null)
+            {
+                return null;
+            }
+
+            ABY_DominionPocketSession session;
+            return runtime.TryGetSessionByPocketMap(map, out session) ? session : null;
+        }
+
+        private IntVec3 ResolveHeartCell(MapComponent_DominionSliceEncounter encounter, ABY_DominionPocketSession session)
+        {
+            Building_ABY_DominionSliceHeart heart = encounter != null ? encounter.HeartBuilding : null;
+            if (heart != null && !heart.Destroyed)
+            {
+                return heart.PositionHeld;
+            }
+
+            if (session != null && session.heartCell.IsValid)
+            {
+                return session.heartCell;
+            }
+
+            return map != null ? map.Center : IntVec3.Invalid;
+        }
+
+        private IntVec3 ResolveExtractionCell(ABY_DominionPocketSession session)
+        {
+            if (session != null && session.extractionCell.IsValid)
+            {
+                return ClampToMap(session.extractionCell);
+            }
+
+            return map != null ? ClampToMap(map.Center + new IntVec3(0, 0, -35)) : IntVec3.Invalid;
+        }
+
+        private IntVec3 ResolveRewardPocketCell(ABY_DominionPocketSession session)
+        {
+            if (session != null && session.heartCell.IsValid)
+            {
+                return ClampToMap(session.heartCell + new IntVec3(-36, 0, -9));
+            }
+
+            return map != null ? ClampToMap(map.Center + new IntVec3(-36, 0, -9)) : IntVec3.Invalid;
+        }
+
+        private IntVec3 ClampToMap(IntVec3 cell)
+        {
+            if (map == null)
+            {
+                return IntVec3.Invalid;
+            }
+
+            int x = System.Math.Max(6, System.Math.Min(map.Size.x - 7, cell.x));
+            int z = System.Math.Max(6, System.Math.Min(map.Size.z - 7, cell.z));
+            return new IntVec3(x, 0, z);
+        }
+
+        private static float GetUrgency(int remainingTicks)
+        {
+            if (remainingTicks <= 0)
+            {
+                return 1f;
+            }
+
+            if (remainingTicks <= 600)
+            {
+                return 1f;
+            }
+
+            if (remainingTicks <= 1200)
+            {
+                return 0.82f;
+            }
+
+            if (remainingTicks <= 2100)
+            {
+                return 0.66f;
+            }
+
+            return 0.48f;
+        }
+    }
+}
