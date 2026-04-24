@@ -165,6 +165,7 @@ namespace AbyssalProtocol
 
             SpawnPerimeterShell(map, center);
             SpawnLaneSupports(map, extraction, center, anchorWest, anchorEast, anchorNorth, rewardPocket);
+            SpawnDecorativeDressings(map, entry, extraction, center, anchorWest, anchorEast, anchorNorth, rewardPocket);
         }
 
         private static TerrainDef ResolveTerrain(params string[] names)
@@ -380,6 +381,150 @@ namespace AbyssalProtocol
             SpawnProp(map, BastionDefName, east + new IntVec3(7, 0, 2), Rot4.East);
             SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(-4, 0, 4), Rot4.West);
             SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(4, 0, -4), Rot4.East);
+        }
+
+        private static void SpawnDecorativeDressings(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
+        {
+            List<IntVec3> reserved = BuildReservedCells(map, entry, extraction, center, west, east, north, rewardPocket);
+
+            SpawnFlankRibs(map, center, extraction, reserved);
+            SpawnAnchorBacklineDressings(map, west, east, north, reserved);
+            SpawnRewardPocketDressings(map, rewardPocket, reserved);
+            SpawnPeripheralSpines(map, center, reserved);
+            SpawnEntryDressings(map, entry, extraction, reserved);
+        }
+
+        private static List<IntVec3> BuildReservedCells(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
+        {
+            List<IntVec3> reserved = new List<IntVec3>
+            {
+                entry,
+                extraction,
+                center,
+                west,
+                east,
+                north,
+                rewardPocket
+            };
+
+            AddLineSamples(reserved, extraction, center + new IntVec3(0, 0, -16), 3);
+            AddLineSamples(reserved, center + new IntVec3(-13, 0, 6), west, 3);
+            AddLineSamples(reserved, center + new IntVec3(13, 0, 6), east, 3);
+            AddLineSamples(reserved, center + new IntVec3(0, 0, 15), north, 3);
+            AddLineSamples(reserved, center + new IntVec3(-18, 0, -4), rewardPocket, 3);
+            return reserved;
+        }
+
+        private static void AddLineSamples(List<IntVec3> cells, IntVec3 from, IntVec3 to, int spacing)
+        {
+            int steps = Mathf.Max(Math.Abs(to.x - from.x), Math.Abs(to.z - from.z));
+            if (steps <= 0)
+            {
+                cells.Add(from);
+                return;
+            }
+
+            int safeSpacing = Mathf.Max(1, spacing);
+            for (int i = 0; i <= steps; i += safeSpacing)
+            {
+                float t = i / (float)steps;
+                cells.Add(new IntVec3(GenMath.RoundRandom(Mathf.Lerp(from.x, to.x, t)), 0, GenMath.RoundRandom(Mathf.Lerp(from.z, to.z, t))));
+            }
+        }
+
+        private static void SpawnFlankRibs(Map map, IntVec3 center, IntVec3 extraction, List<IntVec3> reserved)
+        {
+            int[] zOffsets = { -18, -8, 2, 12 };
+            for (int i = 0; i < zOffsets.Length; i++)
+            {
+                IntVec3 left = center + new IntVec3(-22 - (i % 2), 0, zOffsets[i]);
+                IntVec3 right = center + new IntVec3(22 + (i % 2), 0, zOffsets[i] + 1);
+                TrySpawnDecorativeProp(map, SpireDefName, left, Rot4.West, reserved, 5f);
+                TrySpawnDecorativeProp(map, SpireDefName, right, Rot4.East, reserved, 5f);
+            }
+
+            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(-12, 0, 6), Rot4.West, reserved, 5f);
+            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(12, 0, 6), Rot4.East, reserved, 5f);
+        }
+
+        private static void SpawnAnchorBacklineDressings(Map map, IntVec3 west, IntVec3 east, IntVec3 north, List<IntVec3> reserved)
+        {
+            TrySpawnDecorativeProp(map, SpireDefName, west + new IntVec3(-11, 0, -4), Rot4.West, reserved, 5f);
+            TrySpawnDecorativeProp(map, BastionDefName, west + new IntVec3(-12, 0, 8), Rot4.West, reserved, 5f);
+            TrySpawnDecorativeProp(map, SpireDefName, west + new IntVec3(-4, 0, 11), Rot4.North, reserved, 5f);
+
+            TrySpawnDecorativeProp(map, SpireDefName, east + new IntVec3(11, 0, -4), Rot4.East, reserved, 5f);
+            TrySpawnDecorativeProp(map, BastionDefName, east + new IntVec3(12, 0, 8), Rot4.East, reserved, 5f);
+            TrySpawnDecorativeProp(map, SpireDefName, east + new IntVec3(4, 0, 11), Rot4.North, reserved, 5f);
+
+            TrySpawnDecorativeProp(map, BastionDefName, north + new IntVec3(-9, 0, 11), Rot4.North, reserved, 5f);
+            TrySpawnDecorativeProp(map, BastionDefName, north + new IntVec3(9, 0, 11), Rot4.North, reserved, 5f);
+            TrySpawnDecorativeProp(map, SpireDefName, north + new IntVec3(-12, 0, 3), Rot4.West, reserved, 5f);
+            TrySpawnDecorativeProp(map, SpireDefName, north + new IntVec3(12, 0, 4), Rot4.East, reserved, 5f);
+        }
+
+        private static void SpawnRewardPocketDressings(Map map, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            TrySpawnDecorativeProp(map, BastionDefName, rewardPocket + new IntVec3(-8, 0, 6), Rot4.West, reserved, 4f);
+            TrySpawnDecorativeProp(map, BastionDefName, rewardPocket + new IntVec3(8, 0, -5), Rot4.East, reserved, 4f);
+            TrySpawnDecorativeProp(map, SpireDefName, rewardPocket + new IntVec3(-9, 0, -4), Rot4.West, reserved, 4f);
+            TrySpawnDecorativeProp(map, SpireDefName, rewardPocket + new IntVec3(9, 0, 5), Rot4.East, reserved, 4f);
+        }
+
+        private static void SpawnPeripheralSpines(Map map, IntVec3 center, List<IntVec3> reserved)
+        {
+            float[] radii = { 40f, 46f };
+            float[] angles = { 18f, 58f, 96f, 142f, 198f, 236f, 278f, 322f };
+            for (int i = 0; i < angles.Length; i++)
+            {
+                float radius = radii[i % radii.Length];
+                float rad = angles[i] * Mathf.Deg2Rad;
+                IntVec3 cell = ClampToInterior(map, new IntVec3(
+                    center.x + GenMath.RoundRandom(Mathf.Cos(rad) * radius),
+                    0,
+                    center.z + GenMath.RoundRandom(Mathf.Sin(rad) * radius)));
+                Rot4 rot = Mathf.Abs(Mathf.Cos(rad)) > Mathf.Abs(Mathf.Sin(rad))
+                    ? (Mathf.Cos(rad) > 0f ? Rot4.East : Rot4.West)
+                    : (Mathf.Sin(rad) > 0f ? Rot4.North : Rot4.South);
+                string defName = i % 3 == 0 ? BastionDefName : SpireDefName;
+                TrySpawnDecorativeProp(map, defName, cell, rot, reserved, 5.5f);
+            }
+        }
+
+        private static void SpawnEntryDressings(Map map, IntVec3 entry, IntVec3 extraction, List<IntVec3> reserved)
+        {
+            TrySpawnDecorativeProp(map, SpireDefName, entry + new IntVec3(-11, 0, -2), Rot4.West, reserved, 4f);
+            TrySpawnDecorativeProp(map, SpireDefName, entry + new IntVec3(11, 0, -2), Rot4.East, reserved, 4f);
+            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(-14, 0, -3), Rot4.West, reserved, 4f);
+            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(14, 0, -3), Rot4.East, reserved, 4f);
+        }
+
+        private static bool TrySpawnDecorativeProp(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> reserved, float minDistance)
+        {
+            if (map == null || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (cell.x < 8 || cell.z < 8 || cell.x > map.Size.x - 9 || cell.z > map.Size.z - 9)
+            {
+                return false;
+            }
+
+            float minDistanceSq = minDistance * minDistance;
+            for (int i = 0; i < reserved.Count; i++)
+            {
+                IntVec3 reservedCell = reserved[i];
+                int dx = cell.x - reservedCell.x;
+                int dz = cell.z - reservedCell.z;
+                if (dx * dx + dz * dz <= minDistanceSq)
+                {
+                    return false;
+                }
+            }
+
+            SpawnProp(map, defName, cell, rot);
+            return true;
         }
 
         private static void SpawnArc(Map map, IntVec3 center, float radius, float startDeg, float endDeg, float stepDeg, string defName)
