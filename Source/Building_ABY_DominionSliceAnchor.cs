@@ -99,9 +99,14 @@ namespace AbyssalProtocol
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null && encounter.IsActiveEncounter)
+            {
+                DominionSliceAnchorIdentityVfxUtility.DrawAnchorIdentityZone(drawLoc, Map, AnchorRole, thingIDNumber, encounter.CurrentPhase);
+            }
+
             base.DrawAt(drawLoc, flip);
 
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
             if (encounter != null && encounter.ShouldDrawAnchorLinks)
             {
                 Building_ABY_DominionSliceHeart heart = encounter.HeartBuilding;
