@@ -17,6 +17,19 @@ namespace AbyssalProtocol
         private static readonly Material LawZoneMaterial = MaterialPool.MatFrom(LawZoneTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material CoreGlyphMaterial = MaterialPool.MatFrom(CoreGlyphTexPath, ShaderDatabase.MoteGlow);
 
+        public static void DrawAnchorIdentityZone(Vector3 anchorPos, Map map, DominionSliceAnchorRole role, bool activeEncounter, bool anchorfallActive, int seed)
+        {
+            MapComponent_DominionSliceEncounter.SlicePhase phase = MapComponent_DominionSliceEncounter.SlicePhase.Dormant;
+            if (activeEncounter)
+            {
+                phase = anchorfallActive
+                    ? MapComponent_DominionSliceEncounter.SlicePhase.Anchorfall
+                    : MapComponent_DominionSliceEncounter.SlicePhase.Breach;
+            }
+
+            DrawAnchorIdentityZone(anchorPos, map, role, seed, phase);
+        }
+
         public static void DrawAnchorIdentityZone(Vector3 anchorPos, Map map, DominionSliceAnchorRole role, int seed, MapComponent_DominionSliceEncounter.SlicePhase phase)
         {
             if (map == null || phase == MapComponent_DominionSliceEncounter.SlicePhase.Dormant || phase == MapComponent_DominionSliceEncounter.SlicePhase.Failed)
