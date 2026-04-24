@@ -5,6 +5,7 @@ namespace AbyssalProtocol
 {
     public class MapComponent_DominionSliceVoidEdgeVisuals : MapComponent
     {
+        private int nextVoidVeilTick;
         private int nextRimPulseTick;
         private int nextVoidCrackTick;
         private int nextBoundaryRiftTick;
@@ -17,6 +18,7 @@ namespace AbyssalProtocol
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look(ref nextVoidVeilTick, "nextVoidVeilTick", 0);
             Scribe_Values.Look(ref nextRimPulseTick, "nextRimPulseTick", 0);
             Scribe_Values.Look(ref nextVoidCrackTick, "nextVoidCrackTick", 0);
             Scribe_Values.Look(ref nextBoundaryRiftTick, "nextBoundaryRiftTick", 0);
@@ -40,28 +42,34 @@ namespace AbyssalProtocol
             int now = Find.TickManager.TicksGame;
             float intensity = GetPhaseIntensity(encounter);
 
+            if (now >= nextVoidVeilTick)
+            {
+                EmitVoidVeil(intensity);
+                nextVoidVeilTick = now + Mathf.RoundToInt(Rand.Range(135f, 225f) / Mathf.Max(0.70f, intensity));
+            }
+
             if (now >= nextRimPulseTick)
             {
                 EmitVoidRimPulses(intensity);
-                nextRimPulseTick = now + Mathf.RoundToInt(Rand.Range(110f, 185f) / Mathf.Max(0.62f, intensity));
+                nextRimPulseTick = now + Mathf.RoundToInt(Rand.Range(85f, 145f) / Mathf.Max(0.70f, intensity));
             }
 
             if (now >= nextVoidCrackTick)
             {
                 EmitVoidCracks(intensity);
-                nextVoidCrackTick = now + Mathf.RoundToInt(Rand.Range(75f, 135f) / Mathf.Max(0.62f, intensity));
+                nextVoidCrackTick = now + Mathf.RoundToInt(Rand.Range(115f, 190f) / Mathf.Max(0.70f, intensity));
             }
 
             if (now >= nextBoundaryRiftTick)
             {
                 EmitBoundaryRifts(intensity);
-                nextBoundaryRiftTick = now + Mathf.RoundToInt(Rand.Range(180f, 320f) / Mathf.Max(0.62f, intensity));
+                nextBoundaryRiftTick = now + Mathf.RoundToInt(Rand.Range(220f, 380f) / Mathf.Max(0.70f, intensity));
             }
 
             if (now >= nextShardTick)
             {
                 EmitEdgeShards(intensity);
-                nextShardTick = now + Mathf.RoundToInt(Rand.Range(95f, 165f) / Mathf.Max(0.62f, intensity));
+                nextShardTick = now + Mathf.RoundToInt(Rand.Range(125f, 230f) / Mathf.Max(0.70f, intensity));
             }
         }
 
@@ -76,93 +84,106 @@ namespace AbyssalProtocol
             switch (encounter.CurrentPhase)
             {
                 case MapComponent_DominionSliceEncounter.SlicePhase.Breach:
-                    return 0.72f + hazard;
+                    return 0.78f + hazard;
                 case MapComponent_DominionSliceEncounter.SlicePhase.Anchorfall:
-                    return 0.95f + encounter.LiveAnchorCount * 0.06f + hazard;
+                    return 1.02f + encounter.LiveAnchorCount * 0.055f + hazard;
                 case MapComponent_DominionSliceEncounter.SlicePhase.HeartExposed:
-                    return 1.22f + hazard;
+                    return 1.30f + hazard;
                 case MapComponent_DominionSliceEncounter.SlicePhase.Collapse:
-                    return 1.75f + hazard;
+                    return 1.92f + hazard;
                 default:
                     return 0f;
             }
         }
 
-        private void EmitVoidRimPulses(float intensity)
+        private void EmitVoidVeil(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(2f + intensity * 2.2f), 3, 7);
+            int count = Mathf.Clamp(Mathf.RoundToInt(2f + intensity * 1.45f), 3, 6);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
                 Rot4 edge;
-                if (!TryFindEdgeBandCell(out cell, out edge, 6, 12))
+                if (!TryFindEdgeBandCell(out cell, out edge, 4, 10))
                 {
                     continue;
                 }
 
-                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.008f, 0.032f));
-                float scale = Rand.Range(1.25f, 2.05f) * Mathf.Lerp(0.85f, 1.28f, Mathf.Clamp01(intensity - 0.6f));
+                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.002f, 0.010f));
+                float scale = Rand.Range(2.75f, 4.35f) * Mathf.Lerp(0.88f, 1.35f, Mathf.Clamp01(intensity - 0.65f));
+                DominionSliceVoidEdgeVfxUtility.SpawnVoidVeil(pos, map, scale);
+            }
+        }
+
+        private void EmitVoidRimPulses(float intensity)
+        {
+            int count = Mathf.Clamp(Mathf.RoundToInt(3f + intensity * 2.25f), 4, 8);
+            for (int i = 0; i < count; i++)
+            {
+                IntVec3 cell;
+                Rot4 edge;
+                if (!TryFindEdgeBandCell(out cell, out edge, 5, 12))
+                {
+                    continue;
+                }
+
+                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.012f, 0.038f));
+                float scale = Rand.Range(1.75f, 3.15f) * Mathf.Lerp(0.90f, 1.36f, Mathf.Clamp01(intensity - 0.6f));
                 DominionSliceVoidEdgeVfxUtility.SpawnVoidRim(pos, map, scale);
             }
         }
 
         private void EmitVoidCracks(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(1.5f + intensity * 2f), 2, 6);
+            int count = Mathf.Clamp(Mathf.RoundToInt(1.25f + intensity * 1.75f), 2, 5);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
                 Rot4 edge;
-                if (!TryFindEdgeBandCell(out cell, out edge, 7, 15))
+                if (!TryFindEdgeBandCell(out cell, out edge, 6, 15))
                 {
                     continue;
                 }
 
-                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.010f, 0.040f));
-                float scale = Rand.Range(0.75f, 1.55f) * Mathf.Lerp(0.85f, 1.25f, Mathf.Clamp01(intensity - 0.5f));
+                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.018f, 0.050f));
+                float scale = Rand.Range(1.05f, 2.15f) * Mathf.Lerp(0.95f, 1.42f, Mathf.Clamp01(intensity - 0.55f));
                 DominionSliceVoidEdgeVfxUtility.SpawnVoidCrack(pos, map, scale);
             }
         }
 
         private void EmitBoundaryRifts(float intensity)
         {
-            int count = encounterSafeCount(intensity >= 1.45f ? 3 : 2, 1, 4);
+            int count = Mathf.Clamp(Mathf.RoundToInt(0.75f + intensity * 1.15f), 1, 4);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
                 Rot4 edge;
-                if (!TryFindEdgeBandCell(out cell, out edge, 7, 13))
+                if (!TryFindEdgeBandCell(out cell, out edge, 6, 13))
                 {
                     continue;
                 }
 
-                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.015f, 0.045f));
-                float scale = Rand.Range(1.15f, 1.95f) * Mathf.Lerp(0.90f, 1.40f, Mathf.Clamp01(intensity - 0.55f));
+                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.026f, 0.060f));
+                float scale = Rand.Range(1.65f, 3.05f) * Mathf.Lerp(0.95f, 1.48f, Mathf.Clamp01(intensity - 0.6f));
                 DominionSliceVoidEdgeVfxUtility.SpawnBoundaryRift(pos, map, scale);
             }
         }
 
         private void EmitEdgeShards(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(2f + intensity * 1.65f), 2, 6);
+            int count = Mathf.Clamp(Mathf.RoundToInt(1.15f + intensity * 1.25f), 2, 5);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
                 Rot4 edge;
-                if (!TryFindEdgeBandCell(out cell, out edge, 8, 17))
+                if (!TryFindEdgeBandCell(out cell, out edge, 7, 17))
                 {
                     continue;
                 }
 
-                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.020f, 0.055f));
-                float scale = Rand.Range(0.65f, 1.25f) * Mathf.Lerp(0.85f, 1.35f, Mathf.Clamp01(intensity - 0.5f));
+                Vector3 pos = CellToDrawPos(cell, Rand.Range(0.030f, 0.065f));
+                float scale = Rand.Range(0.80f, 1.55f) * Mathf.Lerp(0.90f, 1.42f, Mathf.Clamp01(intensity - 0.5f));
                 DominionSliceVoidEdgeVfxUtility.SpawnEdgeShard(pos, map, scale);
             }
-        }
-
-        private static int encounterSafeCount(int value, int min, int max)
-        {
-            return System.Math.Max(min, System.Math.Min(max, value));
         }
 
         private bool TryFindEdgeBandCell(out IntVec3 cell, out Rot4 edge, int minInset, int maxInset)

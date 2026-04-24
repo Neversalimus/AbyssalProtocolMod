@@ -2,6 +2,27 @@
 <Defs>
 
   <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceVoidVeil</defName>
+    <label>dominion void edge veil</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_VoidVeil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.080</fadeInTime>
+      <solidTime>0.380</solidTime>
+      <fadeOutTime>0.900</fadeOutTime>
+      <growthRate>0.012</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_DominionSliceVoidRim</defName>
     <label>dominion void rim glow</label>
     <thingClass>MoteThrown</thingClass>
@@ -15,10 +36,10 @@
       <drawSize>(1.00,1.00)</drawSize>
     </graphicData>
     <mote>
-      <fadeInTime>0.060</fadeInTime>
-      <solidTime>0.220</solidTime>
-      <fadeOutTime>0.680</fadeOutTime>
-      <growthRate>0.025</growthRate>
+      <fadeInTime>0.040</fadeInTime>
+      <solidTime>0.300</solidTime>
+      <fadeOutTime>0.740</fadeOutTime>
+      <growthRate>0.035</growthRate>
     </mote>
   </ThingDef>
 
@@ -36,10 +57,10 @@
       <drawSize>(1.00,1.00)</drawSize>
     </graphicData>
     <mote>
-      <fadeInTime>0.020</fadeInTime>
-      <solidTime>0.150</solidTime>
-      <fadeOutTime>0.420</fadeOutTime>
-      <growthRate>0.060</growthRate>
+      <fadeInTime>0.010</fadeInTime>
+      <solidTime>0.220</solidTime>
+      <fadeOutTime>0.520</fadeOutTime>
+      <growthRate>0.070</growthRate>
     </mote>
   </ThingDef>
 
@@ -57,10 +78,10 @@
       <drawSize>(1.00,1.00)</drawSize>
     </graphicData>
     <mote>
-      <fadeInTime>0.030</fadeInTime>
-      <solidTime>0.190</solidTime>
-      <fadeOutTime>0.560</fadeOutTime>
-      <growthRate>0.045</growthRate>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.240</solidTime>
+      <fadeOutTime>0.660</fadeOutTime>
+      <growthRate>0.050</growthRate>
     </mote>
   </ThingDef>
 
@@ -80,8 +101,8 @@
     <mote>
       <fadeInTime>0.000</fadeInTime>
       <solidTime>0.100</solidTime>
-      <fadeOutTime>0.310</fadeOutTime>
-      <growthRate>0.035</growthRate>
+      <fadeOutTime>0.320</fadeOutTime>
+      <growthRate>0.040</growthRate>
     </mote>
   </ThingDef>
 
