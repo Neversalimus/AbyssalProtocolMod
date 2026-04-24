@@ -3,6 +3,14 @@
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
+      <!-- Saint Aegis Carapace: use the working apparel-level interception path. -->
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/thingClass</xpath>
+        <value>
+          <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
+        </value>
+      </li>
+
       <!-- Saint Aegis Carapace: larger shield, slower recharge. -->
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace" and not(modExtensions)]</xpath>
@@ -46,6 +54,14 @@
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/comps[not(li[@Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo" />
+        </value>
+      </li>
+
+      <!-- Crowned Core Plate: use the working apparel-level interception path. -->
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/thingClass</xpath>
+        <value>
+          <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
         </value>
       </li>
 
