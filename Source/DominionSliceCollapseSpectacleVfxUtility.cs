@@ -13,6 +13,9 @@ namespace AbyssalProtocol
         private const string ExtractionColumnMoteDefName = "ABY_Mote_DominionSliceExtractionColumn";
         private const string RewardBeaconMoteDefName = "ABY_Mote_DominionSliceRewardBeacon";
         private const string RewardGuideMoteDefName = "ABY_Mote_DominionSliceRewardGuide";
+        private const string RewardSanctumRingMoteDefName = "ABY_Mote_DominionSliceRewardSanctumRing";
+        private const string RewardSanctumColumnMoteDefName = "ABY_Mote_DominionSliceRewardSanctumColumn";
+        private const string RewardShardMoteDefName = "ABY_Mote_DominionSliceRewardShard";
         private const string GuidanceTrailMoteDefName = "ABY_Mote_DominionSliceGuidanceTrail";
         private const string EdgeInstabilityMoteDefName = "ABY_Mote_DominionSliceEdgeInstability";
         private const string WarningPulseMoteDefName = "ABY_Mote_DominionSliceCollapseWarningPulse";
@@ -24,6 +27,9 @@ namespace AbyssalProtocol
         private static ThingDef extractionColumnMoteDef;
         private static ThingDef rewardBeaconMoteDef;
         private static ThingDef rewardGuideMoteDef;
+        private static ThingDef rewardSanctumRingMoteDef;
+        private static ThingDef rewardSanctumColumnMoteDef;
+        private static ThingDef rewardShardMoteDef;
         private static ThingDef guidanceTrailMoteDef;
         private static ThingDef edgeInstabilityMoteDef;
         private static ThingDef warningPulseMoteDef;
@@ -61,6 +67,21 @@ namespace AbyssalProtocol
         private static ThingDef RewardGuideMoteDef
         {
             get { return rewardGuideMoteDef ?? (rewardGuideMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardGuideMoteDefName)); }
+        }
+
+        private static ThingDef RewardSanctumRingMoteDef
+        {
+            get { return rewardSanctumRingMoteDef ?? (rewardSanctumRingMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardSanctumRingMoteDefName)); }
+        }
+
+        private static ThingDef RewardSanctumColumnMoteDef
+        {
+            get { return rewardSanctumColumnMoteDef ?? (rewardSanctumColumnMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardSanctumColumnMoteDefName)); }
+        }
+
+        private static ThingDef RewardShardMoteDef
+        {
+            get { return rewardShardMoteDef ?? (rewardShardMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(RewardShardMoteDefName)); }
         }
 
         private static ThingDef GuidanceTrailMoteDef
@@ -142,9 +163,23 @@ namespace AbyssalProtocol
 
             Vector3 pos = rewardCell.ToVector3Shifted();
             float clampedUrgency = Mathf.Clamp01(urgency);
-            SpawnStaticMote(pos, map, RewardBeaconMoteDef, Mathf.Lerp(1.55f, 2.45f, clampedUrgency));
-            SpawnStaticMote(pos + new Vector3(0f, 0.004f, 0f), map, RewardGuideMoteDef, Mathf.Lerp(1.30f, 2.10f, clampedUrgency));
-            if (Rand.Chance(0.30f + clampedUrgency * 0.30f))
+            SpawnStaticMote(pos, map, RewardSanctumRingMoteDef, Mathf.Lerp(2.20f, 3.60f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.002f, 0f), map, RewardBeaconMoteDef, Mathf.Lerp(1.80f, 2.85f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.005f, 0f), map, RewardGuideMoteDef, Mathf.Lerp(1.55f, 2.35f, clampedUrgency));
+            SpawnStaticMote(pos + new Vector3(0f, 0.008f, 0f), map, RewardSanctumColumnMoteDef, Mathf.Lerp(1.40f, 2.30f, clampedUrgency));
+            if (clampedUrgency >= 0.72f)
+            {
+                SpawnStaticMote(pos + new Vector3(0f, 0.010f, 0f), map, RewardSanctumRingMoteDef, Mathf.Lerp(1.10f, 1.70f, clampedUrgency));
+            }
+
+            SpawnRewardShards(pos, map, clampedUrgency);
+
+            if (Rand.Chance(0.34f + clampedUrgency * 0.32f))
+            {
+                FleckMaker.ThrowLightningGlow(pos, map, 1.15f + clampedUrgency * 1.20f);
+            }
+
+            if (Rand.Chance(0.26f + clampedUrgency * 0.26f))
             {
                 FleckMaker.ThrowMicroSparks(pos, map);
             }
@@ -252,6 +287,25 @@ namespace AbyssalProtocol
                 {
                     FleckMaker.ThrowMicroSparks(pos, map);
                 }
+            }
+        }
+
+        private static void SpawnRewardShards(Vector3 center, Map map, float urgency)
+        {
+            ThingDef shardDef = RewardShardMoteDef;
+            if (map == null || shardDef == null)
+            {
+                return;
+            }
+
+            int count = urgency >= 0.75f ? 3 : 2;
+            for (int i = 0; i < count; i++)
+            {
+                float angle = (360f / count) * i + Rand.Range(-22f, 22f);
+                float rad = angle * Mathf.Deg2Rad;
+                float radius = Rand.Range(0.55f, 1.30f) + urgency * 0.30f;
+                Vector3 pos = center + new Vector3(Mathf.Cos(rad) * radius, 0.004f + i * 0.001f, Mathf.Sin(rad) * radius);
+                SpawnStaticMote(pos, map, shardDef, Rand.Range(0.68f, 1.08f) + urgency * 0.18f);
             }
         }
 
