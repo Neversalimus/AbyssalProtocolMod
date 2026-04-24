@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftCrownedCorePlate</defName>
+    <label>forge crowned core plate</label>
+    <description>Bind a crowned core fragment into a dominion-grade torso shell. This pattern consumes one hell-slice fragment and rewrites it into wearable breach authority rather than another inert trophy.</description>
+    <jobString>Forging crowned core plate.</jobString>
+    <workAmount>7200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <researchPrerequisite>ABY_DominionGateBootstrapping</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownedCoreFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>64</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>128</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>36</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>6</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_CrownedCorePlate>1</ABY_CrownedCorePlate>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftCrownedCoreHelm</defName>
+    <label>forge crowned core helm</label>
+    <description>Cut a crowned core fragment into a sealed dominion helm with reinforced halo braces and a crown-logic visor. The result is a late reward pattern for colonies that survived the hell slice and came back with proof.</description>
+    <jobString>Forging crowned core helm.</jobString>
+    <workAmount>3100</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <researchPrerequisite>ABY_DominionGateBootstrapping</researchPrerequisite>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownedCoreFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>28</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>54</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_CrownedCoreHelm>1</ABY_CrownedCoreHelm>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+</Defs>

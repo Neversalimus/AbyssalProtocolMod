@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftCrownedCorePlate.label>выковать коронную сердцевинную броню</ABY_CraftCrownedCorePlate.label>
+  <ABY_CraftCrownedCorePlate.description>Встроить коронный фрагмент ядра в доминьонную торсовую оболочку. Этот паттерн расходует один фрагмент из среза ада и переписывает его в носимое право на прорыв, а не в очередной мёртвый трофей.</ABY_CraftCrownedCorePlate.description>
+  <ABY_CraftCrownedCorePlate.jobString>Ковка коронной сердцевинной брони.</ABY_CraftCrownedCorePlate.jobString>
+  <ABY_CraftCrownedCoreHelm.label>выковать коронный сердцевинный шлем</ABY_CraftCrownedCoreHelm.label>
+  <ABY_CraftCrownedCoreHelm.description>Вырезать коронный фрагмент ядра в герметичный доминьонный шлем с усиленными дугами хало и визором коронной логики. Это поздний наградной паттерн для колоний, переживших срез ада и вернувшихся с доказательством.</ABY_CraftCrownedCoreHelm.description>
+  <ABY_CraftCrownedCoreHelm.jobString>Ковка коронного сердцевинного шлема.</ABY_CraftCrownedCoreHelm.jobString>
+</LanguageData>

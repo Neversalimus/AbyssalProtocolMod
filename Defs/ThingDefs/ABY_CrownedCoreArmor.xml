@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownedCorePlate</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crowned core plate</label>
+    <description>A dominion-grade torso shell grown around a crowned core fragment recovered from the hell slice. The plate is less a suit of armor than a wearable administrative seal: blackened plasteel ribs, uranium heat channels and crown-pressure nodes hold a hostile fragment in a human-sized frame. It is heavy, rare, and built for colonists who have already crossed the gate once.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownedCorePlate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.16,1.16)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_CrownedCorePlate</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>54</Plasteel>
+      <Uranium>18</Uranium>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.06</MoveSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>7200</WorkToMake>
+      <MaxHitPoints>560</MaxHitPoints>
+      <Mass>7.1</Mass>
+      <MarketValue>6900</MarketValue>
+      <ArmorRating_Sharp>1.32</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.70</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.16</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownedCoreHelm</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crowned core helm</label>
+    <description>A sealed dominion helm built around a splintered crown logic lens. Its visor does not simply protect the wearer; it frames the battlefield as a set of authorized targets, breach vectors and condemned structures. The halo braces are intentionally restrained so the helm reads as wargear rather than ceremony.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownedCoreHelm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.02,1.02)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_CrownedCoreHelm</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>20</Plasteel>
+      <Uranium>6</Uranium>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>3</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>3100</WorkToMake>
+      <MaxHitPoints>305</MaxHitPoints>
+      <Mass>2.35</Mass>
+      <MarketValue>2850</MarketValue>
+      <ArmorRating_Sharp>1.08</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.56</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.94</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>

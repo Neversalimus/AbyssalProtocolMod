@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftCrownedCorePlate.label>forge crowned core plate</ABY_CraftCrownedCorePlate.label>
+  <ABY_CraftCrownedCorePlate.description>Bind a crowned core fragment into a dominion-grade torso shell. This pattern consumes one hell-slice fragment and rewrites it into wearable breach authority rather than another inert trophy.</ABY_CraftCrownedCorePlate.description>
+  <ABY_CraftCrownedCorePlate.jobString>Forging crowned core plate.</ABY_CraftCrownedCorePlate.jobString>
+  <ABY_CraftCrownedCoreHelm.label>forge crowned core helm</ABY_CraftCrownedCoreHelm.label>
+  <ABY_CraftCrownedCoreHelm.description>Cut a crowned core fragment into a sealed dominion helm with reinforced halo braces and a crown-logic visor. The result is a late reward pattern for colonies that survived the hell slice and came back with proof.</ABY_CraftCrownedCoreHelm.description>
+  <ABY_CraftCrownedCoreHelm.jobString>Forging crowned core helm.</ABY_CraftCrownedCoreHelm.jobString>
+</LanguageData>
