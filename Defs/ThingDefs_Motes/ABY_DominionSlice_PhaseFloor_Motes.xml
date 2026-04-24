@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSlicePhaseFloorRing</defName>
+    <label>dominion phase floor ring</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_PhaseFloorRing</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.040</fadeInTime>
+      <solidTime>0.180</solidTime>
+      <fadeOutTime>0.580</fadeOutTime>
+      <growthRate>0.070</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSlicePhaseConduitPulse</defName>
+    <label>dominion phase conduit pulse</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_PhaseConduitPulse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.100</solidTime>
+      <fadeOutTime>0.360</fadeOutTime>
+      <growthRate>0.030</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceAnchorFloorGlyph</defName>
+    <label>dominion anchor floor glyph</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_AnchorFloorGlyph</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.060</fadeInTime>
+      <solidTime>0.220</solidTime>
+      <fadeOutTime>0.700</fadeOutTime>
+      <growthRate>0.040</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceHeartFloorCrack</defName>
+    <label>dominion heart floor crack</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_HeartFloorCrack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.160</solidTime>
+      <fadeOutTime>0.540</fadeOutTime>
+      <growthRate>0.025</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
