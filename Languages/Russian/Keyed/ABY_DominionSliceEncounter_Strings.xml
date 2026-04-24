@@ -26,4 +26,6 @@
   <ABY_DominionSliceAnchor_SealEffect>Эффект импульса: усиливает барьер Crown-Heart и продлевает давление щита.</ABY_DominionSliceAnchor_SealEffect>
   <ABY_DominionSliceAnchor_ChoirEffect>Эффект импульса: ускоряет входящие волны поддержки и притягивает эскортные ячейки.</ABY_DominionSliceAnchor_ChoirEffect>
   <ABY_DominionSliceAnchor_LawEffect>Эффект импульса: усиливает окружающее наказание и смещает состав среза к давлению снайперов и стражей.</ABY_DominionSliceAnchor_LawEffect>
+  <ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>Сердце доминиона уничтожено</ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>
+  <ABY_DominionSliceEncounter_HeartDestroyedLoreText>Сердце доминиона уничтожено.&#10;&#10;Якоря отказывают. Коронные линии схлопываются. Карманная область теряет связность.&#10;&#10;Это не просто выигранная битва. Ваши колонисты сломали локальный закон Бездны — физически оформленную заявку на власть.&#10;&#10;Карман наград открыт, но срез уже схлопывается. Заберите то, что осталось, и доберитесь до точки извлечения, прежде чем что-то более глубокое ответит.</ABY_DominionSliceEncounter_HeartDestroyedLoreText>
 </LanguageData>

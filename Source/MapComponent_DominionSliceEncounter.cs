@@ -523,6 +523,16 @@ namespace AbyssalProtocol
                 new TargetInfo(map.Center, map),
                 victory ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.ThreatBig,
                 false);
+
+            if (victory)
+            {
+                ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
+                if (runtime != null)
+                {
+                    IntVec3 focusCell = session != null && session.heartCell.IsValid ? session.heartCell : map.Center;
+                    runtime.TrySendDominionHeartDestroyedLoreLetterOnce(map, focusCell);
+                }
+            }
         }
 
         private void CleanupReferences()

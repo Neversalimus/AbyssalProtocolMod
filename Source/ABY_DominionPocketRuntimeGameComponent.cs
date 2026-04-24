@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RimWorld;
 using Verse;
 
 namespace AbyssalProtocol
@@ -8,6 +9,7 @@ namespace AbyssalProtocol
         private const int MaintenanceIntervalTicks = 180;
 
         private int nextMaintenanceTick;
+        private bool dominionHeartDestroyedLoreLetterSent;
         private List<ABY_DominionPocketSession> sessions = new List<ABY_DominionPocketSession>();
 
         public ABY_DominionPocketRuntimeGameComponent(Game game)
@@ -23,6 +25,7 @@ namespace AbyssalProtocol
         {
             base.ExposeData();
             Scribe_Values.Look(ref nextMaintenanceTick, "nextMaintenanceTick", 0);
+            Scribe_Values.Look(ref dominionHeartDestroyedLoreLetterSent, "dominionHeartDestroyedLoreLetterSent", false);
             Scribe_Collections.Look(ref sessions, "sessions", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -123,6 +126,23 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        public bool TrySendDominionHeartDestroyedLoreLetterOnce(Map map, IntVec3 focusCell)
+        {
+            if (dominionHeartDestroyedLoreLetterSent || map == null)
+            {
+                return false;
+            }
+
+            dominionHeartDestroyedLoreLetterSent = true;
+            IntVec3 targetCell = focusCell.IsValid ? focusCell : map.Center;
+            Find.LetterStack.ReceiveLetter(
+                "ABY_DominionSliceEncounter_HeartDestroyedLoreTitle".Translate(),
+                "ABY_DominionSliceEncounter_HeartDestroyedLoreText".Translate(),
+                LetterDefOf.PositiveEvent,
+                new TargetInfo(targetCell, map));
+            return true;
         }
 
         public void ForgetSession(string sessionId)
