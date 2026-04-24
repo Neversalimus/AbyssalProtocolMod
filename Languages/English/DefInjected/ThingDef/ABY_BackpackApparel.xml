@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_AshboundFieldPack.label>ashbound field pack</ABY_AshboundFieldPack.label>
-  <ABY_AshboundFieldPack.description>A crude abyssal field pack built from residue-lined metal, sealed ember canisters and reinforced harness anchors. It is not a true reactor: it is a low-tier logistics frame that lets an operator carry more breach gear without turning the wearer into a walking altar.</ABY_AshboundFieldPack.description>
+  <ABY_AshboundFieldPack.description>A compact abyssal field pack built for early forge operators and breach-line haulers. Steel ribs, residue canisters and a restrained harness frame make it useful without turning the wearer into a walking shrine.</ABY_AshboundFieldPack.description>
   <ABY_RiftRelayPack.label>rift relay pack</ABY_RiftRelayPack.label>
-  <ABY_RiftRelayPack.description>A stabilized mid-tier relay pack that routes abyssal pressure through a compact back-mounted lattice. The frame improves mobility and load handling, but its controlled rift resonance makes the wearer slightly more receptive to hostile psychic pressure.</ABY_RiftRelayPack.description>
+  <ABY_RiftRelayPack.description>A relay-grade abyssal pack with a compact rift conduit, stronger load frame and hotter canister feed. It pushes mobility and hauling beyond the ashbound baseline, but the wearer is unmistakably carrying a live infernal device.</ABY_RiftRelayPack.description>
   <ABY_CrownConduitPack.label>crown conduit pack</ABY_CrownConduitPack.label>
-  <ABY_CrownConduitPack.description>A dominion-grade conduit pack built around a crowned core fragment and a sealed back-mounted power spine. It functions as a wearable logistics authority: heavier than the lower packs, but strong enough to let a fully equipped operator move under the weight of late abyssal wargear.</ABY_CrownConduitPack.description>
+  <ABY_CrownConduitPack.description>A crown-tier conduit pack built around a compact authority core. It is part reactor, part relay and part command seal: heavy, expensive and designed for colonists trusted with the late abyssal line.</ABY_CrownConduitPack.description>
 </LanguageData>

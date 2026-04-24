@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_AshboundFieldPack.label>полевой ранец пепельной привязки</ABY_AshboundFieldPack.label>
-  <ABY_AshboundFieldPack.description>Грубый бездный полевой ранец из металла с residue-прокладкой, герметичных угольных канистр и усиленных точек крепления. Это ещё не настоящий реактор, а низкотирный логистический каркас, позволяющий оператору нести больше снаряжения разлома, не превращая носителя в ходячий алтарь.</ABY_AshboundFieldPack.description>
-  <ABY_RiftRelayPack.label>ретрансляторный ранец разлома</ABY_RiftRelayPack.label>
-  <ABY_RiftRelayPack.description>Стабилизированный ранец среднего тира, проводящий давление Бездны через компактную наспинную решётку. Каркас улучшает подвижность и работу с нагрузкой, но контролируемый резонанс разлома делает носителя немного восприимчивее к враждебному психическому давлению.</ABY_RiftRelayPack.description>
-  <ABY_CrownConduitPack.label>коронный проводящий ранец</ABY_CrownConduitPack.label>
-  <ABY_CrownConduitPack.description>Ранец-проводник доминионного класса, собранный вокруг коронного фрагмента ядра и герметичного наспинного силового хребта. Он работает как носимое логистическое право допуска: тяжелее младших ранцев, но достаточно мощен, чтобы оператор мог двигаться под весом позднего бездного снаряжения.</ABY_CrownConduitPack.description>
+  <ABY_AshboundFieldPack.label>полевой ранец пепельной грани</ABY_AshboundFieldPack.label>
+  <ABY_AshboundFieldPack.description>Компактный бездный полевой ранец для ранних операторов кузницы и носильщиков прорыва. Стальные рёбра, residue-канистры и сдержанная упряжная рама делают его полезным, не превращая носителя в ходячий алтарь.</ABY_AshboundFieldPack.description>
+  <ABY_RiftRelayPack.label>релейный ранец разлома</ABY_RiftRelayPack.label>
+  <ABY_RiftRelayPack.description>Бездный ранец релейного класса с компактным проводником разлома, усиленной грузовой рамой и более горячей канистровой подачей. Он заметно усиливает мобильность и переноску, но носитель уже явно несёт на спине живое инфернальное устройство.</ABY_RiftRelayPack.description>
+  <ABY_CrownConduitPack.label>коронный проводниковый ранец</ABY_CrownConduitPack.label>
+  <ABY_CrownConduitPack.description>Ранец коронного тира, построенный вокруг компактного ядра власти. Это одновременно реактор, релейный узел и печать допуска: тяжёлый, дорогой и рассчитанный на колонистов поздней бездной линии.</ABY_CrownConduitPack.description>
 </LanguageData>
