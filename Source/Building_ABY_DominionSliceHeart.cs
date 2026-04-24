@@ -140,8 +140,7 @@ namespace AbyssalProtocol
                 return stateText;
             }
 
-            return baseText.TrimEnd() + "
-" + stateText;
+            return baseText.TrimEnd() + "\n" + stateText;
         }
     }
 }
