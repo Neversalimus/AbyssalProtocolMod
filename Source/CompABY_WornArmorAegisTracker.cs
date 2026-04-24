@@ -40,6 +40,17 @@ namespace AbyssalProtocol
                 return;
             }
 
+            // TPS guard: this tracker is only a fallback/UI synchronizer. The real
+            // damage interception path is event-driven through the worn apparel and
+            // PostPreApplyDamage, so there is no need to scan apparel every tick on
+            // every humanlike pawn. Spread checks across ticks to avoid spikes in
+            // large colonies and raid maps.
+            int tick = CurrentTick;
+            if ((tick + pawn.thingIDNumber) % 60 != 0)
+            {
+                return;
+            }
+
             Apparel armor = ResolveAegisArmor(pawn, out DefModExtension_ABY_ApparelAegis ext);
             if (armor == null || ext == null)
             {
