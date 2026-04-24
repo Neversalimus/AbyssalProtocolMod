@@ -9,6 +9,8 @@ namespace AbyssalProtocol
         public string rechargingKey = "ABY_ApparelAegis_StateRecharging";
         public string collapsedKey = "ABY_ApparelAegis_StateCollapsed";
         public string suppressedKey = "ABY_ApparelAegis_StateSuppressed";
+        public string gizmoSubtitleKey = "ABY_ApparelAegis_GizmoIntegrity";
+        public string gizmoTheme = "Aegis";
 
         public float maxShieldPoints = 120f;
         public int rechargeDelayTicks = 240;

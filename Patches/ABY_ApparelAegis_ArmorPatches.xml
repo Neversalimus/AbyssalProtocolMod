@@ -24,6 +24,8 @@
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis">
             <labelKey>ABY_ApparelAegis_SaintLabel</labelKey>
+            <gizmoSubtitleKey>ABY_ApparelAegis_SaintGizmoSubtitle</gizmoSubtitleKey>
+            <gizmoTheme>Saint</gizmoTheme>
             <maxShieldPoints>240</maxShieldPoints>
             <rechargeDelayTicks>600</rechargeDelayTicks>
             <rechargeIntervalTicks>30</rechargeIntervalTicks>
@@ -78,6 +80,8 @@
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis">
             <labelKey>ABY_ApparelAegis_CrownLabel</labelKey>
+            <gizmoSubtitleKey>ABY_ApparelAegis_CrownGizmoSubtitle</gizmoSubtitleKey>
+            <gizmoTheme>Crown</gizmoTheme>
             <maxShieldPoints>130</maxShieldPoints>
             <rechargeDelayTicks>180</rechargeDelayTicks>
             <rechargeIntervalTicks>30</rechargeIntervalTicks>

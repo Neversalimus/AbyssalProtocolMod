@@ -4,6 +4,10 @@
   <ABY_ApparelAegis_SaintLabel>Эгида Святого</ABY_ApparelAegis_SaintLabel>
   <ABY_ApparelAegis_CrownLabel>Коронная эгида</ABY_ApparelAegis_CrownLabel>
 
+  <ABY_ApparelAegis_GizmoIntegrity>Целостность щита</ABY_ApparelAegis_GizmoIntegrity>
+  <ABY_ApparelAegis_SaintGizmoSubtitle>Тяжёлая решётка щита</ABY_ApparelAegis_SaintGizmoSubtitle>
+  <ABY_ApparelAegis_CrownGizmoSubtitle>Быстрое коронное реле</ABY_ApparelAegis_CrownGizmoSubtitle>
+
   <ABY_ApparelAegis_StateStable>стабильна</ABY_ApparelAegis_StateStable>
   <ABY_ApparelAegis_StateRecharging>восстанавливается</ABY_ApparelAegis_StateRecharging>
   <ABY_ApparelAegis_StateCollapsed>пробита</ABY_ApparelAegis_StateCollapsed>

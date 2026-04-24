@@ -4,6 +4,10 @@
   <ABY_ApparelAegis_SaintLabel>Saint Aegis</ABY_ApparelAegis_SaintLabel>
   <ABY_ApparelAegis_CrownLabel>Crown Aegis</ABY_ApparelAegis_CrownLabel>
 
+  <ABY_ApparelAegis_GizmoIntegrity>Shield integrity</ABY_ApparelAegis_GizmoIntegrity>
+  <ABY_ApparelAegis_SaintGizmoSubtitle>Heavy shield lattice</ABY_ApparelAegis_SaintGizmoSubtitle>
+  <ABY_ApparelAegis_CrownGizmoSubtitle>Fast crown relay</ABY_ApparelAegis_CrownGizmoSubtitle>
+
   <ABY_ApparelAegis_StateStable>stable</ABY_ApparelAegis_StateStable>
   <ABY_ApparelAegis_StateRecharging>recharging</ABY_ApparelAegis_StateRecharging>
   <ABY_ApparelAegis_StateCollapsed>collapsed</ABY_ApparelAegis_StateCollapsed>

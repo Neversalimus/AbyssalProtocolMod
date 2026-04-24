@@ -178,16 +178,21 @@ namespace AbyssalProtocol
             string label = ABY_ApparelAegisUtility.AegisLabel(ext);
             string points = ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe);
             string state = suppressed ? ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield") : CurrentStateLabel(ext);
+            string subtitle = ABY_ApparelAegisUtility.TranslateOrFallback(ext.gizmoSubtitleKey, "Shield integrity");
+            bool collapsed = !suppressed && (currentShieldPoints <= 0.5f || wasCollapsed);
 
-            Command_Action command = new Command_Action
-            {
-                defaultLabel = label + " " + points,
-                defaultDesc = BuildGizmoDescription(armor, ext, suppressed, state),
-                icon = armor.def?.uiIcon,
-                action = delegate { }
-            };
-            command.Disable(state);
-            yield return command;
+            yield return new Gizmo_ABY_AegisStatus(
+                label,
+                subtitle,
+                state,
+                points,
+                BuildGizmoDescription(armor, ext, suppressed, state),
+                ext.gizmoTheme,
+                currentShieldPoints,
+                ext.MaxShieldPointsSafe,
+                suppressed,
+                collapsed,
+                armor.def?.uiIcon);
         }
 
         private static bool CanOperateOn(Pawn pawn)

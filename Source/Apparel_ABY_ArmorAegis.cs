@@ -104,33 +104,11 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            DefModExtension_ABY_ApparelAegis ext = AegisExtension;
-            if (ext == null || Wearer == null || !Wearer.IsColonistPlayerControlled)
-            {
-                yield break;
-            }
-
-            SyncShield(ext);
-            bool suppressed = IsSuppressedByExternalShield(Wearer, ext);
-            if (!suppressed)
-            {
-                ApplyRecharge(ext);
-            }
-
-            string label = ABY_ApparelAegisUtility.AegisLabel(ext);
-            string state = suppressed
-                ? ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield")
-                : CurrentStateLabel(ext);
-
-            Command_Action command = new Command_Action
-            {
-                defaultLabel = label + " " + ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe),
-                defaultDesc = BuildGizmoDescription(ext, suppressed, state),
-                icon = def?.uiIcon,
-                action = delegate { }
-            };
-            command.Disable(state);
-            yield return command;
+            // The visible player-facing status gizmo is emitted by
+            // CompABY_WornArmorAegisTracker so it reflects the same shield state
+            // that handles damage absorption and lazy recharge. Keeping this class
+            // quiet prevents duplicate or desynced aegis gizmos when the pawn-level
+            // tracker is also present on humanlike races.
         }
 
         public override string GetInspectString()
