@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ApparelAegis_Label>Aegis</ABY_ApparelAegis_Label>
+  <ABY_ApparelAegis_SaintLabel>Saint Aegis</ABY_ApparelAegis_SaintLabel>
+  <ABY_ApparelAegis_CrownLabel>Crown Aegis</ABY_ApparelAegis_CrownLabel>
+
+  <ABY_ApparelAegis_StateStable>stable</ABY_ApparelAegis_StateStable>
+  <ABY_ApparelAegis_StateRecharging>recharging</ABY_ApparelAegis_StateRecharging>
+  <ABY_ApparelAegis_StateCollapsed>collapsed</ABY_ApparelAegis_StateCollapsed>
+  <ABY_ApparelAegis_StateSuppressed>suppressed by external shield</ABY_ApparelAegis_StateSuppressed>
+
+  <ABY_ApparelAegis_GizmoState>State</ABY_ApparelAegis_GizmoState>
+  <ABY_ApparelAegis_GizmoCharge>Charge</ABY_ApparelAegis_GizmoCharge>
+  <ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>Does not block outgoing fire.</ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>
+  <ABY_ApparelAegis_GizmoNoStack>Suppressed while an external shield belt or shield apparel is worn.</ABY_ApparelAegis_GizmoNoStack>
+  <ABY_ApparelAegis_GizmoRechargeDelay>Recharge delay</ABY_ApparelAegis_GizmoRechargeDelay>
+
+  <ABY_ApparelAegis_InfoHeader>Armor aegis</ABY_ApparelAegis_InfoHeader>
+  <ABY_ApparelAegis_InfoHeaderDesc>Built-in passive shield profile for this armor.</ABY_ApparelAegis_InfoHeaderDesc>
+  <ABY_ApparelAegis_InfoCapacity>Aegis capacity</ABY_ApparelAegis_InfoCapacity>
+  <ABY_ApparelAegis_InfoCapacityDesc>Maximum shield points available before the armor aegis collapses.</ABY_ApparelAegis_InfoCapacityDesc>
+  <ABY_ApparelAegis_InfoRechargeDelay>Recharge delay</ABY_ApparelAegis_InfoRechargeDelay>
+  <ABY_ApparelAegis_InfoRechargeDelayDesc>Time after a shield hit before the armor aegis can begin restoring charge.</ABY_ApparelAegis_InfoRechargeDelayDesc>
+  <ABY_ApparelAegis_InfoRechargeRate>Recharge rate</ABY_ApparelAegis_InfoRechargeRate>
+  <ABY_ApparelAegis_InfoRechargeRateDesc>Shield points restored while the armor aegis is recharging.</ABY_ApparelAegis_InfoRechargeRateDesc>
+  <ABY_ApparelAegis_InfoBlocks>Blocks</ABY_ApparelAegis_InfoBlocks>
+  <ABY_ApparelAegis_InfoBlocksDesc>Damage classes intercepted before normal armor resolution.</ABY_ApparelAegis_InfoBlocksDesc>
+  <ABY_ApparelAegis_InfoOutgoing>Outgoing fire</ABY_ApparelAegis_InfoOutgoing>
+  <ABY_ApparelAegis_InfoOutgoingValue>not blocked</ABY_ApparelAegis_InfoOutgoingValue>
+  <ABY_ApparelAegis_InfoOutgoingDesc>This custom armor aegis intercepts incoming damage only and does not prevent the wearer from shooting outward.</ABY_ApparelAegis_InfoOutgoingDesc>
+  <ABY_ApparelAegis_InfoExternalShield>External shields</ABY_ApparelAegis_InfoExternalShield>
+  <ABY_ApparelAegis_InfoExternalShieldValue>suppresses aegis</ABY_ApparelAegis_InfoExternalShieldValue>
+  <ABY_ApparelAegis_InfoExternalShieldDesc>When a shield belt or external shield apparel is worn, this armor aegis is disabled to prevent shield stacking.</ABY_ApparelAegis_InfoExternalShieldDesc>
+
+  <ABY_ApparelAegis_BlockRanged>ranged</ABY_ApparelAegis_BlockRanged>
+  <ABY_ApparelAegis_BlockExplosive>explosions</ABY_ApparelAegis_BlockExplosive>
+  <ABY_ApparelAegis_BlockMelee>melee</ABY_ApparelAegis_BlockMelee>
+  <ABY_ApparelAegis_BlockEMP>EMP drain</ABY_ApparelAegis_BlockEMP>
+  <ABY_ApparelAegis_BlockNone>none</ABY_ApparelAegis_BlockNone>
+</LanguageData>

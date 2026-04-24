@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <!-- Attach the passive worn-armor aegis tracker to humanlike pawns, including most custom humanlike races loaded before this patch. -->
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[race/humanlike="true" and not(comps)]</xpath>
+        <value>
+          <comps />
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[race/humanlike="true"]/comps[not(li[@Class="AbyssalProtocol.CompProperties_ABY_WornArmorAegisTracker"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.CompProperties_ABY_WornArmorAegisTracker" />
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

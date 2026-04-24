@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_ApparelAegis_Label>Эгида</ABY_ApparelAegis_Label>
+  <ABY_ApparelAegis_SaintLabel>Эгида Святого</ABY_ApparelAegis_SaintLabel>
+  <ABY_ApparelAegis_CrownLabel>Коронная эгида</ABY_ApparelAegis_CrownLabel>
+
+  <ABY_ApparelAegis_StateStable>стабильна</ABY_ApparelAegis_StateStable>
+  <ABY_ApparelAegis_StateRecharging>восстанавливается</ABY_ApparelAegis_StateRecharging>
+  <ABY_ApparelAegis_StateCollapsed>пробита</ABY_ApparelAegis_StateCollapsed>
+  <ABY_ApparelAegis_StateSuppressed>подавлена внешним щитом</ABY_ApparelAegis_StateSuppressed>
+
+  <ABY_ApparelAegis_GizmoState>Состояние</ABY_ApparelAegis_GizmoState>
+  <ABY_ApparelAegis_GizmoCharge>Заряд</ABY_ApparelAegis_GizmoCharge>
+  <ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>Не блокирует стрельбу носителя наружу.</ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>
+  <ABY_ApparelAegis_GizmoNoStack>Подавляется, если надет внешний пояс щита или щитовой предмет.</ABY_ApparelAegis_GizmoNoStack>
+  <ABY_ApparelAegis_GizmoRechargeDelay>Задержка восстановления</ABY_ApparelAegis_GizmoRechargeDelay>
+
+  <ABY_ApparelAegis_InfoHeader>Броневая эгида</ABY_ApparelAegis_InfoHeader>
+  <ABY_ApparelAegis_InfoHeaderDesc>Пассивный встроенный профиль щита этой брони.</ABY_ApparelAegis_InfoHeaderDesc>
+  <ABY_ApparelAegis_InfoCapacity>Ёмкость эгиды</ABY_ApparelAegis_InfoCapacity>
+  <ABY_ApparelAegis_InfoCapacityDesc>Максимальный запас щита до пробития броневой эгиды.</ABY_ApparelAegis_InfoCapacityDesc>
+  <ABY_ApparelAegis_InfoRechargeDelay>Задержка восстановления</ABY_ApparelAegis_InfoRechargeDelay>
+  <ABY_ApparelAegis_InfoRechargeDelayDesc>Время после попадания по щиту, прежде чем броневая эгида начнёт восстанавливать заряд.</ABY_ApparelAegis_InfoRechargeDelayDesc>
+  <ABY_ApparelAegis_InfoRechargeRate>Скорость восстановления</ABY_ApparelAegis_InfoRechargeRate>
+  <ABY_ApparelAegis_InfoRechargeRateDesc>Количество очков щита, восстанавливаемое во время перезарядки эгиды.</ABY_ApparelAegis_InfoRechargeRateDesc>
+  <ABY_ApparelAegis_InfoBlocks>Блокирует</ABY_ApparelAegis_InfoBlocks>
+  <ABY_ApparelAegis_InfoBlocksDesc>Классы урона, перехватываемые до обычного расчёта брони.</ABY_ApparelAegis_InfoBlocksDesc>
+  <ABY_ApparelAegis_InfoOutgoing>Стрельба наружу</ABY_ApparelAegis_InfoOutgoing>
+  <ABY_ApparelAegis_InfoOutgoingValue>не блокируется</ABY_ApparelAegis_InfoOutgoingValue>
+  <ABY_ApparelAegis_InfoOutgoingDesc>Эта кастомная броневая эгида перехватывает только входящий урон и не мешает носителю стрелять наружу.</ABY_ApparelAegis_InfoOutgoingDesc>
+  <ABY_ApparelAegis_InfoExternalShield>Внешние щиты</ABY_ApparelAegis_InfoExternalShield>
+  <ABY_ApparelAegis_InfoExternalShieldValue>подавляют эгиду</ABY_ApparelAegis_InfoExternalShieldValue>
+  <ABY_ApparelAegis_InfoExternalShieldDesc>Если надет пояс щита или внешний щитовой предмет, эта броневая эгида отключается, чтобы не складывать щиты.</ABY_ApparelAegis_InfoExternalShieldDesc>
+
+  <ABY_ApparelAegis_BlockRanged>дальний бой</ABY_ApparelAegis_BlockRanged>
+  <ABY_ApparelAegis_BlockExplosive>взрывы</ABY_ApparelAegis_BlockExplosive>
+  <ABY_ApparelAegis_BlockMelee>ближний бой</ABY_ApparelAegis_BlockMelee>
+  <ABY_ApparelAegis_BlockEMP>ЭМИ-разряд</ABY_ApparelAegis_BlockEMP>
+  <ABY_ApparelAegis_BlockNone>ничего</ABY_ApparelAegis_BlockNone>
+</LanguageData>
