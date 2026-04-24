@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_AshenVambraces.label>ashen vambraces</ABY_AshenVambraces.label>
+  <ABY_AshenVambraces.description>Early abyssal forearm braces made from dark steel plates, residue-lined hinge bands and crude ember conduits. They are not gloves; they reinforce the forearms so the wearer can keep tools, weapons and ritual implements steady near active forge machinery.</ABY_AshenVambraces.description>
+  <ABY_RiftVectorVambraces.label>rift vector vambraces</ABY_RiftVectorVambraces.label>
+  <ABY_RiftVectorVambraces.description>Mid-tier forearm modules that stabilize recoil, tool pressure and melee commitment through paired rift-vector conduits. Violet-red channels across the plates make every movement feel corrected by something just outside normal geometry.</ABY_RiftVectorVambraces.description>
+  <ABY_CrownAuthorityVambraces.label>crown authority vambraces</ABY_CrownAuthorityVambraces.label>
+  <ABY_CrownAuthorityVambraces.description>Late-line crown-authority vambraces built around a compact command lattice. They do not simply protect the forearms; they translate grip, recoil and striking vectors into tiny authorized acts of dominion.</ABY_CrownAuthorityVambraces.description>
+</LanguageData>

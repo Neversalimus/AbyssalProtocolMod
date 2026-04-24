@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftAshenVambraces.label>forge ashen vambraces</ABY_CraftAshenVambraces.label>
+  <ABY_CraftAshenVambraces.description>Assemble early abyssal forearm braces from dark steel plates, residue-lined hinge bands and crude ember conduits.</ABY_CraftAshenVambraces.description>
+  <ABY_CraftAshenVambraces.jobString>Forging ashen vambraces.</ABY_CraftAshenVambraces.jobString>
+  <ABY_CraftRiftVectorVambraces.label>forge rift vector vambraces</ABY_CraftRiftVectorVambraces.label>
+  <ABY_CraftRiftVectorVambraces.description>Build mid-tier forearm modules around plasteel braces and paired rift-vector conduits.</ABY_CraftRiftVectorVambraces.description>
+  <ABY_CraftRiftVectorVambraces.jobString>Forging rift vector vambraces.</ABY_CraftRiftVectorVambraces.jobString>
+  <ABY_CraftCrownAuthorityVambraces.label>forge crown authority vambraces</ABY_CraftCrownAuthorityVambraces.label>
+  <ABY_CraftCrownAuthorityVambraces.description>Construct late-line crown-authority vambraces around a compact command lattice and crowned core fragment.</ABY_CraftCrownAuthorityVambraces.description>
+  <ABY_CraftCrownAuthorityVambraces.jobString>Forging crown authority vambraces.</ABY_CraftCrownAuthorityVambraces.jobString>
+</LanguageData>

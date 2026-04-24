@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AshenVambraces</defName>
+    <thingClass>Apparel</thingClass>
+    <label>ashen vambraces</label>
+    <description>Early abyssal forearm braces made from dark steel plates, residue-lined hinge bands and crude ember conduits. They are not gloves; they reinforce the forearms so the wearer can keep tools, weapons and ritual implements steady near active forge machinery.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AshenVambraces</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.82,0.82)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Arms</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Steel>10</Steel>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.03</GeneralLaborSpeed>
+      <MeleeHitChance>0.02</MeleeHitChance>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1050</WorkToMake>
+      <MaxHitPoints>145</MaxHitPoints>
+      <Mass>0.85</Mass>
+      <MarketValue>360</MarketValue>
+      <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.03</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.06</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_RiftVectorVambraces</defName>
+    <thingClass>Apparel</thingClass>
+    <label>rift vector vambraces</label>
+    <description>Mid-tier forearm modules that stabilize recoil, tool pressure and melee commitment through paired rift-vector conduits. Violet-red channels across the plates make every movement feel corrected by something just outside normal geometry.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_RiftVectorVambraces</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.88,0.88)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Arms</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.04</GeneralLaborSpeed>
+      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+      <MeleeHitChance>0.03</MeleeHitChance>
+      <PsychicSensitivity>0.03</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1850</WorkToMake>
+      <MaxHitPoints>205</MaxHitPoints>
+      <Mass>1.15</Mass>
+      <MarketValue>1020</MarketValue>
+      <ArmorRating_Sharp>0.07</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.05</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.10</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_CrownAuthorityVambraces</defName>
+    <thingClass>Apparel</thingClass>
+    <label>crown authority vambraces</label>
+    <description>Late-line crown-authority vambraces built around a compact command lattice. They do not simply protect the forearms; they translate grip, recoil and striking vectors into tiny authorized acts of dominion.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_CrownAuthorityVambraces</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.94,0.94)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Arms</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>18</Plasteel>
+      <Gold>2</Gold>
+      <ComponentSpacer>1</ComponentSpacer>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <GeneralLaborSpeed>0.06</GeneralLaborSpeed>
+      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <MeleeHitChance>0.04</MeleeHitChance>
+      <MeleeDodgeChance>0.02</MeleeDodgeChance>
+      <PsychicSensitivity>0.06</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>3350</WorkToMake>
+      <MaxHitPoints>285</MaxHitPoints>
+      <Mass>1.45</Mass>
+      <MarketValue>2450</MarketValue>
+      <ArmorRating_Sharp>0.11</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.08</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.15</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>
