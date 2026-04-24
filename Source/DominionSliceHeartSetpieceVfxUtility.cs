@@ -14,6 +14,8 @@ namespace AbyssalProtocol
         private const string ShieldLatticeTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartShieldLattice";
         private const string CrownRingTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCrownRing";
         private const string CoreCoronaTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCoreCorona";
+        private const string ApexHaloTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartApexHalo";
+        private const string RadialCracksTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartRadialCracks";
 
         private const string HeartBeatMoteDefName = "ABY_Mote_DominionSliceHeartBeat";
         private const string HeartBeatExposedMoteDefName = "ABY_Mote_DominionSliceHeartBeatExposed";
@@ -26,6 +28,8 @@ namespace AbyssalProtocol
         private static readonly Material ShieldLatticeMaterial = MaterialPool.MatFrom(ShieldLatticeTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material CrownRingMaterial = MaterialPool.MatFrom(CrownRingTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material CoreCoronaMaterial = MaterialPool.MatFrom(CoreCoronaTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material ApexHaloMaterial = MaterialPool.MatFrom(ApexHaloTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material RadialCracksMaterial = MaterialPool.MatFrom(RadialCracksTexPath, ShaderDatabase.MoteGlow);
 
         private static ThingDef heartBeatMoteDef;
         private static ThingDef heartBeatExposedMoteDef;
@@ -46,42 +50,52 @@ namespace AbyssalProtocol
             float breathe = 1f + Mathf.Sin((ticks + seed) * 0.029f) * 0.045f;
             float shimmer = 1f + Mathf.Sin((ticks + seed) * 0.051f + 0.8f) * 0.035f;
             float phasePulse = 1f + Mathf.Sin((ticks + seed) * 0.083f + 0.45f) * 0.05f;
+            float slowDominionPulse = 1f + Mathf.Sin((ticks + seed) * 0.014f + 1.15f) * 0.038f;
             float yBase = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.004f;
             bool exposed = encounter.IsHeartExposed;
             int liveAnchors = encounter.LiveAnchorCount;
 
             Vector3 floorLoc = heartPos;
             floorLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.01f;
-            float floorScale = exposed ? 7.25f : 5.95f + Mathf.Min(liveAnchors, 3) * 0.38f;
-            DrawLayer(FloorPulseMaterial, floorLoc, (ticks + seed) * (exposed ? -0.055f : 0.030f), floorScale * breathe, exposed ? 0.87f : 0.82f);
+            float floorScale = exposed ? 7.65f : 6.20f + Mathf.Min(liveAnchors, 3) * 0.42f;
+            DrawLayer(FloorPulseMaterial, floorLoc, (ticks + seed) * (exposed ? -0.055f : 0.030f), floorScale * breathe, exposed ? 0.90f : 0.84f);
+
+            Vector3 crackLoc = heartPos;
+            crackLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.018f;
+            float crackScale = exposed ? 10.60f * slowDominionPulse : (8.10f + liveAnchors * 0.45f) * slowDominionPulse;
+            DrawLayer(RadialCracksMaterial, crackLoc, -(ticks + seed) * 0.010f, crackScale, exposed ? 0.72f : 0.46f);
 
             Vector3 haloLoc = heartPos;
             haloLoc.y = yBase + 0.012f;
 
             if (!exposed)
             {
-                float outerScale = (7.95f + liveAnchors * 0.34f) * breathe;
-                float innerScale = (5.35f + liveAnchors * 0.26f) * shimmer;
-                float latticeScale = (4.8f + liveAnchors * 0.22f) * (1f + (breathe - 1f) * 0.55f);
-                float crownScale = (8.65f + liveAnchors * 0.36f) * phasePulse;
+                float apexScale = (10.30f + liveAnchors * 0.42f) * slowDominionPulse;
+                float outerScale = (8.25f + liveAnchors * 0.36f) * breathe;
+                float innerScale = (5.50f + liveAnchors * 0.28f) * shimmer;
+                float latticeScale = (4.95f + liveAnchors * 0.24f) * (1f + (breathe - 1f) * 0.55f);
+                float crownScale = (8.95f + liveAnchors * 0.38f) * phasePulse;
 
-                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.020f, crownScale, 0.58f);
-                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.060f, outerScale, 0.84f);
-                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.047f, innerScale, 0.92f);
-                DrawLayer(ShieldLatticeMaterial, haloLoc + new Vector3(0f, 0.004f, 0f), (ticks + seed) * 0.028f, latticeScale, 0.90f);
+                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.014f, apexScale, 0.40f);
+                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.020f, crownScale, 0.62f);
+                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.060f, outerScale, 0.86f);
+                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.047f, innerScale, 0.94f);
+                DrawLayer(ShieldLatticeMaterial, haloLoc + new Vector3(0f, 0.004f, 0f), (ticks + seed) * 0.028f, latticeScale, 0.92f);
             }
             else
             {
-                float outerScale = 7.45f * breathe;
-                float innerScale = 5.6f * shimmer;
-                float crownScale = 9.1f * phasePulse;
-                float coronaScale = 4.35f * (1f + Mathf.Sin((ticks + seed) * 0.063f) * 0.05f);
-                float coreScale = 2.55f * (1f + Mathf.Sin((ticks + seed) * 0.085f) * 0.06f);
+                float apexScale = 11.45f * slowDominionPulse;
+                float outerScale = 7.90f * breathe;
+                float innerScale = 5.95f * shimmer;
+                float crownScale = 9.65f * phasePulse;
+                float coronaScale = 4.85f * (1f + Mathf.Sin((ticks + seed) * 0.063f) * 0.05f);
+                float coreScale = 2.82f * (1f + Mathf.Sin((ticks + seed) * 0.085f) * 0.06f);
 
-                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.030f, crownScale, 0.64f);
-                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.090f, outerScale, 0.92f);
-                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.075f, innerScale, 0.98f);
-                DrawLayer(CoreCoronaMaterial, haloLoc + new Vector3(0f, 0.005f, 0f), (ticks + seed) * 0.115f, coronaScale, 0.86f);
+                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.018f, apexScale, 0.52f);
+                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.030f, crownScale, 0.70f);
+                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.090f, outerScale, 0.94f);
+                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.075f, innerScale, 1.00f);
+                DrawLayer(CoreCoronaMaterial, haloLoc + new Vector3(0f, 0.005f, 0f), (ticks + seed) * 0.115f, coronaScale, 0.92f);
                 DrawLayer(ExposedCoreMaterial, haloLoc + new Vector3(0f, 0.006f, 0f), (ticks + seed) * 0.120f, coreScale, 1f);
             }
         }
@@ -96,7 +110,7 @@ namespace AbyssalProtocol
             ThingDef beatDef = exposed ? HeartBeatExposedMoteDef : HeartBeatMoteDef;
             if (beatDef != null)
             {
-                MoteMaker.MakeStaticMote(heartPos, map, beatDef, exposed ? 2.7f : 1.95f);
+                MoteMaker.MakeStaticMote(heartPos, map, beatDef, exposed ? 2.95f : 2.08f);
             }
 
             if (exposed)
@@ -104,16 +118,16 @@ namespace AbyssalProtocol
                 ThingDef coreFlareDef = HeartCoreFlareMoteDef;
                 if (coreFlareDef != null)
                 {
-                    MoteMaker.MakeStaticMote(heartPos + new Vector3(0f, 0.005f, 0f), map, coreFlareDef, 1.45f);
-                    MoteMaker.MakeStaticMote(heartPos + new Vector3(0f, 0.005f, 0f), map, coreFlareDef, 0.98f);
+                    MoteMaker.MakeStaticMote(heartPos + new Vector3(0f, 0.005f, 0f), map, coreFlareDef, 1.55f);
+                    MoteMaker.MakeStaticMote(heartPos + new Vector3(0f, 0.006f, 0f), map, coreFlareDef, 1.04f);
                 }
 
-                FleckMaker.ThrowLightningGlow(heartPos, map, 2.6f);
+                FleckMaker.ThrowLightningGlow(heartPos, map, 2.85f);
                 FleckMaker.ThrowMicroSparks(heartPos, map);
             }
             else
             {
-                FleckMaker.ThrowLightningGlow(heartPos, map, 1.75f);
+                FleckMaker.ThrowLightningGlow(heartPos, map, 1.85f);
             }
         }
 
