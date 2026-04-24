@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceCohesionHalo</defName>
+    <label>dominion cohesion halo</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionHalo</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.040</fadeInTime>
+      <solidTime>0.250</solidTime>
+      <fadeOutTime>0.680</fadeOutTime>
+      <growthRate>0.025</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceCohesionAxisAccent</defName>
+    <label>dominion cohesion axis accent</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionAxisAccent</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.000</fadeInTime>
+      <solidTime>0.120</solidTime>
+      <fadeOutTime>0.360</fadeOutTime>
+      <growthRate>0.040</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceCohesionCrownSeal</defName>
+    <label>dominion cohesion crown seal</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionCrownSeal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.020</fadeInTime>
+      <solidTime>0.180</solidTime>
+      <fadeOutTime>0.520</fadeOutTime>
+      <growthRate>0.060</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceCohesionCollapseVeil</defName>
+    <label>dominion cohesion collapse veil</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionCollapseVeil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.030</fadeInTime>
+      <solidTime>0.220</solidTime>
+      <fadeOutTime>0.610</fadeOutTime>
+      <growthRate>0.040</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_DominionSliceCohesionQuietEmber</defName>
+    <label>dominion cohesion quiet ember</label>
+    <thingClass>MoteThrown</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionQuietEmber</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,1.00)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.000</fadeInTime>
+      <solidTime>0.080</solidTime>
+      <fadeOutTime>0.300</fadeOutTime>
+      <growthRate>0.020</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
