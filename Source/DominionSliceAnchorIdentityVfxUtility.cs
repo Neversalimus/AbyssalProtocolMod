@@ -17,113 +17,120 @@ namespace AbyssalProtocol
         private static readonly Material LawZoneMaterial = MaterialPool.MatFrom(LawZoneTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material CoreGlyphMaterial = MaterialPool.MatFrom(CoreGlyphTexPath, ShaderDatabase.MoteGlow);
 
-        public static void DrawAnchorIdentityZone(Vector3 anchorPos, Map map, DominionSliceAnchorRole role, int seed, MapComponent_DominionSliceEncounter.SlicePhase phase)
+        public static void DrawAnchorIdentityZone(Vector3 drawLoc, Map map, DominionSliceAnchorRole role, bool activeEncounter, bool anchorfallActive, int seed)
         {
-            if (map == null || phase == MapComponent_DominionSliceEncounter.SlicePhase.Dormant || phase == MapComponent_DominionSliceEncounter.SlicePhase.Failed)
+            if (map == null)
             {
                 return;
             }
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            float intensity = GetPhaseIntensity(phase);
-            if (intensity <= 0.01f)
+            float anchorfallBoost = anchorfallActive ? 1f : 0.82f;
+            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.046f) * 0.055f;
+            float secondaryPulse = 1f + Mathf.Sin((ticks + seed) * 0.029f + 1.3f) * 0.035f;
+
+            float baseScale;
+            float glyphScale;
+            float alpha;
+            Material zoneMaterial = GetZoneMaterial(role, out baseScale, out glyphScale, out alpha);
+            if (zoneMaterial == null)
             {
                 return;
             }
 
-            float roleOffset = GetRoleOffset(role);
-            float slowPulse = 1f + Mathf.Sin((ticks + seed) * 0.022f + roleOffset) * 0.045f;
-            float fastPulse = 1f + Mathf.Sin((ticks + seed) * 0.055f + roleOffset) * 0.055f;
-            float scale = GetRoleBaseScale(role) * slowPulse * Mathf.Lerp(0.88f, 1.08f, intensity);
-
-            Vector3 loc = anchorPos;
-            loc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() - 0.045f;
-
-            Material zoneMaterial = GetZoneMaterial(role);
-            if (zoneMaterial != null)
+            if (!activeEncounter)
             {
-                float rotation = GetRoleRotation(role, ticks, seed);
-                Matrix4x4 zoneMatrix = Matrix4x4.TRS(loc, Quaternion.AngleAxis(rotation, Vector3.up), new Vector3(scale, 1f, scale));
-                Graphics.DrawMesh(MeshPool.plane10, zoneMatrix, zoneMaterial, 0);
+                alpha *= 0.78f;
             }
 
-            if (CoreGlyphMaterial != null)
-            {
-                float coreScale = scale * (0.43f + intensity * 0.035f) * fastPulse;
-                float coreRotation = -GetRoleRotation(role, ticks, seed) * 0.72f;
-                Vector3 coreLoc = loc + new Vector3(0f, 0.002f, 0f);
-                Matrix4x4 coreMatrix = Matrix4x4.TRS(coreLoc, Quaternion.AngleAxis(coreRotation, Vector3.up), new Vector3(coreScale, 1f, coreScale));
-                Graphics.DrawMesh(MeshPool.plane10, coreMatrix, CoreGlyphMaterial, 0);
-            }
+            Vector3 floorLoc = drawLoc;
+            floorLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.012f;
+            float rotation = (ticks + seed) * GetRotationSpeed(role);
+            DrawLayer(zoneMaterial, floorLoc, rotation, baseScale * pulse * anchorfallBoost, alpha);
+
+            Vector3 glyphLoc = drawLoc;
+            glyphLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.031f;
+            float glyphRotation = -(ticks + seed) * (GetRotationSpeed(role) * 0.72f);
+            DrawLayer(CoreGlyphMaterial, glyphLoc, glyphRotation, glyphScale * secondaryPulse * anchorfallBoost, alpha * 0.92f);
         }
 
-        private static Material GetZoneMaterial(DominionSliceAnchorRole role)
+        public static void SpawnAnchorPulse(Vector3 drawLoc, Map map, DominionSliceAnchorRole role)
         {
+            if (map == null)
+            {
+                return;
+            }
+
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
+                    FleckMaker.ThrowLightningGlow(drawLoc, map, 1.9f);
+                    FleckMaker.ThrowMicroSparks(drawLoc + new Vector3(0.30f, 0f, 0f), map);
+                    FleckMaker.ThrowMicroSparks(drawLoc + new Vector3(-0.30f, 0f, 0f), map);
+                    break;
+                case DominionSliceAnchorRole.Law:
+                    FleckMaker.ThrowLightningGlow(drawLoc, map, 2.1f);
+                    FleckMaker.ThrowMicroSparks(drawLoc + new Vector3(0.22f, 0f, 0.22f), map);
+                    FleckMaker.ThrowMicroSparks(drawLoc + new Vector3(-0.22f, 0f, -0.22f), map);
+                    break;
+                default:
+                    FleckMaker.ThrowLightningGlow(drawLoc, map, 1.75f);
+                    FleckMaker.ThrowMicroSparks(drawLoc + new Vector3(0f, 0f, 0.30f), map);
+                    break;
+            }
+        }
+
+        private static Material GetZoneMaterial(DominionSliceAnchorRole role, out float baseScale, out float glyphScale, out float alpha)
+        {
+            baseScale = 10.8f;
+            glyphScale = 4.35f;
+            alpha = 0.88f;
+
+            switch (role)
+            {
+                case DominionSliceAnchorRole.Choir:
+                    baseScale = 10.9f;
+                    glyphScale = 4.55f;
+                    alpha = 0.86f;
                     return ChoirZoneMaterial;
                 case DominionSliceAnchorRole.Law:
+                    baseScale = 11.2f;
+                    glyphScale = 4.45f;
+                    alpha = 0.90f;
                     return LawZoneMaterial;
                 default:
+                    baseScale = 10.6f;
+                    glyphScale = 4.25f;
+                    alpha = 0.88f;
                     return SealZoneMaterial;
             }
         }
 
-        private static float GetRoleBaseScale(DominionSliceAnchorRole role)
+        private static float GetRotationSpeed(DominionSliceAnchorRole role)
         {
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
-                    return 5.25f;
+                    return 0.045f;
                 case DominionSliceAnchorRole.Law:
-                    return 5.75f;
+                    return 0.024f;
                 default:
-                    return 5.55f;
+                    return -0.018f;
             }
         }
 
-        private static float GetRoleRotation(DominionSliceAnchorRole role, int ticks, int seed)
+        private static void DrawLayer(Material material, Vector3 loc, float rotation, float scale, float alpha)
         {
-            switch (role)
+            if (material == null)
             {
-                case DominionSliceAnchorRole.Choir:
-                    return Mathf.Sin((ticks + seed) * 0.018f) * 5.5f;
-                case DominionSliceAnchorRole.Law:
-                    return ((ticks + seed) * 0.035f) % 360f;
-                default:
-                    return Mathf.Sin((ticks + seed) * 0.012f) * 2.2f;
+                return;
             }
-        }
 
-        private static float GetRoleOffset(DominionSliceAnchorRole role)
-        {
-            switch (role)
-            {
-                case DominionSliceAnchorRole.Choir:
-                    return 1.7f;
-                case DominionSliceAnchorRole.Law:
-                    return 3.4f;
-                default:
-                    return 0.25f;
-            }
-        }
-
-        private static float GetPhaseIntensity(MapComponent_DominionSliceEncounter.SlicePhase phase)
-        {
-            switch (phase)
-            {
-                case MapComponent_DominionSliceEncounter.SlicePhase.Breach:
-                    return 0.42f;
-                case MapComponent_DominionSliceEncounter.SlicePhase.Anchorfall:
-                    return 1f;
-                case MapComponent_DominionSliceEncounter.SlicePhase.HeartExposed:
-                    return 0.72f;
-                case MapComponent_DominionSliceEncounter.SlicePhase.Collapse:
-                    return 1.15f;
-                default:
-                    return 0f;
-            }
+            Color originalColor = material.color;
+            material.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.AngleAxis(rotation, Vector3.up), new Vector3(scale, 1f, scale));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+            material.color = originalColor;
         }
     }
 }

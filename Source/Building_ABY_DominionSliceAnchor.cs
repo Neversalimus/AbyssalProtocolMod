@@ -86,7 +86,6 @@ namespace AbyssalProtocol
         {
             if (Map != null)
             {
-                DominionSliceVfxUtility.SpawnAnchorBreakFlare(DrawPos, Map, AnchorRole);
                 MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
                 if (encounter != null)
                 {
@@ -99,22 +98,16 @@ namespace AbyssalProtocol
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
-            if (encounter != null && encounter.IsActiveEncounter)
-            {
-                DominionSliceAnchorIdentityVfxUtility.DrawAnchorIdentityZone(drawLoc, Map, AnchorRole, thingIDNumber, encounter.CurrentPhase);
-            }
-
             base.DrawAt(drawLoc, flip);
 
-            if (encounter != null && encounter.ShouldDrawAnchorLinks)
-            {
-                Building_ABY_DominionSliceHeart heart = encounter.HeartBuilding;
-                if (heart != null && !heart.Destroyed)
-                {
-                    DominionSliceVfxUtility.DrawAnchorLink(DrawPos, heart.DrawPos, Map, AnchorRole, thingIDNumber);
-                }
-            }
+            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            DominionSliceAnchorIdentityVfxUtility.DrawAnchorIdentityZone(
+                drawLoc,
+                Map,
+                AnchorRole,
+                encounter != null && encounter.IsActiveEncounter,
+                encounter != null && encounter.IsAnchorfallActive,
+                thingIDNumber);
 
             string glowPath = SliceExtension != null ? SliceExtension.glowTexPath : null;
             if (glowPath.NullOrEmpty())
@@ -231,6 +224,7 @@ namespace AbyssalProtocol
             if (anyPlayerNearby)
             {
                 FleckMaker.ThrowLightningGlow(DrawPos, Map, 1.6f);
+                DominionSliceAnchorIdentityVfxUtility.SpawnAnchorPulse(DrawPos, Map, AnchorRole);
                 ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", PositionHeld, Map);
             }
         }
