@@ -9,6 +9,7 @@
     <isBad>true</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>
     <tendable>false</tendable>
+    <defaultLabelColor>(0.72, 0.26, 1.00)</defaultLabelColor>
     <stages>
       <li>
         <statOffsets>

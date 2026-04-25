@@ -9,9 +9,14 @@
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_NullbrandFracture">
         <hediffDefName>ABY_NullbrandFracture</hediffDefName>
-        <chance>0.24</chance>
+        <fractureChance>0.25</fractureChance>
         <durationTicks>360</durationTicks>
-        <visualScale>0.52</visualScale>
+        <fractureVisualScale>0.52</fractureVisualScale>
+        <shearChance>0.34</shearChance>
+        <shearDamage>8</shearDamage>
+        <shearArmorPenetration>0.82</shearArmorPenetration>
+        <shearCooldownTicks>100</shearCooldownTicks>
+        <shearVisualScale>0.82</shearVisualScale>
       </li>
     </modExtensions>
   </DamageDef>
