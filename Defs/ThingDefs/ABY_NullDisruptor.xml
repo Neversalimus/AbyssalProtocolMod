@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_NullDisruptor</defName>
+    <label>null disruptor</label>
+    <description>A compact abyssal disruption rifle tuned to hostile machine logic. Its pulse does not burn or pierce in the usual sense — it briefly convinces circuits, shields and mechanoid cores that their own operating rules are optional.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_NullDisruptor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.44,0.36)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>7</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <Steel>25</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>22000</WorkToMake>
+      <Mass>3.2</Mass>
+      <MarketValue>1750</MarketValue>
+      <AccuracyTouch>0.72</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.74</AccuracyMedium>
+      <AccuracyLong>0.46</AccuracyLong>
+      <RangedWeapon_Cooldown>2.15</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_NullDisruptorPulse</defaultProjectile>
+        <warmupTime>1.05</warmupTime>
+        <range>24.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <muzzleFlashScale>9</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>reinforced frame</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2.1</cooldownTime>
+      </li>
+      <li>
+        <label>emitter prongs</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>8</power>
+        <cooldownTime>2.2</cooldownTime>
+        <armorPenetration>0.12</armorPenetration>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>300</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_NullDisruptorPulse</defName>
+    <label>null disruptor pulse</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_NullDisruptorPulse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.38,0.92)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>EMP</damageDef>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>0</armorPenetrationBase>
+      <stoppingPower>0.5</stoppingPower>
+      <speed>56</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
