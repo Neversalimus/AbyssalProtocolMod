@@ -31,6 +31,13 @@ namespace AbyssalProtocol
         private float bossMusicRestoreEarliestRealtime = -1f;
         private bool bossMusicOutroActive;
 
+        private int cachedBossBarStateTick = -1;
+        private Pawn cachedBossBarStateBoss;
+        private ABY_BossBarProfileDef cachedBossBarStateProfile;
+        private string cachedBossBarStateLabelOverride;
+        private bool cachedBossBarStateAvailable;
+        private ABY_BossBarState cachedBossBarState;
+
         private const string FallbackBossSongDefName = "ABY_ArchonBossBattleTheme";
         private const float FallbackBossSongLengthSeconds = 90.0f;
         private const float FallbackBossSongStartDelaySeconds = 0.05f;
@@ -113,14 +120,46 @@ namespace AbyssalProtocol
             state = null;
             if (!BossAlive())
             {
+                CacheBossBarState(false, null, -1);
                 return false;
             }
 
             RefreshActiveBossBarProfile();
-            return activeBossBarProfile != null &&
-                   AbyssalBossBarUtility.TryBuildState(activeBoss, activeBossBarProfile, activeBossDisplayLabelOverride, out state);
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
+            if (cachedBossBarStateTick == ticksGame
+                && cachedBossBarStateBoss == activeBoss
+                && cachedBossBarStateProfile == activeBossBarProfile
+                && cachedBossBarStateLabelOverride == activeBossDisplayLabelOverride)
+            {
+                state = cachedBossBarState;
+                return cachedBossBarStateAvailable;
+            }
+
+            bool available = activeBossBarProfile != null &&
+                             AbyssalBossBarUtility.TryBuildState(activeBoss, activeBossBarProfile, activeBossDisplayLabelOverride, out state);
+            CacheBossBarState(available, state, ticksGame);
+            return available;
         }
 
+        private void CacheBossBarState(bool available, ABY_BossBarState state, int ticksGame)
+        {
+            cachedBossBarStateTick = ticksGame;
+            cachedBossBarStateBoss = activeBoss;
+            cachedBossBarStateProfile = activeBossBarProfile;
+            cachedBossBarStateLabelOverride = activeBossDisplayLabelOverride;
+            cachedBossBarStateAvailable = available;
+            cachedBossBarState = state;
+        }
+
+        private void InvalidateBossBarStateCache()
+        {
+            cachedBossBarStateTick = -1;
+            cachedBossBarStateBoss = null;
+            cachedBossBarStateProfile = null;
+            cachedBossBarStateLabelOverride = null;
+            cachedBossBarStateAvailable = false;
+            cachedBossBarState = null;
+        }
         private void RefreshActiveBossBarProfile()
         {
             if (activeBoss == null)
@@ -222,6 +261,13 @@ namespace AbyssalProtocol
         public override void GameComponentOnGUI()
         {
             base.GameComponentOnGUI();
+
+            Event currentEvent = Event.current;
+            if (currentEvent == null || currentEvent.type != EventType.Repaint)
+            {
+                return;
+            }
+
             HandleBossMusicRealtime();
             DrawOverlay();
             if (TryGetActiveBossBarState(out ABY_BossBarState state))
@@ -229,7 +275,6 @@ namespace AbyssalProtocol
                 AbyssalBossBarRenderer.Draw(state);
             }
         }
-
         private void HandleBossMusicRealtime()
         {
             if (Current.ProgramState != ProgramState.Playing)
@@ -247,7 +292,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SongDef song = activeBossSongDefName.NullOrEmpty() ? null : DefDatabase<SongDef>.GetNamedSilentFail(activeBossSongDefName);
+            SongDef song = ABY_DefCache.SongDefNamed(activeBossSongDefName);
             MusicManagerPlay music = Find.MusicManagerPlay;
             if (song == null || music == null || activeBossSongLengthSeconds <= 0.01f)
             {
@@ -402,7 +447,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SongDef bossSong = activeBossSongDefName.NullOrEmpty() ? null : DefDatabase<SongDef>.GetNamedSilentFail(activeBossSongDefName);
+            SongDef bossSong = ABY_DefCache.SongDefNamed(activeBossSongDefName);
             if (bossSong == null)
             {
                 ResetBossMusicRuntimeState(clearSongProfile: false);

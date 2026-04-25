@@ -30,6 +30,9 @@ namespace AbyssalProtocol
                 return;
             }
 
+            float allyRadiusSq = Props.allyRadius * Props.allyRadius;
+            IntVec3 origin = pawn.PositionHeld;
+
             foreach (Pawn other in pawn.MapHeld.mapPawns.AllPawnsSpawned)
             {
                 if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned)
@@ -37,12 +40,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (!IsEligibleAbyssalAlly(pawn, other))
+                if ((other.PositionHeld - origin).LengthHorizontalSquared > allyRadiusSq)
                 {
                     continue;
                 }
 
-                if (pawn.PositionHeld.DistanceTo(other.PositionHeld) > Props.allyRadius)
+                if (!IsEligibleAbyssalAlly(pawn, other))
                 {
                     continue;
                 }

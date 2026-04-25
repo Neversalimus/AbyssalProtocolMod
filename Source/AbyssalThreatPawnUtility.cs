@@ -321,7 +321,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(hediffDefName);
+            HediffDef hediffDef = ABY_DefCache.HediffDefNamed(hediffDefName);
             if (hediffDef == null)
             {
                 return;

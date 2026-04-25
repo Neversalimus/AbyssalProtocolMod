@@ -37,6 +37,19 @@ namespace AbyssalProtocol
         private int lastPositionChangeTick = -1;
         private IntVec3 lastTrackedPosition = IntVec3.Invalid;
 
+        private int cachedCrowdPressureUntilTick = -1;
+        private bool cachedCrowdPressure;
+        private IntVec3 cachedCrowdPressurePosition = IntVec3.Invalid;
+
+        private int cachedAdvanceTargetTick = -1;
+        private Thing cachedAdvanceTarget;
+        private IntVec3 cachedAdvanceTargetPosition = IntVec3.Invalid;
+
+        private int cachedAdjacentThreatTick = -1;
+        private Pawn cachedAdjacentThreat;
+        private float cachedAdjacentThreatMaxDistance = -1f;
+        private IntVec3 cachedAdjacentThreatPosition = IntVec3.Invalid;
+
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
 
         public override void PostExposeData()
@@ -551,11 +564,29 @@ namespace AbyssalProtocol
         {
             if (pawn?.Map == null)
             {
+                cachedAdvanceTargetTick = -1;
+                cachedAdvanceTarget = null;
+                cachedAdvanceTargetPosition = IntVec3.Invalid;
                 return null;
             }
 
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (cachedAdvanceTargetTick == ticksGame && cachedAdvanceTargetPosition == pawn.Position)
+            {
+                return cachedAdvanceTarget;
+            }
+
+            Thing resolved = FindBestAdvanceTargetUncached(pawn);
+            cachedAdvanceTargetTick = ticksGame;
+            cachedAdvanceTarget = resolved;
+            cachedAdvanceTargetPosition = pawn.Position;
+            return resolved;
+        }
+
+        private Thing FindBestAdvanceTargetUncached(Pawn pawn)
+        {
             Pawn bestPawn = null;
-            float bestPawnDistance = float.MaxValue;
+            float bestPawnDistanceSq = float.MaxValue;
             IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
             if (pawns != null)
             {
@@ -567,10 +598,10 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    float distance = pawn.Position.DistanceTo(candidate.Position);
-                    if (distance < bestPawnDistance)
+                    float distanceSq = (candidate.Position - pawn.Position).LengthHorizontalSquared;
+                    if (distanceSq < bestPawnDistanceSq)
                     {
-                        bestPawnDistance = distance;
+                        bestPawnDistanceSq = distanceSq;
                         bestPawn = candidate;
                     }
                 }
@@ -582,7 +613,7 @@ namespace AbyssalProtocol
             }
 
             Building bestBuilding = null;
-            float bestBuildingDistance = float.MaxValue;
+            float bestBuildingDistanceSq = float.MaxValue;
             List<Building> colonistBuildings = pawn.Map.listerBuildings?.allBuildingsColonist;
             if (colonistBuildings == null)
             {
@@ -597,17 +628,16 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float distance = pawn.Position.DistanceTo(building.Position);
-                if (distance < bestBuildingDistance)
+                float distanceSq = (building.Position - pawn.Position).LengthHorizontalSquared;
+                if (distanceSq < bestBuildingDistanceSq)
                 {
-                    bestBuildingDistance = distance;
+                    bestBuildingDistanceSq = distanceSq;
                     bestBuilding = building;
                 }
             }
 
             return bestBuilding;
         }
-
         private bool TryAdvanceTowardDistantThreat(Pawn pawn)
         {
             if (pawn?.Map == null || pawn.jobs == null)
@@ -809,14 +839,25 @@ namespace AbyssalProtocol
         {
             if (pawn?.Map == null)
             {
+                cachedCrowdPressureUntilTick = -1;
+                cachedCrowdPressurePosition = IntVec3.Invalid;
+                cachedCrowdPressure = false;
                 return false;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (ticksGame < cachedCrowdPressureUntilTick && cachedCrowdPressurePosition == pawn.Position)
+            {
+                return cachedCrowdPressure;
             }
 
             float radius = Mathf.Max(Props.preferredMinRange + 2.5f, 11.5f);
             int threshold = Props.preferredMinRange >= 9f ? 4 : 5;
-            return CountNearbyHostilePawns(pawn, radius) >= threshold;
+            cachedCrowdPressure = CountNearbyHostilePawns(pawn, radius) >= threshold;
+            cachedCrowdPressurePosition = pawn.Position;
+            cachedCrowdPressureUntilTick = ticksGame + 15;
+            return cachedCrowdPressure;
         }
-
         private int CountNearbyHostilePawns(Pawn pawn, float radius)
         {
             if (pawn?.Map == null)
@@ -1019,7 +1060,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayOneShotAt(Props.primaryFireSoundDefName, pawn.Position, pawn.Map);
             }
 
-            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.directProjectileDefName);
+            ThingDef projectileDef = ABY_DefCache.ThingDefNamed(Props.directProjectileDefName);
             if (projectileDef == null)
             {
                 return;
@@ -1071,7 +1112,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayOneShotAt(Props.barrageFireSoundDefName, pawn.Position, pawn.Map);
             }
 
-            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.barrageProjectileDefName);
+            ThingDef projectileDef = ABY_DefCache.ThingDefNamed(Props.barrageProjectileDefName);
             if (projectileDef == null)
             {
                 return;
@@ -1306,38 +1347,50 @@ namespace AbyssalProtocol
         {
             if (pawn?.Map == null)
             {
+                cachedAdjacentThreatTick = -1;
+                cachedAdjacentThreat = null;
+                cachedAdjacentThreatPosition = IntVec3.Invalid;
                 return null;
+            }
+
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (cachedAdjacentThreatTick == ticksGame
+                && cachedAdjacentThreatPosition == pawn.Position
+                && Mathf.Abs(cachedAdjacentThreatMaxDistance - maxDistance) <= 0.01f)
+            {
+                return cachedAdjacentThreat;
             }
 
             Pawn best = null;
-            float bestDistance = maxDistance + 0.01f;
+            float bestDistanceSq = (maxDistance + 0.01f) * (maxDistance + 0.01f);
             IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            if (pawns != null)
             {
-                return null;
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Pawn candidate = pawns[i];
+                    if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
+                    {
+                        continue;
+                    }
+
+                    float distanceSq = (candidate.Position - pawn.Position).LengthHorizontalSquared;
+                    if (distanceSq > bestDistanceSq)
+                    {
+                        continue;
+                    }
+
+                    bestDistanceSq = distanceSq;
+                    best = candidate;
+                }
             }
 
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn candidate = pawns[i];
-                if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
-                {
-                    continue;
-                }
-
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > bestDistance)
-                {
-                    continue;
-                }
-
-                bestDistance = distance;
-                best = candidate;
-            }
-
+            cachedAdjacentThreatTick = ticksGame;
+            cachedAdjacentThreat = best;
+            cachedAdjacentThreatMaxDistance = maxDistance;
+            cachedAdjacentThreatPosition = pawn.Position;
             return best;
         }
-
         private bool TryForceAdjacentBuildingBash(Pawn pawn)
         {
             if (pawn?.Map == null)

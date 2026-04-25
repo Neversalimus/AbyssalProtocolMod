@@ -49,6 +49,10 @@ namespace AbyssalProtocol
                 return;
             }
 
+            float allyRadiusSq = allyRadius * allyRadius;
+            float enemyRadiusSq = enemyRadius * enemyRadius;
+            IntVec3 origin = pawn.PositionHeld;
+
             foreach (Pawn other in pawn.MapHeld.mapPawns.AllPawnsSpawned)
             {
                 if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned)
@@ -56,12 +60,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float distance = pawn.PositionHeld.DistanceTo(other.PositionHeld);
-                if (IsFriendlyTarget(pawn, other) && distance <= allyRadius)
+                float distanceSq = (other.PositionHeld - origin).LengthHorizontalSquared;
+                if (distanceSq <= allyRadiusSq && IsFriendlyTarget(pawn, other))
                 {
                     AbyssalThreatPawnUtility.ApplyOrRefreshHediff(other, Props.allyHediffDefName, allySeverity);
                 }
-                else if (IsEnemyTarget(pawn, other) && distance <= enemyRadius)
+                else if (distanceSq <= enemyRadiusSq && IsEnemyTarget(pawn, other))
                 {
                     AbyssalThreatPawnUtility.ApplyOrRefreshHediff(other, Props.enemyHediffDefName, enemySeverity);
                 }

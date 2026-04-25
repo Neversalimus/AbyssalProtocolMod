@@ -38,7 +38,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(Props.hediffDefName);
+            HediffDef hediffDef = ABY_DefCache.HediffDefNamed(Props.hediffDefName);
             if (hediffDef == null)
             {
                 return;
@@ -50,6 +50,10 @@ namespace AbyssalProtocol
                 return;
             }
 
+            float activeRadius = ActiveRadius;
+            float activeRadiusSq = activeRadius * activeRadius;
+            IntVec3 origin = pawn.PositionHeld;
+
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];
@@ -58,12 +62,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (pawn.PositionHeld.DistanceTo(other.PositionHeld) > ActiveRadius)
+                if ((other.PositionHeld - origin).LengthHorizontalSquared > activeRadiusSq)
                 {
                     continue;
                 }
 
-                if (Props.requireLineOfSight && !GenSight.LineOfSight(pawn.PositionHeld, other.PositionHeld, pawn.MapHeld))
+                if (Props.requireLineOfSight && !GenSight.LineOfSight(origin, other.PositionHeld, pawn.MapHeld))
                 {
                     continue;
                 }
