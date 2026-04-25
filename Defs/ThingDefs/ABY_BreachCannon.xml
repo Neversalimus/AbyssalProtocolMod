@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_BreachCannon</defName>
+    <label>breach cannon</label>
+    <description>A siege-grade abyssal cannon built around a raised rift-optic rail and a caged rupture chamber. It fires one slow, precise, structure-cracking breach bolt: expensive to build, heavy to carry, and devastating when allowed to finish its charge cycle.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_BreachCannon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.15,0.72)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>42</ABY_AbyssalResidue>
+      <Plasteel>320</Plasteel>
+      <Uranium>80</Uranium>
+      <ComponentSpacer>8</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>76000</WorkToMake>
+      <Mass>8.6</Mass>
+      <MarketValue>6400</MarketValue>
+      <AccuracyTouch>0.34</AccuracyTouch>
+      <AccuracyShort>0.58</AccuracyShort>
+      <AccuracyMedium>0.74</AccuracyMedium>
+      <AccuracyLong>0.68</AccuracyLong>
+      <RangedWeapon_Cooldown>4.80</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_BreachCannonBolt</defaultProjectile>
+        <warmupTime>2.65</warmupTime>
+        <range>39.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>16</ticksBetweenBurstShots>
+        <soundAiming>ABY_UltraPlasmaCharge</soundAiming>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <muzzleFlashScale>18</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>stock</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.25</cooldownTime>
+      </li>
+      <li>
+        <label>breach barrel</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>2.55</cooldownTime>
+        <armorPenetration>0.24</armorPenetration>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>6500</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_BreachCannonBolt</defName>
+    <label>breach cannon bolt</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_UltraPlasmaBeam_Long</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.42,2.05)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>82</damageAmountBase>
+      <armorPenetrationBase>1.15</armorPenetrationBase>
+      <stoppingPower>4.2</stoppingPower>
+      <speed>58</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
