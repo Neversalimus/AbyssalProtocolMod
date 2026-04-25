@@ -41,4 +41,11 @@
   <ABY_ApparelAegis_BlockMelee>melee</ABY_ApparelAegis_BlockMelee>
   <ABY_ApparelAegis_BlockEMP>EMP drain</ABY_ApparelAegis_BlockEMP>
   <ABY_ApparelAegis_BlockNone>none</ABY_ApparelAegis_BlockNone>
+  <ABY_ApparelAegis_TagSaint>SAINT</ABY_ApparelAegis_TagSaint>
+  <ABY_ApparelAegis_TagCrown>CROWN</ABY_ApparelAegis_TagCrown>
+  <ABY_ApparelAegis_GizmoPeak>Peak integrity</ABY_ApparelAegis_GizmoPeak>
+  <ABY_ApparelAegis_GizmoRestartIn>Restart in</ABY_ApparelAegis_GizmoRestartIn>
+  <ABY_ApparelAegis_GizmoReforming>Reforming lattice</ABY_ApparelAegis_GizmoReforming>
+  <ABY_ApparelAegis_GizmoRechargeTick>Recharge</ABY_ApparelAegis_GizmoRechargeTick>
+  <ABY_ApparelAegis_GizmoExternalSuppression>External shield active</ABY_ApparelAegis_GizmoExternalSuppression>
 </LanguageData>

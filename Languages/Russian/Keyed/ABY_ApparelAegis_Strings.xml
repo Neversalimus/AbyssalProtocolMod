@@ -41,4 +41,11 @@
   <ABY_ApparelAegis_BlockMelee>ближний бой</ABY_ApparelAegis_BlockMelee>
   <ABY_ApparelAegis_BlockEMP>ЭМИ-разряд</ABY_ApparelAegis_BlockEMP>
   <ABY_ApparelAegis_BlockNone>ничего</ABY_ApparelAegis_BlockNone>
+  <ABY_ApparelAegis_TagSaint>SAINT</ABY_ApparelAegis_TagSaint>
+  <ABY_ApparelAegis_TagCrown>CROWN</ABY_ApparelAegis_TagCrown>
+  <ABY_ApparelAegis_GizmoPeak>Пиковая целостность</ABY_ApparelAegis_GizmoPeak>
+  <ABY_ApparelAegis_GizmoRestartIn>Перезапуск через</ABY_ApparelAegis_GizmoRestartIn>
+  <ABY_ApparelAegis_GizmoReforming>Решётка восстанавливается</ABY_ApparelAegis_GizmoReforming>
+  <ABY_ApparelAegis_GizmoRechargeTick>Восстановление</ABY_ApparelAegis_GizmoRechargeTick>
+  <ABY_ApparelAegis_GizmoExternalSuppression>Активен внешний щит</ABY_ApparelAegis_GizmoExternalSuppression>
 </LanguageData>

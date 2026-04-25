@@ -9,6 +9,7 @@ namespace AbyssalProtocol
     public static class ABY_ApparelAegisUtility
     {
         private const string DefaultCategoryDefName = "Apparel";
+        private static readonly Dictionary<string, Texture2D> TextureCache = new Dictionary<string, Texture2D>();
 
         public static string TranslateOrFallback(string key, string fallback)
         {
@@ -45,6 +46,77 @@ namespace AbyssalProtocol
         public static string AegisLabel(DefModExtension_ABY_ApparelAegis ext)
         {
             return TranslateOrFallback(ext?.labelKey, "Aegis");
+        }
+
+        public static string ResolveThemeTag(DefModExtension_ABY_ApparelAegis ext)
+        {
+            if (ext == null)
+            {
+                return "AEGIS";
+            }
+
+            string explicitTag = TranslateOrFallback(ext.gizmoTagKey, string.Empty);
+            if (!explicitTag.NullOrEmpty() && explicitTag != ext.gizmoTagKey)
+            {
+                return explicitTag.ToUpperInvariant();
+            }
+
+            string theme = ext.gizmoTheme ?? string.Empty;
+            if (theme.NullOrEmpty())
+            {
+                return "AEGIS";
+            }
+
+            return theme.ToUpperInvariant();
+        }
+
+        public static Texture2D ResolveAegisGizmoIcon(DefModExtension_ABY_ApparelAegis ext, Apparel apparel)
+        {
+            string path = ext?.gizmoIconTexPath;
+            if (path.NullOrEmpty() && ext != null)
+            {
+                string theme = (ext.gizmoTheme ?? string.Empty).ToLowerInvariant();
+                if (theme.Contains("crown"))
+                {
+                    path = "UI/Gizmos/ABY_AegisCrown";
+                }
+                else if (theme.Contains("saint"))
+                {
+                    path = "UI/Gizmos/ABY_AegisSaint";
+                }
+                else
+                {
+                    path = "UI/Gizmos/ABY_AegisGeneric";
+                }
+            }
+
+            Texture2D texture = LoadTexture(path);
+            return texture ?? apparel?.def?.uiIcon;
+        }
+
+        private static Texture2D LoadTexture(string path)
+        {
+            if (path.NullOrEmpty())
+            {
+                return null;
+            }
+
+            if (TextureCache.TryGetValue(path, out Texture2D cached))
+            {
+                return cached;
+            }
+
+            Texture2D texture = null;
+            try
+            {
+                texture = ContentFinder<Texture2D>.Get(path, false);
+            }
+            catch
+            {
+            }
+
+            TextureCache[path] = texture;
+            return texture;
         }
 
         public static string FormatPoints(float current, float max)

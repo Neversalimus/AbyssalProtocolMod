@@ -11,6 +11,8 @@ namespace AbyssalProtocol
         public string suppressedKey = "ABY_ApparelAegis_StateSuppressed";
         public string gizmoSubtitleKey = "ABY_ApparelAegis_GizmoIntegrity";
         public string gizmoTheme = "Aegis";
+        public string gizmoTagKey = "";
+        public string gizmoIconTexPath = "";
 
         public float maxShieldPoints = 120f;
         public int rechargeDelayTicks = 240;
