@@ -48,4 +48,10 @@
   <ABY_ApparelAegis_GizmoReforming>Решётка восстанавливается</ABY_ApparelAegis_GizmoReforming>
   <ABY_ApparelAegis_GizmoRechargeTick>Восстановление</ABY_ApparelAegis_GizmoRechargeTick>
   <ABY_ApparelAegis_GizmoExternalSuppression>Активен внешний щит</ABY_ApparelAegis_GizmoExternalSuppression>
+  <ABY_ApparelAegis_TextCollapse>ЭГИДА ПРОБИТА</ABY_ApparelAegis_TextCollapse>
+  <ABY_ApparelAegis_TextRestore>ЭГИДА ВОССТАНОВЛЕНА</ABY_ApparelAegis_TextRestore>
+  <ABY_ApparelAegis_SaintTextCollapse>ЭГИДА СВЯТОГО ПРОБИТА</ABY_ApparelAegis_SaintTextCollapse>
+  <ABY_ApparelAegis_SaintTextRestore>ЭГИДА СВЯТОГО ВОССТАНОВЛЕНА</ABY_ApparelAegis_SaintTextRestore>
+  <ABY_ApparelAegis_CrownTextCollapse>КОРОННАЯ ЭГИДА ПРОБИТА</ABY_ApparelAegis_CrownTextCollapse>
+  <ABY_ApparelAegis_CrownTextRestore>КОРОННАЯ ЭГИДА ВОССТАНОВЛЕНА</ABY_ApparelAegis_CrownTextRestore>
 </LanguageData>

@@ -48,4 +48,10 @@
   <ABY_ApparelAegis_GizmoReforming>Reforming lattice</ABY_ApparelAegis_GizmoReforming>
   <ABY_ApparelAegis_GizmoRechargeTick>Recharge</ABY_ApparelAegis_GizmoRechargeTick>
   <ABY_ApparelAegis_GizmoExternalSuppression>External shield active</ABY_ApparelAegis_GizmoExternalSuppression>
+  <ABY_ApparelAegis_TextCollapse>AEGIS COLLAPSE</ABY_ApparelAegis_TextCollapse>
+  <ABY_ApparelAegis_TextRestore>AEGIS ONLINE</ABY_ApparelAegis_TextRestore>
+  <ABY_ApparelAegis_SaintTextCollapse>SAINT AEGIS COLLAPSE</ABY_ApparelAegis_SaintTextCollapse>
+  <ABY_ApparelAegis_SaintTextRestore>SAINT AEGIS ONLINE</ABY_ApparelAegis_SaintTextRestore>
+  <ABY_ApparelAegis_CrownTextCollapse>CROWN AEGIS COLLAPSE</ABY_ApparelAegis_CrownTextCollapse>
+  <ABY_ApparelAegis_CrownTextRestore>CROWN AEGIS ONLINE</ABY_ApparelAegis_CrownTextRestore>
 </LanguageData>

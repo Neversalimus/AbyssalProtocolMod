@@ -33,9 +33,22 @@ namespace AbyssalProtocol
         public string breakSoundDefName = "ABY_ReactorSaintImpact";
         public string restoreSoundDefName = "ABY_ReactorSaintCharge";
 
+        // Package C presentation polish. These are intentionally optional so future
+        // aegis apparel can inherit safe defaults without extra XML.
+        public bool showAegisCombatText = true;
+        public bool showAegisScreenPulse = true;
+        public string collapseTextKey = "ABY_ApparelAegis_TextCollapse";
+        public string restoreTextKey = "ABY_ApparelAegis_TextRestore";
+        public int majorFeedbackCooldownTicks = 90;
+        public int minorFeedbackCooldownTicks = 12;
+        public float collapsePulseStrength = 0.42f;
+        public float restorePulseStrength = 0.28f;
+
         public float MaxShieldPointsSafe => maxShieldPoints < 1f ? 1f : maxShieldPoints;
         public int RechargeDelayTicksSafe => rechargeDelayTicks < 0 ? 0 : rechargeDelayTicks;
         public int RechargeIntervalTicksSafe => rechargeIntervalTicks < 15 ? 15 : rechargeIntervalTicks;
         public float RechargePerIntervalSafe => rechargePerInterval < 0f ? 0f : rechargePerInterval;
+        public int MajorFeedbackCooldownTicksSafe => majorFeedbackCooldownTicks < 15 ? 15 : majorFeedbackCooldownTicks;
+        public int MinorFeedbackCooldownTicksSafe => minorFeedbackCooldownTicks < 3 ? 3 : minorFeedbackCooldownTicks;
     }
 }

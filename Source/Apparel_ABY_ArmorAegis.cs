@@ -342,8 +342,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            FleckMaker.Static(wearer.PositionHeld, wearer.MapHeld, FleckDefOf.ExplosionFlash, Mathf.Max(0.1f, ext.hitFlashScale));
-            ABY_ApparelAegisUtility.PlaySound(ext.hitSoundDefName, wearer.PositionHeld, wearer.MapHeld);
+            ABY_ApparelAegisFeedbackUtility.TriggerHit(wearer, ext);
         }
 
         private static void TriggerBreakFeedback(Pawn wearer, DefModExtension_ABY_ApparelAegis ext)
@@ -353,8 +352,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            FleckMaker.Static(wearer.PositionHeld, wearer.MapHeld, FleckDefOf.ExplosionFlash, Mathf.Max(0.1f, ext.breakFlashScale));
-            ABY_ApparelAegisUtility.PlaySound(ext.breakSoundDefName, wearer.PositionHeld, wearer.MapHeld);
+            ABY_ApparelAegisFeedbackUtility.TriggerCollapse(wearer, ext);
         }
 
         private static void TriggerRestoreFeedback(Pawn wearer, DefModExtension_ABY_ApparelAegis ext)
@@ -364,8 +362,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            FleckMaker.Static(wearer.PositionHeld, wearer.MapHeld, FleckDefOf.ExplosionFlash, Mathf.Max(0.1f, ext.restoreFlashScale));
-            ABY_ApparelAegisUtility.PlaySound(ext.restoreSoundDefName, wearer.PositionHeld, wearer.MapHeld);
+            ABY_ApparelAegisFeedbackUtility.TriggerRestore(wearer, ext);
         }
     }
 }

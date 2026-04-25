@@ -62,6 +62,7 @@ namespace AbyssalProtocol
             DrawHeader(rect, palette);
             DrawText(rect, palette);
             DrawChargeBar(rect, palette);
+            DrawPulseOverlay(rect, palette, hovered);
 
             if (!tooltip.NullOrEmpty())
             {
@@ -185,6 +186,41 @@ namespace AbyssalProtocol
             fillRect.width *= pct;
             Widgets.DrawBoxSolid(fillRect, palette.fill);
             Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, 2f), palette.fillTop);
+
+            if (fillRect.width > 18f)
+            {
+                float shimmerWidth = Mathf.Min(42f, Mathf.Max(12f, fillRect.width * 0.24f));
+                float shimmerX = fillRect.x - shimmerWidth + Mathf.Repeat(Time.realtimeSinceStartup * 48f, fillRect.width + shimmerWidth);
+                Rect shimmerRect = new Rect(shimmerX, fillRect.y, shimmerWidth, fillRect.height);
+                Widgets.DrawBoxSolid(shimmerRect, new Color(1f, 1f, 1f, collapsed ? 0.08f : 0.13f));
+            }
+        }
+
+        private void DrawPulseOverlay(Rect rect, Palette palette, bool hovered)
+        {
+            if (suppressed)
+            {
+                return;
+            }
+
+            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.realtimeSinceStartup * (collapsed ? 7.2f : 3.1f));
+            float pct = max <= 0.01f ? 0f : Mathf.Clamp01(current / max);
+            bool full = pct >= 0.995f;
+
+            if (collapsed)
+            {
+                Color color = new Color(palette.border.r, palette.border.g, palette.border.b, 0.12f + pulse * 0.18f);
+                Widgets.DrawBoxSolid(rect.ExpandedBy(2f), color);
+                Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, rect.width, 2f), palette.fillTop);
+                Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 2f, rect.width, 2f), palette.fillTop);
+                return;
+            }
+
+            if (full || hovered)
+            {
+                float alpha = full ? 0.055f + pulse * 0.045f : 0.035f;
+                Widgets.DrawBoxSolid(rect.ContractedBy(3f), new Color(palette.fillTop.r, palette.fillTop.g, palette.fillTop.b, alpha));
+            }
         }
 
         private static Palette ResolvePalette(string theme, bool suppressed, bool collapsed)
