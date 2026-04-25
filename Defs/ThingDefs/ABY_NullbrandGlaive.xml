@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>ABY_NullbrandGlaive</defName>
+    <label>nullbrand glaive</label>
+    <description>A stabilized abyssal poleblade built around a compressed null-core. Its edge does not merely cut matter; it briefly denies the target's surface integrity, forcing armor, chitin and machine plating to behave like badly remembered geometry.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_NullbrandGlaive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.36,1.36)</drawSize>
+    </graphicData>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <Steel>35</Steel>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+
+    <tools>
+      <li>
+        <label>nullbrand cleave</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>36</power>
+        <cooldownTime>1.75</cooldownTime>
+        <armorPenetration>0.58</armorPenetration>
+      </li>
+      <li>
+        <label>hooking spike</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>26</power>
+        <cooldownTime>1.55</cooldownTime>
+        <armorPenetration>0.72</armorPenetration>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>42000</WorkToMake>
+      <Mass>3.7</Mass>
+      <MarketValue>2380</MarketValue>
+    </statBases>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>275</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
