@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_HexPistol</defName>
+    <label>hex pistol</label>
+    <description>A compact ritual sidearm built from breach-etched alloys. Each discharge carries a small executable hex that briefly opens the target surface before the bolt punches through.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_HexPistol</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.88,0.56)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>ShortShots</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>5</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Plasteel>22</Plasteel>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+
+    <statBases>
+      <WorkToMake>9000</WorkToMake>
+      <Mass>1.25</Mass>
+      <MarketValue>780</MarketValue>
+      <AccuracyTouch>0.86</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.55</AccuracyMedium>
+      <AccuracyLong>0.28</AccuracyLong>
+      <RangedWeapon_Cooldown>1.20</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_HexPistolBolt</defaultProjectile>
+        <warmupTime>0.65</warmupTime>
+        <range>21.9</range>
+        <burstShotCount>2</burstShotCount>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <muzzleFlashScale>6.5</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>grip</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>7</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>90</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_HexPistolBolt</defName>
+    <label>hex pistol bolt</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_HexPistolBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.16,0.62)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>12</damageAmountBase>
+      <armorPenetrationBase>0.32</armorPenetrationBase>
+      <stoppingPower>0.80</stoppingPower>
+      <speed>58</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
