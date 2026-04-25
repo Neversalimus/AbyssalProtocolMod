@@ -104,11 +104,43 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            // The visible player-facing status gizmo is emitted by
-            // CompABY_WornArmorAegisTracker so it reflects the same shield state
-            // that handles damage absorption and lazy recharge. Keeping this class
-            // quiet prevents duplicate or desynced aegis gizmos when the pawn-level
-            // tracker is also present on humanlike races.
+            DefModExtension_ABY_ApparelAegis ext = AegisExtension;
+            Pawn wearer = Wearer;
+            if (ext == null || wearer == null || wearer.Dead || !wearer.IsColonistPlayerControlled)
+            {
+                yield break;
+            }
+
+            SyncShield(ext);
+            bool suppressed = IsSuppressedByExternalShield(wearer, ext);
+            if (!suppressed)
+            {
+                ApplyRecharge(ext);
+            }
+
+            string label = ABY_ApparelAegisUtility.AegisLabel(ext);
+            string points = ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe);
+            string state = suppressed ? ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield") : CurrentStateLabel(ext);
+            string subtitle = ABY_ApparelAegisUtility.TranslateOrFallback(ext.gizmoSubtitleKey, "Shield integrity");
+            bool collapsed = !suppressed && (currentShieldPoints <= 0.5f || wasCollapsed);
+            string detail = BuildGizmoDetail(ext, suppressed, collapsed);
+            string headerTag = ABY_ApparelAegisUtility.ResolveThemeTag(ext);
+            Texture2D icon = ABY_ApparelAegisUtility.ResolveAegisGizmoIcon(ext, this);
+
+            yield return new Gizmo_ABY_AegisStatus(
+                label,
+                subtitle,
+                state,
+                points,
+                detail,
+                headerTag,
+                BuildGizmoDescription(ext, suppressed, state),
+                ext.gizmoTheme,
+                currentShieldPoints,
+                ext.MaxShieldPointsSafe,
+                suppressed,
+                collapsed,
+                icon);
         }
 
         public override string GetInspectString()
@@ -330,9 +362,45 @@ namespace AbyssalProtocol
                 {
                     desc += "\n" + ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoRechargeDelay", "Recharge delay") + ": " + ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelay);
                 }
+                else
+                {
+                    desc += "\n" + ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoRechargeTick", "Recharge") + ": +" + ext.RechargePerIntervalSafe.ToString("0.#") + " / " + ABY_ApparelAegisUtility.SecondsFromTicks(ext.RechargeIntervalTicksSafe);
+                }
             }
 
             return desc;
+        }
+
+        private string BuildGizmoDetail(DefModExtension_ABY_ApparelAegis ext, bool suppressed, bool collapsed)
+        {
+            if (suppressed)
+            {
+                return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoExternalSuppression", "External shield active");
+            }
+
+            if (collapsed)
+            {
+                int remainingDelayCollapsed = Mathf.Max(0, ext.RechargeDelayTicksSafe - (CurrentTick - lastHitTick));
+                if (remainingDelayCollapsed > 0)
+                {
+                    return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoRestartIn", "Restart in") + " " + ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelayCollapsed);
+                }
+
+                return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoReforming", "Reforming lattice");
+            }
+
+            if (currentShieldPoints >= ext.MaxShieldPointsSafe - 0.5f)
+            {
+                return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoPeak", "Peak integrity");
+            }
+
+            int remainingDelay = Mathf.Max(0, ext.RechargeDelayTicksSafe - (CurrentTick - lastHitTick));
+            if (remainingDelay > 0)
+            {
+                return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoRestartIn", "Restart in") + " " + ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelay);
+            }
+
+            return ABY_ApparelAegisUtility.TranslateOrFallback("ABY_ApparelAegis_GizmoRechargeTick", "Recharge") + " +" + ext.RechargePerIntervalSafe.ToString("0.#") + " / " + ABY_ApparelAegisUtility.SecondsFromTicks(ext.RechargeIntervalTicksSafe);
         }
 
         private static void TriggerHitFeedback(Pawn wearer, DefModExtension_ABY_ApparelAegis ext)

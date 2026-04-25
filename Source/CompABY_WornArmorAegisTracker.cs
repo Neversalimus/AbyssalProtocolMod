@@ -156,48 +156,10 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            Pawn pawn = PawnParent;
-            if (!CanOperateOn(pawn) || !pawn.IsColonistPlayerControlled)
-            {
-                yield break;
-            }
-
-            Apparel armor = ResolveAegisArmor(pawn, out DefModExtension_ABY_ApparelAegis ext);
-            if (armor == null || ext == null)
-            {
-                yield break;
-            }
-
-            SyncTrackedArmor(armor, ext);
-            bool suppressed = IsSuppressedByExternalShield(pawn, armor, ext);
-            if (!suppressed)
-            {
-                ApplyRecharge(pawn, ext);
-            }
-
-            string label = ABY_ApparelAegisUtility.AegisLabel(ext);
-            string points = ABY_ApparelAegisUtility.FormatPoints(currentShieldPoints, ext.MaxShieldPointsSafe);
-            string state = suppressed ? ABY_ApparelAegisUtility.TranslateOrFallback(ext.suppressedKey, "suppressed by external shield") : CurrentStateLabel(ext);
-            string subtitle = ABY_ApparelAegisUtility.TranslateOrFallback(ext.gizmoSubtitleKey, "Shield integrity");
-            bool collapsed = !suppressed && (currentShieldPoints <= 0.5f || wasCollapsed);
-            string detail = BuildGizmoDetail(ext, suppressed, collapsed);
-            string headerTag = ABY_ApparelAegisUtility.ResolveThemeTag(ext);
-            Texture2D icon = ABY_ApparelAegisUtility.ResolveAegisGizmoIcon(ext, armor);
-
-            yield return new Gizmo_ABY_AegisStatus(
-                label,
-                subtitle,
-                state,
-                points,
-                detail,
-                headerTag,
-                BuildGizmoDescription(armor, ext, suppressed, state),
-                ext.gizmoTheme,
-                currentShieldPoints,
-                ext.MaxShieldPointsSafe,
-                suppressed,
-                collapsed,
-                icon);
+            // The player-facing aegis gizmo is emitted by Apparel_ABY_ArmorAegis.GetWornGizmos().
+            // Keeping the pawn tracker silent prevents duplicate gizmos and avoids relying on
+            // race-patch comps for UI visibility. The tracker remains as a low-frequency fallback
+            // for inspect strings, compatibility, and legacy save safety.
         }
 
         private static bool CanOperateOn(Pawn pawn)
