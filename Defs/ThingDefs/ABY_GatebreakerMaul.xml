@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>ABY_GatebreakerMaul</defName>
+    <label>gatebreaker maul</label>
+    <description>A compact abyssal breaching sledge built around a contained reactor core. It is too slow to be a duelist's weapon, but its engineered impact geometry punishes walls, doors, turrets and machine anchors with brutal procedural certainty.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_GatebreakerMaul</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.28,1.28)</drawSize>
+    </graphicData>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Steel>90</Steel>
+      <Plasteel>60</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+
+    <tools>
+      <li>
+        <label>reactor maul head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>37</power>
+        <cooldownTime>3.45</cooldownTime>
+        <armorPenetration>0.38</armorPenetration>
+      </li>
+      <li>
+        <label>breaching spike</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>18</power>
+        <cooldownTime>2.55</cooldownTime>
+        <armorPenetration>0.48</armorPenetration>
+      </li>
+      <li>
+        <label>reinforced haft</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.05</cooldownTime>
+        <armorPenetration>0.12</armorPenetration>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>42000</WorkToMake>
+      <Mass>5.6</Mass>
+      <MarketValue>2850</MarketValue>
+    </statBases>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>575</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
