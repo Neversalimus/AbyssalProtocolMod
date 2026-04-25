@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>ABY_RiftDagger</defName>
+    <label>rift dagger</label>
+    <description>A compact rift-edged dagger stabilized for rapid close work. It cannot carry the same breach mass as a full rift blade, but it slips through seams, joints and exposed geometry with unnerving precision.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_RiftDagger</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.74,0.74)</drawSize>
+    </graphicData>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>4</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <Steel>10</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>4</Gold>
+    </costList>
+
+    <tools>
+      <li>
+        <label>rift edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>17</power>
+        <cooldownTime>0.88</cooldownTime>
+        <armorPenetration>0.46</armorPenetration>
+      </li>
+      <li>
+        <label>piercing tip</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>0.96</cooldownTime>
+        <armorPenetration>0.54</armorPenetration>
+      </li>
+      <li>
+        <label>pommel</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>1.10</cooldownTime>
+        <armorPenetration>0.06</armorPenetration>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>7500</WorkToMake>
+      <Mass>0.78</Mass>
+      <MarketValue>760</MarketValue>
+    </statBases>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>65</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
