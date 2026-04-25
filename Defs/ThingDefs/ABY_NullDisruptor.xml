@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_NullDisruptor</defName>
     <label>null disruptor</label>
-    <description>A compact abyssal disruption rifle tuned to hostile machine logic. Its pulse does not burn or pierce in the usual sense — it briefly convinces circuits, shields and mechanoid cores that their own operating rules are optional.</description>
+    <description>A compact abyssal disruption rifle tuned to hostile machine logic. Its pulse does not burn or pierce in the usual sense — it briefly convinces circuits, shields and mechanoid cores that their own operating rules are optional. The V2 null-static chamber adds a narrow machine-only rupture after impact, giving it a real anti-mech support role without turning it into a general-purpose rifle.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
@@ -30,22 +30,22 @@
     </recipeMaker>
 
     <costList>
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <Plasteel>46</Plasteel>
       <Steel>25</Steel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
 
     <statBases>
-      <WorkToMake>22000</WorkToMake>
-      <Mass>3.2</Mass>
-      <MarketValue>1750</MarketValue>
+      <WorkToMake>24500</WorkToMake>
+      <Mass>3.3</Mass>
+      <MarketValue>2050</MarketValue>
       <AccuracyTouch>0.72</AccuracyTouch>
       <AccuracyShort>0.78</AccuracyShort>
       <AccuracyMedium>0.74</AccuracyMedium>
       <AccuracyLong>0.46</AccuracyLong>
-      <RangedWeapon_Cooldown>2.15</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.25</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -84,7 +84,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>300</requiredResidue>
+        <requiredResidue>400</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>
@@ -93,6 +93,7 @@
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_NullDisruptorPulse</defName>
     <label>null disruptor pulse</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_NullDisruptorPulse</thingClass>
     <graphicData>
       <texPath>Things/Projectile/ABY_NullDisruptorPulse</texPath>
       <graphicClass>Graphic_Single</graphicClass>
