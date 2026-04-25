@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_NullbrandFracture</defName>
+    <label>nullbrand fracture</label>
+    <description>A short-lived rupture in the target's surface integrity. Armor plates, chitin and machine casing momentarily fail to behave as continuous protection.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <tendable>false</tendable>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>-0.10</ArmorRating_Sharp>
+          <ArmorRating_Blunt>-0.04</ArmorRating_Blunt>
+        </statOffsets>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>360</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

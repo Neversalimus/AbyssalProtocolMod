@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DamageDef>
+    <defName>ABY_NullbrandFractureDamage</defName>
+    <label>nullbrand fracture</label>
+    <workerClass>AbyssalProtocol.DamageWorker_ABY_NullbrandFracture</workerClass>
+    <externalViolence>true</externalViolence>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_NullbrandFracture">
+        <hediffDefName>ABY_NullbrandFracture</hediffDefName>
+        <chance>0.24</chance>
+        <durationTicks>360</durationTicks>
+        <visualScale>0.52</visualScale>
+      </li>
+    </modExtensions>
+  </DamageDef>
+
+</Defs>

@@ -12,6 +12,7 @@
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.36,1.36)</drawSize>
     </graphicData>
+
     <recipeMaker>
       <skillRequirements>
         <Crafting>8</Crafting>
@@ -23,8 +24,8 @@
 
     <costList>
       <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
-      <Plasteel>55</Plasteel>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Plasteel>65</Plasteel>
       <Steel>35</Steel>
       <ComponentSpacer>2</ComponentSpacer>
     </costList>
@@ -35,30 +36,62 @@
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>36</power>
-        <cooldownTime>1.75</cooldownTime>
-        <armorPenetration>0.58</armorPenetration>
+        <power>34</power>
+        <cooldownTime>1.80</cooldownTime>
+        <armorPenetration>0.54</armorPenetration>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_NullbrandFractureDamage</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
       </li>
       <li>
         <label>hooking spike</label>
         <capacities>
           <li>Poke</li>
         </capacities>
-        <power>26</power>
-        <cooldownTime>1.55</cooldownTime>
-        <armorPenetration>0.72</armorPenetration>
+        <power>24</power>
+        <cooldownTime>1.60</cooldownTime>
+        <armorPenetration>0.66</armorPenetration>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_NullbrandFractureDamage</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+      <li>
+        <label>weighted haft</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.75</cooldownTime>
+        <armorPenetration>0.18</armorPenetration>
       </li>
     </tools>
 
     <statBases>
-      <WorkToMake>42000</WorkToMake>
-      <Mass>3.7</Mass>
-      <MarketValue>2380</MarketValue>
+      <WorkToMake>48000</WorkToMake>
+      <Mass>3.8</Mass>
+      <MarketValue>2650</MarketValue>
     </statBases>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WeaponGlowOverlay">
+        <texPath>Things/Weapon/ABY_NullbrandGlaive_Glow</texPath>
+        <drawSizeX>1.36</drawSizeX>
+        <drawSizeZ>1.36</drawSizeZ>
+        <alpha>0.58</alpha>
+      </li>
+    </comps>
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>275</requiredResidue>
+        <requiredResidue>325</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>
