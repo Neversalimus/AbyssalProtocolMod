@@ -12,7 +12,7 @@ namespace AbyssalProtocol
     public class Gizmo_ABY_AegisStatus : Gizmo
     {
         private const float Width = 224f;
-        private const float Height = 86f;
+        private const float GizmoHeight = 86f;
 
         private readonly string label;
         private readonly string subtitle;
@@ -53,7 +53,7 @@ namespace AbyssalProtocol
 
         public override GizmoResult GizmoOnGUI(Vector2 topLeft, float maxWidth, GizmoRenderParms parms)
         {
-            Rect rect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), Height);
+            Rect rect = new Rect(topLeft.x, topLeft.y, GetWidth(maxWidth), GizmoHeight);
             Palette palette = ResolvePalette(theme, suppressed, collapsed);
             bool hovered = Mouse.IsOver(rect);
 
