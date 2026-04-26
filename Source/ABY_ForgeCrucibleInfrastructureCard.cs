@@ -74,7 +74,7 @@ namespace AbyssalProtocol
             string label = "ABY_CrucibleSelectButton".Translate();
             string tooltip = enabled ? "ABY_CrucibleSelectButtonTip".Translate() : "ABY_CrucibleSelectButtonDisabledTip".Translate();
 
-            if (AbyssalStyledWidgets.TextButton(rect, label, enabled, false, tooltip) && enabled)
+            if AbyssalStyledWidgets.TextButton(rect, label, enabled, false, null, tooltip) && enabled)
             {
                 SelectCrucible(status.FocusCrucible);
             }
