@@ -20,7 +20,7 @@ namespace AbyssalProtocol
         private const int AshFilthCheckInterval = 180;
 
         private static readonly Vector2 GlowOverlaySize = new Vector2(3.32f, 2.22f);
-        private static readonly Vector2 HeatVentOverlaySize = new Vector2(3.20f, 2.08f);
+        private static readonly Vector2 HeatVentOverlaySize = new Vector2(3.22f, 2.12f);
 
         private int cachedSinterableCorpseCount = -1;
         private int nextCorpseCountRefreshTick;
@@ -79,35 +79,43 @@ namespace AbyssalProtocol
         {
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float seed = thingIDNumber * 0.01931f;
-            float pulse = (Mathf.Sin(ticks * 0.058f + seed) + 1f) * 0.5f;
-            float ventPulse = (Mathf.Sin(ticks * 0.093f + seed + 1.45f) + 1f) * 0.5f;
-            float powerAlpha = IsPowered ? 1f : 0.16f;
 
-            DrawOverlay(
-                HeatVentOverlayTexPath,
-                new Vector3(drawLoc.x, drawLoc.y + HeatVentAltitude, drawLoc.z),
-                HeatVentOverlaySize * Mathf.Lerp(0.98f, 1.035f, ventPulse),
-                Mathf.Sin(ticks * 0.0105f + seed) * 0.45f,
-                new Color(1f, 0.28f, 0.08f, Mathf.Lerp(0.16f, 0.36f, ventPulse) * powerAlpha));
+            float slowBreath = (Mathf.Sin(ticks * 0.045f + seed) + 1f) * 0.5f;
+            float fastVent = (Mathf.Sin(ticks * 0.115f + seed + 1.45f) + 1f) * 0.5f;
+            float heatFlicker = (Mathf.Sin(ticks * 0.173f + seed * 0.71f) + 1f) * 0.5f;
 
             if (!IsPowered)
             {
+                DrawOverlay(
+                    HeatVentOverlayTexPath,
+                    new Vector3(drawLoc.x, drawLoc.y + HeatVentAltitude, drawLoc.z),
+                    HeatVentOverlaySize * Mathf.Lerp(0.985f, 1.005f, fastVent),
+                    0f,
+                    new Color(1f, 0.22f, 0.06f, 0.07f));
+
                 return;
             }
 
             DrawOverlay(
+                HeatVentOverlayTexPath,
+                new Vector3(drawLoc.x, drawLoc.y + HeatVentAltitude, drawLoc.z),
+                HeatVentOverlaySize * Mathf.Lerp(0.99f, 1.035f, fastVent),
+                Mathf.Sin(ticks * 0.011f + seed) * 0.32f,
+                new Color(1f, 0.30f, 0.08f, Mathf.Lerp(0.18f, 0.40f, fastVent)));
+
+            DrawOverlay(
                 GlowOverlayTexPath,
                 new Vector3(drawLoc.x, drawLoc.y + GlowAltitude, drawLoc.z),
-                GlowOverlaySize * Mathf.Lerp(0.985f, 1.055f, pulse),
-                Mathf.Sin(ticks * 0.008f + seed) * 0.55f,
-                new Color(1f, 0.38f, 0.11f, Mathf.Lerp(0.18f, 0.42f, pulse)));
+                GlowOverlaySize * Mathf.Lerp(0.985f, 1.045f, slowBreath),
+                Mathf.Sin(ticks * 0.007f + seed) * 0.42f,
+                new Color(1f, 0.36f, 0.10f, Mathf.Lerp(0.20f, 0.46f, slowBreath)));
 
             DrawOverlay(
                 GlowOverlayTexPath,
                 new Vector3(drawLoc.x, drawLoc.y + GlowAltitude + 0.003f, drawLoc.z),
-                GlowOverlaySize * Mathf.Lerp(0.78f, 0.86f, ventPulse),
-                -Mathf.Sin(ticks * 0.014f + seed) * 0.8f,
-                new Color(1f, 0.12f, 0.04f, Mathf.Lerp(0.06f, 0.18f, ventPulse)));
+                GlowOverlaySize * Mathf.Lerp(0.78f, 0.87f, heatFlicker),
+                -Mathf.Sin(ticks * 0.014f + seed) * 0.72f,
+                new Color(1f, 0.12f, 0.04f, Mathf.Lerp(0.055f, 0.18f, heatFlicker)));
         }
 
         private static void DrawOverlay(string texPath, Vector3 loc, Vector2 size, float angle, Color color)
