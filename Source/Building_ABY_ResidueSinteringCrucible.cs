@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -65,17 +64,20 @@ namespace AbyssalProtocol
 
         public override string GetInspectString()
         {
-            StringBuilder sb = new StringBuilder();
-            AppendInspectBlock(sb, base.GetInspectString());
+            // RimWorld logs an error and can break the inspect pane if the returned string
+            // contains a leading/trailing empty line or any doubled newline. Build the final
+            // string through a filtered list and join once to guarantee a clean inspect block.
+            List<string> lines = new List<string>();
+            AppendInspectBlock(lines, base.GetInspectString());
 
-            AppendInspectLine(sb, IsPowered
+            AppendInspectLine(lines, IsPowered
                 ? "ABY_ResidueSinteringCrucible_InspectActive".Translate()
                 : "ABY_ResidueSinteringCrucible_InspectOffline".Translate());
 
             RefreshCorpseCountIfNeeded(true);
-            AppendInspectLine(sb, "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount));
+            AppendInspectLine(lines, "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount));
 
-            return sb.ToString();
+            return string.Join("\n", lines.ToArray());
         }
 
         private void DrawSinteringOverlays(Vector3 drawLoc)
@@ -202,21 +204,21 @@ namespace AbyssalProtocol
             }
         }
 
-        private static void AppendInspectBlock(StringBuilder sb, string block)
+        private static void AppendInspectBlock(List<string> lines, string block)
         {
             if (block.NullOrEmpty())
             {
                 return;
             }
 
-            string[] lines = block.Split('\n');
-            for (int i = 0; i < lines.Length; i++)
+            string[] splitLines = block.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < splitLines.Length; i++)
             {
-                AppendInspectLine(sb, lines[i]);
+                AppendInspectLine(lines, splitLines[i]);
             }
         }
 
-        private static void AppendInspectLine(StringBuilder sb, string line)
+        private static void AppendInspectLine(List<string> lines, string line)
         {
             if (line.NullOrEmpty())
             {
@@ -229,12 +231,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (sb.Length > 0)
-            {
-                sb.AppendLine();
-            }
-
-            sb.Append(trimmed);
+            lines.Add(trimmed);
         }
     }
 }
