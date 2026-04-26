@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using RimWorld;
@@ -136,7 +136,7 @@ namespace AbyssalProtocol
             }
 
             Faction abyssalFaction = ResolveAbyssalFaction();
-            List<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
+            IReadOnlyList<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
             if (pawns == null)
             {
                 return;
@@ -327,7 +327,7 @@ namespace AbyssalProtocol
 
         private bool HasLivingAbyssalHostiles()
         {
-            List<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
+            IReadOnlyList<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
             if (pawns == null)
             {
                 return false;

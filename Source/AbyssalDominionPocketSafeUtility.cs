@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -488,7 +488,7 @@ namespace AbyssalProtocol
                 return result;
             }
 
-            List<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
@@ -679,12 +679,25 @@ namespace AbyssalProtocol
 
         private static List<GenStepWithParams> ResolveDominionSliceGenSteps()
         {
+            List<GenStepWithParams> result = new List<GenStepWithParams>();
             MapGeneratorDef mapGeneratorDef = DefDatabase<MapGeneratorDef>.GetNamedSilentFail(SliceMapGeneratorDefName);
-            if (mapGeneratorDef?.genSteps != null && mapGeneratorDef.genSteps.Count > 0)
+            if (mapGeneratorDef?.genSteps == null || mapGeneratorDef.genSteps.Count <= 0)
             {
-                return new List<GenStepWithParams>(mapGeneratorDef.genSteps);
+                return result;
             }
-            return new List<GenStepWithParams>();
+
+            for (int i = 0; i < mapGeneratorDef.genSteps.Count; i++)
+            {
+                GenStepDef genStepDef = mapGeneratorDef.genSteps[i];
+                if (genStepDef == null)
+                {
+                    continue;
+                }
+
+                result.Add(new GenStepWithParams(genStepDef, default(GenStepParams)));
+            }
+
+            return result;
         }
 
         private static bool TryBuildGetOrGenerateArguments(ParameterInfo[] parameters, int tile, IntVec3 size, WorldObject_ABY_DominionSliceSite worldObject, List<GenStepWithParams> genSteps, out object[] args)
