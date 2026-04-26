@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_RiftNeedler</defName>
+    <label>rift needler</label>
+    <description>A compact techno-infernal precision carbine that launches ritualized rift needles in a fast, vicious burst. It fills the mid-tier gap between crude breach repeaters and heavier abyssal longarms, excelling at shredding exposed flesh and light armor with concentrated needle volleys.</description>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_RiftNeedler</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.58,0.50)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+
+    <weaponTags>
+      <li>Gun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>7</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>13</ABY_AbyssalResidue>
+      <Steel>28</Steel>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+
+    <statBases>
+      <WorkToMake>17000</WorkToMake>
+      <Mass>2.35</Mass>
+      <MarketValue>1540</MarketValue>
+      <AccuracyTouch>0.88</AccuracyTouch>
+      <AccuracyShort>0.84</AccuracyShort>
+      <AccuracyMedium>0.72</AccuracyMedium>
+      <AccuracyLong>0.41</AccuracyLong>
+      <RangedWeapon_Cooldown>1.65</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_RiftNeedleProjectile</defaultProjectile>
+        <warmupTime>0.74</warmupTime>
+        <range>26.9</range>
+        <burstShotCount>5</burstShotCount>
+        <ticksBetweenBurstShots>6</ticksBetweenBurstShots>
+        <soundCast>ABY_SigilRepeaterFire</soundCast>
+        <soundCastTail>ABY_SigilRepeaterTail</soundCastTail>
+        <muzzleFlashScale>8.4</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_RiftNeedleProjectile</defName>
+    <label>rift needle</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_RiftNeedle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.34,0.26)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <armorPenetrationBase>0.30</armorPenetrationBase>
+      <stoppingPower>0.40</stoppingPower>
+      <speed>60</speed>
+      <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
