@@ -80,7 +80,7 @@ namespace AbyssalProtocol
             AppendInspectLine(lines, statusLine);
             AppendInspectLine(lines, corpseLine);
 
-            return string.Join("\\n", lines.ToArray());
+            return string.Join("\n", lines.ToArray());
         }
 
         private void DrawSinteringOverlays(Vector3 drawLoc)

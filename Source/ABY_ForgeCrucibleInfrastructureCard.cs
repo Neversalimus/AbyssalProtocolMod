@@ -39,14 +39,6 @@ namespace AbyssalProtocol
             DrawMetricSafe(new Rect(metricsRect.x + metricWidth + 6f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricCorpses".Translate(), status.SinterableCorpseCount.ToString());
             DrawMetricSafe(new Rect(metricsRect.x + (metricWidth + 6f) * 2f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricYield".Translate(), ABY_ResidueSinteringConsoleUtility.BuildEstimatedYieldLabel(status));
             DrawMetricSafe(new Rect(metricsRect.x + (metricWidth + 6f) * 3f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricQueued".Translate(), status.QueuedSinterBills.ToString());
-
-            float detailY = metricsRect.yMax + 8f;
-            Text.Font = GameFont.Tiny;
-            GUI.color = status.BestCorpseResidue > 0 ? Color.white : AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, detailY, inner.width, 22f), ABY_ResidueSinteringConsoleUtility.BuildBestCandidateLabel(status));
-
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, detailY + 23f, inner.width, 22f), ABY_ResidueSinteringConsoleUtility.BuildTierBreakdownLabel(status));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
