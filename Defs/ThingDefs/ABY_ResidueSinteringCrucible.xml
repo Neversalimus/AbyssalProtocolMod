@@ -11,11 +11,12 @@
     <graphicData>
       <texPath>Things/Building/ABY_ResidueSinteringCrucible</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
       <drawSize>(3.15,2.10)</drawSize>
     </graphicData>
 
     <castEdgeShadows>false</castEdgeShadows>
-    <staticSunShadowHeight>0.04</staticSunShadowHeight>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
     <constructEffect>ConstructMetal</constructEffect>
 
     <costList>

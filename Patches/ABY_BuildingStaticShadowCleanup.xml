@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_SummoningCircle"]/staticSunShadowHeight</xpath>
+    <value>
+      <staticSunShadowHeight>0</staticSunShadowHeight>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_AbyssalForge"]/staticSunShadowHeight</xpath>
+    <value>
+      <staticSunShadowHeight>0</staticSunShadowHeight>
+    </value>
+  </Operation>
+
+</Patch>

@@ -25,7 +25,14 @@ namespace AbyssalProtocol
         private int cachedSinterableCorpseCount = -1;
         private int nextCorpseCountRefreshTick;
 
-        private bool IsPowered => GetComp<CompPowerTrader>()?.PowerOn ?? true;
+        private bool IsPowered
+        {
+            get
+            {
+                CompPowerTrader power = GetComp<CompPowerTrader>();
+                return power == null || (power.PowerOn && power.PowerNet != null);
+            }
+        }
 
         public override void TickRare()
         {

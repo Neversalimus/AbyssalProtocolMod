@@ -113,19 +113,9 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <fixedIngredientFilter>
-      <thingDefs>
-        <li>Corpse_ABY_RiftImp</li>
-        <li>Corpse_ABY_EmberHound</li>
-        <li>Corpse_ABY_HexgunThrall</li>
-        <li>Corpse_ABY_ChainZealot</li>
-        <li>Corpse_ABY_RiftSniper</li>
-        <li>Corpse_ABY_NullPriest</li>
-        <li>Corpse_ABY_RiftSapper</li>
-        <li>Corpse_ABY_BreachBrute</li>
-        <li>Corpse_ABY_Harvester</li>
-        <li>Corpse_ABY_GateWarden</li>
-        <li>Corpse_ABY_SiegeIdol</li>
-      </thingDefs>
+      <categories>
+        <li>Corpses</li>
+      </categories>
       <specialFiltersToAllow>
         <li>AllowFresh</li>
         <li>AllowRotten</li>
@@ -138,19 +128,9 @@
       </specialFiltersToAllow>
     </fixedIngredientFilter>
     <defaultIngredientFilter>
-      <thingDefs>
-        <li>Corpse_ABY_RiftImp</li>
-        <li>Corpse_ABY_EmberHound</li>
-        <li>Corpse_ABY_HexgunThrall</li>
-        <li>Corpse_ABY_ChainZealot</li>
-        <li>Corpse_ABY_RiftSniper</li>
-        <li>Corpse_ABY_NullPriest</li>
-        <li>Corpse_ABY_RiftSapper</li>
-        <li>Corpse_ABY_BreachBrute</li>
-        <li>Corpse_ABY_Harvester</li>
-        <li>Corpse_ABY_GateWarden</li>
-        <li>Corpse_ABY_SiegeIdol</li>
-      </thingDefs>
+      <categories>
+        <li>Corpses</li>
+      </categories>
       <specialFiltersToAllow>
         <li>AllowFresh</li>
         <li>AllowRotten</li>
@@ -165,19 +145,9 @@
     <ingredients>
       <li>
         <filter>
-          <thingDefs>
-            <li>Corpse_ABY_RiftImp</li>
-            <li>Corpse_ABY_EmberHound</li>
-            <li>Corpse_ABY_HexgunThrall</li>
-            <li>Corpse_ABY_ChainZealot</li>
-            <li>Corpse_ABY_RiftSniper</li>
-            <li>Corpse_ABY_NullPriest</li>
-            <li>Corpse_ABY_RiftSapper</li>
-            <li>Corpse_ABY_BreachBrute</li>
-            <li>Corpse_ABY_Harvester</li>
-            <li>Corpse_ABY_GateWarden</li>
-            <li>Corpse_ABY_SiegeIdol</li>
-          </thingDefs>
+          <categories>
+            <li>Corpses</li>
+          </categories>
           <specialFiltersToAllow>
             <li>AllowFresh</li>
             <li>AllowRotten</li>
