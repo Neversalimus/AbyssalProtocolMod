@@ -135,4 +135,34 @@
     </value>
   </Operation>
 
+
+  <!-- Dominion pocket large-modpack hardening. Replace the gate class with a filtered subclass and add safe pocket gizmos. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/thingClass</xpath>
+    <value>
+      <thingClass>AbyssalProtocol.Building_AbyssalDominionGate_Safe</thingClass>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]</xpath>
+      <value>
+        <comps>
+          <li Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket" />
+        </comps>
+      </value>
+    </nomatch>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps/li[@Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps</xpath>
+        <value>
+          <li Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket" />
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+
 </Patch>

@@ -43,6 +43,58 @@ namespace AbyssalProtocol
                     map.snowGrid.SetDepth(cell, 0f);
                 }
             }
+
+            SeedExternalMapHookCompatibilityRock(map);
+        }
+
+        /// <summary>
+        /// Some external MapGenerated hooks, especially resource-deposit systems, assume every generated map has
+        /// at least a few natural mineable cells. The dominion slice is intentionally sterile and fully plated,
+        /// which made those hooks emit red errors while looking for starting cells.
+        /// These temporary corner rocks exist only during MapGenerated. The safe pocket utility removes them
+        /// immediately after map creation, along with any external gas/deposit artifacts spawned there.
+        /// </summary>
+        private static void SeedExternalMapHookCompatibilityRock(Map map)
+        {
+            ThingDef mineable = DefDatabase<ThingDef>.GetNamedSilentFail("MineableGranite")
+                ?? DefDatabase<ThingDef>.GetNamedSilentFail("MineableSandstone")
+                ?? DefDatabase<ThingDef>.GetNamedSilentFail("MineableSlate")
+
+            if (mineable == null)
+            {
+                return;
+            }
+
+            TerrainDef roughStone = DefDatabase<TerrainDef>.GetNamedSilentFail("RoughStone")
+                ?? DefDatabase<TerrainDef>.GetNamedSilentFail("RoughGranite")
+                ?? TerrainDefOf.Concrete;
+
+            SeedCornerRockPocket(map, mineable, roughStone, 5, 5);
+            SeedCornerRockPocket(map, mineable, roughStone, map.Size.x - 10, 5);
+            SeedCornerRockPocket(map, mineable, roughStone, 5, map.Size.z - 10);
+            SeedCornerRockPocket(map, mineable, roughStone, map.Size.x - 10, map.Size.z - 10);
+        }
+
+        private static void SeedCornerRockPocket(Map map, ThingDef mineable, TerrainDef terrain, int startX, int startZ)
+        {
+            for (int x = startX; x < startX + 5; x++)
+            {
+                for (int z = startZ; z < startZ + 5; z++)
+                {
+                    IntVec3 cell = new IntVec3(x, 0, z);
+                    if (!cell.InBounds(map))
+                    {
+                        continue;
+                    }
+
+                    map.terrainGrid.SetTerrain(cell, terrain);
+                    if (cell.GetEdifice(map) == null && cell.GetFirstThing(map, mineable) == null)
+                    {
+                        Thing rock = ThingMaker.MakeThing(mineable);
+                        GenSpawn.Spawn(rock, cell, map, Rot4.North, WipeMode.Vanish, false, false);
+                    }
+                }
+            }
         }
     }
 }
