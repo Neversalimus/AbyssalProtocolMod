@@ -58,7 +58,7 @@ namespace AbyssalProtocol
         {
             ThingDef mineable = DefDatabase<ThingDef>.GetNamedSilentFail("MineableGranite")
                 ?? DefDatabase<ThingDef>.GetNamedSilentFail("MineableSandstone")
-                ?? DefDatabase<ThingDef>.GetNamedSilentFail("MineableSlate")
+                ?? DefDatabase<ThingDef>.GetNamedSilentFail("MineableSlate");
 
             if (mineable == null)
             {
