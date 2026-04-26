@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_CrucibleInfrastructureHeader>Инфраструктура crucible</ABY_CrucibleInfrastructureHeader>
-  <ABY_CrucibleStateUnavailable>Defs crucible недоступны</ABY_CrucibleStateUnavailable>
-  <ABY_CrucibleStateResearchLocked>Ожидает Abyssal Signal Theory</ABY_CrucibleStateResearchLocked>
-  <ABY_CrucibleStateNotBuilt>Sintering crucible не построен</ABY_CrucibleStateNotBuilt>
-  <ABY_CrucibleStateOffline>Crucible офлайн</ABY_CrucibleStateOffline>
-  <ABY_CrucibleStateWaitingCorpses>Онлайн, ожидает abyssal remains</ABY_CrucibleStateWaitingCorpses>
-  <ABY_CrucibleStateReady>Онлайн и готов к sintering</ABY_CrucibleStateReady>
-  <ABY_CrucibleMetricUnits>Онлайн</ABY_CrucibleMetricUnits>
-  <ABY_CrucibleMetricCorpses>Трупы</ABY_CrucibleMetricCorpses>
-  <ABY_CrucibleMetricQueued>В очереди</ABY_CrucibleMetricQueued>
-  <ABY_CrucibleRequirementSignal>Abyssal Signal Theory завершена</ABY_CrucibleRequirementSignal>
-  <ABY_CrucibleRequirementBuilt>Residue Sintering Crucible построен</ABY_CrucibleRequirementBuilt>
-  <ABY_CrucibleRequirementPowered>Хотя бы один crucible запитан</ABY_CrucibleRequirementPowered>
-  <ABY_CrucibleRequirementCorpses>Есть безопасный abyssal-труп</ABY_CrucibleRequirementCorpses>
-  <ABY_CrucibleInfrastructureTooltipTitle>Статус sintering residue</ABY_CrucibleInfrastructureTooltipTitle>
+  <ABY_CrucibleInfrastructureHeader>Инфраструктура спекания</ABY_CrucibleInfrastructureHeader>
+  <ABY_CrucibleStateUnavailable>Протокол отсутствует: defs тигеля недоступны</ABY_CrucibleStateUnavailable>
+  <ABY_CrucibleStateResearchLocked>Сигнальный замок: нужна «Теория сигнала Бездны»</ABY_CrucibleStateResearchLocked>
+  <ABY_CrucibleStateNotBuilt>Тигель спекания residue не построен</ABY_CrucibleStateNotBuilt>
+  <ABY_CrucibleStateOffline>Холодный тигель: нет запитанного узла</ABY_CrucibleStateOffline>
+  <ABY_CrucibleStateWaitingCorpses>Камера голодна: ожидает пригодные останки</ABY_CrucibleStateWaitingCorpses>
+  <ABY_CrucibleStateReadyNoBill>Готов: добавь bill спекания</ABY_CrucibleStateReadyNoBill>
+  <ABY_CrucibleStateReady>Очередь спекания активна</ABY_CrucibleStateReady>
+  <ABY_CrucibleMetricUnits>Узлы</ABY_CrucibleMetricUnits>
+  <ABY_CrucibleMetricCorpses>Останки</ABY_CrucibleMetricCorpses>
+  <ABY_CrucibleMetricYield>Выход</ABY_CrucibleMetricYield>
+  <ABY_CrucibleMetricQueued>Очередь</ABY_CrucibleMetricQueued>
+  <ABY_CrucibleRequirementSignal>«Теория сигнала Бездны» завершена</ABY_CrucibleRequirementSignal>
+  <ABY_CrucibleRequirementBuilt>Тигель спекания residue построен</ABY_CrucibleRequirementBuilt>
+  <ABY_CrucibleRequirementPowered>Хотя бы один тигель запитан</ABY_CrucibleRequirementPowered>
+  <ABY_CrucibleRequirementCorpses>Есть безопасные останки Бездны</ABY_CrucibleRequirementCorpses>
+  <ABY_CrucibleBestCandidateNone>Лучший материал: отсутствует</ABY_CrucibleBestCandidateNone>
+  <ABY_CrucibleBestCandidate>Лучший материал: {0} → ~{1} residue</ABY_CrucibleBestCandidate>
+  <ABY_CrucibleTierBreakdown>Низш. {0} / Средн. {1} / Элита {2}</ABY_CrucibleTierBreakdown>
+  <ABY_CrucibleInfrastructureTooltipTitle>Инфраструктура спекания residue</ABY_CrucibleInfrastructureTooltipTitle>
   <ABY_CrucibleInfrastructureTooltipRequirements>Требования:</ABY_CrucibleInfrastructureTooltipRequirements>
-  <ABY_CrucibleInfrastructureTooltipCorpseRules>Принимаются только whitelisted abyssal-трупы низкого, среднего и elite тира. Humanlike, vanilla-животные, boss и miniboss трупы отклоняются.</ABY_CrucibleInfrastructureTooltipCorpseRules>
-  <ABY_CrucibleInfrastructureTooltipResidueScale>Выход масштабируется по тиру: малые abyssal remains 5–8 residue, средние 10–18, elite 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
-  <ABY_CrucibleInfrastructureTooltipHint>Используй bills crucible для переработки sigil или одобренных abyssal remains, не затрагивая boss reward chains.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleInfrastructureTooltipOutput>Доступный выход:</ABY_CrucibleInfrastructureTooltipOutput>
+  <ABY_CrucibleTooltipYield>Оценка выхода на карте: {0} residue</ABY_CrucibleTooltipYield>
+  <ABY_CrucibleInfrastructureTooltipCorpseRules>Принимаются только whitelisted останки Бездны низкого, среднего и элитного тира. Humanlike, vanilla-животные, boss и miniboss трупы отклоняются.</ABY_CrucibleInfrastructureTooltipCorpseRules>
+  <ABY_CrucibleInfrastructureTooltipResidueScale>Выход масштабируется по тиру: малые останки Бездны 5–8 residue, средние 10–18, элитные 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
+  <ABY_CrucibleInfrastructureTooltipHint>Используй bills тигеля для возврата сигил или спекания одобренных останков Бездны, не затрагивая reward chains боссов.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleIconUnavailable>NO ICON</ABY_CrucibleIconUnavailable>
 </LanguageData>

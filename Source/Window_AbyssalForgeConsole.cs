@@ -77,7 +77,7 @@ namespace AbyssalProtocol
             DrawNextPanel(nextRect, progress);
             DrawCategoryRow(categoryRect);
             DrawPatternBrowser(patternsRect, progress);
-            DrawInfrastructurePanel(infrastructureRect);
+            ABY_ForgeCrucibleInfrastructureCard.Draw(infrastructureRect, forge);
             DrawBillsPanel(billsRect);
 
             if (mouseoverBill != null)
@@ -462,54 +462,6 @@ namespace AbyssalProtocol
             Widgets.Label(countRect, entry.availableCount + "/" + entry.requiredCount);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
-        }
-
-        private void DrawInfrastructurePanel(Rect rect)
-        {
-            ABY_ResidueSinteringConsoleUtility.StatusSnapshot status = ABY_ResidueSinteringConsoleUtility.BuildStatus(forge.Map);
-            bool highlighted = status.HasOnlineCrucible && status.SinterableCorpseCount > 0;
-            AbyssalForgeConsoleArt.DrawPanel(rect, highlighted);
-
-            Rect inner = rect.ContractedBy(10f);
-            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CrucibleInfrastructureHeader".Translate());
-
-            Rect stateRect = new Rect(inner.x, inner.y + 27f, inner.width, 24f);
-            Color stateColor = status.IsReady
-                ? new Color(0.72f, 1f, 0.74f, 1f)
-                : status.HasAnyCrucible
-                    ? new Color(1f, 0.78f, 0.48f, 1f)
-                    : new Color(1f, 0.58f, 0.52f, 1f);
-
-            GUI.color = stateColor;
-            Text.Font = GameFont.Small;
-            Widgets.Label(stateRect, status.StateKey.Translate());
-            GUI.color = Color.white;
-
-            Rect metricsRect = new Rect(inner.x, inner.y + 53f, inner.width, 38f);
-            float metricWidth = (metricsRect.width - 12f) / 3f;
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricUnits".Translate(), status.OnlineCrucibleCount + "/" + status.CrucibleCount);
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x + metricWidth + 6f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricCorpses".Translate(), status.SinterableCorpseCount.ToString());
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x + (metricWidth + 6f) * 2f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricQueued".Translate(), status.QueuedSinterBills.ToString());
-
-            float lineY = inner.y + 94f;
-            float lineHeight = 17f;
-            DrawInfrastructureRequirementLine(new Rect(inner.x, lineY, inner.width, lineHeight), status.ResearchSatisfied, "ABY_CrucibleRequirementSignal".Translate());
-            DrawInfrastructureRequirementLine(new Rect(inner.x, lineY + 18f, inner.width, lineHeight), status.HasAnyCrucible, "ABY_CrucibleRequirementBuilt".Translate());
-            DrawInfrastructureRequirementLine(new Rect(inner.x, lineY + 36f, inner.width, lineHeight), status.HasOnlineCrucible, "ABY_CrucibleRequirementPowered".Translate());
-            DrawInfrastructureRequirementLine(new Rect(inner.x, lineY + 54f, inner.width, lineHeight), status.SinterableCorpseCount > 0, "ABY_CrucibleRequirementCorpses".Translate());
-
-            TooltipHandler.TipRegion(rect, ABY_ResidueSinteringConsoleUtility.BuildInfrastructureTooltip(status));
-        }
-
-        private void DrawInfrastructureRequirementLine(Rect rect, bool satisfied, string label)
-        {
-            Text.Font = GameFont.Tiny;
-            GUI.color = satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.58f, 0.52f, 1f);
-            Widgets.Label(new Rect(rect.x, rect.y, 18f, rect.height), satisfied ? "✓" : "–");
-            GUI.color = satisfied ? Color.white : AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 18f, rect.y, rect.width - 18f, rect.height), label);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
         }
 
         private void DrawBillsPanel(Rect rect)

@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_CrucibleInfrastructureHeader>Crucible infrastructure</ABY_CrucibleInfrastructureHeader>
-  <ABY_CrucibleStateUnavailable>Crucible definitions unavailable</ABY_CrucibleStateUnavailable>
-  <ABY_CrucibleStateResearchLocked>Awaiting Abyssal Signal Theory</ABY_CrucibleStateResearchLocked>
-  <ABY_CrucibleStateNotBuilt>No sintering crucible built</ABY_CrucibleStateNotBuilt>
-  <ABY_CrucibleStateOffline>Crucible offline</ABY_CrucibleStateOffline>
-  <ABY_CrucibleStateWaitingCorpses>Online, awaiting abyssal remains</ABY_CrucibleStateWaitingCorpses>
-  <ABY_CrucibleStateReady>Online and ready to sinter</ABY_CrucibleStateReady>
-  <ABY_CrucibleMetricUnits>Units online</ABY_CrucibleMetricUnits>
-  <ABY_CrucibleMetricCorpses>Valid corpses</ABY_CrucibleMetricCorpses>
+  <ABY_CrucibleStateUnavailable>Protocol missing: crucible definitions unavailable</ABY_CrucibleStateUnavailable>
+  <ABY_CrucibleStateResearchLocked>Signal lock: Abyssal Signal Theory required</ABY_CrucibleStateResearchLocked>
+  <ABY_CrucibleStateNotBuilt>No residue crucible installed</ABY_CrucibleStateNotBuilt>
+  <ABY_CrucibleStateOffline>Cold crucible: no powered unit online</ABY_CrucibleStateOffline>
+  <ABY_CrucibleStateWaitingCorpses>Chamber hungry: awaiting approved remains</ABY_CrucibleStateWaitingCorpses>
+  <ABY_CrucibleStateReadyNoBill>Ready: add a sintering bill</ABY_CrucibleStateReadyNoBill>
+  <ABY_CrucibleStateReady>Sintering queue active</ABY_CrucibleStateReady>
+  <ABY_CrucibleMetricUnits>Units</ABY_CrucibleMetricUnits>
+  <ABY_CrucibleMetricCorpses>Remains</ABY_CrucibleMetricCorpses>
+  <ABY_CrucibleMetricYield>Yield</ABY_CrucibleMetricYield>
   <ABY_CrucibleMetricQueued>Queued</ABY_CrucibleMetricQueued>
   <ABY_CrucibleRequirementSignal>Abyssal Signal Theory completed</ABY_CrucibleRequirementSignal>
   <ABY_CrucibleRequirementBuilt>Residue Sintering Crucible built</ABY_CrucibleRequirementBuilt>
   <ABY_CrucibleRequirementPowered>At least one crucible powered</ABY_CrucibleRequirementPowered>
   <ABY_CrucibleRequirementCorpses>Safe abyssal corpse available</ABY_CrucibleRequirementCorpses>
-  <ABY_CrucibleInfrastructureTooltipTitle>Residue sintering status</ABY_CrucibleInfrastructureTooltipTitle>
+  <ABY_CrucibleBestCandidateNone>Best candidate: none</ABY_CrucibleBestCandidateNone>
+  <ABY_CrucibleBestCandidate>Best candidate: {0} → ~{1} residue</ABY_CrucibleBestCandidate>
+  <ABY_CrucibleTierBreakdown>Low {0} / Mid {1} / Elite {2}</ABY_CrucibleTierBreakdown>
+  <ABY_CrucibleInfrastructureTooltipTitle>Residue sintering infrastructure</ABY_CrucibleInfrastructureTooltipTitle>
   <ABY_CrucibleInfrastructureTooltipRequirements>Requirements:</ABY_CrucibleInfrastructureTooltipRequirements>
+  <ABY_CrucibleInfrastructureTooltipOutput>Available output:</ABY_CrucibleInfrastructureTooltipOutput>
+  <ABY_CrucibleTooltipYield>Estimated map yield: {0} residue</ABY_CrucibleTooltipYield>
   <ABY_CrucibleInfrastructureTooltipCorpseRules>Accepted: whitelisted low, mid and elite abyssal corpses only. Humanlike, vanilla animal, boss and miniboss corpses are rejected.</ABY_CrucibleInfrastructureTooltipCorpseRules>
   <ABY_CrucibleInfrastructureTooltipResidueScale>Expected output scales by tier: small abyssal remains 5–8 residue, medium remains 10–18, elite remains 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
-  <ABY_CrucibleInfrastructureTooltipHint>Use the crucible bills to reclaim sigils or sinter approved abyssal remains without touching boss reward chains.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleInfrastructureTooltipHint>Use crucible bills to reclaim sigils or sinter approved abyssal remains without touching boss reward chains.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleIconUnavailable>NO ICON</ABY_CrucibleIconUnavailable>
 </LanguageData>
