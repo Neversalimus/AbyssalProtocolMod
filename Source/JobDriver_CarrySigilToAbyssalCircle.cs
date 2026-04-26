@@ -55,7 +55,8 @@ namespace AbyssalProtocol
 
             job.targetB = circle;
 
-            if (!pawn.CanReserveAndReach(sigil, PathEndMode.Touch, Danger.Deadly))
+            bool pawnAlreadyCarriesSigil = pawn.carryTracker != null && pawn.carryTracker.CarriedThing == sigil;
+            if (!pawnAlreadyCarriesSigil && !pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
             {
                 return false;
             }
@@ -65,13 +66,18 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!pawn.Reserve(sigil, job, 1, -1, null, errorOnFailed))
+            if (!pawnAlreadyCarriesSigil && !pawn.Reserve(sigil, job, 1, job.count, null, errorOnFailed))
             {
                 return false;
             }
 
             if (!pawn.Reserve(circle, job, 1, -1, null, errorOnFailed))
             {
+                if (!pawnAlreadyCarriesSigil)
+                {
+                    pawn.MapHeld?.reservationManager?.Release(sigil, pawn, job);
+                }
+
                 return false;
             }
 
@@ -92,7 +98,7 @@ namespace AbyssalProtocol
             placeSigil.initAction = () =>
             {
                 Pawn actor = placeSigil.actor;
-                if (!TryPlaceSigilOnCircle(actor, Circle))
+                if (!TryPlaceSigilNearCircle(actor, Circle))
                 {
                     Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
                     actor.jobs.EndCurrentJob(JobCondition.Incompletable);
@@ -102,7 +108,7 @@ namespace AbyssalProtocol
                 if (Circle != null && actor.rotationTracker != null)
                 {
                     actor.rotationTracker.FaceCell(Circle.Position);
-                    ABY_SoundUtility.PlayAt("ABY_SigilActivate", Circle.RitualFocusCell, actor.MapHeld);
+                    ABY_SoundUtility.PlayAt("ABY_SigilActivate", job.GetTarget(SigilInd).Cell, actor.MapHeld);
                 }
             };
             placeSigil.defaultCompleteMode = ToilCompleteMode.Instant;
@@ -121,7 +127,7 @@ namespace AbyssalProtocol
 
                 if ((actor.IsHashIntervalTick(30) || actor.jobs.curDriver.ticksLeftThisToil == GetWarmupTicks() - 1) && Circle.IsPoweredForRitual)
                 {
-                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", Circle.RitualFocusCell, actor.MapHeld);
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", job.GetTarget(SigilInd).Cell, actor.MapHeld);
                 }
             };
             yield return warmup;
@@ -178,7 +184,7 @@ namespace AbyssalProtocol
 
         private int GetWarmupTicks()
         {
-            Thing sigil = SigilThing;
+            Thing sigil = ResolveUsableSigil(pawn) ?? SigilThing;
             CompUseEffect_SummonBoss comp = sigil?.TryGetComp<CompUseEffect_SummonBoss>();
             if (comp != null && comp.Props != null && comp.Props.ritualWarmupTicks > 0)
             {
@@ -188,22 +194,21 @@ namespace AbyssalProtocol
             return 180;
         }
 
-        private bool TryPlaceSigilOnCircle(Pawn actor, Building_AbyssalSummoningCircle circle)
+        private bool TryPlaceSigilNearCircle(Pawn actor, Building_AbyssalSummoningCircle circle)
         {
             if (actor?.carryTracker?.CarriedThing == null || circle == null || circle.MapHeld != actor.MapHeld)
             {
                 return false;
             }
 
-            IntVec3 focusCell = circle.RitualFocusCell;
-            if (!focusCell.IsValid || !focusCell.InBounds(actor.MapHeld))
+            if (!TryFindSafeSigilPlacementCell(actor, circle, out IntVec3 dropCell))
             {
                 return false;
             }
 
             Thing droppedThing;
-            if (actor.carryTracker.TryDropCarriedThing(focusCell, ThingPlaceMode.Direct, out droppedThing) ||
-                actor.carryTracker.TryDropCarriedThing(focusCell, ThingPlaceMode.Near, out droppedThing))
+            if (actor.carryTracker.TryDropCarriedThing(dropCell, ThingPlaceMode.Direct, out droppedThing) ||
+                actor.carryTracker.TryDropCarriedThing(dropCell, ThingPlaceMode.Near, out droppedThing))
             {
                 if (droppedThing != null)
                 {
@@ -213,6 +218,59 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private bool TryFindSafeSigilPlacementCell(Pawn actor, Building_AbyssalSummoningCircle circle, out IntVec3 result)
+        {
+            result = IntVec3.Invalid;
+            Map map = actor?.MapHeld;
+            if (map == null || circle == null || circle.def == null)
+            {
+                return false;
+            }
+
+            CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
+            IntVec3 interactionCell = circle.InteractionCell;
+            if (IsSafeSigilPlacementCell(interactionCell, map, occupiedRect))
+            {
+                result = interactionCell;
+                return true;
+            }
+
+            IntVec3 actorCell = actor.PositionHeld;
+            if (IsSafeSigilPlacementCell(actorCell, map, occupiedRect))
+            {
+                result = actorCell;
+                return true;
+            }
+
+            for (int i = 0; i < GenRadial.NumCellsInRadius(6.9f); i++)
+            {
+                IntVec3 cell = circle.Position + GenRadial.RadialPattern[i];
+                if (IsSafeSigilPlacementCell(cell, map, occupiedRect))
+                {
+                    result = cell;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsSafeSigilPlacementCell(IntVec3 cell, Map map, CellRect occupiedRect)
+        {
+            if (!cell.IsValid || !cell.InBounds(map) || cell.Fogged(map) || occupiedRect.Contains(cell) || !cell.Standable(map))
+            {
+                return false;
+            }
+
+            Building edifice = cell.GetEdifice(map);
+            if (edifice != null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private Thing ResolveUsableSigil(Pawn actor)

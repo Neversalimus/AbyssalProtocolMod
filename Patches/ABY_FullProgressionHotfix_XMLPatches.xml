@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Full Progression compatibility hotfix.
+       Safe overlay version: avoids overwriting existing Def XML files and does not replace About/ModIcon.png. -->
+
+  <!-- Residue stockpile support. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AbyssalResidue"]/thingCategories</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalResidue"]</xpath>
+      <value>
+        <thingCategories>
+          <li>ResourcesRaw</li>
+        </thingCategories>
+      </value>
+    </nomatch>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalResidue"]/thingCategories/li[text()="ResourcesRaw"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AbyssalResidue"]/thingCategories</xpath>
+        <value>
+          <li>ResourcesRaw</li>
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+
+  <!-- Horde sigil pressure increase requested for full Progression packs. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_HordeSigil"]/comps/li[@Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss"]/spawnPoints</xpath>
+    <value>
+      <spawnPoints>2146</spawnPoints>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_HordeSigil"]/comps/li[@Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss"]/impSpawnIntervalTicks</xpath>
+    <value>
+      <impSpawnIntervalTicks>14</impSpawnIntervalTicks>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_HordeSigil"]/comps/li[@Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss"]/impPortalLingerTicks</xpath>
+    <value>
+      <impPortalLingerTicks>240</impPortalLingerTicks>
+    </value>
+  </Operation>
+
+  <!-- Remove ABY research prerequisite links defensively for full Progression / VFE Tribals / ResearchPapers stacks.
+       The mod's real progression remains handled by forge communion, sigils, boss drops and ritual gating. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_AbyssalSignalTheory"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_AbyssalSignalTheory"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_AshboundCapacitance"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_AshboundCapacitance"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_RiftCapacitanceMatrices"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_RiftCapacitanceMatrices"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_CrownCondensationArrays"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_CrownCondensationArrays"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_CircleStabilizerFrames"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_CircleStabilizerFrames"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_ResonantLatticeStabilization"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_ResonantLatticeStabilization"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_CrownContainmentArchitecture"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_CrownContainmentArchitecture"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[defName="ABY_DominionGateBootstrapping"]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[defName="ABY_DominionGateBootstrapping"]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <!-- Reactor Saint requested balance: +47% MoveSpeed, +28% armor ratings. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_ReactorSaint"]/statBases/MoveSpeed</xpath>
+    <value>
+      <MoveSpeed>5.59</MoveSpeed>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_ReactorSaint"]/statBases/ArmorRating_Sharp</xpath>
+    <value>
+      <ArmorRating_Sharp>1.25</ArmorRating_Sharp>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_ReactorSaint"]/statBases/ArmorRating_Blunt</xpath>
+    <value>
+      <ArmorRating_Blunt>0.92</ArmorRating_Blunt>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="ABY_ReactorSaint"]/statBases/ArmorRating_Heat</xpath>
+    <value>
+      <ArmorRating_Heat>2.30</ArmorRating_Heat>
+    </value>
+  </Operation>
+
+</Patch>
