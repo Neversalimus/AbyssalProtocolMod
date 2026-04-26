@@ -76,8 +76,11 @@ namespace AbyssalProtocol
 
             string corpseLine = "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount);
 
-            return statusLine + "
-" + corpseLine;
+            List<string> lines = new List<string>();
+            AppendInspectLine(lines, statusLine);
+            AppendInspectLine(lines, corpseLine);
+
+            return string.Join("\\n", lines.ToArray());
         }
 
         private void DrawSinteringOverlays(Vector3 drawLoc)
