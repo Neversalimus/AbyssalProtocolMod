@@ -86,10 +86,10 @@
   </RecipeDef>
 
   <RecipeDef>
-    <defName>ABY_GrindHordeFragmentIntoResidue</defName>
-    <label>grind horde fragment into residue</label>
+    <defName>ABY_ReclaimHordeFragment</defName>
+    <label>reclaim horde fragment</label>
     <description>Force a condensed horde war-lattice through the sintering chamber and recover a large but strategically inefficient cache of residue.</description>
-    <jobString>Grinding horde fragment into residue.</jobString>
+    <jobString>Reclaiming horde fragment.</jobString>
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
@@ -110,6 +110,75 @@
     </ingredients>
     <products>
       <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_SinterAbyssalRemains</defName>
+    <label>sinter abyssal remains</label>
+    <description>Burn a safe, non-boss abyssal corpse down to stable residue. The crucible rejects ordinary corpses, humanlike remains, minibosses and boss-class bodies so progression rewards cannot be bypassed.</description>
+    <jobString>Sintering abyssal remains.</jobString>
+    <workerClass>AbyssalProtocol.RecipeWorker_ABY_SinterAbyssalCorpse</workerClass>
+    <workAmount>850</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </recipeUsers>
+    <fixedIngredientFilter>
+      <thingDefs>
+            <li>Corpse_ABY_RiftImp</li>
+            <li>Corpse_ABY_EmberHound</li>
+            <li>Corpse_ABY_HexgunThrall</li>
+            <li>Corpse_ABY_ChainZealot</li>
+            <li>Corpse_ABY_RiftSniper</li>
+            <li>Corpse_ABY_NullPriest</li>
+            <li>Corpse_ABY_RiftSapper</li>
+            <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_Harvester</li>
+            <li>Corpse_ABY_GateWarden</li>
+            <li>Corpse_ABY_SiegeIdol</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <defaultIngredientFilter>
+      <thingDefs>
+            <li>Corpse_ABY_RiftImp</li>
+            <li>Corpse_ABY_EmberHound</li>
+            <li>Corpse_ABY_HexgunThrall</li>
+            <li>Corpse_ABY_ChainZealot</li>
+            <li>Corpse_ABY_RiftSniper</li>
+            <li>Corpse_ABY_NullPriest</li>
+            <li>Corpse_ABY_RiftSapper</li>
+            <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_Harvester</li>
+            <li>Corpse_ABY_GateWarden</li>
+            <li>Corpse_ABY_SiegeIdol</li>
+      </thingDefs>
+    </defaultIngredientFilter>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Corpse_ABY_RiftImp</li>
+            <li>Corpse_ABY_EmberHound</li>
+            <li>Corpse_ABY_HexgunThrall</li>
+            <li>Corpse_ABY_ChainZealot</li>
+            <li>Corpse_ABY_RiftSniper</li>
+            <li>Corpse_ABY_NullPriest</li>
+            <li>Corpse_ABY_RiftSapper</li>
+            <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_Harvester</li>
+            <li>Corpse_ABY_GateWarden</li>
+            <li>Corpse_ABY_SiegeIdol</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AbyssalResidue>1</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
 

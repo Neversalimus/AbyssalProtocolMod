@@ -12,7 +12,11 @@
   <ABY_ReclaimArchonSigil.description>Схлопнуть ключ разлома архонт-уровня и вернуть часть его стабильного ядра остатка. Процесс полностью уничтожает схему призыва босса.</ABY_ReclaimArchonSigil.description>
   <ABY_ReclaimArchonSigil.jobString>Перерабатывает сигилу архонта.</ABY_ReclaimArchonSigil.jobString>
 
-  <ABY_GrindHordeFragmentIntoResidue.label>измельчить фрагмент орды в остаток</ABY_GrindHordeFragmentIntoResidue.label>
-  <ABY_GrindHordeFragmentIntoResidue.description>Продавить уплотнённую боевую решётку орды через спекающую камеру и вернуть большой, но стратегически невыгодный запас остатка.</ABY_GrindHordeFragmentIntoResidue.description>
-  <ABY_GrindHordeFragmentIntoResidue.jobString>Измельчает фрагмент орды в остаток.</ABY_GrindHordeFragmentIntoResidue.jobString>
+  <ABY_ReclaimHordeFragment.label>переработать фрагмент орды</ABY_ReclaimHordeFragment.label>
+  <ABY_ReclaimHordeFragment.description>Продавить уплотнённую боевую решётку орды через спекающую камеру и вернуть большой, но стратегически невыгодный запас остатка.</ABY_ReclaimHordeFragment.description>
+  <ABY_ReclaimHordeFragment.jobString>Перерабатывает фрагмент орды.</ABY_ReclaimHordeFragment.jobString>
+
+  <ABY_SinterAbyssalRemains.label>спечь безднические останки</ABY_SinterAbyssalRemains.label>
+  <ABY_SinterAbyssalRemains.description>Сжечь безопасный не-боссовый труп Бездны до стабильного остатка. Тигель отклоняет обычные трупы, человеческие останки, мини-боссов и тела босс-класса, чтобы нельзя было обойти цепочку наград.</ABY_SinterAbyssalRemains.description>
+  <ABY_SinterAbyssalRemains.jobString>Спекает безднические останки.</ABY_SinterAbyssalRemains.jobString>
 </LanguageData>

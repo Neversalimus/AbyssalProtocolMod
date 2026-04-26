@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ResidueSinteringCrucible_InspectActive>Статус тигля: активен и запитан.</ABY_ResidueSinteringCrucible_InspectActive>
+  <ABY_ResidueSinteringCrucible_InspectOffline>Статус тигля: отключён или без питания.</ABY_ResidueSinteringCrucible_InspectOffline>
+  <ABY_ResidueSinteringCrucible_InspectSinterableCorpses>Пригодных безднических трупов на карте: {0}</ABY_ResidueSinteringCrucible_InspectSinterableCorpses>
+</LanguageData>

@@ -12,7 +12,11 @@
   <ABY_ReclaimArchonSigil.description>Collapse an archon-grade breach-key and recover part of its stable residue core. The process destroys the boss invocation pattern completely.</ABY_ReclaimArchonSigil.description>
   <ABY_ReclaimArchonSigil.jobString>Reclaiming archon sigil.</ABY_ReclaimArchonSigil.jobString>
 
-  <ABY_GrindHordeFragmentIntoResidue.label>grind horde fragment into residue</ABY_GrindHordeFragmentIntoResidue.label>
-  <ABY_GrindHordeFragmentIntoResidue.description>Force a condensed horde war-lattice through the sintering chamber and recover a large but strategically inefficient cache of residue.</ABY_GrindHordeFragmentIntoResidue.description>
-  <ABY_GrindHordeFragmentIntoResidue.jobString>Grinding horde fragment into residue.</ABY_GrindHordeFragmentIntoResidue.jobString>
+  <ABY_ReclaimHordeFragment.label>reclaim horde fragment</ABY_ReclaimHordeFragment.label>
+  <ABY_ReclaimHordeFragment.description>Force a condensed horde war-lattice through the sintering chamber and recover a large but strategically inefficient cache of residue.</ABY_ReclaimHordeFragment.description>
+  <ABY_ReclaimHordeFragment.jobString>Reclaiming horde fragment.</ABY_ReclaimHordeFragment.jobString>
+
+  <ABY_SinterAbyssalRemains.label>sinter abyssal remains</ABY_SinterAbyssalRemains.label>
+  <ABY_SinterAbyssalRemains.description>Burn a safe, non-boss abyssal corpse down to stable residue. The crucible rejects ordinary corpses, humanlike remains, minibosses and boss-class bodies so progression rewards cannot be bypassed.</ABY_SinterAbyssalRemains.description>
+  <ABY_SinterAbyssalRemains.jobString>Sintering abyssal remains.</ABY_SinterAbyssalRemains.jobString>
 </LanguageData>

@@ -6,7 +6,7 @@
     <label>abyssal residue sintering crucible</label>
     <description>A sealed infernal-industrial crucible used to reclaim unstable sigils, horde fragments and low-grade abyssal stock into inert residue. The forge creates weapons and implants; this machine does the dirty recovery work.</description>
 
-    <thingClass>Building_WorkTable</thingClass>
+    <thingClass>AbyssalProtocol.Building_ABY_ResidueSinteringCrucible</thingClass>
 
     <graphicData>
       <texPath>Things/Building/ABY_ResidueSinteringCrucible</texPath>

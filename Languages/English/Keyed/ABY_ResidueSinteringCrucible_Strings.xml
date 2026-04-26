@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ResidueSinteringCrucible_InspectActive>Crucible status: active and powered.</ABY_ResidueSinteringCrucible_InspectActive>
+  <ABY_ResidueSinteringCrucible_InspectOffline>Crucible status: offline or unpowered.</ABY_ResidueSinteringCrucible_InspectOffline>
+  <ABY_ResidueSinteringCrucible_InspectSinterableCorpses>Sinterable abyssal corpses on map: {0}</ABY_ResidueSinteringCrucible_InspectSinterableCorpses>
+</LanguageData>
