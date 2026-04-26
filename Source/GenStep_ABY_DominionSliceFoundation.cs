@@ -1,4 +1,4 @@
-﻿using RimWorld;
+using RimWorld;
 using Verse;
 
 namespace AbyssalProtocol
@@ -50,9 +50,9 @@ namespace AbyssalProtocol
         /// <summary>
         /// Some external MapGenerated hooks, especially resource-deposit systems, assume every generated map has
         /// at least a few natural mineable cells. The dominion slice is intentionally sterile and fully plated,
-        /// which made those hooks emit red errors while looking for starting cells.
-        /// These temporary corner rocks exist only during MapGenerated. The safe pocket utility removes them
-        /// immediately after map creation, along with any external gas/deposit artifacts spawned there.
+        /// which can make those hooks emit red errors while looking for starting cells.
+        /// These temporary corner rocks exist only during MapGenerated. Package 2 cleanup removes them immediately
+        /// after map creation, together with any external gas/deposit artifacts spawned there.
         /// </summary>
         private static void SeedExternalMapHookCompatibilityRock(Map map)
         {
