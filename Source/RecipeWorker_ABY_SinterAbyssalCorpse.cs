@@ -1,22 +1,33 @@
 using System.Collections.Generic;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
 {
     public class RecipeWorker_ABY_SinterAbyssalCorpse : RecipeWorker
     {
-        public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
+        public override void ConsumeIngredient(Thing ingredient, RecipeDef recipe, Map map)
         {
-            // Cache the dynamic corpse yield before base completion consumes/destroys the corpse.
-            // If this is done after base.Notify_IterationCompleted, corpse.InnerPawn can already be
-            // unavailable and the recipe falls back to the static XML product: 1 residue.
-            int targetResidue = GetHighestResidueYield(ingredients);
+            // RimWorld products in RecipeDef are static. ABY_SinterAbyssalRemains keeps
+            // ABY_AbyssalResidue x1 in XML so vanilla bills/workgivers keep behaving normally.
+            //
+            // Dynamic corpse value is added here, while the corpse still exists and its
+            // InnerPawn can be inspected safely. This avoids relying on the post-completion
+            // ingredient list, which may no longer contain a readable corpse or may only
+            // preserve enough state for the static XML product.
+            TrySpawnDynamicResidueBeforeConsuming(ingredient, map);
 
-            base.Notify_IterationCompleted(billDoer, ingredients);
+            base.ConsumeIngredient(ingredient, recipe, map);
+        }
 
-            if (billDoer == null || billDoer.Map == null || targetResidue <= 1)
+        private static void TrySpawnDynamicResidueBeforeConsuming(Thing ingredient, Map map)
+        {
+            if (ingredient == null)
+            {
+                return;
+            }
+
+            if (!ABY_ResidueSinteringUtility.TryGetResidueAmount(ingredient, out int targetResidue) || targetResidue <= 1)
             {
                 return;
             }
@@ -27,28 +38,25 @@ namespace AbyssalProtocol
                 return;
             }
 
+            Map targetMap = map ?? ingredient.Map;
+            if (targetMap == null)
+            {
+                return;
+            }
+
             Thing extraResidue = ThingMaker.MakeThing(residueDef);
             extraResidue.stackCount = targetResidue - 1;
-            GenPlace.TryPlaceThing(extraResidue, billDoer.Position, billDoer.Map, ThingPlaceMode.Near);
-        }
 
-        private static int GetHighestResidueYield(List<Thing> ingredients)
-        {
-            if (ingredients == null)
+            IntVec3 dropCell = ingredient.Position;
+            if (!dropCell.IsValid || !dropCell.InBounds(targetMap))
             {
-                return 0;
+                dropCell = IntVec3.Invalid;
             }
 
-            int targetResidue = 0;
-            for (int i = 0; i < ingredients.Count; i++)
+            if (dropCell.IsValid)
             {
-                if (ABY_ResidueSinteringUtility.TryGetResidueAmount(ingredients[i], out int residueAmount))
-                {
-                    targetResidue = Mathf.Max(targetResidue, residueAmount);
-                }
+                GenPlace.TryPlaceThing(extraResidue, dropCell, targetMap, ThingPlaceMode.Near);
             }
-
-            return targetResidue;
         }
     }
 }

@@ -64,20 +64,20 @@ namespace AbyssalProtocol
 
         public override string GetInspectString()
         {
-            // RimWorld logs an error and can break the inspect pane if the returned string
-            // contains a leading/trailing empty line or any doubled newline. Build the final
-            // string through a filtered list and join once to guarantee a clean inspect block.
-            List<string> lines = new List<string>();
-            AppendInspectBlock(lines, base.GetInspectString());
-
-            AppendInspectLine(lines, IsPowered
-                ? "ABY_ResidueSinteringCrucible_InspectActive".Translate()
-                : "ABY_ResidueSinteringCrucible_InspectOffline".Translate());
-
+            // Keep this inspect string deliberately self-contained. Some vanilla/worktable
+            // inspect blocks can inject hidden empty lines after filtering; RimWorld logs an
+            // error for that and may break the inspect pane. This block never returns a
+            // leading, trailing, or doubled newline.
             RefreshCorpseCountIfNeeded(true);
-            AppendInspectLine(lines, "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount));
 
-            return string.Join("\n", lines.ToArray());
+            string statusLine = IsPowered
+                ? "ABY_ResidueSinteringCrucible_InspectActive".Translate()
+                : "ABY_ResidueSinteringCrucible_InspectOffline".Translate();
+
+            string corpseLine = "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount);
+
+            return statusLine + "
+" + corpseLine;
         }
 
         private void DrawSinteringOverlays(Vector3 drawLoc)
