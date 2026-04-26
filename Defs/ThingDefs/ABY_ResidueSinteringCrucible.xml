@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BenchBase">
+    <defName>ABY_ResidueSinteringCrucible</defName>
+    <label>abyssal residue sintering crucible</label>
+    <description>A sealed infernal-industrial crucible used to reclaim unstable sigils, horde fragments and low-grade abyssal stock into inert residue. The forge creates weapons and implants; this machine does the dirty recovery work.</description>
+
+    <thingClass>Building_WorkTable</thingClass>
+
+    <graphicData>
+      <texPath>Things/Building/ABY_ResidueSinteringCrucible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.15,2.10)</drawSize>
+    </graphicData>
+
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0.04</staticSunShadowHeight>
+    <constructEffect>ConstructMetal</constructEffect>
+
+    <costList>
+      <Steel>180</Steel>
+      <Plasteel>45</Plasteel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ABY_AbyssalResidue>40</ABY_AbyssalResidue>
+    </costList>
+
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.32</fillPercent>
+    <useHitPoints>True</useHitPoints>
+
+    <statBases>
+      <WorkToBuild>6200</WorkToBuild>
+      <MaxHitPoints>390</MaxHitPoints>
+      <Flammability>0.18</Flammability>
+      <Cleanliness>-0.35</Cleanliness>
+    </statBases>
+
+    <size>(3,2)</size>
+    <designationCategory>Production</designationCategory>
+    <uiOrder>2522</uiOrder>
+    <passability>PassThroughOnly</passability>
+    <pathCost>22</pathCost>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <constructionSkillPrerequisite>7</constructionSkillPrerequisite>
+    <minifiedDef IsNull="True" />
+    <thingCategories Inherit="False" />
+
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>850</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>3.6</glowRadius>
+        <glowColor>(255,86,34,0)</glowColor>
+      </li>
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+
+    <building>
+      <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+      <workTableRoomRole>Workshop</workTableRoomRole>
+      <workTableNotInRoomRoleFactor>0.8</workTableNotInRoomRoleFactor>
+    </building>
+
+    <researchPrerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </researchPrerequisites>
+
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+</Defs>

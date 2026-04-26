@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ReclaimUnstableBreachSigil.label>reclaim unstable breach sigil</ABY_ReclaimUnstableBreachSigil.label>
+  <ABY_ReclaimUnstableBreachSigil.description>Crack a crude breach-key and recover a small amount of inert abyssal residue. This is intentionally lossy: the crucible salvages usable ash, not the full ritual investment.</ABY_ReclaimUnstableBreachSigil.description>
+  <ABY_ReclaimUnstableBreachSigil.jobString>Reclaiming unstable breach sigil.</ABY_ReclaimUnstableBreachSigil.jobString>
+
+  <ABY_ReclaimWardenOfAshSigil.label>reclaim warden sigil</ABY_ReclaimWardenOfAshSigil.label>
+  <ABY_ReclaimWardenOfAshSigil.description>Break down a warden-grade ash mark into recoverable residue. The crucible preserves only a fraction of the binding mass, leaving the command geometry ruined.</ABY_ReclaimWardenOfAshSigil.description>
+  <ABY_ReclaimWardenOfAshSigil.jobString>Reclaiming warden sigil.</ABY_ReclaimWardenOfAshSigil.jobString>
+
+  <ABY_ReclaimArchonSigil.label>reclaim archon sigil</ABY_ReclaimArchonSigil.label>
+  <ABY_ReclaimArchonSigil.description>Collapse an archon-grade breach-key and recover part of its stable residue core. The process destroys the boss invocation pattern completely.</ABY_ReclaimArchonSigil.description>
+  <ABY_ReclaimArchonSigil.jobString>Reclaiming archon sigil.</ABY_ReclaimArchonSigil.jobString>
+
+  <ABY_GrindHordeFragmentIntoResidue.label>grind horde fragment into residue</ABY_GrindHordeFragmentIntoResidue.label>
+  <ABY_GrindHordeFragmentIntoResidue.description>Force a condensed horde war-lattice through the sintering chamber and recover a large but strategically inefficient cache of residue.</ABY_GrindHordeFragmentIntoResidue.description>
+  <ABY_GrindHordeFragmentIntoResidue.jobString>Grinding horde fragment into residue.</ABY_GrindHordeFragmentIntoResidue.jobString>
+</LanguageData>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="ABY_CraftResidue"]/recipeUsers</xpath>
+    <value>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="ABY_CraftResiduePlasteelSpacer"]/recipeUsers</xpath>
+    <value>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="ABY_CraftResiduePreciousMetals"]/recipeUsers</xpath>
+    <value>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </value>
+  </Operation>
+
+</Patch>

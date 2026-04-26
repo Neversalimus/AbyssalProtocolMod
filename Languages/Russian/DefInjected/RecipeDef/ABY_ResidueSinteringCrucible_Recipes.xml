@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ReclaimUnstableBreachSigil.label>переработать нестабильную сигилу разлома</ABY_ReclaimUnstableBreachSigil.label>
+  <ABY_ReclaimUnstableBreachSigil.description>Расколоть грубый ключ разлома и вернуть небольшое количество инертного безднического остатка. Процесс намеренно убыточен: тигель спасает пригодный пепел, а не всю ритуальную стоимость.</ABY_ReclaimUnstableBreachSigil.description>
+  <ABY_ReclaimUnstableBreachSigil.jobString>Перерабатывает нестабильную сигилу разлома.</ABY_ReclaimUnstableBreachSigil.jobString>
+
+  <ABY_ReclaimWardenOfAshSigil.label>переработать сигилу надзирателя</ABY_ReclaimWardenOfAshSigil.label>
+  <ABY_ReclaimWardenOfAshSigil.description>Разобрать пепельный знак уровня надзирателя на пригодный к возврату остаток. Тигель сохраняет лишь часть связывающей массы, полностью разрушая командную геометрию.</ABY_ReclaimWardenOfAshSigil.description>
+  <ABY_ReclaimWardenOfAshSigil.jobString>Перерабатывает сигилу надзирателя.</ABY_ReclaimWardenOfAshSigil.jobString>
+
+  <ABY_ReclaimArchonSigil.label>переработать сигилу архонта</ABY_ReclaimArchonSigil.label>
+  <ABY_ReclaimArchonSigil.description>Схлопнуть ключ разлома архонт-уровня и вернуть часть его стабильного ядра остатка. Процесс полностью уничтожает схему призыва босса.</ABY_ReclaimArchonSigil.description>
+  <ABY_ReclaimArchonSigil.jobString>Перерабатывает сигилу архонта.</ABY_ReclaimArchonSigil.jobString>
+
+  <ABY_GrindHordeFragmentIntoResidue.label>измельчить фрагмент орды в остаток</ABY_GrindHordeFragmentIntoResidue.label>
+  <ABY_GrindHordeFragmentIntoResidue.description>Продавить уплотнённую боевую решётку орды через спекающую камеру и вернуть большой, но стратегически невыгодный запас остатка.</ABY_GrindHordeFragmentIntoResidue.description>
+  <ABY_GrindHordeFragmentIntoResidue.jobString>Измельчает фрагмент орды в остаток.</ABY_GrindHordeFragmentIntoResidue.jobString>
+</LanguageData>

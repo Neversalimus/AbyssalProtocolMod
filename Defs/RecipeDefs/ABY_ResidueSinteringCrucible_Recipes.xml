@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_ReclaimUnstableBreachSigil</defName>
+    <label>reclaim unstable breach sigil</label>
+    <description>Crack a crude breach-key and recover a small amount of inert abyssal residue. This is intentionally lossy: the crucible salvages usable ash, not the full ritual investment.</description>
+    <jobString>Reclaiming unstable breach sigil.</jobString>
+    <workAmount>700</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_UnstableBreachSigil</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AbyssalResidue>3</ABY_AbyssalResidue>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_ReclaimWardenOfAshSigil</defName>
+    <label>reclaim warden sigil</label>
+    <description>Break down a warden-grade ash mark into recoverable residue. The crucible preserves only a fraction of the binding mass, leaving the command geometry ruined.</description>
+    <jobString>Reclaiming warden sigil.</jobString>
+    <workAmount>900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_WardenOfAshSigil</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_ReclaimArchonSigil</defName>
+    <label>reclaim archon sigil</label>
+    <description>Collapse an archon-grade breach-key and recover part of its stable residue core. The process destroys the boss invocation pattern completely.</description>
+    <jobString>Reclaiming archon sigil.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_ArchonSigil</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AbyssalResidue>9</ABY_AbyssalResidue>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_GrindHordeFragmentIntoResidue</defName>
+    <label>grind horde fragment into residue</label>
+    <description>Force a condensed horde war-lattice through the sintering chamber and recover a large but strategically inefficient cache of residue.</description>
+    <jobString>Grinding horde fragment into residue.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_HordeFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+    </products>
+  </RecipeDef>
+
+</Defs>
