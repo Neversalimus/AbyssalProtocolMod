@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_AshChoirLauncher</defName>
+    <label>ash choir launcher</label>
+    <description>A compact infernal-tech resonance launcher that fires sealed ash-choir charges into dense formations. Its projectiles rupture in a controlled pulse of compressed ash, signal noise and magenta heat, making the weapon ideal for breaking clustered enemies without replacing true anti-armor or anti-boss systems.</description>
+    <techLevel>Spacer</techLevel>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_AshChoirLauncher</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.78,0.68)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
+      <Steel>95</Steel>
+      <Plasteel>78</Plasteel>
+      <ComponentIndustrial>5</ComponentIndustrial>
+      <Gold>16</Gold>
+    </costList>
+
+    <statBases>
+      <WorkToMake>38500</WorkToMake>
+      <Mass>5.60</Mass>
+      <MarketValue>3350</MarketValue>
+      <AccuracyTouch>0.46</AccuracyTouch>
+      <AccuracyShort>0.69</AccuracyShort>
+      <AccuracyMedium>0.66</AccuracyMedium>
+      <AccuracyLong>0.37</AccuracyLong>
+      <RangedWeapon_Cooldown>3.55</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_AshChoirChargeProjectile</defaultProjectile>
+        <warmupTime>1.85</warmupTime>
+        <range>26.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <muzzleFlashScale>13.5</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>reinforced frame</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>2.15</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>850</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_AshChoirChargeProjectile</defName>
+    <label>ash choir charge</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_AshChoirCharge</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.82,0.42)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>22</damageAmountBase>
+      <armorPenetrationBase>0.24</armorPenetrationBase>
+      <explosionRadius>1.55</explosionRadius>
+      <stoppingPower>1.15</stoppingPower>
+      <speed>34</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
