@@ -1,24 +1,19 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_RiftNeedler</defName>
     <label>rift needler</label>
     <description>A compact techno-infernal precision carbine that launches ritualized rift needles in a disciplined burst. The V2 pass shifts it into a cleaner mid-tier niche: more accurate and more refined than a sigil repeater, but not a replacement for heavier abyssal longarms.</description>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_RiftNeedler</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.58,0.50)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <techLevel>Spacer</techLevel>
-
     <weaponTags>
       <li>Gun</li>
     </weaponTags>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>8</Crafting>
@@ -27,14 +22,12 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_AbyssalResidue>15</ABY_AbyssalResidue>
       <Steel>24</Steel>
       <Plasteel>28</Plasteel>
       <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
-
     <statBases>
       <WorkToMake>18500</WorkToMake>
       <Mass>2.45</Mass>
@@ -45,7 +38,6 @@
       <AccuracyLong>0.44</AccuracyLong>
       <RangedWeapon_Cooldown>1.95</RangedWeapon_Cooldown>
     </statBases>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -60,7 +52,6 @@
         <muzzleFlashScale>9.0</muzzleFlashScale>
       </li>
     </verbs>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
@@ -68,14 +59,13 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_RiftNeedleProjectile</defName>
     <label>rift needle</label>
     <graphicData>
       <texPath>Things/Projectile/ABY_RiftNeedle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.48,0.30)</drawSize>
+      <drawSize>(0.30,1.48)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
@@ -86,5 +76,4 @@
       <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

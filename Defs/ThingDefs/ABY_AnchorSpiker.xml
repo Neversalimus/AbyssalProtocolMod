@@ -1,26 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_AnchorSpiker</defName>
     <label>anchor spiker</label>
     <description>A techno-infernal harpoon rifle built around a caged rift chamber and a brutal anchor-spike launch assembly. It fires a single stabilized breach spike with strong armor cracking power, giving the forge a deliberate mid-high tier marksman option that feels heavier than a needler but lighter and more practical than a breach cannon.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_AnchorSpiker</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.98,0.74)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <weaponTags>
       <li>Gun</li>
       <li>RangedHeavy</li>
       <li>SpacerGun</li>
     </weaponTags>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>10</Crafting>
@@ -29,7 +24,6 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
       <Steel>80</Steel>
@@ -37,7 +31,6 @@
       <ComponentIndustrial>4</ComponentIndustrial>
       <Gold>12</Gold>
     </costList>
-
     <statBases>
       <WorkToMake>31500</WorkToMake>
       <Mass>4.65</Mass>
@@ -48,7 +41,6 @@
       <AccuracyLong>0.51</AccuracyLong>
       <RangedWeapon_Cooldown>2.95</RangedWeapon_Cooldown>
     </statBases>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -62,7 +54,6 @@
         <muzzleFlashScale>11.2</muzzleFlashScale>
       </li>
     </verbs>
-
     <tools>
       <li>
         <label>frame</label>
@@ -74,7 +65,6 @@
         <cooldownTime>2.1</cooldownTime>
       </li>
     </tools>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>425</requiredResidue>
@@ -82,14 +72,13 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_AnchorSpikeProjectile</defName>
     <label>anchor spike</label>
     <graphicData>
       <texPath>Things/Projectile/ABY_AnchorSpike</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.14,0.42)</drawSize>
+      <drawSize>(0.42,1.14)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
@@ -100,5 +89,4 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

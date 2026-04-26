@@ -1,26 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_AshChoirLauncher</defName>
     <label>ash choir launcher</label>
     <description>A compact infernal-tech resonance launcher that fires sealed ash-choir charges into dense formations. Its projectiles rupture in a controlled pulse of compressed ash, signal noise and magenta heat, making the weapon ideal for breaking clustered enemies without replacing true anti-armor or anti-boss systems.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_AshChoirLauncher</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.78,0.68)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <weaponTags>
       <li>Gun</li>
       <li>RangedHeavy</li>
       <li>SpacerGun</li>
     </weaponTags>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>10</Crafting>
@@ -29,7 +24,6 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
       <Steel>95</Steel>
@@ -37,7 +31,6 @@
       <ComponentIndustrial>5</ComponentIndustrial>
       <Gold>16</Gold>
     </costList>
-
     <statBases>
       <WorkToMake>38500</WorkToMake>
       <Mass>5.60</Mass>
@@ -48,7 +41,6 @@
       <AccuracyLong>0.37</AccuracyLong>
       <RangedWeapon_Cooldown>3.55</RangedWeapon_Cooldown>
     </statBases>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -62,7 +54,6 @@
         <muzzleFlashScale>13.5</muzzleFlashScale>
       </li>
     </verbs>
-
     <tools>
       <li>
         <label>reinforced frame</label>
@@ -73,7 +64,6 @@
         <cooldownTime>2.15</cooldownTime>
       </li>
     </tools>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>850</requiredResidue>
@@ -81,7 +71,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_AshChoirChargeProjectile</defName>
     <label>ash choir charge</label>
@@ -89,7 +78,7 @@
     <graphicData>
       <texPath>Things/Projectile/ABY_AshChoirCharge</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.82,0.42)</drawSize>
+      <drawSize>(0.42,0.82)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Bomb</damageDef>
@@ -101,5 +90,4 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>
