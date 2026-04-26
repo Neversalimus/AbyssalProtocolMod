@@ -216,10 +216,17 @@ namespace AbyssalProtocol
                 ABY_DominionPocketSession session;
                 if (runtime != null && runtime.TryGetSessionById(sessionId, out session))
                 {
-                    string reason = session.victoryAchieved
-                        ? "ABY_DominionPocketOutcome_FailureNoExtraction".Translate()
-                        : "ABY_DominionPocketOutcome_FailureCollapse".Translate();
-                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, map, reason, false);
+                    if (session.victoryAchieved)
+                    {
+                        // Package 3: once the heart is destroyed, victory must not be converted into a failure
+                        // simply because the strike team did not extract before the old collapse timer elapsed.
+                        collapseAtTick = now + 3600;
+                        session.collapseAtTick = collapseAtTick;
+                        nextWaveTick = 0;
+                        return;
+                    }
+
+                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, map, "ABY_DominionPocketOutcome_FailureCollapse".Translate(), false);
                 }
                 else
                 {
@@ -511,20 +518,29 @@ namespace AbyssalProtocol
             nextWaveTick = 0;
 
             ABY_DominionPocketSession session;
-            if (TryResolveSession(out session) && session != null)
+            TryResolveSession(out session);
+            bool finalVictory = victory || (session != null && session.victoryAchieved);
+
+            if (session != null)
             {
-                session.victoryAchieved = victory;
+                if (finalVictory)
+                {
+                    session.victoryAchieved = true;
+                }
                 session.collapseAtTick = collapseAtTick;
-                session.rewardSummary = GetRewardForecastValue();
+                if (session.rewardSummary.NullOrEmpty())
+                {
+                    session.rewardSummary = GetRewardForecastValue();
+                }
             }
 
             Messages.Message(
-                victory ? "ABY_DominionSliceEncounter_CollapseStarted".Translate(GetCollapseEta()) : "ABY_DominionSliceEncounter_Failed".Translate(),
+                finalVictory ? "ABY_DominionSliceEncounter_CollapseStarted".Translate(GetCollapseEta()) : "ABY_DominionSliceEncounter_Failed".Translate(),
                 new TargetInfo(map.Center, map),
-                victory ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.ThreatBig,
+                finalVictory ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.ThreatBig,
                 false);
 
-            if (victory)
+            if (finalVictory)
             {
                 ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
                 if (runtime != null)

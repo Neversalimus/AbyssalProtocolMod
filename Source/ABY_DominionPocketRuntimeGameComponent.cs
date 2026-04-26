@@ -85,7 +85,6 @@ namespace AbyssalProtocol
             return false;
         }
 
-
         public bool TryGetSessionByPocketMap(Map pocketMap, out ABY_DominionPocketSession session)
         {
             session = null;
@@ -175,6 +174,8 @@ namespace AbyssalProtocol
                 Map pocketMap = AbyssalDominionPocketUtility.ResolveMap(session.pocketMapId);
                 if (pocketMap == null)
                 {
+                    // Package 3: after a successful safe extraction the pocket map may already be gone.
+                    // Do not turn a recorded victory into a late failure while cleaning orphaned sessions.
                     sessions.RemoveAt(i);
                     continue;
                 }
@@ -182,7 +183,14 @@ namespace AbyssalProtocol
                 Map sourceMap = AbyssalDominionPocketUtility.ResolveMap(session.sourceMapId);
                 if (sourceMap == null)
                 {
-                    AbyssalDominionPocketUtility.CollapsePocketSlice(session, pocketMap, true);
+                    if (!session.victoryAchieved)
+                    {
+                        AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, pocketMap, "ABY_DominionPocketOutcome_FailureLost".Translate(), true);
+                    }
+                    else
+                    {
+                        AbyssalDominionPocketUtility.CollapsePocketSlice(session, pocketMap, true);
+                    }
                     sessions.RemoveAt(i);
                     continue;
                 }
@@ -192,6 +200,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                ReconcileVictoryState(session, pocketMap);
                 session.lastKnownPocketPawnCount = AbyssalDominionPocketUtility.GetPocketPlayerCount(pocketMap);
                 AbyssalDominionPocketUtility.TryEnsurePocketExit(session, pocketMap);
 
@@ -204,11 +213,46 @@ namespace AbyssalProtocol
 
                 if (session.lastKnownPocketPawnCount <= 0)
                 {
-                    string failureKey = session.victoryAchieved
-                        ? "ABY_DominionPocketOutcome_FailureNoExtraction"
-                        : "ABY_DominionPocketOutcome_FailureLost";
-                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, pocketMap, failureKey.Translate(), false);
+                    if (session.victoryAchieved)
+                    {
+                        // Package 3: a victory session is extraction-pending/cleanup-pending, not a loss.
+                        // Large modpacks can temporarily hide/despawn pawns during transfer; do not fail it here.
+                        continue;
+                    }
+
+                    AbyssalDominionPocketUtility.FailAndCollapsePocketSlice(session, pocketMap, "ABY_DominionPocketOutcome_FailureLost".Translate(), false);
                 }
+            }
+        }
+
+        private void ReconcileVictoryState(ABY_DominionPocketSession session, Map pocketMap)
+        {
+            if (session == null || pocketMap == null)
+            {
+                return;
+            }
+
+            MapComponent_DominionSliceEncounter encounter = pocketMap.GetComponent<MapComponent_DominionSliceEncounter>();
+            if (encounter == null)
+            {
+                return;
+            }
+
+            if (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse)
+            {
+                session.victoryAchieved = true;
+                if (session.collapseAtTick <= 0 && Find.TickManager != null)
+                {
+                    session.collapseAtTick = Find.TickManager.TicksGame + 3600;
+                }
+
+                if (session.rewardSummary.NullOrEmpty())
+                {
+                    session.rewardSummary = encounter.GetRewardForecastValue();
+                }
+
+                IntVec3 focusCell = session.heartCell.IsValid ? session.heartCell : pocketMap.Center;
+                TrySendDominionHeartDestroyedLoreLetterOnce(pocketMap, focusCell);
             }
         }
     }
