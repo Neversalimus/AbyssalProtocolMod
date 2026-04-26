@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Package 1: conservative Dominion safe entry/exit.
+       Adds safe gizmos to the Great Infernal Gate without replacing its thingClass,
+       without changing map generation, and without touching Reactor Saint. -->
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps</xpath>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]</xpath>
+      <value>
+        <comps>
+          <li Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket" />
+        </comps>
+      </value>
+    </nomatch>
+    <match Class="PatchOperationConditional">
+      <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps/li[@Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket"]</xpath>
+      <nomatch Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_DominionGateCore"]/comps</xpath>
+        <value>
+          <li Class="AbyssalProtocol.CompProperties_ABY_DominionGateSafePocket" />
+        </value>
+      </nomatch>
+    </match>
+  </Operation>
+
+</Patch>

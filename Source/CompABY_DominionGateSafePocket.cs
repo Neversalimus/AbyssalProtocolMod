@@ -38,7 +38,7 @@ namespace AbyssalProtocol
                 yield return new Command_Action
                 {
                     defaultLabel = TranslateOrFallback("ABY_DominionPocketCommand_SafeExtract", "Extract strike team (safe)"),
-                    defaultDesc = TranslateOrFallback("ABY_DominionPocketCommand_SafeExtractDesc", "Returns all player pawns from the dominion slice with per-pawn exception isolation. Use this in heavy modpacks instead of the legacy extraction command."),
+                    defaultDesc = TranslateOrFallback("ABY_DominionPocketCommand_SafeExtractDesc", "Returns all player pawns from the dominion slice with per-pawn exception isolation. Use this in heavy modpacks if the legacy extraction command misbehaves."),
                     icon = ExtractCommandIcon,
                     action = delegate
                     {
@@ -56,7 +56,7 @@ namespace AbyssalProtocol
                 Command_Action enterCommand = new Command_Action
                 {
                     defaultLabel = TranslateOrFallback("ABY_DominionPocketCommand_SafeEnter", "Enter dominion slice (safe)"),
-                    defaultDesc = TranslateOrFallback("ABY_DominionPocketCommand_SafeEnterDesc", "Creates a sterile dominion pocket map and transfers the entire drafted strike team with per-pawn exception isolation for large modpacks."),
+                    defaultDesc = TranslateOrFallback("ABY_DominionPocketCommand_SafeEnterDesc", "Opens the dominion slice through the existing map pipeline, then transfers the drafted strike team pawn-by-pawn so one third-party SpawnSetup exception cannot abort the whole squad."),
                     icon = JumpCommandIcon,
                     action = delegate
                     {
