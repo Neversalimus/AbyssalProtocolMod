@@ -68,7 +68,7 @@ namespace AbyssalProtocol
             Rect categoryRect = new Rect(inRect.x, statusRect.yMax + 10f, inRect.width, 40f);
             Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 804f, inRect.height - categoryRect.yMax - 10f);
             Rect rightColumnRect = new Rect(patternsRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - patternsRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
-            Rect infrastructureRect = new Rect(rightColumnRect.x, rightColumnRect.y, rightColumnRect.width, 168f);
+            Rect infrastructureRect = new Rect(rightColumnRect.x, rightColumnRect.y, rightColumnRect.width, 190f);
             Rect billsRect = new Rect(rightColumnRect.x, infrastructureRect.yMax + 10f, rightColumnRect.width, rightColumnRect.height - infrastructureRect.height - 10f);
 
             DrawHeader(headerRect, progress);

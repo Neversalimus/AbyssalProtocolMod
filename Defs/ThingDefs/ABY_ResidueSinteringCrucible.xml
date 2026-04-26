@@ -48,6 +48,18 @@
     <minifiedDef IsNull="True" />
     <thingCategories Inherit="False" />
 
+    <recipes>
+      <li>ABY_ReclaimUnstableBreachSigil</li>
+      <li>ABY_ReclaimWardenOfAshSigil</li>
+      <li>ABY_ReclaimArchonSigil</li>
+      <li>ABY_ReclaimHordeFragment</li>
+      <li>ABY_SinterAbyssalRemains</li>
+    </recipes>
+
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>

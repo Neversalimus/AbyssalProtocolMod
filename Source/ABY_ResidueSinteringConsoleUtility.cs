@@ -36,6 +36,7 @@ namespace AbyssalProtocol
             public int EstimatedResidueYield;
             public string BestCorpseLabel;
             public int BestCorpseResidue;
+            public Thing FocusCrucible;
 
             public bool HasAnyCrucible => CrucibleCount > 0;
             public bool HasOnlineCrucible => OnlineCrucibleCount > 0;
@@ -240,7 +241,14 @@ namespace AbyssalProtocol
                 status.CrucibleCount++;
 
                 CompPowerTrader power = thing is ThingWithComps thingWithComps ? thingWithComps.GetComp<CompPowerTrader>() : null;
-                if (power == null || power.PowerOn)
+                bool powered = power == null || power.PowerOn;
+
+                if (status.FocusCrucible == null || powered)
+                {
+                    status.FocusCrucible = thing;
+                }
+
+                if (powered)
                 {
                     status.OnlineCrucibleCount++;
                 }

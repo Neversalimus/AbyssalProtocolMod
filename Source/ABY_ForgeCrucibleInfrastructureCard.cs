@@ -4,10 +4,11 @@ using Verse;
 
 namespace AbyssalProtocol
 {
+    [StaticConstructorOnStartup]
     public static class ABY_ForgeCrucibleInfrastructureCard
     {
         private const string CrucibleIconPath = "Things/Building/ABY_ResidueSinteringCrucible";
-        private static Texture2D cachedCrucibleIcon;
+        private static readonly Texture2D cachedCrucibleIcon = ContentFinder<Texture2D>.Get(CrucibleIconPath, false);
 
         public static void Draw(Rect rect, Building_AbyssalForge forge)
         {
@@ -23,48 +24,83 @@ namespace AbyssalProtocol
             Rect titleRect = new Rect(iconRect.xMax + 8f, inner.y, inner.width - iconRect.width - 8f, 22f);
             AbyssalForgeConsoleArt.DrawSectionTitle(titleRect, "ABY_CrucibleInfrastructureHeader".Translate());
 
-            Rect stateRect = new Rect(titleRect.x, titleRect.yMax + 4f, titleRect.width, 24f);
+            Rect stateRect = new Rect(titleRect.x, titleRect.yMax + 4f, titleRect.width, 38f);
             Text.Font = GameFont.Small;
             GUI.color = GetStateColor(status);
             Widgets.Label(stateRect, status.StateKey.Translate());
             GUI.color = Color.white;
 
-            Rect metricsRect = new Rect(inner.x, iconRect.yMax + 10f, inner.width, 38f);
+            Rect buttonRect = new Rect(inner.xMax - 132f, iconRect.yMax + 8f, 132f, 28f);
+            DrawSelectCrucibleButton(buttonRect, status);
+
+            Rect metricsRect = new Rect(inner.x, buttonRect.yMax + 8f, inner.width, 44f);
             float metricWidth = (metricsRect.width - 18f) / 4f;
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricUnits".Translate(), status.OnlineCrucibleCount + "/" + status.CrucibleCount);
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x + metricWidth + 6f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricCorpses".Translate(), status.SinterableCorpseCount.ToString());
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x + (metricWidth + 6f) * 2f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricYield".Translate(), ABY_ResidueSinteringConsoleUtility.BuildEstimatedYieldLabel(status));
-            AbyssalForgeConsoleArt.DrawMetric(new Rect(metricsRect.x + (metricWidth + 6f) * 3f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricQueued".Translate(), status.QueuedSinterBills.ToString());
+            DrawMetricSafe(new Rect(metricsRect.x, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricUnits".Translate(), status.OnlineCrucibleCount + "/" + status.CrucibleCount);
+            DrawMetricSafe(new Rect(metricsRect.x + metricWidth + 6f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricCorpses".Translate(), status.SinterableCorpseCount.ToString());
+            DrawMetricSafe(new Rect(metricsRect.x + (metricWidth + 6f) * 2f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricYield".Translate(), ABY_ResidueSinteringConsoleUtility.BuildEstimatedYieldLabel(status));
+            DrawMetricSafe(new Rect(metricsRect.x + (metricWidth + 6f) * 3f, metricsRect.y, metricWidth, metricsRect.height), "ABY_CrucibleMetricQueued".Translate(), status.QueuedSinterBills.ToString());
 
             float detailY = metricsRect.yMax + 8f;
             Text.Font = GameFont.Tiny;
             GUI.color = status.BestCorpseResidue > 0 ? Color.white : AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, detailY, inner.width, 20f), ABY_ResidueSinteringConsoleUtility.BuildBestCandidateLabel(status));
+            Widgets.Label(new Rect(inner.x, detailY, inner.width, 22f), ABY_ResidueSinteringConsoleUtility.BuildBestCandidateLabel(status));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, detailY + 21f, inner.width, 20f), ABY_ResidueSinteringConsoleUtility.BuildTierBreakdownLabel(status));
+            Widgets.Label(new Rect(inner.x, detailY + 23f, inner.width, 22f), ABY_ResidueSinteringConsoleUtility.BuildTierBreakdownLabel(status));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
 
             TooltipHandler.TipRegion(rect, ABY_ResidueSinteringConsoleUtility.BuildInfrastructureTooltip(status));
         }
 
-        private static void DrawCrucibleIcon(Rect rect, ABY_ResidueSinteringConsoleUtility.StatusSnapshot status)
+        private static void DrawMetricSafe(Rect rect, string label, string value)
         {
-            Texture2D icon = cachedCrucibleIcon;
-            if (icon == null)
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 18f), label);
+
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x, rect.y + 20f, rect.width, rect.height - 20f), value);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private static void DrawSelectCrucibleButton(Rect rect, ABY_ResidueSinteringConsoleUtility.StatusSnapshot status)
+        {
+            bool enabled = status.FocusCrucible != null && !status.FocusCrucible.Destroyed;
+            string label = "ABY_CrucibleSelectButton".Translate();
+            string tooltip = enabled ? "ABY_CrucibleSelectButtonTip".Translate() : "ABY_CrucibleSelectButtonDisabledTip".Translate();
+
+            if (AbyssalStyledWidgets.TextButton(rect, label, enabled, false, tooltip) && enabled)
             {
-                icon = ContentFinder<Texture2D>.Get(CrucibleIconPath, false);
-                cachedCrucibleIcon = icon;
+                SelectCrucible(status.FocusCrucible);
+            }
+        }
+
+        private static void SelectCrucible(Thing crucible)
+        {
+            if (crucible == null || crucible.Destroyed)
+            {
+                return;
             }
 
+            Find.Selector.ClearSelection();
+            Find.Selector.Select(crucible);
+
+        }
+
+        private static void DrawCrucibleIcon(Rect rect, ABY_ResidueSinteringConsoleUtility.StatusSnapshot status)
+        {
             Widgets.DrawBoxSolid(rect, new Color(0.05f, 0.035f, 0.032f, 0.78f));
             Widgets.DrawBox(rect, 1);
 
-            if (icon != null)
+            if (cachedCrucibleIcon != null)
             {
                 GUI.color = status.CrucibleDefAvailable ? Color.white : new Color(1f, 1f, 1f, 0.35f);
-                GUI.DrawTexture(rect.ContractedBy(3f), icon, ScaleMode.ScaleToFit, true);
+                GUI.DrawTexture(rect.ContractedBy(3f), cachedCrucibleIcon, ScaleMode.ScaleToFit, true);
                 GUI.color = Color.white;
             }
             else

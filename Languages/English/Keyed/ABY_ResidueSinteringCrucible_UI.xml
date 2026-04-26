@@ -6,7 +6,7 @@
   <ABY_CrucibleStateNotBuilt>No residue crucible installed</ABY_CrucibleStateNotBuilt>
   <ABY_CrucibleStateOffline>Cold crucible: no powered unit online</ABY_CrucibleStateOffline>
   <ABY_CrucibleStateWaitingCorpses>Chamber hungry: awaiting approved remains</ABY_CrucibleStateWaitingCorpses>
-  <ABY_CrucibleStateReadyNoBill>Ready: add a sintering bill</ABY_CrucibleStateReadyNoBill>
+  <ABY_CrucibleStateReadyNoBill>Ready: select the Crucible and add a bill</ABY_CrucibleStateReadyNoBill>
   <ABY_CrucibleStateReady>Sintering queue active</ABY_CrucibleStateReady>
   <ABY_CrucibleMetricUnits>Units</ABY_CrucibleMetricUnits>
   <ABY_CrucibleMetricCorpses>Remains</ABY_CrucibleMetricCorpses>
@@ -16,6 +16,9 @@
   <ABY_CrucibleRequirementBuilt>Residue Sintering Crucible built</ABY_CrucibleRequirementBuilt>
   <ABY_CrucibleRequirementPowered>At least one crucible powered</ABY_CrucibleRequirementPowered>
   <ABY_CrucibleRequirementCorpses>Safe abyssal corpse available</ABY_CrucibleRequirementCorpses>
+  <ABY_CrucibleSelectButton>Select Crucible</ABY_CrucibleSelectButton>
+  <ABY_CrucibleSelectButtonTip>Selects the best available Residue Sintering Crucible. Add the sintering bill on the Crucible's own Bills tab, not through the Forge queue.</ABY_CrucibleSelectButtonTip>
+  <ABY_CrucibleSelectButtonDisabledTip>No built Crucible is available to select.</ABY_CrucibleSelectButtonDisabledTip>
   <ABY_CrucibleBestCandidateNone>Best candidate: none</ABY_CrucibleBestCandidateNone>
   <ABY_CrucibleBestCandidate>Best candidate: {0} → ~{1} residue</ABY_CrucibleBestCandidate>
   <ABY_CrucibleTierBreakdown>Low {0} / Mid {1} / Elite {2}</ABY_CrucibleTierBreakdown>
@@ -25,6 +28,6 @@
   <ABY_CrucibleTooltipYield>Estimated map yield: {0} residue</ABY_CrucibleTooltipYield>
   <ABY_CrucibleInfrastructureTooltipCorpseRules>Accepted: whitelisted low, mid and elite abyssal corpses only. Humanlike, vanilla animal, boss and miniboss corpses are rejected.</ABY_CrucibleInfrastructureTooltipCorpseRules>
   <ABY_CrucibleInfrastructureTooltipResidueScale>Expected output scales by tier: small abyssal remains 5–8 residue, medium remains 10–18, elite remains 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
-  <ABY_CrucibleInfrastructureTooltipHint>Use crucible bills to reclaim sigils or sinter approved abyssal remains without touching boss reward chains.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleInfrastructureTooltipHint>Add bills on the Residue Sintering Crucible itself. The Forge Communion Console only reports this infrastructure and helps you find it.</ABY_CrucibleInfrastructureTooltipHint>
   <ABY_CrucibleIconUnavailable>NO ICON</ABY_CrucibleIconUnavailable>
 </LanguageData>
