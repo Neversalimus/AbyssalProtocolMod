@@ -241,7 +241,7 @@ namespace AbyssalProtocol
                 status.CrucibleCount++;
 
                 CompPowerTrader power = thing is ThingWithComps thingWithComps ? thingWithComps.GetComp<CompPowerTrader>() : null;
-                bool powered = power == null || (power.PowerOn && power.PowerNet != null);
+                bool powered = power == null || power.PowerOn;
 
                 if (status.FocusCrucible == null || powered)
                 {

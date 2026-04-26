@@ -7,11 +7,6 @@ namespace AbyssalProtocol
 {
     public class RecipeWorker_ABY_SinterAbyssalCorpse : RecipeWorker
     {
-        public override bool AvailableOnNow(Thing thing, BodyPartRecord part = null)
-        {
-            return ABY_ResidueSinteringUtility.IsSinterableAbyssalCorpse(thing);
-        }
-
         public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
         {
             base.Notify_IterationCompleted(billDoer, ingredients);

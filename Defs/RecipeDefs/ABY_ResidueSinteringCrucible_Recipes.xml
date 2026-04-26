@@ -113,49 +113,67 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <fixedIngredientFilter>
-      <categories>
-        <li>Corpses</li>
-      </categories>
+      <thingDefs>
+        <li>Corpse_ABY_RiftImp</li>
+        <li>Corpse_ABY_EmberHound</li>
+        <li>Corpse_ABY_HexgunThrall</li>
+        <li>Corpse_ABY_ChainZealot</li>
+        <li>Corpse_ABY_RiftSniper</li>
+        <li>Corpse_ABY_NullPriest</li>
+        <li>Corpse_ABY_BreachBrute</li>
+        <li>Corpse_ABY_Harvester</li>
+        <li>Corpse_ABY_GateWarden</li>
+        <li>Corpse_ABY_SiegeIdol</li>
+      </thingDefs>
       <specialFiltersToAllow>
         <li>AllowFresh</li>
         <li>AllowRotten</li>
         <li>AllowCorpsesStranger</li>
         <li>AllowCorpsesColonist</li>
-        <li>AllowCorpsesAnimal</li>
-        <li>AllowCorpsesMechanoid</li>
-        <li>AllowCorpsesInsect</li>
         <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
       </specialFiltersToAllow>
     </fixedIngredientFilter>
     <defaultIngredientFilter>
-      <categories>
-        <li>Corpses</li>
-      </categories>
+      <thingDefs>
+        <li>Corpse_ABY_RiftImp</li>
+        <li>Corpse_ABY_EmberHound</li>
+        <li>Corpse_ABY_HexgunThrall</li>
+        <li>Corpse_ABY_ChainZealot</li>
+        <li>Corpse_ABY_RiftSniper</li>
+        <li>Corpse_ABY_NullPriest</li>
+        <li>Corpse_ABY_BreachBrute</li>
+        <li>Corpse_ABY_Harvester</li>
+        <li>Corpse_ABY_GateWarden</li>
+        <li>Corpse_ABY_SiegeIdol</li>
+      </thingDefs>
       <specialFiltersToAllow>
         <li>AllowFresh</li>
         <li>AllowRotten</li>
         <li>AllowCorpsesStranger</li>
         <li>AllowCorpsesColonist</li>
-        <li>AllowCorpsesAnimal</li>
-        <li>AllowCorpsesMechanoid</li>
-        <li>AllowCorpsesInsect</li>
         <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
       </specialFiltersToAllow>
     </defaultIngredientFilter>
     <ingredients>
       <li>
         <filter>
-          <categories>
-            <li>Corpses</li>
-          </categories>
+          <thingDefs>
+            <li>Corpse_ABY_RiftImp</li>
+            <li>Corpse_ABY_EmberHound</li>
+            <li>Corpse_ABY_HexgunThrall</li>
+            <li>Corpse_ABY_ChainZealot</li>
+            <li>Corpse_ABY_RiftSniper</li>
+            <li>Corpse_ABY_NullPriest</li>
+            <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_Harvester</li>
+            <li>Corpse_ABY_GateWarden</li>
+            <li>Corpse_ABY_SiegeIdol</li>
+          </thingDefs>
           <specialFiltersToAllow>
             <li>AllowFresh</li>
             <li>AllowRotten</li>
             <li>AllowCorpsesStranger</li>
             <li>AllowCorpsesColonist</li>
-            <li>AllowCorpsesAnimal</li>
-            <li>AllowCorpsesMechanoid</li>
-            <li>AllowCorpsesInsect</li>
             <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
           </specialFiltersToAllow>
         </filter>

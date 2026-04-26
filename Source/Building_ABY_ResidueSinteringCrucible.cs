@@ -30,7 +30,7 @@ namespace AbyssalProtocol
             get
             {
                 CompPowerTrader power = GetComp<CompPowerTrader>();
-                return power == null || (power.PowerOn && power.PowerNet != null);
+                return power == null || power.PowerOn;
             }
         }
 
@@ -66,7 +66,7 @@ namespace AbyssalProtocol
         public override string GetInspectString()
         {
             StringBuilder sb = new StringBuilder();
-            string baseInspect = base.GetInspectString();
+            string baseInspect = FilterVanillaPowerNoise(base.GetInspectString());
             if (!baseInspect.NullOrEmpty())
             {
                 sb.Append(baseInspect.TrimEnd());
@@ -78,6 +78,39 @@ namespace AbyssalProtocol
 
             RefreshCorpseCountIfNeeded(true);
             AppendInspectLine(sb, "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount));
+
+            return sb.ToString();
+        }
+
+        private static string FilterVanillaPowerNoise(string baseInspect)
+        {
+            if (baseInspect.NullOrEmpty())
+            {
+                return baseInspect;
+            }
+
+            string[] lines = baseInspect.Split('\n');
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (line.NullOrEmpty())
+                {
+                    continue;
+                }
+
+                string normalized = line.Trim().ToLowerInvariant();
+                if (normalized == "not connected to power." || normalized == "not connected to power")
+                {
+                    continue;
+                }
+
+                if (sb.Length > 0)
+                {
+                    sb.AppendLine();
+                }
+                sb.Append(line);
+            }
 
             return sb.ToString();
         }
@@ -98,7 +131,7 @@ namespace AbyssalProtocol
                     new Vector3(drawLoc.x, drawLoc.y + HeatVentAltitude, drawLoc.z),
                     HeatVentOverlaySize * Mathf.Lerp(0.985f, 1.005f, fastVent),
                     0f,
-                    new Color(1f, 0.22f, 0.06f, 0.07f));
+                    new Color(1f, 0.22f, 0.06f, 0.055f));
 
                 return;
             }
@@ -108,21 +141,21 @@ namespace AbyssalProtocol
                 new Vector3(drawLoc.x, drawLoc.y + HeatVentAltitude, drawLoc.z),
                 HeatVentOverlaySize * Mathf.Lerp(0.99f, 1.035f, fastVent),
                 Mathf.Sin(ticks * 0.011f + seed) * 0.32f,
-                new Color(1f, 0.30f, 0.08f, Mathf.Lerp(0.18f, 0.40f, fastVent)));
+                new Color(1f, 0.30f, 0.08f, Mathf.Lerp(0.16f, 0.34f, fastVent)));
 
             DrawOverlay(
                 GlowOverlayTexPath,
                 new Vector3(drawLoc.x, drawLoc.y + GlowAltitude, drawLoc.z),
                 GlowOverlaySize * Mathf.Lerp(0.985f, 1.045f, slowBreath),
                 Mathf.Sin(ticks * 0.007f + seed) * 0.42f,
-                new Color(1f, 0.36f, 0.10f, Mathf.Lerp(0.20f, 0.46f, slowBreath)));
+                new Color(1f, 0.36f, 0.10f, Mathf.Lerp(0.18f, 0.40f, slowBreath)));
 
             DrawOverlay(
                 GlowOverlayTexPath,
                 new Vector3(drawLoc.x, drawLoc.y + GlowAltitude + 0.003f, drawLoc.z),
                 GlowOverlaySize * Mathf.Lerp(0.78f, 0.87f, heatFlicker),
                 -Mathf.Sin(ticks * 0.014f + seed) * 0.72f,
-                new Color(1f, 0.12f, 0.04f, Mathf.Lerp(0.055f, 0.18f, heatFlicker)));
+                new Color(1f, 0.12f, 0.04f, Mathf.Lerp(0.045f, 0.14f, heatFlicker)));
         }
 
         private static void DrawOverlay(string texPath, Vector3 loc, Vector2 size, float angle, Color color)
