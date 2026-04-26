@@ -347,7 +347,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<Pawn> colonists = map.mapPawns != null ? map.mapPawns.FreeColonistsSpawned : null;
+            IReadOnlyList<Pawn> colonists = map.mapPawns != null ? map.mapPawns.FreeColonistsSpawned : null;
             if (colonists == null)
             {
                 return;
@@ -652,18 +652,33 @@ namespace AbyssalProtocol
                 IntVec3 spawnCell;
                 if (!TryFindWaveSpawnCell(focus, plan.MinSpawnRadius, plan.MaxSpawnRadius, out spawnCell))
                 {
-                    pawn.Destroy(DestroyMode.Vanish);
+                    SafeDestroyUnspawnedPawn(pawn, "dominion slice wave no spawn cell");
                     continue;
                 }
 
-                GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
-                AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
-                spawned.Add(pawn);
+                Pawn spawnedPawn;
+                if (!ABY_SafeSpawnUtility.TrySpawnPawnSafe(
+                        pawn,
+                        spawnCell,
+                        map,
+                        out spawnedPawn,
+                        Rot4.Random,
+                        WipeMode.Vanish,
+                        false,
+                        false,
+                        "dominion slice wave pawn spawn"))
+                {
+                    SafeDestroyUnspawnedPawn(pawn, "dominion slice wave spawn failed");
+                    continue;
+                }
+
+                TryPrepareThreatPawnSafe(spawnedPawn);
+                spawned.Add(spawnedPawn);
             }
 
             if (spawned.Count > 0)
             {
-                AbyssalLordUtility.EnsureAssaultLord(spawned, faction, map, false);
+                TryEnsureAssaultLordSafe(spawned, faction);
                 wavesTriggered++;
                 lastWaveLabel = plan.GetLabel();
                 lastWaveSummary = "ABY_DominionSliceEncounter_WaveSummary".Translate(lastWaveLabel, spawned.Count, wavesTriggered);
@@ -757,8 +772,62 @@ namespace AbyssalProtocol
                 forceNoIdeo: true,
                 developmentalStages: DevelopmentalStage.Adult);
 
-            pawn = PawnGenerator.GeneratePawn(request);
-            return pawn != null;
+            return ABY_SafeSpawnUtility.TryGeneratePawnSafe(
+                request,
+                out pawn,
+                out _,
+                "dominion slice wave pawn generation");
+        }
+
+        private void TryPrepareThreatPawnSafe(Pawn pawn)
+        {
+            if (pawn == null || pawn.Destroyed || pawn.Dead)
+            {
+                return;
+            }
+
+            try
+            {
+                AbyssalThreatPawnUtility.PrepareThreatPawn(pawn);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Dominion slice wave threat pawn preparation failed for " + pawn.ToStringSafe() + ": " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+            }
+        }
+
+        private void TryEnsureAssaultLordSafe(List<Pawn> spawned, Faction faction)
+        {
+            if (spawned == null || spawned.Count == 0 || faction == null || map == null)
+            {
+                return;
+            }
+
+            try
+            {
+                AbyssalLordUtility.EnsureAssaultLord(spawned, faction, map, false);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Dominion slice wave lord creation failed: " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+            }
+        }
+
+        private void SafeDestroyUnspawnedPawn(Pawn pawn, string context)
+        {
+            if (pawn == null || pawn.Destroyed)
+            {
+                return;
+            }
+
+            try
+            {
+                pawn.Destroy(DestroyMode.Vanish);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Failed to destroy unspawned dominion wave pawn (" + context + "): " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+            }
         }
 
         private bool TryFindWaveSpawnCell(IntVec3 focus, int minRadius, int maxRadius, out IntVec3 cell)
@@ -769,7 +838,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < 40; i++)
             {
                 IntVec3 candidate;
-                if (!CellFinder.TryFindRandomCellNear(focus, map, resolvedMaxRadius, c => c.Standable(map) && !c.Fogged(map), out candidate))
+                if (!CellFinder.TryFindRandomCellNear(focus, map, resolvedMaxRadius, c => ABY_SafeSpawnUtility.IsCellSpawnable(c, map), out candidate))
                 {
                     continue;
                 }
@@ -788,7 +857,7 @@ namespace AbyssalProtocol
 
         private void EmitAmbientPressure()
         {
-            List<Pawn> colonists = map.mapPawns != null ? map.mapPawns.FreeColonistsSpawned : null;
+            IReadOnlyList<Pawn> colonists = map.mapPawns != null ? map.mapPawns.FreeColonistsSpawned : null;
             if (colonists == null)
             {
                 return;
