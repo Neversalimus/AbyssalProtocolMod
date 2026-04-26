@@ -66,11 +66,7 @@ namespace AbyssalProtocol
         public override string GetInspectString()
         {
             StringBuilder sb = new StringBuilder();
-            string baseInspect = FilterVanillaPowerNoise(base.GetInspectString());
-            if (!baseInspect.NullOrEmpty())
-            {
-                sb.Append(baseInspect.TrimEnd());
-            }
+            AppendInspectBlock(sb, base.GetInspectString());
 
             AppendInspectLine(sb, IsPowered
                 ? "ABY_ResidueSinteringCrucible_InspectActive".Translate()
@@ -78,39 +74,6 @@ namespace AbyssalProtocol
 
             RefreshCorpseCountIfNeeded(true);
             AppendInspectLine(sb, "ABY_ResidueSinteringCrucible_InspectSinterableCorpses".Translate(cachedSinterableCorpseCount));
-
-            return sb.ToString();
-        }
-
-        private static string FilterVanillaPowerNoise(string baseInspect)
-        {
-            if (baseInspect.NullOrEmpty())
-            {
-                return baseInspect;
-            }
-
-            string[] lines = baseInspect.Split('\n');
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (line.NullOrEmpty())
-                {
-                    continue;
-                }
-
-                string normalized = line.Trim().ToLowerInvariant();
-                if (normalized == "not connected to power." || normalized == "not connected to power")
-                {
-                    continue;
-                }
-
-                if (sb.Length > 0)
-                {
-                    sb.AppendLine();
-                }
-                sb.Append(line);
-            }
 
             return sb.ToString();
         }
@@ -239,9 +202,29 @@ namespace AbyssalProtocol
             }
         }
 
+        private static void AppendInspectBlock(StringBuilder sb, string block)
+        {
+            if (block.NullOrEmpty())
+            {
+                return;
+            }
+
+            string[] lines = block.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                AppendInspectLine(sb, lines[i]);
+            }
+        }
+
         private static void AppendInspectLine(StringBuilder sb, string line)
         {
             if (line.NullOrEmpty())
+            {
+                return;
+            }
+
+            string trimmed = line.Trim();
+            if (trimmed.Length == 0)
             {
                 return;
             }
@@ -251,7 +234,7 @@ namespace AbyssalProtocol
                 sb.AppendLine();
             }
 
-            sb.Append(line);
+            sb.Append(trimmed);
         }
     }
 }

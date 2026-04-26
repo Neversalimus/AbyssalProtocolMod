@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>ABY_DoBillsResidueSinteringCrucible</defName>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>94</priorityInType>
+    <verb>work at</verb>
+    <gerund>working at</gerund>
+
+    <fixedBillGiverDefs>
+      <li>ABY_ResidueSinteringCrucible</li>
+    </fixedBillGiverDefs>
+
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>

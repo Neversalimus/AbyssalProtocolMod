@@ -50,11 +50,11 @@
     <thingCategories Inherit="False" />
 
     <recipes>
+      <li>ABY_SinterAbyssalRemains</li>
       <li>ABY_ReclaimUnstableBreachSigil</li>
       <li>ABY_ReclaimWardenOfAshSigil</li>
       <li>ABY_ReclaimArchonSigil</li>
       <li>ABY_ReclaimHordeFragment</li>
-      <li>ABY_SinterAbyssalRemains</li>
     </recipes>
 
     <inspectorTabs>

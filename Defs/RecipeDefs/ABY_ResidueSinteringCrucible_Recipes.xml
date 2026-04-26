@@ -120,6 +120,7 @@
         <li>Corpse_ABY_ChainZealot</li>
         <li>Corpse_ABY_RiftSniper</li>
         <li>Corpse_ABY_NullPriest</li>
+        <li>Corpse_ABY_RiftSapper</li>
         <li>Corpse_ABY_BreachBrute</li>
         <li>Corpse_ABY_Harvester</li>
         <li>Corpse_ABY_GateWarden</li>
@@ -141,6 +142,7 @@
         <li>Corpse_ABY_ChainZealot</li>
         <li>Corpse_ABY_RiftSniper</li>
         <li>Corpse_ABY_NullPriest</li>
+        <li>Corpse_ABY_RiftSapper</li>
         <li>Corpse_ABY_BreachBrute</li>
         <li>Corpse_ABY_Harvester</li>
         <li>Corpse_ABY_GateWarden</li>
@@ -164,7 +166,8 @@
             <li>Corpse_ABY_ChainZealot</li>
             <li>Corpse_ABY_RiftSniper</li>
             <li>Corpse_ABY_NullPriest</li>
-            <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_RiftSapper</li>
+        <li>Corpse_ABY_BreachBrute</li>
             <li>Corpse_ABY_Harvester</li>
             <li>Corpse_ABY_GateWarden</li>
             <li>Corpse_ABY_SiegeIdol</li>
