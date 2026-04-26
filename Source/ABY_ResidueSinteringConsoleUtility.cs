@@ -188,7 +188,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < corpses.Count; i++)
             {
                 Thing corpse = corpses[i];
-                if (!ABY_ResidueSinteringUtility.TryGetResidueAmount(corpse, out int residueAmount))
+                if (!ABY_ResidueSinteringUtility.IsBillUsableSinteringIngredient(corpse, out int residueAmount))
                 {
                     continue;
                 }

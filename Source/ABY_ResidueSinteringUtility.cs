@@ -55,6 +55,39 @@ namespace AbyssalProtocol
             return TryGetResidueAmount(thing, out int _);
         }
 
+        public static bool IsBillUsableSinteringIngredient(Thing thing)
+        {
+            return IsBillUsableSinteringIngredient(thing, out int _);
+        }
+
+        public static bool IsBillUsableSinteringIngredient(Thing thing, out int residueAmount)
+        {
+            residueAmount = 0;
+
+            if (!TryGetResidueAmount(thing, out residueAmount))
+            {
+                return false;
+            }
+
+            if (thing.Destroyed || !thing.Spawned || thing.Map == null)
+            {
+                return false;
+            }
+
+            Faction playerFaction = Faction.OfPlayer;
+            if (playerFaction != null && thing.IsForbidden(playerFaction))
+            {
+                return false;
+            }
+
+            if (thing.Position.Fogged(thing.Map))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool TryGetResidueAmount(Thing thing, out int residueAmount)
         {
             residueAmount = 0;
@@ -102,7 +135,7 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < corpses.Count; i++)
             {
-                if (IsSinterableAbyssalCorpse(corpses[i]))
+                if (IsBillUsableSinteringIngredient(corpses[i]))
                 {
                     count++;
                 }

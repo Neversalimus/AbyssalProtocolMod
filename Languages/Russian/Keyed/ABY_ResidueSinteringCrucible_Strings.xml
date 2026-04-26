@@ -2,5 +2,5 @@
 <LanguageData>
   <ABY_ResidueSinteringCrucible_InspectActive>Статус тигля: активен и запитан.</ABY_ResidueSinteringCrucible_InspectActive>
   <ABY_ResidueSinteringCrucible_InspectOffline>Статус тигля: отключён или без питания.</ABY_ResidueSinteringCrucible_InspectOffline>
-  <ABY_ResidueSinteringCrucible_InspectSinterableCorpses>Пригодных безднических трупов на карте: {0}</ABY_ResidueSinteringCrucible_InspectSinterableCorpses>
+  <ABY_ResidueSinteringCrucible_InspectSinterableCorpses>Доступных для bill останков Бездны на карте: {0}</ABY_ResidueSinteringCrucible_InspectSinterableCorpses>
 </LanguageData>

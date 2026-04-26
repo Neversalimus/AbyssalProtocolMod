@@ -11,9 +11,6 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_ResidueSinteringCrucible</li>
-    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -39,9 +36,6 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_ResidueSinteringCrucible</li>
-    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -67,9 +61,6 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_ResidueSinteringCrucible</li>
-    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -95,9 +86,6 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_ResidueSinteringCrucible</li>
-    </recipeUsers>
     <ingredients>
       <li>
         <filter>
@@ -124,9 +112,6 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers>
-      <li>ABY_ResidueSinteringCrucible</li>
-    </recipeUsers>
     <fixedIngredientFilter>
       <thingDefs>
         <li>Corpse_ABY_RiftImp</li>
@@ -146,6 +131,9 @@
         <li>AllowRotten</li>
         <li>AllowCorpsesStranger</li>
         <li>AllowCorpsesColonist</li>
+        <li>AllowCorpsesAnimal</li>
+        <li>AllowCorpsesMechanoid</li>
+        <li>AllowCorpsesInsect</li>
         <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
       </specialFiltersToAllow>
     </fixedIngredientFilter>
@@ -168,6 +156,9 @@
         <li>AllowRotten</li>
         <li>AllowCorpsesStranger</li>
         <li>AllowCorpsesColonist</li>
+        <li>AllowCorpsesAnimal</li>
+        <li>AllowCorpsesMechanoid</li>
+        <li>AllowCorpsesInsect</li>
         <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
       </specialFiltersToAllow>
     </defaultIngredientFilter>
@@ -192,6 +183,9 @@
             <li>AllowRotten</li>
             <li>AllowCorpsesStranger</li>
             <li>AllowCorpsesColonist</li>
+            <li>AllowCorpsesAnimal</li>
+            <li>AllowCorpsesMechanoid</li>
+            <li>AllowCorpsesInsect</li>
             <li MayRequire="Ludeon.RimWorld.Ideology">AllowCorpsesSlave</li>
           </specialFiltersToAllow>
         </filter>
