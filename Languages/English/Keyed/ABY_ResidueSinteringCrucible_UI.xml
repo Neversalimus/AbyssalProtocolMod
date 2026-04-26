@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CrucibleInfrastructureHeader>Crucible infrastructure</ABY_CrucibleInfrastructureHeader>
+  <ABY_CrucibleStateUnavailable>Crucible definitions unavailable</ABY_CrucibleStateUnavailable>
+  <ABY_CrucibleStateResearchLocked>Awaiting Abyssal Signal Theory</ABY_CrucibleStateResearchLocked>
+  <ABY_CrucibleStateNotBuilt>No sintering crucible built</ABY_CrucibleStateNotBuilt>
+  <ABY_CrucibleStateOffline>Crucible offline</ABY_CrucibleStateOffline>
+  <ABY_CrucibleStateWaitingCorpses>Online, awaiting abyssal remains</ABY_CrucibleStateWaitingCorpses>
+  <ABY_CrucibleStateReady>Online and ready to sinter</ABY_CrucibleStateReady>
+  <ABY_CrucibleMetricUnits>Units online</ABY_CrucibleMetricUnits>
+  <ABY_CrucibleMetricCorpses>Valid corpses</ABY_CrucibleMetricCorpses>
+  <ABY_CrucibleMetricQueued>Queued</ABY_CrucibleMetricQueued>
+  <ABY_CrucibleRequirementSignal>Abyssal Signal Theory completed</ABY_CrucibleRequirementSignal>
+  <ABY_CrucibleRequirementBuilt>Residue Sintering Crucible built</ABY_CrucibleRequirementBuilt>
+  <ABY_CrucibleRequirementPowered>At least one crucible powered</ABY_CrucibleRequirementPowered>
+  <ABY_CrucibleRequirementCorpses>Safe abyssal corpse available</ABY_CrucibleRequirementCorpses>
+  <ABY_CrucibleInfrastructureTooltipTitle>Residue sintering status</ABY_CrucibleInfrastructureTooltipTitle>
+  <ABY_CrucibleInfrastructureTooltipRequirements>Requirements:</ABY_CrucibleInfrastructureTooltipRequirements>
+  <ABY_CrucibleInfrastructureTooltipCorpseRules>Accepted: whitelisted low, mid and elite abyssal corpses only. Humanlike, vanilla animal, boss and miniboss corpses are rejected.</ABY_CrucibleInfrastructureTooltipCorpseRules>
+  <ABY_CrucibleInfrastructureTooltipResidueScale>Expected output scales by tier: small abyssal remains 5–8 residue, medium remains 10–18, elite remains 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
+  <ABY_CrucibleInfrastructureTooltipHint>Use the crucible bills to reclaim sigils or sinter approved abyssal remains without touching boss reward chains.</ABY_CrucibleInfrastructureTooltipHint>
+</LanguageData>
