@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Abyssal Protocol stockpile category safety pass.
+    Adds explicit ThingCategory membership to ABY item-like defs that relied on parent inheritance
+    or had no explicit category in the source XML. This improves stockpile/filter compatibility
+    in large modpacks and avoids resources/rewards becoming unstorable.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AnchorSpiker"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshChoirLauncher"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenLiverLattice"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CinderMandibleSeal"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_EmberLungArray"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenAnchorNode"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenPike"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenScattergun"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundFieldPack"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftRelayPack"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownConduitPack"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshboundTreadBoots"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftstepGreaves"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownpathSabatons"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachCannon"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CanticleSubcoreNode"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_ResonanceServoArm"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HarmonicMesh"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_ChoirSinkKidney"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CanticleDriver"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CohortHalberd"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsMelee</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownedCoreHelm"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownshardStormcaster"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownspikeRail"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownCortexSubnode"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_DominionPulseHeart"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VerdictTendonSpine"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_LawwovenCarapaceMesh"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenGripGloves"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftConduitGloves"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownsealGauntlets"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HeraldCoreFragment"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Manufactured</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HeraldEye"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_ArchonTendonSpine"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HeraldCarapaceMesh"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HexPistol"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_Hexgun"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HordeFragment"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Manufactured</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CohortSyncSubnode"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BoundClawArray"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachTendonWeave"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullChorusCollar"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_InfernalEye"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalResidue"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>ResourcesRaw</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_ArchonOverrideAmpoule"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Drugs</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_LitanyGrinder"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullDisruptor"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullMarksmanRifle"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_NullbrandGlaive"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsMelee</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_OblivionChoir"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_PhalanxDriver"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperHaloHelm"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SaintReactorHeart"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AegisSinkKidney"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperServoArm"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_HaloSubcoreNode"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>BodyPartsBionic</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftDagger"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsMelee</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftHelm"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftNeedler"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_BreachSpikeProjector"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownOfRupture"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SigilRepeater"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_SpecterLashProjector"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_UltraPlasmaRifle"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_AshenVambraces"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftVectorVambraces"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_CrownAuthorityVambraces"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>Apparel</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_VesperLance"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftCarbine"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsRanged</li>
+        </thingCategories>
+      </value>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="ABY_RiftBlade"][not(thingCategories)]</xpath>
+      <value>
+        <thingCategories>
+          <li>WeaponsMelee</li>
+        </thingCategories>
+      </value>
+    </li>
+    </operations>
+  </Operation>
+</Patch>
