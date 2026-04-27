@@ -46,7 +46,13 @@ namespace AbyssalProtocol
         {
             this.FailOnDestroyedOrNull(SigilInd);
             this.FailOnDestroyedOrNull(CircleInd);
-            this.FailOn(() => Circle == null || !Circle.IsReadyForSigil(out _));
+            // Do not call Circle.IsReadyForSigil() while the pawn is carrying the sigil.
+            // IsReadyForSigil() requires the ritual focus cell to be clear. If pathing briefly routes
+            // the pawn through the circle center, the pawn itself blocks that focus cell and RimWorld
+            // fails the hauling job, which makes the carried sigil drop. This job-local check allows
+            // only the carrying pawn to occupy the focus cell temporarily while still rejecting real
+            // blockers, power loss, destruction, or an already active ritual.
+            this.FailOn(() => !CanContinueSigilCarryJob(pawn, Circle));
 
             Toil validateStart = new Toil();
             validateStart.initAction = () =>
@@ -159,6 +165,70 @@ namespace AbyssalProtocol
             };
             invoke.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return invoke;
+        }
+
+        private bool CanContinueSigilCarryJob(Pawn actor, Building_AbyssalSummoningCircle circle)
+        {
+            if (actor == null || circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld == null)
+            {
+                return false;
+            }
+
+            if (circle.RitualActive || !circle.IsPoweredForRitual)
+            {
+                return false;
+            }
+
+            return IsRitualFocusClearForCarryJob(actor, circle);
+        }
+
+        private bool IsRitualFocusClearForCarryJob(Pawn actor, Building_AbyssalSummoningCircle circle)
+        {
+            Map map = circle?.MapHeld;
+            if (actor == null || circle == null || map == null)
+            {
+                return false;
+            }
+
+            IntVec3 focusCell = circle.RitualFocusCell;
+            if (!focusCell.IsValid || !focusCell.InBounds(map))
+            {
+                return false;
+            }
+
+            List<Thing> things = focusCell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || thing == circle)
+                {
+                    continue;
+                }
+
+                if (thing == actor)
+                {
+                    continue;
+                }
+
+                if (thing is Mote || thing is Filth)
+                {
+                    continue;
+                }
+
+                if (thing.TryGetComp<CompUseEffect_SummonBoss>() != null)
+                {
+                    continue;
+                }
+
+                if (thing.def != null && thing.def.defName == "ABY_ArchonSigil")
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         private int GetWarmupTicks()
