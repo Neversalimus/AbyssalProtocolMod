@@ -110,7 +110,14 @@ namespace AbyssalProtocol
 
                 Building_AbyssalSummoningCircle circle = Circle ?? ResolveCircle(actor.MapHeld, out _);
                 Thing sigil = ResolveUsableSigil(actor) ?? SigilThing;
-                if (sigil == null || circle == null || !IsCircleUsableForSigilJob(circle, out string failReason))
+                string failReason = null;
+                if (sigil == null || circle == null)
+                {
+                    actor.jobs.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
+
+                if (!IsCircleUsableForSigilJob(circle, out failReason))
                 {
                     if (!failReason.NullOrEmpty())
                     {
@@ -143,14 +150,21 @@ namespace AbyssalProtocol
             {
                 Pawn actor = resolveStagingAfterPickup.actor;
                 Building_AbyssalSummoningCircle circle = Circle;
-                if (actor == null || circle == null || !IsCircleUsableForSigilJob(circle, out string failReason))
+                string failReason = null;
+                if (actor == null || circle == null)
+                {
+                    actor?.jobs?.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
+
+                if (!IsCircleUsableForSigilJob(circle, out failReason))
                 {
                     if (!failReason.NullOrEmpty())
                     {
                         Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                     }
 
-                    actor?.jobs?.EndCurrentJob(JobCondition.Incompletable);
+                    actor.jobs.EndCurrentJob(JobCondition.Incompletable);
                     return;
                 }
 
