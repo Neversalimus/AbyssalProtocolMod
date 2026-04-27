@@ -69,6 +69,7 @@ namespace AbyssalProtocol
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            ABY_LargeModpackHotfixBUtility.EnsureDominionGateFriendly(this);
 
             if (pulseSeed == 0)
             {
@@ -113,6 +114,8 @@ namespace AbyssalProtocol
             {
                 return;
             }
+
+            ABY_LargeModpackHotfixBUtility.EnsureDominionGateFriendly(this);
 
             MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
             if (crisis == null || !(crisis.IsGatePhaseActive || crisis.IsStandbyPhaseActive) || !crisis.IsRegisteredGate(this))

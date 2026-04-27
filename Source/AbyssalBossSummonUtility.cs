@@ -1539,6 +1539,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            ABY_LargeModpackHotfixBUtility.TryHardStopStaleHorde(map, "active-encounter-check");
+
             MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
             if (dominionCrisis != null && dominionCrisis.IsActive)
             {
@@ -1560,7 +1562,8 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    if (IsActiveEncounterPawn(pawn.def?.defName))
+                    if (IsActiveEncounterPawn(pawn.def?.defName)
+                        && ABY_LargeModpackHotfixBUtility.IsLiveCombatCapableAbyssalEncounterPawn(pawn))
                     {
                         return true;
                     }

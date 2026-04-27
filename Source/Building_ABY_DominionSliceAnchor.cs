@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            ABY_LargeModpackHotfixBUtility.EnsureDominionSliceAnchorHostile(this);
             if (!respawningAfterLoad && Find.TickManager != null)
             {
                 nextPulseTick = Find.TickManager.TicksGame + Rand.RangeInclusive(90, 210);
@@ -59,6 +60,8 @@ namespace AbyssalProtocol
             {
                 return;
             }
+
+            ABY_LargeModpackHotfixBUtility.EnsureDominionSliceAnchorHostile(this);
 
             MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter == null || !encounter.IsActiveEncounter || !encounter.IsAnchorfallActive)

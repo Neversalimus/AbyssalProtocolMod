@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Package 13 safety net for large modpacks.
+       Runtime Helixien/Gas map-generation suppression is handled by C# reflection patches.
+       This XML guard only removes externally injected Helixien/Gas-style GenSteps from the sterile Dominion pocket map if another mod added them by XML. Normal colony maps are untouched. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/MapGeneratorDef[defName="ABY_DominionSlicePocketMap"]/genSteps/li[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'helixien') or contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'gas')]</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/MapGeneratorDef[defName="ABY_DominionSlicePocketMap"]/genSteps/li[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'helixien') or contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'gas')]</xpath>
+    </match>
+  </Operation>
+
+</Patch>

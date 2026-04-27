@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using RimWorld.Planet;
 using Verse;
 
 namespace AbyssalProtocol
@@ -210,6 +211,40 @@ namespace AbyssalProtocol
             IntVec3 cell = thing.PositionHeld;
             return cell.x <= 20 || cell.z <= 20 || cell.x >= map.Size.x - 21 || cell.z >= map.Size.z - 21
                 || cell.DistanceTo(map.Center) <= 18f;
+        }
+
+        public static bool ShouldSuppressExternalMapGeneration(Map map)
+        {
+            return IsDominionSliceMap(map) || MapComponent_ABY_SterileAbyssalMap.IsSterile(map);
+        }
+
+        public static bool IsDominionSliceMap(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            if (MapComponent_ABY_SterileAbyssalMap.IsSterile(map))
+            {
+                return true;
+            }
+
+            WorldObject parent = map.Parent;
+            if (parent == null)
+            {
+                return false;
+            }
+
+            string defName = parent.def?.defName ?? string.Empty;
+            if (defName.IndexOf("DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0
+                || defName.IndexOf("ABY_DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+
+            string typeName = parent.GetType().FullName ?? parent.GetType().Name ?? string.Empty;
+            return typeName.IndexOf("DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static string SafeThingDefName(Thing thing)
