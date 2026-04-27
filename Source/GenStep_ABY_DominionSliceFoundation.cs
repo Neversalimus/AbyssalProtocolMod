@@ -47,13 +47,6 @@ namespace AbyssalProtocol
             SeedExternalMapHookCompatibilityRock(map);
         }
 
-        /// <summary>
-        /// Some external MapGenerated hooks, especially resource-deposit systems, assume every generated map has
-        /// at least a few natural mineable cells. The dominion slice is intentionally sterile and fully plated,
-        /// which can make those hooks emit red errors while looking for starting cells.
-        /// These temporary corner rocks exist only during MapGenerated. Package 2 cleanup removes them immediately
-        /// after map creation, together with any external gas/deposit artifacts spawned there.
-        /// </summary>
         private static void SeedExternalMapHookCompatibilityRock(Map map)
         {
             ThingDef mineable = DefDatabase<ThingDef>.GetNamedSilentFail("MineableGranite")
@@ -69,17 +62,20 @@ namespace AbyssalProtocol
                 ?? DefDatabase<TerrainDef>.GetNamedSilentFail("RoughGranite")
                 ?? TerrainDefOf.Concrete;
 
-            SeedCornerRockPocket(map, mineable, roughStone, 5, 5);
-            SeedCornerRockPocket(map, mineable, roughStone, map.Size.x - 10, 5);
-            SeedCornerRockPocket(map, mineable, roughStone, 5, map.Size.z - 10);
-            SeedCornerRockPocket(map, mineable, roughStone, map.Size.x - 10, map.Size.z - 10);
+            SeedRockPocket(map, mineable, roughStone, 5, 5, 8);
+            SeedRockPocket(map, mineable, roughStone, map.Size.x - 13, 5, 8);
+            SeedRockPocket(map, mineable, roughStone, 5, map.Size.z - 13, 8);
+            SeedRockPocket(map, mineable, roughStone, map.Size.x - 13, map.Size.z - 13, 8);
+            SeedRockPocket(map, mineable, roughStone, map.Center.x - 6, map.Center.z - 6, 12);
+            SeedRockPocket(map, mineable, roughStone, map.Center.x - 20, map.Center.z - 6, 10);
+            SeedRockPocket(map, mineable, roughStone, map.Center.x + 10, map.Center.z - 6, 10);
         }
 
-        private static void SeedCornerRockPocket(Map map, ThingDef mineable, TerrainDef terrain, int startX, int startZ)
+        private static void SeedRockPocket(Map map, ThingDef mineable, TerrainDef terrain, int startX, int startZ, int size)
         {
-            for (int x = startX; x < startX + 5; x++)
+            for (int x = startX; x < startX + size; x++)
             {
-                for (int z = startZ; z < startZ + 5; z++)
+                for (int z = startZ; z < startZ + size; z++)
                 {
                     IntVec3 cell = new IntVec3(x, 0, z);
                     if (!cell.InBounds(map))

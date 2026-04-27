@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Runtime UI mods such as RimHUD/Discoveries can fail to load About/ModIcon through ContentFinder.
+       Keep About/ModIcon for Workshop, but use a real Textures/ path for the faction icon. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost"]/factionIconPath</xpath>
+    <value>
+      <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost" and not(factionIconPath)]</xpath>
+    <value>
+      <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
+    </value>
+  </Operation>
+
+</Patch>
