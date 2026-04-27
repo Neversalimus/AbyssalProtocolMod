@@ -61,6 +61,18 @@ namespace AbyssalProtocol
 
         public override void DoWindowContents(Rect inRect)
         {
+            try
+            {
+                DoWindowContentsSafe(inRect);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.DrawWindowFallback(inRect, "Abyssal Bestiary Codex", ex);
+            }
+        }
+
+        private void DoWindowContentsSafe(Rect inRect)
+        {
             if (circle != null)
             {
                 AbyssalSummoningConsoleArt.ReducedEffects = circle.ReducedConsoleEffects;
@@ -79,6 +91,7 @@ namespace AbyssalProtocol
             DrawFilters(filtersRect);
             DrawBrowser(listRect);
             DrawDetails(detailRect);
+        
         }
 
         private void DrawHeader(Rect rect)

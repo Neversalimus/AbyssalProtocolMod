@@ -294,7 +294,16 @@ namespace AbyssalProtocol
 
         public static string GetCategoryLabel(string category)
         {
-            return ("ABY_ForgeCategory_" + category).Translate();
+            try
+            {
+                string safeCategory = category.NullOrEmpty() ? CoreCategory : category;
+                string translated = ("ABY_ForgeCategory_" + safeCategory).Translate();
+                return translated.NullOrEmpty() ? safeCategory : translated;
+            }
+            catch
+            {
+                return category.NullOrEmpty() ? CoreCategory : category;
+            }
         }
 
         public static string GetPatternBrowserSummary(RecipeDef recipe)
@@ -326,18 +335,25 @@ namespace AbyssalProtocol
 
         public static string GetRecipeDisplayLabel(RecipeDef recipe)
         {
-            if (recipe == null)
+            try
             {
-                return string.Empty;
-            }
+                if (recipe == null)
+                {
+                    return "unknown pattern";
+                }
 
-            ThingDef product = GetPrimaryProduct(recipe);
-            if (product?.label != null)
+                ThingDef product = GetPrimaryProduct(recipe);
+                if (product != null)
+                {
+                    return ABY_UISafetyUtility.SafeDefLabel(product, recipe.defName ?? "unknown pattern");
+                }
+
+                return ABY_UISafetyUtility.SafeDefLabel(recipe, recipe.defName ?? "unknown pattern");
+            }
+            catch
             {
-                return product.LabelCap;
+                return recipe?.defName ?? "unknown pattern";
             }
-
-            return recipe.LabelCap;
         }
 
         public static string GetRecipeIngredientSummary(RecipeDef recipe, int maxEntries)
@@ -490,7 +506,7 @@ namespace AbyssalProtocol
                             continue;
                         }
 
-                        lines.Add("• " + modifier.stat.LabelCap + ": " + FormatStatOffset(modifier.stat, modifier.value));
+                        lines.Add("• " + ABY_UISafetyUtility.SafeDefLabel(modifier.stat, modifier.stat.defName ?? "stat") + ": " + FormatStatOffset(modifier.stat, modifier.value));
                     }
                 }
 
@@ -504,7 +520,8 @@ namespace AbyssalProtocol
                             continue;
                         }
 
-                        lines.Add("• " + modifier.capacity.label.CapitalizeFirst() + ": " + FormatCapacityOffset(modifier.capacity, modifier.offset));
+                        string capacityLabel = ABY_UISafetyUtility.SafeString(modifier.capacity.label, modifier.capacity.defName ?? "capacity").CapitalizeFirst();
+                        lines.Add("• " + capacityLabel + ": " + FormatCapacityOffset(modifier.capacity, modifier.offset));
                     }
                 }
             }
@@ -764,7 +781,7 @@ namespace AbyssalProtocol
             List<ThingDef> allowed = allowedDefs != null ? allowedDefs.ToList() : new List<ThingDef>();
             if (allowed.Count == 1 && allowed[0] != null)
             {
-                return allowed[0].label;
+                return ABY_UISafetyUtility.SafeString(allowed[0].label, allowed[0].defName ?? "ingredient");
             }
 
             string summary = filter.Summary;

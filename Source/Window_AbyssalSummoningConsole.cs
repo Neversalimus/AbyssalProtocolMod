@@ -44,6 +44,18 @@ namespace AbyssalProtocol
 
         public override void DoWindowContents(Rect inRect)
         {
+            try
+            {
+                DoWindowContentsSafe(inRect);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.DrawWindowFallback(inRect, "Abyssal Summoning Console", ex);
+            }
+        }
+
+        private void DoWindowContentsSafe(Rect inRect)
+        {
             if (circle == null || circle.Destroyed || circle.Map == null)
             {
                 Close();
@@ -71,6 +83,7 @@ namespace AbyssalProtocol
             DrawControlPanel(controlRect, ritual);
             DrawScrollableRitualPreviewPanel(previewRect, ritual);
             DrawSystemsPanel(systemsRect, ritual);
+        
         }
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetSelectedRitual()

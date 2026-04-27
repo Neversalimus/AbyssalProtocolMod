@@ -45,6 +45,18 @@ namespace AbyssalProtocol
 
         public override void DoWindowContents(Rect inRect)
         {
+            try
+            {
+                DoWindowContentsSafe(inRect);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.DrawWindowFallback(inRect, "Abyssal Forge Console", ex);
+            }
+        }
+
+        private void DoWindowContentsSafe(Rect inRect)
+        {
             if (forge == null || forge.Destroyed || forge.Map == null)
             {
                 Close();
@@ -85,6 +97,7 @@ namespace AbyssalProtocol
                 mouseoverBill.TryDrawIngredientSearchRadiusOnMap(forge.Position);
                 mouseoverBill = null;
             }
+        
         }
 
         private void DrawHeader(Rect rect, MapComponent_AbyssalForgeProgress progress)
@@ -301,6 +314,13 @@ namespace AbyssalProtocol
 
         private void DrawPatternCard(Rect rect, RecipeDef recipe, bool unlocked, bool freshlyUnlocked)
         {
+            if (recipe == null)
+            {
+                AbyssalForgeConsoleArt.DrawPanel(rect, false);
+                Widgets.Label(rect.ContractedBy(10f), "Missing forge pattern");
+                return;
+            }
+
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
 
@@ -364,7 +384,9 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x + 10f, rect.y + 86f, rect.width - 20f, 18f), "ABY_ForgePatternRequirementsState".Translate());
             GUI.color = Color.white;
 
-            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe);
+            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
+                ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
+                : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
             int shownEntries = Math.Min(2, entries.Count);
             for (int i = 0; i < shownEntries; i++)
             {
@@ -379,7 +401,15 @@ namespace AbyssalProtocol
             }
 
             bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
-            bool recipeAvailable = recipe.AvailableNow && recipe.AvailableOnNow(forge);
+            bool recipeAvailable = false;
+            try
+            {
+                recipeAvailable = forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.LogUIException("Forge pattern availability", ex);
+            }
             string actionLabel;
             if (!unlocked)
             {
@@ -429,7 +459,7 @@ namespace AbyssalProtocol
                 tooltipLines.Add(costBlock);
             }
 
-            string stateBlock = AbyssalForgeProgressUtility.GetRecipeAvailabilityTooltip(forge.Map, recipe);
+            string stateBlock = forge?.Map != null ? AbyssalForgeProgressUtility.GetRecipeAvailabilityTooltip(forge.Map, recipe) : string.Empty;
             if (!stateBlock.NullOrEmpty())
             {
                 tooltipLines.Add(string.Empty);
@@ -456,7 +486,13 @@ namespace AbyssalProtocol
             Rect countRect = new Rect(rect.xMax - 70f, rect.y, 70f, rect.height);
 
             GUI.color = Color.white;
-            Widgets.Label(labelRect, entry.label);
+            if (entry == null)
+            {
+                Widgets.Label(labelRect, "missing ingredient");
+                return;
+            }
+
+            Widgets.Label(labelRect, ABY_UISafetyUtility.SafeString(entry.label, "ingredient"));
             GUI.color = entry.IsSatisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.58f, 0.52f, 1f);
             Text.Anchor = TextAnchor.UpperRight;
             Widgets.Label(countRect, entry.availableCount + "/" + entry.requiredCount);
@@ -480,18 +516,30 @@ namespace AbyssalProtocol
         private List<FloatMenuOption> BuildRecipeOptions()
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
-            List<RecipeDef> availableRecipes = forge.ProgressComponent.GetUnlockedRecipes(selectedCategory);
+            List<RecipeDef> availableRecipes = forge?.ProgressComponent != null
+                ? forge.ProgressComponent.GetUnlockedRecipes(selectedCategory)
+                : new List<RecipeDef>();
 
             for (int i = 0; i < availableRecipes.Count; i++)
             {
                 RecipeDef recipe = availableRecipes[i];
-                if (!recipe.AvailableNow || !recipe.AvailableOnNow(forge))
+                bool availableNow = false;
+                try
+                {
+                    availableNow = recipe != null && forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
+                }
+                catch (System.Exception ex)
+                {
+                    ABY_UISafetyUtility.LogUIException("Forge bill recipe option", ex);
+                }
+
+                if (!availableNow)
                 {
                     continue;
                 }
 
                 RecipeDef capturedRecipe = recipe;
-                options.Add(new FloatMenuOption(capturedRecipe.LabelCap, delegate
+                options.Add(new FloatMenuOption(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(capturedRecipe), delegate
                 {
                     AddBill(capturedRecipe);
                 }));
@@ -512,13 +560,20 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!forge.Map.mapPawns.FreeColonists.Any(colonist => recipe.PawnSatisfiesSkillRequirements(colonist)))
+            try
             {
-                Bill.CreateNoPawnsWithSkillDialog(recipe);
-            }
+                if (forge?.Map?.mapPawns != null && !forge.Map.mapPawns.FreeColonists.Any(colonist => colonist != null && recipe.PawnSatisfiesSkillRequirements(colonist)))
+                {
+                    Bill.CreateNoPawnsWithSkillDialog(recipe);
+                }
 
-            Bill bill = recipe.MakeNewBill();
-            forge.BillStack.AddBill(bill);
+                Bill bill = recipe.MakeNewBill();
+                forge?.BillStack?.AddBill(bill);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.LogUIException("Forge add bill", ex);
+            }
 
             if (recipe.conceptLearned != null)
             {
