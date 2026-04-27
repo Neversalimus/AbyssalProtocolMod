@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using RimWorld;
 using Verse;
 
@@ -37,12 +38,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    def.race.trainability = noneTrainability;
-                    def.race.wildness = 1f;
-                    def.race.petness = 0f;
-                    def.race.nuzzleMtbHours = -1f;
-                    def.race.manhunterOnTameFailChance = 0f;
-                    def.race.herdAnimal = false;
+                    ApplyNonTameRaceSettings(def.race, noneTrainability);
                 }
             }
             catch (Exception ex)
@@ -209,15 +205,78 @@ namespace AbyssalProtocol
                 }
 
                 TrainabilityDef noneTrainability = DefDatabase<TrainabilityDef>.GetNamedSilentFail("None") ?? TrainabilityDefOf.None;
-                pawn.def.race.trainability = noneTrainability;
-                pawn.def.race.petness = 0f;
-                pawn.def.race.nuzzleMtbHours = -1f;
-                pawn.def.race.manhunterOnTameFailChance = 0f;
-                pawn.def.race.herdAnimal = false;
+                ApplyNonTameRaceSettings(pawn.def.race, noneTrainability);
             }
             catch
             {
             }
+        }
+
+
+        private static void ApplyNonTameRaceSettings(RaceProperties race, TrainabilityDef noneTrainability)
+        {
+            if (race == null)
+            {
+                return;
+            }
+
+            race.trainability = noneTrainability;
+            TrySetOptionalMember(race, "wildness", 1f);
+            TrySetOptionalMember(race, "petness", 0f);
+            TrySetOptionalMember(race, "nuzzleMtbHours", -1f);
+            TrySetOptionalMember(race, "manhunterOnTameFailChance", 0f);
+            TrySetOptionalMember(race, "herdAnimal", false);
+        }
+
+        private static void TrySetOptionalMember(object target, string memberName, object value)
+        {
+            if (target == null || memberName.NullOrEmpty())
+            {
+                return;
+            }
+
+            try
+            {
+                Type type = target.GetType();
+                BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+                FieldInfo field = type.GetField(memberName, flags);
+                if (field != null && CanAssignValue(field.FieldType, value))
+                {
+                    field.SetValue(target, value);
+                    return;
+                }
+
+                PropertyInfo property = type.GetProperty(memberName, flags);
+                if (property != null && property.CanWrite && CanAssignValue(property.PropertyType, value))
+                {
+                    property.SetValue(target, value, null);
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private static bool CanAssignValue(Type targetType, object value)
+        {
+            if (targetType == null)
+            {
+                return false;
+            }
+
+            if (value == null)
+            {
+                return !targetType.IsValueType || Nullable.GetUnderlyingType(targetType) != null;
+            }
+
+            Type valueType = value.GetType();
+            if (targetType.IsAssignableFrom(valueType))
+            {
+                return true;
+            }
+
+            Type underlying = Nullable.GetUnderlyingType(targetType);
+            return underlying != null && underlying.IsAssignableFrom(valueType);
         }
 
         private static bool IsAnimalWorkflowDesignation(DesignationDef def)
