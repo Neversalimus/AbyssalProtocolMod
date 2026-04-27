@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <!-- Route all abyssal sigil use actions through a validating CompUsable subclass.
+       This prevents right-click/Achtung-style multi-actions from starting an impossible
+       ABY_CarrySigilToCircle job when the sigil or circle cannot be reached/reserved. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[comps/li/useJob="ABY_CarrySigilToCircle"]/comps/li[useJob="ABY_CarrySigilToCircle"]</xpath>
+    <value>
+      <compClass>AbyssalProtocol.CompUsable_AbyssalSigil</compClass>
+    </value>
+  </Operation>
+</Patch>

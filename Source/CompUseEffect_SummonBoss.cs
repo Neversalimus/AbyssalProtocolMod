@@ -12,37 +12,22 @@ namespace AbyssalProtocol
         {
             base.DoEffect(usedBy);
 
-            if (AbyssalDominionAccessUtility.IsDominionRitualId(Props.ritualId) && !AbyssalDominionAccessUtility.IsUserFacingDominionContentEnabled())
+            Building_AbyssalSummoningCircle preferredCircle = TryGetPreferredCircle(usedBy);
+            ABY_SigilUseValidator.SigilUseContext context;
+            string failReason;
+            if (!ABY_SigilUseValidator.TryBuildContext(usedBy, parent, preferredCircle, false, out context, out failReason))
             {
-                Messages.Message("ABY_DominionSigilDisabled".Translate(), MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Map map = usedBy?.MapHeld;
-            if (map == null)
-            {
-                Messages.Message("ABY_BossSummonFail_NoMap".Translate(), MessageTypeDefOf.RejectInput, false);
-                return;
-            }
-
-            Building_AbyssalSummoningCircle circle = TryGetPreferredCircle(usedBy);
-            if (circle == null)
-            {
-                if (!AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
-                        map,
-                        usedBy.PositionHeld,
-                        out circle,
-                        out string findFailReason))
+                TryEjectFailedSigilFromCircle(usedBy, preferredCircle);
+                if (!failReason.NullOrEmpty())
                 {
-                    TryEjectFailedSigilFromCircle(usedBy, circle);
-                    Messages.Message(findFailReason, MessageTypeDefOf.RejectInput, false);
-                    return;
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                 }
+                return;
             }
 
-            if (!circle.TryStartSummonSequence(usedBy, Props, out string startFailReason))
+            if (!context.Circle.TryStartSummonSequence(usedBy, context.Props, out string startFailReason))
             {
-                TryEjectFailedSigilFromCircle(usedBy, circle);
+                TryEjectFailedSigilFromCircle(usedBy, context.Circle);
                 Messages.Message(startFailReason, MessageTypeDefOf.RejectInput, false);
                 return;
             }
@@ -110,7 +95,17 @@ namespace AbyssalProtocol
             }
 
             IntVec3 focusCell = circle?.RitualFocusCell ?? IntVec3.Invalid;
-            if (!focusCell.IsValid || sigil.PositionHeld != focusCell)
+            bool onUnsafeCircleCell = focusCell.IsValid && sigil.PositionHeld == focusCell;
+            if (!onUnsafeCircleCell && circle != null)
+            {
+                CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
+                if (occupiedRect.Contains(sigil.PositionHeld))
+                {
+                    onUnsafeCircleCell = true;
+                }
+            }
+
+            if (!onUnsafeCircleCell)
             {
                 return;
             }

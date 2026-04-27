@@ -15,25 +15,12 @@ namespace AbyssalProtocol
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            if (job.count <= 0)
-            {
-                job.count = 1;
-            }
+            Thing sigil = ABY_SigilUseValidator.ResolveSigil(pawn, SigilThing);
+            Building_AbyssalSummoningCircle preferredCircle = Circle;
+            ABY_SigilUseValidator.SigilUseContext context;
+            string failReason;
 
-            Thing sigil = SigilThing;
-            if (sigil == null)
-            {
-                return false;
-            }
-
-            Map map = pawn.MapHeld;
-            if (map == null)
-            {
-                return false;
-            }
-
-            Building_AbyssalSummoningCircle circle = ResolveCircle(map, out string failReason);
-            if (circle == null)
+            if (!ABY_SigilUseValidator.TryBuildContext(pawn, sigil, preferredCircle, true, out context, out failReason))
             {
                 if (!failReason.NullOrEmpty())
                 {
@@ -43,45 +30,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!circle.IsReadyForSigil(out failReason))
-            {
-                if (!failReason.NullOrEmpty())
-                {
-                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
-                }
-
-                return false;
-            }
-
-            job.targetB = circle;
-
-            bool pawnAlreadyCarriesSigil = pawn.carryTracker != null && pawn.carryTracker.CarriedThing == sigil;
-            if (!pawnAlreadyCarriesSigil && !pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
-            {
-                return false;
-            }
-
-            if (!pawn.CanReserveAndReach(circle, PathEndMode.InteractionCell, Danger.Deadly))
-            {
-                return false;
-            }
-
-            if (!pawnAlreadyCarriesSigil && !pawn.Reserve(sigil, job, 1, job.count, null, errorOnFailed))
-            {
-                return false;
-            }
-
-            if (!pawn.Reserve(circle, job, 1, -1, null, errorOnFailed))
-            {
-                if (!pawnAlreadyCarriesSigil)
-                {
-                    pawn.MapHeld?.reservationManager?.Release(sigil, pawn, job);
-                }
-
-                return false;
-            }
-
-            return true;
+            job.targetA = context.Sigil;
+            job.targetB = context.Circle;
+            return ABY_SigilUseValidator.TryReserveContext(pawn, job, context, errorOnFailed);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -89,6 +40,29 @@ namespace AbyssalProtocol
             this.FailOnDestroyedOrNull(SigilInd);
             this.FailOnDestroyedOrNull(CircleInd);
             this.FailOn(() => Circle == null || !Circle.IsReadyForSigil(out _));
+
+            Toil validateStart = new Toil();
+            validateStart.initAction = () =>
+            {
+                Pawn actor = validateStart.actor;
+                ABY_SigilUseValidator.SigilUseContext context;
+                string failReason;
+                if (!ABY_SigilUseValidator.TryBuildContext(actor, SigilThing, Circle, false, out context, out failReason))
+                {
+                    if (!failReason.NullOrEmpty())
+                    {
+                        Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                    }
+
+                    actor.jobs.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
+
+                job.targetA = context.Sigil;
+                job.targetB = context.Circle;
+            };
+            validateStart.defaultCompleteMode = ToilCompleteMode.Instant;
+            yield return validateStart;
 
             yield return Toils_Goto.GotoThing(SigilInd, PathEndMode.ClosestTouch);
             yield return Toils_Haul.StartCarryThing(SigilInd);
@@ -120,7 +94,7 @@ namespace AbyssalProtocol
             warmup.tickAction = () =>
             {
                 Pawn actor = warmup.actor;
-                if (actor == null || Circle == null || actor.MapHeld == null)
+                if (actor == null || Circle == null || actor.MapHeld == null || actor.jobs?.curDriver == null)
                 {
                     return;
                 }
@@ -149,37 +123,6 @@ namespace AbyssalProtocol
             };
             invoke.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return invoke;
-        }
-
-        private Building_AbyssalSummoningCircle ResolveCircle(Map map, out string failReason)
-        {
-            Building_AbyssalSummoningCircle existing = Circle;
-            if (IsValidCircle(existing, map))
-            {
-                failReason = null;
-                return existing;
-            }
-
-            if (AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
-                    map,
-                    pawn.PositionHeld,
-                    out Building_AbyssalSummoningCircle found,
-                    out failReason))
-            {
-                return found;
-            }
-
-            return null;
-        }
-
-        private bool IsValidCircle(Building_AbyssalSummoningCircle circle, Map map)
-        {
-            return circle != null
-                && !circle.Destroyed
-                && circle.Spawned
-                && circle.MapHeld == map
-                && !circle.RitualActive
-                && circle.IsPoweredForRitual;
         }
 
         private int GetWarmupTicks()
