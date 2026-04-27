@@ -16,12 +16,25 @@ namespace AbyssalProtocol
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            Thing sigil = ABY_SigilUseValidator.ResolveSigil(pawn, SigilThing);
-            Building_AbyssalSummoningCircle preferredCircle = Circle;
-            ABY_SigilUseValidator.SigilUseContext context;
-            string failReason;
+            if (job.count <= 0)
+            {
+                job.count = 1;
+            }
 
-            if (!ABY_SigilUseValidator.TryBuildContext(pawn, sigil, preferredCircle, true, out context, out failReason))
+            Thing sigil = ResolveUsableSigil(pawn) ?? SigilThing;
+            if (sigil == null)
+            {
+                return false;
+            }
+
+            Map map = pawn.MapHeld;
+            if (map == null)
+            {
+                return false;
+            }
+
+            Building_AbyssalSummoningCircle circle = ResolveCircle(map, out string failReason);
+            if (circle == null)
             {
                 if (!failReason.NullOrEmpty())
                 {
@@ -31,36 +44,73 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            job.targetA = context.Sigil;
-            job.targetB = context.Circle;
-
-            if (TryResolveSigilStagingCell(pawn, context.Circle, out IntVec3 stagingCell))
+            if (!IsCircleUsableForSigilJob(circle, out failReason))
             {
-                job.targetC = stagingCell;
+                if (!failReason.NullOrEmpty())
+                {
+                    Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                }
+
+                return false;
             }
 
-            return ABY_SigilUseValidator.TryReserveContext(pawn, job, context, errorOnFailed);
+            if (!TryFindBestStagingCell(pawn, circle, out IntVec3 stagingCell))
+            {
+                Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
+
+            job.targetA = sigil;
+            job.targetB = circle;
+            job.targetC = stagingCell;
+
+            bool pawnAlreadyCarriesSigil = pawn.carryTracker != null && pawn.carryTracker.CarriedThing == sigil;
+            if (!pawnAlreadyCarriesSigil && !pawn.CanReserveAndReach(sigil, PathEndMode.ClosestTouch, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (!pawn.CanReach(stagingCell, PathEndMode.OnCell, Danger.Deadly))
+            {
+                return false;
+            }
+
+            if (!pawnAlreadyCarriesSigil && !pawn.Reserve(sigil, job, 1, job.count, null, errorOnFailed))
+            {
+                return false;
+            }
+
+            if (!pawn.Reserve(circle, job, 1, -1, null, errorOnFailed))
+            {
+                if (!pawnAlreadyCarriesSigil)
+                {
+                    pawn.MapHeld?.reservationManager?.Release(sigil, pawn, job);
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
             this.FailOnDestroyedOrNull(SigilInd);
             this.FailOnDestroyedOrNull(CircleInd);
-            // Do not call Circle.IsReadyForSigil() while the pawn is carrying the sigil.
-            // IsReadyForSigil() requires the ritual focus cell to be clear. If pathing briefly routes
-            // the pawn through the circle center, the pawn itself blocks that focus cell and RimWorld
-            // fails the hauling job, which makes the carried sigil drop. This job-local check allows
-            // only the carrying pawn to occupy the focus cell temporarily while still rejecting real
-            // blockers, power loss, destruction, or an already active ritual.
-            this.FailOn(() => !CanContinueSigilCarryJob(pawn, Circle));
 
             Toil validateStart = new Toil();
             validateStart.initAction = () =>
             {
                 Pawn actor = validateStart.actor;
-                ABY_SigilUseValidator.SigilUseContext context;
-                string failReason;
-                if (!ABY_SigilUseValidator.TryBuildContext(actor, SigilThing, Circle, false, out context, out failReason))
+                if (actor == null || actor.MapHeld == null)
+                {
+                    actor?.jobs?.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
+
+                Building_AbyssalSummoningCircle circle = Circle ?? ResolveCircle(actor.MapHeld, out _);
+                Thing sigil = ResolveUsableSigil(actor) ?? SigilThing;
+                if (sigil == null || circle == null || !IsCircleUsableForSigilJob(circle, out string failReason))
                 {
                     if (!failReason.NullOrEmpty())
                     {
@@ -71,16 +121,15 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                job.targetA = context.Sigil;
-                job.targetB = context.Circle;
-
-                if (!TryResolveSigilStagingCell(actor, context.Circle, out IntVec3 stagingCell))
+                if (!TryFindBestStagingCell(actor, circle, out IntVec3 stagingCell))
                 {
                     Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
                     actor.jobs.EndCurrentJob(JobCondition.Incompletable);
                     return;
                 }
 
+                job.targetA = sigil;
+                job.targetB = circle;
                 job.targetC = stagingCell;
             };
             validateStart.defaultCompleteMode = ToilCompleteMode.Instant;
@@ -93,7 +142,19 @@ namespace AbyssalProtocol
             resolveStagingAfterPickup.initAction = () =>
             {
                 Pawn actor = resolveStagingAfterPickup.actor;
-                if (!TryResolveSigilStagingCell(actor, Circle, out IntVec3 stagingCell))
+                Building_AbyssalSummoningCircle circle = Circle;
+                if (actor == null || circle == null || !IsCircleUsableForSigilJob(circle, out string failReason))
+                {
+                    if (!failReason.NullOrEmpty())
+                    {
+                        Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                    }
+
+                    actor?.jobs?.EndCurrentJob(JobCondition.Incompletable);
+                    return;
+                }
+
+                if (!TryFindBestStagingCell(actor, circle, out IntVec3 stagingCell))
                 {
                     Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
                     actor.jobs.EndCurrentJob(JobCondition.Incompletable);
@@ -105,16 +166,13 @@ namespace AbyssalProtocol
             resolveStagingAfterPickup.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return resolveStagingAfterPickup;
 
-            Toil gotoStaging = Toils_Goto.GotoCell(StagingInd, PathEndMode.OnCell);
-            gotoStaging.FailOn(() => Circle == null || Circle.Destroyed || !Circle.Spawned || Circle.RitualActive || !Circle.IsPoweredForRitual);
-            yield return gotoStaging;
+            yield return Toils_Goto.GotoCell(StagingInd, PathEndMode.OnCell);
 
             Toil placeSigil = new Toil();
             placeSigil.initAction = () =>
             {
                 Pawn actor = placeSigil.actor;
-                IntVec3 preferredDropCell = job.GetTarget(StagingInd).Cell;
-                if (!TryPlaceSigilNearCircle(actor, Circle, preferredDropCell))
+                if (!TryPlaceSigilAtStagingCell(actor, Circle))
                 {
                     Messages.Message("ABY_SigilPlacementFailed".Translate(), MessageTypeDefOf.RejectInput, false);
                     actor.jobs.EndCurrentJob(JobCondition.Incompletable);
@@ -167,64 +225,66 @@ namespace AbyssalProtocol
             yield return invoke;
         }
 
-        private bool CanContinueSigilCarryJob(Pawn actor, Building_AbyssalSummoningCircle circle)
+        private Building_AbyssalSummoningCircle ResolveCircle(Map map, out string failReason)
         {
-            if (actor == null || circle == null || circle.Destroyed || !circle.Spawned || circle.MapHeld == null)
+            Building_AbyssalSummoningCircle existing = Circle;
+            if (IsValidCircle(existing, map))
             {
-                return false;
+                failReason = null;
+                return existing;
             }
 
-            if (circle.RitualActive || !circle.IsPoweredForRitual)
+            if (AbyssalBossSummonUtility.TryFindNearestAvailableCircle(
+                    map,
+                    pawn.PositionHeld,
+                    out Building_AbyssalSummoningCircle found,
+                    out failReason))
             {
-                return false;
+                return found;
             }
 
-            return IsRitualFocusClearForCarryJob(actor, circle);
+            return null;
         }
 
-        private bool IsRitualFocusClearForCarryJob(Pawn actor, Building_AbyssalSummoningCircle circle)
+        private bool IsValidCircle(Building_AbyssalSummoningCircle circle, Map map)
         {
-            Map map = circle?.MapHeld;
-            if (actor == null || circle == null || map == null)
+            return circle != null
+                && !circle.Destroyed
+                && circle.Spawned
+                && circle.MapHeld == map
+                && !circle.RitualActive
+                && circle.IsPoweredForRitual;
+        }
+
+        private bool IsCircleUsableForSigilJob(Building_AbyssalSummoningCircle circle, out string failReason)
+        {
+            failReason = null;
+            if (circle == null || circle.Destroyed || !circle.Spawned || circle.Map == null)
+            {
+                failReason = "ABY_CircleFail_NotPlaced".Translate();
+                return false;
+            }
+
+            if (circle.RitualActive)
+            {
+                failReason = "ABY_CircleFail_Busy".Translate();
+                return false;
+            }
+
+            if (!circle.IsPoweredForRitual)
+            {
+                failReason = "ABY_CircleFail_NoPower".Translate();
+                return false;
+            }
+
+            if (!circle.HasValidInteractionCell(out failReason))
             {
                 return false;
             }
 
-            IntVec3 focusCell = circle.RitualFocusCell;
-            if (!focusCell.IsValid || !focusCell.InBounds(map))
+            if (AbyssalBossSummonUtility.HasActiveAbyssalEncounter(circle.Map))
             {
-                return false;
-            }
-
-            List<Thing> things = focusCell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing thing = things[i];
-                if (thing == null || thing.Destroyed || thing == circle)
-                {
-                    continue;
-                }
-
-                if (thing == actor)
-                {
-                    continue;
-                }
-
-                if (thing is Mote || thing is Filth)
-                {
-                    continue;
-                }
-
-                if (thing.TryGetComp<CompUseEffect_SummonBoss>() != null)
-                {
-                    continue;
-                }
-
-                if (thing.def != null && thing.def.defName == "ABY_ArchonSigil")
-                {
-                    continue;
-                }
-
+                failReason = "ABY_BossSummonFail_EncounterActive".Translate();
                 return false;
             }
 
@@ -243,33 +303,40 @@ namespace AbyssalProtocol
             return 180;
         }
 
-        private bool TryPlaceSigilNearCircle(Pawn actor, Building_AbyssalSummoningCircle circle, IntVec3 preferredDropCell)
+        private bool TryPlaceSigilAtStagingCell(Pawn actor, Building_AbyssalSummoningCircle circle)
         {
             if (actor?.carryTracker?.CarriedThing == null || circle == null || circle.MapHeld != actor.MapHeld)
             {
                 return false;
             }
 
-            if (!TryFindSafeSigilPlacementCell(actor, circle, preferredDropCell, out IntVec3 dropCell))
+            IntVec3 dropCell = job.GetTarget(StagingInd).Cell;
+            if (!IsSafeSigilPlacementCell(dropCell, actor.MapHeld, GetCircleOccupiedRect(circle), actor))
+            {
+                if (!TryFindBestStagingCell(actor, circle, out dropCell))
+                {
+                    return false;
+                }
+
+                job.targetC = dropCell;
+            }
+
+            if (actor.PositionHeld != dropCell)
             {
                 return false;
             }
 
             Thing droppedThing;
-            if (actor.carryTracker.TryDropCarriedThing(dropCell, ThingPlaceMode.Direct, out droppedThing) ||
-                actor.carryTracker.TryDropCarriedThing(dropCell, ThingPlaceMode.Near, out droppedThing))
+            if (actor.carryTracker.TryDropCarriedThing(dropCell, ThingPlaceMode.Direct, out droppedThing) && droppedThing != null)
             {
-                if (droppedThing != null)
-                {
-                    job.targetA = droppedThing;
-                    return true;
-                }
+                job.targetA = droppedThing;
+                return true;
             }
 
             return false;
         }
 
-        private bool TryResolveSigilStagingCell(Pawn actor, Building_AbyssalSummoningCircle circle, out IntVec3 result)
+        private bool TryFindBestStagingCell(Pawn actor, Building_AbyssalSummoningCircle circle, out IntVec3 result)
         {
             result = IntVec3.Invalid;
             Map map = actor?.MapHeld;
@@ -278,74 +345,33 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
-
-            IntVec3 existing = job.GetTarget(StagingInd).Cell;
-            if (IsCircleEdgeSigilCell(existing, map, occupiedRect, actor) && CanActorReachCell(actor, existing))
-            {
-                result = existing;
-                return true;
-            }
-
+            CellRect occupiedRect = GetCircleOccupiedRect(circle);
+            IntVec3 origin = actor.PositionHeld;
+            int bestScore = int.MaxValue;
             IntVec3 interactionCell = circle.InteractionCell;
-            if (IsCircleEdgeSigilCell(interactionCell, map, occupiedRect, actor) && CanActorReachCell(actor, interactionCell))
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(circle.Position, 10.9f, true))
             {
-                result = interactionCell;
-                return true;
-            }
-
-            // Never use the pawn's current remote position as the staging cell. The staging cell must be
-            // on the outside rim of the circle so the sigil is visually and mechanically carried to the ritual site.
-            if (TryFindBestCircleEdgeCell(actor, circle, occupiedRect, out result))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool TryFindSafeSigilPlacementCell(Pawn actor, Building_AbyssalSummoningCircle circle, IntVec3 preferredCell, out IntVec3 result)
-        {
-            result = IntVec3.Invalid;
-            Map map = actor?.MapHeld;
-            if (map == null || circle == null || circle.def == null)
-            {
-                return false;
-            }
-
-            CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
-            if (IsCircleEdgeSigilCell(preferredCell, map, occupiedRect, actor))
-            {
-                result = preferredCell;
-                return true;
-            }
-
-            return TryFindBestCircleEdgeCell(actor, circle, occupiedRect, out result);
-        }
-
-        private bool TryFindBestCircleEdgeCell(Pawn actor, Building_AbyssalSummoningCircle circle, CellRect occupiedRect, out IntVec3 result)
-        {
-            result = IntVec3.Invalid;
-            Map map = actor?.MapHeld;
-            if (map == null || circle == null)
-            {
-                return false;
-            }
-
-            float bestScore = float.MaxValue;
-            CellRect searchRect = occupiedRect.ExpandedBy(2).ClipInsideMap(map);
-            foreach (IntVec3 cell in searchRect.Cells)
-            {
-                if (!IsCircleEdgeSigilCell(cell, map, occupiedRect, actor) || !CanActorReachCell(actor, cell))
+                if (!IsOuterRingCell(cell, occupiedRect))
                 {
                     continue;
                 }
 
-                // Must be close to the circle, but choose the side the pawn can reach most naturally.
-                float score = 0f;
-                score += cell.DistanceToSquared(actor.PositionHeld) * 1.0f;
-                score += cell.DistanceToSquared(circle.InteractionCell) * 0.65f;
-                score += cell.DistanceToSquared(circle.Position) * 0.18f;
+                if (!IsSafeSigilPlacementCell(cell, map, occupiedRect, actor))
+                {
+                    continue;
+                }
+
+                if (!actor.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                int score = cell.DistanceToSquared(origin) * 100 + cell.DistanceToSquared(circle.Position);
+                if (cell == interactionCell)
+                {
+                    score -= 4;
+                }
 
                 if (score < bestScore)
                 {
@@ -357,21 +383,32 @@ namespace AbyssalProtocol
             return result.IsValid;
         }
 
-        private bool IsCircleEdgeSigilCell(IntVec3 cell, Map map, CellRect occupiedRect, Pawn actor)
+        private CellRect GetCircleOccupiedRect(Building_AbyssalSummoningCircle circle)
         {
-            if (!IsSafeSigilPlacementCell(cell, map, occupiedRect, actor))
+            return GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
+        }
+
+        private bool IsOuterRingCell(IntVec3 cell, CellRect occupiedRect)
+        {
+            if (!cell.IsValid || occupiedRect.Contains(cell))
             {
                 return false;
             }
 
-            // ExpandedBy(1) minus occupiedRect means the cell is visually at the circle,
-            // but never inside/center of the circle footprint.
-            return occupiedRect.ExpandedBy(1).Contains(cell);
+            for (int i = 0; i < 4; i++)
+            {
+                if (occupiedRect.Contains(cell + GenAdj.CardinalDirections[i]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsSafeSigilPlacementCell(IntVec3 cell, Map map, CellRect occupiedRect, Pawn actor)
         {
-            if (!cell.IsValid || !cell.InBounds(map) || cell.Fogged(map) || occupiedRect.Contains(cell) || !cell.Standable(map))
+            if (!cell.IsValid || map == null || !cell.InBounds(map) || cell.Fogged(map) || occupiedRect.Contains(cell) || !cell.Standable(map))
             {
                 return false;
             }
@@ -382,22 +419,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Pawn firstPawn = cell.GetFirstPawn(map);
-            if (firstPawn != null && firstPawn != actor)
+            Pawn pawn = cell.GetFirstPawn(map);
+            if (pawn != null && pawn != actor)
             {
                 return false;
             }
 
             return true;
-        }
-
-        private bool CanActorReachCell(Pawn actor, IntVec3 cell)
-        {
-            return actor != null
-                && actor.MapHeld != null
-                && cell.IsValid
-                && cell.InBounds(actor.MapHeld)
-                && actor.CanReach(cell, PathEndMode.OnCell, Danger.Deadly);
         }
 
         private Thing ResolveUsableSigil(Pawn actor)
