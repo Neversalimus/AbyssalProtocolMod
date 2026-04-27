@@ -211,33 +211,23 @@ namespace AbyssalProtocol
             CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
 
             IntVec3 existing = job.GetTarget(StagingInd).Cell;
-            if (IsSafeSigilPlacementCell(existing, map, occupiedRect, actor) && CanActorReachCell(actor, existing))
+            if (IsCircleEdgeSigilCell(existing, map, occupiedRect, actor) && CanActorReachCell(actor, existing))
             {
                 result = existing;
                 return true;
             }
 
-            IntVec3 actorCell = actor.PositionHeld;
-            if (IsSafeSigilPlacementCell(actorCell, map, occupiedRect, actor))
-            {
-                result = actorCell;
-                return true;
-            }
-
-            if (TryFindClosestExternalCell(actor, circle, actorCell, occupiedRect, 8.9f, out result))
-            {
-                return true;
-            }
-
-            if (TryFindClosestExternalCell(actor, circle, circle.Position, occupiedRect, 9.9f, out result))
-            {
-                return true;
-            }
-
             IntVec3 interactionCell = circle.InteractionCell;
-            if (IsSafeSigilPlacementCell(interactionCell, map, occupiedRect, actor) && CanActorReachCell(actor, interactionCell))
+            if (IsCircleEdgeSigilCell(interactionCell, map, occupiedRect, actor) && CanActorReachCell(actor, interactionCell))
             {
                 result = interactionCell;
+                return true;
+            }
+
+            // Never use the pawn's current remote position as the staging cell. The staging cell must be
+            // on the outside rim of the circle so the sigil is visually and mechanically carried to the ritual site.
+            if (TryFindBestCircleEdgeCell(actor, circle, occupiedRect, out result))
+            {
                 return true;
             }
 
@@ -254,24 +244,16 @@ namespace AbyssalProtocol
             }
 
             CellRect occupiedRect = GenAdj.OccupiedRect(circle.Position, circle.Rotation, circle.def.Size);
-            if (IsSafeSigilPlacementCell(preferredCell, map, occupiedRect, actor))
+            if (IsCircleEdgeSigilCell(preferredCell, map, occupiedRect, actor))
             {
                 result = preferredCell;
                 return true;
             }
 
-            IntVec3 actorCell = actor.PositionHeld;
-            if (IsSafeSigilPlacementCell(actorCell, map, occupiedRect, actor))
-            {
-                result = actorCell;
-                return true;
-            }
-
-            return TryFindClosestExternalCell(actor, circle, actorCell, occupiedRect, 6.9f, out result)
-                || TryFindClosestExternalCell(actor, circle, circle.Position, occupiedRect, 8.9f, out result);
+            return TryFindBestCircleEdgeCell(actor, circle, occupiedRect, out result);
         }
 
-        private bool TryFindClosestExternalCell(Pawn actor, Building_AbyssalSummoningCircle circle, IntVec3 root, CellRect occupiedRect, float radius, out IntVec3 result)
+        private bool TryFindBestCircleEdgeCell(Pawn actor, Building_AbyssalSummoningCircle circle, CellRect occupiedRect, out IntVec3 result)
         {
             result = IntVec3.Invalid;
             Map map = actor?.MapHeld;
@@ -281,16 +263,20 @@ namespace AbyssalProtocol
             }
 
             float bestScore = float.MaxValue;
-            int maxCells = GenRadial.NumCellsInRadius(radius);
-            for (int i = 0; i < maxCells && i < GenRadial.RadialPattern.Length; i++)
+            CellRect searchRect = occupiedRect.ExpandedBy(2).ClipInsideMap(map);
+            foreach (IntVec3 cell in searchRect.Cells)
             {
-                IntVec3 cell = root + GenRadial.RadialPattern[i];
-                if (!IsSafeSigilPlacementCell(cell, map, occupiedRect, actor) || !CanActorReachCell(actor, cell))
+                if (!IsCircleEdgeSigilCell(cell, map, occupiedRect, actor) || !CanActorReachCell(actor, cell))
                 {
                     continue;
                 }
 
-                float score = cell.DistanceToSquared(actor.PositionHeld) * 1.7f + cell.DistanceToSquared(circle.Position) * 0.25f;
+                // Must be close to the circle, but choose the side the pawn can reach most naturally.
+                float score = 0f;
+                score += cell.DistanceToSquared(actor.PositionHeld) * 1.0f;
+                score += cell.DistanceToSquared(circle.InteractionCell) * 0.65f;
+                score += cell.DistanceToSquared(circle.Position) * 0.18f;
+
                 if (score < bestScore)
                 {
                     bestScore = score;
@@ -299,6 +285,18 @@ namespace AbyssalProtocol
             }
 
             return result.IsValid;
+        }
+
+        private bool IsCircleEdgeSigilCell(IntVec3 cell, Map map, CellRect occupiedRect, Pawn actor)
+        {
+            if (!IsSafeSigilPlacementCell(cell, map, occupiedRect, actor))
+            {
+                return false;
+            }
+
+            // ExpandedBy(1) minus occupiedRect means the cell is visually at the circle,
+            // but never inside/center of the circle footprint.
+            return occupiedRect.ExpandedBy(1).Contains(cell);
         }
 
         private bool IsSafeSigilPlacementCell(IntVec3 cell, Map map, CellRect occupiedRect, Pawn actor)
