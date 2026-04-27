@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+  <!-- Package 8: Research / Pattern Browser compatibility for large research-overhaul modpacks.
+       Goal: Abyssal Forge progression remains residue/boss-loop driven even when research tabs
+       are replaced or aggressively patched by VFE Tribals / ResearchPapers / Progression-like mods.
+       This patch intentionally avoids Reactor Saint, Dominion map generation, horde, weapons and jobs. -->
+
+  <!-- Forge recipes should be gated by Abyssal residue unlock extensions, not by fragile vanilla research prerequisites.
+       Conditional wrappers keep this patch silent if a given node is absent in another local build. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/RecipeDef[recipeUsers/li="ABY_AbyssalForge"]/researchPrerequisite</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/RecipeDef[recipeUsers/li="ABY_AbyssalForge"]/researchPrerequisite</xpath>
+    </match>
+  </Operation>
+
+  <!-- Some recipes are added to the forge through recipeUsers after implied defs/other patches.
+       This broader ABY_ fallback removes researchPrerequisite only from our own recipes. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/RecipeDef[starts-with(defName, "ABY_")]/researchPrerequisite</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/RecipeDef[starts-with(defName, "ABY_")]/researchPrerequisite</xpath>
+    </match>
+  </Operation>
+
+  <!-- Keep Abyssal research nodes lightweight for research-tree overhaul compatibility.
+       The nodes may remain visible, but chain prerequisites are removed so external finished-research caches
+       have fewer fragile cross-links to walk through. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[starts-with(defName, "ABY_")]/prerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ResearchProjectDef[starts-with(defName, "ABY_")]/prerequisites</xpath>
+    </match>
+  </Operation>
+
+  <!-- Building availability fallback: if a research overhaul breaks custom research tabs, core Abyssal buildings
+       should not disappear from the colony's progression loop. Actual power/cost/progression requirements remain. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="ABY_AbyssalForge" or defName="ABY_SummoningCircle"]/researchPrerequisites</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ThingDef[defName="ABY_AbyssalForge" or defName="ABY_SummoningCircle"]/researchPrerequisites</xpath>
+    </match>
+  </Operation>
+
+  <!-- If the Abyssal research tab itself exists, keep it harmlessly rooted in vanilla UI data. This does not add
+       any hard dependency; it only normalizes optional metadata for modpacks that inspect all ResearchProjectDefs. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ResearchProjectDef[starts-with(defName, "ABY_") and not(techLevel)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ResearchProjectDef[starts-with(defName, "ABY_") and not(techLevel)]</xpath>
+      <value>
+        <techLevel>Spacer</techLevel>
+      </value>
+    </match>
+  </Operation>
+
+</Patch>
