@@ -9,7 +9,7 @@ namespace AbyssalProtocol
 {
     public class RiftBladeDashGameComponent : GameComponent
     {
-        private const int ScanIntervalTicks = 12;
+        private const int ScanIntervalTicks = 30;
 
         private static readonly IntVec3[] AdjacentOffsets =
         {

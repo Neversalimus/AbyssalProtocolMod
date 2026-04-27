@@ -36,7 +36,7 @@ namespace AbyssalProtocol
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            ABY_LargeModpackHotfixBUtility.EnsureDominionGateFriendly(this);
+            ABY_DominionTargetUtility.MakeDominionPortalFriendly(this);
 
             if (pulseSeed == 0)
             {
@@ -49,12 +49,6 @@ namespace AbyssalProtocol
             base.ExposeData();
             Scribe_Values.Look(ref sessionId, "sessionId");
             Scribe_Values.Look(ref pulseSeed, "pulseSeed", 0);
-        }
-
-        protected override void Tick()
-        {
-            base.Tick();
-            ABY_LargeModpackHotfixBUtility.EnsureDominionGateFriendly(this);
         }
 
         public override AcceptanceReport ClaimableBy(Faction by)

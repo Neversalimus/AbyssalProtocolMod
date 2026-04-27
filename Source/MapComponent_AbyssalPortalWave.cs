@@ -2024,6 +2024,89 @@ namespace AbyssalProtocol
                     new TargetInfo(gate.PositionHeld, map),
                     MessageTypeDefOf.PositiveEvent);
             }
+
+            TryForceCompleteStaleHorde(true, "command gate collapsed with no active portals or combat-capable abyssal pawns");
+        }
+
+        public bool TryForceCompleteStaleHorde(bool allowQueuedPortals, string reason)
+        {
+            if (!activeHordeWave)
+            {
+                return false;
+            }
+
+            if (!allowQueuedPortals && queuedPortals != null && queuedPortals.Count > 0)
+            {
+                return false;
+            }
+
+            if (activeCommandGate != null && activeCommandGate.Spawned && !activeCommandGate.Destroyed)
+            {
+                return false;
+            }
+
+            if (HasActiveAbyssalPortalsOnMap() || HasLiveCombatCapableAbyssalPawnsOnMap())
+            {
+                return false;
+            }
+
+            int discarded = queuedPortals != null ? queuedPortals.Count : 0;
+            queuedPortals?.Clear();
+            ResetWave();
+            ABY_LogThrottleUtility.Message(
+                "horde-hard-stop-" + (map != null ? map.uniqueID.ToString() : "unknown"),
+                "[Abyssal Protocol] Horde hard-stop completed a stale horde encounter" + (discarded > 0 ? " and discarded " + discarded + " hidden queued portal requests" : string.Empty) + (reason.NullOrEmpty() ? "." : ": " + reason),
+                2500);
+            return true;
+        }
+
+        private bool HasActiveAbyssalPortalsOnMap()
+        {
+            if (map?.listerThings?.AllThings == null)
+            {
+                return false;
+            }
+
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned || thing.def == null)
+                {
+                    continue;
+                }
+
+                if (ABY_DominionTargetUtility.IsHostileHordePortal(thing))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HasLiveCombatCapableAbyssalPawnsOnMap()
+        {
+            if (map?.mapPawns == null)
+            {
+                return false;
+            }
+
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawns[i]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void ResetWave()

@@ -58,7 +58,7 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
-                Log.Warning("[Abyssal Protocol] Anti-tame race normalization failed: " + ex.Message);
+                ABY_LogThrottleUtility.Warning("anti-tame-normalize", "[Abyssal Protocol] Anti-tame race normalization failed: " + ex.Message, 5000);
             }
         }
 
@@ -127,7 +127,7 @@ namespace AbyssalProtocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning("[Abyssal Protocol] Could not remove abyssal animal designation: " + ex.Message);
+                    ABY_LogThrottleUtility.Warning("anti-tame-designation", "[Abyssal Protocol] Could not remove abyssal animal designation: " + ex.Message, 5000);
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace AbyssalProtocol
                 }
                 catch (Exception ex)
                 {
-                    Log.Warning("[Abyssal Protocol] Could not cancel abyssal animal workflow job: " + ex.Message);
+                    ABY_LogThrottleUtility.Warning("anti-tame-job", "[Abyssal Protocol] Could not cancel abyssal animal workflow job: " + ex.Message, 5000);
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace AbyssalProtocol
                     }
                     catch (Exception ex)
                     {
-                        Log.Warning("[Abyssal Protocol] Could not restore abyssal pawn faction for " + SafePawnLabel(pawn) + ": " + ex.Message);
+                        ABY_LogThrottleUtility.Warning("anti-tame-faction-" + (pawn?.thingIDNumber.ToString() ?? "unknown"), "[Abyssal Protocol] Could not restore abyssal pawn faction for " + SafePawnLabel(pawn) + ": " + ex.Message, 5000);
                     }
                 }
             }
@@ -236,6 +236,36 @@ namespace AbyssalProtocol
             string raceName = pawn.def?.defName ?? string.Empty;
             return kindName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase)
                 || raceName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool IsLiveCombatCapableAbyssalPawn(Pawn pawn)
+        {
+            if (!IsAbyssalPawn(pawn))
+            {
+                return false;
+            }
+
+            if (pawn == null || pawn.Dead || pawn.Destroyed || !pawn.Spawned || pawn.Downed)
+            {
+                return false;
+            }
+
+            if (pawn.InMentalState || pawn.health?.capacities == null)
+            {
+                return false;
+            }
+
+            if (!pawn.health.capacities.CapableOf(PawnCapacityDefOf.Moving) || !pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation))
+            {
+                return false;
+            }
+
+            if (pawn.Faction == Faction.OfPlayer)
+            {
+                return false;
+            }
+
+            return pawn.Faction == null || Faction.OfPlayer == null || pawn.Faction.HostileTo(Faction.OfPlayer);
         }
 
         public static bool IsAbyssalRaceDef(ThingDef def)

@@ -1539,7 +1539,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ABY_LargeModpackHotfixBUtility.TryHardStopStaleHorde(map, "active-encounter-check");
+            map.GetComponent<MapComponent_AbyssalPortalWave>()?.TryForceCompleteStaleHorde(true, "pre-summon active encounter check");
 
             MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
             if (dominionCrisis != null && dominionCrisis.IsActive)
@@ -1557,13 +1557,12 @@ namespace AbyssalProtocol
             {
                 foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
                 {
-                    if (pawn == null || pawn.Destroyed || pawn.Dead)
+                    if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.Downed)
                     {
                         continue;
                     }
 
-                    if (IsActiveEncounterPawn(pawn.def?.defName)
-                        && ABY_LargeModpackHotfixBUtility.IsLiveCombatCapableAbyssalEncounterPawn(pawn))
+                    if (IsActiveEncounterPawn(pawn.def?.defName) && ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawn))
                     {
                         return true;
                     }

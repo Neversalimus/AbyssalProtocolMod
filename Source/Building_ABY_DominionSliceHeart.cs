@@ -23,6 +23,7 @@ namespace AbyssalProtocol
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
+            ABY_DominionTargetUtility.MakeDominionAnchorHostile(this);
             if (!respawningAfterLoad && Find.TickManager != null)
             {
                 nextPulseTick = Find.TickManager.TicksGame + Rand.RangeInclusive(90, 180);

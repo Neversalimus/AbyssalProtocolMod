@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Linq;
 using RimWorld;
-using RimWorld.Planet;
 using Verse;
 
 namespace AbyssalProtocol
@@ -13,6 +13,50 @@ namespace AbyssalProtocol
     /// </summary>
     public static class AbyssalDominionSterileMapUtility
     {
+        public static bool IsDominionSliceMap(Map map)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            if (MapComponent_ABY_SterileAbyssalMap.IsSterile(map))
+            {
+                return true;
+            }
+
+            string parentDefName = map.Parent?.def?.defName ?? string.Empty;
+            if (string.Equals(parentDefName, "ABY_DominionSliceSite", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            string generatorDefName = ResolveGeneratorDefName(map);
+            return string.Equals(generatorDefName, "ABY_DominionSlicePocketMap", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string ResolveGeneratorDefName(Map map)
+        {
+            try
+            {
+                FieldInfo field = typeof(Map).GetField("generatorDef", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (field != null && field.GetValue(map) is Def def)
+                {
+                    return def.defName ?? string.Empty;
+                }
+            }
+            catch
+            {
+            }
+
+            return string.Empty;
+        }
+
+        public static bool ShouldSkipExternalMapGeneratedDepositLogic(Map map)
+        {
+            return IsDominionSliceMap(map);
+        }
+
         public static void MarkAndSanitizeAfterGeneration(Map map)
         {
             if (map == null)
@@ -133,7 +177,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!MapComponent_ABY_SterileAbyssalMap.IsSterile(map))
+            if (!IsDominionSliceMap(map))
             {
                 return false;
             }
@@ -211,40 +255,6 @@ namespace AbyssalProtocol
             IntVec3 cell = thing.PositionHeld;
             return cell.x <= 20 || cell.z <= 20 || cell.x >= map.Size.x - 21 || cell.z >= map.Size.z - 21
                 || cell.DistanceTo(map.Center) <= 18f;
-        }
-
-        public static bool ShouldSuppressExternalMapGeneration(Map map)
-        {
-            return IsDominionSliceMap(map) || MapComponent_ABY_SterileAbyssalMap.IsSterile(map);
-        }
-
-        public static bool IsDominionSliceMap(Map map)
-        {
-            if (map == null)
-            {
-                return false;
-            }
-
-            if (MapComponent_ABY_SterileAbyssalMap.IsSterile(map))
-            {
-                return true;
-            }
-
-            WorldObject parent = map.Parent;
-            if (parent == null)
-            {
-                return false;
-            }
-
-            string defName = parent.def?.defName ?? string.Empty;
-            if (defName.IndexOf("DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("ABY_DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-
-            string typeName = parent.GetType().FullName ?? parent.GetType().Name ?? string.Empty;
-            return typeName.IndexOf("DominionSlice", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static string SafeThingDefName(Thing thing)

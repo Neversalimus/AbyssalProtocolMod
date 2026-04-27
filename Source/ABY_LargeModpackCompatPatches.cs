@@ -1,315 +1,201 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using RimWorld;
 using Verse;
+using Verse.AI;
 
 namespace AbyssalProtocol
 {
     [StaticConstructorOnStartup]
     public static class ABY_LargeModpackCompatPatches
     {
-        private static bool installAttempted;
+        private static readonly MethodInfo HarmonyPatchMethod;
+        private static readonly ConstructorInfo HarmonyMethodCtor;
+        private static readonly object HarmonyInstance;
 
         static ABY_LargeModpackCompatPatches()
         {
-            TryInstall();
-        }
-
-        public static void TryInstall()
-        {
-            if (installAttempted)
-            {
-                return;
-            }
-
-            installAttempted = true;
-
-            Type harmonyType = Type.GetType("HarmonyLib.Harmony, 0Harmony");
-            Type harmonyMethodType = Type.GetType("HarmonyLib.HarmonyMethod, 0Harmony");
-            if (harmonyType == null || harmonyMethodType == null)
-            {
-                Log.Message("[Abyssal Protocol] Package 13 optional Harmony compat patches skipped: HarmonyLib was not available by reflection.");
-                return;
-            }
-
-            object harmony;
             try
             {
-                harmony = Activator.CreateInstance(harmonyType, "abyssalprotocol.large_modpack_hotfix_b.package13");
+                Type harmonyType = ResolveType("HarmonyLib.Harmony");
+                Type harmonyMethodType = ResolveType("HarmonyLib.HarmonyMethod");
+                if (harmonyType == null || harmonyMethodType == null)
+                {
+                    return;
+                }
+
+                HarmonyInstance = Activator.CreateInstance(harmonyType, "AbyssalProtocol.large_modpack_hotfixes");
+                HarmonyMethodCtor = harmonyMethodType.GetConstructor(new[] { typeof(MethodInfo) });
+                HarmonyPatchMethod = harmonyType.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                    .FirstOrDefault(m => m.Name == "Patch" && m.GetParameters().Length == 5)
+                    ?? harmonyType.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                        .FirstOrDefault(m => m.Name == "Patch" && m.GetParameters().Length == 6);
+
+                if (HarmonyInstance == null || HarmonyMethodCtor == null || HarmonyPatchMethod == null)
+                {
+                    return;
+                }
+
+                TryPatchFinalizer(typeof(ThinkNode_TraitBehaviors), "TryIssueJobPackage", nameof(ThinkNodeTraitBehaviorsFinalizer));
+                TryPatchFinalizer(typeof(ThinkNode_ConditionalNeedPercentageAbove), "TryIssueJobPackage", nameof(ThinkNodeNeedPercentageFinalizer));
+                TryPatchPostfix(typeof(JobGiver_AIGotoNearestHostile), "TryGiveJob", nameof(AIGotoNearestHostilePostfix));
+                TryPatchPrefix("VHelixienGasE.HelixienGasHandler", "MapGenerated", nameof(HelixienGasMapGeneratedPrefix));
             }
             catch (Exception ex)
             {
-                Log.Warning("[Abyssal Protocol] Package 13 optional Harmony compat patches could not create Harmony instance: " + ex.Message);
-                return;
-            }
-
-            int helixienPatched = TryPatchHelixienGasGeneration(harmony, harmonyType, harmonyMethodType);
-            bool thinkNodePatched = TryPatchThinkNodeTraitBehaviors(harmony, harmonyType, harmonyMethodType);
-
-            if (helixienPatched > 0 || thinkNodePatched)
-            {
-                Log.Message("[Abyssal Protocol] Package 13 optional compat patches active. Helixien gas methods: " + helixienPatched + "; ThinkNode_TraitBehaviors guard: " + thinkNodePatched + ".");
+                ABY_LogThrottleUtility.Warning("compat-init", "[Abyssal Protocol] Large modpack compat patches could not initialize: " + ex.GetType().Name + ": " + ex.Message, 5000);
             }
         }
 
-        public static bool HelixienGasSterileMapPrefix(object[] __args)
+        public static Exception ThinkNodeTraitBehaviorsFinalizer(Exception __exception, object[] __args, ref ThinkResult __result)
         {
-            Map map = FindMapArgument(__args);
-            if (AbyssalDominionSterileMapUtility.ShouldSuppressExternalMapGeneration(map))
+            return SuppressThinkNodeExceptionForAbyssalPawn(__exception, __args, ref __result, "ThinkNode_TraitBehaviors");
+        }
+
+        public static Exception ThinkNodeNeedPercentageFinalizer(Exception __exception, object[] __args, ref ThinkResult __result)
+        {
+            return SuppressThinkNodeExceptionForAbyssalPawn(__exception, __args, ref __result, "ThinkNode_ConditionalNeedPercentageAbove");
+        }
+
+        public static void AIGotoNearestHostilePostfix(Pawn pawn, ref Job __result)
+        {
+            ABY_AbyssalJobLoopGuardUtility.StabilizeAIGotoNearestHostileResult(pawn, ref __result);
+        }
+
+        public static bool HelixienGasMapGeneratedPrefix(object __instance)
+        {
+            Map map = ResolveMapFromComponent(__instance);
+            if (AbyssalDominionSterileMapUtility.ShouldSkipExternalMapGeneratedDepositLogic(map))
             {
+                map.GetComponent<MapComponent_ABY_SterileAbyssalMap>()?.MarkSterileDominionPocket();
+                ABY_LogThrottleUtility.Message("helixien-skip-dominion", "[Abyssal Protocol] Skipped Helixien Gas deposit generation on a sterile dominion slice map.", 5000);
                 return false;
             }
 
             return true;
         }
 
-        public static Exception ThinkNodeTraitBehaviorsFinalizer(Exception __exception, object[] __args)
+        private static Exception SuppressThinkNodeExceptionForAbyssalPawn(Exception exception, object[] args, ref ThinkResult result, string source)
         {
-            if (__exception == null)
+            if (exception == null)
             {
                 return null;
             }
 
-            Pawn pawn = FindPawnArgument(__args);
-            if (ABY_LargeModpackHotfixBUtility.IsAbyssalPawn(pawn))
+            Pawn pawn = args != null && args.Length > 0 ? args[0] as Pawn : null;
+            if (!ABY_AntiTameUtility.IsAbyssalPawn(pawn))
             {
-                Log.Warning("[Abyssal Protocol] Package 13 suppressed ThinkNode_TraitBehaviors exception for abyssal pawn " + SafePawnLabel(pawn) + ": " + __exception.GetType().Name + " - " + __exception.Message);
-                return null;
+                return exception;
             }
 
-            return __exception;
+            result = ThinkResult.NoJob;
+            string pawnKey = pawn != null ? pawn.thingIDNumber.ToString() : "unknown";
+            ABY_LogThrottleUtility.Warning(
+                "thinknode-suppressed-" + source + "-" + pawnKey,
+                "[Abyssal Protocol] Suppressed " + source + " exception for abyssal pawn " + (pawn?.LabelShortCap ?? "unknown") + ": " + exception.GetType().Name + " - " + exception.Message,
+                5000);
+            return null;
         }
 
-        private static int TryPatchHelixienGasGeneration(object harmony, Type harmonyType, Type harmonyMethodType)
+        private static void TryPatchFinalizer(Type targetType, string methodName, string finalizerName)
         {
-            MethodInfo prefix = typeof(ABY_LargeModpackCompatPatches).GetMethod(nameof(HelixienGasSterileMapPrefix), BindingFlags.Static | BindingFlags.Public);
-            if (prefix == null)
+            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            MethodInfo finalizer = typeof(ABY_LargeModpackCompatPatches).GetMethod(finalizerName, BindingFlags.Static | BindingFlags.Public);
+            if (original == null || finalizer == null)
             {
-                return 0;
+                return;
             }
 
-            int patched = 0;
-            HashSet<MethodBase> seen = new HashSet<MethodBase>();
+            InvokeHarmonyPatch(original, null, null, finalizer);
+        }
+
+        private static void TryPatchPostfix(Type targetType, string methodName, string postfixName)
+        {
+            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            MethodInfo postfix = typeof(ABY_LargeModpackCompatPatches).GetMethod(postfixName, BindingFlags.Static | BindingFlags.Public);
+            if (original == null || postfix == null)
+            {
+                return;
+            }
+
+            InvokeHarmonyPatch(original, null, postfix, null);
+        }
+
+        private static void TryPatchPrefix(string targetTypeName, string methodName, string prefixName)
+        {
+            Type targetType = ResolveType(targetTypeName);
+            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            MethodInfo prefix = typeof(ABY_LargeModpackCompatPatches).GetMethod(prefixName, BindingFlags.Static | BindingFlags.Public);
+            if (original == null || prefix == null)
+            {
+                return;
+            }
+
+            InvokeHarmonyPatch(original, prefix, null, null);
+        }
+
+        private static void InvokeHarmonyPatch(MethodInfo original, MethodInfo prefix, MethodInfo postfix, MethodInfo finalizer)
+        {
+            object prefixHm = prefix != null ? HarmonyMethodCtor.Invoke(new object[] { prefix }) : null;
+            object postfixHm = postfix != null ? HarmonyMethodCtor.Invoke(new object[] { postfix }) : null;
+            object finalizerHm = finalizer != null ? HarmonyMethodCtor.Invoke(new object[] { finalizer }) : null;
+            ParameterInfo[] parameters = HarmonyPatchMethod.GetParameters();
+            if (parameters.Length == 6)
+            {
+                HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm, null });
+                return;
+            }
+
+            HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm });
+        }
+
+        private static Type ResolveType(string fullName)
+        {
+            if (fullName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            Type direct = Type.GetType(fullName + ", 0Harmony") ?? Type.GetType(fullName);
+            if (direct != null)
+            {
+                return direct;
+            }
+
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
             for (int i = 0; i < assemblies.Length; i++)
             {
-                Assembly assembly = assemblies[i];
-                if (assembly == null || !AssemblyLooksHelixienRelated(assembly))
+                Type type = assemblies[i].GetType(fullName, false);
+                if (type != null)
                 {
-                    continue;
-                }
-
-                Type[] types;
-                try
-                {
-                    types = assembly.GetTypes();
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    types = ex.Types.Where(t => t != null).ToArray();
-                }
-                catch
-                {
-                    continue;
-                }
-
-                for (int t = 0; t < types.Length; t++)
-                {
-                    Type type = types[t];
-                    if (type == null || !TypeLooksHelixienRelated(type))
-                    {
-                        continue;
-                    }
-
-                    MethodInfo[] methods;
-                    try
-                    {
-                        methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-
-                    for (int m = 0; m < methods.Length; m++)
-                    {
-                        MethodInfo method = methods[m];
-                        if (!LooksLikeHelixienMapGenerationMethod(method) || seen.Contains(method))
-                        {
-                            continue;
-                        }
-
-                        if (TryPatch(harmony, harmonyType, harmonyMethodType, method, prefix, null))
-                        {
-                            seen.Add(method);
-                            patched++;
-                        }
-                    }
+                    return type;
                 }
             }
 
-            return patched;
+            return null;
         }
 
-        private static bool TryPatchThinkNodeTraitBehaviors(object harmony, Type harmonyType, Type harmonyMethodType)
+        private static Map ResolveMapFromComponent(object component)
         {
-            Type type = Type.GetType("RimWorld.ThinkNode_TraitBehaviors, Assembly-CSharp");
-            if (type == null)
-            {
-                return false;
-            }
-
-            MethodInfo original = type.GetMethod("TryIssueJobPackage", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            MethodInfo finalizer = typeof(ABY_LargeModpackCompatPatches).GetMethod(nameof(ThinkNodeTraitBehaviorsFinalizer), BindingFlags.Static | BindingFlags.Public);
-            if (original == null || finalizer == null)
-            {
-                return false;
-            }
-
-            return TryPatch(harmony, harmonyType, harmonyMethodType, original, null, finalizer);
-        }
-
-        private static bool TryPatch(object harmony, Type harmonyType, Type harmonyMethodType, MethodBase original, MethodInfo prefix, MethodInfo finalizer)
-        {
-            if (harmony == null || harmonyType == null || harmonyMethodType == null || original == null)
-            {
-                return false;
-            }
-
-            try
-            {
-                MethodInfo patchMethod = harmonyType.GetMethods(BindingFlags.Instance | BindingFlags.Public)
-                    .FirstOrDefault(m => m.Name == "Patch" && m.GetParameters().Length >= 2 && m.GetParameters()[0].ParameterType == typeof(MethodBase));
-                if (patchMethod == null)
-                {
-                    return false;
-                }
-
-                object prefixHarmonyMethod = prefix != null ? Activator.CreateInstance(harmonyMethodType, prefix) : null;
-                object finalizerHarmonyMethod = finalizer != null ? Activator.CreateInstance(harmonyMethodType, finalizer) : null;
-
-                ParameterInfo[] parameters = patchMethod.GetParameters();
-                object[] args = new object[parameters.Length];
-                args[0] = original;
-                for (int i = 1; i < args.Length; i++)
-                {
-                    string name = parameters[i].Name ?? string.Empty;
-                    if (string.Equals(name, "prefix", StringComparison.OrdinalIgnoreCase))
-                    {
-                        args[i] = prefixHarmonyMethod;
-                    }
-                    else if (string.Equals(name, "finalizer", StringComparison.OrdinalIgnoreCase))
-                    {
-                        args[i] = finalizerHarmonyMethod;
-                    }
-                    else
-                    {
-                        args[i] = null;
-                    }
-                }
-
-                patchMethod.Invoke(harmony, args);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Log.Warning("[Abyssal Protocol] Package 13 optional compat patch failed for " + original.DeclaringType?.FullName + "." + original.Name + ": " + ex.Message);
-                return false;
-            }
-        }
-
-        private static bool AssemblyLooksHelixienRelated(Assembly assembly)
-        {
-            string name = assembly.GetName().Name ?? string.Empty;
-            return name.IndexOf("Helixien", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Gas", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("VFEPower", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("VanillaExpanded", StringComparison.OrdinalIgnoreCase) >= 0;
-        }
-
-        private static bool TypeLooksHelixienRelated(Type type)
-        {
-            string name = type.FullName ?? type.Name ?? string.Empty;
-            return name.IndexOf("Helixien", StringComparison.OrdinalIgnoreCase) >= 0
-                || (name.IndexOf("Gas", StringComparison.OrdinalIgnoreCase) >= 0 && name.IndexOf("Deposit", StringComparison.OrdinalIgnoreCase) >= 0)
-                || (name.IndexOf("Gas", StringComparison.OrdinalIgnoreCase) >= 0 && name.IndexOf("Gen", StringComparison.OrdinalIgnoreCase) >= 0);
-        }
-
-        private static bool LooksLikeHelixienMapGenerationMethod(MethodInfo method)
-        {
-            if (method == null || method.IsAbstract || method.ContainsGenericParameters)
-            {
-                return false;
-            }
-
-            ParameterInfo[] parameters = method.GetParameters();
-            bool hasMap = parameters.Any(p => p.ParameterType == typeof(Map));
-            if (!hasMap)
-            {
-                return false;
-            }
-
-            string name = method.Name ?? string.Empty;
-            string full = (method.DeclaringType?.FullName ?? string.Empty) + "." + name;
-            if (full.IndexOf("Helixien", StringComparison.OrdinalIgnoreCase) < 0 && full.IndexOf("Gas", StringComparison.OrdinalIgnoreCase) < 0)
-            {
-                return false;
-            }
-
-            return name.IndexOf("MapGenerated", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Generate", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Spawn", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Deposit", StringComparison.OrdinalIgnoreCase) >= 0
-                || name.IndexOf("Gas", StringComparison.OrdinalIgnoreCase) >= 0;
-        }
-
-        private static Map FindMapArgument(object[] args)
-        {
-            if (args == null)
+            if (component == null)
             {
                 return null;
             }
 
-            for (int i = 0; i < args.Length; i++)
+            Type type = component.GetType();
+            while (type != null)
             {
-                if (args[i] is Map map)
+                FieldInfo field = type.GetField("map", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (field != null && field.GetValue(component) is Map map)
                 {
                     return map;
                 }
+
+                type = type.BaseType;
             }
 
             return null;
-        }
-
-        private static Pawn FindPawnArgument(object[] args)
-        {
-            if (args == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < args.Length; i++)
-            {
-                if (args[i] is Pawn pawn)
-                {
-                    return pawn;
-                }
-            }
-
-            return null;
-        }
-
-        private static string SafePawnLabel(Pawn pawn)
-        {
-            try
-            {
-                return pawn?.LabelShortCap ?? pawn?.def?.defName ?? "unknown pawn";
-            }
-            catch
-            {
-                return "unknown pawn";
-            }
         }
     }
 }

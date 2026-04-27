@@ -14,7 +14,7 @@ namespace AbyssalProtocol
         private const string PulseSoundDefName = "ABY_SpecterLashPulse";
         private const string TailSoundDefName = "ABY_SpecterLashTail";
 
-        private const int VisualIntervalTicks = 1;
+        private const int VisualIntervalTicks = 2;
         private const int DamageIntervalTicks = 10;
         private const int PawnStreamDurationTicks = 90;
         private const int PointStreamDurationTicks = 24;
@@ -160,7 +160,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (ticksGame % VisualIntervalTicks == 0)
+                int visualInterval = GetVisualIntervalTicks();
+                if (ticksGame % visualInterval == 0)
                 {
                     SpawnBeamVisuals(map, source, stream.staticTargetPos, stream.seed, ticksGame, target != null);
                 }
@@ -171,6 +172,38 @@ namespace AbyssalProtocol
                     stream.nextDamageTick = ticksGame + DamageIntervalTicks;
                 }
             }
+        }
+
+        private int GetVisualIntervalTicks()
+        {
+            int count = activeStreams != null ? activeStreams.Count : 0;
+            if (count >= 6)
+            {
+                return 4;
+            }
+
+            if (count >= 3)
+            {
+                return 3;
+            }
+
+            return VisualIntervalTicks;
+        }
+
+        private int GetSegmentCap()
+        {
+            int count = activeStreams != null ? activeStreams.Count : 0;
+            if (count >= 6)
+            {
+                return 6;
+            }
+
+            if (count >= 3)
+            {
+                return 8;
+            }
+
+            return 10;
         }
 
         private void EnsureDefsLoaded()
@@ -305,7 +338,7 @@ namespace AbyssalProtocol
             sourcePos += normal * EndpointInset;
             targetPos -= normal * EndpointInset;
 
-            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 3.4f), 9, 18);
+            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 2.15f), 5, GetSegmentCap());
             float amplitude = Mathf.Lerp(BaseAmplitude, MaxAmplitude, Mathf.Clamp01(distance / 14f));
             float phaseBase = ticksGame * 0.47f + seed * 0.019f;
 
@@ -324,7 +357,7 @@ namespace AbyssalProtocol
                 MoteMaker.MakeStaticMote(point, map, blobMoteDef, outerScale);
                 MoteMaker.MakeStaticMote(point + new Vector3(0f, 0.0035f, 0f), map, coreMoteDef, coreScale);
 
-                if (sparkMoteDef != null && i > 0 && i < segmentCount - 1 && ((i + ticksGame + seed) % 2 == 0))
+                if (sparkMoteDef != null && i > 0 && i < segmentCount - 1 && segmentCount <= 8 && ((i + ticksGame + seed) % 3 == 0))
                 {
                     Vector3 sparkPoint = point + perpendicular * (sway * 0.22f);
                     sparkPoint.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + 0.002f;
