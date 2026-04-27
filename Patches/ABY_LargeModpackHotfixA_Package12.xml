@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Patch>
 
-  <!-- Runtime UI mods such as RimHUD/Discoveries can fail to load About/ModIcon through ContentFinder.
-       Keep About/ModIcon for Workshop, but use a real Textures/ path for the faction icon. -->
-  <Operation Class="PatchOperationReplace">
+  <!--
+    Package 14B XML hygiene fix.
+    The previous version did Replace + Add. When factionIconPath already existed,
+    the Add operation targeted no nodes and RimWorld logged a patch failure.
+    This conditional keeps the icon path stable without producing a failed Add.
+  -->
+  <Operation Class="PatchOperationConditional">
     <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost"]/factionIconPath</xpath>
-    <value>
-      <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
-    </value>
-  </Operation>
-
-  <Operation Class="PatchOperationAdd">
-    <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost" and not(factionIconPath)]</xpath>
-    <value>
-      <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
-    </value>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost"]/factionIconPath</xpath>
+      <value>
+        <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
+      </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/FactionDef[defName="ABY_AbyssalHost"]</xpath>
+      <value>
+        <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
+      </value>
+    </nomatch>
   </Operation>
 
 </Patch>
