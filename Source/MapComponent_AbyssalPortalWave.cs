@@ -1076,14 +1076,45 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Building_AbyssalImpPortal portal = ThingMaker.MakeThing(portalDef) as Building_AbyssalImpPortal;
-            if (portal == null)
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(
+                    portalDef,
+                    cell,
+                    map,
+                    out Thing spawnedThing,
+                    null,
+                    Rot4.Random,
+                    WipeMode.Vanish,
+                    false,
+                    false,
+                    "portal wave imp portal spawn"))
             {
                 return false;
             }
 
-            GenSpawn.Spawn(portal, cell, map, Rot4.Random);
-            portal.Initialize(waveFaction, pawnKindDef, spawnCount, warmupTicks, spawnIntervalTicks, lingerTicks);
+            Building_AbyssalImpPortal portal = spawnedThing as Building_AbyssalImpPortal;
+            if (portal == null)
+            {
+                if (spawnedThing != null && !spawnedThing.Destroyed)
+                {
+                    spawnedThing.Destroy(DestroyMode.Vanish);
+                }
+                return false;
+            }
+
+            try
+            {
+                portal.Initialize(waveFaction, pawnKindDef, spawnCount, warmupTicks, spawnIntervalTicks, lingerTicks);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Portal wave initialization failed: " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+                if (!portal.Destroyed)
+                {
+                    portal.Destroy(DestroyMode.Vanish);
+                }
+                return false;
+            }
+
             return true;
         }
 
@@ -1864,15 +1895,45 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Building_AbyssalHordeCommandGate gate = ThingMaker.MakeThing(gateDef) as Building_AbyssalHordeCommandGate;
-            if (gate == null)
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(
+                    gateDef,
+                    cell,
+                    map,
+                    out Thing spawnedThing,
+                    null,
+                    Rot4.Random,
+                    WipeMode.Vanish,
+                    false,
+                    false,
+                    "horde command gate spawn"))
             {
                 return false;
             }
 
-            GenSpawn.Spawn(gate, cell, map, Rot4.Random);
-            gate.SetFaction(waveFaction);
-            gate.Initialize(hordePlan.CommandGateReservedBursts, hordePlan.CommandGateCadenceFactor, hordePlan.CommandGateHitPoints, AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan), activeHordeRewardSnapshot);
+            Building_AbyssalHordeCommandGate gate = spawnedThing as Building_AbyssalHordeCommandGate;
+            if (gate == null)
+            {
+                if (spawnedThing != null && !spawnedThing.Destroyed)
+                {
+                    spawnedThing.Destroy(DestroyMode.Vanish);
+                }
+                return false;
+            }
+
+            try
+            {
+                gate.SetFaction(waveFaction);
+                gate.Initialize(hordePlan.CommandGateReservedBursts, hordePlan.CommandGateCadenceFactor, hordePlan.CommandGateHitPoints, AbyssalHordeSigilUtility.GetDoctrineLabel(hordePlan), activeHordeRewardSnapshot);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Horde command gate initialization failed: " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+                if (!gate.Destroyed)
+                {
+                    gate.Destroy(DestroyMode.Vanish);
+                }
+                return false;
+            }
 
             activeCommandGate = gate;
             activeCommandFrontIndex = Mathf.Max(0, commandFrontIndex);

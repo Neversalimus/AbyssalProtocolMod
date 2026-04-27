@@ -117,14 +117,50 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!ABY_Phase2PortalUtility.TryGenerateImp(impKindDef, portalFaction, Map, out Pawn imp))
+            Pawn imp;
+            try
             {
+                if (!ABY_Phase2PortalUtility.TryGenerateImp(impKindDef, portalFaction, Map, out imp))
+                {
+                    impsRemaining--;
+                    return;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Portal pawn generation failed: " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
                 impsRemaining--;
                 return;
             }
 
-            GenSpawn.Spawn(imp, spawnCell, Map, Rot4.Random);
-            ABY_Phase2PortalUtility.GiveAssaultLord(imp);
+            if (!ABY_SafeSpawnUtility.TrySpawnPawnSafe(
+                    imp,
+                    spawnCell,
+                    Map,
+                    out Pawn spawnedImp,
+                    Rot4.Random,
+                    WipeMode.Vanish,
+                    false,
+                    false,
+                    "abyssal imp portal pawn spawn"))
+            {
+                if (imp != null && !imp.Destroyed && !imp.Spawned)
+                {
+                    imp.Destroy(DestroyMode.Vanish);
+                }
+                impsRemaining--;
+                return;
+            }
+
+            try
+            {
+                ABY_Phase2PortalUtility.GiveAssaultLord(spawnedImp);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Portal pawn lord assignment failed: " + ex.GetType().Name + ": " + ex.Message + "\n" + ex);
+            }
+
             impsRemaining--;
         }
 
