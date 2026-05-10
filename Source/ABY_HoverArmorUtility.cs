@@ -1,172 +1,71 @@
-using System.Collections.Generic;
+using System;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace AbyssalProtocol
 {
     public static class ABY_HoverArmorUtility
     {
-        private const float MaxWorldDrawLocDrift = 2.25f;
-        private static readonly HashSet<string> BuiltInHoverArmorDefNames = new HashSet<string>
-        {
-            "ABY_AbyssalGravplatePrototype",
-            "ABY_GatebreakerCarapace"
-        };
+        private const string GatebreakerDefName = "ABY_GatebreakerCarapace";
+        private const string GravplateDefName = "ABY_AbyssalGravplatePrototype";
 
-        private static readonly ABY_HoverArmorExtension FallbackGatebreakerExtension = new ABY_HoverArmorExtension
+        private static readonly ABY_HoverArmorExtension GatebreakerFallback = new ABY_HoverArmorExtension
         {
             draftedOnly = true,
             enableUnderfootFx = true,
-            enableMovingSparks = true,
             enablePawnBob = true,
-            ringScale = 0.82f,
-            movingRingScaleBonus = 0.08f,
-            ringAlpha = 0.50f,
-            pulseAmplitude = 0.075f,
-            sparkIntervalTicks = 12,
-            sparkLifetimeTicks = 20,
-            sparkScale = 0.18f,
-            sparkAlpha = 0.66f,
-            pawnVisualLift = 0.085f,
-            pawnBobAmplitude = 0.020f,
-            pawnBobPeriodTicks = 98,
-            pawnAltitudeLayerOffset = 0.006f,
-            drawPriority = 10
+            pawnVisualLiftZ = 0.095f,
+            pawnBobAmplitudeZ = 0.030f,
+            pawnBobPeriodTicks = 112,
+            pawnAltitudeLayerOffset = 0.018f,
+            ringScale = 0.70f,
+            ringPulseScale = 0.050f,
+            ringAlpha = 0.54f,
+            shadowScale = 0.42f,
+            sparkScale = 0.080f
         };
 
-        private static readonly ABY_HoverArmorExtension FallbackGravplateExtension = new ABY_HoverArmorExtension
+        private static readonly ABY_HoverArmorExtension GravplateFallback = new ABY_HoverArmorExtension
         {
             draftedOnly = true,
             enableUnderfootFx = true,
-            enableMovingSparks = true,
             enablePawnBob = true,
-            ringScale = 0.88f,
-            movingRingScaleBonus = 0.10f,
-            ringAlpha = 0.56f,
-            pulseAmplitude = 0.085f,
-            sparkIntervalTicks = 10,
-            sparkLifetimeTicks = 22,
-            sparkScale = 0.21f,
-            sparkAlpha = 0.72f,
-            pawnVisualLift = 0.105f,
-            pawnBobAmplitude = 0.026f,
-            pawnBobPeriodTicks = 92,
-            pawnAltitudeLayerOffset = 0.007f,
-            drawPriority = 20
+            pawnVisualLiftZ = 0.120f,
+            pawnBobAmplitudeZ = 0.036f,
+            pawnBobPeriodTicks = 126,
+            pawnAltitudeLayerOffset = 0.020f,
+            ringScale = 0.76f,
+            ringPulseScale = 0.060f,
+            ringAlpha = 0.62f,
+            shadowScale = 0.46f,
+            sparkScale = 0.090f
         };
 
-        public static bool IsHoverActive(Pawn pawn)
-        {
-            return TryGetActiveHoverExtension(pawn, out _);
-        }
-
-        public static bool TryGetActiveHoverExtension(Pawn pawn, out ABY_HoverArmorExtension extension)
+        public static bool TryGetActiveHover(Pawn pawn, out ABY_HoverArmorExtension extension)
         {
             extension = null;
-
-            if (pawn == null || pawn.Dead || pawn.Destroyed || !pawn.Spawned || pawn.MapHeld == null)
+            if (!IsPawnEligibleForHover(pawn))
             {
                 return false;
             }
 
-            if (pawn.apparel == null)
+            Apparel apparel = FindHoverApparel(pawn, out extension);
+            if (apparel == null || extension == null)
             {
                 return false;
             }
 
-            List<Apparel> wornApparel = pawn.apparel.WornApparel;
-            if (wornApparel == null || wornApparel.Count == 0)
+            if (extension.draftedOnly && !pawn.Drafted)
             {
                 return false;
             }
 
-            ABY_HoverArmorExtension best = null;
-            int bestPriority = int.MinValue;
-
-            for (int i = 0; i < wornApparel.Count; i++)
-            {
-                Apparel apparel = wornApparel[i];
-                if (apparel == null || apparel.def == null)
-                {
-                    continue;
-                }
-
-                ABY_HoverArmorExtension current = apparel.def.GetModExtension<ABY_HoverArmorExtension>();
-                if (current == null)
-                {
-                    current = FallbackExtensionFor(apparel.def.defName);
-                }
-
-                if (current == null)
-                {
-                    continue;
-                }
-
-                if (current.draftedOnly && !pawn.Drafted)
-                {
-                    continue;
-                }
-
-                if (current.drawPriority >= bestPriority)
-                {
-                    best = current;
-                    bestPriority = current.drawPriority;
-                }
-            }
-
-            extension = best;
-            return extension != null;
+            return true;
         }
 
-        public static bool IsKnownHoverArmorDefName(string defName)
+        public static bool ShouldApplyWorldDrawOffset(Pawn pawn)
         {
-            return !string.IsNullOrEmpty(defName) && BuiltInHoverArmorDefNames.Contains(defName);
-        }
-
-        public static bool TryGetPawnVisualOffset(Pawn pawn, Vector3 incomingDrawLoc, out Vector3 offset)
-        {
-            offset = Vector3.zero;
-
-            if (Current.ProgramState != ProgramState.Playing)
-            {
-                return false;
-            }
-
-            if (!TryGetActiveHoverExtension(pawn, out ABY_HoverArmorExtension extension))
-            {
-                return false;
-            }
-
-            if (extension == null || !extension.enablePawnBob)
-            {
-                return false;
-            }
-
-            if (!IsWorldPawnDraw(pawn, incomingDrawLoc))
-            {
-                return false;
-            }
-
-            float lift = Mathf.Max(0f, extension.pawnVisualLift);
-            float amplitude = Mathf.Max(0f, extension.pawnBobAmplitude);
-            int period = Mathf.Max(30, extension.pawnBobPeriodTicks);
-            float phaseSeed = Mathf.Abs((pawn.thingIDNumber * 19) % period);
-            float phase = ((SafeTicksGame() + phaseSeed) / period) * Mathf.PI * 2f;
-            float bob = Mathf.Sin(phase) * amplitude;
-
-            offset = new Vector3(0f, Mathf.Max(0f, extension.pawnAltitudeLayerOffset), lift + bob);
-            return offset.sqrMagnitude > 0.000001f;
-        }
-
-        public static bool IsWorldPawnDraw(Pawn pawn, Vector3 incomingDrawLoc)
-        {
-            if (pawn == null || !pawn.Spawned || pawn.Map == null)
-            {
-                return false;
-            }
-
-            if (Current.ProgramState != ProgramState.Playing)
+            if (pawn == null || !pawn.Spawned || pawn.Map == null || pawn.Dead)
             {
                 return false;
             }
@@ -176,42 +75,85 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Vector3 actualDrawPos = pawn.DrawPos;
-            if (Mathf.Abs(incomingDrawLoc.x - actualDrawPos.x) > MaxWorldDrawLocDrift)
+            return TryGetActiveHover(pawn, out _);
+        }
+
+        public static float ComputePawnLiftZ(Pawn pawn, ABY_HoverArmorExtension extension)
+        {
+            if (pawn == null || extension == null)
             {
-                return false;
+                return 0f;
             }
 
-            if (Mathf.Abs(incomingDrawLoc.z - actualDrawPos.z) > MaxWorldDrawLocDrift)
+            float lift = Math.Max(0f, extension.pawnVisualLiftZ);
+            if (extension.enablePawnBob)
             {
-                return false;
+                int period = Math.Max(24, extension.pawnBobPeriodTicks);
+                int ticks = SafeTicksGame() + pawn.thingIDNumber * 17;
+                float phase = (ticks % period) / (float)period;
+                lift += (float)Math.Sin(phase * Math.PI * 2.0) * Math.Max(0f, extension.pawnBobAmplitudeZ);
             }
 
-            return true;
+            return lift;
         }
 
         public static int SafeTicksGame()
         {
             try
             {
-                return Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return Find.TickManager?.TicksGame ?? 0;
             }
             catch
             {
-                return 0;
+                return Environment.TickCount & int.MaxValue;
             }
         }
 
-        private static ABY_HoverArmorExtension FallbackExtensionFor(string defName)
+        private static bool IsPawnEligibleForHover(Pawn pawn)
         {
-            if (defName == "ABY_AbyssalGravplatePrototype")
+            return pawn != null
+                && pawn.Spawned
+                && pawn.Map != null
+                && !pawn.Dead
+                && pawn.apparel != null
+                && pawn.apparel.WornApparel != null;
+        }
+
+        private static Apparel FindHoverApparel(Pawn pawn, out ABY_HoverArmorExtension extension)
+        {
+            extension = null;
+            if (pawn?.apparel?.WornApparel == null)
             {
-                return FallbackGravplateExtension;
+                return null;
             }
 
-            if (defName == "ABY_GatebreakerCarapace")
+            for (int i = 0; i < pawn.apparel.WornApparel.Count; i++)
             {
-                return FallbackGatebreakerExtension;
+                Apparel apparel = pawn.apparel.WornApparel[i];
+                if (apparel?.def == null)
+                {
+                    continue;
+                }
+
+                ABY_HoverArmorExtension xmlExtension = apparel.def.GetModExtension<ABY_HoverArmorExtension>();
+                if (xmlExtension != null)
+                {
+                    extension = xmlExtension;
+                    return apparel;
+                }
+
+                string defName = apparel.def.defName;
+                if (defName == GatebreakerDefName)
+                {
+                    extension = GatebreakerFallback;
+                    return apparel;
+                }
+
+                if (defName == GravplateDefName)
+                {
+                    extension = GravplateFallback;
+                    return apparel;
+                }
             }
 
             return null;

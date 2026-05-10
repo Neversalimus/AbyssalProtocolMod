@@ -14,7 +14,7 @@ namespace AbyssalProtocol
             {
                 if (CanLog(key, throttleTicks))
                 {
-                    Log.Warning(message ?? "[Abyssal Protocol] Warning with empty message.");
+                    Log.Warning(message ?? string.Empty);
                 }
             }
             catch
@@ -29,7 +29,7 @@ namespace AbyssalProtocol
             {
                 if (CanLog(key, throttleTicks))
                 {
-                    Log.Message(message ?? "[Abyssal Protocol] Message with empty message.");
+                    Log.Message(message ?? string.Empty);
                 }
             }
             catch
@@ -50,15 +50,18 @@ namespace AbyssalProtocol
                 int now = 0;
                 try
                 {
-                    now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                    TickManager tickManager = Find.TickManager;
+                    if (tickManager != null)
+                    {
+                        now = tickManager.TicksGame;
+                    }
                 }
                 catch
                 {
-                    now = 0;
+                    now = Environment.TickCount & int.MaxValue;
                 }
 
-                int nextTick;
-                if (NextLogTickByKey.TryGetValue(key, out nextTick) && now < nextTick)
+                if (NextLogTickByKey.TryGetValue(key, out int nextTick) && now < nextTick)
                 {
                     return false;
                 }

@@ -1,3 +1,4 @@
+using System;
 using HarmonyLib;
 using Verse;
 
@@ -8,8 +9,15 @@ namespace AbyssalProtocol
     {
         static ABY_HarmonyBootstrap()
         {
-            Harmony harmony = new Harmony("neversalimus.abyssalprotocol");
-            harmony.PatchAll();
+            try
+            {
+                Harmony harmony = new Harmony("neversalimus.abyssalprotocol.core");
+                harmony.PatchAll();
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Warning("harmony-bootstrap", "[Abyssal Protocol] Harmony bootstrap failed: " + ex.GetType().Name + ": " + ex.Message, 5000);
+            }
         }
     }
 }

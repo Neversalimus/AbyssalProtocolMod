@@ -9,25 +9,22 @@ namespace AbyssalProtocol
     {
         public static void Prefix(Pawn ___pawn, ref Vector3 drawLoc)
         {
-            try
+            if (___pawn == null)
             {
-                if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(___pawn, out ABY_HoverArmorExtension extension))
-                {
-                    return;
-                }
-
-                Vector3 originalDrawLoc = drawLoc;
-                ABY_HoverArmorRenderUtility.DrawForPawn(___pawn, originalDrawLoc, extension);
-
-                if (ABY_HoverArmorUtility.TryGetPawnVisualOffset(___pawn, originalDrawLoc, out Vector3 offset))
-                {
-                    drawLoc += offset;
-                }
+                return;
             }
-            catch (System.Exception ex)
+
+            if (!ABY_HoverArmorUtility.TryGetActiveHover(___pawn, out ABY_HoverArmorExtension extension))
             {
-                ABY_LogThrottleUtility.Warning("hoverArmorRenderOffset", "[Abyssal Protocol] Failed to apply hover armor visual offset: " + ex.Message, 600);
+                return;
             }
+
+            Vector3 originalDrawLoc = drawLoc;
+            ABY_HoverArmorRenderUtility.DrawUnderfootFx(___pawn, originalDrawLoc, extension);
+
+            float visualLiftZ = ABY_HoverArmorUtility.ComputePawnLiftZ(___pawn, extension);
+            drawLoc.z += visualLiftZ;
+            drawLoc.y += Mathf.Max(0f, extension.pawnAltitudeLayerOffset);
         }
     }
 }

@@ -30,28 +30,6 @@
       </layers>
       <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplatePrototype</wornGraphicPath>
     </apparel>
-    <modExtensions>
-      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
-        <draftedOnly>true</draftedOnly>
-        <enableUnderfootFx>true</enableUnderfootFx>
-        <enableMovingSparks>true</enableMovingSparks>
-        <enablePawnBob>true</enablePawnBob>
-        <hoverFxIntensity>Subtle</hoverFxIntensity>
-        <ringScale>0.88</ringScale>
-        <movingRingScaleBonus>0.10</movingRingScaleBonus>
-        <ringAlpha>0.56</ringAlpha>
-        <pulseAmplitude>0.085</pulseAmplitude>
-        <sparkIntervalTicks>10</sparkIntervalTicks>
-        <sparkLifetimeTicks>22</sparkLifetimeTicks>
-        <sparkScale>0.21</sparkScale>
-        <sparkAlpha>0.72</sparkAlpha>
-        <pawnVisualLift>0.105</pawnVisualLift>
-        <pawnBobAmplitude>0.026</pawnBobAmplitude>
-        <pawnBobPeriodTicks>92</pawnBobPeriodTicks>
-        <pawnAltitudeLayerOffset>0.006</pawnAltitudeLayerOffset>
-        <drawPriority>20</drawPriority>
-      </li>
-    </modExtensions>
     <tradeability>None</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
@@ -71,7 +49,23 @@
       <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
       <ArmorRating_Heat>1.02</ArmorRating_Heat>
     </statBases>
-  </ThingDef>
+      <modExtensions>
+      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
+        <draftedOnly>true</draftedOnly>
+        <enableUnderfootFx>true</enableUnderfootFx>
+        <enablePawnBob>true</enablePawnBob>
+        <pawnVisualLiftZ>0.120</pawnVisualLiftZ>
+        <pawnBobAmplitudeZ>0.036</pawnBobAmplitudeZ>
+        <pawnBobPeriodTicks>126</pawnBobPeriodTicks>
+        <pawnAltitudeLayerOffset>0.020</pawnAltitudeLayerOffset>
+        <ringScale>0.76</ringScale>
+        <ringPulseScale>0.060</ringPulseScale>
+        <ringAlpha>0.62</ringAlpha>
+        <shadowScale>0.46</shadowScale>
+        <sparkScale>0.090</sparkScale>
+      </li>
+    </modExtensions>
+</ThingDef>
 
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplateHelmPrototype</defName>
