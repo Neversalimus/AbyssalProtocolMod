@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_GatebreakerSpiker</defName>
     <label>gatebreaker spiker</label>
-    <description>A heavy breach-spike cannon built to match the Gatebreaker suit line. Its black segmented frame holds a predatory maw-reactor that bites open a narrow rupture and throws a single white-hot spike through armor, boss shells and hardened breach constructs. It is too slow for crowd control, but devastating when one target absolutely must be cracked.</description>
+    <description>A heavy breach-spike cannon built to match the Gatebreaker suit line. Its black segmented frame holds a predatory maw-reactor that bites open a narrow rupture and throws a rapid three-spike breach sequence through armor, boss shells and hardened breach constructs. It is too slow for casual skirmishing, but devastating when one target absolutely must be cracked.</description>
     <techLevel>Ultra</techLevel>
     <tradeability>None</tradeability>
     <generateCommonality>0</generateCommonality>
@@ -59,8 +59,8 @@
         <defaultProjectile>ABY_GatebreakerSpikeBolt</defaultProjectile>
         <warmupTime>1.35</warmupTime>
         <range>35.9</range>
-        <burstShotCount>1</burstShotCount>
-        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <burstShotCount>3</burstShotCount>
+        <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
         <soundAiming>ABY_VesperLanceAim</soundAiming>
         <soundCast>ABY_VesperLanceFire</soundCast>
         <soundCastTail>ABY_VesperLanceTail</soundCastTail>
