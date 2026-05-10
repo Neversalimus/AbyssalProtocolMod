@@ -6,7 +6,7 @@ namespace AbyssalProtocol
 {
     public static class ABY_LogThrottleUtility
     {
-        private static Dictionary<string, int> nextLogTickByKey = new Dictionary<string, int>();
+        private static readonly Dictionary<string, int> NextLogTickByKey = new Dictionary<string, int>();
 
         public static void Warning(string key, string message, int throttleTicks = 2500)
         {
@@ -14,13 +14,12 @@ namespace AbyssalProtocol
             {
                 if (CanLog(key, throttleTicks))
                 {
-                    Log.Warning(message);
+                    Log.Warning(message ?? "[Abyssal Protocol] Warning with empty message.");
                 }
             }
             catch
             {
                 // Logging must never break static constructors or Harmony finalizers.
-                // RimWorld can call early static constructors before Find.TickManager is safe to touch.
             }
         }
 
@@ -30,12 +29,12 @@ namespace AbyssalProtocol
             {
                 if (CanLog(key, throttleTicks))
                 {
-                    Log.Message(message);
+                    Log.Message(message ?? "[Abyssal Protocol] Message with empty message.");
                 }
             }
             catch
             {
-                // Logging must remain best-effort only.
+                // Logging must never break static constructors or Harmony finalizers.
             }
         }
 
@@ -48,37 +47,28 @@ namespace AbyssalProtocol
                     key = "default";
                 }
 
-                if (nextLogTickByKey == null)
+                int now = 0;
+                try
                 {
-                    nextLogTickByKey = new Dictionary<string, int>();
+                    now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                }
+                catch
+                {
+                    now = 0;
                 }
 
-                int now = SafeTicksGame();
-                if (nextLogTickByKey.TryGetValue(key, out int nextTick) && now < nextTick)
+                int nextTick;
+                if (NextLogTickByKey.TryGetValue(key, out nextTick) && now < nextTick)
                 {
                     return false;
                 }
 
-                nextLogTickByKey[key] = now + Math.Max(1, throttleTicks);
+                NextLogTickByKey[key] = now + Math.Max(1, throttleTicks);
                 return true;
             }
             catch
             {
-                // If throttling itself fails, allow the caller to attempt one log instead of crashing.
-                return true;
-            }
-        }
-
-        private static int SafeTicksGame()
-        {
-            try
-            {
-                TickManager tickManager = Find.TickManager;
-                return tickManager != null ? tickManager.TicksGame : 0;
-            }
-            catch
-            {
-                return 0;
+                return false;
             }
         }
     }

@@ -21,6 +21,11 @@ namespace AbyssalProtocol
         {
             base.MapComponentTick();
 
+            if (ABY_HoverArmorRenderUtility.PawnRendererOwnsHoverFx)
+            {
+                return;
+            }
+
             int now = Find.TickManager.TicksGame;
             CleanupSparkSchedule();
             TickSparks(now);
@@ -59,6 +64,11 @@ namespace AbyssalProtocol
         public override void MapComponentUpdate()
         {
             base.MapComponentUpdate();
+
+            if (ABY_HoverArmorRenderUtility.PawnRendererOwnsHoverFx)
+            {
+                return;
+            }
 
             if (Current.ProgramState != ProgramState.Playing || map == null)
             {

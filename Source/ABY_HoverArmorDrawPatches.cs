@@ -11,7 +11,15 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (ABY_HoverArmorUtility.TryGetPawnVisualOffset(___pawn, drawLoc, out Vector3 offset))
+                if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(___pawn, out ABY_HoverArmorExtension extension))
+                {
+                    return;
+                }
+
+                Vector3 originalDrawLoc = drawLoc;
+                ABY_HoverArmorRenderUtility.DrawForPawn(___pawn, originalDrawLoc, extension);
+
+                if (ABY_HoverArmorUtility.TryGetPawnVisualOffset(___pawn, originalDrawLoc, out Vector3 offset))
                 {
                     drawLoc += offset;
                 }

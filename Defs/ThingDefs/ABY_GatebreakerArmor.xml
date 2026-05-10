@@ -32,16 +32,16 @@
         <enableMovingSparks>true</enableMovingSparks>
         <enablePawnBob>true</enablePawnBob>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
-        <ringScale>0.72</ringScale>
-        <movingRingScaleBonus>0.06</movingRingScaleBonus>
-        <ringAlpha>0.30</ringAlpha>
-        <pulseAmplitude>0.055</pulseAmplitude>
-        <sparkIntervalTicks>16</sparkIntervalTicks>
-        <sparkLifetimeTicks>16</sparkLifetimeTicks>
-        <sparkScale>0.15</sparkScale>
-        <sparkAlpha>0.48</sparkAlpha>
-        <pawnVisualLift>0.050</pawnVisualLift>
-        <pawnBobAmplitude>0.014</pawnBobAmplitude>
+        <ringScale>0.82</ringScale>
+        <movingRingScaleBonus>0.08</movingRingScaleBonus>
+        <ringAlpha>0.50</ringAlpha>
+        <pulseAmplitude>0.075</pulseAmplitude>
+        <sparkIntervalTicks>12</sparkIntervalTicks>
+        <sparkLifetimeTicks>20</sparkLifetimeTicks>
+        <sparkScale>0.18</sparkScale>
+        <sparkAlpha>0.66</sparkAlpha>
+        <pawnVisualLift>0.085</pawnVisualLift>
+        <pawnBobAmplitude>0.020</pawnBobAmplitude>
         <pawnBobPeriodTicks>98</pawnBobPeriodTicks>
         <pawnAltitudeLayerOffset>0.005</pawnAltitudeLayerOffset>
         <drawPriority>10</drawPriority>
