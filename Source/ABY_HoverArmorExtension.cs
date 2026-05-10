@@ -7,7 +7,8 @@ namespace AbyssalProtocol
         public bool draftedOnly = true;
         public bool enableUnderfootFx = true;
         public bool enablePawnBob = true;
-        public bool enableHaloFx = true;
+        public bool enableHaloFx = false;
+        public bool enableFlightRigFx = true;
 
         // Visible screen-space lift through Pawn_DrawTracker.DrawPos z-offset.
         public float pawnVisualLiftZ = 0.30f;
@@ -17,17 +18,28 @@ namespace AbyssalProtocol
 
         public float ringScale = 0.80f;
         public float ringPulseScale = 0.070f;
-        public float ringAlpha = 0.62f;
+        public float ringAlpha = 0.75f;
         public float shadowScale = 0.54f;
-        public float sparkScale = 0.100f;
+        public float sparkScale = 0.110f;
 
-        // Animated drafted halo/backplate. Values are deliberately conservative: the pawn must stay readable.
-        public float haloScale = 0.68f;
-        public float haloPulseScale = 0.022f;
-        public float haloAlpha = 0.62f;
-        public float haloOffsetZ = 0.54f;
-        public float haloAltitudeOffset = -0.018f;
-        public int haloAppearTicks = 42;
-        public int haloLoopFrameTicks = 8;
+        // Legacy upper aura/backplate. Disabled by default now that the readable drafted-flight cue is
+        // the animated back-mounted flight rig. Kept as a fallback/optional accent for future tuning.
+        public float haloScale = 1.08f;
+        public float haloPulseScale = 0.060f;
+        public float haloAlpha = 0.70f;
+        public float haloOffsetZ = 0.42f;
+        public float haloAltitudeOffset = 0.120f;
+
+        // Animated Gatebreaker-style flight rig: 00-02 are deploy frames, 03-07 are idle hover loop.
+        // It is drawn behind the pawn while drafted, so the pawn body remains readable but the silhouette
+        // clearly gains a powered anti-grav backpack/thruster assembly.
+        public float flightRigScale = 1.10f;
+        public float flightRigPulseScale = 0.025f;
+        public float flightRigAlpha = 0.98f;
+        public float flightRigGlowAlpha = 0.28f;
+        public float flightRigOffsetX = 0.00f;
+        public float flightRigOffsetZ = 0.16f;
+        public float flightRigAltitudeOffset = -0.030f;
+        public int flightRigFrameTicks = 8;
     }
 }

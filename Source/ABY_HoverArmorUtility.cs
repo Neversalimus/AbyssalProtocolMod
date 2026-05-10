@@ -18,22 +18,23 @@ namespace AbyssalProtocol
             draftedOnly = true,
             enableUnderfootFx = true,
             enablePawnBob = true,
+            enableHaloFx = false,
+            enableFlightRigFx = true,
             pawnVisualLiftZ = 0.28f,
             pawnBobAmplitudeZ = 0.045f,
             pawnBobPeriodTicks = 112,
             pawnAltitudeLayerOffset = 0.018f,
             ringScale = 0.78f,
             ringPulseScale = 0.065f,
-            ringAlpha = 0.62f,
+            ringAlpha = 0.72f,
             shadowScale = 0.52f,
             sparkScale = 0.105f,
-            haloScale = 0.68f,
-            haloPulseScale = 0.022f,
-            haloAlpha = 0.62f,
-            haloOffsetZ = 0.54f,
-            haloAltitudeOffset = -0.018f,
-            haloAppearTicks = 42,
-            haloLoopFrameTicks = 8
+            flightRigScale = 1.08f,
+            flightRigPulseScale = 0.025f,
+            flightRigAlpha = 0.98f,
+            flightRigGlowAlpha = 0.30f,
+            flightRigOffsetZ = 0.15f,
+            flightRigFrameTicks = 8
         };
 
         private static readonly ABY_HoverArmorExtension GravplateFallback = new ABY_HoverArmorExtension
@@ -41,22 +42,23 @@ namespace AbyssalProtocol
             draftedOnly = true,
             enableUnderfootFx = true,
             enablePawnBob = true,
+            enableHaloFx = false,
+            enableFlightRigFx = true,
             pawnVisualLiftZ = 0.32f,
             pawnBobAmplitudeZ = 0.052f,
             pawnBobPeriodTicks = 126,
             pawnAltitudeLayerOffset = 0.020f,
             ringScale = 0.84f,
             ringPulseScale = 0.075f,
-            ringAlpha = 0.66f,
+            ringAlpha = 0.78f,
             shadowScale = 0.56f,
             sparkScale = 0.115f,
-            haloScale = 0.72f,
-            haloPulseScale = 0.024f,
-            haloAlpha = 0.66f,
-            haloOffsetZ = 0.57f,
-            haloAltitudeOffset = -0.018f,
-            haloAppearTicks = 42,
-            haloLoopFrameTicks = 8
+            flightRigScale = 1.14f,
+            flightRigPulseScale = 0.030f,
+            flightRigAlpha = 0.98f,
+            flightRigGlowAlpha = 0.33f,
+            flightRigOffsetZ = 0.16f,
+            flightRigFrameTicks = 8
         };
 
         public static bool TryGetActiveHover(Pawn pawn, out ABY_HoverArmorExtension extension)

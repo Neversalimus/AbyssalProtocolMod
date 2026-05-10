@@ -54,23 +54,30 @@
         <draftedOnly>true</draftedOnly>
         <enableUnderfootFx>true</enableUnderfootFx>
         <enablePawnBob>true</enablePawnBob>
-        <enableHaloFx>true</enableHaloFx>
+        <enableHaloFx>false</enableHaloFx>
+        <enableFlightRigFx>true</enableFlightRigFx>
         <pawnVisualLiftZ>0.32</pawnVisualLiftZ>
         <pawnBobAmplitudeZ>0.052</pawnBobAmplitudeZ>
         <pawnBobPeriodTicks>126</pawnBobPeriodTicks>
         <pawnAltitudeLayerOffset>0.020</pawnAltitudeLayerOffset>
         <ringScale>0.84</ringScale>
         <ringPulseScale>0.060</ringPulseScale>
-        <ringAlpha>0.66</ringAlpha>
+        <ringAlpha>0.78</ringAlpha>
         <shadowScale>0.56</shadowScale>
         <sparkScale>0.115</sparkScale>
-        <haloScale>0.72</haloScale>
-        <haloPulseScale>0.024</haloPulseScale>
-        <haloAlpha>0.66</haloAlpha>
-        <haloOffsetZ>0.57</haloOffsetZ>
-        <haloAltitudeOffset>-0.018</haloAltitudeOffset>
-        <haloAppearTicks>42</haloAppearTicks>
-        <haloLoopFrameTicks>8</haloLoopFrameTicks>
+        <haloScale>1.16</haloScale>
+        <haloPulseScale>0.065</haloPulseScale>
+        <haloAlpha>0.92</haloAlpha>
+        <haloOffsetZ>0.44</haloOffsetZ>
+        <haloAltitudeOffset>0.125</haloAltitudeOffset>
+        <flightRigScale>1.14</flightRigScale>
+        <flightRigPulseScale>0.030</flightRigPulseScale>
+        <flightRigAlpha>0.98</flightRigAlpha>
+        <flightRigGlowAlpha>0.33</flightRigGlowAlpha>
+        <flightRigOffsetX>0.00</flightRigOffsetX>
+        <flightRigOffsetZ>0.16</flightRigOffsetZ>
+        <flightRigAltitudeOffset>-0.030</flightRigAltitudeOffset>
+        <flightRigFrameTicks>8</flightRigFrameTicks>
       </li>
     </modExtensions>
 </ThingDef>
