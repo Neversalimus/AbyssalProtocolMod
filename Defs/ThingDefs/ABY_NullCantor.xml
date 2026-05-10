@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_NullCantor</defName>
+    <label>null cantor</label>
+    <description>A compact ritual focus-carbine for acolyte operators. Its barrel-ring recites a controlled breach pulse through residue-lined circuitry, turning a firing cycle into something disturbingly close to a chant. It is light enough for second-line specialists and precise enough to defend the circle, but it is not built to replace heavier abyssal war rifles.</description>
+    <techLevel>Spacer</techLevel>
+    <tradeability>Sellable</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_NullCantor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.42,0.46)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <DevilstrandCloth>12</DevilstrandCloth>
+      <Plasteel>38</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <Gold>4</Gold>
+    </costList>
+
+    <statBases>
+      <WorkToMake>22000</WorkToMake>
+      <Mass>2.2</Mass>
+      <MarketValue>1450</MarketValue>
+      <AccuracyTouch>0.70</AccuracyTouch>
+      <AccuracyShort>0.86</AccuracyShort>
+      <AccuracyMedium>0.82</AccuracyMedium>
+      <AccuracyLong>0.64</AccuracyLong>
+      <RangedWeapon_Cooldown>1.75</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_NullCantorPulse</defaultProjectile>
+        <warmupTime>0.85</warmupTime>
+        <range>27.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundCast>Shot_ChargeRifle</soundCast>
+        <muzzleFlashScale>8</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>frame</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>8</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>350</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_NullCantorPulse</defName>
+    <label>null cantor pulse</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_NullCantorPulse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.20,1.05)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>14</damageAmountBase>
+      <armorPenetrationBase>0.72</armorPenetrationBase>
+      <stoppingPower>1.4</stoppingPower>
+      <speed>58</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
