@@ -33,12 +33,12 @@ namespace AbyssalProtocol
         // Animated Gatebreaker-style flight rig: 00-02 are deploy frames, 03-07 are idle hover loop.
         // It is drawn behind the pawn while drafted, so the pawn body remains readable but the silhouette
         // clearly gains a powered anti-grav backpack/thruster assembly.
-        public float flightRigScale = 1.10f;
-        public float flightRigPulseScale = 0.025f;
+        public float flightRigScale = 2.85f;
+        public float flightRigPulseScale = 0.070f;
         public float flightRigAlpha = 0.98f;
-        public float flightRigGlowAlpha = 0.28f;
+        public float flightRigGlowAlpha = 0.24f;
         public float flightRigOffsetX = 0.00f;
-        public float flightRigOffsetZ = 0.16f;
+        public float flightRigOffsetZ = 0.20f;
         public float flightRigAltitudeOffset = -0.030f;
         public int flightRigFrameTicks = 8;
     }

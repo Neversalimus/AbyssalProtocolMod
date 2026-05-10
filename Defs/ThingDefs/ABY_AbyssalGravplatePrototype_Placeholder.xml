@@ -70,12 +70,12 @@
         <haloAlpha>0.92</haloAlpha>
         <haloOffsetZ>0.44</haloOffsetZ>
         <haloAltitudeOffset>0.125</haloAltitudeOffset>
-        <flightRigScale>1.14</flightRigScale>
-        <flightRigPulseScale>0.030</flightRigPulseScale>
+        <flightRigScale>3.05</flightRigScale>
+        <flightRigPulseScale>0.075</flightRigPulseScale>
         <flightRigAlpha>0.98</flightRigAlpha>
-        <flightRigGlowAlpha>0.33</flightRigGlowAlpha>
+        <flightRigGlowAlpha>0.26</flightRigGlowAlpha>
         <flightRigOffsetX>0.00</flightRigOffsetX>
-        <flightRigOffsetZ>0.16</flightRigOffsetZ>
+        <flightRigOffsetZ>0.22</flightRigOffsetZ>
         <flightRigAltitudeOffset>-0.030</flightRigAltitudeOffset>
         <flightRigFrameTicks>8</flightRigFrameTicks>
       </li>

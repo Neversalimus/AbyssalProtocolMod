@@ -29,11 +29,11 @@ namespace AbyssalProtocol
             ringAlpha = 0.72f,
             shadowScale = 0.52f,
             sparkScale = 0.105f,
-            flightRigScale = 1.08f,
-            flightRigPulseScale = 0.025f,
+            flightRigScale = 2.85f,
+            flightRigPulseScale = 0.070f,
             flightRigAlpha = 0.98f,
-            flightRigGlowAlpha = 0.30f,
-            flightRigOffsetZ = 0.15f,
+            flightRigGlowAlpha = 0.24f,
+            flightRigOffsetZ = 0.20f,
             flightRigFrameTicks = 8
         };
 
@@ -53,11 +53,11 @@ namespace AbyssalProtocol
             ringAlpha = 0.78f,
             shadowScale = 0.56f,
             sparkScale = 0.115f,
-            flightRigScale = 1.14f,
-            flightRigPulseScale = 0.030f,
+            flightRigScale = 3.05f,
+            flightRigPulseScale = 0.075f,
             flightRigAlpha = 0.98f,
-            flightRigGlowAlpha = 0.33f,
-            flightRigOffsetZ = 0.16f,
+            flightRigGlowAlpha = 0.26f,
+            flightRigOffsetZ = 0.22f,
             flightRigFrameTicks = 8
         };
 
