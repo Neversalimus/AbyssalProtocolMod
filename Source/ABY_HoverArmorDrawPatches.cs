@@ -25,7 +25,8 @@ namespace AbyssalProtocol
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnAt))]
     public static class ABY_HoverArmorDrawPatches_RenderPawnAt
     {
-        // Ground FX is drawn before the pawn, anchored to the true cell center.
+        // Ground FX is drawn before the pawn, anchored to the true cell center. It is intentionally
+        // secondary; the readable cue is now the static upper halo/backplate.
         public static void Prefix(Pawn ___pawn, Vector3 drawLoc)
         {
             if (!ABY_HoverArmorUtility.TryGetActiveHover(___pawn, out ABY_HoverArmorExtension extension))
@@ -38,8 +39,8 @@ namespace AbyssalProtocol
             ABY_HoverArmorRenderUtility.DrawUnderfootFx(___pawn, groundLoc, extension);
         }
 
-        // Halo FX is drawn after the pawn, so it is readable even if the underfoot ring is hidden by
-        // terrain or draw-order interactions. It follows the lifted pawn and sits visually above the head.
+        // Drawn after the pawn so the aura remains readable over apparel and terrain. This is not a
+        // spinning ring; it is a stable grav-suspension halo/backplate following the lifted pawn.
         public static void Postfix(Pawn ___pawn, Vector3 drawLoc)
         {
             if (!ABY_HoverArmorUtility.TryGetActiveHover(___pawn, out ABY_HoverArmorExtension extension))

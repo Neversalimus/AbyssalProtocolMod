@@ -21,12 +21,12 @@ namespace AbyssalProtocol
         public float shadowScale = 0.54f;
         public float sparkScale = 0.110f;
 
-        // Above-pawn halo is intentionally separate from the ground ring: it remains readable even
-        // when terrain, pawn shadows, apparel, or other overlays make underfoot FX hard to see.
-        public float haloScale = 0.52f;
-        public float haloPulseScale = 0.055f;
-        public float haloAlpha = 0.78f;
-        public float haloOffsetZ = 0.46f;
-        public float haloAltitudeOffset = 0.105f;
+        // Readable above-pawn hover aura. This is intentionally not a spinning horizontal ring:
+        // it is a static, pulsing backplate/halo that sits behind the lifted pawn silhouette.
+        public float haloScale = 1.08f;
+        public float haloPulseScale = 0.060f;
+        public float haloAlpha = 0.88f;
+        public float haloOffsetZ = 0.42f;
+        public float haloAltitudeOffset = 0.120f;
     }
 }

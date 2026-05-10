@@ -61,10 +61,10 @@
         <ringAlpha>0.72</ringAlpha>
         <shadowScale>0.52</shadowScale>
         <sparkScale>0.105</sparkScale>
-        <haloScale>0.50</haloScale>
-        <haloPulseScale>0.050</haloPulseScale>
-        <haloAlpha>0.82</haloAlpha>
-        <haloOffsetZ>0.46</haloOffsetZ>
+        <haloScale>1.08</haloScale>
+        <haloPulseScale>0.055</haloPulseScale>
+        <haloAlpha>0.88</haloAlpha>
+        <haloOffsetZ>0.42</haloOffsetZ>
         <haloAltitudeOffset>0.120</haloAltitudeOffset>
       </li>
     </modExtensions>

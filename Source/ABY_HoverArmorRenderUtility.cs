@@ -32,9 +32,10 @@ namespace AbyssalProtocol
             Vector3 ground = groundDrawLoc;
             ground.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.030f;
 
-            DrawPlane(ground, new Vector3(extension.shadowScale, 1f, extension.shadowScale * 0.62f), ShadowMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.48f));
-            DrawPlane(ground + new Vector3(0f, 0.010f, 0f), new Vector3(ringScale, 1f, ringScale), RingMaterial, Quaternion.AngleAxis(phase * 360f, Vector3.up), Alpha(extension.ringAlpha));
+            DrawPlane(ground, new Vector3(extension.shadowScale, 1f, extension.shadowScale * 0.62f), ShadowMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.42f));
+            DrawPlane(ground + new Vector3(0f, 0.010f, 0f), new Vector3(ringScale, 1f, ringScale), RingMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.55f));
 
+            // Keep these subtle; upper halo/backplate is the primary readability cue.
             DrawIdleSparkSet(pawn, groundDrawLoc, extension, ticks, phase);
             if (pawn.pather != null && pawn.pather.MovingNow)
             {
@@ -50,26 +51,22 @@ namespace AbyssalProtocol
             }
 
             int ticks = ABY_HoverArmorUtility.SafeTicksGame() + pawn.thingIDNumber * 19;
-            float phase = (ticks % 120) / 120f;
+            int period = 132;
+            float phase = (ticks % period) / (float)period;
             float pulse = (float)Math.Sin(phase * Math.PI * 2.0);
-            float scale = Math.Max(0.20f, extension.haloScale + pulse * extension.haloPulseScale);
-            float alpha = Mathf.Clamp01(extension.haloAlpha + pulse * 0.075f);
+            float scale = Math.Max(0.45f, extension.haloScale + pulse * extension.haloPulseScale);
+            float alpha = Mathf.Clamp01(extension.haloAlpha + pulse * 0.055f);
 
             Vector3 loc = pawnDrawLoc;
             loc.z += extension.haloOffsetZ;
             loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + extension.haloAltitudeOffset;
 
-            Quaternion rotation = Quaternion.AngleAxis((ticks * 2.2f) % 360f, Vector3.up);
-            DrawPlane(loc, new Vector3(scale, 1f, scale * 0.70f), HaloMaterial, rotation, Alpha(alpha));
+            // Important: no spin. The previous rotating plane read like a vertical/slanted wheel in
+            // real gameplay. This is a stable upper grav-halo/backplate, only pulsing in size/alpha.
+            DrawPlane(loc, new Vector3(scale, 1f, scale * 0.52f), HaloMaterial, Quaternion.identity, Alpha(alpha));
 
-            // Small orbiting points make the halo read as an active grav-suspension field rather than a UI marker.
-            for (int i = 0; i < 3; i++)
-            {
-                float angle = (phase * 360f + i * 120f + pawn.thingIDNumber * 5) * Mathf.Deg2Rad;
-                float radius = scale * 0.34f;
-                Vector3 offset = new Vector3((float)Math.Cos(angle) * radius, 0f, (float)Math.Sin(angle) * radius * 0.46f);
-                DrawPlane(loc + offset + new Vector3(0f, 0.006f + i * 0.002f, 0f), new Vector3(extension.sparkScale * 0.58f, 1f, extension.sparkScale * 0.58f), SparkMaterial, Quaternion.AngleAxis((ticks * 11 + i * 73) % 360, Vector3.up), Alpha(alpha * 0.95f));
-            }
+            // A faint second pass widens the aura without adding rotation or noisy orbit points.
+            DrawPlane(loc + new Vector3(0f, 0.006f, 0f), new Vector3(scale * 0.72f, 1f, scale * 0.34f), HaloMaterial, Quaternion.identity, Alpha(alpha * 0.42f));
         }
 
         private static MaterialPropertyBlock Alpha(float alpha)
@@ -84,14 +81,13 @@ namespace AbyssalProtocol
             Vector3 baseLoc = groundDrawLoc;
             baseLoc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
-                float angle = (phase * 360f + i * 90f + pawn.thingIDNumber * 7) * Mathf.Deg2Rad;
-                float radius = 0.18f + 0.025f * (float)Math.Sin((phase + i * 0.17f) * Math.PI * 2.0);
-                Vector3 offset = new Vector3((float)Math.Cos(angle) * radius, 0f, (float)Math.Sin(angle) * radius * 0.72f);
-                float scale = Math.Max(0.025f, extension.sparkScale * 0.62f);
-                Quaternion rot = Quaternion.AngleAxis((ticks * 9 + i * 71) % 360, Vector3.up);
-                DrawPlane(baseLoc + offset + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, rot, Alpha(extension.ringAlpha * 0.82f));
+                float angle = (phase * 360f + i * 120f + pawn.thingIDNumber * 7) * Mathf.Deg2Rad;
+                float radius = 0.19f + 0.025f * (float)Math.Sin((phase + i * 0.17f) * Math.PI * 2.0);
+                Vector3 offset = new Vector3((float)Math.Cos(angle) * radius, 0f, (float)Math.Sin(angle) * radius * 0.62f);
+                float scale = Math.Max(0.030f, extension.sparkScale * 0.58f);
+                DrawPlane(baseLoc + offset + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.58f));
             }
         }
 
@@ -102,15 +98,14 @@ namespace AbyssalProtocol
             Vector3 baseLoc = groundDrawLoc - trailDir * 0.34f;
             baseLoc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.030f;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
-                float side = (i - 2) * 0.095f;
-                float back = 0.07f * i;
+                float side = (i - 1.5f) * 0.095f;
+                float back = 0.075f * i;
                 float wobble = (float)Math.Sin((phase + i * 0.31f) * Math.PI * 2.0) * 0.040f;
                 Vector3 loc = baseLoc - trailDir * back + right * (side + wobble);
-                float scale = Math.Max(0.025f, extension.sparkScale * (1f - i * 0.12f));
-                Quaternion rot = Quaternion.AngleAxis((ticks * 13 + i * 67) % 360, Vector3.up);
-                DrawPlane(loc + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, rot, Alpha(extension.ringAlpha));
+                float scale = Math.Max(0.030f, extension.sparkScale * (0.95f - i * 0.14f));
+                DrawPlane(loc + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.80f));
             }
         }
 
