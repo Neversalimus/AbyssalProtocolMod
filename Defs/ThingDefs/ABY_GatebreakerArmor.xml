@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_GatebreakerCarapace</defName>
+    <thingClass>Apparel</thingClass>
+    <label>gatebreaker carapace</label>
+    <description>A late abyssal assault shell built for colonists who are no longer merely surviving controlled breaches, but preparing to break through them. Blackened plasteel plates, saint-reactor containment ribs and residue-lit pressure channels form a compact human-scale siege frame. It is stronger and more hostile than saint-line armor, but still beneath true crowned-core authority.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_GatebreakerCarapace</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.12,1.12)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_GatebreakerCarapace</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>48</Plasteel>
+      <Uranium>17</Uranium>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>5</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.10</MoveSpeed>
+      <PsychicSensitivity>-0.06</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>6600</WorkToMake>
+      <MaxHitPoints>520</MaxHitPoints>
+      <Mass>6.8</Mass>
+      <MarketValue>5600</MarketValue>
+      <ArmorRating_Sharp>1.18</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.10</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_GatebreakerHelm</defName>
+    <thingClass>Apparel</thingClass>
+    <label>gatebreaker helm</label>
+    <description>A sealed assault helm with a predatory white gate-visor and layered black reactor plating. Its optics do not promise clarity so much as permission: authorized breaches, condemned targets and hostile silhouettes burn through the mask in a single grin of pale abyssal light.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_GatebreakerHelm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.98,0.98)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_GatebreakerHelm</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>20</Plasteel>
+      <Uranium>7</Uranium>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>3</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <PsychicSensitivity>-0.05</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>3000</WorkToMake>
+      <MaxHitPoints>285</MaxHitPoints>
+      <Mass>2.25</Mass>
+      <MarketValue>2650</MarketValue>
+      <ArmorRating_Sharp>0.98</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.50</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.88</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>

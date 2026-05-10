@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftGatebreakerCarapace.label>forge gatebreaker carapace</ABY_CraftGatebreakerCarapace.label>
+  <ABY_CraftGatebreakerCarapace.description>Rebuild a saint-grade core shell into a black abyssal assault carapace meant for the next gate, not the last battle. This pattern sacrifices reactor remnant geometry for heavier anti-breach plating and a more openly hostile battlefield profile.</ABY_CraftGatebreakerCarapace.description>
+  <ABY_CraftGatebreakerCarapace.jobString>Forging gatebreaker carapace.</ABY_CraftGatebreakerCarapace.jobString>
+  <ABY_CraftGatebreakerHelm.label>forge gatebreaker helm</ABY_CraftGatebreakerHelm.label>
+  <ABY_CraftGatebreakerHelm.description>Condense saint-class field hardware and black plasteel into a sealed predatory gate helm. The result is less ceremonial than crowned gear and more direct: an execution visor for controlled breaches that are expected to fight back.</ABY_CraftGatebreakerHelm.description>
+  <ABY_CraftGatebreakerHelm.jobString>Forging gatebreaker helm.</ABY_CraftGatebreakerHelm.jobString>
+</LanguageData>
