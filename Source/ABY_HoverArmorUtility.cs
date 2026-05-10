@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using RimWorld;
 using Verse;
 
@@ -7,22 +8,25 @@ namespace AbyssalProtocol
     public static class ABY_HoverArmorUtility
     {
         private const string GatebreakerDefName = "ABY_GatebreakerCarapace";
+        private const string GatebreakerHarnessDefName = "ABY_GatebreakerAnchorHarness";
         private const string GravplateDefName = "ABY_AbyssalGravplatePrototype";
+
+        private static readonly FieldInfo PawnDrawerPawnField = typeof(Pawn_DrawTracker).GetField("pawn", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
         private static readonly ABY_HoverArmorExtension GatebreakerFallback = new ABY_HoverArmorExtension
         {
             draftedOnly = true,
             enableUnderfootFx = true,
             enablePawnBob = true,
-            pawnVisualLiftZ = 0.095f,
-            pawnBobAmplitudeZ = 0.030f,
+            pawnVisualLiftZ = 0.28f,
+            pawnBobAmplitudeZ = 0.045f,
             pawnBobPeriodTicks = 112,
             pawnAltitudeLayerOffset = 0.018f,
-            ringScale = 0.70f,
-            ringPulseScale = 0.050f,
-            ringAlpha = 0.54f,
-            shadowScale = 0.42f,
-            sparkScale = 0.080f
+            ringScale = 0.78f,
+            ringPulseScale = 0.065f,
+            ringAlpha = 0.72f,
+            shadowScale = 0.52f,
+            sparkScale = 0.105f
         };
 
         private static readonly ABY_HoverArmorExtension GravplateFallback = new ABY_HoverArmorExtension
@@ -30,15 +34,15 @@ namespace AbyssalProtocol
             draftedOnly = true,
             enableUnderfootFx = true,
             enablePawnBob = true,
-            pawnVisualLiftZ = 0.120f,
-            pawnBobAmplitudeZ = 0.036f,
+            pawnVisualLiftZ = 0.32f,
+            pawnBobAmplitudeZ = 0.052f,
             pawnBobPeriodTicks = 126,
             pawnAltitudeLayerOffset = 0.020f,
-            ringScale = 0.76f,
-            ringPulseScale = 0.060f,
-            ringAlpha = 0.62f,
-            shadowScale = 0.46f,
-            sparkScale = 0.090f
+            ringScale = 0.84f,
+            ringPulseScale = 0.075f,
+            ringAlpha = 0.78f,
+            shadowScale = 0.56f,
+            sparkScale = 0.115f
         };
 
         public static bool TryGetActiveHover(Pawn pawn, out ABY_HoverArmorExtension extension)
@@ -55,12 +59,29 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (extension.draftedOnly && !pawn.Drafted)
+            if (extension.draftedOnly && !IsDrafted(pawn))
             {
                 return false;
             }
 
             return true;
+        }
+
+        public static Pawn ResolvePawnFromDrawer(Pawn_DrawTracker drawer)
+        {
+            if (drawer == null || PawnDrawerPawnField == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return PawnDrawerPawnField.GetValue(drawer) as Pawn;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public static bool ShouldApplyWorldDrawOffset(Pawn pawn)
@@ -119,6 +140,34 @@ namespace AbyssalProtocol
                 && pawn.apparel.WornApparel != null;
         }
 
+        private static bool IsDrafted(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (pawn.drafter != null)
+                {
+                    return pawn.drafter.Drafted;
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                return pawn.Drafted;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private static Apparel FindHoverApparel(Pawn pawn, out ABY_HoverArmorExtension extension)
         {
             extension = null;
@@ -126,6 +175,9 @@ namespace AbyssalProtocol
             {
                 return null;
             }
+
+            Apparel fallbackApparel = null;
+            ABY_HoverArmorExtension fallbackExtension = null;
 
             for (int i = 0; i < pawn.apparel.WornApparel.Count; i++)
             {
@@ -143,17 +195,31 @@ namespace AbyssalProtocol
                 }
 
                 string defName = apparel.def.defName;
+                if (defName == GravplateDefName)
+                {
+                    extension = GravplateFallback;
+                    return apparel;
+                }
+
                 if (defName == GatebreakerDefName)
                 {
                     extension = GatebreakerFallback;
                     return apparel;
                 }
 
-                if (defName == GravplateDefName)
+                // Some Gatebreaker visual loadouts include the anchor harness as the visible over-layer.
+                // Treat it as eligible only as a fallback, so the real carapace/XML extension still wins.
+                if (defName == GatebreakerHarnessDefName || defName.StartsWith("ABY_Gatebreaker", StringComparison.Ordinal))
                 {
-                    extension = GravplateFallback;
-                    return apparel;
+                    fallbackApparel = apparel;
+                    fallbackExtension = GatebreakerFallback;
                 }
+            }
+
+            if (fallbackApparel != null)
+            {
+                extension = fallbackExtension;
+                return fallbackApparel;
             }
 
             return null;

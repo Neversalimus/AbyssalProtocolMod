@@ -8,16 +8,16 @@ namespace AbyssalProtocol
         public bool enableUnderfootFx = true;
         public bool enablePawnBob = true;
 
-        // World-space visual offset. z is intentionally used for visible screen lift in RimWorld's top-down view.
-        public float pawnVisualLiftZ = 0.105f;
-        public float pawnBobAmplitudeZ = 0.032f;
+        // Visible screen-space lift through Pawn_DrawTracker.DrawPos z-offset.
+        public float pawnVisualLiftZ = 0.30f;
+        public float pawnBobAmplitudeZ = 0.048f;
         public int pawnBobPeriodTicks = 116;
         public float pawnAltitudeLayerOffset = 0.018f;
 
-        public float ringScale = 0.72f;
-        public float ringPulseScale = 0.055f;
-        public float ringAlpha = 0.58f;
-        public float shadowScale = 0.44f;
-        public float sparkScale = 0.085f;
+        public float ringScale = 0.80f;
+        public float ringPulseScale = 0.070f;
+        public float ringAlpha = 0.75f;
+        public float shadowScale = 0.54f;
+        public float sparkScale = 0.110f;
     }
 }

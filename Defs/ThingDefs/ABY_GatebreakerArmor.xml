@@ -51,15 +51,15 @@
         <draftedOnly>true</draftedOnly>
         <enableUnderfootFx>true</enableUnderfootFx>
         <enablePawnBob>true</enablePawnBob>
-        <pawnVisualLiftZ>0.095</pawnVisualLiftZ>
-        <pawnBobAmplitudeZ>0.030</pawnBobAmplitudeZ>
+        <pawnVisualLiftZ>0.28</pawnVisualLiftZ>
+        <pawnBobAmplitudeZ>0.045</pawnBobAmplitudeZ>
         <pawnBobPeriodTicks>112</pawnBobPeriodTicks>
         <pawnAltitudeLayerOffset>0.018</pawnAltitudeLayerOffset>
-        <ringScale>0.70</ringScale>
+        <ringScale>0.78</ringScale>
         <ringPulseScale>0.050</ringPulseScale>
-        <ringAlpha>0.54</ringAlpha>
-        <shadowScale>0.42</shadowScale>
-        <sparkScale>0.080</sparkScale>
+        <ringAlpha>0.72</ringAlpha>
+        <shadowScale>0.52</shadowScale>
+        <sparkScale>0.105</sparkScale>
       </li>
     </modExtensions>
 </ThingDef>
