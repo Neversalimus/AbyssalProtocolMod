@@ -30,6 +30,34 @@
       </layers>
       <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplatePrototype</wornGraphicPath>
     </apparel>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
+        <draftedOnly>true</draftedOnly>
+        <enableUnderfootFx>true</enableUnderfootFx>
+        <enableMovingSparks>true</enableMovingSparks>
+        <enableFlightRigFx>true</enableFlightRigFx>
+        <hoverFxIntensity>Subtle</hoverFxIntensity>
+        <ringScale>0.78</ringScale>
+        <movingRingScaleBonus>0.08</movingRingScaleBonus>
+        <ringAlpha>0.28</ringAlpha>
+        <pulseAmplitude>0.055</pulseAmplitude>
+        <flightRigScale>3.10</flightRigScale>
+        <flightRigAlpha>0.98</flightRigAlpha>
+        <flightRigPulseScale>0.070</flightRigPulseScale>
+        <flightRigPulseAlpha>0.14</flightRigPulseAlpha>
+        <flightRigBobAmplitude>0.034</flightRigBobAmplitude>
+        <flightRigOffsetSouthZ>0.11</flightRigOffsetSouthZ>
+        <flightRigOffsetEastX>-0.11</flightRigOffsetEastX>
+        <flightRigOffsetEastZ>0.02</flightRigOffsetEastZ>
+        <flightRigOffsetNorthZ>-0.07</flightRigOffsetNorthZ>
+        <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
+        <sparkIntervalTicks>16</sparkIntervalTicks>
+        <sparkLifetimeTicks>16</sparkLifetimeTicks>
+        <sparkScale>0.15</sparkScale>
+        <sparkAlpha>0.46</sparkAlpha>
+        <drawPriority>20</drawPriority>
+      </li>
+    </modExtensions>
     <tradeability>None</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
@@ -49,38 +77,7 @@
       <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
       <ArmorRating_Heat>1.02</ArmorRating_Heat>
     </statBases>
-      <modExtensions>
-      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
-        <draftedOnly>true</draftedOnly>
-        <enableUnderfootFx>true</enableUnderfootFx>
-        <enablePawnBob>true</enablePawnBob>
-        <enableHaloFx>false</enableHaloFx>
-        <enableFlightRigFx>true</enableFlightRigFx>
-        <pawnVisualLiftZ>0.32</pawnVisualLiftZ>
-        <pawnBobAmplitudeZ>0.052</pawnBobAmplitudeZ>
-        <pawnBobPeriodTicks>126</pawnBobPeriodTicks>
-        <pawnAltitudeLayerOffset>0.020</pawnAltitudeLayerOffset>
-        <ringScale>0.84</ringScale>
-        <ringPulseScale>0.060</ringPulseScale>
-        <ringAlpha>0.78</ringAlpha>
-        <shadowScale>0.56</shadowScale>
-        <sparkScale>0.115</sparkScale>
-        <haloScale>1.16</haloScale>
-        <haloPulseScale>0.065</haloPulseScale>
-        <haloAlpha>0.92</haloAlpha>
-        <haloOffsetZ>0.44</haloOffsetZ>
-        <haloAltitudeOffset>0.125</haloAltitudeOffset>
-        <flightRigScale>3.05</flightRigScale>
-        <flightRigPulseScale>0.075</flightRigPulseScale>
-        <flightRigAlpha>0.98</flightRigAlpha>
-        <flightRigGlowAlpha>0.26</flightRigGlowAlpha>
-        <flightRigOffsetX>0.00</flightRigOffsetX>
-        <flightRigOffsetZ>0.22</flightRigOffsetZ>
-        <flightRigAltitudeOffset>-0.030</flightRigAltitudeOffset>
-        <flightRigFrameTicks>8</flightRigFrameTicks>
-      </li>
-    </modExtensions>
-</ThingDef>
+  </ThingDef>
 
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplateHelmPrototype</defName>

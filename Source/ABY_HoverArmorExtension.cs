@@ -2,44 +2,38 @@ using Verse;
 
 namespace AbyssalProtocol
 {
-    public sealed class ABY_HoverArmorExtension : DefModExtension
+    public class ABY_HoverArmorExtension : DefModExtension
     {
         public bool draftedOnly = true;
         public bool enableUnderfootFx = true;
-        public bool enablePawnBob = true;
-        public bool enableHaloFx = false;
+        public bool enableMovingSparks = true;
         public bool enableFlightRigFx = true;
-
-        // Visible screen-space lift through Pawn_DrawTracker.DrawPos z-offset.
-        public float pawnVisualLiftZ = 0.30f;
-        public float pawnBobAmplitudeZ = 0.048f;
-        public int pawnBobPeriodTicks = 116;
-        public float pawnAltitudeLayerOffset = 0.018f;
-
-        public float ringScale = 0.80f;
-        public float ringPulseScale = 0.070f;
-        public float ringAlpha = 0.75f;
-        public float shadowScale = 0.54f;
-        public float sparkScale = 0.110f;
-
-        // Legacy upper aura/backplate. Disabled by default now that the readable drafted-flight cue is
-        // the animated back-mounted flight rig. Kept as a fallback/optional accent for future tuning.
-        public float haloScale = 1.08f;
-        public float haloPulseScale = 0.060f;
-        public float haloAlpha = 0.70f;
-        public float haloOffsetZ = 0.42f;
-        public float haloAltitudeOffset = 0.120f;
-
-        // Animated Gatebreaker-style flight rig: 00-02 are deploy frames, 03-07 are idle hover loop.
-        // It is drawn behind the pawn while drafted, so the pawn body remains readable but the silhouette
-        // clearly gains a powered anti-grav backpack/thruster assembly.
+        public string hoverFxIntensity = "Subtle";
+        public string ringTexPath = "Effects/ABY_HoverGravRing";
+        public string sparkTexPath = "Effects/ABY_HoverSpark";
+        public string flightRigTexPathSouth = "Effects/FlightRig/ABY_FlightRig_South";
+        public string flightRigTexPathEast = "Effects/FlightRig/ABY_FlightRig_East";
+        public string flightRigTexPathNorth = "Effects/FlightRig/ABY_FlightRig_North";
+        public float ringScale = 0.74f;
+        public float movingRingScaleBonus = 0.08f;
+        public float ringAlpha = 0.34f;
+        public float pulseAmplitude = 0.07f;
         public float flightRigScale = 2.85f;
-        public float flightRigPulseScale = 0.070f;
-        public float flightRigAlpha = 0.98f;
-        public float flightRigGlowAlpha = 0.24f;
-        public float flightRigOffsetX = 0.00f;
-        public float flightRigOffsetZ = 0.20f;
-        public float flightRigAltitudeOffset = -0.030f;
-        public int flightRigFrameTicks = 8;
+        public float flightRigAlpha = 0.96f;
+        public float flightRigPulseScale = 0.055f;
+        public float flightRigPulseAlpha = 0.10f;
+        public float flightRigBobAmplitude = 0.032f;
+        public float flightRigOffsetSouthX = 0f;
+        public float flightRigOffsetSouthZ = 0.10f;
+        public float flightRigOffsetEastX = -0.10f;
+        public float flightRigOffsetEastZ = 0.02f;
+        public float flightRigOffsetNorthX = 0f;
+        public float flightRigOffsetNorthZ = -0.06f;
+        public float draftedMoveSpeedBonus = 0f;
+        public int drawPriority = 0;
+        public int sparkIntervalTicks = 14;
+        public int sparkLifetimeTicks = 18;
+        public float sparkScale = 0.18f;
+        public float sparkAlpha = 0.58f;
     }
 }
