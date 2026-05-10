@@ -71,8 +71,8 @@ namespace AbyssalProtocol
             }
 
             int ticks = Find.TickManager.TicksGame;
-            DrawActiveFlightRigs(ticks);
-            DrawActiveHoverRings(ticks);
+            // Rig and underfoot ring are drawn from the PawnRenderer prefix so they are ordered behind the pawn.
+            // This component keeps only transient moving sparks/trails.
             DrawSparks(ticks);
         }
 
@@ -313,7 +313,7 @@ namespace AbyssalProtocol
 
         private static bool IsMoving(Pawn pawn)
         {
-            return pawn?.pather != null && pawn.pather.Moving;
+            return pawn?.pather != null && pawn.pather.MovingNow;
         }
 
         private static bool TryGetFlightRigTexture(ABY_HoverArmorExtension extension, Rot4 rot, out string texPath, out bool mirrorX)

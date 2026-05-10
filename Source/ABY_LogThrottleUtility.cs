@@ -6,7 +6,8 @@ namespace AbyssalProtocol
 {
     public static class ABY_LogThrottleUtility
     {
-        private static readonly Dictionary<string, int> NextLogTickByKey = new Dictionary<string, int>();
+        private static readonly object SyncRoot = new object();
+        private static Dictionary<string, int> nextLogTickByKey;
 
         public static void Warning(string key, string message, int throttleTicks = 2500)
         {
@@ -19,7 +20,7 @@ namespace AbyssalProtocol
             }
             catch
             {
-                // Logging must never break static constructors or Harmony finalizers.
+                // Logging must never break static constructors, Harmony finalizers, or early PlayData loading.
             }
         }
 
@@ -34,7 +35,7 @@ namespace AbyssalProtocol
             }
             catch
             {
-                // Logging must never break static constructors or Harmony finalizers.
+                // Logging must never break static constructors, Harmony finalizers, or early PlayData loading.
             }
         }
 
@@ -42,37 +43,55 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (string.IsNullOrEmpty(key))
+                if (key.NullOrEmpty())
                 {
                     key = "default";
                 }
 
-                int now = 0;
-                try
+                int now = SafeTicks();
+                int delay = Math.Max(1, throttleTicks);
+
+                lock (SyncRoot)
                 {
-                    TickManager tickManager = Find.TickManager;
-                    if (tickManager != null)
+                    Dictionary<string, int> map = nextLogTickByKey;
+                    if (map == null)
                     {
-                        now = tickManager.TicksGame;
+                        map = new Dictionary<string, int>();
+                        nextLogTickByKey = map;
                     }
-                }
-                catch
-                {
-                    now = Environment.TickCount & int.MaxValue;
-                }
 
-                if (NextLogTickByKey.TryGetValue(key, out int nextTick) && now < nextTick)
-                {
-                    return false;
-                }
+                    if (map.TryGetValue(key, out int nextTick) && now < nextTick)
+                    {
+                        return false;
+                    }
 
-                NextLogTickByKey[key] = now + Math.Max(1, throttleTicks);
-                return true;
+                    map[key] = now + delay;
+                    return true;
+                }
             }
             catch
             {
+                // If throttle state itself is unavailable during early startup, prefer silence over a red error.
                 return false;
             }
+        }
+
+        private static int SafeTicks()
+        {
+            try
+            {
+                TickManager tickManager = Find.TickManager;
+                if (tickManager != null)
+                {
+                    return tickManager.TicksGame;
+                }
+            }
+            catch
+            {
+                // Find.TickManager can dereference Current.Game during very early static construction.
+            }
+
+            return Environment.TickCount & int.MaxValue;
         }
     }
 }
