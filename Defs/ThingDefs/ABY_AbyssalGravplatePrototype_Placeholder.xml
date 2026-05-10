@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <!--
+    Abyssal Gravplate prototype placeholder.
+    Intentionally not wired into research, recipes, forge patterns, traders, rewards, pawn gear pools, or incidents.
+    It is kept as a dev-mode spawnable future armor set only.
+  -->
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AbyssalGravplatePrototype</defName>
+    <thingClass>Apparel</thingClass>
+    <label>abyssal gravplate prototype</label>
+    <description>[WIP / developer placeholder] A future dominion-grade grav-suspension armor shell. Its blackened crown-plating, red fracture channels and violet node lenses are prepared as a visual placeholder only; the armor is intentionally not craftable, not sold, not researched and not connected to forge progression yet. Use developer mode spawning to inspect it in-game.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AbyssalGravplatePrototype</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.16,1.16)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplatePrototype</wornGraphicPath>
+    </apparel>
+    <tradeability>None</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>40</Plasteel>
+      <Uranium>12</Uranium>
+      <ComponentSpacer>1</ComponentSpacer>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.04</MoveSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>6000</WorkToMake>
+      <MaxHitPoints>520</MaxHitPoints>
+      <Mass>6.8</Mass>
+      <MarketValue>5600</MarketValue>
+      <ArmorRating_Sharp>1.18</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.02</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_AbyssalGravplateHelmPrototype</defName>
+    <thingClass>Apparel</thingClass>
+    <label>abyssal gravplate helm prototype</label>
+    <description>[WIP / developer placeholder] A future sealed helm for the abyssal gravplate line. The compact horned faceplate, violet lenses and red crown-core venting are included as visual placeholder art only; the helm is intentionally not craftable, not sold, not researched and not connected to forge progression yet. Use developer mode spawning to inspect it in-game.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_AbyssalGravplateHelmPrototype</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.02,1.02)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplateHelmPrototype</wornGraphicPath>
+    </apparel>
+    <tradeability>None</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>16</Plasteel>
+      <Uranium>4</Uranium>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2800</WorkToMake>
+      <MaxHitPoints>285</MaxHitPoints>
+      <Mass>2.2</Mass>
+      <MarketValue>2450</MarketValue>
+      <ArmorRating_Sharp>1.00</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.52</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.90</ArmorRating_Heat>
+    </statBases>
+  </ThingDef>
+
+</Defs>
