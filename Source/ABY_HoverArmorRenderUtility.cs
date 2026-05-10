@@ -11,22 +11,30 @@ namespace AbyssalProtocol
         private const string RingTexPath = "Effects/ABY_HoverGravRing";
         private const string SparkTexPath = "Effects/ABY_HoverSpark";
         private const string ShadowTexPath = "Effects/ABY_HoverShadow";
-        private const string LegacyHaloTexPath = "Effects/ABY_HoverHalo";
-        private const string AnimatedHaloTexPrefix = "Effects/HoverHalo/ABY_HoverHalo_";
+        private const string HaloFallbackTexPath = "Effects/ABY_HoverHalo";
+        private const string HaloFrameTexPrefix = "Effects/HoverHalo/ABY_HoverHalo_";
         private const int HaloFrameCount = 8;
-        private const int HaloAppearFrames = 3;
-        private const int HaloAppearFrameTicks = 10;
-        private const int HaloIdleFrameTicks = 8;
-        private const int HaloRedraftResetGapTicks = 45;
+        private const int HaloAppearFrameCount = 3;
+        private const int HaloIdleStartFrame = 3;
 
         private static readonly Material RingMaterial = MaterialPool.MatFrom(RingTexPath, ShaderDatabase.MoteGlow, Color.white);
         private static readonly Material SparkMaterial = MaterialPool.MatFrom(SparkTexPath, ShaderDatabase.MoteGlow, Color.white);
         private static readonly Material ShadowMaterial = MaterialPool.MatFrom(ShadowTexPath, ShaderDatabase.Transparent, Color.white);
-        private static readonly Material LegacyHaloMaterial = MaterialPool.MatFrom(LegacyHaloTexPath, ShaderDatabase.MoteGlow, Color.white);
-        private static readonly Material[] HaloFrameMaterials = new Material[HaloFrameCount];
-        private static readonly Dictionary<int, int> HaloStartTickByPawn = new Dictionary<int, int>();
-        private static readonly Dictionary<int, int> HaloLastSeenTickByPawn = new Dictionary<int, int>();
-        private static int lastCachePruneTick = -1;
+        private static readonly Material HaloFallbackMaterial = MaterialPool.MatFrom(HaloFallbackTexPath, ShaderDatabase.MoteGlow, Color.white);
+        private static readonly Material[] HaloFrameMaterials = BuildHaloFrameMaterials();
+
+        private static readonly Dictionary<int, int> HoverStartTicksByPawnId = new Dictionary<int, int>();
+        private static int lastCleanupTick = -1;
+
+        public static void NotifyHoverInactive(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            HoverStartTicksByPawnId.Remove(pawn.thingIDNumber);
+        }
 
         public static void DrawUnderfootFx(Pawn pawn, Vector3 groundDrawLoc, ABY_HoverArmorExtension extension)
         {
@@ -43,10 +51,10 @@ namespace AbyssalProtocol
             Vector3 ground = groundDrawLoc;
             ground.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.030f;
 
-            DrawPlane(ground, new Vector3(extension.shadowScale, 1f, extension.shadowScale * 0.62f), ShadowMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.34f));
-            DrawPlane(ground + new Vector3(0f, 0.010f, 0f), new Vector3(ringScale, 1f, ringScale), RingMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.42f));
+            DrawPlane(ground, new Vector3(extension.shadowScale, 1f, extension.shadowScale * 0.62f), ShadowMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.32f));
+            DrawPlane(ground + new Vector3(0f, 0.010f, 0f), new Vector3(ringScale, 1f, ringScale), RingMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.32f));
 
-            // Secondary cue only. The generated animated upper halo is now the primary readable FX.
+            // Ground sparks are intentionally subtle now; animated halo is the readable drafted cue.
             DrawIdleSparkSet(pawn, groundDrawLoc, extension, ticks, phase);
             if (pawn.pather != null && pawn.pather.MovingNow)
             {
@@ -62,128 +70,87 @@ namespace AbyssalProtocol
             }
 
             int ticks = ABY_HoverArmorUtility.SafeTicksGame();
-            int frameIndex = ResolveHaloFrameIndex(pawn, ticks);
-            Material haloMaterial = GetHaloFrameMaterial(frameIndex) ?? LegacyHaloMaterial;
-            if (haloMaterial == null)
-            {
-                return;
-            }
+            CleanupOccasionally(ticks);
+
+            int activeTicks = ActiveTicksFor(pawn, ticks);
+            int frameIndex = ResolveHaloFrameIndex(activeTicks, ticks, extension);
+            Material material = ResolveHaloMaterial(frameIndex);
 
             int visualTicks = ticks + pawn.thingIDNumber * 19;
-            int period = 132;
-            float phase = (visualTicks % period) / (float)period;
-            float pulse = (float)Math.Sin(phase * Math.PI * 2.0);
-
-            float scale = Math.Max(0.45f, extension.haloScale + pulse * extension.haloPulseScale);
-            float alpha = Mathf.Clamp01(extension.haloAlpha + pulse * 0.055f);
-
-            // Fade the generated appear frames in softly, then keep frames 3-7 as the idle loop.
-            int elapsed = ResolveHaloElapsedTicks(pawn, ticks);
-            if (elapsed < HaloAppearFrames * HaloAppearFrameTicks)
-            {
-                alpha *= Mathf.Clamp01((elapsed + 2f) / (HaloAppearFrames * HaloAppearFrameTicks));
-            }
+            float pulse = (float)Math.Sin((visualTicks % 132) / 132f * Math.PI * 2.0);
+            float scale = Math.Max(0.18f, extension.haloScale + pulse * extension.haloPulseScale);
+            float appearAlpha = Mathf.Clamp01(activeTicks / Math.Max(1f, extension.haloAppearTicks * 0.70f));
+            float alpha = Mathf.Clamp01((extension.haloAlpha + pulse * 0.030f) * appearAlpha);
 
             Vector3 loc = pawnDrawLoc;
             loc.z += extension.haloOffsetZ;
-            loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + extension.haloAltitudeOffset;
 
-            // No geometric spin. Animation comes from authored frame changes and a subtle pulse only.
-            DrawPlane(loc, new Vector3(scale, 1f, scale), haloMaterial, Quaternion.identity, Alpha(alpha));
+            // This is deliberately drawn as a backplate before the pawn and slightly below pawn altitude.
+            // It should frame the head/shoulders, not sit on the face like a second helmet.
+            loc.y = pawnDrawLoc.y + extension.haloAltitudeOffset;
+
+            DrawPlane(loc, new Vector3(scale, 1f, scale), material, Quaternion.identity, Alpha(alpha));
         }
 
-        private static Material GetHaloFrameMaterial(int frameIndex)
+        private static Material[] BuildHaloFrameMaterials()
         {
-            frameIndex = Mathf.Clamp(frameIndex, 0, HaloFrameCount - 1);
-            Material material = HaloFrameMaterials[frameIndex];
-            if (material != null)
+            Material[] result = new Material[HaloFrameCount];
+            for (int i = 0; i < result.Length; i++)
             {
-                return material;
+                result[i] = MaterialPool.MatFrom(HaloFrameTexPrefix + i.ToString("00"), ShaderDatabase.MoteGlow, Color.white);
             }
 
-            try
-            {
-                string path = AnimatedHaloTexPrefix + frameIndex.ToString("00");
-                material = MaterialPool.MatFrom(path, ShaderDatabase.MoteGlow, Color.white);
-                HaloFrameMaterials[frameIndex] = material;
-                return material;
-            }
-            catch
-            {
-                return LegacyHaloMaterial;
-            }
+            return result;
         }
 
-        private static int ResolveHaloFrameIndex(Pawn pawn, int ticks)
+        private static int ActiveTicksFor(Pawn pawn, int ticks)
         {
-            int elapsed = ResolveHaloElapsedTicks(pawn, ticks);
-            int appearTicks = HaloAppearFrames * HaloAppearFrameTicks;
-            if (elapsed < appearTicks)
-            {
-                return Mathf.Clamp(elapsed / HaloAppearFrameTicks, 0, HaloAppearFrames - 1);
-            }
-
-            int idleFrame = (elapsed - appearTicks) / HaloIdleFrameTicks;
-            return HaloAppearFrames + idleFrame % (HaloFrameCount - HaloAppearFrames);
-        }
-
-        private static int ResolveHaloElapsedTicks(Pawn pawn, int ticks)
-        {
-            if (pawn == null)
-            {
-                return 0;
-            }
-
-            int id = pawn.thingIDNumber;
-            if (!HaloStartTickByPawn.TryGetValue(id, out int startTick)
-                || !HaloLastSeenTickByPawn.TryGetValue(id, out int lastSeenTick)
-                || ticks - lastSeenTick > HaloRedraftResetGapTicks)
+            int key = pawn.thingIDNumber;
+            if (!HoverStartTicksByPawnId.TryGetValue(key, out int startTick))
             {
                 startTick = ticks;
-                HaloStartTickByPawn[id] = startTick;
+                HoverStartTicksByPawnId[key] = startTick;
             }
 
-            HaloLastSeenTickByPawn[id] = ticks;
-            PruneHaloAnimationCache(ticks);
             return Math.Max(0, ticks - startTick);
         }
 
-        private static void PruneHaloAnimationCache(int ticks)
+        private static int ResolveHaloFrameIndex(int activeTicks, int ticks, ABY_HoverArmorExtension extension)
         {
-            if (ticks - lastCachePruneTick < 600)
+            int appearTicks = Math.Max(1, extension.haloAppearTicks);
+            if (activeTicks < appearTicks)
+            {
+                float t = Mathf.Clamp01(activeTicks / (float)appearTicks);
+                return Mathf.Clamp(Mathf.FloorToInt(t * HaloAppearFrameCount), 0, HaloAppearFrameCount - 1);
+            }
+
+            int loopTicks = Math.Max(2, extension.haloLoopFrameTicks);
+            int idleFrameCount = HaloFrameCount - HaloIdleStartFrame;
+            int loopFrame = (ticks / loopTicks) % idleFrameCount;
+            return HaloIdleStartFrame + loopFrame;
+        }
+
+        private static Material ResolveHaloMaterial(int frameIndex)
+        {
+            if (frameIndex >= 0 && frameIndex < HaloFrameMaterials.Length && HaloFrameMaterials[frameIndex] != null)
+            {
+                return HaloFrameMaterials[frameIndex];
+            }
+
+            return HaloFallbackMaterial;
+        }
+
+        private static void CleanupOccasionally(int ticks)
+        {
+            if (lastCleanupTick >= 0 && ticks - lastCleanupTick < 900)
             {
                 return;
             }
 
-            lastCachePruneTick = ticks;
-            if (HaloLastSeenTickByPawn.Count <= 128)
+            lastCleanupTick = ticks;
+            if (HoverStartTicksByPawnId.Count > 256)
             {
-                return;
-            }
-
-            List<int> stale = null;
-            foreach (KeyValuePair<int, int> pair in HaloLastSeenTickByPawn)
-            {
-                if (ticks - pair.Value > 1200)
-                {
-                    if (stale == null)
-                    {
-                        stale = new List<int>();
-                    }
-
-                    stale.Add(pair.Key);
-                }
-            }
-
-            if (stale == null)
-            {
-                return;
-            }
-
-            for (int i = 0; i < stale.Count; i++)
-            {
-                HaloLastSeenTickByPawn.Remove(stale[i]);
-                HaloStartTickByPawn.Remove(stale[i]);
+                HoverStartTicksByPawnId.Clear();
             }
         }
 
@@ -199,13 +166,13 @@ namespace AbyssalProtocol
             Vector3 baseLoc = groundDrawLoc;
             baseLoc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 2; i++)
             {
-                float angle = (phase * 360f + i * 120f + pawn.thingIDNumber * 7) * Mathf.Deg2Rad;
-                float radius = 0.19f + 0.025f * (float)Math.Sin((phase + i * 0.17f) * Math.PI * 2.0);
+                float angle = (phase * 360f + i * 180f + pawn.thingIDNumber * 7) * Mathf.Deg2Rad;
+                float radius = 0.16f + 0.020f * (float)Math.Sin((phase + i * 0.17f) * Math.PI * 2.0);
                 Vector3 offset = new Vector3((float)Math.Cos(angle) * radius, 0f, (float)Math.Sin(angle) * radius * 0.62f);
-                float scale = Math.Max(0.030f, extension.sparkScale * 0.48f);
-                DrawPlane(baseLoc + offset + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.46f));
+                float scale = Math.Max(0.026f, extension.sparkScale * 0.45f);
+                DrawPlane(baseLoc + offset + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.38f));
             }
         }
 
@@ -216,14 +183,14 @@ namespace AbyssalProtocol
             Vector3 baseLoc = groundDrawLoc - trailDir * 0.34f;
             baseLoc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.030f;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
-                float side = (i - 1.5f) * 0.095f;
+                float side = (i - 1f) * 0.085f;
                 float back = 0.075f * i;
-                float wobble = (float)Math.Sin((phase + i * 0.31f) * Math.PI * 2.0) * 0.040f;
+                float wobble = (float)Math.Sin((phase + i * 0.31f) * Math.PI * 2.0) * 0.034f;
                 Vector3 loc = baseLoc - trailDir * back + right * (side + wobble);
-                float scale = Math.Max(0.030f, extension.sparkScale * (0.78f - i * 0.10f));
-                DrawPlane(loc + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.62f));
+                float scale = Math.Max(0.028f, extension.sparkScale * (0.75f - i * 0.12f));
+                DrawPlane(loc + new Vector3(0f, i * 0.002f, 0f), new Vector3(scale, 1f, scale), SparkMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.52f));
             }
         }
 

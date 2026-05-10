@@ -17,16 +17,17 @@ namespace AbyssalProtocol
 
         public float ringScale = 0.80f;
         public float ringPulseScale = 0.070f;
-        public float ringAlpha = 0.75f;
+        public float ringAlpha = 0.62f;
         public float shadowScale = 0.54f;
-        public float sparkScale = 0.110f;
+        public float sparkScale = 0.100f;
 
-        // Readable above-pawn hover aura. This is intentionally not a spinning horizontal ring:
-        // it is a static, pulsing backplate/halo that sits behind the lifted pawn silhouette.
-        public float haloScale = 1.08f;
-        public float haloPulseScale = 0.060f;
-        public float haloAlpha = 0.88f;
-        public float haloOffsetZ = 0.42f;
-        public float haloAltitudeOffset = 0.120f;
+        // Animated drafted halo/backplate. Values are deliberately conservative: the pawn must stay readable.
+        public float haloScale = 0.68f;
+        public float haloPulseScale = 0.022f;
+        public float haloAlpha = 0.62f;
+        public float haloOffsetZ = 0.54f;
+        public float haloAltitudeOffset = -0.018f;
+        public int haloAppearTicks = 42;
+        public int haloLoopFrameTicks = 8;
     }
 }

@@ -24,9 +24,16 @@ namespace AbyssalProtocol
             pawnAltitudeLayerOffset = 0.018f,
             ringScale = 0.78f,
             ringPulseScale = 0.065f,
-            ringAlpha = 0.72f,
+            ringAlpha = 0.62f,
             shadowScale = 0.52f,
-            sparkScale = 0.105f
+            sparkScale = 0.105f,
+            haloScale = 0.68f,
+            haloPulseScale = 0.022f,
+            haloAlpha = 0.62f,
+            haloOffsetZ = 0.54f,
+            haloAltitudeOffset = -0.018f,
+            haloAppearTicks = 42,
+            haloLoopFrameTicks = 8
         };
 
         private static readonly ABY_HoverArmorExtension GravplateFallback = new ABY_HoverArmorExtension
@@ -40,9 +47,16 @@ namespace AbyssalProtocol
             pawnAltitudeLayerOffset = 0.020f,
             ringScale = 0.84f,
             ringPulseScale = 0.075f,
-            ringAlpha = 0.78f,
+            ringAlpha = 0.66f,
             shadowScale = 0.56f,
-            sparkScale = 0.115f
+            sparkScale = 0.115f,
+            haloScale = 0.72f,
+            haloPulseScale = 0.024f,
+            haloAlpha = 0.66f,
+            haloOffsetZ = 0.57f,
+            haloAltitudeOffset = -0.018f,
+            haloAppearTicks = 42,
+            haloLoopFrameTicks = 8
         };
 
         public static bool TryGetActiveHover(Pawn pawn, out ABY_HoverArmorExtension extension)

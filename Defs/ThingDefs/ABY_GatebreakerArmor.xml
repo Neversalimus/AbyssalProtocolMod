@@ -58,14 +58,16 @@
         <pawnAltitudeLayerOffset>0.018</pawnAltitudeLayerOffset>
         <ringScale>0.78</ringScale>
         <ringPulseScale>0.050</ringPulseScale>
-        <ringAlpha>0.72</ringAlpha>
+        <ringAlpha>0.62</ringAlpha>
         <shadowScale>0.52</shadowScale>
         <sparkScale>0.105</sparkScale>
-        <haloScale>1.08</haloScale>
+        <haloScale>0.68</haloScale>
         <haloPulseScale>0.055</haloPulseScale>
-        <haloAlpha>0.88</haloAlpha>
-        <haloOffsetZ>0.42</haloOffsetZ>
-        <haloAltitudeOffset>0.120</haloAltitudeOffset>
+        <haloAlpha>0.62</haloAlpha>
+        <haloOffsetZ>0.54</haloOffsetZ>
+        <haloAltitudeOffset>-0.018</haloAltitudeOffset>
+        <haloAppearTicks>42</haloAppearTicks>
+        <haloLoopFrameTicks>8</haloLoopFrameTicks>
       </li>
     </modExtensions>
 </ThingDef>
