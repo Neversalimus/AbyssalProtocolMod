@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CraftGatebreakerAnchorHarness.label>forge gatebreaker anchor harness</ABY_CraftGatebreakerAnchorHarness.label>
+  <ABY_CraftGatebreakerAnchorHarness.description>Assemble a visible recoil-anchor rig for Gatebreaker armor, binding plasteel straps, uranium pressure blocks and residue logic into a compact anti-breach stabilizer.</ABY_CraftGatebreakerAnchorHarness.description>
+  <ABY_CraftNullCantorFocusSling.label>forge null cantor focus sling</ABY_CraftNullCantorFocusSling.label>
+  <ABY_CraftNullCantorFocusSling.description>Build a diagonal ritual focus sling with a small sigil coil, dark cloth conductor and Null Cantor stabilization keys.</ABY_CraftNullCantorFocusSling.description>
+  <ABY_CraftNullProcessionVeil.label>forge null procession veil</ABY_CraftNullProcessionVeil.label>
+  <ABY_CraftNullProcessionVeil.description>Forge a compact null-procession half-mask from sigil cloth, plasteel baffles and a small gold logic seal.</ABY_CraftNullProcessionVeil.description>
+</LanguageData>

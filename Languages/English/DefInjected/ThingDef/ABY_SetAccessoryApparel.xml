@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_GatebreakerAnchorHarness.label>gatebreaker anchor harness</ABY_GatebreakerAnchorHarness.label>
+  <ABY_GatebreakerAnchorHarness.description>A visible recoil-anchor rig worn over the Gatebreaker carapace. Its diagonal breach straps, hip anchors and compact pressure core lock the wearer into each heavy shot, turning the armor into a human-scale firing brace rather than a simple suit of protection.</ABY_GatebreakerAnchorHarness.description>
+  <ABY_NullCantorFocusSling.label>null cantor focus sling</ABY_NullCantorFocusSling.label>
+  <ABY_NullCantorFocusSling.description>A cross-body focus sling for null acolytes and chant-rifle operators. Its cloth-wrapped conductor strap, suspended sigil coil and small calculation keys keep the Null Cantor steady while also isolating the wearer from the worst ritual feedback.</ABY_NullCantorFocusSling.description>
+  <ABY_NullProcessionVeil.label>null procession veil</ABY_NullProcessionVeil.label>
+  <ABY_NullProcessionVeil.description>A rigid null-procession half-mask worn beneath a cowl rather than a cloth veil. The faceplate seals the acolyte's lower field of vision behind a small sigil filter, muting hostile whispers at the cost of a slight loss of ordinary target tracking.</ABY_NullProcessionVeil.description>
+</LanguageData>

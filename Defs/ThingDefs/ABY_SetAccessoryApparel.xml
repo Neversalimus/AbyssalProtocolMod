@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_GatebreakerAnchorHarness</defName>
+    <thingClass>Apparel</thingClass>
+    <label>gatebreaker anchor harness</label>
+    <description>A visible recoil-anchor rig worn over the Gatebreaker carapace. Its diagonal breach straps, hip anchors and compact pressure core lock the wearer into each heavy shot, turning the armor into a human-scale firing brace rather than a simple suit of protection.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_GatebreakerAnchorHarness</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.96,0.96)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_GatebreakerAnchorHarness</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>16</Plasteel>
+      <Uranium>4</Uranium>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+      <MoveSpeed>-0.02</MoveSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>2600</WorkToMake>
+      <MaxHitPoints>220</MaxHitPoints>
+      <Mass>1.8</Mass>
+      <MarketValue>1450</MarketValue>
+      <ArmorRating_Sharp>0.03</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.05</ArmorRating_Heat>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_NullCantorFocusSling</defName>
+    <thingClass>Apparel</thingClass>
+    <label>null cantor focus sling</label>
+    <description>A cross-body focus sling for null acolytes and chant-rifle operators. Its cloth-wrapped conductor strap, suspended sigil coil and small calculation keys keep the Null Cantor steady while also isolating the wearer from the worst ritual feedback.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_NullCantorFocusSling</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.92,0.92)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Belt</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_NullCantorFocusSling</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>5</Plasteel>
+      <Gold>1</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+      <ResearchSpeed>0.03</ResearchSpeed>
+      <PsychicSensitivity>-0.03</PsychicSensitivity>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1800</WorkToMake>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Mass>0.9</Mass>
+      <MarketValue>850</MarketValue>
+      <ArmorRating_Sharp>0.02</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.02</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.04</ArmorRating_Heat>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>350</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_NullProcessionVeil</defName>
+    <thingClass>Apparel</thingClass>
+    <label>null procession veil</label>
+    <description>A rigid null-procession half-mask worn beneath a cowl rather than a cloth veil. The faceplate seals the acolyte's lower field of vision behind a small sigil filter, muting hostile whispers at the cost of a slight loss of ordinary target tracking.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_NullProcessionVeil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.72,0.72)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Eyes</li>
+      </bodyPartGroups>
+      <layers>
+        <li>EyeCover</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_NullProcessionVeil</wornGraphicPath>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>3</Plasteel>
+      <Gold>1</Gold>
+    </smeltProducts>
+    <equippedStatOffsets>
+      <PsychicSensitivity>-0.05</PsychicSensitivity>
+      <ResearchSpeed>0.02</ResearchSpeed>
+      <ShootingAccuracyPawn>-0.01</ShootingAccuracyPawn>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1200</WorkToMake>
+      <MaxHitPoints>95</MaxHitPoints>
+      <Mass>0.25</Mass>
+      <MarketValue>700</MarketValue>
+      <ArmorRating_Sharp>0.02</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.01</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.04</ArmorRating_Heat>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>325</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>
