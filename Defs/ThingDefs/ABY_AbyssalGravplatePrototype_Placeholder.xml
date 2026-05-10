@@ -54,6 +54,7 @@
         <draftedOnly>true</draftedOnly>
         <enableUnderfootFx>true</enableUnderfootFx>
         <enablePawnBob>true</enablePawnBob>
+        <enableHaloFx>true</enableHaloFx>
         <pawnVisualLiftZ>0.32</pawnVisualLiftZ>
         <pawnBobAmplitudeZ>0.052</pawnBobAmplitudeZ>
         <pawnBobPeriodTicks>126</pawnBobPeriodTicks>
@@ -63,6 +64,11 @@
         <ringAlpha>0.78</ringAlpha>
         <shadowScale>0.56</shadowScale>
         <sparkScale>0.115</sparkScale>
+        <haloScale>0.56</haloScale>
+        <haloPulseScale>0.060</haloPulseScale>
+        <haloAlpha>0.88</haloAlpha>
+        <haloOffsetZ>0.48</haloOffsetZ>
+        <haloAltitudeOffset>0.125</haloAltitudeOffset>
       </li>
     </modExtensions>
 </ThingDef>

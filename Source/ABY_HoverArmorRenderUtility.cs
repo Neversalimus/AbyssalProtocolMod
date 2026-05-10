@@ -10,10 +10,12 @@ namespace AbyssalProtocol
         private const string RingTexPath = "Effects/ABY_HoverGravRing";
         private const string SparkTexPath = "Effects/ABY_HoverSpark";
         private const string ShadowTexPath = "Effects/ABY_HoverShadow";
+        private const string HaloTexPath = "Effects/ABY_HoverHalo";
 
         private static readonly Material RingMaterial = MaterialPool.MatFrom(RingTexPath, ShaderDatabase.MoteGlow, Color.white);
         private static readonly Material SparkMaterial = MaterialPool.MatFrom(SparkTexPath, ShaderDatabase.MoteGlow, Color.white);
         private static readonly Material ShadowMaterial = MaterialPool.MatFrom(ShadowTexPath, ShaderDatabase.Transparent, Color.white);
+        private static readonly Material HaloMaterial = MaterialPool.MatFrom(HaloTexPath, ShaderDatabase.MoteGlow, Color.white);
 
         public static void DrawUnderfootFx(Pawn pawn, Vector3 groundDrawLoc, ABY_HoverArmorExtension extension)
         {
@@ -33,11 +35,40 @@ namespace AbyssalProtocol
             DrawPlane(ground, new Vector3(extension.shadowScale, 1f, extension.shadowScale * 0.62f), ShadowMaterial, Quaternion.identity, Alpha(extension.ringAlpha * 0.48f));
             DrawPlane(ground + new Vector3(0f, 0.010f, 0f), new Vector3(ringScale, 1f, ringScale), RingMaterial, Quaternion.AngleAxis(phase * 360f, Vector3.up), Alpha(extension.ringAlpha));
 
-            // Standing hover still needs visible energy. Moving pawns additionally get a longer trail.
             DrawIdleSparkSet(pawn, groundDrawLoc, extension, ticks, phase);
             if (pawn.pather != null && pawn.pather.MovingNow)
             {
                 DrawTrailSparkSet(pawn, groundDrawLoc, extension, ticks, phase);
+            }
+        }
+
+        public static void DrawHaloFx(Pawn pawn, Vector3 pawnDrawLoc, ABY_HoverArmorExtension extension)
+        {
+            if (pawn == null || extension == null || !extension.enableHaloFx)
+            {
+                return;
+            }
+
+            int ticks = ABY_HoverArmorUtility.SafeTicksGame() + pawn.thingIDNumber * 19;
+            float phase = (ticks % 120) / 120f;
+            float pulse = (float)Math.Sin(phase * Math.PI * 2.0);
+            float scale = Math.Max(0.20f, extension.haloScale + pulse * extension.haloPulseScale);
+            float alpha = Mathf.Clamp01(extension.haloAlpha + pulse * 0.075f);
+
+            Vector3 loc = pawnDrawLoc;
+            loc.z += extension.haloOffsetZ;
+            loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + extension.haloAltitudeOffset;
+
+            Quaternion rotation = Quaternion.AngleAxis((ticks * 2.2f) % 360f, Vector3.up);
+            DrawPlane(loc, new Vector3(scale, 1f, scale * 0.70f), HaloMaterial, rotation, Alpha(alpha));
+
+            // Small orbiting points make the halo read as an active grav-suspension field rather than a UI marker.
+            for (int i = 0; i < 3; i++)
+            {
+                float angle = (phase * 360f + i * 120f + pawn.thingIDNumber * 5) * Mathf.Deg2Rad;
+                float radius = scale * 0.34f;
+                Vector3 offset = new Vector3((float)Math.Cos(angle) * radius, 0f, (float)Math.Sin(angle) * radius * 0.46f);
+                DrawPlane(loc + offset + new Vector3(0f, 0.006f + i * 0.002f, 0f), new Vector3(extension.sparkScale * 0.58f, 1f, extension.sparkScale * 0.58f), SparkMaterial, Quaternion.AngleAxis((ticks * 11 + i * 73) % 360, Vector3.up), Alpha(alpha * 0.95f));
             }
         }
 

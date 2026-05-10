@@ -42,9 +42,9 @@ namespace AbyssalProtocol
                 TryPatchPostfix(typeof(JobGiver_AIGotoNearestHostile), "TryGiveJob", nameof(AIGotoNearestHostilePostfix));
                 TryPatchPrefix("VHelixienGasE.HelixienGasHandler", "MapGenerated", nameof(HelixienGasMapGeneratedPrefix));
             }
-            catch (Exception ex)
+            catch
             {
-                ABY_LogThrottleUtility.Warning("compat-init", "[Abyssal Protocol] Large modpack compat patches could not initialize: " + ex.GetType().Name + ": " + ex.Message, 5000);
+                // Best-effort compatibility patches must never break startup or spam warnings.
             }
         }
 
@@ -100,54 +100,82 @@ namespace AbyssalProtocol
 
         private static void TryPatchFinalizer(Type targetType, string methodName, string finalizerName)
         {
-            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            MethodInfo finalizer = typeof(ABY_LargeModpackCompatPatches).GetMethod(finalizerName, BindingFlags.Static | BindingFlags.Public);
-            if (original == null || finalizer == null)
+            try
             {
-                return;
-            }
+                MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                MethodInfo finalizer = typeof(ABY_LargeModpackCompatPatches).GetMethod(finalizerName, BindingFlags.Static | BindingFlags.Public);
+                if (original == null || finalizer == null)
+                {
+                    return;
+                }
 
-            InvokeHarmonyPatch(original, null, null, finalizer);
+                InvokeHarmonyPatch(original, null, null, finalizer);
+            }
+            catch
+            {
+                // Optional large-modpack guard: ignore incompatible Harmony/target signatures.
+            }
         }
 
         private static void TryPatchPostfix(Type targetType, string methodName, string postfixName)
         {
-            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            MethodInfo postfix = typeof(ABY_LargeModpackCompatPatches).GetMethod(postfixName, BindingFlags.Static | BindingFlags.Public);
-            if (original == null || postfix == null)
+            try
             {
-                return;
-            }
+                MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                MethodInfo postfix = typeof(ABY_LargeModpackCompatPatches).GetMethod(postfixName, BindingFlags.Static | BindingFlags.Public);
+                if (original == null || postfix == null)
+                {
+                    return;
+                }
 
-            InvokeHarmonyPatch(original, null, postfix, null);
+                InvokeHarmonyPatch(original, null, postfix, null);
+            }
+            catch
+            {
+                // Optional large-modpack guard: ignore incompatible Harmony/target signatures.
+            }
         }
 
         private static void TryPatchPrefix(string targetTypeName, string methodName, string prefixName)
         {
-            Type targetType = ResolveType(targetTypeName);
-            MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-            MethodInfo prefix = typeof(ABY_LargeModpackCompatPatches).GetMethod(prefixName, BindingFlags.Static | BindingFlags.Public);
-            if (original == null || prefix == null)
+            try
             {
-                return;
-            }
+                Type targetType = ResolveType(targetTypeName);
+                MethodInfo original = targetType?.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                MethodInfo prefix = typeof(ABY_LargeModpackCompatPatches).GetMethod(prefixName, BindingFlags.Static | BindingFlags.Public);
+                if (original == null || prefix == null)
+                {
+                    return;
+                }
 
-            InvokeHarmonyPatch(original, prefix, null, null);
+                InvokeHarmonyPatch(original, prefix, null, null);
+            }
+            catch
+            {
+                // Optional large-modpack guard: ignore incompatible Harmony/target signatures.
+            }
         }
 
         private static void InvokeHarmonyPatch(MethodInfo original, MethodInfo prefix, MethodInfo postfix, MethodInfo finalizer)
         {
-            object prefixHm = prefix != null ? HarmonyMethodCtor.Invoke(new object[] { prefix }) : null;
-            object postfixHm = postfix != null ? HarmonyMethodCtor.Invoke(new object[] { postfix }) : null;
-            object finalizerHm = finalizer != null ? HarmonyMethodCtor.Invoke(new object[] { finalizer }) : null;
-            ParameterInfo[] parameters = HarmonyPatchMethod.GetParameters();
-            if (parameters.Length == 6)
+            try
             {
-                HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm, null });
-                return;
-            }
+                object prefixHm = prefix != null ? HarmonyMethodCtor.Invoke(new object[] { prefix }) : null;
+                object postfixHm = postfix != null ? HarmonyMethodCtor.Invoke(new object[] { postfix }) : null;
+                object finalizerHm = finalizer != null ? HarmonyMethodCtor.Invoke(new object[] { finalizer }) : null;
+                ParameterInfo[] parameters = HarmonyPatchMethod.GetParameters();
+                if (parameters.Length == 6)
+                {
+                    HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm, null });
+                    return;
+                }
 
-            HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm });
+                HarmonyPatchMethod.Invoke(HarmonyInstance, new object[] { original, prefixHm, postfixHm, null, finalizerHm });
+            }
+            catch
+            {
+                // Optional compatibility patch failed; keep startup clean and continue.
+            }
         }
 
         private static Type ResolveType(string fullName)
