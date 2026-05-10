@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_GatebreakerSpiker.label>шипомёт прорывателя врат</ABY_GatebreakerSpiker.label>
+  <ABY_GatebreakerSpiker.description>Тяжёлая пушка рифтовых шипов, созданная под линейку доспехов Gatebreaker. Её чёрный сегментированный каркас удерживает хищный реактор-пасть, который прогрызает узкий разрыв и выбрасывает один белокалёный шип сквозь броню, оболочки боссов и укреплённые структуры прорыва. Для контроля толпы она слишком медленная, но когда одну цель нужно расколоть наверняка — это именно тот инструмент.</ABY_GatebreakerSpiker.description>
+
+  <ABY_GatebreakerSpikeBolt.label>шиповой заряд прорывателя</ABY_GatebreakerSpikeBolt.label>
+
+</LanguageData>

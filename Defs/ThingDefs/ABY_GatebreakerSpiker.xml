@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_GatebreakerSpiker</defName>
+    <label>gatebreaker spiker</label>
+    <description>A heavy breach-spike cannon built to match the Gatebreaker suit line. Its black segmented frame holds a predatory maw-reactor that bites open a narrow rupture and throws a single white-hot spike through armor, boss shells and hardened breach constructs. It is too slow for crowd control, but devastating when one target absolutely must be cracked.</description>
+    <techLevel>Ultra</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_GatebreakerSpiker</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.62,0.52)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>13</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>42</ABY_AbyssalResidue>
+      <Plasteel>145</Plasteel>
+      <Uranium>34</Uranium>
+      <ComponentSpacer>5</ComponentSpacer>
+      <Gold>10</Gold>
+    </costList>
+
+    <statBases>
+      <WorkToMake>95000</WorkToMake>
+      <Mass>6.6</Mass>
+      <MarketValue>4200</MarketValue>
+      <AccuracyTouch>0.52</AccuracyTouch>
+      <AccuracyShort>0.76</AccuracyShort>
+      <AccuracyMedium>0.88</AccuracyMedium>
+      <AccuracyLong>0.82</AccuracyLong>
+      <RangedWeapon_Cooldown>2.85</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_GatebreakerSpikeBolt</defaultProjectile>
+        <warmupTime>1.35</warmupTime>
+        <range>35.9</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_VesperLanceAim</soundAiming>
+        <soundCast>ABY_VesperLanceFire</soundCast>
+        <soundCastTail>ABY_VesperLanceTail</soundCastTail>
+        <muzzleFlashScale>12</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>maw frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Weapons</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_GatebreakerSpikeBolt</defName>
+    <label>gatebreaker spike bolt</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_GatebreakerSpikeBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.36,2.95)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>34</damageAmountBase>
+      <armorPenetrationBase>1.55</armorPenetrationBase>
+      <stoppingPower>2.6</stoppingPower>
+      <speed>54</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>
