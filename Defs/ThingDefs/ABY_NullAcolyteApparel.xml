@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_NullAcolyteVestment</defName>
+    <thingClass>Apparel</thingClass>
+    <label>null acolyte vestment</label>
+    <description>A layered techno-ritual mantle worn by operators who work too close to the Abyssal Protocol to remain ordinary technicians. It is not true battle armor; its residue-baffled cloth, plasteel harness and null-sigil trim are built to keep ritual heat and hostile whispers at bay while the wearer serves the circle, the forge, or the second line.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_NullAcolyteVestment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.08,1.08)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+        <li>Neck</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Shell</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_NullAcolyteVestment</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>10</Plasteel>
+      <Gold>1</Gold>
+    </smeltProducts>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <DevilstrandCloth>45</DevilstrandCloth>
+      <Plasteel>26</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <Gold>4</Gold>
+    </costList>
+    <equippedStatOffsets>
+      <MoveSpeed>-0.01</MoveSpeed>
+      <PsychicSensitivity>-0.06</PsychicSensitivity>
+      <ResearchSpeed>0.05</ResearchSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>4200</WorkToMake>
+      <MaxHitPoints>260</MaxHitPoints>
+      <Mass>2.6</Mass>
+      <MarketValue>1850</MarketValue>
+      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.22</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.68</ArmorRating_Heat>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>350</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelBase">
+    <defName>ABY_NullAcolyteCowl</defName>
+    <thingClass>Apparel</thingClass>
+    <label>null acolyte cowl</label>
+    <description>A hooded mask-cowl plated with narrow null optics and a ritual logic strip. The cowl does not make its wearer a soldier, but it lets an acolyte look into the breach without immediately mistaking the signal for revelation.</description>
+    <techLevel>Ultra</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Apparel/ABY_NullAcolyteCowl</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.95,0.95)</drawSize>
+    </graphicData>
+    <apparel>
+      <bodyPartGroups>
+        <li>FullHead</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <wornGraphicPath>Things/Apparel/ABY_NullAcolyteCowl</wornGraphicPath>
+    </apparel>
+    <tradeability>Sellable</tradeability>
+    <smeltable>true</smeltable>
+    <smeltProducts>
+      <Plasteel>5</Plasteel>
+      <Gold>1</Gold>
+    </smeltProducts>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <DevilstrandCloth>20</DevilstrandCloth>
+      <Plasteel>14</Plasteel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>2</Gold>
+    </costList>
+    <equippedStatOffsets>
+      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+      <PsychicSensitivity>-0.08</PsychicSensitivity>
+      <ResearchSpeed>0.03</ResearchSpeed>
+    </equippedStatOffsets>
+    <statBases>
+      <WorkToMake>1900</WorkToMake>
+      <MaxHitPoints>170</MaxHitPoints>
+      <Mass>1.25</Mass>
+      <MarketValue>1050</MarketValue>
+      <ArmorRating_Sharp>0.48</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.22</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.58</ArmorRating_Heat>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>300</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_NullAcolyteVestment.label>null acolyte vestment</ABY_NullAcolyteVestment.label>
+  <ABY_NullAcolyteVestment.description>A layered techno-ritual mantle worn by operators who work too close to the Abyssal Protocol to remain ordinary technicians. It is not true battle armor; its residue-baffled cloth, plasteel harness and null-sigil trim are built to keep ritual heat and hostile whispers at bay while the wearer serves the circle, the forge, or the second line.</ABY_NullAcolyteVestment.description>
+
+  <ABY_NullAcolyteCowl.label>null acolyte cowl</ABY_NullAcolyteCowl.label>
+  <ABY_NullAcolyteCowl.description>A hooded mask-cowl plated with narrow null optics and a ritual logic strip. The cowl does not make its wearer a soldier, but it lets an acolyte look into the breach without immediately mistaking the signal for revelation.</ABY_NullAcolyteCowl.description>
+
+</LanguageData>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_NullAcolyteVestment.label>одеяние нулевого аколита</ABY_NullAcolyteVestment.label>
+  <ABY_NullAcolyteVestment.description>Многослойная техно-ритуальная мантия для операторов, которые работают слишком близко к Бездному Протоколу, чтобы оставаться обычными техниками. Это не настоящая боевая броня: ткань с резидуальными гасителями, пласталевый каркас и нулевые сигильные швы должны удерживать ритуальный жар и враждебный шёпот, пока носитель обслуживает круг, кузницу или вторую линию боя.</ABY_NullAcolyteVestment.description>
+
+  <ABY_NullAcolyteCowl.label>капюшон нулевого аколита</ABY_NullAcolyteCowl.label>
+  <ABY_NullAcolyteCowl.description>Капюшон-маска с узкой нулевой оптикой и полосой ритуальной логики. Он не делает носителя солдатом, но позволяет аколиту смотреть в разлом и не принять сигнал за откровение в первые же секунды.</ABY_NullAcolyteCowl.description>
+
+</LanguageData>
