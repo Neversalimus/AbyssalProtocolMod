@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <!-- DLLs copied from RimWorld install into mod's Libraries/ folder (not distributed with mod) -->
+    <Reference Include="0Harmony">
+      <HintPath>..\Libraries\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Libraries\Assembly-CSharp.dll</HintPath>
       <Private>false</Private>

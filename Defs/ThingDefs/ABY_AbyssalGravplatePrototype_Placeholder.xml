@@ -35,6 +35,7 @@
         <draftedOnly>true</draftedOnly>
         <enableUnderfootFx>true</enableUnderfootFx>
         <enableMovingSparks>true</enableMovingSparks>
+        <enablePawnBob>true</enablePawnBob>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
         <ringScale>0.78</ringScale>
         <movingRingScaleBonus>0.08</movingRingScaleBonus>
@@ -44,6 +45,10 @@
         <sparkLifetimeTicks>18</sparkLifetimeTicks>
         <sparkScale>0.18</sparkScale>
         <sparkAlpha>0.58</sparkAlpha>
+        <pawnVisualLift>0.062</pawnVisualLift>
+        <pawnBobAmplitude>0.020</pawnBobAmplitude>
+        <pawnBobPeriodTicks>92</pawnBobPeriodTicks>
+        <pawnAltitudeLayerOffset>0.006</pawnAltitudeLayerOffset>
         <drawPriority>20</drawPriority>
       </li>
     </modExtensions>

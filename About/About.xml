@@ -6,6 +6,13 @@
   <supportedVersions>
     <li>1.6</li>
   </supportedVersions>
+  <modDependencies>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+  </modDependencies>
   <description>A techno-demonic RimWorld 1.6 endgame expansion built around controlled summoning, infernal infrastructure, custom abyssal UI, and boss-driven progression.
 
 Build the Abyssal Summoning Circle and Abyssal Forge, gather Abyssal Residue and sigils, trigger controlled hostile encounters, survive abyssal elites and bosses, and convert the spoils into stronger weapons, implants, and deeper infernal-tech access.
