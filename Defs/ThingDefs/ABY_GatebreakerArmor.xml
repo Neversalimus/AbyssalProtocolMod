@@ -25,6 +25,23 @@
       </layers>
       <wornGraphicPath>Things/Apparel/ABY_GatebreakerCarapace</wornGraphicPath>
     </apparel>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
+        <draftedOnly>true</draftedOnly>
+        <enableUnderfootFx>true</enableUnderfootFx>
+        <enableMovingSparks>true</enableMovingSparks>
+        <hoverFxIntensity>Subtle</hoverFxIntensity>
+        <ringScale>0.72</ringScale>
+        <movingRingScaleBonus>0.06</movingRingScaleBonus>
+        <ringAlpha>0.30</ringAlpha>
+        <pulseAmplitude>0.055</pulseAmplitude>
+        <sparkIntervalTicks>16</sparkIntervalTicks>
+        <sparkLifetimeTicks>16</sparkLifetimeTicks>
+        <sparkScale>0.15</sparkScale>
+        <sparkAlpha>0.48</sparkAlpha>
+        <drawPriority>10</drawPriority>
+      </li>
+    </modExtensions>
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>

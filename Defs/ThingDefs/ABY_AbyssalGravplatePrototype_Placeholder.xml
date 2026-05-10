@@ -30,6 +30,23 @@
       </layers>
       <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplatePrototype</wornGraphicPath>
     </apparel>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
+        <draftedOnly>true</draftedOnly>
+        <enableUnderfootFx>true</enableUnderfootFx>
+        <enableMovingSparks>true</enableMovingSparks>
+        <hoverFxIntensity>Subtle</hoverFxIntensity>
+        <ringScale>0.78</ringScale>
+        <movingRingScaleBonus>0.08</movingRingScaleBonus>
+        <ringAlpha>0.36</ringAlpha>
+        <pulseAmplitude>0.07</pulseAmplitude>
+        <sparkIntervalTicks>14</sparkIntervalTicks>
+        <sparkLifetimeTicks>18</sparkLifetimeTicks>
+        <sparkScale>0.18</sparkScale>
+        <sparkAlpha>0.58</sparkAlpha>
+        <drawPriority>20</drawPriority>
+      </li>
+    </modExtensions>
     <tradeability>None</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
