@@ -9,6 +9,8 @@ namespace AbyssalProtocol
     public static class ABY_DevToolUtility
     {
         private static int lastDetectedDebugToolTick = -999999;
+        private static int cachedActiveToolTick = -999999;
+        private static bool cachedActiveToolResult;
 
         public static bool IsDebugToolActiveForInput()
         {
@@ -61,6 +63,19 @@ namespace AbyssalProtocol
         }
 
         private static bool HasActiveDebugToolField()
+        {
+            int tick = Find.TickManager != null ? Find.TickManager.TicksGame : -999999;
+            if (cachedActiveToolTick == tick)
+            {
+                return cachedActiveToolResult;
+            }
+
+            cachedActiveToolTick = tick;
+            cachedActiveToolResult = HasActiveDebugToolFieldUncached();
+            return cachedActiveToolResult;
+        }
+
+        private static bool HasActiveDebugToolFieldUncached()
         {
             try
             {
