@@ -459,13 +459,19 @@ namespace AbyssalProtocol
             base.GameComponentOnGUI();
 
             Event currentEvent = Event.current;
-            if (currentEvent == null || currentEvent.type != EventType.Repaint)
+            if (currentEvent == null)
             {
                 return;
             }
 
-            HandleBossMusicRealtime();
-            DrawOverlay();
+            // Screen overlays and realtime music probes are repaint-only, but the boss bar itself
+            // must run on mouse events too; otherwise the Adjust button is visually drawn but never clickable.
+            if (currentEvent.type == EventType.Repaint)
+            {
+                HandleBossMusicRealtime();
+                DrawOverlay();
+            }
+
             if (TryGetActiveBossBarState(out ABY_BossBarState state))
             {
                 AbyssalBossBarRenderer.Draw(state);

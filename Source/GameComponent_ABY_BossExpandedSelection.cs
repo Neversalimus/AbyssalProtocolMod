@@ -7,6 +7,7 @@ namespace AbyssalProtocol
     {
         private Pawn pendingBossClick;
         private Vector2 pendingLeftClickStart;
+        private bool pendingExpandedClick;
 
         public GameComponent_ABY_BossExpandedSelection(Game game)
         {
@@ -24,28 +25,25 @@ namespace AbyssalProtocol
             if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0)
             {
                 pendingBossClick = null;
+                pendingExpandedClick = false;
                 pendingLeftClickStart = currentEvent.mousePosition;
 
+                // Do not consume MouseDown. Consuming it here can confuse RimWorld's vanilla selector into
+                // starting/holding a drag rectangle and it can also steal clicks from debug tools.
                 if (ABY_BossSelectionUtility.TryBeginExpandedBossClick(currentEvent, out Pawn boss))
                 {
                     pendingBossClick = boss;
-                    currentEvent.Use();
+                    pendingExpandedClick = true;
                 }
                 return;
             }
 
             if (currentEvent.type == EventType.MouseDrag && currentEvent.button == 0)
             {
-                if (pendingBossClick != null)
+                if (pendingExpandedClick && Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) > 8f)
                 {
-                    if (Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) > 8f)
-                    {
-                        pendingBossClick = null;
-                    }
-                    else
-                    {
-                        currentEvent.Use();
-                    }
+                    pendingBossClick = null;
+                    pendingExpandedClick = false;
                 }
                 return;
             }
@@ -56,8 +54,11 @@ namespace AbyssalProtocol
             }
 
             Pawn bossToSelect = pendingBossClick;
+            bool wasPendingExpandedClick = pendingExpandedClick;
             pendingBossClick = null;
-            if (bossToSelect == null)
+            pendingExpandedClick = false;
+
+            if (!wasPendingExpandedClick || bossToSelect == null)
             {
                 return;
             }

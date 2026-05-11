@@ -74,8 +74,8 @@ namespace AbyssalProtocol
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
             float barWidth = settings.width * scale;
-            float neutralRightExtensionWidth = Mathf.Max(16f * scale, barWidth * 0.035f);
-            float textWidth = barWidth + neutralRightExtensionWidth;
+            float rightBackingExtensionWidth = Mathf.Max(18f * scale, barWidth * 0.035f);
+            float textWidth = barWidth + rightBackingExtensionWidth;
             float totalWidth = iconSize + gap + textWidth;
             float totalHeight = Mathf.Max(iconSize, nameHeight + barHeight + secondaryGap + secondaryHeight + footerHeight);
 
@@ -88,7 +88,6 @@ namespace AbyssalProtocol
             Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, textWidth, totalHeight);
             Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
             Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, barWidth, barHeight);
-            Rect mainBarExtensionRect = new Rect(mainBarRect.xMax, mainBarRect.y, neutralRightExtensionWidth, mainBarRect.height);
             Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, textRoot.width, secondaryHeight);
             Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, textRoot.width, footerHeight);
 
@@ -96,7 +95,6 @@ namespace AbyssalProtocol
             DrawIcon(iconRect, state, palette, displayedAlpha);
             DrawHeader(nameRect, state, palette, displayedAlpha, settings);
             DrawMainBar(mainBarRect, state, palette, displayedAlpha, settings);
-            DrawMainBarNeutralExtension(mainBarExtensionRect, palette, displayedAlpha);
 
             if (secondaryHeight > 0f)
             {
@@ -310,22 +308,6 @@ namespace AbyssalProtocol
             {
                 DrawPhaseMarkers(rect, innerRect, state, palette, alpha);
             }
-        }
-
-        private static void DrawMainBarNeutralExtension(Rect rect, ABY_BossBarStylePalette palette, float alpha)
-        {
-            if (rect.width <= 0.5f || rect.height <= 0.5f || alpha <= 0.001f)
-            {
-                return;
-            }
-
-            Rect shellRect = rect.ContractedBy(1f);
-            Rect innerRect = rect.ContractedBy(4f);
-            Widgets.DrawBoxSolid(shellRect, new Color(0.03f, 0.03f, 0.04f, alpha * 0.90f));
-            Widgets.DrawBoxSolid(innerRect, new Color(palette.backFill.r, palette.backFill.g, palette.backFill.b, alpha * 0.98f));
-            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
-            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 1f, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
-            Widgets.DrawBoxSolid(new Rect(rect.xMax - 1f, rect.y, 1f, rect.height), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
         }
 
         private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)

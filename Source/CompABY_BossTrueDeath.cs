@@ -94,7 +94,7 @@ namespace AbyssalProtocol
             }
 
             EnsureInitialized();
-            if (deathAuthorized)
+            if (deathAuthorized || ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
             {
                 return;
             }
@@ -120,7 +120,7 @@ namespace AbyssalProtocol
         public override void PostPostApplyDamage(DamageInfo dinfo, float totalDamageDealt)
         {
             base.PostPostApplyDamage(dinfo, totalDamageDealt);
-            if (deathAuthorized || PawnParent == null || PawnParent.Destroyed || PawnParent.Dead)
+            if (deathAuthorized || PawnParent == null || PawnParent.Destroyed || PawnParent.Dead || ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
             {
                 return;
             }

@@ -117,6 +117,19 @@ namespace AbyssalProtocol
                 return null;
             }
 
+            // Fast path: in almost every real fight the active boss is the only pawn that needs an
+            // expanded hitbox. This avoids scanning every pawn on large maps and removes the visible
+            // click latency reported during Reactor Saint tests.
+            Pawn activeBoss = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.ActiveBoss;
+            if (IsExpandedSelectableBoss(activeBoss, out SelectionProfile activeProfile))
+            {
+                Rect activeRect = GetScreenSelectionRect(activeBoss, activeProfile);
+                if (activeRect.Contains(mousePosition))
+                {
+                    return activeBoss;
+                }
+            }
+
             Pawn best = null;
             int bestPriority = int.MinValue;
             float bestDistance = float.MaxValue;
@@ -124,7 +137,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (!IsExpandedSelectableBoss(pawn, out SelectionProfile profile))
+                if (pawn == activeBoss || !IsExpandedSelectableBoss(pawn, out SelectionProfile profile))
                 {
                     continue;
                 }
@@ -155,7 +168,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            if (ABY_DevToolUtility.IsDebugToolActiveForInput())
             {
                 return false;
             }
