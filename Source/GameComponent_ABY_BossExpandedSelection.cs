@@ -28,22 +28,25 @@ namespace AbyssalProtocol
                 pendingExpandedClick = false;
                 pendingLeftClickStart = currentEvent.mousePosition;
 
-                // Do not consume MouseDown. Consuming it here can confuse RimWorld's vanilla selector into
-                // starting/holding a drag rectangle and it can also steal clicks from debug tools.
                 if (ABY_BossSelectionUtility.TryBeginExpandedBossClick(currentEvent, out Pawn boss))
                 {
                     pendingBossClick = boss;
                     pendingExpandedClick = true;
+                    currentEvent.Use();
                 }
                 return;
             }
 
             if (currentEvent.type == EventType.MouseDrag && currentEvent.button == 0)
             {
-                if (pendingExpandedClick && Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) > 8f)
+                if (pendingExpandedClick)
                 {
-                    pendingBossClick = null;
-                    pendingExpandedClick = false;
+                    if (Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) > 8f)
+                    {
+                        pendingBossClick = null;
+                        pendingExpandedClick = false;
+                    }
+                    currentEvent.Use();
                 }
                 return;
             }

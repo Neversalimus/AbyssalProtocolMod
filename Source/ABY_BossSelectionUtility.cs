@@ -34,7 +34,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!CanUseExpandedSelection(currentEvent.mousePosition))
+            if (!currentEvent.alt || !CanUseExpandedSelection(currentEvent.mousePosition))
             {
                 return false;
             }
@@ -62,7 +62,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!CanUseExpandedSelection(currentEvent.mousePosition))
+            if (!currentEvent.alt || !CanUseExpandedSelection(currentEvent.mousePosition))
             {
                 return false;
             }
@@ -168,7 +168,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (ABY_DevToolUtility.IsDebugToolActiveForInput())
+            // Expanded visual-body selection is deliberately disabled while Dev Mode is on.
+            // Debug tools use the same mouse events and must always win over cosmetic selection helpers.
+            if (Prefs.DevMode || ABY_DevToolUtility.IsDebugToolActiveForInput())
             {
                 return false;
             }

@@ -7,7 +7,7 @@ namespace AbyssalProtocol
 {
     public class Projectile_ReactorSaintBolt : Bullet
     {
-        private const int TrailIntervalTicks = 1;
+        private const int TrailIntervalTicks = 3;
         private const float SplashRadius = 1.12f;
         private const int SplashDamage = 7;
         private const float SplashArmorPenetration = 0.30f;
@@ -85,7 +85,6 @@ namespace AbyssalProtocol
             DrawPlane(drawPos - direction * 0.20f, angle, new Vector3(0.92f * pulse * phaseFactor, 1f, 4.35f * phaseFactor), HaloMaterial);
             DrawPlane(drawPos + direction * 0.08f, angle + jitter * 80f, new Vector3(0.42f * hotPulse * phaseFactor, 1f, 3.82f * phaseFactor), CoreMaterial);
             DrawPlane(drawPos + direction * 0.28f, angle, new Vector3(0.18f * phaseFactor, 1f, 4.86f * phaseFactor), NeedleMaterial);
-            DrawPlane(drawPos - direction * 0.48f, angle, new Vector3(0.20f * pulse * phaseFactor, 1f, 1.60f * phaseFactor), CoreMaterial);
         }
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)

@@ -36,13 +36,13 @@ namespace AbyssalProtocol
                     noiseAlpha = 0.060f,
                     pulseSpeed = 4.4f,
                     introSurgeAlpha = 0.30f,
-                    mapEffectIntervalTicks = 28,
-                    mapEffectCount = 4,
-                    mapEffectRadius = 8.5f,
-                    lightningSize = 1.10f,
-                    fireGlowSize = 0.18f,
-                    microSparkChance = 0.72f,
-                    extraScreenPulse = 0.08f
+                    mapEffectIntervalTicks = 90,
+                    mapEffectCount = 1,
+                    mapEffectRadius = 6.5f,
+                    lightningSize = 0.78f,
+                    fireGlowSize = 0.10f,
+                    microSparkChance = 0.30f,
+                    extraScreenPulse = 0.06f
                 };
             }
 
@@ -194,7 +194,8 @@ namespace AbyssalProtocol
             }
 
             ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
-            for (int i = 0; i < Mathf.Max(4, profile.mapEffectCount + 3); i++)
+            int introCount = Mathf.Clamp(profile.mapEffectCount + 2, 2, 5);
+            for (int i = 0; i < introCount; i++)
             {
                 Vector3 loc = RandomPointNear(boss, profile.mapEffectRadius + 2.5f);
                 FleckMaker.ThrowLightningGlow(loc, boss.MapHeld, profile.lightningSize * Rand.Range(1.0f, 1.8f));
@@ -217,7 +218,7 @@ namespace AbyssalProtocol
             }
 
             ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
-            int count = Mathf.Clamp(Mathf.RoundToInt(profile.mapEffectCount * Mathf.Clamp01(strength)), 1, 8);
+            int count = Mathf.Clamp(Mathf.RoundToInt(profile.mapEffectCount * Mathf.Clamp01(strength)), 1, 4);
             for (int i = 0; i < count; i++)
             {
                 Vector3 loc = RandomPointNear(boss, profile.mapEffectRadius);
@@ -247,7 +248,7 @@ namespace AbyssalProtocol
             }
 
             ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
-            int count = Mathf.Clamp(profile.mapEffectCount + phase + 2, 5, 12);
+            int count = Mathf.Clamp(profile.mapEffectCount + phase + 1, 3, 7);
             float radius = profile.mapEffectRadius + Mathf.Clamp(phase, 1, 6) * 0.85f;
             for (int i = 0; i < count; i++)
             {
@@ -272,7 +273,7 @@ namespace AbyssalProtocol
             }
 
             ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
-            for (int i = 0; i < Mathf.Clamp(profile.mapEffectCount + 7, 8, 16); i++)
+            for (int i = 0; i < Mathf.Clamp(profile.mapEffectCount + 4, 4, 9); i++)
             {
                 Vector3 loc = RandomPointNear(boss, profile.mapEffectRadius + 4.0f);
                 FleckMaker.ThrowLightningGlow(loc, boss.MapHeld, profile.lightningSize * Rand.Range(1.4f, 2.6f));

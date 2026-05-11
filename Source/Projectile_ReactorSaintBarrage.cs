@@ -7,7 +7,7 @@ namespace AbyssalProtocol
 {
     public class Projectile_ReactorSaintBarrage : Bullet
     {
-        private const int TrailIntervalTicks = 2;
+        private const int TrailIntervalTicks = 4;
         private const float ExplosionRadius = 2.05f;
         private const int ExplosionDamage = 18;
         private const float ExplosionArmorPenetration = 0.48f;
@@ -61,10 +61,6 @@ namespace AbyssalProtocol
                 ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageTrail(lastExactPosition, currentPosition, Map, ticksAlive, phaseFactor);
             }
 
-            if (ticksAlive % 12 == 0)
-            {
-                ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageWarning(destination.ToIntVec3(), Map, phaseFactor * 0.78f);
-            }
 
             lastExactPosition = currentPosition;
         }
@@ -88,8 +84,7 @@ namespace AbyssalProtocol
             float roll = ticksAlive * (8.0f + phaseFactor * 2.2f);
 
             DrawPlane(drawPos, angle + roll * 0.10f, new Vector3(1.22f * pulse * phaseFactor, 1f, 2.05f * phaseFactor), HaloMaterial);
-            DrawPlane(drawPos + direction * 0.10f, angle, new Vector3(0.68f * phaseFactor, 1f, 1.42f * pulse * phaseFactor), CoreMaterial);
-            DrawPlane(drawPos - direction * 0.34f, angle, new Vector3(0.30f * phaseFactor, 1f, 0.92f * phaseFactor), CoreMaterial);
+            DrawPlane(drawPos + direction * 0.02f, angle, new Vector3(0.62f * phaseFactor, 1f, 1.48f * pulse * phaseFactor), CoreMaterial);
         }
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)

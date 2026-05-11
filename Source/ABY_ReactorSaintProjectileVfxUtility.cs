@@ -32,6 +32,11 @@ namespace AbyssalProtocol
         private static ThingDef barrageScorchDef;
         private static ThingDef barrageShockDef;
 
+        private const int MaxVfxBudgetPerTick = 18;
+        private static int budgetTick = -1;
+        private static int budgetMapId = -1;
+        private static int budgetUsed;
+
         private static ThingDef LanceTrailHaloDef => lanceTrailHaloDef ?? (lanceTrailHaloDef = DefDatabase<ThingDef>.GetNamedSilentFail(LanceTrailHaloDefName));
         private static ThingDef LanceTrailCoreDef => lanceTrailCoreDef ?? (lanceTrailCoreDef = DefDatabase<ThingDef>.GetNamedSilentFail(LanceTrailCoreDefName));
         private static ThingDef LanceAfterimageDef => lanceAfterimageDef ?? (lanceAfterimageDef = DefDatabase<ThingDef>.GetNamedSilentFail(LanceAfterimageDefName));
@@ -74,48 +79,45 @@ namespace AbyssalProtocol
             }
 
             float distance = (to - from).MagnitudeHorizontal();
-            if (distance <= 0.08f)
+            if (distance <= 0.08f || !TryConsumeVfxBudget(map, 4))
             {
                 return;
             }
 
-            int life = Mathf.Clamp(Mathf.RoundToInt(7f * phaseFactor), 5, 11);
-            SpawnBeam(LanceAfterimageDef, from, to, map, 0.34f * phaseFactor, life + 9, LanceAfterimageTexturePath, false);
-            SpawnBeam(LanceTrailHaloDef, from, to, map, 0.64f * phaseFactor, life, LanceTrailHaloTexturePath, true);
-            SpawnBeam(LanceTrailCoreDef, from, to, map, 0.18f * phaseFactor, Mathf.Max(3, life - 2), LanceTrailCoreTexturePath, false);
+            bool reduced = AbyssalProtocolMod.Settings.reducedMotion;
+            int life = Mathf.Clamp(Mathf.RoundToInt(5f * phaseFactor), 4, 8);
+            SpawnBeam(LanceTrailHaloDef, from, to, map, 0.42f * phaseFactor, life, LanceTrailHaloTexturePath, true);
 
-            int sparks = Mathf.Clamp(Mathf.RoundToInt(distance * 0.45f), 1, 4);
-            for (int i = 0; i < sparks; i++)
+            if (!reduced && (phaseFactor > 1.12f || ticksAlive % 6 == 0) && TryConsumeVfxBudget(map, 2))
             {
-                if ((ticksAlive + i) % 2 != 0 && !Rand.Chance(0.38f))
-                {
-                    continue;
-                }
+                SpawnBeam(LanceTrailCoreDef, from, to, map, 0.11f * phaseFactor, Mathf.Max(3, life - 2), LanceTrailCoreTexturePath, false);
+            }
 
-                float t = (i + 1f) / (sparks + 1f);
-                Vector3 point = Vector3.Lerp(from, to, t);
-                point += new Vector3(Rand.Range(-0.055f, 0.055f), 0f, Rand.Range(-0.055f, 0.055f));
-                FleckMaker.ThrowLightningGlow(point, map, Rand.Range(0.26f, 0.46f) * phaseFactor);
+            if (!reduced && ticksAlive % 9 == 0 && TryConsumeVfxBudget(map, 2))
+            {
+                SpawnBeam(LanceAfterimageDef, from, to, map, 0.22f * phaseFactor, life + 4, LanceAfterimageTexturePath, false);
+            }
+
+            if (!reduced && TryConsumeVfxBudget(map, 1))
+            {
+                Vector3 point = Vector3.Lerp(from, to, 0.65f);
+                point += new Vector3(Rand.Range(-0.045f, 0.045f), 0f, Rand.Range(-0.045f, 0.045f));
+                FleckMaker.ThrowLightningGlow(point, map, Rand.Range(0.20f, 0.34f) * phaseFactor);
             }
         }
 
         public static void SpawnBarrageTrail(Vector3 from, Vector3 to, Map map, int ticksAlive, float phaseFactor)
         {
-            if (map == null)
+            if (map == null || !TryConsumeVfxBudget(map, 2))
             {
                 return;
             }
 
             Vector3 mid = Vector3.Lerp(from, to, 0.55f);
-            FleckMaker.ThrowLightningGlow(mid, map, 0.40f * phaseFactor);
-            if (ticksAlive % 6 == 0 || Rand.Chance(0.18f * phaseFactor))
+            FleckMaker.ThrowLightningGlow(mid, map, 0.30f * phaseFactor);
+            if (!AbyssalProtocolMod.Settings.reducedMotion && ticksAlive % 8 == 0 && TryConsumeVfxBudget(map, 2))
             {
-                FleckMaker.ThrowMicroSparks(mid, map);
-            }
-
-            if (ticksAlive % 5 == 0)
-            {
-                SpawnBeam(LanceAfterimageDef, from, to, map, 0.18f * phaseFactor, 8, LanceAfterimageTexturePath, false);
+                SpawnBeam(LanceAfterimageDef, from, to, map, 0.13f * phaseFactor, 5, LanceAfterimageTexturePath, false);
             }
         }
 
@@ -126,9 +128,14 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (!TryConsumeVfxBudget(map, 3))
+            {
+                return;
+            }
+
             Vector3 pos = cell.ToVector3Shifted();
-            MakeStaticMote(pos, map, BarrageWarningDef, 1.05f * phaseFactor);
-            FleckMaker.ThrowLightningGlow(pos, map, 0.80f * phaseFactor);
+            MakeStaticMote(pos, map, BarrageWarningDef, 0.92f * phaseFactor);
+            FleckMaker.ThrowLightningGlow(pos, map, 0.56f * phaseFactor);
         }
 
         public static void SpawnLanceImpact(Vector3 position, IntVec3 cell, Map map, Thing hitThing, bool blockedByShield, float phaseFactor)
@@ -138,18 +145,22 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MakeStaticMote(position, map, ImpactRingDef, (blockedByShield ? 1.32f : 1.62f) * phaseFactor);
-            FleckMaker.ThrowLightningGlow(position, map, (blockedByShield ? 2.10f : 2.85f) * phaseFactor);
-            FleckMaker.ThrowMicroSparks(position, map);
-            FleckMaker.ThrowMicroSparks(position, map);
-
-            if (phaseFactor > 1.1f || IsDenseTarget(hitThing))
+            if (TryConsumeVfxBudget(map, 5))
             {
-                FleckMaker.ThrowMicroSparks(position, map);
-                FleckMaker.ThrowFireGlow(position, map, 0.42f * phaseFactor);
+                MakeStaticMote(position, map, ImpactRingDef, (blockedByShield ? 1.20f : 1.42f) * phaseFactor);
+                FleckMaker.ThrowLightningGlow(position, map, (blockedByShield ? 1.65f : 2.25f) * phaseFactor);
+                if (!AbyssalProtocolMod.Settings.reducedMotion)
+                {
+                    FleckMaker.ThrowMicroSparks(position, map);
+                }
             }
 
-            SpawnShortRadialArcs(position, map, 4 + Mathf.RoundToInt(phaseFactor * 2f), 2.1f * phaseFactor);
+            if (!AbyssalProtocolMod.Settings.reducedMotion && (phaseFactor > 1.1f || IsDenseTarget(hitThing)) && TryConsumeVfxBudget(map, 2))
+            {
+                FleckMaker.ThrowFireGlow(position, map, 0.34f * phaseFactor);
+            }
+
+            SpawnShortRadialArcs(position, map, 2 + Mathf.RoundToInt(phaseFactor), 1.8f * phaseFactor);
             if (cell.IsValid && cell.InBounds(map))
             {
                 MakeStaticMote(cell.ToVector3Shifted(), map, BarrageScorchDef, 0.72f * phaseFactor);
@@ -163,14 +174,18 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MakeStaticMote(position, map, BarrageShockDef, 1.45f * phaseFactor);
-            MakeStaticMote(position, map, BarrageScorchDef, 1.10f * phaseFactor);
-            FleckMaker.ThrowLightningGlow(position, map, 3.05f * phaseFactor);
-            FleckMaker.ThrowFireGlow(position, map, 0.85f * phaseFactor);
-            FleckMaker.ThrowMicroSparks(position, map);
-            FleckMaker.ThrowMicroSparks(position, map);
-            FleckMaker.ThrowMicroSparks(position, map);
-            SpawnShortRadialArcs(position, map, 5 + Mathf.RoundToInt(phaseFactor * 2f), 2.8f * phaseFactor);
+            if (TryConsumeVfxBudget(map, 6))
+            {
+                MakeStaticMote(position, map, BarrageShockDef, 1.22f * phaseFactor);
+                MakeStaticMote(position, map, BarrageScorchDef, 0.95f * phaseFactor);
+                FleckMaker.ThrowLightningGlow(position, map, 2.35f * phaseFactor);
+                if (!AbyssalProtocolMod.Settings.reducedMotion)
+                {
+                    FleckMaker.ThrowFireGlow(position, map, 0.62f * phaseFactor);
+                    FleckMaker.ThrowMicroSparks(position, map);
+                }
+            }
+            SpawnShortRadialArcs(position, map, 2 + Mathf.RoundToInt(phaseFactor), 2.2f * phaseFactor);
         }
 
         private static void SpawnShortRadialArcs(Vector3 center, Map map, int count, float radius)
@@ -180,18 +195,25 @@ namespace AbyssalProtocol
                 return;
             }
 
-            center.y = AltitudeLayer.MoteOverhead.AltitudeFor();
-            for (int i = 0; i < count; i++)
+            if (AbyssalProtocolMod.Settings.reducedMotion)
             {
+                return;
+            }
+
+            center.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            int resolvedCount = Mathf.Min(count, 3);
+            for (int i = 0; i < resolvedCount; i++)
+            {
+                if (!TryConsumeVfxBudget(map, 2))
+                {
+                    return;
+                }
+
                 float angle = Rand.Range(0f, Mathf.PI * 2f);
                 float length = Rand.Range(radius * 0.45f, radius);
                 Vector3 target = center + new Vector3(Mathf.Cos(angle) * length, 0f, Mathf.Sin(angle) * length);
                 target.y = AltitudeLayer.MoteOverhead.AltitudeFor();
-                SpawnBeam(LanceTrailHaloDef, center, target, map, Rand.Range(0.10f, 0.20f), Rand.Range(4, 8), LanceTrailHaloTexturePath, true);
-                if (Rand.Chance(0.55f))
-                {
-                    SpawnBeam(LanceTrailCoreDef, center, target, map, Rand.Range(0.035f, 0.070f), Rand.Range(3, 6), LanceTrailCoreTexturePath, false);
-                }
+                SpawnBeam(LanceTrailHaloDef, center, target, map, Rand.Range(0.08f, 0.14f), Rand.Range(3, 5), LanceTrailHaloTexturePath, true);
             }
         }
 
@@ -233,6 +255,32 @@ namespace AbyssalProtocol
             }
 
             GenSpawn.Spawn(beam, spawnCell, map);
+        }
+
+        private static bool TryConsumeVfxBudget(Map map, int cost)
+        {
+            if (map == null || cost <= 0 || Find.TickManager == null)
+            {
+                return true;
+            }
+
+            int tick = Find.TickManager.TicksGame;
+            int mapId = map.uniqueID;
+            if (budgetTick != tick || budgetMapId != mapId)
+            {
+                budgetTick = tick;
+                budgetMapId = mapId;
+                budgetUsed = 0;
+            }
+
+            int maxBudget = AbyssalProtocolMod.Settings.reducedMotion ? 8 : MaxVfxBudgetPerTick;
+            if (budgetUsed + cost > maxBudget)
+            {
+                return false;
+            }
+
+            budgetUsed += cost;
+            return true;
         }
 
         private static bool IsDenseTarget(Thing hitThing)
