@@ -12,11 +12,11 @@
   <ABY_DominionPocketFlowStatus_Ready>{0} drafted colonists ready</ABY_DominionPocketFlowStatus_Ready>
   <ABY_DominionPocketFlowStatus_Deployed>strike team deployed inside dominion slice</ABY_DominionPocketFlowStatus_Deployed>
   <ABY_DominionPocketCommand_Enter>Enter Great Infernal Gate</ABY_DominionPocketCommand_Enter>
-  <ABY_DominionPocketCommand_EnterDesc>Insert the drafted strike team into the temporary dominion slice. If no drafted colonists are available, selected colonists are used as a fallback.</ABY_DominionPocketCommand_EnterDesc>
+  <ABY_DominionPocketCommand_EnterDesc>Insert the drafted strike team into the unstable dominion slice. If no drafted colonists are available, selected colonists are routed through the gate as an emergency measure.</ABY_DominionPocketCommand_EnterDesc>
   <ABY_DominionPocketCommand_Jump>Jump to strike team</ABY_DominionPocketCommand_Jump>
   <ABY_DominionPocketCommand_JumpDesc>Jump to the active dominion slice linked to this Great Infernal Gate.</ABY_DominionPocketCommand_JumpDesc>
   <ABY_DominionPocketCommand_Extract>Extract strike team</ABY_DominionPocketCommand_Extract>
-  <ABY_DominionPocketCommand_ExtractDesc>Recall all player pawns from the active dominion slice and collapse the temporary runtime map.</ABY_DominionPocketCommand_ExtractDesc>
+  <ABY_DominionPocketCommand_ExtractDesc>Recall all player pawns from the active dominion slice and force the unstable pocket to collapse behind them.</ABY_DominionPocketCommand_ExtractDesc>
   <ABY_DominionCommand_TrackStrikeTeam>Track strike team</ABY_DominionCommand_TrackStrikeTeam>
   <ABY_DominionPocketGate_Inspect>Strike-team flow: {0}</ABY_DominionPocketGate_Inspect>
   <ABY_DominionGate_ConsoleEntry>Ingress: {0}</ABY_DominionGate_ConsoleEntry>

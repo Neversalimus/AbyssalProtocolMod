@@ -19,7 +19,7 @@
   <ABY_ForgeOfferHintShort>Available residue can be committed directly into the lattice.</ABY_ForgeOfferHintShort>
   <ABY_ForgeOfferNoneAvailable>No abyssal residue is available on this map right now.</ABY_ForgeOfferNoneAvailable>
   <ABY_ForgeOfferComplete>Committed {0} residue. Total attuned residue: {1}.</ABY_ForgeOfferComplete>
-  <ABY_ForgeNextHeader>Pattern telemetry</ABY_ForgeNextHeader>
+  <ABY_ForgeNextHeader>Pattern records</ABY_ForgeNextHeader>
   <ABY_ForgeUpcomingPatterns>Upcoming patterns</ABY_ForgeUpcomingPatterns>
   <ABY_ForgeUnlockedSummary>{0} / {1} patterns unlocked in {2}</ABY_ForgeUnlockedSummary>
   <ABY_ForgeAllPatternsUnlocked>All known patterns are unlocked.</ABY_ForgeAllPatternsUnlocked>

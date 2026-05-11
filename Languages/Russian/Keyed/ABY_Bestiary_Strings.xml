@@ -22,7 +22,7 @@
   <ABY_Bestiary_Sort_Recent>Недавние</ABY_Bestiary_Sort_Recent>
   <ABY_Bestiary_BrowserHeader>Реестр угроз</ABY_Bestiary_BrowserHeader>
   <ABY_Bestiary_UnknownEntry>Неизвестный враждебный паттерн</ABY_Bestiary_UnknownEntry>
-  <ABY_Bestiary_LockedTag>Убей этого противника один раз, чтобы вскрыть архивную заглушку.</ABY_Bestiary_LockedTag>
+  <ABY_Bestiary_LockedTag>Убей этого противника один раз, чтобы вскрыть запечатанную архивную запись.</ABY_Bestiary_LockedTag>
   <ABY_Bestiary_LockedSummary>Архив пока содержит только замаскированную сигнатуру угрозы. Подтверди убийство, чтобы раскрыть запись.</ABY_Bestiary_LockedSummary>
   <ABY_Bestiary_LockedTactical>Полевые заметки останутся запечатанными до {0} подтверждённых убийств.</ABY_Bestiary_LockedTactical>
   <ABY_Bestiary_LockedDeep>Глубокая архивная запись останется запечатанной до статуса изучения на {0} подтверждённых убийствах.</ABY_Bestiary_LockedDeep>
@@ -127,7 +127,7 @@
   <ABY_Bestiary_Entry_ABY_RiftSapper_Label>Разломный сапёр</ABY_Bestiary_Entry_ABY_RiftSapper_Label>
   <ABY_Bestiary_Entry_ABY_RiftSapper_Tag>Специалист по подрыву геометрии прорыва.</ABY_Bestiary_Entry_ABY_RiftSapper_Tag>
   <ABY_Bestiary_Entry_ABY_RiftSapper_Summary>Специализированный враг, предназначенный для дестабилизации строений, проходов и подготовленной геометрии обороны, а не для прямой перестрелки.</ABY_Bestiary_Entry_ABY_RiftSapper_Summary>
-  <ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>Разломных сапёров нужно перехватывать рано. Их ценность в том, что они меняют карту на выгодных для остального пакета прорыва условиях.</ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>
+  <ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>Разломных сапёров нужно перехватывать рано. Их ценность в том, что они меняют карту на условиях, выгодных для всего прорывного строя.</ABY_Bestiary_Entry_ABY_RiftSapper_Tactical>
   <ABY_Bestiary_Entry_ABY_RiftSapper_Deep>Кодекс помечает сапёров как прикладную войну с геометрией: доказательство того, что abyssal-давление может бить не только по телам, но и по логике укреплений.</ABY_Bestiary_Entry_ABY_RiftSapper_Deep>
   <ABY_Bestiary_StatusHeader>Статус</ABY_Bestiary_StatusHeader>
   <ABY_Bestiary_CategoryHeader>Категория</ABY_Bestiary_CategoryHeader>

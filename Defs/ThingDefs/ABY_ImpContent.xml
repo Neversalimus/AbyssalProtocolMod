@@ -99,7 +99,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_ImpPortal</defName>
     <label>abyssal imp portal</label>
-    <description>A temporary infernal breach used by abyssal heralds to vomit lesser hunters into reality.</description>
+    <description>A short-lived infernal breach used by abyssal heralds to force lesser hunters into local reality before the wound seals itself.</description>
     <thingClass>AbyssalProtocol.Building_AbyssalImpPortal</thingClass>
     <category>Building</category>
     <drawerType>RealtimeOnly</drawerType>

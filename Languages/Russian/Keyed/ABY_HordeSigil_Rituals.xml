@@ -3,7 +3,7 @@
   <ABY_CircleRitual_Horde_Label>Открыть Horde Gate</ABY_CircleRitual_Horde_Label>
   <ABY_CircleRitual_Horde_Subtitle>Пост-Saint многовекторный армейский прорыв</ABY_CircleRitual_Horde_Subtitle>
   <ABY_CircleRitual_Horde_Desc>Потребляет одну horde gate sigil, направляет колониста к кругу и вскрывает несколько внешних фронтов разлома по периметру карты. Из них волнами идут обычные abyssal-боевые формы. Это не ритуал босса, а первый осознанный army-scale summon после Reactor Saint.</ABY_CircleRitual_Horde_Desc>
-  <ABY_CircleRitual_Horde_Rewards>&#10;• Очень высокий приток residue и широкая зачисточная добыча&#10;• Первый post-saint стресс-тест обороны против целой abyssal-армии&#10;• Использует обычных мобов мода вместо boss/miniboss reward ladder</ABY_CircleRitual_Horde_Rewards>
+  <ABY_CircleRitual_Horde_Rewards>&#10;• Очень высокий приток residue и широкая зачисточная добыча&#10;• Первое post-saint испытание обороны против целой abyssal-армии&#10;• Опирается на обычные вражеские формы мода, а не на лестницу наград от боссов и мини-боссов</ABY_CircleRitual_Horde_Rewards>
   <ABY_CircleRitual_Horde_SideEffects>&#10;• Открывает сразу несколько фронтов разлома по периметру вместо одного локального спавна&#10;• Очень сильно масштабируется от колонии, богатства и протокола сложности&#10;• Даже огромная волна не выдаёт награды уровня boss/miniboss</ABY_CircleRitual_Horde_SideEffects>
   <ABY_HordeGateSummonSuccessLabel>Horde gate открыт</ABY_HordeGateSummonSuccessLabel>
   <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные rupture-фронты. Обычные abyssal-боевые формы входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
@@ -96,7 +96,7 @@
   <ABY_HordeCommandGate_Spawned>На {1} периметре стабилизировался узел command gate доктрины {0}. Его уничтожение отменит резервные подкрепления и замедлит наступление.</ABY_HordeCommandGate_Spawned>
   <ABY_HordeCommandGate_Destroyed>{0} схлопывается. Оставшиеся command-linked подкрепления обрываются, и прорыв теряет темп.</ABY_HordeCommandGate_Destroyed>
   <ABY_HordeCommandGate_Inspect>Узел command gate. Доктрина: {0}. Оставшиеся command-burst: {1}. Пока он цел, он ускоряет cadence порталов на своём фронте и удерживает резервные подкрепления.</ABY_HordeCommandGate_Inspect>
-  <ABY_HordeCommandGate_InspectReward>При уничтожении выбрасывает бонусный salvage-пакет, зависящий от оставшихся burst.</ABY_HordeCommandGate_InspectReward>
+  <ABY_HordeCommandGate_InspectReward>При уничтожении выбрасывает бонусную salvage-связку, зависящий от оставшихся burst.</ABY_HordeCommandGate_InspectReward>
   <ABY_HordeEconomy_Header>Маршрутизация наград</ABY_HordeEconomy_Header>
   <ABY_HordeEconomy_Summary>Плата за схлопывание: {0}. Бонус за уничтожение command node: {1}. Через этот ритуал не идут ядра boss/miniboss.</ABY_HordeEconomy_Summary>
   <ABY_HordeEconomy_Unknown>Не удалось стабилизировать маршрутизацию наград. Ожидается residue-heavy добыча без boss-tier дропа.</ABY_HordeEconomy_Unknown>

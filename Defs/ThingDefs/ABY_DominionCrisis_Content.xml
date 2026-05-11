@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_DominionSigil</defName>
     <label>dominion sigil</label>
-    <description>An endgame crown-lattice invocation key. Carry it to an abyssal summoning circle to bootstrap the Great Infernal Gate staging sequence and initialize the first dominion breach package.</description>
+    <description>An endgame crown-lattice invocation key. Carry it to an abyssal summoning circle to authorize a Great Infernal Gate prelude and begin a dominion-class breach sequence.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>

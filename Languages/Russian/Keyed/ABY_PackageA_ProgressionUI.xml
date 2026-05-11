@@ -40,8 +40,8 @@
   <ABY_CircleRewardProgression_Choir>Прогрессия: открывает ветку наград поддержки вокруг Choir-имплантов и Canticle Driver.</ABY_CircleRewardProgression_Choir>
   <ABY_CircleRewardGuaranteed_Reactor>Гарантированно: 1 Reactor Saint Core, residue и spacer-grade salvage.</ABY_CircleRewardGuaranteed_Reactor>
   <ABY_CircleRewardProgression_Reactor>Прогрессия: питает saint-class fabrication и ведёт колонию в позднюю эскалацию.</ABY_CircleRewardProgression_Reactor>
-  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: награды этапа Великого адского портала, shard-материалы, телеметрия прорыва и поздние progression drops при успешном удержании прорыва.</ABY_CircleRewardGuaranteed_Dominion>
-  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает пролог Великого адского портала и сохраняет dominion-маршрутизацию наград / исходов для следующих пакетов.</ABY_CircleRewardProgression_Dominion>
+  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: награды этапа Великого адского портала, shard-материалы, записи состояния прорыва и поздние прогрессионные трофеи при успешном удержании порога.</ABY_CircleRewardGuaranteed_Dominion>
+  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает пролог Великого адского портала и сохраняет маршрутизацию наград и исходов доминиона для более глубоких входных ритуалов.</ABY_CircleRewardProgression_Dominion>
   <ABY_CircleRewardFollowUp_Generic>Следом: следующий чистый шаг эскалации — {0}.</ABY_CircleRewardFollowUp_Generic>
   <ABY_CircleRewardFollowUp_Final>Следом: это уже текущая вершина ритуальной ветки.</ABY_CircleRewardFollowUp_Final>
 
@@ -61,11 +61,11 @@
   <ABY_ProgressRecap_Archon_Label>Зафиксирован сдвиг протокола</ABY_ProgressRecap_Archon_Label>
   <ABY_ProgressRecap_Archon_Desc>Порог архонта прорван.
 
-{0} теперь достигается через forge на {1} attuned residue, а {2} находится ступенью выше на {3}. Herald core fragments теперь стали реальной progression-валютой, и самый чистый следующий маршрут — продолжать кормить forge, разбирать herald-side продолжение и эскалировать в пост-первый-босс ветку поддержки до saint-class инвокации.</ABY_ProgressRecap_Archon_Desc>
+{0} теперь достигается через кузницу на {1} настроенного residue, а {2} находится ступенью выше на {3}. Herald core fragments стали реальной валютой допуска: самый чистый путь дальше — продолжать кормить кузницу, разбирать herald-side продолжение и эскалировать ветку после первого босса до saint-class инвокации.</ABY_ProgressRecap_Archon_Desc>
   <ABY_ProgressRecap_Reactor_Label>Зафиксирована поздняя эскалация решётки</ABY_ProgressRecap_Reactor_Label>
   <ABY_ProgressRecap_Reactor_Desc>Порог saint-tier прорван.
 
-Ядра Reactor Saint теперь питают {0}, {1} и более тяжёлую saint-side ветку крафта. Если готово исследование {2}, dominion sigils становятся достижимыми через forge на {3} attuned residue — это следующий осознанный шаг за пределы текущей лестницы боссов.</ABY_ProgressRecap_Reactor_Desc>
+Ядра Reactor Saint теперь питают {0}, {1} и более тяжёлую saint-side ветку крафта. Если готово исследование {2}, dominion sigils становятся достижимыми через кузницу на {3} настроенного residue — это следующий осознанный шаг за пределы известной лестницы боссов.</ABY_ProgressRecap_Reactor_Desc>
   <ABY_CircleRoleTag_PerimeterOverload>перегрузка периметра</ABY_CircleRoleTag_PerimeterOverload>
   <ABY_CircleRoleTag_MultiFront>многофронтовый</ABY_CircleRoleTag_MultiFront>
 </LanguageData>

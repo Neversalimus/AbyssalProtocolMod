@@ -3,7 +3,7 @@
   <ABY_DominionPocketRuntimeFail_NoGate>Активные Великие адские врата для генерации среза доминиона не найдены.</ABY_DominionPocketRuntimeFail_NoGate>
   <ABY_DominionPocketRuntimeFail_NoPawns>Перед открытием среза доминиона выделите хотя бы одного колониста на текущей карте.</ABY_DominionPocketRuntimeFail_NoPawns>
   <ABY_DominionPocketRuntimeFail_AlreadyOpen>Для этой карты уже активен один срез доминиона.</ABY_DominionPocketRuntimeFail_AlreadyOpen>
-  <ABY_DominionPocketRuntimeFail_NoGenerator>Для runtime-среза доминиона не удалось определить генератор pocket map.</ABY_DominionPocketRuntimeFail_NoGenerator>
+  <ABY_DominionPocketRuntimeFail_NoGenerator>Не удалось определить геометрию среза доминиона.</ABY_DominionPocketRuntimeFail_NoGenerator>
   <ABY_DominionPocketRuntimeFail_MapCreate>Не удалось сгенерировать срез доминиона.</ABY_DominionPocketRuntimeFail_MapCreate>
   <ABY_DominionPocketRuntimeFail_NoEntryCell>Внутри среза доминиона не удалось найти допустимую точку входа.</ABY_DominionPocketRuntimeFail_NoEntryCell>
   <ABY_DominionPocketRuntimeFail_NoSession>С этой командой не связана активная сессия среза доминиона.</ABY_DominionPocketRuntimeFail_NoSession>
@@ -14,7 +14,7 @@
   <ABY_DominionPocketRuntimeReturned>Ударная группа эвакуирована: {0}.</ABY_DominionPocketRuntimeReturned>
   <ABY_DominionPocketRuntimeCollapsed>Временный срез доминиона схлопнулся.</ABY_DominionPocketRuntimeCollapsed>
   <ABY_DominionPocketRuntimeCommand_Return>Вернуть ударную группу</ABY_DominionPocketRuntimeCommand_Return>
-  <ABY_DominionPocketRuntimeCommand_ReturnDesc>Вернуть всех пешек игрока, находящихся внутри этого среза доминиона, на исходную карту колонии и схлопнуть временную runtime-карту.</ABY_DominionPocketRuntimeCommand_ReturnDesc>
+  <ABY_DominionPocketRuntimeCommand_ReturnDesc>Вернуть всех пешек игрока, находящихся внутри этого среза доминиона, на исходную карту колонии и схлопнуть нестабильный карман за ними.</ABY_DominionPocketRuntimeCommand_ReturnDesc>
   <ABY_DominionPocketRuntimeExitInspect>Связанный вектор возврата: {0}.</ABY_DominionPocketRuntimeExitInspect>
   <ABY_DominionPocketRuntimeExitInspect_Unlinked>Этот якорь эвакуации больше не связан с живой сессией среза доминиона.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
   <ABY_DominionPocketRuntimeSource_Unknown>неизвестная исходная карта</ABY_DominionPocketRuntimeSource_Unknown>

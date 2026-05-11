@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionPocketExit</defName>
     <label>dominion extraction gate</label>
-    <description>A temporary extraction anchor formed inside the dominion slice. It is not the final version of the encounter, but it allows a strike team to return to the colony during runtime testing.</description>
+    <description>An extraction anchor formed inside a dominion slice. It pins a narrow return path through collapsing gate geometry, allowing a strike team to withdraw before the hostile pocket folds shut.</description>
     <thingClass>AbyssalProtocol.Building_ABY_DominionPocketExit</thingClass>
     <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>

@@ -2,16 +2,15 @@
 <Defs>
 
   <!--
-    Abyssal Gravplate prototype placeholder.
-    Intentionally not wired into research, recipes, forge patterns, traders, rewards, pawn gear pools, or incidents.
-    It is kept as a dev-mode spawnable future armor set only.
+    Abyssal Gravplate dormant relic.
+    This sealed dominion armor line is present as a hidden relic pattern and is not yet reachable through ordinary colony progression.
   -->
 
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplatePrototype</defName>
     <thingClass>Apparel</thingClass>
-    <label>abyssal gravplate prototype</label>
-    <description>[WIP / developer placeholder] A future dominion-grade grav-suspension armor shell. Its blackened crown-plating, red fracture channels and violet node lenses are prepared as a visual placeholder only; the armor is intentionally not craftable, not sold, not researched and not connected to forge progression yet. Use developer mode spawning to inspect it in-game.</description>
+    <label>abyssal gravplate shell</label>
+    <description>A dormant dominion-grade grav-suspension shell sealed behind incomplete access law. Black crown-plating, red fracture channels and violet node lenses hint at an armor lineage meant for operators who have learned to hover at the edge of the gate rather than merely survive it.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_AbyssalGravplatePrototype</texPath>
@@ -105,8 +104,8 @@
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplateHelmPrototype</defName>
     <thingClass>Apparel</thingClass>
-    <label>abyssal gravplate helm prototype</label>
-    <description>[WIP / developer placeholder] A future sealed helm for the abyssal gravplate line. The compact horned faceplate, violet lenses and red crown-core venting are included as visual placeholder art only; the helm is intentionally not craftable, not sold, not researched and not connected to forge progression yet. Use developer mode spawning to inspect it in-game.</description>
+    <label>abyssal gravplate helm</label>
+    <description>A sealed helm for the dormant gravplate line. Its compact horned faceplate, violet lenses and red crown-core venting make it feel less like protective equipment and more like a permission mask for a higher tier of abyssal motion.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_AbyssalGravplateHelmPrototype</texPath>

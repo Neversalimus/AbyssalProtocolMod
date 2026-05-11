@@ -425,8 +425,8 @@
 
   <HediffDef>
     <defName>ABY_ArchonOverrideFeedback</defName>
-    <label>archon override feedback (legacy)</label>
-    <description>Legacy placeholder. The feedback phase is now handled inside ABY_ArchonOverrideSurge so the downside starts only after the short positive window ends.</description>
+    <label>archon override afterimage</label>
+    <description>The stolen archon rhythm leaves a fading afterimage in the nervous system. The body remembers the command pattern for a moment, then pays for moving under a law it was never meant to obey.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <isBad>true</isBad>
     <scenarioCanAdd>false</scenarioCanAdd>

@@ -4,7 +4,7 @@
   <ResearchProjectDef>
     <defName>ABY_DominionGateBootstrapping</defName>
     <label>dominion gate bootstrapping</label>
-    <description>Hardens the circle lattice for first-stage dominion synchronization. It does not grant the full Crowned Gate boss encounter yet, but it lets the colony intentionally arm a Great Infernal Gate staging sequence, hold it stable, and build the systemic base for later portal-entry packages.</description>
+    <description>Hardens the circle lattice for dominion-class synchronization. The colony learns to arm a Great Infernal Gate prelude, hold the outer breach under pressure and prepare the ritual geometry needed for entry into deeper hostile infrastructure.</description>
     <baseCost>4200</baseCost>
     <techLevel>Spacer</techLevel>
     <tab>ABY_AbyssalProtocolTab</tab>

@@ -126,7 +126,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionAnchor_Breach</defName>
     <label>breach anchor</label>
-    <description>A dominion anchor dedicated to widening the tear. It does not spawn the later portal package yet, but it accelerates contamination growth and shortens the time window before the crisis slips out of control.</description>
+    <description>A dominion anchor dedicated to widening the tear. It accelerates contamination growth, thins the remaining safety margin and teaches the breach to behave less like an event and more like admitted territory.</description>
     <thingClass>AbyssalProtocol.Building_AbyssalDominionAnchor</thingClass>
     <category>Building</category>
     <drawerType>MapMeshAndRealTime</drawerType>

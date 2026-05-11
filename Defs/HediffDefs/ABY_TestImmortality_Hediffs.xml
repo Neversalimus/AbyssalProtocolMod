@@ -3,8 +3,8 @@
 
   <HediffDef>
     <defName>ABY_TestImmortality</defName>
-    <label>dev immortality anchor</label>
-    <description>A dev-only stability anchor that immediately repairs injuries, restores missing parts, and strips lethal bad hediffs for testing.</description>
+    <label>forbidden stasis anchor</label>
+    <description>A forbidden stasis mark that refuses the body permission to fail. Wounds seal, missing structures are rewritten and lethal states are suppressed by a crude administrative override of flesh.</description>
     <hediffClass>HediffWithComps</hediffClass>
     <scenarioCanAdd>false</scenarioCanAdd>
     <isBad>false</isBad>

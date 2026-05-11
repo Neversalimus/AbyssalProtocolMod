@@ -3,6 +3,5 @@
   <!-- Intentionally left empty.
        The active Archon Beast manifestation def is kept in:
        Defs/ThingDefs/ABY_ArchonArrival_Manifestation.xml
-       This file remains only as a compatibility placeholder to avoid duplicate defName errors
-       in local builds that previously received both Package B and the later polish package. -->
+       Reserved manifestation namespace for Archon Beast arrival routing. -->
 </Defs>

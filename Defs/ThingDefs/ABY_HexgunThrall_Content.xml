@@ -153,7 +153,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HexgunRelaySigil</defName>
     <label>hexgun relay sigil</label>
-    <description>A legacy infernal-tech relay from an earlier T1 layout. Existing copies are retained only for save compatibility and are automatically converted or rejected by the updated circle flow.</description>
+    <description>A retired infernal-tech relay whose access pattern has been superseded by safer circle geometry. Existing copies still carry a faint breach signature, but the modern circle no longer treats them as a frontline rite.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -173,7 +173,7 @@
     <comps>
       <li Class="CompProperties_Usable">
         <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>legacy relay (retired)</useLabel>
+        <useLabel>retired relay</useLabel>
       </li>
       <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
         <ritualId>hexgun_thralls</ritualId>
