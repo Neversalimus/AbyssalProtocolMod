@@ -34,11 +34,14 @@ namespace AbyssalProtocol
             ScrubBlockedDiseases();
             EnsurePreparedState();
             EnsureAggressionState();
+            EnsureMonsterBrainState();
         }
 
         private void ScrubBlockedDiseases()
         {
-            ABY_AbyssalDiseaseUtility.ScrubBlockedHediffs(parent as Pawn);
+            Pawn pawn = parent as Pawn;
+            ABY_AbyssalDiseaseUtility.ScrubBlockedHediffs(pawn);
+            ABY_ReactorSaintBleedUtility.ScrubBloodLoss(pawn);
         }
 
         private void EnsurePreparedState()
@@ -73,6 +76,12 @@ namespace AbyssalProtocol
                 Props.lordRetryTicks,
                 ref spawnTick,
                 ref lastAggroTick);
+        }
+
+        private void EnsureMonsterBrainState()
+        {
+            Pawn pawn = parent as Pawn;
+            ABY_AbyssalMonsterBrain.TryRecoverStaleCombatJob(pawn);
         }
     }
 }
