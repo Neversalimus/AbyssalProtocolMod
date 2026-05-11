@@ -35,7 +35,10 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (HasActiveDebugToolField() || IsDebugCallStackActive())
+            // Runtime health/boss code used to call a StackTrace-based detector through this method.
+            // On Dev Mode maps that is disastrous when ShouldBeDead/ShouldBeDowned are queried many
+            // times per second during a boss fight. Keep this detector cheap and input-field based.
+            if (HasActiveDebugToolField())
             {
                 MarkDebugToolDetected();
                 return true;

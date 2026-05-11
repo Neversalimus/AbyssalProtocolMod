@@ -34,24 +34,39 @@ namespace AbyssalProtocol
 
         public static bool ShouldSuppressVanillaHealthState(Pawn pawn)
         {
-            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            // This method is called from Pawn_HealthTracker.ShouldBeDead/ShouldBeDowned postfixes.
+            // Those can run very often while a boss is active, so the first check must be a cheap
+            // comp lookup. Never call the reflective/StackTrace debug-tool detector here.
+            CompABY_BossTrueDeath comp = GetComp(pawn);
+            if (comp == null)
             {
                 return false;
             }
 
-            CompABY_BossTrueDeath comp = GetComp(pawn);
-            return comp != null && comp.ShouldSuppressVanillaDeathOrDowned();
+            if (ABY_DevToolUtility.IsRecentDebugToolAction(3))
+            {
+                return false;
+            }
+
+            return comp.ShouldSuppressVanillaDeathOrDowned();
         }
 
         public static bool TrySuppressPawnKill(Pawn pawn, DamageInfo? dinfo, Hediff exactCulprit)
         {
-            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            // Pawn.Kill is rare, but keep the same cheap-first rule. Debug-tool bypass is driven by
+            // the recent input marker instead of a per-call StackTrace probe.
+            CompABY_BossTrueDeath comp = GetComp(pawn);
+            if (comp == null)
             {
                 return false;
             }
 
-            CompABY_BossTrueDeath comp = GetComp(pawn);
-            return comp != null && comp.TrySuppressPrematureKill(dinfo, exactCulprit);
+            if (ABY_DevToolUtility.IsRecentDebugToolAction(3))
+            {
+                return false;
+            }
+
+            return comp.TrySuppressPrematureKill(dinfo, exactCulprit);
         }
 
         public static void SuppressDowned(Pawn pawn, DamageInfo? dinfo, Hediff hediff)
