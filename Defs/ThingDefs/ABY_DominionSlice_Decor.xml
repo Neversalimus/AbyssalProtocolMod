@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Package 2: Dominion props / ruins / decals library for later layout integration. -->
+
+  <ThingDef Abstract="True" Name="ABY_DominionRuinWallBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>2500</MaxHitPoints>
+      <Mass>35</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef Abstract="True" Name="ABY_DominionRubbleBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.08</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Mass>2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef Abstract="True" Name="ABY_DominionDecalBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <!-- Ruin wall / perimeter pieces -->
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallStraightA</defName>
+    <label>dominion ruin wall segment</label>
+    <description>A dead-black dominion wall segment, torn from a ruined excavation perimeter and left half-buried in ash.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_Straight_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.2,1.1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallStraightBrokenA</defName>
+    <label>broken dominion ruin wall</label>
+    <description>A collapsed dominion wall section with its center split open and drowned in cinders.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_StraightBroken_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.2,1.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallCornerA</defName>
+    <label>dominion ruin corner</label>
+    <description>A heavy corner segment of a dominion perimeter line, built from blackened brass and ash-metal plates.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_Corner_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.3,2.3)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallCornerBrokenA</defName>
+    <label>broken dominion ruin corner</label>
+    <description>A smashed perimeter corner held together by nothing but slagged supports and dead brass reinforcement.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_CornerBroken_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.3,2.3)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallTJunctionA</defName>
+    <label>dominion ruin T-junction</label>
+    <description>A T-junction from a collapsed dominion process lane, now a skeletal remnant of infernal industry.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_TJunction_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.2,2.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionRuinWallTJunctionBrokenA</defName>
+    <label>broken dominion ruin T-junction</label>
+    <description>A fractured process-junction with its spine cracked open and buried under machine rubble.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_TJunctionBroken_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3.2,2.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionPerimeterBarricadeA</defName>
+    <label>dominion perimeter barricade</label>
+    <description>A low perimeter barricade from the outer excavation ring.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_Barricade_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.8,1.0)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>900</MaxHitPoints>
+      <Mass>12</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionPerimeterBarricadeBrokenA</defName>
+    <label>broken dominion perimeter barricade</label>
+    <description>A ruined barricade fragment half-consumed by collapse and soot.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionWall_BarricadeBroken_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.0,1.0)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>650</MaxHitPoints>
+      <Mass>10</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionPerimeterCollapseA</defName>
+    <label>collapsed dominion perimeter fragment</label>
+    <description>A collapsed perimeter fragment where the dead shell of the dominion has caved into its own ash-filled foundations.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRuin_Pile_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.0,1.4)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Mass>8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRuinWallBase">
+    <defName>ABY_DominionPerimeterCollapseB</defName>
+    <label>collapsed dominion ruin cluster</label>
+    <description>A more compact collapse cluster of shattered wallwork, ash slag and dead brass bracing.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRuin_Pile_B</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.9,1.3)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Mass>8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <!-- Rubble props -->
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionRubblePileA</defName>
+    <label>dominion rubble pile</label>
+    <description>A small pile of blackened dominion plate and broken structural debris.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_Pile_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.2,1.1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionPlateClusterA</defName>
+    <label>dominion plate cluster</label>
+    <description>A loose cluster of cracked dominion floor plates, scattered by prior collapse or impact.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_PlateCluster_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,1.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionPlateClusterB</defName>
+    <label>broken dominion slab cluster</label>
+    <description>A broader scatter of broken dark plates from the dead industrial flooring of the slice.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_PlateCluster_B</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.7,1.3)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionConduitScrapA</defName>
+    <label>dominion conduit scrap</label>
+    <description>A torn conduit cluster with dead lines and dimly poisoned filament stubs.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_ConduitScrap_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,0.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionConduitScrapB</defName>
+    <label>broken dominion conduit scrap</label>
+    <description>A heavier conduit scrap cluster, snapped out of a buried industrial line.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_ConduitScrap_B</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,0.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionIndustrialWreckageA</defName>
+    <label>dominion industrial wreckage</label>
+    <description>A knot of broken framing, wrecked beams and black-metal offcuts.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_IndustrialWreckage_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionRubbleBase">
+    <defName>ABY_DominionReactorRingFragmentA</defName>
+    <label>dominion ring fragment</label>
+    <description>A fractured ring-like machine remnant from a dead dominion process assembly.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_ReactorRing_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,1.1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <!-- Decals / quiet environmental dressing -->
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionSootPatchA</defName>
+    <label>dominion soot patch</label>
+    <description>A low dark soot patch left by heat, dust and dead exhaust.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_SootPatch_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionScorchCraterA</defName>
+    <label>dominion scorch crater</label>
+    <description>A compact scorch crater burned into the ash-metal floor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decor/ABY_DominionRubble_ScorchCrater_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.3,1.1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionAshPatchA</defName>
+    <label>ash patch</label>
+    <description>A quiet patch of caked ash and dust.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_AshPatch_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,1.4)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionAshPatchB</defName>
+    <label>broken ash-metal patch</label>
+    <description>A flat broken patch of cinders and cracked dark plate.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_AshPatch_B</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionBrokenPlateDustA</defName>
+    <label>broken plate dust patch</label>
+    <description>A shallow patch of shattered plate fragments ground into the floor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_BrokenPlateDust_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionDarkScatterA</defName>
+    <label>dark scatter patch</label>
+    <description>A low-noise scatter of dark grit, dust and fine debris.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_DarkScatter_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.2,0.9)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionDustClusterA</defName>
+    <label>dead dust cluster</label>
+    <description>A small dead dust cluster with traces of burned brass grit.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_DustCluster_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.1,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionExcavationScarA</defName>
+    <label>excavation scar</label>
+    <description>A faint excavation scar pressed into the dead ash-metal floor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_ExcavationScar_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.4,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionExcavationScarB</defName>
+    <label>long excavation scar</label>
+    <description>A longer dragging scar where machinery or stone once tore across the floor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_ExcavationScar_B</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionSootMoundA</defName>
+    <label>soot mound</label>
+    <description>A low mound of soot, grit and cinder flakes.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionDecal_SootMound_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.2,1.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+</Defs>
