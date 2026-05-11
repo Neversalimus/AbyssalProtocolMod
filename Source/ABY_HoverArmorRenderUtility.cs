@@ -124,11 +124,11 @@ namespace AbyssalProtocol
             int ticks = ABY_HoverArmorUtility.SafeTicksGame();
             int startTick = ResolveFlightRigStartTick(pawn, ticks);
             float age = Mathf.Max(0f, ticks - startTick);
-            float fade = Mathf.Clamp01(age / 14f);
+            float fade = Mathf.Clamp01(age / 8f);
             float seed = Mathf.Abs((pawn.thingIDNumber * 31) % 997);
             bool moving = pawn.pather != null && pawn.pather.MovingNow;
-            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.170f : 0.105f));
-            float shimmer = Mathf.Sin((ticks + seed * 0.61f) * 0.225f);
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.190f : 0.120f));
+            float shimmer = Mathf.Sin((ticks + seed * 0.61f) * 0.245f);
             float motionAlpha = moving ? Mathf.Max(0f, extension.groundWakeMotionAlphaBonus) : 0f;
             float motionLength = moving ? Mathf.Max(0f, extension.groundWakeMotionLengthBonus) : 0f;
 
@@ -138,39 +138,57 @@ namespace AbyssalProtocol
                 movementDir = FacingVector(pawn.Rotation);
             }
             movementDir.Normalize();
+
             Vector3 trail = -movementDir;
             Vector3 right = RightVector(movementDir);
             float angle = AngleForDirection(trail);
 
             float baseScale = Mathf.Max(0.05f, extension.groundWakeScale);
-            float width = Mathf.Max(0.05f, baseScale * Mathf.Max(0.05f, extension.groundWakeWidthScale) * (0.92f + pulse * 0.10f));
-            float depth = Mathf.Max(0.08f, baseScale * Mathf.Max(0.05f, extension.groundWakeLengthScale) * (0.82f + pulse * Mathf.Max(0f, extension.groundWakePulseScale) + motionLength));
+            float width = Mathf.Max(0.05f, baseScale * Mathf.Max(0.05f, extension.groundWakeWidthScale) * (1.00f + pulse * 0.12f));
+            float depth = Mathf.Max(0.08f, baseScale * Mathf.Max(0.05f, extension.groundWakeLengthScale) * (0.95f + pulse * Mathf.Max(0f, extension.groundWakePulseScale) + motionLength));
             float alpha = Mathf.Clamp01((extension.groundWakeAlpha + pulse * extension.groundWakePulseAlpha + motionAlpha) * fade);
+            float rotationNoise = shimmer * (moving ? 4.5f : 2.4f);
 
-            float rotationNoise = shimmer * (moving ? 4.0f : 2.0f);
-            Vector3 baseLoc = groundDrawLoc + trail * Mathf.Max(0f, extension.groundWakeBackOffset);
-            baseLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + ResolveGroundWakeAltitudeOffset(extension);
+            // Keep the main pressure smear close enough to the pawn that it is visible even while idle
+            // and in south/front view. The old full back offset put the effect mostly behind the body.
+            float backOffset = Mathf.Max(0f, extension.groundWakeBackOffset);
+            Vector3 baseLoc = groundDrawLoc + trail * (backOffset * (moving ? 0.82f : 0.42f));
+            baseLoc.y = GroundWakeLayerY(extension, 0);
 
             if (!extension.groundDistortionTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.groundDistortionTexPath, baseLoc + new Vector3(0f, 0.001f, 0f), width * 1.22f, depth * 1.08f, ShaderDatabase.TransparentPostLight, alpha * 0.50f, angle + rotationNoise);
+                DrawPlane(extension.groundDistortionTexPath, baseLoc + new Vector3(0f, 0.001f, 0f), width * 1.45f, depth * 1.10f, ShaderDatabase.TransparentPostLight, alpha * 0.82f, angle + rotationNoise);
             }
 
             if (!extension.groundWakeTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.groundWakeTexPath, baseLoc + new Vector3(0f, 0.002f, 0f), width, depth, ShaderDatabase.MoteGlow, alpha * 0.72f, angle + rotationNoise * 0.45f);
+                DrawPlane(extension.groundWakeTexPath, baseLoc + new Vector3(0f, 0.002f, 0f), width * 1.08f, depth, ShaderDatabase.MoteGlow, alpha * 0.98f, angle + rotationNoise * 0.45f);
             }
 
-            if (moving && !extension.groundWakeTexPath.NullOrEmpty())
+            // Side shear lanes make the ground effect readable around the pawn silhouette without becoming
+            // a circular underfoot ring. They are always present, but stronger when moving.
+            if (!extension.groundWakeTexPath.NullOrEmpty())
             {
+                float laneAlpha = alpha * (moving ? 0.62f : 0.34f);
+                float laneDepth = depth * (moving ? 0.78f : 0.52f);
+                float laneWidth = width * (moving ? 0.46f : 0.34f);
                 for (int i = 0; i < 2; i++)
                 {
                     float sideSign = i == 0 ? -1f : 1f;
                     float lanePhase = Mathf.Sin((ticks + seed + i * 37) * 0.190f);
-                    Vector3 laneLoc = baseLoc + right * sideSign * (extension.groundWakeSideOffset + lanePhase * 0.018f) + trail * (0.070f + i * 0.030f);
-                    laneLoc.y += 0.0025f + i * 0.001f;
-                    DrawPlane(extension.groundWakeTexPath, laneLoc, width * 0.38f, depth * 0.72f, ShaderDatabase.MoteGlow, alpha * 0.34f, angle + rotationNoise + sideSign * 6f);
+                    Vector3 laneLoc = groundDrawLoc + right * sideSign * (extension.groundWakeSideOffset + lanePhase * 0.020f) + trail * (backOffset * 0.24f + i * 0.020f);
+                    laneLoc.y = GroundWakeLayerY(extension, i + 1);
+                    DrawPlane(extension.groundWakeTexPath, laneLoc, laneWidth, laneDepth, ShaderDatabase.MoteGlow, laneAlpha, angle + rotationNoise + sideSign * 7f);
                 }
+            }
+
+            // A small central shimmer prevents the effect from disappearing while the pawn is drafted but
+            // standing still. It is an elongated distortion, not a rune/ring.
+            if (!moving && !extension.groundDistortionTexPath.NullOrEmpty())
+            {
+                Vector3 centerLoc = groundDrawLoc + trail * 0.035f;
+                centerLoc.y = GroundWakeLayerY(extension, 3);
+                DrawPlane(extension.groundDistortionTexPath, centerLoc, width * 0.92f, depth * 0.42f, ShaderDatabase.TransparentPostLight, alpha * 0.55f, angle - rotationNoise * 0.35f);
             }
         }
 
@@ -396,6 +414,13 @@ namespace AbyssalProtocol
             }
 
             return extension.groundWakeAltitudeOffset;
+        }
+
+        private static float GroundWakeLayerY(ABY_HoverArmorExtension extension, int slot)
+        {
+            // MoteOverhead-level sorting keeps the VFX visible after pawn rendering. The planes are
+            // placed only around the feet/ground wake, so they do not cover the face or torso.
+            return AltitudeLayer.MoteOverhead.AltitudeFor() + ResolveGroundWakeAltitudeOffset(extension) + slot * 0.002f;
         }
 
         private static float ResolveVectorThrusterAngle(Rot4 rot)

@@ -62,17 +62,17 @@
         <vectorThrusterShoulderScale>0.92</vectorThrusterShoulderScale>
         <vectorThrusterHipScale>1.10</vectorThrusterHipScale>
         <vectorThrusterAltitudeOffset>0.028</vectorThrusterAltitudeOffset>
-        <groundWakeScale>0.72</groundWakeScale>
-        <groundWakeLengthScale>1.48</groundWakeLengthScale>
-        <groundWakeWidthScale>0.55</groundWakeWidthScale>
-        <groundWakeAlpha>0.34</groundWakeAlpha>
-        <groundWakeMotionAlphaBonus>0.32</groundWakeMotionAlphaBonus>
-        <groundWakeMotionLengthBonus>0.38</groundWakeMotionLengthBonus>
-        <groundWakePulseScale>0.090</groundWakePulseScale>
-        <groundWakePulseAlpha>0.14</groundWakePulseAlpha>
-        <groundWakeBackOffset>0.38</groundWakeBackOffset>
-        <groundWakeSideOffset>0.090</groundWakeSideOffset>
-        <groundWakeAltitudeOffset>0.028</groundWakeAltitudeOffset>
+        <groundWakeScale>1.02</groundWakeScale>
+        <groundWakeLengthScale>1.66</groundWakeLengthScale>
+        <groundWakeWidthScale>0.82</groundWakeWidthScale>
+        <groundWakeAlpha>0.78</groundWakeAlpha>
+        <groundWakeMotionAlphaBonus>0.34</groundWakeMotionAlphaBonus>
+        <groundWakeMotionLengthBonus>0.36</groundWakeMotionLengthBonus>
+        <groundWakePulseScale>0.11</groundWakePulseScale>
+        <groundWakePulseAlpha>0.20</groundWakePulseAlpha>
+        <groundWakeBackOffset>0.20</groundWakeBackOffset>
+        <groundWakeSideOffset>0.170</groundWakeSideOffset>
+        <groundWakeAltitudeOffset>0.044</groundWakeAltitudeOffset>
         <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
         <sparkIntervalTicks>16</sparkIntervalTicks>
         <sparkLifetimeTicks>16</sparkLifetimeTicks>
