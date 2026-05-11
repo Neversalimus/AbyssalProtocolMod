@@ -30,11 +30,11 @@ namespace AbyssalProtocol
             int ticks = ABY_HoverArmorUtility.SafeTicksGame();
             int startTick = ResolveFlightRigStartTick(pawn, ticks);
             float age = Mathf.Max(0f, ticks - startTick);
-            float fade = Mathf.Clamp01(age / 16f);
+            float fade = Mathf.Clamp01(age / 10f);
             float seed = Mathf.Abs((pawn.thingIDNumber * 47) % 997);
             bool moving = pawn.pather != null && pawn.pather.MovingNow;
-            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.205f : 0.125f));
-            float hotPulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.37f) * (moving ? 0.310f : 0.180f));
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.245f : 0.150f));
+            float hotPulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.37f) * (moving ? 0.360f : 0.205f));
             float motionAlpha = moving ? Mathf.Max(0f, extension.vectorThrusterMotionAlphaBonus) : 0f;
             float motionScale = moving ? Mathf.Max(0f, extension.vectorThrusterMotionScaleBonus) : 0f;
 
@@ -43,9 +43,9 @@ namespace AbyssalProtocol
             Vector3 right = RightVector(forward);
             float angle = AngleForDirection(back);
 
-            // Draw the glows first at pawn-back altitude, then draw smaller hot cores. These are intentionally
-            // close to the body rather than under the pawn: the armor reads as using integrated vector jets,
-            // not as standing on a magic ring or wearing a huge wing-rig.
+            // Drawn from the PawnRenderer postfix, so the jets stay visible instead of being buried under
+            // apparel/body layers. The offsets keep the bursts on the shoulder/hip sides rather than below
+            // the feet, so the effect reads as integrated vector thrusters built into the armor.
             DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 0);
             DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 1);
             DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 2);
@@ -128,26 +128,27 @@ namespace AbyssalProtocol
 
         private static void DrawThrusterEmitter(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale, float backOffset, float sideOffset, float scaleMult, int slot)
         {
-            float slotPhase = Mathf.Sin((ticks + pawn.thingIDNumber * 13 + slot * 17) * 0.230f);
+            float slotPhase = Mathf.Sin((ticks + pawn.thingIDNumber * 13 + slot * 17) * 0.260f);
+            float slotFlicker = 0.5f + 0.5f * Mathf.Sin((ticks + pawn.thingIDNumber * 5 + slot * 23) * 0.410f);
             Vector3 loc = pawnDrawLoc + back * backOffset + right * sideOffset;
-            loc.z += slotPhase * 0.010f;
-            loc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveVectorThrusterAltitudeOffset(extension) + slot * 0.0015f;
+            loc.z += slotPhase * 0.012f;
+            loc.y = VectorThrusterLayerY(extension, slot);
 
-            float baseScale = Mathf.Max(0.030f, extension.vectorThrusterBurstScale);
+            float baseScale = Mathf.Max(0.045f, extension.vectorThrusterBurstScale);
             float pulseScale = pulse * Mathf.Max(0f, extension.vectorThrusterPulseScale);
             float burstScale = (baseScale + pulseScale + motionScale) * Mathf.Max(0.10f, scaleMult);
-            float burstAlpha = Mathf.Clamp01((extension.vectorThrusterAlpha + hotPulse * extension.vectorThrusterPulseAlpha + motionAlpha) * fade);
-            float glowScale = Mathf.Max(0.040f, extension.vectorThrusterGlowScale + pulseScale * 1.35f + motionScale * 1.25f) * Mathf.Max(0.10f, scaleMult);
-            float glowAlpha = Mathf.Clamp01((extension.vectorThrusterGlowAlpha + pulse * extension.vectorThrusterPulseAlpha * 0.35f + motionAlpha * 0.45f) * fade);
+            float burstAlpha = Mathf.Clamp01((extension.vectorThrusterAlpha + hotPulse * extension.vectorThrusterPulseAlpha + motionAlpha + slotFlicker * 0.08f) * fade);
+            float glowScale = Mathf.Max(0.060f, extension.vectorThrusterGlowScale + pulseScale * 1.45f + motionScale * 1.35f) * Mathf.Max(0.10f, scaleMult);
+            float glowAlpha = Mathf.Clamp01((extension.vectorThrusterGlowAlpha + pulse * extension.vectorThrusterPulseAlpha * 0.55f + motionAlpha * 0.55f) * fade);
 
             if (!extension.vectorThrusterGlowTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.vectorThrusterGlowTexPath, loc + back * 0.012f + new Vector3(0f, -0.004f, 0f), glowScale, glowScale * 1.22f, ShaderDatabase.MoteGlow, glowAlpha, angle);
+                DrawPlane(extension.vectorThrusterGlowTexPath, loc + back * 0.018f + new Vector3(0f, 0.004f, 0f), glowScale, glowScale * 1.18f, ShaderDatabase.MoteGlow, glowAlpha, angle);
             }
 
             if (!extension.vectorThrusterBurstTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.vectorThrusterBurstTexPath, loc, burstScale * 0.74f, burstScale * 1.46f, ShaderDatabase.MoteGlow, burstAlpha, angle);
+                DrawPlane(extension.vectorThrusterBurstTexPath, loc, burstScale * 0.78f, burstScale * 1.55f, ShaderDatabase.MoteGlow, burstAlpha, angle);
             }
         }
 
@@ -158,19 +159,19 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float baseScale = Mathf.Max(0.030f, extension.vectorThrusterBurstScale);
-            Vector3 baseLoc = pawnDrawLoc + back * (extension.vectorThrusterLowerBackOffset + 0.105f);
-            baseLoc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveVectorThrusterAltitudeOffset(extension) - 0.006f;
+            float baseScale = Mathf.Max(0.045f, extension.vectorThrusterBurstScale);
+            Vector3 baseLoc = pawnDrawLoc + back * (extension.vectorThrusterLowerBackOffset + 0.145f);
+            baseLoc.y = VectorThrusterLayerY(extension, 6);
 
             for (int i = 0; i < 3; i++)
             {
-                float side = (i - 1) * extension.vectorThrusterLowerSideOffset * 0.85f;
-                float backDistance = 0.075f + i * 0.060f;
-                float wobble = Mathf.Sin((ticks + i * 19) * 0.190f) * 0.030f;
+                float side = (i - 1) * extension.vectorThrusterLowerSideOffset * 1.10f;
+                float backDistance = 0.085f + i * 0.075f;
+                float wobble = Mathf.Sin((ticks + i * 19) * 0.220f) * 0.036f;
                 Vector3 loc = baseLoc + back * backDistance + right * (side + wobble);
-                float scale = baseScale * (0.88f - i * 0.15f) + pulse * 0.030f;
-                float alpha = Mathf.Clamp01((0.22f + hotPulse * 0.20f) * fade * (1f - i * 0.22f));
-                DrawPlane(extension.vectorThrusterBurstTexPath, loc, scale * 0.64f, scale * 1.25f, ShaderDatabase.MoteGlow, alpha, angle);
+                float scale = baseScale * (0.92f - i * 0.16f) + pulse * 0.040f;
+                float alpha = Mathf.Clamp01((0.34f + hotPulse * 0.30f) * fade * (1f - i * 0.23f));
+                DrawPlane(extension.vectorThrusterBurstTexPath, loc, scale * 0.70f, scale * 1.32f, ShaderDatabase.MoteGlow, alpha, angle);
             }
         }
 
@@ -290,10 +291,15 @@ namespace AbyssalProtocol
         {
             if (extension == null || Mathf.Abs(extension.vectorThrusterAltitudeOffset) < 0.0001f)
             {
-                return -0.026f;
+                return 0.020f;
             }
 
             return extension.vectorThrusterAltitudeOffset;
+        }
+
+        private static float VectorThrusterLayerY(ABY_HoverArmorExtension extension, int slot)
+        {
+            return AltitudeLayer.MoteOverhead.AltitudeFor() + ResolveVectorThrusterAltitudeOffset(extension) + slot * 0.002f;
         }
 
         private static Vector3 FacingVector(Rot4 rot)

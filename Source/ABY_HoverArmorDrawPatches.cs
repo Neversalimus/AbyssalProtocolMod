@@ -23,7 +23,7 @@ namespace AbyssalProtocol
         }
     }
 
-    // The renderer prefix draws only the hover VFX. The actual pawn lift is applied by the DrawPos
+    // The renderer prefix keeps only background-safe FX. The actual pawn lift is applied by the DrawPos
     // postfix above, which keeps vanilla body/apparel/head rendering intact.
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnAt))]
     public static class ABY_HoverArmorDrawPatches_RenderPawnAt
@@ -35,12 +35,23 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ABY_HoverArmorRenderUtility.DrawVectorThrusterFx(___pawn, drawLoc, extension);
             ABY_HoverArmorRenderUtility.DrawBackFlightRigFx(___pawn, drawLoc, extension);
 
             Vector3 groundLoc = drawLoc;
             groundLoc.z -= ABY_HoverArmorUtility.ComputePawnLiftZ(___pawn, extension);
             ABY_HoverArmorRenderUtility.DrawUnderfootFx(___pawn, groundLoc, extension);
+        }
+
+        public static void Postfix(Pawn ___pawn, Vector3 drawLoc)
+        {
+            if (!ABY_HoverArmorUtility.TryGetActiveHover(___pawn, out ABY_HoverArmorExtension extension))
+            {
+                return;
+            }
+
+            // Vector thrusters are intentionally drawn after the pawn. They are tiny side/hip jets, so
+            // drawing them behind the pawn made them disappear under vanilla apparel layers.
+            ABY_HoverArmorRenderUtility.DrawVectorThrusterFx(___pawn, drawLoc, extension);
         }
     }
 }

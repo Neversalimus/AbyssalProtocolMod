@@ -39,18 +39,21 @@
         <movingRingScaleBonus>0.06</movingRingScaleBonus>
         <ringAlpha>0.24</ringAlpha>
         <pulseAmplitude>0.045</pulseAmplitude>
-        <vectorThrusterBurstScale>0.18</vectorThrusterBurstScale>
-        <vectorThrusterGlowScale>0.34</vectorThrusterGlowScale>
-        <vectorThrusterAlpha>0.70</vectorThrusterAlpha>
-        <vectorThrusterGlowAlpha>0.22</vectorThrusterGlowAlpha>
-        <vectorThrusterPulseScale>0.040</vectorThrusterPulseScale>
-        <vectorThrusterPulseAlpha>0.20</vectorThrusterPulseAlpha>
-        <vectorThrusterMotionAlphaBonus>0.24</vectorThrusterMotionAlphaBonus>
-        <vectorThrusterMotionScaleBonus>0.055</vectorThrusterMotionScaleBonus>
-        <vectorThrusterBackOffset>0.13</vectorThrusterBackOffset>
-        <vectorThrusterSideOffset>0.135</vectorThrusterSideOffset>
-        <vectorThrusterLowerBackOffset>0.245</vectorThrusterLowerBackOffset>
-        <vectorThrusterLowerSideOffset>0.080</vectorThrusterLowerSideOffset>
+        <vectorThrusterBurstScale>0.42</vectorThrusterBurstScale>
+        <vectorThrusterGlowScale>0.64</vectorThrusterGlowScale>
+        <vectorThrusterAlpha>1.00</vectorThrusterAlpha>
+        <vectorThrusterGlowAlpha>0.48</vectorThrusterGlowAlpha>
+        <vectorThrusterPulseScale>0.080</vectorThrusterPulseScale>
+        <vectorThrusterPulseAlpha>0.35</vectorThrusterPulseAlpha>
+        <vectorThrusterMotionAlphaBonus>0.45</vectorThrusterMotionAlphaBonus>
+        <vectorThrusterMotionScaleBonus>0.130</vectorThrusterMotionScaleBonus>
+        <vectorThrusterBackOffset>0.18</vectorThrusterBackOffset>
+        <vectorThrusterSideOffset>0.245</vectorThrusterSideOffset>
+        <vectorThrusterLowerBackOffset>0.320</vectorThrusterLowerBackOffset>
+        <vectorThrusterLowerSideOffset>0.155</vectorThrusterLowerSideOffset>
+        <vectorThrusterShoulderScale>0.88</vectorThrusterShoulderScale>
+        <vectorThrusterHipScale>1.05</vectorThrusterHipScale>
+        <vectorThrusterAltitudeOffset>0.024</vectorThrusterAltitudeOffset>
         <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
         <sparkIntervalTicks>18</sparkIntervalTicks>
         <sparkLifetimeTicks>14</sparkLifetimeTicks>

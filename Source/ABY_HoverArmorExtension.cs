@@ -7,7 +7,7 @@ namespace AbyssalProtocol
         public bool draftedOnly = true;
         public bool enableUnderfootFx = true;
         public bool enableMovingSparks = true;
-        public bool enableFlightRigFx = true;
+        public bool enableFlightRigFx = false;
         public bool enableVectorThrusterFx = false;
         public bool enableHaloFx = false;
 
@@ -57,7 +57,7 @@ namespace AbyssalProtocol
         public float vectorThrusterLowerSideOffset = 0.090f;
         public float vectorThrusterShoulderScale = 0.92f;
         public float vectorThrusterHipScale = 1.00f;
-        public float vectorThrusterAltitudeOffset = -0.026f;
+        public float vectorThrusterAltitudeOffset = 0.020f;
 
         public float draftedMoveSpeedBonus = 0f;
         public int drawPriority = 0;
