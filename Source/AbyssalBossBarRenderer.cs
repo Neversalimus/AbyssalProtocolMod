@@ -118,7 +118,7 @@ namespace AbyssalProtocol
             Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, textWidth, totalHeight);
             Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
             Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, barWidth, barHeight);
-            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, textRoot.width, secondaryHeight);
+            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, barWidth, secondaryHeight);
             Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, textRoot.width, footerHeight);
 
             DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
@@ -262,7 +262,7 @@ namespace AbyssalProtocol
                 ? new Rect(rect.x + 2f, rect.y + 2f, rect.width - phaseWidth - 14f, rect.height)
                 : new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height);
             Rect phaseRect = phaseWidth > 0f
-                ? new Rect(rect.xMax - phaseWidth - 2f, rect.y + 2f, phaseWidth, Mathf.Max(18f, rect.height - 3f))
+                ? new Rect(rect.xMax - phaseWidth - 24f, rect.y + 3f, phaseWidth, Mathf.Max(18f, rect.height - 4f))
                 : Rect.zero;
 
             DrawBossTitle(titleRect, label, palette, alpha);
@@ -283,18 +283,20 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.MiddleLeft;
             Color oldColor = GUI.color;
-            float textWidth = Mathf.Min(rect.width, Text.CalcSize(label).x + 10f);
+            float textWidth = Mathf.Min(rect.width - 4f, Text.CalcSize(label).x);
             Rect textRect = new Rect(rect.x + 2f, rect.y + 1f, rect.width, rect.height);
-            Rect glowRect = new Rect(rect.x + 1f, rect.yMax - 3f, textWidth + 8f, 1f);
+            Rect underlineRect = new Rect(textRect.x, rect.yMax - 4f, Mathf.Max(8f, textWidth + 2f), 1f);
 
-            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 4f, textWidth + 14f, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.18f));
-            Widgets.DrawBoxSolid(glowRect, new Color(palette.text.r, palette.text.g, palette.text.b, alpha * 0.58f));
-            Widgets.DrawBoxSolid(new Rect(glowRect.x, glowRect.y + 1f, glowRect.width, 1f), new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.20f));
+            // Keep the title accent tied to the actual text width. The previous glow strip
+            // overextended toward the phase marker and looked like a broken underline.
+            Widgets.DrawBoxSolid(new Rect(underlineRect.x, underlineRect.y - 1f, underlineRect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.18f));
+            Widgets.DrawBoxSolid(underlineRect, new Color(palette.text.r, palette.text.g, palette.text.b, alpha * 0.58f));
+            Widgets.DrawBoxSolid(new Rect(underlineRect.x, underlineRect.y + 1f, underlineRect.width, 1f), new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.18f));
 
-            GUI.color = new Color(0f, 0f, 0f, alpha * 0.62f);
-            Widgets.Label(new Rect(textRect.x + 1f, textRect.y + 1f, textRect.width, textRect.height), label);
+            GUI.color = new Color(0f, 0f, 0f, alpha * 0.52f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(textRect.x + 1f, textRect.y + 1f, textRect.width, textRect.height), label);
             GUI.color = new Color(palette.text.r, palette.text.g, palette.text.b, alpha);
-            Widgets.Label(textRect, label);
+            ABY_UIPolishUtility.SafeLabel(textRect, label);
 
             GUI.color = oldColor;
             Text.Anchor = TextAnchor.UpperLeft;
@@ -318,9 +320,9 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = new Color(0f, 0f, 0f, alpha * 0.58f);
-            Widgets.Label(new Rect(badgeRect.x + 1f, badgeRect.y + 1f, badgeRect.width, badgeRect.height), label);
+            ABY_UIPolishUtility.SafeLabel(new Rect(badgeRect.x + 1f, badgeRect.y + 1f, badgeRect.width, badgeRect.height), label);
             GUI.color = new Color(0.90f, 0.98f, 1f, alpha);
-            Widgets.Label(badgeRect, label);
+            ABY_UIPolishUtility.SafeLabel(badgeRect, label);
             GUI.color = oldColor;
             Text.Anchor = TextAnchor.UpperLeft;
         }
@@ -421,29 +423,29 @@ namespace AbyssalProtocol
             }
 
             bool active = state != null && state.hasSecondaryBar && state.secondaryPct > 0.001f && state.secondaryMax > 0f;
-            float pulse = settings.reducedMotion ? 0.18f : 0.18f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.06f;
+            float pulse = settings.reducedMotion ? 0.12f : 0.14f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.05f;
             Color cyan = active
-                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.60f + pulse))
-                : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.18f);
+                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.42f + pulse))
+                : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.12f);
             Color ember = active
-                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.28f)
-                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.10f);
+                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.20f)
+                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.06f);
 
-            float top = mainBarRect.yMax - 2f;
-            float bottom = secondaryRect.y + 3f;
-            float height = Mathf.Max(4f, bottom - top);
-            int count = 7;
+            // Pure connector effect: do not resize or restyle the Aegis bar itself.
+            // Draw short energy clamps between the HP frame and the shield frame.
+            float top = mainBarRect.yMax - 1f;
+            float bottom = secondaryRect.y + 1f;
+            float height = Mathf.Max(3f, bottom - top);
+            int count = 6;
             for (int i = 0; i < count; i++)
             {
                 float t = count <= 1 ? 0.5f : i / (float)(count - 1);
-                float x = Mathf.Lerp(mainBarRect.x + mainBarRect.width * 0.08f, mainBarRect.xMax - mainBarRect.width * 0.08f, t);
+                float x = Mathf.Lerp(secondaryRect.x + secondaryRect.width * 0.10f, secondaryRect.xMax - secondaryRect.width * 0.10f, t);
                 Widgets.DrawBoxSolid(new Rect(x - 1f, top, 2f, height), cyan);
-                Widgets.DrawBoxSolid(new Rect(x - 4f, top + height * 0.42f, 8f, 1f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.55f));
-                Widgets.DrawBoxSolid(new Rect(x - 2f, top - 1f, 4f, 3f), ember);
-                Widgets.DrawBoxSolid(new Rect(x - 2f, bottom - 1f, 4f, 3f), cyan);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, top + height * 0.45f, 6f, 1f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.45f));
+                Widgets.DrawBoxSolid(new Rect(x - 2f, top - 1f, 4f, 2f), ember);
+                Widgets.DrawBoxSolid(new Rect(x - 2f, bottom - 1f, 4f, 2f), cyan);
             }
-
-            Widgets.DrawBoxSolid(new Rect(mainBarRect.x + 6f, bottom - 1f, mainBarRect.width - 12f, 1f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.30f));
         }
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
@@ -544,18 +546,15 @@ namespace AbyssalProtocol
             string label = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossBar_AdjustShort", "Adjust");
             Color oldColor = GUI.color;
             GUI.color = Color.white;
-            Widgets.DrawBoxSolid(rect, new Color(0.08f, 0.06f, 0.05f, 0.92f));
-            Widgets.DrawBox(rect, 1);
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
-            Widgets.Label(rect, label);
-            Text.Anchor = TextAnchor.UpperLeft;
+            // Draw-only during Repaint; actual click handling remains in HandleInput so boss-bar
+            // state is not rebuilt on mouse events. This restores the normal abyssal button art.
+            AbyssalStyledWidgets.TextButton(rect, label);
             GUI.color = oldColor;
         }
 
         private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
         {
-            Rect rect = new Rect(rootRect.xMax - 96f * scale, rootRect.y - 26f * scale, 96f * scale, 22f * scale);
+            Rect rect = new Rect(rootRect.xMax - 96f * scale, rootRect.y - 30f * scale, 96f * scale, 26f * scale);
             float minY = screenRect.y + settings.safeMargin;
             if (rect.y < minY)
             {

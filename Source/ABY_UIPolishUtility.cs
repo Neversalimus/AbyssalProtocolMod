@@ -8,10 +8,14 @@ namespace AbyssalProtocol
     {
         public static Rect TextRect(Rect rect, float horizontalPadding = 2f, float verticalPadding = 2f)
         {
+            // RimWorld/Unity IMGUI text is very easy to clip when custom textured panels use
+            // tight 14-22px rows. Expand symmetrically so MiddleCenter labels keep their
+            // visual center while UpperLeft labels get enough descender room for g/y/p/q.
+            float extraY = Mathf.Max(3f, verticalPadding + 2f);
             rect.x = Mathf.Floor(rect.x) + horizontalPadding;
-            rect.y = Mathf.Floor(rect.y) - 1f;
-            rect.width = Mathf.Ceil(rect.width) - horizontalPadding * 2f;
-            rect.height = Mathf.Ceil(rect.height) + verticalPadding * 2f + 2f;
+            rect.y = Mathf.Floor(rect.y) - extraY;
+            rect.width = Mathf.Max(1f, Mathf.Ceil(rect.width) - horizontalPadding * 2f);
+            rect.height = Mathf.Max(1f, Mathf.Ceil(rect.height) + extraY * 2f);
             return rect;
         }
 
@@ -20,6 +24,19 @@ namespace AbyssalProtocol
             try
             {
                 Widgets.Label(TextRect(rect), text ?? string.Empty);
+            }
+            catch (Exception ex)
+            {
+                ABY_UISafetyUtility.LogUIException("safe label", ex);
+            }
+        }
+
+
+        public static void SafeLabel(Rect rect, string text, float horizontalPadding, float verticalPadding)
+        {
+            try
+            {
+                Widgets.Label(TextRect(rect, horizontalPadding, verticalPadding), text ?? string.Empty);
             }
             catch (Exception ex)
             {
