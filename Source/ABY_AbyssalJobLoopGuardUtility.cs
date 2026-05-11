@@ -20,7 +20,8 @@ namespace AbyssalProtocol
 
             if (ABY_ReactorSaintAIUtility.IsReactorSaintPawn(pawn))
             {
-                ABY_ReactorSaintAIUtility.StabilizeAIGotoNearestHostileResult(pawn, ref job);
+                // Reactor Saint has its own dedicated Harmony postfix. Do not run the
+                // generic large-modpack loop guard on it as a second AI route.
                 return;
             }
 

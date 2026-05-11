@@ -37,6 +37,17 @@ namespace AbyssalProtocol
         private int nextTacticalBrainTick;
         private int nextEmergencyRepositionTick;
         private int lastSuccessfulShotTick = -1;
+        private int nextAdvanceAttemptTick;
+        private int nextSpacingAttemptTick;
+        private int nextCloseQuartersAttemptTick;
+        private int lastAdvanceJobTick = -999999;
+        private IntVec3 lastAdvanceJobDestination = IntVec3.Invalid;
+
+        private int cachedAdvanceCellUntilTick = -1;
+        private IntVec3 cachedAdvanceCellTarget = IntVec3.Invalid;
+        private bool cachedAdvanceCellRequireLineOfSight;
+        private IntVec3 cachedAdvanceCellDestination = IntVec3.Invalid;
+        private bool cachedAdvanceCellResult;
 
         private int cachedCrowdPressureUntilTick = -1;
         private bool cachedCrowdPressure;
@@ -81,6 +92,16 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextTacticalBrainTick, "nextTacticalBrainTick", 0);
             Scribe_Values.Look(ref nextEmergencyRepositionTick, "nextEmergencyRepositionTick", 0);
             Scribe_Values.Look(ref lastSuccessfulShotTick, "lastSuccessfulShotTick", -1);
+            Scribe_Values.Look(ref nextAdvanceAttemptTick, "nextAdvanceAttemptTick", 0);
+            Scribe_Values.Look(ref nextSpacingAttemptTick, "nextSpacingAttemptTick", 0);
+            Scribe_Values.Look(ref nextCloseQuartersAttemptTick, "nextCloseQuartersAttemptTick", 0);
+            Scribe_Values.Look(ref lastAdvanceJobTick, "lastAdvanceJobTick", -999999);
+            Scribe_Values.Look(ref lastAdvanceJobDestination, "lastAdvanceJobDestination");
+            Scribe_Values.Look(ref cachedAdvanceCellUntilTick, "cachedAdvanceCellUntilTick", -1);
+            Scribe_Values.Look(ref cachedAdvanceCellTarget, "cachedAdvanceCellTarget");
+            Scribe_Values.Look(ref cachedAdvanceCellRequireLineOfSight, "cachedAdvanceCellRequireLineOfSight", false);
+            Scribe_Values.Look(ref cachedAdvanceCellDestination, "cachedAdvanceCellDestination");
+            Scribe_Values.Look(ref cachedAdvanceCellResult, "cachedAdvanceCellResult", false);
         }
 
         public override void CompTick()
@@ -92,6 +113,7 @@ namespace AbyssalProtocol
             {
                 forcedAdvanceUntilTick = -1;
                 lastTrackedPosition = IntVec3.Invalid;
+                InvalidateAdvanceCaches();
                 ResetAttackState();
                 return;
             }
@@ -115,7 +137,7 @@ namespace AbyssalProtocol
 
             TryApplyStructureCrushBonus(pawn, ticksGame);
             bool crowdPressure = HasCrowdPressure(pawn);
-            if (TryForceCloseQuartersEngagement(pawn))
+            if (TryForceCloseQuartersEngagement(pawn, ticksGame))
             {
                 forcedAdvanceUntilTick = -1;
                 ResetAttackState();
@@ -128,10 +150,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!crowdPressure && TryMaintainSpacing(pawn))
+            if (!crowdPressure && ticksGame >= nextSpacingAttemptTick)
             {
-                ResetAttackState();
-                return;
+                nextSpacingAttemptTick = ticksGame + 20;
+                if (TryMaintainSpacing(pawn))
+                {
+                    ResetAttackState();
+                    return;
+                }
             }
 
             if (burstShotsRemaining > 0)
@@ -139,7 +165,7 @@ namespace AbyssalProtocol
                 if (!CanContinueCurrentAttack(pawn))
                 {
                     ResetAttackState();
-                    TryAdvanceTowardDistantThreat(pawn);
+                    TryAdvanceTowardDistantThreat(pawn, ticksGame, force: true);
                     return;
                 }
 
@@ -165,7 +191,7 @@ namespace AbyssalProtocol
                 if (!CanContinueCurrentAttack(pawn))
                 {
                     ResetAttackState();
-                    TryAdvanceTowardDistantThreat(pawn);
+                    TryAdvanceTowardDistantThreat(pawn, ticksGame, force: true);
                     return;
                 }
 
@@ -189,12 +215,12 @@ namespace AbyssalProtocol
 
             if (ticksGame < nextSearchTick)
             {
-                if (TryForceCloseQuartersEngagement(pawn))
+                if (TryForceCloseQuartersEngagement(pawn, ticksGame))
                 {
                     return;
                 }
 
-                if (TryAdvanceTowardDistantThreat(pawn))
+                if (TryAdvanceTowardDistantThreat(pawn, ticksGame))
                 {
                     return;
                 }
@@ -206,12 +232,12 @@ namespace AbyssalProtocol
             Thing target = FindBestTargetThing(pawn, ticksGame);
             if (target == null)
             {
-                if (TryForceCloseQuartersEngagement(pawn))
+                if (TryForceCloseQuartersEngagement(pawn, ticksGame))
                 {
                     return;
                 }
 
-                if (TryAdvanceTowardDistantThreat(pawn))
+                if (TryAdvanceTowardDistantThreat(pawn, ticksGame))
                 {
                     return;
                 }
@@ -223,12 +249,12 @@ namespace AbyssalProtocol
             int attackMode = ResolveAttackMode(pawn, target, ticksGame);
             if (attackMode == AttackModeNone)
             {
-                if (TryForceCloseQuartersEngagement(pawn))
+                if (TryForceCloseQuartersEngagement(pawn, ticksGame))
                 {
                     return;
                 }
 
-                if (TryAdvanceTowardDistantThreat(pawn))
+                if (TryAdvanceTowardDistantThreat(pawn, ticksGame))
                 {
                     return;
                 }
@@ -337,7 +363,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (TryAdvanceTowardDistantThreat(pawn))
+            if (TryAdvanceTowardDistantThreat(pawn, ticksGame, force: true))
             {
                 return true;
             }
@@ -597,16 +623,33 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            if (cachedAdvanceTargetTick == ticksGame && cachedAdvanceTargetPosition == pawn.Position)
+            if (ticksGame < cachedAdvanceTargetTick
+                && cachedAdvanceTargetPosition == pawn.Position
+                && IsValidAdvanceTarget(pawn, cachedAdvanceTarget))
             {
                 return cachedAdvanceTarget;
             }
 
             Thing resolved = FindBestAdvanceTargetUncached(pawn);
-            cachedAdvanceTargetTick = ticksGame;
+            cachedAdvanceTargetTick = ticksGame + 30;
             cachedAdvanceTarget = resolved;
             cachedAdvanceTargetPosition = pawn.Position;
             return resolved;
+        }
+
+        private static bool IsValidAdvanceTarget(Pawn pawn, Thing target)
+        {
+            if (pawn?.Map == null || target == null || target.Destroyed || !target.Spawned || target.Map != pawn.Map)
+            {
+                return false;
+            }
+
+            if (target is Pawn targetPawn)
+            {
+                return AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, targetPawn);
+            }
+
+            return AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target);
         }
 
         private Thing FindBestAdvanceTargetUncached(Pawn pawn)
@@ -664,12 +707,19 @@ namespace AbyssalProtocol
 
             return bestBuilding;
         }
-        private bool TryAdvanceTowardDistantThreat(Pawn pawn)
+        private bool TryAdvanceTowardDistantThreat(Pawn pawn, int ticksGame, bool force = false)
         {
             if (pawn?.Map == null || pawn.jobs == null)
             {
                 return false;
             }
+
+            if (!force && ticksGame < nextAdvanceAttemptTick)
+            {
+                return false;
+            }
+
+            nextAdvanceAttemptTick = ticksGame + (force ? 12 : 36);
 
             Thing target = FindBestAdvanceTarget(pawn);
             if (target == null)
@@ -707,10 +757,19 @@ namespace AbyssalProtocol
                 return true;
             }
 
+            if (lastAdvanceJobDestination.IsValid
+                && lastAdvanceJobDestination == destination
+                && ticksGame - lastAdvanceJobTick < 45)
+            {
+                return true;
+            }
+
             Job goJob = JobMaker.MakeJob(JobDefOf.Goto, destination);
             goJob.expiryInterval = 150;
             goJob.checkOverrideOnExpire = true;
             goJob.collideWithPawns = true;
+            lastAdvanceJobTick = ticksGame;
+            lastAdvanceJobDestination = destination;
             pawn.jobs.TryTakeOrderedJob(goJob, JobTag.Misc);
             pawn.rotationTracker?.FaceTarget(targetCell);
             return true;
@@ -725,10 +784,25 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (ticksGame < cachedAdvanceCellUntilTick
+                && cachedAdvanceCellTarget == targetCell
+                && cachedAdvanceCellRequireLineOfSight == requireLineOfSight)
+            {
+                destination = cachedAdvanceCellDestination;
+                return cachedAdvanceCellResult && destination.IsValid;
+            }
+
             float minRange = Mathf.Max(Props.preferredMinRange + 0.8f, 6f);
             float maxRange = Mathf.Min(Props.range - 1f, Mathf.Max(minRange + 2f, desiredRange + 4f));
-            float bestScore = float.MinValue;
+            float idealRange = Mathf.Clamp(desiredRange, minRange, maxRange);
             int maxCells = Math.Min(GenRadial.NumCellsInRadius(maxRange), GenRadial.RadialPattern.Length);
+
+            const int CandidateLimit = 24;
+            IntVec3[] candidateCells = new IntVec3[CandidateLimit];
+            float[] candidateScores = new float[CandidateLimit];
+            int candidateCount = 0;
+
             for (int i = 0; i < maxCells; i++)
             {
                 IntVec3 cell = targetCell + GenRadial.RadialPattern[i];
@@ -743,19 +817,29 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
-                {
-                    continue;
-                }
-
                 float moveDistance = pawn.Position.DistanceTo(cell);
-                float score = 120f - moveDistance;
+                float rangeError = Mathf.Abs(targetDistance - idealRange);
+                float score = 160f - (moveDistance * 1.5f) - (rangeError * 5f);
+                InsertAdvanceCandidate(candidateCells, candidateScores, ref candidateCount, cell, score);
+            }
+
+            float bestScore = float.MinValue;
+            for (int i = 0; i < candidateCount; i++)
+            {
+                IntVec3 cell = candidateCells[i];
                 bool cellHasLineOfSight = GenSight.LineOfSight(cell, targetCell, map);
                 if (requireLineOfSight && !cellHasLineOfSight)
                 {
                     continue;
                 }
 
+                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float targetDistance = cell.DistanceTo(targetCell);
+                float score = candidateScores[i];
                 if (cellHasLineOfSight)
                 {
                     score += 14f;
@@ -773,7 +857,45 @@ namespace AbyssalProtocol
                 }
             }
 
-            return destination.IsValid;
+            cachedAdvanceCellUntilTick = ticksGame + 45;
+            cachedAdvanceCellTarget = targetCell;
+            cachedAdvanceCellRequireLineOfSight = requireLineOfSight;
+            cachedAdvanceCellDestination = destination;
+            cachedAdvanceCellResult = destination.IsValid;
+            return cachedAdvanceCellResult;
+        }
+
+        private static void InsertAdvanceCandidate(IntVec3[] cells, float[] scores, ref int count, IntVec3 cell, float score)
+        {
+            if (cells == null || scores == null || cells.Length == 0 || scores.Length != cells.Length)
+            {
+                return;
+            }
+
+            if (count < cells.Length)
+            {
+                cells[count] = cell;
+                scores[count] = score;
+                count++;
+                return;
+            }
+
+            int worstIndex = 0;
+            float worstScore = scores[0];
+            for (int i = 1; i < scores.Length; i++)
+            {
+                if (scores[i] < worstScore)
+                {
+                    worstScore = scores[i];
+                    worstIndex = i;
+                }
+            }
+
+            if (score > worstScore)
+            {
+                cells[worstIndex] = cell;
+                scores[worstIndex] = score;
+            }
         }
 
         private static bool IsTurretLike(Building building)
@@ -1230,8 +1352,14 @@ namespace AbyssalProtocol
             return best;
         }
 
-        private bool TryForceCloseQuartersEngagement(Pawn pawn)
+        private bool TryForceCloseQuartersEngagement(Pawn pawn, int ticksGame, bool force = false)
         {
+            if (!force && ticksGame < nextCloseQuartersAttemptTick)
+            {
+                return false;
+            }
+
+            nextCloseQuartersAttemptTick = ticksGame + 12;
             Pawn adjacentThreat = FindAdjacentThreat(pawn, 2.1f);
             if (adjacentThreat == null)
             {
@@ -1403,6 +1531,17 @@ namespace AbyssalProtocol
             }
 
             ResetAttackState();
+        }
+
+        private void InvalidateAdvanceCaches()
+        {
+            cachedAdvanceTargetTick = -1;
+            cachedAdvanceTarget = null;
+            cachedAdvanceTargetPosition = IntVec3.Invalid;
+            cachedAdvanceCellUntilTick = -1;
+            cachedAdvanceCellTarget = IntVec3.Invalid;
+            cachedAdvanceCellDestination = IntVec3.Invalid;
+            cachedAdvanceCellResult = false;
         }
 
         private void ResetAttackState()

@@ -14,6 +14,16 @@ namespace AbyssalProtocol
         private const int TacticalGotoExpiryTicks = 120;
         private const int StructureCrushExpiryTicks = 150;
 
+        private struct FireSolutionCacheEntry
+        {
+            public int untilTick;
+            public IntVec3 pawnPosition;
+            public float range;
+            public bool result;
+        }
+
+        private static readonly Dictionary<int, FireSolutionCacheEntry> FireSolutionCache = new Dictionary<int, FireSolutionCacheEntry>();
+
         public static bool IsReactorSaintPawn(Pawn pawn)
         {
             if (pawn == null)
@@ -49,7 +59,31 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float range = Mathf.Max(1f, maxRange);
+            int key = pawn.thingIDNumber;
+            FireSolutionCacheEntry cached;
+            if (FireSolutionCache.TryGetValue(key, out cached)
+                && ticksGame < cached.untilTick
+                && cached.pawnPosition == pawn.Position
+                && Mathf.Abs(cached.range - range) <= 0.1f)
+            {
+                return cached.result;
+            }
+
+            bool result = HasValidFireSolutionUncached(pawn, range);
+            FireSolutionCache[key] = new FireSolutionCacheEntry
+            {
+                untilTick = ticksGame + 15,
+                pawnPosition = pawn.Position,
+                range = range,
+                result = result
+            };
+            return result;
+        }
+
+        private static bool HasValidFireSolutionUncached(Pawn pawn, float range)
+        {
             Pawn pawnTarget = AbyssalThreatPawnUtility.FindBestTarget(
                 pawn,
                 0f,
@@ -431,7 +465,11 @@ namespace AbyssalProtocol
             float idealRange = Mathf.Clamp(maxRange * 0.72f, minRange + 1.5f, maxRange - 1.25f);
             float searchRadius = Mathf.Min(maxRange - 0.5f, Mathf.Max(minRange + 2f, idealRange + 4f));
             int maxCells = Math.Min(GenRadial.NumCellsInRadius(searchRadius), GenRadial.RadialPattern.Length);
-            float bestScore = float.MinValue;
+
+            const int CandidateLimit = 28;
+            IntVec3[] candidateCells = new IntVec3[CandidateLimit];
+            float[] candidateScores = new float[CandidateLimit];
+            int candidateCount = 0;
 
             for (int i = 0; i < maxCells; i++)
             {
@@ -443,16 +481,6 @@ namespace AbyssalProtocol
 
                 float targetDistance = cell.DistanceTo(targetCell);
                 if (targetDistance < minRange || targetDistance > maxRange)
-                {
-                    continue;
-                }
-
-                if (!GenSight.LineOfSight(cell, targetCell, map))
-                {
-                    continue;
-                }
-
-                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
                 {
                     continue;
                 }
@@ -470,6 +498,24 @@ namespace AbyssalProtocol
                     score += 10f;
                 }
 
+                InsertCellCandidate(candidateCells, candidateScores, ref candidateCount, cell, score);
+            }
+
+            float bestScore = float.MinValue;
+            for (int i = 0; i < candidateCount; i++)
+            {
+                IntVec3 cell = candidateCells[i];
+                if (!GenSight.LineOfSight(cell, targetCell, map))
+                {
+                    continue;
+                }
+
+                if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
+                {
+                    continue;
+                }
+
+                float score = candidateScores[i];
                 if (score > bestScore)
                 {
                     bestScore = score;
@@ -478,6 +524,39 @@ namespace AbyssalProtocol
             }
 
             return firingCell.IsValid;
+        }
+
+        private static void InsertCellCandidate(IntVec3[] cells, float[] scores, ref int count, IntVec3 cell, float score)
+        {
+            if (cells == null || scores == null || cells.Length == 0 || scores.Length != cells.Length)
+            {
+                return;
+            }
+
+            if (count < cells.Length)
+            {
+                cells[count] = cell;
+                scores[count] = score;
+                count++;
+                return;
+            }
+
+            int worstIndex = 0;
+            float worstScore = scores[0];
+            for (int i = 1; i < scores.Length; i++)
+            {
+                if (scores[i] < worstScore)
+                {
+                    worstScore = scores[i];
+                    worstIndex = i;
+                }
+            }
+
+            if (score > worstScore)
+            {
+                cells[worstIndex] = cell;
+                scores[worstIndex] = score;
+            }
         }
 
         private static bool TryFindApproachCell(Pawn pawn, IntVec3 targetCell, out IntVec3 approachCell)
@@ -489,7 +568,10 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            float bestScore = float.MinValue;
+            const int CandidateLimit = 18;
+            IntVec3[] candidateCells = new IntVec3[CandidateLimit];
+            float[] candidateScores = new float[CandidateLimit];
+            int candidateCount = 0;
             int maxCells = Math.Min(GenRadial.NumCellsInRadius(11f), GenRadial.RadialPattern.Length);
             for (int i = 0; i < maxCells; i++)
             {
@@ -499,14 +581,22 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                float distanceFromPawn = pawn.Position.DistanceTo(cell);
+                float distanceToTarget = cell.DistanceTo(targetCell);
+                float score = 100f - distanceFromPawn - (distanceToTarget * 0.35f);
+                InsertCellCandidate(candidateCells, candidateScores, ref candidateCount, cell, score);
+            }
+
+            float bestScore = float.MinValue;
+            for (int i = 0; i < candidateCount; i++)
+            {
+                IntVec3 cell = candidateCells[i];
                 if (!pawn.CanReach(cell, PathEndMode.OnCell, Danger.Deadly))
                 {
                     continue;
                 }
 
-                float distanceFromPawn = pawn.Position.DistanceTo(cell);
-                float distanceToTarget = cell.DistanceTo(targetCell);
-                float score = 100f - distanceFromPawn - (distanceToTarget * 0.35f);
+                float score = candidateScores[i];
                 if (GenSight.LineOfSight(cell, targetCell, map))
                 {
                     score += 20f;
