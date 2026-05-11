@@ -98,6 +98,14 @@
         <healWorstInjuryAmount>28</healWorstInjuryAmount>
         <maxHealPasses>5</maxHealPasses>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>40</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_ChoirEngineAura">
         <scanIntervalTicks>30</scanIntervalTicks>
         <allyRadius>11.2</allyRadius>

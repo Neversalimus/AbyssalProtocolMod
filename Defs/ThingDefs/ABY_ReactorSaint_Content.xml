@@ -103,6 +103,14 @@
         <healWorstInjuryAmount>54</healWorstInjuryAmount>
         <maxHealPasses>6</maxHealPasses>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>40</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_ReactorSaintShooter">
         <directProjectileDefName>ABY_ReactorSaintBolt</directProjectileDefName>
         <barrageProjectileDefName>ABY_ReactorSaintBarrageShell</barrageProjectileDefName>

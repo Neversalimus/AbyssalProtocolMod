@@ -109,6 +109,14 @@
         <healWorstInjuryAmount>42</healWorstInjuryAmount>
         <maxHealPasses>6</maxHealPasses>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>40</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
+      </li>
     </comps>
     <killedLeavings Inherit="False">
       <ABY_HeraldCoreFragment>2</ABY_HeraldCoreFragment>
@@ -221,6 +229,14 @@
         <heatstrokeClamp>0.10</heatstrokeClamp>
         <healWorstInjuryAmount>90</healWorstInjuryAmount>
         <maxHealPasses>8</maxHealPasses>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>40</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
       </li>
     </comps>
     <killedLeavings Inherit="False">

@@ -82,8 +82,22 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            float healthPct = Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
-            float maxHealth = Mathf.Max(1f, GetApproximateMaxHealth(pawn));
+            float healthPct;
+            float maxHealth;
+            float currentHealth;
+            if (ABY_BossTrueDeathUtility.TryGetBossHp(pawn, out currentHealth, out maxHealth, out healthPct))
+            {
+                healthPct = Mathf.Clamp01(healthPct);
+                maxHealth = Mathf.Max(1f, maxHealth);
+                currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+            }
+            else
+            {
+                healthPct = Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
+                maxHealth = Mathf.Max(1f, GetApproximateMaxHealth(pawn));
+                currentHealth = maxHealth * healthPct;
+            }
+
             int currentPhase = ResolveCurrentPhase(pawn, profile, healthPct);
 
             state = new ABY_BossBarState
@@ -93,7 +107,7 @@ namespace AbyssalProtocol
                 displayLabel = profile.ResolveDisplayLabel(pawn, displayLabelOverride),
                 healthPct = healthPct,
                 maxHealth = maxHealth,
-                currentHealth = maxHealth * healthPct,
+                currentHealth = currentHealth,
                 currentPhase = currentPhase,
                 currentPhaseLabel = ResolvePhaseLabel(currentPhase)
             };
