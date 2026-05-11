@@ -1,9 +1,27 @@
 using System.Reflection;
 using HarmonyLib;
+using RimWorld;
 using Verse;
 
 namespace AbyssalProtocol
 {
+    [HarmonyPatch]
+    public static class HarmonyPatch_AbyssalDiseaseImmunity_AdjustSeverity
+    {
+        private static MethodBase TargetMethod()
+        {
+            return AccessTools.Method(
+                typeof(HealthUtility),
+                nameof(HealthUtility.AdjustSeverity),
+                new[] { typeof(Pawn), typeof(HediffDef), typeof(float) });
+        }
+
+        private static bool Prefix(Pawn pawn, HediffDef hdDef)
+        {
+            return !ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, hdDef);
+        }
+    }
+
     [HarmonyPatch]
     public static class HarmonyPatch_AbyssalDiseaseImmunity_AddHediffDef
     {

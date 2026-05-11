@@ -26,6 +26,21 @@ namespace AbyssalProtocol
             "BloodRot"
         };
 
+        private static readonly HashSet<string> ExplicitBlockedSpawnConditionDefNames = new HashSet<string>
+        {
+            "Frail",
+            "BadBack",
+            "Cataract",
+            "Dementia",
+            "Alzheimers",
+            "HearingLoss",
+            "Asthma",
+            "Carcinoma",
+            "HeartArteryBlockage",
+            "ChemicalDamageSevere",
+            "ChemicalDamageModerate"
+        };
+
         public static Pawn GetPawn(Pawn_HealthTracker tracker)
         {
             if (tracker == null || HealthTrackerPawnField == null)
@@ -104,7 +119,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return IsBlockedDiseaseLikeHediff(hediffDef);
+            return IsBlockedDiseaseLikeHediff(hediffDef) || IsBlockedSpawnConditionHediff(hediffDef);
         }
 
         public static bool ShouldBlockHediff(Pawn pawn, Hediff hediff)
@@ -208,6 +223,17 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private static bool IsBlockedSpawnConditionHediff(HediffDef hediffDef)
+        {
+            if (hediffDef == null)
+            {
+                return false;
+            }
+
+            string defName = hediffDef.defName;
+            return !string.IsNullOrEmpty(defName) && ExplicitBlockedSpawnConditionDefNames.Contains(defName);
         }
     }
 }

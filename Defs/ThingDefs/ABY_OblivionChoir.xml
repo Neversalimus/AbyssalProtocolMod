@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_OblivionChoir</defName>
     <label>oblivion choir</label>
-    <description>A forge-born annihilation cannon that stabilizes a choir-core inside a self-cycling abyssal chamber. The projectile advances like a miniature breach-heart, lashing nearby targets on its way in before detonating in a violent infernal bloom. It remains devastating against clustered infantry and breach points, but it is slower, slightly less overwhelming and no longer depends on external choir-cell reloads.</description>
+    <description>A forge-born annihilation cannon that stabilizes a choir-core inside a self-cycling abyssal chamber. The projectile advances like a miniature breach-heart, lashing nearby targets with intelligent resonance branches before detonating in a violent infernal bloom. Enemies repeatedly touched by the choir carry a temporary harmonic mark that answers the final blast, and the impact leaves a short-lived scar of breach-song behind. It no longer depends on external choir-cell reloads.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
@@ -93,7 +93,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_OblivionChoirCell</defName>
     <label>choir cell</label>
-    <description>A sealed infernal magazine cell for the Oblivion Choir. Each charge contains a stabilized choir-core seed that unravels into a breach-like plasma heart once fired.</description>
+    <description>A sealed infernal choir-cell containing a stabilized core-seed. Early prototypes tried to feed these directly into the weapon; the surviving design uses them as forge-bound catalyst stock rather than a battlefield reload magazine.</description>
     <graphicData>
       <texPath>Things/Item/ABY_OblivionChoirCell</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -21,6 +21,7 @@ namespace AbyssalProtocol
         public float haloWidth = 0.30f;
         public float coreWidth = 0.095f;
         public Func<Thing, bool> shouldAffectThing;
+        public Func<Thing, float> scoreOffset;
         public Action<Thing, Vector3> onBranchHit;
     }
 
@@ -114,7 +115,7 @@ namespace AbyssalProtocol
                         {
                             thing = thing,
                             branchSource = SelectBranchSource(currentCorePos, samplePos, targetCenter, radius),
-                            score = sampleDistanceSq + Mathf.Abs(0.66f - t) * 2.25f
+                            score = sampleDistanceSq + Mathf.Abs(0.66f - t) * 2.25f + ResolveScoreOffset(config, thing)
                         });
                     }
                 }
@@ -214,6 +215,23 @@ namespace AbyssalProtocol
                 SpawnBeamThing(haloDef, previous, point, map, Mathf.Max(0.01f, haloWidth) * widthFactor, lifetimeTicks, haloTexturePath, true);
                 SpawnBeamThing(coreDef, previous, point, map, Mathf.Max(0.01f, coreWidth) * widthFactor, Mathf.Max(1, lifetimeTicks - 1), coreTexturePath, false);
                 previous = point;
+            }
+        }
+
+        private static float ResolveScoreOffset(ABY_BranchingProjectileConfig config, Thing thing)
+        {
+            if (config?.scoreOffset == null || thing == null)
+            {
+                return 0f;
+            }
+
+            try
+            {
+                return config.scoreOffset(thing);
+            }
+            catch
+            {
+                return 0f;
             }
         }
 
