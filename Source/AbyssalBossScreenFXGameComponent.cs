@@ -409,9 +409,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            bool started = TryInvokeSongMethod(music, "ForceStartSong", song, false)
-                || TryInvokeSongMethod(music, "ForcePlaySong", song, false)
-                || TryInvokeSongMethod(music, "StartNewSong", song, false);
+            bool started;
+            using (ABY_BossMusicUtility.AuthorizeBossSongStart(song))
+            {
+                started = TryInvokeSongMethod(music, "ForceStartSong", song, false)
+                    || TryInvokeSongMethod(music, "ForcePlaySong", song, false)
+                    || TryInvokeSongMethod(music, "StartNewSong", song, false);
+            }
 
             if (!started)
             {
