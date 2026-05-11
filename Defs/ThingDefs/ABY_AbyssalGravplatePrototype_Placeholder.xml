@@ -36,6 +36,10 @@
         <enableUnderfootFx>true</enableUnderfootFx>
         <enableMovingSparks>true</enableMovingSparks>
         <enableFlightRigFx>true</enableFlightRigFx>
+        <flightRigTexPathSouth>Effects/FlightRig/ABY_FlightRig_South</flightRigTexPathSouth>
+        <flightRigTexPathEast>Effects/FlightRig/ABY_FlightRig_East</flightRigTexPathEast>
+        <flightRigTexPathWest>Effects/FlightRig/ABY_FlightRig_West</flightRigTexPathWest>
+        <flightRigTexPathNorth>Effects/FlightRig/ABY_FlightRig_North</flightRigTexPathNorth>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
         <ringScale>0.78</ringScale>
         <movingRingScaleBonus>0.08</movingRingScaleBonus>

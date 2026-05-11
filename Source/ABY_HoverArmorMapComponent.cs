@@ -121,7 +121,7 @@ namespace AbyssalProtocol
 
         private void DrawFlightRig(Pawn pawn, ABY_HoverArmorExtension extension, int ticks)
         {
-            if (!TryGetFlightRigTexture(extension, pawn.Rotation, out string texPath, out bool mirrorX))
+            if (!TryGetFlightRigTexture(extension, pawn.Rotation, out string texPath))
             {
                 return;
             }
@@ -146,8 +146,8 @@ namespace AbyssalProtocol
             drawPos.z += bob;
             drawPos.y = AltitudeLayer.Pawn.AltitudeFor() + FlightRigPawnBackOffset;
 
-            float width = mirrorX ? -scale : scale;
-            DrawPlane(texPath, drawPos, width, scale, alpha, 0f);
+            // Keep positive mesh scale. West uses its own flipped asset; negative scale can be culled.
+            DrawPlane(texPath, drawPos, scale, scale, alpha, 0f);
         }
 
         private void DrawActiveHoverRings(int ticks)
@@ -316,10 +316,9 @@ namespace AbyssalProtocol
             return pawn?.pather != null && pawn.pather.MovingNow;
         }
 
-        private static bool TryGetFlightRigTexture(ABY_HoverArmorExtension extension, Rot4 rot, out string texPath, out bool mirrorX)
+        private static bool TryGetFlightRigTexture(ABY_HoverArmorExtension extension, Rot4 rot, out string texPath)
         {
             texPath = null;
-            mirrorX = false;
 
             if (extension == null)
             {
@@ -336,8 +335,9 @@ namespace AbyssalProtocol
             }
             else if (rot == Rot4.West)
             {
-                texPath = extension.flightRigTexPathEast;
-                mirrorX = true;
+                texPath = extension.flightRigTexPathWest.NullOrEmpty()
+                    ? "Effects/FlightRig/ABY_FlightRig_West"
+                    : extension.flightRigTexPathWest;
             }
             else
             {

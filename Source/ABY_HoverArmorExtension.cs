@@ -15,6 +15,7 @@ namespace AbyssalProtocol
         public string sparkTexPath = "Effects/ABY_HoverSpark";
         public string flightRigTexPathSouth = "Effects/FlightRig/ABY_FlightRig_South";
         public string flightRigTexPathEast = "Effects/FlightRig/ABY_FlightRig_East";
+        public string flightRigTexPathWest = "Effects/FlightRig/ABY_FlightRig_West";
         public string flightRigTexPathNorth = "Effects/FlightRig/ABY_FlightRig_North";
 
         public float ringScale = 0.74f;

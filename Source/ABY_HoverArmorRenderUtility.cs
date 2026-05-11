@@ -22,7 +22,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!TryGetFlightRigTexture(extension, pawn.Rotation, out string texPath, out bool mirrorX))
+            if (!TryGetFlightRigTexture(extension, pawn.Rotation, out string texPath))
             {
                 return;
             }
@@ -42,13 +42,15 @@ namespace AbyssalProtocol
             loc.z += bob;
             loc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveFlightRigAltitudeOffset(extension);
 
-            float width = mirrorX ? -scale : scale;
-            DrawPlane(texPath, loc, width, scale, ShaderDatabase.TransparentPostLight, alpha, 0f);
+            // Do not mirror by using negative mesh scale. Unity/RimWorld transparent pawn FX can be culled
+            // when the plane has a negative determinant, which made the rig disappear on west-facing pawns.
+            // West now uses an explicit flipped texture and a normal positive scale.
+            DrawPlane(texPath, loc, scale, scale, ShaderDatabase.TransparentPostLight, alpha, 0f);
 
             float glowAlpha = Mathf.Clamp01(extension.flightRigGlowAlpha * fade * (0.35f + energyPulse * 0.65f));
             if (glowAlpha > 0.001f)
             {
-                DrawPlane(texPath, loc + new Vector3(0f, 0.004f, 0f), width * 1.025f, scale * 1.025f, ShaderDatabase.MoteGlow, glowAlpha, 0f);
+                DrawPlane(texPath, loc + new Vector3(0f, 0.004f, 0f), scale * 1.025f, scale * 1.025f, ShaderDatabase.MoteGlow, glowAlpha, 0f);
             }
         }
 
@@ -129,10 +131,9 @@ namespace AbyssalProtocol
             }
         }
 
-        private static bool TryGetFlightRigTexture(ABY_HoverArmorExtension extension, Rot4 rot, out string texPath, out bool mirrorX)
+        private static bool TryGetFlightRigTexture(ABY_HoverArmorExtension extension, Rot4 rot, out string texPath)
         {
             texPath = null;
-            mirrorX = false;
 
             if (extension == null)
             {
@@ -149,8 +150,9 @@ namespace AbyssalProtocol
             }
             else if (rot == Rot4.West)
             {
-                texPath = extension.flightRigTexPathEast;
-                mirrorX = true;
+                texPath = extension.flightRigTexPathWest.NullOrEmpty()
+                    ? "Effects/FlightRig/ABY_FlightRig_West"
+                    : extension.flightRigTexPathWest;
             }
             else
             {
