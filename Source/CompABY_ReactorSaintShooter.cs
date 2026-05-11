@@ -36,6 +36,9 @@ namespace AbyssalProtocol
         private int forcedAdvanceUntilTick = -1;
         private int lastPositionChangeTick = -1;
         private IntVec3 lastTrackedPosition = IntVec3.Invalid;
+        private int nextTacticalBrainTick;
+        private int nextEmergencyRepositionTick;
+        private int lastSuccessfulShotTick = -1;
 
         private int cachedCrowdPressureUntilTick = -1;
         private bool cachedCrowdPressure;
@@ -51,6 +54,8 @@ namespace AbyssalProtocol
         private IntVec3 cachedAdjacentThreatPosition = IntVec3.Invalid;
 
         private CompProperties_ABY_ReactorSaintShooter Props => (CompProperties_ABY_ReactorSaintShooter)props;
+
+        public CompProperties_ABY_ReactorSaintShooter PropsForAI => Props;
 
         public override void PostExposeData()
         {
@@ -75,6 +80,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref forcedAdvanceUntilTick, "forcedAdvanceUntilTick", -1);
             Scribe_Values.Look(ref lastPositionChangeTick, "lastPositionChangeTick", -1);
             Scribe_Values.Look(ref lastTrackedPosition, "lastTrackedPosition");
+            Scribe_Values.Look(ref nextTacticalBrainTick, "nextTacticalBrainTick", 0);
+            Scribe_Values.Look(ref nextEmergencyRepositionTick, "nextEmergencyRepositionTick", 0);
+            Scribe_Values.Look(ref lastSuccessfulShotTick, "lastSuccessfulShotTick", -1);
         }
 
         public override void CompTick()
@@ -92,6 +100,21 @@ namespace AbyssalProtocol
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             UpdateMovementProgress(pawn, ticksGame);
+            if (ticksGame >= nextTacticalBrainTick)
+            {
+                nextTacticalBrainTick = ticksGame + 45;
+                if (ABY_ReactorSaintAIUtility.TryRunTacticalWatchdog(
+                    pawn,
+                    Props,
+                    lastPositionChangeTick,
+                    lastSuccessfulShotTick,
+                    ref nextEmergencyRepositionTick))
+                {
+                    ResetAttackState();
+                    return;
+                }
+            }
+
             TryApplyStructureCrushBonus(pawn, ticksGame);
             bool crowdPressure = HasCrowdPressure(pawn);
             if (TryForceCloseQuartersEngagement(pawn))
@@ -230,7 +253,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayChargeAt(Props.aimSoundDefName, pawn.Position, pawn.Map);
             }
 
-            if (Props.holdPositionWhenTargeting)
+            if (Props.holdPositionWhenTargeting && ABY_ReactorSaintAIUtility.HasValidFireSolution(pawn, Props.range))
             {
                 pawn.pather?.StopDead();
             }
@@ -485,6 +508,11 @@ namespace AbyssalProtocol
                 }
 
                 bool hasLos = GenSight.LineOfSight(pawn.Position, building.Position, pawn.Map);
+                if (!hasLos && distance > 3.5f)
+                {
+                    continue;
+                }
+
                 float score = -distance;
                 if (hasLos)
                 {
@@ -659,13 +687,14 @@ namespace AbyssalProtocol
 
             float distance = pawn.Position.DistanceTo(targetCell);
             float desiredRange = Mathf.Clamp(Props.range * 0.78f, Props.preferredMinRange + 2f, Props.range - 1.5f);
-            if (distance <= desiredRange)
+            bool hasLineOfSight = GenSight.LineOfSight(pawn.Position, targetCell, pawn.Map);
+            if (distance <= desiredRange && hasLineOfSight)
             {
                 return false;
             }
 
             IntVec3 destination = targetCell;
-            if (TryFindAdvanceCell(pawn, targetCell, desiredRange, out IntVec3 approachCell))
+            if (TryFindAdvanceCell(pawn, targetCell, desiredRange, !hasLineOfSight, out IntVec3 approachCell))
             {
                 destination = approachCell;
             }
@@ -689,7 +718,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private bool TryFindAdvanceCell(Pawn pawn, IntVec3 targetCell, float desiredRange, out IntVec3 destination)
+        private bool TryFindAdvanceCell(Pawn pawn, IntVec3 targetCell, float desiredRange, bool requireLineOfSight, out IntVec3 destination)
         {
             destination = IntVec3.Invalid;
             Map map = pawn?.Map;
@@ -723,7 +752,13 @@ namespace AbyssalProtocol
 
                 float moveDistance = pawn.Position.DistanceTo(cell);
                 float score = 120f - moveDistance;
-                if (GenSight.LineOfSight(cell, targetCell, map))
+                bool cellHasLineOfSight = GenSight.LineOfSight(cell, targetCell, map);
+                if (requireLineOfSight && !cellHasLineOfSight)
+                {
+                    continue;
+                }
+
+                if (cellHasLineOfSight)
                 {
                     score += 14f;
                 }
@@ -1072,7 +1107,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(target)))
+            if (TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(target)))
+            {
+                lastSuccessfulShotTick = Find.TickManager != null ? Find.TickManager.TicksGame : lastSuccessfulShotTick;
+            }
+            else
             {
                 projectile.Destroy(DestroyMode.Vanish);
             }
@@ -1124,7 +1163,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(targetCell)))
+            if (TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(targetCell)))
+            {
+                lastSuccessfulShotTick = Find.TickManager != null ? Find.TickManager.TicksGame : lastSuccessfulShotTick;
+            }
+            else
             {
                 projectile.Destroy(DestroyMode.Vanish);
             }

@@ -30,10 +30,15 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (ABY_ReactorSaintAIUtility.IsReactorSaintPawn(pawn))
+            {
+                ABY_ReactorSaintAIUtility.StabilizeAIGotoNearestHostileResult(pawn, ref job);
+                return;
+            }
+
             bool hasCustomRangedController = pawn.TryGetComp<CompHexgunThrallShooter>() != null
                 || pawn.TryGetComp<CompABY_RiftSapperShooter>() != null
-                || pawn.TryGetComp<CompABY_SiegeIdolSiegeShooter>() != null
-                || pawn.TryGetComp<CompABY_ReactorSaintShooter>() != null;
+                || pawn.TryGetComp<CompABY_SiegeIdolSiegeShooter>() != null;
 
             float distance = pawn.Position.DistanceTo(targetPawn.Position);
             if (!hasCustomRangedController && distance > 1.9f)
