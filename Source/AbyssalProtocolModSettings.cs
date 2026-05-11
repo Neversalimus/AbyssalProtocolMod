@@ -32,6 +32,9 @@ namespace AbyssalProtocol
         public bool verboseDiagnostics = false;
         public bool enableUIPolish = true;
         public bool suppressRepeatedWarnings = true;
+        public bool enableBossScreenEffects = true;
+        public bool enableBossMapPresentationEffects = true;
+        public bool enableBossExpandedSelection = true;
 
         public override void ExposeData()
         {
@@ -61,6 +64,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref verboseDiagnostics, "verboseDiagnostics", false);
             Scribe_Values.Look(ref enableUIPolish, "enableUIPolish", true);
             Scribe_Values.Look(ref suppressRepeatedWarnings, "suppressRepeatedWarnings", true);
+            Scribe_Values.Look(ref enableBossScreenEffects, "enableBossScreenEffects", true);
+            Scribe_Values.Look(ref enableBossMapPresentationEffects, "enableBossMapPresentationEffects", true);
+            Scribe_Values.Look(ref enableBossExpandedSelection, "enableBossExpandedSelection", true);
             ClampValues();
         }
 
@@ -103,6 +109,9 @@ namespace AbyssalProtocol
             verboseDiagnostics = false;
             enableUIPolish = true;
             suppressRepeatedWarnings = true;
+            enableBossScreenEffects = true;
+            enableBossMapPresentationEffects = true;
+            enableBossExpandedSelection = true;
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)

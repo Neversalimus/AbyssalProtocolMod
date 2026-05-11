@@ -15,6 +15,8 @@ namespace AbyssalProtocol
         private Map effectMap;
         private float currentStrength;
         private int effectStartTick;
+        private float introSurgeStrength;
+        private int nextBossMapEffectTick;
 
         private Map ritualPulseMap;
         private float ritualPulseStrength;
@@ -64,6 +66,8 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref effectMap, "effectMap");
             Scribe_Values.Look(ref currentStrength, "currentStrength", 0f);
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
+            Scribe_Values.Look(ref introSurgeStrength, "introSurgeStrength", 0f);
+            Scribe_Values.Look(ref nextBossMapEffectTick, "nextBossMapEffectTick", 0);
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
             Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
@@ -93,7 +97,10 @@ namespace AbyssalProtocol
             effectMap = boss.MapHeld;
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
+            introSurgeStrength = 1f;
+            nextBossMapEffectTick = effectStartTick + 8;
             RegisterRitualPulse(effectMap, 0.35f);
+            ABY_BossPresentationUtility.SpawnIntroBurst(boss, activeBossBarProfile);
             RefreshActiveBossSongProfile();
             ResetBossMusicRuntimeState(clearSongProfile: false);
             ScheduleBossSongStart(activeBossSongStartDelaySeconds);
@@ -111,6 +118,7 @@ namespace AbyssalProtocol
             activeBossDisplayLabelOverride = null;
             effectMap = null;
             currentStrength = 0f;
+            introSurgeStrength = 0f;
             AbyssalBossBarRenderer.ResetVisualState();
             QueueVanillaMusicRestore();
         }
@@ -231,10 +239,13 @@ namespace AbyssalProtocol
             currentStrength = Mathf.MoveTowards(currentStrength, targetStrength, step);
 
             ritualPulseStrength = Mathf.MoveTowards(ritualPulseStrength, 0f, 0.01f);
+            introSurgeStrength = Mathf.MoveTowards(introSurgeStrength, 0f, 0.016f);
             if (ritualPulseStrength <= 0.001f)
             {
                 ritualPulseMap = null;
             }
+
+            TickBossPresentationMapEffects(bossAlive);
 
             if (!bossAlive)
             {
@@ -256,6 +267,40 @@ namespace AbyssalProtocol
                     ResetBossMusicRuntimeState(clearSongProfile: false);
                 }
             }
+        }
+
+        private void TickBossPresentationMapEffects(bool bossAlive)
+        {
+            if (!bossAlive || activeBoss == null || activeBoss.MapHeld == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            if (!AbyssalProtocolMod.Settings.enableBossMapPresentationEffects || AbyssalProtocolMod.Settings.reducedMotion)
+            {
+                return;
+            }
+
+            if (Find.CurrentMap != activeBoss.MapHeld)
+            {
+                return;
+            }
+
+            int tick = Find.TickManager.TicksGame;
+            if (nextBossMapEffectTick <= 0)
+            {
+                nextBossMapEffectTick = tick + ABY_BossPresentationUtility.ResolveMapEffectIntervalTicks(activeBoss, activeBossBarProfile);
+                return;
+            }
+
+            if (tick < nextBossMapEffectTick)
+            {
+                return;
+            }
+
+            float strength = Mathf.Clamp01(currentStrength + introSurgeStrength * 0.55f);
+            ABY_BossPresentationUtility.SpawnAmbientMapEffects(activeBoss, activeBossBarProfile, strength);
+            nextBossMapEffectTick = tick + ABY_BossPresentationUtility.ResolveMapEffectIntervalTicks(activeBoss, activeBossBarProfile);
         }
 
         public override void GameComponentOnGUI()
@@ -677,31 +722,19 @@ namespace AbyssalProtocol
 
             float bossStrength = currentMap == effectMap ? currentStrength : 0f;
             float pulseStrength = currentMap == ritualPulseMap ? ritualPulseStrength : 0f;
-            float totalStrength = Mathf.Clamp01(bossStrength + pulseStrength);
+            float totalStrength = Mathf.Clamp01(bossStrength + pulseStrength + introSurgeStrength * 0.5f);
             if (totalStrength <= 0.001f)
             {
                 return;
             }
 
-            float t = effectStartTick > 0 ? (Find.TickManager.TicksGame - effectStartTick) / 60f : 0f;
-            float pulse = 0.42f + 0.26f * Mathf.Sin(t * 3.6f);
-            float fade = Mathf.SmoothStep(0f, 1f, totalStrength);
-            float vignetteAlpha = fade * (0.12f + pulse * 0.08f);
-            float bloomAlpha = fade * (0.05f + pulse * 0.06f);
-            Color vignetteColor = new Color(0.65f, 0.06f, 0.06f, vignetteAlpha);
-            Color bloomColor = new Color(0.90f, 0.12f, 0.10f, bloomAlpha);
-
-            Rect fullRect = new Rect(0f, 0f, UI.screenWidth, UI.screenHeight);
-            Widgets.DrawBoxSolid(fullRect, vignetteColor);
-
-            float glowWidth = UI.screenWidth * (0.82f + pulse * 0.06f);
-            float glowHeight = UI.screenHeight * (0.62f + pulse * 0.05f);
-            Rect glowRect = new Rect(
-                (UI.screenWidth - glowWidth) * 0.5f,
-                (UI.screenHeight - glowHeight) * 0.28f,
-                glowWidth,
-                glowHeight);
-            Widgets.DrawBoxSolid(glowRect, bloomColor);
+            ABY_BossPresentationUtility.DrawBossScreenOverlay(
+                activeBoss,
+                activeBossBarProfile,
+                bossStrength,
+                pulseStrength,
+                introSurgeStrength,
+                effectStartTick);
         }
 
         private bool BossAlive()

@@ -16,4 +16,10 @@
   <ABY_Diagnostics_ThrottleWarningsDesc>Не даёт совместимостным предупреждениям спамить лог.</ABY_Diagnostics_ThrottleWarningsDesc>
   <ABY_Diagnostics_OpenWindow>Открыть диагностику</ABY_Diagnostics_OpenWindow>
   <ABY_Diagnostics_LogNow>Записать снимок в лог</ABY_Diagnostics_LogNow>
+  <ABY_BossPresentation_ScreenEffects>Включить экранные эффекты боссов</ABY_BossPresentation_ScreenEffects>
+  <ABY_BossPresentation_ScreenEffectsDesc>Рисует плавную полноэкранную виньетку, свечение и шум нестабильности для разных боссов без заметных прямоугольных блоков.</ABY_BossPresentation_ScreenEffectsDesc>
+  <ABY_BossPresentation_MapEffects>Включить эффекты боссов на карте</ABY_BossPresentation_MapEffects>
+  <ABY_BossPresentation_MapEffectsDesc>Добавляет сдержанные уникальные импульсы на карте вокруг активных боссов и моментов призыва.</ABY_BossPresentation_MapEffectsDesc>
+  <ABY_BossExpandedSelection_Enable>Включить расширенное выделение боссов</ABY_BossExpandedSelection_Enable>
+  <ABY_BossExpandedSelection_EnableDesc>Позволяет выделять крупных Abyssal-боссов кликом по их видимому телу, а не только по центральной клетке пешки.</ABY_BossExpandedSelection_EnableDesc>
 </LanguageData>

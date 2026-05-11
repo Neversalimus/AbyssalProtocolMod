@@ -16,4 +16,10 @@
   <ABY_Diagnostics_ThrottleWarningsDesc>Prevents repeated compatibility warnings from spamming the log.</ABY_Diagnostics_ThrottleWarningsDesc>
   <ABY_Diagnostics_OpenWindow>Open diagnostics</ABY_Diagnostics_OpenWindow>
   <ABY_Diagnostics_LogNow>Log snapshot now</ABY_Diagnostics_LogNow>
+  <ABY_BossPresentation_ScreenEffects>Enable boss screen presentation effects</ABY_BossPresentation_ScreenEffects>
+  <ABY_BossPresentation_ScreenEffectsDesc>Draws smooth boss-specific fullscreen vignette, bloom, and instability noise without rectangular overlay blocks.</ABY_BossPresentation_ScreenEffectsDesc>
+  <ABY_BossPresentation_MapEffects>Enable boss map presentation effects</ABY_BossPresentation_MapEffects>
+  <ABY_BossPresentation_MapEffectsDesc>Adds restrained boss-specific map pulses around active bosses and summon moments.</ABY_BossPresentation_MapEffectsDesc>
+  <ABY_BossExpandedSelection_Enable>Enable expanded boss selection</ABY_BossExpandedSelection_Enable>
+  <ABY_BossExpandedSelection_EnableDesc>Allows large Abyssal bosses to be selected by clicking their visual body, not only the pawn center cell.</ABY_BossExpandedSelection_EnableDesc>
 </LanguageData>
