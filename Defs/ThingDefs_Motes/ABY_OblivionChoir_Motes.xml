@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_OblivionChoirBranchHalo</defName>
+    <label>oblivion choir branch halo</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/OblivionChoir/ABY_OblivionChoir_BranchHalo</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.045</solidTime>
+      <fadeOutTime>0.095</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_OblivionChoirBranchCore</defName>
+    <label>oblivion choir branch core</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/OblivionChoir/ABY_OblivionChoir_BranchCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.030</solidTime>
+      <fadeOutTime>0.075</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>
