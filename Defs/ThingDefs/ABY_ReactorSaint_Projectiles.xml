@@ -6,16 +6,16 @@
     <label>reactor lance bolt</label>
     <thingClass>AbyssalProtocol.Projectile_ReactorSaintBolt</thingClass>
     <graphicData>
-      <texPath>Things/Projectile/ABY_UltraPlasmaBeam_Long</texPath>
+      <texPath>Things/Projectile/ReactorSaint/ABY_ReactorSaint_LanceProjectile</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.42,3.15)</drawSize>
+      <drawSize>(0.74,3.85)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>32</damageAmountBase>
-      <armorPenetrationBase>1.38</armorPenetrationBase>
-      <stoppingPower>2.1</stoppingPower>
-      <speed>50</speed>
+      <damageAmountBase>34</damageAmountBase>
+      <armorPenetrationBase>1.44</armorPenetrationBase>
+      <stoppingPower>2.25</stoppingPower>
+      <speed>52</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
@@ -25,16 +25,16 @@
     <label>reactor barrage shell</label>
     <thingClass>AbyssalProtocol.Projectile_ReactorSaintBarrage</thingClass>
     <graphicData>
-      <texPath>Things/Projectile/ABY_AshenScatterShell</texPath>
+      <texPath>Things/Projectile/ReactorSaint/ABY_ReactorSaint_BarrageProjectile</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.52,0.88)</drawSize>
+      <drawSize>(1.06,1.74)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>12</damageAmountBase>
-      <armorPenetrationBase>0.45</armorPenetrationBase>
-      <stoppingPower>0.9</stoppingPower>
-      <speed>36</speed>
+      <damageAmountBase>13</damageAmountBase>
+      <armorPenetrationBase>0.50</armorPenetrationBase>
+      <stoppingPower>1.05</stoppingPower>
+      <speed>35</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>

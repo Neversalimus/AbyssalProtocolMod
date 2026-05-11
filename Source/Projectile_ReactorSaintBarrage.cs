@@ -7,18 +7,20 @@ namespace AbyssalProtocol
 {
     public class Projectile_ReactorSaintBarrage : Bullet
     {
-        private const int TrailIntervalTicks = 3;
-        private const float TrailGlowSize = 0.28f;
-        private const float ImpactGlowSize = 1.95f;
-        private const float ExplosionRadius = 1.95f;
-        private const int ExplosionDamage = 17;
-        private const float ExplosionArmorPenetration = 0.42f;
-        private const int StructureDamagePerShell = 70;
-        private const float StructureArmorPenetration = 1.65f;
+        private const int TrailIntervalTicks = 2;
+        private const float ExplosionRadius = 2.05f;
+        private const int ExplosionDamage = 18;
+        private const float ExplosionArmorPenetration = 0.48f;
+        private const int StructureDamagePerShell = 78;
+        private const float StructureArmorPenetration = 1.85f;
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
+        private Vector3 lastDrawDirection = Vector3.forward;
         private bool lastPositionInitialized;
+        private bool warningSpawned;
+        private Material cachedHaloMaterial;
+        private Material cachedCoreMaterial;
 
         protected override void Tick()
         {
@@ -31,6 +33,14 @@ namespace AbyssalProtocol
             }
 
             ticksAlive++;
+            float phaseFactor = ABY_ReactorSaintProjectileVfxUtility.ResolvePhaseFactor(Launcher);
+
+            if (!warningSpawned)
+            {
+                warningSpawned = true;
+                IntVec3 targetCell = destination.ToIntVec3();
+                ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageWarning(targetCell, Map, phaseFactor);
+            }
 
             if (!lastPositionInitialized)
             {
@@ -38,16 +48,85 @@ namespace AbyssalProtocol
                 lastPositionInitialized = true;
             }
 
-            if (ticksAlive % TrailIntervalTicks == 0)
+            Vector3 currentPosition = ExactPosition;
+            Vector3 movement = currentPosition - lastExactPosition;
+            movement.y = 0f;
+            if (movement.sqrMagnitude > 0.0001f)
             {
-                Vector3 point = Vector3.Lerp(lastExactPosition, ExactPosition, 0.5f);
-                FleckMaker.ThrowLightningGlow(point, Map, TrailGlowSize);
+                lastDrawDirection = movement.normalized;
             }
 
-            lastExactPosition = ExactPosition;
+            if (ticksAlive % TrailIntervalTicks == 0)
+            {
+                ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageTrail(lastExactPosition, currentPosition, Map, ticksAlive, phaseFactor);
+            }
+
+            if (ticksAlive % 12 == 0)
+            {
+                ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageWarning(destination.ToIntVec3(), Map, phaseFactor * 0.78f);
+            }
+
+            lastExactPosition = currentPosition;
         }
 
-        private static void ApplyStructureBlastBonus(IntVec3 impactCell, Map map, Thing instigator)
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            Vector3 drawPos = drawLoc;
+            drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.Projectile);
+
+            Vector3 direction = lastDrawDirection;
+            direction.y = 0f;
+            if (direction.sqrMagnitude <= 0.0001f)
+            {
+                direction = Vector3.forward;
+            }
+            direction.Normalize();
+
+            float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+            float phaseFactor = ABY_ReactorSaintProjectileVfxUtility.ResolvePhaseFactor(Launcher);
+            float pulse = 0.92f + Mathf.Abs(Mathf.Sin(ticksAlive * 0.54f)) * 0.18f;
+            float roll = ticksAlive * (8.0f + phaseFactor * 2.2f);
+
+            DrawPlane(drawPos, angle + roll * 0.10f, new Vector3(1.22f * pulse * phaseFactor, 1f, 2.05f * phaseFactor), HaloMaterial);
+            DrawPlane(drawPos + direction * 0.10f, angle, new Vector3(0.68f * phaseFactor, 1f, 1.42f * pulse * phaseFactor), CoreMaterial);
+            DrawPlane(drawPos - direction * 0.34f, angle, new Vector3(0.30f * phaseFactor, 1f, 0.92f * phaseFactor), CoreMaterial);
+        }
+
+        protected override void Impact(Thing hitThing, bool blockedByShield = false)
+        {
+            Map impactMap = Map;
+            IntVec3 impactCell = Position;
+            Vector3 impactPosition = ExactPosition;
+            Thing instigator = Launcher;
+            float phaseFactor = ABY_ReactorSaintProjectileVfxUtility.ResolvePhaseFactor(Launcher);
+
+            base.Impact(hitThing, blockedByShield);
+
+            if (impactMap == null || !impactCell.IsValid)
+            {
+                return;
+            }
+
+            ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageImpact(impactPosition, impactCell, impactMap, phaseFactor);
+            ABY_SoundUtility.PlayAt("ABY_ReactorSaintBarrageImpact", impactCell, impactMap);
+
+            if (blockedByShield)
+            {
+                return;
+            }
+
+            ApplyStructureBlastBonus(impactCell, impactMap, instigator, phaseFactor);
+            GenExplosion.DoExplosion(
+                impactCell,
+                impactMap,
+                ExplosionRadius * Mathf.Lerp(1f, 1.18f, phaseFactor - 1f),
+                DamageDefOf.Burn,
+                instigator,
+                Mathf.RoundToInt(ExplosionDamage * phaseFactor),
+                ExplosionArmorPenetration * phaseFactor);
+        }
+
+        private static void ApplyStructureBlastBonus(IntVec3 impactCell, Map map, Thing instigator, float phaseFactor)
         {
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(impactCell, ExplosionRadius, true))
             {
@@ -67,8 +146,8 @@ namespace AbyssalProtocol
 
                     building.TakeDamage(new DamageInfo(
                         DamageDefOf.Bomb,
-                        StructureDamagePerShell,
-                        StructureArmorPenetration,
+                        Mathf.RoundToInt(StructureDamagePerShell * phaseFactor),
+                        StructureArmorPenetration * phaseFactor,
                         -1f,
                         instigator,
                         null,
@@ -87,32 +166,39 @@ namespace AbyssalProtocol
                 && building.def.useHitPoints;
         }
 
-        protected override void Impact(Thing hitThing, bool blockedByShield = false)
+        private void DrawPlane(Vector3 center, float angle, Vector3 scale, Material material)
         {
-            Map impactMap = Map;
-            IntVec3 impactCell = Position;
-            Vector3 impactPosition = ExactPosition;
-            Thing instigator = Launcher;
-
-            base.Impact(hitThing, blockedByShield);
-
-            if (impactMap == null || !impactCell.IsValid)
+            if (material == null)
             {
                 return;
             }
 
-            FleckMaker.ThrowLightningGlow(impactPosition, impactMap, ImpactGlowSize);
-            FleckMaker.ThrowMicroSparks(impactPosition, impactMap);
-            FleckMaker.ThrowMicroSparks(impactPosition, impactMap);
-            ABY_SoundUtility.PlayAt("ABY_ReactorSaintBarrageImpact", impactCell, impactMap);
+            Matrix4x4 matrix = Matrix4x4.TRS(center, Quaternion.AngleAxis(angle, Vector3.up), scale);
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+        }
 
-            if (blockedByShield)
+        private Material HaloMaterial
+        {
+            get
             {
-                return;
+                if (cachedHaloMaterial == null)
+                {
+                    cachedHaloMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageHaloTexturePath, ShaderDatabase.MoteGlow);
+                }
+                return cachedHaloMaterial;
             }
+        }
 
-            ApplyStructureBlastBonus(impactCell, impactMap, instigator);
-            GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Burn, instigator, ExplosionDamage, ExplosionArmorPenetration);
+        private Material CoreMaterial
+        {
+            get
+            {
+                if (cachedCoreMaterial == null)
+                {
+                    cachedCoreMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageCoreTexturePath, ShaderDatabase.MoteGlow);
+                }
+                return cachedCoreMaterial;
+            }
         }
     }
 }
