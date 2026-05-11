@@ -199,7 +199,14 @@ namespace AbyssalProtocol
 
         private static void DrawLabel(Rect rect, string label, bool enabled, bool active, bool hovered, Texture2D icon, bool useTabStyle)
         {
-            Rect labelRect = rect.ContractedBy(rect.height <= 30f ? 8f : 6f);
+            float horizontalInset = rect.height <= 30f ? 8f : 10f;
+            float verticalInset = rect.height <= 24f ? 1f : 2f;
+            Rect labelRect = new Rect(
+                rect.x + horizontalInset,
+                rect.y + verticalInset,
+                Mathf.Max(1f, rect.width - horizontalInset * 2f),
+                Mathf.Max(1f, rect.height - verticalInset * 2f));
+
             if (icon != null)
             {
                 labelRect.xMin += useTabStyle ? 28f : 26f;
@@ -210,7 +217,7 @@ namespace AbyssalProtocol
             Color oldColor = GUI.color;
 
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = rect.height <= 28f ? GameFont.Tiny : GameFont.Small;
+            Text.Font = rect.height <= 24f ? GameFont.Tiny : GameFont.Small;
             if (Text.CalcSize(label).x > labelRect.width - 4f)
             {
                 Text.Font = GameFont.Tiny;
@@ -233,14 +240,7 @@ namespace AbyssalProtocol
                 GUI.color = DefaultTextColor;
             }
 
-            if (ABY_StabilityDiagnosticsUtility.UIPolishEnabled)
-            {
-                Widgets.Label(ABY_UIPolishUtility.TextRect(labelRect, 1f, 2f), label);
-            }
-            else
-            {
-                Widgets.Label(labelRect, label);
-            }
+            ABY_UIPolishUtility.SafeLabel(labelRect, label, 0f, rect.height <= 24f ? 10f : 8f);
 
             GUI.color = oldColor;
             Text.Font = oldFont;

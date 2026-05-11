@@ -73,13 +73,13 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Medium;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 16f, rect.y + 6f, rect.width - 76f, 34f), title);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 16f, rect.y + 6f, rect.width - 76f, 34f), title);
 
             Text.Font = GameFont.Small;
             GUI.color = TextSoftColor;
             float subtitleHeight = Text.CalcHeight(subtitle, rect.width - 88f);
             float maxSubtitleHeight = Mathf.Max(18f, rect.height - 40f);
-            Widgets.Label(new Rect(rect.x + 18f, rect.y + 36f, rect.width - 88f, Mathf.Min(subtitleHeight, maxSubtitleHeight)), subtitle);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 36f, rect.width - 88f, Mathf.Min(subtitleHeight, maxSubtitleHeight)), subtitle);
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
 
@@ -105,7 +105,7 @@ namespace AbyssalProtocol
         {
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(rect, title);
+            ABY_UIPolishUtility.SafeLabel(rect, title);
             GUI.color = Color.white;
         }
 
@@ -113,11 +113,11 @@ namespace AbyssalProtocol
         {
             Text.Font = GameFont.Tiny;
             GUI.color = TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y, rect.width, 14f), label);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y, rect.width, 14f), label);
 
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x, rect.y + 14f, rect.width, rect.height - 14f), value);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 14f, rect.width, rect.height - 14f), value);
             GUI.color = Color.white;
         }
 
@@ -140,7 +140,7 @@ namespace AbyssalProtocol
 
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = Color.white;
-            Widgets.Label(rect, label);
+            ABY_UIPolishUtility.SafeLabel(rect, label);
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }
@@ -175,7 +175,7 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
             GUI.color = Color.white;
-            Widgets.Label(rect, label);
+            ABY_UIPolishUtility.SafeLabel(rect, label);
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }
@@ -233,7 +233,7 @@ namespace AbyssalProtocol
 
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = selected ? Color.Lerp(new Color(1f, 0.72f, 0.52f, 1f), Color.white, Pulse(2.2f, rect.y * 0.01f) * 0.45f) : Color.white;
-            Widgets.Label(new Rect(rect.x + 18f, rect.y, rect.width - 22f, rect.height), AbyssalForgeProgressUtility.GetCategoryLabel(category));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y, rect.width - 22f, rect.height), AbyssalForgeProgressUtility.GetCategoryLabel(category));
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }

@@ -98,9 +98,9 @@ namespace AbyssalProtocol
             float scale = settings.globalScale;
             float nameHeight = 22f * scale;
             float barHeight = settings.height * scale;
-            float secondaryHeight = state.hasSecondaryBar && settings.showSecondaryBars ? Mathf.Max(10f, barHeight * 0.34f) : 0f;
+            float secondaryHeight = state.hasSecondaryBar && settings.showSecondaryBars ? Mathf.Max(16f * scale, barHeight * 0.50f) : 0f;
             float secondaryGap = secondaryHeight > 0f ? 6f * scale : 0f;
-            float footerHeight = settings.showHealthNumbers ? 18f * scale : 0f;
+            float footerHeight = 0f;
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
             float barWidth = settings.width * scale;
@@ -118,8 +118,8 @@ namespace AbyssalProtocol
             Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, textWidth, totalHeight);
             Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
             Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, barWidth, barHeight);
-            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, textRoot.width, secondaryHeight);
-            Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, textRoot.width, footerHeight);
+            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, mainBarRect.width, secondaryHeight);
+            Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, mainBarRect.width, footerHeight);
 
             DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
             DrawIcon(iconRect, state, palette, displayedAlpha);
@@ -268,13 +268,13 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             Color oldColor = GUI.color;
             GUI.color = new Color(palette.text.r, palette.text.g, palette.text.b, alpha);
-            Widgets.Label(titleRect, label);
+            ABY_UIPolishUtility.SafeLabel(titleRect, label, 0f, 8f);
 
             if (!phaseLabel.NullOrEmpty())
             {
                 Text.Anchor = TextAnchor.UpperRight;
                 GUI.color = new Color(palette.phaseText.r, palette.phaseText.g, palette.phaseText.b, alpha * 0.98f);
-                Widgets.Label(phaseRect, phaseLabel);
+                ABY_UIPolishUtility.SafeLabel(phaseRect, phaseLabel, 0f, 8f);
             }
 
             GUI.color = oldColor;
@@ -340,6 +340,12 @@ namespace AbyssalProtocol
             {
                 DrawPhaseMarkers(rect, innerRect, state, palette, alpha);
             }
+
+            if (settings.showHealthNumbers)
+            {
+                string healthText = Mathf.RoundToInt(state.currentHealth) + " / " + Mathf.RoundToInt(state.maxHealth);
+                DrawOutlinedLabel(new Rect(innerRect.x + 8f, innerRect.y, innerRect.width - 16f, innerRect.height), healthText, TextAnchor.MiddleRight, GameFont.Small, new Color(1f, 0.96f, 0.86f, alpha), alpha);
+            }
         }
 
         private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)
@@ -390,19 +396,12 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.MiddleLeft;
-            Color oldColor = GUI.color;
-            GUI.color = new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha);
-            Widgets.Label(new Rect(rect.x + 6f, rect.y, rect.width - 12f, rect.height), state.secondaryLabel);
+            Rect labelRect = new Rect(rect.x + 8f, rect.y, rect.width - 16f, rect.height);
+            DrawOutlinedLabel(labelRect, state.secondaryLabel, TextAnchor.MiddleLeft, GameFont.Tiny, new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha), alpha);
             if (settings.showHealthNumbers)
             {
-                Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(new Rect(rect.x + 6f, rect.y, rect.width - 12f, rect.height), Mathf.RoundToInt(state.secondaryCurrent) + " / " + Mathf.RoundToInt(state.secondaryMax));
+                DrawOutlinedLabel(labelRect, Mathf.RoundToInt(state.secondaryCurrent) + " / " + Mathf.RoundToInt(state.secondaryMax), TextAnchor.MiddleRight, GameFont.Tiny, new Color(0.88f, 0.98f, 1f, alpha), alpha);
             }
-
-            GUI.color = oldColor;
-            Text.Anchor = TextAnchor.UpperLeft;
         }
 
         private static void DrawFooter(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
@@ -419,6 +418,31 @@ namespace AbyssalProtocol
             }
 
             GUI.color = oldColor;
+        }
+
+        private static void DrawOutlinedLabel(Rect rect, string text, TextAnchor anchor, GameFont font, Color color, float alpha)
+        {
+            if (text.NullOrEmpty())
+            {
+                return;
+            }
+
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldColor = GUI.color;
+            Text.Anchor = anchor;
+            Text.Font = font;
+
+            Color shadow = new Color(0f, 0f, 0f, Mathf.Clamp01(alpha * 0.78f));
+            GUI.color = shadow;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 1f, rect.y + 1f, rect.width, rect.height), text, 0f, 8f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x - 1f, rect.y + 1f, rect.width, rect.height), text, 0f, 8f);
+            GUI.color = new Color(color.r, color.g, color.b, Mathf.Clamp01(color.a));
+            ABY_UIPolishUtility.SafeLabel(rect, text, 0f, 8f);
+
+            GUI.color = oldColor;
+            Text.Font = oldFont;
+            Text.Anchor = oldAnchor;
         }
 
         private static Rect Union(Rect a, Rect b)
@@ -453,7 +477,7 @@ namespace AbyssalProtocol
 
         private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
         {
-            Rect rect = new Rect(rootRect.xMax - 84f * scale, rootRect.y - 26f * scale, 84f * scale, 22f * scale);
+            Rect rect = new Rect(rootRect.xMax - 92f * scale, rootRect.y - 30f * scale, 92f * scale, 26f * scale);
             float minY = screenRect.y + settings.safeMargin;
             if (rect.y < minY)
             {

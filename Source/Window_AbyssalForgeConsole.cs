@@ -186,7 +186,7 @@ namespace AbyssalProtocol
             }
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 142f, inner.width, inner.height - 142f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 142f, inner.width, inner.height - 142f), enabled ? "ABY_ForgeOfferHintShort".Translate() : "ABY_ForgeOfferNoneAvailable".Translate());
             GUI.color = Color.white;
         }
 
@@ -199,7 +199,7 @@ namespace AbyssalProtocol
             List<AbyssalForgeProgressUtility.MilestoneEntry> milestones = AbyssalForgeProgressUtility.GetMilestoneEntries(progress, selectedCategory);
             float leftWidth = inner.width * 0.58f;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeMilestonesHeader".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeMilestonesHeader".Translate());
             GUI.color = Color.white;
 
             float lineY = inner.y + 54f;
@@ -209,7 +209,7 @@ namespace AbyssalProtocol
                 GUI.color = entry.satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : Color.white;
                 Text.Font = GameFont.Tiny;
                 float height = Text.CalcHeight(entry.label + ": " + entry.value, leftWidth);
-                Widgets.Label(new Rect(inner.x, lineY, leftWidth, height), entry.label + ": " + entry.value);
+                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, lineY, leftWidth, height), entry.label + ": " + entry.value);
                 lineY += height + 8f;
             }
             Text.Font = GameFont.Small;
@@ -222,10 +222,10 @@ namespace AbyssalProtocol
             string summary = "ABY_ForgeUnlockedSummary".Translate(unlocked.Count, unlocked.Count + lockedAll.Count, categoryLabel);
 
             Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 52f);
-            Widgets.Label(summaryRect, summary);
+            ABY_UIPolishUtility.SafeLabel(summaryRect, summary);
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 18f), "ABY_ForgeUpcomingPatterns".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 18f), "ABY_ForgeUpcomingPatterns".Translate());
             GUI.color = Color.white;
 
             List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(2).ToList();
@@ -233,7 +233,7 @@ namespace AbyssalProtocol
             if (locked.Count == 0)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(rightRect.x, rightRect.y + 76f, rightRect.width, 34f), "ABY_ForgeAllPatternsUnlocked".Translate());
+                ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 76f, rightRect.width, 34f), "ABY_ForgeAllPatternsUnlocked".Translate());
             }
             else
             {
@@ -241,7 +241,7 @@ namespace AbyssalProtocol
                 {
                     RecipeDef recipe = locked[i];
                     string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe);
-                    Widgets.Label(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
                 }
             }
 
@@ -317,7 +317,7 @@ namespace AbyssalProtocol
             if (recipe == null)
             {
                 AbyssalForgeConsoleArt.DrawPanel(rect, false);
-                Widgets.Label(rect.ContractedBy(10f), "Missing forge pattern");
+                ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(10f), "Missing forge pattern");
                 return;
             }
 
@@ -361,15 +361,15 @@ namespace AbyssalProtocol
             Rect labelRect = new Rect(rect.x + 60f, rect.y + 10f, rect.width - 154f, 22f);
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
-            Widgets.Label(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+            ABY_UIPolishUtility.SafeLabel(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 100f, 18f), AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 60f, rect.y + 31f, rect.width - 100f, 18f), AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
 
             int primaryProductCount = AbyssalForgeProgressUtility.GetPrimaryProductCount(recipe);
             if (primaryProductCount > 1)
             {
-                Widgets.Label(new Rect(rect.x + 60f, rect.y + 48f, rect.width - 100f, 18f), "ABY_ForgePatternOutputCount".Translate(primaryProductCount));
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 60f, rect.y + 48f, rect.width - 100f, 18f), "ABY_ForgePatternOutputCount".Translate(primaryProductCount));
             }
             GUI.color = Color.white;
 
@@ -377,11 +377,11 @@ namespace AbyssalProtocol
                 ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe))
                 : "ABY_ForgePatternLockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe));
             GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 66f, rect.width - 20f, 18f), unlockLine);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 66f, rect.width - 20f, 18f), unlockLine);
             GUI.color = Color.white;
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x + 10f, rect.y + 86f, rect.width - 20f, 18f), "ABY_ForgePatternRequirementsState".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 86f, rect.width - 20f, 18f), "ABY_ForgePatternRequirementsState".Translate());
             GUI.color = Color.white;
 
             List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
@@ -396,7 +396,7 @@ namespace AbyssalProtocol
             if (entries.Count > shownEntries)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(rect.x + 10f, rect.y + 104f + shownEntries * 18f, rect.width - 20f, 18f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 104f + shownEntries * 18f, rect.width - 20f, 18f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
                 GUI.color = Color.white;
             }
 
@@ -488,14 +488,14 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             if (entry == null)
             {
-                Widgets.Label(labelRect, "missing ingredient");
+                ABY_UIPolishUtility.SafeLabel(labelRect, "missing ingredient");
                 return;
             }
 
-            Widgets.Label(labelRect, ABY_UISafetyUtility.SafeString(entry.label, "ingredient"));
+            ABY_UIPolishUtility.SafeLabel(labelRect, ABY_UISafetyUtility.SafeString(entry.label, "ingredient"));
             GUI.color = entry.IsSatisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.58f, 0.52f, 1f);
             Text.Anchor = TextAnchor.UpperRight;
-            Widgets.Label(countRect, entry.availableCount + "/" + entry.requiredCount);
+            ABY_UIPolishUtility.SafeLabel(countRect, entry.availableCount + "/" + entry.requiredCount);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
         }
