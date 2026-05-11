@@ -22,7 +22,7 @@ namespace AbyssalProtocol
 
             CompProperties_AbyssalPawnController resolvedProps = controllerProps ?? GetControllerProps(pawn);
             ABY_AbyssalDiseaseUtility.ScrubBlockedHediffs(pawn);
-            ABY_ReactorSaintBleedUtility.ScrubBloodLoss(pawn);
+            ABY_AbyssalConstructPhysiologyUtility.ScrubConstructHediffs(pawn);
             RemoveSpawnDiseases(pawn);
             RemoveSpawnPermanentDamage(pawn);
             EnsureLoadout(pawn, resolvedProps);

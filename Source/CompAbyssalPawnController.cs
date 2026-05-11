@@ -41,7 +41,7 @@ namespace AbyssalProtocol
         {
             Pawn pawn = parent as Pawn;
             ABY_AbyssalDiseaseUtility.ScrubBlockedHediffs(pawn);
-            ABY_ReactorSaintBleedUtility.ScrubBloodLoss(pawn);
+            ABY_AbyssalConstructPhysiologyUtility.ScrubConstructHediffs(pawn);
         }
 
         private void EnsurePreparedState()

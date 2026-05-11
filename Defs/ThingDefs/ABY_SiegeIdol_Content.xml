@@ -18,8 +18,8 @@
       <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
       <hasGenders>false</hasGenders>
       <trainability>None</trainability>
-      <bloodDef>Filth_Blood</bloodDef>
-      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <bloodDef>Filth_MachineBits</bloodDef>
+      <bloodSmearDef>Filth_OilSmear</bloodSmearDef>
       <canBecomeShambler>false</canBecomeShambler>
       <hediffGiverSets>
         <li>OrganicStandard</li>
