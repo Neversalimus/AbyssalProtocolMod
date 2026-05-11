@@ -107,6 +107,21 @@ namespace AbyssalProtocol
             return false;
         }
 
+        public static bool MightBlockHediff(HediffDef hediffDef)
+        {
+            if (hediffDef == null || IsAbyssalOwnedHediff(hediffDef))
+            {
+                return false;
+            }
+
+            return IsBlockedDiseaseLikeHediff(hediffDef) || IsBlockedSpawnConditionHediff(hediffDef);
+        }
+
+        public static bool MightBlockHediff(Hediff hediff)
+        {
+            return MightBlockHediff(hediff?.def);
+        }
+
         public static bool ShouldBlockHediff(Pawn pawn, HediffDef hediffDef)
         {
             if (!IsDiseaseProtectedPawn(pawn) || hediffDef == null)

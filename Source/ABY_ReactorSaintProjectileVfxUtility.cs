@@ -32,7 +32,7 @@ namespace AbyssalProtocol
         private static ThingDef barrageScorchDef;
         private static ThingDef barrageShockDef;
 
-        private const int MaxVfxBudgetPerTick = 18;
+        private const int MaxVfxBudgetPerTick = 12;
         private static int budgetTick = -1;
         private static int budgetMapId = -1;
         private static int budgetUsed;
@@ -145,47 +145,98 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (TryConsumeVfxBudget(map, 5))
+            if (IsPawnTarget(hitThing))
             {
-                MakeStaticMote(position, map, ImpactRingDef, (blockedByShield ? 1.20f : 1.42f) * phaseFactor);
-                FleckMaker.ThrowLightningGlow(position, map, (blockedByShield ? 1.65f : 2.25f) * phaseFactor);
-                if (!AbyssalProtocolMod.Settings.reducedMotion)
+                SpawnLightPawnLanceImpact(position, map, blockedByShield, phaseFactor);
+                return;
+            }
+
+            if (TryConsumeVfxBudget(map, 4))
+            {
+                MakeStaticMote(position, map, ImpactRingDef, (blockedByShield ? 1.05f : 1.24f) * phaseFactor);
+                FleckMaker.ThrowLightningGlow(position, map, (blockedByShield ? 1.25f : 1.72f) * phaseFactor);
+                if (!AbyssalProtocolMod.Settings.reducedMotion && TryConsumeVfxBudget(map, 1))
                 {
                     FleckMaker.ThrowMicroSparks(position, map);
                 }
             }
 
-            if (!AbyssalProtocolMod.Settings.reducedMotion && (phaseFactor > 1.1f || IsDenseTarget(hitThing)) && TryConsumeVfxBudget(map, 2))
+            if (!AbyssalProtocolMod.Settings.reducedMotion && (phaseFactor > 1.1f || IsDenseTarget(hitThing)) && TryConsumeVfxBudget(map, 1))
             {
-                FleckMaker.ThrowFireGlow(position, map, 0.34f * phaseFactor);
+                FleckMaker.ThrowFireGlow(position, map, 0.28f * phaseFactor);
             }
 
-            SpawnShortRadialArcs(position, map, 2 + Mathf.RoundToInt(phaseFactor), 1.8f * phaseFactor);
-            if (cell.IsValid && cell.InBounds(map))
+            if (IsDenseTarget(hitThing))
             {
-                MakeStaticMote(cell.ToVector3Shifted(), map, BarrageScorchDef, 0.72f * phaseFactor);
+                SpawnShortRadialArcs(position, map, 1 + Mathf.RoundToInt(phaseFactor * 0.5f), 1.45f * phaseFactor);
+            }
+
+            if (cell.IsValid && cell.InBounds(map) && TryConsumeVfxBudget(map, 1))
+            {
+                MakeStaticMote(cell.ToVector3Shifted(), map, BarrageScorchDef, 0.58f * phaseFactor);
             }
         }
 
-        public static void SpawnBarrageImpact(Vector3 position, IntVec3 cell, Map map, float phaseFactor)
+        public static void SpawnBarrageImpact(Vector3 position, IntVec3 cell, Map map, Thing hitThing, float phaseFactor)
         {
             if (map == null)
             {
                 return;
             }
 
-            if (TryConsumeVfxBudget(map, 6))
+            if (IsPawnTarget(hitThing))
             {
-                MakeStaticMote(position, map, BarrageShockDef, 1.22f * phaseFactor);
-                MakeStaticMote(position, map, BarrageScorchDef, 0.95f * phaseFactor);
-                FleckMaker.ThrowLightningGlow(position, map, 2.35f * phaseFactor);
+                SpawnLightPawnBarrageImpact(position, map, phaseFactor);
+                return;
+            }
+
+            if (TryConsumeVfxBudget(map, 5))
+            {
+                MakeStaticMote(position, map, BarrageShockDef, 1.06f * phaseFactor);
+                MakeStaticMote(position, map, BarrageScorchDef, 0.80f * phaseFactor);
+                FleckMaker.ThrowLightningGlow(position, map, 1.80f * phaseFactor);
                 if (!AbyssalProtocolMod.Settings.reducedMotion)
                 {
-                    FleckMaker.ThrowFireGlow(position, map, 0.62f * phaseFactor);
-                    FleckMaker.ThrowMicroSparks(position, map);
+                    if (TryConsumeVfxBudget(map, 1))
+                    {
+                        FleckMaker.ThrowFireGlow(position, map, 0.46f * phaseFactor);
+                    }
+                    if (TryConsumeVfxBudget(map, 1))
+                    {
+                        FleckMaker.ThrowMicroSparks(position, map);
+                    }
                 }
             }
-            SpawnShortRadialArcs(position, map, 2 + Mathf.RoundToInt(phaseFactor), 2.2f * phaseFactor);
+
+            SpawnShortRadialArcs(position, map, 1 + Mathf.RoundToInt(phaseFactor * 0.5f), 1.70f * phaseFactor);
+        }
+
+        private static void SpawnLightPawnLanceImpact(Vector3 position, Map map, bool blockedByShield, float phaseFactor)
+        {
+            if (map == null || !TryConsumeVfxBudget(map, 2))
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(position, map, (blockedByShield ? 0.82f : 1.05f) * phaseFactor);
+            if (!AbyssalProtocolMod.Settings.reducedMotion && TryConsumeVfxBudget(map, 1))
+            {
+                FleckMaker.ThrowMicroSparks(position, map);
+            }
+        }
+
+        private static void SpawnLightPawnBarrageImpact(Vector3 position, Map map, float phaseFactor)
+        {
+            if (map == null || !TryConsumeVfxBudget(map, 2))
+            {
+                return;
+            }
+
+            FleckMaker.ThrowLightningGlow(position, map, 1.15f * phaseFactor);
+            if (!AbyssalProtocolMod.Settings.reducedMotion && TryConsumeVfxBudget(map, 1))
+            {
+                FleckMaker.ThrowMicroSparks(position, map);
+            }
         }
 
         private static void SpawnShortRadialArcs(Vector3 center, Map map, int count, float radius)
@@ -281,6 +332,11 @@ namespace AbyssalProtocol
 
             budgetUsed += cost;
             return true;
+        }
+
+        private static bool IsPawnTarget(Thing hitThing)
+        {
+            return hitThing is Pawn;
         }
 
         private static bool IsDenseTarget(Thing hitThing)

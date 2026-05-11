@@ -102,7 +102,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageImpact(impactPosition, impactCell, impactMap, phaseFactor);
+            ABY_ReactorSaintProjectileVfxUtility.SpawnBarrageImpact(impactPosition, impactCell, impactMap, hitThing, phaseFactor);
             ABY_SoundUtility.PlayAt("ABY_ReactorSaintBarrageImpact", impactCell, impactMap);
 
             if (blockedByShield)

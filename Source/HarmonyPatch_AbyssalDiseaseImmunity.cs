@@ -18,6 +18,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn pawn, HediffDef hdDef)
         {
+            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hdDef))
+            {
+                return true;
+            }
+
             return !ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, hdDef);
         }
     }
@@ -35,6 +40,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, HediffDef def, ref Hediff __result)
         {
+            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(def))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalDiseaseUtility.GetPawn(__instance);
             if (!ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, def))
             {
@@ -59,6 +69,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, HediffDef def, ref Hediff __result)
         {
+            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(def))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalDiseaseUtility.GetPawn(__instance);
             if (!ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, def))
             {
@@ -83,6 +98,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, Hediff hediff)
         {
+            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hediff))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalDiseaseUtility.GetPawn(__instance);
             return !ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, hediff);
         }
@@ -101,6 +121,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(HediffSet __instance, Hediff hediff)
         {
+            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hediff))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalDiseaseUtility.GetPawn(__instance);
             return !ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, hediff);
         }

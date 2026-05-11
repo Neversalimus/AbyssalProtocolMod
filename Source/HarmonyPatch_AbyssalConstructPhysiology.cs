@@ -18,6 +18,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn pawn, HediffDef hdDef)
         {
+            if (!ABY_AbyssalConstructPhysiologyUtility.MightBlockBloodLoss(hdDef))
+            {
+                return true;
+            }
+
             return !ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, hdDef);
         }
     }
@@ -35,6 +40,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, HediffDef def, ref Hediff __result)
         {
+            if (!ABY_AbyssalConstructPhysiologyUtility.MightBlockBloodLoss(def))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalConstructPhysiologyUtility.GetPawn(__instance);
             if (!ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, def))
             {
@@ -59,6 +69,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, Hediff hediff)
         {
+            if (!ABY_AbyssalConstructPhysiologyUtility.MightBlockBloodLoss(hediff))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalConstructPhysiologyUtility.GetPawn(__instance);
             return !ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, hediff);
         }
@@ -77,6 +92,11 @@ namespace AbyssalProtocol
 
         private static bool Prefix(HediffSet __instance, Hediff hediff)
         {
+            if (!ABY_AbyssalConstructPhysiologyUtility.MightBlockBloodLoss(hediff))
+            {
+                return true;
+            }
+
             Pawn pawn = ABY_AbyssalConstructPhysiologyUtility.GetPawn(__instance);
             return !ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, hediff);
         }

@@ -101,6 +101,16 @@ namespace AbyssalProtocol
             return IsBloodLoss(hediff?.def);
         }
 
+        public static bool MightBlockBloodLoss(HediffDef hediffDef)
+        {
+            return IsBloodLoss(hediffDef);
+        }
+
+        public static bool MightBlockBloodLoss(Hediff hediff)
+        {
+            return IsBloodLoss(hediff);
+        }
+
         public static bool ShouldBlockBloodLoss(Pawn pawn, HediffDef hediffDef)
         {
             return IsConstructPhysiologyPawn(pawn) && IsBloodLoss(hediffDef);
