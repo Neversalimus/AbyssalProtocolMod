@@ -262,7 +262,7 @@ namespace AbyssalProtocol
                 ? new Rect(rect.x + 2f, rect.y + 2f, rect.width - phaseWidth - 14f, rect.height)
                 : new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height);
             Rect phaseRect = phaseWidth > 0f
-                ? new Rect(rect.xMax - phaseWidth - 24f, rect.y + 3f, phaseWidth, Mathf.Max(18f, rect.height - 4f))
+                ? new Rect(rect.xMax - phaseWidth - 36f, rect.y + 3f, phaseWidth, Mathf.Max(18f, rect.height - 4f))
                 : Rect.zero;
 
             DrawBossTitle(titleRect, label, palette, alpha);
@@ -423,29 +423,43 @@ namespace AbyssalProtocol
             }
 
             bool active = state != null && state.hasSecondaryBar && state.secondaryPct > 0.001f && state.secondaryMax > 0f;
-            float pulse = settings.reducedMotion ? 0.12f : 0.14f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.05f;
+            float pulse = settings.reducedMotion ? 0.10f : 0.13f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.05f;
             Color cyan = active
-                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.42f + pulse))
+                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.46f + pulse))
                 : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.12f);
+            Color core = active
+                ? new Color(0.88f, 1f, 1f, alpha * 0.55f)
+                : new Color(0.88f, 1f, 1f, alpha * 0.12f);
             Color ember = active
-                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.20f)
-                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.06f);
+                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.18f)
+                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.05f);
 
-            // Pure connector effect: do not resize or restyle the Aegis bar itself.
-            // Draw short energy clamps between the HP frame and the shield frame.
+            // Anchor the chain effect to the AEGIS label area only. The shield bar itself
+            // keeps its original length/position; these are short vertical conduits from
+            // the Aegis tag up to the HP frame, matching the reference layout.
+            Rect labelRect = ResolveAegisLabelRect(secondaryRect);
             float top = mainBarRect.yMax - 1f;
             float bottom = secondaryRect.y + 1f;
             float height = Mathf.Max(3f, bottom - top);
-            int count = 6;
+            int count = 3;
             for (int i = 0; i < count; i++)
             {
                 float t = count <= 1 ? 0.5f : i / (float)(count - 1);
-                float x = Mathf.Lerp(secondaryRect.x + secondaryRect.width * 0.10f, secondaryRect.xMax - secondaryRect.width * 0.10f, t);
-                Widgets.DrawBoxSolid(new Rect(x - 1f, top, 2f, height), cyan);
-                Widgets.DrawBoxSolid(new Rect(x - 3f, top + height * 0.45f, 6f, 1f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.45f));
-                Widgets.DrawBoxSolid(new Rect(x - 2f, top - 1f, 4f, 2f), ember);
-                Widgets.DrawBoxSolid(new Rect(x - 2f, bottom - 1f, 4f, 2f), cyan);
+                float x = Mathf.Lerp(labelRect.x + 10f, labelRect.xMax - 10f, t);
+                Widgets.DrawBoxSolid(new Rect(x - 2f, top, 4f, height), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.34f));
+                Widgets.DrawBoxSolid(new Rect(x - 0.5f, top, 1f, height), core);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, top - 1f, 6f, 2f), ember);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, bottom - 1f, 6f, 2f), cyan);
             }
+        }
+
+        private static Rect ResolveAegisLabelRect(Rect secondaryRect)
+        {
+            return new Rect(
+                secondaryRect.x + 7f,
+                secondaryRect.y - 2f,
+                Mathf.Min(68f, Mathf.Max(52f, secondaryRect.width * 0.16f)),
+                secondaryRect.height + 4f);
         }
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
@@ -481,15 +495,17 @@ namespace AbyssalProtocol
             }
 
             string label = state.secondaryLabel.ToUpperInvariant();
-            Rect labelRect = new Rect(rect.x + 8f, rect.y + 1f, Mathf.Min(86f, rect.width * 0.22f), rect.height - 2f);
-            Widgets.DrawBoxSolid(labelRect, new Color(0.02f, 0.06f, 0.075f, alpha * 0.48f));
-            Widgets.DrawBoxSolid(new Rect(labelRect.x, labelRect.yMax - 1f, labelRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.54f));
+            Rect labelRect = ResolveAegisLabelRect(rect);
+            // Keep the AEGIS tag light. The previous dark block clipped letters and fought
+            // the cyan shield style. A small underline/accent is enough for readability.
+            Widgets.DrawBoxSolid(new Rect(labelRect.x, labelRect.yMax - 3f, labelRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.42f));
+            Widgets.DrawBoxSolid(new Rect(labelRect.x, labelRect.y + 2f, 1f, labelRect.height - 4f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.35f));
             DrawOutlinedText(labelRect, label, TextAnchor.MiddleCenter, GameFont.Tiny, new Color(0.84f, 0.98f, 1f, alpha), alpha);
 
             if (settings.showHealthNumbers)
             {
                 string value = Mathf.RoundToInt(state.secondaryCurrent) + " / " + Mathf.RoundToInt(state.secondaryMax);
-                Rect valueRect = new Rect(rect.x + labelRect.width + 16f, rect.y, rect.width - labelRect.width - 24f, rect.height);
+                Rect valueRect = new Rect(rect.x + labelRect.width + 16f, rect.y - 1f, rect.width - labelRect.width - 24f, rect.height + 2f);
                 DrawOutlinedText(valueRect, value, TextAnchor.MiddleRight, GameFont.Tiny, new Color(0.88f, 1f, 1f, alpha), alpha);
             }
         }
@@ -509,10 +525,10 @@ namespace AbyssalProtocol
 
             Color shadow = new Color(0f, 0f, 0f, alpha * 0.74f);
             GUI.color = shadow;
-            Widgets.Label(new Rect(rect.x + 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty);
-            Widgets.Label(new Rect(rect.x - 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty, 0f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x - 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty, 0f, 1f);
             GUI.color = color;
-            Widgets.Label(rect, text ?? string.Empty);
+            ABY_UIPolishUtility.SafeLabel(rect, text ?? string.Empty, 0f, 1f);
 
             GUI.color = oldColor;
             Text.Anchor = oldAnchor;

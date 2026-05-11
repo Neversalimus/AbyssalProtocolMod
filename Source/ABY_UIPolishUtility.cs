@@ -8,14 +8,31 @@ namespace AbyssalProtocol
     {
         public static Rect TextRect(Rect rect, float horizontalPadding = 2f, float verticalPadding = 2f)
         {
-            // RimWorld/Unity IMGUI text is very easy to clip when custom textured panels use
-            // tight 14-22px rows. Expand symmetrically so MiddleCenter labels keep their
-            // visual center while UpperLeft labels get enough descender room for g/y/p/q.
+            // RimWorld IMGUI clips ascenders/descenders very easily in custom 14-22px rows.
+            // Do not always move the rect upward: that fixed some centered labels but broke
+            // Forge/Summoning upper-left rows. Expand according to the current anchor instead.
             float extraY = Mathf.Max(3f, verticalPadding + 2f);
+            TextAnchor anchor = Text.Anchor;
+
             rect.x = Mathf.Floor(rect.x) + horizontalPadding;
-            rect.y = Mathf.Floor(rect.y) - extraY;
             rect.width = Mathf.Max(1f, Mathf.Ceil(rect.width) - horizontalPadding * 2f);
-            rect.height = Mathf.Max(1f, Mathf.Ceil(rect.height) + extraY * 2f);
+
+            if (anchor == TextAnchor.MiddleLeft || anchor == TextAnchor.MiddleCenter || anchor == TextAnchor.MiddleRight)
+            {
+                rect.y = Mathf.Floor(rect.y) - extraY;
+                rect.height = Mathf.Max(1f, Mathf.Ceil(rect.height) + extraY * 2f);
+            }
+            else if (anchor == TextAnchor.LowerLeft || anchor == TextAnchor.LowerCenter || anchor == TextAnchor.LowerRight)
+            {
+                rect.y = Mathf.Floor(rect.y) - extraY * 2f;
+                rect.height = Mathf.Max(1f, Mathf.Ceil(rect.height) + extraY * 2f);
+            }
+            else
+            {
+                rect.y = Mathf.Floor(rect.y);
+                rect.height = Mathf.Max(1f, Mathf.Ceil(rect.height) + extraY * 2f);
+            }
+
             return rect;
         }
 

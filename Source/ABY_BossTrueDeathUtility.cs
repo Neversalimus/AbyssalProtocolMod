@@ -90,6 +90,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ABY_AbyssalConstructPhysiologyUtility.ScrubConstructHediffs(pawn);
             ClampHediffSeverity(pawn, HediffDefOf.BloodLoss, Mathf.Max(0f, props.bloodLossClamp));
             ClampHediffSeverity(pawn, HediffDefOf.Heatstroke, Mathf.Max(0f, props.heatstrokeClamp));
             ClampHediffSeverity(pawn, DefDatabase<HediffDef>.GetNamedSilentFail("ToxicBuildup"), Mathf.Max(0f, props.toxicBuildupClamp));

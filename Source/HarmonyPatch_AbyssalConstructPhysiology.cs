@@ -49,6 +49,11 @@ namespace AbyssalProtocol
             __result = null;
             return false;
         }
+
+        private static void Postfix(Hediff __result)
+        {
+            ABY_AbyssalConstructPhysiologyUtility.StopBleedingInjury(__result as Hediff_Injury);
+        }
     }
 
     [HarmonyPatch]
@@ -72,6 +77,11 @@ namespace AbyssalProtocol
             Pawn pawn = ABY_AbyssalConstructPhysiologyUtility.GetPawn(__instance);
             return !ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, hediff);
         }
+
+        private static void Postfix(Hediff hediff)
+        {
+            ABY_AbyssalConstructPhysiologyUtility.StopBleedingInjury(hediff as Hediff_Injury);
+        }
     }
 
     [HarmonyPatch]
@@ -94,6 +104,11 @@ namespace AbyssalProtocol
 
             Pawn pawn = ABY_AbyssalConstructPhysiologyUtility.GetPawn(__instance);
             return !ABY_AbyssalConstructPhysiologyUtility.TryBlockBloodLossAdd(pawn, hediff);
+        }
+
+        private static void Postfix(Hediff hediff)
+        {
+            ABY_AbyssalConstructPhysiologyUtility.StopBleedingInjury(hediff as Hediff_Injury);
         }
     }
 }

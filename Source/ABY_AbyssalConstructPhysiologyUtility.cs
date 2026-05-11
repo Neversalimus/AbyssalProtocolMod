@@ -133,7 +133,66 @@ namespace AbyssalProtocol
 
         public static bool ScrubConstructHediffs(Pawn pawn)
         {
-            return ScrubBloodLoss(pawn);
+            bool changed = ScrubBloodLoss(pawn);
+            changed |= StopConstructBleedingInjuries(pawn);
+            return changed;
+        }
+
+        public static bool StopConstructBleedingInjuries(Pawn pawn)
+        {
+            if (!IsConstructPhysiologyPawn(pawn) || pawn.health?.hediffSet?.hediffs == null)
+            {
+                return false;
+            }
+
+            bool changed = false;
+            List<Hediff> hediffs = pawn.health.hediffSet.hediffs;
+            for (int i = 0; i < hediffs.Count; i++)
+            {
+                if (StopBleedingInjury(hediffs[i] as Hediff_Injury))
+                {
+                    changed = true;
+                }
+            }
+
+            if (changed)
+            {
+                pawn.health.hediffSet.DirtyCache();
+            }
+
+            return changed;
+        }
+
+        public static bool StopBleedingInjury(Hediff_Injury injury)
+        {
+            if (injury == null || injury.pawn == null || !IsConstructPhysiologyPawn(injury.pawn))
+            {
+                return false;
+            }
+
+            bool changed = false;
+            try
+            {
+                if (injury.BleedRate > 0.0001f)
+                {
+                    // Mechanical/construct bosses may keep the visible wound, but should not
+                    // generate pawn-style bleeding. Aging the wound past its bleeding window
+                    // is cheaper and less destructive than removing every injury outright.
+                    if (injury.ageTicks < 999999)
+                    {
+                        injury.ageTicks = 999999;
+                        changed = true;
+                    }
+
+                    injury.Tended(1f, 1f, 0);
+                    changed = true;
+                }
+            }
+            catch
+            {
+            }
+
+            return changed;
         }
 
         public static bool ScrubBloodLoss(Pawn pawn)
