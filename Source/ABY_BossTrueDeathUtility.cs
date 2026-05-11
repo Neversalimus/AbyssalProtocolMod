@@ -34,12 +34,22 @@ namespace AbyssalProtocol
 
         public static bool ShouldSuppressVanillaHealthState(Pawn pawn)
         {
+            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            {
+                return false;
+            }
+
             CompABY_BossTrueDeath comp = GetComp(pawn);
             return comp != null && comp.ShouldSuppressVanillaDeathOrDowned();
         }
 
         public static bool TrySuppressPawnKill(Pawn pawn, DamageInfo? dinfo, Hediff exactCulprit)
         {
+            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            {
+                return false;
+            }
+
             CompABY_BossTrueDeath comp = GetComp(pawn);
             return comp != null && comp.TrySuppressPrematureKill(dinfo, exactCulprit);
         }

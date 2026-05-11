@@ -73,8 +73,10 @@ namespace AbyssalProtocol
             float footerHeight = settings.showHealthNumbers ? 18f * scale : 0f;
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
-            float barWidth = settings.width * scale * 1.03f;
-            float totalWidth = iconSize + gap + barWidth;
+            float barWidth = settings.width * scale;
+            float neutralRightExtensionWidth = Mathf.Max(16f * scale, barWidth * 0.035f);
+            float textWidth = barWidth + neutralRightExtensionWidth;
+            float totalWidth = iconSize + gap + textWidth;
             float totalHeight = Mathf.Max(iconSize, nameHeight + barHeight + secondaryGap + secondaryHeight + footerHeight);
 
             Rect screenRect = UI.screenWidth > 0 && UI.screenHeight > 0
@@ -83,16 +85,18 @@ namespace AbyssalProtocol
             Vector2 topLeft = settings.ResolveTopLeft(screenRect, new Vector2(totalWidth, totalHeight));
             Rect rootRect = settings.ClampRectToSafeArea(new Rect(topLeft.x, topLeft.y, totalWidth, totalHeight), screenRect);
             Rect iconRect = new Rect(rootRect.x, rootRect.y + Mathf.Max(0f, totalHeight - iconSize) * 0.5f, iconSize, iconSize);
-            Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, barWidth, totalHeight);
+            Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, textWidth, totalHeight);
             Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
-            Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, textRoot.width, barHeight);
-            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, mainBarRect.width, secondaryHeight);
-            Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, mainBarRect.width, footerHeight);
+            Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, barWidth, barHeight);
+            Rect mainBarExtensionRect = new Rect(mainBarRect.xMax, mainBarRect.y, neutralRightExtensionWidth, mainBarRect.height);
+            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, textRoot.width, secondaryHeight);
+            Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, textRoot.width, footerHeight);
 
             DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
             DrawIcon(iconRect, state, palette, displayedAlpha);
             DrawHeader(nameRect, state, palette, displayedAlpha, settings);
             DrawMainBar(mainBarRect, state, palette, displayedAlpha, settings);
+            DrawMainBarNeutralExtension(mainBarExtensionRect, palette, displayedAlpha);
 
             if (secondaryHeight > 0f)
             {
@@ -308,6 +312,22 @@ namespace AbyssalProtocol
             }
         }
 
+        private static void DrawMainBarNeutralExtension(Rect rect, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (rect.width <= 0.5f || rect.height <= 0.5f || alpha <= 0.001f)
+            {
+                return;
+            }
+
+            Rect shellRect = rect.ContractedBy(1f);
+            Rect innerRect = rect.ContractedBy(4f);
+            Widgets.DrawBoxSolid(shellRect, new Color(0.03f, 0.03f, 0.04f, alpha * 0.90f));
+            Widgets.DrawBoxSolid(innerRect, new Color(palette.backFill.r, palette.backFill.g, palette.backFill.b, alpha * 0.98f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 1f, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+            Widgets.DrawBoxSolid(new Rect(rect.xMax - 1f, rect.y, 1f, rect.height), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+        }
+
         private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)
         {
             float speed = reducedMotion ? 48f : 82f;
@@ -411,10 +431,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (AbyssalStyledWidgets.TextButton(rect, "ABY_BossBar_AdjustShort".Translate()))
+            string label = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossBar_AdjustShort", "Adjust");
+            Color oldColor = GUI.color;
+            GUI.color = Color.white;
+            if (Widgets.ButtonText(rect, label, true, true, true))
             {
                 Window_ABY_BossBarCalibration.OpenWindow();
             }
+            GUI.color = oldColor;
         }
 
         private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)

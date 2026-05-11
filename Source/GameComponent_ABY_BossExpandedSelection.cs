@@ -5,7 +5,7 @@ namespace AbyssalProtocol
 {
     public sealed class GameComponent_ABY_BossExpandedSelection : GameComponent
     {
-        private bool pendingLeftClick;
+        private Pawn pendingBossClick;
         private Vector2 pendingLeftClickStart;
 
         public GameComponent_ABY_BossExpandedSelection(Game game)
@@ -23,8 +23,30 @@ namespace AbyssalProtocol
 
             if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0)
             {
-                pendingLeftClick = true;
+                pendingBossClick = null;
                 pendingLeftClickStart = currentEvent.mousePosition;
+
+                if (ABY_BossSelectionUtility.TryBeginExpandedBossClick(currentEvent, out Pawn boss))
+                {
+                    pendingBossClick = boss;
+                    currentEvent.Use();
+                }
+                return;
+            }
+
+            if (currentEvent.type == EventType.MouseDrag && currentEvent.button == 0)
+            {
+                if (pendingBossClick != null)
+                {
+                    if (Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) > 8f)
+                    {
+                        pendingBossClick = null;
+                    }
+                    else
+                    {
+                        currentEvent.Use();
+                    }
+                }
                 return;
             }
 
@@ -33,19 +55,23 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!pendingLeftClick)
+            Pawn bossToSelect = pendingBossClick;
+            pendingBossClick = null;
+            if (bossToSelect == null)
             {
                 return;
             }
 
             bool smallClick = Vector2.Distance(pendingLeftClickStart, currentEvent.mousePosition) <= 8f;
-            pendingLeftClick = false;
             if (!smallClick)
             {
                 return;
             }
 
-            ABY_BossSelectionUtility.TrySelectBossUnderMouse(currentEvent);
+            if (ABY_BossSelectionUtility.TryCompleteExpandedBossClick(currentEvent, bossToSelect))
+            {
+                currentEvent.Use();
+            }
         }
     }
 }

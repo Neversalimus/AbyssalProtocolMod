@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -27,36 +26,60 @@ namespace AbyssalProtocol
             { "ABY_GateWarden", new SelectionProfile { widthCells = 4.2f, heightCells = 3.8f, yOffsetCells = 0.0f, priority = 45 } }
         };
 
-        public static bool TrySelectBossUnderMouse(Event currentEvent)
+        public static bool TryBeginExpandedBossClick(Event currentEvent, out Pawn boss)
         {
-            if (currentEvent == null || currentEvent.type != EventType.MouseUp || currentEvent.button != 0)
+            boss = null;
+            if (currentEvent == null || currentEvent.type != EventType.MouseDown || currentEvent.button != 0)
             {
                 return false;
             }
 
-            if (!AbyssalProtocolMod.Settings.enableBossExpandedSelection || Current.ProgramState != ProgramState.Playing)
-            {
-                return false;
-            }
-
-            if (IsDebugToolActive() || AbyssalBossBarRenderer.MouseOverInteractiveRect(currentEvent.mousePosition))
+            if (!CanUseExpandedSelection(currentEvent.mousePosition))
             {
                 return false;
             }
 
             Map map = Find.CurrentMap;
-            if (map == null || Find.Selector == null || Find.Camera == null)
-            {
-                return false;
-            }
-
-            Pawn boss = FindSelectableBossUnderMouse(map, currentEvent.mousePosition);
+            boss = FindSelectableBossUnderMouse(map, currentEvent.mousePosition);
             if (boss == null)
             {
                 return false;
             }
 
             if (MouseCellContainsPreferredSelectable(map, boss))
+            {
+                boss = null;
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool TryCompleteExpandedBossClick(Event currentEvent, Pawn pendingBoss)
+        {
+            if (currentEvent == null || currentEvent.type != EventType.MouseUp || currentEvent.button != 0 || pendingBoss == null)
+            {
+                return false;
+            }
+
+            if (!CanUseExpandedSelection(currentEvent.mousePosition))
+            {
+                return false;
+            }
+
+            Map map = Find.CurrentMap;
+            if (map == null || pendingBoss.Destroyed || pendingBoss.Dead || !pendingBoss.Spawned || pendingBoss.MapHeld != map)
+            {
+                return false;
+            }
+
+            Pawn bossUnderMouse = FindSelectableBossUnderMouse(map, currentEvent.mousePosition);
+            if (bossUnderMouse != pendingBoss)
+            {
+                return false;
+            }
+
+            if (MouseCellContainsPreferredSelectable(map, pendingBoss))
             {
                 return false;
             }
@@ -67,8 +90,7 @@ namespace AbyssalProtocol
                 {
                     Find.Selector.ClearSelection();
                 }
-                Find.Selector.Select(boss);
-                currentEvent.Use();
+                Find.Selector.Select(pendingBoss);
                 return true;
             }
             catch (Exception ex)
@@ -78,9 +100,19 @@ namespace AbyssalProtocol
             }
         }
 
+        public static bool TrySelectBossUnderMouse(Event currentEvent)
+        {
+            if (!TryBeginExpandedBossClick(currentEvent, out Pawn boss))
+            {
+                return false;
+            }
+
+            return TryCompleteExpandedBossClick(currentEvent, boss);
+        }
+
         public static Pawn FindSelectableBossUnderMouse(Map map, Vector2 mousePosition)
         {
-            if (map?.mapPawns?.AllPawnsSpawned == null)
+            if (map?.mapPawns?.AllPawnsSpawned == null || Find.Camera == null)
             {
                 return null;
             }
@@ -114,6 +146,26 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        private static bool CanUseExpandedSelection(Vector2 mousePosition)
+        {
+            if (!AbyssalProtocolMod.Settings.enableBossExpandedSelection || Current.ProgramState != ProgramState.Playing)
+            {
+                return false;
+            }
+
+            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            {
+                return false;
+            }
+
+            if (AbyssalBossBarRenderer.MouseOverInteractiveRect(mousePosition))
+            {
+                return false;
+            }
+
+            return Find.CurrentMap != null && Find.Selector != null && Find.Camera != null;
         }
 
         private static bool MouseCellContainsPreferredSelectable(Map map, Pawn boss)
@@ -180,50 +232,6 @@ namespace AbyssalProtocol
             }
 
             return thing is Pawn || thing is Building;
-        }
-
-        private static bool IsDebugToolActive()
-        {
-            if (Prefs.DevMode == false)
-            {
-                return false;
-            }
-
-            try
-            {
-                Type debugToolsType = typeof(Log).Assembly.GetType("Verse.DebugTools");
-                if (debugToolsType == null)
-                {
-                    return false;
-                }
-
-                FieldInfo[] fields = debugToolsType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-                for (int i = 0; i < fields.Length; i++)
-                {
-                    FieldInfo field = fields[i];
-                    if (field == null || field.FieldType == null)
-                    {
-                        continue;
-                    }
-
-                    string name = field.Name ?? string.Empty;
-                    if (name.IndexOf("tool", StringComparison.OrdinalIgnoreCase) < 0)
-                    {
-                        continue;
-                    }
-
-                    object value = field.GetValue(null);
-                    if (value != null && !field.FieldType.IsArray && !typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType))
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch
-            {
-            }
-
-            return false;
         }
 
         private static bool IsExpandedSelectableBoss(Pawn pawn, out SelectionProfile profile)

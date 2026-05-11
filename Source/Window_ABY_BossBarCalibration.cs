@@ -22,9 +22,22 @@ namespace AbyssalProtocol
 
         public static void OpenWindow()
         {
-            if (Find.WindowStack == null || openWindow != null)
+            if (Find.WindowStack == null)
             {
                 return;
+            }
+
+            if (openWindow != null)
+            {
+                try
+                {
+                    openWindow.Close(false);
+                }
+                catch
+                {
+                }
+
+                openWindow = null;
             }
 
             openWindow = new Window_ABY_BossBarCalibration();
