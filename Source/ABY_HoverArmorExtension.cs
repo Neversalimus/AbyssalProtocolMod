@@ -8,6 +8,7 @@ namespace AbyssalProtocol
         public bool enableUnderfootFx = true;
         public bool enableMovingSparks = true;
         public bool enableFlightRigFx = true;
+        public bool enableVectorThrusterFx = false;
         public bool enableHaloFx = false;
 
         public string hoverFxIntensity = "Subtle";
@@ -17,6 +18,8 @@ namespace AbyssalProtocol
         public string flightRigTexPathEast = "Effects/FlightRig/ABY_FlightRig_East";
         public string flightRigTexPathWest = "Effects/FlightRig/ABY_FlightRig_West";
         public string flightRigTexPathNorth = "Effects/FlightRig/ABY_FlightRig_North";
+        public string vectorThrusterBurstTexPath = "Effects/Hover/ABY_VectorThrusterBurst";
+        public string vectorThrusterGlowTexPath = "Effects/Hover/ABY_VectorThrusterGlow";
 
         public float ringScale = 0.74f;
         public float movingRingScaleBonus = 0.08f;
@@ -39,6 +42,22 @@ namespace AbyssalProtocol
         public float flightRigOffsetEastZ = 0.02f;
         public float flightRigOffsetNorthX = 0f;
         public float flightRigOffsetNorthZ = -0.06f;
+
+        public float vectorThrusterBurstScale = 0.18f;
+        public float vectorThrusterGlowScale = 0.34f;
+        public float vectorThrusterAlpha = 0.72f;
+        public float vectorThrusterGlowAlpha = 0.24f;
+        public float vectorThrusterPulseScale = 0.045f;
+        public float vectorThrusterPulseAlpha = 0.22f;
+        public float vectorThrusterMotionAlphaBonus = 0.26f;
+        public float vectorThrusterMotionScaleBonus = 0.060f;
+        public float vectorThrusterBackOffset = 0.14f;
+        public float vectorThrusterSideOffset = 0.145f;
+        public float vectorThrusterLowerBackOffset = 0.255f;
+        public float vectorThrusterLowerSideOffset = 0.090f;
+        public float vectorThrusterShoulderScale = 0.92f;
+        public float vectorThrusterHipScale = 1.00f;
+        public float vectorThrusterAltitudeOffset = -0.026f;
 
         public float draftedMoveSpeedBonus = 0f;
         public int drawPriority = 0;

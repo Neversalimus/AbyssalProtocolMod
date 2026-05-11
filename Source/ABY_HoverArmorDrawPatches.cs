@@ -23,8 +23,8 @@ namespace AbyssalProtocol
         }
     }
 
-    // The renderer prefix only draws the back rig / underfoot FX. The actual pawn lift is applied by
-    // the DrawPos postfix above, which is more reliable and keeps vanilla pawn rendering intact.
+    // The renderer prefix draws only the hover VFX. The actual pawn lift is applied by the DrawPos
+    // postfix above, which keeps vanilla body/apparel/head rendering intact.
     [HarmonyPatch(typeof(PawnRenderer), nameof(PawnRenderer.RenderPawnAt))]
     public static class ABY_HoverArmorDrawPatches_RenderPawnAt
     {
@@ -35,6 +35,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ABY_HoverArmorRenderUtility.DrawVectorThrusterFx(___pawn, drawLoc, extension);
             ABY_HoverArmorRenderUtility.DrawBackFlightRigFx(___pawn, drawLoc, extension);
 
             Vector3 groundLoc = drawLoc;

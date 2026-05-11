@@ -28,27 +28,29 @@
     <modExtensions>
       <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
         <draftedOnly>true</draftedOnly>
-        <enableUnderfootFx>true</enableUnderfootFx>
-        <enableMovingSparks>true</enableMovingSparks>
-        <enableFlightRigFx>true</enableFlightRigFx>
-        <flightRigTexPathSouth>Effects/FlightRig/ABY_FlightRig_South</flightRigTexPathSouth>
-        <flightRigTexPathEast>Effects/FlightRig/ABY_FlightRig_East</flightRigTexPathEast>
-        <flightRigTexPathWest>Effects/FlightRig/ABY_FlightRig_West</flightRigTexPathWest>
-        <flightRigTexPathNorth>Effects/FlightRig/ABY_FlightRig_North</flightRigTexPathNorth>
+        <enableUnderfootFx>false</enableUnderfootFx>
+        <enableMovingSparks>false</enableMovingSparks>
+        <enableFlightRigFx>false</enableFlightRigFx>
+        <enableVectorThrusterFx>true</enableVectorThrusterFx>
+        <vectorThrusterBurstTexPath>Effects/Hover/ABY_VectorThrusterBurst</vectorThrusterBurstTexPath>
+        <vectorThrusterGlowTexPath>Effects/Hover/ABY_VectorThrusterGlow</vectorThrusterGlowTexPath>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
         <ringScale>0.72</ringScale>
         <movingRingScaleBonus>0.06</movingRingScaleBonus>
         <ringAlpha>0.24</ringAlpha>
         <pulseAmplitude>0.045</pulseAmplitude>
-        <flightRigScale>2.95</flightRigScale>
-        <flightRigAlpha>0.96</flightRigAlpha>
-        <flightRigPulseScale>0.060</flightRigPulseScale>
-        <flightRigPulseAlpha>0.12</flightRigPulseAlpha>
-        <flightRigBobAmplitude>0.030</flightRigBobAmplitude>
-        <flightRigOffsetSouthZ>0.10</flightRigOffsetSouthZ>
-        <flightRigOffsetEastX>-0.10</flightRigOffsetEastX>
-        <flightRigOffsetEastZ>0.02</flightRigOffsetEastZ>
-        <flightRigOffsetNorthZ>-0.06</flightRigOffsetNorthZ>
+        <vectorThrusterBurstScale>0.18</vectorThrusterBurstScale>
+        <vectorThrusterGlowScale>0.34</vectorThrusterGlowScale>
+        <vectorThrusterAlpha>0.70</vectorThrusterAlpha>
+        <vectorThrusterGlowAlpha>0.22</vectorThrusterGlowAlpha>
+        <vectorThrusterPulseScale>0.040</vectorThrusterPulseScale>
+        <vectorThrusterPulseAlpha>0.20</vectorThrusterPulseAlpha>
+        <vectorThrusterMotionAlphaBonus>0.24</vectorThrusterMotionAlphaBonus>
+        <vectorThrusterMotionScaleBonus>0.055</vectorThrusterMotionScaleBonus>
+        <vectorThrusterBackOffset>0.13</vectorThrusterBackOffset>
+        <vectorThrusterSideOffset>0.135</vectorThrusterSideOffset>
+        <vectorThrusterLowerBackOffset>0.245</vectorThrusterLowerBackOffset>
+        <vectorThrusterLowerSideOffset>0.080</vectorThrusterLowerSideOffset>
         <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
         <sparkIntervalTicks>18</sparkIntervalTicks>
         <sparkLifetimeTicks>14</sparkLifetimeTicks>

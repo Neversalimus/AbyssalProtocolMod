@@ -15,6 +15,48 @@ namespace AbyssalProtocol
         private static readonly Dictionary<int, int> FlightRigLastSeenTicksByPawn = new Dictionary<int, int>();
         private static int lastFlightRigCleanupTick = -1;
 
+        public static void DrawVectorThrusterFx(Pawn pawn, Vector3 pawnDrawLoc, ABY_HoverArmorExtension extension)
+        {
+            if (pawn == null || extension == null || !extension.enableVectorThrusterFx)
+            {
+                return;
+            }
+
+            if (extension.vectorThrusterBurstTexPath.NullOrEmpty() && extension.vectorThrusterGlowTexPath.NullOrEmpty())
+            {
+                return;
+            }
+
+            int ticks = ABY_HoverArmorUtility.SafeTicksGame();
+            int startTick = ResolveFlightRigStartTick(pawn, ticks);
+            float age = Mathf.Max(0f, ticks - startTick);
+            float fade = Mathf.Clamp01(age / 16f);
+            float seed = Mathf.Abs((pawn.thingIDNumber * 47) % 997);
+            bool moving = pawn.pather != null && pawn.pather.MovingNow;
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.205f : 0.125f));
+            float hotPulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.37f) * (moving ? 0.310f : 0.180f));
+            float motionAlpha = moving ? Mathf.Max(0f, extension.vectorThrusterMotionAlphaBonus) : 0f;
+            float motionScale = moving ? Mathf.Max(0f, extension.vectorThrusterMotionScaleBonus) : 0f;
+
+            Vector3 forward = FacingVector(pawn.Rotation);
+            Vector3 back = -forward;
+            Vector3 right = RightVector(forward);
+            float angle = AngleForDirection(back);
+
+            // Draw the glows first at pawn-back altitude, then draw smaller hot cores. These are intentionally
+            // close to the body rather than under the pawn: the armor reads as using integrated vector jets,
+            // not as standing on a magic ring or wearing a huge wing-rig.
+            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 0);
+            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 1);
+            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 2);
+            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, -extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 3);
+
+            if (moving)
+            {
+                DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse);
+            }
+        }
+
         public static void DrawBackFlightRigFx(Pawn pawn, Vector3 pawnDrawLoc, ABY_HoverArmorExtension extension)
         {
             if (pawn == null || extension == null || !extension.enableFlightRigFx)
@@ -43,8 +85,7 @@ namespace AbyssalProtocol
             loc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveFlightRigAltitudeOffset(extension);
 
             // Do not mirror by using negative mesh scale. Unity/RimWorld transparent pawn FX can be culled
-            // when the plane has a negative determinant, which made the rig disappear on west-facing pawns.
-            // West now uses an explicit flipped texture and a normal positive scale.
+            // when the plane has a negative determinant. West uses an explicit flipped texture.
             DrawPlane(texPath, loc, scale, scale, ShaderDatabase.TransparentPostLight, alpha, 0f);
 
             float glowAlpha = Mathf.Clamp01(extension.flightRigGlowAlpha * fade * (0.35f + energyPulse * 0.65f));
@@ -81,8 +122,56 @@ namespace AbyssalProtocol
 
         public static void DrawHaloFx(Pawn pawn, Vector3 pawnDrawLoc, ABY_HoverArmorExtension extension)
         {
-            // Kept as a compatibility entry point for older call sites. Current drafted hover mode uses
-            // directional back-rig + underfoot energy only, so it does not draw a separate overhead halo.
+            // Kept as a compatibility entry point for older call sites. Current vector-thruster hover mode
+            // does not draw a separate overhead halo.
+        }
+
+        private static void DrawThrusterEmitter(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale, float backOffset, float sideOffset, float scaleMult, int slot)
+        {
+            float slotPhase = Mathf.Sin((ticks + pawn.thingIDNumber * 13 + slot * 17) * 0.230f);
+            Vector3 loc = pawnDrawLoc + back * backOffset + right * sideOffset;
+            loc.z += slotPhase * 0.010f;
+            loc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveVectorThrusterAltitudeOffset(extension) + slot * 0.0015f;
+
+            float baseScale = Mathf.Max(0.030f, extension.vectorThrusterBurstScale);
+            float pulseScale = pulse * Mathf.Max(0f, extension.vectorThrusterPulseScale);
+            float burstScale = (baseScale + pulseScale + motionScale) * Mathf.Max(0.10f, scaleMult);
+            float burstAlpha = Mathf.Clamp01((extension.vectorThrusterAlpha + hotPulse * extension.vectorThrusterPulseAlpha + motionAlpha) * fade);
+            float glowScale = Mathf.Max(0.040f, extension.vectorThrusterGlowScale + pulseScale * 1.35f + motionScale * 1.25f) * Mathf.Max(0.10f, scaleMult);
+            float glowAlpha = Mathf.Clamp01((extension.vectorThrusterGlowAlpha + pulse * extension.vectorThrusterPulseAlpha * 0.35f + motionAlpha * 0.45f) * fade);
+
+            if (!extension.vectorThrusterGlowTexPath.NullOrEmpty())
+            {
+                DrawPlane(extension.vectorThrusterGlowTexPath, loc + back * 0.012f + new Vector3(0f, -0.004f, 0f), glowScale, glowScale * 1.22f, ShaderDatabase.MoteGlow, glowAlpha, angle);
+            }
+
+            if (!extension.vectorThrusterBurstTexPath.NullOrEmpty())
+            {
+                DrawPlane(extension.vectorThrusterBurstTexPath, loc, burstScale * 0.74f, burstScale * 1.46f, ShaderDatabase.MoteGlow, burstAlpha, angle);
+            }
+        }
+
+        private static void DrawVectorMotionWake(ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse)
+        {
+            if (extension.vectorThrusterBurstTexPath.NullOrEmpty())
+            {
+                return;
+            }
+
+            float baseScale = Mathf.Max(0.030f, extension.vectorThrusterBurstScale);
+            Vector3 baseLoc = pawnDrawLoc + back * (extension.vectorThrusterLowerBackOffset + 0.105f);
+            baseLoc.y = AltitudeLayer.Pawn.AltitudeFor() + ResolveVectorThrusterAltitudeOffset(extension) - 0.006f;
+
+            for (int i = 0; i < 3; i++)
+            {
+                float side = (i - 1) * extension.vectorThrusterLowerSideOffset * 0.85f;
+                float backDistance = 0.075f + i * 0.060f;
+                float wobble = Mathf.Sin((ticks + i * 19) * 0.190f) * 0.030f;
+                Vector3 loc = baseLoc + back * backDistance + right * (side + wobble);
+                float scale = baseScale * (0.88f - i * 0.15f) + pulse * 0.030f;
+                float alpha = Mathf.Clamp01((0.22f + hotPulse * 0.20f) * fade * (1f - i * 0.22f));
+                DrawPlane(extension.vectorThrusterBurstTexPath, loc, scale * 0.64f, scale * 1.25f, ShaderDatabase.MoteGlow, alpha, angle);
+            }
         }
 
         private static int ResolveFlightRigStartTick(Pawn pawn, int ticks)
@@ -195,6 +284,56 @@ namespace AbyssalProtocol
             }
 
             return extension.flightRigAltitudeOffset;
+        }
+
+        private static float ResolveVectorThrusterAltitudeOffset(ABY_HoverArmorExtension extension)
+        {
+            if (extension == null || Mathf.Abs(extension.vectorThrusterAltitudeOffset) < 0.0001f)
+            {
+                return -0.026f;
+            }
+
+            return extension.vectorThrusterAltitudeOffset;
+        }
+
+        private static Vector3 FacingVector(Rot4 rot)
+        {
+            if (rot == Rot4.North)
+            {
+                return new Vector3(0f, 0f, 1f);
+            }
+
+            if (rot == Rot4.South)
+            {
+                return new Vector3(0f, 0f, -1f);
+            }
+
+            if (rot == Rot4.East)
+            {
+                return new Vector3(1f, 0f, 0f);
+            }
+
+            if (rot == Rot4.West)
+            {
+                return new Vector3(-1f, 0f, 0f);
+            }
+
+            return new Vector3(0f, 0f, -1f);
+        }
+
+        private static Vector3 RightVector(Vector3 forward)
+        {
+            return new Vector3(forward.z, 0f, -forward.x);
+        }
+
+        private static float AngleForDirection(Vector3 direction)
+        {
+            if (direction.sqrMagnitude < 0.0001f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         }
 
         private static void DrawIdleSparkSet(Pawn pawn, Vector3 groundDrawLoc, ABY_HoverArmorExtension extension, int ticks, float phase)
