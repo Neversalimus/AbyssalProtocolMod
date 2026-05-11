@@ -171,13 +171,13 @@ namespace AbyssalProtocol
 
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
-            Widgets.Label(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+            ABY_UIPolishUtility.SafeLabel(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
 
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             Text.Font = GameFont.Tiny;
-            Widgets.Label(tagRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
+            ABY_UIPolishUtility.SafeLabel(tagRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
             GUI.color = new Color(1f, 0.76f, 0.58f, 1f);
-            Widgets.Label(metaRect, FormatRitualMetaForCard(AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual)));
+            ABY_UIPolishUtility.SafeLabel(metaRect, FormatRitualMetaForCard(AbyssalSummoningConsoleUtility.GetRitualMetaText(circle, ritual)));
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
@@ -225,12 +225,12 @@ namespace AbyssalProtocol
             bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
 
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(inner.x, inner.y + 64f, inner.width, 18f), "ABY_CircleControlState".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 64f, inner.width, 18f), "ABY_CircleControlState".Translate());
             GUI.color = Color.white;
             string statusLine = dominionCrisis != null && dominionCrisis.IsActive
                 ? dominionCrisis.GetStatusLine()
                 : circle.GetCurrentStatusLine();
-            Widgets.Label(new Rect(inner.x, inner.y + 82f, inner.width, 26f), statusLine);
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 82f, inner.width, 26f), statusLine);
 
             string blockerLine = AbyssalSummoningConsoleUtility.IsInvocationPathClear(circle, ritual)
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandReady", "Invocation path clear. Prepared sigil, operator, and circle state are valid.")
@@ -240,7 +240,7 @@ namespace AbyssalProtocol
                 ? new Color(0.72f, 1f, 0.74f, 1f)
                 : new Color(1f, 0.60f, 0.54f, 1f);
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(inner.x, inner.y + 108f, inner.width, 30f), blockerLine);
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 108f, inner.width, 30f), blockerLine);
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
 
@@ -353,7 +353,7 @@ namespace AbyssalProtocol
             Rect checkboxRect = new Rect(rect.xMax - 24f, rect.y + Mathf.Max(0f, (rect.height - 24f) * 0.5f), 24f, 24f);
 
             GUI.color = state ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(labelRect, label);
+            ABY_UIPolishUtility.SafeLabel(labelRect, label);
             GUI.color = Color.white;
 
             bool newState = state;
@@ -392,11 +392,11 @@ namespace AbyssalProtocol
                 GUI.color = new Color(0.19f, 0.08f, 0.07f, 0.78f);
                 GUI.DrawTexture(new Rect(0f, 0f, viewRect.width, 50f), BaseContent.WhiteTex);
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(8f, 4f, viewRect.width - 16f, 16f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionStatusHeader", "Crisis telemetry"));
+                ABY_UIPolishUtility.SafeLabel(new Rect(8f, 4f, viewRect.width - 16f, 16f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionStatusHeader", "Crisis telemetry"));
                 GUI.color = Color.white;
                 Text.Font = GameFont.Tiny;
                 float dominionSummaryBlockHeight = Mathf.Max(28f, Text.CalcHeight(dominionSummaryText, viewRect.width - 16f));
-                Widgets.Label(new Rect(8f, 20f, viewRect.width - 16f, dominionSummaryBlockHeight), dominionSummaryText);
+                ABY_UIPolishUtility.SafeLabel(new Rect(8f, 20f, viewRect.width - 16f, dominionSummaryBlockHeight), dominionSummaryText);
                 Text.Font = GameFont.Small;
                 y += summaryHeight + 4f;
             }
@@ -410,7 +410,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < difficultyLines.Count; i++)
                 {
                     GUI.color = new Color(0.78f, 0.92f, 1f, 1f);
-                    Widgets.Label(new Rect(8f, y + 4f + i * 18f, viewRect.width - 16f, 18f), difficultyLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(8f, y + 4f + i * 18f, viewRect.width - 16f, 18f), difficultyLines[i]);
                 }
 
                 GUI.color = Color.white;
@@ -423,9 +423,9 @@ namespace AbyssalProtocol
                 Rect lineRect = new Rect(0f, y + i * 22f, viewRect.width, 20f);
                 Rect valueRect = new Rect(lineRect.x + viewRect.width * 0.44f, lineRect.y, viewRect.width * 0.56f, lineRect.height);
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-                Widgets.Label(new Rect(lineRect.x, lineRect.y, viewRect.width * 0.42f, lineRect.height), entries[i].Label);
+                ABY_UIPolishUtility.SafeLabel(new Rect(lineRect.x, lineRect.y, viewRect.width * 0.42f, lineRect.height), entries[i].Label);
                 GUI.color = entries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.60f, 0.54f, 1f);
-                Widgets.Label(valueRect, entries[i].Value);
+                ABY_UIPolishUtility.SafeLabel(valueRect, entries[i].Value);
                 GUI.color = Color.white;
             }
 
@@ -466,7 +466,7 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rect.y, rect.width, 22f), "ABY_CapacitorPanel_Header".Translate());
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y + 24f, rect.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 24f, rect.width, 18f), AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
             GUI.color = Color.white;
 
             float rowsY = rect.y + 48f;
@@ -482,24 +482,24 @@ namespace AbyssalProtocol
             AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport report = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
             float summaryY = rowsY + rowIndex * (rowHeight + 6f) + 10f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY, rect.width, 16f), "ABY_CapacitorPanel_State".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report));
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(rect.x, summaryY + 16f, rect.width, 34f), AbyssalCircleCapacitorRitualUtility.GetSupportDetailText(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 16f, rect.width, 34f), AbyssalCircleCapacitorRitualUtility.GetSupportDetailText(report));
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(rect.x, summaryY + 52f, rect.width, 14f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 66f, rect.width, 14f), "ABY_CapacitorPanel_Lattice".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLatticeProfileLabel(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 80f, rect.width, 14f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 94f, rect.width, 14f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 108f, rect.width, 14f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 122f, rect.width, 14f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 136f, rect.width, 14f), "ABY_CapacitorPanel_Leakage".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLeakageValueReadout(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 150f, rect.width, 14f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
-            Widgets.Label(new Rect(rect.x, summaryY + 164f, rect.width, 14f), "ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(circle, ritual));
-            Widgets.Label(new Rect(rect.x, summaryY + 178f, rect.width, 14f), "ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 52f, rect.width, 14f), AbyssalCircleCapacitorUtility.GetChargeReadout(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 66f, rect.width, 14f), "ABY_CapacitorPanel_Lattice".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLatticeProfileLabel(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 80f, rect.width, 14f), "ABY_CapacitorPanel_Startup".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetStartupReadout(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 94f, rect.width, 14f), "ABY_CapacitorPanel_Reserve".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetReserveReadout(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 108f, rect.width, 14f), "ABY_CapacitorPanel_Feed".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetThroughputRequirementReadout(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 122f, rect.width, 14f), "ABY_CapacitorPanel_Grid".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetGridSmoothingReadout(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 136f, rect.width, 14f), "ABY_CapacitorPanel_Leakage".Translate() + ": " + AbyssalCircleCapacitorUtility.GetLeakageValueReadout(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 150f, rect.width, 14f), "ABY_CapacitorPanel_Flow".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetChargeFlowReadout(report));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 164f, rect.width, 14f), "ABY_CapacitorPanel_Mode".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetOperationalModeSummary(circle, ritual));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 178f, rect.width, 14f), "ABY_CapacitorPanel_Dump".Translate() + ": " + AbyssalCircleCapacitorRitualUtility.GetEmergencyDumpStatusLabel(circle));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY + 196f, rect.width, 36f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 196f, rect.width, 36f), AbyssalCircleCapacitorRitualUtility.GetRitualDemandSummary(ritual));
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
         }
@@ -510,7 +510,7 @@ namespace AbyssalProtocol
             ThingDef installedDef = slot?.InstalledThingDef;
             Rect labelRect = new Rect(rect.x, rect.y, rect.width - 118f, rect.height);
             GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
-            Widgets.Label(labelRect, AbyssalCircleCapacitorUtility.GetSlotRowText(slot, bay));
+            ABY_UIPolishUtility.SafeLabel(labelRect, AbyssalCircleCapacitorUtility.GetSlotRowText(slot, bay));
             GUI.color = Color.white;
             TooltipHandler.TipRegion(labelRect, AbyssalCircleCapacitorUtility.GetBayTooltip(circle, bay));
 
@@ -547,7 +547,7 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rect.y, rect.width, 22f), "ABY_CircleModulesHeader".Translate());
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y + 24f, rect.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 24f, rect.width, 18f), "ABY_CircleInspect_Stabilizers".Translate(circle.InstalledStabilizerCount, circle.ModuleSlots.Count));
             GUI.color = Color.white;
 
             float rowsY = rect.y + 48f;
@@ -562,16 +562,16 @@ namespace AbyssalProtocol
 
             float summaryY = rowsY + rowIndex * (rowHeight + 5f) + 10f;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, summaryY, rect.width, 16f), AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY, rect.width, 16f), AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle));
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(rect.x, summaryY + 14f, rect.width, 36f), AbyssalSummoningConsoleUtility.GetStabilizerPatternDetail(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 14f, rect.width, 36f), AbyssalSummoningConsoleUtility.GetStabilizerPatternDetail(circle));
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
             Text.Font = GameFont.Tiny;
-            Widgets.Label(new Rect(rect.x, summaryY + 54f, rect.width, 14f), "ABY_CircleModulesContainment".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerContainmentBonusDisplay(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 68f, rect.width, 14f), "ABY_CircleModulesHeatDamping".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerHeatDampingDisplay(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 82f, rect.width, 14f), "ABY_CircleModulesResidue".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerResidueSuppressionDisplay(circle));
-            Widgets.Label(new Rect(rect.x, summaryY + 96f, rect.width, 14f), "ABY_CircleModulesAnomaly".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerAnomalyShieldingDisplay(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 54f, rect.width, 14f), "ABY_CircleModulesContainment".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerContainmentBonusDisplay(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 68f, rect.width, 14f), "ABY_CircleModulesHeatDamping".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerHeatDampingDisplay(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 82f, rect.width, 14f), "ABY_CircleModulesResidue".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerResidueSuppressionDisplay(circle));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, summaryY + 96f, rect.width, 14f), "ABY_CircleModulesAnomaly".Translate() + ": " + AbyssalSummoningConsoleUtility.GetStabilizerAnomalyShieldingDisplay(circle));
             Text.Font = GameFont.Small;
         }
 
@@ -593,15 +593,15 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(rect.x, rect.y, rect.width, 22f), "ABY_CirclePreviewHeader".Translate());
 
-            Widgets.Label(new Rect(rect.x, rect.y + 28f, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 28f, rect.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CirclePreviewHost", "Likely host: {0}", ritual.BossLabel));
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
-            Widgets.Label(new Rect(rect.x, rect.y + 52f, rect.width, 16f), AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 52f, rect.width, 16f), AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
             GUI.color = Color.white;
 
             Text.Font = GameFont.Tiny;
             string ritualDescription = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
             float descriptionHeight = Text.CalcHeight(ritualDescription, rect.width);
-            Widgets.Label(new Rect(rect.x, rect.y + 72f, rect.width, descriptionHeight), ritualDescription);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 72f, rect.width, descriptionHeight), ritualDescription);
 
             float rewardY = rect.y + 80f + descriptionHeight;
             if (AbyssalHordeSigilUtility.IsSupportedRitual(ritual?.Id))
@@ -631,10 +631,10 @@ namespace AbyssalProtocol
 
                 float bulletinSummaryY = bulletinRow2 + 46f;
                 float operationBulletinHeight = Text.CalcHeight(operationBulletin, rect.width);
-                Widgets.Label(new Rect(rect.x, bulletinSummaryY, rect.width, operationBulletinHeight), operationBulletin);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, bulletinSummaryY, rect.width, operationBulletinHeight), operationBulletin);
                 GUI.color = new Color(1f, 0.72f, 0.56f, 1f);
                 float doctrineWarningHeight = Text.CalcHeight(doctrineWarning, rect.width);
-                Widgets.Label(new Rect(rect.x, bulletinSummaryY + operationBulletinHeight + 4f, rect.width, doctrineWarningHeight), doctrineWarning);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, bulletinSummaryY + operationBulletinHeight + 4f, rect.width, doctrineWarningHeight), doctrineWarning);
                 GUI.color = Color.white;
 
                 rewardY = bulletinSummaryY + operationBulletinHeight + doctrineWarningHeight + 14f;
@@ -644,11 +644,11 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
 
                 float doctrineLineHeight = Text.CalcHeight(doctrineLine, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, doctrineLineHeight), doctrineLine);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, doctrineLineHeight), doctrineLine);
 
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 float doctrineSummaryHeight = Text.CalcHeight(doctrineSummary, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 32f + doctrineLineHeight, rect.width, doctrineSummaryHeight), doctrineSummary);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 32f + doctrineLineHeight, rect.width, doctrineSummaryHeight), doctrineSummary);
                 GUI.color = Color.white;
 
                 rewardY += 42f + doctrineLineHeight + doctrineSummaryHeight + 10f;
@@ -661,14 +661,14 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
 
                 float phaseSummaryHeight = Text.CalcHeight(phaseSummary, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, phaseSummaryHeight), phaseSummary);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, phaseSummaryHeight), phaseSummary);
 
                 float phaseLineY = rewardY + 32f + phaseSummaryHeight;
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 for (int i = 0; i < phaseLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(phaseLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, phaseLineY, rect.width, lineHeight), phaseLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, phaseLineY, rect.width, lineHeight), phaseLines[i]);
                     phaseLineY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -683,14 +683,14 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
 
                 float perimeterSummaryHeight = Text.CalcHeight(perimeterSummary, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, perimeterSummaryHeight), perimeterSummary);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, perimeterSummaryHeight), perimeterSummary);
 
                 float perimeterLineY = rewardY + 32f + perimeterSummaryHeight;
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 for (int i = 0; i < perimeterLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(perimeterLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, perimeterLineY, rect.width, lineHeight), perimeterLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, perimeterLineY, rect.width, lineHeight), perimeterLines[i]);
                     perimeterLineY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -705,14 +705,14 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
 
                 float commandSummaryHeight = Text.CalcHeight(commandGateSummary, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, commandSummaryHeight), commandGateSummary);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, commandSummaryHeight), commandGateSummary);
 
                 float commandLineY = rewardY + 32f + commandSummaryHeight;
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 for (int i = 0; i < commandGateLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(commandGateLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, commandLineY, rect.width, lineHeight), commandGateLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, commandLineY, rect.width, lineHeight), commandGateLines[i]);
                     commandLineY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -727,14 +727,14 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
 
                 float economySummaryHeight = Text.CalcHeight(economySummary, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, economySummaryHeight), economySummary);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, economySummaryHeight), economySummary);
 
                 float economyLineY = rewardY + 32f + economySummaryHeight;
                 GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
                 for (int i = 0; i < economyLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(economyLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, economyLineY, rect.width, lineHeight), economyLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, economyLineY, rect.width, lineHeight), economyLines[i]);
                     economyLineY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -754,7 +754,7 @@ namespace AbyssalProtocol
                     AbyssalSummoningConsoleUtility.GetRewardVectorFollowUp(ritual)
                 }.Where(line => !line.NullOrEmpty()).ToArray());
             float rewardHeight = Text.CalcHeight(rewardText, rect.width);
-            Widgets.Label(new Rect(rect.x, rewardY + 28f, rect.width, rewardHeight), rewardText);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardY + 28f, rect.width, rewardHeight), rewardText);
 
             float dominionY = rewardY + 36f + rewardHeight + 10f;
             if (AbyssalSummoningConsoleUtility.IsDominionRitual(ritual))
@@ -771,7 +771,7 @@ namespace AbyssalProtocol
                         : "ABY_DominionAnchorPreviewSummaryIdle".Translate();
 
                 float summaryHeight = Text.CalcHeight(summaryText, rect.width);
-                Widgets.Label(new Rect(rect.x, dominionY + 28f, rect.width, summaryHeight), summaryText);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, dominionY + 28f, rect.width, summaryHeight), summaryText);
 
                 float linesY = dominionY + 32f + summaryHeight;
                 List<string> anchorLines = crisis != null ? crisis.GetAnchorConsoleLines() : new List<string>();
@@ -779,7 +779,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < anchorLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(anchorLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, linesY, rect.width, lineHeight), anchorLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, linesY, rect.width, lineHeight), anchorLines[i]);
                     linesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -796,7 +796,7 @@ namespace AbyssalProtocol
                         : "ABY_DominionWavePreviewSummaryIdle".Translate();
 
                 float waveSummaryHeight = Text.CalcHeight(waveSummaryText, rect.width);
-                Widgets.Label(new Rect(rect.x, waveSectionY + 28f, rect.width, waveSummaryHeight), waveSummaryText);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, waveSectionY + 28f, rect.width, waveSummaryHeight), waveSummaryText);
 
                 float waveLinesY = waveSectionY + 32f + waveSummaryHeight;
                 List<string> waveLines = crisis != null ? crisis.GetWaveConsoleLines() : new List<string>();
@@ -804,7 +804,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < waveLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(waveLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, waveLinesY, rect.width, lineHeight), waveLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, waveLinesY, rect.width, lineHeight), waveLines[i]);
                     waveLinesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -819,7 +819,7 @@ namespace AbyssalProtocol
                     : "ABY_DominionGatePreviewSummaryIdle".Translate();
 
                 float gateSummaryHeight = Text.CalcHeight(gateSummaryText, rect.width);
-                Widgets.Label(new Rect(rect.x, gateSectionY + 28f, rect.width, gateSummaryHeight), gateSummaryText);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, gateSectionY + 28f, rect.width, gateSummaryHeight), gateSummaryText);
 
                 float gateLinesY = gateSectionY + 32f + gateSummaryHeight;
                 List<string> gateLines = crisis != null ? crisis.GetGateConsoleLines() : new List<string>();
@@ -827,7 +827,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < gateLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(gateLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, gateLinesY, rect.width, lineHeight), gateLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, gateLinesY, rect.width, lineHeight), gateLines[i]);
                     gateLinesY += lineHeight + 4f;
                 }
                 GUI.color = Color.white;
@@ -848,7 +848,7 @@ namespace AbyssalProtocol
                         "Dominion reward routing is dormant until the breach is attempted on this map.");
 
                 float rewardSummaryHeight = Text.CalcHeight(rewardSummaryText, rect.width);
-                Widgets.Label(new Rect(rect.x, rewardSectionY + 28f, rect.width, rewardSummaryHeight), rewardSummaryText);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardSectionY + 28f, rect.width, rewardSummaryHeight), rewardSummaryText);
 
                 float rewardLinesY = rewardSectionY + 32f + rewardSummaryHeight;
                 List<string> rewardLines = crisis != null ? crisis.GetRewardConsoleLines() : new List<string>();
@@ -857,7 +857,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < rewardLines.Count; i++)
                 {
                     float lineHeight = Text.CalcHeight(rewardLines[i], rect.width);
-                    Widgets.Label(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), rewardLines[i]);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), rewardLines[i]);
                     rewardLinesY += lineHeight + 4f;
                 }
 
@@ -867,7 +867,7 @@ namespace AbyssalProtocol
                     for (int i = 0; i < balanceLines.Count; i++)
                     {
                         float lineHeight = Text.CalcHeight(balanceLines[i], rect.width);
-                        Widgets.Label(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), balanceLines[i]);
+                        ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rewardLinesY, rect.width, lineHeight), balanceLines[i]);
                         rewardLinesY += lineHeight + 4f;
                     }
                 }
@@ -1012,7 +1012,7 @@ namespace AbyssalProtocol
             string slotLabel = installedDef == null ? "ABY_CircleModuleSlotEmpty".Translate(edgeLabel) : "ABY_CircleModuleSlotInstalled".Translate(edgeLabel, installedDef.label.CapitalizeFirst(), AbyssalCircleModuleUtility.GetTierLabel(installedDef));
             Rect labelRect = new Rect(rect.x, rect.y, rect.width - 118f, rect.height);
             GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
-            Widgets.Label(labelRect, slotLabel);
+            ABY_UIPolishUtility.SafeLabel(labelRect, slotLabel);
             GUI.color = Color.white;
             TooltipHandler.TipRegion(rect, AbyssalSummoningConsoleUtility.GetModuleSlotTooltip(circle, edge));
             Rect actionRect = new Rect(rect.xMax - 112f, rect.y - 1f, 112f, rect.height + 2f);
