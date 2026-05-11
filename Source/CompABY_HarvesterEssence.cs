@@ -9,8 +9,10 @@ namespace AbyssalProtocol
     public class CompABY_HarvesterEssence : ThingComp
     {
         private const int MaxTrackedCorpseIds = 512;
+        private const int MaxTrackedDeathPawnIds = 512;
 
         private HashSet<int> registeredCorpseIds = new HashSet<int>();
+        private HashSet<int> registeredDeathPawnIds = new HashSet<int>();
         private int currentHarvestCorpseId = -1;
         private int harvestWarmupTicksRemaining;
         private int essenceStacks;
@@ -25,9 +27,15 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref harvestWarmupTicksRemaining, "harvestWarmupTicksRemaining", 0);
             Scribe_Values.Look(ref essenceStacks, "essenceStacks", 0);
             Scribe_Collections.Look(ref registeredCorpseIds, "registeredCorpseIds", LookMode.Value);
+            Scribe_Collections.Look(ref registeredDeathPawnIds, "registeredDeathPawnIds", LookMode.Value);
             if (registeredCorpseIds == null)
             {
                 registeredCorpseIds = new HashSet<int>();
+            }
+
+            if (registeredDeathPawnIds == null)
+            {
+                registeredDeathPawnIds = new HashSet<int>();
             }
         }
 
@@ -56,6 +64,46 @@ namespace AbyssalProtocol
             ProgressHarvest(pawn);
         }
 
+        public bool NotifyNearbyAbyssalDeath(Pawn deadPawn, IntVec3 focusCell, Map map, int corpseThingId = -1)
+        {
+            Pawn pawn = PawnParent;
+            if (!ShouldOperateNow(pawn) || deadPawn == null || map == null || pawn.MapHeld != map || !focusCell.IsValid)
+            {
+                return false;
+            }
+
+            if (!IsEligibleDeadPawn(pawn, deadPawn))
+            {
+                return false;
+            }
+
+            if (pawn.PositionHeld.DistanceTo(focusCell) > Props.nearbyDeathRadius + 0.35f)
+            {
+                return false;
+            }
+
+            TrimTrackedSetsIfNeeded();
+
+            int deadPawnId = deadPawn.thingIDNumber;
+            if (deadPawnId >= 0 && !registeredDeathPawnIds.Add(deadPawnId))
+            {
+                if (corpseThingId >= 0)
+                {
+                    registeredCorpseIds.Add(corpseThingId);
+                }
+
+                return false;
+            }
+
+            if (corpseThingId >= 0)
+            {
+                registeredCorpseIds.Add(corpseThingId);
+            }
+
+            GainEssence(pawn, Math.Max(0, Props.stackGainPerDeath), focusCell, false);
+            return true;
+        }
+
         private void ScanNearbyCorpses(Pawn pawn)
         {
             List<Thing> corpses = pawn.MapHeld?.listerThings?.ThingsInGroup(ThingRequestGroup.Corpse);
@@ -64,10 +112,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (registeredCorpseIds.Count > MaxTrackedCorpseIds)
-            {
-                registeredCorpseIds.Clear();
-            }
+            TrimTrackedSetsIfNeeded();
 
             for (int i = 0; i < corpses.Count; i++)
             {
@@ -79,10 +124,23 @@ namespace AbyssalProtocol
 
                 float distance = pawn.PositionHeld.DistanceTo(corpse.PositionHeld);
                 if (distance <= Props.nearbyDeathRadius
-                    && corpse.Age <= Props.corpseRecognitionMaxAgeTicks
-                    && registeredCorpseIds.Add(corpse.thingIDNumber))
+                    && corpse.Age <= Props.corpseRecognitionMaxAgeTicks)
                 {
-                    GainEssence(pawn, Math.Max(0, Props.stackGainPerDeath), corpse.PositionHeld, false);
+                    int innerPawnId = corpse.InnerPawn?.thingIDNumber ?? -1;
+                    bool alreadyRegisteredByDeathEvent = innerPawnId >= 0 && registeredDeathPawnIds.Contains(innerPawnId);
+                    if (alreadyRegisteredByDeathEvent)
+                    {
+                        registeredCorpseIds.Add(corpse.thingIDNumber);
+                    }
+                    else if (registeredCorpseIds.Add(corpse.thingIDNumber))
+                    {
+                        if (innerPawnId >= 0)
+                        {
+                            registeredDeathPawnIds.Add(innerPawnId);
+                        }
+
+                        GainEssence(pawn, Math.Max(0, Props.stackGainPerDeath), corpse.PositionHeld, false);
+                    }
                 }
 
                 if (currentHarvestCorpseId >= 0)
@@ -150,6 +208,12 @@ namespace AbyssalProtocol
             }
 
             registeredCorpseIds.Add(corpse.thingIDNumber);
+            int innerPawnId = corpse.InnerPawn?.thingIDNumber ?? -1;
+            if (innerPawnId >= 0)
+            {
+                registeredDeathPawnIds.Add(innerPawnId);
+            }
+
             IntVec3 corpseCell = corpse.PositionHeld;
             Map map = corpse.MapHeld;
             corpse.Destroy(DestroyMode.Vanish);
@@ -227,6 +291,19 @@ namespace AbyssalProtocol
             harvestWarmupTicksRemaining = 0;
         }
 
+        private void TrimTrackedSetsIfNeeded()
+        {
+            if (registeredCorpseIds.Count > MaxTrackedCorpseIds)
+            {
+                registeredCorpseIds.Clear();
+            }
+
+            if (registeredDeathPawnIds.Count > MaxTrackedDeathPawnIds)
+            {
+                registeredDeathPawnIds.Clear();
+            }
+        }
+
         private static bool ShouldOperateNow(Pawn pawn)
         {
             return pawn != null
@@ -273,22 +350,37 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (owner.Faction == null || innerPawn.Faction == null)
-            {
-                return false;
-            }
-
-            if (owner.Faction != innerPawn.Faction || owner.HostileTo(innerPawn))
-            {
-                return false;
-            }
-
-            if (!IsAbyssalPawn(innerPawn) || IsProtectedBossCorpse(innerPawn))
+            if (!IsEligibleDeadPawn(owner, innerPawn))
             {
                 return false;
             }
 
             return corpse.Spawned;
+        }
+
+        private static bool IsEligibleDeadPawn(Pawn owner, Pawn deadPawn)
+        {
+            if (owner == null || deadPawn == null || deadPawn == owner)
+            {
+                return false;
+            }
+
+            if (owner.Faction == null || deadPawn.Faction == null)
+            {
+                return false;
+            }
+
+            if (owner.Faction != deadPawn.Faction || owner.HostileTo(deadPawn))
+            {
+                return false;
+            }
+
+            if (!IsAbyssalPawn(deadPawn) || IsProtectedBossCorpse(deadPawn))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool IsAbyssalPawn(Pawn pawn)
