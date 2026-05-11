@@ -49,15 +49,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // Draw the ground wake after the pawn as well: pure MoteLow prefix drawing was too easy to
-            // lose under terrain/pawn sorting and became invisible in-game. The texture itself stays under
-            // the feet visually; this ordering just makes the pressure wake readable.
+            // Draw the pressure wake after the pawn for readability, but keep it tiny/neutral and anchored
+            // around the feet. The effect is no longer a primary magenta ground smear.
             Vector3 groundLoc = drawLoc;
             groundLoc.z -= ABY_HoverArmorUtility.ComputePawnLiftZ(___pawn, extension);
             ABY_HoverArmorRenderUtility.DrawGroundWakeFx(___pawn, groundLoc, extension);
 
-            // Vector thrusters are now secondary: visible mainly from the rear and intentionally muted
-            // from front/side angles so the hover read comes from the ground wake rather than face-level jets.
+            // Vector thrusters are secondary: rear view keeps the readable engine silhouette, side view gets
+            // one compact down-back accent, and front view has no face-level jets.
             ABY_HoverArmorRenderUtility.DrawVectorThrusterFx(___pawn, drawLoc, extension);
         }
     }

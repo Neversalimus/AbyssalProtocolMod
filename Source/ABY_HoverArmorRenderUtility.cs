@@ -30,11 +30,11 @@ namespace AbyssalProtocol
             int ticks = ABY_HoverArmorUtility.SafeTicksGame();
             int startTick = ResolveFlightRigStartTick(pawn, ticks);
             float age = Mathf.Max(0f, ticks - startTick);
-            float fade = Mathf.Clamp01(age / 10f);
+            float fade = Mathf.Clamp01(age / 12f);
             float seed = Mathf.Abs((pawn.thingIDNumber * 47) % 997);
             bool moving = pawn.pather != null && pawn.pather.MovingNow;
-            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.245f : 0.150f));
-            float hotPulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.37f) * (moving ? 0.360f : 0.205f));
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.205f : 0.125f));
+            float hotPulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.37f) * (moving ? 0.290f : 0.170f));
             float motionAlpha = moving ? Mathf.Max(0f, extension.vectorThrusterMotionAlphaBonus) : 0f;
             float motionScale = moving ? Mathf.Max(0f, extension.vectorThrusterMotionScaleBonus) : 0f;
 
@@ -45,28 +45,26 @@ namespace AbyssalProtocol
 
             switch (pawn.Rotation.AsInt)
             {
-                case 0: // North/back: keep the strong rear-thruster silhouette that tested well.
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 0, 0.94f, 0.86f, 0.90f, true, true, 0f);
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 1, 0.94f, 0.86f, 0.90f, true, true, 0f);
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 2, 1.00f, 1.00f, 1.00f, true, true, 0f);
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, -extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 3, 1.00f, 1.00f, 1.00f, true, true, 0f);
+                case 0: // North/back: this is the primary readable engine angle. Keep it coherent, but less noisy.
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha * 0.72f, motionScale * 0.72f, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset * 0.82f, extension.vectorThrusterShoulderScale, 0, 0.72f, 0.50f, 0.52f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha * 0.72f, motionScale * 0.72f, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset * 0.82f, extension.vectorThrusterShoulderScale, 1, 0.72f, 0.50f, 0.52f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha * 0.82f, motionScale * 0.82f, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset * 0.90f, extension.vectorThrusterHipScale, 2, 0.84f, 0.64f, 0.62f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha * 0.82f, motionScale * 0.82f, extension.vectorThrusterLowerBackOffset, -extension.vectorThrusterLowerSideOffset * 0.90f, extension.vectorThrusterHipScale, 3, 0.84f, 0.64f, 0.62f, true, true, 0f);
                     if (moving)
                     {
-                        DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 2, 0.55f, 0.70f, 0.80f, 0.72f);
+                        DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 1, 0.18f, 0.42f, 0.46f, 0.42f);
                     }
                     break;
 
-                case 2: // South/front: almost no visible face-level thrusters; ground wake carries the hover read.
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 0f, 0f, extension.vectorThrusterLowerBackOffset + 0.020f, extension.vectorThrusterLowerSideOffset * 0.38f, extension.vectorThrusterHipScale * 0.70f, 2, 0.52f, 0.00f, 0.14f, false, true, 0f);
-                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 0f, 0f, extension.vectorThrusterLowerBackOffset + 0.020f, -extension.vectorThrusterLowerSideOffset * 0.38f, extension.vectorThrusterHipScale * 0.70f, 3, 0.52f, 0.00f, 0.14f, false, true, 0f);
+                case 2: // South/front: no face-level thrusters. Hover read comes from lift and tiny pressure wake.
                     break;
 
-                case 1: // East side: compact down-back accent only.
-                    DrawSideThrusterSet(pawn, extension, pawnDrawLoc, back, right, -1f, ticks, fade, pulse, hotPulse, motionAlpha, motionScale);
+                case 1: // East side: one compact down-back accent, not a horizontal laser.
+                    DrawSideThrusterSet(pawn, extension, pawnDrawLoc, back, -1f, ticks, fade, pulse, hotPulse, motionAlpha, motionScale);
                     break;
 
-                case 3: // West side: compact down-back accent only.
-                    DrawSideThrusterSet(pawn, extension, pawnDrawLoc, back, right, 1f, ticks, fade, pulse, hotPulse, motionAlpha, motionScale);
+                case 3: // West side: mirrored compact down-back accent.
+                    DrawSideThrusterSet(pawn, extension, pawnDrawLoc, back, 1f, ticks, fade, pulse, hotPulse, motionAlpha, motionScale);
                     break;
             }
         }
@@ -124,11 +122,11 @@ namespace AbyssalProtocol
             int ticks = ABY_HoverArmorUtility.SafeTicksGame();
             int startTick = ResolveFlightRigStartTick(pawn, ticks);
             float age = Mathf.Max(0f, ticks - startTick);
-            float fade = Mathf.Clamp01(age / 8f);
+            float fade = Mathf.Clamp01(age / 14f);
             float seed = Mathf.Abs((pawn.thingIDNumber * 31) % 997);
             bool moving = pawn.pather != null && pawn.pather.MovingNow;
-            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.190f : 0.120f));
-            float shimmer = Mathf.Sin((ticks + seed * 0.61f) * 0.245f);
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed) * (moving ? 0.155f : 0.090f));
+            float shimmer = Mathf.Sin((ticks + seed * 0.61f) * 0.175f);
             float motionAlpha = moving ? Mathf.Max(0f, extension.groundWakeMotionAlphaBonus) : 0f;
             float motionLength = moving ? Mathf.Max(0f, extension.groundWakeMotionLengthBonus) : 0f;
 
@@ -144,51 +142,37 @@ namespace AbyssalProtocol
             float angle = AngleForDirection(trail);
 
             float baseScale = Mathf.Max(0.05f, extension.groundWakeScale);
-            float width = Mathf.Max(0.05f, baseScale * Mathf.Max(0.05f, extension.groundWakeWidthScale) * (1.00f + pulse * 0.12f));
-            float depth = Mathf.Max(0.08f, baseScale * Mathf.Max(0.05f, extension.groundWakeLengthScale) * (0.95f + pulse * Mathf.Max(0f, extension.groundWakePulseScale) + motionLength));
-            float alpha = Mathf.Clamp01((extension.groundWakeAlpha + pulse * extension.groundWakePulseAlpha + motionAlpha) * fade);
-            float rotationNoise = shimmer * (moving ? 4.5f : 2.4f);
+            float width = Mathf.Max(0.05f, baseScale * Mathf.Max(0.05f, extension.groundWakeWidthScale) * (0.92f + pulse * 0.07f));
+            float depth = Mathf.Max(0.08f, baseScale * Mathf.Max(0.05f, extension.groundWakeLengthScale) * (0.76f + pulse * Mathf.Max(0f, extension.groundWakePulseScale) + motionLength));
+            float baseAlpha = extension.groundWakeAlpha + pulse * extension.groundWakePulseAlpha + motionAlpha;
+            float alpha = Mathf.Clamp01(baseAlpha * fade * (moving ? 1f : 0.58f));
+            float rotationNoise = shimmer * (moving ? 2.2f : 1.1f);
 
-            // Keep the main pressure smear close enough to the pawn that it is visible even while idle
-            // and in south/front view. The old full back offset put the effect mostly behind the body.
+            // Keep the pressure distortion close to the feet. It must read as air/ground shear, not a ring or aura.
             float backOffset = Mathf.Max(0f, extension.groundWakeBackOffset);
-            Vector3 baseLoc = groundDrawLoc + trail * (backOffset * (moving ? 0.82f : 0.42f));
+            Vector3 baseLoc = groundDrawLoc + trail * (backOffset * (moving ? 0.72f : 0.28f));
             baseLoc.y = GroundWakeLayerY(extension, 0);
 
             if (!extension.groundDistortionTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.groundDistortionTexPath, baseLoc + new Vector3(0f, 0.001f, 0f), width * 1.45f, depth * 1.10f, ShaderDatabase.TransparentPostLight, alpha * 0.82f, angle + rotationNoise);
+                DrawPlane(extension.groundDistortionTexPath, baseLoc + new Vector3(0f, 0.001f, 0f), width * 1.05f, depth * 0.82f, ShaderDatabase.TransparentPostLight, alpha * 0.52f, angle + rotationNoise);
             }
 
             if (!extension.groundWakeTexPath.NullOrEmpty())
             {
-                DrawPlane(extension.groundWakeTexPath, baseLoc + new Vector3(0f, 0.002f, 0f), width * 1.08f, depth, ShaderDatabase.MoteGlow, alpha * 0.98f, angle + rotationNoise * 0.45f);
+                DrawPlane(extension.groundWakeTexPath, baseLoc + new Vector3(0f, 0.002f, 0f), width * 0.82f, depth * 0.70f, ShaderDatabase.TransparentPostLight, alpha * 0.46f, angle + rotationNoise * 0.45f);
             }
 
-            // Side shear lanes make the ground effect readable around the pawn silhouette without becoming
-            // a circular underfoot ring. They are always present, but stronger when moving.
-            if (!extension.groundWakeTexPath.NullOrEmpty())
+            if (moving && !extension.groundWakeTexPath.NullOrEmpty())
             {
-                float laneAlpha = alpha * (moving ? 0.62f : 0.34f);
-                float laneDepth = depth * (moving ? 0.78f : 0.52f);
-                float laneWidth = width * (moving ? 0.46f : 0.34f);
                 for (int i = 0; i < 2; i++)
                 {
                     float sideSign = i == 0 ? -1f : 1f;
-                    float lanePhase = Mathf.Sin((ticks + seed + i * 37) * 0.190f);
-                    Vector3 laneLoc = groundDrawLoc + right * sideSign * (extension.groundWakeSideOffset + lanePhase * 0.020f) + trail * (backOffset * 0.24f + i * 0.020f);
+                    float lanePhase = Mathf.Sin((ticks + seed + i * 37) * 0.150f);
+                    Vector3 laneLoc = groundDrawLoc + right * sideSign * (extension.groundWakeSideOffset + lanePhase * 0.010f) + trail * (backOffset * 0.42f + i * 0.018f);
                     laneLoc.y = GroundWakeLayerY(extension, i + 1);
-                    DrawPlane(extension.groundWakeTexPath, laneLoc, laneWidth, laneDepth, ShaderDatabase.MoteGlow, laneAlpha, angle + rotationNoise + sideSign * 7f);
+                    DrawPlane(extension.groundWakeTexPath, laneLoc, width * 0.26f, depth * 0.46f, ShaderDatabase.TransparentPostLight, alpha * 0.22f, angle + rotationNoise + sideSign * 4f);
                 }
-            }
-
-            // A small central shimmer prevents the effect from disappearing while the pawn is drafted but
-            // standing still. It is an elongated distortion, not a rune/ring.
-            if (!moving && !extension.groundDistortionTexPath.NullOrEmpty())
-            {
-                Vector3 centerLoc = groundDrawLoc + trail * 0.035f;
-                centerLoc.y = GroundWakeLayerY(extension, 3);
-                DrawPlane(extension.groundDistortionTexPath, centerLoc, width * 0.92f, depth * 0.42f, ShaderDatabase.TransparentPostLight, alpha * 0.55f, angle - rotationNoise * 0.35f);
             }
         }
 
@@ -223,14 +207,14 @@ namespace AbyssalProtocol
             // does not draw a separate overhead halo.
         }
 
-        private static void DrawSideThrusterSet(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float visualSideSign, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale)
+        private static void DrawSideThrusterSet(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, float visualSideSign, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale)
         {
-            Vector3 downBack = (back + new Vector3(0f, 0f, -0.45f)).normalized;
+            Vector3 downBack = (back + new Vector3(0f, 0f, -0.50f)).normalized;
             Vector3 sideRight = RightVector(-back);
             float sideAngle = AngleForDirection(downBack);
 
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, sideRight, sideAngle, ticks, fade, pulse, hotPulse, motionAlpha * 0.40f, motionScale * 0.34f, extension.vectorThrusterBackOffset + 0.020f, visualSideSign * extension.vectorThrusterSideOffset * 0.06f, extension.vectorThrusterShoulderScale * 0.55f, 0, 0.46f, 0.12f, 0.18f, true, true, 0f);
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, sideRight, sideAngle, ticks, fade, pulse, hotPulse, motionAlpha * 0.55f, motionScale * 0.42f, extension.vectorThrusterLowerBackOffset + 0.035f, visualSideSign * extension.vectorThrusterLowerSideOffset * 0.12f, extension.vectorThrusterHipScale * 0.70f, 1, 0.58f, 0.20f, 0.26f, true, true, 0f);
+            // One restrained hip/nozzle accent only. This removes the old horizontal beam look.
+            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, sideRight, sideAngle, ticks, fade, pulse, hotPulse, motionAlpha * 0.22f, motionScale * 0.20f, extension.vectorThrusterLowerBackOffset + 0.018f, visualSideSign * extension.vectorThrusterLowerSideOffset * 0.06f, extension.vectorThrusterHipScale * 0.56f, 1, 0.42f, 0.15f, 0.18f, true, true, 0f);
         }
 
         private static void DrawThrusterEmitter(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale, float backOffset, float sideOffset, float scaleMult, int slot, float effectScale, float burstAlphaMult, float glowAlphaMult, bool drawBurst, bool drawGlow, float angleOffset)
@@ -418,9 +402,9 @@ namespace AbyssalProtocol
 
         private static float GroundWakeLayerY(ABY_HoverArmorExtension extension, int slot)
         {
-            // MoteOverhead-level sorting keeps the VFX visible after pawn rendering. The planes are
-            // placed only around the feet/ground wake, so they do not cover the face or torso.
-            return AltitudeLayer.MoteOverhead.AltitudeFor() + ResolveGroundWakeAltitudeOffset(extension) + slot * 0.002f;
+            // Draw after the pawn for visibility, but keep the altitude near the ground and use muted assets
+            // so the pressure wake stays environmental instead of becoming a new aura layer.
+            return AltitudeLayer.MoteLow.AltitudeFor() + ResolveGroundWakeAltitudeOffset(extension) + slot * 0.0015f;
         }
 
         private static float ResolveVectorThrusterAngle(Rot4 rot)
@@ -428,9 +412,9 @@ namespace AbyssalProtocol
             switch (rot.AsInt)
             {
                 case 1:
-                    return -70f;
+                    return -58f;
                 case 3:
-                    return 70f;
+                    return 58f;
                 default:
                     return 0f;
             }
