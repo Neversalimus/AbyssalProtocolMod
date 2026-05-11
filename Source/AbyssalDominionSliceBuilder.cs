@@ -13,6 +13,45 @@ namespace AbyssalProtocol
         private const string SigilPadDefName = "ABY_DominionSliceSigilPad";
         private const string PerimeterWallDefName = "ABY_DominionSlicePerimeterWall";
 
+        private static readonly string[] DominionRuinWallDefs =
+        {
+            "ABY_DominionRuinWallStraightA",
+            "ABY_DominionRuinWallStraightBrokenA",
+            "ABY_DominionRuinWallCornerA",
+            "ABY_DominionRuinWallCornerBrokenA",
+            "ABY_DominionRuinWallTJunctionA",
+            "ABY_DominionRuinWallTJunctionBrokenA",
+            "ABY_DominionPerimeterBarricadeA",
+            "ABY_DominionPerimeterBarricadeBrokenA",
+            "ABY_DominionPerimeterCollapseA",
+            "ABY_DominionPerimeterCollapseB"
+        };
+
+        private static readonly string[] DominionRubbleDefs =
+        {
+            "ABY_DominionRubblePileA",
+            "ABY_DominionPlateClusterA",
+            "ABY_DominionPlateClusterB",
+            "ABY_DominionConduitScrapA",
+            "ABY_DominionConduitScrapB",
+            "ABY_DominionIndustrialWreckageA",
+            "ABY_DominionReactorRingFragmentA"
+        };
+
+        private static readonly string[] DominionDecalDefs =
+        {
+            "ABY_DominionSootPatchA",
+            "ABY_DominionScorchCraterA",
+            "ABY_DominionAshPatchA",
+            "ABY_DominionAshPatchB",
+            "ABY_DominionBrokenPlateDustA",
+            "ABY_DominionDarkScatterA",
+            "ABY_DominionDustClusterA",
+            "ABY_DominionExcavationScarA",
+            "ABY_DominionExcavationScarB",
+            "ABY_DominionSootMoundA"
+        };
+
         public static bool TryPrepareDominionSlice(Map map, ABY_DominionPocketSession session, out string failReason)
         {
             failReason = null;
@@ -392,6 +431,13 @@ namespace AbyssalProtocol
             SpawnRewardPocketDressings(map, rewardPocket, reserved);
             SpawnPeripheralSpines(map, center, reserved);
             SpawnEntryDressings(map, entry, extraction, reserved);
+
+            // Package 3: integrate the new Dominion Sepulcher decor library as a restrained
+            // environmental layer. These props are deliberately kept away from heart/anchor/entry
+            // routes so the redesign adds atmosphere without turning the pocket map into a maze.
+            SpawnDominionRuinWallLayer(map, center, extraction, west, east, north, rewardPocket, reserved);
+            SpawnDominionRubbleLayer(map, center, extraction, west, east, north, rewardPocket, reserved);
+            SpawnDominionQuietDecalLayer(map, center, extraction, west, east, north, rewardPocket, reserved);
         }
 
         private static List<IntVec3> BuildReservedCells(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
@@ -499,6 +545,149 @@ namespace AbyssalProtocol
             TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(14, 0, -3), Rot4.East, reserved, 4f);
         }
 
+        private static void SpawnDominionRuinWallLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 0), center + new IntVec3(-34, 0, -22), Rot4.West, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 1), center + new IntVec3(34, 0, -19), Rot4.East, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 2), center + new IntVec3(-39, 0, 16), Rot4.West, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 3), center + new IntVec3(39, 0, 18), Rot4.East, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 4), center + new IntVec3(-24, 0, 34), Rot4.North, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 5), center + new IntVec3(27, 0, 35), Rot4.North, reserved, 7.5f, false);
+
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 6), extraction + new IntVec3(-18, 0, 9), Rot4.West, reserved, 6f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 7), extraction + new IntVec3(18, 0, 9), Rot4.East, reserved, 6f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), rewardPocket + new IntVec3(-12, 0, 9), Rot4.West, reserved, 6f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), rewardPocket + new IntVec3(10, 0, 9), Rot4.East, reserved, 6f, false);
+
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 7), west + new IntVec3(-14, 0, -10), Rot4.West, reserved, 7f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 6), east + new IntVec3(14, 0, -10), Rot4.East, reserved, 7f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), north + new IntVec3(-14, 0, 15), Rot4.North, reserved, 7f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), north + new IntVec3(14, 0, 15), Rot4.North, reserved, 7f, false);
+        }
+
+        private static void SpawnDominionRubbleLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), center + new IntVec3(-20, 0, -17), Rot4.North, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 1), center + new IntVec3(21, 0, -16), Rot4.North, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 2), center + new IntVec3(-29, 0, 4), Rot4.North, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 3), center + new IntVec3(30, 0, 3), Rot4.East, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 4), center + new IntVec3(-15, 0, 24), Rot4.West, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 5), center + new IntVec3(17, 0, 25), Rot4.East, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 6), center + new IntVec3(3, 0, -28), Rot4.North, reserved, 5f, false);
+
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 2), west + new IntVec3(-8, 0, -8), Rot4.North, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 3), west + new IntVec3(-8, 0, 11), Rot4.West, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 4), east + new IntVec3(8, 0, -8), Rot4.East, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 5), east + new IntVec3(8, 0, 11), Rot4.North, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), north + new IntVec3(-10, 0, 8), Rot4.North, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 1), north + new IntVec3(10, 0, 8), Rot4.North, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 6), rewardPocket + new IntVec3(-9, 0, -9), Rot4.North, reserved, 4.5f, false);
+        }
+
+        private static void SpawnDominionQuietDecalLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            float[] radii = { 19f, 25f, 32f, 39f, 45f };
+            float[] angles = { 9f, 34f, 73f, 111f, 151f, 187f, 222f, 259f, 301f, 337f };
+            int index = 0;
+            for (int r = 0; r < radii.Length; r++)
+            {
+                for (int a = 0; a < angles.Length; a += 2)
+                {
+                    float angle = (angles[(a + r) % angles.Length] + r * 5f) * Mathf.Deg2Rad;
+                    IntVec3 cell = ClampToInterior(map, new IntVec3(
+                        center.x + GenMath.RoundRandom(Mathf.Cos(angle) * radii[r]),
+                        0,
+                        center.z + GenMath.RoundRandom(Mathf.Sin(angle) * radii[r])));
+                    TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), cell, Rot4.North, reserved, 3.25f, false);
+                }
+            }
+
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(-7, 0, -7), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(7, 0, -7), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), west + new IntVec3(0, 0, -11), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), east + new IntVec3(0, 0, -11), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), north + new IntVec3(0, 0, 12), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), rewardPocket + new IntVec3(0, 0, 7), Rot4.North, reserved, 3f, false);
+        }
+
+        private static string SelectDef(string[] defs, int index)
+        {
+            if (defs == null || defs.Length == 0)
+            {
+                return null;
+            }
+
+            int safeIndex = Mathf.Abs(index) % defs.Length;
+            return defs[safeIndex];
+        }
+
+        private static bool TrySpawnDominionDecoration(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> reserved, float minDistance, bool clearExisting)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return false;
+            }
+
+            if (map == null || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (cell.x < 8 || cell.z < 8 || cell.x > map.Size.x - 9 || cell.z > map.Size.z - 9)
+            {
+                return false;
+            }
+
+            float minDistanceSq = minDistance * minDistance;
+            for (int i = 0; i < reserved.Count; i++)
+            {
+                IntVec3 reservedCell = reserved[i];
+                int dx = cell.x - reservedCell.x;
+                int dz = cell.z - reservedCell.z;
+                if (dx * dx + dz * dz <= minDistanceSq)
+                {
+                    return false;
+                }
+            }
+
+            if (!clearExisting && CellContainsNonEphemeralThing(map, cell))
+            {
+                return false;
+            }
+
+            SpawnProp(map, defName, cell, rot, clearExisting);
+            reserved.Add(cell);
+            return true;
+        }
+
+        private static bool CellContainsNonEphemeralThing(Map map, IntVec3 cell)
+        {
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || thing is Pawn || thing.def == null)
+                {
+                    continue;
+                }
+
+                if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
+                {
+                    continue;
+                }
+
+                string defName = thing.def.defName ?? string.Empty;
+                if (defName == "PocketMapExit" || defName == "CaveExit" || defName == "PitGate")
+                {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         private static bool TrySpawnDecorativeProp(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> reserved, float minDistance)
         {
             if (map == null || !cell.InBounds(map))
@@ -524,6 +713,7 @@ namespace AbyssalProtocol
             }
 
             SpawnProp(map, defName, cell, rot);
+            reserved.Add(cell);
             return true;
         }
 
@@ -549,6 +739,11 @@ namespace AbyssalProtocol
 
         private static void SpawnProp(Map map, string defName, IntVec3 cell, Rot4 rot)
         {
+            SpawnProp(map, defName, cell, rot, true);
+        }
+
+        private static void SpawnProp(Map map, string defName, IntVec3 cell, Rot4 rot, bool clearExisting)
+        {
             if (map == null || !cell.InBounds(map))
             {
                 return;
@@ -560,32 +755,35 @@ namespace AbyssalProtocol
                 return;
             }
 
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = things.Count - 1; i >= 0; i--)
+            if (clearExisting)
             {
-                Thing thing = things[i];
-                if (thing == null || thing.Destroyed || thing is Pawn || thing.def == null)
+                List<Thing> things = cell.GetThingList(map);
+                for (int i = things.Count - 1; i >= 0; i--)
                 {
-                    continue;
-                }
+                    Thing thing = things[i];
+                    if (thing == null || thing.Destroyed || thing is Pawn || thing.def == null)
+                    {
+                        continue;
+                    }
 
-                if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
-                {
-                    continue;
-                }
+                    if (thing.def.category == ThingCategory.Mote || thing.def.category == ThingCategory.Attachment)
+                    {
+                        continue;
+                    }
 
-                string existingDefName = thing.def.defName ?? string.Empty;
-                if (!thing.def.useHitPoints || existingDefName == "PocketMapExit" || existingDefName == "CaveExit" || existingDefName == "PitGate")
-                {
-                    continue;
-                }
+                    string existingDefName = thing.def.defName ?? string.Empty;
+                    if (!thing.def.useHitPoints || existingDefName == "PocketMapExit" || existingDefName == "CaveExit" || existingDefName == "PitGate")
+                    {
+                        continue;
+                    }
 
-                try
-                {
-                    thing.Destroy(DestroyMode.Vanish);
-                }
-                catch
-                {
+                    try
+                    {
+                        thing.Destroy(DestroyMode.Vanish);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
