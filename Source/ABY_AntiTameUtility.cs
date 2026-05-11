@@ -292,6 +292,33 @@ namespace AbyssalProtocol
             return raceName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase);
         }
 
+        public static bool IsAnimalWorkflowDesignationDef(DesignationDef def)
+        {
+            return IsAnimalWorkflowDesignation(def);
+        }
+
+        public static bool IsAnimalWorkflowJobDef(JobDef def)
+        {
+            return IsAnimalWorkflowJob(def);
+        }
+
+        public static bool JobTargetsAbyssalPawn(Job job)
+        {
+            if (job == null)
+            {
+                return false;
+            }
+
+            return IsAbyssalPawn(job.targetA.Thing as Pawn)
+                || IsAbyssalPawn(job.targetB.Thing as Pawn)
+                || IsAbyssalPawn(job.targetC.Thing as Pawn);
+        }
+
+        public static bool IsAbyssalAnimalWorkflowJob(Job job)
+        {
+            return job != null && IsAnimalWorkflowJob(job.def) && JobTargetsAbyssalPawn(job);
+        }
+
         private static bool ShouldForceAbyssalFaction(Pawn pawn)
         {
             if (pawn == null || pawn.Dead)

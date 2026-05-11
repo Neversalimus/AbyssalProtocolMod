@@ -31,7 +31,7 @@
       <baseHealthScale>1.0</baseHealthScale>
       <baseHungerRate>0.42</baseHungerRate>
       <fleshType>Normal</fleshType>
-      <intelligence>Animal</intelligence>
+      <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
       <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
       <gestationPeriodDays>8</gestationPeriodDays>

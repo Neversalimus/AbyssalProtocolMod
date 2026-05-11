@@ -312,11 +312,6 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!target.def.useHitPoints)
-            {
-                return false;
-            }
-
             if (target.def.category == ThingCategory.Mote || target.def.category == ThingCategory.Projectile || target is Fire)
             {
                 return false;
@@ -325,7 +320,12 @@ namespace AbyssalProtocol
             Pawn targetPawn = target as Pawn;
             if (targetPawn != null)
             {
-                return !targetPawn.Dead && GenHostility.HostileTo(source, targetPawn);
+                return !targetPawn.Dead && !targetPawn.Destroyed;
+            }
+
+            if (!target.def.useHitPoints)
+            {
+                return false;
             }
 
             if (target.Faction != null && source.Faction != null && target.Faction == source.Faction)
