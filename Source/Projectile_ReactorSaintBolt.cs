@@ -108,6 +108,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            bool directPawnHit = hitThing is Pawn;
             ApplyStructureImpactBonus(hitThing, impactCell, impactMap, instigator, phaseFactor);
             GenExplosion.DoExplosion(
                 impactCell,
@@ -116,7 +117,9 @@ namespace AbyssalProtocol
                 DamageDefOf.Burn,
                 instigator,
                 Mathf.RoundToInt(SplashDamage * phaseFactor),
-                SplashArmorPenetration * phaseFactor);
+                SplashArmorPenetration * phaseFactor,
+                doVisualEffects: !directPawnHit,
+                screenShakeFactor: directPawnHit ? 0f : 1f);
         }
 
         private static void ApplyStructureImpactBonus(Thing hitThing, IntVec3 impactCell, Map map, Thing instigator, float phaseFactor)

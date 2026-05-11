@@ -64,35 +64,32 @@ namespace AbyssalProtocol
 
         private static bool HasActiveDebugToolField()
         {
-            int tick = Find.TickManager != null ? Find.TickManager.TicksGame : -999999;
-            if (cachedActiveToolTick == tick)
+            int tick = Find.TickManager?.TicksGame ?? -1;
+            if (tick == cachedActiveToolTick)
             {
                 return cachedActiveToolResult;
             }
 
-            cachedActiveToolTick = tick;
-            cachedActiveToolResult = HasActiveDebugToolFieldUncached();
-            return cachedActiveToolResult;
-        }
-
-        private static bool HasActiveDebugToolFieldUncached()
-        {
+            bool result = false;
             try
             {
                 if (HasActiveDebugToolFieldOnType(AccessTools.TypeByName("LudeonTK.DebugTools")))
                 {
-                    return true;
+                    result = true;
                 }
-                if (HasActiveDebugToolFieldOnType(AccessTools.TypeByName("Verse.DebugTools") ?? typeof(Log).Assembly.GetType("Verse.DebugTools")))
+                else if (HasActiveDebugToolFieldOnType(AccessTools.TypeByName("Verse.DebugTools") ?? typeof(Log).Assembly.GetType("Verse.DebugTools")))
                 {
-                    return true;
+                    result = true;
                 }
             }
             catch
             {
+                result = false;
             }
 
-            return false;
+            cachedActiveToolTick = tick;
+            cachedActiveToolResult = result;
+            return result;
         }
 
         private static bool HasActiveDebugToolFieldOnType(Type debugToolsType)

@@ -110,6 +110,11 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            {
+                return;
+            }
+
             if (!pawn.Dead && (pawn.Downed || pawn.health?.ShouldBeDead() == true || pawn.health?.ShouldBeDowned() == true))
             {
                 ABY_BossTrueDeathUtility.StabilizePawnBody(pawn, Props);
@@ -121,15 +126,6 @@ namespace AbyssalProtocol
         {
             base.PostPostApplyDamage(dinfo, totalDamageDealt);
             if (deathAuthorized || PawnParent == null || PawnParent.Destroyed || PawnParent.Dead)
-            {
-                return;
-            }
-
-            // Do not call the reflective debug-tool / stack-trace detector from normal damage flow.
-            // Reactor Saint can receive many damage callbacks per second, and on Dev Mode maps the
-            // old check was enough to tank FPS/TPS even when no logs were produced. Dev-tool kill
-            // bypass remains handled in the Pawn.Kill / health-state Harmony path.
-            if (ABY_DevToolUtility.IsRecentDebugToolAction(3))
             {
                 return;
             }

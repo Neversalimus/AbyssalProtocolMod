@@ -18,11 +18,6 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn pawn, HediffDef hdDef)
         {
-            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hdDef))
-            {
-                return true;
-            }
-
             return !ABY_AbyssalDiseaseUtility.TryBlockHediffAdd(pawn, hdDef);
         }
     }
@@ -40,7 +35,7 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, HediffDef def, ref Hediff __result)
         {
-            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(def))
+            if (!ABY_AbyssalDiseaseUtility.CouldBeBlockedHediff(def))
             {
                 return true;
             }
@@ -69,7 +64,7 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, HediffDef def, ref Hediff __result)
         {
-            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(def))
+            if (!ABY_AbyssalDiseaseUtility.CouldBeBlockedHediff(def))
             {
                 return true;
             }
@@ -98,7 +93,7 @@ namespace AbyssalProtocol
 
         private static bool Prefix(Pawn_HealthTracker __instance, Hediff hediff)
         {
-            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hediff))
+            if (!ABY_AbyssalDiseaseUtility.CouldBeBlockedHediff(hediff))
             {
                 return true;
             }
@@ -121,7 +116,7 @@ namespace AbyssalProtocol
 
         private static bool Prefix(HediffSet __instance, Hediff hediff)
         {
-            if (!ABY_AbyssalDiseaseUtility.MightBlockHediff(hediff))
+            if (!ABY_AbyssalDiseaseUtility.CouldBeBlockedHediff(hediff))
             {
                 return true;
             }
