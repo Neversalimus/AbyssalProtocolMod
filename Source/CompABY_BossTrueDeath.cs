@@ -10,7 +10,12 @@ namespace AbyssalProtocol
         private float maxBossHitPointsSnapshot = -1f;
         private bool deathAuthorized;
         private int lastRegisteredDamageTick = -999999;
+        private int lastBodyStabilizeTick = -999999;
         private int lastSuppressedKillTick = -999999;
+
+        private const int DamageBodyStabilizeCooldownTicks = 45;
+        private const int ForcedBodyStabilizeCooldownTicks = 1;
+        private const int DownedWatchdogIntervalTicks = 120;
         private float lastSuppressedKillDamage;
         private bool suppressedKillDamageConsumed;
 
@@ -53,7 +58,7 @@ namespace AbyssalProtocol
             EnsureInitialized();
             if (!deathAuthorized && HasBossHitPointsRemaining)
             {
-                ABY_BossTrueDeathUtility.StabilizePawnBody(PawnParent, Props);
+                StabilizePawnBodyThrottled(force: true);
             }
         }
 
@@ -64,6 +69,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref maxBossHitPointsSnapshot, "abyTrueDeath_maxBossHitPointsSnapshot", -1f);
             Scribe_Values.Look(ref deathAuthorized, "abyTrueDeath_deathAuthorized", false);
             Scribe_Values.Look(ref lastRegisteredDamageTick, "abyTrueDeath_lastRegisteredDamageTick", -999999);
+            Scribe_Values.Look(ref lastBodyStabilizeTick, "abyTrueDeath_lastBodyStabilizeTick", -999999);
             Scribe_Values.Look(ref lastSuppressedKillTick, "abyTrueDeath_lastSuppressedKillTick", -999999);
             Scribe_Values.Look(ref lastSuppressedKillDamage, "abyTrueDeath_lastSuppressedKillDamage", 0f);
             Scribe_Values.Look(ref suppressedKillDamageConsumed, "abyTrueDeath_suppressedKillDamageConsumed", false);
@@ -105,19 +111,17 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (Find.TickManager != null && Find.TickManager.TicksGame % 30 != 0)
+            // Keep the safety watchdog cheap. The Harmony health-state patches already suppress
+            // vanilla death/downed transitions; polling ShouldBeDead/ShouldBeDowned every 30 ticks
+            // re-enters those Harmony paths and caused regular spikes during boss fights.
+            if (Find.TickManager != null && Find.TickManager.TicksGame % DownedWatchdogIntervalTicks != 0)
             {
                 return;
             }
 
-            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            if (!pawn.Dead && pawn.Downed)
             {
-                return;
-            }
-
-            if (!pawn.Dead && (pawn.Downed || pawn.health?.ShouldBeDead() == true || pawn.health?.ShouldBeDowned() == true))
-            {
-                ABY_BossTrueDeathUtility.StabilizePawnBody(pawn, Props);
+                StabilizePawnBodyThrottled(force: true);
                 TryForceReengage();
             }
         }
@@ -208,7 +212,7 @@ namespace AbyssalProtocol
 
             if (!deathAuthorized && pawn != null && !pawn.Destroyed && !pawn.Dead)
             {
-                ABY_BossTrueDeathUtility.StabilizePawnBody(pawn, Props);
+                StabilizePawnBodyThrottled(force: true);
                 TryForceReengage();
             }
 
@@ -222,7 +226,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ABY_BossTrueDeathUtility.StabilizePawnBody(PawnParent, Props);
+            StabilizePawnBodyThrottled(force: true);
             TryForceReengage();
         }
 
@@ -257,7 +261,7 @@ namespace AbyssalProtocol
 
             if (Props.stabilizeOnEveryDamage)
             {
-                ABY_BossTrueDeathUtility.StabilizePawnBody(PawnParent, Props);
+                StabilizePawnBodyThrottled(force: false);
             }
         }
 
@@ -276,6 +280,26 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+
+        private void StabilizePawnBodyThrottled(bool force)
+        {
+            Pawn pawn = PawnParent;
+            if (pawn == null || pawn.Destroyed || pawn.Dead)
+            {
+                return;
+            }
+
+            int tick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int cooldown = force ? ForcedBodyStabilizeCooldownTicks : DamageBodyStabilizeCooldownTicks;
+            if (lastBodyStabilizeTick == tick || (!force && tick - lastBodyStabilizeTick < cooldown))
+            {
+                return;
+            }
+
+            ABY_BossTrueDeathUtility.StabilizePawnBody(pawn, Props);
+            lastBodyStabilizeTick = tick;
         }
 
         private void AuthorizeAndKill(DamageInfo? dinfo, Hediff exactCulprit)

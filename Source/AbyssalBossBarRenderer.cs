@@ -445,21 +445,15 @@ namespace AbyssalProtocol
                 return;
             }
 
+            // Draw with the normal abyssal button skin again. Click handling is kept in
+            // HandleInput() so the boss bar does not rebuild on every MouseDown/Layout event.
             string label = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossBar_AdjustShort", "Adjust");
-            Color oldColor = GUI.color;
-            GUI.color = Color.white;
-            Widgets.DrawBoxSolid(rect, new Color(0.08f, 0.06f, 0.05f, 0.92f));
-            Widgets.DrawBox(rect, 1);
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
-            Widgets.Label(rect, label);
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = oldColor;
+            AbyssalStyledWidgets.TextButton(rect, label);
         }
 
         private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
         {
-            Rect rect = new Rect(rootRect.xMax - 96f * scale, rootRect.y - 26f * scale, 96f * scale, 22f * scale);
+            Rect rect = new Rect(rootRect.xMax - 84f * scale, rootRect.y - 26f * scale, 84f * scale, 22f * scale);
             float minY = screenRect.y + settings.safeMargin;
             if (rect.y < minY)
             {

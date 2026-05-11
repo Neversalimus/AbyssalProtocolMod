@@ -43,11 +43,6 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (ABY_DevToolUtility.IsRecentDebugToolAction(3))
-            {
-                return false;
-            }
-
             return comp.ShouldSuppressVanillaDeathOrDowned();
         }
 
@@ -57,11 +52,6 @@ namespace AbyssalProtocol
             // the recent input marker instead of a per-call StackTrace probe.
             CompABY_BossTrueDeath comp = GetComp(pawn);
             if (comp == null)
-            {
-                return false;
-            }
-
-            if (ABY_DevToolUtility.IsRecentDebugToolAction(3))
             {
                 return false;
             }
