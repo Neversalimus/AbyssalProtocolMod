@@ -32,8 +32,11 @@
         <enableMovingSparks>false</enableMovingSparks>
         <enableFlightRigFx>false</enableFlightRigFx>
         <enableVectorThrusterFx>true</enableVectorThrusterFx>
+        <enableGroundWakeFx>true</enableGroundWakeFx>
         <vectorThrusterBurstTexPath>Effects/Hover/ABY_VectorThrusterBurst</vectorThrusterBurstTexPath>
         <vectorThrusterGlowTexPath>Effects/Hover/ABY_VectorThrusterGlow</vectorThrusterGlowTexPath>
+        <groundWakeTexPath>Effects/Hover/ABY_GravWake</groundWakeTexPath>
+        <groundDistortionTexPath>Effects/Hover/ABY_GravDistortion</groundDistortionTexPath>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
         <ringScale>0.72</ringScale>
         <movingRingScaleBonus>0.06</movingRingScaleBonus>
@@ -54,6 +57,17 @@
         <vectorThrusterShoulderScale>0.88</vectorThrusterShoulderScale>
         <vectorThrusterHipScale>1.05</vectorThrusterHipScale>
         <vectorThrusterAltitudeOffset>0.024</vectorThrusterAltitudeOffset>
+        <groundWakeScale>0.66</groundWakeScale>
+        <groundWakeLengthScale>1.40</groundWakeLengthScale>
+        <groundWakeWidthScale>0.50</groundWakeWidthScale>
+        <groundWakeAlpha>0.30</groundWakeAlpha>
+        <groundWakeMotionAlphaBonus>0.28</groundWakeMotionAlphaBonus>
+        <groundWakeMotionLengthBonus>0.34</groundWakeMotionLengthBonus>
+        <groundWakePulseScale>0.080</groundWakePulseScale>
+        <groundWakePulseAlpha>0.12</groundWakePulseAlpha>
+        <groundWakeBackOffset>0.35</groundWakeBackOffset>
+        <groundWakeSideOffset>0.080</groundWakeSideOffset>
+        <groundWakeAltitudeOffset>0.026</groundWakeAltitudeOffset>
         <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
         <sparkIntervalTicks>18</sparkIntervalTicks>
         <sparkLifetimeTicks>14</sparkLifetimeTicks>

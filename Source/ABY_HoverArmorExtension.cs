@@ -9,6 +9,7 @@ namespace AbyssalProtocol
         public bool enableMovingSparks = true;
         public bool enableFlightRigFx = false;
         public bool enableVectorThrusterFx = false;
+        public bool enableGroundWakeFx = false;
         public bool enableHaloFx = false;
 
         public string hoverFxIntensity = "Subtle";
@@ -20,6 +21,8 @@ namespace AbyssalProtocol
         public string flightRigTexPathNorth = "Effects/FlightRig/ABY_FlightRig_North";
         public string vectorThrusterBurstTexPath = "Effects/Hover/ABY_VectorThrusterBurst";
         public string vectorThrusterGlowTexPath = "Effects/Hover/ABY_VectorThrusterGlow";
+        public string groundWakeTexPath = "Effects/Hover/ABY_GravWake";
+        public string groundDistortionTexPath = "Effects/Hover/ABY_GravDistortion";
 
         public float ringScale = 0.74f;
         public float movingRingScaleBonus = 0.08f;
@@ -58,6 +61,18 @@ namespace AbyssalProtocol
         public float vectorThrusterShoulderScale = 0.92f;
         public float vectorThrusterHipScale = 1.00f;
         public float vectorThrusterAltitudeOffset = 0.020f;
+
+        public float groundWakeScale = 0.62f;
+        public float groundWakeLengthScale = 1.25f;
+        public float groundWakeWidthScale = 0.54f;
+        public float groundWakeAlpha = 0.30f;
+        public float groundWakeMotionAlphaBonus = 0.20f;
+        public float groundWakeMotionLengthBonus = 0.26f;
+        public float groundWakePulseScale = 0.055f;
+        public float groundWakePulseAlpha = 0.10f;
+        public float groundWakeBackOffset = 0.30f;
+        public float groundWakeSideOffset = 0.075f;
+        public float groundWakeAltitudeOffset = 0.026f;
 
         public float draftedMoveSpeedBonus = 0f;
         public int drawPriority = 0;
