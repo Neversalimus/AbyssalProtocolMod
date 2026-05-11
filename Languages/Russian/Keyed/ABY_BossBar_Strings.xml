@@ -33,7 +33,7 @@
   <ABY_BossBar_OpenCalibration>Открыть live-настройку boss bar</ABY_BossBar_OpenCalibration>
   <ABY_BossBar_ResetDefaults>Сбросить по умолчанию</ABY_BossBar_ResetDefaults>
   <ABY_BossBar_SettingsHint>Окно live-настройки позволяет двигать и менять размер boss bar, пока на карте активен поддерживаемый босс.</ABY_BossBar_SettingsHint>
-  <ABY_BossBar_AdjustShort>НАСТ</ABY_BossBar_AdjustShort>
+  <ABY_BossBar_AdjustShort>Настр.</ABY_BossBar_AdjustShort>
   <ABY_BossBar_CalibrationTitle>Калибровка Boss Bar</ABY_BossBar_CalibrationTitle>
   <ABY_BossBar_CalibrationDesc>Инструменты live-настройки для abyssal boss HUD. Держи поддерживаемого босса активным на текущей карте, чтобы сразу видеть результат.</ABY_BossBar_CalibrationDesc>
   <ABY_BossBar_Calibration_Positioning>Позиционирование</ABY_BossBar_Calibration_Positioning>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_BossPresentation_Timeline>Enable boss intro / phase / outro timeline</ABY_BossPresentation_Timeline>
+  <ABY_BossPresentation_TimelineDesc>Adds timed title cards and burst events for boss arrival, phase changes, and collapse.</ABY_BossPresentation_TimelineDesc>
+  <ABY_BossPresentation_TitleCards>Show boss presentation title cards</ABY_BossPresentation_TitleCards>
+  <ABY_BossPresentation_TitleCardsDesc>Shows short cinematic name / phase / collapse cards during supported boss encounters.</ABY_BossPresentation_TitleCardsDesc>
+  <ABY_BossPresentation_Title_ReactorSaint>INFERNAL REACTOR SAINT</ABY_BossPresentation_Title_ReactorSaint>
+  <ABY_BossPresentation_Title_Rupture>ARCHON OF RUPTURE</ABY_BossPresentation_Title_Rupture>
+  <ABY_BossPresentation_Title_ArchonBeast>ARCHON BEAST</ABY_BossPresentation_Title_ArchonBeast>
+  <ABY_BossPresentation_Title_WardenOfAsh>WARDEN OF ASH</ABY_BossPresentation_Title_WardenOfAsh>
+  <ABY_BossPresentation_Title_ChoirEngine>CHOIR ENGINE</ABY_BossPresentation_Title_ChoirEngine>
+  <ABY_BossPresentation_Title_Default>ABYSSAL NODE</ABY_BossPresentation_Title_Default>
+  <ABY_BossPresentation_Subtitle_ReactorSaint>Reactor lattice online. Aegis protocol engaged.</ABY_BossPresentation_Subtitle_ReactorSaint>
+  <ABY_BossPresentation_Subtitle_Rupture>The breach remembers its crown.</ABY_BossPresentation_Subtitle_Rupture>
+  <ABY_BossPresentation_Subtitle_ArchonBeast>The first refusal of the gate has arrived.</ABY_BossPresentation_Subtitle_ArchonBeast>
+  <ABY_BossPresentation_Subtitle_WardenOfAsh>Ash discipline anchors the field.</ABY_BossPresentation_Subtitle_WardenOfAsh>
+  <ABY_BossPresentation_Subtitle_ChoirEngine>The hymn becomes a command channel.</ABY_BossPresentation_Subtitle_ChoirEngine>
+  <ABY_BossPresentation_Subtitle_Default>Abyssal authority enters the map.</ABY_BossPresentation_Subtitle_Default>
+  <ABY_BossPresentation_PhaseTitle>PHASE {0}</ABY_BossPresentation_PhaseTitle>
+  <ABY_BossPresentation_Phase_ReactorSaint>Aegis geometry recalibrates under fire.</ABY_BossPresentation_Phase_ReactorSaint>
+  <ABY_BossPresentation_Phase_ReactorSaint_Final>Containment limits exceeded. Reactor hymn accelerating.</ABY_BossPresentation_Phase_ReactorSaint_Final>
+  <ABY_BossPresentation_Phase_Rupture>A deeper law opens beneath the breach.</ABY_BossPresentation_Phase_Rupture>
+  <ABY_BossPresentation_Phase_Rupture_Final>The veil fails. Rupture authority is unbound.</ABY_BossPresentation_Phase_Rupture_Final>
+  <ABY_BossPresentation_Phase_ArchonBeast>The gate-beast sheds restraint.</ABY_BossPresentation_Phase_ArchonBeast>
+  <ABY_BossPresentation_Phase_ArchonBeast_Final>The beast answers with total refusal.</ABY_BossPresentation_Phase_ArchonBeast_Final>
+  <ABY_BossPresentation_Phase_ChoirEngine>The chorus retunes the battlefield.</ABY_BossPresentation_Phase_ChoirEngine>
+  <ABY_BossPresentation_Phase_Default>The abyssal pattern escalates.</ABY_BossPresentation_Phase_Default>
+  <ABY_BossPresentation_OutroTitle>NODE COLLAPSE</ABY_BossPresentation_OutroTitle>
+  <ABY_BossPresentation_Outro_ReactorSaint>The reactor saint falls silent. The aegis geometry unthreads.</ABY_BossPresentation_Outro_ReactorSaint>
+  <ABY_BossPresentation_Outro_Rupture>Rupture authority collapses back into the wound.</ABY_BossPresentation_Outro_Rupture>
+  <ABY_BossPresentation_Outro_ArchonBeast>The gate rejects its own beast.</ABY_BossPresentation_Outro_ArchonBeast>
+  <ABY_BossPresentation_Outro_ChoirEngine>The command hymn drops into dead static.</ABY_BossPresentation_Outro_ChoirEngine>
+  <ABY_BossPresentation_Outro_Default>The abyssal presence recedes, but the mark remains.</ABY_BossPresentation_Outro_Default>
+</LanguageData>

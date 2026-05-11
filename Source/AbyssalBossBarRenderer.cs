@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         private static float displayedSecondaryPct = 1f;
         private static float displayedAlpha;
         private static float displayedSpecialPulse;
+        private static Rect lastInteractiveRect = Rect.zero;
 
         public static void ResetVisualState()
         {
@@ -33,6 +34,12 @@ namespace AbyssalProtocol
             displayedSecondaryPct = 1f;
             displayedAlpha = 0f;
             displayedSpecialPulse = 0f;
+            lastInteractiveRect = Rect.zero;
+        }
+
+        public static bool MouseOverInteractiveRect(Vector2 mousePosition)
+        {
+            return lastInteractiveRect.width > 0f && lastInteractiveRect.height > 0f && lastInteractiveRect.Contains(mousePosition);
         }
 
         public static void Draw(ABY_BossBarState state)
@@ -66,7 +73,7 @@ namespace AbyssalProtocol
             float footerHeight = settings.showHealthNumbers ? 18f * scale : 0f;
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
-            float barWidth = settings.width * scale;
+            float barWidth = settings.width * scale * 1.03f;
             float totalWidth = iconSize + gap + barWidth;
             float totalHeight = Mathf.Max(iconSize, nameHeight + barHeight + secondaryGap + secondaryHeight + footerHeight);
 
@@ -97,9 +104,16 @@ namespace AbyssalProtocol
                 DrawFooter(footerRect, state, palette, displayedAlpha, settings);
             }
 
+            Rect calibrationRect = Rect.zero;
             if (settings.showCalibrationButton)
             {
-                DrawCalibrationButton(ResolveCalibrationButtonRect(rootRect, screenRect, settings, scale));
+                calibrationRect = ResolveCalibrationButtonRect(rootRect, screenRect, settings, scale);
+                DrawCalibrationButton(calibrationRect);
+            }
+            lastInteractiveRect = rootRect.ExpandedBy(8f);
+            if (settings.showCalibrationButton && calibrationRect.width > 0f)
+            {
+                lastInteractiveRect = Union(lastInteractiveRect, calibrationRect.ExpandedBy(8f));
             }
         }
 
@@ -373,6 +387,23 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
         }
 
+        private static Rect Union(Rect a, Rect b)
+        {
+            if (a.width <= 0f || a.height <= 0f)
+            {
+                return b;
+            }
+            if (b.width <= 0f || b.height <= 0f)
+            {
+                return a;
+            }
+            float xMin = Mathf.Min(a.xMin, b.xMin);
+            float yMin = Mathf.Min(a.yMin, b.yMin);
+            float xMax = Mathf.Max(a.xMax, b.xMax);
+            float yMax = Mathf.Max(a.yMax, b.yMax);
+            return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
+        }
+
         private static void DrawCalibrationButton(Rect rect)
         {
             if (rect.width < 20f || rect.height < 12f)
@@ -388,7 +419,7 @@ namespace AbyssalProtocol
 
         private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
         {
-            Rect rect = new Rect(rootRect.xMax - 84f * scale, rootRect.y - 26f * scale, 84f * scale, 22f * scale);
+            Rect rect = new Rect(rootRect.xMax - 96f * scale, rootRect.y - 26f * scale, 96f * scale, 22f * scale);
             float minY = screenRect.y + settings.safeMargin;
             if (rect.y < minY)
             {

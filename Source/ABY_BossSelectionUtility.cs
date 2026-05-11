@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Verse;
 
@@ -28,12 +29,17 @@ namespace AbyssalProtocol
 
         public static bool TrySelectBossUnderMouse(Event currentEvent)
         {
-            if (currentEvent == null || currentEvent.type != EventType.MouseDown || currentEvent.button != 0)
+            if (currentEvent == null || currentEvent.type != EventType.MouseUp || currentEvent.button != 0)
             {
                 return false;
             }
 
             if (!AbyssalProtocolMod.Settings.enableBossExpandedSelection || Current.ProgramState != ProgramState.Playing)
+            {
+                return false;
+            }
+
+            if (IsDebugToolActive() || AbyssalBossBarRenderer.MouseOverInteractiveRect(currentEvent.mousePosition))
             {
                 return false;
             }
@@ -46,6 +52,11 @@ namespace AbyssalProtocol
 
             Pawn boss = FindSelectableBossUnderMouse(map, currentEvent.mousePosition);
             if (boss == null)
+            {
+                return false;
+            }
+
+            if (MouseCellContainsPreferredSelectable(map, boss))
             {
                 return false;
             }
@@ -103,6 +114,116 @@ namespace AbyssalProtocol
             }
 
             return best;
+        }
+
+        private static bool MouseCellContainsPreferredSelectable(Map map, Pawn boss)
+        {
+            if (map == null || boss == null)
+            {
+                return false;
+            }
+
+            IntVec3 mouseCell;
+            try
+            {
+                mouseCell = UI.MouseCell();
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (!mouseCell.IsValid || !mouseCell.InBounds(map))
+            {
+                return false;
+            }
+
+            List<Thing> things = mouseCell.GetThingList(map);
+            for (int i = things.Count - 1; i >= 0; i--)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing == boss || thing.Destroyed)
+                {
+                    continue;
+                }
+
+                if (IsExpandedSelectableBoss(thing as Pawn, out _))
+                {
+                    continue;
+                }
+
+                if (IsSelectableThing(thing))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsSelectableThing(Thing thing)
+        {
+            if (thing == null || thing.Destroyed || !thing.Spawned)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (thing.def != null && thing.def.selectable)
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+            }
+
+            return thing is Pawn || thing is Building;
+        }
+
+        private static bool IsDebugToolActive()
+        {
+            if (Prefs.DevMode == false)
+            {
+                return false;
+            }
+
+            try
+            {
+                Type debugToolsType = typeof(Log).Assembly.GetType("Verse.DebugTools");
+                if (debugToolsType == null)
+                {
+                    return false;
+                }
+
+                FieldInfo[] fields = debugToolsType.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    FieldInfo field = fields[i];
+                    if (field == null || field.FieldType == null)
+                    {
+                        continue;
+                    }
+
+                    string name = field.Name ?? string.Empty;
+                    if (name.IndexOf("tool", StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        continue;
+                    }
+
+                    object value = field.GetValue(null);
+                    if (value != null && !field.FieldType.IsArray && !typeof(System.Collections.IEnumerable).IsAssignableFrom(field.FieldType))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return false;
         }
 
         private static bool IsExpandedSelectableBoss(Pawn pawn, out SelectionProfile profile)

@@ -76,6 +76,9 @@
     <butcherProducts>
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </butcherProducts>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
+    </killedLeavings>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>RangedSkirmisher</archetype>

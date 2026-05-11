@@ -17,6 +17,15 @@ namespace AbyssalProtocol
         private int effectStartTick;
         private float introSurgeStrength;
         private int nextBossMapEffectTick;
+        private int lastKnownPhase = -1;
+        private float phaseSurgeStrength;
+        private float outroSurgeStrength;
+        private bool outroTriggered;
+        private int titleCardStartTick = -999999;
+        private int titleCardDurationTicks;
+        private string titleCardTitle;
+        private string titleCardSubtitle;
+        private string titleCardKind;
 
         private Map ritualPulseMap;
         private float ritualPulseStrength;
@@ -68,6 +77,15 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref effectStartTick, "effectStartTick", 0);
             Scribe_Values.Look(ref introSurgeStrength, "introSurgeStrength", 0f);
             Scribe_Values.Look(ref nextBossMapEffectTick, "nextBossMapEffectTick", 0);
+            Scribe_Values.Look(ref lastKnownPhase, "lastKnownPhase", -1);
+            Scribe_Values.Look(ref phaseSurgeStrength, "phaseSurgeStrength", 0f);
+            Scribe_Values.Look(ref outroSurgeStrength, "outroSurgeStrength", 0f);
+            Scribe_Values.Look(ref outroTriggered, "outroTriggered", false);
+            Scribe_Values.Look(ref titleCardStartTick, "titleCardStartTick", -999999);
+            Scribe_Values.Look(ref titleCardDurationTicks, "titleCardDurationTicks", 0);
+            Scribe_Values.Look(ref titleCardTitle, "titleCardTitle");
+            Scribe_Values.Look(ref titleCardSubtitle, "titleCardSubtitle");
+            Scribe_Values.Look(ref titleCardKind, "titleCardKind");
             Scribe_References.Look(ref ritualPulseMap, "ritualPulseMap");
             Scribe_Values.Look(ref ritualPulseStrength, "ritualPulseStrength", 0f);
             Scribe_Values.Look(ref vanillaSongRestoreQueued, "vanillaSongRestoreQueued", false);
@@ -98,9 +116,18 @@ namespace AbyssalProtocol
             effectStartTick = Find.TickManager.TicksGame;
             currentStrength = Mathf.Max(currentStrength, 0.55f);
             introSurgeStrength = 1f;
+            phaseSurgeStrength = 0f;
+            outroSurgeStrength = 0f;
+            outroTriggered = false;
+            lastKnownPhase = ResolveCurrentPresentationPhase();
             nextBossMapEffectTick = effectStartTick + 8;
             RegisterRitualPulse(effectMap, 0.35f);
             ABY_BossPresentationUtility.SpawnIntroBurst(boss, activeBossBarProfile);
+            StartTitleCard(
+                ABY_BossPresentationDirector.ResolveIntroTitle(boss, activeBossBarProfile),
+                ABY_BossPresentationDirector.ResolveIntroSubtitle(boss, activeBossBarProfile),
+                ABY_BossPresentationDirector.IntroTitleDurationTicks,
+                "intro");
             RefreshActiveBossSongProfile();
             ResetBossMusicRuntimeState(clearSongProfile: false);
             ScheduleBossSongStart(activeBossSongStartDelaySeconds);
@@ -113,12 +140,23 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (activeBoss != null && AbyssalProtocolMod.Settings.enableBossPresentationTimeline && !outroTriggered)
+            {
+                TriggerOutroPresentation();
+                QueueVanillaMusicRestore();
+                return;
+            }
+
             activeBoss = null;
             activeBossBarProfile = null;
             activeBossDisplayLabelOverride = null;
             effectMap = null;
             currentStrength = 0f;
             introSurgeStrength = 0f;
+            phaseSurgeStrength = 0f;
+            outroSurgeStrength = 0f;
+            lastKnownPhase = -1;
+            ClearTitleCard();
             AbyssalBossBarRenderer.ResetVisualState();
             QueueVanillaMusicRestore();
         }
@@ -240,25 +278,36 @@ namespace AbyssalProtocol
 
             ritualPulseStrength = Mathf.MoveTowards(ritualPulseStrength, 0f, 0.01f);
             introSurgeStrength = Mathf.MoveTowards(introSurgeStrength, 0f, 0.016f);
+            phaseSurgeStrength = Mathf.MoveTowards(phaseSurgeStrength, 0f, 0.014f);
+            outroSurgeStrength = Mathf.MoveTowards(outroSurgeStrength, 0f, 0.012f);
             if (ritualPulseStrength <= 0.001f)
             {
                 ritualPulseMap = null;
             }
 
+            DetectPhaseTransition(bossAlive);
             TickBossPresentationMapEffects(bossAlive);
 
             if (!bossAlive)
             {
+                if (activeBoss != null && !outroTriggered && AbyssalProtocolMod.Settings.enableBossPresentationTimeline)
+                {
+                    TriggerOutroPresentation();
+                }
+
                 QueueVanillaMusicRestore();
                 TryRestoreVanillaMusicIfNeeded();
             }
 
-            if (!bossAlive && currentStrength <= 0.001f)
+            if (!bossAlive && currentStrength <= 0.001f && outroSurgeStrength <= 0.001f && !TitleCardActive())
             {
                 activeBoss = null;
                 activeBossBarProfile = null;
                 activeBossDisplayLabelOverride = null;
                 effectMap = null;
+                lastKnownPhase = -1;
+                outroTriggered = false;
+                ClearTitleCard();
                 AbyssalBossBarRenderer.ResetVisualState();
 
                 if (!vanillaSongRestoreQueued)
@@ -267,6 +316,108 @@ namespace AbyssalProtocol
                     ResetBossMusicRuntimeState(clearSongProfile: false);
                 }
             }
+        }
+
+        private void DetectPhaseTransition(bool bossAlive)
+        {
+            if (!bossAlive || activeBoss == null || !AbyssalProtocolMod.Settings.enableBossPresentationTimeline)
+            {
+                return;
+            }
+
+            int phase = ResolveCurrentPresentationPhase();
+            if (phase <= 0)
+            {
+                return;
+            }
+
+            if (lastKnownPhase <= 0)
+            {
+                lastKnownPhase = phase;
+                return;
+            }
+
+            if (phase <= lastKnownPhase)
+            {
+                return;
+            }
+
+            lastKnownPhase = phase;
+            phaseSurgeStrength = 1f;
+            introSurgeStrength = Mathf.Max(introSurgeStrength, 0.35f);
+            ABY_BossPresentationUtility.SpawnPhaseTransitionBurst(activeBoss, activeBossBarProfile, phase);
+            StartTitleCard(
+                ABY_BossPresentationDirector.ResolvePhaseTitle(activeBoss, activeBossBarProfile, phase),
+                ABY_BossPresentationDirector.ResolvePhaseSubtitle(activeBoss, activeBossBarProfile, phase),
+                ABY_BossPresentationDirector.PhaseTitleDurationTicks,
+                "phase");
+        }
+
+        private int ResolveCurrentPresentationPhase()
+        {
+            if (activeBoss == null || activeBossBarProfile == null)
+            {
+                return -1;
+            }
+
+            if (AbyssalBossBarUtility.TryBuildState(activeBoss, activeBossBarProfile, activeBossDisplayLabelOverride, out ABY_BossBarState state) && state != null)
+            {
+                return state.currentPhase;
+            }
+
+            return -1;
+        }
+
+        private void TriggerOutroPresentation()
+        {
+            if (activeBoss == null || outroTriggered)
+            {
+                return;
+            }
+
+            outroTriggered = true;
+            outroSurgeStrength = 1f;
+            currentStrength = Mathf.Max(currentStrength, 0.62f);
+            ABY_BossPresentationUtility.SpawnOutroBurst(activeBoss, activeBossBarProfile);
+            StartTitleCard(
+                ABY_BossPresentationDirector.ResolveOutroTitle(activeBoss, activeBossBarProfile),
+                ABY_BossPresentationDirector.ResolveOutroSubtitle(activeBoss, activeBossBarProfile),
+                ABY_BossPresentationDirector.OutroTitleDurationTicks,
+                "outro");
+        }
+
+        private void StartTitleCard(string title, string subtitle, int durationTicks, string kind)
+        {
+            if (!AbyssalProtocolMod.Settings.enableBossPresentationTimeline || !AbyssalProtocolMod.Settings.enableBossPresentationTitleCards)
+            {
+                return;
+            }
+
+            titleCardTitle = title;
+            titleCardSubtitle = subtitle;
+            titleCardDurationTicks = Mathf.Max(1, durationTicks);
+            titleCardKind = kind;
+            titleCardStartTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+        }
+
+        private bool TitleCardActive()
+        {
+            if (titleCardTitle.NullOrEmpty() || titleCardDurationTicks <= 0 || Find.TickManager == null)
+            {
+                return false;
+            }
+
+            int age = Find.TickManager.TicksGame - titleCardStartTick;
+            return age >= 0 && age <= titleCardDurationTicks;
+        }
+
+        private void ClearTitleCard()
+        {
+            titleCardTitle = null;
+            titleCardSubtitle = null;
+            titleCardKind = null;
+            titleCardStartTick = -999999;
+            titleCardDurationTicks = 0;
         }
 
         private void TickBossPresentationMapEffects(bool bossAlive)
@@ -722,7 +873,7 @@ namespace AbyssalProtocol
 
             float bossStrength = currentMap == effectMap ? currentStrength : 0f;
             float pulseStrength = currentMap == ritualPulseMap ? ritualPulseStrength : 0f;
-            float totalStrength = Mathf.Clamp01(bossStrength + pulseStrength + introSurgeStrength * 0.5f);
+            float totalStrength = Mathf.Clamp01(bossStrength + pulseStrength + introSurgeStrength * 0.5f + phaseSurgeStrength * 0.45f + outroSurgeStrength * 0.55f);
             if (totalStrength <= 0.001f)
             {
                 return;
@@ -733,8 +884,17 @@ namespace AbyssalProtocol
                 activeBossBarProfile,
                 bossStrength,
                 pulseStrength,
-                introSurgeStrength,
+                Mathf.Max(introSurgeStrength, phaseSurgeStrength, outroSurgeStrength),
                 effectStartTick);
+
+            ABY_BossPresentationUtility.DrawTitleCard(
+                activeBoss,
+                activeBossBarProfile,
+                titleCardTitle,
+                titleCardSubtitle,
+                titleCardStartTick,
+                titleCardDurationTicks,
+                titleCardKind);
         }
 
         private bool BossAlive()

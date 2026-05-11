@@ -5,6 +5,7 @@ using Verse;
 
 namespace AbyssalProtocol
 {
+    [StaticConstructorOnStartup]
     public static class ABY_BossPresentationUtility
     {
         private const int VignetteTextureSize = 256;
@@ -235,6 +236,111 @@ namespace AbyssalProtocol
         public static int ResolveMapEffectIntervalTicks(Pawn boss, ABY_BossBarProfileDef profileDef)
         {
             return Mathf.Clamp(ResolveProfile(boss, profileDef).mapEffectIntervalTicks, 18, 90);
+        }
+
+
+        public static void SpawnPhaseTransitionBurst(Pawn boss, ABY_BossBarProfileDef profileDef, int phase)
+        {
+            if (boss?.MapHeld == null)
+            {
+                return;
+            }
+
+            ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
+            int count = Mathf.Clamp(profile.mapEffectCount + phase + 2, 5, 12);
+            float radius = profile.mapEffectRadius + Mathf.Clamp(phase, 1, 6) * 0.85f;
+            for (int i = 0; i < count; i++)
+            {
+                Vector3 loc = RandomPointNear(boss, radius);
+                FleckMaker.ThrowLightningGlow(loc, boss.MapHeld, profile.lightningSize * Rand.Range(1.15f, 2.05f));
+                if (profile.fireGlowSize > 0.01f)
+                {
+                    FleckMaker.ThrowFireGlow(loc, boss.MapHeld, profile.fireGlowSize * Rand.Range(1.0f, 1.85f));
+                }
+                if (Rand.Chance(0.88f))
+                {
+                    FleckMaker.ThrowMicroSparks(loc, boss.MapHeld);
+                }
+            }
+        }
+
+        public static void SpawnOutroBurst(Pawn boss, ABY_BossBarProfileDef profileDef)
+        {
+            if (boss?.MapHeld == null)
+            {
+                return;
+            }
+
+            ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
+            for (int i = 0; i < Mathf.Clamp(profile.mapEffectCount + 7, 8, 16); i++)
+            {
+                Vector3 loc = RandomPointNear(boss, profile.mapEffectRadius + 4.0f);
+                FleckMaker.ThrowLightningGlow(loc, boss.MapHeld, profile.lightningSize * Rand.Range(1.4f, 2.6f));
+                if (profile.fireGlowSize > 0.01f)
+                {
+                    FleckMaker.ThrowFireGlow(loc, boss.MapHeld, profile.fireGlowSize * Rand.Range(1.2f, 2.1f));
+                }
+                if (Rand.Chance(0.95f))
+                {
+                    FleckMaker.ThrowMicroSparks(loc, boss.MapHeld);
+                }
+            }
+        }
+
+        public static void DrawTitleCard(Pawn boss, ABY_BossBarProfileDef profileDef, string title, string subtitle, int startTick, int durationTicks, string eventKind)
+        {
+            if (!AbyssalProtocolMod.Settings.enableBossPresentationTitleCards || title.NullOrEmpty() || Find.TickManager == null)
+            {
+                return;
+            }
+
+            int age = Find.TickManager.TicksGame - startTick;
+            if (age < 0 || age > durationTicks)
+            {
+                return;
+            }
+
+            ABY_BossPresentationProfile profile = ResolveProfile(boss, profileDef);
+            float t = age / (float)Mathf.Max(1, durationTicks);
+            float fadeIn = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0f, 0.18f, t));
+            float fadeOut = 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.72f, 1f, t));
+            float alpha = Mathf.Clamp01(fadeIn * fadeOut);
+            if (alpha <= 0.001f)
+            {
+                return;
+            }
+
+            Rect screen = new Rect(0f, 0f, UI.screenWidth, UI.screenHeight);
+            float width = Mathf.Min(720f, screen.width * 0.68f);
+            float height = subtitle.NullOrEmpty() ? 72f : 104f;
+            float y = screen.height * 0.28f + Mathf.Sin(t * Mathf.PI) * 4f;
+            Rect card = new Rect((screen.width - width) * 0.5f, y, width, height);
+            Color oldColor = GUI.color;
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+
+            Color back = profile.vignetteColor;
+            back.a = alpha * 0.58f;
+            Widgets.DrawBoxSolid(card.ExpandedBy(8f), back);
+            Color line = profile.bloomColor;
+            line.a = alpha * 0.88f;
+            Widgets.DrawBoxSolid(new Rect(card.x, card.y, card.width, 2f), line);
+            Widgets.DrawBoxSolid(new Rect(card.x, card.yMax - 2f, card.width, 2f), line);
+
+            GUI.color = new Color(1f, 0.94f, 0.86f, alpha);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Medium;
+            Widgets.Label(new Rect(card.x + 12f, card.y + 10f, card.width - 24f, 36f), title);
+            if (!subtitle.NullOrEmpty())
+            {
+                GUI.color = new Color(profile.bloomColor.r, profile.bloomColor.g, profile.bloomColor.b, alpha * 0.92f);
+                Text.Font = GameFont.Small;
+                Widgets.Label(new Rect(card.x + 18f, card.y + 50f, card.width - 36f, 42f), subtitle);
+            }
+
+            Text.Anchor = oldAnchor;
+            Text.Font = oldFont;
+            GUI.color = oldColor;
         }
 
         private static bool Matches(string thingDef, string kindDef, string expected)

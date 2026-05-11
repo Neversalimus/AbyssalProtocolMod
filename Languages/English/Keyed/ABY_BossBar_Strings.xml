@@ -33,7 +33,7 @@
   <ABY_BossBar_OpenCalibration>Open live boss bar calibration</ABY_BossBar_OpenCalibration>
   <ABY_BossBar_ResetDefaults>Reset defaults</ABY_BossBar_ResetDefaults>
   <ABY_BossBar_SettingsHint>The live calibration window lets you move and resize the boss bar while a supported boss is active on the map.</ABY_BossBar_SettingsHint>
-  <ABY_BossBar_AdjustShort>ADJ</ABY_BossBar_AdjustShort>
+  <ABY_BossBar_AdjustShort>Adjust</ABY_BossBar_AdjustShort>
   <ABY_BossBar_CalibrationTitle>Boss Bar Calibration</ABY_BossBar_CalibrationTitle>
   <ABY_BossBar_CalibrationDesc>Live adjustment tools for the abyssal boss HUD. Keep a supported boss active on the current map to preview the result in place.</ABY_BossBar_CalibrationDesc>
   <ABY_BossBar_Calibration_Positioning>Positioning</ABY_BossBar_Calibration_Positioning>

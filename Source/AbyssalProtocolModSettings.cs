@@ -35,6 +35,8 @@ namespace AbyssalProtocol
         public bool enableBossScreenEffects = true;
         public bool enableBossMapPresentationEffects = true;
         public bool enableBossExpandedSelection = true;
+        public bool enableBossPresentationTimeline = true;
+        public bool enableBossPresentationTitleCards = true;
 
         public override void ExposeData()
         {
@@ -67,6 +69,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableBossScreenEffects, "enableBossScreenEffects", true);
             Scribe_Values.Look(ref enableBossMapPresentationEffects, "enableBossMapPresentationEffects", true);
             Scribe_Values.Look(ref enableBossExpandedSelection, "enableBossExpandedSelection", true);
+            Scribe_Values.Look(ref enableBossPresentationTimeline, "enableBossPresentationTimeline", true);
+            Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
             ClampValues();
         }
 
@@ -112,6 +116,8 @@ namespace AbyssalProtocol
             enableBossScreenEffects = true;
             enableBossMapPresentationEffects = true;
             enableBossExpandedSelection = true;
+            enableBossPresentationTimeline = true;
+            enableBossPresentationTitleCards = true;
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)
