@@ -99,7 +99,7 @@ namespace AbyssalProtocol
             float nameHeight = 22f * scale;
             float barHeight = settings.height * scale;
             float secondaryHeight = state.hasSecondaryBar && settings.showSecondaryBars ? Mathf.Max(12f, barHeight * 0.38f) : 0f;
-            float secondaryGap = secondaryHeight > 0f ? Mathf.Max(13f, 12f * scale) : 0f;
+            float secondaryGap = secondaryHeight > 0f ? Mathf.Max(16f, 18f * scale) : 0f;
             float footerHeight = 0f;
             float iconSize = settings.iconSize * scale;
             float gap = settings.gap * scale;
@@ -423,52 +423,56 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float liveStrength = state != null && state.hasSecondaryBar ? Mathf.Clamp01(state.secondaryPct) : 0f;
-            bool active = liveStrength > 0.001f;
-            Color cyanGlow = active
-                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.32f + 0.22f * liveStrength))
-                : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.09f);
-            Color cyanCore = active
-                ? new Color(0.86f, 1f, 1f, alpha * (0.70f + 0.20f * liveStrength))
-                : new Color(0.50f, 0.72f, 0.76f, alpha * 0.25f);
-            Color emberNode = active
-                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.22f)
-                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.06f);
-
             Rect tagRect = ResolveAegisTagRect(mainBarRect, secondaryRect);
-            float top = mainBarRect.yMax - 1f;
-            float bottom = secondaryRect.y;
-            if (bottom <= top + 2f)
+            if (tagRect.width <= 8f || tagRect.height <= 8f)
             {
-                bottom = tagRect.yMax;
+                return;
             }
 
-            // Draw only short vertical conduits from the HP frame down into the external
-            // AEGIS tag area. The shield bar itself is left unchanged and no label is
-            // embedded into it, matching the requested reference layout.
-            int count = 4;
+            bool active = state != null && state.hasSecondaryBar && state.secondaryPct > 0.001f && state.secondaryMax > 0f;
+            float pulse = settings.reducedMotion ? 0.10f : 0.13f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.05f;
+            Color cyan = active
+                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.44f + pulse))
+                : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.12f);
+            Color core = active
+                ? new Color(0.88f, 1f, 1f, alpha * 0.58f)
+                : new Color(0.88f, 1f, 1f, alpha * 0.12f);
+            Color ember = active
+                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.16f)
+                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.05f);
+
+            // Reference layout: AEGIS is an external hanging module under the HP bar,
+            // not a label drawn inside the shield bar. Tethers connect HP -> tag -> shield.
+            int count = 3;
             for (int i = 0; i < count; i++)
             {
                 float t = count <= 1 ? 0.5f : i / (float)(count - 1);
-                float x = Mathf.Lerp(tagRect.x + 7f, tagRect.xMax - 7f, t);
-                Widgets.DrawBoxSolid(new Rect(x - 2f, top, 4f, bottom - top), new Color(cyanGlow.r, cyanGlow.g, cyanGlow.b, cyanGlow.a * 0.46f));
-                Widgets.DrawBoxSolid(new Rect(x - 0.5f, top, 1f, bottom - top), cyanCore);
-                Widgets.DrawBoxSolid(new Rect(x - 3f, top - 1f, 6f, 2f), emberNode);
-                Widgets.DrawBoxSolid(new Rect(x - 3f, bottom - 1f, 6f, 2f), cyanGlow);
+                float x = Mathf.Lerp(tagRect.x + 10f, tagRect.xMax - 10f, t);
+
+                float upperTop = mainBarRect.yMax - 1f;
+                float upperBottom = tagRect.y + 1f;
+                float upperHeight = Mathf.Max(2f, upperBottom - upperTop);
+                Widgets.DrawBoxSolid(new Rect(x - 2f, upperTop, 4f, upperHeight), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.30f));
+                Widgets.DrawBoxSolid(new Rect(x - 0.5f, upperTop, 1f, upperHeight), core);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, upperTop - 1f, 6f, 2f), ember);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, upperBottom - 1f, 6f, 2f), cyan);
+
+                float lowerTop = tagRect.yMax - 1f;
+                float lowerBottom = secondaryRect.y + 1f;
+                float lowerHeight = Mathf.Max(2f, lowerBottom - lowerTop);
+                Widgets.DrawBoxSolid(new Rect(x - 1.5f, lowerTop, 3f, lowerHeight), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.22f));
+                Widgets.DrawBoxSolid(new Rect(x - 0.5f, lowerTop, 1f, lowerHeight), new Color(core.r, core.g, core.b, core.a * 0.72f));
+                Widgets.DrawBoxSolid(new Rect(x - 3f, lowerBottom - 1f, 6f, 2f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.80f));
             }
         }
 
         private static Rect ResolveAegisTagRect(Rect mainBarRect, Rect secondaryRect)
         {
-            float width = Mathf.Min(66f, Mathf.Max(54f, secondaryRect.width * 0.15f));
-            float height = Mathf.Max(11f, Mathf.Min(13f, secondaryRect.y - mainBarRect.yMax + 3f));
-            float y = mainBarRect.yMax + 1f;
-            if (secondaryRect.y - y < height)
-            {
-                y = secondaryRect.y - height + 1f;
-            }
-
-            return new Rect(secondaryRect.x + 7f, y, width, height);
+            float width = Mathf.Min(76f, Mathf.Max(58f, mainBarRect.width * 0.13f));
+            float height = Mathf.Max(12f, Mathf.Min(14f, secondaryRect.y - mainBarRect.yMax - 4f));
+            float x = mainBarRect.x + 11f;
+            float y = mainBarRect.yMax + Mathf.Max(1f, (secondaryRect.y - mainBarRect.yMax - height) * 0.5f);
+            return new Rect(x, y, width, height);
         }
 
         private static void DrawAegisTag(Rect mainBarRect, Rect secondaryRect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha)
@@ -480,17 +484,18 @@ namespace AbyssalProtocol
 
             Rect tagRect = ResolveAegisTagRect(mainBarRect, secondaryRect);
             string label = state.secondaryLabel.ToUpperInvariant();
+            Color oldColor = GUI.color;
 
-            // External tag: visually hangs below the HP bar and above the shield rail.
-            // It is deliberately not embedded into the Aegis fill bar.
-            Widgets.DrawBoxSolid(tagRect, new Color(0.035f, 0.090f, 0.105f, alpha * 0.72f));
-            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, tagRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.72f));
+            // Light external module: readable, but not the heavy dark block that fought the shield bar.
+            Widgets.DrawBoxSolid(tagRect, new Color(0.025f, 0.055f, 0.065f, alpha * 0.58f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, tagRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.76f));
             Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.yMax - 1f, tagRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.58f));
-            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.64f));
-            Widgets.DrawBoxSolid(new Rect(tagRect.xMax - 1f, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.64f));
-            Widgets.DrawBoxSolid(new Rect(tagRect.x + 3f, tagRect.yMax - 3f, tagRect.width - 6f, 1f), new Color(0.84f, 1f, 1f, alpha * 0.26f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.60f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.xMax - 1f, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.60f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x + 4f, tagRect.yMax - 3f, tagRect.width - 8f, 1f), new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.34f));
 
-            DrawOutlinedText(tagRect, label, TextAnchor.MiddleCenter, GameFont.Tiny, new Color(0.84f, 0.98f, 1f, alpha), alpha);
+            DrawOutlinedText(new Rect(tagRect.x, tagRect.y - 1f, tagRect.width, tagRect.height + 2f), label, TextAnchor.MiddleCenter, GameFont.Tiny, new Color(0.86f, 0.99f, 1f, alpha), alpha);
+            GUI.color = oldColor;
         }
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
