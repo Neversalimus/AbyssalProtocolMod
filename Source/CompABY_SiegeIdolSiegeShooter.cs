@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -562,24 +561,17 @@ namespace AbyssalProtocol
 
         private bool CanFireAt(Pawn shooter, Thing target)
         {
-            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(shooter, target))
+            if (target == null || target.PositionHeld == shooter.PositionHeld)
             {
                 return false;
             }
 
-            IntVec3 targetCell = target.PositionHeld;
-            if (!targetCell.IsValid || targetCell == shooter.PositionHeld)
-            {
-                return false;
-            }
-
-            float distance = shooter.Position.DistanceTo(targetCell);
-            if (distance > Props.range || distance < Mathf.Max(0f, Props.targetMinRange))
-            {
-                return false;
-            }
-
-            return GenSight.LineOfSight(shooter.PositionHeld, targetCell, shooter.Map);
+            return ABY_AbyssalRangedBrain.HasThingFireSolution(
+                shooter,
+                target,
+                Mathf.Max(0f, Props.targetMinRange),
+                Props.range,
+                true);
         }
 
         private bool IsTurretLike(Building building)
@@ -661,29 +653,17 @@ namespace AbyssalProtocol
             string castSound = useBreachShot && !Props.breachCastSoundDefName.NullOrEmpty()
                 ? Props.breachCastSoundDefName
                 : Props.castSoundDefName;
-            if (!castSound.NullOrEmpty())
-            {
-                ABY_SoundUtility.PlayOneShotAt(castSound, pawn.PositionHeld, pawn.Map);
-            }
 
             string projectileDefName = useBreachShot && !Props.breachProjectileDefName.NullOrEmpty()
                 ? Props.breachProjectileDefName
                 : Props.projectileDefName;
-            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(projectileDefName);
-            if (projectileDef == null)
+            if (!ABY_AbyssalRangedBrain.TryFireProjectile(
+                pawn,
+                target,
+                projectileDefName,
+                castSound,
+                out _))
             {
-                return;
-            }
-
-            Projectile projectile = GenSpawn.Spawn(projectileDef, pawn.PositionHeld, pawn.Map, WipeMode.Vanish) as Projectile;
-            if (projectile == null)
-            {
-                return;
-            }
-
-            if (!TryLaunchProjectile(projectile, pawn, target))
-            {
-                projectile.Destroy(DestroyMode.Vanish);
                 return;
             }
 
@@ -693,94 +673,6 @@ namespace AbyssalProtocol
             {
                 FleckMaker.Static(target.PositionHeld, pawn.Map, FleckDefOf.ExplosionFlash, 1.15f);
             }
-        }
-
-        private bool TryLaunchProjectile(Projectile projectile, Pawn pawn, Thing target)
-        {
-            MethodInfo[] methods = projectile.GetType()
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                .Where(m => m.Name == "Launch")
-                .OrderByDescending(m => m.GetParameters().Length)
-                .ToArray();
-
-            for (int i = 0; i < methods.Length; i++)
-            {
-                if (!TryBuildLaunchArgs(methods[i], pawn, target, out object[] args))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    methods[i].Invoke(projectile, args);
-                    return true;
-                }
-                catch
-                {
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryBuildLaunchArgs(MethodInfo method, Pawn pawn, Thing target, out object[] args)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            args = new object[parameters.Length];
-            int thingSlot = 0;
-            LocalTargetInfo targetInfo = new LocalTargetInfo(target);
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Type parameterType = parameters[i].ParameterType;
-                if (typeof(Thing).IsAssignableFrom(parameterType))
-                {
-                    args[i] = thingSlot == 0 ? (object)pawn : null;
-                    thingSlot++;
-                    continue;
-                }
-
-                if (parameterType == typeof(Vector3))
-                {
-                    args[i] = pawn.DrawPos;
-                    continue;
-                }
-
-                if (parameterType == typeof(LocalTargetInfo))
-                {
-                    args[i] = targetInfo;
-                    continue;
-                }
-
-                if (parameterType == typeof(ProjectileHitFlags))
-                {
-                    args[i] = ProjectileHitFlags.IntendedTarget;
-                    continue;
-                }
-
-                if (parameterType == typeof(bool))
-                {
-                    args[i] = false;
-                    continue;
-                }
-
-                if (parameterType == typeof(ThingDef))
-                {
-                    args[i] = null;
-                    continue;
-                }
-
-                if (parameterType.IsEnum)
-                {
-                    args[i] = Activator.CreateInstance(parameterType);
-                    continue;
-                }
-
-                args = null;
-                return false;
-            }
-
-            return true;
         }
 
         private void ShowDeployFX(Pawn pawn)

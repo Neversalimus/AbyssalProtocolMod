@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -110,17 +108,7 @@ namespace AbyssalProtocol
 
         private bool CanOperate(Pawn pawn)
         {
-            if (pawn == null || pawn.Map == null || pawn.Dead || !pawn.Spawned || pawn.Downed)
-            {
-                return false;
-            }
-
-            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
-            {
-                return false;
-            }
-
-            return true;
+            return ABY_AbyssalRangedBrain.CanOperateHostilePawn(pawn);
         }
 
         private Thing FindBestTarget(Pawn pawn)
@@ -313,13 +301,12 @@ namespace AbyssalProtocol
 
         private bool CanFireAt(Pawn shooter, Thing target)
         {
-            if (!AbyssalThreatPawnUtility.CanFireAt(shooter, target))
-            {
-                return false;
-            }
-
-            float distance = shooter.Position.DistanceTo(target.PositionHeld);
-            return distance <= Props.range && distance >= Mathf.Max(0f, Props.targetMinRange);
+            return ABY_AbyssalRangedBrain.HasThingFireSolution(
+                shooter,
+                target,
+                Mathf.Max(0f, Props.targetMinRange),
+                Props.range,
+                true);
         }
 
         private bool TryMaintainSpacing(Pawn pawn)
@@ -377,120 +364,18 @@ namespace AbyssalProtocol
                 return;
             }
 
-            pawn.rotationTracker?.FaceTarget(target.PositionHeld);
-            if (!Props.castSoundDefName.NullOrEmpty())
+            if (!ABY_AbyssalRangedBrain.TryFireProjectile(
+                pawn,
+                target,
+                Props.projectileDefName,
+                Props.castSoundDefName,
+                out _))
             {
-                ABY_SoundUtility.PlayOneShotAt(Props.castSoundDefName, pawn.PositionHeld, pawn.Map);
-            }
-
-            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.projectileDefName);
-            if (projectileDef == null)
-            {
-                return;
-            }
-
-            Projectile projectile = GenSpawn.Spawn(projectileDef, pawn.PositionHeld, pawn.Map, WipeMode.Vanish) as Projectile;
-            if (projectile == null)
-            {
-                return;
-            }
-
-            if (!TryLaunchProjectile(projectile, pawn, target))
-            {
-                projectile.Destroy(DestroyMode.Vanish);
                 return;
             }
 
             FleckMaker.ThrowLightningGlow(target.DrawPos, pawn.Map, target is Building ? 1.2f : 0.9f);
             FleckMaker.ThrowMicroSparks(target.DrawPos, pawn.Map);
-        }
-
-        private bool TryLaunchProjectile(Projectile projectile, Pawn pawn, Thing target)
-        {
-            MethodInfo[] methods = projectile.GetType()
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                .Where(m => m.Name == "Launch")
-                .OrderByDescending(m => m.GetParameters().Length)
-                .ToArray();
-
-            for (int i = 0; i < methods.Length; i++)
-            {
-                if (!TryBuildLaunchArgs(methods[i], pawn, target, out object[] args))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    methods[i].Invoke(projectile, args);
-                    return true;
-                }
-                catch
-                {
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryBuildLaunchArgs(MethodInfo method, Pawn pawn, Thing target, out object[] args)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            args = new object[parameters.Length];
-            int thingSlot = 0;
-            LocalTargetInfo targetInfo = new LocalTargetInfo(target);
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Type parameterType = parameters[i].ParameterType;
-                if (typeof(Thing).IsAssignableFrom(parameterType))
-                {
-                    args[i] = thingSlot == 0 ? (object)pawn : null;
-                    thingSlot++;
-                    continue;
-                }
-
-                if (parameterType == typeof(Vector3))
-                {
-                    args[i] = pawn.DrawPos;
-                    continue;
-                }
-
-                if (parameterType == typeof(LocalTargetInfo))
-                {
-                    args[i] = targetInfo;
-                    continue;
-                }
-
-                if (parameterType == typeof(ProjectileHitFlags))
-                {
-                    args[i] = ProjectileHitFlags.IntendedTarget;
-                    continue;
-                }
-
-                if (parameterType == typeof(bool))
-                {
-                    args[i] = false;
-                    continue;
-                }
-
-                if (parameterType == typeof(ThingDef))
-                {
-                    args[i] = null;
-                    continue;
-                }
-
-                if (parameterType.IsEnum)
-                {
-                    args[i] = Activator.CreateInstance(parameterType);
-                    continue;
-                }
-
-                args = null;
-                return false;
-            }
-
-            return true;
         }
 
         private static bool IsTurretLike(Building building)
