@@ -3,8 +3,8 @@
 
   <TerrainDef>
     <defName>ABY_DominionAshMetal</defName>
-    <label>ash-metal plating</label>
-    <description>Dark infernal plating powdered by cold ash and reactor soot.</description>
+    <label>void-ash metal</label>
+    <description>A dead matte field of ash-choked black industrial plating, scraped by old excavation scars.</description>
     <texturePath>Terrain/ABY_DominionAshMetal</texturePath>
     <renderPrecedence>335</renderPrecedence>
     <fertility>0</fertility>
@@ -18,8 +18,8 @@
 
   <TerrainDef>
     <defName>ABY_DominionScorchedPlate</defName>
-    <label>scorched dominion plate</label>
-    <description>Heat-flayed platework from a hostile infernal machine-temple.</description>
+    <label>fractured dominion plate</label>
+    <description>Cracked hellsteel slabs from a collapsed machine-basilica, blackened by pressure and soot rather than flame.</description>
     <texturePath>Terrain/ABY_DominionScorchedPlate</texturePath>
     <renderPrecedence>338</renderPrecedence>
     <fertility>0</fertility>
@@ -33,8 +33,8 @@
 
   <TerrainDef>
     <defName>ABY_DominionBloodChannel</defName>
-    <label>blood-channel conduit</label>
-    <description>Narrow crimson conduits that pulse through the slice like capillaries in plated hellsteel.</description>
+    <label>void-channel conduit</label>
+    <description>Subdued violet conduits cut through the black platework, carrying the Dominion's dead signal beneath the floor.</description>
     <texturePath>Terrain/ABY_DominionBloodChannel</texturePath>
     <renderPrecedence>342</renderPrecedence>
     <fertility>0</fertility>
@@ -48,8 +48,8 @@
 
   <TerrainDef>
     <defName>ABY_DominionBrassSigil</defName>
-    <label>brass-sigil dais</label>
-    <description>Engraved infernal brass used on the heart dais and anchor platforms.</description>
+    <label>dominion lock-plate</label>
+    <description>Dense circular lock-plating used around the heart and anchor points, more like a sealed industrial interface than a magical seal.</description>
     <texturePath>Terrain/ABY_DominionBrassSigil</texturePath>
     <renderPrecedence>345</renderPrecedence>
     <fertility>0</fertility>
