@@ -61,4 +61,32 @@
     </mote>
   </ThingDef>
 
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_SpecterLashBeamHalo</defName>
+    <label>specter lash beam halo</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/SpecterLash/ABY_SpecterLash_StreamBlob</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.90,0.90)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_SpecterLashBeamCore</defName>
+    <label>specter lash beam core</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/VFX/SpecterLash/ABY_SpecterLash_StreamCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.34,0.34)</drawSize>
+    </graphicData>
+  </ThingDef>
+
 </Defs>

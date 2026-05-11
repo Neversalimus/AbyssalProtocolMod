@@ -8,25 +8,30 @@ namespace AbyssalProtocol
     public class SpecterLashStreamGameComponent : GameComponent
     {
         private const string WeaponDefName = "ABY_SpecterLashProjector";
-        private const string BlobMoteDefName = "ABY_Mote_SpecterLashBlob";
-        private const string CoreMoteDefName = "ABY_Mote_SpecterLashCore";
+        private const string BeamHaloDefName = "ABY_Mote_SpecterLashBeamHalo";
+        private const string BeamCoreDefName = "ABY_Mote_SpecterLashBeamCore";
         private const string SparkMoteDefName = "ABY_Mote_SpecterLashSpark";
         private const string PulseSoundDefName = "ABY_SpecterLashPulse";
         private const string TailSoundDefName = "ABY_SpecterLashTail";
 
-        private const int VisualIntervalTicks = 2;
+        private const string BeamHaloTexturePath = "Things/VFX/SpecterLash/ABY_SpecterLash_StreamBlob";
+        private const string BeamCoreTexturePath = "Things/VFX/SpecterLash/ABY_SpecterLash_StreamCore";
+
+        private const int VisualIntervalTicks = 1;
         private const int DamageIntervalTicks = 10;
-        private const int PawnStreamDurationTicks = 90;
-        private const int PointStreamDurationTicks = 24;
+        private const int PawnStreamDurationTicks = 88;
+        private const int PointStreamDurationTicks = 18;
+        private const int BeamSegmentLifetimeTicks = 4;
         private const float PulseDamage = 16f;
         private const float PulseArmorPenetration = 0.24f;
         private const float MaxStreamRange = 28.9f;
         private const float EndpointInset = 0.34f;
-        private const float BaseAmplitude = 0.20f;
-        private const float MaxAmplitude = 0.48f;
+        private const float BaseAmplitude = 0.18f;
+        private const float MaxAmplitude = 0.54f;
+        private const float SourceBreakPadding = 1.8f;
 
-        private ThingDef blobMoteDef;
-        private ThingDef coreMoteDef;
+        private ThingDef beamHaloDef;
+        private ThingDef beamCoreDef;
         private ThingDef sparkMoteDef;
         private readonly List<ActiveStream> activeStreams = new List<ActiveStream>();
 
@@ -34,11 +39,12 @@ namespace AbyssalProtocol
         {
             public int mapId;
             public int sourcePawnId;
-            public int targetPawnId = -1;
+            public int targetThingId = -1;
             public int expireTick;
             public int nextDamageTick;
             public int seed;
             public bool damageEnabled;
+            public bool requireLineOfSight;
             public Vector3 staticTargetPos;
         }
 
@@ -46,14 +52,24 @@ namespace AbyssalProtocol
         {
         }
 
+        public static bool IsSpecterLashWeapon(ThingWithComps equipment)
+        {
+            return equipment?.def != null && equipment.def.defName == WeaponDefName;
+        }
+
         public void TryStartStream(Pawn source, Pawn target, Vector3 fallbackTargetPos)
+        {
+            TryStartStream(source, target as Thing, fallbackTargetPos, true, true);
+        }
+
+        public void TryStartStream(Pawn source, Thing target, Vector3 fallbackTargetPos, bool allowDamage, bool requireLineOfSight)
         {
             if (!CanStartSourceStream(source))
             {
                 return;
             }
 
-            Vector3 targetPos = target != null ? target.DrawPos : fallbackTargetPos;
+            Vector3 targetPos = target != null && !target.Destroyed ? target.DrawPos : fallbackTargetPos;
             if (!CanUseTargetPos(source, targetPos))
             {
                 return;
@@ -62,24 +78,24 @@ namespace AbyssalProtocol
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             RemoveExistingStreamFor(source);
 
-            bool damageEnabled = target != null && GenHostility.HostileTo(source, target);
-
+            bool damageEnabled = allowDamage && CanDamageTarget(source, target);
             activeStreams.Add(new ActiveStream
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
-                targetPawnId = target?.thingIDNumber ?? -1,
-                expireTick = ticksGame + PawnStreamDurationTicks,
-                nextDamageTick = ticksGame + Mathf.Max(4, DamageIntervalTicks / 2),
+                targetThingId = target != null && !target.Destroyed ? target.thingIDNumber : -1,
+                expireTick = ticksGame + (target is Pawn ? PawnStreamDurationTicks : PointStreamDurationTicks),
+                nextDamageTick = ticksGame + Mathf.Max(3, DamageIntervalTicks / 2),
                 seed = source.thingIDNumber * 397 ^ (target?.thingIDNumber ?? fallbackTargetPos.GetHashCode()) * 17,
                 damageEnabled = damageEnabled,
+                requireLineOfSight = requireLineOfSight,
                 staticTargetPos = targetPos
             });
 
             if (source.MapHeld != null)
             {
                 ABY_SoundUtility.PlayAt(PulseSoundDefName, targetPos.ToIntVec3(), source.MapHeld);
-                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, 0.95f);
+                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, damageEnabled ? 0.88f : 0.54f);
                 FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
             }
 
@@ -103,17 +119,18 @@ namespace AbyssalProtocol
             {
                 mapId = source.MapHeld.uniqueID,
                 sourcePawnId = source.thingIDNumber,
-                targetPawnId = -1,
+                targetThingId = -1,
                 expireTick = ticksGame + PointStreamDurationTicks,
                 nextDamageTick = ticksGame + DamageIntervalTicks,
                 seed = source.thingIDNumber * 397 ^ targetPos.GetHashCode() * 17,
                 damageEnabled = false,
+                requireLineOfSight = false,
                 staticTargetPos = targetPos
             });
 
             if (source.MapHeld != null)
             {
-                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, blockedByShield ? 0.88f : 1.02f);
+                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, blockedByShield ? 0.78f : 0.92f);
                 FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
             }
         }
@@ -140,15 +157,15 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                Pawn target = FindPawn(map, stream.targetPawnId);
+                Thing target = FindThing(map, stream.targetThingId);
                 if (target != null && CanUseTrackedTarget(source, target))
                 {
                     stream.staticTargetPos = target.DrawPos;
-                    stream.damageEnabled = GenHostility.HostileTo(source, target);
+                    stream.damageEnabled = CanDamageTarget(source, target);
                 }
                 else
                 {
-                    stream.targetPawnId = -1;
+                    stream.targetThingId = -1;
                     stream.damageEnabled = false;
                     target = null;
                 }
@@ -160,8 +177,14 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                int visualInterval = GetVisualIntervalTicks();
-                if (ticksGame % visualInterval == 0)
+                if (stream.requireLineOfSight && target != null && !HasLineOfSight(source, target))
+                {
+                    PlayTailIfPossible(source, map);
+                    activeStreams.RemoveAt(i);
+                    continue;
+                }
+
+                if (ticksGame % GetVisualIntervalTicks() == 0)
                 {
                     SpawnBeamVisuals(map, source, stream.staticTargetPos, stream.seed, ticksGame, target != null);
                 }
@@ -179,12 +202,7 @@ namespace AbyssalProtocol
             int count = activeStreams != null ? activeStreams.Count : 0;
             if (count >= 6)
             {
-                return 4;
-            }
-
-            if (count >= 3)
-            {
-                return 3;
+                return 2;
             }
 
             return VisualIntervalTicks;
@@ -195,27 +213,27 @@ namespace AbyssalProtocol
             int count = activeStreams != null ? activeStreams.Count : 0;
             if (count >= 6)
             {
-                return 6;
+                return 7;
             }
 
             if (count >= 3)
             {
-                return 8;
+                return 9;
             }
 
-            return 10;
+            return 12;
         }
 
         private void EnsureDefsLoaded()
         {
-            if (blobMoteDef == null)
+            if (beamHaloDef == null)
             {
-                blobMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(BlobMoteDefName);
+                beamHaloDef = DefDatabase<ThingDef>.GetNamedSilentFail(BeamHaloDefName);
             }
 
-            if (coreMoteDef == null)
+            if (beamCoreDef == null)
             {
-                coreMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(CoreMoteDefName);
+                beamCoreDef = DefDatabase<ThingDef>.GetNamedSilentFail(BeamCoreDefName);
             }
 
             if (sparkMoteDef == null)
@@ -231,8 +249,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            ThingWithComps primary = source.equipment?.Primary;
-            return primary?.def != null && primary.def.defName == WeaponDefName;
+            return IsSpecterLashWeapon(source.equipment?.Primary);
         }
 
         private static bool CanContinueSourceStream(Pawn source, Vector3 targetPos, int ticksGame, int expireTick)
@@ -250,9 +267,9 @@ namespace AbyssalProtocol
             return CanUseTargetPos(source, targetPos);
         }
 
-        private static bool CanUseTrackedTarget(Pawn source, Pawn target)
+        private static bool CanUseTrackedTarget(Pawn source, Thing target)
         {
-            if (source == null || target == null || target.Dead || !target.Spawned)
+            if (source == null || target == null || target.Destroyed || !target.Spawned)
             {
                 return false;
             }
@@ -266,7 +283,7 @@ namespace AbyssalProtocol
             Vector3 targetPos = target.DrawPos;
             sourcePos.y = 0f;
             targetPos.y = 0f;
-            return (targetPos - sourcePos).magnitude <= MaxStreamRange + 1.8f;
+            return (targetPos - sourcePos).magnitude <= MaxStreamRange + SourceBreakPadding;
         }
 
         private static bool CanUseTargetPos(Pawn source, Vector3 targetPos)
@@ -279,7 +296,7 @@ namespace AbyssalProtocol
             Vector3 sourcePos = source.DrawPos;
             sourcePos.y = 0f;
             targetPos.y = 0f;
-            if ((targetPos - sourcePos).magnitude > MaxStreamRange + 1.8f)
+            if ((targetPos - sourcePos).magnitude > MaxStreamRange + SourceBreakPadding)
             {
                 return false;
             }
@@ -288,10 +305,58 @@ namespace AbyssalProtocol
             return targetCell.IsValid && targetCell.InBounds(source.MapHeld);
         }
 
-        private void ApplyPulseDamage(Pawn source, Pawn target)
+        private static bool CanDamageTarget(Pawn source, Thing target)
+        {
+            if (source == null || target == null || target == source || target.Destroyed || !target.Spawned || target.def == null)
+            {
+                return false;
+            }
+
+            if (!target.def.useHitPoints)
+            {
+                return false;
+            }
+
+            if (target.def.category == ThingCategory.Mote || target.def.category == ThingCategory.Projectile || target is Fire)
+            {
+                return false;
+            }
+
+            Pawn targetPawn = target as Pawn;
+            if (targetPawn != null)
+            {
+                return !targetPawn.Dead && GenHostility.HostileTo(source, targetPawn);
+            }
+
+            if (target.Faction != null && source.Faction != null && target.Faction == source.Faction)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool HasLineOfSight(Pawn source, Thing target)
+        {
+            if (source?.MapHeld == null || target == null || !target.Spawned)
+            {
+                return false;
+            }
+
+            IntVec3 sourceCell = source.PositionHeld;
+            IntVec3 targetCell = target.PositionHeld;
+            if (!sourceCell.IsValid || !targetCell.IsValid || !sourceCell.InBounds(source.MapHeld) || !targetCell.InBounds(source.MapHeld))
+            {
+                return false;
+            }
+
+            return GenSight.LineOfSight(sourceCell, targetCell, source.MapHeld, true);
+        }
+
+        private void ApplyPulseDamage(Pawn source, Thing target)
         {
             Map map = source.MapHeld;
-            if (map == null || target == null || target.Dead)
+            if (map == null || target == null || target.Destroyed)
             {
                 return;
             }
@@ -308,15 +373,18 @@ namespace AbyssalProtocol
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
             target.TakeDamage(damageInfo);
-            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.62f);
+            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.58f);
             FleckMaker.ThrowMicroSparks(target.DrawPos, map);
-            FleckMaker.ThrowMicroSparks(target.DrawPos, map);
+            if (Rand.Chance(0.55f))
+            {
+                FleckMaker.ThrowMicroSparks(target.DrawPos, map);
+            }
             ABY_SoundUtility.PlayAt(PulseSoundDefName, target.PositionHeld, map);
         }
 
-        private void SpawnBeamVisuals(Map map, Pawn source, Vector3 rawTargetPos, int seed, int ticksGame, bool isTrackingPawn)
+        private void SpawnBeamVisuals(Map map, Pawn source, Vector3 rawTargetPos, int seed, int ticksGame, bool isTrackingThing)
         {
-            if (map == null || blobMoteDef == null || coreMoteDef == null)
+            if (map == null || beamHaloDef == null || beamCoreDef == null)
             {
                 return;
             }
@@ -338,35 +406,87 @@ namespace AbyssalProtocol
             sourcePos += normal * EndpointInset;
             targetPos -= normal * EndpointInset;
 
-            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 2.15f), 5, GetSegmentCap());
+            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 0.48f), 5, GetSegmentCap());
+            Vector3 previousPoint = sourcePos;
             float amplitude = Mathf.Lerp(BaseAmplitude, MaxAmplitude, Mathf.Clamp01(distance / 14f));
-            float phaseBase = ticksGame * 0.47f + seed * 0.019f;
+            float phaseBase = ticksGame * 0.42f + seed * 0.017f;
 
-            for (int i = 0; i < segmentCount; i++)
+            for (int i = 1; i < segmentCount; i++)
             {
-                float t = segmentCount == 1 ? 0f : i / (float)(segmentCount - 1);
-                float envelope = Mathf.Sin(t * Mathf.PI);
-                float sway = Mathf.Sin(phaseBase + t * 8.2f) * amplitude * envelope;
-                float secondary = Mathf.Sin(phaseBase * 1.91f + t * 13.6f + 1.2f) * amplitude * 0.42f * envelope;
-
-                Vector3 point = Vector3.Lerp(sourcePos, targetPos, t) + perpendicular * sway;
-                point.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + secondary * 0.06f;
-
-                float outerScale = Mathf.Lerp(0.60f, 1.08f, envelope);
-                float coreScale = outerScale * 0.60f;
-                MoteMaker.MakeStaticMote(point, map, blobMoteDef, outerScale);
-                MoteMaker.MakeStaticMote(point + new Vector3(0f, 0.0035f, 0f), map, coreMoteDef, coreScale);
-
-                if (sparkMoteDef != null && i > 0 && i < segmentCount - 1 && segmentCount <= 8 && ((i + ticksGame + seed) % 3 == 0))
-                {
-                    Vector3 sparkPoint = point + perpendicular * (sway * 0.22f);
-                    sparkPoint.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + 0.002f;
-                    MoteMaker.MakeStaticMote(sparkPoint, map, sparkMoteDef, 0.36f + envelope * 0.22f);
-                }
+                float t = i / (float)(segmentCount - 1);
+                Vector3 point = GetCurvedPoint(sourcePos, targetPos, perpendicular, amplitude, phaseBase, t);
+                SpawnBeamSegment(map, previousPoint, point, i, segmentCount, isTrackingThing, seed, ticksGame);
+                previousPoint = point;
             }
 
-            FleckMaker.ThrowLightningGlow(sourcePos, map, isTrackingPawn ? 0.46f : 0.34f);
-            FleckMaker.ThrowLightningGlow(targetPos, map, isTrackingPawn ? 0.62f : 0.42f);
+            FleckMaker.ThrowLightningGlow(sourcePos, map, isTrackingThing ? 0.42f : 0.28f);
+            FleckMaker.ThrowLightningGlow(targetPos, map, isTrackingThing ? 0.54f : 0.34f);
+        }
+
+        private Vector3 GetCurvedPoint(Vector3 sourcePos, Vector3 targetPos, Vector3 perpendicular, float amplitude, float phaseBase, float t)
+        {
+            float envelope = Mathf.Sin(t * Mathf.PI);
+            float sway = Mathf.Sin(phaseBase + t * 7.35f) * amplitude * envelope;
+            float secondary = Mathf.Sin(phaseBase * 1.73f + t * 12.8f + 1.1f) * amplitude * 0.34f * envelope;
+            Vector3 point = Vector3.Lerp(sourcePos, targetPos, t) + perpendicular * sway;
+            point.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + secondary * 0.045f;
+            return point;
+        }
+
+        private void SpawnBeamSegment(Map map, Vector3 start, Vector3 end, int segmentIndex, int segmentCount, bool isTrackingThing, int seed, int ticksGame)
+        {
+            float t = segmentCount <= 1 ? 0f : segmentIndex / (float)(segmentCount - 1);
+            float envelope = Mathf.Sin(t * Mathf.PI);
+            float haloWidth = Mathf.Lerp(0.42f, 0.82f, envelope) * (isTrackingThing ? 1.0f : 0.72f);
+            float coreWidth = Mathf.Lerp(0.12f, 0.23f, envelope) * (isTrackingThing ? 1.0f : 0.76f);
+
+            SpawnBeamThing(beamHaloDef, start, end, map, haloWidth, BeamSegmentLifetimeTicks, BeamHaloTexturePath, true);
+            SpawnBeamThing(beamCoreDef, start, end, map, coreWidth, BeamSegmentLifetimeTicks - 1, BeamCoreTexturePath, false);
+
+            if (sparkMoteDef != null && segmentIndex > 1 && segmentIndex < segmentCount - 1 && ((segmentIndex + seed + ticksGame) % 5 == 0))
+            {
+                Vector3 sparkPoint = Vector3.Lerp(start, end, 0.5f);
+                sparkPoint.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + 0.004f;
+                MoteMaker.MakeStaticMote(sparkPoint, map, sparkMoteDef, 0.20f + envelope * 0.16f);
+            }
+        }
+
+        private static void SpawnBeamThing(ThingDef def, Vector3 source, Vector3 target, Map map, float width, int ticks, string texturePath, bool pulse)
+        {
+            if (def == null || map == null || ticks <= 0)
+            {
+                return;
+            }
+
+            Mote_CrownspikeRailBeam beam = ThingMaker.MakeThing(def) as Mote_CrownspikeRailBeam;
+            if (beam == null)
+            {
+                return;
+            }
+
+            beam.start = source;
+            beam.end = target;
+            beam.width = width;
+            beam.ticksLeft = ticks;
+            beam.startingTicks = ticks;
+            beam.texturePath = texturePath;
+            beam.additivePulse = pulse;
+
+            IntVec3 spawnCell = ((source + target) * 0.5f).ToIntVec3();
+            if (!spawnCell.InBounds(map))
+            {
+                spawnCell = source.ToIntVec3();
+            }
+            if (!spawnCell.InBounds(map))
+            {
+                spawnCell = target.ToIntVec3();
+            }
+            if (!spawnCell.InBounds(map))
+            {
+                return;
+            }
+
+            GenSpawn.Spawn(beam, spawnCell, map);
         }
 
         private static Vector3 GetMuzzleSourcePos(Pawn source, Vector3 targetPos)
@@ -413,18 +533,23 @@ namespace AbyssalProtocol
 
         private static Pawn FindPawn(Map map, int pawnId)
         {
-            if (pawnId < 0 || map?.mapPawns == null)
+            return FindThing(map, pawnId) as Pawn;
+        }
+
+        private static Thing FindThing(Map map, int thingId)
+        {
+            if (thingId < 0 || map?.listerThings == null)
             {
                 return null;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
             {
-                Pawn pawn = pawns[i];
-                if (pawn != null && pawn.thingIDNumber == pawnId)
+                Thing thing = things[i];
+                if (thing != null && thing.thingIDNumber == thingId)
                 {
-                    return pawn;
+                    return thing;
                 }
             }
 

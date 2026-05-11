@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_SpecterLashProjector</defName>
     <label>specter lash projector</label>
-    <description>A residue-fed tether projector that snaps an impact point into a writhing containment lash. On a solid hit the stream clings to the victim, weaving from side to side and burning through the target in repeated pulses instead of a single straight beam.</description>
+    <description>A residue-fed tether projector that replaces a conventional shot with a sustained curved containment lash. When the lock holds, the visible beam and damage pulses are driven by the same runtime stream, so the victim is burned only while the lash is actually attached.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
