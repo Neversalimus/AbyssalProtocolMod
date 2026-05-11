@@ -107,7 +107,8 @@ namespace AbyssalProtocol
             return false;
         }
 
-        public static bool MightBlockHediff(HediffDef hediffDef)
+
+        public static bool CouldBeBlockedHediff(HediffDef hediffDef)
         {
             if (hediffDef == null || IsAbyssalOwnedHediff(hediffDef))
             {
@@ -117,24 +118,19 @@ namespace AbyssalProtocol
             return IsBlockedDiseaseLikeHediff(hediffDef) || IsBlockedSpawnConditionHediff(hediffDef);
         }
 
-        public static bool MightBlockHediff(Hediff hediff)
+        public static bool CouldBeBlockedHediff(Hediff hediff)
         {
-            return MightBlockHediff(hediff?.def);
+            return CouldBeBlockedHediff(hediff?.def);
         }
 
         public static bool ShouldBlockHediff(Pawn pawn, HediffDef hediffDef)
         {
-            if (!IsDiseaseProtectedPawn(pawn) || hediffDef == null)
+            if (!CouldBeBlockedHediff(hediffDef))
             {
                 return false;
             }
 
-            if (IsAbyssalOwnedHediff(hediffDef))
-            {
-                return false;
-            }
-
-            return IsBlockedDiseaseLikeHediff(hediffDef) || IsBlockedSpawnConditionHediff(hediffDef);
+            return IsDiseaseProtectedPawn(pawn);
         }
 
         public static bool ShouldBlockHediff(Pawn pawn, Hediff hediff)
