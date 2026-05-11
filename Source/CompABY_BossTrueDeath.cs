@@ -69,6 +69,21 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref suppressedKillDamageConsumed, "abyTrueDeath_suppressedKillDamageConsumed", false);
         }
 
+
+        public override string CompInspectStringExtra()
+        {
+            if (!ABY_StabilityDiagnosticsUtility.ShowDebugInspectStrings)
+            {
+                return null;
+            }
+
+            EnsureInitialized();
+            return "ABY debug true HP: " + CurrentBossHitPoints.ToString("0.#") + " / " + MaxBossHitPoints.ToString("0.#")
+                + " (" + (HealthPercent * 100f).ToString("0") + "%)"
+                + "\nABY death authorized: " + deathAuthorized
+                + "\nABY last damage tick: " + lastRegisteredDamageTick;
+        }
+
         public override void CompTick()
         {
             base.CompTick();

@@ -26,6 +26,12 @@ namespace AbyssalProtocol
         public bool lockDifficultyAfterFirstBoss = DefaultLockDifficultyAfterFirstBoss;
         public const bool DefaultEnableWeaponChargeSounds = false;
         public bool enableWeaponChargeSounds = DefaultEnableWeaponChargeSounds;
+        public bool enableStabilityDiagnostics = false;
+        public bool showHarmonyPatchReportOnLoad = true;
+        public bool showDebugInspectStrings = false;
+        public bool verboseDiagnostics = false;
+        public bool enableUIPolish = true;
+        public bool suppressRepeatedWarnings = true;
 
         public override void ExposeData()
         {
@@ -49,6 +55,12 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref difficultyProfileDefName, "difficultyProfileDefName", AbyssalDifficultyUtility.NormalProfileDefName);
             Scribe_Values.Look(ref lockDifficultyAfterFirstBoss, "lockDifficultyAfterFirstBoss", DefaultLockDifficultyAfterFirstBoss);
             Scribe_Values.Look(ref enableWeaponChargeSounds, "enableWeaponChargeSounds", DefaultEnableWeaponChargeSounds);
+            Scribe_Values.Look(ref enableStabilityDiagnostics, "enableStabilityDiagnostics", false);
+            Scribe_Values.Look(ref showHarmonyPatchReportOnLoad, "showHarmonyPatchReportOnLoad", true);
+            Scribe_Values.Look(ref showDebugInspectStrings, "showDebugInspectStrings", false);
+            Scribe_Values.Look(ref verboseDiagnostics, "verboseDiagnostics", false);
+            Scribe_Values.Look(ref enableUIPolish, "enableUIPolish", true);
+            Scribe_Values.Look(ref suppressRepeatedWarnings, "suppressRepeatedWarnings", true);
             ClampValues();
         }
 
@@ -85,6 +97,12 @@ namespace AbyssalProtocol
             difficultyProfileDefName = AbyssalDifficultyUtility.NormalProfileDefName;
             lockDifficultyAfterFirstBoss = DefaultLockDifficultyAfterFirstBoss;
             enableWeaponChargeSounds = DefaultEnableWeaponChargeSounds;
+            enableStabilityDiagnostics = false;
+            showHarmonyPatchReportOnLoad = true;
+            showDebugInspectStrings = false;
+            verboseDiagnostics = false;
+            enableUIPolish = true;
+            suppressRepeatedWarnings = true;
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)

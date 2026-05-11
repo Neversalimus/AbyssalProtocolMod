@@ -47,7 +47,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 860f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1080f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -62,6 +62,10 @@ namespace AbyssalProtocol
             {
                 ABY_WeaponChargeSoundUtility.ApplyCurrentSettings();
             }
+
+            list.GapLine();
+            DrawDiagnosticsSection(list, s);
+            list.GapLine();
 
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowHealthNumbers".Translate(), ref s.showHealthNumbers, "ABY_BossBar_ShowHealthNumbersDesc".Translate());
@@ -115,6 +119,37 @@ namespace AbyssalProtocol
             ABY_WeaponChargeSoundUtility.ApplyCurrentSettings();
         }
 
+
+        private static void DrawDiagnosticsSection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
+        {
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DiagnosticsSettingsHeader", "Stability / diagnostics / UI polish"));
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            Widgets.Label(ABY_UIPolishUtility.TextRect(list.GetRect(42f)), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DiagnosticsSettingsDesc", "Optional tools for checking Harmony hooks, boss true HP, monster AI recovery, and safer Abyssal UI text layout. Keep verbose diagnostics off unless testing."));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_Enable", "Enable periodic diagnostics"), ref settingsData.enableStabilityDiagnostics, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_EnableDesc", "Logs a throttled health snapshot while a game is loaded. Off by default."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_HarmonyReport", "Log Harmony patch report on load"), ref settingsData.showHarmonyPatchReportOnLoad, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_HarmonyReportDesc", "Writes a compact count of Abyssal-owned Harmony patches after startup."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_DebugInspect", "Show debug inspect strings"), ref settingsData.showDebugInspectStrings, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_DebugInspectDesc", "Shows extra inspect text such as boss true HP. Intended for testing only."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_Verbose", "Verbose diagnostics"), ref settingsData.verboseDiagnostics, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_VerboseDesc", "Adds throttled messages for AI recovery and periodic snapshots. Use only while debugging."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_UIPolish", "Enable Abyssal UI text polish"), ref settingsData.enableUIPolish, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_UIPolishDesc", "Adds small padding and clipping guards to Abyssal custom labels/buttons."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarnings", "Throttle repeated Abyssal warnings"), ref settingsData.suppressRepeatedWarnings, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarningsDesc", "Prevents repeated compatibility warnings from spamming the log."));
+
+            Rect row = list.GetRect(32f);
+            Rect openRect = new Rect(row.x, row.y, (row.width - 8f) * 0.5f, 32f);
+            Rect logRect = new Rect(openRect.xMax + 8f, row.y, row.width - openRect.width - 8f, 32f);
+            if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_OpenWindow", "Open diagnostics")))
+            {
+                Window_ABY_Diagnostics.OpenWindow();
+            }
+            if (AbyssalStyledWidgets.TextButton(logRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_LogNow", "Log snapshot now")))
+            {
+                ABY_StabilityDiagnosticsUtility.LogSnapshot(true);
+            }
+
+            list.Gap(4f);
+        }
 
         private static void DrawDifficultySection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
         {

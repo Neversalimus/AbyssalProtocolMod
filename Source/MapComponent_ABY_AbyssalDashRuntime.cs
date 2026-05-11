@@ -12,6 +12,8 @@ namespace AbyssalProtocol
         {
         }
 
+        public int ActiveDashCount => activeDashes.Count;
+
         public bool IsPawnDashing(Pawn pawn)
         {
             return pawn != null && activePawnIds.Contains(pawn.thingIDNumber);

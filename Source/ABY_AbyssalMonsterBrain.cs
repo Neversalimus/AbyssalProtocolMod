@@ -81,10 +81,12 @@ namespace AbyssalProtocol
                 if (TryCreateRepositionJob(pawn, target, profile, out Job repositionJob))
                 {
                     pawn.jobs.TryTakeOrderedJob(repositionJob, JobTag.Misc);
+                    ABY_StabilityDiagnosticsUtility.Verbose("monster-ai-reposition", "Monster AI recovered stale Wait_Combat by repositioning " + ABY_StabilityDiagnosticsUtility.FormatPawnLabel(pawn), 1800);
                     return true;
                 }
 
                 pawn.jobs.EndCurrentJob(JobCondition.InterruptForced, true, true);
+                ABY_StabilityDiagnosticsUtility.Verbose("monster-ai-interrupt", "Monster AI interrupted stale combat job for " + ABY_StabilityDiagnosticsUtility.FormatPawnLabel(pawn), 1800);
                 return true;
             }
 
@@ -92,6 +94,7 @@ namespace AbyssalProtocol
             {
                 Job wait = MakeWaitJob(ShortCombatJobExpiry);
                 pawn.jobs.TryTakeOrderedJob(wait, JobTag.Misc);
+                ABY_StabilityDiagnosticsUtility.Verbose("monster-ai-hold", "Monster AI converted Goto to hold-fire for " + ABY_StabilityDiagnosticsUtility.FormatPawnLabel(pawn), 1800);
                 return true;
             }
 

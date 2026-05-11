@@ -50,6 +50,10 @@ namespace AbyssalProtocol
 
                 int now = SafeTicks();
                 int delay = Math.Max(1, throttleTicks);
+                if (AbyssalProtocolMod.Settings != null && !AbyssalProtocolMod.Settings.suppressRepeatedWarnings)
+                {
+                    delay = 1;
+                }
 
                 lock (SyncRoot)
                 {

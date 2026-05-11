@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_DiagnosticsSettingsHeader>Stability / diagnostics / UI polish</ABY_DiagnosticsSettingsHeader>
+  <ABY_DiagnosticsSettingsDesc>Optional tools for checking Harmony hooks, boss true HP, monster AI recovery, and safer Abyssal UI text layout. Keep verbose diagnostics off unless testing.</ABY_DiagnosticsSettingsDesc>
+  <ABY_Diagnostics_Enable>Enable periodic diagnostics</ABY_Diagnostics_Enable>
+  <ABY_Diagnostics_EnableDesc>Logs a throttled health snapshot while a game is loaded. Off by default.</ABY_Diagnostics_EnableDesc>
+  <ABY_Diagnostics_HarmonyReport>Log Harmony patch report on load</ABY_Diagnostics_HarmonyReport>
+  <ABY_Diagnostics_HarmonyReportDesc>Writes a compact count of Abyssal-owned Harmony patches after startup.</ABY_Diagnostics_HarmonyReportDesc>
+  <ABY_Diagnostics_DebugInspect>Show debug inspect strings</ABY_Diagnostics_DebugInspect>
+  <ABY_Diagnostics_DebugInspectDesc>Shows extra inspect text such as boss true HP. Intended for testing only.</ABY_Diagnostics_DebugInspectDesc>
+  <ABY_Diagnostics_Verbose>Verbose diagnostics</ABY_Diagnostics_Verbose>
+  <ABY_Diagnostics_VerboseDesc>Adds throttled messages for AI recovery and periodic snapshots. Use only while debugging.</ABY_Diagnostics_VerboseDesc>
+  <ABY_Diagnostics_UIPolish>Enable Abyssal UI text polish</ABY_Diagnostics_UIPolish>
+  <ABY_Diagnostics_UIPolishDesc>Adds small padding and clipping guards to Abyssal custom labels/buttons.</ABY_Diagnostics_UIPolishDesc>
+  <ABY_Diagnostics_ThrottleWarnings>Throttle repeated Abyssal warnings</ABY_Diagnostics_ThrottleWarnings>
+  <ABY_Diagnostics_ThrottleWarningsDesc>Prevents repeated compatibility warnings from spamming the log.</ABY_Diagnostics_ThrottleWarningsDesc>
+  <ABY_Diagnostics_OpenWindow>Open diagnostics</ABY_Diagnostics_OpenWindow>
+  <ABY_Diagnostics_LogNow>Log snapshot now</ABY_Diagnostics_LogNow>
+</LanguageData>

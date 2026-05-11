@@ -7,16 +7,27 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class ABY_HarmonyBootstrap
     {
+        public const string HarmonyId = "neversalimus.abyssalprotocol.core";
+        public static Harmony HarmonyInstance { get; private set; }
+        public static bool BootstrapSucceeded { get; private set; }
+        public static string BootstrapError { get; private set; }
+
         static ABY_HarmonyBootstrap()
         {
             try
             {
-                Harmony harmony = new Harmony("neversalimus.abyssalprotocol.core");
+                Harmony harmony = new Harmony(HarmonyId);
+                HarmonyInstance = harmony;
                 harmony.PatchAll();
+                BootstrapSucceeded = true;
+                ABY_HarmonyPatchReportUtility.Capture(harmony);
+                LongEventHandler.ExecuteWhenFinished(ABY_StabilityDiagnosticsUtility.ReportStartupSnapshot);
             }
             catch (Exception ex)
             {
-                ABY_LogThrottleUtility.Warning("harmony-bootstrap", "[Abyssal Protocol] Harmony bootstrap failed: " + ex.GetType().Name + ": " + ex.Message, 5000);
+                BootstrapSucceeded = false;
+                BootstrapError = ex.GetType().Name + ": " + ex.Message;
+                ABY_LogThrottleUtility.Warning("harmony-bootstrap", "[Abyssal Protocol] Harmony bootstrap failed: " + BootstrapError, 5000);
             }
         }
     }

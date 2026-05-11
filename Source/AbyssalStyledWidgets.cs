@@ -233,7 +233,14 @@ namespace AbyssalProtocol
                 GUI.color = DefaultTextColor;
             }
 
-            Widgets.Label(labelRect, label);
+            if (ABY_StabilityDiagnosticsUtility.UIPolishEnabled)
+            {
+                Widgets.Label(ABY_UIPolishUtility.TextRect(labelRect, 1f, 2f), label);
+            }
+            else
+            {
+                Widgets.Label(labelRect, label);
+            }
 
             GUI.color = oldColor;
             Text.Font = oldFont;
