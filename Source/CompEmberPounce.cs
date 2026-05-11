@@ -1,4 +1,3 @@
-using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -26,6 +25,11 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (ABY_AbyssalDashRuntime.IsDashing(pawn))
+            {
+                return;
+            }
+
             if (!parent.IsHashIntervalTick(Mathf.Max(15, Props.scanIntervalTicks)))
             {
                 return;
@@ -49,41 +53,19 @@ namespace AbyssalProtocol
                 return;
             }
 
-            DoPounce(pawn, target, landingCell);
-            nextPounceTick = currentTick + Mathf.Max(60, Props.cooldownTicks) + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
-        }
-
-        private void DoPounce(Pawn pawn, Pawn target, IntVec3 landingCell)
-        {
-            Map map = pawn.Map;
-            IntVec3 sourceCell = pawn.Position;
-
-            SpawnMote(map, sourceCell);
-            pawn.pather?.StopDead();
-            pawn.Position = landingCell;
-            pawn.Drawer?.tweener?.ResetTweenedPosToRoot();
-            pawn.stances?.CancelBusyStanceSoft();
-            pawn.rotationTracker?.FaceCell(target.Position);
-            SpawnMote(map, landingCell);
-
-            ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", landingCell, map);
-            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.impactHediffDefName);
-        }
-
-        private void SpawnMote(Map map, IntVec3 cell)
-        {
-            if (map == null || !cell.IsValid)
+            if (ABY_AbyssalDashRuntime.TryStartDash(
+                pawn,
+                target,
+                landingCell,
+                Props.impactHediffDefName,
+                Props.dashDurationTicks,
+                Props.dashMoteDefName,
+                Props.dashMoteScale,
+                Props.dashSoundDefName,
+                "ember_pounce"))
             {
-                return;
+                nextPounceTick = currentTick + Mathf.Max(60, Props.cooldownTicks) + Rand.RangeInclusive(-Mathf.Max(0, Props.cooldownJitterTicks), Mathf.Max(0, Props.cooldownJitterTicks));
             }
-
-            ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_Mote_ArchonDashTrail");
-            if (moteDef == null)
-            {
-                return;
-            }
-
-            MoteMaker.MakeStaticMote(cell.ToVector3Shifted(), map, moteDef, 0.82f);
         }
     }
 }
