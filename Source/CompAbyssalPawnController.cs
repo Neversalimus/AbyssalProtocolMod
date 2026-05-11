@@ -23,6 +23,7 @@ namespace AbyssalProtocol
             base.PostSpawnSetup(respawningAfterLoad);
             spawnTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             prepared = false;
+            ScrubBlockedDiseases();
             EnsurePreparedState();
             EnsureAggressionState();
         }
@@ -30,8 +31,14 @@ namespace AbyssalProtocol
         public override void CompTickRare()
         {
             base.CompTickRare();
+            ScrubBlockedDiseases();
             EnsurePreparedState();
             EnsureAggressionState();
+        }
+
+        private void ScrubBlockedDiseases()
+        {
+            ABY_AbyssalDiseaseUtility.ScrubBlockedHediffs(parent as Pawn);
         }
 
         private void EnsurePreparedState()
