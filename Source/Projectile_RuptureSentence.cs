@@ -94,22 +94,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Hediff mark = targetPawn.health.hediffSet.GetFirstHediffOfDef(markDef);
-            if (mark == null)
-            {
-                mark = HediffMaker.MakeHediff(markDef, targetPawn);
-                targetPawn.health.AddHediff(mark);
-            }
-
-            mark.Severity = Mathf.Max(mark.Severity, 1f);
-
-            HediffComp_Disappears disappears = mark.TryGetComp<HediffComp_Disappears>();
-            if (disappears != null)
-            {
-                disappears.ticksToDisappear = DefaultMarkTicks;
-            }
-
-            targetPawn.health.hediffSet.DirtyCache();
+            ABY_ProjectileProcUtility.ApplyOrRefreshFixedHediff(
+                targetPawn,
+                RuptureCrownUtility.MarkHediffDefName,
+                1f,
+                DefaultMarkTicks);
         }
     }
 }

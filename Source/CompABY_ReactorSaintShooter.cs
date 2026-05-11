@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -1095,25 +1093,13 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayOneShotAt(Props.primaryFireSoundDefName, pawn.Position, pawn.Map);
             }
 
-            ThingDef projectileDef = ABY_DefCache.ThingDefNamed(Props.directProjectileDefName);
-            if (projectileDef == null)
-            {
-                return;
-            }
-
-            Projectile projectile = GenSpawn.Spawn(projectileDef, pawn.Position, pawn.Map, WipeMode.Vanish) as Projectile;
-            if (projectile == null)
-            {
-                return;
-            }
-
-            if (TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(target)))
+            if (ABY_AbyssalProjectileLaunchUtility.TrySpawnAndLaunch(
+                pawn,
+                target,
+                Props.directProjectileDefName,
+                out Projectile projectile))
             {
                 lastSuccessfulShotTick = Find.TickManager != null ? Find.TickManager.TicksGame : lastSuccessfulShotTick;
-            }
-            else
-            {
-                projectile.Destroy(DestroyMode.Vanish);
             }
         }
 
@@ -1151,25 +1137,13 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayOneShotAt(Props.barrageFireSoundDefName, pawn.Position, pawn.Map);
             }
 
-            ThingDef projectileDef = ABY_DefCache.ThingDefNamed(Props.barrageProjectileDefName);
-            if (projectileDef == null)
-            {
-                return;
-            }
-
-            Projectile projectile = GenSpawn.Spawn(projectileDef, pawn.Position, pawn.Map, WipeMode.Vanish) as Projectile;
-            if (projectile == null)
-            {
-                return;
-            }
-
-            if (TryLaunchProjectile(projectile, pawn, new LocalTargetInfo(targetCell)))
+            if (ABY_AbyssalProjectileLaunchUtility.TrySpawnAndLaunch(
+                pawn,
+                targetCell,
+                Props.barrageProjectileDefName,
+                out Projectile projectile))
             {
                 lastSuccessfulShotTick = Find.TickManager != null ? Find.TickManager.TicksGame : lastSuccessfulShotTick;
-            }
-            else
-            {
-                projectile.Destroy(DestroyMode.Vanish);
             }
         }
 
@@ -1197,115 +1171,6 @@ namespace AbyssalProtocol
             }
 
             return bestCell.IsValid ? bestCell : anchorCell;
-        }
-
-        private bool TryLaunchProjectile(Projectile projectile, Pawn pawn, LocalTargetInfo targetInfo)
-        {
-            MethodInfo[] methods = projectile.GetType()
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-                .Where(m => m.Name == "Launch")
-                .OrderByDescending(m => m.GetParameters().Length)
-                .ToArray();
-
-            for (int i = 0; i < methods.Length; i++)
-            {
-                if (!TryBuildLaunchArgs(methods[i], pawn, targetInfo, out object[] args))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    methods[i].Invoke(projectile, args);
-                    return true;
-                }
-                catch
-                {
-                }
-            }
-
-            return false;
-        }
-
-        private bool TryBuildLaunchArgs(MethodInfo method, Pawn pawn, LocalTargetInfo targetInfo, out object[] args)
-        {
-            ParameterInfo[] parameters = method.GetParameters();
-            args = new object[parameters.Length];
-            int thingSlot = 0;
-            IntVec3 targetCell = targetInfo.Cell.IsValid
-                ? targetInfo.Cell
-                : (targetInfo.Thing != null ? targetInfo.Thing.PositionHeld : IntVec3.Invalid);
-            TargetInfo mapTarget = new TargetInfo(targetCell, pawn.Map);
-
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Type parameterType = parameters[i].ParameterType;
-                if (typeof(Thing).IsAssignableFrom(parameterType))
-                {
-                    args[i] = thingSlot == 0 ? (object)pawn : null;
-                    thingSlot++;
-                    continue;
-                }
-
-                if (parameterType == typeof(Vector3))
-                {
-                    args[i] = pawn.DrawPos;
-                    continue;
-                }
-
-                if (parameterType == typeof(LocalTargetInfo))
-                {
-                    args[i] = targetInfo;
-                    continue;
-                }
-
-                if (parameterType == typeof(TargetInfo))
-                {
-                    args[i] = mapTarget;
-                    continue;
-                }
-
-                if (parameterType == typeof(IntVec3))
-                {
-                    if (!targetCell.IsValid)
-                    {
-                        args = null;
-                        return false;
-                    }
-
-                    args[i] = targetCell;
-                    continue;
-                }
-
-                if (parameterType == typeof(ProjectileHitFlags))
-                {
-                    args[i] = ProjectileHitFlags.IntendedTarget;
-                    continue;
-                }
-
-                if (parameterType == typeof(bool))
-                {
-                    args[i] = false;
-                    continue;
-                }
-
-                if (parameterType == typeof(ThingDef))
-                {
-                    args[i] = null;
-                    continue;
-                }
-
-                if (parameterType.IsEnum)
-                {
-                    args[i] = Activator.CreateInstance(parameterType);
-                    continue;
-                }
-
-                args = null;
-                return false;
-            }
-
-            return true;
         }
 
         private void SetTargetLock(int ticksGame, int attackMode)

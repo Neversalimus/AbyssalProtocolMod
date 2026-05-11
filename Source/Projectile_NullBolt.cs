@@ -99,21 +99,13 @@ namespace AbyssalProtocol
                     }
 
                     float severityGain = pawn == directPawn ? DirectSeverity : SplashSeverity;
-                    Hediff existing = pawn.health.hediffSet.GetFirstHediffOfDef(exposureDef);
-                    if (existing == null)
-                    {
-                        existing = HediffMaker.MakeHediff(exposureDef, pawn);
-                        pawn.health.AddHediff(existing);
-                    }
-
-                    existing.Severity = Mathf.Clamp(existing.Severity + severityGain, 0.01f, 0.99f);
-                    HediffComp_Disappears disappears = existing.TryGetComp<HediffComp_Disappears>();
-                    if (disappears != null)
-                    {
-                        disappears.ticksToDisappear = DebuffDurationTicks;
-                    }
-
-                    pawn.health.hediffSet.DirtyCache();
+                    ABY_ProjectileProcUtility.ApplyOrRefreshHediff(
+                        pawn,
+                        exposureDef,
+                        severityGain,
+                        0.01f,
+                        0.99f,
+                        DebuffDurationTicks);
                 }
             }
         }

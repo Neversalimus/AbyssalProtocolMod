@@ -17,7 +17,36 @@ namespace AbyssalProtocol
             bool preventFriendlyFire = false)
         {
             projectile = null;
-            if (launcher == null || target == null || projectileDef == null)
+            if (target == null)
+            {
+                return false;
+            }
+
+            return TrySpawnAndLaunch(
+                launcher,
+                new LocalTargetInfo(target),
+                new LocalTargetInfo(target),
+                projectileDef,
+                out projectile,
+                equipment,
+                targetCoverDef,
+                hitFlags,
+                preventFriendlyFire);
+        }
+
+        public static bool TrySpawnAndLaunch(
+            Pawn launcher,
+            LocalTargetInfo usedTarget,
+            LocalTargetInfo intendedTarget,
+            ThingDef projectileDef,
+            out Projectile projectile,
+            Thing equipment = null,
+            ThingDef targetCoverDef = null,
+            ProjectileHitFlags hitFlags = ProjectileHitFlags.IntendedTarget,
+            bool preventFriendlyFire = false)
+        {
+            projectile = null;
+            if (launcher == null || projectileDef == null || !usedTarget.IsValid || !intendedTarget.IsValid)
             {
                 return false;
             }
@@ -28,7 +57,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (target.Destroyed || !target.Spawned || target.Map != map)
+            if (!TargetIsValidForMap(usedTarget, map) || !TargetIsValidForMap(intendedTarget, map))
             {
                 return false;
             }
@@ -44,14 +73,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            LocalTargetInfo targetInfo = new LocalTargetInfo(target);
             try
             {
                 projectile.Launch(
                     launcher,
                     launcher.DrawPos,
-                    targetInfo,
-                    targetInfo,
+                    usedTarget,
+                    intendedTarget,
                     hitFlags,
                     preventFriendlyFire,
                     equipment,
@@ -76,6 +104,35 @@ namespace AbyssalProtocol
                 projectile = null;
                 return false;
             }
+        }
+
+        public static bool TrySpawnAndLaunch(
+            Pawn launcher,
+            IntVec3 targetCell,
+            ThingDef projectileDef,
+            out Projectile projectile,
+            Thing equipment = null,
+            ThingDef targetCoverDef = null,
+            ProjectileHitFlags hitFlags = ProjectileHitFlags.IntendedTarget,
+            bool preventFriendlyFire = false)
+        {
+            projectile = null;
+            if (!targetCell.IsValid)
+            {
+                return false;
+            }
+
+            LocalTargetInfo targetInfo = new LocalTargetInfo(targetCell);
+            return TrySpawnAndLaunch(
+                launcher,
+                targetInfo,
+                targetInfo,
+                projectileDef,
+                out projectile,
+                equipment,
+                targetCoverDef,
+                hitFlags,
+                preventFriendlyFire);
         }
 
         public static bool TrySpawnAndLaunch(
@@ -110,6 +167,56 @@ namespace AbyssalProtocol
                 targetCoverDef,
                 hitFlags,
                 preventFriendlyFire);
+        }
+
+        public static bool TrySpawnAndLaunch(
+            Pawn launcher,
+            IntVec3 targetCell,
+            string projectileDefName,
+            out Projectile projectile,
+            Thing equipment = null,
+            ThingDef targetCoverDef = null,
+            ProjectileHitFlags hitFlags = ProjectileHitFlags.IntendedTarget,
+            bool preventFriendlyFire = false)
+        {
+            projectile = null;
+            if (projectileDefName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            ThingDef projectileDef = DefDatabase<ThingDef>.GetNamedSilentFail(projectileDefName);
+            if (projectileDef == null)
+            {
+                Log.Warning("[Abyssal Protocol] Missing abyssal projectile ThingDef: " + projectileDefName);
+                return false;
+            }
+
+            return TrySpawnAndLaunch(
+                launcher,
+                targetCell,
+                projectileDef,
+                out projectile,
+                equipment,
+                targetCoverDef,
+                hitFlags,
+                preventFriendlyFire);
+        }
+
+        private static bool TargetIsValidForMap(LocalTargetInfo target, Map map)
+        {
+            if (!target.IsValid || map == null)
+            {
+                return false;
+            }
+
+            if (target.HasThing)
+            {
+                Thing thing = target.Thing;
+                return thing != null && !thing.Destroyed && thing.Spawned && thing.Map == map;
+            }
+
+            return target.Cell.IsValid && target.Cell.InBounds(map);
         }
     }
 }

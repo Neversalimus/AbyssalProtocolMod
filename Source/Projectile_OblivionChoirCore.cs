@@ -37,12 +37,7 @@ namespace AbyssalProtocol
         private const string BranchHaloTexturePath = "Things/VFX/OblivionChoir/ABY_OblivionChoir_BranchHalo";
         private const string BranchCoreTexturePath = "Things/VFX/OblivionChoir/ABY_OblivionChoir_BranchCore";
 
-        private static ThingDef branchHaloDef;
-        private static ThingDef branchCoreDef;
-
         private readonly Dictionary<int, int> targetRetargetTicks = new Dictionary<int, int>();
-        private readonly List<ArcCandidate> reusableCandidates = new List<ArcCandidate>();
-        private readonly HashSet<int> reusableSeenThingIds = new HashSet<int>();
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
@@ -52,13 +47,6 @@ namespace AbyssalProtocol
         private Material cachedBodyMaterial;
         private Material cachedBlobHaloMaterial;
         private Material cachedBlobCoreMaterial;
-
-        private sealed class ArcCandidate
-        {
-            public Thing thing;
-            public Vector3 branchSource;
-            public float score;
-        }
 
         protected override void Tick()
         {
@@ -159,102 +147,30 @@ namespace AbyssalProtocol
                 return;
             }
 
-            EnsureBranchDefsLoaded();
-            reusableCandidates.Clear();
-            reusableSeenThingIds.Clear();
-
-            Vector3 flatDelta = to - from;
-            flatDelta.y = 0f;
-            float distance = flatDelta.magnitude;
-            int sampleCount = Mathf.Clamp(Mathf.CeilToInt(distance / SweepSampleSpacing), 1, MaxSweepSamples);
-            Vector3 currentCorePos = to;
-
-            for (int i = 0; i <= sampleCount; i++)
-            {
-                float t = sampleCount <= 0 ? 1f : i / (float)sampleCount;
-                Vector3 samplePos = Vector3.Lerp(from, to, t);
-                IntVec3 sampleCell = samplePos.ToIntVec3();
-                if (!sampleCell.IsValid || !sampleCell.InBounds(Map))
+            ABY_BranchingProjectileUtility.PulseSweptBranches(
+                Map,
+                Launcher,
+                from,
+                to,
+                ticksAlive,
+                targetRetargetTicks,
+                new ABY_BranchingProjectileConfig
                 {
-                    continue;
-                }
-
-                foreach (IntVec3 cell in GenRadial.RadialCellsAround(sampleCell, ArcRadius, true))
-                {
-                    if (!cell.InBounds(Map))
-                    {
-                        continue;
-                    }
-
-                    List<Thing> things = cell.GetThingList(Map);
-                    for (int j = 0; j < things.Count; j++)
-                    {
-                        Thing thing = things[j];
-                        if (thing == null || reusableSeenThingIds.Contains(thing.thingIDNumber) || !ShouldAffectThing(thing))
-                        {
-                            continue;
-                        }
-
-                        Vector3 targetCenter = thing.TrueCenter();
-                        float sampleDistanceSq = HorizontalDistanceSquared(samplePos, targetCenter);
-                        if (sampleDistanceSq > ArcRadius * ArcRadius)
-                        {
-                            continue;
-                        }
-
-                        if (!HasLineOfSightFromSample(sampleCell, thing))
-                        {
-                            continue;
-                        }
-
-                        reusableSeenThingIds.Add(thing.thingIDNumber);
-                        reusableCandidates.Add(new ArcCandidate
-                        {
-                            thing = thing,
-                            branchSource = SelectBranchSource(currentCorePos, samplePos, targetCenter),
-                            score = sampleDistanceSq + Mathf.Abs(0.66f - t) * 2.25f
-                        });
-                    }
-                }
-            }
-
-            if (reusableCandidates.Count <= 0)
-            {
-                return;
-            }
-
-            reusableCandidates.Sort((a, b) => a.score.CompareTo(b.score));
-            int currentTick = Find.TickManager != null ? Find.TickManager.TicksGame : ticksAlive;
-            int affectedCount = 0;
-
-            for (int i = 0; i < reusableCandidates.Count && affectedCount < MaxArcTargetsPerPulse; i++)
-            {
-                Thing thing = reusableCandidates[i].thing;
-                if (thing == null || thing.Destroyed)
-                {
-                    continue;
-                }
-
-                if (targetRetargetTicks.TryGetValue(thing.thingIDNumber, out int nextTick) && currentTick < nextTick)
-                {
-                    continue;
-                }
-
-                ApplyArcDamage(thing, reusableCandidates[i].branchSource);
-                targetRetargetTicks[thing.thingIDNumber] = currentTick + ArcRetargetCooldownTicks;
-                affectedCount++;
-            }
-        }
-
-        private Vector3 SelectBranchSource(Vector3 currentCorePos, Vector3 samplePos, Vector3 targetCenter)
-        {
-            float currentDistanceSq = HorizontalDistanceSquared(currentCorePos, targetCenter);
-            if (currentDistanceSq <= ArcRadius * ArcRadius * 1.18f)
-            {
-                return currentCorePos;
-            }
-
-            return samplePos;
+                    radius = ArcRadius,
+                    sampleSpacing = SweepSampleSpacing,
+                    maxSweepSamples = MaxSweepSamples,
+                    maxTargetsPerPulse = MaxArcTargetsPerPulse,
+                    retargetCooldownTicks = ArcRetargetCooldownTicks,
+                    branchLifetimeTicks = BranchBeamLifetimeTicks,
+                    branchHaloThingDefName = BranchHaloThingDefName,
+                    branchCoreThingDefName = BranchCoreThingDefName,
+                    branchHaloTexturePath = BranchHaloTexturePath,
+                    branchCoreTexturePath = BranchCoreTexturePath,
+                    haloWidth = 0.30f,
+                    coreWidth = 0.095f,
+                    shouldAffectThing = ShouldAffectThing,
+                    onBranchHit = ApplyArcDamage
+                });
         }
 
         private bool ShouldAffectThing(Thing thing)
@@ -304,22 +220,6 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private bool HasLineOfSightFromSample(IntVec3 sampleCell, Thing thing)
-        {
-            if (Map == null || thing == null || !thing.Spawned)
-            {
-                return false;
-            }
-
-            IntVec3 targetCell = thing.PositionHeld;
-            if (!sampleCell.IsValid || !targetCell.IsValid || !sampleCell.InBounds(Map) || !targetCell.InBounds(Map))
-            {
-                return false;
-            }
-
-            return sampleCell == targetCell || GenSight.LineOfSight(sampleCell, targetCell, Map, true);
-        }
-
         private void ApplyArcDamage(Thing thing, Vector3 branchSource)
         {
             if (thing == null)
@@ -351,83 +251,19 @@ namespace AbyssalProtocol
 
         private void SpawnBranchBeam(Map map, Vector3 from, Vector3 to, int targetId)
         {
-            if (map == null || branchHaloDef == null || branchCoreDef == null)
-            {
-                return;
-            }
-
-            from.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead);
-            to.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead);
-
-            Vector3 direction = to - from;
-            direction.y = 0f;
-            float distance = direction.magnitude;
-            if (distance <= 0.08f)
-            {
-                return;
-            }
-
-            Vector3 normal = direction / distance;
-            Vector3 perpendicular = new Vector3(-normal.z, 0f, normal.x);
-            int seed = targetId * 397 ^ ticksAlive * 101;
-            float phase = seed * 0.017f + ticksAlive * 0.64f;
-            float amplitude = Mathf.Clamp(distance * 0.11f, 0.10f, 0.42f);
-            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 0.75f), 2, 5);
-            Vector3 previous = from;
-
-            for (int i = 1; i <= segmentCount; i++)
-            {
-                float t = i / (float)segmentCount;
-                Vector3 point = Vector3.Lerp(from, to, t);
-                float envelope = Mathf.Sin(t * Mathf.PI);
-                float sway = Mathf.Sin(phase + t * 9.8f) * amplitude * envelope;
-                float snap = Mathf.Sin(phase * 1.9f + t * 19.2f) * amplitude * 0.38f * envelope;
-                point += perpendicular * (sway + snap);
-                point.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead);
-
-                float widthFactor = 0.76f + envelope * 0.34f;
-                SpawnBeamThing(branchHaloDef, previous, point, map, 0.30f * widthFactor, BranchBeamLifetimeTicks, BranchHaloTexturePath, true);
-                SpawnBeamThing(branchCoreDef, previous, point, map, 0.095f * widthFactor, BranchBeamLifetimeTicks - 1, BranchCoreTexturePath, false);
-                previous = point;
-            }
-        }
-
-        private static void SpawnBeamThing(ThingDef thingDef, Vector3 source, Vector3 target, Map map, float width, int ticks, string texturePath, bool pulse)
-        {
-            if (thingDef == null || map == null || ticks <= 0)
-            {
-                return;
-            }
-
-            Mote_CrownspikeRailBeam beam = ThingMaker.MakeThing(thingDef) as Mote_CrownspikeRailBeam;
-            if (beam == null)
-            {
-                return;
-            }
-
-            beam.start = source;
-            beam.end = target;
-            beam.width = width;
-            beam.ticksLeft = ticks;
-            beam.startingTicks = ticks;
-            beam.texturePath = texturePath;
-            beam.additivePulse = pulse;
-
-            IntVec3 spawnCell = ((source + target) * 0.5f).ToIntVec3();
-            if (!spawnCell.InBounds(map))
-            {
-                spawnCell = source.ToIntVec3();
-            }
-            if (!spawnCell.InBounds(map))
-            {
-                spawnCell = target.ToIntVec3();
-            }
-            if (!spawnCell.InBounds(map))
-            {
-                return;
-            }
-
-            GenSpawn.Spawn(beam, spawnCell, map);
+            ABY_BranchingProjectileUtility.SpawnCurvedBranchBeam(
+                map,
+                from,
+                to,
+                targetId * 397 ^ ticksAlive * 101,
+                ticksAlive,
+                BranchBeamLifetimeTicks,
+                BranchHaloThingDefName,
+                BranchCoreThingDefName,
+                BranchHaloTexturePath,
+                BranchCoreTexturePath,
+                0.30f,
+                0.095f);
         }
 
         private static void SpawnTrail(Vector3 from, Vector3 to, Map map, int ticksAlive)
@@ -477,31 +313,6 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowFireGlow(position, map, 0.72f);
-        }
-
-        private static float HorizontalDistanceSquared(Vector3 origin, Thing thing)
-        {
-            return HorizontalDistanceSquared(origin, thing.TrueCenter());
-        }
-
-        private static float HorizontalDistanceSquared(Vector3 origin, Vector3 target)
-        {
-            float dx = target.x - origin.x;
-            float dz = target.z - origin.z;
-            return dx * dx + dz * dz;
-        }
-
-        private static void EnsureBranchDefsLoaded()
-        {
-            if (branchHaloDef == null)
-            {
-                branchHaloDef = DefDatabase<ThingDef>.GetNamedSilentFail(BranchHaloThingDefName);
-            }
-
-            if (branchCoreDef == null)
-            {
-                branchCoreDef = DefDatabase<ThingDef>.GetNamedSilentFail(BranchCoreThingDefName);
-            }
         }
 
         private void DrawPlane(Vector3 center, float angle, Vector3 scale, Material material)

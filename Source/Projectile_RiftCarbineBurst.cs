@@ -76,32 +76,22 @@ namespace AbyssalProtocol
 
         private static void ApplyArmorMelt(Pawn pawn, Thing instigator)
         {
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(ArmorMeltHediffDefName);
-            if (hediffDef == null)
+            Hediff hediff = ABY_ProjectileProcUtility.ApplyOrRefreshHediff(
+                pawn,
+                ArmorMeltHediffDefName,
+                SeverityPerHit,
+                0.01f,
+                0.99f,
+                DebuffDurationTicks);
+            if (hediff == null)
             {
                 return;
             }
 
-            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
-            if (hediff == null)
-            {
-                hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-                pawn.health.AddHediff(hediff);
-            }
-
-            hediff.Severity = Mathf.Clamp(hediff.Severity + SeverityPerHit, 0.01f, 0.99f);
-
-            HediffComp_Disappears disappears = hediff.TryGetComp<HediffComp_Disappears>();
-            if (disappears != null)
-            {
-                disappears.ticksToDisappear = DebuffDurationTicks;
-            }
-
-            pawn.health.hediffSet.DirtyCache();
             if (hediff.Severity >= BreachThreshold)
             {
                 TriggerArmorBreach(pawn, instigator);
-                pawn.health.RemoveHediff(hediff);
+                ABY_ProjectileProcUtility.RemoveHediff(pawn, hediff);
             }
         }
 
@@ -116,17 +106,12 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt("ABY_RiftCarbineFire", pawn.PositionHeld, pawn.MapHeld);
             }
 
-            DamageInfo damageInfo = new DamageInfo(
+            ABY_ProjectileProcUtility.ApplyDamage(
+                pawn,
                 DamageDefOf.Burn,
                 BreachDamage,
                 BreachArmorPenetration,
-                -1f,
-                instigator,
-                null,
-                null,
-                DamageInfo.SourceCategory.ThingOrUnknown);
-
-            pawn.TakeDamage(damageInfo);
+                instigator);
         }
 
         private static void SpawnTrail(Vector3 from, Vector3 to, Map map)

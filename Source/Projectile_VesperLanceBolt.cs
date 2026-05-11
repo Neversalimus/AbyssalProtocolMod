@@ -95,61 +95,44 @@ namespace AbyssalProtocol
             Pawn pawn = hitThing as Pawn;
             if (pawn != null && pawn.RaceProps != null && pawn.RaceProps.IsMechanoid)
             {
-                pawn.TakeDamage(new DamageInfo(
+                ABY_ProjectileProcUtility.ApplyDamage(
+                    pawn,
                     DamageDefOf.EMP,
                     MechanicalEmpDamage,
                     0f,
-                    -1f,
-                    instigator,
-                    null,
-                    null,
-                    DamageInfo.SourceCategory.ThingOrUnknown));
+                    instigator);
                 return;
             }
 
             if (hitThing.def != null && hitThing.def.category == ThingCategory.Building && hitThing.def.useHitPoints)
             {
-                hitThing.TakeDamage(new DamageInfo(
+                ABY_ProjectileProcUtility.ApplyDamage(
+                    hitThing,
                     DamageDefOf.EMP,
                     MechanicalEmpDamage,
                     0f,
-                    -1f,
-                    instigator,
-                    null,
-                    null,
-                    DamageInfo.SourceCategory.ThingOrUnknown));
+                    instigator);
             }
         }
 
         private static void ApplyJudgement(Pawn pawn, Thing instigator)
         {
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(JudgementHediffDefName);
-            if (hediffDef == null)
+            Hediff hediff = ABY_ProjectileProcUtility.ApplyOrRefreshHediff(
+                pawn,
+                JudgementHediffDefName,
+                SeverityPerHit,
+                0.01f,
+                0.99f,
+                DebuffDurationTicks);
+            if (hediff == null)
             {
                 return;
             }
 
-            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
-            if (hediff == null)
-            {
-                hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-                pawn.health.AddHediff(hediff);
-            }
-
-            hediff.Severity = Mathf.Clamp(hediff.Severity + SeverityPerHit, 0.01f, 0.99f);
-
-            HediffComp_Disappears disappears = hediff.TryGetComp<HediffComp_Disappears>();
-            if (disappears != null)
-            {
-                disappears.ticksToDisappear = DebuffDurationTicks;
-            }
-
-            pawn.health.hediffSet.DirtyCache();
-
             if (hediff.Severity >= SentenceThreshold)
             {
                 TriggerSentence(pawn, instigator);
-                pawn.health.RemoveHediff(hediff);
+                ABY_ProjectileProcUtility.RemoveHediff(pawn, hediff);
             }
         }
 
@@ -170,15 +153,12 @@ namespace AbyssalProtocol
                 DoEmpPulse(pawn.PositionHeld, pawn.MapHeld, instigator);
             }
 
-            pawn.TakeDamage(new DamageInfo(
+            ABY_ProjectileProcUtility.ApplyDamage(
+                pawn,
                 DamageDefOf.Burn,
                 SentenceDamage,
                 SentenceArmorPenetration,
-                -1f,
-                instigator,
-                null,
-                null,
-                DamageInfo.SourceCategory.ThingOrUnknown));
+                instigator);
         }
 
         private static void DoEmpPulse(IntVec3 center, Map map, Thing instigator)
@@ -209,15 +189,12 @@ namespace AbyssalProtocol
                     {
                         if (pawn.RaceProps != null && pawn.RaceProps.IsMechanoid)
                         {
-                            pawn.TakeDamage(new DamageInfo(
+                            ABY_ProjectileProcUtility.ApplyDamage(
+                                pawn,
                                 DamageDefOf.EMP,
                                 SentenceEmpDamage,
                                 0f,
-                                -1f,
-                                instigator,
-                                null,
-                                null,
-                                DamageInfo.SourceCategory.ThingOrUnknown));
+                                instigator);
                         }
 
                         continue;
@@ -225,15 +202,12 @@ namespace AbyssalProtocol
 
                     if (thing.def != null && thing.def.category == ThingCategory.Building && thing.def.useHitPoints)
                     {
-                        thing.TakeDamage(new DamageInfo(
+                        ABY_ProjectileProcUtility.ApplyDamage(
+                            thing,
                             DamageDefOf.EMP,
                             SentenceEmpDamage,
                             0f,
-                            -1f,
-                            instigator,
-                            null,
-                            null,
-                            DamageInfo.SourceCategory.ThingOrUnknown));
+                            instigator);
                     }
                 }
             }

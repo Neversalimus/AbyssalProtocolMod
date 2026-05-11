@@ -88,7 +88,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    ExecuteDash(pawn, destination, extension, ticksGame);
+                    ExecuteDash(pawn, target, destination, extension, ticksGame);
                 }
             }
         }
@@ -236,10 +236,11 @@ namespace AbyssalProtocol
             return bestCell.IsValid;
         }
 
-        private void ExecuteDash(Pawn pawn, IntVec3 destination, RiftDashWeaponExtension extension, int ticksGame)
+        private void ExecuteDash(Pawn pawn, Thing targetThing, IntVec3 destination, RiftDashWeaponExtension extension, int ticksGame)
         {
             Map map = pawn.MapHeld;
-            if (map == null)
+            Pawn targetPawn = targetThing as Pawn;
+            if (map == null || targetPawn == null)
             {
                 return;
             }
@@ -247,11 +248,19 @@ namespace AbyssalProtocol
             IntVec3 start = pawn.Position;
             SpawnDashEffects(map, start, destination, extension);
 
-            pawn.pather?.StopDead();
-            pawn.Position = destination;
-            pawn.pather?.StopDead();
-
-            nextDashTickByPawn[pawn.thingIDNumber] = ticksGame + Math.Max(1, extension.cooldownTicks);
+            if (ABY_AbyssalDashRuntime.TryStartDash(
+                pawn,
+                targetPawn,
+                destination,
+                null,
+                4,
+                extension.trailMoteDef,
+                extension.trailMoteScale,
+                extension.soundDef,
+                "rift_blade"))
+            {
+                nextDashTickByPawn[pawn.thingIDNumber] = ticksGame + Math.Max(1, extension.cooldownTicks);
+            }
         }
 
         private void SpawnDashEffects(Map map, IntVec3 start, IntVec3 end, RiftDashWeaponExtension extension)
