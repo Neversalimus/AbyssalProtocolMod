@@ -47,7 +47,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1080f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1140f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -137,6 +137,11 @@ namespace AbyssalProtocol
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarnings", "Throttle repeated Abyssal warnings"), ref settingsData.suppressRepeatedWarnings, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarningsDesc", "Prevents repeated compatibility warnings from spamming the log."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_ScreenEffects", "Enable boss screen presentation effects"), ref settingsData.enableBossScreenEffects, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_ScreenEffectsDesc", "Draws smooth boss-specific fullscreen vignette, bloom, and instability noise without rectangular overlay blocks."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_MapEffects", "Enable boss map presentation effects"), ref settingsData.enableBossMapPresentationEffects, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_MapEffectsDesc", "Adds restrained boss-specific map pulses around active bosses and summon moments."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWeather_Enable", "Enable Dominion hell weather"), ref settingsData.enableDominionWeather, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWeather_EnableDesc", "Adds a restrained hell-only ashfall / static veil / furnace drift layer inside Dominion pocket maps. Uses existing Abyssal VFX assets and honors reduced motion."));
+            if (settingsData.enableDominionWeather)
+            {
+                DrawSlider(list, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionWeather_Intensity", "Dominion weather intensity: {0}", settingsData.dominionWeatherIntensity.ToString("F2")), ref settingsData.dominionWeatherIntensity, 0.20f, 1.50f);
+            }
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_Timeline", "Enable boss intro / phase / outro timeline"), ref settingsData.enableBossPresentationTimeline, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TimelineDesc", "Adds timed title cards and burst events for boss arrival, phase changes, and collapse."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TitleCards", "Show boss presentation title cards"), ref settingsData.enableBossPresentationTitleCards, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TitleCardsDesc", "Shows short cinematic name / phase / collapse cards during supported boss encounters."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossExpandedSelection_Enable", "Enable expanded boss selection"), ref settingsData.enableBossExpandedSelection, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossExpandedSelection_EnableDesc", "Allows large Abyssal bosses to be selected by clicking their visual body, not only the pawn's center cell."));

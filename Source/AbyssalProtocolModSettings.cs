@@ -34,6 +34,8 @@ namespace AbyssalProtocol
         public bool suppressRepeatedWarnings = true;
         public bool enableBossScreenEffects = true;
         public bool enableBossMapPresentationEffects = true;
+        public bool enableDominionWeather = true;
+        public float dominionWeatherIntensity = 0.85f;
         public bool enableBossExpandedSelection = true;
         public bool enableBossPresentationTimeline = true;
         public bool enableBossPresentationTitleCards = true;
@@ -68,6 +70,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref suppressRepeatedWarnings, "suppressRepeatedWarnings", true);
             Scribe_Values.Look(ref enableBossScreenEffects, "enableBossScreenEffects", true);
             Scribe_Values.Look(ref enableBossMapPresentationEffects, "enableBossMapPresentationEffects", true);
+            Scribe_Values.Look(ref enableDominionWeather, "enableDominionWeather", true);
+            Scribe_Values.Look(ref dominionWeatherIntensity, "dominionWeatherIntensity", 0.85f);
             Scribe_Values.Look(ref enableBossExpandedSelection, "enableBossExpandedSelection", true);
             Scribe_Values.Look(ref enableBossPresentationTimeline, "enableBossPresentationTimeline", true);
             Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
@@ -84,6 +88,7 @@ namespace AbyssalProtocol
             offsetX = Mathf.Clamp(offsetX, -1200f, 1200f);
             offsetY = Mathf.Clamp(offsetY, -700f, 700f);
             safeMargin = Mathf.Clamp(safeMargin, 0f, 120f);
+            dominionWeatherIntensity = Mathf.Clamp(dominionWeatherIntensity, 0.20f, 1.50f);
         }
 
         public void ResetToDefaults()
@@ -115,9 +120,17 @@ namespace AbyssalProtocol
             suppressRepeatedWarnings = true;
             enableBossScreenEffects = true;
             enableBossMapPresentationEffects = true;
+            enableDominionWeather = true;
+            dominionWeatherIntensity = 0.85f;
             enableBossExpandedSelection = true;
             enableBossPresentationTimeline = true;
             enableBossPresentationTitleCards = true;
+        }
+
+        public float ResolveDominionWeatherIntensity()
+        {
+            ClampValues();
+            return dominionWeatherIntensity;
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)

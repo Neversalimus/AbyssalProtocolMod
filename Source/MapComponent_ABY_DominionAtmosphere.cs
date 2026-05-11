@@ -9,13 +9,23 @@ namespace AbyssalProtocol
         private const int MaintenanceIntervalTicks = 1800;
         private const int AmbientIntervalMinTicks = 1250;
         private const int AmbientIntervalMaxTicks = 2600;
+        private const int WeatherIntervalMinTicks = 180;
+        private const int WeatherIntervalMaxTicks = 360;
+        private const int ReducedWeatherIntervalMinTicks = 850;
+        private const int ReducedWeatherIntervalMaxTicks = 1500;
+        private const int WeatherStateMinTicks = 5200;
+        private const int WeatherStateMaxTicks = 9400;
 
         private bool markedAsDominionSlice;
         private int nextScanTick;
         private int nextMaintenanceTick;
         private int nextAmbientPulseTick;
+        private int nextWeatherTick;
+        private int nextWeatherStateChangeTick;
+        private int dominionWeatherStateInt;
         private int maintenanceRuns;
         private int ambientPulses;
+        private int weatherBursts;
 
         public MapComponent_ABY_DominionAtmosphere(Map map) : base(map)
         {
@@ -23,6 +33,19 @@ namespace AbyssalProtocol
         }
 
         public bool MarkedAsDominionSlice => markedAsDominionSlice;
+
+        public ABY_DominionWeatherState CurrentWeatherState
+        {
+            get
+            {
+                if (dominionWeatherStateInt < 0 || dominionWeatherStateInt > (int)ABY_DominionWeatherState.FurnaceDrift)
+                {
+                    dominionWeatherStateInt = (int)ABY_DominionWeatherState.Ashfall;
+                }
+
+                return (ABY_DominionWeatherState)dominionWeatherStateInt;
+            }
+        }
 
         public void MarkDominionSlice(ABY_DominionPocketSession session = null, string source = null)
         {
@@ -38,10 +61,20 @@ namespace AbyssalProtocol
                 nextAmbientPulseTick = now + Rand.Range(320, 720);
             }
 
+            if (nextWeatherTick <= now)
+            {
+                nextWeatherTick = now + Rand.Range(220, 520);
+            }
+
+            if (nextWeatherStateChangeTick <= now)
+            {
+                ChooseNextWeatherState(now, true);
+            }
+
             if (AbyssalProtocolMod.Settings?.verboseDiagnostics ?? false)
             {
                 string sessionText = session != null ? session.sessionId : "none";
-                ABY_LogThrottleUtility.Message("dominion-atmosphere-mark-" + map.uniqueID, "[Abyssal Protocol] Dominion atmosphere controller marked map " + map.uniqueID + " from " + (source ?? "unknown") + ", session=" + sessionText + ".", 2500);
+                ABY_LogThrottleUtility.Message("dominion-atmosphere-mark-" + map.uniqueID, "[Abyssal Protocol] Dominion atmosphere controller marked map " + map.uniqueID + " from " + (source ?? "unknown") + ", session=" + sessionText + ", weather=" + CurrentWeatherState + ".", 2500);
             }
         }
 
@@ -52,8 +85,12 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextScanTick, "ABY_nextAtmosphereScanTick", 0);
             Scribe_Values.Look(ref nextMaintenanceTick, "ABY_nextAtmosphereMaintenanceTick", 0);
             Scribe_Values.Look(ref nextAmbientPulseTick, "ABY_nextAmbientPulseTick", 0);
+            Scribe_Values.Look(ref nextWeatherTick, "ABY_nextDominionWeatherTick", 0);
+            Scribe_Values.Look(ref nextWeatherStateChangeTick, "ABY_nextDominionWeatherStateChangeTick", 0);
+            Scribe_Values.Look(ref dominionWeatherStateInt, "ABY_dominionWeatherState", (int)ABY_DominionWeatherState.Ashfall);
             Scribe_Values.Look(ref maintenanceRuns, "ABY_atmosphereMaintenanceRuns", 0);
             Scribe_Values.Look(ref ambientPulses, "ABY_atmosphereAmbientPulses", 0);
+            Scribe_Values.Look(ref weatherBursts, "ABY_dominionWeatherBursts", 0);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
@@ -97,6 +134,17 @@ namespace AbyssalProtocol
             {
                 TryRunAmbientPulse();
                 nextAmbientPulseTick = now + Rand.Range(AmbientIntervalMinTicks, AmbientIntervalMaxTicks);
+            }
+
+            if (now >= nextWeatherStateChangeTick)
+            {
+                ChooseNextWeatherState(now, false);
+            }
+
+            if (now >= nextWeatherTick)
+            {
+                TryRunDominionWeather();
+                nextWeatherTick = now + ResolveWeatherInterval();
             }
         }
 
@@ -169,6 +217,77 @@ namespace AbyssalProtocol
             ambientPulses++;
         }
 
+        private void TryRunDominionWeather()
+        {
+            if (!markedAsDominionSlice || map == null)
+            {
+                return;
+            }
+
+            AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+            if (settings == null || !settings.enableDominionWeather || !settings.enableBossMapPresentationEffects)
+            {
+                return;
+            }
+
+            try
+            {
+                float intensity = settings.ResolveDominionWeatherIntensity();
+                bool reduced = settings.reducedMotion;
+                ABY_DominionWeatherUtility.EmitWeatherBurst(map, CurrentWeatherState, intensity, reduced);
+                weatherBursts++;
+
+                if (settings.verboseDiagnostics && weatherBursts % 16 == 1)
+                {
+                    ABY_LogThrottleUtility.Message("dominion-weather-" + map.uniqueID, "[Abyssal Protocol] Dominion weather burst " + weatherBursts + " on map " + map.uniqueID + " state=" + CurrentWeatherState + " intensity=" + intensity.ToString("F2") + ".", 3500);
+                }
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Warning("dominion-weather-burst", "[Abyssal Protocol] Dominion weather burst skipped: " + ex.GetType().Name + ": " + ex.Message, 5000);
+            }
+        }
+
+        private int ResolveWeatherInterval()
+        {
+            AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+            if (settings == null || settings.reducedMotion)
+            {
+                return Rand.Range(ReducedWeatherIntervalMinTicks, ReducedWeatherIntervalMaxTicks);
+            }
+
+            float intensity = settings.ResolveDominionWeatherIntensity();
+            float min = WeatherIntervalMinTicks / Math.Max(0.65f, intensity);
+            float max = WeatherIntervalMaxTicks / Math.Max(0.65f, intensity);
+            return Rand.Range(Math.Max(80, (int)min), Math.Max(120, (int)max));
+        }
+
+        private void ChooseNextWeatherState(int now, bool initial)
+        {
+            ABY_DominionWeatherState oldState = CurrentWeatherState;
+            ABY_DominionWeatherState nextState;
+            if (initial)
+            {
+                nextState = Rand.Chance(0.58f) ? ABY_DominionWeatherState.Ashfall : (Rand.Chance(0.5f) ? ABY_DominionWeatherState.StaticVeil : ABY_DominionWeatherState.FurnaceDrift);
+            }
+            else
+            {
+                nextState = oldState;
+                for (int i = 0; i < 5 && nextState == oldState; i++)
+                {
+                    nextState = (ABY_DominionWeatherState)Rand.RangeInclusive(0, (int)ABY_DominionWeatherState.FurnaceDrift);
+                }
+            }
+
+            dominionWeatherStateInt = (int)nextState;
+            nextWeatherStateChangeTick = now + Rand.Range(WeatherStateMinTicks, WeatherStateMaxTicks);
+
+            if (markedAsDominionSlice && (AbyssalProtocolMod.Settings?.verboseDiagnostics ?? false))
+            {
+                ABY_LogThrottleUtility.Message("dominion-weather-state-" + map.uniqueID, "[Abyssal Protocol] Dominion weather state changed to " + nextState + " on map " + map.uniqueID + ".", 3500);
+            }
+        }
+
         private void ScheduleInitialTicks()
         {
             int now = CurrentTick;
@@ -181,6 +300,21 @@ namespace AbyssalProtocol
             if (nextAmbientPulseTick <= now)
             {
                 nextAmbientPulseTick = now + Rand.Range(AmbientIntervalMinTicks, AmbientIntervalMaxTicks);
+            }
+
+            if (nextWeatherTick <= now)
+            {
+                nextWeatherTick = now + Rand.Range(WeatherIntervalMinTicks, WeatherIntervalMaxTicks);
+            }
+
+            if (nextWeatherStateChangeTick <= now)
+            {
+                nextWeatherStateChangeTick = now + Rand.Range(WeatherStateMinTicks, WeatherStateMaxTicks);
+            }
+
+            if (dominionWeatherStateInt < 0 || dominionWeatherStateInt > (int)ABY_DominionWeatherState.FurnaceDrift)
+            {
+                dominionWeatherStateInt = (int)ABY_DominionWeatherState.Ashfall;
             }
         }
 
