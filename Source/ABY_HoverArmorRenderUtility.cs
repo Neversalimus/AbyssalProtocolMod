@@ -41,19 +41,43 @@ namespace AbyssalProtocol
             Vector3 forward = FacingVector(pawn.Rotation);
             Vector3 back = -forward;
             Vector3 right = RightVector(forward);
-            float angle = AngleForDirection(back);
+            float angle = ResolveVectorThrusterAngle(pawn.Rotation);
 
-            // Drawn from the PawnRenderer postfix, so the jets stay visible instead of being buried under
-            // apparel/body layers. The offsets keep the bursts on the shoulder/hip sides rather than below
-            // the feet, so the effect reads as integrated vector thrusters built into the armor.
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 0);
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 1);
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 2);
-            DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, -extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 3);
-
-            if (moving)
+            switch (pawn.Rotation.AsInt)
             {
-                DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse);
+                case 0: // North: keep the strongest four-thruster silhouette. This is the best-looking view.
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 0, 1.00f, 1.00f, 1.00f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterBackOffset, -extension.vectorThrusterSideOffset, extension.vectorThrusterShoulderScale, 1, 1.00f, 1.00f, 1.00f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 2, 1.00f, 1.00f, 1.00f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset, -extension.vectorThrusterLowerSideOffset, extension.vectorThrusterHipScale, 3, 1.00f, 1.00f, 1.00f, true, true, 0f);
+                    if (moving)
+                    {
+                        DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 3, 1.00f, 1.00f, 1.00f, 1.00f);
+                    }
+                    break;
+
+                case 2: // South/front: suppress the weird shoulder "horns" and emphasize the lower thrusters.
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale * 0.25f, extension.vectorThrusterBackOffset + 0.012f, extension.vectorThrusterSideOffset * 0.38f, extension.vectorThrusterShoulderScale * 0.72f, 0, 0.80f, 0.00f, 0.26f, false, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale * 0.25f, extension.vectorThrusterBackOffset + 0.012f, -extension.vectorThrusterSideOffset * 0.38f, extension.vectorThrusterShoulderScale * 0.72f, 1, 0.80f, 0.00f, 0.26f, false, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset + 0.030f, extension.vectorThrusterLowerSideOffset * 0.72f, extension.vectorThrusterHipScale * 1.06f, 2, 1.00f, 1.00f, 0.86f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale, extension.vectorThrusterLowerBackOffset + 0.030f, -extension.vectorThrusterLowerSideOffset * 0.72f, extension.vectorThrusterHipScale * 1.06f, 3, 1.00f, 1.00f, 0.86f, true, true, 0f);
+                    if (moving)
+                    {
+                        DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 1, 0.34f, 0.70f, 0.55f, 0.65f);
+                    }
+                    break;
+
+                case 1: // East
+                case 3: // West
+                    float sideSign = pawn.Rotation == Rot4.East ? 1f : -1f;
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha * 0.85f, motionScale * 0.75f, extension.vectorThrusterBackOffset + 0.024f, sideSign * extension.vectorThrusterSideOffset * 0.12f, extension.vectorThrusterShoulderScale * 0.78f, 0, 0.85f, 0.42f, 0.42f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, motionAlpha, motionScale * 0.90f, extension.vectorThrusterLowerBackOffset + 0.045f, sideSign * extension.vectorThrusterLowerSideOffset * 0.26f, extension.vectorThrusterHipScale * 1.04f, 1, 0.96f, 0.86f, 0.78f, true, true, 0f);
+                    DrawThrusterEmitter(pawn, extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 0f, 0f, extension.vectorThrusterLowerBackOffset + 0.012f, -sideSign * extension.vectorThrusterLowerSideOffset * 0.10f, extension.vectorThrusterHipScale * 0.72f, 2, 0.68f, 0.00f, 0.20f, false, true, 0f);
+                    if (moving)
+                    {
+                        DrawVectorMotionWake(extension, pawnDrawLoc, back, right, angle, ticks, fade, pulse, hotPulse, 2, 0.44f, 0.78f, 0.48f, 0.78f);
+                    }
+                    break;
             }
         }
 
@@ -126,7 +150,7 @@ namespace AbyssalProtocol
             // does not draw a separate overhead halo.
         }
 
-        private static void DrawThrusterEmitter(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale, float backOffset, float sideOffset, float scaleMult, int slot)
+        private static void DrawThrusterEmitter(Pawn pawn, ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, float motionAlpha, float motionScale, float backOffset, float sideOffset, float scaleMult, int slot, float effectScale, float burstAlphaMult, float glowAlphaMult, bool drawBurst, bool drawGlow, float angleOffset)
         {
             float slotPhase = Mathf.Sin((ticks + pawn.thingIDNumber * 13 + slot * 17) * 0.260f);
             float slotFlicker = 0.5f + 0.5f * Mathf.Sin((ticks + pawn.thingIDNumber * 5 + slot * 23) * 0.410f);
@@ -136,41 +160,43 @@ namespace AbyssalProtocol
 
             float baseScale = Mathf.Max(0.045f, extension.vectorThrusterBurstScale);
             float pulseScale = pulse * Mathf.Max(0f, extension.vectorThrusterPulseScale);
-            float burstScale = (baseScale + pulseScale + motionScale) * Mathf.Max(0.10f, scaleMult);
-            float burstAlpha = Mathf.Clamp01((extension.vectorThrusterAlpha + hotPulse * extension.vectorThrusterPulseAlpha + motionAlpha + slotFlicker * 0.08f) * fade);
-            float glowScale = Mathf.Max(0.060f, extension.vectorThrusterGlowScale + pulseScale * 1.45f + motionScale * 1.35f) * Mathf.Max(0.10f, scaleMult);
-            float glowAlpha = Mathf.Clamp01((extension.vectorThrusterGlowAlpha + pulse * extension.vectorThrusterPulseAlpha * 0.55f + motionAlpha * 0.55f) * fade);
+            float burstScale = (baseScale + pulseScale + motionScale) * Mathf.Max(0.10f, scaleMult) * Mathf.Max(0.10f, effectScale);
+            float burstAlpha = Mathf.Clamp01((extension.vectorThrusterAlpha + hotPulse * extension.vectorThrusterPulseAlpha + motionAlpha + slotFlicker * 0.08f) * fade * Mathf.Max(0f, burstAlphaMult));
+            float glowScale = Mathf.Max(0.060f, extension.vectorThrusterGlowScale + pulseScale * 1.45f + motionScale * 1.35f) * Mathf.Max(0.10f, scaleMult) * Mathf.Max(0.10f, effectScale);
+            float glowAlpha = Mathf.Clamp01((extension.vectorThrusterGlowAlpha + pulse * extension.vectorThrusterPulseAlpha * 0.55f + motionAlpha * 0.55f) * fade * Mathf.Max(0f, glowAlphaMult));
+            float emitterAngle = angle + angleOffset;
 
-            if (!extension.vectorThrusterGlowTexPath.NullOrEmpty())
+            if (drawGlow && !extension.vectorThrusterGlowTexPath.NullOrEmpty() && glowAlpha > 0.001f)
             {
-                DrawPlane(extension.vectorThrusterGlowTexPath, loc + back * 0.018f + new Vector3(0f, 0.004f, 0f), glowScale, glowScale * 1.18f, ShaderDatabase.MoteGlow, glowAlpha, angle);
+                DrawPlane(extension.vectorThrusterGlowTexPath, loc + back * 0.018f + new Vector3(0f, 0.004f, 0f), glowScale, glowScale * 1.18f, ShaderDatabase.MoteGlow, glowAlpha, emitterAngle);
             }
 
-            if (!extension.vectorThrusterBurstTexPath.NullOrEmpty())
+            if (drawBurst && !extension.vectorThrusterBurstTexPath.NullOrEmpty() && burstAlpha > 0.001f)
             {
-                DrawPlane(extension.vectorThrusterBurstTexPath, loc, burstScale * 0.78f, burstScale * 1.55f, ShaderDatabase.MoteGlow, burstAlpha, angle);
+                DrawPlane(extension.vectorThrusterBurstTexPath, loc, burstScale * 0.78f, burstScale * 1.55f, ShaderDatabase.MoteGlow, burstAlpha, emitterAngle);
             }
         }
 
-        private static void DrawVectorMotionWake(ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse)
+        private static void DrawVectorMotionWake(ABY_HoverArmorExtension extension, Vector3 pawnDrawLoc, Vector3 back, Vector3 right, float angle, int ticks, float fade, float pulse, float hotPulse, int count, float alphaMult, float scaleMult, float sideSpreadMult, float backStepMult)
         {
-            if (extension.vectorThrusterBurstTexPath.NullOrEmpty())
+            if (extension.vectorThrusterBurstTexPath.NullOrEmpty() || count <= 0)
             {
                 return;
             }
 
             float baseScale = Mathf.Max(0.045f, extension.vectorThrusterBurstScale);
-            Vector3 baseLoc = pawnDrawLoc + back * (extension.vectorThrusterLowerBackOffset + 0.145f);
+            Vector3 baseLoc = pawnDrawLoc + back * (extension.vectorThrusterLowerBackOffset + 0.145f * Mathf.Max(0.35f, backStepMult));
             baseLoc.y = VectorThrusterLayerY(extension, 6);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < count; i++)
             {
-                float side = (i - 1) * extension.vectorThrusterLowerSideOffset * 1.10f;
-                float backDistance = 0.085f + i * 0.075f;
-                float wobble = Mathf.Sin((ticks + i * 19) * 0.220f) * 0.036f;
+                float centerBias = count == 1 ? 0f : (i - (count - 1) * 0.5f);
+                float side = centerBias * extension.vectorThrusterLowerSideOffset * 1.10f * Mathf.Max(0.20f, sideSpreadMult);
+                float backDistance = 0.085f + i * 0.075f * Mathf.Max(0.35f, backStepMult);
+                float wobble = Mathf.Sin((ticks + i * 19) * 0.220f) * 0.036f * Mathf.Max(0.25f, sideSpreadMult);
                 Vector3 loc = baseLoc + back * backDistance + right * (side + wobble);
-                float scale = baseScale * (0.92f - i * 0.16f) + pulse * 0.040f;
-                float alpha = Mathf.Clamp01((0.34f + hotPulse * 0.30f) * fade * (1f - i * 0.23f));
+                float scale = (baseScale * (0.92f - i * 0.16f) + pulse * 0.040f) * Mathf.Max(0.20f, scaleMult);
+                float alpha = Mathf.Clamp01((0.34f + hotPulse * 0.30f) * fade * (1f - i * 0.23f) * Mathf.Max(0f, alphaMult));
                 DrawPlane(extension.vectorThrusterBurstTexPath, loc, scale * 0.70f, scale * 1.32f, ShaderDatabase.MoteGlow, alpha, angle);
             }
         }
@@ -295,6 +321,19 @@ namespace AbyssalProtocol
             }
 
             return extension.vectorThrusterAltitudeOffset;
+        }
+
+        private static float ResolveVectorThrusterAngle(Rot4 rot)
+        {
+            switch (rot.AsInt)
+            {
+                case 1:
+                    return -38f;
+                case 3:
+                    return 38f;
+                default:
+                    return 0f;
+            }
         }
 
         private static float VectorThrusterLayerY(ABY_HoverArmorExtension extension, int slot)
