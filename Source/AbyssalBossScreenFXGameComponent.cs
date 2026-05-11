@@ -42,6 +42,7 @@ namespace AbyssalProtocol
         private float bossMusicRestoreEarliestRealtime = -1f;
         private bool bossMusicOutroActive;
 
+        private const int BossBarStateRefreshIntervalTicks = 6;
         private int cachedBossBarStateTick = -1;
         private Pawn cachedBossBarStateBoss;
         private ABY_BossBarProfileDef cachedBossBarStateProfile;
@@ -172,7 +173,7 @@ namespace AbyssalProtocol
 
             RefreshActiveBossBarProfile();
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
-            if (cachedBossBarStateTick == ticksGame
+            if (cachedBossBarStateTick >= ticksGame
                 && cachedBossBarStateBoss == activeBoss
                 && cachedBossBarStateProfile == activeBossBarProfile
                 && cachedBossBarStateLabelOverride == activeBossDisplayLabelOverride)
@@ -183,7 +184,8 @@ namespace AbyssalProtocol
 
             bool available = activeBossBarProfile != null &&
                              AbyssalBossBarUtility.TryBuildState(activeBoss, activeBossBarProfile, activeBossDisplayLabelOverride, out state);
-            CacheBossBarState(available, state, ticksGame);
+            int cacheTick = ticksGame >= 0 ? ticksGame + BossBarStateRefreshIntervalTicks : ticksGame;
+            CacheBossBarState(available, state, cacheTick);
             return available;
         }
 
@@ -464,13 +466,22 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // Screen overlays and realtime music probes are repaint-only, but the boss bar itself
-            // must run on mouse events too; otherwise the Adjust button is visually drawn but never clickable.
-            if (currentEvent.type == EventType.Repaint)
+            // Keep boss UI work repaint-bound. The previous generic OnGUI path rebuilt boss-bar
+            // state on every GUI event while the game tick advanced, which could produce severe
+            // main-thread drops during active boss fights but look normal on pause.
+            if (currentEvent.type == EventType.MouseDown)
             {
-                HandleBossMusicRealtime();
-                DrawOverlay();
+                AbyssalBossBarRenderer.HandleInput(currentEvent);
+                return;
             }
+
+            if (currentEvent.type != EventType.Repaint)
+            {
+                return;
+            }
+
+            HandleBossMusicRealtime();
+            DrawOverlay();
 
             if (TryGetActiveBossBarState(out ABY_BossBarState state))
             {

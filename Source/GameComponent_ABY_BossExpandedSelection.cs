@@ -16,6 +16,13 @@ namespace AbyssalProtocol
         public override void GameComponentOnGUI()
         {
             base.GameComponentOnGUI();
+            if (!AbyssalProtocolMod.Settings.enableBossExpandedSelection || Current.ProgramState != ProgramState.Playing)
+            {
+                pendingBossClick = null;
+                pendingExpandedClick = false;
+                return;
+            }
+
             Event currentEvent = Event.current;
             if (currentEvent == null)
             {

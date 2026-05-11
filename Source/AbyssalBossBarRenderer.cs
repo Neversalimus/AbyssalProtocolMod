@@ -25,6 +25,7 @@ namespace AbyssalProtocol
         private static float displayedAlpha;
         private static float displayedSpecialPulse;
         private static Rect lastInteractiveRect = Rect.zero;
+        private static Rect lastCalibrationButtonRect = Rect.zero;
 
         public static void ResetVisualState()
         {
@@ -35,11 +36,40 @@ namespace AbyssalProtocol
             displayedAlpha = 0f;
             displayedSpecialPulse = 0f;
             lastInteractiveRect = Rect.zero;
+            lastCalibrationButtonRect = Rect.zero;
         }
 
         public static bool MouseOverInteractiveRect(Vector2 mousePosition)
         {
             return lastInteractiveRect.width > 0f && lastInteractiveRect.height > 0f && lastInteractiveRect.Contains(mousePosition);
+        }
+
+        public static bool HandleInput(Event currentEvent)
+        {
+            if (currentEvent == null || currentEvent.type != EventType.MouseDown || currentEvent.button != 0)
+            {
+                return false;
+            }
+
+            AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+            if (settings == null || !settings.enableBossBars || !settings.showCalibrationButton)
+            {
+                return false;
+            }
+
+            if (lastCalibrationButtonRect.width <= 0f || lastCalibrationButtonRect.height <= 0f)
+            {
+                return false;
+            }
+
+            if (!lastCalibrationButtonRect.Contains(currentEvent.mousePosition))
+            {
+                return false;
+            }
+
+            Window_ABY_BossBarCalibration.OpenWindow();
+            currentEvent.Use();
+            return true;
         }
 
         public static void Draw(ABY_BossBarState state)
@@ -112,6 +142,8 @@ namespace AbyssalProtocol
                 calibrationRect = ResolveCalibrationButtonRect(rootRect, screenRect, settings, scale);
                 DrawCalibrationButton(calibrationRect);
             }
+
+            lastCalibrationButtonRect = calibrationRect;
             lastInteractiveRect = rootRect.ExpandedBy(8f);
             if (settings.showCalibrationButton && calibrationRect.width > 0f)
             {
@@ -416,10 +448,12 @@ namespace AbyssalProtocol
             string label = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossBar_AdjustShort", "Adjust");
             Color oldColor = GUI.color;
             GUI.color = Color.white;
-            if (Widgets.ButtonText(rect, label, true, true, true))
-            {
-                Window_ABY_BossBarCalibration.OpenWindow();
-            }
+            Widgets.DrawBoxSolid(rect, new Color(0.08f, 0.06f, 0.05f, 0.92f));
+            Widgets.DrawBox(rect, 1);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+            Widgets.Label(rect, label);
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = oldColor;
         }
 
