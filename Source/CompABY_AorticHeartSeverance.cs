@@ -37,13 +37,17 @@ namespace AbyssalProtocol
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            RememberPosition();
+            RememberPosition(true);
         }
 
         public override void CompTick()
         {
             base.CompTick();
-            RememberPosition();
+            // Intentionally do not read Pawn.DrawPos here. Pawn.DrawPos can pass through
+            // PawnTweener while the pawn is being generated/spawned/despawned, and a broken
+            // tween state caused infinite Root-level Update/OnGUI red errors in dev-spawn.
+            // PositionHeld is enough for death-severance VFX and is safe during normal ticks.
+            RememberPosition(false);
         }
 
         public override void PostDestroy(DestroyMode mode, Map previousMap)
@@ -59,7 +63,7 @@ namespace AbyssalProtocol
             base.PostDestroy(mode, previousMap);
         }
 
-        private void RememberPosition()
+        private void RememberPosition(bool allowInitialDrawPos)
         {
             if (parent == null || parent.Destroyed || !parent.Spawned)
             {
@@ -67,7 +71,27 @@ namespace AbyssalProtocol
             }
 
             lastKnownCell = parent.PositionHeld;
-            lastKnownDrawPos = parent.DrawPos;
+            if (lastKnownCell.IsValid)
+            {
+                lastKnownDrawPos = lastKnownCell.ToVector3Shifted();
+            }
+
+            // DrawPos is only attempted once after spawn setup, and even then it is guarded.
+            // Runtime ticks must never depend on DrawPos for this comp.
+            if (allowInitialDrawPos)
+            {
+                try
+                {
+                    lastKnownDrawPos = parent.DrawPos;
+                }
+                catch
+                {
+                    if (lastKnownCell.IsValid)
+                    {
+                        lastKnownDrawPos = lastKnownCell.ToVector3Shifted();
+                    }
+                }
+            }
         }
 
         private void NotifySeverance(Map map, Pawn pawn)

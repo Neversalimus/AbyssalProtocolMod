@@ -40,7 +40,7 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (pawn == null || pawn.def == null || !pawn.Spawned)
+                if (pawn == null || pawn.def == null || !pawn.Spawned || pawn.def.defName != "ABY_AorticChainHarrower")
                 {
                     return;
                 }

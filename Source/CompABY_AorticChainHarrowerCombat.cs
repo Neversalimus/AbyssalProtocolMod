@@ -378,7 +378,7 @@ namespace AbyssalProtocol
             Map map = pawn.MapHeld;
             ABY_AbyssalDashRuntime.SpawnTrailMote(map, pawn.PositionHeld, Props.cagePulseSparkMoteDefName, 0.82f);
             ABY_AbyssalDashRuntime.SpawnTrailMote(map, target.PositionHeld, Props.cagePulseSparkMoteDefName, 0.92f);
-            FleckMaker.ThrowMicroSparks(target.DrawPos, map);
+            FleckMaker.ThrowMicroSparks(SafePawnDrawPos(target), map);
         }
 
         private void TrySpawnCagePulseCue(Pawn pawn)
@@ -394,7 +394,7 @@ namespace AbyssalProtocol
                 ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.cagePulseMoteDefName);
                 if (moteDef != null)
                 {
-                    MoteMaker.MakeStaticMote(pawn.DrawPos, map, moteDef, Mathf.Max(1.0f, Props.cagePulseRadius * 0.56f));
+                    MoteMaker.MakeStaticMote(SafePawnDrawPos(pawn), map, moteDef, Mathf.Max(1.0f, Props.cagePulseRadius * 0.56f));
                 }
             }
 
@@ -405,13 +405,13 @@ namespace AbyssalProtocol
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        Vector3 loc = pawn.DrawPos + Gen.RandomHorizontalVector(Props.cagePulseRadius * 0.35f);
+                        Vector3 loc = SafePawnDrawPos(pawn) + Gen.RandomHorizontalVector(Props.cagePulseRadius * 0.35f);
                         MoteMaker.MakeStaticMote(loc, map, sparkDef, Rand.Range(0.62f, 0.92f));
                     }
                 }
             }
 
-            FleckMaker.ThrowLightningGlow(pawn.DrawPos, map, Mathf.Max(1.3f, Props.cagePulseRadius * 0.34f));
+            FleckMaker.ThrowLightningGlow(SafePawnDrawPos(pawn), map, Mathf.Max(1.3f, Props.cagePulseRadius * 0.34f));
             ABY_SoundUtility.PlayAt(Props.cagePulseSoundDefName, pawn.PositionHeld, map);
         }
 
@@ -434,5 +434,22 @@ namespace AbyssalProtocol
                 && !pawn.Downed
                 && pawn.Faction != null;
         }
+        private static Vector3 SafePawnDrawPos(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return Vector3.zero;
+            }
+
+            try
+            {
+                return pawn.DrawPos;
+            }
+            catch
+            {
+                return pawn.PositionHeld.IsValid ? pawn.PositionHeld.ToVector3Shifted() : Vector3.zero;
+            }
+        }
+
     }
 }

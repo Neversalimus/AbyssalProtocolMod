@@ -614,7 +614,7 @@ namespace AbyssalProtocol
 
             if (guardianPos == Vector3.zero)
             {
-                guardianPos = guardian != null ? guardian.DrawPos : map.Center.ToVector3Shifted();
+                guardianPos = guardian != null && guardian.PositionHeld.IsValid ? guardian.PositionHeld.ToVector3Shifted() : map.Center.ToVector3Shifted();
             }
 
             Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;

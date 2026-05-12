@@ -93,50 +93,6 @@
         <useSapperAssaultLord>false</useSapperAssaultLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
-      <li Class="AbyssalProtocol.CompProperties_ABY_HeartGuardianLeash">
-        <heartDefName>ABY_DominionSliceHeart</heartDefName>
-        <scanIntervalTicks>24</scanIntervalTicks>
-        <defendRadius>13.5</defendRadius>
-        <leashDistance>15.5</leashDistance>
-        <hardLeashDistance>21.5</hardLeashDistance>
-        <returnRadiusMin>5.0</returnRadiusMin>
-        <returnRadiusMax>8.0</returnRadiusMax>
-        <interceptJobExpiryTicks>110</interceptJobExpiryTicks>
-        <returnJobExpiryTicks>100</returnJobExpiryTicks>
-        <preferRangedTargets>true</preferRangedTargets>
-      </li>
-      <li Class="AbyssalProtocol.CompProperties_ABY_AorticHeartSeverance">
-        <guardianKindDefName>ABY_AorticChainHarrower</guardianKindDefName>
-        <heartDefName>ABY_DominionSliceHeart</heartDefName>
-        <severanceSoundDefName>ABY_SigilChargePulse</severanceSoundDefName>
-      </li>
-      <li Class="AbyssalProtocol.CompProperties_ABY_AorticChainHarrowerCombat">
-        <heartDefName>ABY_DominionSliceHeart</heartDefName>
-        <scanIntervalTicks>18</scanIntervalTicks>
-        <defendRadius>14.0</defendRadius>
-        <minInterceptRange>4.2</minInterceptRange>
-        <maxInterceptRange>11.8</maxInterceptRange>
-        <maxDistanceFromHeartToIntercept>17.5</maxDistanceFromHeartToIntercept>
-        <interceptCooldownTicks>390</interceptCooldownTicks>
-        <interceptCooldownJitterTicks>90</interceptCooldownJitterTicks>
-        <dashDurationTicks>12</dashDurationTicks>
-        <dashMoteScale>1.18</dashMoteScale>
-        <dashMoteDefName>ABY_Mote_ArchonDashTrail</dashMoteDefName>
-        <dashSoundDefName>ABY_SigilChargePulse</dashSoundDefName>
-        <snareHediffDefName>ABY_AorticSnare</snareHediffDefName>
-        <snareSeverity>0.42</snareSeverity>
-        <preferRangedTargets>true</preferRangedTargets>
-        <preferHeartAttackers>true</preferHeartAttackers>
-        <cagePulseCooldownTicks>840</cagePulseCooldownTicks>
-        <cagePulseCooldownJitterTicks>180</cagePulseCooldownJitterTicks>
-        <cagePulseRadius>4.6</cagePulseRadius>
-        <cagePulseDamage>9.0</cagePulseDamage>
-        <cagePulseArmorPenetration>0.22</cagePulseArmorPenetration>
-        <cagePulseMaxTargets>8</cagePulseMaxTargets>
-        <cagePulseMoteDefName>ABY_Mote_DominionSliceAmbientPressurePulse</cagePulseMoteDefName>
-        <cagePulseSparkMoteDefName>ABY_Mote_DominionSliceStaticPressureSpark</cagePulseSparkMoteDefName>
-        <cagePulseSoundDefName>ABY_SigilChargePulse</cagePulseSoundDefName>
-      </li>
     </comps>
   </ThingDef>
 </Defs>
