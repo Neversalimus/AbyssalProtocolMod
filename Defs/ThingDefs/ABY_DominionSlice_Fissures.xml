@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef Abstract="True" Name="ABY_DominionFissureBase" ParentName="BuildingBase">
+    <thingClass>AbyssalProtocol.Building_ABY_DominionFissure</thingClass>
+    <category>Building</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <rotatable>true</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissureBase">
+    <defName>ABY_DominionFissureStraight</defName>
+    <label>dominion hemoplasm fissure</label>
+    <description>A sealed but impassable tear in the Dominion Slice floor, filled with black-red abyssal hemoplasm and industrial pressure static.</description>
+    <size>(8,2)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Straight_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Straight_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>9</frameDurationTicks>
+        <drawSizeX>10.8</drawSizeX>
+        <drawSizeZ>2.9</drawSizeZ>
+        <altitudeOffset>0.060</altitudeOffset>
+        <colorA>0.88</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissureBase">
+    <defName>ABY_DominionFissureCorner</defName>
+    <label>dominion hemoplasm fissure corner</label>
+    <description>A bent impassable Dominion rupture where industrial floor plating has folded around a black-red living pressure wound.</description>
+    <size>(6,7)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Corner_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Corner_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>6.4</drawSizeX>
+        <drawSizeZ>8.2</drawSizeZ>
+        <altitudeOffset>0.061</altitudeOffset>
+        <colorA>0.90</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissureBase">
+    <defName>ABY_DominionFissureEndcap</defName>
+    <label>dominion terminal fissure</label>
+    <description>A terminal pressure pocket at the end of a Dominion floor tear, sealed around abyssal hemoplasm instead of open lava or a portal.</description>
+    <size>(5,5)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Endcap_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Endcap_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>11</frameDurationTicks>
+        <drawSizeX>5.4</drawSizeX>
+        <drawSizeZ>6.0</drawSizeZ>
+        <altitudeOffset>0.062</altitudeOffset>
+        <colorA>0.88</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissureBase">
+    <defName>ABY_DominionFissureNode</defName>
+    <label>dominion fissure pressure node</label>
+    <description>A wider impassable Dominion rupture node where several abyssal pressure seams meet under the ash-metal floor.</description>
+    <size>(7,8)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Node_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Node_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>9</frameDurationTicks>
+        <drawSizeX>7.5</drawSizeX>
+        <drawSizeZ>8.8</drawSizeZ>
+        <altitudeOffset>0.063</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

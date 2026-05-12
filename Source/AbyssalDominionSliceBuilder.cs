@@ -28,6 +28,11 @@ namespace AbyssalProtocol
         private const string PlateCollapseLargeDefName = "ABY_DominionPlateCollapseLargeA";
         private const string EdgeVoidTearDefName = "ABY_DominionEdgeVoidTearA";
 
+        private const string DominionFissureStraightDefName = "ABY_DominionFissureStraight";
+        private const string DominionFissureCornerDefName = "ABY_DominionFissureCorner";
+        private const string DominionFissureEndcapDefName = "ABY_DominionFissureEndcap";
+        private const string DominionFissureNodeDefName = "ABY_DominionFissureNode";
+
         private static readonly string[] DominionRuinWallDefs =
         {
             "ABY_DominionRuinWallStraightA",
@@ -535,6 +540,7 @@ namespace AbyssalProtocol
         {
             List<IntVec3> reserved = BuildReservedCells(map, entry, extraction, center, west, east, north, rewardPocket);
 
+            SpawnAnimatedFissureNetwork(map, center, entry, extraction, west, east, north, rewardPocket, reserved);
             SpawnGeneratedDominionSetpieces(map, entry, extraction, center, west, east, north, rewardPocket, reserved);
             SpawnFlankRibs(map, center, extraction, reserved);
             SpawnAnchorBacklineDressings(map, west, east, north, reserved);
@@ -589,6 +595,123 @@ namespace AbyssalProtocol
                 float t = i / (float)steps;
                 cells.Add(new IntVec3(GenMath.RoundRandom(Mathf.Lerp(from.x, to.x, t)), 0, GenMath.RoundRandom(Mathf.Lerp(from.z, to.z, t))));
             }
+        }
+
+
+        private static void SpawnAnimatedFissureNetwork(Map map, IntVec3 center, IntVec3 entry, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            if (map == null || reserved == null)
+            {
+                return;
+            }
+
+            // Animated Dominion fissures: authored blockers along the outer combat field, matching
+            // the hand-marked seam positions from testing. They are true impassable floor wounds,
+            // but kept away from the heart, anchors, entry, extraction and reward pocket.
+            List<IntVec3> spawned = new List<IntVec3>();
+
+            // North-west torn seam, descending from the upper shell toward the west-side ruins.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-12, 0, 48), Rot4.East, reserved, spawned, 8.0f, 5.5f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-15, 0, 39), Rot4.East, reserved, spawned, 8.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 30), Rot4.East, reserved, spawned, 8.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(-21, 0, 22), Rot4.West, reserved, spawned, 8.0f, 6.2f);
+            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(-25, 0, 15), Rot4.North, reserved, spawned, 8.0f, 6.2f);
+
+            // North-east angular seam: vertical pressure tear, then horizontal fracture.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(19, 0, 48), Rot4.South, reserved, spawned, 8.0f, 5.5f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 39), Rot4.East, reserved, spawned, 8.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 30), Rot4.East, reserved, spawned, 8.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(27, 0, 25), Rot4.North, reserved, spawned, 8.0f, 6.2f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(38, 0, 24), Rot4.North, reserved, spawned, 8.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(48, 0, 24), Rot4.West, reserved, spawned, 8.0f, 5.5f);
+
+            // West-side short edge wound, deliberately kept away from the reward pocket.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-53, 0, -19), Rot4.East, reserved, spawned, 7.0f, 5.2f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-44, 0, -19), Rot4.North, reserved, spawned, 7.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-35, 0, -19), Rot4.West, reserved, spawned, 7.0f, 5.2f);
+
+            // South-east torn seam, rising from the lower edge and bending inward.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(35, 0, -46), Rot4.North, reserved, spawned, 9.0f, 5.5f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -37), Rot4.East, reserved, spawned, 9.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(36, 0, -28), Rot4.East, reserved, spawned, 9.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(39, 0, -20), Rot4.North, reserved, spawned, 9.0f, 6.2f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(49, 0, -18), Rot4.North, reserved, spawned, 9.0f, 6.4f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(58, 0, -18), Rot4.West, reserved, spawned, 9.0f, 5.5f);
+
+            if (spawned.Count > 0)
+            {
+                reserved.AddRange(spawned);
+            }
+        }
+
+        private static bool TrySpawnDominionFissure(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> protectedCells, List<IntVec3> spawnedFissures, float protectedMinDistance, float fissureMinDistance)
+        {
+            if (string.IsNullOrEmpty(defName) || map == null)
+            {
+                return false;
+            }
+
+            cell = ClampToInterior(map, cell, 11);
+            if (!cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (TooCloseToAny(cell, protectedCells, protectedMinDistance) || TooCloseToAny(cell, spawnedFissures, fissureMinDistance))
+            {
+                return false;
+            }
+
+            if (CellContainsNonEphemeralThing(map, cell))
+            {
+                return false;
+            }
+
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                Thing thing = ThingMaker.MakeThing(def);
+                if (thing == null)
+                {
+                    return false;
+                }
+
+                GenSpawn.Spawn(thing, cell, map, rot);
+                spawnedFissures.Add(cell);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Skipped Dominion fissure spawn " + defName + " at " + cell + ": " + ex.GetType().Name);
+                return false;
+            }
+        }
+
+        private static bool TooCloseToAny(IntVec3 cell, List<IntVec3> others, float minDistance)
+        {
+            if (others == null || others.Count == 0 || minDistance <= 0f)
+            {
+                return false;
+            }
+
+            float minDistanceSq = minDistance * minDistance;
+            for (int i = 0; i < others.Count; i++)
+            {
+                IntVec3 other = others[i];
+                int dx = cell.x - other.x;
+                int dz = cell.z - other.z;
+                if (dx * dx + dz * dz <= minDistanceSq)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static void SpawnGeneratedDominionSetpieces(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
