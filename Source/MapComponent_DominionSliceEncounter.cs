@@ -28,6 +28,8 @@ namespace AbyssalProtocol
         private const string HeartDefName = "ABY_DominionSliceHeart";
         private const string HeartGuardianPawnKindDefName = "ABY_AorticChainHarrower";
         private const int HeartGuardianCount = 3;
+        private const int HeartGuardianInitialSpawnDelayTicks = 150;
+        private const int HeartGuardianSpawnRetryDelayTicks = 180;
 
         private string sessionId;
         private SlicePhase phase = SlicePhase.Dormant;
@@ -39,6 +41,8 @@ namespace AbyssalProtocol
         private int wavesTriggered;
         private bool heartGuardiansSpawned;
         private int nextHeartGuardianSpawnRetryTick;
+        private int scheduledHeartGuardianSpawnTick;
+        private int heartGuardianSpawnAttempts;
         private string lastWaveLabel;
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
@@ -161,6 +165,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref wavesTriggered, "wavesTriggered", 0);
             Scribe_Values.Look(ref heartGuardiansSpawned, "heartGuardiansSpawned", false);
             Scribe_Values.Look(ref nextHeartGuardianSpawnRetryTick, "nextHeartGuardianSpawnRetryTick", 0);
+            Scribe_Values.Look(ref scheduledHeartGuardianSpawnTick, "scheduledHeartGuardianSpawnTick", 0);
+            Scribe_Values.Look(ref heartGuardianSpawnAttempts, "heartGuardianSpawnAttempts", 0);
             Scribe_Values.Look(ref lastWaveLabel, "lastWaveLabel");
             Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_References.Look(ref heart, "heart");
@@ -172,6 +178,10 @@ namespace AbyssalProtocol
                 anchors ??= new List<Building_ABY_DominionSliceAnchor>();
                 heartGuardians ??= new List<Pawn>();
                 RestoreReferencesFromMap();
+                if (IsActiveEncounter && !heartGuardiansSpawned && GetLiveHeartGuardianCount() < HeartGuardianCount)
+                {
+                    ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
+                }
             }
         }
 
@@ -206,9 +216,15 @@ namespace AbyssalProtocol
             CleanupReferences();
             RestoreReferencesFromMap();
             int now = Find.TickManager.TicksGame;
+            TryRunScheduledHeartGuardianSpawn(now);
 
             if (phase == SlicePhase.Breach)
             {
+                if (!heartGuardiansSpawned && GetLiveHeartGuardianCount() < HeartGuardianCount)
+                {
+                    ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
+                }
+
                 if (now >= nextWaveTick)
                 {
                     TriggerWave();
@@ -231,7 +247,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                TrySpawnHeartGuardians();
+                ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
 
                 if (now >= nextWaveTick)
                 {
@@ -250,7 +266,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                TrySpawnHeartGuardians();
+                ScheduleHeartGuardianSpawn(60);
 
                 if (now >= nextWaveTick)
                 {
@@ -308,6 +324,8 @@ namespace AbyssalProtocol
             wavesTriggered = 0;
             heartGuardiansSpawned = false;
             nextHeartGuardianSpawnRetryTick = 0;
+            scheduledHeartGuardianSpawnTick = 0;
+            heartGuardianSpawnAttempts = 0;
             lastWaveLabel = null;
             lastWaveSummary = null;
             anchors.Clear();
@@ -318,7 +336,7 @@ namespace AbyssalProtocol
             heart = null;
 
             SpawnEncounterObjects(session);
-            TrySpawnHeartGuardians(true);
+            ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
             Messages.Message("ABY_DominionSliceEncounter_Breach".Translate(), new TargetInfo(session.heartCell.IsValid ? session.heartCell : map.Center, map), MessageTypeDefOf.ThreatSmall, false);
             return true;
         }
@@ -362,6 +380,7 @@ namespace AbyssalProtocol
 
             if (phase == SlicePhase.Anchorfall)
             {
+                ScheduleHeartGuardianSpawn(30);
                 TargetInfo target = anchor != null ? new TargetInfo(anchor.PositionHeld, map) : new TargetInfo(map.Center, map);
                 Messages.Message("ABY_DominionSliceEncounter_AnchorDestroyed".Translate(GetLiveAnchorCount()), target, MessageTypeDefOf.PositiveEvent, false);
                 if (GetLiveAnchorCount() <= 0)
@@ -802,7 +821,7 @@ namespace AbyssalProtocol
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             nextWaveTick = phaseStartedTick + AbyssalDominionSliceWaveDirector.GetNextWaveDelayTicks(phase, wavesTriggered, hazardPressure, GetLiveAnchorCount());
             Messages.Message("ABY_DominionSliceEncounter_Anchorfall".Translate(GetLiveAnchorCount()), new TargetInfo(map.Center, map), MessageTypeDefOf.ThreatBig, false);
-            TrySpawnHeartGuardians();
+            ScheduleHeartGuardianSpawn(60);
         }
 
         private void BeginHeartExposed()
@@ -816,7 +835,45 @@ namespace AbyssalProtocol
                 DominionSliceVfxUtility.SpawnHeartExposedBurst(heart.DrawPos, map);
             }
 
-            TrySpawnHeartGuardians();
+            ScheduleHeartGuardianSpawn(30);
+        }
+
+        private void ScheduleHeartGuardianSpawn(int delayTicks)
+        {
+            if (map == null || heartGuardiansSpawned || GetLiveHeartGuardianCount() >= HeartGuardianCount)
+            {
+                return;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int dueTick = now + Mathf.Max(1, delayTicks);
+            if (scheduledHeartGuardianSpawnTick <= 0 || dueTick < scheduledHeartGuardianSpawnTick)
+            {
+                scheduledHeartGuardianSpawnTick = dueTick;
+            }
+        }
+
+        private void TryRunScheduledHeartGuardianSpawn(int now)
+        {
+            if (!IsActiveEncounter || heartGuardiansSpawned || GetLiveHeartGuardianCount() >= HeartGuardianCount)
+            {
+                scheduledHeartGuardianSpawnTick = 0;
+                return;
+            }
+
+            if (scheduledHeartGuardianSpawnTick <= 0)
+            {
+                ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
+                return;
+            }
+
+            if (now < scheduledHeartGuardianSpawnTick)
+            {
+                return;
+            }
+
+            scheduledHeartGuardianSpawnTick = 0;
+            TrySpawnHeartGuardians(true);
         }
 
         private void TrySpawnHeartGuardians(bool force = false)
@@ -857,6 +914,7 @@ namespace AbyssalProtocol
             Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
             if (heartBuilding == null || heartBuilding.Destroyed)
             {
+                ScheduleHeartGuardianSpawn(HeartGuardianSpawnRetryDelayTicks);
                 return;
             }
 
@@ -864,6 +922,16 @@ namespace AbyssalProtocol
             Faction faction = ResolveAbyssalFaction();
             if (guardianKind == null || faction == null)
             {
+                nextHeartGuardianSpawnRetryTick = now + HeartGuardianSpawnRetryDelayTicks;
+                scheduledHeartGuardianSpawnTick = nextHeartGuardianSpawnRetryTick;
+                if (guardianKind == null)
+                {
+                    Log.Warning("[Abyssal Protocol] Aortic Chain Harrower PawnKindDef is missing; heart guardian spawn will retry.");
+                }
+                if (faction == null)
+                {
+                    Log.Warning("[Abyssal Protocol] Abyssal faction is missing; Aortic Chain Harrower spawn will retry.");
+                }
                 return;
             }
 
@@ -876,9 +944,11 @@ namespace AbyssalProtocol
             List<IntVec3> spawnFocuses = BuildHeartGuardianSpawnFocuses(heartBuilding.PositionHeld);
             if (spawnFocuses.Count == 0)
             {
+                ScheduleHeartGuardianSpawn(HeartGuardianSpawnRetryDelayTicks);
                 return;
             }
 
+            heartGuardianSpawnAttempts++;
             List<Pawn> spawnedNow = new List<Pawn>();
             IntVec3 center = heartBuilding.PositionHeld;
             for (int slot = heartGuardians.Count; slot < HeartGuardianCount; slot++)
@@ -930,12 +1000,19 @@ namespace AbyssalProtocol
             }
             else
             {
-                nextHeartGuardianSpawnRetryTick = now + 180;
+                nextHeartGuardianSpawnRetryTick = now + HeartGuardianSpawnRetryDelayTicks;
+                scheduledHeartGuardianSpawnTick = nextHeartGuardianSpawnRetryTick;
             }
 
             if (GetLiveHeartGuardianCount() >= HeartGuardianCount)
             {
                 heartGuardiansSpawned = true;
+                scheduledHeartGuardianSpawnTick = 0;
+            }
+            else if (!heartGuardiansSpawned)
+            {
+                nextHeartGuardianSpawnRetryTick = now + HeartGuardianSpawnRetryDelayTicks;
+                scheduledHeartGuardianSpawnTick = nextHeartGuardianSpawnRetryTick;
             }
         }
 
@@ -984,6 +1061,19 @@ namespace AbyssalProtocol
 
             if (heartCenter.IsValid && heartCenter != focus && TryFindHeartGuardianSpawnCellNearFocus(heartCenter, heartCenter, reservedPawns, 5.0f, 9.2f, out cell))
             {
+                return true;
+            }
+
+            IntVec3 fallback;
+            if (focus.IsValid && CellFinder.TryFindRandomCellNear(focus, map, 12, c => ABY_SafeSpawnUtility.IsCellSpawnable(c, map), out fallback))
+            {
+                cell = fallback;
+                return true;
+            }
+
+            if (heartCenter.IsValid && CellFinder.TryFindRandomCellNear(heartCenter, map, 14, c => ABY_SafeSpawnUtility.IsCellSpawnable(c, map), out fallback))
+            {
+                cell = fallback;
                 return true;
             }
 
