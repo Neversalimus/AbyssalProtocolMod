@@ -19,7 +19,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Seal</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(7.92,7.92)</drawSize>
+      <drawSize>(5.25,5.25)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>720</MaxHitPoints>
@@ -33,7 +33,7 @@
         <role>Seal</role>
         <pulseIntervalTicks>225</pulseIntervalTicks>
         <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Seal_Glow</glowTexPath>
-        <glowDrawScale>8.72</glowDrawScale>
+        <glowDrawScale>3.4</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -56,7 +56,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Choir</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(7.92,7.92)</drawSize>
+      <drawSize>(5.25,5.25)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>690</MaxHitPoints>
@@ -70,7 +70,7 @@
         <role>Choir</role>
         <pulseIntervalTicks>210</pulseIntervalTicks>
         <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Choir_Glow</glowTexPath>
-        <glowDrawScale>8.72</glowDrawScale>
+        <glowDrawScale>3.4</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -93,7 +93,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Law</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(7.92,7.92)</drawSize>
+      <drawSize>(5.25,5.25)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>670</MaxHitPoints>
@@ -107,7 +107,7 @@
         <role>Law</role>
         <pulseIntervalTicks>240</pulseIntervalTicks>
         <glowTexPath>Things/Building/DominionSlice/Anchors/ABY_DominionSliceAnchor_Law_Glow</glowTexPath>
-        <glowDrawScale>8.93</glowDrawScale>
+        <glowDrawScale>3.6</glowDrawScale>
       </li>
     </modExtensions>
   </ThingDef>
@@ -130,7 +130,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/ABY_DominionSlice_Heart</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(13.2,13.2)</drawSize>
+      <drawSize>(8.8,8.8)</drawSize>
     </graphicData>
     <statBases>
       <MaxHitPoints>2600</MaxHitPoints>

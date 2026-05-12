@@ -8,8 +8,6 @@ namespace AbyssalProtocol
 {
     public static class AbyssalDominionSliceBuilder
     {
-        private const string BastionDefName = "ABY_DominionSliceBastion";
-        private const string SpireDefName = "ABY_DominionSliceSpire";
         private const string SigilPadDefName = "ABY_DominionSliceSigilPad";
         private const string PerimeterWallDefName = "ABY_DominionSlicePerimeterWall";
 
@@ -195,6 +193,7 @@ namespace AbyssalProtocol
             PaintCorridor(map, center + new IntVec3(0, 0, 12), anchorNorth, 1, channelTerrain);
             PaintCorridor(map, extraction, center + new IntVec3(0, 0, -15), 1, channelTerrain);
 
+            PaintBrokenFactoryFloorStrips(map, center, extraction, anchorWest, anchorEast, anchorNorth, rewardPocket, plateTerrain, channelTerrain);
             ScatterBurnScars(map, center, plateTerrain, baseTerrain);
             SpawnPad(map, extraction);
             SpawnPad(map, center);
@@ -336,6 +335,34 @@ namespace AbyssalProtocol
             PaintCircle(map, center + new IntVec3(-2,0,2), 2, sigil);
         }
 
+        private static void PaintBrokenFactoryFloorStrips(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, TerrainDef plate, TerrainDef channel)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            // Large-scale but low-contrast terrain composition: gives the slice a built/ruined
+            // factory-cathedral footprint without adding blocking objects or noisy props.
+            PaintCorridor(map, center + new IntVec3(-43, 0, -16), center + new IntVec3(-25, 0, -13), 2, plate);
+            PaintCorridor(map, center + new IntVec3(25, 0, -12), center + new IntVec3(43, 0, -16), 2, plate);
+            PaintCorridor(map, center + new IntVec3(-44, 0, 20), center + new IntVec3(-30, 0, 28), 2, plate);
+            PaintCorridor(map, center + new IntVec3(31, 0, 26), center + new IntVec3(45, 0, 18), 2, plate);
+            PaintCorridor(map, extraction + new IntVec3(-22, 0, -12), extraction + new IntVec3(-8, 0, -9), 2, plate);
+            PaintCorridor(map, extraction + new IntVec3(8, 0, -10), extraction + new IntVec3(22, 0, -13), 2, plate);
+
+            PaintCorridor(map, center + new IntVec3(-40, 0, -16), center + new IntVec3(-31, 0, -15), 0, channel);
+            PaintCorridor(map, center + new IntVec3(31, 0, -14), center + new IntVec3(40, 0, -16), 0, channel);
+            PaintCorridor(map, center + new IntVec3(-40, 0, 22), center + new IntVec3(-33, 0, 26), 0, channel);
+            PaintCorridor(map, center + new IntVec3(33, 0, 25), center + new IntVec3(41, 0, 20), 0, channel);
+
+            PaintOrganicPatch(map, west + new IntVec3(-14, 0, 8), 3, plate);
+            PaintOrganicPatch(map, east + new IntVec3(14, 0, 8), 3, plate);
+            PaintOrganicPatch(map, north + new IntVec3(0, 0, 18), 3, plate);
+            PaintOrganicPatch(map, rewardPocket + new IntVec3(-11, 0, 7), 2, plate);
+            PaintOrganicPatch(map, rewardPocket + new IntVec3(12, 0, -7), 2, plate);
+        }
+
         private static void ScatterBurnScars(Map map, IntVec3 center, TerrainDef scarTerrain, TerrainDef baseTerrain)
         {
             IntRange radiusRange = new IntRange(18, 44);
@@ -401,25 +428,17 @@ namespace AbyssalProtocol
 
         private static void SpawnPerimeterShell(Map map, IntVec3 center)
         {
-            SpawnArc(map, center, 36f, 205f, 335f, 18f, BastionDefName);
-            SpawnArc(map, center, 44f, 214f, 325f, 24f, SpireDefName);
-            SpawnArc(map, center, 30f, 24f, 156f, 22f, SpireDefName);
+            // Dominion Sepulcher hotfix: old Bastion/Spire shell art is intentionally disabled.
+            // Boundary containment is handled by SpawnEdgePerimeterWalls; environmental mass now
+            // comes from the newer ruin/rubble/decal library so the slice reads as dead industry,
+            // not a reused magic-spire arena.
         }
 
         private static void SpawnLaneSupports(Map map, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
         {
-            SpawnProp(map, BastionDefName, extraction + new IntVec3(-8, 0, 1), Rot4.West);
-            SpawnProp(map, BastionDefName, extraction + new IntVec3(8, 0, 1), Rot4.East);
-            SpawnProp(map, SpireDefName, center + new IntVec3(-18, 0, -6), Rot4.West);
-            SpawnProp(map, SpireDefName, center + new IntVec3(18, 0, -6), Rot4.East);
-            SpawnProp(map, SpireDefName, center + new IntVec3(-17, 0, 12), Rot4.West);
-            SpawnProp(map, SpireDefName, center + new IntVec3(17, 0, 12), Rot4.East);
-            SpawnProp(map, BastionDefName, north + new IntVec3(-5, 0, 7), Rot4.North);
-            SpawnProp(map, BastionDefName, north + new IntVec3(5, 0, 7), Rot4.North);
-            SpawnProp(map, BastionDefName, west + new IntVec3(-7, 0, 2), Rot4.West);
-            SpawnProp(map, BastionDefName, east + new IntVec3(7, 0, 2), Rot4.East);
-            SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(-4, 0, 4), Rot4.West);
-            SpawnProp(map, SpireDefName, rewardPocket + new IntVec3(4, 0, -4), Rot4.East);
+            // Old Dominion Bastion Fragment / Dominion Spire lane supports disabled by request.
+            // New composition groups are spawned in SpawnDecorativeDressings using the approved
+            // Dominion ruins/rubble/decals already present in the project.
         }
 
         private static void SpawnDecorativeDressings(Map map, IntVec3 entry, IntVec3 extraction, IntVec3 center, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket)
@@ -480,69 +499,162 @@ namespace AbyssalProtocol
 
         private static void SpawnFlankRibs(Map map, IntVec3 center, IntVec3 extraction, List<IntVec3> reserved)
         {
-            int[] zOffsets = { -18, -8, 2, 12 };
-            for (int i = 0; i < zOffsets.Length; i++)
+            // Composed side ruin fields. These replace the old spires with lower, industrial ruins.
+            SpawnDecorationCluster(map, center + new IntVec3(-28, 0, -12), reserved, new[]
             {
-                IntVec3 left = center + new IntVec3(-22 - (i % 2), 0, zOffsets[i]);
-                IntVec3 right = center + new IntVec3(22 + (i % 2), 0, zOffsets[i] + 1);
-                TrySpawnDecorativeProp(map, SpireDefName, left, Rot4.West, reserved, 5f);
-                TrySpawnDecorativeProp(map, SpireDefName, right, Rot4.East, reserved, 5f);
-            }
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(-3, 0, 0), Rot4.West, 5.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(1, 0, -2), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 0, new IntVec3(2, 0, 2), Rot4.North, 1.6f, false),
+                new DecorationEntry(DominionDecalDefs, 7, new IntVec3(-1, 0, 3), Rot4.North, 1.6f, false)
+            });
 
-            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(-12, 0, 6), Rot4.West, reserved, 5f);
-            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(12, 0, 6), Rot4.East, reserved, 5f);
+            SpawnDecorationCluster(map, center + new IntVec3(29, 0, -10), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 3, new IntVec3(3, 0, 0), Rot4.East, 5.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(-1, 0, -2), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 1, new IntVec3(-2, 0, 2), Rot4.North, 1.6f, false),
+                new DecorationEntry(DominionDecalDefs, 8, new IntVec3(1, 0, 3), Rot4.North, 1.6f, false)
+            });
+
+            SpawnDecorationCluster(map, extraction + new IntVec3(-18, 0, -2), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-2, 0, 0), Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 3, new IntVec3(1, 0, 2), Rot4.West, 3.2f, false),
+                new DecorationEntry(DominionDecalDefs, 5, new IntVec3(3, 0, -1), Rot4.North, 1.4f, false)
+            });
+
+            SpawnDecorationCluster(map, extraction + new IntVec3(18, 0, -2), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(2, 0, 0), Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 4, new IntVec3(-1, 0, 2), Rot4.East, 3.2f, false),
+                new DecorationEntry(DominionDecalDefs, 6, new IntVec3(-3, 0, -1), Rot4.North, 1.4f, false)
+            });
         }
 
         private static void SpawnAnchorBacklineDressings(Map map, IntVec3 west, IntVec3 east, IntVec3 north, List<IntVec3> reserved)
         {
-            TrySpawnDecorativeProp(map, SpireDefName, west + new IntVec3(-11, 0, -4), Rot4.West, reserved, 5f);
-            TrySpawnDecorativeProp(map, BastionDefName, west + new IntVec3(-12, 0, 8), Rot4.West, reserved, 5f);
-            TrySpawnDecorativeProp(map, SpireDefName, west + new IntVec3(-4, 0, 11), Rot4.North, reserved, 5f);
+            SpawnDecorationCluster(map, west + new IntVec3(-15, 0, 8), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 8, IntVec3.Zero, Rot4.West, 6.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(-2, 0, -3), Rot4.North, 3.2f, false),
+                new DecorationEntry(DominionDecalDefs, 2, new IntVec3(2, 0, 2), Rot4.North, 1.5f, false)
+            });
 
-            TrySpawnDecorativeProp(map, SpireDefName, east + new IntVec3(11, 0, -4), Rot4.East, reserved, 5f);
-            TrySpawnDecorativeProp(map, BastionDefName, east + new IntVec3(12, 0, 8), Rot4.East, reserved, 5f);
-            TrySpawnDecorativeProp(map, SpireDefName, east + new IntVec3(4, 0, 11), Rot4.North, reserved, 5f);
+            SpawnDecorationCluster(map, east + new IntVec3(15, 0, 8), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 9, IntVec3.Zero, Rot4.East, 6.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(2, 0, -3), Rot4.North, 3.2f, false),
+                new DecorationEntry(DominionDecalDefs, 3, new IntVec3(-2, 0, 2), Rot4.North, 1.5f, false)
+            });
 
-            TrySpawnDecorativeProp(map, BastionDefName, north + new IntVec3(-9, 0, 11), Rot4.North, reserved, 5f);
-            TrySpawnDecorativeProp(map, BastionDefName, north + new IntVec3(9, 0, 11), Rot4.North, reserved, 5f);
-            TrySpawnDecorativeProp(map, SpireDefName, north + new IntVec3(-12, 0, 3), Rot4.West, reserved, 5f);
-            TrySpawnDecorativeProp(map, SpireDefName, north + new IntVec3(12, 0, 4), Rot4.East, reserved, 5f);
+            SpawnDecorationCluster(map, north + new IntVec3(0, 0, 18), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 5, IntVec3.Zero, Rot4.North, 7.2f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-4, 0, 2), Rot4.North, 3.4f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(4, 0, 2), Rot4.North, 3.4f, false),
+                new DecorationEntry(DominionDecalDefs, 9, new IntVec3(0, 0, -3), Rot4.North, 1.5f, false)
+            });
         }
 
         private static void SpawnRewardPocketDressings(Map map, IntVec3 rewardPocket, List<IntVec3> reserved)
         {
-            TrySpawnDecorativeProp(map, BastionDefName, rewardPocket + new IntVec3(-8, 0, 6), Rot4.West, reserved, 4f);
-            TrySpawnDecorativeProp(map, BastionDefName, rewardPocket + new IntVec3(8, 0, -5), Rot4.East, reserved, 4f);
-            TrySpawnDecorativeProp(map, SpireDefName, rewardPocket + new IntVec3(-9, 0, -4), Rot4.West, reserved, 4f);
-            TrySpawnDecorativeProp(map, SpireDefName, rewardPocket + new IntVec3(9, 0, 5), Rot4.East, reserved, 4f);
+            SpawnDecorationCluster(map, rewardPocket + new IntVec3(-11, 0, 6), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 1, IntVec3.Zero, Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(3, 0, -2), Rot4.North, 3.0f, false),
+                new DecorationEntry(DominionDecalDefs, 0, new IntVec3(2, 0, 2), Rot4.North, 1.4f, false)
+            });
+
+            SpawnDecorationCluster(map, rewardPocket + new IntVec3(12, 0, -6), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 3, IntVec3.Zero, Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(-3, 0, 2), Rot4.North, 3.0f, false),
+                new DecorationEntry(DominionDecalDefs, 4, new IntVec3(-2, 0, -2), Rot4.North, 1.4f, false)
+            });
         }
 
         private static void SpawnPeripheralSpines(Map map, IntVec3 center, List<IntVec3> reserved)
         {
-            float[] radii = { 40f, 46f };
-            float[] angles = { 18f, 58f, 96f, 142f, 198f, 236f, 278f, 322f };
-            for (int i = 0; i < angles.Length; i++)
+            // Non-uniform perimeter groups make the dominion slice feel intentionally ruined rather
+            // than uniformly empty. They are kept well away from combat lanes.
+            SpawnDecorationCluster(map, center + new IntVec3(-44, 0, 22), reserved, new[]
             {
-                float radius = radii[i % radii.Length];
-                float rad = angles[i] * Mathf.Deg2Rad;
-                IntVec3 cell = ClampToInterior(map, new IntVec3(
-                    center.x + GenMath.RoundRandom(Mathf.Cos(rad) * radius),
-                    0,
-                    center.z + GenMath.RoundRandom(Mathf.Sin(rad) * radius)));
-                Rot4 rot = Mathf.Abs(Mathf.Cos(rad)) > Mathf.Abs(Mathf.Sin(rad))
-                    ? (Mathf.Cos(rad) > 0f ? Rot4.East : Rot4.West)
-                    : (Mathf.Sin(rad) > 0f ? Rot4.North : Rot4.South);
-                string defName = i % 3 == 0 ? BastionDefName : SpireDefName;
-                TrySpawnDecorativeProp(map, defName, cell, rot, reserved, 5.5f);
-            }
+                new DecorationEntry(DominionRuinWallDefs, 2, IntVec3.Zero, Rot4.West, 7.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(4, 0, -3), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 5, new IntVec3(1, 0, 4), Rot4.North, 1.8f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(43, 0, 20), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 4, IntVec3.Zero, Rot4.East, 7.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 3, new IntVec3(-4, 0, -3), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 6, new IntVec3(-1, 0, 4), Rot4.North, 1.8f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(-42, 0, -31), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 8, IntVec3.Zero, Rot4.West, 7.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 4, new IntVec3(3, 0, 3), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 1, new IntVec3(-2, 0, -3), Rot4.North, 1.8f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(42, 0, -32), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 9, IntVec3.Zero, Rot4.East, 7.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-3, 0, 3), Rot4.North, 3.5f, false),
+                new DecorationEntry(DominionDecalDefs, 8, new IntVec3(2, 0, -3), Rot4.North, 1.8f, false)
+            });
         }
 
         private static void SpawnEntryDressings(Map map, IntVec3 entry, IntVec3 extraction, List<IntVec3> reserved)
         {
-            TrySpawnDecorativeProp(map, SpireDefName, entry + new IntVec3(-11, 0, -2), Rot4.West, reserved, 4f);
-            TrySpawnDecorativeProp(map, SpireDefName, entry + new IntVec3(11, 0, -2), Rot4.East, reserved, 4f);
-            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(-14, 0, -3), Rot4.West, reserved, 4f);
-            TrySpawnDecorativeProp(map, BastionDefName, extraction + new IntVec3(14, 0, -3), Rot4.East, reserved, 4f);
+            SpawnDecorationCluster(map, entry + new IntVec3(-13, 0, 5), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 7, IntVec3.Zero, Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(3, 0, -1), Rot4.North, 3.0f, false),
+                new DecorationEntry(DominionDecalDefs, 9, new IntVec3(1, 0, 3), Rot4.North, 1.3f, false)
+            });
+
+            SpawnDecorationCluster(map, entry + new IntVec3(13, 0, 5), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 6, IntVec3.Zero, Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(-3, 0, -1), Rot4.North, 3.0f, false),
+                new DecorationEntry(DominionDecalDefs, 4, new IntVec3(-1, 0, 3), Rot4.North, 1.3f, false)
+            });
+        }
+
+        private struct DecorationEntry
+        {
+            public readonly string[] defs;
+            public readonly int index;
+            public readonly IntVec3 offset;
+            public readonly Rot4 rot;
+            public readonly float minDistance;
+            public readonly bool clearExisting;
+
+            public DecorationEntry(string[] defs, int index, IntVec3 offset, Rot4 rot, float minDistance, bool clearExisting)
+            {
+                this.defs = defs;
+                this.index = index;
+                this.offset = offset;
+                this.rot = rot;
+                this.minDistance = minDistance;
+                this.clearExisting = clearExisting;
+            }
+        }
+
+        private static void SpawnDecorationCluster(Map map, IntVec3 origin, List<IntVec3> reserved, DecorationEntry[] entries)
+        {
+            if (map == null || entries == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < entries.Length; i++)
+            {
+                DecorationEntry entry = entries[i];
+                TrySpawnDominionDecoration(map, SelectDef(entry.defs, entry.index), origin + entry.offset, entry.rot, reserved, entry.minDistance, entry.clearExisting);
+            }
         }
 
         private static void SpawnDominionRuinWallLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
