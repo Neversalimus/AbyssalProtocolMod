@@ -636,7 +636,7 @@ namespace AbyssalProtocol
             // compete for the same occupied center cell.
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathWestMidDefName,
-                new IntVec3(-42, 0, -12),
+                new IntVec3(-42, 0, -17),
                 new IntVec3(-57, 0, -17),
                 new IntVec3(-27, 0, -17));
 
@@ -649,7 +649,7 @@ namespace AbyssalProtocol
 
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathSouthWestDefName,
-                new IntVec3(-18, 0, -43),
+                new IntVec3(-18, 0, -48),
                 new IntVec3(-27, 0, -48),
                 new IntVec3(-9, 0, -48));
 
