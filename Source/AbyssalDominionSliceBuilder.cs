@@ -605,38 +605,46 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // Animated Dominion fissures: authored blockers along the outer combat field, matching
-            // the hand-marked seam positions from testing. They are true impassable floor wounds,
-            // but kept away from the heart, anchors, entry, extraction and reward pocket.
+            // Animated Dominion fissures: authored connected blocker chains along the outer combat field.
+            // The first pass placed good assets as isolated markers; this pass keeps the same art but
+            // aligns centres, rotations and spacing so each seam reads as one continuous impassable rupture.
             List<IntVec3> spawned = new List<IntVec3>();
 
-            // North-west torn seam, descending from the upper shell toward the west-side ruins.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-12, 0, 48), Rot4.East, reserved, spawned, 8.0f, 5.5f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-15, 0, 39), Rot4.East, reserved, spawned, 8.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 30), Rot4.East, reserved, spawned, 8.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(-21, 0, 22), Rot4.West, reserved, spawned, 8.0f, 6.2f);
-            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(-25, 0, 15), Rot4.North, reserved, spawned, 8.0f, 6.2f);
+            // North-west seam: vertical tear from the upper shell, bending into a short westward wound.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-17, 0, 50), Rot4.West, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 41), Rot4.East, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 31), Rot4.East, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(-17, 0, 22), Rot4.West, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-25, 0, 22), Rot4.North, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(-33, 0, 22), Rot4.North, reserved, spawned, 8.0f, 3.0f);
 
-            // North-east angular seam: vertical pressure tear, then horizontal fracture.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(19, 0, 48), Rot4.South, reserved, spawned, 8.0f, 5.5f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 39), Rot4.East, reserved, spawned, 8.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 30), Rot4.East, reserved, spawned, 8.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(27, 0, 25), Rot4.North, reserved, spawned, 8.0f, 6.2f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(38, 0, 24), Rot4.North, reserved, spawned, 8.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(48, 0, 24), Rot4.West, reserved, spawned, 8.0f, 5.5f);
+            // North-east seam: continuous vertical tear, then a horizontal fracture across the upper-right field.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(20, 0, 50), Rot4.West, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 41), Rot4.East, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 31), Rot4.East, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(20, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(29, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(39, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(49, 0, 23), Rot4.East, reserved, spawned, 8.0f, 3.0f);
 
-            // West-side short edge wound, deliberately kept away from the reward pocket.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-53, 0, -19), Rot4.East, reserved, spawned, 7.0f, 5.2f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-44, 0, -19), Rot4.North, reserved, spawned, 7.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-35, 0, -19), Rot4.West, reserved, spawned, 7.0f, 5.2f);
+            // West-side edge wound, deliberately kept away from the reward pocket and objective lanes.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-55, 0, -19), Rot4.West, reserved, spawned, 7.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-46, 0, -19), Rot4.North, reserved, spawned, 7.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-36, 0, -19), Rot4.North, reserved, spawned, 7.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-27, 0, -19), Rot4.East, reserved, spawned, 7.0f, 3.0f);
 
-            // South-east torn seam, rising from the lower edge and bending inward.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(35, 0, -46), Rot4.North, reserved, spawned, 9.0f, 5.5f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -37), Rot4.East, reserved, spawned, 9.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(36, 0, -28), Rot4.East, reserved, spawned, 9.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(39, 0, -20), Rot4.North, reserved, spawned, 9.0f, 6.2f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(49, 0, -18), Rot4.North, reserved, spawned, 9.0f, 6.4f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(58, 0, -18), Rot4.West, reserved, spawned, 9.0f, 5.5f);
+            // South-east seam: rising vertical tear which turns into a horizontal lower-right rupture.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(35, 0, -47), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -38), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -28), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(35, 0, -19), Rot4.North, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(44, 0, -19), Rot4.North, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(54, 0, -19), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+
+            // Bottom-left accent seam: a short connected tear near the lower shell to balance the scene.
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-26, 0, -48), Rot4.West, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, -48), Rot4.North, reserved, spawned, 9.0f, 3.0f);
+            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-8, 0, -48), Rot4.East, reserved, spawned, 9.0f, 3.0f);
 
             if (spawned.Count > 0)
             {
