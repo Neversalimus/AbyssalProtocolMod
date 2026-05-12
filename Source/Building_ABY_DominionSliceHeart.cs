@@ -87,10 +87,10 @@ namespace AbyssalProtocol
                 DominionSliceVfxUtility.DrawHeartShield(drawLoc, Map, encounter.LiveAnchorCount, thingIDNumber);
             }
 
-            if (encounter != null && encounter.IsActiveEncounter)
-            {
-                DominionSliceHeartSetpieceVfxUtility.DrawHeartSetpiece(drawLoc, Map, encounter, thingIDNumber);
-            }
+            // Always draw the compact machine-heart core above the lower platform.
+            // This keeps the heart readable even before the encounter starts and avoids
+            // the platform visually swallowing the interactable object.
+            DominionSliceHeartSetpieceVfxUtility.DrawHeartSetpiece(drawLoc, Map, encounter, thingIDNumber);
         }
 
         public void NotifyShieldBlocked()

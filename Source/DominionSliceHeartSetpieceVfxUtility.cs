@@ -7,35 +7,40 @@ namespace AbyssalProtocol
     /// <summary>
     /// Restrained Dominion Slice heart presentation.
     ///
-    /// The old implementation drew broad rotating halo/ring layers around the heart. The Dominion
-    /// Sepulcher pass keeps those magic circles disabled, but still draws a small machine-core
-    /// overlay above the industrial platform so the actual heart remains readable in combat.
+    /// The platform art is the lower industrial base. This utility draws a compact machine-heart
+    /// core above it so the interactable heart remains readable without bringing back the old
+    /// magical floor rings, halo stack, crown seal or broad shield glyphs.
     /// </summary>
     public static class DominionSliceHeartSetpieceVfxUtility
     {
         private const string CoreCoronaPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCoreCorona";
         private const string CoreFlarePath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCoreFlare";
+        private const string ExposedCorePath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartExposedCore";
 
         private static Graphic coreCoronaGraphic;
         private static Graphic coreFlareGraphic;
+        private static Graphic exposedCoreGraphic;
 
         public static void DrawHeartSetpiece(Vector3 heartPos, Map map, MapComponent_DominionSliceEncounter encounter, int seed)
         {
-            if (map == null || encounter == null)
+            if (map == null)
             {
                 return;
             }
 
-            // Small over-platform core only. This is intentionally not a floor ring, shield halo,
-            // crown seal, or rotating glyph stack.
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            bool exposed = encounter.IsHeartExposed;
-            float phase = Mathf.Sin((ticks + seed) * 0.047f);
-            float coronaScale = exposed ? 2.35f + phase * 0.12f : 1.72f + phase * 0.08f;
-            float flareScale = exposed ? 1.22f + phase * 0.06f : 0.92f + phase * 0.04f;
+            bool exposed = encounter != null && encounter.IsHeartExposed;
+            bool active = encounter != null && encounter.IsActiveEncounter;
+            float phase = Mathf.Sin((ticks + seed) * 0.052f);
 
-            DrawOverlay(CoreCoronaPath, ref coreCoronaGraphic, heartPos, coronaScale, exposed ? HeartExposedColor : HeartShieldedColor, 0.118f);
-            DrawOverlay(CoreFlarePath, ref coreFlareGraphic, heartPos, flareScale, Color.white, 0.124f);
+            // Always visible: this is the actual heart/readability layer, not a magic-circle layer.
+            float coreScale = exposed ? 2.35f + phase * 0.12f : active ? 2.05f + phase * 0.08f : 1.78f;
+            float flareScale = exposed ? 1.35f + phase * 0.07f : active ? 1.16f + phase * 0.05f : 1.02f;
+            float coronaScale = exposed ? 1.68f + phase * 0.08f : active ? 1.36f + phase * 0.05f : 1.12f;
+
+            DrawOverlay(ExposedCorePath, ref exposedCoreGraphic, heartPos, coreScale, exposed ? HeartExposedColor : HeartShieldedColor, 0.325f);
+            DrawOverlay(CoreCoronaPath, ref coreCoronaGraphic, heartPos, coronaScale, exposed ? HeartExposedCoronaColor : HeartShieldedCoronaColor, 0.332f);
+            DrawOverlay(CoreFlarePath, ref coreFlareGraphic, heartPos, flareScale, Color.white, 0.340f);
         }
 
         public static void SpawnHeartbeatPulse(Vector3 heartPos, Map map, bool exposed)
@@ -46,7 +51,7 @@ namespace AbyssalProtocol
             }
 
             // Small feedback only: no floor rings, crown rings, exposed-core circles, or shield halos.
-            float glowScale = exposed ? 0.9f : 0.48f;
+            float glowScale = exposed ? 1.25f : 0.78f;
             FleckMaker.ThrowLightningGlow(heartPos, map, glowScale);
 
             if (exposed)
@@ -58,12 +63,22 @@ namespace AbyssalProtocol
 
         private static Color HeartShieldedColor
         {
-            get { return new Color(0.95f, 0.18f, 0.10f, 0.86f); }
+            get { return new Color(1f, 0.16f, 0.08f, 0.96f); }
         }
 
         private static Color HeartExposedColor
         {
-            get { return new Color(1f, 0.08f, 0.04f, 0.96f); }
+            get { return new Color(1f, 0.05f, 0.025f, 1f); }
+        }
+
+        private static Color HeartShieldedCoronaColor
+        {
+            get { return new Color(1f, 0.10f, 0.055f, 0.46f); }
+        }
+
+        private static Color HeartExposedCoronaColor
+        {
+            get { return new Color(1f, 0.04f, 0.02f, 0.62f); }
         }
 
         private static void DrawOverlay(string path, ref Graphic graphic, Vector3 drawPos, float scale, Color color, float altitudeOffset)

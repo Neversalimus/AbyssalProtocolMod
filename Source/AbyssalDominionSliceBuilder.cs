@@ -361,6 +361,24 @@ namespace AbyssalProtocol
             PaintOrganicPatch(map, north + new IntVec3(0, 0, 18), 3, plate);
             PaintOrganicPatch(map, rewardPocket + new IntVec3(-11, 0, 7), 2, plate);
             PaintOrganicPatch(map, rewardPocket + new IntVec3(12, 0, -7), 2, plate);
+
+            // Dead factory floor districts: broad, non-blocking terrain mass so the slice reads
+            // as a ruined industrial domain rather than a mostly empty dark board.
+            PaintRect(map, new CellRect(center.x - 48, center.z + 4, 17, 9), plate);
+            PaintRect(map, new CellRect(center.x + 31, center.z + 5, 16, 8), plate);
+            PaintRect(map, new CellRect(center.x - 48, center.z - 34, 18, 7), plate);
+            PaintRect(map, new CellRect(center.x + 29, center.z - 35, 18, 7), plate);
+            PaintRect(map, new CellRect(center.x - 8, center.z + 30, 16, 9), plate);
+            PaintCorridor(map, center + new IntVec3(-47, 0, 8), center + new IntVec3(-29, 0, 8), 1, channel);
+            PaintCorridor(map, center + new IntVec3(30, 0, 9), center + new IntVec3(47, 0, 9), 1, channel);
+            PaintCorridor(map, center + new IntVec3(-46, 0, -31), center + new IntVec3(-31, 0, -31), 1, channel);
+            PaintCorridor(map, center + new IntVec3(31, 0, -32), center + new IntVec3(46, 0, -32), 1, channel);
+
+            PaintOrganicPatch(map, center + new IntVec3(-39, 0, 9), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(39, 0, 10), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(-39, 0, -31), 4, plate);
+            PaintOrganicPatch(map, center + new IntVec3(39, 0, -32), 4, plate);
+            PaintOrganicPatch(map, center + new IntVec3(0, 0, 35), 4, plate);
         }
 
         private static void ScatterBurnScars(Map map, IntVec3 center, TerrainDef scarTerrain, TerrainDef baseTerrain)
@@ -450,6 +468,7 @@ namespace AbyssalProtocol
             SpawnRewardPocketDressings(map, rewardPocket, reserved);
             SpawnPeripheralSpines(map, center, reserved);
             SpawnEntryDressings(map, entry, extraction, reserved);
+            SpawnInteriorDeadMachineFields(map, center, extraction, west, east, north, rewardPocket, reserved);
 
             // Package 3: integrate the new Dominion Sepulcher decor library as a restrained
             // environmental layer. These props are deliberately kept away from heart/anchor/entry
@@ -620,6 +639,54 @@ namespace AbyssalProtocol
                 new DecorationEntry(DominionRuinWallDefs, 6, IntVec3.Zero, Rot4.East, 5.0f, false),
                 new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(-3, 0, -1), Rot4.North, 3.0f, false),
                 new DecorationEntry(DominionDecalDefs, 4, new IntVec3(-1, 0, 3), Rot4.North, 1.3f, false)
+            });
+        }
+
+        private static void SpawnInteriorDeadMachineFields(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            // Mid-field visual mass. These are not evenly scattered decorations: each group reads
+            // as a broken machine bay or dead process lane, and all use the existing approved
+            // ruins/rubble/decals. They are non-critical to pathing and kept off heart/anchor cells.
+            SpawnDecorationCluster(map, center + new IntVec3(-39, 0, 9), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 0, new IntVec3(-3, 0, 0), Rot4.West, 4.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(3, 0, 1), Rot4.East, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(0, 0, -3), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(2, 0, 4), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionDecalDefs, 5, new IntVec3(-1, 0, 4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(39, 0, 10), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(3, 0, 0), Rot4.East, 4.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-3, 0, 1), Rot4.West, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(0, 0, -3), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-2, 0, 4), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionDecalDefs, 6, new IntVec3(1, 0, 4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(-39, 0, -31), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 8, new IntVec3(-2, 0, 0), Rot4.West, 4.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(2, 0, -2), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 3, new IntVec3(4, 0, 2), Rot4.West, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 0, new IntVec3(-1, 0, 3), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(39, 0, -32), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 9, new IntVec3(2, 0, 0), Rot4.East, 4.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 4, new IntVec3(-2, 0, -2), Rot4.East, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(-4, 0, 2), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 1, new IntVec3(1, 0, 3), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(0, 0, 36), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 5, new IntVec3(0, 0, 1), Rot4.North, 5.0f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-5, 0, -1), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(5, 0, -1), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 8, new IntVec3(0, 0, -4), Rot4.North, 1.2f, false)
             });
         }
 

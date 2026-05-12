@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI.Group;
 
@@ -672,6 +673,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                EmitDominionEmergenceCue(spawnCell, spawnedPawn.kindDef, i);
                 TryPrepareThreatPawnSafe(spawnedPawn);
                 spawned.Add(spawnedPawn);
             }
@@ -688,6 +690,36 @@ namespace AbyssalProtocol
             {
                 lastWaveLabel = plan.GetLabel();
                 lastWaveSummary = null;
+            }
+        }
+
+        private void EmitDominionEmergenceCue(IntVec3 cell, PawnKindDef kindDef, int index)
+        {
+            if (map == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return;
+            }
+
+            Vector3 loc = cell.ToVector3Shifted();
+            float glowScale = kindDef != null && kindDef.race != null && kindDef.race.race != null && kindDef.race.race.Humanlike ? 1.25f : 0.95f;
+            glowScale += (index % 3) * 0.08f;
+
+            // Hell-map emergence: enemies condense out of dominion seams and static pressure,
+            // rather than entering the already-open pocket through a separate hell portal.
+            FleckMaker.ThrowLightningGlow(loc, map, glowScale);
+            if (Rand.Chance(0.72f))
+            {
+                FleckMaker.ThrowMicroSparks(loc + new Vector3(Rand.Range(-0.22f, 0.22f), 0f, Rand.Range(-0.22f, 0.22f)), map);
+            }
+
+            if (Rand.Chance(0.38f))
+            {
+                FleckMaker.ThrowDustPuff(loc, map, Rand.Range(0.58f, 0.95f));
+            }
+
+            if (index == 0)
+            {
+                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", cell, map);
             }
         }
 
