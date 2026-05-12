@@ -71,23 +71,8 @@ namespace AbyssalProtocol
 
         public static void DrawHeartShield(Vector3 heartPos, Map map, int liveAnchors, int seed)
         {
-            if (map == null || liveAnchors <= 0)
-            {
-                return;
-            }
-
-            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.032f) * 0.045f;
-            float scale = (5.8f + liveAnchors * 0.42f) * pulse;
-
-            Vector3 loc = heartPos;
-            loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.006f;
-            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.AngleAxis((ticks + seed) * 0.075f, Vector3.up), new Vector3(scale, 1f, scale));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, HeartShieldMaterial, 0);
-
-            float innerScale = scale * 0.74f;
-            Matrix4x4 innerMatrix = Matrix4x4.TRS(loc + new Vector3(0f, 0.002f, 0f), Quaternion.AngleAxis(-(ticks + seed) * 0.045f, Vector3.up), new Vector3(innerScale, 1f, innerScale));
-            Graphics.DrawMesh(MeshPool.plane10, innerMatrix, HeartShieldMaterial, 0);
+            // Disabled by the Dominion Sepulcher redesign: the shield state should be communicated
+            // mechanically and through small impact feedback, not by a large magic circle around the heart.
         }
 
         public static void SpawnAnchorBreakFlare(Vector3 position, Map map, DominionSliceAnchorRole role)
@@ -116,17 +101,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ThingDef moteDef = HeartExposeMoteDef;
-            if (moteDef != null)
-            {
-                MoteMaker.MakeStaticMote(position, map, moteDef, 3.35f);
-                MoteMaker.MakeStaticMote(position + new Vector3(0f, 0.004f, 0f), map, moteDef, 2.28f);
-            }
-
-            FleckMaker.ThrowLightningGlow(position, map, 3.65f);
+            FleckMaker.ThrowLightningGlow(position, map, 1.15f);
             FleckMaker.ThrowMicroSparks(position, map);
-            FleckMaker.ThrowMicroSparks(position, map);
-            FleckMaker.ThrowMicroSparks(position, map);
+            FleckMaker.ThrowMicroSparks(position + new Vector3(0.16f, 0f, -0.12f), map);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", position.ToIntVec3(), map);
         }
 
@@ -137,11 +114,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            ThingDef moteDef = ShieldBlockMoteDef;
-            if (moteDef != null)
-            {
-                MoteMaker.MakeStaticMote(position, map, moteDef, 1.35f);
-            }
+            FleckMaker.ThrowLightningGlow(position, map, 0.62f);
         }
 
         private static void DrawBeam(Vector3 from, Vector3 to, float width, float length, Material material, float scalePulse)
@@ -161,17 +134,7 @@ namespace AbyssalProtocol
 
         private static void DrawLinkEntryBloom(Vector3 heartPos, DominionSliceAnchorRole role, int seed, int ticks, float scale)
         {
-            if (LinkEntryBloomMaterial == null)
-            {
-                return;
-            }
-
-            float roleOffset = GetRolePhaseOffset(role);
-            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.068f + roleOffset) * 0.07f;
-            Vector3 loc = heartPos;
-            loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.018f;
-            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.AngleAxis((ticks + seed) * 0.030f + roleOffset * 17f, Vector3.up), new Vector3(scale * pulse, 1f, scale * pulse));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, LinkEntryBloomMaterial, 0);
+            // Disabled: old link-entry bloom drew another circular halo on the heart platform.
         }
 
         private static float GetRoleWidth(DominionSliceAnchorRole role)

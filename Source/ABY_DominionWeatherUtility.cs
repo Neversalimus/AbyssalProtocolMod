@@ -15,18 +15,24 @@ namespace AbyssalProtocol
     public static class ABY_DominionWeatherUtility
     {
         private const string AshMoteDefName = "ABY_Mote_DominionWeatherAsh";
-        private const string StaticVeilMoteDefName = "ABY_Mote_DominionWeatherStaticVeil";
-        private const string FurnaceDriftMoteDefName = "ABY_Mote_DominionWeatherFurnaceDrift";
+        private const string SootMoteDefName = "ABY_Mote_DominionWeatherSoot";
+        private const string StaticSparkMoteDefName = "ABY_Mote_DominionWeatherStaticSpark";
+        private const string EmberMoteDefName = "ABY_Mote_DominionWeatherEmber";
+        private const string CinderMoteDefName = "ABY_Mote_DominionWeatherCinder";
         private const string PressurePulseDefName = "ABY_Mote_DominionSliceAmbientPressurePulse";
 
         private static ThingDef ashMoteDef;
-        private static ThingDef staticVeilMoteDef;
-        private static ThingDef furnaceDriftMoteDef;
+        private static ThingDef sootMoteDef;
+        private static ThingDef staticSparkMoteDef;
+        private static ThingDef emberMoteDef;
+        private static ThingDef cinderMoteDef;
         private static ThingDef pressurePulseDef;
 
         private static ThingDef AshMoteDef => ashMoteDef ?? (ashMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(AshMoteDefName));
-        private static ThingDef StaticVeilMoteDef => staticVeilMoteDef ?? (staticVeilMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(StaticVeilMoteDefName));
-        private static ThingDef FurnaceDriftMoteDef => furnaceDriftMoteDef ?? (furnaceDriftMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(FurnaceDriftMoteDefName));
+        private static ThingDef SootMoteDef => sootMoteDef ?? (sootMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(SootMoteDefName));
+        private static ThingDef StaticSparkMoteDef => staticSparkMoteDef ?? (staticSparkMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(StaticSparkMoteDefName));
+        private static ThingDef EmberMoteDef => emberMoteDef ?? (emberMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(EmberMoteDefName));
+        private static ThingDef CinderMoteDef => cinderMoteDef ?? (cinderMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(CinderMoteDefName));
         private static ThingDef PressurePulseDef => pressurePulseDef ?? (pressurePulseDef = DefDatabase<ThingDef>.GetNamedSilentFail(PressurePulseDefName));
 
         public static void EmitWeatherBurst(Map map, ABY_DominionWeatherState state, float intensity, bool reducedMotion)
@@ -53,7 +59,7 @@ namespace AbyssalProtocol
 
         private static void EmitAshfall(Map map, float intensity, bool reducedMotion)
         {
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(5.0f, 9.0f) * intensity), 2, 14);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(6.0f, 11.0f) * intensity), 2, 16);
             for (int i = 0; i < count; i++)
             {
                 if (!TryFindWeatherCell(map, out IntVec3 cell))
@@ -62,13 +68,15 @@ namespace AbyssalProtocol
                 }
 
                 Vector3 pos = CellToMotePos(cell, Rand.Range(0.070f, 0.105f));
-                pos.x += Rand.Range(-0.42f, 0.42f);
-                pos.z += Rand.Range(-0.42f, 0.42f);
-                SpawnStaticMote(AshMoteDef, pos, map, Rand.Range(0.42f, 0.86f) * Mathf.Lerp(0.85f, 1.22f, Mathf.Clamp01(intensity - 0.5f)));
+                pos.x += Rand.Range(-0.46f, 0.46f);
+                pos.z += Rand.Range(-0.46f, 0.46f);
 
-                if (!reducedMotion && Rand.Chance(0.12f * intensity))
+                ThingDef def = Rand.Chance(0.58f) ? AshMoteDef : SootMoteDef;
+                SpawnStaticMote(def, pos, map, Rand.Range(0.34f, 0.74f) * Mathf.Lerp(0.88f, 1.18f, Mathf.Clamp01(intensity - 0.5f)));
+
+                if (!reducedMotion && Rand.Chance(0.10f * intensity))
                 {
-                    FleckMaker.ThrowDustPuff(pos, map, Rand.Range(0.24f, 0.46f));
+                    FleckMaker.ThrowDustPuff(pos, map, Rand.Range(0.18f, 0.34f));
                 }
             }
         }
@@ -81,7 +89,7 @@ namespace AbyssalProtocol
                 focus = map.Center;
             }
 
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(1.8f, 3.2f) * intensity), 1, 5);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(2.0f, 3.8f) * intensity), 1, 6);
             for (int i = 0; i < count; i++)
             {
                 if (!ABY_DominionAtmosphereUtility.TryFindAtmosphereCellNear(map, focus, 10, 48, out IntVec3 cell))
@@ -90,18 +98,18 @@ namespace AbyssalProtocol
                 }
 
                 Vector3 pos = CellToMotePos(cell, Rand.Range(0.055f, 0.095f));
-                SpawnStaticMote(StaticVeilMoteDef, pos, map, Rand.Range(1.10f, 2.35f) * Mathf.Lerp(0.85f, 1.25f, intensity * 0.5f));
+                SpawnStaticMote(StaticSparkMoteDef, pos, map, Rand.Range(0.42f, 0.82f) * Mathf.Lerp(0.85f, 1.20f, intensity * 0.5f));
 
-                if (!reducedMotion && Rand.Chance(0.12f * intensity))
+                if (!reducedMotion && Rand.Chance(0.10f * intensity))
                 {
-                    FleckMaker.ThrowLightningGlow(pos, map, Rand.Range(0.10f, 0.22f));
+                    FleckMaker.ThrowLightningGlow(pos, map, Rand.Range(0.06f, 0.14f));
                 }
             }
         }
 
         private static void EmitFurnaceDrift(Map map, float intensity, bool reducedMotion)
         {
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(2.0f, 4.2f) * intensity), 1, 7);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(2.0f, 4.6f) * intensity), 1, 7);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -111,21 +119,22 @@ namespace AbyssalProtocol
                 }
 
                 Vector3 pos = CellToMotePos(cell, Rand.Range(0.060f, 0.100f));
-                SpawnStaticMote(FurnaceDriftMoteDef, pos, map, Rand.Range(0.62f, 1.18f) * Mathf.Lerp(0.80f, 1.20f, intensity * 0.5f));
+                ThingDef def = Rand.Chance(0.55f) ? EmberMoteDef : CinderMoteDef;
+                SpawnStaticMote(def, pos, map, Rand.Range(0.34f, 0.78f) * Mathf.Lerp(0.82f, 1.16f, intensity * 0.5f));
 
-                if (!reducedMotion && Rand.Chance(0.28f * intensity))
+                if (!reducedMotion && Rand.Chance(0.14f * intensity))
                 {
-                    FleckMaker.ThrowHeatGlow(cell, map, Rand.Range(0.18f, 0.42f));
+                    FleckMaker.ThrowHeatGlow(cell, map, Rand.Range(0.10f, 0.24f));
                 }
             }
 
-            if (!reducedMotion && Rand.Chance(0.055f * intensity))
+            if (!reducedMotion && Rand.Chance(0.035f * intensity))
             {
                 IntVec3 focus;
                 if (ABY_DominionAtmosphereUtility.TryFindFocusCell(map, out focus))
                 {
                     Vector3 pulsePos = CellToMotePos(focus, 0.045f);
-                    SpawnStaticMote(PressurePulseDef, pulsePos, map, Rand.Range(2.8f, 4.2f));
+                    SpawnStaticMote(PressurePulseDef, pulsePos, map, Rand.Range(1.45f, 2.35f));
                 }
             }
         }

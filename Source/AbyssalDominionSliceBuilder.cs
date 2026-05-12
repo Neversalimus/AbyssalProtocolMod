@@ -307,26 +307,25 @@ namespace AbyssalProtocol
 
         private static void PaintHeartDais(Map map, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil)
         {
-            PaintCircle(map, center, 16, plate);
-            PaintCircle(map, center, 11, sigil);
-            PaintCircle(map, center, 8, plate);
-            PaintCircle(map, center, 3, sigil);
-            PaintCircle(map, center, 2, sigil);
+            // Dominion Sepulcher redesign: avoid large terrain circles under the heart.
+            // The heart building texture now provides the focal industrial platform, while the
+            // terrain layer stays as structured machinery and subtle access plating.
+            PaintRect(map, new CellRect(center.x - 11, center.z - 10, 22, 20), plate);
+            PaintRect(map, new CellRect(center.x - 5, center.z - 4, 10, 8), sigil);
+            PaintRect(map, new CellRect(center.x - 2, center.z - 2, 4, 4), sigil);
 
-            for (int i = 0; i < 6; i++)
-            {
-                float angle = (i * 60f + 30f) * Mathf.Deg2Rad;
-                IntVec3 tip = new IntVec3(center.x + GenMath.RoundRandom(Mathf.Cos(angle) * 16f), 0, center.z + GenMath.RoundRandom(Mathf.Sin(angle) * 16f));
-                PaintCorridor(map, center, tip, 1, channel);
-            }
+            PaintCorridor(map, center, center + new IntVec3(0, 0, 16), 1, channel);
+            PaintCorridor(map, center, center + new IntVec3(0, 0, -16), 1, channel);
+            PaintCorridor(map, center, center + new IntVec3(16, 0, 0), 1, channel);
+            PaintCorridor(map, center, center + new IntVec3(-16, 0, 0), 1, channel);
         }
 
         private static void PaintAnchorPlatform(Map map, IntVec3 center, TerrainDef plate, TerrainDef channel, TerrainDef sigil, Rot4 facing)
         {
-            PaintCircle(map, center, 7, plate);
-            PaintCircle(map, center, 5, sigil);
-            PaintCircle(map, center, 2, sigil);
-            IntVec3 front = center + facing.FacingCell * 4;
+            // Rectilinear access machinery instead of magical floor circles.
+            PaintRect(map, new CellRect(center.x - 5, center.z - 5, 10, 10), plate);
+            PaintRect(map, new CellRect(center.x - 2, center.z - 2, 4, 4), sigil);
+            IntVec3 front = center + facing.FacingCell * 5;
             PaintCorridor(map, center, front, 1, channel);
         }
 
