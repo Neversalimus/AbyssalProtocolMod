@@ -199,7 +199,9 @@ namespace AbyssalProtocol
 
             PaintBrokenFactoryFloorStrips(map, center, extraction, anchorWest, anchorEast, anchorNorth, rewardPocket, plateTerrain, channelTerrain);
             PaintSideArchitectureFootprints(map, center, extraction, anchorWest, anchorEast, anchorNorth, plateTerrain, channelTerrain);
-            SpawnObjectivePlatformUnderlays(map, center, anchorWest, anchorEast, anchorNorth);
+            // Objective platform underlays are drawn directly by the heart/anchor buildings.
+            // Spawning same-cell underlay buildings was unreliable because RimWorld can wipe or hide
+            // lower buildings when the real objective building is spawned later by the encounter component.
             ScatterBurnScars(map, center, plateTerrain, baseTerrain);
             // Objective cells now use dedicated industrial underlays. Keep only non-objective pads.
             SpawnPad(map, extraction);
@@ -516,6 +518,7 @@ namespace AbyssalProtocol
             SpawnEntryDressings(map, entry, extraction, reserved);
             SpawnInteriorDeadMachineFields(map, center, extraction, west, east, north, rewardPocket, reserved);
             SpawnSideArchitectureLayer(map, center, extraction, west, east, north, rewardPocket, reserved);
+            SpawnLargeEdgeArchitectureShells(map, center, extraction, reserved);
 
             // Package 3: integrate the new Dominion Sepulcher decor library as a restrained
             // environmental layer. These props are deliberately kept away from heart/anchor/entry
@@ -831,11 +834,89 @@ namespace AbyssalProtocol
                 return;
             }
 
+            // Important: cluster members must be allowed to sit near each other.
+            // The previous implementation added each spawned prop to the global reserved list
+            // immediately, so most multi-piece side rooms collapsed into a single tiny object.
+            // This is why the slice still looked empty at maximum zoom. Check distance only
+            // against pre-existing reserved objective/lane cells, then commit the whole cluster.
+            List<IntVec3> spawnedLocal = new List<IntVec3>();
             for (int i = 0; i < entries.Length; i++)
             {
                 DecorationEntry entry = entries[i];
-                TrySpawnDominionDecoration(map, SelectDef(entry.defs, entry.index), origin + entry.offset, entry.rot, reserved, entry.minDistance, entry.clearExisting);
+                TrySpawnDominionDecorationInCluster(map, SelectDef(entry.defs, entry.index), origin + entry.offset, entry.rot, reserved, spawnedLocal, entry.minDistance, entry.clearExisting);
             }
+
+            if (spawnedLocal.Count > 0)
+            {
+                reserved.AddRange(spawnedLocal);
+            }
+        }
+
+        private static void SpawnLargeEdgeArchitectureShells(Map map, IntVec3 center, IntVec3 extraction, List<IntVec3> reserved)
+        {
+            // Maximum-zoom readability layer: big side shells and dead industrial rooms.
+            // Uses the same approved ruin/rubble/decals, but the cluster-distance fix above lets
+            // the pieces actually appear together as structures instead of isolated specks.
+            SpawnDecorationCluster(map, center + new IntVec3(-52, 0, 24), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 0, new IntVec3(-5, 0, 0), Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 2, new IntVec3(-5, 0, 6), Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(1, 0, -5), Rot4.North, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 8, new IntVec3(3, 0, 4), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(2, 0, 0), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(5, 0, 6), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 0, new IntVec3(4, 0, -4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(52, 0, 25), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(5, 0, 0), Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 3, new IntVec3(5, 0, 6), Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-1, 0, -5), Rot4.North, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 9, new IntVec3(-3, 0, 4), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-2, 0, 0), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(-5, 0, 6), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 1, new IntVec3(-4, 0, -4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(-53, 0, -34), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 4, new IntVec3(-4, 0, 0), Rot4.West, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 8, new IntVec3(2, 0, 5), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(5, 0, -3), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(1, 0, -1), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 3, new IntVec3(5, 0, 4), Rot4.West, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 8, new IntVec3(-1, 0, 4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(53, 0, -35), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 5, new IntVec3(4, 0, 0), Rot4.East, 5.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 9, new IntVec3(-2, 0, 5), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-5, 0, -3), Rot4.North, 4.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 4, new IntVec3(-1, 0, -1), Rot4.East, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(-5, 0, 4), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 9, new IntVec3(1, 0, 4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(0, 0, 49), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 5, new IntVec3(0, 0, 0), Rot4.North, 6.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(-8, 0, -2), Rot4.West, 4.2f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(8, 0, -2), Rot4.East, 4.2f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(-4, 0, 3), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(4, 0, 3), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 5, new IntVec3(0, 0, -4), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, extraction + new IntVec3(0, 0, -24), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 0, new IntVec3(-8, 0, 0), Rot4.West, 4.2f, false),
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(8, 0, 0), Rot4.East, 4.2f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(-3, 0, 3), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(3, 0, 3), Rot4.North, 2.5f, false),
+                new DecorationEntry(DominionDecalDefs, 6, new IntVec3(0, 0, -3), Rot4.North, 1.2f, false)
+            });
         }
 
         private static void SpawnDominionRuinWallLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
@@ -946,6 +1027,53 @@ namespace AbyssalProtocol
 
             int safeIndex = Mathf.Abs(index) % defs.Length;
             return defs[safeIndex];
+        }
+
+        private static bool TrySpawnDominionDecorationInCluster(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> externalReserved, List<IntVec3> spawnedLocal, float minDistance, bool clearExisting)
+        {
+            if (string.IsNullOrEmpty(defName))
+            {
+                return false;
+            }
+
+            if (map == null || !cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (cell.x < 8 || cell.z < 8 || cell.x > map.Size.x - 9 || cell.z > map.Size.z - 9)
+            {
+                return false;
+            }
+
+            float minDistanceSq = minDistance * minDistance;
+            for (int i = 0; i < externalReserved.Count; i++)
+            {
+                IntVec3 reservedCell = externalReserved[i];
+                int dx = cell.x - reservedCell.x;
+                int dz = cell.z - reservedCell.z;
+                if (dx * dx + dz * dz <= minDistanceSq)
+                {
+                    return false;
+                }
+            }
+
+            for (int i = 0; i < spawnedLocal.Count; i++)
+            {
+                if (spawnedLocal[i] == cell)
+                {
+                    return false;
+                }
+            }
+
+            if (!clearExisting && CellContainsNonEphemeralThing(map, cell))
+            {
+                return false;
+            }
+
+            SpawnProp(map, defName, cell, rot, clearExisting);
+            spawnedLocal.Add(cell);
+            return true;
         }
 
         private static bool TrySpawnDominionDecoration(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> reserved, float minDistance, bool clearExisting)

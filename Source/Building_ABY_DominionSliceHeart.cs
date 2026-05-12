@@ -7,6 +7,9 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public class Building_ABY_DominionSliceHeart : Building
     {
+        private const string HeartPlatformUnderlayPath = "Things/Building/DominionSlice/Platforms/ABY_DominionHeart_PlatformUnderlay";
+        private static Graphic heartPlatformUnderlayGraphic;
+
         private int nextPulseTick = -1;
         private int lastBlockedMessageTick = -999999;
 
@@ -80,6 +83,7 @@ namespace AbyssalProtocol
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            DrawHeartPlatformUnderlay(drawLoc);
             base.DrawAt(drawLoc, flip);
             MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
             if (encounter != null && encounter.ShouldDrawHeartShield)
@@ -91,6 +95,24 @@ namespace AbyssalProtocol
             // This keeps the heart readable even before the encounter starts and avoids
             // the platform visually swallowing the interactable object.
             DominionSliceHeartSetpieceVfxUtility.DrawHeartSetpiece(drawLoc, Map, encounter, thingIDNumber);
+        }
+
+        private static void DrawHeartPlatformUnderlay(Vector3 drawLoc)
+        {
+            if (heartPlatformUnderlayGraphic == null)
+            {
+                heartPlatformUnderlayGraphic = GraphicDatabase.Get<Graphic_Single>(HeartPlatformUnderlayPath, ShaderDatabase.Transparent, Vector2.one, Color.white);
+            }
+
+            if (heartPlatformUnderlayGraphic == null || heartPlatformUnderlayGraphic.MatSingle == null)
+            {
+                return;
+            }
+
+            Vector3 loc = drawLoc;
+            loc.y = AltitudeLayer.FloorEmplacement.AltitudeFor() + 0.018f;
+            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(10.2f, 1f, 10.2f));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, heartPlatformUnderlayGraphic.MatSingle, 0);
         }
 
         public void NotifyShieldBlocked()

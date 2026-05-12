@@ -8,7 +8,12 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public class Building_ABY_DominionSliceAnchor : Building
     {
+        private const string SealPlatformUnderlayPath = "Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Seal";
+        private const string ChoirPlatformUnderlayPath = "Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Choir";
+        private const string LawPlatformUnderlayPath = "Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Law";
+
         private static readonly Dictionary<string, Graphic> GlowGraphics = new Dictionary<string, Graphic>();
+        private static readonly Dictionary<string, Graphic> PlatformUnderlayGraphics = new Dictionary<string, Graphic>();
         private int nextPulseTick = -1;
 
         private DefModExtension_DominionSliceAnchor SliceExtension
@@ -99,6 +104,7 @@ namespace AbyssalProtocol
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            DrawPlatformUnderlay(drawLoc);
             base.DrawAt(drawLoc, flip);
 
             MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
@@ -185,6 +191,40 @@ namespace AbyssalProtocol
                 default:
                     return "ABY_DominionSliceAnchor_SealEffect".Translate();
             }
+        }
+
+        private void DrawPlatformUnderlay(Vector3 drawLoc)
+        {
+            string path;
+            switch (AnchorRole)
+            {
+                case DominionSliceAnchorRole.Choir:
+                    path = ChoirPlatformUnderlayPath;
+                    break;
+                case DominionSliceAnchorRole.Law:
+                    path = LawPlatformUnderlayPath;
+                    break;
+                default:
+                    path = SealPlatformUnderlayPath;
+                    break;
+            }
+
+            Graphic platformGraphic;
+            if (!PlatformUnderlayGraphics.TryGetValue(path, out platformGraphic))
+            {
+                platformGraphic = GraphicDatabase.Get<Graphic_Single>(path, ShaderDatabase.Transparent, Vector2.one, Color.white);
+                PlatformUnderlayGraphics[path] = platformGraphic;
+            }
+
+            if (platformGraphic == null || platformGraphic.MatSingle == null)
+            {
+                return;
+            }
+
+            Vector3 loc = drawLoc;
+            loc.y = AltitudeLayer.FloorEmplacement.AltitudeFor() + 0.020f;
+            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(6.6f, 1f, 6.6f));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, platformGraphic.MatSingle, 0);
         }
 
         private void ExecutePulse(MapComponent_DominionSliceEncounter encounter)
