@@ -8,13 +8,52 @@ namespace AbyssalProtocol
     {
         private static readonly Dictionary<string, Mesh[]> MeshCache = new Dictionary<string, Mesh[]>();
         private static readonly Dictionary<string, Material> MaterialCache = new Dictionary<string, Material>();
+        private static readonly HashSet<int> DrawnThisFrame = new HashSet<int>();
+        private static int drawnFrame = -1;
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            MapComponent_DominionSliceEncounter encounter = map != null ? map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null)
+            {
+                encounter.RegisterFissureVisual(this);
+            }
+        }
+
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            Map oldMap = Map;
+            MapComponent_DominionSliceEncounter encounter = oldMap != null ? oldMap.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            if (encounter != null)
+            {
+                encounter.DeregisterFissureVisual(this);
+            }
+
+            base.DeSpawn(mode);
+        }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            DrawFissureVisualAt(drawLoc);
+        }
+
+        public void DrawFissureVisualFromMapComponent()
+        {
+            DrawFissureVisualAt(DrawPos);
+        }
+
+        private void DrawFissureVisualAt(Vector3 drawLoc)
+        {
+            if (!TryMarkDrawnThisFrame())
+            {
+                return;
+            }
+
             DefModExtension_DominionFissure extension = def != null ? def.GetModExtension<DefModExtension_DominionFissure>() : null;
             if (extension == null || extension.sheetTexPath.NullOrEmpty())
             {
-                base.DrawAt(drawLoc, flip);
+                base.DrawAt(drawLoc, false);
                 return;
             }
 
@@ -49,6 +88,18 @@ namespace AbyssalProtocol
             Quaternion rotation = Quaternion.AngleAxis(Rotation.AsAngle, Vector3.up);
             Matrix4x4 matrix = Matrix4x4.TRS(loc, rotation, new Vector3(drawSize.x, 1f, drawSize.y));
             Graphics.DrawMesh(mesh, matrix, material, 0);
+        }
+
+        private bool TryMarkDrawnThisFrame()
+        {
+            int frame = Time.frameCount;
+            if (frame != drawnFrame)
+            {
+                drawnFrame = frame;
+                DrawnThisFrame.Clear();
+            }
+
+            return DrawnThisFrame.Add(thingIDNumber);
         }
 
         private static Material GetMaterial(DefModExtension_DominionFissure extension)

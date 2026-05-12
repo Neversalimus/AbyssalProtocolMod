@@ -562,7 +562,7 @@ namespace AbyssalProtocol
             IntVec3 top = new IntVec3(leftWallX + 16, 0, topWallZ);
             IntVec3 junction = new IntVec3(leftWallX + 16, 0, topWallZ - 16);
             IntVec3 wall = new IntVec3(leftWallX, 0, topWallZ - 16);
-            IntVec3 visual = new IntVec3(top.x, 0, topWallZ - 12);
+            IntVec3 visual = new IntVec3(leftWallX + 8, 0, topWallZ - 8);
             return new DominionFissurePlacement(DominionFissurePathNorthWestDefName, visual, 1, top, junction, wall);
         }
 
@@ -571,7 +571,7 @@ namespace AbyssalProtocol
             IntVec3 top = new IntVec3(rightWallX - 16, 0, topWallZ);
             IntVec3 junction = new IntVec3(rightWallX - 16, 0, topWallZ - 15);
             IntVec3 wall = new IntVec3(rightWallX, 0, topWallZ - 15);
-            IntVec3 visual = new IntVec3(top.x, 0, topWallZ - 12);
+            IntVec3 visual = new IntVec3(rightWallX - 8, 0, topWallZ - 8);
             return new DominionFissurePlacement(DominionFissurePathNorthEastDefName, visual, 1, top, junction, wall);
         }
 
@@ -580,7 +580,7 @@ namespace AbyssalProtocol
             IntVec3 bottom = new IntVec3(leftWallX + 14, 0, bottomWallZ);
             IntVec3 junction = new IntVec3(leftWallX + 14, 0, bottomWallZ + 14);
             IntVec3 wall = new IntVec3(leftWallX, 0, bottomWallZ + 14);
-            IntVec3 visual = new IntVec3(bottom.x, 0, bottomWallZ + 12);
+            IntVec3 visual = new IntVec3(leftWallX + 7, 0, bottomWallZ + 7);
             return new DominionFissurePlacement(DominionFissurePathSouthWestDefName, visual, 1, bottom, junction, wall);
         }
 
@@ -589,7 +589,7 @@ namespace AbyssalProtocol
             IntVec3 bottom = new IntVec3(rightWallX - 15, 0, bottomWallZ);
             IntVec3 junction = new IntVec3(rightWallX - 15, 0, bottomWallZ + 15);
             IntVec3 wall = new IntVec3(rightWallX, 0, bottomWallZ + 15);
-            IntVec3 visual = new IntVec3(bottom.x, 0, bottomWallZ + 12);
+            IntVec3 visual = new IntVec3(rightWallX - 8, 0, bottomWallZ + 8);
             return new DominionFissurePlacement(DominionFissurePathSouthEastDefName, visual, 1, bottom, junction, wall);
         }
 

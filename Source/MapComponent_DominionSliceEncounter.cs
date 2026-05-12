@@ -39,6 +39,7 @@ namespace AbyssalProtocol
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
         private List<Building_ABY_DominionSliceAnchor> anchors = new List<Building_ABY_DominionSliceAnchor>();
+        private readonly List<Building_ABY_DominionFissure> fissureVisuals = new List<Building_ABY_DominionFissure>();
         private readonly List<LinkSeverBurst> linkSeverBursts = new List<LinkSeverBurst>();
 
         private struct LinkSeverBurst
@@ -149,6 +150,19 @@ namespace AbyssalProtocol
                 anchors ??= new List<Building_ABY_DominionSliceAnchor>();
                 RestoreReferencesFromMap();
             }
+        }
+
+        public override void MapComponentUpdate()
+        {
+            base.MapComponentUpdate();
+            if (map == null || Find.CurrentMap != map)
+            {
+                return;
+            }
+
+            DrawPersistentAnchorLinks();
+            DrawAnchorLinkSeverBursts();
+            DrawRegisteredFissureVisuals();
         }
 
         public override void MapComponentTick()
@@ -333,6 +347,88 @@ namespace AbyssalProtocol
             if (phase == SlicePhase.HeartExposed)
             {
                 BeginCollapse(true);
+            }
+        }
+
+        public void RegisterFissureVisual(Building_ABY_DominionFissure fissure)
+        {
+            if (fissure == null)
+            {
+                return;
+            }
+
+            if (!fissureVisuals.Contains(fissure))
+            {
+                fissureVisuals.Add(fissure);
+            }
+        }
+
+        public void DeregisterFissureVisual(Building_ABY_DominionFissure fissure)
+        {
+            if (fissureVisuals == null || fissure == null)
+            {
+                return;
+            }
+
+            fissureVisuals.Remove(fissure);
+        }
+
+        private void DrawPersistentAnchorLinks()
+        {
+            Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
+            if (heartBuilding == null || map == null || !ShouldDrawAnchorLinks)
+            {
+                return;
+            }
+
+            DrawAnchorLinksFromHeart(heartBuilding);
+        }
+
+        private void DrawRegisteredFissureVisuals()
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            if (fissureVisuals.Count == 0)
+            {
+                RestoreFissureVisualsFromMap();
+            }
+
+            for (int i = fissureVisuals.Count - 1; i >= 0; i--)
+            {
+                Building_ABY_DominionFissure fissure = fissureVisuals[i];
+                if (fissure == null || fissure.Destroyed || fissure.Map != map)
+                {
+                    fissureVisuals.RemoveAt(i);
+                    continue;
+                }
+
+                fissure.DrawFissureVisualFromMapComponent();
+            }
+        }
+
+        private void RestoreFissureVisualsFromMap()
+        {
+            if (map == null || map.listerThings == null)
+            {
+                return;
+            }
+
+            List<Thing> allThings = map.listerThings.AllThings;
+            if (allThings == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < allThings.Count; i++)
+            {
+                Building_ABY_DominionFissure fissure = allThings[i] as Building_ABY_DominionFissure;
+                if (fissure != null && !fissure.Destroyed && fissure.Map == map && !fissureVisuals.Contains(fissure))
+                {
+                    fissureVisuals.Add(fissure);
+                }
             }
         }
 

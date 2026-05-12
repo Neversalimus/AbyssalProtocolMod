@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -7,6 +8,9 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class DominionSliceVfxUtility
     {
+        private static readonly HashSet<int> DrawnAnchorLinkSeeds = new HashSet<int>();
+        private static int drawnAnchorLinkFrame = -1;
+
         private const string LinkBeamTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_LinkBeam";
         private const string LinkCoreTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_LinkCore";
         private const string LinkEntryBloomTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_LinkEntryBloom";
@@ -67,8 +71,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            anchorPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.012f;
-            heartPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.012f;
+            if (!TryMarkAnchorLinkDrawn(seed))
+            {
+                return;
+            }
+
+            float tetherAltitude = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.086f;
+            anchorPos.y = tetherAltitude;
+            heartPos.y = tetherAltitude;
 
             Vector3 flatDelta = heartPos - anchorPos;
             flatDelta.y = 0f;
@@ -97,14 +107,15 @@ namespace AbyssalProtocol
             float surge = 1f + Mathf.Sin((ticks + seed) * 0.052f + roleOffset) * 0.025f;
             float width = GetRoleWidth(role) * pulse;
 
-            // Draw the tether from the heart-side renderer, not from every anchor DrawAt call.
-            // Keep all persistent layers continuous. The previous heavy-chain gate blinked on/off
-            // and looked like a camera/culling bug, especially on max zoom and while panning.
-            DrawBeam(start, end, width * 8.80f, renderLength, TetherGlowMaterial, breath);
-            DrawBeam(start, end, width * 1.46f, renderLength, TetherCoreMaterial, 1f + (surge - 1f) * 0.65f);
-            DrawBeam(start, end, width * 2.44f, renderLength, TetherChainSparseMaterial, 1f);
-            DrawBeam(start, end, width * 1.82f, renderLength, TetherChainHeavyMaterial, 1f);
-            DrawBeam(start, end, width * 0.84f, renderLength, TetherCoreMaterial, 1f + (pulse - 1f) * 0.45f);
+            // Persistent layers stay continuous; movement is carried by flowing energy packets.
+            // Drawing is de-duplicated per Unity frame, so the same link may be requested from the
+            // map component, heart, or anchor without double-brightening when both endpoints are visible.
+            DrawBeam(start, end, width * 8.10f, renderLength, TetherGlowMaterial, breath);
+            DrawBeam(start, end, width * 1.62f, renderLength, TetherCoreMaterial, 1f + (surge - 1f) * 0.75f);
+            DrawBeam(start, end, width * 2.36f, renderLength, TetherChainSparseMaterial, 1f + (pulse - 1f) * 0.35f);
+            DrawBeam(start, end, width * 1.62f, renderLength, TetherChainHeavyMaterial, 1f + (breath - 1f) * 0.50f);
+            DrawBeam(start, end, width * 0.92f, renderLength, TetherCoreMaterial, 1f + (pulse - 1f) * 0.55f);
+            DrawFlowPackets(start, end, width, renderLength, seed, ticks, roleOffset);
         }
 
         public static void DrawAnchorLinkSeverBurst(Vector3 anchorPos, Vector3 heartPos, Map map, DominionSliceAnchorRole role, int seed, int ageTicks)
@@ -114,8 +125,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            anchorPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
-            heartPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
+            float tetherAltitude = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.092f;
+            anchorPos.y = tetherAltitude;
+            heartPos.y = tetherAltitude;
 
             Vector3 flatDelta = heartPos - anchorPos;
             flatDelta.y = 0f;
@@ -228,6 +240,49 @@ namespace AbyssalProtocol
             }
 
             FleckMaker.ThrowLightningGlow(position, map, 0.62f);
+        }
+
+        private static bool TryMarkAnchorLinkDrawn(int seed)
+        {
+            int frame = Time.frameCount;
+            if (frame != drawnAnchorLinkFrame)
+            {
+                drawnAnchorLinkFrame = frame;
+                DrawnAnchorLinkSeeds.Clear();
+            }
+
+            return DrawnAnchorLinkSeeds.Add(seed);
+        }
+
+        private static void DrawFlowPackets(Vector3 start, Vector3 end, float baseWidth, float renderLength, int seed, int ticks, float roleOffset)
+        {
+            Vector3 delta = end - start;
+            delta.y = 0f;
+            float length = delta.magnitude;
+            if (length <= 1.20f)
+            {
+                return;
+            }
+
+            Vector3 direction = delta / length;
+            float packetLength = Mathf.Clamp(renderLength * 0.115f, 1.45f, 3.35f);
+            float speed = 0.0105f;
+            for (int i = 0; i < 3; i++)
+            {
+                float t = Mathf.Repeat(ticks * speed + seed * 0.0073f + roleOffset * 0.071f + i * 0.333f, 1f);
+                float fade = Mathf.Sin(t * Mathf.PI);
+                if (fade <= 0.05f)
+                {
+                    continue;
+                }
+
+                Vector3 center = Vector3.Lerp(start, end, t);
+                Vector3 from = center - direction * (packetLength * 0.50f);
+                Vector3 to = center + direction * (packetLength * 0.50f);
+                from.y = start.y + 0.004f;
+                to.y = start.y + 0.004f;
+                DrawBeam(from, to, baseWidth * Mathf.Lerp(1.55f, 2.25f, fade), (to - from).MagnitudeHorizontal(), TetherCoreMaterial, 1f);
+            }
         }
 
         private static void DrawBeam(Vector3 from, Vector3 to, float width, float length, Material material, float scalePulse)
