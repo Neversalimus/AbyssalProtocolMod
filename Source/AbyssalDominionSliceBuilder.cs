@@ -10,6 +10,10 @@ namespace AbyssalProtocol
     {
         private const string SigilPadDefName = "ABY_DominionSliceSigilPad";
         private const string PerimeterWallDefName = "ABY_DominionSlicePerimeterWall";
+        private const string HeartPlatformUnderlayDefName = "ABY_DominionHeartPlatformUnderlay";
+        private const string AnchorPlatformUnderlaySealDefName = "ABY_DominionAnchorPlatformUnderlay_Seal";
+        private const string AnchorPlatformUnderlayChoirDefName = "ABY_DominionAnchorPlatformUnderlay_Choir";
+        private const string AnchorPlatformUnderlayLawDefName = "ABY_DominionAnchorPlatformUnderlay_Law";
 
         private static readonly string[] DominionRuinWallDefs =
         {
@@ -194,12 +198,11 @@ namespace AbyssalProtocol
             PaintCorridor(map, extraction, center + new IntVec3(0, 0, -15), 1, channelTerrain);
 
             PaintBrokenFactoryFloorStrips(map, center, extraction, anchorWest, anchorEast, anchorNorth, rewardPocket, plateTerrain, channelTerrain);
+            PaintSideArchitectureFootprints(map, center, extraction, anchorWest, anchorEast, anchorNorth, plateTerrain, channelTerrain);
+            SpawnObjectivePlatformUnderlays(map, center, anchorWest, anchorEast, anchorNorth);
             ScatterBurnScars(map, center, plateTerrain, baseTerrain);
+            // Objective cells now use dedicated industrial underlays. Keep only non-objective pads.
             SpawnPad(map, extraction);
-            SpawnPad(map, center);
-            SpawnPad(map, anchorWest);
-            SpawnPad(map, anchorEast);
-            SpawnPad(map, anchorNorth);
             SpawnPad(map, rewardPocket);
 
             SpawnPerimeterShell(map, center);
@@ -381,6 +384,49 @@ namespace AbyssalProtocol
             PaintOrganicPatch(map, center + new IntVec3(0, 0, 35), 4, plate);
         }
 
+        private static void SpawnObjectivePlatformUnderlays(Map map, IntVec3 heart, IntVec3 sealAnchor, IntVec3 choirAnchor, IntVec3 lawAnchor)
+        {
+            // Lower-layer platform art. Heart and anchor buildings are spawned later by the
+            // encounter component and keep their own actual object graphics above these bases.
+            SpawnProp(map, HeartPlatformUnderlayDefName, heart, Rot4.North, false);
+            SpawnProp(map, AnchorPlatformUnderlaySealDefName, sealAnchor, Rot4.North, false);
+            SpawnProp(map, AnchorPlatformUnderlayChoirDefName, choirAnchor, Rot4.North, false);
+            SpawnProp(map, AnchorPlatformUnderlayLawDefName, lawAnchor, Rot4.North, false);
+        }
+
+        private static void PaintSideArchitectureFootprints(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, TerrainDef plate, TerrainDef channel)
+        {
+            if (map == null || plate == null)
+            {
+                return;
+            }
+
+            // Broad low-contrast industrial side rooms. They make the slice read as a ruined
+            // factory-cathedral without introducing new art or blocking the main combat lanes.
+            PaintRect(map, new CellRect(center.x - 58, center.z - 2, 16, 20), plate);
+            PaintRect(map, new CellRect(center.x + 42, center.z + 0, 16, 19), plate);
+            PaintRect(map, new CellRect(center.x - 56, center.z - 39, 22, 12), plate);
+            PaintRect(map, new CellRect(center.x + 35, center.z - 41, 22, 12), plate);
+            PaintRect(map, new CellRect(center.x - 12, center.z + 42, 24, 10), plate);
+            PaintRect(map, new CellRect(extraction.x - 33, extraction.z - 16, 18, 9), plate);
+            PaintRect(map, new CellRect(extraction.x + 15, extraction.z - 17, 18, 9), plate);
+
+            if (channel != null)
+            {
+                PaintCorridor(map, center + new IntVec3(-55, 0, 8), center + new IntVec3(-42, 0, 8), 1, channel);
+                PaintCorridor(map, center + new IntVec3(42, 0, 9), center + new IntVec3(55, 0, 9), 1, channel);
+                PaintCorridor(map, center + new IntVec3(-53, 0, -33), center + new IntVec3(-35, 0, -33), 1, channel);
+                PaintCorridor(map, center + new IntVec3(36, 0, -35), center + new IntVec3(54, 0, -35), 1, channel);
+                PaintCorridor(map, center + new IntVec3(-10, 0, 46), center + new IntVec3(10, 0, 46), 1, channel);
+            }
+
+            PaintOrganicPatch(map, center + new IntVec3(-49, 0, 8), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(49, 0, 9), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(-44, 0, -33), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(45, 0, -35), 5, plate);
+            PaintOrganicPatch(map, center + new IntVec3(0, 0, 46), 5, plate);
+        }
+
         private static void ScatterBurnScars(Map map, IntVec3 center, TerrainDef scarTerrain, TerrainDef baseTerrain)
         {
             IntRange radiusRange = new IntRange(18, 44);
@@ -469,6 +515,7 @@ namespace AbyssalProtocol
             SpawnPeripheralSpines(map, center, reserved);
             SpawnEntryDressings(map, entry, extraction, reserved);
             SpawnInteriorDeadMachineFields(map, center, extraction, west, east, north, rewardPocket, reserved);
+            SpawnSideArchitectureLayer(map, center, extraction, west, east, north, rewardPocket, reserved);
 
             // Package 3: integrate the new Dominion Sepulcher decor library as a restrained
             // environmental layer. These props are deliberately kept away from heart/anchor/entry
@@ -687,6 +734,73 @@ namespace AbyssalProtocol
                 new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-5, 0, -1), Rot4.North, 2.8f, false),
                 new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(5, 0, -1), Rot4.North, 2.8f, false),
                 new DecorationEntry(DominionDecalDefs, 8, new IntVec3(0, 0, -4), Rot4.North, 1.2f, false)
+            });
+        }
+
+        private static void SpawnSideArchitectureLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
+        {
+            // Stronger architectural silhouette: broken side rooms, wall shells and machine bays.
+            // These use existing approved Dominion ruin/rubble/decals and avoid objective cells/lane samples.
+            SpawnDecorationCluster(map, center + new IntVec3(-51, 0, 8), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 0, new IntVec3(-3, 0, 0), Rot4.West, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 2, new IntVec3(-6, 0, 4), Rot4.West, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(2, 0, -5), Rot4.North, 3.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(2, 0, 3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 0, new IntVec3(5, 0, 0), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(51, 0, 9), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(3, 0, 0), Rot4.East, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 3, new IntVec3(6, 0, 4), Rot4.East, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-2, 0, -5), Rot4.North, 3.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(-2, 0, 3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 1, new IntVec3(-5, 0, 0), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(-45, 0, -34), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 4, new IntVec3(-4, 0, 0), Rot4.West, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 8, new IntVec3(2, 0, 4), Rot4.North, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 5, new IntVec3(3, 0, -3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(-2, 0, -4), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 5, new IntVec3(5, 0, 2), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(45, 0, -35), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 5, new IntVec3(4, 0, 0), Rot4.East, 4.0f, false),
+                new DecorationEntry(DominionRuinWallDefs, 9, new IntVec3(-2, 0, 4), Rot4.North, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 6, new IntVec3(-3, 0, -3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 0, new IntVec3(2, 0, -4), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 6, new IntVec3(-5, 0, 2), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, center + new IntVec3(0, 0, 46), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 0, new IntVec3(-7, 0, 0), Rot4.North, 3.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 1, new IntVec3(7, 0, 0), Rot4.North, 3.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 5, new IntVec3(0, 0, 4), Rot4.North, 3.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 3, new IntVec3(-3, 0, -3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionRubbleDefs, 4, new IntVec3(3, 0, -3), Rot4.North, 2.8f, false),
+                new DecorationEntry(DominionDecalDefs, 9, new IntVec3(0, 0, -5), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, extraction + new IntVec3(-27, 0, -12), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 2, new IntVec3(-3, 0, 0), Rot4.West, 3.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 6, new IntVec3(4, 0, 1), Rot4.North, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 1, new IntVec3(1, 0, 4), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionDecalDefs, 2, new IntVec3(4, 0, -3), Rot4.North, 1.2f, false)
+            });
+
+            SpawnDecorationCluster(map, extraction + new IntVec3(27, 0, -13), reserved, new[]
+            {
+                new DecorationEntry(DominionRuinWallDefs, 3, new IntVec3(3, 0, 0), Rot4.East, 3.8f, false),
+                new DecorationEntry(DominionRuinWallDefs, 7, new IntVec3(-4, 0, 1), Rot4.North, 3.6f, false),
+                new DecorationEntry(DominionRubbleDefs, 2, new IntVec3(-1, 0, 4), Rot4.North, 2.6f, false),
+                new DecorationEntry(DominionDecalDefs, 3, new IntVec3(-4, 0, -3), Rot4.North, 1.2f, false)
             });
         }
 

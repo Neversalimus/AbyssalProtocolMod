@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Dedicated lower-layer industrial bases for Dominion Slice objectives. -->
+  <!-- These are visual underlays only. Heart/anchor objects keep their own actual graphics. -->
+
+  <ThingDef Abstract="True" Name="ABY_DominionPlatformUnderlayBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionPlatformUnderlayBase">
+    <defName>ABY_DominionHeartPlatformUnderlay</defName>
+    <label>dominion heart platform underlay</label>
+    <description>A lower industrial platform beneath the Crown-Heart. This is visual infrastructure, not the heart itself.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Platforms/ABY_DominionHeart_PlatformUnderlay</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(8.8,8.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionPlatformUnderlayBase">
+    <defName>ABY_DominionAnchorPlatformUnderlay_Seal</defName>
+    <label>seal anchor platform underlay</label>
+    <description>A lower industrial platform beneath a dominion seal anchor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Seal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.25,5.25)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionPlatformUnderlayBase">
+    <defName>ABY_DominionAnchorPlatformUnderlay_Choir</defName>
+    <label>choir anchor platform underlay</label>
+    <description>A lower industrial platform beneath a dominion choir anchor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Choir</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.25,5.25)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionPlatformUnderlayBase">
+    <defName>ABY_DominionAnchorPlatformUnderlay_Law</defName>
+    <label>law anchor platform underlay</label>
+    <description>A lower industrial platform beneath a dominion law anchor.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Platforms/ABY_DominionAnchor_PlatformUnderlay_Law</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.25,5.25)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

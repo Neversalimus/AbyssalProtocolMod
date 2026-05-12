@@ -704,17 +704,19 @@ namespace AbyssalProtocol
             float glowScale = kindDef != null && kindDef.race != null && kindDef.race.race != null && kindDef.race.race.Humanlike ? 1.25f : 0.95f;
             glowScale += (index % 3) * 0.08f;
 
-            // Hell-map emergence: enemies condense out of dominion seams and static pressure,
-            // rather than entering the already-open pocket through a separate hell portal.
+            // Dominion seam emergence: the pocket is already hell. Reinforcements should feel
+            // pressure-forged out of cracked machinery, not summoned through another portal.
             FleckMaker.ThrowLightningGlow(loc, map, glowScale);
-            if (Rand.Chance(0.72f))
+            FleckMaker.ThrowDustPuff(loc, map, Rand.Range(0.42f, 0.74f));
+
+            if (Rand.Chance(0.82f))
             {
                 FleckMaker.ThrowMicroSparks(loc + new Vector3(Rand.Range(-0.22f, 0.22f), 0f, Rand.Range(-0.22f, 0.22f)), map);
             }
 
-            if (Rand.Chance(0.38f))
+            if (Rand.Chance(0.55f))
             {
-                FleckMaker.ThrowDustPuff(loc, map, Rand.Range(0.58f, 0.95f));
+                FleckMaker.ThrowDustPuff(loc + new Vector3(Rand.Range(-0.34f, 0.34f), 0f, Rand.Range(-0.34f, 0.34f)), map, Rand.Range(0.52f, 0.9f));
             }
 
             if (index == 0)
