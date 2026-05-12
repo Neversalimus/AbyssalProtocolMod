@@ -229,6 +229,8 @@ namespace AbyssalProtocol
                     return;
                 }
 
+                TrySpawnHeartGuardians();
+
                 if (now >= nextWaveTick)
                 {
                     TriggerWave();
@@ -796,6 +798,7 @@ namespace AbyssalProtocol
             phaseStartedTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             nextWaveTick = phaseStartedTick + AbyssalDominionSliceWaveDirector.GetNextWaveDelayTicks(phase, wavesTriggered, hazardPressure, GetLiveAnchorCount());
             Messages.Message("ABY_DominionSliceEncounter_Anchorfall".Translate(GetLiveAnchorCount()), new TargetInfo(map.Center, map), MessageTypeDefOf.ThreatBig, false);
+            TrySpawnHeartGuardians();
         }
 
         private void BeginHeartExposed()
@@ -814,14 +817,14 @@ namespace AbyssalProtocol
 
         private void TrySpawnHeartGuardians()
         {
-            if (phase != SlicePhase.HeartExposed || map == null)
+            if ((phase != SlicePhase.Anchorfall && phase != SlicePhase.HeartExposed) || map == null)
             {
                 return;
             }
 
             CleanupReferences();
             RestoreReferencesFromMap();
-            if (heartGuardiansSpawned && heartGuardians.Count >= HeartGuardianCount)
+            if (heartGuardiansSpawned)
             {
                 return;
             }
@@ -845,10 +848,15 @@ namespace AbyssalProtocol
                 return;
             }
 
+            List<IntVec3> spawnFocuses = BuildHeartGuardianSpawnFocuses(heartBuilding.PositionHeld);
+            if (spawnFocuses.Count == 0)
+            {
+                return;
+            }
+
             List<Pawn> spawnedNow = new List<Pawn>();
             IntVec3 center = heartBuilding.PositionHeld;
-            int attempts = HeartGuardianCount - heartGuardians.Count;
-            for (int i = 0; i < attempts; i++)
+            for (int slot = heartGuardians.Count; slot < HeartGuardianCount; slot++)
             {
                 Pawn pawn;
                 if (!TryGeneratePawn(guardianKind, faction, out pawn) || pawn == null)
@@ -856,10 +864,11 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                IntVec3 focus = spawnFocuses[Mathf.Clamp(slot, 0, spawnFocuses.Count - 1)];
                 IntVec3 spawnCell;
-                if (!TryFindHeartGuardianSpawnCell(center, spawnedNow, out spawnCell))
+                if (!TryFindHeartGuardianSpawnCell(focus, center, spawnedNow, out spawnCell))
                 {
-                    SafeDestroyUnspawnedPawn(pawn, "heart guardian no spawn cell");
+                    SafeDestroyUnspawnedPawn(pawn, "heart guardian no pylon-adjacent spawn cell");
                     continue;
                 }
 
@@ -873,13 +882,13 @@ namespace AbyssalProtocol
                         WipeMode.Vanish,
                         false,
                         false,
-                        "dominion slice heart guardian spawn"))
+                        "dominion slice heart guardian pylon spawn"))
                 {
                     SafeDestroyUnspawnedPawn(pawn, "heart guardian spawn failed");
                     continue;
                 }
 
-                EmitDominionEmergenceCue(spawnCell, spawnedPawn.kindDef, i);
+                EmitDominionEmergenceCue(spawnCell, spawnedPawn.kindDef, slot);
                 TryPrepareThreatPawnSafe(spawnedPawn);
                 heartGuardians.Add(spawnedPawn);
                 spawnedNow.Add(spawnedPawn);
@@ -897,24 +906,75 @@ namespace AbyssalProtocol
             }
         }
 
-        private bool TryFindHeartGuardianSpawnCell(IntVec3 center, List<Pawn> reservedPawns, out IntVec3 cell)
+        private List<IntVec3> BuildHeartGuardianSpawnFocuses(IntVec3 heartCell)
+        {
+            List<IntVec3> focuses = new List<IntVec3>();
+            if (anchors != null)
+            {
+                for (int i = 0; i < anchors.Count && focuses.Count < HeartGuardianCount; i++)
+                {
+                    Building_ABY_DominionSliceAnchor anchor = anchors[i];
+                    if (anchor == null || anchor.Destroyed || anchor.Map != map || !anchor.PositionHeld.IsValid)
+                    {
+                        continue;
+                    }
+
+                    focuses.Add(anchor.PositionHeld);
+                }
+            }
+
+            while (focuses.Count < HeartGuardianCount && heartCell.IsValid)
+            {
+                focuses.Add(heartCell);
+            }
+
+            return focuses;
+        }
+
+        private bool TryFindHeartGuardianSpawnCell(IntVec3 focus, IntVec3 heartCenter, List<Pawn> reservedPawns, out IntVec3 cell)
         {
             cell = IntVec3.Invalid;
-            if (map == null || !center.IsValid)
+            if (map == null)
+            {
+                return false;
+            }
+
+            if (!focus.IsValid)
+            {
+                focus = heartCenter;
+            }
+
+            if (focus.IsValid && TryFindHeartGuardianSpawnCellNearFocus(focus, heartCenter, reservedPawns, 1.8f, 5.8f, out cell))
+            {
+                return true;
+            }
+
+            if (heartCenter.IsValid && heartCenter != focus && TryFindHeartGuardianSpawnCellNearFocus(heartCenter, heartCenter, reservedPawns, 5.0f, 9.2f, out cell))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryFindHeartGuardianSpawnCellNearFocus(IntVec3 focus, IntVec3 heartCenter, List<Pawn> reservedPawns, float minRadius, float maxRadius, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !focus.IsValid)
             {
                 return false;
             }
 
             float bestScore = float.MinValue;
-            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(center, 9.2f, true))
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(focus, maxRadius, true))
             {
                 if (!candidate.InBounds(map) || !candidate.Standable(map) || AbyssalThreatPawnUtility.CellHasOtherPawn(candidate, map, null))
                 {
                     continue;
                 }
 
-                float distance = center.DistanceTo(candidate);
-                if (distance < 5.0f || distance > 9.2f)
+                float distance = focus.DistanceTo(candidate);
+                if (distance < minRadius || distance > maxRadius)
                 {
                     continue;
                 }
@@ -938,9 +998,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float ringScore = 8.5f - Mathf.Abs(distance - 6.8f);
-                float coverScore = GenSight.LineOfSight(center, candidate, map) ? 0.7f : 0f;
-                float score = ringScore + coverScore + Rand.Value * 0.35f;
+                float preferredDistance = Mathf.Lerp(minRadius, maxRadius, 0.46f);
+                float distanceScore = maxRadius - Mathf.Abs(distance - preferredDistance);
+                float heartScore = heartCenter.IsValid ? Mathf.Clamp(heartCenter.DistanceTo(candidate), 0f, 18f) * 0.04f : 0f;
+                float sightScore = heartCenter.IsValid && GenSight.LineOfSight(heartCenter, candidate, map) ? 0.35f : 0f;
+                float focusSightScore = GenSight.LineOfSight(focus, candidate, map) ? 0.55f : 0f;
+                float score = distanceScore + heartScore + sightScore + focusSightScore + Rand.Value * 0.35f;
                 if (score > bestScore)
                 {
                     bestScore = score;
