@@ -357,6 +357,33 @@ namespace AbyssalProtocol
                 DominionSliceVfxUtility.DrawAnchorLinkSeverBurst(burst.anchorPos, burst.heartPos, map, burst.role, burst.seed, age);
             }
         }
+        public void DrawAnchorLinksFromHeart(Building_ABY_DominionSliceHeart heartBuilding)
+        {
+            if (heartBuilding == null || map == null || !ShouldDrawAnchorLinks)
+            {
+                return;
+            }
+
+            CleanupReferences();
+            RestoreReferencesFromMap();
+            if (anchors == null || anchors.Count == 0)
+            {
+                return;
+            }
+
+            Vector3 heartPos = heartBuilding.DrawPos;
+            for (int i = 0; i < anchors.Count; i++)
+            {
+                Building_ABY_DominionSliceAnchor anchor = anchors[i];
+                if (anchor == null || anchor.Destroyed || anchor.Map != map)
+                {
+                    continue;
+                }
+
+                DominionSliceVfxUtility.DrawAnchorLink(anchor.DrawPos, heartPos, map, anchor.AnchorRole, anchor.thingIDNumber);
+            }
+        }
+
 
         private void TrySpawnAnchorLinkSeverVfx(Building_ABY_DominionSliceAnchor anchor)
         {

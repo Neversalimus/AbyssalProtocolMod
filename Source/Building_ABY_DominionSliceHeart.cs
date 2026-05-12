@@ -93,6 +93,7 @@ namespace AbyssalProtocol
 
             if (encounter != null)
             {
+                encounter.DrawAnchorLinksFromHeart(this);
                 encounter.DrawAnchorLinkSeverBursts();
             }
 

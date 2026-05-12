@@ -29,12 +29,12 @@ namespace AbyssalProtocol
         private static readonly Material LinkEntryBloomMaterial = MaterialPool.MatFrom(LinkEntryBloomTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material HeartShieldMaterial = MaterialPool.MatFrom(HeartShieldTexPath, ShaderDatabase.MoteGlow);
 
-        private static readonly Material TetherGlowMaterial = MaterialPool.MatFrom(TetherGlowTexPath, ShaderDatabase.MoteGlow);
-        private static readonly Material TetherCoreMaterial = MaterialPool.MatFrom(TetherCoreTexPath, ShaderDatabase.MoteGlow);
-        private static readonly Material TetherChainSparseMaterial = MaterialPool.MatFrom(TetherChainSparseTexPath, ShaderDatabase.Transparent);
-        private static readonly Material TetherChainHeavyMaterial = MaterialPool.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.Transparent);
-        private static readonly Material TetherSnapAnchorMaterial = MaterialPool.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.Transparent);
-        private static readonly Material TetherSnapHeartMaterial = MaterialPool.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.Transparent);
+        private static readonly Material TetherGlowMaterial = MaterialPool.MatFrom(TetherGlowTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.62f));
+        private static readonly Material TetherCoreMaterial = MaterialPool.MatFrom(TetherCoreTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.92f));
+        private static readonly Material TetherChainSparseMaterial = MaterialPool.MatFrom(TetherChainSparseTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.88f));
+        private static readonly Material TetherChainHeavyMaterial = MaterialPool.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.34f));
+        private static readonly Material TetherSnapAnchorMaterial = MaterialPool.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
+        private static readonly Material TetherSnapHeartMaterial = MaterialPool.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
 
         private static ThingDef anchorBreakMoteDef;
         private static ThingDef heartExposeMoteDef;
@@ -92,24 +92,19 @@ namespace AbyssalProtocol
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float roleOffset = GetRolePhaseOffset(role);
-            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.044f + roleOffset) * 0.070f;
-            float breath = 1f + Mathf.Sin((ticks + seed) * 0.017f + roleOffset) * 0.055f;
-            float surge = 1f + Mathf.Sin((ticks + seed) * 0.072f + roleOffset) * 0.040f;
-            float heavySignal = Mathf.Sin((ticks + seed) * 0.026f + roleOffset);
+            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.030f + roleOffset) * 0.032f;
+            float breath = 1f + Mathf.Sin((ticks + seed) * 0.014f + roleOffset) * 0.030f;
+            float surge = 1f + Mathf.Sin((ticks + seed) * 0.052f + roleOffset) * 0.025f;
             float width = GetRoleWidth(role) * pulse;
 
-            // The generated tether sheet is deliberately layered: soft aura, visible core,
-            // sparse chain authority, and rare heavier chain beats. Widths are kept in the
-            // middle range so the link is readable on max zoom without becoming a wall.
-            DrawBeam(start, end, width * 13.4f, renderLength, TetherGlowMaterial, breath);
-            DrawBeam(start, end, width * 1.28f, renderLength, TetherCoreMaterial, 1f + (surge - 1f) * 0.72f);
-            DrawBeam(start, end, width * 2.62f, renderLength, TetherChainSparseMaterial, 1f);
-            DrawBeam(start, end, width * 0.72f, renderLength, TetherCoreMaterial, 1f + (pulse - 1f) * 0.65f);
-
-            if (heavySignal > 0.18f)
-            {
-                DrawBeam(start, end, width * 2.92f, renderLength, TetherChainHeavyMaterial, 0.98f + heavySignal * 0.025f);
-            }
+            // Draw the tether from the heart-side renderer, not from every anchor DrawAt call.
+            // Keep all persistent layers continuous. The previous heavy-chain gate blinked on/off
+            // and looked like a camera/culling bug, especially on max zoom and while panning.
+            DrawBeam(start, end, width * 8.80f, renderLength, TetherGlowMaterial, breath);
+            DrawBeam(start, end, width * 1.46f, renderLength, TetherCoreMaterial, 1f + (surge - 1f) * 0.65f);
+            DrawBeam(start, end, width * 2.44f, renderLength, TetherChainSparseMaterial, 1f);
+            DrawBeam(start, end, width * 1.82f, renderLength, TetherChainHeavyMaterial, 1f);
+            DrawBeam(start, end, width * 0.84f, renderLength, TetherCoreMaterial, 1f + (pulse - 1f) * 0.45f);
         }
 
         public static void DrawAnchorLinkSeverBurst(Vector3 anchorPos, Vector3 heartPos, Map map, DominionSliceAnchorRole role, int seed, int ageTicks)
@@ -260,11 +255,11 @@ namespace AbyssalProtocol
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
-                    return 0.168f;
+                    return 0.178f;
                 case DominionSliceAnchorRole.Law:
-                    return 0.206f;
+                    return 0.214f;
                 default:
-                    return 0.186f;
+                    return 0.196f;
             }
         }
 

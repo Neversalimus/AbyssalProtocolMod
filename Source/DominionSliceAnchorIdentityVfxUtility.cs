@@ -11,6 +11,7 @@ namespace AbyssalProtocol
     /// machine pylon/core above it so anchors remain visible without the previous broad ritual
     /// circles, floor glyphs or halo zones.
     /// </summary>
+    [StaticConstructorOnStartup]
     public static class DominionSliceAnchorIdentityVfxUtility
     {
         private const string CoreFlarePath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCoreFlare";

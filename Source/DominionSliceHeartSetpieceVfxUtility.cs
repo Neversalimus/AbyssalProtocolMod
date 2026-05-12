@@ -11,6 +11,7 @@ namespace AbyssalProtocol
     /// core above it so the interactable heart remains readable without bringing back the old
     /// magical floor rings, halo stack, crown seal or broad shield glyphs.
     /// </summary>
+    [StaticConstructorOnStartup]
     public static class DominionSliceHeartSetpieceVfxUtility
     {
         private const string CoreCoronaPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartCoreCorona";
