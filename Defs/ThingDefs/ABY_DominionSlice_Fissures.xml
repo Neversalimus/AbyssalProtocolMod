@@ -69,10 +69,10 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthWest_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>28</drawSizeX>
-        <drawSizeZ>40</drawSizeZ>
+        <drawSizeX>26</drawSizeX>
+        <drawSizeZ>37</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
-        <colorA>0.88</colorA>
+        <colorA>0.84</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -92,10 +92,10 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthEast_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>40</drawSizeX>
-        <drawSizeZ>40</drawSizeZ>
+        <drawSizeX>37</drawSizeX>
+        <drawSizeZ>37</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
-        <colorA>0.88</colorA>
+        <colorA>0.84</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -115,10 +115,33 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>40</drawSizeX>
-        <drawSizeZ>10</drawSizeZ>
+        <drawSizeX>37</drawSizeX>
+        <drawSizeZ>7.5</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
-        <colorA>0.86</colorA>
+        <colorA>0.82</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathShortWestMid</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A short continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>28</drawSizeX>
+        <drawSizeZ>7.5</drawSizeZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.82</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -138,10 +161,10 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthEast_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>28</drawSizeX>
-        <drawSizeZ>40</drawSizeZ>
+        <drawSizeX>26</drawSizeX>
+        <drawSizeZ>37</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
-        <colorA>0.88</colorA>
+        <colorA>0.84</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -161,10 +184,10 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthWest_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>28</drawSizeX>
-        <drawSizeZ>10</drawSizeZ>
+        <drawSizeX>26</drawSizeX>
+        <drawSizeZ>37</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
-        <colorA>0.86</colorA>
+        <colorA>0.84</colorA>
       </li>
     </modExtensions>
   </ThingDef>

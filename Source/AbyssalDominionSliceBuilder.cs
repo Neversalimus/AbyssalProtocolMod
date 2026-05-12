@@ -36,6 +36,7 @@ namespace AbyssalProtocol
         private const string DominionFissurePathNorthWestDefName = "ABY_DominionFissurePathNorthWest";
         private const string DominionFissurePathNorthEastDefName = "ABY_DominionFissurePathNorthEast";
         private const string DominionFissurePathWestMidDefName = "ABY_DominionFissurePathWestMid";
+        private const string DominionFissurePathShortWestMidDefName = "ABY_DominionFissurePathShortWestMid";
         private const string DominionFissurePathSouthEastDefName = "ABY_DominionFissurePathSouthEast";
         private const string DominionFissurePathSouthWestDefName = "ABY_DominionFissurePathSouthWest";
 
@@ -648,7 +649,7 @@ namespace AbyssalProtocol
                 new IntVec3(54, 0, -17));
 
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
-                DominionFissurePathSouthWestDefName,
+                DominionFissurePathShortWestMidDefName,
                 new IntVec3(-18, 0, -48),
                 new IntVec3(-27, 0, -48),
                 new IntVec3(-9, 0, -48));
