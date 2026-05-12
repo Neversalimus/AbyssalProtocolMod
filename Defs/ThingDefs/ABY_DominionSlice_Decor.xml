@@ -389,4 +389,160 @@
     </graphicData>
   </ThingDef>
 
+
+  <!-- Generated Dominion Slice large composition assets: non-blocking visual setpieces and floor scars. -->
+
+  <ThingDef Abstract="True" Name="ABY_DominionLargeVisualSetpieceBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <size>(1,1)</size>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionSideRoomMachineBayWest</defName>
+    <label>dominion machine bay shell</label>
+    <description>A collapsed side-machine bay from the Dominion Slice, used as non-blocking visual architecture.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_MachineBay_West</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(16.8,8.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionSideRoomReliquaryBayEast</defName>
+    <label>dominion reliquary bay shell</label>
+    <description>A ruined machine-reliquary side bay from the Dominion Slice, used as non-blocking visual architecture.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_ReliquaryBay_East</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(17.4,8.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionBackWallShellNorth</defName>
+    <label>dominion back wall shell</label>
+    <description>A broken northern shell of Dominion architecture, low and non-blocking but visually heavy.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionBackWallShell_North</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(20.5,6.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionEdgeMegastructureStraightA</defName>
+    <label>dominion edge megastructure fragment</label>
+    <description>A long broken Dominion perimeter fragment that frames the dead edge of the slice without blocking movement.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEdge_Megastructure_Straight_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(14.8,3.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionEdgeMegastructureCornerA</defName>
+    <label>dominion edge megastructure corner</label>
+    <description>An L-shaped Dominion perimeter fragment used to frame the side edges of the slice.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEdge_Megastructure_Corner_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(7.6,8.6)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionLargeVisualSetpieceBase">
+    <defName>ABY_DominionMachineWreckReactorRibA</defName>
+    <label>dominion reactor rib wreck</label>
+    <description>A collapsed reactor-rib carcass from the Dominion machinery layer.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionMachineWreck_ReactorRib_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(9.6,5.0)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionHeartFloorFractureLarge</defName>
+    <label>dominion heart floor fracture</label>
+    <description>A broad floor fracture under the Dominion heart, showing pressure damage instead of a ritual circle.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionHeart_FloorFracture_Large</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(11.2,10.1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionEntrySeamScarSouth</defName>
+    <label>dominion seam emergence scar</label>
+    <description>A jagged seam-scar where the Dominion floor forces reinforcements through cracked industrial matter.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEntry_SeamScar_South</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(10.8,5.4)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionBrokenConduitSpineA</defName>
+    <label>dominion broken conduit spine</label>
+    <description>A long broken conduit spine used to visually connect dead machinery without forming a magic pattern.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionBrokenConduitSpine_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(18.0,3.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionPlateCollapseLargeA</defName>
+    <label>large dominion plate collapse</label>
+    <description>A broad collapsed plate field used to break up empty floor areas.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionPlateCollapse_Large_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(9.4,5.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionSideRoomFloorUnderlayA</defName>
+    <label>dominion side room floor underlay</label>
+    <description>A dead industrial floor underlay for Dominion side rooms.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_FloorUnderlay_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(15.5,8.8)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionDecalBase">
+    <defName>ABY_DominionEdgeVoidTearA</defName>
+    <label>dominion edge void tear</label>
+    <description>A jagged low-profile void tear used along the edge of the Dominion Slice.</description>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Decals/ABY_DominionEdge_VoidTear_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(12.0,4.2)</drawSize>
+    </graphicData>
+  </ThingDef>
+
 </Defs>

@@ -8,6 +8,9 @@ namespace AbyssalProtocol
 {
     public class MapComponent_DominionSliceEncounter : MapComponent
     {
+        private const string StaticPressureSparkMoteDefName = "ABY_Mote_DominionSliceStaticPressureSpark";
+        private const string SeamDustBurstMoteDefName = "ABY_Mote_DominionSliceSeamDustBurst";
+
         public enum SlicePhase
         {
             Dormant,
@@ -708,21 +711,43 @@ namespace AbyssalProtocol
             // pressure-forged out of cracked machinery, not summoned through another portal.
             FleckMaker.ThrowLightningGlow(loc, map, glowScale);
             FleckMaker.ThrowDustPuff(loc, map, Rand.Range(0.42f, 0.74f));
+            TryMakeStaticDominionMote(SeamDustBurstMoteDefName, loc + new Vector3(Rand.Range(-0.10f, 0.10f), 0f, Rand.Range(-0.10f, 0.10f)), Rand.Range(0.85f, 1.25f));
 
             if (Rand.Chance(0.82f))
             {
-                FleckMaker.ThrowMicroSparks(loc + new Vector3(Rand.Range(-0.22f, 0.22f), 0f, Rand.Range(-0.22f, 0.22f)), map);
+                Vector3 sparkLoc = loc + new Vector3(Rand.Range(-0.22f, 0.22f), 0f, Rand.Range(-0.22f, 0.22f));
+                FleckMaker.ThrowMicroSparks(sparkLoc, map);
+                TryMakeStaticDominionMote(StaticPressureSparkMoteDefName, sparkLoc, Rand.Range(0.62f, 0.96f));
             }
 
             if (Rand.Chance(0.55f))
             {
-                FleckMaker.ThrowDustPuff(loc + new Vector3(Rand.Range(-0.34f, 0.34f), 0f, Rand.Range(-0.34f, 0.34f)), map, Rand.Range(0.52f, 0.9f));
+                Vector3 dustLoc = loc + new Vector3(Rand.Range(-0.34f, 0.34f), 0f, Rand.Range(-0.34f, 0.34f));
+                FleckMaker.ThrowDustPuff(dustLoc, map, Rand.Range(0.52f, 0.9f));
+                TryMakeStaticDominionMote(SeamDustBurstMoteDefName, dustLoc, Rand.Range(0.72f, 1.08f));
             }
 
             if (index == 0)
             {
                 ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", cell, map);
             }
+        }
+
+
+        private void TryMakeStaticDominionMote(string defName, Vector3 position, float scale)
+        {
+            if (map == null || string.IsNullOrEmpty(defName))
+            {
+                return;
+            }
+
+            ThingDef moteDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (moteDef == null)
+            {
+                return;
+            }
+
+            MoteMaker.MakeStaticMote(position, map, moteDef, Mathf.Clamp(scale, 0.25f, 1.65f));
         }
 
         private List<PawnKindDef> BuildWaveKinds()
