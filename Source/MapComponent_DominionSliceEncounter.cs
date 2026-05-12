@@ -26,6 +26,8 @@ namespace AbyssalProtocol
         private const string ChoirAnchorDefName = "ABY_DominionSliceAnchor_Choir";
         private const string LawAnchorDefName = "ABY_DominionSliceAnchor_Law";
         private const string HeartDefName = "ABY_DominionSliceHeart";
+        private const string HeartGuardianPawnKindDefName = "ABY_AorticChainHarrower";
+        private const int HeartGuardianCount = 3;
 
         private string sessionId;
         private SlicePhase phase = SlicePhase.Dormant;
@@ -35,11 +37,13 @@ namespace AbyssalProtocol
         private int hazardPressure;
         private float heartShieldBonus;
         private int wavesTriggered;
+        private bool heartGuardiansSpawned;
         private string lastWaveLabel;
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
         private List<Building_ABY_DominionSliceAnchor> anchors = new List<Building_ABY_DominionSliceAnchor>();
         private readonly List<Building_ABY_DominionFissure> fissureVisuals = new List<Building_ABY_DominionFissure>();
+        private List<Pawn> heartGuardians = new List<Pawn>();
         private readonly List<LinkSeverBurst> linkSeverBursts = new List<LinkSeverBurst>();
 
         private struct LinkSeverBurst
@@ -140,14 +144,17 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref hazardPressure, "hazardPressure", 0);
             Scribe_Values.Look(ref heartShieldBonus, "heartShieldBonus", 0f);
             Scribe_Values.Look(ref wavesTriggered, "wavesTriggered", 0);
+            Scribe_Values.Look(ref heartGuardiansSpawned, "heartGuardiansSpawned", false);
             Scribe_Values.Look(ref lastWaveLabel, "lastWaveLabel");
             Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_References.Look(ref heart, "heart");
             Scribe_Collections.Look(ref anchors, "anchors", LookMode.Reference);
+            Scribe_Collections.Look(ref heartGuardians, "heartGuardians", LookMode.Reference);
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 anchors ??= new List<Building_ABY_DominionSliceAnchor>();
+                heartGuardians ??= new List<Pawn>();
                 RestoreReferencesFromMap();
             }
         }
@@ -224,6 +231,8 @@ namespace AbyssalProtocol
                     return;
                 }
 
+                TrySpawnHeartGuardians();
+
                 if (now >= nextWaveTick)
                 {
                     TriggerWave();
@@ -278,9 +287,11 @@ namespace AbyssalProtocol
             hazardPressure = 0;
             heartShieldBonus = 0f;
             wavesTriggered = 0;
+            heartGuardiansSpawned = false;
             lastWaveLabel = null;
             lastWaveSummary = null;
             anchors.Clear();
+            heartGuardians.Clear();
             linkSeverBursts.Clear();
             heart = null;
 
@@ -700,6 +711,147 @@ namespace AbyssalProtocol
             {
                 DominionSliceVfxUtility.SpawnHeartExposedBurst(heart.DrawPos, map);
             }
+
+            TrySpawnHeartGuardians();
+        }
+
+        private void TrySpawnHeartGuardians()
+        {
+            if (phase != SlicePhase.HeartExposed || map == null)
+            {
+                return;
+            }
+
+            CleanupReferences();
+            RestoreReferencesFromMap();
+            if (heartGuardiansSpawned && heartGuardians.Count >= HeartGuardianCount)
+            {
+                return;
+            }
+
+            Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
+            if (heartBuilding == null || heartBuilding.Destroyed)
+            {
+                return;
+            }
+
+            PawnKindDef guardianKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HeartGuardianPawnKindDefName);
+            Faction faction = ResolveAbyssalFaction();
+            if (guardianKind == null || faction == null)
+            {
+                return;
+            }
+
+            if (heartGuardians.Count >= HeartGuardianCount)
+            {
+                heartGuardiansSpawned = true;
+                return;
+            }
+
+            List<Pawn> spawnedNow = new List<Pawn>();
+            IntVec3 center = heartBuilding.PositionHeld;
+            int attempts = HeartGuardianCount - heartGuardians.Count;
+            for (int i = 0; i < attempts; i++)
+            {
+                Pawn pawn;
+                if (!TryGeneratePawn(guardianKind, faction, out pawn) || pawn == null)
+                {
+                    continue;
+                }
+
+                IntVec3 spawnCell;
+                if (!TryFindHeartGuardianSpawnCell(center, spawnedNow, out spawnCell))
+                {
+                    SafeDestroyUnspawnedPawn(pawn, "heart guardian no spawn cell");
+                    continue;
+                }
+
+                Pawn spawnedPawn;
+                if (!ABY_SafeSpawnUtility.TrySpawnPawnSafe(
+                        pawn,
+                        spawnCell,
+                        map,
+                        out spawnedPawn,
+                        Rot4.Random,
+                        WipeMode.Vanish,
+                        false,
+                        false,
+                        "dominion slice heart guardian spawn"))
+                {
+                    SafeDestroyUnspawnedPawn(pawn, "heart guardian spawn failed");
+                    continue;
+                }
+
+                EmitDominionEmergenceCue(spawnCell, spawnedPawn.kindDef, i);
+                TryPrepareThreatPawnSafe(spawnedPawn);
+                heartGuardians.Add(spawnedPawn);
+                spawnedNow.Add(spawnedPawn);
+            }
+
+            if (spawnedNow.Count > 0)
+            {
+                TryEnsureAssaultLordSafe(spawnedNow, faction);
+                Messages.Message("ABY_DominionSliceEncounter_HeartGuardiansAwakened".Translate(spawnedNow.Count), new TargetInfo(center, map), MessageTypeDefOf.ThreatBig, false);
+            }
+
+            if (heartGuardians.Count >= HeartGuardianCount)
+            {
+                heartGuardiansSpawned = true;
+            }
+        }
+
+        private bool TryFindHeartGuardianSpawnCell(IntVec3 center, List<Pawn> reservedPawns, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || !center.IsValid)
+            {
+                return false;
+            }
+
+            float bestScore = float.MinValue;
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(center, 9.2f, true))
+            {
+                if (!candidate.InBounds(map) || !candidate.Standable(map) || AbyssalThreatPawnUtility.CellHasOtherPawn(candidate, map, null))
+                {
+                    continue;
+                }
+
+                float distance = center.DistanceTo(candidate);
+                if (distance < 5.0f || distance > 9.2f)
+                {
+                    continue;
+                }
+
+                bool reserved = false;
+                if (reservedPawns != null)
+                {
+                    for (int i = 0; i < reservedPawns.Count; i++)
+                    {
+                        Pawn pawn = reservedPawns[i];
+                        if (pawn != null && pawn.Spawned && pawn.PositionHeld.DistanceTo(candidate) < 3.1f)
+                        {
+                            reserved = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (reserved)
+                {
+                    continue;
+                }
+
+                float ringScore = 8.5f - Mathf.Abs(distance - 6.8f);
+                float coverScore = GenSight.LineOfSight(center, candidate, map) ? 0.7f : 0f;
+                float score = ringScore + coverScore + Rand.Value * 0.35f;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    cell = candidate;
+                }
+            }
+
+            return cell.IsValid;
         }
 
         private void BeginCollapse(bool victory)
@@ -751,6 +903,15 @@ namespace AbyssalProtocol
             }
 
             anchors.RemoveAll(anchor => anchor == null || anchor.Destroyed || anchor.Map != map);
+            if (heartGuardians == null)
+            {
+                heartGuardians = new List<Pawn>();
+            }
+            else
+            {
+                heartGuardians.RemoveAll(guardian => guardian == null || guardian.Destroyed || guardian.Dead || guardian.Map != map || guardian.kindDef == null || guardian.kindDef.defName != HeartGuardianPawnKindDefName);
+            }
+
             if (heart != null && (heart.Destroyed || heart.Map != map))
             {
                 heart = null;
@@ -765,7 +926,8 @@ namespace AbyssalProtocol
             }
 
             anchors ??= new List<Building_ABY_DominionSliceAnchor>();
-            if (anchors.Count >= 3 && heart != null)
+            heartGuardians ??= new List<Pawn>();
+            if (anchors.Count >= 3 && heart != null && (heartGuardiansSpawned || heartGuardians.Count >= HeartGuardianCount))
             {
                 return;
             }
@@ -788,6 +950,12 @@ namespace AbyssalProtocol
                 if (thing is Building_ABY_DominionSliceHeart candidateHeart && heart == null)
                 {
                     heart = candidateHeart;
+                    continue;
+                }
+
+                if (thing is Pawn guardian && guardian.kindDef != null && guardian.kindDef.defName == HeartGuardianPawnKindDefName && !heartGuardians.Contains(guardian))
+                {
+                    heartGuardians.Add(guardian);
                 }
             }
         }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_AorticChainHarrower</defName>
+    <label>aortic chain harrower</label>
+    <race>ABY_AorticChainHarrower</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>560</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/AorticChainHarrower/ABY_AorticChainHarrower</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(4.65,4.65)</drawSize>
+          <shadowData>
+            <volume>(1.28, 1.18, 1.28)</volume>
+            <offset>(0, 0, -0.30)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

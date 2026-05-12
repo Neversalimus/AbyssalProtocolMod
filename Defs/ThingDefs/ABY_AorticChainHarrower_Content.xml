@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_AorticChainHarrower</defName>
+    <label>aortic chain harrower</label>
+    <description>A living chain-mechanism grown from the Dominion heart's own restraints. Aortic chain harrowers exist only inside the Dominion Slice, where the Crown-Heart exposes its command-organ and the binding lattice grows bodies to defend it.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/AorticChainHarrower/ABY_AorticChainHarrower</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(4.65,4.65)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_MachineBits</bloodDef>
+      <bloodSmearDef>Filth_OilSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.48</baseBodySize>
+      <baseHealthScale>1.92</baseHealthScale>
+      <baseHungerRate>0.36</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>190</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>1060</MaxHitPoints>
+      <MoveSpeed>3.68</MoveSpeed>
+      <MeleeHitChance>0.84</MeleeHitChance>
+      <MeleeDPS>12.6</MeleeDPS>
+      <MeleeDodgeChance>0.06</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.54</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.32</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.78</ArmorRating_Heat>
+      <ComfyTemperatureMin>-32</ComfyTemperatureMin>
+      <ComfyTemperatureMax>260</ComfyTemperatureMax>
+      <Flammability>0.00</Flammability>
+      <PainShockThreshold>1.22</PainShockThreshold>
+      <MarketValue>1660</MarketValue>
+      <Mass>1.36</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>aortic hook-chain</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>22</power>
+        <cooldownTime>1.92</cooldownTime>
+        <chanceFactor>1.00</chanceFactor>
+        <armorPenetration>0.24</armorPenetration>
+      </li>
+      <li>
+        <label>cage crush</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>18</power>
+        <cooldownTime>2.18</cooldownTime>
+        <chanceFactor>0.72</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+    </killedLeavings>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>BossJuggernaut</archetype>
+        <minMeleeSkill>13</minMeleeSkill>
+        <spawnGraceTicks>24</spawnGraceTicks>
+        <lordRetryTicks>45</lordRetryTicks>
+        <useSapperAssaultLord>false</useSapperAssaultLord>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_HeartGuardianLeash">
+        <heartDefName>ABY_DominionSliceHeart</heartDefName>
+        <scanIntervalTicks>24</scanIntervalTicks>
+        <defendRadius>13.5</defendRadius>
+        <leashDistance>15.5</leashDistance>
+        <hardLeashDistance>21.5</hardLeashDistance>
+        <returnRadiusMin>5.0</returnRadiusMin>
+        <returnRadiusMax>8.0</returnRadiusMax>
+        <interceptJobExpiryTicks>110</interceptJobExpiryTicks>
+        <returnJobExpiryTicks>100</returnJobExpiryTicks>
+        <preferRangedTargets>true</preferRangedTargets>
+      </li>
+    </comps>
+  </ThingDef>
+</Defs>
