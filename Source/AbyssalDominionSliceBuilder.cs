@@ -618,41 +618,41 @@ namespace AbyssalProtocol
             // pre-baked animated overlay, then use invisible one-cell blockers for actual pathing.
             List<IntVec3> blockerCells = new List<IntVec3>();
 
+            // The unified master sheet fixed the style mismatch, but its cells are very dense.
+            // Keep the paths as large boundary wounds, not full-screen pipes: shorter blocker runs
+            // and smaller visuals keep the arena readable while preserving impassable fissure routes.
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathNorthWestDefName,
-                new IntVec3(-27, 0, 35),
-                new IntVec3(-18, 0, 50),
-                new IntVec3(-18, 0, 20),
-                new IntVec3(-36, 0, 20));
+                new IntVec3(-31, 0, 31),
+                new IntVec3(-31, 0, 41),
+                new IntVec3(-31, 0, 30),
+                new IntVec3(-42, 0, 30));
 
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathNorthEastDefName,
-                new IntVec3(36, 0, 35),
-                new IntVec3(21, 0, 50),
-                new IntVec3(21, 0, 20),
-                new IntVec3(51, 0, 20));
+                new IntVec3(31, 0, 31),
+                new IntVec3(31, 0, 41),
+                new IntVec3(31, 0, 30),
+                new IntVec3(42, 0, 30));
 
-            // Straight overlays are spawned a few cells away from their blocker line and drawn back
-            // with DefModExtension draw offsets so the invisible blockers and visual object do not
-            // compete for the same occupied center cell.
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathWestMidDefName,
-                new IntVec3(-42, 0, -17),
-                new IntVec3(-57, 0, -17),
-                new IntVec3(-27, 0, -17));
+                new IntVec3(-41, 0, -18),
+                new IntVec3(-53, 0, -18),
+                new IntVec3(-30, 0, -18));
 
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathSouthEastDefName,
-                new IntVec3(45, 0, -32),
-                new IntVec3(36, 0, -47),
-                new IntVec3(36, 0, -17),
-                new IntVec3(54, 0, -17));
+                new IntVec3(38, 0, -31),
+                new IntVec3(38, 0, -41),
+                new IntVec3(38, 0, -30),
+                new IntVec3(49, 0, -30));
 
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathShortWestMidDefName,
-                new IntVec3(-18, 0, -48),
-                new IntVec3(-27, 0, -48),
-                new IntVec3(-9, 0, -48));
+                new IntVec3(-18, 0, -45),
+                new IntVec3(-27, 0, -45),
+                new IntVec3(-10, 0, -45));
 
             if (blockerCells.Count > 0)
             {
