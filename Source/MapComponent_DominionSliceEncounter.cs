@@ -38,6 +38,7 @@ namespace AbyssalProtocol
         private float heartShieldBonus;
         private int wavesTriggered;
         private bool heartGuardiansSpawned;
+        private int nextHeartGuardianSpawnRetryTick;
         private string lastWaveLabel;
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
@@ -159,6 +160,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref heartShieldBonus, "heartShieldBonus", 0f);
             Scribe_Values.Look(ref wavesTriggered, "wavesTriggered", 0);
             Scribe_Values.Look(ref heartGuardiansSpawned, "heartGuardiansSpawned", false);
+            Scribe_Values.Look(ref nextHeartGuardianSpawnRetryTick, "nextHeartGuardianSpawnRetryTick", 0);
             Scribe_Values.Look(ref lastWaveLabel, "lastWaveLabel");
             Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_References.Look(ref heart, "heart");
@@ -305,6 +307,7 @@ namespace AbyssalProtocol
             heartShieldBonus = 0f;
             wavesTriggered = 0;
             heartGuardiansSpawned = false;
+            nextHeartGuardianSpawnRetryTick = 0;
             lastWaveLabel = null;
             lastWaveSummary = null;
             anchors.Clear();
@@ -315,6 +318,7 @@ namespace AbyssalProtocol
             heart = null;
 
             SpawnEncounterObjects(session);
+            TrySpawnHeartGuardians(true);
             Messages.Message("ABY_DominionSliceEncounter_Breach".Translate(), new TargetInfo(session.heartCell.IsValid ? session.heartCell : map.Center, map), MessageTypeDefOf.ThreatSmall, false);
             return true;
         }
@@ -815,15 +819,36 @@ namespace AbyssalProtocol
             TrySpawnHeartGuardians();
         }
 
-        private void TrySpawnHeartGuardians()
+        private void TrySpawnHeartGuardians(bool force = false)
         {
-            if ((phase != SlicePhase.Anchorfall && phase != SlicePhase.HeartExposed) || map == null)
+            if ((!force && phase != SlicePhase.Anchorfall && phase != SlicePhase.HeartExposed) || map == null)
+            {
+                return;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (!force && nextHeartGuardianSpawnRetryTick > 0 && now < nextHeartGuardianSpawnRetryTick)
             {
                 return;
             }
 
             CleanupReferences();
             RestoreReferencesFromMap();
+
+            int liveCount = GetLiveHeartGuardianCount();
+            if (heartGuardiansSpawned && liveCount >= HeartGuardianCount)
+            {
+                return;
+            }
+
+            // Safety migration for saves that were touched by the earlier invisible-anchor sprite package:
+            // if the encounter says the guardians were spawned but no live guardian and no guardian corpse exists,
+            // allow one recovery spawn instead of leaving the heart unguarded forever.
+            if (heartGuardiansSpawned && liveCount <= 0 && !HasAnyHeartGuardianCorpseOnMap())
+            {
+                heartGuardiansSpawned = false;
+            }
+
             if (heartGuardiansSpawned)
             {
                 return;
@@ -861,6 +886,7 @@ namespace AbyssalProtocol
                 Pawn pawn;
                 if (!TryGeneratePawn(guardianKind, faction, out pawn) || pawn == null)
                 {
+                    Log.Warning("[Abyssal Protocol] Failed to generate Aortic Chain Harrower for Dominion Slice heart guardian spawn.");
                     continue;
                 }
 
@@ -868,8 +894,9 @@ namespace AbyssalProtocol
                 IntVec3 spawnCell;
                 if (!TryFindHeartGuardianSpawnCell(focus, center, spawnedNow, out spawnCell))
                 {
-                    SafeDestroyUnspawnedPawn(pawn, "heart guardian no pylon-adjacent spawn cell");
-                    continue;
+                    // Do not abort the spawn only because the preferred pylon ring is blocked.
+                    // ABY_SafeSpawnUtility will search for a nearby standable fallback.
+                    spawnCell = focus.IsValid ? focus : center;
                 }
 
                 Pawn spawnedPawn;
@@ -885,6 +912,7 @@ namespace AbyssalProtocol
                         "dominion slice heart guardian pylon spawn"))
                 {
                     SafeDestroyUnspawnedPawn(pawn, "heart guardian spawn failed");
+                    Log.Warning("[Abyssal Protocol] Aortic Chain Harrower spawn failed near " + spawnCell + ". The encounter will retry shortly.");
                     continue;
                 }
 
@@ -898,9 +926,14 @@ namespace AbyssalProtocol
             {
                 TryEnsureAssaultLordSafe(spawnedNow, faction);
                 Messages.Message("ABY_DominionSliceEncounter_HeartGuardiansAwakened".Translate(spawnedNow.Count), new TargetInfo(center, map), MessageTypeDefOf.ThreatBig, false);
+                nextHeartGuardianSpawnRetryTick = 0;
+            }
+            else
+            {
+                nextHeartGuardianSpawnRetryTick = now + 180;
             }
 
-            if (heartGuardians.Count >= HeartGuardianCount)
+            if (GetLiveHeartGuardianCount() >= HeartGuardianCount)
             {
                 heartGuardiansSpawned = true;
             }
@@ -1118,6 +1151,30 @@ namespace AbyssalProtocol
                     heartGuardians.Add(guardian);
                 }
             }
+        }
+
+        private bool HasAnyHeartGuardianCorpseOnMap()
+        {
+            if (map?.listerThings == null)
+            {
+                return false;
+            }
+
+            List<Thing> corpses = map.listerThings.ThingsInGroup(ThingRequestGroup.Corpse);
+            if (corpses == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < corpses.Count; i++)
+            {
+                if (corpses[i] is Corpse corpse && corpse.InnerPawn?.kindDef != null && corpse.InnerPawn.kindDef.defName == HeartGuardianPawnKindDefName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private int GetLiveAnchorCount()

@@ -17,6 +17,7 @@ namespace AbyssalProtocol
         public bool disableWhenDead = true;
         public bool disableWhenDowned = false;
         public bool mirrorWestFromEast = true;
+        public float overlayAlpha = 0.46f;
 
         public CompProperties_ABY_AnimatedPawnBody()
         {
@@ -88,7 +89,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            Material[] materials = GetMaterialsFor(texPath, Mathf.Max(1, props.frameCount));
+            Material[] materials = GetMaterialsFor(texPath, Mathf.Max(1, props.frameCount), Mathf.Clamp01(props.overlayAlpha));
             if (materials == null || materials.Length == 0)
             {
                 return null;
@@ -121,14 +122,14 @@ namespace AbyssalProtocol
             return props.southTexPath;
         }
 
-        private static Material[] GetMaterialsFor(string baseTexPath, int frameCount)
+        private static Material[] GetMaterialsFor(string baseTexPath, int frameCount, float overlayAlpha)
         {
             if (baseTexPath.NullOrEmpty() || frameCount <= 0)
             {
                 return null;
             }
 
-            string key = baseTexPath + "|" + frameCount;
+            string key = baseTexPath + "|" + frameCount + "|" + overlayAlpha.ToString("0.###");
             if (MaterialCache.TryGetValue(key, out Material[] cached))
             {
                 return cached;
@@ -137,7 +138,8 @@ namespace AbyssalProtocol
             Material[] materials = new Material[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
-                materials[i] = MaterialPool.MatFrom(baseTexPath + "_" + i, ShaderDatabase.Cutout);
+                Color color = new Color(1f, 1f, 1f, Mathf.Clamp01(overlayAlpha));
+                materials[i] = MaterialPool.MatFrom(baseTexPath + "_" + i, ShaderDatabase.TransparentPostLight, color);
             }
 
             MaterialCache[key] = materials;

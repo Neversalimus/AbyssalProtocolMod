@@ -104,6 +104,7 @@
         <disableWhenDead>true</disableWhenDead>
         <disableWhenDowned>false</disableWhenDowned>
         <mirrorWestFromEast>true</mirrorWestFromEast>
+        <overlayAlpha>0.46</overlayAlpha>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_HeartGuardianLeash">
         <heartDefName>ABY_DominionSliceHeart</heartDefName>
