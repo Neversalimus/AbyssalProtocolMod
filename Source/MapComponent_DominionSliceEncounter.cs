@@ -45,12 +45,21 @@ namespace AbyssalProtocol
         private readonly List<Building_ABY_DominionFissure> fissureVisuals = new List<Building_ABY_DominionFissure>();
         private List<Pawn> heartGuardians = new List<Pawn>();
         private readonly List<LinkSeverBurst> linkSeverBursts = new List<LinkSeverBurst>();
+        private readonly List<HeartGuardianSeverBurst> heartGuardianSeverBursts = new List<HeartGuardianSeverBurst>();
 
         private struct LinkSeverBurst
         {
             public Vector3 anchorPos;
             public Vector3 heartPos;
             public DominionSliceAnchorRole role;
+            public int startTick;
+            public int seed;
+        }
+
+        private struct HeartGuardianSeverBurst
+        {
+            public Vector3 guardianPos;
+            public Vector3 heartPos;
             public int startTick;
             public int seed;
         }
@@ -78,6 +87,11 @@ namespace AbyssalProtocol
         public int LiveAnchorCount
         {
             get { return GetLiveAnchorCount(); }
+        }
+
+        public int LiveHeartGuardianCount
+        {
+            get { return GetLiveHeartGuardianCount(); }
         }
 
         public int HazardPressure
@@ -169,6 +183,7 @@ namespace AbyssalProtocol
 
             DrawPersistentAnchorLinks();
             DrawAnchorLinkSeverBursts();
+            DrawHeartGuardianSeverBursts();
             DrawRegisteredFissureVisuals();
         }
 
@@ -292,6 +307,8 @@ namespace AbyssalProtocol
             lastWaveSummary = null;
             anchors.Clear();
             heartGuardians.Clear();
+            linkSeverBursts.Clear();
+            heartGuardianSeverBursts.Clear();
             linkSeverBursts.Clear();
             heart = null;
 
@@ -464,6 +481,28 @@ namespace AbyssalProtocol
                 DominionSliceVfxUtility.DrawAnchorLinkSeverBurst(burst.anchorPos, burst.heartPos, map, burst.role, burst.seed, age);
             }
         }
+
+        public void DrawHeartGuardianSeverBursts()
+        {
+            if (heartGuardianSeverBursts == null || heartGuardianSeverBursts.Count == 0 || map == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            int now = Find.TickManager.TicksGame;
+            for (int i = heartGuardianSeverBursts.Count - 1; i >= 0; i--)
+            {
+                HeartGuardianSeverBurst burst = heartGuardianSeverBursts[i];
+                int age = now - burst.startTick;
+                if (age > DominionSliceVfxUtility.SeverBurstDurationTicks)
+                {
+                    heartGuardianSeverBursts.RemoveAt(i);
+                    continue;
+                }
+
+                DominionSliceVfxUtility.DrawHeartGuardianSeverBurst(burst.guardianPos, burst.heartPos, map, burst.seed, age);
+            }
+        }
         public void DrawAnchorLinksFromHeart(Building_ABY_DominionSliceHeart heartBuilding)
         {
             if (heartBuilding == null || map == null || !ShouldDrawAnchorLinks)
@@ -517,6 +556,64 @@ namespace AbyssalProtocol
                 startTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
                 seed = anchor.thingIDNumber
             });
+        }
+
+        public void NotifyHeartGuardianKilled(Pawn guardian, IntVec3 lastKnownCell, Vector3 lastKnownDrawPos, string guardianKindDefName = null)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            if (!guardianKindDefName.NullOrEmpty() && guardianKindDefName != HeartGuardianPawnKindDefName)
+            {
+                return;
+            }
+
+            if (heartGuardians != null && guardian != null)
+            {
+                heartGuardians.Remove(guardian);
+            }
+
+            Vector3 guardianPos = lastKnownDrawPos;
+            if (guardianPos == Vector3.zero && lastKnownCell.IsValid)
+            {
+                guardianPos = lastKnownCell.ToVector3Shifted();
+            }
+
+            if (guardianPos == Vector3.zero)
+            {
+                guardianPos = guardian != null ? guardian.DrawPos : map.Center.ToVector3Shifted();
+            }
+
+            Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
+            Vector3 heartPos = heartBuilding != null && !heartBuilding.Destroyed ? heartBuilding.DrawPos : guardianPos;
+
+            DominionSliceVfxUtility.SpawnHeartGuardianSeverance(guardianPos, heartPos, map);
+            heartGuardianSeverBursts.Add(new HeartGuardianSeverBurst
+            {
+                guardianPos = guardianPos,
+                heartPos = heartPos,
+                startTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
+                seed = guardian != null ? guardian.thingIDNumber : Rand.Int
+            });
+        }
+
+        public float GetHeartGuardianDamageFactor(string guardianKindDefName, float reductionPerGuardian, float maxReduction)
+        {
+            if (!IsActiveEncounter || !IsHeartExposed || reductionPerGuardian <= 0f)
+            {
+                return 1f;
+            }
+
+            int liveGuardians = GetLiveHeartGuardianCount(guardianKindDefName);
+            if (liveGuardians <= 0)
+            {
+                return 1f;
+            }
+
+            float reduction = Mathf.Clamp(liveGuardians * reductionPerGuardian, 0f, Mathf.Clamp01(maxReduction));
+            return Mathf.Clamp(1f - reduction, 0.05f, 1f);
         }
 
         public void AccelerateNextWave(int ticks)
@@ -964,6 +1061,28 @@ namespace AbyssalProtocol
         {
             CleanupReferences();
             return anchors != null ? anchors.Count : 0;
+        }
+
+        private int GetLiveHeartGuardianCount(string guardianKindDefName = null)
+        {
+            CleanupReferences();
+            if (heartGuardians == null)
+            {
+                return 0;
+            }
+
+            string expectedDefName = !guardianKindDefName.NullOrEmpty() ? guardianKindDefName : HeartGuardianPawnKindDefName;
+            int count = 0;
+            for (int i = 0; i < heartGuardians.Count; i++)
+            {
+                Pawn guardian = heartGuardians[i];
+                if (guardian != null && !guardian.Destroyed && !guardian.Dead && guardian.Spawned && guardian.Map == map && guardian.kindDef != null && guardian.kindDef.defName == expectedDefName)
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         private void TriggerWave()

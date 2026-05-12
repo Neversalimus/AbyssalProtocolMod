@@ -155,6 +155,43 @@ namespace AbyssalProtocol
             DrawBeam(heartFrom, heartTo, burstWidth * (0.92f + (1f - progress) * 0.06f), (heartTo - heartFrom).MagnitudeHorizontal(), TetherSnapHeartMaterial, 1f);
         }
 
+        public static void DrawHeartGuardianSeverBurst(Vector3 guardianPos, Vector3 heartPos, Map map, int seed, int ageTicks)
+        {
+            if (map == null || ageTicks < 0 || ageTicks > LinkSeverBurstDurationTicks)
+            {
+                return;
+            }
+
+            float tetherAltitude = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.096f;
+            guardianPos.y = tetherAltitude;
+            heartPos.y = tetherAltitude;
+
+            Vector3 flatDelta = heartPos - guardianPos;
+            flatDelta.y = 0f;
+            float length = flatDelta.magnitude;
+            if (length <= 0.65f)
+            {
+                return;
+            }
+
+            Vector3 direction = flatDelta / length;
+            float progress = Mathf.Clamp01(ageTicks / (float)LinkSeverBurstDurationTicks);
+            float segment = Mathf.Clamp(length * (0.23f + progress * 0.05f), 2.20f, 5.80f);
+            float baseWidth = 0.205f;
+            float burstWidth = baseWidth * Mathf.Lerp(7.60f, 4.85f, progress);
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            float jitter = 1f + Mathf.Sin((ticks + seed) * 0.127f + 0.73f) * 0.045f;
+
+            Vector3 guardianFrom = guardianPos + direction * 0.10f;
+            Vector3 guardianTo = guardianPos + direction * segment;
+            Vector3 heartFrom = heartPos - direction * segment;
+            Vector3 heartTo = heartPos - direction * 0.30f;
+            guardianFrom.y = guardianTo.y = heartFrom.y = heartTo.y = guardianPos.y;
+
+            DrawBeam(guardianFrom, guardianTo, burstWidth * jitter, (guardianTo - guardianFrom).MagnitudeHorizontal(), TetherSnapAnchorMaterial, 1f);
+            DrawBeam(heartFrom, heartTo, burstWidth * (0.98f + (1f - progress) * 0.08f), (heartTo - heartFrom).MagnitudeHorizontal(), TetherSnapHeartMaterial, 1f);
+        }
+
         public static void DrawHeartShield(Vector3 heartPos, Map map, int liveAnchors, int seed)
         {
             // Disabled by the Dominion Sepulcher redesign: the shield state should be communicated
@@ -217,6 +254,43 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(midpoint, map);
             FleckMaker.ThrowMicroSparks(heartSocket, map);
             FleckMaker.ThrowMicroSparks(heartSocket + new Vector3(direction.z, 0f, -direction.x) * 0.18f, map);
+        }
+
+        public static void SpawnHeartGuardianSeverance(Vector3 guardianPos, Vector3 heartPos, Map map)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            ThingDef moteDef = AnchorBreakMoteDef;
+            if (moteDef != null)
+            {
+                MoteMaker.MakeStaticMote(guardianPos, map, moteDef, 1.55f);
+            }
+
+            Vector3 flatDelta = heartPos - guardianPos;
+            flatDelta.y = 0f;
+            float distance = flatDelta.magnitude;
+            if (distance <= 0.10f)
+            {
+                FleckMaker.ThrowLightningGlow(guardianPos, map, 1.55f);
+                FleckMaker.ThrowMicroSparks(guardianPos, map);
+                return;
+            }
+
+            Vector3 direction = flatDelta / distance;
+            Vector3 recoil = heartPos - direction * Mathf.Clamp(distance * 0.18f, 1.15f, 2.40f);
+            Vector3 midpoint = guardianPos + direction * Mathf.Clamp(distance * 0.38f, 1.35f, 4.20f);
+            recoil.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.008f;
+            midpoint.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.008f;
+
+            FleckMaker.ThrowLightningGlow(guardianPos, map, 1.85f);
+            FleckMaker.ThrowLightningGlow(midpoint, map, 1.20f);
+            FleckMaker.ThrowLightningGlow(recoil, map, 1.60f);
+            FleckMaker.ThrowMicroSparks(guardianPos, map);
+            FleckMaker.ThrowMicroSparks(midpoint, map);
+            FleckMaker.ThrowMicroSparks(recoil, map);
         }
 
         public static void SpawnHeartExposedBurst(Vector3 position, Map map)

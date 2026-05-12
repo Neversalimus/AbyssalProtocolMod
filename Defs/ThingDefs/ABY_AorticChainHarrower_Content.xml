@@ -105,6 +105,11 @@
         <returnJobExpiryTicks>100</returnJobExpiryTicks>
         <preferRangedTargets>true</preferRangedTargets>
       </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_AorticHeartSeverance">
+        <guardianKindDefName>ABY_AorticChainHarrower</guardianKindDefName>
+        <heartDefName>ABY_DominionSliceHeart</heartDefName>
+        <severanceSoundDefName>ABY_SigilChargePulse</severanceSoundDefName>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_AorticChainHarrowerCombat">
         <heartDefName>ABY_DominionSliceHeart</heartDefName>
         <scanIntervalTicks>18</scanIntervalTicks>

@@ -15,6 +15,7 @@
   <ABY_DominionSliceHeart_Shielded>Корона-сердце всё ещё защищено якорями доминиона.</ABY_DominionSliceHeart_Shielded>
   <ABY_DominionSliceHeart_InspectShielded>Сердце защищено. Сначала уничтожьте якоря доминиона.</ABY_DominionSliceHeart_InspectShielded>
   <ABY_DominionSliceHeart_InspectExposed>Сердце раскрыто. До схлопывания: {0}.</ABY_DominionSliceHeart_InspectExposed>
+  <ABY_DominionSliceHeart_InspectGuarded>Аортальная защита активна: стражей осталось {0}, входящий урон по сердцу снижен.</ABY_DominionSliceHeart_InspectGuarded>
   <ABY_DominionSliceEncounter_WaveSummary>{0} задействованы. Враждебных целей: {1}. Волна №{2}.</ABY_DominionSliceEncounter_WaveSummary>
   <ABY_DominionSliceWaveLabel_ThresholdHunters>Пороговые охотники</ABY_DominionSliceWaveLabel_ThresholdHunters>
   <ABY_DominionSliceWaveLabel_BreachCell>Ячейка прорыва</ABY_DominionSliceWaveLabel_BreachCell>

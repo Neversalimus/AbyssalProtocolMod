@@ -156,6 +156,11 @@ namespace AbyssalProtocol
             if (encounter != null && encounter.IsHeartExposed)
             {
                 stateText = "ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta());
+                int liveGuardians = encounter.LiveHeartGuardianCount;
+                if (liveGuardians > 0)
+                {
+                    stateText += "\n" + "ABY_DominionSliceHeart_InspectGuarded".Translate(liveGuardians);
+                }
             }
 
             if (baseText.NullOrEmpty())

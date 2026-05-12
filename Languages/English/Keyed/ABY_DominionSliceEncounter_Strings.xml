@@ -15,6 +15,7 @@
   <ABY_DominionSliceHeart_Shielded>The Crown-Heart is still shielded by dominion anchors.</ABY_DominionSliceHeart_Shielded>
   <ABY_DominionSliceHeart_InspectShielded>The heart remains shielded. Destroy the dominion anchors first.</ABY_DominionSliceHeart_InspectShielded>
   <ABY_DominionSliceHeart_InspectExposed>The heart is exposed. Collapse in: {0}.</ABY_DominionSliceHeart_InspectExposed>
+  <ABY_DominionSliceHeart_InspectGuarded>Aortic guard-link active: {0} guardian(s) still reduce incoming heart damage.</ABY_DominionSliceHeart_InspectGuarded>
   <ABY_DominionSliceEncounter_WaveSummary>{0} engaged. Hostiles: {1}. Wave #{2}.</ABY_DominionSliceEncounter_WaveSummary>
   <ABY_DominionSliceWaveLabel_ThresholdHunters>Threshold hunters</ABY_DominionSliceWaveLabel_ThresholdHunters>
   <ABY_DominionSliceWaveLabel_BreachCell>Breach cell</ABY_DominionSliceWaveLabel_BreachCell>

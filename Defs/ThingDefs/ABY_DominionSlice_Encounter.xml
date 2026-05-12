@@ -138,7 +138,11 @@
       <Flammability>0</Flammability>
     </statBases>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_ABY_DominionHeartShield" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_DominionHeartShield">
+        <guardianKindDefName>ABY_AorticChainHarrower</guardianKindDefName>
+        <guardianDamageReductionPerGuardian>0.08</guardianDamageReductionPerGuardian>
+        <maxGuardianDamageReduction>0.24</maxGuardianDamageReduction>
+      </li>
     </comps>
     <size>(6,6)</size>
     <thingCategories Inherit="False" />
