@@ -101,16 +101,53 @@
           <li>ABY_DominionSliceAnchor_Law</li>
         </anchorDefNames>
         <scanIntervalTicks>45</scanIntervalTicks>
-        <defendRadius>10.5</defendRadius>
-        <leashDistance>8.0</leashDistance>
-        <hardLeashDistance>13.5</hardLeashDistance>
-        <returnRadiusMin>2.0</returnRadiusMin>
-        <returnRadiusMax>5.5</returnRadiusMax>
+        <defendRadius>24.0</defendRadius>
+        <leashDistance>22.0</leashDistance>
+        <hardLeashDistance>36.0</hardLeashDistance>
+        <returnRadiusMin>4.0</returnRadiusMin>
+        <returnRadiusMax>9.0</returnRadiusMax>
         <interceptJobExpiryTicks>90</interceptJobExpiryTicks>
         <returnJobExpiryTicks>90</returnJobExpiryTicks>
         <preferRangedTargets>true</preferRangedTargets>
         <defendNearestAnchorBeforeHeartExposed>true</defendNearestAnchorBeforeHeartExposed>
         <allowMeleeIntercept>true</allowMeleeIntercept>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_AorticChainLash">
+        <heartDefName>ABY_DominionSliceHeart</heartDefName>
+        <anchorDefNames>
+          <li>ABY_DominionSliceAnchor_Seal</li>
+          <li>ABY_DominionSliceAnchor_Choir</li>
+          <li>ABY_DominionSliceAnchor_Law</li>
+        </anchorDefNames>
+        <scanIntervalTicks>30</scanIntervalTicks>
+        <cooldownTicks>540</cooldownTicks>
+        <cooldownJitterTicks>150</cooldownJitterTicks>
+        <minRange>3.2</minRange>
+        <maxRange>16.0</maxRange>
+        <targetFocusRadius>28.0</targetFocusRadius>
+        <maxGuardianDistanceFromFocus>34.0</maxGuardianDistanceFromFocus>
+        <damageAmount>12.0</damageAmount>
+        <armorPenetration>0.26</armorPenetration>
+        <snareSeverity>0.46</snareSeverity>
+        <snareHediffDefName>ABY_AorticSnare</snareHediffDefName>
+        <preferRangedTargets>true</preferRangedTargets>
+        <preferFocusAttackers>true</preferFocusAttackers>
+        <defendNearestAnchorBeforeHeartExposed>true</defendNearestAnchorBeforeHeartExposed>
+        <beamMoteDefName>ABY_Mote_AorticChainLashBeam</beamMoteDefName>
+        <fireSoundDefName>ABY_SpecterLashFire</fireSoundDefName>
+        <impactSoundDefName>ABY_SigilChargePulse</impactSoundDefName>
+        <beamTicks>11</beamTicks>
+        <snapTicks>15</snapTicks>
+        <burstTicks>10</burstTicks>
+        <baseBeamWidth>0.20</baseBeamWidth>
+        <chainBeamWidth>0.38</chainBeamWidth>
+        <snapBeamWidth>0.30</snapBeamWidth>
+        <launchLength>2.8</launchLength>
+        <launchWidth>1.05</launchWidth>
+        <impactLength>2.25</impactLength>
+        <impactWidth>1.18</impactWidth>
+        <residualLength>2.10</residualLength>
+        <residualWidth>0.74</residualWidth>
       </li>
     </comps>
   </ThingDef>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AorticChainLashBeam</defName>
+    <label>aortic chain lash beam</label>
+    <thingClass>AbyssalProtocol.Mote_CrownspikeRailBeam</thingClass>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/VFX/AorticChainHarrower/ABY_AorticChainLash_ChainTether</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.070</solidTime>
+      <fadeOutTime>0.110</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+</Defs>
