@@ -185,6 +185,15 @@ namespace AbyssalProtocol
             TerrainDef plateTerrain = ResolveTerrain("ABY_DominionScorchedPlate", "PavedTile", "Concrete");
             TerrainDef channelTerrain = ResolveTerrain("ABY_DominionBloodChannel", "MetalTile", "PavedTile");
             TerrainDef sigilTerrain = ResolveTerrain("ABY_DominionBrassSigil", "MetalTile", "PavedTile");
+            TerrainDef[] fissureSupportTerrains = ResolveTerrainSet(
+                "ABY_DominionFissureSupport_A01", "ABY_DominionFissureSupport_A02",
+                "ABY_DominionFissureSupport_A03", "ABY_DominionFissureSupport_A04",
+                "ABY_DominionFissureSupport_A05", "ABY_DominionFissureSupport_A06",
+                "ABY_DominionFissureSupport_A07", "ABY_DominionFissureSupport_A08",
+                "ABY_DominionFissureSupport_A09", "ABY_DominionFissureSupport_A10",
+                "ABY_DominionFissureSupport_A11", "ABY_DominionFissureSupport_A12",
+                "ABY_DominionFissureSupport_A13", "ABY_DominionFissureSupport_A14",
+                "ABY_DominionFissureSupport_A15", "ABY_DominionFissureSupport_A16");
 
             PaintWholeMap(map, baseTerrain);
             ScatterQuietFloorVariation(map, map.Center, baseTerrain, plateTerrain);
@@ -228,6 +237,7 @@ namespace AbyssalProtocol
             // Spawning same-cell underlay buildings was unreliable because RimWorld can wipe or hide
             // lower buildings when the real objective building is spawned later by the encounter component.
             ScatterBurnScars(map, center, plateTerrain, baseTerrain);
+            PaintFissureSupportTerrainNetwork(map, center, fissureSupportTerrains);
             // Objective cells now use dedicated industrial underlays. Keep only non-objective pads.
             SpawnPad(map, extraction);
             SpawnPad(map, rewardPocket);
@@ -249,6 +259,215 @@ namespace AbyssalProtocol
             }
 
             return TerrainDefOf.Concrete;
+        }
+
+
+        private static TerrainDef[] ResolveTerrainSet(params string[] names)
+        {
+            List<TerrainDef> defs = new List<TerrainDef>();
+            if (names != null)
+            {
+                for (int i = 0; i < names.Length; i++)
+                {
+                    TerrainDef def = DefDatabase<TerrainDef>.GetNamedSilentFail(names[i]);
+                    if (def != null && !defs.Contains(def))
+                    {
+                        defs.Add(def);
+                    }
+                }
+            }
+
+            return defs.ToArray();
+        }
+
+        private static void PaintFissureSupportTerrainNetwork(Map map, IntVec3 center, TerrainDef[] supportTerrains)
+        {
+            if (map == null || supportTerrains == null || supportTerrains.Length == 0)
+            {
+                return;
+            }
+
+            IntVec3 jitterNorthWest = FissureJitter(map, 1, 2, 2);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterNorthWest,
+                new IntVec3(-33, 0, 46), new IntVec3(-33, 0, 28), new IntVec3(-51, 0, 28)));
+
+            IntVec3 jitterNorthEast = FissureJitter(map, 2, 2, 2);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterNorthEast,
+                new IntVec3(33, 0, 46), new IntVec3(33, 0, 28), new IntVec3(52, 0, 28)));
+
+            IntVec3 jitterWestMid = FissureJitter(map, 3, 2, 1);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterWestMid,
+                new IntVec3(-56, 0, -18), new IntVec3(-24, 0, -18)));
+
+            IntVec3 jitterEastMid = FissureJitter(map, 4, 2, 1);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterEastMid,
+                new IntVec3(24, 0, -21), new IntVec3(56, 0, -21)));
+
+            IntVec3 jitterSouthEast = FissureJitter(map, 5, 2, 2);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterSouthEast,
+                new IntVec3(41, 0, -47), new IntVec3(41, 0, -28), new IntVec3(56, 0, -28)));
+
+            IntVec3 jitterSouthWest = FissureJitter(map, 6, 2, 2);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterSouthWest,
+                new IntVec3(-43, 0, -47), new IntVec3(-43, 0, -31), new IntVec3(-56, 0, -31)));
+
+            IntVec3 jitterSouthRun = FissureJitter(map, 7, 2, 1);
+            PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterSouthRun,
+                new IntVec3(-29, 0, -46), new IntVec3(3, 0, -46)));
+
+            if (ShouldUseOptionalFissure(map, 8, 65))
+            {
+                IntVec3 jitterNorthRun = FissureJitter(map, 8, 2, 1);
+                PaintFissureSupportPath(map, center, supportTerrains, 3, OffsetPath(jitterNorthRun,
+                    new IntVec3(-12, 0, 46), new IntVec3(20, 0, 46)));
+            }
+        }
+
+        private static void PaintFissureSupportPath(Map map, IntVec3 center, TerrainDef[] supportTerrains, int halfWidth, params IntVec3[] offsets)
+        {
+            if (map == null || supportTerrains == null || supportTerrains.Length == 0 || offsets == null || offsets.Length < 2)
+            {
+                return;
+            }
+
+            for (int i = 0; i < offsets.Length - 1; i++)
+            {
+                IntVec3 a = offsets[i];
+                IntVec3 b = offsets[i + 1];
+                int dx = b.x - a.x;
+                int dz = b.z - a.z;
+                if (dx != 0 && dz != 0)
+                {
+                    continue;
+                }
+
+                int distance = Mathf.Max(Math.Abs(dx), Math.Abs(dz));
+                int dirX = dx == 0 ? 0 : Math.Sign(dx);
+                int dirZ = dz == 0 ? 0 : Math.Sign(dz);
+                for (int d = 0; d <= distance; d++)
+                {
+                    IntVec3 offset = new IntVec3(a.x + dirX * d, 0, a.z + dirZ * d);
+                    for (int w = -halfWidth; w <= halfWidth; w++)
+                    {
+                        IntVec3 widened = dirX != 0
+                            ? new IntVec3(offset.x, 0, offset.z + w)
+                            : new IntVec3(offset.x + w, 0, offset.z);
+                        PaintFissureSupportCell(map, center + widened, supportTerrains);
+                    }
+
+                    if (d % 4 == 0)
+                    {
+                        int softSide = ((int)(FissureCellHash(center + offset) % 3u)) - 1;
+                        if (softSide != 0)
+                        {
+                            IntVec3 soft = dirX != 0
+                                ? new IntVec3(offset.x, 0, offset.z + (halfWidth + softSide))
+                                : new IntVec3(offset.x + (halfWidth + softSide), 0, offset.z);
+                            PaintFissureSupportCell(map, center + soft, supportTerrains);
+                        }
+                    }
+                }
+
+                PaintFissureSupportPatch(map, center + a, supportTerrains, halfWidth + 1);
+                PaintFissureSupportPatch(map, center + b, supportTerrains, halfWidth + 1);
+            }
+        }
+
+        private static void PaintFissureSupportPatch(Map map, IntVec3 center, TerrainDef[] supportTerrains, int radius)
+        {
+            int safeRadius = Mathf.Max(1, radius);
+            for (int dx = -safeRadius; dx <= safeRadius; dx++)
+            {
+                for (int dz = -safeRadius; dz <= safeRadius; dz++)
+                {
+                    if (dx * dx + dz * dz > safeRadius * safeRadius + 1)
+                    {
+                        continue;
+                    }
+
+                    PaintFissureSupportCell(map, center + new IntVec3(dx, 0, dz), supportTerrains);
+                }
+            }
+        }
+
+        private static void PaintFissureSupportCell(Map map, IntVec3 cell, TerrainDef[] supportTerrains)
+        {
+            if (map == null || supportTerrains == null || supportTerrains.Length == 0)
+            {
+                return;
+            }
+
+            cell = ClampToInterior(map, cell, 8);
+            if (!cell.InBounds(map))
+            {
+                return;
+            }
+
+            map.terrainGrid.SetTerrain(cell, PickFissureSupportTerrain(supportTerrains, cell));
+        }
+
+        private static TerrainDef PickFissureSupportTerrain(TerrainDef[] supportTerrains, IntVec3 cell)
+        {
+            if (supportTerrains == null || supportTerrains.Length == 0)
+            {
+                return TerrainDefOf.Concrete;
+            }
+
+            uint hash = FissureCellHash(cell);
+            int index = (int)(hash % (uint)supportTerrains.Length);
+            return supportTerrains[index] ?? supportTerrains[0];
+        }
+
+        private static uint FissureCellHash(IntVec3 cell)
+        {
+            unchecked
+            {
+                uint hash = (uint)(cell.x * 73856093) ^ (uint)(cell.z * 19349663) ^ 0x9E3779B9u;
+                hash ^= hash >> 13;
+                hash *= 1274126177u;
+                hash ^= hash >> 16;
+                return hash;
+            }
+        }
+
+        private static IntVec3[] OffsetPath(IntVec3 jitter, params IntVec3[] offsets)
+        {
+            if (offsets == null)
+            {
+                return new IntVec3[0];
+            }
+
+            IntVec3[] shifted = new IntVec3[offsets.Length];
+            for (int i = 0; i < offsets.Length; i++)
+            {
+                shifted[i] = offsets[i] + jitter;
+            }
+
+            return shifted;
+        }
+
+        private static IntVec3 FissureJitter(Map map, int index, int maxX, int maxZ)
+        {
+            int tile = map != null ? map.Tile : 0;
+            unchecked
+            {
+                uint hash = (uint)(tile * 92837111) ^ (uint)(index * 689287499) ^ 0x6D2B79F5u;
+                int xRange = Mathf.Max(0, maxX) * 2 + 1;
+                int zRange = Mathf.Max(0, maxZ) * 2 + 1;
+                int x = xRange <= 1 ? 0 : (int)(hash % (uint)xRange) - maxX;
+                int z = zRange <= 1 ? 0 : (int)((hash >> 8) % (uint)zRange) - maxZ;
+                return new IntVec3(x, 0, z);
+            }
+        }
+
+        private static bool ShouldUseOptionalFissure(Map map, int index, int chancePercent)
+        {
+            int tile = map != null ? map.Tile : 0;
+            unchecked
+            {
+                uint hash = (uint)(tile * 1103515245) ^ (uint)(index * 12345) ^ 0xA5A5A5A5u;
+                return (hash % 100u) < Mathf.Clamp(chancePercent, 0, 100);
+            }
         }
 
         private static IntVec3 ClampToInterior(Map map, IntVec3 cell)
@@ -612,47 +831,82 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // The generated modular pieces look good individually, but they are not pixel-perfect
-            // tile modules. Drawing each segment as an independent building causes small frame-to-frame
-            // and connector misalignments. The stable solution is to draw each whole fissure path as one
-            // pre-baked animated overlay, then use invisible one-cell blockers for actual pathing.
+            // Visual fissures use whole-path animated overlays, while real pathing is blocked by
+            // invisible cells. The paths are intentionally long boundary wounds, kept away from
+            // objectives and slightly jittered per map so the Dominion Slice does not repeat as a
+            // rigid grid every time.
             List<IntVec3> blockerCells = new List<IntVec3>();
 
-            // The unified master sheet fixed the style mismatch, but its cells are very dense.
-            // Keep the paths as large boundary wounds, not full-screen pipes: shorter blocker runs
-            // and smaller visuals keep the arena readable while preserving impassable fissure routes.
+            IntVec3 jitterNorthWest = FissureJitter(map, 1, 2, 2);
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathNorthWestDefName,
-                new IntVec3(-31, 0, 31),
-                new IntVec3(-31, 0, 41),
-                new IntVec3(-31, 0, 30),
-                new IntVec3(-42, 0, 30));
+                new IntVec3(-33, 0, 32) + jitterNorthWest,
+                OffsetPath(jitterNorthWest,
+                    new IntVec3(-33, 0, 46),
+                    new IntVec3(-33, 0, 28),
+                    new IntVec3(-51, 0, 28)));
 
+            IntVec3 jitterNorthEast = FissureJitter(map, 2, 2, 2);
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathNorthEastDefName,
-                new IntVec3(31, 0, 31),
-                new IntVec3(31, 0, 41),
-                new IntVec3(31, 0, 30),
-                new IntVec3(42, 0, 30));
+                new IntVec3(33, 0, 32) + jitterNorthEast,
+                OffsetPath(jitterNorthEast,
+                    new IntVec3(33, 0, 46),
+                    new IntVec3(33, 0, 28),
+                    new IntVec3(52, 0, 28)));
 
+            IntVec3 jitterWestMid = FissureJitter(map, 3, 2, 1);
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathWestMidDefName,
-                new IntVec3(-41, 0, -18),
-                new IntVec3(-53, 0, -18),
-                new IntVec3(-30, 0, -18));
+                new IntVec3(-40, 0, -18) + jitterWestMid,
+                OffsetPath(jitterWestMid,
+                    new IntVec3(-56, 0, -18),
+                    new IntVec3(-24, 0, -18)));
 
+            IntVec3 jitterEastMid = FissureJitter(map, 4, 2, 1);
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathWestMidDefName,
+                new IntVec3(40, 0, -21) + jitterEastMid,
+                OffsetPath(jitterEastMid,
+                    new IntVec3(24, 0, -21),
+                    new IntVec3(56, 0, -21)));
+
+            IntVec3 jitterSouthEast = FissureJitter(map, 5, 2, 2);
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathSouthEastDefName,
-                new IntVec3(38, 0, -31),
-                new IntVec3(38, 0, -41),
-                new IntVec3(38, 0, -30),
-                new IntVec3(49, 0, -30));
+                new IntVec3(41, 0, -33) + jitterSouthEast,
+                OffsetPath(jitterSouthEast,
+                    new IntVec3(41, 0, -47),
+                    new IntVec3(41, 0, -28),
+                    new IntVec3(56, 0, -28)));
 
+            IntVec3 jitterSouthWest = FissureJitter(map, 6, 2, 2);
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathSouthWestDefName,
+                new IntVec3(-43, 0, -33) + jitterSouthWest,
+                OffsetPath(jitterSouthWest,
+                    new IntVec3(-43, 0, -47),
+                    new IntVec3(-43, 0, -31),
+                    new IntVec3(-56, 0, -31)));
+
+            IntVec3 jitterSouthRun = FissureJitter(map, 7, 2, 1);
             SpawnContinuousFissurePath(map, center, reserved, blockerCells,
                 DominionFissurePathShortWestMidDefName,
-                new IntVec3(-18, 0, -45),
-                new IntVec3(-27, 0, -45),
-                new IntVec3(-10, 0, -45));
+                new IntVec3(-14, 0, -46) + jitterSouthRun,
+                OffsetPath(jitterSouthRun,
+                    new IntVec3(-29, 0, -46),
+                    new IntVec3(3, 0, -46)));
+
+            if (ShouldUseOptionalFissure(map, 8, 65))
+            {
+                IntVec3 jitterNorthRun = FissureJitter(map, 8, 2, 1);
+                SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                    DominionFissurePathShortWestMidDefName,
+                    new IntVec3(4, 0, 46) + jitterNorthRun,
+                    OffsetPath(jitterNorthRun,
+                        new IntVec3(-12, 0, 46),
+                        new IntVec3(20, 0, 46)));
+            }
 
             if (blockerCells.Count > 0)
             {

@@ -61,4 +61,244 @@
     </affordances>
   </TerrainDef>
 
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A01</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A01</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A02</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A02</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A03</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A03</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A04</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A04</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A05</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A05</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A06</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A06</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A07</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A07</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A08</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A08</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A09</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A09</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A10</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A10</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A11</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A11</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A12</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A12</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A13</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A13</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A14</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A14</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A15</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A15</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>ABY_DominionFissureSupport_A16</defName>
+    <label>dominion fissure-stressed floor</label>
+    <description>Corrupted ash-metal plating stressed by nearby Dominion hemoplasm fissures. It is floor support scarring, not an open rupture.</description>
+    <texturePath>Terrain/DominionSlice/FissureSupport/ABY_DominionFissureSupport_A16</texturePath>
+    <renderPrecedence>344</renderPrecedence>
+    <fertility>0</fertility>
+    <pathCost>0</pathCost>
+    <takeFootprints>false</takeFootprints>
+    <edgeType>Hard</edgeType>
+    <affordances>
+      <li>Heavy</li>
+    </affordances>
+  </TerrainDef>
+
 </Defs>
