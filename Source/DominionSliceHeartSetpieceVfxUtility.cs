@@ -27,6 +27,11 @@ namespace AbyssalProtocol
         private static Material heartOverlayPulseActiveMaterial;
         private static Material heartOverlayPulseExposedMaterial;
 
+        // The pulse sheet is authored at the same logical footprint as the approved heart graphic.
+        // Keep this near the ThingDef drawSize; the frame mesh itself is unit-sized.
+        // Previous build used a 10-cell mesh * 9.6 scale, which expanded the overlay across most of the map.
+        private const float HeartOverlayPulseDrawSize = 9.55f;
+
         public static void DrawHeartSetpiece(Vector3 heartPos, Map map, MapComponent_DominionSliceEncounter encounter, int seed)
         {
             if (map == null)
@@ -91,17 +96,17 @@ namespace AbyssalProtocol
 
         private static Color HeartOverlayInactiveColor
         {
-            get { return new Color(1f, 0.36f, 0.16f, 0.30f); }
+            get { return new Color(1f, 0.36f, 0.16f, 0.24f); }
         }
 
         private static Color HeartOverlayActiveColor
         {
-            get { return new Color(1f, 0.34f, 0.12f, 0.52f); }
+            get { return new Color(1f, 0.34f, 0.12f, 0.42f); }
         }
 
         private static Color HeartOverlayExposedColor
         {
-            get { return new Color(1f, 0.26f, 0.08f, 0.68f); }
+            get { return new Color(1f, 0.26f, 0.08f, 0.54f); }
         }
 
         private static void DrawHeartOverlayPulseSheet(Vector3 heartPos, int ticks, int seed, bool active, bool exposed)
@@ -128,7 +133,7 @@ namespace AbyssalProtocol
 
             Vector3 loc = heartPos;
             loc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + 0.348f;
-            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(9.6f, 1f, 9.6f));
+            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(HeartOverlayPulseDrawSize, 1f, HeartOverlayPulseDrawSize));
             Graphics.DrawMesh(mesh, matrix, material, 0);
         }
 
@@ -176,12 +181,13 @@ namespace AbyssalProtocol
                 float uMax = (i + 1) / (float)HeartOverlayPulseFrameCount;
                 Mesh mesh = new Mesh();
                 mesh.name = "ABY_DominionSliceHeartOverlayPulseFrame_" + i;
+                // Unit-sized custom quad. The draw size is controlled only by HeartOverlayPulseDrawSize above.
                 mesh.vertices = new[]
                 {
-                    new Vector3(-5f, 0f, -5f),
-                    new Vector3(-5f, 0f, 5f),
-                    new Vector3(5f, 0f, 5f),
-                    new Vector3(5f, 0f, -5f)
+                    new Vector3(-0.5f, 0f, -0.5f),
+                    new Vector3(-0.5f, 0f, 0.5f),
+                    new Vector3(0.5f, 0f, 0.5f),
+                    new Vector3(0.5f, 0f, -0.5f)
                 };
                 mesh.uv = new[]
                 {
