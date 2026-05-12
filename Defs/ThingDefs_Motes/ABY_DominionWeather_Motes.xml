@@ -14,13 +14,13 @@
       <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_CohesionQuietEmber</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>Transparent</shaderType>
-      <drawSize>(0.70,0.70)</drawSize>
-      <color>(107,99,92,158)</color>
+      <drawSize>(0.86,0.86)</drawSize>
+      <color>(0.48,0.45,0.40,0.70)</color>
     </graphicData>
     <mote>
       <fadeInTime>0.080</fadeInTime>
-      <solidTime>0.560</solidTime>
-      <fadeOutTime>1.100</fadeOutTime>
+      <solidTime>0.760</solidTime>
+      <fadeOutTime>1.350</fadeOutTime>
       <growthRate>0.018</growthRate>
     </mote>
   </ThingDef>
@@ -36,8 +36,8 @@
       <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_VoidVeil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>Transparent</shaderType>
-      <drawSize>(1.00,1.00)</drawSize>
-      <color>(115,71,179,87)</color>
+      <drawSize>(1.24,1.24)</drawSize>
+      <color>(0.40,0.24,0.72,0.36)</color>
     </graphicData>
     <mote>
       <fadeInTime>0.090</fadeInTime>
@@ -58,8 +58,8 @@
       <texPath>Things/VFX/DominionSlice/ABY_DominionSlice_AmbientEmber</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(0.86,0.86)</drawSize>
-      <color>(209,97,61,133)</color>
+      <drawSize>(0.92,0.92)</drawSize>
+      <color>(0.68,0.28,0.18,0.45)</color>
     </graphicData>
     <mote>
       <fadeInTime>0.060</fadeInTime>

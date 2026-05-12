@@ -9,10 +9,10 @@ namespace AbyssalProtocol
         private const int MaintenanceIntervalTicks = 1800;
         private const int AmbientIntervalMinTicks = 1250;
         private const int AmbientIntervalMaxTicks = 2600;
-        private const int WeatherIntervalMinTicks = 180;
-        private const int WeatherIntervalMaxTicks = 360;
-        private const int ReducedWeatherIntervalMinTicks = 850;
-        private const int ReducedWeatherIntervalMaxTicks = 1500;
+        private const int WeatherIntervalMinTicks = 80;
+        private const int WeatherIntervalMaxTicks = 150;
+        private const int ReducedWeatherIntervalMinTicks = 520;
+        private const int ReducedWeatherIntervalMaxTicks = 900;
         private const int WeatherStateMinTicks = 5200;
         private const int WeatherStateMaxTicks = 9400;
 
@@ -63,12 +63,25 @@ namespace AbyssalProtocol
 
             if (nextWeatherTick <= now)
             {
-                nextWeatherTick = now + Rand.Range(220, 520);
+                nextWeatherTick = now + Rand.Range(30, 90);
             }
 
             if (nextWeatherStateChangeTick <= now)
             {
                 ChooseNextWeatherState(now, true);
+            }
+
+            // Make the weather layer visible immediately after the pocket map is prepared.
+            // Previously the first burst could be delayed enough that it looked disabled.
+            if (AbyssalProtocolMod.Settings != null && AbyssalProtocolMod.Settings.enableDominionWeather)
+            {
+                try
+                {
+                    ABY_DominionWeatherUtility.EmitWeatherBurst(map, CurrentWeatherState, AbyssalProtocolMod.Settings.ResolveDominionWeatherIntensity(), AbyssalProtocolMod.Settings.reducedMotion);
+                }
+                catch
+                {
+                }
             }
 
             if (AbyssalProtocolMod.Settings?.verboseDiagnostics ?? false)
@@ -225,7 +238,7 @@ namespace AbyssalProtocol
             }
 
             AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
-            if (settings == null || !settings.enableDominionWeather || !settings.enableBossMapPresentationEffects)
+            if (settings == null || !settings.enableDominionWeather)
             {
                 return;
             }
@@ -304,7 +317,7 @@ namespace AbyssalProtocol
 
             if (nextWeatherTick <= now)
             {
-                nextWeatherTick = now + Rand.Range(WeatherIntervalMinTicks, WeatherIntervalMaxTicks);
+                nextWeatherTick = now + Rand.Range(40, 100);
             }
 
             if (nextWeatherStateChangeTick <= now)

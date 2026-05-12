@@ -53,7 +53,7 @@ namespace AbyssalProtocol
 
         private static void EmitAshfall(Map map, float intensity, bool reducedMotion)
         {
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(2.2f, 4.8f) * intensity), 1, 7);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(5.0f, 9.0f) * intensity), 2, 14);
             for (int i = 0; i < count; i++)
             {
                 if (!TryFindWeatherCell(map, out IntVec3 cell))
@@ -64,9 +64,9 @@ namespace AbyssalProtocol
                 Vector3 pos = CellToMotePos(cell, Rand.Range(0.070f, 0.105f));
                 pos.x += Rand.Range(-0.42f, 0.42f);
                 pos.z += Rand.Range(-0.42f, 0.42f);
-                SpawnStaticMote(AshMoteDef, pos, map, Rand.Range(0.28f, 0.58f) * Mathf.Lerp(0.85f, 1.22f, Mathf.Clamp01(intensity - 0.5f)));
+                SpawnStaticMote(AshMoteDef, pos, map, Rand.Range(0.42f, 0.86f) * Mathf.Lerp(0.85f, 1.22f, Mathf.Clamp01(intensity - 0.5f)));
 
-                if (!reducedMotion && Rand.Chance(0.20f * intensity))
+                if (!reducedMotion && Rand.Chance(0.12f * intensity))
                 {
                     FleckMaker.ThrowDustPuff(pos, map, Rand.Range(0.24f, 0.46f));
                 }
@@ -81,7 +81,7 @@ namespace AbyssalProtocol
                 focus = map.Center;
             }
 
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(1.0f, 2.2f) * intensity), 1, 4);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(1.8f, 3.2f) * intensity), 1, 5);
             for (int i = 0; i < count; i++)
             {
                 if (!ABY_DominionAtmosphereUtility.TryFindAtmosphereCellNear(map, focus, 10, 48, out IntVec3 cell))
@@ -101,7 +101,7 @@ namespace AbyssalProtocol
 
         private static void EmitFurnaceDrift(Map map, float intensity, bool reducedMotion)
         {
-            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(1.2f, 2.8f) * intensity), 1, 5);
+            int count = reducedMotion ? 1 : Mathf.Clamp(Mathf.RoundToInt(Rand.Range(2.0f, 4.2f) * intensity), 1, 7);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;

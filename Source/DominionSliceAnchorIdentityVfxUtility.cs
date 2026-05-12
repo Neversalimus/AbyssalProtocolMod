@@ -71,7 +71,7 @@ namespace AbyssalProtocol
                 float coreScale = scale * GetRoleCoreScale(role) * fastPulse;
                 float coreRotation = -GetRoleRotation(role, ticks, seed) * GetRoleCoreRotationFactor(role);
                 Vector3 coreLoc = loc + new Vector3(0f, 0.004f, 0f);
-                DrawLayer(CoreGlyphMaterial, coreLoc, coreRotation, coreScale, Mathf.Lerp(0.72f, 0.98f, intensity));
+                DrawLayer(CoreGlyphMaterial, coreLoc, coreRotation, coreScale, Mathf.Lerp(0.34f, 0.56f, intensity));
             }
         }
 
@@ -122,11 +122,11 @@ namespace AbyssalProtocol
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
-                    return 12.15f;
+                    return 7.45f;
                 case DominionSliceAnchorRole.Law:
-                    return 12.45f;
+                    return 7.65f;
                 default:
-                    return 11.85f;
+                    return 7.25f;
             }
         }
 
@@ -200,11 +200,11 @@ namespace AbyssalProtocol
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
-                    return 0.92f;
+                    return 0.42f;
                 case DominionSliceAnchorRole.Law:
-                    return 0.96f;
+                    return 0.44f;
                 default:
-                    return 0.94f;
+                    return 0.40f;
             }
         }
 

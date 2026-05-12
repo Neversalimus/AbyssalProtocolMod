@@ -57,45 +57,45 @@ namespace AbyssalProtocol
 
             Vector3 floorLoc = heartPos;
             floorLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.01f;
-            float floorScale = exposed ? 7.65f : 6.20f + Mathf.Min(liveAnchors, 3) * 0.42f;
-            DrawLayer(FloorPulseMaterial, floorLoc, (ticks + seed) * (exposed ? -0.055f : 0.030f), floorScale * breathe, exposed ? 0.90f : 0.84f);
+            float floorScale = exposed ? 5.85f : 4.35f + Mathf.Min(liveAnchors, 3) * 0.28f;
+            DrawLayer(FloorPulseMaterial, floorLoc, (ticks + seed) * (exposed ? -0.055f : 0.030f), floorScale * breathe, exposed ? 0.58f : 0.40f);
 
             Vector3 crackLoc = heartPos;
             crackLoc.y = AltitudeLayer.MoteLow.AltitudeFor() + 0.018f;
-            float crackScale = exposed ? 10.60f * slowDominionPulse : (8.10f + liveAnchors * 0.45f) * slowDominionPulse;
-            DrawLayer(RadialCracksMaterial, crackLoc, -(ticks + seed) * 0.010f, crackScale, exposed ? 0.72f : 0.46f);
+            float crackScale = exposed ? 8.20f * slowDominionPulse : (5.80f + liveAnchors * 0.28f) * slowDominionPulse;
+            DrawLayer(RadialCracksMaterial, crackLoc, -(ticks + seed) * 0.010f, crackScale, exposed ? 0.48f : 0.28f);
 
             Vector3 haloLoc = heartPos;
             haloLoc.y = yBase + 0.012f;
 
             if (!exposed)
             {
-                float apexScale = (10.30f + liveAnchors * 0.42f) * slowDominionPulse;
-                float outerScale = (8.25f + liveAnchors * 0.36f) * breathe;
-                float innerScale = (5.50f + liveAnchors * 0.28f) * shimmer;
-                float latticeScale = (4.95f + liveAnchors * 0.24f) * (1f + (breathe - 1f) * 0.55f);
-                float crownScale = (8.95f + liveAnchors * 0.38f) * phasePulse;
+                float apexScale = (7.40f + liveAnchors * 0.25f) * slowDominionPulse;
+                float outerScale = (5.90f + liveAnchors * 0.22f) * breathe;
+                float innerScale = (4.15f + liveAnchors * 0.18f) * shimmer;
+                float latticeScale = (3.70f + liveAnchors * 0.16f) * (1f + (breathe - 1f) * 0.55f);
+                float crownScale = (6.20f + liveAnchors * 0.24f) * phasePulse;
 
-                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.014f, apexScale, 0.40f);
-                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.020f, crownScale, 0.62f);
-                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.060f, outerScale, 0.86f);
-                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.047f, innerScale, 0.94f);
-                DrawLayer(ShieldLatticeMaterial, haloLoc + new Vector3(0f, 0.004f, 0f), (ticks + seed) * 0.028f, latticeScale, 0.92f);
+                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.014f, apexScale, 0.20f);
+                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.020f, crownScale, 0.32f);
+                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.060f, outerScale, 0.46f);
+                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.047f, innerScale, 0.54f);
+                DrawLayer(ShieldLatticeMaterial, haloLoc + new Vector3(0f, 0.004f, 0f), (ticks + seed) * 0.028f, latticeScale, 0.48f);
             }
             else
             {
-                float apexScale = 11.45f * slowDominionPulse;
-                float outerScale = 7.90f * breathe;
-                float innerScale = 5.95f * shimmer;
-                float crownScale = 9.65f * phasePulse;
-                float coronaScale = 4.85f * (1f + Mathf.Sin((ticks + seed) * 0.063f) * 0.05f);
+                float apexScale = 8.40f * slowDominionPulse;
+                float outerScale = 5.90f * breathe;
+                float innerScale = 4.50f * shimmer;
+                float crownScale = 6.90f * phasePulse;
+                float coronaScale = 3.70f * (1f + Mathf.Sin((ticks + seed) * 0.063f) * 0.05f);
                 float coreScale = 2.82f * (1f + Mathf.Sin((ticks + seed) * 0.085f) * 0.06f);
 
-                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.018f, apexScale, 0.52f);
-                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.030f, crownScale, 0.70f);
-                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.090f, outerScale, 0.94f);
-                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.075f, innerScale, 1.00f);
-                DrawLayer(CoreCoronaMaterial, haloLoc + new Vector3(0f, 0.005f, 0f), (ticks + seed) * 0.115f, coronaScale, 0.92f);
+                DrawLayer(ApexHaloMaterial, haloLoc + new Vector3(0f, 0.0005f, 0f), (ticks + seed) * 0.018f, apexScale, 0.28f);
+                DrawLayer(CrownRingMaterial, haloLoc + new Vector3(0f, 0.001f, 0f), -(ticks + seed) * 0.030f, crownScale, 0.40f);
+                DrawLayer(OuterHaloMaterial, haloLoc, (ticks + seed) * 0.090f, outerScale, 0.58f);
+                DrawLayer(InnerHaloMaterial, haloLoc + new Vector3(0f, 0.002f, 0f), -(ticks + seed) * 0.075f, innerScale, 0.62f);
+                DrawLayer(CoreCoronaMaterial, haloLoc + new Vector3(0f, 0.005f, 0f), (ticks + seed) * 0.115f, coronaScale, 0.58f);
                 DrawLayer(ExposedCoreMaterial, haloLoc + new Vector3(0f, 0.006f, 0f), (ticks + seed) * 0.120f, coreScale, 1f);
             }
         }

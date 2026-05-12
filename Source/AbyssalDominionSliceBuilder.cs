@@ -160,7 +160,8 @@ namespace AbyssalProtocol
             TerrainDef sigilTerrain = ResolveTerrain("ABY_DominionBrassSigil", "MetalTile", "PavedTile");
 
             PaintWholeMap(map, baseTerrain);
-            SpawnEdgePerimeterWalls(map, 6);
+            ScatterQuietFloorVariation(map, map.Center, baseTerrain, plateTerrain);
+            SpawnEdgePerimeterWalls(map, 3);
 
             IntVec3 center = ClampToInterior(map, map.Center + new IntVec3(0, 0, 4));
             IntVec3 entry = ClampToInterior(map, new IntVec3(center.x, 0, center.z - 42));
@@ -339,7 +340,7 @@ namespace AbyssalProtocol
         private static void ScatterBurnScars(Map map, IntVec3 center, TerrainDef scarTerrain, TerrainDef baseTerrain)
         {
             IntRange radiusRange = new IntRange(18, 44);
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 14; i++)
             {
                 int radius = radiusRange.RandomInRange;
                 float angle = Rand.Range(0f, 360f) * Mathf.Deg2Rad;
@@ -547,67 +548,101 @@ namespace AbyssalProtocol
 
         private static void SpawnDominionRuinWallLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
         {
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 0), center + new IntVec3(-34, 0, -22), Rot4.West, reserved, 7.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 1), center + new IntVec3(34, 0, -19), Rot4.East, reserved, 7.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 2), center + new IntVec3(-39, 0, 16), Rot4.West, reserved, 7.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 3), center + new IntVec3(39, 0, 18), Rot4.East, reserved, 7.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 4), center + new IntVec3(-24, 0, 34), Rot4.North, reserved, 7.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 5), center + new IntVec3(27, 0, 35), Rot4.North, reserved, 7.5f, false);
+            // Hotfix 5.1: keep the industrial ruin dressing sparse. The previous pass made
+            // the map look like a decorated arena rather than a bleak dominion floor.
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 1), center + new IntVec3(-37, 0, -23), Rot4.West, reserved, 9.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 3), center + new IntVec3(37, 0, -20), Rot4.East, reserved, 9.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), center + new IntVec3(-33, 0, 29), Rot4.North, reserved, 9.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), center + new IntVec3(32, 0, 31), Rot4.North, reserved, 9.0f, false);
 
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 6), extraction + new IntVec3(-18, 0, 9), Rot4.West, reserved, 6f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 7), extraction + new IntVec3(18, 0, 9), Rot4.East, reserved, 6f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), rewardPocket + new IntVec3(-12, 0, 9), Rot4.West, reserved, 6f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), rewardPocket + new IntVec3(10, 0, 9), Rot4.East, reserved, 6f, false);
-
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 7), west + new IntVec3(-14, 0, -10), Rot4.West, reserved, 7f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 6), east + new IntVec3(14, 0, -10), Rot4.East, reserved, 7f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), north + new IntVec3(-14, 0, 15), Rot4.North, reserved, 7f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), north + new IntVec3(14, 0, 15), Rot4.North, reserved, 7f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 7), extraction + new IntVec3(-18, 0, 10), Rot4.West, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 6), extraction + new IntVec3(18, 0, 10), Rot4.East, reserved, 7.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 8), north + new IntVec3(-16, 0, 16), Rot4.North, reserved, 8.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRuinWallDefs, 9), north + new IntVec3(16, 0, 16), Rot4.North, reserved, 8.0f, false);
         }
 
         private static void SpawnDominionRubbleLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
         {
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), center + new IntVec3(-20, 0, -17), Rot4.North, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 1), center + new IntVec3(21, 0, -16), Rot4.North, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 2), center + new IntVec3(-29, 0, 4), Rot4.North, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 3), center + new IntVec3(30, 0, 3), Rot4.East, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 4), center + new IntVec3(-15, 0, 24), Rot4.West, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 5), center + new IntVec3(17, 0, 25), Rot4.East, reserved, 5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 6), center + new IntVec3(3, 0, -28), Rot4.North, reserved, 5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), center + new IntVec3(-22, 0, -17), Rot4.North, reserved, 5.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 1), center + new IntVec3(22, 0, -15), Rot4.North, reserved, 5.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 3), center + new IntVec3(-30, 0, 5), Rot4.West, reserved, 6.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 4), center + new IntVec3(31, 0, 4), Rot4.East, reserved, 6.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 6), center + new IntVec3(4, 0, -29), Rot4.North, reserved, 5.5f, false);
 
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 2), west + new IntVec3(-8, 0, -8), Rot4.North, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 3), west + new IntVec3(-8, 0, 11), Rot4.West, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 4), east + new IntVec3(8, 0, -8), Rot4.East, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 5), east + new IntVec3(8, 0, 11), Rot4.North, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), north + new IntVec3(-10, 0, 8), Rot4.North, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 1), north + new IntVec3(10, 0, 8), Rot4.North, reserved, 4.5f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 6), rewardPocket + new IntVec3(-9, 0, -9), Rot4.North, reserved, 4.5f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 2), west + new IntVec3(-9, 0, -9), Rot4.North, reserved, 5.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 5), east + new IntVec3(9, 0, 11), Rot4.North, reserved, 5.0f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionRubbleDefs, 0), rewardPocket + new IntVec3(-9, 0, -9), Rot4.North, reserved, 5.0f, false);
         }
 
         private static void SpawnDominionQuietDecalLayer(Map map, IntVec3 center, IntVec3 extraction, IntVec3 west, IntVec3 east, IntVec3 north, IntVec3 rewardPocket, List<IntVec3> reserved)
         {
-            float[] radii = { 19f, 25f, 32f, 39f, 45f };
-            float[] angles = { 9f, 34f, 73f, 111f, 151f, 187f, 222f, 259f, 301f, 337f };
+            float[] radii = { 23f, 34f, 43f };
+            float[] angles = { 17f, 61f, 119f, 173f, 229f, 287f, 331f };
             int index = 0;
             for (int r = 0; r < radii.Length; r++)
             {
                 for (int a = 0; a < angles.Length; a += 2)
                 {
-                    float angle = (angles[(a + r) % angles.Length] + r * 5f) * Mathf.Deg2Rad;
+                    float angle = (angles[(a + r) % angles.Length] + r * 8f) * Mathf.Deg2Rad;
                     IntVec3 cell = ClampToInterior(map, new IntVec3(
                         center.x + GenMath.RoundRandom(Mathf.Cos(angle) * radii[r]),
                         0,
                         center.z + GenMath.RoundRandom(Mathf.Sin(angle) * radii[r])));
-                    TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), cell, Rot4.North, reserved, 3.25f, false);
+                    TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), cell, Rot4.North, reserved, 4.25f, false);
                 }
             }
 
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(-7, 0, -7), Rot4.North, reserved, 3f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(7, 0, -7), Rot4.North, reserved, 3f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), west + new IntVec3(0, 0, -11), Rot4.North, reserved, 3f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), east + new IntVec3(0, 0, -11), Rot4.North, reserved, 3f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), north + new IntVec3(0, 0, 12), Rot4.North, reserved, 3f, false);
-            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), rewardPocket + new IntVec3(0, 0, 7), Rot4.North, reserved, 3f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(-7, 0, -7), Rot4.North, reserved, 3.75f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), extraction + new IntVec3(7, 0, -7), Rot4.North, reserved, 3.75f, false);
+            TrySpawnDominionDecoration(map, SelectDef(DominionDecalDefs, index++), north + new IntVec3(0, 0, 13), Rot4.North, reserved, 3.75f, false);
+        }
+
+        private static void ScatterQuietFloorVariation(Map map, IntVec3 center, TerrainDef baseTerrain, TerrainDef plateTerrain)
+        {
+            if (map == null || plateTerrain == null)
+            {
+                return;
+            }
+
+            // Irregular low-contrast plate islands stop the dominion map from reading as one
+            // repeated square texture, while avoiding large clean arena blocks.
+            for (int i = 0; i < 42; i++)
+            {
+                float angle = Rand.Range(0f, 360f) * Mathf.Deg2Rad;
+                float radius = Rand.Range(14f, Mathf.Min(map.Size.x, map.Size.z) * 0.46f);
+                IntVec3 patch = ClampToInterior(map, new IntVec3(
+                    center.x + GenMath.RoundRandom(Mathf.Cos(angle) * radius),
+                    0,
+                    center.z + GenMath.RoundRandom(Mathf.Sin(angle) * radius)));
+
+                int patchRadius = Rand.RangeInclusive(1, 3);
+                PaintOrganicPatch(map, patch, patchRadius, plateTerrain);
+            }
+        }
+
+        private static void PaintOrganicPatch(Map map, IntVec3 center, int radius, TerrainDef terrain)
+        {
+            if (map == null || terrain == null)
+            {
+                return;
+            }
+
+            int radiusSq = radius * radius;
+            foreach (IntVec3 cell in CellRect.CenteredOn(center, radius))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                int dx = cell.x - center.x;
+                int dz = cell.z - center.z;
+                int distSq = dx * dx + dz * dz;
+                if (distSq <= radiusSq && Rand.Chance(distSq == 0 ? 1f : 0.72f))
+                {
+                    map.terrainGrid.SetTerrain(cell, terrain);
+                }
+            }
         }
 
         private static string SelectDef(string[] defs, int index)
