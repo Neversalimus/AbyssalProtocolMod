@@ -11,18 +11,39 @@ namespace AbyssalProtocol
         private const string LinkCoreTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_LinkCore";
         private const string LinkEntryBloomTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_LinkEntryBloom";
         private const string HeartShieldTexPath = "Things/VFX/DominionSlice/ABY_DominionSlice_HeartShield";
+
+        private const string TetherGlowTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_Glow";
+        private const string TetherCoreTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_Core";
+        private const string TetherChainSparseTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_ChainSparse";
+        private const string TetherChainHeavyTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_ChainHeavy";
+        private const string TetherSnapAnchorTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_SnapAnchor";
+        private const string TetherSnapHeartTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_SnapHeart";
+
         private const string AnchorBreakMoteDefName = "ABY_Mote_DominionSliceAnchorBreak";
         private const string HeartExposeMoteDefName = "ABY_Mote_DominionSliceHeartExpose";
         private const string ShieldBlockMoteDefName = "ABY_Mote_DominionSliceShieldBlock";
+        private const int LinkSeverBurstDurationTicks = 62;
 
         private static readonly Material LinkBeamMaterial = MaterialPool.MatFrom(LinkBeamTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material LinkCoreMaterial = MaterialPool.MatFrom(LinkCoreTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material LinkEntryBloomMaterial = MaterialPool.MatFrom(LinkEntryBloomTexPath, ShaderDatabase.MoteGlow);
         private static readonly Material HeartShieldMaterial = MaterialPool.MatFrom(HeartShieldTexPath, ShaderDatabase.MoteGlow);
 
+        private static readonly Material TetherGlowMaterial = MaterialPool.MatFrom(TetherGlowTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material TetherCoreMaterial = MaterialPool.MatFrom(TetherCoreTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material TetherChainSparseMaterial = MaterialPool.MatFrom(TetherChainSparseTexPath, ShaderDatabase.Transparent);
+        private static readonly Material TetherChainHeavyMaterial = MaterialPool.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.Transparent);
+        private static readonly Material TetherSnapAnchorMaterial = MaterialPool.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.Transparent);
+        private static readonly Material TetherSnapHeartMaterial = MaterialPool.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.Transparent);
+
         private static ThingDef anchorBreakMoteDef;
         private static ThingDef heartExposeMoteDef;
         private static ThingDef shieldBlockMoteDef;
+
+        public static int SeverBurstDurationTicks
+        {
+            get { return LinkSeverBurstDurationTicks; }
+        }
 
         private static ThingDef AnchorBreakMoteDef
         {
@@ -49,24 +70,82 @@ namespace AbyssalProtocol
             anchorPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.012f;
             heartPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.012f;
 
-            Vector3 delta = heartPos - anchorPos;
-            float length = delta.MagnitudeHorizontal();
-            if (length <= 0.25f)
+            Vector3 flatDelta = heartPos - anchorPos;
+            flatDelta.y = 0f;
+            float length = flatDelta.magnitude;
+            if (length <= 0.80f)
+            {
+                return;
+            }
+
+            Vector3 direction = flatDelta / length;
+            Vector3 start = anchorPos + direction * Mathf.Min(0.65f, length * 0.14f);
+            Vector3 end = heartPos - direction * Mathf.Min(1.05f, length * 0.20f);
+            start.y = anchorPos.y;
+            end.y = heartPos.y;
+
+            float renderLength = (end - start).MagnitudeHorizontal();
+            if (renderLength <= 0.25f)
             {
                 return;
             }
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float roleOffset = GetRolePhaseOffset(role);
-            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.044f + roleOffset) * 0.08f;
-            float breath = 1f + Mathf.Sin((ticks + seed) * 0.017f + roleOffset) * 0.05f;
-            float surge = 1f + Mathf.Sin((ticks + seed) * 0.072f + roleOffset) * 0.035f;
+            float pulse = 1f + Mathf.Sin((ticks + seed) * 0.044f + roleOffset) * 0.070f;
+            float breath = 1f + Mathf.Sin((ticks + seed) * 0.017f + roleOffset) * 0.055f;
+            float surge = 1f + Mathf.Sin((ticks + seed) * 0.072f + roleOffset) * 0.040f;
+            float heavySignal = Mathf.Sin((ticks + seed) * 0.026f + roleOffset);
             float width = GetRoleWidth(role) * pulse;
 
-            DrawBeam(anchorPos, heartPos, width * 3.05f, length, LinkBeamMaterial, breath);
-            DrawBeam(anchorPos, heartPos, width * 1.35f, length, LinkBeamMaterial, 1f + (surge - 1f) * 0.8f);
-            DrawBeam(anchorPos, heartPos, width * 0.58f, length, LinkCoreMaterial, 1f + (pulse - 1f) * 0.65f);
-            DrawLinkEntryBloom(heartPos, role, seed, ticks, 1.18f + width * 3.6f);
+            // The generated tether sheet is deliberately layered: soft aura, visible core,
+            // sparse chain authority, and rare heavier chain beats. Widths are kept in the
+            // middle range so the link is readable on max zoom without becoming a wall.
+            DrawBeam(start, end, width * 13.4f, renderLength, TetherGlowMaterial, breath);
+            DrawBeam(start, end, width * 1.28f, renderLength, TetherCoreMaterial, 1f + (surge - 1f) * 0.72f);
+            DrawBeam(start, end, width * 2.62f, renderLength, TetherChainSparseMaterial, 1f);
+            DrawBeam(start, end, width * 0.72f, renderLength, TetherCoreMaterial, 1f + (pulse - 1f) * 0.65f);
+
+            if (heavySignal > 0.18f)
+            {
+                DrawBeam(start, end, width * 2.92f, renderLength, TetherChainHeavyMaterial, 0.98f + heavySignal * 0.025f);
+            }
+        }
+
+        public static void DrawAnchorLinkSeverBurst(Vector3 anchorPos, Vector3 heartPos, Map map, DominionSliceAnchorRole role, int seed, int ageTicks)
+        {
+            if (map == null || ageTicks < 0 || ageTicks > LinkSeverBurstDurationTicks)
+            {
+                return;
+            }
+
+            anchorPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
+            heartPos.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.020f;
+
+            Vector3 flatDelta = heartPos - anchorPos;
+            flatDelta.y = 0f;
+            float length = flatDelta.magnitude;
+            if (length <= 0.80f)
+            {
+                return;
+            }
+
+            Vector3 direction = flatDelta / length;
+            float progress = Mathf.Clamp01(ageTicks / (float)LinkSeverBurstDurationTicks);
+            float segment = Mathf.Clamp(length * (0.27f + progress * 0.04f), 2.60f, 6.40f);
+            float baseWidth = GetRoleWidth(role);
+            float burstWidth = baseWidth * Mathf.Lerp(7.25f, 4.75f, progress);
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            float jitter = 1f + Mathf.Sin((ticks + seed) * 0.115f + GetRolePhaseOffset(role)) * 0.035f;
+
+            Vector3 anchorFrom = anchorPos + direction * 0.15f;
+            Vector3 anchorTo = anchorPos + direction * segment;
+            Vector3 heartFrom = heartPos - direction * segment;
+            Vector3 heartTo = heartPos - direction * 0.20f;
+            anchorFrom.y = anchorTo.y = heartFrom.y = heartTo.y = anchorPos.y;
+
+            DrawBeam(anchorFrom, anchorTo, burstWidth * jitter, (anchorTo - anchorFrom).MagnitudeHorizontal(), TetherSnapAnchorMaterial, 1f);
+            DrawBeam(heartFrom, heartTo, burstWidth * (0.92f + (1f - progress) * 0.06f), (heartTo - heartFrom).MagnitudeHorizontal(), TetherSnapHeartMaterial, 1f);
         }
 
         public static void DrawHeartShield(Vector3 heartPos, Map map, int liveAnchors, int seed)
@@ -92,6 +171,45 @@ namespace AbyssalProtocol
             FleckMaker.ThrowLightningGlow(position, map, 2.15f);
             FleckMaker.ThrowMicroSparks(position, map);
             FleckMaker.ThrowMicroSparks(position, map);
+        }
+
+        public static void SpawnAnchorLinkSever(Vector3 anchorPos, Vector3 heartPos, Map map, DominionSliceAnchorRole role)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            SpawnAnchorBreakFlare(anchorPos, map, role);
+
+            Vector3 flatDelta = heartPos - anchorPos;
+            flatDelta.y = 0f;
+            float distance = flatDelta.magnitude;
+            if (distance <= 0.10f)
+            {
+                FleckMaker.ThrowLightningGlow(heartPos, map, 1.45f);
+                FleckMaker.ThrowMicroSparks(heartPos, map);
+                return;
+            }
+
+            Vector3 direction = flatDelta / distance;
+            Vector3 midpoint = anchorPos + direction * (distance * 0.45f);
+            midpoint.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.006f;
+
+            Vector3 heartSocket = heartPos - direction * Mathf.Clamp(distance * 0.16f, 1.05f, 2.15f);
+            heartSocket.y = AltitudeLayer.MoteOverhead.AltitudeFor() + 0.006f;
+
+            ThingDef moteDef = AnchorBreakMoteDef;
+            if (moteDef != null)
+            {
+                MoteMaker.MakeStaticMote(midpoint, map, moteDef, role == DominionSliceAnchorRole.Law ? 1.28f : 1.10f);
+            }
+
+            FleckMaker.ThrowLightningGlow(midpoint, map, 1.28f);
+            FleckMaker.ThrowLightningGlow(heartSocket, map, 1.44f);
+            FleckMaker.ThrowMicroSparks(midpoint, map);
+            FleckMaker.ThrowMicroSparks(heartSocket, map);
+            FleckMaker.ThrowMicroSparks(heartSocket + new Vector3(direction.z, 0f, -direction.x) * 0.18f, map);
         }
 
         public static void SpawnHeartExposedBurst(Vector3 position, Map map)
@@ -142,11 +260,11 @@ namespace AbyssalProtocol
             switch (role)
             {
                 case DominionSliceAnchorRole.Choir:
-                    return 0.108f;
+                    return 0.168f;
                 case DominionSliceAnchorRole.Law:
-                    return 0.140f;
+                    return 0.206f;
                 default:
-                    return 0.122f;
+                    return 0.186f;
             }
         }
 

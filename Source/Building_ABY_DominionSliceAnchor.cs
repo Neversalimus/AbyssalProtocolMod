@@ -116,6 +116,15 @@ namespace AbyssalProtocol
                 encounter != null && encounter.IsAnchorfallActive,
                 thingIDNumber);
 
+            if (encounter != null && encounter.ShouldDrawAnchorLinks)
+            {
+                Building_ABY_DominionSliceHeart linkedHeart = encounter.HeartBuilding;
+                if (linkedHeart != null && !linkedHeart.Destroyed)
+                {
+                    DominionSliceVfxUtility.DrawAnchorLink(drawLoc, linkedHeart.DrawPos, Map, AnchorRole, thingIDNumber);
+                }
+            }
+
             string glowPath = SliceExtension != null ? SliceExtension.glowTexPath : null;
             if (glowPath.NullOrEmpty())
             {

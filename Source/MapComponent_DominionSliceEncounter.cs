@@ -39,6 +39,16 @@ namespace AbyssalProtocol
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
         private List<Building_ABY_DominionSliceAnchor> anchors = new List<Building_ABY_DominionSliceAnchor>();
+        private readonly List<LinkSeverBurst> linkSeverBursts = new List<LinkSeverBurst>();
+
+        private struct LinkSeverBurst
+        {
+            public Vector3 anchorPos;
+            public Vector3 heartPos;
+            public DominionSliceAnchorRole role;
+            public int startTick;
+            public int seed;
+        }
 
         public bool IsActiveEncounter
         {
@@ -87,7 +97,7 @@ namespace AbyssalProtocol
 
         public bool ShouldDrawAnchorLinks
         {
-            get { return phase == SlicePhase.Anchorfall && GetLiveAnchorCount() > 0 && HeartBuilding != null; }
+            get { return IsActiveEncounter && !IsHeartExposed && GetLiveAnchorCount() > 0 && HeartBuilding != null; }
         }
 
         public bool ShouldDrawHeartShield
@@ -257,6 +267,7 @@ namespace AbyssalProtocol
             lastWaveLabel = null;
             lastWaveSummary = null;
             anchors.Clear();
+            linkSeverBursts.Clear();
             heart = null;
 
             SpawnEncounterObjects(session);
@@ -292,14 +303,19 @@ namespace AbyssalProtocol
 
         public void NotifyAnchorDestroyed(Building_ABY_DominionSliceAnchor anchor)
         {
-            if (anchor != null && anchors != null)
+            if (anchor != null)
             {
-                anchors.Remove(anchor);
+                TrySpawnAnchorLinkSeverVfx(anchor);
+                if (anchors != null)
+                {
+                    anchors.Remove(anchor);
+                }
             }
 
             if (phase == SlicePhase.Anchorfall)
             {
-                Messages.Message("ABY_DominionSliceEncounter_AnchorDestroyed".Translate(GetLiveAnchorCount()), new TargetInfo(anchor.PositionHeld, map), MessageTypeDefOf.PositiveEvent, false);
+                TargetInfo target = anchor != null ? new TargetInfo(anchor.PositionHeld, map) : new TargetInfo(map.Center, map);
+                Messages.Message("ABY_DominionSliceEncounter_AnchorDestroyed".Translate(GetLiveAnchorCount()), target, MessageTypeDefOf.PositiveEvent, false);
                 if (GetLiveAnchorCount() <= 0)
                 {
                     BeginHeartExposed();
@@ -318,6 +334,55 @@ namespace AbyssalProtocol
             {
                 BeginCollapse(true);
             }
+        }
+
+        public void DrawAnchorLinkSeverBursts()
+        {
+            if (linkSeverBursts == null || linkSeverBursts.Count == 0 || map == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            int now = Find.TickManager.TicksGame;
+            for (int i = linkSeverBursts.Count - 1; i >= 0; i--)
+            {
+                LinkSeverBurst burst = linkSeverBursts[i];
+                int age = now - burst.startTick;
+                if (age > DominionSliceVfxUtility.SeverBurstDurationTicks)
+                {
+                    linkSeverBursts.RemoveAt(i);
+                    continue;
+                }
+
+                DominionSliceVfxUtility.DrawAnchorLinkSeverBurst(burst.anchorPos, burst.heartPos, map, burst.role, burst.seed, age);
+            }
+        }
+
+        private void TrySpawnAnchorLinkSeverVfx(Building_ABY_DominionSliceAnchor anchor)
+        {
+            if (anchor == null || map == null || !IsActiveEncounter || IsHeartExposed)
+            {
+                return;
+            }
+
+            Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
+            if (heartBuilding == null || heartBuilding.Destroyed)
+            {
+                return;
+            }
+
+            Vector3 anchorPos = anchor.DrawPos;
+            Vector3 heartPos = heartBuilding.DrawPos;
+            DominionSliceVfxUtility.SpawnAnchorLinkSever(anchorPos, heartPos, map, anchor.AnchorRole);
+
+            linkSeverBursts.Add(new LinkSeverBurst
+            {
+                anchorPos = anchorPos,
+                heartPos = heartPos,
+                role = anchor.AnchorRole,
+                startTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
+                seed = anchor.thingIDNumber
+            });
         }
 
         public void AccelerateNextWave(int ticks)
