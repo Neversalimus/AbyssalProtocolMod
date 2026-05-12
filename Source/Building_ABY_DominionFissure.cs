@@ -33,7 +33,7 @@ namespace AbyssalProtocol
 
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             int frameDuration = Mathf.Max(1, extension.frameDurationTicks);
-            int frame = Mathf.Abs((ticks + thingIDNumber) / frameDuration) % frameCount;
+            int frame = Mathf.Abs(ticks / frameDuration) % frameCount;
             Mesh mesh = meshes[frame];
             if (mesh == null)
             {

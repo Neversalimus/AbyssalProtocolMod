@@ -25,7 +25,7 @@
     <defName>ABY_DominionFissureStraight</defName>
     <label>dominion hemoplasm fissure</label>
     <description>A sealed but impassable tear in the Dominion Slice floor, filled with black-red abyssal hemoplasm and industrial pressure static.</description>
-    <size>(8,2)</size>
+    <size>(6,2)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Straight_Sheet_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -35,11 +35,11 @@
       <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Straight_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
-        <frameDurationTicks>9</frameDurationTicks>
-        <drawSizeX>12.2</drawSizeX>
-        <drawSizeZ>3.15</drawSizeZ>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>8.6</drawSizeX>
+        <drawSizeZ>2.8</drawSizeZ>
         <altitudeOffset>0.060</altitudeOffset>
-        <colorA>0.90</colorA>
+        <colorA>0.88</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -48,7 +48,7 @@
     <defName>ABY_DominionFissureCorner</defName>
     <label>dominion hemoplasm fissure corner</label>
     <description>A bent impassable Dominion rupture where industrial floor plating has folded around a black-red living pressure wound.</description>
-    <size>(6,7)</size>
+    <size>(5,5)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Corner_Sheet_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -59,10 +59,10 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Corner_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>7.4</drawSizeX>
-        <drawSizeZ>8.7</drawSizeZ>
+        <drawSizeX>6.3</drawSizeX>
+        <drawSizeZ>6.5</drawSizeZ>
         <altitudeOffset>0.061</altitudeOffset>
-        <colorA>0.90</colorA>
+        <colorA>0.88</colorA>
       </li>
     </modExtensions>
   </ThingDef>
@@ -71,7 +71,7 @@
     <defName>ABY_DominionFissureEndcap</defName>
     <label>dominion terminal fissure</label>
     <description>A terminal pressure pocket at the end of a Dominion floor tear, sealed around abyssal hemoplasm instead of open lava or a portal.</description>
-    <size>(5,5)</size>
+    <size>(4,4)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Endcap_Sheet_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -81,9 +81,9 @@
       <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Endcap_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
-        <frameDurationTicks>11</frameDurationTicks>
-        <drawSizeX>6.4</drawSizeX>
-        <drawSizeZ>6.2</drawSizeZ>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>5.4</drawSizeX>
+        <drawSizeZ>5.2</drawSizeZ>
         <altitudeOffset>0.062</altitudeOffset>
         <colorA>0.88</colorA>
       </li>
@@ -94,7 +94,7 @@
     <defName>ABY_DominionFissureNode</defName>
     <label>dominion fissure pressure node</label>
     <description>A wider impassable Dominion rupture node where several abyssal pressure seams meet under the ash-metal floor.</description>
-    <size>(7,8)</size>
+    <size>(6,6)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Node_Sheet_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -104,11 +104,11 @@
       <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Node_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
-        <frameDurationTicks>9</frameDurationTicks>
-        <drawSizeX>8.4</drawSizeX>
-        <drawSizeZ>9.2</drawSizeZ>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>7.2</drawSizeX>
+        <drawSizeZ>7.3</drawSizeZ>
         <altitudeOffset>0.063</altitudeOffset>
-        <colorA>0.92</colorA>
+        <colorA>0.90</colorA>
       </li>
     </modExtensions>
   </ThingDef>

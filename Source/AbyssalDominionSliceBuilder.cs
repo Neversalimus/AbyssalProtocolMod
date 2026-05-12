@@ -605,51 +605,137 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // Animated Dominion fissures: authored connected blocker chains along the outer combat field.
-            // The first pass placed good assets as isolated markers; this pass keeps the same art but
-            // aligns centres, rotations and spacing so each seam reads as one continuous impassable rupture.
+            // Animated Dominion fissures are intentionally authored as connected blocker chains.
+            // Do not scatter them as individual markers: the generated sheets need overlapping,
+            // globally synced pieces so the seam reads as one stable wound instead of crawling fragments.
             List<IntVec3> spawned = new List<IntVec3>();
 
-            // North-west seam: vertical tear from the upper shell, bending into a short westward wound.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-17, 0, 50), Rot4.West, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 41), Rot4.East, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, 31), Rot4.East, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(-17, 0, 22), Rot4.West, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-25, 0, 22), Rot4.North, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(-33, 0, 22), Rot4.North, reserved, spawned, 8.0f, 3.0f);
+            SpawnFissurePath(map, center, reserved, spawned,
+                new IntVec3(-18, 0, 50),
+                new IntVec3(-18, 0, 20),
+                new IntVec3(-36, 0, 20));
 
-            // North-east seam: continuous vertical tear, then a horizontal fracture across the upper-right field.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(20, 0, 50), Rot4.West, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 41), Rot4.East, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(20, 0, 31), Rot4.East, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureCornerDefName, center + new IntVec3(20, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(29, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(39, 0, 23), Rot4.North, reserved, spawned, 8.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(49, 0, 23), Rot4.East, reserved, spawned, 8.0f, 3.0f);
+            SpawnFissurePath(map, center, reserved, spawned,
+                new IntVec3(21, 0, 50),
+                new IntVec3(21, 0, 20),
+                new IntVec3(51, 0, 20));
 
-            // West-side edge wound, deliberately kept away from the reward pocket and objective lanes.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-55, 0, -19), Rot4.West, reserved, spawned, 7.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-46, 0, -19), Rot4.North, reserved, spawned, 7.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-36, 0, -19), Rot4.North, reserved, spawned, 7.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-27, 0, -19), Rot4.East, reserved, spawned, 7.0f, 3.0f);
+            SpawnFissurePath(map, center, reserved, spawned,
+                new IntVec3(-57, 0, -17),
+                new IntVec3(-27, 0, -17));
 
-            // South-east seam: rising vertical tear which turns into a horizontal lower-right rupture.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(35, 0, -47), Rot4.East, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -38), Rot4.East, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(35, 0, -28), Rot4.East, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureNodeDefName, center + new IntVec3(35, 0, -19), Rot4.North, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(44, 0, -19), Rot4.North, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(54, 0, -19), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+            SpawnFissurePath(map, center, reserved, spawned,
+                new IntVec3(36, 0, -47),
+                new IntVec3(36, 0, -17),
+                new IntVec3(54, 0, -17));
 
-            // Bottom-left accent seam: a short connected tear near the lower shell to balance the scene.
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-26, 0, -48), Rot4.West, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + new IntVec3(-17, 0, -48), Rot4.North, reserved, spawned, 9.0f, 3.0f);
-            TrySpawnDominionFissure(map, DominionFissureEndcapDefName, center + new IntVec3(-8, 0, -48), Rot4.East, reserved, spawned, 9.0f, 3.0f);
+            SpawnFissurePath(map, center, reserved, spawned,
+                new IntVec3(-27, 0, -48),
+                new IntVec3(-9, 0, -48));
 
             if (spawned.Count > 0)
             {
                 reserved.AddRange(spawned);
             }
+        }
+
+        private static void SpawnFissurePath(Map map, IntVec3 center, List<IntVec3> protectedCells, List<IntVec3> spawnedFissures, params IntVec3[] offsets)
+        {
+            if (map == null || offsets == null || offsets.Length < 2)
+            {
+                return;
+            }
+
+            const float protectedMinDistance = 5.25f;
+            const float chainMinDistance = 0.10f;
+            const int step = 6;
+            const int bendInset = 5;
+
+            for (int i = 0; i < offsets.Length; i++)
+            {
+                IntVec3 cell = center + offsets[i];
+                if (i == 0 || i == offsets.Length - 1)
+                {
+                    Rot4 endRot = EndcapRotation(offsets, i);
+                    TrySpawnDominionFissure(map, DominionFissureEndcapDefName, cell, endRot, protectedCells, spawnedFissures, protectedMinDistance, chainMinDistance);
+                }
+                else
+                {
+                    Rot4 nodeRot = CornerRotation(offsets[i - 1], offsets[i], offsets[i + 1]);
+                    TrySpawnDominionFissure(map, DominionFissureNodeDefName, cell, nodeRot, protectedCells, spawnedFissures, protectedMinDistance, chainMinDistance);
+                }
+            }
+
+            for (int i = 0; i < offsets.Length - 1; i++)
+            {
+                SpawnFissureRun(map, center, offsets[i], offsets[i + 1], protectedCells, spawnedFissures, protectedMinDistance, chainMinDistance, bendInset, step);
+            }
+        }
+
+        private static void SpawnFissureRun(Map map, IntVec3 center, IntVec3 fromOffset, IntVec3 toOffset, List<IntVec3> protectedCells, List<IntVec3> spawnedFissures, float protectedMinDistance, float chainMinDistance, int inset, int step)
+        {
+            int dx = toOffset.x - fromOffset.x;
+            int dz = toOffset.z - fromOffset.z;
+            if (dx != 0 && dz != 0)
+            {
+                return;
+            }
+
+            int distance = Mathf.Max(Math.Abs(dx), Math.Abs(dz));
+            if (distance <= inset * 2)
+            {
+                return;
+            }
+
+            int dirX = dx == 0 ? 0 : Math.Sign(dx);
+            int dirZ = dz == 0 ? 0 : Math.Sign(dz);
+            Rot4 rot = dz != 0 ? Rot4.East : Rot4.North;
+
+            for (int d = inset; d <= distance - inset; d += Mathf.Max(1, step))
+            {
+                IntVec3 offset = new IntVec3(fromOffset.x + dirX * d, 0, fromOffset.z + dirZ * d);
+                TrySpawnDominionFissure(map, DominionFissureStraightDefName, center + offset, rot, protectedCells, spawnedFissures, protectedMinDistance, chainMinDistance);
+            }
+        }
+
+        private static Rot4 EndcapRotation(IntVec3[] offsets, int index)
+        {
+            if (offsets == null || offsets.Length < 2)
+            {
+                return Rot4.North;
+            }
+
+            IntVec3 here = offsets[index];
+            IntVec3 next = index == 0 ? offsets[1] : offsets[index - 1];
+            int dx = next.x - here.x;
+            int dz = next.z - here.z;
+            if (Math.Abs(dx) >= Math.Abs(dz))
+            {
+                return dx >= 0 ? Rot4.East : Rot4.West;
+            }
+            return dz >= 0 ? Rot4.North : Rot4.South;
+        }
+
+        private static Rot4 CornerRotation(IntVec3 previous, IntVec3 current, IntVec3 next)
+        {
+            int dxA = current.x - previous.x;
+            int dzA = current.z - previous.z;
+            int dxB = next.x - current.x;
+            int dzB = next.z - current.z;
+
+            if ((dxA < 0 && dzB < 0) || (dzA > 0 && dxB > 0))
+            {
+                return Rot4.North;
+            }
+            if ((dxA > 0 && dzB < 0) || (dzA > 0 && dxB < 0))
+            {
+                return Rot4.East;
+            }
+            if ((dxA > 0 && dzB > 0) || (dzA < 0 && dxB < 0))
+            {
+                return Rot4.South;
+            }
+            return Rot4.West;
         }
 
         private static bool TrySpawnDominionFissure(Map map, string defName, IntVec3 cell, Rot4 rot, List<IntVec3> protectedCells, List<IntVec3> spawnedFissures, float protectedMinDistance, float fissureMinDistance)
