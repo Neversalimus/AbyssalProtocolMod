@@ -241,8 +241,19 @@ namespace AbyssalProtocol
 
         private static IntVec3 ClampToInterior(Map map, IntVec3 cell)
         {
-            int x = Mathf.Clamp(cell.x, 8, map.Size.x - 9);
-            int z = Mathf.Clamp(cell.z, 8, map.Size.z - 9);
+            return ClampToInterior(map, cell, 8);
+        }
+
+        private static IntVec3 ClampToInterior(Map map, IntVec3 cell, int margin)
+        {
+            if (map == null)
+            {
+                return cell;
+            }
+
+            int safeMargin = Mathf.Clamp(margin, 1, Mathf.Max(1, Mathf.Min(map.Size.x, map.Size.z) / 2 - 1));
+            int x = Mathf.Clamp(cell.x, safeMargin, map.Size.x - safeMargin - 1);
+            int z = Mathf.Clamp(cell.z, safeMargin, map.Size.z - safeMargin - 1);
             return new IntVec3(x, 0, z);
         }
 
@@ -590,30 +601,34 @@ namespace AbyssalProtocol
             // Generated hotfix assets: big readable silhouettes first, then old small props.
             // These are pass-through visual layers, so they make the slice feel built without
             // adding maze blockers around heart, anchors, entry, extraction or reward cells.
-            SpawnProp(map, HeartFloorFractureDefName, ClampToInterior(map, center + new IntVec3(0, 0, -1)), Rot4.North, false);
-            SpawnProp(map, EntrySeamScarDefName, ClampToInterior(map, entry + new IntVec3(0, 0, 3)), Rot4.North, false);
+            // Hotfix 5.2: clamp large art by draw-footprint margin and keep it on lower altitude
+            // defs so oversized silhouettes cannot visually sit on top of the pocket perimeter wall.
+            SpawnProp(map, HeartFloorFractureDefName, ClampToInterior(map, center + new IntVec3(0, 0, -1), 12), Rot4.North, false);
 
-            SpawnProp(map, SideRoomFloorUnderlayDefName, ClampToInterior(map, center + new IntVec3(-50, 0, 8)), Rot4.North, false);
-            TrySpawnDominionDecoration(map, SideRoomMachineBayWestDefName, ClampToInterior(map, center + new IntVec3(-51, 0, 8)), Rot4.North, reserved, 7.0f, false);
+            // The generated south seam scar read too much like a broken wall under arriving pawns.
+            // Enemy emergence remains VFX-driven in MapComponent_DominionSliceEncounter; static entry
+            // dressing is kept as flanking floor tears instead of a central structure under pawns.
+            TrySpawnDominionDecoration(map, EdgeVoidTearDefName, ClampToInterior(map, entry + new IntVec3(-18, 0, -7), 12), Rot4.North, reserved, 5.5f, false);
+            TrySpawnDominionDecoration(map, EdgeVoidTearDefName, ClampToInterior(map, entry + new IntVec3(18, 0, -7), 12), Rot4.North, reserved, 5.5f, false);
 
-            SpawnProp(map, SideRoomFloorUnderlayDefName, ClampToInterior(map, center + new IntVec3(50, 0, 9)), Rot4.North, false);
-            TrySpawnDominionDecoration(map, SideRoomReliquaryBayEastDefName, ClampToInterior(map, center + new IntVec3(51, 0, 9)), Rot4.North, reserved, 7.0f, false);
+            SpawnProp(map, SideRoomFloorUnderlayDefName, ClampToInterior(map, center + new IntVec3(-43, 0, 4), 18), Rot4.North, false);
+            TrySpawnDominionDecoration(map, SideRoomMachineBayWestDefName, ClampToInterior(map, center + new IntVec3(-43, 0, 4), 18), Rot4.North, reserved, 7.0f, false);
 
-            TrySpawnDominionDecoration(map, BackWallShellNorthDefName, ClampToInterior(map, center + new IntVec3(0, 0, 47)), Rot4.North, reserved, 8.5f, false);
-            TrySpawnDominionDecoration(map, EdgeMegastructureStraightDefName, ClampToInterior(map, center + new IntVec3(-43, 0, 44)), Rot4.North, reserved, 6.5f, false);
-            TrySpawnDominionDecoration(map, EdgeMegastructureStraightDefName, ClampToInterior(map, center + new IntVec3(43, 0, 43)), Rot4.North, reserved, 6.5f, false);
-            TrySpawnDominionDecoration(map, EdgeMegastructureCornerDefName, ClampToInterior(map, center + new IntVec3(-52, 0, -34)), Rot4.North, reserved, 6.5f, false);
-            TrySpawnDominionDecoration(map, EdgeMegastructureCornerDefName, ClampToInterior(map, center + new IntVec3(52, 0, -34)), Rot4.North, reserved, 6.5f, false);
+            SpawnProp(map, SideRoomFloorUnderlayDefName, ClampToInterior(map, center + new IntVec3(43, 0, 5), 18), Rot4.North, false);
+            TrySpawnDominionDecoration(map, SideRoomReliquaryBayEastDefName, ClampToInterior(map, center + new IntVec3(43, 0, 5), 18), Rot4.North, reserved, 7.0f, false);
 
-            TrySpawnDominionDecoration(map, MachineWreckReactorRibDefName, ClampToInterior(map, center + new IntVec3(42, 0, -31)), Rot4.North, reserved, 6.5f, false);
-            TrySpawnDominionDecoration(map, PlateCollapseLargeDefName, ClampToInterior(map, center + new IntVec3(-41, 0, -31)), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, BackWallShellNorthDefName, ClampToInterior(map, center + new IntVec3(0, 0, 39), 16), Rot4.North, reserved, 8.5f, false);
+            TrySpawnDominionDecoration(map, EdgeMegastructureStraightDefName, ClampToInterior(map, center + new IntVec3(-31, 0, 37), 16), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, EdgeMegastructureStraightDefName, ClampToInterior(map, center + new IntVec3(31, 0, 36), 16), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, EdgeMegastructureCornerDefName, ClampToInterior(map, center + new IntVec3(-43, 0, -30), 16), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, EdgeMegastructureCornerDefName, ClampToInterior(map, center + new IntVec3(43, 0, -30), 16), Rot4.North, reserved, 6.5f, false);
 
-            TrySpawnDominionDecoration(map, BrokenConduitSpineDefName, ClampToInterior(map, center + new IntVec3(-19, 0, 8)), Rot4.North, reserved, 5.0f, false);
-            TrySpawnDominionDecoration(map, BrokenConduitSpineDefName, ClampToInterior(map, center + new IntVec3(20, 0, 10)), Rot4.North, reserved, 5.0f, false);
-            TrySpawnDominionDecoration(map, PlateCollapseLargeDefName, ClampToInterior(map, center + new IntVec3(0, 0, 34)), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, MachineWreckReactorRibDefName, ClampToInterior(map, center + new IntVec3(36, 0, -29), 14), Rot4.North, reserved, 6.5f, false);
+            TrySpawnDominionDecoration(map, PlateCollapseLargeDefName, ClampToInterior(map, center + new IntVec3(-36, 0, -29), 14), Rot4.North, reserved, 6.5f, false);
 
-            TrySpawnDominionDecoration(map, EdgeVoidTearDefName, ClampToInterior(map, entry + new IntVec3(-22, 0, -9)), Rot4.North, reserved, 5.5f, false);
-            TrySpawnDominionDecoration(map, EdgeVoidTearDefName, ClampToInterior(map, entry + new IntVec3(22, 0, -10)), Rot4.North, reserved, 5.5f, false);
+            TrySpawnDominionDecoration(map, BrokenConduitSpineDefName, ClampToInterior(map, center + new IntVec3(-16, 0, 8), 12), Rot4.North, reserved, 5.0f, false);
+            TrySpawnDominionDecoration(map, BrokenConduitSpineDefName, ClampToInterior(map, center + new IntVec3(17, 0, 10), 12), Rot4.North, reserved, 5.0f, false);
+            TrySpawnDominionDecoration(map, PlateCollapseLargeDefName, ClampToInterior(map, center + new IntVec3(0, 0, 32), 14), Rot4.North, reserved, 6.5f, false);
         }
 
         private static void SpawnFlankRibs(Map map, IntVec3 center, IntVec3 extraction, List<IntVec3> reserved)

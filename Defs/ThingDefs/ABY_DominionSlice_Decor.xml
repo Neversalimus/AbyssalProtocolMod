@@ -397,7 +397,7 @@
     <category>Building</category>
     <drawerType>MapMeshOnly</drawerType>
     <tickerType>Never</tickerType>
-    <altitudeLayer>Building</altitudeLayer>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <fillPercent>0</fillPercent>
     <rotatable>false</rotatable>
@@ -420,7 +420,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_MachineBay_West</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(16.8,8.8)</drawSize>
+      <drawSize>(14.5,7.2)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -431,7 +431,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_ReliquaryBay_East</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(17.4,8.0)</drawSize>
+      <drawSize>(14.8,6.8)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -442,7 +442,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionBackWallShell_North</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(20.5,6.8)</drawSize>
+      <drawSize>(16.5,5.4)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -453,7 +453,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEdge_Megastructure_Straight_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(14.8,3.8)</drawSize>
+      <drawSize>(12.4,3.1)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -464,7 +464,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEdge_Megastructure_Corner_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(7.6,8.6)</drawSize>
+      <drawSize>(6.6,7.2)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -475,7 +475,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionMachineWreck_ReactorRib_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(9.6,5.0)</drawSize>
+      <drawSize>(8.0,4.1)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -497,7 +497,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionEntry_SeamScar_South</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(10.8,5.4)</drawSize>
+      <drawSize>(7.4,3.1)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -508,7 +508,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionBrokenConduitSpine_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(18.0,3.2)</drawSize>
+      <drawSize>(14.0,2.5)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -519,7 +519,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Decals/ABY_DominionPlateCollapse_Large_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(9.4,5.8)</drawSize>
+      <drawSize>(7.6,4.7)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -530,7 +530,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Setpieces/ABY_DominionSideRoom_FloorUnderlay_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(15.5,8.8)</drawSize>
+      <drawSize>(13.4,7.0)</drawSize>
     </graphicData>
   </ThingDef>
 
@@ -541,7 +541,7 @@
     <graphicData>
       <texPath>Things/Building/DominionSlice/Decals/ABY_DominionEdge_VoidTear_A</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(12.0,4.2)</drawSize>
+      <drawSize>(9.4,3.2)</drawSize>
     </graphicData>
   </ThingDef>
 

@@ -222,8 +222,12 @@ namespace AbyssalProtocol
             }
 
             Vector3 loc = drawLoc;
+            // The approved anchor sprites have a tall crown body, so their visual base sits
+            // slightly south of the full texture center. Nudge only the platform underlay down
+            // to align the machine socket with the anchor base instead of the top-heavy sprite.
+            loc.z -= 0.32f;
             loc.y = AltitudeLayer.FloorEmplacement.AltitudeFor() + 0.020f;
-            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(6.6f, 1f, 6.6f));
+            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(6.35f, 1f, 6.35f));
             Graphics.DrawMesh(MeshPool.plane10, matrix, platformGraphic.MatSingle, 0);
         }
 
