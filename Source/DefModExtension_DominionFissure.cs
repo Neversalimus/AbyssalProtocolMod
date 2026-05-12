@@ -11,6 +11,8 @@ namespace AbyssalProtocol
         public float drawSizeX = 8f;
         public float drawSizeZ = 3f;
         public float altitudeOffset = 0.055f;
+        public float drawOffsetX = 0f;
+        public float drawOffsetZ = 0f;
         public bool usePostLightShader = true;
         public float colorR = 1f;
         public float colorG = 1f;

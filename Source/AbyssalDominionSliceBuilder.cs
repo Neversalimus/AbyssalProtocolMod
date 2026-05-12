@@ -32,6 +32,12 @@ namespace AbyssalProtocol
         private const string DominionFissureCornerDefName = "ABY_DominionFissureCorner";
         private const string DominionFissureEndcapDefName = "ABY_DominionFissureEndcap";
         private const string DominionFissureNodeDefName = "ABY_DominionFissureNode";
+        private const string DominionFissureBlockerDefName = "ABY_DominionFissureBlocker";
+        private const string DominionFissurePathNorthWestDefName = "ABY_DominionFissurePathNorthWest";
+        private const string DominionFissurePathNorthEastDefName = "ABY_DominionFissurePathNorthEast";
+        private const string DominionFissurePathWestMidDefName = "ABY_DominionFissurePathWestMid";
+        private const string DominionFissurePathSouthEastDefName = "ABY_DominionFissurePathSouthEast";
+        private const string DominionFissurePathSouthWestDefName = "ABY_DominionFissurePathSouthWest";
 
         private static readonly string[] DominionRuinWallDefs =
         {
@@ -605,37 +611,181 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // Animated Dominion fissures are intentionally authored as connected blocker chains.
-            // Do not scatter them as individual markers: the generated sheets need overlapping,
-            // globally synced pieces so the seam reads as one stable wound instead of crawling fragments.
-            List<IntVec3> spawned = new List<IntVec3>();
+            // The generated modular pieces look good individually, but they are not pixel-perfect
+            // tile modules. Drawing each segment as an independent building causes small frame-to-frame
+            // and connector misalignments. The stable solution is to draw each whole fissure path as one
+            // pre-baked animated overlay, then use invisible one-cell blockers for actual pathing.
+            List<IntVec3> blockerCells = new List<IntVec3>();
 
-            SpawnFissurePath(map, center, reserved, spawned,
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathNorthWestDefName,
+                new IntVec3(-27, 0, 35),
                 new IntVec3(-18, 0, 50),
                 new IntVec3(-18, 0, 20),
                 new IntVec3(-36, 0, 20));
 
-            SpawnFissurePath(map, center, reserved, spawned,
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathNorthEastDefName,
+                new IntVec3(36, 0, 35),
                 new IntVec3(21, 0, 50),
                 new IntVec3(21, 0, 20),
                 new IntVec3(51, 0, 20));
 
-            SpawnFissurePath(map, center, reserved, spawned,
+            // Straight overlays are spawned a few cells away from their blocker line and drawn back
+            // with DefModExtension draw offsets so the invisible blockers and visual object do not
+            // compete for the same occupied center cell.
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathWestMidDefName,
+                new IntVec3(-42, 0, -12),
                 new IntVec3(-57, 0, -17),
                 new IntVec3(-27, 0, -17));
 
-            SpawnFissurePath(map, center, reserved, spawned,
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathSouthEastDefName,
+                new IntVec3(45, 0, -32),
                 new IntVec3(36, 0, -47),
                 new IntVec3(36, 0, -17),
                 new IntVec3(54, 0, -17));
 
-            SpawnFissurePath(map, center, reserved, spawned,
+            SpawnContinuousFissurePath(map, center, reserved, blockerCells,
+                DominionFissurePathSouthWestDefName,
+                new IntVec3(-18, 0, -43),
                 new IntVec3(-27, 0, -48),
                 new IntVec3(-9, 0, -48));
 
-            if (spawned.Count > 0)
+            if (blockerCells.Count > 0)
             {
-                reserved.AddRange(spawned);
+                reserved.AddRange(blockerCells);
+            }
+        }
+
+        private static void SpawnContinuousFissurePath(Map map, IntVec3 center, List<IntVec3> protectedCells, List<IntVec3> blockerCells, string visualDefName, IntVec3 visualOffset, params IntVec3[] pathOffsets)
+        {
+            if (map == null || pathOffsets == null || pathOffsets.Length < 2)
+            {
+                return;
+            }
+
+            TrySpawnDominionFissureVisual(map, visualDefName, center + visualOffset, protectedCells, blockerCells);
+            SpawnInvisibleFissureBlockers(map, center, protectedCells, blockerCells, pathOffsets);
+        }
+
+        private static void SpawnInvisibleFissureBlockers(Map map, IntVec3 center, List<IntVec3> protectedCells, List<IntVec3> blockerCells, IntVec3[] pathOffsets)
+        {
+            ThingDef blockerDef = DefDatabase<ThingDef>.GetNamedSilentFail(DominionFissureBlockerDefName);
+            if (blockerDef == null)
+            {
+                return;
+            }
+
+            const float protectedMinDistance = 4.25f;
+            const int halfWidth = 1;
+
+            for (int i = 0; i < pathOffsets.Length - 1; i++)
+            {
+                IntVec3 a = pathOffsets[i];
+                IntVec3 b = pathOffsets[i + 1];
+                int dx = b.x - a.x;
+                int dz = b.z - a.z;
+                if (dx != 0 && dz != 0)
+                {
+                    continue;
+                }
+
+                int distance = Mathf.Max(Math.Abs(dx), Math.Abs(dz));
+                int dirX = dx == 0 ? 0 : Math.Sign(dx);
+                int dirZ = dz == 0 ? 0 : Math.Sign(dz);
+
+                for (int d = 0; d <= distance; d++)
+                {
+                    IntVec3 offset = new IntVec3(a.x + dirX * d, 0, a.z + dirZ * d);
+                    for (int w = -halfWidth; w <= halfWidth; w++)
+                    {
+                        IntVec3 widened = dirX != 0
+                            ? new IntVec3(offset.x, 0, offset.z + w)
+                            : new IntVec3(offset.x + w, 0, offset.z);
+                        TrySpawnInvisibleFissureBlocker(map, blockerDef, center + widened, protectedCells, blockerCells, protectedMinDistance);
+                    }
+                }
+            }
+        }
+
+        private static bool TrySpawnDominionFissureVisual(Map map, string defName, IntVec3 cell, List<IntVec3> protectedCells, List<IntVec3> blockerCells)
+        {
+            if (string.IsNullOrEmpty(defName) || map == null)
+            {
+                return false;
+            }
+
+            cell = ClampToInterior(map, cell, 11);
+            if (!cell.InBounds(map) || CellContainsNonEphemeralThing(map, cell))
+            {
+                return false;
+            }
+
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                Thing thing = ThingMaker.MakeThing(def);
+                if (thing == null)
+                {
+                    return false;
+                }
+
+                GenSpawn.Spawn(thing, cell, map, Rot4.North);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Skipped continuous Dominion fissure visual " + defName + " at " + cell + ": " + ex.GetType().Name);
+                return false;
+            }
+        }
+
+        private static bool TrySpawnInvisibleFissureBlocker(Map map, ThingDef blockerDef, IntVec3 cell, List<IntVec3> protectedCells, List<IntVec3> blockerCells, float protectedMinDistance)
+        {
+            if (map == null || blockerDef == null)
+            {
+                return false;
+            }
+
+            cell = ClampToInterior(map, cell, 9);
+            if (!cell.InBounds(map))
+            {
+                return false;
+            }
+
+            if (TooCloseToAny(cell, protectedCells, protectedMinDistance) || TooCloseToAny(cell, blockerCells, 0.1f))
+            {
+                return false;
+            }
+
+            if (CellContainsNonEphemeralThing(map, cell))
+            {
+                return false;
+            }
+
+            try
+            {
+                Thing blocker = ThingMaker.MakeThing(blockerDef);
+                if (blocker == null)
+                {
+                    return false;
+                }
+
+                GenSpawn.Spawn(blocker, cell, map, Rot4.North);
+                blockerCells.Add(cell);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Skipped invisible Dominion fissure blocker at " + cell + ": " + ex.GetType().Name);
+                return false;
             }
         }
 

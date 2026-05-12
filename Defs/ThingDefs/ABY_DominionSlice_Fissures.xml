@@ -113,4 +113,173 @@
     </modExtensions>
   </ThingDef>
 
+
+  <!-- Continuous path visuals: each whole fissure chain is drawn as one synced 8-frame sheet.
+       Invisible blockers below provide pathing. This avoids visible connector misalignment from
+       using AI-generated modular pieces as independent rotated buildings. -->
+  <ThingDef Abstract="True" Name="ABY_DominionFissurePathVisualBase" ParentName="BuildingBase">
+    <thingClass>AbyssalProtocol.Building_ABY_DominionFissure</thingClass>
+    <category>Building</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Standable</passability>
+    <fillPercent>0</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_DominionFissureBlocker</defName>
+    <label>dominion fissure blocker</label>
+    <description>Invisible blocker used by Dominion Slice hemoplasm fissures.</description>
+    <category>Building</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>1</fillPercent>
+    <size>(1,1)</size>
+    <rotatable>false</rotatable>
+    <selectable>false</selectable>
+    <canOverlapZones>true</canOverlapZones>
+    <useHitPoints>false</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Blocker_Invisible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <statBases>
+      <Mass>0.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <thingCategories Inherit="False" />
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathNorthWest</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthWest_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthWest_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>28</drawSizeX>
+        <drawSizeZ>40</drawSizeZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathNorthEast</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthEast_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthEast_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>40</drawSizeX>
+        <drawSizeZ>40</drawSizeZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathWestMid</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>40</drawSizeX>
+        <drawSizeZ>10</drawSizeZ>
+        <drawOffsetZ>-5</drawOffsetZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathSouthEast</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthEast_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthEast_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>28</drawSizeX>
+        <drawSizeZ>40</drawSizeZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
+    <defName>ABY_DominionFissurePathSouthWest</defName>
+    <label>dominion hemoplasm fissure path</label>
+    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <size>(1,1)</size>
+    <graphicData>
+      <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthWest_Sheet_A</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_DominionFissure">
+        <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthWest_Sheet_A</sheetTexPath>
+        <frameCount>8</frameCount>
+        <frameDurationTicks>10</frameDurationTicks>
+        <drawSizeX>28</drawSizeX>
+        <drawSizeZ>10</drawSizeZ>
+        <drawOffsetZ>-5</drawOffsetZ>
+        <altitudeOffset>0.064</altitudeOffset>
+        <colorA>0.92</colorA>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 </Defs>

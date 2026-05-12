@@ -42,7 +42,9 @@ namespace AbyssalProtocol
 
             Vector2 drawSize = extension.DrawSize;
             Vector3 loc = drawLoc;
-            loc.y = AltitudeLayer.FloorEmplacement.AltitudeFor() + extension.altitudeOffset + (thingIDNumber % 17) * 0.0001f;
+            loc.x += extension.drawOffsetX;
+            loc.z += extension.drawOffsetZ;
+            loc.y = AltitudeLayer.FloorEmplacement.AltitudeFor() + extension.altitudeOffset;
 
             Quaternion rotation = Quaternion.AngleAxis(Rotation.AsAngle, Vector3.up);
             Matrix4x4 matrix = Matrix4x4.TRS(loc, rotation, new Vector3(drawSize.x, 1f, drawSize.y));
