@@ -93,6 +93,25 @@
         <useSapperAssaultLord>false</useSapperAssaultLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_HeartGuardianLeash">
+        <heartDefName>ABY_DominionSliceHeart</heartDefName>
+        <anchorDefNames>
+          <li>ABY_DominionSliceAnchor_Seal</li>
+          <li>ABY_DominionSliceAnchor_Choir</li>
+          <li>ABY_DominionSliceAnchor_Law</li>
+        </anchorDefNames>
+        <scanIntervalTicks>45</scanIntervalTicks>
+        <defendRadius>10.5</defendRadius>
+        <leashDistance>8.0</leashDistance>
+        <hardLeashDistance>13.5</hardLeashDistance>
+        <returnRadiusMin>2.0</returnRadiusMin>
+        <returnRadiusMax>5.5</returnRadiusMax>
+        <interceptJobExpiryTicks>90</interceptJobExpiryTicks>
+        <returnJobExpiryTicks>90</returnJobExpiryTicks>
+        <preferRangedTargets>true</preferRangedTargets>
+        <defendNearestAnchorBeforeHeartExposed>true</defendNearestAnchorBeforeHeartExposed>
+        <allowMeleeIntercept>true</allowMeleeIntercept>
+      </li>
     </comps>
   </ThingDef>
 </Defs>
