@@ -69,8 +69,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthWest_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>22.5</drawSizeX>
-        <drawSizeZ>22.5</drawSizeZ>
+        <drawSizeX>20.5</drawSizeX>
+        <drawSizeZ>20.5</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.68</colorA>
       </li>
@@ -92,8 +92,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthEast_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>22.5</drawSizeX>
-        <drawSizeZ>22.5</drawSizeZ>
+        <drawSizeX>20.5</drawSizeX>
+        <drawSizeZ>20.5</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.68</colorA>
       </li>
@@ -115,8 +115,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>28.5</drawSizeX>
-        <drawSizeZ>4.4</drawSizeZ>
+        <drawSizeX>26.5</drawSizeX>
+        <drawSizeZ>4.2</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.66</colorA>
       </li>
@@ -138,8 +138,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>20.0</drawSizeX>
-        <drawSizeZ>4.0</drawSizeZ>
+        <drawSizeX>24.0</drawSizeX>
+        <drawSizeZ>4.1</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.66</colorA>
       </li>
@@ -161,8 +161,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthEast_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>22.5</drawSizeX>
-        <drawSizeZ>22.5</drawSizeZ>
+        <drawSizeX>20.5</drawSizeX>
+        <drawSizeZ>20.5</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.68</colorA>
       </li>
@@ -184,8 +184,8 @@
         <sheetTexPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthWest_Sheet_A</sheetTexPath>
         <frameCount>8</frameCount>
         <frameDurationTicks>10</frameDurationTicks>
-        <drawSizeX>22.5</drawSizeX>
-        <drawSizeZ>22.5</drawSizeZ>
+        <drawSizeX>20.5</drawSizeX>
+        <drawSizeZ>20.5</drawSizeZ>
         <altitudeOffset>0.064</altitudeOffset>
         <colorA>0.68</colorA>
       </li>
