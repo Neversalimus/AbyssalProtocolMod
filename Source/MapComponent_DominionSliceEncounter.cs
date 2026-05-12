@@ -247,7 +247,10 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
+                if (GetLiveHeartGuardianCount() < HeartGuardianCount)
+                {
+                    ScheduleHeartGuardianSpawn(30);
+                }
 
                 if (now >= nextWaveTick)
                 {
@@ -266,7 +269,10 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                ScheduleHeartGuardianSpawn(60);
+                if (GetLiveHeartGuardianCount() < HeartGuardianCount)
+                {
+                    ScheduleHeartGuardianSpawn(30);
+                }
 
                 if (now >= nextWaveTick)
                 {
@@ -926,16 +932,16 @@ namespace AbyssalProtocol
                 scheduledHeartGuardianSpawnTick = nextHeartGuardianSpawnRetryTick;
                 if (guardianKind == null)
                 {
-                    Log.Warning("[Abyssal Protocol] Aortic Chain Harrower PawnKindDef is missing; heart guardian spawn will retry.");
+                    ABY_LogThrottleUtility.Warning("aortic-guardian-kind-missing", "[Abyssal Protocol] Aortic Chain Harrower PawnKindDef is missing; heart guardian spawn will retry.", 900);
                 }
                 if (faction == null)
                 {
-                    Log.Warning("[Abyssal Protocol] Abyssal faction is missing; Aortic Chain Harrower spawn will retry.");
+                    ABY_LogThrottleUtility.Warning("aortic-guardian-faction-missing", "[Abyssal Protocol] Could not resolve any hostile faction for Aortic Chain Harrower spawn; heart guardian spawn will retry.", 900);
                 }
                 return;
             }
 
-            if (heartGuardians.Count >= HeartGuardianCount)
+            if (GetLiveHeartGuardianCount() >= HeartGuardianCount)
             {
                 heartGuardiansSpawned = true;
                 return;
@@ -956,7 +962,7 @@ namespace AbyssalProtocol
                 Pawn pawn;
                 if (!TryGeneratePawn(guardianKind, faction, out pawn) || pawn == null)
                 {
-                    Log.Warning("[Abyssal Protocol] Failed to generate Aortic Chain Harrower for Dominion Slice heart guardian spawn.");
+                    ABY_LogThrottleUtility.Warning("aortic-guardian-generate-failed", "[Abyssal Protocol] Failed to generate Aortic Chain Harrower for Dominion Slice heart guardian spawn.", 900);
                     continue;
                 }
 
@@ -982,7 +988,7 @@ namespace AbyssalProtocol
                         "dominion slice heart guardian pylon spawn"))
                 {
                     SafeDestroyUnspawnedPawn(pawn, "heart guardian spawn failed");
-                    Log.Warning("[Abyssal Protocol] Aortic Chain Harrower spawn failed near " + spawnCell + ". The encounter will retry shortly.");
+                    ABY_LogThrottleUtility.Warning("aortic-guardian-spawn-failed", "[Abyssal Protocol] Aortic Chain Harrower spawn failed near " + spawnCell + ". The encounter will retry shortly.", 900);
                     continue;
                 }
 
@@ -1624,13 +1630,13 @@ namespace AbyssalProtocol
 
         private Faction ResolveAbyssalFaction()
         {
-            FactionDef def = DefDatabase<FactionDef>.GetNamedSilentFail(AbyssalFactionDefName);
-            if (def == null || Find.FactionManager == null)
-            {
-                return null;
-            }
-
-            return Find.FactionManager.FirstFactionOfDef(def);
+            // ABY_AbyssalHost is hidden and has requiredCountAtGameStart=0, so many saves do
+            // not contain a live faction instance until something explicitly creates it.
+            // The normal summon pipeline already uses AbyssalBossSummonUtility because it can
+            // generate the hidden faction on demand and then fall back to a valid hostile
+            // faction. Heart guardians must use the same resolver; otherwise their spawn
+            // silently retries forever with faction == null.
+            return AbyssalBossSummonUtility.ResolveHostileFaction();
         }
     }
 }

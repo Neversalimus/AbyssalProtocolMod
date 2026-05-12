@@ -64,6 +64,21 @@ namespace AbyssalProtocol
         {
             base.CompTick();
 
+            try
+            {
+                TickCombatSafe();
+            }
+            catch (System.Exception ex)
+            {
+                ABY_LogThrottleUtility.Warning(
+                    "aortic-combat-tick-failed",
+                    "[Abyssal Protocol] Aortic Chain Harrower combat tick failed and was skipped: " + ex.GetType().Name + ": " + ex.Message,
+                    1200);
+            }
+        }
+
+        private void TickCombatSafe()
+        {
             Pawn pawn = PawnParent;
             if (!ShouldOperate(pawn) || !parent.IsHashIntervalTick(Mathf.Max(10, Props.scanIntervalTicks)))
             {

@@ -18,6 +18,7 @@ namespace AbyssalProtocol
         public bool disableWhenDowned = false;
         public bool mirrorWestFromEast = true;
         public float overlayAlpha = 0.46f;
+        public bool enableAnimation = false;
 
         public CompProperties_ABY_AnimatedPawnBody()
         {
@@ -37,48 +38,58 @@ namespace AbyssalProtocol
 
         public static void DrawAnimatedBody(Pawn pawn, Vector3 drawLoc)
         {
-            if (pawn == null || pawn.def == null || !pawn.Spawned)
+            try
             {
-                return;
-            }
+                if (pawn == null || pawn.def == null || !pawn.Spawned)
+                {
+                    return;
+                }
 
-            CompABY_AnimatedPawnBody comp = pawn.TryGetComp<CompABY_AnimatedPawnBody>();
-            if (comp == null || comp.Props == null)
+                CompABY_AnimatedPawnBody comp = pawn.TryGetComp<CompABY_AnimatedPawnBody>();
+                if (comp == null || comp.Props == null || !comp.Props.enableAnimation)
+                {
+                    return;
+                }
+
+                CompProperties_ABY_AnimatedPawnBody props = comp.Props;
+                if (props.disableWhenDead && pawn.Dead)
+                {
+                    return;
+                }
+
+                if (props.disableWhenDowned && pawn.Downed)
+                {
+                    return;
+                }
+
+                Material material = GetCurrentMaterial(pawn, props);
+                if (material == null)
+                {
+                    return;
+                }
+
+                Vector2 drawSize = pawn.def.graphicData != null ? pawn.def.graphicData.drawSize : Vector2.one;
+                float width = Mathf.Max(0.01f, drawSize.x * Mathf.Max(0.01f, props.drawScale));
+                float height = Mathf.Max(0.01f, drawSize.y * Mathf.Max(0.01f, props.drawScale));
+
+                if (pawn.Rotation == Rot4.West && props.mirrorWestFromEast)
+                {
+                    width = -width;
+                }
+
+                Vector3 loc = drawLoc;
+                loc.y += props.layerOffset;
+
+                Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(width, 1f, height));
+                Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+            }
+            catch (System.Exception ex)
             {
-                return;
+                ABY_LogThrottleUtility.Warning(
+                    "aortic-animated-body-render-failed",
+                    "[Abyssal Protocol] Aortic Chain Harrower animated body render was disabled after an exception: " + ex.GetType().Name + ": " + ex.Message,
+                    5000);
             }
-
-            CompProperties_ABY_AnimatedPawnBody props = comp.Props;
-            if (props.disableWhenDead && pawn.Dead)
-            {
-                return;
-            }
-
-            if (props.disableWhenDowned && pawn.Downed)
-            {
-                return;
-            }
-
-            Material material = GetCurrentMaterial(pawn, props);
-            if (material == null)
-            {
-                return;
-            }
-
-            Vector2 drawSize = pawn.def.graphicData != null ? pawn.def.graphicData.drawSize : Vector2.one;
-            float width = Mathf.Max(0.01f, drawSize.x * Mathf.Max(0.01f, props.drawScale));
-            float height = Mathf.Max(0.01f, drawSize.y * Mathf.Max(0.01f, props.drawScale));
-
-            if (pawn.Rotation == Rot4.West && props.mirrorWestFromEast)
-            {
-                width = -width;
-            }
-
-            Vector3 loc = drawLoc;
-            loc.y += props.layerOffset;
-
-            Matrix4x4 matrix = Matrix4x4.TRS(loc, Quaternion.identity, new Vector3(width, 1f, height));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
 
         private static Material GetCurrentMaterial(Pawn pawn, CompProperties_ABY_AnimatedPawnBody props)

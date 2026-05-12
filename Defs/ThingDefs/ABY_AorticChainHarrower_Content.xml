@@ -93,19 +93,6 @@
         <useSapperAssaultLord>false</useSapperAssaultLord>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
-      <li Class="AbyssalProtocol.CompProperties_ABY_AnimatedPawnBody">
-        <southTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_south</southTexPath>
-        <eastTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_east</eastTexPath>
-        <northTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_north</northTexPath>
-        <frameCount>4</frameCount>
-        <ticksPerFrame>8</ticksPerFrame>
-        <drawScale>1.00</drawScale>
-        <layerOffset>0.006</layerOffset>
-        <disableWhenDead>true</disableWhenDead>
-        <disableWhenDowned>false</disableWhenDowned>
-        <mirrorWestFromEast>true</mirrorWestFromEast>
-        <overlayAlpha>0.46</overlayAlpha>
-      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_HeartGuardianLeash">
         <heartDefName>ABY_DominionSliceHeart</heartDefName>
         <scanIntervalTicks>24</scanIntervalTicks>
