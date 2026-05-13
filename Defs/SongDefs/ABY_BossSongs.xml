@@ -24,4 +24,11 @@
     <tense>true</tense>
   </SongDef>
 
+  <SongDef>
+    <defName>ABY_DominionHellPocketTheme</defName>
+    <clipPath>ABY/Dominion_HellPocketTheme</clipPath>
+    <volume>0.88</volume>
+    <tense>true</tense>
+  </SongDef>
+
 </Defs>

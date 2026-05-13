@@ -136,6 +136,7 @@ namespace AbyssalProtocol
             }
 
             runtime?.RegisterSession(session);
+            ABY_DominionPocketMusicGameComponent.NotifyPocketOpened(session);
 
             if (!TrySpawnPocketExit(session, sliceMap, out failReason))
             {
@@ -305,6 +306,7 @@ namespace AbyssalProtocol
                 session.cleanupQueued = false;
             }
 
+            ABY_DominionPocketMusicGameComponent.NotifyPocketClosed(session);
             SafeDestroyPocketMap(pocketMap, session);
             ABY_DominionPocketRuntimeGameComponent.Get()?.ForgetSession(session?.sessionId);
 
@@ -1061,6 +1063,8 @@ namespace AbyssalProtocol
 
         private static void SafeDestroyPocketMap(Map pocketMap, ABY_DominionPocketSession session)
         {
+            ABY_DominionPocketMusicGameComponent.NotifyPocketClosed(session);
+
             if (pocketMap != null)
             {
                 try

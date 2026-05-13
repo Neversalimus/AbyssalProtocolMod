@@ -11,7 +11,8 @@ namespace AbyssalProtocol
         {
             "ABY_ArchonBossBattleTheme",
             "ABY_RuptureBossBattleTheme",
-            "ABY_ReactorSaintBossBattleTheme"
+            "ABY_ReactorSaintBossBattleTheme",
+            ABY_DominionPocketMusicGameComponent.HellPocketSongDefName
         };
 
         private static int authorizedDepth;
@@ -62,6 +63,11 @@ namespace AbyssalProtocol
             if (!IsReservedBossSong(song) || Current.Game == null)
             {
                 return false;
+            }
+
+            if (ABY_DominionPocketMusicGameComponent.IsSongManagedByActivePocketMusic(song))
+            {
+                return true;
             }
 
             AbyssalBossScreenFXGameComponent bossFx = Current.Game.GetComponent<AbyssalBossScreenFXGameComponent>();
