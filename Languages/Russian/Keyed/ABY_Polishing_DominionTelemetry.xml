@@ -19,4 +19,12 @@
   <ABY_DominionSliceHeart_InspectShieldedDetailed>Crown-Heart остаётся запечатанным, пока стоят якоря доминиона. Осталось якорей: {0}.</ABY_DominionSliceHeart_InspectShieldedDetailed>
   <ABY_DominionSliceHeart_InspectRewards>Прогноз наград: {0}</ABY_DominionSliceHeart_InspectRewards>
   <ABY_DominionSliceAnchor_InspectTelemetry>Якорей ещё активно: {0}. Следующая волна: {1}.</ABY_DominionSliceAnchor_InspectTelemetry>
+
+  <ABY_DominionPocketTelemetry_NoSession>нет активной сессии среза доминиона</ABY_DominionPocketTelemetry_NoSession>
+  <ABY_DominionPocketTelemetry_StatusAwaiting>ожидание телеметрии среза доминиона</ABY_DominionPocketTelemetry_StatusAwaiting>
+  <ABY_DominionPocketTelemetry_Team>ударная группа: {0}</ABY_DominionPocketTelemetry_Team>
+  <ABY_DominionPocketTelemetry_State>состояние: {0}</ABY_DominionPocketTelemetry_State>
+  <ABY_DominionPocketTelemetry_Objective>задача: {0}</ABY_DominionPocketTelemetry_Objective>
+  <ABY_DominionPocketTelemetry_Rewards>награды: {0}</ABY_DominionPocketTelemetry_Rewards>
+  <ABY_DominionPocketTelemetry_RewardsUnknown>прогноз наград недоступен</ABY_DominionPocketTelemetry_RewardsUnknown>
 </LanguageData>

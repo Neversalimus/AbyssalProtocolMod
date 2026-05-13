@@ -43,10 +43,6 @@
             <restoreFlashScale>1.10</restoreFlashScale>
             <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
             <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
-            <collapseTextKey>ABY_ApparelAegis_CrownTextCollapse</collapseTextKey>
-            <restoreTextKey>ABY_ApparelAegis_CrownTextRestore</restoreTextKey>
-            <collapsePulseStrength>0.34</collapsePulseStrength>
-            <restorePulseStrength>0.34</restorePulseStrength>
             <collapseTextKey>ABY_ApparelAegis_SaintTextCollapse</collapseTextKey>
             <restoreTextKey>ABY_ApparelAegis_SaintTextRestore</restoreTextKey>
             <collapsePulseStrength>0.46</collapsePulseStrength>
@@ -109,6 +105,10 @@
             <restoreFlashScale>1.30</restoreFlashScale>
             <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
             <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
+            <collapseTextKey>ABY_ApparelAegis_CrownTextCollapse</collapseTextKey>
+            <restoreTextKey>ABY_ApparelAegis_CrownTextRestore</restoreTextKey>
+            <collapsePulseStrength>0.34</collapsePulseStrength>
+            <restorePulseStrength>0.34</restorePulseStrength>
           </li>
         </value>
       </li>

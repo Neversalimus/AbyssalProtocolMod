@@ -190,4 +190,10 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_CircleReducedEffectsOn>Effects: reduced</ABY_CircleReducedEffectsOn>
   <ABY_CircleReducedEffectsOff>Effects: full</ABY_CircleReducedEffectsOff>
 
+
+  <ABY_CircleFail_NoArrivalCell>No valid arrival cell could be found for this abyssal manifestation.</ABY_CircleFail_NoArrivalCell>
+  <ABY_CircleVentFail_NoCircle>No abyssal summoning circle is available for contamination venting.</ABY_CircleVentFail_NoCircle>
+  <ABY_CircleVentFail_Busy>The abyssal summoning circle is busy and cannot vent contamination right now.</ABY_CircleVentFail_Busy>
+  <ABY_CircleVentFail_LowContamination>Residual contamination is too low to vent.</ABY_CircleVentFail_LowContamination>
+  <ABY_CircleVentFail_Cooldown>Contamination venting is still on cooldown: {0}.</ABY_CircleVentFail_Cooldown>
 </LanguageData>

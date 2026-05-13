@@ -19,4 +19,12 @@ Pocket signal: {2}</ABY_DominionOpsSummary_Pocket>
   <ABY_DominionSliceHeart_InspectShieldedDetailed>The Crown-Heart remains sealed while dominion anchors stand. Anchors remaining: {0}.</ABY_DominionSliceHeart_InspectShieldedDetailed>
   <ABY_DominionSliceHeart_InspectRewards>Reward forecast: {0}</ABY_DominionSliceHeart_InspectRewards>
   <ABY_DominionSliceAnchor_InspectTelemetry>Anchors still standing: {0}. Next wave: {1}.</ABY_DominionSliceAnchor_InspectTelemetry>
+
+  <ABY_DominionPocketTelemetry_NoSession>no active dominion slice session</ABY_DominionPocketTelemetry_NoSession>
+  <ABY_DominionPocketTelemetry_StatusAwaiting>awaiting dominion slice telemetry</ABY_DominionPocketTelemetry_StatusAwaiting>
+  <ABY_DominionPocketTelemetry_Team>strike team: {0}</ABY_DominionPocketTelemetry_Team>
+  <ABY_DominionPocketTelemetry_State>state: {0}</ABY_DominionPocketTelemetry_State>
+  <ABY_DominionPocketTelemetry_Objective>objective: {0}</ABY_DominionPocketTelemetry_Objective>
+  <ABY_DominionPocketTelemetry_Rewards>rewards: {0}</ABY_DominionPocketTelemetry_Rewards>
+  <ABY_DominionPocketTelemetry_RewardsUnknown>reward forecast unavailable</ABY_DominionPocketTelemetry_RewardsUnknown>
 </LanguageData>

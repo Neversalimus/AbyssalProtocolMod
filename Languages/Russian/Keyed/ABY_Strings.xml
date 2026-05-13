@@ -190,4 +190,10 @@
   <ABY_CircleReducedEffectsOn>Эффекты: снижены</ABY_CircleReducedEffectsOn>
   <ABY_CircleReducedEffectsOff>Эффекты: полные</ABY_CircleReducedEffectsOff>
 
+
+  <ABY_CircleFail_NoArrivalCell>Не удалось найти допустимую клетку прибытия для этого проявления Бездны.</ABY_CircleFail_NoArrivalCell>
+  <ABY_CircleVentFail_NoCircle>Нет доступного круга призыва для сброса загрязнения.</ABY_CircleVentFail_NoCircle>
+  <ABY_CircleVentFail_Busy>Круг призыва занят и не может сбросить загрязнение прямо сейчас.</ABY_CircleVentFail_Busy>
+  <ABY_CircleVentFail_LowContamination>Остаточное загрязнение слишком низкое для сброса.</ABY_CircleVentFail_LowContamination>
+  <ABY_CircleVentFail_Cooldown>Сброс загрязнения ещё перезаряжается: {0}.</ABY_CircleVentFail_Cooldown>
 </LanguageData>

@@ -42,11 +42,11 @@
       <WorkToMake>56000</WorkToMake>
       <Mass>8.8</Mass>
       <MarketValue>3400</MarketValue>
-      <AccuracyTouch>0.74</AccuracyTouch>
-      <AccuracyShort>0.78</AccuracyShort>
-      <AccuracyMedium>0.60</AccuracyMedium>
-      <AccuracyLong>0.34</AccuracyLong>
-      <RangedWeapon_Cooldown>4.6</RangedWeapon_Cooldown>
+      <AccuracyTouch>0.70</AccuracyTouch>
+      <AccuracyShort>0.74</AccuracyShort>
+      <AccuracyMedium>0.56</AccuracyMedium>
+      <AccuracyLong>0.28</AccuracyLong>
+      <RangedWeapon_Cooldown>5.10</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -54,9 +54,9 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_LitanyRoundProjectile</defaultProjectile>
-        <warmupTime>1.85</warmupTime>
-        <range>27.9</range>
-        <burstShotCount>18</burstShotCount>
+        <warmupTime>2.05</warmupTime>
+        <range>25.9</range>
+        <burstShotCount>16</burstShotCount>
         <ticksBetweenBurstShots>4</ticksBetweenBurstShots>
         <soundAiming>ABY_LitanyGrinderAim</soundAiming>
         <soundCast>ABY_LitanyGrinderFire</soundCast>
@@ -83,9 +83,9 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>7</damageAmountBase>
-      <armorPenetrationBase>0.18</armorPenetrationBase>
-      <stoppingPower>0.65</stoppingPower>
+      <damageAmountBase>6</damageAmountBase>
+      <armorPenetrationBase>0.16</armorPenetrationBase>
+      <stoppingPower>0.55</stoppingPower>
       <speed>64</speed>
       <soundImpactAnticipate>ABY_LitanyGrinderImpact</soundImpactAnticipate>
     </projectile>
