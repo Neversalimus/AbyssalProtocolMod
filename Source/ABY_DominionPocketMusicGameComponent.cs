@@ -447,8 +447,67 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<object> visited = new List<object>();
-            return ValueMatchesSongRecursive(music, targetSong, 0, visited);
+            SongDef currentSong = TryGetCurrentSong(music);
+            if (SongsMatch(currentSong, targetSong))
+            {
+                return true;
+            }
+
+            try
+            {
+                List<object> visited = new List<object>();
+                return ValueMatchesSongRecursive(music, targetSong, 0, visited);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static SongDef TryGetCurrentSong(MusicManagerPlay music)
+        {
+            if (music == null)
+            {
+                return null;
+            }
+
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+            try
+            {
+                FieldInfo field = typeof(MusicManagerPlay).GetField("currentSong", flags);
+                if (field != null)
+                {
+                    SongDef song = field.GetValue(music) as SongDef;
+                    if (song != null)
+                    {
+                        return song;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                PropertyInfo property = typeof(MusicManagerPlay).GetProperty("CurrentSong", flags);
+                if (property != null && property.CanRead && property.GetIndexParameters().Length == 0)
+                {
+                    return property.GetValue(music, null) as SongDef;
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        private static bool SongsMatch(SongDef candidate, SongDef targetSong)
+        {
+            return candidate != null && targetSong != null &&
+                (candidate == targetSong || candidate.defName == targetSong.defName);
         }
 
         private static bool ValueMatchesSongRecursive(object value, SongDef targetSong, int depth, List<object> visited)
@@ -464,13 +523,13 @@ namespace AbyssalProtocol
             }
 
             SongDef directSong = value as SongDef;
-            if (directSong != null)
+            if (SongsMatch(directSong, targetSong))
             {
-                return directSong == targetSong || directSong.defName == targetSong.defName;
+                return true;
             }
 
             Type valueType = value.GetType();
-            if (valueType.IsPrimitive || valueType.IsEnum || value is string)
+            if (valueType.IsPrimitive || valueType.IsEnum || value is string || IsUnsafeReflectionTarget(valueType))
             {
                 return false;
             }
@@ -488,12 +547,31 @@ namespace AbyssalProtocol
                 visited.Add(value);
             }
 
+            System.Collections.IEnumerable enumerable = value as System.Collections.IEnumerable;
+            if (enumerable != null)
+            {
+                int inspected = 0;
+                foreach (object item in enumerable)
+                {
+                    if (ValueMatchesSongRecursive(item, targetSong, depth + 1, visited))
+                    {
+                        return true;
+                    }
+
+                    inspected++;
+                    if (inspected >= 64)
+                    {
+                        break;
+                    }
+                }
+            }
+
             BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             FieldInfo[] fields = valueType.GetFields(flags);
             for (int i = 0; i < fields.Length; i++)
             {
                 FieldInfo field = fields[i];
-                if (field == null)
+                if (field == null || field.IsStatic || IsUnsafeReflectionTarget(field.FieldType))
                 {
                     continue;
                 }
@@ -514,32 +592,31 @@ namespace AbyssalProtocol
                 }
             }
 
-            PropertyInfo[] properties = valueType.GetProperties(flags);
-            for (int i = 0; i < properties.Length; i++)
-            {
-                PropertyInfo property = properties[i];
-                if (property == null || !property.CanRead || property.GetIndexParameters().Length != 0)
-                {
-                    continue;
-                }
-
-                object propertyValue;
-                try
-                {
-                    propertyValue = property.GetValue(value, null);
-                }
-                catch
-                {
-                    continue;
-                }
-
-                if (ValueMatchesSongRecursive(propertyValue, targetSong, depth + 1, visited))
-                {
-                    return true;
-                }
-            }
-
             return false;
         }
+
+        private static bool IsUnsafeReflectionTarget(Type type)
+        {
+            if (type == null)
+            {
+                return true;
+            }
+
+            if (typeof(UnityEngine.Object).IsAssignableFrom(type))
+            {
+                return true;
+            }
+
+            string ns = type.Namespace;
+            if (ns == null)
+            {
+                return false;
+            }
+
+            return ns.StartsWith("UnityEngine", StringComparison.Ordinal) ||
+                ns.StartsWith("System.Reflection", StringComparison.Ordinal) ||
+                ns.StartsWith("System.Runtime", StringComparison.Ordinal);
+        }
+
     }
 }
