@@ -47,7 +47,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1140f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1190f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -145,6 +145,20 @@ namespace AbyssalProtocol
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_Timeline", "Enable boss intro / phase / outro timeline"), ref settingsData.enableBossPresentationTimeline, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TimelineDesc", "Adds timed title cards and burst events for boss arrival, phase changes, and collapse."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TitleCards", "Show boss presentation title cards"), ref settingsData.enableBossPresentationTitleCards, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_TitleCardsDesc", "Shows short cinematic name / phase / collapse cards during supported boss encounters."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossExpandedSelection_Enable", "Enable expanded boss selection"), ref settingsData.enableBossExpandedSelection, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossExpandedSelection_EnableDesc", "Allows large Abyssal bosses to be selected by clicking their visual body, not only the pawn's center cell."));
+            bool previousHarrowerAnimation = settingsData.enableAorticHarrowerBodyAnimation;
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HarrowerAnimation_Enable", "Enable Aortic Chain Harrower body animation"), ref settingsData.enableAorticHarrowerBodyAnimation, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HarrowerAnimation_EnableDesc", "Experimental overlay animation for the Dominion Slice heart guardians. If it throws a render exception, it auto-disables and can be re-enabled here after testing."));
+            if (!previousHarrowerAnimation && settingsData.enableAorticHarrowerBodyAnimation)
+            {
+                ABY_AnimatedPawnBodyRenderer.ResetRuntimeDisableForDevTest();
+            }
+            if (ABY_AnimatedPawnBodyRenderer.IsRuntimeDisabled)
+            {
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(1f, 0.64f, 0.58f, 1f);
+                Widgets.Label(list.GetRect(32f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_HarrowerAnimation_RuntimeDisabled", "Aortic Harrower animation was auto-disabled this session: {0}", ABY_AnimatedPawnBodyRenderer.RuntimeDisableReason ?? "unknown"));
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+            }
 
             Rect row = list.GetRect(32f);
             Rect openRect = new Rect(row.x, row.y, (row.width - 8f) * 0.5f, 32f);

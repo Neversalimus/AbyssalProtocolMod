@@ -37,6 +37,7 @@ namespace AbyssalProtocol
         public bool enableDominionWeather = true;
         public float dominionWeatherIntensity = 0.85f;
         public bool enableBossExpandedSelection = true;
+        public bool enableAorticHarrowerBodyAnimation = true;
         public bool enableBossPresentationTimeline = true;
         public bool enableBossPresentationTitleCards = true;
 
@@ -73,6 +74,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableDominionWeather, "enableDominionWeather", true);
             Scribe_Values.Look(ref dominionWeatherIntensity, "dominionWeatherIntensity", 0.85f);
             Scribe_Values.Look(ref enableBossExpandedSelection, "enableBossExpandedSelection", true);
+            Scribe_Values.Look(ref enableAorticHarrowerBodyAnimation, "enableAorticHarrowerBodyAnimation", true);
             Scribe_Values.Look(ref enableBossPresentationTimeline, "enableBossPresentationTimeline", true);
             Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
             ClampValues();
@@ -123,6 +125,7 @@ namespace AbyssalProtocol
             enableDominionWeather = true;
             dominionWeatherIntensity = 0.85f;
             enableBossExpandedSelection = true;
+            enableAorticHarrowerBodyAnimation = true;
             enableBossPresentationTimeline = true;
             enableBossPresentationTitleCards = true;
         }

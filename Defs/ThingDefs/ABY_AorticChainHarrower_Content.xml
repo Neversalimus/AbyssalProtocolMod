@@ -119,6 +119,22 @@
         <severanceSoundDefName>ABY_SigilChargePulse</severanceSoundDefName>
         <rememberPositionIntervalTicks>45</rememberPositionIntervalTicks>
       </li>
+
+      <li Class="AbyssalProtocol.CompProperties_ABY_AnimatedPawnBody">
+        <southTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_south</southTexPath>
+        <eastTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_east</eastTexPath>
+        <northTexPath>Pawn/AorticChainHarrower/Anim/ABY_AorticChainHarrower_north</northTexPath>
+        <frameCount>4</frameCount>
+        <ticksPerFrame>12</ticksPerFrame>
+        <drawScale>1.00</drawScale>
+        <layerOffset>0.006</layerOffset>
+        <overlayAlpha>0.52</overlayAlpha>
+        <disableWhenDead>true</disableWhenDead>
+        <disableWhenDowned>false</disableWhenDowned>
+        <mirrorWestFromEast>true</mirrorWestFromEast>
+        <enableAnimation>true</enableAnimation>
+        <respectReducedMotion>true</respectReducedMotion>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_AorticChainLash">
         <heartDefName>ABY_DominionSliceHeart</heartDefName>
         <anchorDefNames>
