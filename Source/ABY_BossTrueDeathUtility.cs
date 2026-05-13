@@ -56,6 +56,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (ABY_DevToolUtility.IsDebugToolActiveOrExecuting())
+            {
+                comp.AuthorizeDevToolKill();
+                return false;
+            }
+
             return comp.TrySuppressPrematureKill(dinfo, exactCulprit);
         }
 

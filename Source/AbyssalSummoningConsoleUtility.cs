@@ -250,13 +250,13 @@ namespace AbyssalProtocol
         public static string TranslateOrFallback(string key, string fallback)
         {
             string value = key.Translate();
-            return value == key ? fallback : value;
+            return IsMissingTranslationValue(key, value) ? fallback : value;
         }
 
         public static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
         {
             string template = key.Translate();
-            if (template == key)
+            if (IsMissingTranslationValue(key, template))
             {
                 return string.Format(fallbackFormat, args);
             }
@@ -269,6 +269,56 @@ namespace AbyssalProtocol
             {
                 return template;
             }
+        }
+
+        private static bool IsMissingTranslationValue(string key, string value)
+        {
+            if (key.NullOrEmpty() || value.NullOrEmpty())
+            {
+                return true;
+            }
+
+            if (string.Equals(value, key, StringComparison.Ordinal))
+            {
+                return true;
+            }
+
+            // RimWorld's debug / pseudo-localization paths can transform missing keyed text
+            // instead of returning the key verbatim. Treat any returned ABY_ token-like value
+            // as missing so title cards never show raw translation keys.
+            if (value.StartsWith("ABY_", StringComparison.Ordinal) && value.Contains("_"))
+            {
+                return true;
+            }
+
+            string normalized = NormalizeAsciiKeyLike(value);
+            return string.Equals(normalized, key, StringComparison.Ordinal);
+        }
+
+        private static string NormalizeAsciiKeyLike(string value)
+        {
+            if (value.NullOrEmpty())
+            {
+                return value;
+            }
+
+            char[] chars = value.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                switch (chars[i])
+                {
+                    case 'À': case 'Á': case 'Â': case 'Ã': case 'Ä': case 'Å': case 'à': case 'á': case 'â': case 'ã': case 'ä': case 'å': chars[i] = 'a'; break;
+                    case 'È': case 'É': case 'Ê': case 'Ë': case 'è': case 'é': case 'ê': case 'ë': chars[i] = 'e'; break;
+                    case 'Ì': case 'Í': case 'Î': case 'Ï': case 'ì': case 'í': case 'î': case 'ï': chars[i] = 'i'; break;
+                    case 'Ò': case 'Ó': case 'Ô': case 'Õ': case 'Ö': case 'ò': case 'ó': case 'ô': case 'õ': case 'ö': chars[i] = 'o'; break;
+                    case 'Ù': case 'Ú': case 'Û': case 'Ü': case 'ù': case 'ú': case 'û': case 'ü': chars[i] = 'u'; break;
+                    case 'Ç': case 'ç': chars[i] = 'c'; break;
+                    case 'Ñ': case 'ñ': chars[i] = 'n'; break;
+                    case 'Ý': case 'Ÿ': case 'ý': case 'ÿ': chars[i] = 'y'; break;
+                }
+            }
+
+            return new string(chars);
         }
 
         public static string GetConsoleTitle()

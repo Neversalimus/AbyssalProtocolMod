@@ -185,6 +185,13 @@ namespace AbyssalProtocol
             return pawn != null && !pawn.Destroyed && !deathAuthorized && currentBossHitPoints > 0.001f;
         }
 
+
+        public void AuthorizeDevToolKill()
+        {
+            deathAuthorized = true;
+            currentBossHitPoints = 0f;
+        }
+
         public bool TrySuppressPrematureKill(DamageInfo? dinfo, Hediff exactCulprit)
         {
             if (!ShouldSuppressVanillaDeathOrDowned())

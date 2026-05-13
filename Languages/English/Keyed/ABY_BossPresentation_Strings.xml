@@ -31,4 +31,10 @@
   <ABY_BossPresentation_Outro_ArchonBeast>The gate rejects its own beast.</ABY_BossPresentation_Outro_ArchonBeast>
   <ABY_BossPresentation_Outro_ChoirEngine>The command hymn drops into dead static.</ABY_BossPresentation_Outro_ChoirEngine>
   <ABY_BossPresentation_Outro_Default>The abyssal presence recedes, but the mark remains.</ABY_BossPresentation_Outro_Default>
+
+  <ABY_BossPresentation_Title_ReliquaryArchonBeast>RELIQUARY ARCHON BEAST</ABY_BossPresentation_Title_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Subtitle_ReliquaryArchonBeast>A heavier law of the first gate enters the map.</ABY_BossPresentation_Subtitle_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Phase_ReliquaryArchonBeast>The shrine-beast unfolds its stored authority.</ABY_BossPresentation_Phase_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Phase_ReliquaryArchonBeast_Final>The reliquary law closes around the field.</ABY_BossPresentation_Phase_ReliquaryArchonBeast_Final>
+  <ABY_BossPresentation_Outro_ReliquaryArchonBeast>The reliquary shell collapses. The gate loses a heavier claim.</ABY_BossPresentation_Outro_ReliquaryArchonBeast>
 </LanguageData>

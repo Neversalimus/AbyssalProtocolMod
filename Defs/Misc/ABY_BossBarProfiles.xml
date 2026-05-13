@@ -5,11 +5,9 @@
     <defName>ABY_BossBarProfile_ArchonBeast</defName>
     <bossThingDefNames>
       <li>ABY_ArchonBeast</li>
-      <li>ABY_ReliquaryArchonBeast</li>
     </bossThingDefNames>
     <bossPawnKindDefNames>
       <li>ABY_ArchonBeast</li>
-      <li>ABY_ReliquaryArchonBeast</li>
     </bossPawnKindDefNames>
     <displayLabel>Archon Beast</displayLabel>
     <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonBeast</iconTexPath>
@@ -20,6 +18,44 @@
     <bossSongEndLingerSeconds>1.10</bossSongEndLingerSeconds>
     <useRawIconColors>true</useRawIconColors>
     <priority>100</priority>
+    <phaseSourceMode>ArchonCoreController</phaseSourceMode>
+    <showPhaseMarkers>true</showPhaseMarkers>
+    <phaseEntries>
+      <li>
+        <phaseIndex>1</phaseIndex>
+        <triggerHealthPct>1.00</triggerHealthPct>
+        <label>I</label>
+      </li>
+      <li>
+        <phaseIndex>2</phaseIndex>
+        <triggerHealthPct>0.70</triggerHealthPct>
+        <label>II</label>
+      </li>
+      <li>
+        <phaseIndex>3</phaseIndex>
+        <triggerHealthPct>0.35</triggerHealthPct>
+        <label>III</label>
+      </li>
+    </phaseEntries>
+  </AbyssalProtocol.ABY_BossBarProfileDef>
+
+  <AbyssalProtocol.ABY_BossBarProfileDef>
+    <defName>ABY_BossBarProfile_ReliquaryArchonBeast</defName>
+    <bossThingDefNames>
+      <li>ABY_ReliquaryArchonBeast</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ReliquaryArchonBeast</li>
+    </bossPawnKindDefNames>
+    <displayLabel>Reliquary Archon Beast</displayLabel>
+    <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ReliquaryArchonBeast</iconTexPath>
+    <styleId>abyssal_archon</styleId>
+    <bossSongDefName>ABY_ArchonBossBattleTheme</bossSongDefName>
+    <bossSongLengthSeconds>90.0</bossSongLengthSeconds>
+    <bossSongStartDelaySeconds>0.05</bossSongStartDelaySeconds>
+    <bossSongEndLingerSeconds>1.10</bossSongEndLingerSeconds>
+    <useRawIconColors>true</useRawIconColors>
+    <priority>101</priority>
     <phaseSourceMode>ArchonCoreController</phaseSourceMode>
     <showPhaseMarkers>true</showPhaseMarkers>
     <phaseEntries>

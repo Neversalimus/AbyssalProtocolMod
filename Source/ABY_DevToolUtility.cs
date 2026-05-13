@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Verse;
 
 namespace AbyssalProtocol
@@ -6,21 +7,62 @@ namespace AbyssalProtocol
     {
         public static bool IsDebugToolActiveForInput()
         {
-            // Dev-mode bypass detection was originally added so armed debug tools would not
-            // fight boss-click helpers. In practice the reflective detector became a runtime
-            // perf risk during boss fights on Dev maps. Keep this utility inert; callers that
-            // need to avoid DevMode input conflicts already check Prefs.DevMode directly.
-            return false;
+            return Prefs.DevMode && IsDebugToolStackActive();
         }
 
         public static bool IsDebugToolActiveOrExecuting()
         {
-            return false;
+            return Prefs.DevMode && IsDebugToolStackActive();
         }
 
         public static bool IsRecentDebugToolAction(int graceTicks = 3)
         {
+            return IsDebugToolActiveOrExecuting();
+        }
+
+        private static bool IsDebugToolStackActive()
+        {
+            if (!Prefs.DevMode)
+            {
+                return false;
+            }
+
+            try
+            {
+                StackTrace trace = new StackTrace(false);
+                for (int i = 0; i < trace.FrameCount; i++)
+                {
+                    System.Reflection.MethodBase method = trace.GetFrame(i)?.GetMethod();
+                    string declaringType = method?.DeclaringType?.FullName;
+                    string methodName = method?.Name;
+                    if (IsDebugToolName(declaringType) || IsDebugToolName(methodName))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+            }
+
             return false;
+        }
+
+        private static bool IsDebugToolName(string value)
+        {
+            if (value.NullOrEmpty())
+            {
+                return false;
+            }
+
+            return value.Contains("DebugTools")
+                || value.Contains("DebugTool")
+                || value.Contains("DebugActions")
+                || value.Contains("DebugAction")
+                || value.Contains("Dialog_Debug")
+                || value.Contains("EditWindow_Debug")
+                || value.Contains("DevTool")
+                || value.Contains("DevelopmentalStage");
         }
     }
 }

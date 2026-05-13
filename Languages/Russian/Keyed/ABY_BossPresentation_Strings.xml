@@ -31,4 +31,10 @@
   <ABY_BossPresentation_Outro_ArchonBeast>Врата отвергают собственного зверя.</ABY_BossPresentation_Outro_ArchonBeast>
   <ABY_BossPresentation_Outro_ChoirEngine>Командный гимн проваливается в мёртвую статику.</ABY_BossPresentation_Outro_ChoirEngine>
   <ABY_BossPresentation_Outro_Default>Присутствие Бездны отступает, но метка остаётся.</ABY_BossPresentation_Outro_Default>
+
+  <ABY_BossPresentation_Title_ReliquaryArchonBeast>RELIQUARY ARCHON BEAST</ABY_BossPresentation_Title_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Subtitle_ReliquaryArchonBeast>Более тяжёлый закон первых Врат входит на карту.</ABY_BossPresentation_Subtitle_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Phase_ReliquaryArchonBeast>Зверь-реликварий разворачивает накопленную власть.</ABY_BossPresentation_Phase_ReliquaryArchonBeast>
+  <ABY_BossPresentation_Phase_ReliquaryArchonBeast_Final>Закон реликвария смыкается вокруг поля.</ABY_BossPresentation_Phase_ReliquaryArchonBeast_Final>
+  <ABY_BossPresentation_Outro_ReliquaryArchonBeast>Реликварная оболочка рушится. Врата теряют более тяжёлое право.</ABY_BossPresentation_Outro_ReliquaryArchonBeast>
 </LanguageData>
