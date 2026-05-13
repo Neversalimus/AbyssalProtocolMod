@@ -15,7 +15,7 @@
   <ABY_DominionSliceHeart_Shielded>The Crown-Heart is still shielded by dominion anchors.</ABY_DominionSliceHeart_Shielded>
   <ABY_DominionSliceHeart_InspectShielded>The heart remains shielded. Destroy the dominion anchors first.</ABY_DominionSliceHeart_InspectShielded>
   <ABY_DominionSliceHeart_InspectExposed>The heart is exposed. Collapse in: {0}.</ABY_DominionSliceHeart_InspectExposed>
-  <ABY_DominionSliceHeart_InspectGuarded>Aortic guard-link active: {0} guardian(s) still reduce incoming heart damage.</ABY_DominionSliceHeart_InspectGuarded>
+  <ABY_DominionSliceHeart_InspectGuarded>Aortic guard-link active: {0} guardian(s), incoming heart damage reduced by {1}%.</ABY_DominionSliceHeart_InspectGuarded>
   <ABY_DominionSliceEncounter_WaveSummary>{0} engaged. Hostiles: {1}. Wave #{2}.</ABY_DominionSliceEncounter_WaveSummary>
   <ABY_DominionSliceWaveLabel_ThresholdHunters>Threshold hunters</ABY_DominionSliceWaveLabel_ThresholdHunters>
   <ABY_DominionSliceWaveLabel_BreachCell>Breach cell</ABY_DominionSliceWaveLabel_BreachCell>
@@ -30,4 +30,9 @@
   <ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>Dominion Heart Destroyed</ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>
   <ABY_DominionSliceEncounter_HeartDestroyedLoreText>The Dominion Heart has been destroyed.&#10;&#10;The anchors fail. The crown-lines collapse. The pocket realm is losing coherence.&#10;&#10;This was not simply a battle won. Your colonists have broken a local law of the Abyss — a claim of rule made physical.&#10;&#10;The reward pocket has opened, but the slice is collapsing. Take what remains and reach extraction before something deeper answers.</ABY_DominionSliceEncounter_HeartDestroyedLoreText>
   <ABY_DominionSliceEncounter_HeartGuardiansAwakened>The Crown-Heart grows its chain-guardians: {0} aortic harrower(s) have risen.</ABY_DominionSliceEncounter_HeartGuardiansAwakened>
+  <ABY_AorticGuardianLeash_FocusAnchor>anchor pylon</ABY_AorticGuardianLeash_FocusAnchor>
+  <ABY_AorticGuardianLeash_FocusHeart>Crown-Heart</ABY_AorticGuardianLeash_FocusHeart>
+  <ABY_AorticGuardianLeash_Inspect>Guard focus: {0}. Distance: {1}; soft leash: {2}; hard leash: {3}.</ABY_AorticGuardianLeash_Inspect>
+  <ABY_AorticChainLash_InspectReady>Aortic chain lash ready. Effective range: {0}.</ABY_AorticChainLash_InspectReady>
+  <ABY_AorticChainLash_InspectCooldown>Aortic chain lash recharging: {0}s. Effective range: {1}.</ABY_AorticChainLash_InspectCooldown>
 </LanguageData>

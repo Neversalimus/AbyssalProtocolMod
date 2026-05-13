@@ -8,6 +8,9 @@ namespace AbyssalProtocol
     public class Building_ABY_DominionSliceHeart : Building
     {
         private const string HeartPlatformUnderlayPath = "Things/Building/DominionSlice/Platforms/ABY_DominionHeart_PlatformUnderlay";
+        private const string HeartGuardianKindDefName = "ABY_AorticChainHarrower";
+        private const float HeartGuardianReductionPerGuardian = 0.08f;
+        private const float HeartGuardianMaxReduction = 0.24f;
         private static Graphic heartPlatformUnderlayGraphic;
 
         private int nextPulseTick = -1;
@@ -159,7 +162,12 @@ namespace AbyssalProtocol
                 int liveGuardians = encounter.LiveHeartGuardianCount;
                 if (liveGuardians > 0)
                 {
-                    stateText += "\n" + "ABY_DominionSliceHeart_InspectGuarded".Translate(liveGuardians);
+                    float damageFactor = encounter.GetHeartGuardianDamageFactor(
+                        HeartGuardianKindDefName,
+                        HeartGuardianReductionPerGuardian,
+                        HeartGuardianMaxReduction);
+                    int reductionPercent = Mathf.RoundToInt(Mathf.Clamp01(1f - damageFactor) * 100f);
+                    stateText += "\n" + "ABY_DominionSliceHeart_InspectGuarded".Translate(liveGuardians, reductionPercent);
                 }
             }
 

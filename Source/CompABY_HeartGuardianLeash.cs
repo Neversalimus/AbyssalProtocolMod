@@ -17,11 +17,11 @@ namespace AbyssalProtocol
         };
 
         public int scanIntervalTicks = 45;
-        public float defendRadius = 10.5f;
-        public float leashDistance = 8.0f;
-        public float hardLeashDistance = 13.5f;
-        public float returnRadiusMin = 2.0f;
-        public float returnRadiusMax = 5.5f;
+        public float defendRadius = 32.0f;
+        public float leashDistance = 30.0f;
+        public float hardLeashDistance = 44.0f;
+        public float returnRadiusMin = 5.0f;
+        public float returnRadiusMax = 12.0f;
         public int interceptJobExpiryTicks = 90;
         public int returnJobExpiryTicks = 90;
         public bool preferRangedTargets = true;
@@ -87,28 +87,55 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (distanceToFocus > Props.leashDistance)
+            currentThreat = Props.allowMeleeIntercept ? FindThreatNearFocus(pawn, currentFocus) : null;
+
+            // Soft leash: the guardian is allowed to keep pressure on a valid target inside
+            // the defended zone, but it will not wander indefinitely after kited pawns.
+            if (distanceToFocus > Props.leashDistance && currentThreat == null)
             {
                 if (TryFindReturnCell(pawn, currentFocus, out IntVec3 returnCell))
                 {
                     ForceReturnJob(pawn, returnCell, false);
                 }
 
-                currentThreat = null;
                 return;
             }
 
-            if (!Props.allowMeleeIntercept)
-            {
-                currentThreat = null;
-                return;
-            }
-
-            currentThreat = FindThreatNearFocus(pawn, currentFocus);
             if (currentThreat != null)
             {
                 EnsureInterceptJob(pawn, currentThreat);
             }
+        }
+
+
+        public override string CompInspectStringExtra()
+        {
+            Pawn pawn = PawnParent;
+            if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.MapHeld == null)
+            {
+                return null;
+            }
+
+            Thing focus = ResolveDefendFocus(pawn);
+            if (!IsValidFocus(pawn, focus))
+            {
+                return null;
+            }
+
+            string focusLabel = IsHeartFocus(focus)
+                ? "ABY_AorticGuardianLeash_FocusHeart".Translate().ToString()
+                : "ABY_AorticGuardianLeash_FocusAnchor".Translate().ToString();
+            float distance = pawn.PositionHeld.DistanceTo(focus.PositionHeld);
+            return "ABY_AorticGuardianLeash_Inspect".Translate(
+                focusLabel,
+                distance.ToString("0"),
+                Props.leashDistance.ToString("0"),
+                Props.hardLeashDistance.ToString("0"));
+        }
+
+        private bool IsHeartFocus(Thing focus)
+        {
+            return focus != null && !Props.heartDefName.NullOrEmpty() && focus.def != null && focus.def.defName == Props.heartDefName;
         }
 
         private Thing ResolveDefendFocus(Pawn pawn)

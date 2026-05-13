@@ -12,7 +12,7 @@
     <defaultLabelColor>(1.00, 0.16, 0.10)</defaultLabelColor>
     <comps>
       <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>300</disappearsAfterTicks>
+        <disappearsAfterTicks>270</disappearsAfterTicks>
       </li>
     </comps>
     <stages>
@@ -27,9 +27,9 @@
       <li>
         <minSeverity>0.35</minSeverity>
         <statOffsets>
-          <MoveSpeed>-0.46</MoveSpeed>
-          <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
-          <MeleeDodgeChance>-0.05</MeleeDodgeChance>
+          <MoveSpeed>-0.40</MoveSpeed>
+          <ShootingAccuracyPawn>-0.08</ShootingAccuracyPawn>
+          <MeleeDodgeChance>-0.04</MeleeDodgeChance>
         </statOffsets>
       </li>
       <li>

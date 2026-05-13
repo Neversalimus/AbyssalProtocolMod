@@ -16,15 +16,16 @@ namespace AbyssalProtocol
         };
 
         public int scanIntervalTicks = 30;
-        public int cooldownTicks = 540;
-        public int cooldownJitterTicks = 150;
-        public float minRange = 3.2f;
-        public float maxRange = 16.0f;
-        public float targetFocusRadius = 28.0f;
-        public float maxGuardianDistanceFromFocus = 34.0f;
-        public float damageAmount = 12.0f;
-        public float armorPenetration = 0.26f;
-        public float snareSeverity = 0.46f;
+        public int cooldownTicks = 600;
+        public int cooldownJitterTicks = 120;
+        public float minRange = 2.6f;
+        public float maxRange = 18.0f;
+        public float targetFocusRadius = 34.0f;
+        public float maxGuardianDistanceFromFocus = 42.0f;
+        public float damageAmount = 11.0f;
+        public float armorPenetration = 0.24f;
+        public float snareSeverity = 0.40f;
+        public int snareRefreshTicks = 270;
         public string snareHediffDefName = "ABY_AorticSnare";
         public bool preferRangedTargets = true;
         public bool preferFocusAttackers = true;
@@ -90,6 +91,25 @@ namespace AbyssalProtocol
                     "[Abyssal Protocol] Aortic Chain Harrower lash tick failed and was skipped: " + ex.GetType().Name + ": " + ex.Message,
                     1200);
             }
+        }
+
+
+        public override string CompInspectStringExtra()
+        {
+            Pawn pawn = PawnParent;
+            if (pawn == null || pawn.Destroyed || pawn.Dead)
+            {
+                return null;
+            }
+
+            int now = CurrentTicks;
+            if (now >= nextAttackTick)
+            {
+                return "ABY_AorticChainLash_InspectReady".Translate(Props.maxRange.ToString("0.#"));
+            }
+
+            float seconds = Mathf.Max(0f, (nextAttackTick - now) / 60f);
+            return "ABY_AorticChainLash_InspectCooldown".Translate(seconds.ToString("0.0"), Props.maxRange.ToString("0.#"));
         }
 
         private void TickLashSafe()
@@ -199,7 +219,11 @@ namespace AbyssalProtocol
                 target.TakeDamage(damageInfo);
             }
 
-            AbyssalThreatPawnUtility.ApplyOrRefreshHediff(target, Props.snareHediffDefName, Props.snareSeverity);
+            ABY_ProjectileProcUtility.ApplyOrRefreshFixedHediff(
+                target,
+                Props.snareHediffDefName,
+                Mathf.Max(0.01f, Props.snareSeverity),
+                Mathf.Max(60, Props.snareRefreshTicks));
         }
 
         private Pawn FindBestLashTarget(Pawn pawn, Thing focus)

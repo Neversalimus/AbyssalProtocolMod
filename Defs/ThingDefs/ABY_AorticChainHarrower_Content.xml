@@ -101,11 +101,11 @@
           <li>ABY_DominionSliceAnchor_Law</li>
         </anchorDefNames>
         <scanIntervalTicks>45</scanIntervalTicks>
-        <defendRadius>24.0</defendRadius>
-        <leashDistance>22.0</leashDistance>
-        <hardLeashDistance>36.0</hardLeashDistance>
-        <returnRadiusMin>4.0</returnRadiusMin>
-        <returnRadiusMax>9.0</returnRadiusMax>
+        <defendRadius>32.0</defendRadius>
+        <leashDistance>30.0</leashDistance>
+        <hardLeashDistance>44.0</hardLeashDistance>
+        <returnRadiusMin>5.0</returnRadiusMin>
+        <returnRadiusMax>12.0</returnRadiusMax>
         <interceptJobExpiryTicks>90</interceptJobExpiryTicks>
         <returnJobExpiryTicks>90</returnJobExpiryTicks>
         <preferRangedTargets>true</preferRangedTargets>
@@ -120,16 +120,17 @@
           <li>ABY_DominionSliceAnchor_Law</li>
         </anchorDefNames>
         <scanIntervalTicks>30</scanIntervalTicks>
-        <cooldownTicks>540</cooldownTicks>
-        <cooldownJitterTicks>150</cooldownJitterTicks>
-        <minRange>3.2</minRange>
-        <maxRange>16.0</maxRange>
-        <targetFocusRadius>28.0</targetFocusRadius>
-        <maxGuardianDistanceFromFocus>34.0</maxGuardianDistanceFromFocus>
-        <damageAmount>12.0</damageAmount>
-        <armorPenetration>0.26</armorPenetration>
-        <snareSeverity>0.46</snareSeverity>
+        <cooldownTicks>600</cooldownTicks>
+        <cooldownJitterTicks>120</cooldownJitterTicks>
+        <minRange>2.6</minRange>
+        <maxRange>18.0</maxRange>
+        <targetFocusRadius>34.0</targetFocusRadius>
+        <maxGuardianDistanceFromFocus>42.0</maxGuardianDistanceFromFocus>
+        <damageAmount>11.0</damageAmount>
+        <armorPenetration>0.24</armorPenetration>
+        <snareSeverity>0.40</snareSeverity>
         <snareHediffDefName>ABY_AorticSnare</snareHediffDefName>
+        <snareRefreshTicks>270</snareRefreshTicks>
         <preferRangedTargets>true</preferRangedTargets>
         <preferFocusAttackers>true</preferFocusAttackers>
         <defendNearestAnchorBeforeHeartExposed>true</defendNearestAnchorBeforeHeartExposed>
