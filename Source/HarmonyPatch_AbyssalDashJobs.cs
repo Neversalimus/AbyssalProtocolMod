@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
@@ -9,7 +10,9 @@ namespace AbyssalProtocol
     [HarmonyPatch]
     public static class HarmonyPatch_AbyssalDashPathFollower
     {
-        private static readonly AccessTools.FieldRef<Pawn_PathFollower, Pawn> PawnRef = AccessTools.FieldRefAccess<Pawn_PathFollower, Pawn>("pawn");
+        private static AccessTools.FieldRef<Pawn_PathFollower, Pawn> pawnRef;
+        private static bool pawnRefResolveAttempted;
+        private static bool pawnRefResolveFailed;
 
         private static IEnumerable<MethodBase> TargetMethods()
         {
@@ -17,6 +20,13 @@ namespace AbyssalProtocol
             if (method != null)
             {
                 yield return method;
+            }
+            else
+            {
+                ABY_LogThrottleUtility.Warning(
+                    "dash-pather-target-missing",
+                    "[Abyssal Protocol] Dash Harmony patch could not resolve Pawn_PathFollower.PatherTick; dash path-freeze guard disabled for this runtime.",
+                    999999);
             }
         }
 
@@ -28,25 +38,69 @@ namespace AbyssalProtocol
 
         private static Pawn SafeGetPawn(Pawn_PathFollower follower)
         {
-            try
-            {
-                return follower != null ? PawnRef(follower) : null;
-            }
-            catch
+            if (follower == null)
             {
                 return null;
             }
+
+            AccessTools.FieldRef<Pawn_PathFollower, Pawn> resolvedRef = ResolvePawnRef();
+            if (resolvedRef == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return resolvedRef(follower);
+            }
+            catch (Exception ex)
+            {
+                pawnRefResolveFailed = true;
+                ABY_LogThrottleUtility.Warning(
+                    "dash-pather-pawnref-read-failed",
+                    "[Abyssal Protocol] Dash Harmony patch failed to read Pawn_PathFollower.pawn; dash path-freeze guard disabled. " + ex.GetType().Name + ": " + ex.Message,
+                    999999);
+                return null;
+            }
+        }
+
+        private static AccessTools.FieldRef<Pawn_PathFollower, Pawn> ResolvePawnRef()
+        {
+            if (pawnRefResolveAttempted)
+            {
+                return pawnRefResolveFailed ? null : pawnRef;
+            }
+
+            pawnRefResolveAttempted = true;
+            try
+            {
+                pawnRef = AccessTools.FieldRefAccess<Pawn_PathFollower, Pawn>("pawn");
+                pawnRefResolveFailed = pawnRef == null;
+            }
+            catch (Exception ex)
+            {
+                pawnRef = null;
+                pawnRefResolveFailed = true;
+                ABY_LogThrottleUtility.Warning(
+                    "dash-pather-pawnref-bind-failed",
+                    "[Abyssal Protocol] Dash Harmony patch could not bind Pawn_PathFollower.pawn; dash path-freeze guard disabled for this runtime. " + ex.GetType().Name + ": " + ex.Message,
+                    999999);
+            }
+
+            return pawnRefResolveFailed ? null : pawnRef;
         }
     }
 
     [HarmonyPatch]
     public static class HarmonyPatch_AbyssalDashJobTracker
     {
-        private static readonly AccessTools.FieldRef<Pawn_JobTracker, Pawn> PawnRef = AccessTools.FieldRefAccess<Pawn_JobTracker, Pawn>("pawn");
+        private static AccessTools.FieldRef<Pawn_JobTracker, Pawn> pawnRef;
+        private static bool pawnRefResolveAttempted;
+        private static bool pawnRefResolveFailed;
 
         private static IEnumerable<MethodBase> TargetMethods()
         {
-            MethodInfo[] methods = typeof(Pawn_JobTracker).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            MethodInfo[] methods = typeof(Pawn_JobTracker).GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
             for (int i = 0; i < methods.Length; i++)
             {
                 MethodInfo method = methods[i];
@@ -70,14 +124,56 @@ namespace AbyssalProtocol
 
         private static Pawn SafeGetPawn(Pawn_JobTracker tracker)
         {
-            try
-            {
-                return tracker != null ? PawnRef(tracker) : null;
-            }
-            catch
+            if (tracker == null)
             {
                 return null;
             }
+
+            AccessTools.FieldRef<Pawn_JobTracker, Pawn> resolvedRef = ResolvePawnRef();
+            if (resolvedRef == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return resolvedRef(tracker);
+            }
+            catch (Exception ex)
+            {
+                pawnRefResolveFailed = true;
+                ABY_LogThrottleUtility.Warning(
+                    "dash-jobtracker-pawnref-read-failed",
+                    "[Abyssal Protocol] Dash Harmony patch failed to read Pawn_JobTracker.pawn; dash job-freeze guard disabled. " + ex.GetType().Name + ": " + ex.Message,
+                    999999);
+                return null;
+            }
+        }
+
+        private static AccessTools.FieldRef<Pawn_JobTracker, Pawn> ResolvePawnRef()
+        {
+            if (pawnRefResolveAttempted)
+            {
+                return pawnRefResolveFailed ? null : pawnRef;
+            }
+
+            pawnRefResolveAttempted = true;
+            try
+            {
+                pawnRef = AccessTools.FieldRefAccess<Pawn_JobTracker, Pawn>("pawn");
+                pawnRefResolveFailed = pawnRef == null;
+            }
+            catch (Exception ex)
+            {
+                pawnRef = null;
+                pawnRefResolveFailed = true;
+                ABY_LogThrottleUtility.Warning(
+                    "dash-jobtracker-pawnref-bind-failed",
+                    "[Abyssal Protocol] Dash Harmony patch could not bind Pawn_JobTracker.pawn; dash job-freeze guard disabled for this runtime. " + ex.GetType().Name + ": " + ex.Message,
+                    999999);
+            }
+
+            return pawnRefResolveFailed ? null : pawnRef;
         }
     }
 }
