@@ -35,4 +35,5 @@
   <ABY_AorticGuardianLeash_Inspect>Фокус охраны: {0}. Дистанция: {1}; мягкая привязка: {2}; жёсткая привязка: {3}.</ABY_AorticGuardianLeash_Inspect>
   <ABY_AorticChainLash_InspectReady>Аортальная цепная плеть готова. Эффективная дальность: {0}.</ABY_AorticChainLash_InspectReady>
   <ABY_AorticChainLash_InspectCooldown>Аортальная цепная плеть перезаряжается: {0}с. Эффективная дальность: {1}.</ABY_AorticChainLash_InspectCooldown>
+  <ABY_DominionSliceEncounter_HeartGuardianSevered>Аортальная связь разорвана. Оставшиеся стражи сердца: {0}.</ABY_DominionSliceEncounter_HeartGuardianSevered>
 </LanguageData>

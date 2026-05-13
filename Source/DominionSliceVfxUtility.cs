@@ -22,6 +22,9 @@ namespace AbyssalProtocol
         private const string TetherChainHeavyTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_ChainHeavy";
         private const string TetherSnapAnchorTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_SnapAnchor";
         private const string TetherSnapHeartTexPath = "Things/VFX/DominionSlice/Tether/ABY_DominionTether_SnapHeart";
+        private const string HeartGuardianSnapTexPath = "Things/VFX/AorticChainHarrower/ABY_AorticChainLash_Snap";
+        private const string HeartGuardianImpactTexPath = "Things/VFX/AorticChainHarrower/ABY_AorticChainLash_Impact";
+        private const string HeartGuardianResidualTexPath = "Things/VFX/AorticChainHarrower/ABY_AorticChainLash_Residual";
 
         private const string AnchorBreakMoteDefName = "ABY_Mote_DominionSliceAnchorBreak";
         private const string HeartExposeMoteDefName = "ABY_Mote_DominionSliceHeartExpose";
@@ -39,6 +42,9 @@ namespace AbyssalProtocol
         private static readonly Material TetherChainHeavyMaterial = MaterialPool.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.34f));
         private static readonly Material TetherSnapAnchorMaterial = MaterialPool.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
         private static readonly Material TetherSnapHeartMaterial = MaterialPool.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
+        private static readonly Material HeartGuardianSnapMaterial = MaterialPool.MatFrom(HeartGuardianSnapTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.96f));
+        private static readonly Material HeartGuardianImpactMaterial = MaterialPool.MatFrom(HeartGuardianImpactTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.86f));
+        private static readonly Material HeartGuardianResidualMaterial = MaterialPool.MatFrom(HeartGuardianResidualTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.74f));
 
         private static ThingDef anchorBreakMoteDef;
         private static ThingDef heartExposeMoteDef;
@@ -175,10 +181,11 @@ namespace AbyssalProtocol
             }
 
             Vector3 direction = flatDelta / length;
+            Vector3 perp = new Vector3(direction.z, 0f, -direction.x);
             float progress = Mathf.Clamp01(ageTicks / (float)LinkSeverBurstDurationTicks);
             float segment = Mathf.Clamp(length * (0.23f + progress * 0.05f), 2.20f, 5.80f);
             float baseWidth = 0.205f;
-            float burstWidth = baseWidth * Mathf.Lerp(7.60f, 4.85f, progress);
+            float burstWidth = baseWidth * Mathf.Lerp(7.35f, 4.45f, progress);
             int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             float jitter = 1f + Mathf.Sin((ticks + seed) * 0.127f + 0.73f) * 0.045f;
 
@@ -188,8 +195,30 @@ namespace AbyssalProtocol
             Vector3 heartTo = heartPos - direction * 0.30f;
             guardianFrom.y = guardianTo.y = heartFrom.y = heartTo.y = guardianPos.y;
 
-            DrawBeam(guardianFrom, guardianTo, burstWidth * jitter, (guardianTo - guardianFrom).MagnitudeHorizontal(), TetherSnapAnchorMaterial, 1f);
-            DrawBeam(heartFrom, heartTo, burstWidth * (0.98f + (1f - progress) * 0.08f), (heartTo - heartFrom).MagnitudeHorizontal(), TetherSnapHeartMaterial, 1f);
+            DrawBeam(guardianFrom, guardianTo, burstWidth * jitter, (guardianTo - guardianFrom).MagnitudeHorizontal(), HeartGuardianSnapMaterial, 1f);
+            DrawBeam(heartFrom, heartTo, burstWidth * (0.96f + (1f - progress) * 0.07f), (heartTo - heartFrom).MagnitudeHorizontal(), HeartGuardianSnapMaterial, 1f);
+
+            if (ageTicks <= 18)
+            {
+                float impactPulse = Mathf.Lerp(1.20f, 0.42f, ageTicks / 18f);
+                Vector3 guardianCrossA = guardianPos - perp * 0.58f;
+                Vector3 guardianCrossB = guardianPos + perp * 0.58f;
+                Vector3 heartCrossA = heartPos - perp * 0.46f;
+                Vector3 heartCrossB = heartPos + perp * 0.46f;
+                guardianCrossA.y = guardianCrossB.y = heartCrossA.y = heartCrossB.y = guardianPos.y + 0.004f;
+                DrawBeam(guardianCrossA, guardianCrossB, 0.82f * impactPulse, 1.16f, HeartGuardianImpactMaterial, 1f);
+                DrawBeam(heartCrossA, heartCrossB, 0.62f * impactPulse, 0.92f, HeartGuardianImpactMaterial, 1f);
+            }
+
+            if (ageTicks >= 10)
+            {
+                float residual = Mathf.Sin(progress * Mathf.PI);
+                Vector3 mid = Vector3.Lerp(guardianPos, heartPos, 0.44f);
+                Vector3 residualFrom = mid - direction * Mathf.Clamp(length * 0.10f, 1.15f, 2.80f);
+                Vector3 residualTo = mid + direction * Mathf.Clamp(length * 0.08f, 0.95f, 2.25f);
+                residualFrom.y = residualTo.y = guardianPos.y + 0.006f;
+                DrawBeam(residualFrom, residualTo, Mathf.Max(0.12f, burstWidth * 0.45f * residual), (residualTo - residualFrom).MagnitudeHorizontal(), HeartGuardianResidualMaterial, 1f);
+            }
         }
 
         public static void DrawHeartShield(Vector3 heartPos, Map map, int liveAnchors, int seed)

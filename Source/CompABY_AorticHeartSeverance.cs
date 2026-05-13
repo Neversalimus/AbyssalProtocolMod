@@ -9,6 +9,7 @@ namespace AbyssalProtocol
         public string guardianKindDefName = "ABY_AorticChainHarrower";
         public string heartDefName = "ABY_DominionSliceHeart";
         public string severanceSoundDefName = "ABY_SigilChargePulse";
+        public int rememberPositionIntervalTicks = 45;
 
         public CompProperties_ABY_AorticHeartSeverance()
         {
@@ -16,10 +17,20 @@ namespace AbyssalProtocol
         }
     }
 
+    /// <summary>
+    /// One-shot death severance notifier for Aortic Chain Harrowers.
+    ///
+    /// This comp is intentionally conservative:
+    /// - it never reads Pawn.DrawPos during ticks;
+    /// - it does not install any renderer or tweener hook;
+    /// - it only stores a safe map cell and fires once when the pawn is killed.
+    ///
+    /// The previous animated/body overlay pipeline could put PawnTweener into a bad state during
+    /// dev-spawn/despawn. This component is deliberately limited to PositionHeld + PostDestroy.
+    /// </summary>
     public class CompABY_AorticHeartSeverance : ThingComp
     {
         private IntVec3 lastKnownCell = IntVec3.Invalid;
-        private Vector3 lastKnownDrawPos = Vector3.zero;
         private bool severanceNotified;
 
         public CompProperties_ABY_AorticHeartSeverance Props => (CompProperties_ABY_AorticHeartSeverance)props;
@@ -30,31 +41,36 @@ namespace AbyssalProtocol
         {
             base.PostExposeData();
             Scribe_Values.Look(ref lastKnownCell, "lastKnownCell");
-            Scribe_Values.Look(ref lastKnownDrawPos, "lastKnownDrawPos");
             Scribe_Values.Look(ref severanceNotified, "severanceNotified", false);
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-            RememberPosition(true);
+            RememberSafeCell();
         }
 
         public override void CompTick()
         {
             base.CompTick();
-            // Intentionally do not read Pawn.DrawPos here. Pawn.DrawPos can pass through
-            // PawnTweener while the pawn is being generated/spawned/despawned, and a broken
-            // tween state caused infinite Root-level Update/OnGUI red errors in dev-spawn.
-            // PositionHeld is enough for death-severance VFX and is safe during normal ticks.
-            RememberPosition(false);
+
+            if (parent == null || parent.Destroyed || !parent.Spawned)
+            {
+                return;
+            }
+
+            int interval = Props != null ? Mathf.Max(15, Props.rememberPositionIntervalTicks) : 45;
+            if (parent.IsHashIntervalTick(interval))
+            {
+                RememberSafeCell();
+            }
         }
 
         public override void PostDestroy(DestroyMode mode, Map previousMap)
         {
             Pawn pawn = PawnParent;
-            bool killed = pawn != null && (pawn.Dead || mode == DestroyMode.KillFinalize);
-            if (!severanceNotified && killed && previousMap != null)
+            bool killed = mode == DestroyMode.KillFinalize || (pawn != null && pawn.Dead);
+            if (!severanceNotified && killed)
             {
                 severanceNotified = true;
                 NotifySeverance(previousMap, pawn);
@@ -63,34 +79,17 @@ namespace AbyssalProtocol
             base.PostDestroy(mode, previousMap);
         }
 
-        private void RememberPosition(bool allowInitialDrawPos)
+        private void RememberSafeCell()
         {
-            if (parent == null || parent.Destroyed || !parent.Spawned)
+            if (parent == null)
             {
                 return;
             }
 
-            lastKnownCell = parent.PositionHeld;
-            if (lastKnownCell.IsValid)
+            IntVec3 cell = parent.PositionHeld;
+            if (cell.IsValid)
             {
-                lastKnownDrawPos = lastKnownCell.ToVector3Shifted();
-            }
-
-            // DrawPos is only attempted once after spawn setup, and even then it is guarded.
-            // Runtime ticks must never depend on DrawPos for this comp.
-            if (allowInitialDrawPos)
-            {
-                try
-                {
-                    lastKnownDrawPos = parent.DrawPos;
-                }
-                catch
-                {
-                    if (lastKnownCell.IsValid)
-                    {
-                        lastKnownDrawPos = lastKnownCell.ToVector3Shifted();
-                    }
-                }
+                lastKnownCell = cell;
             }
         }
 
@@ -101,21 +100,31 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!Props.severanceSoundDefName.NullOrEmpty() && lastKnownCell.IsValid)
+            IntVec3 cell = lastKnownCell;
+            if (!cell.IsValid && pawn != null && pawn.PositionHeld.IsValid)
             {
-                ABY_SoundUtility.PlayAt(Props.severanceSoundDefName, lastKnownCell, map);
+                cell = pawn.PositionHeld;
+            }
+            if (!cell.IsValid)
+            {
+                cell = map.Center;
+            }
+
+            if (!Props.severanceSoundDefName.NullOrEmpty())
+            {
+                ABY_SoundUtility.PlayAt(Props.severanceSoundDefName, cell, map);
             }
 
             MapComponent_DominionSliceEncounter encounter = map.GetComponent<MapComponent_DominionSliceEncounter>();
             if (encounter != null)
             {
-                encounter.NotifyHeartGuardianKilled(pawn, lastKnownCell, lastKnownDrawPos, Props.guardianKindDefName);
+                encounter.NotifyHeartGuardianKilled(pawn, cell, Props.guardianKindDefName);
+                return;
             }
-            else if (lastKnownCell.IsValid)
-            {
-                FleckMaker.ThrowLightningGlow(lastKnownCell.ToVector3Shifted(), map, 1.65f);
-                FleckMaker.ThrowMicroSparks(lastKnownCell.ToVector3Shifted(), map);
-            }
+
+            Vector3 pos = cell.ToVector3Shifted();
+            FleckMaker.ThrowLightningGlow(pos, map, 1.65f);
+            FleckMaker.ThrowMicroSparks(pos, map);
         }
     }
 }

@@ -112,6 +112,13 @@
         <defendNearestAnchorBeforeHeartExposed>true</defendNearestAnchorBeforeHeartExposed>
         <allowMeleeIntercept>true</allowMeleeIntercept>
       </li>
+
+      <li Class="AbyssalProtocol.CompProperties_ABY_AorticHeartSeverance">
+        <guardianKindDefName>ABY_AorticChainHarrower</guardianKindDefName>
+        <heartDefName>ABY_DominionSliceHeart</heartDefName>
+        <severanceSoundDefName>ABY_SigilChargePulse</severanceSoundDefName>
+        <rememberPositionIntervalTicks>45</rememberPositionIntervalTicks>
+      </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_AorticChainLash">
         <heartDefName>ABY_DominionSliceHeart</heartDefName>
         <anchorDefNames>

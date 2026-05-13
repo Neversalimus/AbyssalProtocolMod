@@ -35,4 +35,5 @@
   <ABY_AorticGuardianLeash_Inspect>Guard focus: {0}. Distance: {1}; soft leash: {2}; hard leash: {3}.</ABY_AorticGuardianLeash_Inspect>
   <ABY_AorticChainLash_InspectReady>Aortic chain lash ready. Effective range: {0}.</ABY_AorticChainLash_InspectReady>
   <ABY_AorticChainLash_InspectCooldown>Aortic chain lash recharging: {0}s. Effective range: {1}.</ABY_AorticChainLash_InspectCooldown>
+  <ABY_DominionSliceEncounter_HeartGuardianSevered>Aortic guard-link severed. Remaining heart guardian(s): {0}.</ABY_DominionSliceEncounter_HeartGuardianSevered>
 </LanguageData>

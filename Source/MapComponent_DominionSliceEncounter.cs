@@ -338,7 +338,6 @@ namespace AbyssalProtocol
             heartGuardians.Clear();
             linkSeverBursts.Clear();
             heartGuardianSeverBursts.Clear();
-            linkSeverBursts.Clear();
             heart = null;
 
             SpawnEncounterObjects(session);
@@ -589,7 +588,7 @@ namespace AbyssalProtocol
             });
         }
 
-        public void NotifyHeartGuardianKilled(Pawn guardian, IntVec3 lastKnownCell, Vector3 lastKnownDrawPos, string guardianKindDefName = null)
+        public void NotifyHeartGuardianKilled(Pawn guardian, IntVec3 lastKnownCell, string guardianKindDefName = null)
         {
             if (map == null)
             {
@@ -606,28 +605,45 @@ namespace AbyssalProtocol
                 heartGuardians.Remove(guardian);
             }
 
-            Vector3 guardianPos = lastKnownDrawPos;
-            if (guardianPos == Vector3.zero && lastKnownCell.IsValid)
+            IntVec3 guardianCell = lastKnownCell;
+            if (!guardianCell.IsValid && guardian != null && guardian.PositionHeld.IsValid)
             {
-                guardianPos = lastKnownCell.ToVector3Shifted();
+                guardianCell = guardian.PositionHeld;
             }
-
-            if (guardianPos == Vector3.zero)
+            if (!guardianCell.IsValid)
             {
-                guardianPos = guardian != null && guardian.PositionHeld.IsValid ? guardian.PositionHeld.ToVector3Shifted() : map.Center.ToVector3Shifted();
+                guardianCell = map.Center;
             }
 
             Building_ABY_DominionSliceHeart heartBuilding = HeartBuilding;
-            Vector3 heartPos = heartBuilding != null && !heartBuilding.Destroyed ? heartBuilding.DrawPos : guardianPos;
+            IntVec3 heartCell = heartBuilding != null && !heartBuilding.Destroyed && heartBuilding.PositionHeld.IsValid
+                ? heartBuilding.PositionHeld
+                : guardianCell;
+
+            Vector3 guardianPos = guardianCell.ToVector3Shifted();
+            Vector3 heartPos = heartCell.ToVector3Shifted();
 
             DominionSliceVfxUtility.SpawnHeartGuardianSeverance(guardianPos, heartPos, map);
-            heartGuardianSeverBursts.Add(new HeartGuardianSeverBurst
+            if (heartGuardianSeverBursts != null)
             {
-                guardianPos = guardianPos,
-                heartPos = heartPos,
-                startTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
-                seed = guardian != null ? guardian.thingIDNumber : Rand.Int
-            });
+                heartGuardianSeverBursts.Add(new HeartGuardianSeverBurst
+                {
+                    guardianPos = guardianPos,
+                    heartPos = heartPos,
+                    startTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0,
+                    seed = guardian != null ? guardian.thingIDNumber : Rand.Int
+                });
+            }
+
+            if (heartBuilding != null && IsActiveEncounter)
+            {
+                int remaining = GetLiveHeartGuardianCount(guardianKindDefName);
+                Messages.Message(
+                    "ABY_DominionSliceEncounter_HeartGuardianSevered".Translate(remaining),
+                    new TargetInfo(guardianCell, map),
+                    remaining > 0 ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.ThreatSmall,
+                    false);
+            }
         }
 
         public float GetHeartGuardianDamageFactor(string guardianKindDefName, float reductionPerGuardian, float maxReduction)
