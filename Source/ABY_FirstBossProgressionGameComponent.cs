@@ -6,7 +6,6 @@ namespace AbyssalProtocol
 {
     public class ABY_FirstBossProgressionGameComponent : GameComponent
     {
-        private const string ArchonBeastRaceDefName = "ABY_ArchonBeast";
         private const int ScanIntervalTicks = 90;
 
         private bool firstBeastKillRecorded;
@@ -76,7 +75,7 @@ namespace AbyssalProtocol
                     }
 
                     Pawn deadPawn = corpse.InnerPawn;
-                    if (deadPawn.def?.defName != ArchonBeastRaceDefName)
+                    if (!AbyssalArchonVariantUtility.IsArchonBeastFamily(deadPawn))
                     {
                         continue;
                     }

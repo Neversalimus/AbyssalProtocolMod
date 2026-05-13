@@ -19,6 +19,7 @@ namespace AbyssalProtocol
         {
             { "ABY_ReactorSaint", new SelectionProfile { widthCells = 11.5f, heightCells = 8.8f, yOffsetCells = -0.2f, priority = 120 } },
             { "ABY_ArchonBeast", new SelectionProfile { widthCells = 7.6f, heightCells = 6.6f, yOffsetCells = 0.0f, priority = 100 } },
+            { "ABY_ReliquaryArchonBeast", new SelectionProfile { widthCells = 8.4f, heightCells = 7.2f, yOffsetCells = 0.0f, priority = 101 } },
             { "ABY_ArchonOfRupture", new SelectionProfile { widthCells = 8.0f, heightCells = 7.2f, yOffsetCells = 0.0f, priority = 110 } },
             { "ABY_SiegeIdol", new SelectionProfile { widthCells = 5.8f, heightCells = 4.8f, yOffsetCells = 0.0f, priority = 65 } },
             { "ABY_ChoirEngine", new SelectionProfile { widthCells = 5.4f, heightCells = 4.8f, yOffsetCells = 0.0f, priority = 70 } },

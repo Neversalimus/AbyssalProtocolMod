@@ -70,7 +70,7 @@ namespace AbyssalProtocol
                 };
             }
 
-            if (Matches(thingDef, kindDef, "ABY_ArchonBeast") || style == "abyssal_archon")
+            if (AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(thingDef) || AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(kindDef) || style == "abyssal_archon")
             {
                 return new ABY_BossPresentationProfile
                 {

@@ -9,6 +9,9 @@ namespace AbyssalProtocol
         public string summonMode = "Boss";
         public string pawnKindDefName = "ABY_ArchonBeast";
         public string bossLabel = "Archon Beast";
+        public string alternatePawnKindDefName;
+        public string alternateBossLabel;
+        public string alternateDifficultyFloorDefName;
         public int spawnPoints = 900;
         public int ritualWarmupTicks = 180;
 

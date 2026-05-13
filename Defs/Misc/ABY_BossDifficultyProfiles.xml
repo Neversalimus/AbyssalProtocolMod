@@ -28,6 +28,7 @@
     </ritualIds>
     <bossPawnKindDefNames>
       <li>ABY_ArchonBeast</li>
+      <li>ABY_ReliquaryArchonBeast</li>
     </bossPawnKindDefNames>
     <escortPoolId>archon_boss_escort</escortPoolId>
     <escortBaseContentTier>4</escortBaseContentTier>

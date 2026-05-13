@@ -472,7 +472,7 @@ namespace AbyssalProtocol
 
             pendingRitualId = summonProps.ritualId;
             pendingSummonMode = summonProps.summonMode ?? "Boss";
-            pendingBossLabel = summonProps.bossLabel;
+            pendingBossLabel = AbyssalArchonVariantUtility.ResolveBossLabel(summonProps);
             pendingCompletionLetterLabelKey = summonProps.completionLetterLabelKey;
             pendingCompletionLetterDescKey = summonProps.completionLetterDescKey;
             pendingArrivalManifestationDefName = summonProps.arrivalManifestationDefName;
@@ -525,10 +525,11 @@ namespace AbyssalProtocol
             }
             else
             {
-                pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.pawnKindDefName);
+                string resolvedPawnKindDefName = AbyssalArchonVariantUtility.ResolvePawnKindDefName(summonProps);
+                pendingPawnKindDef = DefDatabase<PawnKindDef>.GetNamedSilentFail(resolvedPawnKindDefName);
                 if (pendingPawnKindDef == null)
                 {
-                    failReason = "Missing PawnKindDef: " + summonProps.pawnKindDefName;
+                    failReason = "Missing PawnKindDef: " + resolvedPawnKindDefName;
                     return false;
                 }
 
@@ -2372,7 +2373,7 @@ namespace AbyssalProtocol
 
         private bool IsCurrentArchonBeastRitual()
         {
-            return pendingPawnKindDef?.defName == "ABY_ArchonBeast"
+            return AbyssalArchonVariantUtility.IsArchonBeastFamily(pendingPawnKindDef)
                 && string.Equals(pendingRitualId, "archon_beast", System.StringComparison.OrdinalIgnoreCase);
         }
 
@@ -2412,7 +2413,7 @@ namespace AbyssalProtocol
 
         private bool ShouldUseArchonBeastPortalEscortEncounter()
         {
-            if (pendingPawnKindDef?.defName != "ABY_ArchonBeast")
+            if (!AbyssalArchonVariantUtility.IsArchonBeastFamily(pendingPawnKindDef))
             {
                 return false;
             }

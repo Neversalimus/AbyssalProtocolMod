@@ -41,6 +41,45 @@
   </PawnKindDef>
 
   <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_ReliquaryArchonBeast</defName>
+    <label>reliquary archon beast</label>
+    <race>ABY_ReliquaryArchonBeast</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>1250</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+        <role>boss</role>
+        <budgetCost>1250</budgetCost>
+        <selectionWeight>1.00</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>boss_main</li>
+        </encounterPools>
+      </li>
+    </modExtensions>
+
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/ArchonBeastReliquary/ArchonBeastReliquary</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(7.8,7.8)</drawSize>
+          <shadowData>
+            <volume>(4.3, 1.25, 2.35)</volume>
+            <offset>(0, 0, -0.38)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ArchonOfRupture</defName>
     <label>archon of rupture</label>
     <race>ABY_ArchonOfRupture</race>

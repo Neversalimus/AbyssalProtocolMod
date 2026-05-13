@@ -601,6 +601,22 @@ namespace AbyssalProtocol
             },
             new ABY_BestiaryEntryDefinition
             {
+                EntryId = "ABY_ReliquaryArchonBeast",
+                Category = ABY_BestiaryCategory.Boss,
+                PortraitPath = "Pawn/ArchonBeastReliquary/ArchonBeastReliquary_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Label",
+                LabelFallback = @"Reliquary Archon Beast",
+                TagKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Tag",
+                TagFallback = @"High-protocol first boss variant carrying heavier domain law.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Summary",
+                SummaryFallback = @"On Rupture protocol and above, the first archon sigil can answer with a reliquary-form beast: slower, heavier, and more deeply fused with abyssal shrine geometry.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Tactical",
+                TacticalFallback = @"Expect a harder first-boss check. The reliquary form trades speed for armor, endurance, heavier strikes, and a slightly stronger escort release.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Deep",
+                DeepFallback = @"Archive classification: the same first gate authority expressed as a heavier mobile reliquary, implying the abyss adjusts even its early administrators to the colony's chosen protocol severity."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
                 EntryId = "ABY_RiftSapper",
                 Category = ABY_BestiaryCategory.Support,
                 PortraitPath = "Pawn/RiftSapper/ABY_RiftSapper_east",

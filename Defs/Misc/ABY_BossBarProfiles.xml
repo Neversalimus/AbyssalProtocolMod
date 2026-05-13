@@ -5,9 +5,11 @@
     <defName>ABY_BossBarProfile_ArchonBeast</defName>
     <bossThingDefNames>
       <li>ABY_ArchonBeast</li>
+      <li>ABY_ReliquaryArchonBeast</li>
     </bossThingDefNames>
     <bossPawnKindDefNames>
       <li>ABY_ArchonBeast</li>
+      <li>ABY_ReliquaryArchonBeast</li>
     </bossPawnKindDefNames>
     <displayLabel>Archon Beast</displayLabel>
     <iconTexPath>UI/AbyssalBossBar/Icons/ABY_BossIcon_ArchonBeast</iconTexPath>

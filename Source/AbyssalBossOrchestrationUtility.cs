@@ -553,7 +553,7 @@ namespace AbyssalProtocol
                     TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
                 }
             }
-            else if (resolvedId == "archon_beast" || string.Equals(bossDefName, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase))
+            else if (resolvedId == "archon_beast" || AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(bossDefName))
             {
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_EmberHound", poolId, allowedContentTier, true);
                 TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSapper", poolId, allowedContentTier, false);

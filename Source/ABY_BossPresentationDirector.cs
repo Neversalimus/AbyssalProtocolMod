@@ -18,6 +18,8 @@ namespace AbyssalProtocol
                     return Translate("ABY_BossPresentation_Title_ReactorSaint", "INFERNAL REACTOR SAINT");
                 case "ABY_ArchonOfRupture":
                     return Translate("ABY_BossPresentation_Title_Rupture", "ARCHON OF RUPTURE");
+                case "ABY_ReliquaryArchonBeast":
+                    return Translate("ABY_BossPresentation_Title_ReliquaryArchonBeast", "RELIQUARY ARCHON BEAST");
                 case "ABY_ArchonBeast":
                     return Translate("ABY_BossPresentation_Title_ArchonBeast", "ARCHON BEAST");
                 case "ABY_WardenOfAsh":
@@ -38,6 +40,8 @@ namespace AbyssalProtocol
                     return Translate("ABY_BossPresentation_Subtitle_ReactorSaint", "Reactor lattice online. Aegis protocol engaged.");
                 case "ABY_ArchonOfRupture":
                     return Translate("ABY_BossPresentation_Subtitle_Rupture", "The breach remembers its crown.");
+                case "ABY_ReliquaryArchonBeast":
+                    return Translate("ABY_BossPresentation_Subtitle_ReliquaryArchonBeast", "A heavier law of the first gate enters the map.");
                 case "ABY_ArchonBeast":
                     return Translate("ABY_BossPresentation_Subtitle_ArchonBeast", "The first refusal of the gate has arrived.");
                 case "ABY_WardenOfAsh":
@@ -68,6 +72,10 @@ namespace AbyssalProtocol
                     return phase >= 4
                         ? Translate("ABY_BossPresentation_Phase_Rupture_Final", "The veil fails. Rupture authority is unbound.")
                         : Translate("ABY_BossPresentation_Phase_Rupture", "A deeper law opens beneath the breach.");
+                case "ABY_ReliquaryArchonBeast":
+                    return phase >= 3
+                        ? Translate("ABY_BossPresentation_Phase_ReliquaryArchonBeast_Final", "The reliquary law closes around the field.")
+                        : Translate("ABY_BossPresentation_Phase_ReliquaryArchonBeast", "The shrine-beast unfolds its stored authority.");
                 case "ABY_ArchonBeast":
                     return phase >= 3
                         ? Translate("ABY_BossPresentation_Phase_ArchonBeast_Final", "The beast answers with total refusal.")
@@ -93,6 +101,8 @@ namespace AbyssalProtocol
                     return Translate("ABY_BossPresentation_Outro_ReactorSaint", "The reactor saint falls silent. The aegis geometry unthreads.");
                 case "ABY_ArchonOfRupture":
                     return Translate("ABY_BossPresentation_Outro_Rupture", "Rupture authority collapses back into the wound.");
+                case "ABY_ReliquaryArchonBeast":
+                    return Translate("ABY_BossPresentation_Outro_ReliquaryArchonBeast", "The reliquary shell collapses. The gate loses a heavier claim.");
                 case "ABY_ArchonBeast":
                     return Translate("ABY_BossPresentation_Outro_ArchonBeast", "The gate rejects its own beast.");
                 case "ABY_ChoirEngine":

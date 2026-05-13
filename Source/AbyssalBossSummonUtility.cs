@@ -10,7 +10,6 @@ namespace AbyssalProtocol
 {
     public static class AbyssalBossSummonUtility
     {
-        private const string ArchonBeastRaceDefName = "ABY_ArchonBeast";
         private const string ArchonOfRuptureRaceDefName = "ABY_ArchonOfRupture";
         private const string WardenOfAshRaceDefName = "ABY_WardenOfAsh";
         private const string RiftImpRaceDefName = "ABY_RiftImp";
@@ -1583,7 +1582,7 @@ namespace AbyssalProtocol
 
         private static bool IsActiveEncounterPawn(string defName)
         {
-            return defName == ArchonBeastRaceDefName
+            return AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(defName)
                 || defName == ArchonOfRuptureRaceDefName
                 || defName == ReactorSaintKindDefName
                 || defName == RiftImpRaceDefName
@@ -1710,7 +1709,7 @@ namespace AbyssalProtocol
                 coreDefName = "ABY_RuptureCore";
                 carapaceDefName = "ABY_RuptureCarapace";
             }
-            else if (raceDefName == ArchonBeastRaceDefName)
+            else if (AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(raceDefName))
             {
                 coreDefName = "ABY_ArchonCore";
                 carapaceDefName = "ABY_ArchonCarapace";

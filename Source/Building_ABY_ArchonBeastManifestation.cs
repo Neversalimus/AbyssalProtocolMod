@@ -276,12 +276,13 @@ namespace AbyssalProtocol
                 completionLetterLabelKey,
                 completionLetterDescKey);
 
+            float escortBudget = AbyssalArchonVariantUtility.ResolveArchonEscortFallbackBudget(bossKindDef, 620f);
             if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
                     Map,
                     manifestationFaction,
                     "archon_beast",
                     pawn,
-                    620f,
+                    escortBudget,
                     bossLabel,
                     out string escortFailReason) && !escortFailReason.NullOrEmpty())
             {

@@ -124,6 +124,127 @@
     </killedLeavings>
   </ThingDef>
   <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_ReliquaryArchonBeast</defName>
+    <label>reliquary archon beast</label>
+    <description>A heavier first-gate archon-form: an infernal beast whose body has been reforged into a mobile reliquary of abyssal domain law. It manifests only when the protocol is pushed into rupture-grade severity or higher.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Pawn/ArchonBeastReliquary/ArchonBeastReliquary</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3.55,3.55)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>true</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>QuadrupedAnimalWithHooves</body>
+      <baseBodySize>3.55</baseBodySize>
+      <baseHealthScale>5.65</baseHealthScale>
+      <baseHungerRate>1.2</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>12</gestationPeriodDays>
+      <lifeExpectancy>500</lifeExpectancy>
+      <herdAnimal>false</herdAnimal>
+      <predator>true</predator>
+      <foodType>CarnivoreAnimal</foodType>
+      <lifeStageAges>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>3000</MaxHitPoints>
+      <MoveSpeed>4.75</MoveSpeed>
+      <MeleeHitChance>0.95</MeleeHitChance>
+      <MeleeDPS>46</MeleeDPS>
+      <ArmorRating_Sharp>1.35</ArmorRating_Sharp>
+      <ArmorRating_Blunt>1.15</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.70</ArmorRating_Heat>
+      <PainShockThreshold>999</PainShockThreshold>
+      <ComfyTemperatureMin>-50</ComfyTemperatureMin>
+      <ComfyTemperatureMax>260</ComfyTemperatureMax>
+      <Flammability>0</Flammability>
+      <ToxicResistance>1</ToxicResistance>
+      <PsychicSensitivity>0</PsychicSensitivity>
+      <MarketValue>8500</MarketValue>
+      <Mass>5.4</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>crown-maul forelimb</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Scratch</li>
+        </capacities>
+        <power>58</power>
+        <cooldownTime>2.0</cooldownTime>
+        <chanceFactor>1.25</chanceFactor>
+        <armorPenetration>0.52</armorPenetration>
+      </li>
+      <li>
+        <label>reliquary maw</label>
+        <capacities>
+          <li>Bite</li>
+          <li>Blunt</li>
+        </capacities>
+        <power>70</power>
+        <cooldownTime>2.8</cooldownTime>
+        <chanceFactor>0.9</chanceFactor>
+        <armorPenetration>0.58</armorPenetration>
+      </li>
+      <li>
+        <label>altar-crush limb</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>88</power>
+        <cooldownTime>3.6</cooldownTime>
+        <chanceFactor>0.65</chanceFactor>
+        <armorPenetration>0.68</armorPenetration>
+      </li>
+    </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>ArchonPredator</archetype>
+        <minMeleeSkill>15</minMeleeSkill>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.10</bloodLossClamp>
+        <heatstrokeClamp>0.12</heatstrokeClamp>
+        <healWorstInjuryAmount>56</healWorstInjuryAmount>
+        <maxHealPasses>7</maxHealPasses>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>40</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
+      </li>
+    </comps>
+    <killedLeavings Inherit="False">
+      <ABY_HeraldCoreFragment>3</ABY_HeraldCoreFragment>
+      <ABY_ArchonOverrideAmpoule>1</ABY_ArchonOverrideAmpoule>
+    </killedLeavings>
+  </ThingDef>
+  <ThingDef ParentName="AnimalThingBase">
     <defName>ABY_ArchonOfRupture</defName>
     <label>archon of rupture</label>
     <description>The true archon hidden behind the beast. A crown-limbed infernal executor that only manifests when the herald is annihilated before it can unfold its ritual phases.</description>

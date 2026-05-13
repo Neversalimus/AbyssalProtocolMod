@@ -49,6 +49,9 @@
         <summonMode>Boss</summonMode>
         <pawnKindDefName>ABY_ArchonBeast</pawnKindDefName>
         <bossLabel>Archon Beast</bossLabel>
+        <alternatePawnKindDefName>ABY_ReliquaryArchonBeast</alternatePawnKindDefName>
+        <alternateBossLabel>Reliquary Archon Beast</alternateBossLabel>
+        <alternateDifficultyFloorDefName>ABY_Difficulty_Rupture</alternateDifficultyFloorDefName>
         <spawnPoints>900</spawnPoints>
         <ritualWarmupTicks>195</ritualWarmupTicks>
         <arrivalManifestationDefName>ABY_Manifestation_ArchonBeastArrival</arrivalManifestationDefName>
