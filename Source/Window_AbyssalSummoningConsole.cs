@@ -113,13 +113,41 @@ namespace AbyssalProtocol
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(6f);
-            List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
+            List<AbyssalSummoningConsoleUtility.StatusEntry> entries = GetReadinessStripEntries(ritual);
+            if (entries.Count == 0)
+            {
+                return;
+            }
+
             float width = inner.width / entries.Count;
             for (int i = 0; i < entries.Count; i++)
             {
                 Rect cellRect = new Rect(inner.x + width * i, inner.y, width - 4f, inner.height);
                 AbyssalSummoningConsoleArt.DrawStripCell(cellRect, entries[i].Label, entries[i].Value, entries[i].Satisfied, i * 0.17f);
             }
+        }
+
+        private List<AbyssalSummoningConsoleUtility.StatusEntry> GetReadinessStripEntries(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(circle, ritual);
+            if (entries.Count <= 6)
+            {
+                return entries;
+            }
+
+            // Keep the top readiness strip as a compact, fixed gate summary. Dominion/crisis
+            // telemetry can add many extra status entries, but those belong in the detailed
+            // status/preview panels; drawing all of them here collapses the strip into tiny
+            // unreadable cells. The standard strip remains: Power, Focus, Access, Sigils,
+            // Encounter, plus the final ritual-support/capacitor state.
+            List<AbyssalSummoningConsoleUtility.StatusEntry> compactEntries = entries.Take(5).ToList();
+            AbyssalSummoningConsoleUtility.StatusEntry supportEntry = entries[entries.Count - 1];
+            if (!compactEntries.Contains(supportEntry))
+            {
+                compactEntries.Add(supportEntry);
+            }
+
+            return compactEntries;
         }
 
         private void DrawRitualBrowser(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition selected)
