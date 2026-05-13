@@ -14,6 +14,7 @@ namespace AbyssalProtocol
         private const string RuneSweepTexPath = "Things/Building/ABY_AbyssalForge_RuneSweepOverlay";
         private const string VentGlowTexPath = "Things/Building/ABY_AbyssalForge_VentGlowOverlay";
         private const string SparkTexPath = "Things/Building/ABY_AbyssalForge_SparkOverlay";
+        private const string ConsoleCommandIconPath = "UI/ABY/Commands/ABY_OpenCommunionConsole";
 
         private const float ReactorAltitude = 0.036f;
         private const float GlowAltitude = 0.031f;
@@ -33,6 +34,7 @@ namespace AbyssalProtocol
         private static readonly Vector2 RuneSize = new Vector2(4.28f, 0.82f);
         private static readonly Vector2 VentSize = new Vector2(6.06f, 1.62f);
         private static readonly Vector2 SparkSize = new Vector2(2.90f, 1.16f);
+        private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get(ConsoleCommandIconPath, false);
 
         public MapComponent_AbyssalForgeProgress ProgressComponent => Map?.GetComponent<MapComponent_AbyssalForgeProgress>();
         public bool IsPowerActive => GetComp<CompPowerTrader>()?.PowerOn ?? true;
@@ -72,7 +74,7 @@ namespace AbyssalProtocol
             {
                 defaultLabel = "ABY_ForgeOpenConsoleLabel".Translate(),
                 defaultDesc = "ABY_ForgeOpenConsoleDesc".Translate(),
-                icon = ContentFinder<Texture2D>.Get("UI/AbyssalForge/ABY_Category_Core"),
+                icon = ConsoleCommandIcon,
                 action = delegate
                 {
                     Find.WindowStack.Add(new Window_AbyssalForgeConsole(this));
