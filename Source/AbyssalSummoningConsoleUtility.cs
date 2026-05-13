@@ -1746,14 +1746,14 @@ namespace AbyssalProtocol
                 {
                     Label = TranslateOrFallback("ABY_CircleStatus_Anchors", "Anchors"),
                     Value = crisis != null ? crisis.GetAnchorStatusValue() : TranslateOrFallback("ABY_DominionAnchor_StatusValue_Pending", "pending"),
-                    Satisfied = crisis == null || crisis.ActiveAnchorCount <= 0
+                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
                 });
 
                 entries.Add(new StatusEntry
                 {
                     Label = TranslateOrFallback("ABY_CircleStatus_AnchorPressure", "Anchor pressure"),
                     Value = crisis != null ? crisis.GetAnchorPressureLabel() : TranslateOrFallback("ABY_DominionAnchor_Pressure_None", "none"),
-                    Satisfied = crisis == null || crisis.ActiveAnchorCount <= 0
+                    Satisfied = crisis == null || !crisis.IsAnchorPhaseActive
                 });
 
                 entries.Add(new StatusEntry

@@ -73,8 +73,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            nextPulseTick = now + Mathf.Max(90, AnchorExtension?.pulseIntervalTicks ?? 240);
-            ExecutePulse(crisis);
+            nextPulseTick = now + Mathf.Max(120, AnchorExtension?.pulseIntervalTicks ?? 240);
+            ExecuteStabilizationPulse(crisis);
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -133,6 +133,12 @@ namespace AbyssalProtocol
 
         public string GetEffectSummary()
         {
+            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            if (crisis != null && crisis.IsRegisteredAnchor(this))
+            {
+                return "ABY_DominionAnchor_Effect_PreludeStabilizer".Translate();
+            }
+
             switch (AnchorRole)
             {
                 case DominionAnchorRole.Drain:
@@ -144,6 +150,29 @@ namespace AbyssalProtocol
                 default:
                     return "ABY_DominionAnchor_Effect_Suppression".Translate();
             }
+        }
+
+        private void ExecuteStabilizationPulse(MapComponent_DominionCrisis crisis)
+        {
+            if (Map == null || crisis == null)
+            {
+                return;
+            }
+
+            bool lowFx = AbyssalDominionBalanceUtility.ShouldUseLowFxMode(Map, crisis);
+            Vector3 center = PositionHeld.ToVector3Shifted();
+            FleckMaker.ThrowLightningGlow(center, Map, lowFx ? 1.0f : 1.55f);
+            if (!lowFx && Rand.Chance(0.35f))
+            {
+                FleckMaker.ThrowMicroSparks(center, Map);
+            }
+
+            if (!lowFx || this.IsHashIntervalTick(240))
+            {
+                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", PositionHeld, Map);
+            }
+
+            Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, lowFx ? 0.018f : 0.035f);
         }
 
         private void ExecutePulse(MapComponent_DominionCrisis crisis)

@@ -4,14 +4,14 @@
 
   <ABY_CircleRitual_Dominion_Label>Bootstrap great infernal gate</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Outer gate staging</ABY_CircleRitual_Dominion_Subtitle>
-  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to arm the Great Infernal Gate prelude. Once the anchor lattice is destroyed, the breach manifests a Great Infernal Gate that must be held stable until entry calibration completes.</ABY_CircleRitual_Dominion_Desc>
+  <ABY_CircleRitual_Dominion_Desc>Consumes one dominion sigil and uses the full circle lattice to arm the Great Infernal Gate prelude. Dominion anchors now stabilize the breach as a short external gate-lock instead of acting as a long destruction objective. Once synchronization completes, the gate opens for a selected strike team to enter the pocket dimension.</ABY_CircleRitual_Dominion_Desc>
   <ABY_CircleRitual_Dominion_Rewards>• Initializes the endgame dominion framework in-world
-• Drives recurring hostile pulses while the anchor lattice survives
-• Unfolds a real Great Infernal Gate staging layer after the anchors are broken
+• Manifests four external anchors as a short visual gate-lock
+• Opens a real Great Infernal Gate for controlled strike-team entry
 • Preserves reward routing, shard recovery and gate-state records for deeper entry rites</ABY_CircleRitual_Dominion_Rewards>
   <ABY_CircleRitual_Dominion_SideEffects>• Requires full stabilizer coverage and both capacitor bays online
 • Blocks other abyssal encounters while the dominion staging layer is active
-• After anchors fall, the Great Infernal Gate begins direct suppression, ignition strikes, and reinforcement pulses until the staging timer is held to completion or the gate is lost</ABY_CircleRitual_Dominion_SideEffects>
+• External anchors collapse automatically when the pocket dimension closes by victory, failure, extraction, cancellation, or cleanup</ABY_CircleRitual_Dominion_SideEffects>
 
   <ABY_CircleConsoleSubtitleDominion>Great Infernal Gate signal records active. Current state: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Sigils on map: {0}   •   Crisis state: {1}   •   Challenge tier: endgame</ABY_DominionRitualMeta>
@@ -27,20 +27,20 @@
   <ABY_DominionCrisisStartLabel>Great infernal gate armed</ABY_DominionCrisisStartLabel>
   <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach is unstable, but the Great Infernal Gate has not unfolded yet.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Dominion anchors manifested</ABY_DominionCrisisAnchorfallLabel>
-  <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into anchorfall. {1} dominion anchors have materialized across the map, recurring abyssal pulses are now routing through them, and the breach will intensify until the anchors are destroyed.</ABY_DominionCrisisAnchorfallDesc>
+  <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into a Dominion breach prelude. {1} external anchors have materialized to stabilize the gate-lock. They are not the main objective; the lattice will finish opening the Great Infernal Gate shortly.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Dominion core synchronized</ABY_DominionCrisisStandbyLabel>
   <ABY_DominionCrisisStandbyDesc>{0} is now holding a live dominion standby state. The colony is sustaining the armed core while the gate lattice decides whether this world can bear a deeper breach.</ABY_DominionCrisisStandbyDesc>
   <ABY_DominionCrisisCancelledLabel>Dominion staging cancelled</ABY_DominionCrisisCancelledLabel>
   <ABY_DominionCrisisCancelledDesc>The dominion crisis core was intentionally shut down. Outcome: {0}</ABY_DominionCrisisCancelledDesc>
   <ABY_DominionCrisisCancelledReason>manual abort</ABY_DominionCrisisCancelledReason>
   <ABY_DominionCrisisCompletedLabel>Great infernal gate stabilized</ABY_DominionCrisisCompletedLabel>
-  <ABY_DominionCrisisCompletedDesc>The anchor lattice was broken, the Great Infernal Gate manifested, and the colony held the staging window until entry calibration completed. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
-  <ABY_DominionCrisisCompletedReason>Great Infernal Gate staging held until entry calibration completed</ABY_DominionCrisisCompletedReason>
+  <ABY_DominionCrisisCompletedDesc>The Great Infernal Gate was stabilized, the strike-team flow resolved, and the external anchor lattice collapsed with the closing Dominion Slice. Outcome: {0}</ABY_DominionCrisisCompletedDesc>
+  <ABY_DominionCrisisCompletedReason>Dominion Slice resolved and external gate-lock collapsed</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Dominion staging failed</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>The Great Infernal Gate staging layer destabilized before the circle could force a stable entry path. Failure reason: {0}</ABY_DominionCrisisFailedDesc>
   <ABY_DominionCrisisReminder>Dominion hold-state remains armed for {0}.</ABY_DominionCrisisReminder>
-  <ABY_DominionCrisisReminderAnchors>{0} / {1} dominion anchors remain active. Collapse window in {2}.</ABY_DominionCrisisReminderAnchors>
-  <ABY_DominionCrisisAnchorDestroyed>{0} destroyed. Active anchors remaining: {1} / {2}.</ABY_DominionCrisisAnchorDestroyed>
+  <ABY_DominionCrisisReminderAnchors>External dominion anchors are stabilizing the gate-lock. Gate opening in {2}.</ABY_DominionCrisisReminderAnchors>
+  <ABY_DominionCrisisAnchorDestroyed>{0} desynchronized. Gate-lock anchors remaining: {1} / {2}.</ABY_DominionCrisisAnchorDestroyed>
 
   <ABY_DominionCrisisFail_NoCircle>No valid summoning circle is available for dominion synchronization.</ABY_DominionCrisisFail_NoCircle>
   <ABY_DominionCrisisFail_AlreadyActive>A dominion crisis core is already active on this map.</ABY_DominionCrisisFail_AlreadyActive>
@@ -50,35 +50,35 @@
   <ABY_DominionCrisisFail_CircleLost>The source summoning circle was lost.</ABY_DominionCrisisFail_CircleLost>
   <ABY_DominionCrisisFail_Power>The source summoning circle lost power for too long.</ABY_DominionCrisisFail_Power>
   <ABY_DominionCrisisFail_WindowExpired>The dominion standby window expired before the gate could be held open.</ABY_DominionCrisisFail_WindowExpired>
-  <ABY_DominionCrisisFail_AnchorsPersisted>The dominion anchors were not destroyed before the collapse timer expired.</ABY_DominionCrisisFail_AnchorsPersisted>
+  <ABY_DominionCrisisFail_AnchorsPersisted>The dominion anchor lattice failed to stabilize the gate-lock before collapse.</ABY_DominionCrisisFail_AnchorsPersisted>
   <ABY_DominionCrisisFail_NoAnchorCell>No valid map cells were available for the dominion anchors.</ABY_DominionCrisisFail_NoAnchorCell>
   <ABY_DominionCrisisFail_AnchorRemnants>The map still contains {0} active dominion anchors from an unfinished breach.</ABY_DominionCrisisFail_AnchorRemnants>
   <ABY_DominionCrisisAbortFail_NoActive>No dominion crisis core is active on this map.</ABY_DominionCrisisAbortFail_NoActive>
 
   <ABY_DominionCrisisPhase_Dormant>dormant</ABY_DominionCrisisPhase_Dormant>
   <ABY_DominionCrisisPhase_Synchronizing>synchronizing</ABY_DominionCrisisPhase_Synchronizing>
-  <ABY_DominionCrisisPhase_Anchorfall>anchorfall</ABY_DominionCrisisPhase_Anchorfall>
+  <ABY_DominionCrisisPhase_Anchorfall>gate-lock prelude</ABY_DominionCrisisPhase_Anchorfall>
   <ABY_DominionCrisisPhase_Standby>hold-state</ABY_DominionCrisisPhase_Standby>
   <ABY_DominionCrisisPhase_Cancelled>cancelled</ABY_DominionCrisisPhase_Cancelled>
   <ABY_DominionCrisisPhase_Failed>failed</ABY_DominionCrisisPhase_Failed>
   <ABY_DominionCrisisPhase_Completed>completed</ABY_DominionCrisisPhase_Completed>
 
   <ABY_DominionCrisisStatusLine_Active>Dominion crisis: {0} • {1} remaining</ABY_DominionCrisisStatusLine_Active>
-  <ABY_DominionCrisisStatusLine_Anchors>Dominion crisis: {0} • anchors {1}/{2} • next wave {3} • {4} remaining</ABY_DominionCrisisStatusLine_Anchors>
+  <ABY_DominionCrisisStatusLine_Anchors>Dominion crisis: {0} • anchors {1}/{2} stabilizing • gate opens in {3} • {4} remaining</ABY_DominionCrisisStatusLine_Anchors>
   <ABY_DominionCrisisStatusLine_Dormant>Dominion crisis core dormant.</ABY_DominionCrisisStatusLine_Dormant>
   <ABY_DominionCrisisStatusLine_Terminal>Dominion crisis: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
 
   <ABY_DominionAnchorPreviewHeader>Anchor lattice</ABY_DominionAnchorPreviewHeader>
-  <ABY_DominionAnchorPreviewSummary>Anchor state: {0}. Pressure: {1}. Collapse window: {2}.</ABY_DominionAnchorPreviewSummary>
-  <ABY_DominionAnchorPreviewSummaryIdle>No dominion anchors are active on this map yet. Once synchronization completes, anchorfall will seed multiple objectives around the colony.</ABY_DominionAnchorPreviewSummaryIdle>
-  <ABY_DominionAnchor_ConsoleIdle>No anchor roles are active yet. The breach is still synchronizing.</ABY_DominionAnchor_ConsoleIdle>
-  <ABY_DominionAnchor_ConsoleCleared>All known anchor roles on this map have been neutralized.</ABY_DominionAnchor_ConsoleCleared>
+  <ABY_DominionAnchorPreviewSummary>Anchor state: {0}. Lattice pressure: {1}. Gate-lock window: {2}.</ABY_DominionAnchorPreviewSummary>
+  <ABY_DominionAnchorPreviewSummaryIdle>No dominion anchors are active on this map yet. Once synchronization completes, a short external anchor lattice will stabilize the entry gate.</ABY_DominionAnchorPreviewSummaryIdle>
+  <ABY_DominionAnchor_ConsoleIdle>No external anchor lattice is active yet. The breach is still synchronizing.</ABY_DominionAnchor_ConsoleIdle>
+  <ABY_DominionAnchor_ConsoleCleared>The external anchor lattice has collapsed.</ABY_DominionAnchor_ConsoleCleared>
   <ABY_DominionAnchor_ConsoleLine>{0}: {1} active — {2}</ABY_DominionAnchor_ConsoleLine>
 
   <ABY_DominionAnchor_StatusShort_None>no active anchor lattice</ABY_DominionAnchor_StatusShort_None>
-  <ABY_DominionAnchor_StatusShort_Active>{0}/{1} anchors still feeding the breach</ABY_DominionAnchor_StatusShort_Active>
+  <ABY_DominionAnchor_StatusShort_Active>{0}/{1} anchors stabilizing the breach</ABY_DominionAnchor_StatusShort_Active>
   <ABY_DominionAnchor_StatusValue_Pending>pending manifestation</ABY_DominionAnchor_StatusValue_Pending>
-  <ABY_DominionAnchor_StatusValue_Active>{0} / {1} active</ABY_DominionAnchor_StatusValue_Active>
+  <ABY_DominionAnchor_StatusValue_Active>{0} / {1} stabilizing</ABY_DominionAnchor_StatusValue_Active>
 
   <ABY_DominionAnchor_Pressure_None>none</ABY_DominionAnchor_Pressure_None>
   <ABY_DominionAnchor_Pressure_Low>low</ABY_DominionAnchor_Pressure_Low>
@@ -144,8 +144,8 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
   <ABY_CircleStatus_GateIntegrity>Great gate stability</ABY_CircleStatus_GateIntegrity>
 
   <ABY_DominionCrisisGateLabel>Great infernal gate manifested</ABY_DominionCrisisGateLabel>
-  <ABY_DominionCrisisGateDesc>{0} has torn the breach fully open. The anchor lattice is gone, and a Great Infernal Gate has manifested near the ritual site. Hold the outer threshold stable until entry calibration completes.</ABY_DominionCrisisGateDesc>
-  <ABY_DominionCrisisReminderGate>Great Infernal Gate stability: {0}. Next surge: {1}. Entry calibration in {2}.</ABY_DominionCrisisReminderGate>
+  <ABY_DominionCrisisGateDesc>{0} has torn the breach fully open. The external anchor lattice is holding the threshold while a Great Infernal Gate manifests near the ritual site. Entry calibration will complete shortly.</ABY_DominionCrisisGateDesc>
+  <ABY_DominionCrisisReminderGate>Great Infernal Gate stability: {0}. Next surge: {1}. Entry calibration in {2}. External anchors remain linked until the pocket closes.</ABY_DominionCrisisReminderGate>
   <ABY_DominionCrisisFail_NoGateCell>No valid cells were available for the Great Infernal Gate to manifest.</ABY_DominionCrisisFail_NoGateCell>
   <ABY_DominionCrisisFail_GatePersisted>The Great Infernal Gate remained unstable until the staging window collapsed.</ABY_DominionCrisisFail_GatePersisted>
   <ABY_DominionCrisisFail_GateLost>The Great Infernal Gate was lost before entry calibration completed.</ABY_DominionCrisisFail_GateLost>
@@ -154,9 +154,9 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
   <ABY_DominionCrisisStatusLine_Gate>Dominion crisis: {0} • great gate {1} • next surge {2} • {3} remaining</ABY_DominionCrisisStatusLine_Gate>
 
   <ABY_DominionAnchorPreviewSummaryGate>Anchor state: broken. Great Infernal Gate state: {0}. Stability: {1}. Entry calibration: {2}.</ABY_DominionAnchorPreviewSummaryGate>
-  <ABY_DominionAnchor_ConsoleGatecore>The anchor lattice has been broken. The breach is now feeding directly into the manifested Great Infernal Gate staging layer.</ABY_DominionAnchor_ConsoleGatecore>
-  <ABY_DominionAnchor_StatusShort_Cleared>anchor lattice broken</ABY_DominionAnchor_StatusShort_Cleared>
-  <ABY_DominionAnchor_StatusValue_Cleared>broken / exposed</ABY_DominionAnchor_StatusValue_Cleared>
+  <ABY_DominionAnchor_ConsoleGatecore>The external anchor lattice is synchronized and holding the Great Infernal Gate open.</ABY_DominionAnchor_ConsoleGatecore>
+  <ABY_DominionAnchor_StatusShort_Cleared>external anchor lattice collapsed</ABY_DominionAnchor_StatusShort_Cleared>
+  <ABY_DominionAnchor_StatusValue_Cleared>collapsed / gate core exposed</ABY_DominionAnchor_StatusValue_Cleared>
 
   <ABY_DominionWavePreviewStatus_Gatebound>rerouted through the Great Infernal Gate</ABY_DominionWavePreviewStatus_Gatebound>
   <ABY_DominionWavePreviewSummaryGate>Support pulses are now routed by the Great Infernal Gate. Pattern: {0}. Next surge: {1}.</ABY_DominionWavePreviewSummaryGate>
@@ -164,7 +164,7 @@ Breach status: {2}</ABY_DominionAnchor_Inspect>
 
   <ABY_DominionGatePreviewHeader>Great Infernal Gate</ABY_DominionGatePreviewHeader>
   <ABY_DominionGatePreviewSummary>Gate state: {0}. Stability: {1}. Next surge: {2}. Entry calibration: {3}.</ABY_DominionGatePreviewSummary>
-  <ABY_DominionGatePreviewSummaryIdle>No manifested Great Infernal Gate is active yet. Once the anchor lattice is broken, the breach will condense into an outer gate threshold that can be forced into a true entry point.</ABY_DominionGatePreviewSummaryIdle>
+  <ABY_DominionGatePreviewSummaryIdle>The Great Infernal Gate has not manifested yet. When the short external anchor lattice finishes synchronizing, the breach will condense into a controlled entry threshold.</ABY_DominionGatePreviewSummaryIdle>
   <ABY_DominionGate_Status_Dormant>dormant</ABY_DominionGate_Status_Dormant>
   <ABY_DominionGate_Status_Stable>stable</ABY_DominionGate_Status_Stable>
   <ABY_DominionGate_Status_Shaken>shaken</ABY_DominionGate_Status_Shaken>
@@ -192,17 +192,17 @@ Next surge: {2}</ABY_DominionGate_Inspect>
 Directive: {1}</ABY_DominionOpsSummary>
   <ABY_DominionOpsObjective_Dormant>No active dominion breach on this map.</ABY_DominionOpsObjective_Dormant>
   <ABY_DominionOpsObjective_Sync>Keep the source circle online until anchorfall manifests.</ABY_DominionOpsObjective_Sync>
-  <ABY_DominionOpsObjective_Anchors>Break the anchor lattice before the collapse window expires.</ABY_DominionOpsObjective_Anchors>
+  <ABY_DominionOpsObjective_Anchors>Allow the external anchor lattice to stabilize the Dominion Gate.</ABY_DominionOpsObjective_Anchors>
   <ABY_DominionOpsObjective_Gate>Hold the Great Infernal Gate until entry calibration completes.</ABY_DominionOpsObjective_Gate>
   <ABY_DominionOpsDirective_Sync>Keep the circle powered, unobstructed, and ready for the first anchorfall transition.</ABY_DominionOpsDirective_Sync>
-  <ABY_DominionOpsDirective_Anchors>{0}/{1} anchors remain active. Wave pressure: {2}.</ABY_DominionOpsDirective_Anchors>
+  <ABY_DominionOpsDirective_Anchors>External anchors active: {0}/{1}. Lattice state: {2}.</ABY_DominionOpsDirective_Anchors>
   <ABY_DominionOpsDirective_Gate>Gate stability: {0}. Next surge: {1}.</ABY_DominionOpsDirective_Gate>
   <ABY_DominionCommand_TrackObjective>Track objective</ABY_DominionCommand_TrackObjective>
   <ABY_DominionCommand_TrackAnchor>Track anchor lattice</ABY_DominionCommand_TrackAnchor>
   <ABY_DominionCommand_TrackGate>Track great gate</ABY_DominionCommand_TrackGate>
   <ABY_DominionCommand_NoObjective>No dominion objective is currently available on this map.</ABY_DominionCommand_NoObjective>
   <ABY_DominionCompactHint>Dominion crisis signal records are being routed through the circle.</ABY_DominionCompactHint>
-  <ABY_DominionCompactFooter>Dominion breach active. Use the full console for anchor and Great Infernal Gate tracking.</ABY_DominionCompactFooter>
+  <ABY_DominionCompactFooter>Dominion breach active. Open the full console to track the external anchor lattice, Great Infernal Gate and pocket entry state.</ABY_DominionCompactFooter>
 
   <ABY_DominionRitualMetaCooldown>Sigils on map: {0}   •   Crisis state: {1}   •   Rearm: {2}   •   Record: {3}</ABY_DominionRitualMetaCooldown>
   <ABY_DominionCompactHintCooldown>Dominion lattice recovery in progress. Rearm available in {0}.</ABY_DominionCompactHintCooldown>
@@ -259,5 +259,33 @@ Directive: {1}</ABY_DominionOpsSummary>
   <ABY_CircleStatus_DominionCalibration>Calibration</ABY_CircleStatus_DominionCalibration>
   <ABY_CircleStatus_DominionBudget>Runtime budget</ABY_CircleStatus_DominionBudget>
   <ABY_CircleStatus_DominionFx>FX mode</ABY_CircleStatus_DominionFx>
+
+  <ABY_DominionAnchor_ConsolePrelude>External anchor lattice: {0}/{1} anchors stabilizing the breach. Gate opening in {2}.</ABY_DominionAnchor_ConsolePrelude>
+
+  <ABY_DominionAnchor_ConsoleGateLinked>External anchor lattice synchronized: {0} anchors remain linked to the Great Infernal Gate until the Dominion Slice closes.</ABY_DominionAnchor_ConsoleGateLinked>
+
+  <ABY_DominionAnchor_StatusShort_Prelude>{0}/{1} anchors stabilizing gate-lock • {2}</ABY_DominionAnchor_StatusShort_Prelude>
+
+  <ABY_DominionAnchor_StatusShort_Synchronized>{0} external anchors synchronized to the gate</ABY_DominionAnchor_StatusShort_Synchronized>
+
+  <ABY_DominionAnchor_StatusValue_Prelude>{0} / {1} stabilizing • {2}</ABY_DominionAnchor_StatusValue_Prelude>
+
+  <ABY_DominionAnchor_StatusValue_Synchronized>{0} linked to gate</ABY_DominionAnchor_StatusValue_Synchronized>
+
+  <ABY_DominionAnchor_Pressure_Stabilizing>stabilizing</ABY_DominionAnchor_Pressure_Stabilizing>
+
+  <ABY_DominionAnchor_Pressure_ExternalLock>external lock</ABY_DominionAnchor_Pressure_ExternalLock>
+
+  <ABY_DominionAnchor_Effect_PreludeStabilizer>stabilizes the external Dominion Gate lock until the pocket dimension closes</ABY_DominionAnchor_Effect_PreludeStabilizer>
+
+  <ABY_DominionOpsObjective_AnchorPrelude>Let the external anchors stabilize the Dominion Gate.</ABY_DominionOpsObjective_AnchorPrelude>
+
+  <ABY_DominionOpsDirective_AnchorPrelude>External anchor lattice active: {0} anchors. Gate opening in {1}.</ABY_DominionOpsDirective_AnchorPrelude>
+
+  <ABY_DominionWavePreviewStatus_PreludeQuiet>No waves routed during gate-lock prelude. Gate opening in {0}.</ABY_DominionWavePreviewStatus_PreludeQuiet>
+
+  <ABY_DominionWaveEta_GateOpening>gate opening in {0}</ABY_DominionWaveEta_GateOpening>
+
+  <ABY_DominionWaveConsolePrelude>Wave routing is suppressed during the short gate-lock prelude. The Great Infernal Gate will open in {0}.</ABY_DominionWaveConsolePrelude>
 
 </LanguageData>

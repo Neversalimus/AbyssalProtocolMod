@@ -19,10 +19,11 @@ namespace AbyssalProtocol
             Completed
         }
 
-        private const int SynchronizationTicks = 4500;
-        private const int AnchorfallTicks = 30000;
-        private const int GatecoreTicks = 24000;
+        private const int SynchronizationTicks = 1500;
+        private const int AnchorfallTicks = 2700;
+        private const int GatecoreTicks = 1800;
         private const int FailurePowerGraceTicks = 3000;
+        private const int StalePreludeCleanupIntervalTicks = 600;
         private const int AmbientPulseIntervalTicks = 180;
         private const int AmbientSoundIntervalTicks = 900;
         private const int AnchorReminderIntervalTicks = 3000;
@@ -68,6 +69,8 @@ namespace AbyssalProtocol
         public bool IsAnchorPhaseActive => phase == DominionCrisisPhase.Anchorfall;
         public bool IsGatePhaseActive => phase == DominionCrisisPhase.Gatecore;
         public bool IsStandbyPhaseActive => phase == DominionCrisisPhase.Standby;
+        public bool IsPreludeAnchorLatticeActive => phase == DominionCrisisPhase.Anchorfall || phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby;
+        public bool AreAnchorsGateStabilizers => IsPreludeAnchorLatticeActive && ActiveAnchorCount > 0;
         public bool IsTerminal => phase == DominionCrisisPhase.Cancelled || phase == DominionCrisisPhase.Failed || phase == DominionCrisisPhase.Completed;
         public Building_AbyssalSummoningCircle SourceCircle => sourceCircle;
         public IntVec3 SourceCell => sourceCell;
@@ -186,12 +189,22 @@ namespace AbyssalProtocol
         {
             base.MapComponentTick();
 
-            if (!IsActive || Find.TickManager == null)
+            if (Find.TickManager == null)
             {
                 return;
             }
 
             int now = Find.TickManager.TicksGame;
+            if (!IsActive)
+            {
+                if (now >= nextMaintenanceTick)
+                {
+                    nextMaintenanceTick = now + StalePreludeCleanupIntervalTicks;
+                    CollapseStalePreludeObjectsIfNeeded();
+                }
+                return;
+            }
+
             if (sourceCircle == null || sourceCircle.Destroyed || sourceCircle.Map != map)
             {
                 ForceFail("ABY_DominionCrisisFail_CircleLost".Translate(), true);
@@ -245,15 +258,9 @@ namespace AbyssalProtocol
 
             if (phase == DominionCrisisPhase.Anchorfall)
             {
-                if (ActiveAnchorCount <= 0)
+                if (ActiveAnchorCount <= 0 || now >= phaseEndsTick)
                 {
                     BeginGatecore();
-                    return;
-                }
-
-                if (now >= phaseEndsTick)
-                {
-                    ForceFail("ABY_DominionCrisisFail_AnchorsPersisted".Translate(), true);
                     return;
                 }
 
@@ -261,11 +268,6 @@ namespace AbyssalProtocol
                 {
                     nextReminderTick = now + AnchorReminderIntervalTicks;
                     SendAnchorReminder();
-                }
-
-                if (nextWaveTick > 0 && now >= nextWaveTick)
-                {
-                    TryFireWavePulse();
                 }
 
                 return;
@@ -652,7 +654,7 @@ namespace AbyssalProtocol
                 case DominionCrisisPhase.Synchronizing:
                     return "ABY_DominionOpsObjective_Sync".Translate();
                 case DominionCrisisPhase.Anchorfall:
-                    return "ABY_DominionOpsObjective_Anchors".Translate();
+                    return "ABY_DominionOpsObjective_AnchorPrelude".Translate();
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsObjective_Gate".Translate();
                 case DominionCrisisPhase.Standby:
@@ -673,7 +675,7 @@ namespace AbyssalProtocol
                 case DominionCrisisPhase.Synchronizing:
                     return "ABY_DominionOpsDirective_Sync".Translate();
                 case DominionCrisisPhase.Anchorfall:
-                    return "ABY_DominionOpsDirective_Anchors".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), GetWavePressureLabel());
+                    return "ABY_DominionOpsDirective_AnchorPrelude".Translate(ActiveAnchorCount, TicksRemaining.ToStringTicksToPeriod());
                 case DominionCrisisPhase.Gatecore:
                     return "ABY_DominionOpsDirective_Gate".Translate(GetGateIntegrityValue(), GetGatePulseEtaValue());
                 case DominionCrisisPhase.Standby:
@@ -995,6 +997,11 @@ namespace AbyssalProtocol
 
         public string GetAnchorStatusShort()
         {
+            if ((phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby) && ActiveAnchorCount > 0)
+            {
+                return "ABY_DominionAnchor_StatusShort_Synchronized".Translate(ActiveAnchorCount);
+            }
+
             if (phase == DominionCrisisPhase.Gatecore)
             {
                 return "ABY_DominionAnchor_StatusShort_Cleared".Translate();
@@ -1005,11 +1012,16 @@ namespace AbyssalProtocol
                 return "ABY_DominionAnchor_StatusShort_None".Translate();
             }
 
-            return "ABY_DominionAnchor_StatusShort_Active".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount));
+            return "ABY_DominionAnchor_StatusShort_Prelude".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), TicksRemaining.ToStringTicksToPeriod());
         }
 
         public string GetAnchorStatusValue()
         {
+            if ((phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby) && ActiveAnchorCount > 0)
+            {
+                return "ABY_DominionAnchor_StatusValue_Synchronized".Translate(ActiveAnchorCount);
+            }
+
             if (phase == DominionCrisisPhase.Gatecore)
             {
                 return "ABY_DominionAnchor_StatusValue_Cleared".Translate();
@@ -1020,7 +1032,7 @@ namespace AbyssalProtocol
                 return "ABY_DominionAnchor_StatusValue_Pending".Translate();
             }
 
-            return "ABY_DominionAnchor_StatusValue_Active".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount));
+            return "ABY_DominionAnchor_StatusValue_Prelude".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), TicksRemaining.ToStringTicksToPeriod());
         }
 
         public string GetAnchorPressureLabel()
@@ -1030,27 +1042,39 @@ namespace AbyssalProtocol
                 + GetActiveAnchorCount(DominionAnchorRole.Ward)
                 + GetActiveAnchorCount(DominionAnchorRole.Breach);
 
+            if (phase == DominionCrisisPhase.Anchorfall && pressure > 0)
+            {
+                return "ABY_DominionAnchor_Pressure_Stabilizing".Translate();
+            }
+
+            if ((phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby) && pressure > 0)
+            {
+                return "ABY_DominionAnchor_Pressure_ExternalLock".Translate();
+            }
+
             if (pressure <= 0)
             {
                 return "ABY_DominionAnchor_Pressure_None".Translate();
             }
 
-            if (pressure <= 1)
-            {
-                return "ABY_DominionAnchor_Pressure_Low".Translate();
-            }
-
-            if (pressure <= 3)
-            {
-                return "ABY_DominionAnchor_Pressure_High".Translate();
-            }
-
-            return "ABY_DominionAnchor_Pressure_Maximum".Translate();
+            return "ABY_DominionAnchor_Pressure_ExternalLock".Translate();
         }
 
         public List<string> GetAnchorConsoleLines()
         {
             List<string> lines = new List<string>();
+
+            if (phase == DominionCrisisPhase.Anchorfall)
+            {
+                lines.Add("ABY_DominionAnchor_ConsolePrelude".Translate(ActiveAnchorCount, Mathf.Max(1, initialAnchorCount), TicksRemaining.ToStringTicksToPeriod()));
+                return lines;
+            }
+
+            if ((phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby) && ActiveAnchorCount > 0)
+            {
+                lines.Add("ABY_DominionAnchor_ConsoleGateLinked".Translate(ActiveAnchorCount));
+                return lines;
+            }
 
             if (phase == DominionCrisisPhase.Gatecore)
             {
@@ -1064,16 +1088,7 @@ namespace AbyssalProtocol
                 return lines;
             }
 
-            AddAnchorRoleLine(lines, DominionAnchorRole.Suppression, "ABY_DominionAnchor_Role_Suppression".Translate(), "ABY_DominionAnchor_Effect_Suppression".Translate());
-            AddAnchorRoleLine(lines, DominionAnchorRole.Drain, "ABY_DominionAnchor_Role_Drain".Translate(), "ABY_DominionAnchor_Effect_Drain".Translate());
-            AddAnchorRoleLine(lines, DominionAnchorRole.Ward, "ABY_DominionAnchor_Role_Ward".Translate(), "ABY_DominionAnchor_Effect_Ward".Translate());
-            AddAnchorRoleLine(lines, DominionAnchorRole.Breach, "ABY_DominionAnchor_Role_Breach".Translate(), "ABY_DominionAnchor_Effect_Breach".Translate());
-
-            if (lines.Count == 0)
-            {
-                lines.Add("ABY_DominionAnchor_ConsoleCleared".Translate());
-            }
-
+            lines.Add("ABY_DominionAnchor_ConsoleCleared".Translate());
             return lines;
         }
 
@@ -1095,6 +1110,11 @@ namespace AbyssalProtocol
                 return "ABY_DominionWavePreviewStatus_Gatebound".Translate();
             }
 
+            if (phase == DominionCrisisPhase.Anchorfall)
+            {
+                return "ABY_DominionWavePreviewStatus_PreludeQuiet".Translate(TicksRemaining.ToStringTicksToPeriod());
+            }
+
             if (phase != DominionCrisisPhase.Anchorfall)
             {
                 return "ABY_DominionWavePreviewStatus_Dormant".Translate();
@@ -1113,6 +1133,11 @@ namespace AbyssalProtocol
             if (phase == DominionCrisisPhase.Gatecore)
             {
                 return GetGatePulseEtaValue();
+            }
+
+            if (phase == DominionCrisisPhase.Anchorfall)
+            {
+                return TicksRemaining.ToStringTicksToPeriod();
             }
 
             if (phase != DominionCrisisPhase.Anchorfall)
@@ -1136,6 +1161,11 @@ namespace AbyssalProtocol
 
         public List<string> GetWaveConsoleLines()
         {
+            if (phase == DominionCrisisPhase.Anchorfall)
+            {
+                return new List<string> { "ABY_DominionWaveConsolePrelude".Translate(TicksRemaining.ToStringTicksToPeriod()) };
+            }
+
             return AbyssalDominionWaveUtility.GetConsoleLines(map, this);
         }
 
@@ -1279,7 +1309,7 @@ namespace AbyssalProtocol
             phaseStartedTick = now;
             phaseEndsTick = now + AnchorfallTicks;
             nextReminderTick = now + AnchorReminderIntervalTicks;
-            nextWaveTick = now + AbyssalDominionWaveUtility.GetInitialWaveDelayTicks(this);
+            nextWaveTick = 0;
             lastWaveTick = 0;
             wavesTriggered = 0;
             lastWaveSummary = null;
@@ -1295,7 +1325,6 @@ namespace AbyssalProtocol
         private void BeginGatecore()
         {
             int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            DestroyTrackedAnchors(true);
 
             if (!TrySpawnGateCore(out string failReason))
             {
@@ -1469,7 +1498,6 @@ namespace AbyssalProtocol
                 DominionAnchorRole.Breach
             };
 
-            Faction hostileFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
             List<CellRect> usedRects = new List<CellRect>();
 
             for (int i = 0; i < roles.Count; i++)
@@ -1498,10 +1526,7 @@ namespace AbyssalProtocol
                 }
 
                 GenSpawn.Spawn(anchor, cell, map, Rot4.North);
-                if (hostileFaction != null)
-                {
-                    anchor.SetFaction(hostileFaction);
-                }
+                anchor.SetFaction(null);
 
                 RegisterAnchor(anchor);
                 usedRects.Add(GenAdj.OccupiedRect(cell, Rot4.North, def.size));
@@ -1889,6 +1914,26 @@ namespace AbyssalProtocol
             return string.Join("\n\n", parts);
         }
 
+        private void CollapseStalePreludeObjectsIfNeeded()
+        {
+            if (phase == DominionCrisisPhase.Anchorfall || phase == DominionCrisisPhase.Gatecore || phase == DominionCrisisPhase.Standby)
+            {
+                return;
+            }
+
+            CleanupAnchorReferences();
+            if (activeAnchors != null && activeAnchors.Count > 0)
+            {
+                DestroyTrackedAnchors(false);
+            }
+
+            CleanupGateReference();
+            if (gateCore != null)
+            {
+                DestroyTrackedGate(false);
+            }
+        }
+
         private void CleanupAnchorReferences()
         {
             if (activeAnchors == null)
@@ -1935,7 +1980,7 @@ namespace AbyssalProtocol
 
                 if (!silent)
                 {
-                    FleckMaker.ThrowLightningGlow(anchor.DrawPos, map, 1.35f);
+                    FleckMaker.ThrowLightningGlow(anchor.PositionHeld.ToVector3Shifted(), map, 1.35f);
                 }
 
                 anchor.Destroy(DestroyMode.Vanish);
@@ -1964,7 +2009,7 @@ namespace AbyssalProtocol
 
             if (!silent)
             {
-                FleckMaker.ThrowLightningGlow(gate.DrawPos, map, 2.1f);
+                FleckMaker.ThrowLightningGlow(gate.PositionHeld.ToVector3Shifted(), map, 2.1f);
             }
 
             gate.Destroy(DestroyMode.Vanish);
