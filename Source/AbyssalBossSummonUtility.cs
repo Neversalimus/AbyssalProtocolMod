@@ -481,7 +481,6 @@ namespace AbyssalProtocol
 
             string[] fallbackEscortKinds =
             {
-                "ABY_HaloHusk",
                 "ABY_RiftSniper",
                 "ABY_HexgunThrall",
                 "ABY_ChainZealot"

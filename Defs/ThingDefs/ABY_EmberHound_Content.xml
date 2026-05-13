@@ -139,6 +139,10 @@
         <impCount>1</impCount>
         <completionLetterLabelKey>ABY_CircleEmberHoundLetterLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_CircleEmberHoundLetterDesc</completionLetterDescKey>
+      
+        <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+        <rareEscortCount>1</rareEscortCount>
+        <rareEscortChance>0.05</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

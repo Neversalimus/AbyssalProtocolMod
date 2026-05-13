@@ -44,7 +44,7 @@
 
                 <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
                 <rareEscortCount>1</rareEscortCount>
-                <rareEscortChance>0.16</rareEscortChance>
+                <rareEscortChance>0.05</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

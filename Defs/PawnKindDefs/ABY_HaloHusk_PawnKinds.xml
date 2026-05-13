@@ -25,14 +25,10 @@
         <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
         <role>elite</role>
         <budgetCost>520</budgetCost>
-        <selectionWeight>0.58</selectionWeight>
+        <selectionWeight>0.01</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
-        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <allowFutureAutoEscalation>false</allowFutureAutoEscalation>
         <encounterPools>
-          <li>choir_escort</li>
-          <li>dominion_wave</li>
-          <li>dominion_gate_support</li>
-                  <li>reactor_saint_escort</li>
         </encounterPools>
       </li>
     </modExtensions>

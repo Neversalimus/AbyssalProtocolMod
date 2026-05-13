@@ -83,6 +83,9 @@ namespace AbyssalProtocol
         private static readonly Vector3 AuxiliaryCapacitorBayOffset = new Vector3(0f, 0f, -1.10f);
         private static readonly Texture2D ConsoleCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_OpenSummoningConsole", false);
 
+        private const string HaloHuskPawnKindDefName = "ABY_HaloHusk";
+        private const float HaloHuskStandardSigilChance = 0.05f;
+        private const int HaloHuskStandardSigilMaxCount = 1;
 
         private RitualPhase ritualPhase = RitualPhase.Idle;
         private int phaseTicksRemaining;
@@ -578,10 +581,13 @@ namespace AbyssalProtocol
             if (!summonProps.rareEscortPawnKindDefName.NullOrEmpty() && summonProps.rareEscortCount > 0 && summonProps.rareEscortChance > 0f)
             {
                 PawnKindDef rareEscortKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(summonProps.rareEscortPawnKindDefName);
-                if (rareEscortKind != null && Rand.Chance(Mathf.Clamp01(summonProps.rareEscortChance)))
+                int rareEscortCount = ResolveRareEscortCount(rareEscortKind, summonProps.rareEscortCount);
+                float rareEscortChance = ResolveRareEscortChance(rareEscortKind, summonProps.rareEscortChance);
+
+                if (rareEscortKind != null && rareEscortCount > 0 && Rand.Chance(rareEscortChance))
                 {
                     pendingRareEscortPawnKindDef = rareEscortKind;
-                    pendingRareEscortCount = Mathf.Max(1, summonProps.rareEscortCount);
+                    pendingRareEscortCount = rareEscortCount;
                 }
             }
 
@@ -1799,11 +1805,31 @@ namespace AbyssalProtocol
                 return;
             }
 
+            TrySpawnPendingDominionRareEscort();
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.20f);
             if (RitualFocusCell.IsValid)
             {
                 ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
+            }
+        }
+
+        private void TrySpawnPendingDominionRareEscort()
+        {
+            if (pendingRareEscortPawnKindDef == null || pendingRareEscortCount <= 0)
+            {
+                return;
+            }
+
+            Faction originalFaction = pendingFaction;
+            try
+            {
+                pendingFaction = AbyssalBossSummonUtility.ResolveHostileFaction();
+                TrySpawnPendingSupportPack();
+            }
+            finally
+            {
+                pendingFaction = originalFaction;
             }
         }
 
@@ -2140,16 +2166,71 @@ namespace AbyssalProtocol
                 });
             }
 
-                if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
-            {
-                entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
-                {
-                    KindDef = pendingRareEscortPawnKindDef,
-                    Count = pendingRareEscortCount
-                });
-            }
+            AddPendingRareEscortEntry(entries);
 
             return entries;
+        }
+
+        private void AddPendingRareEscortEntry(List<AbyssalHostileSummonUtility.HostilePackEntry> entries)
+        {
+            if (entries == null || pendingRareEscortPawnKindDef == null || pendingRareEscortCount <= 0)
+            {
+                return;
+            }
+
+            int resolvedCount = ResolveRareEscortCount(pendingRareEscortPawnKindDef, pendingRareEscortCount);
+            if (resolvedCount <= 0)
+            {
+                return;
+            }
+
+            int maxCount = IsHaloHuskPawnKind(pendingRareEscortPawnKindDef) ? HaloHuskStandardSigilMaxCount : int.MaxValue;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                AbyssalHostileSummonUtility.HostilePackEntry entry = entries[i];
+                if (entry?.KindDef == pendingRareEscortPawnKindDef)
+                {
+                    entry.Count = Mathf.Min(maxCount, Mathf.Max(0, entry.Count) + resolvedCount);
+                    return;
+                }
+            }
+
+            entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
+            {
+                KindDef = pendingRareEscortPawnKindDef,
+                Count = Mathf.Min(maxCount, resolvedCount)
+            });
+        }
+
+        private static int ResolveRareEscortCount(PawnKindDef rareEscortKind, int requestedCount)
+        {
+            if (rareEscortKind == null || requestedCount <= 0)
+            {
+                return 0;
+            }
+
+            if (IsHaloHuskPawnKind(rareEscortKind))
+            {
+                return Mathf.Clamp(requestedCount, 0, HaloHuskStandardSigilMaxCount);
+            }
+
+            return Mathf.Max(1, requestedCount);
+        }
+
+        private static float ResolveRareEscortChance(PawnKindDef rareEscortKind, float requestedChance)
+        {
+            float chance = Mathf.Clamp01(requestedChance);
+            if (IsHaloHuskPawnKind(rareEscortKind))
+            {
+                return Mathf.Min(chance, HaloHuskStandardSigilChance);
+            }
+
+            return chance;
+        }
+
+        private static bool IsHaloHuskPawnKind(PawnKindDef kindDef)
+        {
+            return kindDef != null && string.Equals(kindDef.defName, HaloHuskPawnKindDefName, System.StringComparison.OrdinalIgnoreCase);
         }
 
         private void TrySpawnPendingSupportPack()
@@ -2222,15 +2303,9 @@ namespace AbyssalProtocol
                     });
                 }
 
-                if (pendingRareEscortPawnKindDef != null && pendingRareEscortCount > 0)
-                {
-                    entries.Add(new AbyssalHostileSummonUtility.HostilePackEntry
-                    {
-                        KindDef = pendingRareEscortPawnKindDef,
-                        Count = pendingRareEscortCount
-                    });
-                }
             }
+
+            AddPendingRareEscortEntry(entries);
 
             if (entries == null || entries.Count <= 0)
             {

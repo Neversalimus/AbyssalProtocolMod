@@ -47,8 +47,11 @@ namespace AbyssalProtocol
         private const string ImpPortalDefName = "ABY_ImpPortal";
         private const string CommandGateDefName = "ABY_HordeCommandGate";
         private const string RiftImpPawnKindDefName = "ABY_RiftImp";
+        private const string HaloHuskPawnKindDefName = "ABY_HaloHusk";
 
         private const int PortalCadenceTicks = 48;
+        private const int HordeHaloHuskRareRolls = 3;
+        private const float HordeHaloHuskRareChance = 0.25f;
         private const int RetryCadenceTicks = 24;
         private const float UsedPortalMinSeparation = 11.9f;
         private const float HordeUsedPortalMinSeparation = 13.9f;
@@ -501,6 +504,14 @@ namespace AbyssalProtocol
                 phaseFrontBase = (phaseFrontBase + Mathf.Max(1, phaseFrontSpan)) % overallFrontCount;
             }
 
+            AppendHordeHaloHuskRareRequests(
+                requests,
+                hordePlan,
+                overallFrontCount,
+                baseWarmupTicks,
+                baseSpawnIntervalTicks,
+                baseLingerTicks);
+
             return requests;
         }
 
@@ -600,6 +611,65 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private void AppendHordeHaloHuskRareRequests(
+            List<PortalWaveRequest> requests,
+            AbyssalHordeSigilUtility.HordePlan hordePlan,
+            int overallFrontCount,
+            int baseWarmupTicks,
+            int baseSpawnIntervalTicks,
+            int baseLingerTicks)
+        {
+            if (requests == null || hordePlan == null)
+            {
+                return;
+            }
+
+            PawnKindDef haloKind = DefDatabase<PawnKindDef>.GetNamedSilentFail(HaloHuskPawnKindDefName);
+            if (haloKind == null)
+            {
+                return;
+            }
+
+            int rareCount = 0;
+            for (int i = 0; i < HordeHaloHuskRareRolls; i++)
+            {
+                if (Rand.Chance(HordeHaloHuskRareChance))
+                {
+                    rareCount++;
+                }
+            }
+
+            if (rareCount <= 0)
+            {
+                return;
+            }
+
+            int frontCount = Mathf.Max(1, overallFrontCount);
+            int commandFrontIndex = ResolveCommandFrontIndex(hordePlan, frontCount);
+            int frontBase = commandFrontIndex >= 0 ? commandFrontIndex : Rand.Range(0, frontCount);
+            int warmupBase = Mathf.Max(72, baseWarmupTicks + 20);
+            int interval = Mathf.Max(8, baseSpawnIntervalTicks);
+            int linger = Mathf.Max(120, baseLingerTicks + 60);
+
+            for (int i = 0; i < rareCount; i++)
+            {
+                requests.Add(new PortalWaveRequest
+                {
+                    PawnKindDef = haloKind,
+                    SpawnCount = 1,
+                    WarmupTicks = warmupBase + i * 18,
+                    SpawnIntervalTicks = interval,
+                    LingerTicks = linger,
+                    DelayAfterTicks = Mathf.Max(30, Mathf.RoundToInt(PortalCadenceTicks * 0.92f)),
+                    PreferPerimeter = true,
+                    FrontIndex = (frontBase + i) % frontCount,
+                    PhaseIndex = hordePlan.PhaseCount > 0 ? hordePlan.PhaseCount - 1 : -1,
+                    PhaseId = "halo_hint",
+                    AssignedFrontRoleId = AbyssalHordeSigilUtility.ResolveEntryFrontRoleId(HaloHuskPawnKindDefName, "support")
+                });
+            }
         }
 
         private void AppendCommandBurstRequests(
@@ -710,7 +780,6 @@ namespace AbyssalProtocol
                 if (band >= 2 || difficultyOrder >= 2) entries.Add(("ABY_RiftSapper", 1));
                 entries.Add(("ABY_RiftSniper", 1));
                 if (band >= 1 || difficultyOrder >= 2) entries.Add(("ABY_NullPriest", 1));
-                if (band >= 2 || difficultyOrder >= 3) entries.Add(("ABY_HaloHusk", 1));
                 return entries;
             }
 
@@ -728,7 +797,6 @@ namespace AbyssalProtocol
             {
                 entries.Add(("ABY_HexgunThrall", 2 + band));
                 entries.Add(("ABY_RiftSapper", 1));
-                entries.Add(("ABY_HaloHusk", 1));
                 if (band >= 1 || difficultyOrder >= 2) entries.Add(("ABY_BreachBrute", 1));
                 if (remainingCommandBursts <= 1 && (band >= 3 || difficultyOrder >= 3)) entries.Add(("ABY_SiegeIdol", 1));
                 return entries;

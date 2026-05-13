@@ -57,6 +57,10 @@
         <arrivalNearColonyMinDistance>13</arrivalNearColonyMinDistance>
         <arrivalNearColonyMaxDistance>24</arrivalNearColonyMaxDistance>
         <arrivalSoundDefName>ABY_RuptureArrive</arrivalSoundDefName>
+      
+        <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+        <rareEscortCount>1</rareEscortCount>
+        <rareEscortChance>0.05</rareEscortChance>
       </li>
     </comps>
   </ThingDef>
@@ -98,6 +102,10 @@
         <impPortalLingerTicks>1800</impPortalLingerTicks>
         <completionLetterLabelKey>ABY_CircleUnstableBreachLetterLabel</completionLetterLabelKey>
         <completionLetterDescKey>ABY_CircleUnstableBreachLetterDesc</completionLetterDescKey>
+      
+        <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+        <rareEscortCount>1</rareEscortCount>
+        <rareEscortChance>0.05</rareEscortChance>
       </li>
     </comps>
   </ThingDef>

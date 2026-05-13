@@ -580,10 +580,6 @@ namespace AbyssalProtocol
                 {
                     TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_RiftSniper", poolId, allowedContentTier, false);
                 }
-                if (currentOrder >= AbyssalDifficultyUtility.GetProfileOrder("ABY_Difficulty_FinalGate"))
-                {
-                    TryAddGuaranteedEscortKind(plan, ref remainingBudget, "ABY_HaloHusk", poolId, allowedContentTier, false);
-                }
             }
             else
             {
