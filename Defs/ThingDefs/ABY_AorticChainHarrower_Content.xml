@@ -10,7 +10,7 @@
     <graphicData>
       <texPath>Pawn/AorticChainHarrower/ABY_AorticChainHarrower</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(4.65,4.65)</drawSize>
+      <drawSize>(5.28,5.28)</drawSize>
     </graphicData>
     <race>
       <renderTree>Animal</renderTree>

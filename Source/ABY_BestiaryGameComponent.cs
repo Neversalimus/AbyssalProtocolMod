@@ -521,6 +521,22 @@ namespace AbyssalProtocol
             },
             new ABY_BestiaryEntryDefinition
             {
+                EntryId = "ABY_AorticChainHarrower",
+                Category = ABY_BestiaryCategory.Elite,
+                PortraitPath = "Pawn/AorticChainHarrower/ABY_AorticChainHarrower_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_AorticChainHarrower_Label",
+                LabelFallback = @"Aortic Chain Harrower",
+                TagKey = "ABY_Bestiary_Entry_ABY_AorticChainHarrower_Tag",
+                TagFallback = @"Heart-grown restraint guardian of the Dominion Slice.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_AorticChainHarrower_Summary",
+                SummaryFallback = @"A heart-only guardian grown from the Crown-Heart's binding lattice, using chain-lash pressure, leash behavior and death-severance feedback to defend pylons and the exposed heart.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_AorticChainHarrower_Tactical",
+                TacticalFallback = @"Harrowers punish kiting and ranged focus with a chain-lash snare. Kill them to weaken the heart's protection, but avoid dragging them just far enough to waste time around the pylons.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_AorticChainHarrower_Deep",
+                DeepFallback = @"The archive classifies Harrowers as living restraint infrastructure rather than ordinary troops: the Dominion heart grows a body out of its own chains when its local authority requires personal enforcement."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
                 EntryId = "ABY_WardenOfAsh",
                 Category = ABY_BestiaryCategory.Boss,
                 PortraitPath = "Pawn/WardenOfAsh/WardenOfAsh_east",
