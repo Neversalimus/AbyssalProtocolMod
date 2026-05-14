@@ -279,7 +279,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float hpPct = pawn.health.summaryHealth.SummaryHealthPercent;
+            float hpPct = ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
 
             int newPhase;
             if (hpPct <= Props.phase3HealthPct)

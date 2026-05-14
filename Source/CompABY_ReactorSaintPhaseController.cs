@@ -77,31 +77,7 @@ namespace AbyssalProtocol
 
         private static float ResolvePhaseHealthPercent(Pawn pawn)
         {
-            if (pawn == null)
-            {
-                return 1f;
-            }
-
-            float current;
-            float max;
-            float pct;
-            if (ABY_BossTrueDeathUtility.TryGetBossHp(pawn, out current, out max, out pct))
-            {
-                return Mathf.Clamp01(pct);
-            }
-
-            try
-            {
-                if (pawn.health?.summaryHealth != null)
-                {
-                    return Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
-                }
-            }
-            catch
-            {
-            }
-
-            return 1f;
+            return ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
         }
 
         private void ApplyPhaseState(int phase)

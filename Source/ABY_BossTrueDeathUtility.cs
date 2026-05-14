@@ -89,6 +89,36 @@ namespace AbyssalProtocol
             return max > 0.001f;
         }
 
+
+        public static float ResolveBossHealthPercentForPhase(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return 1f;
+            }
+
+            float current;
+            float max;
+            float pct;
+            if (TryGetBossHp(pawn, out current, out max, out pct))
+            {
+                return Mathf.Clamp01(pct);
+            }
+
+            try
+            {
+                if (pawn.health?.summaryHealth != null)
+                {
+                    return Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
+                }
+            }
+            catch
+            {
+            }
+
+            return 1f;
+        }
+
         public static void StabilizePawnBody(Pawn pawn, CompProperties_ABY_BossTrueDeath props)
         {
             if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.health?.hediffSet == null || props == null)
