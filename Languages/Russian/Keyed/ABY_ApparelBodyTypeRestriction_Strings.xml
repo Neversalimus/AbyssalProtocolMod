@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ApparelBodyTypeRestriction_Incompatible>{0} несовместима с телосложением {1}.</ABY_ApparelBodyTypeRestriction_Incompatible>
+  <ABY_ApparelBodyTypeRestriction_Removed>{1} снята с {0}: несовместима с телосложением {2}.</ABY_ApparelBodyTypeRestriction_Removed>
+</LanguageData>

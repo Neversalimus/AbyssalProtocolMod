@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate" and not(modExtensions)]</xpath>
+        <value><modExtensions /></value>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
+        <value>
+          <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+            <disallowedBodyTypes>
+              <li>Fat</li>
+              <li>Hulk</li>
+            </disallowedBodyTypes>
+          </li>
+        </value>
+      </li>
+
+    </operations>
+  </Operation>
+</Patch>

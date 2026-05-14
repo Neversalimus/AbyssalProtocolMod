@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ApparelBodyTypeRestriction_Incompatible>{0} is incompatible with {1} body frames.</ABY_ApparelBodyTypeRestriction_Incompatible>
+  <ABY_ApparelBodyTypeRestriction_Removed>{1} was removed from {0}: incompatible with {2} body frame.</ABY_ApparelBodyTypeRestriction_Removed>
+</LanguageData>
