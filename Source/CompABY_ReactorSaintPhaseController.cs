@@ -62,7 +62,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float hpPct = pawn.health.summaryHealth.SummaryHealthPercent;
+            float hpPct = ResolvePhaseHealthPercent(pawn);
             int newPhase = hpPct <= Props.phase3HealthPct ? 3 : (hpPct <= Props.phase2HealthPct ? 2 : 1);
             if (!force && newPhase == currentPhase)
             {
@@ -72,6 +72,36 @@ namespace AbyssalProtocol
             currentPhase = newPhase;
             ApplyPhaseState(newPhase);
             TriggerPhaseFeedback(pawn, force);
+        }
+
+
+        private static float ResolvePhaseHealthPercent(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return 1f;
+            }
+
+            float current;
+            float max;
+            float pct;
+            if (ABY_BossTrueDeathUtility.TryGetBossHp(pawn, out current, out max, out pct))
+            {
+                return Mathf.Clamp01(pct);
+            }
+
+            try
+            {
+                if (pawn.health?.summaryHealth != null)
+                {
+                    return Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
+                }
+            }
+            catch
+            {
+            }
+
+            return 1f;
         }
 
         private void ApplyPhaseState(int phase)
