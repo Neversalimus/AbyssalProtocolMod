@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftNeedlerCore</defName>
     <label>rift needler core</label>
-    <description>Slot: Main weapon. Gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Main weapon. Compatible chassis: Medium. Role: anti-light sustained fire. Effect: gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure. Stats: range 28.5, cooldown 2.5s, burst 3, no extra module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -17,6 +17,9 @@
       <Mass>2.2</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>80</requiredResidue>
@@ -28,7 +31,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_PlasmaLanceCore</defName>
     <label>plasma lance core</label>
-    <description>Slot: Main weapon. Replaces the turret main weapon with a slower long-range ultra-plasma bolt for armored targets, elites, and early boss pressure. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Main weapon. Compatible chassis: Medium. Role: anti-armor lance. Effect: replaces the turret main weapon with a slower long-range ultra-plasma bolt for armor, elites, and early boss pressure. Stats: range 33.5, cooldown 4.3s, burst 1, +120 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -41,6 +44,9 @@
       <Mass>3.1</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>190</requiredResidue>
@@ -52,7 +58,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
-    <description>Slot: Auxiliary. Adds an independent timed canticle-wave support shot while the main weapon keeps firing normally. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Auxiliary. Compatible chassis: Medium. Role: secondary crowd pressure. Effect: adds an independent timed canticle-wave support shot while the main weapon keeps firing normally. Stats: range 30.0, auxiliary cooldown 7.0s, burst 1, +130 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -65,6 +71,9 @@
       <Mass>2.7</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>260</requiredResidue>
@@ -76,7 +85,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CoolingLattice</defName>
     <label>cooling lattice</label>
-    <description>A passive abyssal heat-sink lattice for modular turrets. It tightens firing cadence by venting ritual heat through sacrificial fins.</description>
+    <description>Slot: Passive. Compatible chassis: Medium. Role: cadence stabilizer. Effect: reduces installed main weapon cooldown by 16%, making the turret fire more often. Trade-off: +70 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CoolingLattice</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -89,6 +98,9 @@
       <Mass>1.4</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>110</requiredResidue>
@@ -100,7 +112,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_TargetingSigil</defName>
     <label>targeting sigil</label>
-    <description>A passive sighting matrix that lengthens the turret's targeting geometry. It is stable enough for a prototype, but hungry for additional power.</description>
+    <description>Slot: Passive. Compatible chassis: Medium. Role: range and tracking. Effect: adds +3.5 cells to installed main weapon range and reserves a small future accuracy hook. Trade-off: +80 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_TargetingSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -113,6 +125,9 @@
       <Mass>1.1</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>140</requiredResidue>
@@ -124,7 +139,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ResidueCapacitor</defName>
     <label>residue capacitor</label>
-    <description>A passive capacitor module that steadies both firing cadence and range by buffering abyssal charge in a sealed residue coil.</description>
+    <description>Slot: Passive. Compatible chassis: Medium. Role: charge buffer. Effect: adds +1.5 cells to installed main weapon range and reduces installed main weapon cooldown by 8%. Trade-off: +120 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ResidueCapacitor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -137,6 +152,9 @@
       <Mass>1.7</Mass>
       <Flammability>0</Flammability>
     </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>170</requiredResidue>

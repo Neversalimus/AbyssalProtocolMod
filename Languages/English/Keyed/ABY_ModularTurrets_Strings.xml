@@ -98,4 +98,34 @@
   <ABY_TurretInspectPassive>Passive: {0}/{1}</ABY_TurretInspectPassive>
   <ABY_TurretInspectStats>Range {0} · cooldown {1} · power {2} W</ABY_TurretInspectStats>
   <ABY_TurretInspectNeedsMain>No main weapon core installed.</ABY_TurretInspectNeedsMain>
+
+  <ABY_TurretInfo_Profile>Turret module profile</ABY_TurretInfo_Profile>
+  <ABY_TurretInfo_ProfileDesc>The occupied slot and tactical role of this modular turret component.</ABY_TurretInfo_ProfileDesc>
+  <ABY_TurretInfo_CompatibleChassis>Compatible chassis</ABY_TurretInfo_CompatibleChassis>
+  <ABY_TurretInfo_CompatibleChassisDesc>Chassis tags that can accept this module.</ABY_TurretInfo_CompatibleChassisDesc>
+  <ABY_TurretInfo_Effect>Effect</ABY_TurretInfo_Effect>
+  <ABY_TurretInfo_EffectDesc>What this module does after installation.</ABY_TurretInfo_EffectDesc>
+  <ABY_TurretInfo_Range>Turret range</ABY_TurretInfo_Range>
+  <ABY_TurretInfo_RangeDesc>Maximum firing range provided by this weapon module.</ABY_TurretInfo_RangeDesc>
+  <ABY_TurretInfo_MainCooldown>Main cooldown</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretInfo_AuxCooldown>Auxiliary cooldown</ABY_TurretInfo_AuxCooldown>
+  <ABY_TurretInfo_CooldownDesc>Time before this module can fire again.</ABY_TurretInfo_CooldownDesc>
+  <ABY_TurretInfo_Burst>Burst</ABY_TurretInfo_Burst>
+  <ABY_TurretInfo_BurstDesc>Number of projectiles fired per activation.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstSpacing>Burst spacing</ABY_TurretInfo_BurstSpacing>
+  <ABY_TurretInfo_BurstSpacingDesc>Delay between shots inside a burst.</ABY_TurretInfo_BurstSpacingDesc>
+  <ABY_TurretInfo_Projectile>Projectile</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Projectile def fired by this module.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_RangeOffset>Main range offset</ABY_TurretInfo_RangeOffset>
+  <ABY_TurretInfo_RangeOffsetDesc>Added to the installed main weapon range.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_CooldownMultiplier>Main cooldown modifier</ABY_TurretInfo_CooldownMultiplier>
+  <ABY_TurretInfo_CooldownMultiplierDesc>Multiplies the installed main weapon cooldown. Negative values are faster.</ABY_TurretInfo_CooldownMultiplierDesc>
+  <ABY_TurretInfo_CooldownOffset>Main cooldown offset</ABY_TurretInfo_CooldownOffset>
+  <ABY_TurretInfo_CooldownOffsetDesc>Flat cooldown shift added after multiplier effects.</ABY_TurretInfo_CooldownOffsetDesc>
+  <ABY_TurretInfo_MissRadiusOffset>Miss radius offset</ABY_TurretInfo_MissRadiusOffset>
+  <ABY_TurretInfo_MissRadiusOffsetDesc>Prototype targeting offset reserved for future accuracy logic.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_ExtraPowerDraw>Extra power draw</ABY_TurretInfo_ExtraPowerDraw>
+  <ABY_TurretInfo_ExtraPowerDrawDesc>Additional power consumed by the chassis while this module is installed and modular turrets are enabled.</ABY_TurretInfo_ExtraPowerDrawDesc>
+  <ABY_TurretInfo_AnyChassis>any modular chassis</ABY_TurretInfo_AnyChassis>
+
 </LanguageData>

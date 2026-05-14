@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_AbyssalBastionChassis</defName>
     <label>abyssal bastion chassis</label>
-    <description>A medium sigil-bound turret shell. It is inert by itself and only becomes a weapon after forge-built turret modules are installed through its module tab.</description>
+    <description>A medium 2x2 sigil-bound turret shell. It is inert by itself and only becomes a weapon after forge-built turret modules are installed through its module tab.</description>
     <thingClass>Building</thingClass>
     <drawerType>MapMeshOnly</drawerType>
     <tickerType>Normal</tickerType>
@@ -12,7 +12,7 @@
     <graphicData>
       <texPath>Things/Building/Turrets/ABY_AbyssalBastionChassis</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(2.4,2.4)</drawSize>
+      <drawSize>(2.75,2.75)</drawSize>
     </graphicData>
 
     <castEdgeShadows>false</castEdgeShadows>
@@ -27,7 +27,7 @@
     </costList>
 
     <altitudeLayer>Building</altitudeLayer>
-    <fillPercent>0.55</fillPercent>
+    <fillPercent>0.72</fillPercent>
     <useHitPoints>True</useHitPoints>
 
     <statBases>

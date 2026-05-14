@@ -98,4 +98,34 @@
   <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
   <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} W</ABY_TurretInspectStats>
   <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
+
+  <ABY_TurretInfo_Profile>Профиль турельного модуля</ABY_TurretInfo_Profile>
+  <ABY_TurretInfo_ProfileDesc>Занимаемый слот и тактическая роль этого компонента модульной турели.</ABY_TurretInfo_ProfileDesc>
+  <ABY_TurretInfo_CompatibleChassis>Совместимые корпуса</ABY_TurretInfo_CompatibleChassis>
+  <ABY_TurretInfo_CompatibleChassisDesc>Теги корпусов, которые могут принять этот модуль.</ABY_TurretInfo_CompatibleChassisDesc>
+  <ABY_TurretInfo_Effect>Эффект</ABY_TurretInfo_Effect>
+  <ABY_TurretInfo_EffectDesc>Что модуль делает после установки.</ABY_TurretInfo_EffectDesc>
+  <ABY_TurretInfo_Range>Дальность турели</ABY_TurretInfo_Range>
+  <ABY_TurretInfo_RangeDesc>Максимальная дальность стрельбы, которую даёт этот оружейный модуль.</ABY_TurretInfo_RangeDesc>
+  <ABY_TurretInfo_MainCooldown>Перезарядка основного</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretInfo_AuxCooldown>Перезарядка aux</ABY_TurretInfo_AuxCooldown>
+  <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
+  <ABY_TurretInfo_Burst>Очередь</ABY_TurretInfo_Burst>
+  <ABY_TurretInfo_BurstDesc>Количество снарядов за одну активацию.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstSpacing>Интервал очереди</ABY_TurretInfo_BurstSpacing>
+  <ABY_TurretInfo_BurstSpacingDesc>Задержка между выстрелами внутри очереди.</ABY_TurretInfo_BurstSpacingDesc>
+  <ABY_TurretInfo_Projectile>Снаряд</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Projectile def, которым стреляет этот модуль.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_RangeOffset>Бонус дальности основного</ABY_TurretInfo_RangeOffset>
+  <ABY_TurretInfo_RangeOffsetDesc>Добавляется к дальности установленного основного оружия.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_CooldownMultiplier>Модификатор перезарядки основного</ABY_TurretInfo_CooldownMultiplier>
+  <ABY_TurretInfo_CooldownMultiplierDesc>Множитель перезарядки установленного основного оружия. Отрицательные значения быстрее.</ABY_TurretInfo_CooldownMultiplierDesc>
+  <ABY_TurretInfo_CooldownOffset>Сдвиг перезарядки основного</ABY_TurretInfo_CooldownOffset>
+  <ABY_TurretInfo_CooldownOffsetDesc>Плоский сдвиг перезарядки после множителей.</ABY_TurretInfo_CooldownOffsetDesc>
+  <ABY_TurretInfo_MissRadiusOffset>Сдвиг радиуса промаха</ABY_TurretInfo_MissRadiusOffset>
+  <ABY_TurretInfo_MissRadiusOffsetDesc>Прототипный targeting-offset, зарезервированный под будущую accuracy-логику.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_ExtraPowerDraw>Дополнительное энергопотребление</ABY_TurretInfo_ExtraPowerDraw>
+  <ABY_TurretInfo_ExtraPowerDrawDesc>Дополнительная энергия, которую потребляет корпус, пока модуль установлен и модульные турели включены.</ABY_TurretInfo_ExtraPowerDrawDesc>
+  <ABY_TurretInfo_AnyChassis>любой модульный корпус</ABY_TurretInfo_AnyChassis>
+
 </LanguageData>

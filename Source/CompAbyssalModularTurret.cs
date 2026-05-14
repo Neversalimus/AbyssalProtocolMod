@@ -149,6 +149,19 @@ namespace AbyssalProtocol
             }
         }
 
+        public override void PostDraw()
+        {
+            base.PostDraw();
+
+            if (parent == null || !parent.Spawned || parent.MapHeld == null || !FeatureEnabled)
+            {
+                return;
+            }
+
+            DrawModuleOverlay(mainModule, new Vector3(0f, 0f, 0.22f), 0.58f, 0.018f);
+            DrawModuleOverlay(auxiliaryModule, new Vector3(0.42f, 0f, -0.18f), 0.38f, 0.021f);
+        }
+
         public bool CanInstall(ABY_TurretModuleDef moduleDef, out string reason)
         {
             reason = null;
@@ -394,6 +407,38 @@ namespace AbyssalProtocol
             }
 
             return string.Join("\n", lines);
+        }
+
+        private void DrawModuleOverlay(ABY_TurretModuleDef module, Vector3 localOffset, float size, float altitudeOffset)
+        {
+            if (module?.thingDef == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Graphic graphic = module.thingDef.graphicData?.Graphic;
+                Material material = graphic?.MatSingle;
+                if (material == null)
+                {
+                    return;
+                }
+
+                Vector3 drawPos = parent.DrawPos + localOffset;
+                drawPos.y += Mathf.Max(0.001f, altitudeOffset);
+
+                Vector3 scale = new Vector3(Mathf.Max(0.05f, size), 1f, Mathf.Max(0.05f, size));
+                Matrix4x4 matrix = Matrix4x4.TRS(drawPos, Quaternion.identity, scale);
+                Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+            }
+            catch (Exception ex)
+            {
+                if (!AbyssalProtocolMod.Settings.suppressRepeatedWarnings)
+                {
+                    Log.Warning("[Abyssal Protocol] Modular turret failed to draw module overlay " + module.defName + ": " + ex.GetType().Name + " " + ex.Message);
+                }
+            }
         }
 
         private void Install(ABY_TurretModuleDef module)
