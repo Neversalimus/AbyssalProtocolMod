@@ -683,6 +683,8 @@ namespace AbyssalProtocol
                 DrawLayer(IdleGlowGraphic, center, BreachSize * breachPulse, breachAngle * -0.65f, 0.027f);
                 DrawLayer(CoreGlowGraphic, center, BreachSize * (0.65f + ritualIntensity * 0.22f), breachAngle * 1.35f, 0.028f);
             }
+
+            ABY_SummoningCircleActivationVFXUtility.Draw(this, center, CurrentRitualPhase, GetPhaseProgress(), ritualSeed, reducedConsoleEffects);
         }
 
         private void DrawCapacitorBayVisuals(Vector3 center, int ticks, float ritualIntensity, float powerFactor)
