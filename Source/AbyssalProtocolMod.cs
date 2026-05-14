@@ -47,7 +47,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1190f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1250f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -65,6 +65,8 @@ namespace AbyssalProtocol
 
             list.GapLine();
             DrawDiagnosticsSection(list, s);
+            list.GapLine();
+            DrawExperimentalSystemsSection(list, s);
             list.GapLine();
 
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
@@ -174,6 +176,18 @@ namespace AbyssalProtocol
             }
 
             list.Gap(4f);
+        }
+
+        private static void DrawExperimentalSystemsSection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
+        {
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ExperimentalSystemsHeader", "Experimental systems / kill switches"));
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            Widgets.Label(ABY_UIPolishUtility.TextRect(list.GetRect(42f)), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ExperimentalSystemsDesc", "Prototype systems live behind explicit kill switches. Disabling a system should stop runtime behavior and hide its forge exposure without deleting save data."));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ModularTurrets_Enable", "Enable modular turret prototype"), ref settingsData.enableModularTurrets, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ModularTurrets_EnableDesc", "Master switch for Package 0 modular turrets. When disabled, modular turret comps stop targeting/firing, placement is blocked, and turret-module forge recipes are hidden. Installed modules remain saved for safe re-enable."));
         }
 
         private static void DrawDifficultySection(Listing_Standard list, AbyssalProtocolModSettings settingsData)

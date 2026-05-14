@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_RiftNeedlerCore</defName>
+    <label>Rift Needler Core</label>
+    <description>Main weapon core for medium modular turret chassis. Fast needle bursts against lightly armored targets.</description>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_RiftNeedlerCore</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>anti-light sustained fire</role>
+    <tier>1</tier>
+    <projectileDef>ABY_RiftNeedleProjectile</projectileDef>
+    <soundCast>ABY_SigilRepeaterFire</soundCast>
+    <range>28.5</range>
+    <cooldownTicks>150</cooldownTicks>
+    <burstShotCount>3</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_PlasmaLanceCore</defName>
+    <label>Plasma Lance Core</label>
+    <description>Main weapon core for medium modular turret chassis. Slower armor-focused ultra-plasma discharge.</description>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_PlasmaLanceCore</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>anti-armor lance</role>
+    <tier>2</tier>
+    <projectileDef>ABY_UltraPlasmaBolt</projectileDef>
+    <soundCast>ABY_UltraPlasmaFire</soundCast>
+    <range>33.5</range>
+    <cooldownTicks>260</cooldownTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>120</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_ChoirArcEmitter</defName>
+    <label>Choir Arc Emitter</label>
+    <description>Auxiliary support module. Fires a slow timed canticle-wave shot independently of the main weapon.</description>
+    <slot>Auxiliary</slot>
+    <thingDef>ABY_TurretModule_ChoirArcEmitter</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>secondary crowd pressure</role>
+    <tier>2</tier>
+    <projectileDef>ABY_CanticleWaveProjectile</projectileDef>
+    <soundCast>ABY_CanticleDriverFire</soundCast>
+    <range>30</range>
+    <cooldownTicks>420</cooldownTicks>
+    <auxiliaryCooldownTicks>420</auxiliaryCooldownTicks>
+    <burstShotCount>1</burstShotCount>
+    <extraPowerDraw>130</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CoolingLattice</defName>
+    <label>Cooling Lattice</label>
+    <description>Passive cadence module. Reduces main weapon cooldown at the cost of additional power draw.</description>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_CoolingLattice</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>cadence stabilizer</role>
+    <tier>1</tier>
+    <cooldownMultiplier>0.84</cooldownMultiplier>
+    <extraPowerDraw>70</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_TargetingSigil</defName>
+    <label>Targeting Sigil</label>
+    <description>Passive targeting module. Extends range and stabilizes the aiming geometry.</description>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_TargetingSigil</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>range and tracking</role>
+    <tier>1</tier>
+    <rangeOffset>3.5</rangeOffset>
+    <missRadiusOffset>-0.2</missRadiusOffset>
+    <extraPowerDraw>80</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_ResidueCapacitor</defName>
+    <label>Residue Capacitor</label>
+    <description>Passive buffering module. Gives modest range and cadence gains while adding a larger power burden.</description>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_ResidueCapacitor</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>charge buffer</role>
+    <tier>2</tier>
+    <rangeOffset>1.5</rangeOffset>
+    <cooldownMultiplier>0.92</cooldownMultiplier>
+    <extraPowerDraw>120</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+</Defs>

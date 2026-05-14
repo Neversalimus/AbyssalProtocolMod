@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ABY_AbyssalBastionChassis</defName>
+    <label>abyssal bastion chassis</label>
+    <description>A medium sigil-bound turret shell. It is inert by itself and only becomes a weapon after forge-built turret modules are installed through its module tab.</description>
+    <thingClass>Building</thingClass>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Normal</tickerType>
+
+    <graphicData>
+      <texPath>Things/Building/Turrets/ABY_AbyssalBastionChassis</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.4,2.4)</drawSize>
+    </graphicData>
+
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0.35</staticSunShadowHeight>
+    <constructEffect>ConstructMetal</constructEffect>
+
+    <costList>
+      <Steel>170</Steel>
+      <Plasteel>45</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+    </costList>
+
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.55</fillPercent>
+    <useHitPoints>True</useHitPoints>
+
+    <statBases>
+      <WorkToBuild>4300</WorkToBuild>
+      <MaxHitPoints>420</MaxHitPoints>
+      <Flammability>0.05</Flammability>
+      <Beauty>-5</Beauty>
+    </statBases>
+
+    <size>(2,2)</size>
+    <designationCategory>Security</designationCategory>
+    <uiOrder>2538</uiOrder>
+    <passability>PassThroughOnly</passability>
+    <pathCost>36</pathCost>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <constructionSkillPrerequisite>7</constructionSkillPrerequisite>
+    <minifiedDef IsNull="True" />
+    <thingCategories Inherit="False" />
+
+    <inspectorTabs>
+      <li>AbyssalProtocol.ITab_AbyssalTurretModules</li>
+    </inspectorTabs>
+
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>650</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Breakdownable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>4.2</glowRadius>
+        <glowColor>(255,85,32,0)</glowColor>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalModularTurret">
+        <chassisTag>Medium</chassisTag>
+        <mainWeaponSlots>1</mainWeaponSlots>
+        <auxiliarySlots>1</auxiliarySlots>
+        <passiveSlots>2</passiveSlots>
+        <baseRange>24</baseRange>
+        <baseCooldownTicks>210</baseCooldownTicks>
+        <targetScanIntervalTicks>30</targetScanIntervalTicks>
+        <basePowerDraw>650</basePowerDraw>
+      </li>
+    </comps>
+
+    <building>
+      <claimable>false</claimable>
+    </building>
+
+    <researchPrerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </researchPrerequisites>
+
+    <placeWorkers>
+      <li>AbyssalProtocol.PlaceWorker_ABY_ModularTurretFeatureEnabled</li>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeCategory_TurretSystems>Turret Systems</ABY_ForgeCategory_TurretSystems>
+  <ABY_ForgePatternSummary_TurretSystems>Modular turret system pattern</ABY_ForgePatternSummary_TurretSystems>
+  <ABY_ModularTurret_Tab>Modules</ABY_ModularTurret_Tab>
+  <ABY_ExperimentalSystemsHeader>Experimental systems / kill switches</ABY_ExperimentalSystemsHeader>
+  <ABY_ExperimentalSystemsDesc>Prototype systems live behind explicit kill switches. Disabling a system should stop runtime behavior and hide its forge exposure without deleting save data.</ABY_ExperimentalSystemsDesc>
+  <ABY_ModularTurrets_Enable>Enable modular turret prototype</ABY_ModularTurrets_Enable>
+  <ABY_ModularTurrets_EnableDesc>Master switch for Package 0 modular turrets. When disabled, modular turret comps stop targeting/firing, placement is blocked, and turret-module forge recipes are hidden. Installed modules remain saved for safe re-enable.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurret_Header>Abyssal modular turret chassis</ABY_ModularTurret_Header>
+  <ABY_ModularTurret_Subtitle>Prototype framework: install loose forge-built modules from this map. Remove ejects the item near the chassis.</ABY_ModularTurret_Subtitle>
+  <ABY_TurretDisabledMessage>Modular turret systems are disabled in mod settings.</ABY_TurretDisabledMessage>
+  <ABY_TurretSlot_Main>Main weapon</ABY_TurretSlot_Main>
+  <ABY_TurretSlot_Auxiliary>Auxiliary</ABY_TurretSlot_Auxiliary>
+  <ABY_TurretSlot_Passive>Passive</ABY_TurretSlot_Passive>
+  <ABY_TurretRole_Generic>general</ABY_TurretRole_Generic>
+  <ABY_TurretInstallFromMap>Install from map</ABY_TurretInstallFromMap>
+  <ABY_TurretRemove>Remove / eject</ABY_TurretRemove>
+  <ABY_TurretOpenForgeHint>Craft in Forge</ABY_TurretOpenForgeHint>
+  <ABY_TurretOpenForgeHintTooltip>Package 0 exposes module recipes in the Abyssal Forge Turret Systems category. Direct forge-opening from turret slots is planned for the next UX pass.</ABY_TurretOpenForgeHintTooltip>
+  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsKillSwitch>Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.</ABY_TurretStatsKillSwitch>
+</LanguageData>

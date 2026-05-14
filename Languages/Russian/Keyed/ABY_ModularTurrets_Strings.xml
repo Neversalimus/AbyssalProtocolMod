@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ForgeCategory_TurretSystems>Турельные системы</ABY_ForgeCategory_TurretSystems>
+  <ABY_ForgePatternSummary_TurretSystems>Схема модульной турельной системы</ABY_ForgePatternSummary_TurretSystems>
+  <ABY_ModularTurret_Tab>Модули</ABY_ModularTurret_Tab>
+  <ABY_ExperimentalSystemsHeader>Экспериментальные системы / аварийные выключатели</ABY_ExperimentalSystemsHeader>
+  <ABY_ExperimentalSystemsDesc>Прототипные системы живут за явными выключателями. Отключение должно останавливать runtime-поведение и скрывать Forge-рецепты без удаления save data.</ABY_ExperimentalSystemsDesc>
+  <ABY_ModularTurrets_Enable>Включить прототип модульных турелей</ABY_ModularTurrets_Enable>
+  <ABY_ModularTurrets_EnableDesc>Главный выключатель Package 0 для модульных турелей. Если выключено, comp турели перестаёт целиться/стрелять, постройка блокируется, а рецепты модулей скрываются из Forge. Установленные модули остаются в сейве для безопасного повторного включения.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurret_Header>Модульный турельный корпус Бездны</ABY_ModularTurret_Header>
+  <ABY_ModularTurret_Subtitle>Прототип framework: устанавливает свободные forge-модули с этой карты. Снятие выбрасывает предмет рядом с корпусом.</ABY_ModularTurret_Subtitle>
+  <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках мода.</ABY_TurretDisabledMessage>
+  <ABY_TurretSlot_Main>Основное оружие</ABY_TurretSlot_Main>
+  <ABY_TurretSlot_Auxiliary>Вспомогательный</ABY_TurretSlot_Auxiliary>
+  <ABY_TurretSlot_Passive>Пассивный</ABY_TurretSlot_Passive>
+  <ABY_TurretRole_Generic>общий</ABY_TurretRole_Generic>
+  <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
+  <ABY_TurretRemove>Снять / выбросить</ABY_TurretRemove>
+  <ABY_TurretOpenForgeHint>Крафт в Forge</ABY_TurretOpenForgeHint>
+  <ABY_TurretOpenForgeHintTooltip>Package 0 показывает рецепты модулей в категории Abyssal Forge “Турельные системы”. Прямое открытие Forge из слота турели запланировано для следующего UX-пакета.</ABY_TurretOpenForgeHintTooltip>
+  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsKillSwitch>Выключатель: настройка мода отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
+</LanguageData>

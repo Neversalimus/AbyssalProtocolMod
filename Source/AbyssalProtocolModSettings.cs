@@ -41,6 +41,7 @@ namespace AbyssalProtocol
         public bool enableAorticHarrowerBodyAnimation = true;
         public bool enableBossPresentationTimeline = true;
         public bool enableBossPresentationTitleCards = true;
+        public bool enableModularTurrets = true;
 
         public override void ExposeData()
         {
@@ -79,6 +80,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableAorticHarrowerBodyAnimation, "enableAorticHarrowerBodyAnimation", true);
             Scribe_Values.Look(ref enableBossPresentationTimeline, "enableBossPresentationTimeline", true);
             Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
+            Scribe_Values.Look(ref enableModularTurrets, "enableModularTurrets", true);
             ClampValues();
         }
 
@@ -131,6 +133,7 @@ namespace AbyssalProtocol
             enableAorticHarrowerBodyAnimation = true;
             enableBossPresentationTimeline = true;
             enableBossPresentationTitleCards = true;
+            enableModularTurrets = true;
         }
 
         public float ResolveDominionWeatherIntensity()

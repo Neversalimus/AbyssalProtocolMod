@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_RiftNeedlerCore</defName>
+    <label>rift needler core</label>
+    <description>A compact main weapon module for abyssal turret chassis. It binds a repeating needle lattice into a stationary targeting crucible.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftNeedlerCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>210</MarketValue>
+      <Mass>2.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>80</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_PlasmaLanceCore</defName>
+    <label>plasma lance core</label>
+    <description>A heavier main weapon module that routes a focused ultra-plasma bolt through a sealed bastion crucible. Slow, hot, and armor-focused.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_PlasmaLanceCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>360</MarketValue>
+      <Mass>3.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>190</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_ChoirArcEmitter</defName>
+    <label>choir arc emitter</label>
+    <description>An auxiliary emitter that adds a slow timed canticle-wave discharge to a modular turret chassis. Designed as a first support-slot proof of concept.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>300</MarketValue>
+      <Mass>2.7</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>260</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CoolingLattice</defName>
+    <label>cooling lattice</label>
+    <description>A passive abyssal heat-sink lattice for modular turrets. It tightens firing cadence by venting ritual heat through sacrificial fins.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CoolingLattice</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>145</MarketValue>
+      <Mass>1.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>110</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_TargetingSigil</defName>
+    <label>targeting sigil</label>
+    <description>A passive sighting matrix that lengthens the turret's targeting geometry. It is stable enough for a prototype, but hungry for additional power.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_TargetingSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>160</MarketValue>
+      <Mass>1.1</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>140</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_ResidueCapacitor</defName>
+    <label>residue capacitor</label>
+    <description>A passive capacitor module that steadies both firing cadence and range by buffering abyssal charge in a sealed residue coil.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_ResidueCapacitor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>190</MarketValue>
+      <Mass>1.7</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>170</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

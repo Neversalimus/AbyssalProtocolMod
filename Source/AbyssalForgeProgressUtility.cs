@@ -23,6 +23,7 @@ namespace AbyssalProtocol
         public const string ImplantsCategory = "Implants";
         public const string RitualCategory = "Ritual";
         public const string HeraldCategory = "Herald";
+        public const string TurretSystemsCategory = ABY_ModularTurretUtility.ForgeCategory;
 
         public class IngredientAvailabilityEntry
         {
@@ -53,7 +54,8 @@ namespace AbyssalProtocol
             ArmorCategory,
             ImplantsCategory,
             RitualCategory,
-            HeraldCategory
+            HeraldCategory,
+            TurretSystemsCategory
         };
 
         public static IEnumerable<string> Categories => CategoryOrder;
@@ -215,6 +217,7 @@ namespace AbyssalProtocol
 
             return forgeDef.AllRecipes
                 .Where(recipe => recipe != null && AbyssalDominionAccessUtility.ShouldExposeForgeRecipe(recipe))
+                .Where(recipe => !ABY_ModularTurretUtility.IsModularTurretRecipe(recipe) || ABY_ModularTurretUtility.Enabled)
                 .OrderBy(GetRequiredResidue)
                 .ThenBy(recipe => GetCategoryOrderIndex(GetCategory(recipe)))
                 .ThenBy(recipe => GetRecipeDisplayLabel(recipe))
@@ -328,6 +331,8 @@ namespace AbyssalProtocol
                     return TranslateOrFallback("ABY_ForgePatternSummary_Ritual", "Ritual support pattern");
                 case HeraldCategory:
                     return TranslateOrFallback("ABY_ForgePatternSummary_Herald", "Herald pattern");
+                case TurretSystemsCategory:
+                    return TranslateOrFallback("ABY_ForgePatternSummary_TurretSystems", "Modular turret system pattern");
                 default:
                     return TranslateOrFallback("ABY_ForgePatternSummary_Generic", "Forge pattern");
             }

@@ -212,6 +212,11 @@ namespace AbyssalProtocol
                 return IconHeraldTex;
             }
 
+            if (category == AbyssalForgeProgressUtility.TurretSystemsCategory)
+            {
+                return IconWeaponsTex ?? IconCoreTex;
+            }
+
             return IconAllTex;
         }
 

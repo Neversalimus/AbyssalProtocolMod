@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_RiftNeedlerCore</defName>
+    <label>forge rift needler core</label>
+    <description>Bind a repeating rift-needle lattice into a turret-compatible main weapon core.</description>
+    <jobString>Forging rift needler core.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>45</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_RiftNeedlerCore>1</ABY_TurretModule_RiftNeedlerCore></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>80</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_PlasmaLanceCore</defName>
+    <label>forge plasma lance core</label>
+    <description>Bind a sealed ultra-plasma feed into a turret-compatible armor-breaking main weapon core.</description>
+    <jobString>Forging plasma lance core.</jobString>
+    <workAmount>2300</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>32</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>25</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_PlasmaLanceCore>1</ABY_TurretModule_PlasmaLanceCore></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>190</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_ChoirArcEmitter</defName>
+    <label>forge choir arc emitter</label>
+    <description>Assemble a secondary canticle-wave emitter for the modular turret auxiliary slot.</description>
+    <jobString>Forging choir arc emitter.</jobString>
+    <workAmount>2100</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>28</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>55</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_ChoirArcEmitter>1</ABY_TurretModule_ChoirArcEmitter></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>260</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_CoolingLattice</defName>
+    <label>forge cooling lattice</label>
+    <description>Assemble a passive heat-sink lattice for modular turret chassis.</description>
+    <jobString>Forging cooling lattice.</jobString>
+    <workAmount>1150</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>12</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>30</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_CoolingLattice>1</ABY_TurretModule_CoolingLattice></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>110</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_TargetingSigil</defName>
+    <label>forge targeting sigil</label>
+    <description>Etch a passive targeting matrix for modular turret chassis.</description>
+    <jobString>Forging targeting sigil.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>14</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>25</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_TargetingSigil>1</ABY_TurretModule_TargetingSigil></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>140</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_ResidueCapacitor</defName>
+    <label>forge residue capacitor</label>
+    <description>Build a passive residue-buffer capacitor for modular turret chassis.</description>
+    <jobString>Forging residue capacitor.</jobString>
+    <workAmount>1450</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>12</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_ResidueCapacitor>1</ABY_TurretModule_ResidueCapacitor></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>170</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+</Defs>

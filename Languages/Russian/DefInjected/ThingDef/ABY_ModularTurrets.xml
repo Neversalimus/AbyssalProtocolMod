@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_AbyssalBastionChassis.label>бастионный корпус Бездны</ABY_AbyssalBastionChassis.label>
+  <ABY_AbyssalBastionChassis.description>Средний сигильно-связанный турельный корпус. Сам по себе инертен и становится оружием только после установки forge-модулей через вкладку модулей.</ABY_AbyssalBastionChassis.description>
+  <ABY_TurretModule_RiftNeedlerCore.label>ядро рифтового игломёта</ABY_TurretModule_RiftNeedlerCore.label>
+  <ABY_TurretModule_RiftNeedlerCore.description>Компактный модуль основного оружия для турельных корпусов Бездны. Привязывает повторяющуюся игольную решётку к стационарному прицельному тиглю.</ABY_TurretModule_RiftNeedlerCore.description>
+  <ABY_TurretModule_PlasmaLanceCore.label>ядро плазменного копья</ABY_TurretModule_PlasmaLanceCore.label>
+  <ABY_TurretModule_PlasmaLanceCore.description>Более тяжёлый модуль основного оружия, проводящий сфокусированный ультраплазменный заряд через запечатанный бастионный тигель. Медленный, горячий и бронебойный.</ABY_TurretModule_PlasmaLanceCore.description>
+  <ABY_TurretModule_ChoirArcEmitter.label>хоровой дуговой эмиттер</ABY_TurretModule_ChoirArcEmitter.label>
+  <ABY_TurretModule_ChoirArcEmitter.description>Вспомогательный эмиттер, добавляющий медленный периодический кантильный разряд к модульной турели. Первый proof-of-concept для support-слота.</ABY_TurretModule_ChoirArcEmitter.description>
+  <ABY_TurretModule_CoolingLattice.label>охлаждающая решётка</ABY_TurretModule_CoolingLattice.label>
+  <ABY_TurretModule_CoolingLattice.description>Пассивная теплоотводная решётка для модульных турелей. Ускоряет цикл стрельбы, сбрасывая ритуальное тепло через жертвенные рёбра.</ABY_TurretModule_CoolingLattice.description>
+  <ABY_TurretModule_TargetingSigil.label>прицельная сигила</ABY_TurretModule_TargetingSigil.label>
+  <ABY_TurretModule_TargetingSigil.description>Пассивная прицельная матрица, удлиняющая геометрию наведения турели. Достаточно стабильна для прототипа, но требует больше энергии.</ABY_TurretModule_TargetingSigil.description>
+  <ABY_TurretModule_ResidueCapacitor.label>residue-конденсатор</ABY_TurretModule_ResidueCapacitor.label>
+  <ABY_TurretModule_ResidueCapacitor.description>Пассивный конденсаторный модуль, стабилизирующий темп и дальность стрельбы через запечатанную residue-катушку.</ABY_TurretModule_ResidueCapacitor.description>
+</LanguageData>
