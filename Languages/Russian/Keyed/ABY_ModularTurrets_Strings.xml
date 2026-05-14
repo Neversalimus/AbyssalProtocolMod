@@ -8,7 +8,7 @@
   <ABY_ModularTurrets_Enable>Включить прототип модульных турелей</ABY_ModularTurrets_Enable>
   <ABY_ModularTurrets_EnableDesc>Главный выключатель Package 0 для модульных турелей. Если выключено, comp турели перестаёт целиться/стрелять, постройка блокируется, а рецепты модулей скрываются из Forge. Установленные модули остаются в сейве для безопасного повторного включения.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Модульный турельный корпус Бездны</ABY_ModularTurret_Header>
-  <ABY_ModularTurret_Subtitle>Устанавливает свободные forge-модули с этой карты. Основные ядра дают корпусу стрельбу; вспомогательные и пассивные слоты меняют его роль.</ABY_ModularTurret_Subtitle>
+  <ABY_ModularTurret_Subtitle>Установка модулей с карты. Основное ядро стреляет; aux/пассивные модули меняют поведение.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках мода.</ABY_TurretDisabledMessage>
 
   <ABY_StateEnabled>включено</ABY_StateEnabled>
@@ -63,15 +63,15 @@
   <ABY_TurretModuleProjectile>Снаряд: {0}</ABY_TurretModuleProjectile>
   <ABY_TurretModuleFireStats>Дальность {0} · перезарядка {1} · очередь {2}</ABY_TurretModuleFireStats>
   <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка aux {1} · очередь {2}</ABY_TurretModuleAuxStats>
-  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка {1} · питание +{2} W</ABY_TurretModulePassiveStats>
+  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка основного {1} · потребление +{2} W</ABY_TurretModulePassiveStats>
   <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
   <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
   <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
   <ABY_TurretModuleTooltipStats>Статы: {0}</ABY_TurretModuleTooltipStats>
   <ABY_TurretModulePowerDelta>Дополнительное питание модуля: +{0} W</ABY_TurretModulePowerDelta>
   <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
-  <ABY_TurretCooldown_Faster>-{0}% перезарядки</ABY_TurretCooldown_Faster>
-  <ABY_TurretCooldown_Slower>+{0}% перезарядки</ABY_TurretCooldown_Slower>
+  <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_Slower>+{0}%</ABY_TurretCooldown_Slower>
 
   <ABY_TurretForgeSummary_Main>Слот основного оружия · {0}</ABY_TurretForgeSummary_Main>
   <ABY_TurretForgeSummary_Aux>Вспомогательный слот · {0}</ABY_TurretForgeSummary_Aux>
@@ -82,19 +82,20 @@
   <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
   <ABY_TurretChassisTooltipRuntime>Runtime: установленные модули сохраняются внутри здания и переживают save/load и переключение kill switch.</ABY_TurretChassisTooltipRuntime>
 
-  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsHeader>Предпросмотр работы</ABY_TurretStatsHeader>
   <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
   <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
   <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
   <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
-  <ABY_TurretStatsPowerDraw>Дополнительное питание модулей: {0} W</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Выключатель: настройка мода отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет burst-очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
+  <ABY_TurretStatsCooldownResolved>Перезарядка основного: {0} → {1}</ABY_TurretStatsCooldownResolved>
+  <ABY_TurretStatsPowerDraw>Потребление: {0} W база + {1} W модули = {2} W применено</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsKillSwitch>Выключатель: отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
 
   <ABY_TurretInspectDisabled>Модульная турельная система отключена в настройках.</ABY_TurretInspectDisabled>
   <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
   <ABY_TurretInspectAux>Вспомогательное: {0}</ABY_TurretInspectAux>
   <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
-  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1}</ABY_TurretInspectStats>
+  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} W</ABY_TurretInspectStats>
   <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
 </LanguageData>

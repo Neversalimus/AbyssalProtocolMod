@@ -62,12 +62,24 @@ namespace AbyssalProtocol
             }
         }
 
+        public int BaseMainCooldownTicks => mainModule != null ? mainModule.cooldownTicks : Props.baseCooldownTicks;
+
+        public float ResolvedBasePowerDraw => Mathf.Max(0f, Props.basePowerDraw);
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
+        public float ResolvedModulePowerDraw => FeatureEnabled ? Mathf.Max(0f, ExtraPowerDraw) : 0f;
+        public float ResolvedTotalPowerDraw => Mathf.Max(0f, ResolvedBasePowerDraw + ResolvedModulePowerDraw);
 
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
             passiveModules ??= new List<ABY_TurretModuleDef>();
+            ApplyPowerDraw();
+        }
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            ApplyPowerDraw();
         }
 
         public override void PostExposeData()
@@ -84,12 +96,18 @@ namespace AbyssalProtocol
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 SanitizeLoadedState();
+                ApplyPowerDraw();
             }
         }
 
         public override void CompTick()
         {
             base.CompTick();
+            if (parent.IsHashIntervalTick(60))
+            {
+                ApplyPowerDraw();
+            }
+
             if (!Operational)
             {
                 HaltRuntimeState();
@@ -245,6 +263,7 @@ namespace AbyssalProtocol
             }
 
             Install(module);
+            ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstalledMessage", "Installed {0}.", module.LabelCap);
             return true;
         }
@@ -274,6 +293,7 @@ namespace AbyssalProtocol
             mainModule = null;
             mainCooldownTicks = 0;
             HaltBurst();
+            ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
             return true;
         }
@@ -302,6 +322,7 @@ namespace AbyssalProtocol
 
             auxiliaryModule = null;
             auxiliaryCooldownTicks = 0;
+            ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
             return true;
         }
@@ -329,6 +350,7 @@ namespace AbyssalProtocol
             }
 
             passiveModules.RemoveAt(index);
+            ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
             return true;
         }
@@ -364,7 +386,7 @@ namespace AbyssalProtocol
             lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectPassive", "Passive: {0}/{1}", passiveModules.Count, Props.passiveSlots));
             if (HasMainWeapon)
             {
-                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectStats", "Range {0} · cooldown {1}", ResolvedRange.ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(ResolvedMainCooldownTicks)));
+                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectStats", "Range {0} · cooldown {1} · power {2} W", ResolvedRange.ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(ResolvedMainCooldownTicks), ResolvedTotalPowerDraw.ToString("0")));
             }
             else
             {
@@ -580,6 +602,17 @@ namespace AbyssalProtocol
 
                 return false;
             }
+        }
+
+        private void ApplyPowerDraw()
+        {
+            CompPowerTrader powerComp = PowerComp;
+            if (powerComp == null)
+            {
+                return;
+            }
+
+            powerComp.PowerOutput = -ResolvedTotalPowerDraw;
         }
 
         private void SanitizeLoadedState()

@@ -60,7 +60,7 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             GUI.color = comp.FeatureEnabled ? AbyssalForgeConsoleArt.TextSoftColor : new Color(1f, 0.48f, 0.36f, 1f);
             string subtitle = comp.FeatureEnabled
-                ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Subtitle", "Prototype framework: install loose forge-built modules from this map. Remove ejects the item near the chassis.")
+                ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Subtitle", "Install modules from map. Main core fires; auxiliary/passive modules change behavior.")
                 : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretDisabledMessage", "Modular turret systems are disabled in mod settings.");
             ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 14f, rect.y + 32f, rect.width - 28f, 20f), subtitle);
             GUI.color = Color.white;
@@ -146,15 +146,23 @@ namespace AbyssalProtocol
 
             Text.Font = GameFont.Tiny;
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            string cooldownText = comp.HasMainWeapon
+                ? ABY_ModularTurretUtility.TranslateOrFallback(
+                    "ABY_TurretStatsCooldownResolved",
+                    "Main cooldown: {0} → {1}",
+                    ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.BaseMainCooldownTicks),
+                    ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.ResolvedMainCooldownTicks))
+                : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsCooldown", "Main cooldown: {0}", "—");
+
             List<string> lines = new List<string>
             {
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsFeature", "Feature state: {0}", comp.FeatureEnabled ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateEnabled", "enabled") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateDisabled", "disabled")),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPower", "Power: {0}", comp.IsPowered ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOnline", "online") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOffline", "offline")),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsRange", "Main range: {0}", comp.HasMainWeapon ? comp.ResolvedRange.ToString("0.0") : "—"),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsCooldown", "Main cooldown: {0}", comp.HasMainWeapon ? ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.ResolvedMainCooldownTicks) : "—"),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDraw", "Estimated extra module draw: {0} W", comp.ExtraPowerDraw.ToString("0")),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsTargeting", "Targeting: skips downed/dead targets and cancels burst fire if the target falls, leaves range, or loses line of sight."),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitch", "Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.")
+                cooldownText,
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDraw", "Power draw: {0} W base + {1} W modules = {2} W applied", comp.ResolvedBasePowerDraw.ToString("0"), comp.ResolvedModulePowerDraw.ToString("0"), comp.ResolvedTotalPowerDraw.ToString("0")),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsTargeting", "Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight."),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitch", "Kill switch: disables targeting, firing, placement, and Forge exposure without deleting installed modules.")
             };
             ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 14f, rect.y + 34f, rect.width - 28f, rect.height - 40f), string.Join("\n", lines.ToArray()));
             GUI.color = Color.white;

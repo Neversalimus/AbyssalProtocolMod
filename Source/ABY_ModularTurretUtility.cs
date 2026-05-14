@@ -281,7 +281,7 @@ namespace AbyssalProtocol
 
             return TranslateOrFallback(
                 "ABY_TurretModulePassiveStats",
-                "Range {0} · cooldown {1} · power +{2} W",
+                "Range {0} · main cooldown {1} · power draw +{2} W",
                 FormatSignedDecimal(module.rangeOffset),
                 FormatCooldownMultiplierEffect(module.cooldownMultiplier),
                 module.extraPowerDraw.ToString("0"));
@@ -373,10 +373,10 @@ namespace AbyssalProtocol
             int percent = Mathf.RoundToInt(Mathf.Abs(delta) * 100f);
             if (delta < 0f)
             {
-                return TranslateOrFallback("ABY_TurretCooldown_Faster", "-{0}% cooldown", percent);
+                return TranslateOrFallback("ABY_TurretCooldown_Faster", "-{0}%", percent);
             }
 
-            return TranslateOrFallback("ABY_TurretCooldown_Slower", "+{0}% cooldown", percent);
+            return TranslateOrFallback("ABY_TurretCooldown_Slower", "+{0}%", percent);
         }
 
         private static void EnsureModuleCache()

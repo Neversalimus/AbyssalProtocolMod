@@ -8,7 +8,7 @@
   <ABY_ModularTurrets_Enable>Enable modular turret prototype</ABY_ModularTurrets_Enable>
   <ABY_ModularTurrets_EnableDesc>Master switch for Package 0 modular turrets. When disabled, modular turret comps stop targeting/firing, placement is blocked, and turret-module forge recipes are hidden. Installed modules remain saved for safe re-enable.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Abyssal modular turret chassis</ABY_ModularTurret_Header>
-  <ABY_ModularTurret_Subtitle>Install loose forge-built modules from this map. Main cores make the chassis fire; auxiliary and passive slots change its role.</ABY_ModularTurret_Subtitle>
+  <ABY_ModularTurret_Subtitle>Install modules from map. Main core fires; auxiliary/passive modules change behavior.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Modular turret systems are disabled in mod settings.</ABY_TurretDisabledMessage>
 
   <ABY_StateEnabled>enabled</ABY_StateEnabled>
@@ -63,15 +63,15 @@
   <ABY_TurretModuleProjectile>Projectile: {0}</ABY_TurretModuleProjectile>
   <ABY_TurretModuleFireStats>Range {0} · cooldown {1} · burst {2}</ABY_TurretModuleFireStats>
   <ABY_TurretModuleAuxStats>Range {0} · aux cooldown {1} · burst {2}</ABY_TurretModuleAuxStats>
-  <ABY_TurretModulePassiveStats>Range {0} · cooldown {1} · power +{2} W</ABY_TurretModulePassiveStats>
+  <ABY_TurretModulePassiveStats>Range {0} · main cooldown {1} · power draw +{2} W</ABY_TurretModulePassiveStats>
   <ABY_TurretModuleTooltipSlot>Slot: {0}</ABY_TurretModuleTooltipSlot>
   <ABY_TurretModuleTooltipRole>Role: {0}</ABY_TurretModuleTooltipRole>
   <ABY_TurretModuleTooltipEffect>Effect: {0}</ABY_TurretModuleTooltipEffect>
   <ABY_TurretModuleTooltipStats>Stats: {0}</ABY_TurretModuleTooltipStats>
   <ABY_TurretModulePowerDelta>Extra module power draw: +{0} W</ABY_TurretModulePowerDelta>
   <ABY_TurretCooldown_NoChange>no change</ABY_TurretCooldown_NoChange>
-  <ABY_TurretCooldown_Faster>-{0}% cooldown</ABY_TurretCooldown_Faster>
-  <ABY_TurretCooldown_Slower>+{0}% cooldown</ABY_TurretCooldown_Slower>
+  <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_Slower>+{0}%</ABY_TurretCooldown_Slower>
 
   <ABY_TurretForgeSummary_Main>Main weapon slot · {0}</ABY_TurretForgeSummary_Main>
   <ABY_TurretForgeSummary_Aux>Auxiliary slot · {0}</ABY_TurretForgeSummary_Aux>
@@ -87,14 +87,15 @@
   <ABY_TurretStatsPower>Power: {0}</ABY_TurretStatsPower>
   <ABY_TurretStatsRange>Main range: {0}</ABY_TurretStatsRange>
   <ABY_TurretStatsCooldown>Main cooldown: {0}</ABY_TurretStatsCooldown>
-  <ABY_TurretStatsPowerDraw>Estimated extra module draw: {0} W</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Targeting: skips downed/dead targets and cancels burst fire if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
+  <ABY_TurretStatsCooldownResolved>Main cooldown: {0} → {1}</ABY_TurretStatsCooldownResolved>
+  <ABY_TurretStatsPowerDraw>Power draw: {0} W base + {1} W modules = {2} W applied</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsKillSwitch>Kill switch: disables targeting, firing, placement, and Forge exposure without deleting installed modules.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsTargeting>Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
 
   <ABY_TurretInspectDisabled>Modular turret framework disabled in settings.</ABY_TurretInspectDisabled>
   <ABY_TurretInspectMain>Main: {0}</ABY_TurretInspectMain>
   <ABY_TurretInspectAux>Auxiliary: {0}</ABY_TurretInspectAux>
   <ABY_TurretInspectPassive>Passive: {0}/{1}</ABY_TurretInspectPassive>
-  <ABY_TurretInspectStats>Range {0} · cooldown {1}</ABY_TurretInspectStats>
+  <ABY_TurretInspectStats>Range {0} · cooldown {1} · power {2} W</ABY_TurretInspectStats>
   <ABY_TurretInspectNeedsMain>No main weapon core installed.</ABY_TurretInspectNeedsMain>
 </LanguageData>
