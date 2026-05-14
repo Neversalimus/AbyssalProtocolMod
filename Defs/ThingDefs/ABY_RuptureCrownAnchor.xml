@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef Abstract="True" Name="ABY_RuptureCrownAnchorBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <drawerType>MapMeshOnly</drawerType>
+    <tickerType>Never</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.30</fillPercent>
+    <rotatable>false</rotatable>
+    <selectable>true</selectable>
+    <useHitPoints>true</useHitPoints>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <canOverlapZones>true</canOverlapZones>
+    <size>(2,2)</size>
+    <thingCategories Inherit="False" />
+    <statBases>
+      <MaxHitPoints>760</MaxHitPoints>
+      <Mass>80</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_RuptureCrownAnchorBase">
+    <defName>ABY_RuptureCrownAnchor</defName>
+    <thingClass>AbyssalProtocol.Building_ABY_RuptureCrownAnchor</thingClass>
+    <tickerType>Normal</tickerType>
+    <label>rupture crown anchor</label>
+    <description>A hostile crown-authority fragment driven into local reality during an Archon-class encounter. The structure pins a rupture verdict in place until the colony breaks it.</description>
+    <graphicData>
+      <texPath>Things/Building/RuptureCrownAnchor/ABY_RuptureCrownAnchor_Active</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.40,5.40)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_RuptureCrownAnchorBase">
+    <defName>ABY_RuptureCrownAnchor_Destabilized</defName>
+    <label>destabilized rupture crown anchor</label>
+    <description>A rupture crown anchor with its authority lattice cracked open. It is weakened, but the remaining crown-prongs still hold the secret breach geometry in place.</description>
+    <graphicData>
+      <texPath>Things/Building/RuptureCrownAnchor/ABY_RuptureCrownAnchor_Destabilized</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.40,5.40)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>380</MaxHitPoints>
+      <Mass>70</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="ABY_RuptureCrownAnchorBase">
+    <defName>ABY_RuptureCrownAnchor_Broken</defName>
+    <label>broken rupture crown anchor</label>
+    <description>The collapsed remains of a rupture crown anchor. Its crown authority has been broken, leaving only inert obsidian fragments and dying ember seams.</description>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.08</fillPercent>
+    <graphicData>
+      <texPath>Things/Building/RuptureCrownAnchor/ABY_RuptureCrownAnchor_Broken</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5.40,5.40)</drawSize>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>20</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

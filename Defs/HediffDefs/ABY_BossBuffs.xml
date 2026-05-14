@@ -52,6 +52,15 @@
         <phase2PortalImpsPerColonist>3</phase2PortalImpsPerColonist>
         <phase2PortalMaxImpsPerPortal>3</phase2PortalMaxImpsPerPortal>
         <phase2RetreatMaintainIntervalTicks>45</phase2RetreatMaintainIntervalTicks>
+
+        <breakCrownDifficultyFloorDefName>ABY_Difficulty_Rupture</breakCrownDifficultyFloorDefName>
+        <breakCrownNormalAnchorCount>2</breakCrownNormalAnchorCount>
+        <breakCrownReliquaryAnchorCount>3</breakCrownReliquaryAnchorCount>
+        <breakCrownAnchorHitPoints>760</breakCrownAnchorHitPoints>
+        <breakCrownStatusCheckIntervalTicks>120</breakCrownStatusCheckIntervalTicks>
+        <breakCrownSpawnMinRadius>7.0</breakCrownSpawnMinRadius>
+        <breakCrownSpawnMaxRadius>15.0</breakCrownSpawnMaxRadius>
+        <breakCrownEnablePhaseOneFallback>true</breakCrownEnablePhaseOneFallback>
       </li>
     </comps>
 

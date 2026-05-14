@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_BreakCrown_Start>Якоря короны разрыва проявились. Разбейте все якоря ({0}) до смерти Архонта, чтобы открыть секретный разлом.</ABY_BreakCrown_Start>
+  <ABY_BreakCrown_Unlocked>Корона разрыва сломана. Смерть Архонта теперь откроет секретный разлом.</ABY_BreakCrown_Unlocked>
+  <ABY_BreakCrown_Failed>Архонт умирает с нетронутой короной разрыва. Секретный разлом схлопывается, не успев открыться.</ABY_BreakCrown_Failed>
+</LanguageData>

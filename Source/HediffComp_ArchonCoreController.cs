@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -56,6 +57,15 @@ namespace AbyssalProtocol
         public int phase2PortalMaxImpsPerPortal = 3;
         public int phase2RetreatMaintainIntervalTicks = 45;
 
+        public string breakCrownDifficultyFloorDefName = "ABY_Difficulty_Rupture";
+        public int breakCrownNormalAnchorCount = 2;
+        public int breakCrownReliquaryAnchorCount = 3;
+        public int breakCrownAnchorHitPoints = 760;
+        public int breakCrownStatusCheckIntervalTicks = 120;
+        public float breakCrownSpawnMinRadius = 7f;
+        public float breakCrownSpawnMaxRadius = 15f;
+        public bool breakCrownEnablePhaseOneFallback = true;
+
         public HediffCompProperties_ArchonCoreController()
         {
             compClass = typeof(HediffComp_ArchonCoreController);
@@ -77,6 +87,12 @@ namespace AbyssalProtocol
         private bool deathFinalized;
         private bool everReachedPhase2;
         private bool secretBossTriggered;
+        private bool breakCrownAnchorsSpawned;
+        private bool breakCrownSecretUnlocked;
+        private bool breakCrownFailedMessageShown;
+        private int breakCrownAnchorTargetCount;
+        private int lastBreakCrownStatusTick = -999999;
+        private List<int> breakCrownAnchorThingIds = new List<int>();
 
         private ArchonEncounterState encounterState = ArchonEncounterState.Spawning;
         private int encounterStateSetTick = -999999;
@@ -111,6 +127,16 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref deathFinalized, "deathFinalized", false);
             Scribe_Values.Look(ref everReachedPhase2, "everReachedPhase2", false);
             Scribe_Values.Look(ref secretBossTriggered, "secretBossTriggered", false);
+            Scribe_Values.Look(ref breakCrownAnchorsSpawned, "breakCrownAnchorsSpawned", false);
+            Scribe_Values.Look(ref breakCrownSecretUnlocked, "breakCrownSecretUnlocked", false);
+            Scribe_Values.Look(ref breakCrownFailedMessageShown, "breakCrownFailedMessageShown", false);
+            Scribe_Values.Look(ref breakCrownAnchorTargetCount, "breakCrownAnchorTargetCount", 0);
+            Scribe_Values.Look(ref lastBreakCrownStatusTick, "lastBreakCrownStatusTick", -999999);
+            Scribe_Collections.Look(ref breakCrownAnchorThingIds, "breakCrownAnchorThingIds", LookMode.Value);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && breakCrownAnchorThingIds == null)
+            {
+                breakCrownAnchorThingIds = new List<int>();
+            }
             Scribe_Values.Look(ref encounterState, "encounterState", ArchonEncounterState.Spawning);
             Scribe_Values.Look(ref encounterStateSetTick, "encounterStateSetTick", -999999);
             Scribe_Values.Look(ref stateLockUntilTick, "stateLockUntilTick", -1);
@@ -164,6 +190,7 @@ namespace AbyssalProtocol
 
             UpdatePhase();
             UpdatePassiveEffects(pawn);
+            TickBreakCrownStatus(pawn, false);
 
             if (pawn.Downed)
             {
@@ -266,6 +293,7 @@ namespace AbyssalProtocol
                 StopCombat(pawn);
             }
 
+            RefreshBreakCrownStatus(pawn != null ? pawn.MapHeld ?? pawn.Corpse?.Map : null, true);
             TryTriggerDeathVFX();
             AbyssalArchonEncounterCleanupUtility.HandleArchonBeastDeath(Pawn);
             TryTriggerSecretBoss();
@@ -314,6 +342,7 @@ namespace AbyssalProtocol
 
             if (newPhase == 2 && !phase2PortalTriggered)
             {
+                StartBreakCrownChallenge(pawn);
                 StartPhase2PortalEvent(pawn);
                 return;
             }
@@ -340,7 +369,7 @@ namespace AbyssalProtocol
 
         private void TryTriggerSecretBoss()
         {
-            if (secretBossTriggered || everReachedPhase2)
+            if (secretBossTriggered)
             {
                 return;
             }
@@ -358,8 +387,282 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (breakCrownAnchorsSpawned)
+            {
+                RefreshBreakCrownStatus(map, true);
+                if (!breakCrownSecretUnlocked)
+                {
+                    ShowBreakCrownFailureMessage(map, cell);
+                    return;
+                }
+            }
+            else if (everReachedPhase2 || !Props.breakCrownEnablePhaseOneFallback)
+            {
+                return;
+            }
+
             secretBossTriggered = true;
             AbyssalSecretBossUtility.TrySpawnRupturePortal(map, cell, pawn.Faction);
+        }
+
+        private void StartBreakCrownChallenge(Pawn pawn)
+        {
+            if (pawn == null || pawn.MapHeld == null || !pawn.Spawned || breakCrownAnchorsSpawned || breakCrownSecretUnlocked || deathFinalized)
+            {
+                return;
+            }
+
+            if (!IsBreakCrownDifficultyAllowed())
+            {
+                return;
+            }
+
+            ThingDef anchorDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_RuptureCrownAnchor");
+            if (anchorDef == null)
+            {
+                ABY_LogThrottleUtility.Warning("break-crown-missing-anchor-def", "[Abyssal Protocol] Break the Crown could not start: missing ABY_RuptureCrownAnchor ThingDef.", 5000);
+                return;
+            }
+
+            int desiredCount = AbyssalArchonVariantUtility.IsReliquaryArchonBeastDefName(pawn.kindDef?.defName) || AbyssalArchonVariantUtility.IsReliquaryArchonBeastDefName(pawn.def?.defName)
+                ? Mathf.Max(1, Props.breakCrownReliquaryAnchorCount)
+                : Mathf.Max(1, Props.breakCrownNormalAnchorCount);
+
+            List<IntVec3> placedCells = new List<IntVec3>();
+            List<Building_ABY_RuptureCrownAnchor> spawnedAnchors = new List<Building_ABY_RuptureCrownAnchor>();
+            for (int i = 0; i < desiredCount; i++)
+            {
+                if (!TryFindBreakCrownAnchorCell(pawn.MapHeld, pawn.Position, anchorDef, placedCells, out IntVec3 anchorCell))
+                {
+                    continue;
+                }
+
+                Building_ABY_RuptureCrownAnchor anchor = ThingMaker.MakeThing(anchorDef) as Building_ABY_RuptureCrownAnchor;
+                if (anchor == null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    GenSpawn.Spawn(anchor, anchorCell, pawn.MapHeld, Rot4.North);
+                    anchor.Initialize(pawn.thingIDNumber, Mathf.Max(1, Props.breakCrownAnchorHitPoints));
+                    breakCrownAnchorThingIds.Add(anchor.thingIDNumber);
+                    placedCells.Add(anchorCell);
+                    spawnedAnchors.Add(anchor);
+                    ArchonInfernalVFXUtility.DoSummonVFX(pawn.MapHeld, anchorCell);
+                }
+                catch (System.Exception ex)
+                {
+                    ABY_LogThrottleUtility.Warning("break-crown-anchor-spawn", "[Abyssal Protocol] Could not spawn rupture crown anchor: " + ex.Message, 5000);
+                }
+            }
+
+            breakCrownAnchorTargetCount = spawnedAnchors.Count;
+            breakCrownAnchorsSpawned = breakCrownAnchorTargetCount > 0;
+            lastBreakCrownStatusTick = Find.TickManager.TicksGame;
+
+            if (breakCrownAnchorsSpawned)
+            {
+                ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", pawn.PositionHeld, pawn.MapHeld);
+                ShowBreakCrownStartMessage(pawn.MapHeld, spawnedAnchors[0].PositionHeld, breakCrownAnchorTargetCount);
+            }
+        }
+
+        private bool IsBreakCrownDifficultyAllowed()
+        {
+            string floorDefName = Props.breakCrownDifficultyFloorDefName.NullOrEmpty()
+                ? "ABY_Difficulty_Rupture"
+                : Props.breakCrownDifficultyFloorDefName;
+            return AbyssalDifficultyUtility.GetCurrentProfileOrder() >= AbyssalDifficultyUtility.GetProfileOrder(floorDefName);
+        }
+
+        private void TickBreakCrownStatus(Pawn pawn, bool force)
+        {
+            if (!breakCrownAnchorsSpawned || breakCrownSecretUnlocked || pawn == null || pawn.MapHeld == null)
+            {
+                return;
+            }
+
+            int now = Find.TickManager.TicksGame;
+            if (!force && now - lastBreakCrownStatusTick < Mathf.Max(30, Props.breakCrownStatusCheckIntervalTicks))
+            {
+                return;
+            }
+
+            RefreshBreakCrownStatus(pawn.MapHeld, force);
+        }
+
+        private void RefreshBreakCrownStatus(Map map, bool force)
+        {
+            if (!breakCrownAnchorsSpawned || breakCrownSecretUnlocked || map == null || breakCrownAnchorThingIds == null || breakCrownAnchorThingIds.Count == 0)
+            {
+                return;
+            }
+
+            lastBreakCrownStatusTick = Find.TickManager.TicksGame;
+            int aliveCount = 0;
+            for (int i = 0; i < breakCrownAnchorThingIds.Count; i++)
+            {
+                Thing thing = FindThingById(map, breakCrownAnchorThingIds[i]);
+                if (thing != null && !thing.Destroyed && string.Equals(thing.def?.defName, "ABY_RuptureCrownAnchor", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    aliveCount++;
+                }
+            }
+
+            if (aliveCount <= 0 && breakCrownAnchorTargetCount > 0)
+            {
+                breakCrownSecretUnlocked = true;
+                ShowBreakCrownUnlockedMessage(map, Pawn?.PositionHeld ?? IntVec3.Invalid);
+            }
+        }
+
+        private static Thing FindThingById(Map map, int thingId)
+        {
+            if (map == null || thingId < 0 || map.listerThings == null)
+            {
+                return null;
+            }
+
+            List<Thing> things = map.listerThings.AllThings;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing != null && thing.thingIDNumber == thingId)
+                {
+                    return thing;
+                }
+            }
+
+            return null;
+        }
+
+        private bool TryFindBreakCrownAnchorCell(Map map, IntVec3 origin, ThingDef anchorDef, List<IntVec3> alreadyPlaced, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            if (map == null || anchorDef == null || !origin.IsValid)
+            {
+                return false;
+            }
+
+            List<IntVec3> candidates = new List<IntVec3>();
+            float minRadius = Mathf.Max(3f, Props.breakCrownSpawnMinRadius);
+            float maxRadius = Mathf.Max(minRadius + 1f, Props.breakCrownSpawnMaxRadius);
+            float minDistSq = minRadius * minRadius;
+            float maxDistSq = maxRadius * maxRadius;
+
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(origin, maxRadius, true))
+            {
+                if (!candidate.InBounds(map))
+                {
+                    continue;
+                }
+
+                float distSq = candidate.DistanceToSquared(origin);
+                if (distSq < minDistSq || distSq > maxDistSq)
+                {
+                    continue;
+                }
+
+                bool tooCloseToExisting = false;
+                if (alreadyPlaced != null)
+                {
+                    for (int i = 0; i < alreadyPlaced.Count; i++)
+                    {
+                        if (candidate.DistanceToSquared(alreadyPlaced[i]) < 25f)
+                        {
+                            tooCloseToExisting = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (tooCloseToExisting || !CanPlaceBreakCrownAnchorAt(map, anchorDef, candidate))
+                {
+                    continue;
+                }
+
+                candidates.Add(candidate);
+            }
+
+            if (candidates.Count <= 0)
+            {
+                return false;
+            }
+
+            cell = candidates[Rand.Range(0, candidates.Count)];
+            return true;
+        }
+
+        private static bool CanPlaceBreakCrownAnchorAt(Map map, ThingDef anchorDef, IntVec3 center)
+        {
+            if (map == null || anchorDef == null || !center.IsValid || !center.InBounds(map) || center.Fogged(map))
+            {
+                return false;
+            }
+
+            CellRect rect = CellRect.CenteredOn(center, Mathf.Max(1, anchorDef.size.x), Mathf.Max(1, anchorDef.size.z));
+            int requiredCells = Mathf.Max(1, anchorDef.size.x) * Mathf.Max(1, anchorDef.size.z);
+            int checkedCells = 0;
+            foreach (IntVec3 c in rect.Cells)
+            {
+                checkedCells++;
+                if (!c.InBounds(map) || c.Fogged(map) || !c.Standable(map))
+                {
+                    return false;
+                }
+
+                if (c.GetFirstPawn(map) != null || c.GetEdifice(map) != null)
+                {
+                    return false;
+                }
+            }
+
+            return checkedCells >= requiredCells;
+        }
+
+        private void ShowBreakCrownStartMessage(Map map, IntVec3 cell, int count)
+        {
+            if (map == null || !cell.IsValid)
+            {
+                return;
+            }
+
+            string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_BreakCrown_Start",
+                "Rupture crown anchors have manifested. Break all {0} anchors before the Archon dies to open the secret breach.",
+                count);
+            Messages.Message(text, new TargetInfo(cell, map), MessageTypeDefOf.ThreatBig, true);
+        }
+
+        private void ShowBreakCrownUnlockedMessage(Map map, IntVec3 cell)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            TargetInfo target = cell.IsValid ? new TargetInfo(cell, map) : TargetInfo.Invalid;
+            string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_BreakCrown_Unlocked",
+                "The rupture crown has been broken. Killing the Archon will now open the secret breach.");
+            Messages.Message(text, target, MessageTypeDefOf.PositiveEvent, true);
+        }
+
+        private void ShowBreakCrownFailureMessage(Map map, IntVec3 cell)
+        {
+            if (breakCrownFailedMessageShown || map == null)
+            {
+                return;
+            }
+
+            breakCrownFailedMessageShown = true;
+            TargetInfo target = cell.IsValid ? new TargetInfo(cell, map) : TargetInfo.Invalid;
+            string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_BreakCrown_Failed",
+                "The Archon dies with its rupture crown intact. The secret breach collapses before it can open.");
+            Messages.Message(text, target, MessageTypeDefOf.NegativeEvent, true);
         }
 
         private void StartPhase2PortalEvent(Pawn pawn)
