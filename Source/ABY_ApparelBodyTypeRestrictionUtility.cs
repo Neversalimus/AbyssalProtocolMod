@@ -105,6 +105,22 @@ namespace AbyssalProtocol
             return key.Translate(pawnLabel, apparelLabel, bodyTypeLabel).ToString();
         }
 
+        public static string BuildFloatMenuRejectReason(Pawn pawn, DefModExtension_ABY_ApparelBodyTypeRestriction restriction)
+        {
+            string bodyTypeLabel = ResolveBodyTypeLabel(pawn);
+            string key = !string.IsNullOrEmpty(restriction?.floatMenuReasonKey) ? restriction.floatMenuReasonKey : "ABY_ApparelBodyTypeRestriction_FloatMenuReason";
+            return key.Translate(bodyTypeLabel).ToString();
+        }
+
+        public static FloatMenuOption BuildFloatMenuRejectOption(Pawn pawn, Apparel apparel, DefModExtension_ABY_ApparelBodyTypeRestriction restriction)
+        {
+            string cannotKey = IsUtilityLayer(apparel) ? "CannotEquipApparel" : "CannotWear";
+            string verb = cannotKey.Translate(apparel.Label, apparel).ToString();
+            string reason = BuildFloatMenuRejectReason(pawn, restriction).CapitalizeFirst();
+            string label = verb + ": " + reason;
+            return new FloatMenuOption(label, null, MenuOptionPriority.DisabledOption, null, null, 0f, null, null, true, 0);
+        }
+
         public static void TryShowRejectMessage(Pawn pawn, ThingDef apparelDef, DefModExtension_ABY_ApparelBodyTypeRestriction restriction)
         {
             if (restriction != null && !restriction.showRejectMessage)
@@ -234,6 +250,18 @@ namespace AbyssalProtocol
             }
 
             return true;
+        }
+
+        private static bool IsUtilityLayer(Apparel apparel)
+        {
+            try
+            {
+                return apparel?.def?.apparel?.LastLayer?.IsUtilityLayer == true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static string ResolveBodyTypeDefName(Pawn pawn)

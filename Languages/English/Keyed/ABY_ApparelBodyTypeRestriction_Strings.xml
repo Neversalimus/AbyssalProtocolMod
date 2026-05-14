@@ -2,4 +2,5 @@
 <LanguageData>
   <ABY_ApparelBodyTypeRestriction_Incompatible>{0} is incompatible with {1} body frames.</ABY_ApparelBodyTypeRestriction_Incompatible>
   <ABY_ApparelBodyTypeRestriction_Removed>{1} was removed from {0}: incompatible with {2} body frame.</ABY_ApparelBodyTypeRestriction_Removed>
+  <ABY_ApparelBodyTypeRestriction_FloatMenuReason>incompatible body frame ({0})</ABY_ApparelBodyTypeRestriction_FloatMenuReason>
 </LanguageData>

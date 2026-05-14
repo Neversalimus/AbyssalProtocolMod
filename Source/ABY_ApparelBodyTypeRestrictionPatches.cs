@@ -7,6 +7,41 @@ using Verse.AI;
 
 namespace AbyssalProtocol
 {
+
+    [HarmonyPatch]
+    public static class ABY_Patch_FloatMenuOptionProvider_Wear_BodyTypeRestriction
+    {
+        private static readonly MethodBase Target = AccessTools.Method(typeof(FloatMenuOptionProvider_Wear), "GetSingleOptionFor", new[] { typeof(Thing), typeof(FloatMenuContext) });
+
+        private static bool Prepare()
+        {
+            return Target != null;
+        }
+
+        private static MethodBase TargetMethod()
+        {
+            return Target;
+        }
+
+        private static bool Prefix(Thing clickedThing, FloatMenuContext context, ref FloatMenuOption __result)
+        {
+            Apparel apparel = clickedThing as Apparel;
+            Pawn pawn = context?.FirstSelectedPawn;
+            if (pawn == null || apparel?.def == null)
+            {
+                return true;
+            }
+
+            if (ABY_ApparelBodyTypeRestrictionUtility.CanWear(pawn, apparel.def, out DefModExtension_ABY_ApparelBodyTypeRestriction restriction, out _))
+            {
+                return true;
+            }
+
+            __result = ABY_ApparelBodyTypeRestrictionUtility.BuildFloatMenuRejectOption(pawn, apparel, restriction);
+            return false;
+        }
+    }
+
     [HarmonyPatch]
     public static class ABY_Patch_ApparelUtility_HasPartsToWear_BodyTypeRestriction
     {

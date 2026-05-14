@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         public List<string> disallowedBodyTypes;
         public string rejectMessageKey = "ABY_ApparelBodyTypeRestriction_Incompatible";
         public string removedMessageKey = "ABY_ApparelBodyTypeRestriction_Removed";
+        public string floatMenuReasonKey = "ABY_ApparelBodyTypeRestriction_FloatMenuReason";
         public bool showRejectMessage = true;
         public bool showRemovalMessage = true;
     }
