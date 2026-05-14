@@ -12,7 +12,9 @@ namespace AbyssalProtocol
             "ABY_ArchonBossBattleTheme",
             "ABY_RuptureBossBattleTheme",
             "ABY_ReactorSaintBossBattleTheme",
-            ABY_DominionPocketMusicGameComponent.HellPocketSongDefName
+            ABY_DominionPocketMusicGameComponent.HellPocketSongDefName,
+            ABY_SigilEncounterMusicUtility.StandardSigilSongDefName,
+            ABY_SigilEncounterMusicUtility.MiniBossSigilSongDefName
         };
 
         private static int authorizedDepth;

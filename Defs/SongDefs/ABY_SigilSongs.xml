@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SongDef>
+    <defName>ABY_AbyssSigilDrum</defName>
+    <clipPath>ABY/ABY_AbyssSigilDrum</clipPath>
+    <volume>0.86</volume>
+    <tense>true</tense>
+  </SongDef>
+
+  <SongDef>
+    <defName>ABY_BellmetalRookery</defName>
+    <clipPath>ABY/ABY_BellmetalRookery</clipPath>
+    <volume>0.88</volume>
+    <tense>true</tense>
+  </SongDef>
+
+</Defs>

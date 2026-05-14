@@ -234,7 +234,22 @@ namespace AbyssalProtocol
 
             if (resolvedSongDefName.NullOrEmpty())
             {
+                resolvedSongDefName = ABY_SigilEncounterMusicUtility.ResolveSongDefNameForPawnKindDefName(activeBoss?.kindDef?.defName);
+                float sigilSongLengthSeconds = ABY_SigilEncounterMusicUtility.ResolveSongLengthSeconds(resolvedSongDefName);
+                if (sigilSongLengthSeconds > 0.01f)
+                {
+                    resolvedSongLengthSeconds = sigilSongLengthSeconds;
+                }
+            }
+
+            if (resolvedSongDefName.NullOrEmpty())
+            {
                 resolvedSongDefName = FallbackBossSongDefName;
+            }
+
+            if (resolvedSongLengthSeconds <= 0.01f)
+            {
+                resolvedSongLengthSeconds = ABY_SigilEncounterMusicUtility.ResolveSongLengthSeconds(resolvedSongDefName);
             }
 
             if (resolvedSongLengthSeconds <= 0.01f)

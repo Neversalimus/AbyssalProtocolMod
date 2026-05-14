@@ -1666,6 +1666,7 @@ namespace AbyssalProtocol
                     ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", pendingSpawnCell, Map);
                 }
 
+                ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
                 return;
             }
 
@@ -1693,6 +1694,7 @@ namespace AbyssalProtocol
                 pendingCompletionLetterDescKey);
             TrySpawnPendingSupportPack();
             ApplyRitualInstability();
+            ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
         }
 
         private bool TrySpawnPendingBossManifestation(out string failReason)
@@ -1886,6 +1888,8 @@ namespace AbyssalProtocol
             {
                 ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", arrivalCell, Map);
             }
+
+            ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
         }
 
         private void CompletePortalWaveSummon()
@@ -2020,6 +2024,7 @@ namespace AbyssalProtocol
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
+            ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
             Find.LetterStack.ReceiveLetter(
                 GetCompletionLetterLabel(),
                 GetCompletionLetterDesc(),
