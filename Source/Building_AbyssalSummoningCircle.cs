@@ -2391,13 +2391,13 @@ namespace AbyssalProtocol
                 switch (phase)
                 {
                     case RitualPhase.Charging:
-                        return 120;
+                        return 84;
                     case RitualPhase.Surge:
-                        return 90;
+                        return 64;
                     case RitualPhase.Breach:
-                        return 30;
+                        return 72;
                     case RitualPhase.Cooldown:
-                        return 120;
+                        return 96;
                     default:
                         return 60;
                 }
@@ -2406,13 +2406,13 @@ namespace AbyssalProtocol
             switch (phase)
             {
                 case RitualPhase.Charging:
-                    return 132;
+                    return 100;
                 case RitualPhase.Surge:
-                    return 102;
+                    return 76;
                 case RitualPhase.Breach:
-                    return 42;
+                    return 86;
                 case RitualPhase.Cooldown:
-                    return 128;
+                    return 108;
                 default:
                     return 60;
             }

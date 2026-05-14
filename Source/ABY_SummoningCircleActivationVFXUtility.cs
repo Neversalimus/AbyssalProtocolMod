@@ -11,10 +11,10 @@ namespace AbyssalProtocol
         private const float GroundOverlayAltitude = 0.052f;
         private const float BloomOverlayAltitude = 0.058f;
         private const float BeamOverlayAltitude = 0.082f;
-        private const float IgnitionScale = 8.66f;
-        private const float BloomScale = 4.72f;
-        private const float BeamWidth = 2.72f;
-        private const float BeamHeight = 8.92f;
+        private const float IgnitionScale = 8.18f;
+        private const float BloomScale = 3.62f;
+        private const float BeamWidth = 2.42f;
+        private const float BeamHeight = 8.64f;
         private const float BeamBaseAnchorFromBottom = 0.0625f;
 
         private static readonly string[] IgnitionFramePaths = BuildFramePaths("ABY_CircleIgnition");
@@ -43,31 +43,43 @@ namespace AbyssalProtocol
             switch (phase)
             {
                 case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Charging:
-                    DrawIgnition(center, progress, Mathf.Lerp(0.62f, 0.96f, progress) * reducedFactor, pulse, seed);
+                    float ignitionProgress = Mathf.Clamp01(progress * 1.75f + 0.08f);
+                    float ignitionAlpha = Mathf.Lerp(0.38f, 0.64f, Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(progress * 1.25f))) * reducedFactor;
+                    DrawIgnition(center, ignitionProgress, ignitionAlpha, pulse, seed);
+
+                    if (progress > 0.64f)
+                    {
+                        float earlyBloomProgress = Mathf.Clamp01((progress - 0.64f) / 0.36f);
+                        DrawBloom(center, earlyBloomProgress * 0.42f, Mathf.Lerp(0.08f, 0.26f, earlyBloomProgress) * reducedFactor, pulse, seed);
+                    }
                     break;
 
                 case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Surge:
-                    DrawIgnition(center, 1f, 0.34f * reducedFactor, pulse, seed);
-                    DrawBloom(center, progress, Mathf.Lerp(0.52f, 1.00f, progress) * reducedFactor, pulse, seed);
+                    DrawIgnition(center, 1f, Mathf.Lerp(0.28f, 0.18f, progress) * reducedFactor, pulse, seed);
+                    DrawBloom(center, Mathf.Clamp01(progress * 1.18f), Mathf.Lerp(0.44f, 0.82f, Mathf.SmoothStep(0f, 1f, progress)) * reducedFactor, pulse, seed);
                     break;
 
                 case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Breach:
-                    DrawIgnition(center, 1f, Mathf.Lerp(0.22f, 0.10f, progress) * reducedFactor, pulse, seed);
-                    DrawBloom(center, Mathf.Lerp(0.72f, 1f, progress), Mathf.Lerp(0.64f, 0.26f, progress) * reducedFactor, pulse, seed);
+                    DrawIgnition(center, 1f, Mathf.Lerp(0.16f, 0.06f, progress) * reducedFactor, pulse, seed);
+                    DrawBloom(center, Mathf.Lerp(0.82f, 1f, progress), Mathf.Lerp(0.42f, 0.16f, progress) * reducedFactor, pulse, seed);
                     if (!reducedEffects)
                     {
                         DrawBeam(center, progress, pulse, seed);
                     }
-                    else if (progress < 0.52f)
+                    else if (progress < 0.48f)
                     {
-                        DrawBloom(center, 1f, Mathf.Lerp(0.46f, 0.18f, progress / 0.52f), pulse, seed);
+                        DrawBloom(center, 1f, Mathf.Lerp(0.34f, 0.12f, progress / 0.48f), pulse, seed);
                     }
                     break;
 
                 case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Cooldown:
                     float fade = 1f - progress;
-                    DrawIgnition(center, 1f, 0.12f * fade * reducedFactor, pulse, seed);
-                    DrawBloom(center, 1f, 0.16f * fade * reducedFactor, pulse, seed);
+                    DrawIgnition(center, 1f, 0.08f * fade * reducedFactor, pulse, seed);
+                    DrawBloom(center, 1f, 0.10f * fade * reducedFactor, pulse, seed);
+                    if (!reducedEffects && progress < 0.22f)
+                    {
+                        DrawBeamAfterglow(center, progress / 0.22f, pulse, seed);
+                    }
                     break;
             }
         }
@@ -92,23 +104,31 @@ namespace AbyssalProtocol
 
         private static void DrawBeam(Vector3 center, float progress, float pulse, int seed)
         {
-            float beamProgress;
-            float alpha;
+            float clampedProgress = Mathf.Clamp01(progress);
+            float alphaIn = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(clampedProgress / 0.10f));
+            float alphaOut = 1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01((clampedProgress - 0.78f) / 0.22f));
+            float alpha = Mathf.Clamp01(alphaIn * alphaOut);
 
-            if (progress <= 0.72f)
+            int frame = FrameFromProgress(clampedProgress);
+            float surge = 1f + Mathf.Sin(clampedProgress * Mathf.PI) * 0.08f;
+            DrawBeamFrame(center, frame, alpha, pulse, surge);
+        }
+
+        private static void DrawBeamAfterglow(Vector3 center, float progress, float pulse, int seed)
+        {
+            float fade = 1f - Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(progress));
+            DrawBeamFrame(center, FrameCount - 1, 0.22f * fade, pulse, 0.72f);
+        }
+
+        private static void DrawBeamFrame(Vector3 center, int frame, float alpha, float pulse, float scaleFactor)
+        {
+            if (alpha <= 0.001f)
             {
-                beamProgress = progress / 0.72f;
-                alpha = Mathf.Lerp(0.82f, 1.00f, Mathf.Clamp01(beamProgress * 1.45f));
-            }
-            else
-            {
-                beamProgress = 1f;
-                alpha = Mathf.Lerp(0.34f, 0f, (progress - 0.72f) / 0.28f);
+                return;
             }
 
-            int frame = FrameFromProgress(beamProgress);
-            float width = BeamWidth * (1f + (pulse - 0.5f) * 0.026f);
-            float height = BeamHeight * (1f + (pulse - 0.5f) * 0.014f);
+            float width = BeamWidth * scaleFactor * (1f + (pulse - 0.5f) * 0.026f);
+            float height = BeamHeight * scaleFactor * (1f + (pulse - 0.5f) * 0.014f);
             Vector3 loc = center;
             loc.z += height * (0.5f - BeamBaseAnchorFromBottom);
             loc.y = AltitudeLayer.MoteOverhead.AltitudeFor() + BeamOverlayAltitude;
