@@ -39,7 +39,7 @@
       <useMeatFrom>Human</useMeatFrom>
       <lifeStageAges Inherit="False">
         <li>
-          <def>AnimalAdult</def>
+          <def>HumanlikeAdult</def>
           <minAge>0</minAge>
         </li>
       </lifeStageAges>
