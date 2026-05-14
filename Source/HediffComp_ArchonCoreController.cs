@@ -392,6 +392,7 @@ namespace AbyssalProtocol
                 RefreshBreakCrownStatus(map, true);
                 if (!breakCrownSecretUnlocked)
                 {
+                    CollapseRemainingBreakCrownAnchors(map);
                     ShowBreakCrownFailureMessage(map, cell);
                     return;
                 }
@@ -518,6 +519,48 @@ namespace AbyssalProtocol
             }
         }
 
+        private void CollapseRemainingBreakCrownAnchors(Map map)
+        {
+            if (map == null || breakCrownAnchorThingIds == null || breakCrownAnchorThingIds.Count == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < breakCrownAnchorThingIds.Count; i++)
+            {
+                Thing thing = FindThingById(map, breakCrownAnchorThingIds[i]);
+                if (thing == null || thing.Destroyed || !string.Equals(thing.def?.defName, "ABY_RuptureCrownAnchor", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                try
+                {
+                    IntVec3 pos = thing.PositionHeld;
+                    if (thing is Building_ABY_RuptureCrownAnchor anchor)
+                    {
+                        anchor.CollapseToBrokenWreck(Rand.RangeInclusive(600, 1200));
+                    }
+                    else
+                    {
+                        thing.Destroy(DestroyMode.Vanish);
+                    }
+
+                    if (pos.IsValid && pos.InBounds(map))
+                    {
+                        FleckMaker.ThrowLightningGlow(pos.ToVector3Shifted(), map, 1.25f);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    ABY_LogThrottleUtility.Warning(
+                        "break-crown-anchor-collapse",
+                        "[Abyssal Protocol] Could not collapse rupture crown anchor after Archon death: " + ex.Message,
+                        5000);
+                }
+            }
+        }
+
         private static Thing FindThingById(Map map, int thingId)
         {
             if (map == null || thingId < 0 || map.listerThings == null)
@@ -624,30 +667,12 @@ namespace AbyssalProtocol
 
         private void ShowBreakCrownStartMessage(Map map, IntVec3 cell, int count)
         {
-            if (map == null || !cell.IsValid)
-            {
-                return;
-            }
-
-            string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_BreakCrown_Start",
-                "Rupture crown anchors have manifested. Break all {0} anchors before the Archon dies to open the secret breach.",
-                count);
-            Messages.Message(text, new TargetInfo(cell, map), MessageTypeDefOf.ThreatBig, true);
+            // Intentionally silent. Break the Crown is a secret mechanic; the anchors themselves are the hint.
         }
 
         private void ShowBreakCrownUnlockedMessage(Map map, IntVec3 cell)
         {
-            if (map == null)
-            {
-                return;
-            }
-
-            TargetInfo target = cell.IsValid ? new TargetInfo(cell, map) : TargetInfo.Invalid;
-            string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
-                "ABY_BreakCrown_Unlocked",
-                "The rupture crown has been broken. Killing the Archon will now open the secret breach.");
-            Messages.Message(text, target, MessageTypeDefOf.PositiveEvent, true);
+            // Intentionally silent. Do not expose the secret route before the rupture portal actually manifests.
         }
 
         private void ShowBreakCrownFailureMessage(Map map, IntVec3 cell)
@@ -661,8 +686,8 @@ namespace AbyssalProtocol
             TargetInfo target = cell.IsValid ? new TargetInfo(cell, map) : TargetInfo.Invalid;
             string text = AbyssalSummoningConsoleUtility.TranslateOrFallback(
                 "ABY_BreakCrown_Failed",
-                "The Archon dies with its rupture crown intact. The secret breach collapses before it can open.");
-            Messages.Message(text, target, MessageTypeDefOf.NegativeEvent, true);
+                "The crown anchors collapse.");
+            Messages.Message(text, target, MessageTypeDefOf.NeutralEvent, true);
         }
 
         private void StartPhase2PortalEvent(Pawn pawn)

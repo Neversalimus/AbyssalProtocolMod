@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_BreakCrown_Start>Rupture crown anchors have manifested. Break all {0} anchors before the Archon dies to open the secret breach.</ABY_BreakCrown_Start>
-  <ABY_BreakCrown_Unlocked>The rupture crown has been broken. Killing the Archon will now open the secret breach.</ABY_BreakCrown_Unlocked>
-  <ABY_BreakCrown_Failed>The Archon dies with its rupture crown intact. The secret breach collapses before it can open.</ABY_BreakCrown_Failed>
+  <ABY_BreakCrown_Start></ABY_BreakCrown_Start>
+  <ABY_BreakCrown_Unlocked></ABY_BreakCrown_Unlocked>
+  <ABY_BreakCrown_Failed>The crown anchors collapse.</ABY_BreakCrown_Failed>
 </LanguageData>

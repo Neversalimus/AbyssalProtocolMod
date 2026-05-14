@@ -54,6 +54,8 @@
 
   <ThingDef ParentName="ABY_RuptureCrownAnchorBase">
     <defName>ABY_RuptureCrownAnchor_Broken</defName>
+    <thingClass>AbyssalProtocol.Building_ABY_RuptureCrownAnchorBroken</thingClass>
+    <tickerType>Normal</tickerType>
     <label>broken rupture crown anchor</label>
     <description>The collapsed remains of a rupture crown anchor. Its crown authority has been broken, leaving only inert obsidian fragments and dying ember seams.</description>
     <passability>PassThroughOnly</passability>

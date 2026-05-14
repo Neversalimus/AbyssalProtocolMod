@@ -109,8 +109,27 @@ namespace AbyssalProtocol
 
             if (shouldSpawnBroken)
             {
-                TrySpawnBrokenWreck(map, cell);
+                TrySpawnBrokenWreck(map, cell, Rand.RangeInclusive(600, 1200));
             }
+        }
+
+        public void CollapseToBrokenWreck(int vanishAfterTicks = -1)
+        {
+            if (Destroyed)
+            {
+                return;
+            }
+
+            Map map = Map;
+            IntVec3 cell = PositionHeld;
+            brokenWreckSpawned = true;
+
+            if (map != null && cell.IsValid)
+            {
+                TrySpawnBrokenWreck(map, cell, vanishAfterTicks > 0 ? vanishAfterTicks : Rand.RangeInclusive(600, 1200));
+            }
+
+            Destroy(DestroyMode.Vanish);
         }
 
         private bool ShouldUseDestabilizedGraphic()
@@ -160,7 +179,7 @@ namespace AbyssalProtocol
             }
         }
 
-        private static void TrySpawnBrokenWreck(Map map, IntVec3 cell)
+        private static void TrySpawnBrokenWreck(Map map, IntVec3 cell, int vanishAfterTicks)
         {
             ThingDef brokenDef = DefDatabase<ThingDef>.GetNamedSilentFail(BrokenDefName);
             if (brokenDef == null || map == null || !cell.IsValid || !cell.InBounds(map))
@@ -171,6 +190,11 @@ namespace AbyssalProtocol
             try
             {
                 Thing broken = ThingMaker.MakeThing(brokenDef);
+                if (broken is Building_ABY_RuptureCrownAnchorBroken timedBroken)
+                {
+                    timedBroken.InitializeVanishDelay(vanishAfterTicks > 0 ? vanishAfterTicks : Rand.RangeInclusive(600, 1200));
+                }
+
                 if (broken != null)
                 {
                     GenSpawn.Spawn(broken, cell, map, Rot4.North);
@@ -183,6 +207,50 @@ namespace AbyssalProtocol
                     "[Abyssal Protocol] Could not spawn broken rupture crown anchor wreck: " + ex.Message,
                     5000);
             }
+        }
+    }
+
+    public class Building_ABY_RuptureCrownAnchorBroken : Building
+    {
+        private const int DefaultMinVanishTicks = 600;
+        private const int DefaultMaxVanishTicks = 1200;
+
+        private int vanishTick = -1;
+
+        public void InitializeVanishDelay(int delayTicks)
+        {
+            if (Find.TickManager == null)
+            {
+                return;
+            }
+
+            vanishTick = Find.TickManager.TicksGame + Mathf.Max(1, delayTicks);
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref vanishTick, "vanishTick", -1);
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            if (!respawningAfterLoad && vanishTick < 0 && Find.TickManager != null)
+            {
+                vanishTick = Find.TickManager.TicksGame + Rand.RangeInclusive(DefaultMinVanishTicks, DefaultMaxVanishTicks);
+            }
+        }
+
+        protected override void Tick()
+        {
+            base.Tick();
+            if (Destroyed || vanishTick < 0 || Find.TickManager == null || Find.TickManager.TicksGame < vanishTick)
+            {
+                return;
+            }
+
+            Destroy(DestroyMode.Vanish);
         }
     }
 }
