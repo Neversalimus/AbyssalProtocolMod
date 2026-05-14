@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         public float CurrentAegisPoints => Mathf.Max(0f, currentAegisPoints);
         public float MaxAegisPoints => Mathf.Max(1f, Props.maxAegisPoints * Mathf.Max(0.2f, tunedMaxFactor));
         public bool AegisActive => CurrentAegisPoints > 0.5f;
+        public bool AegisCollapsedOrRecovering => (currentAegisPoints >= 0f && CurrentAegisPoints <= 0.5f) || CollapseWindowActive;
         public float AegisFraction => Mathf.Clamp01(CurrentAegisPoints / MaxAegisPoints);
 
         public override void PostSpawnSetup(bool respawningAfterLoad)

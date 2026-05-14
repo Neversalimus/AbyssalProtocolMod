@@ -484,6 +484,8 @@ namespace AbyssalProtocol
 
             Rect tagRect = ResolveAegisTagRect(mainBarRect, secondaryRect);
             string label = state.secondaryLabel.ToUpperInvariant();
+            string statusLabel = state.secondaryStatusLabel.NullOrEmpty() ? string.Empty : state.secondaryStatusLabel.ToUpperInvariant();
+            bool collapsed = state.secondaryCriticalStateActive || !statusLabel.NullOrEmpty();
             Color oldColor = GUI.color;
 
             // Light external module: readable, but not the heavy dark block that fought the shield bar.
@@ -494,8 +496,56 @@ namespace AbyssalProtocol
             Widgets.DrawBoxSolid(new Rect(tagRect.xMax - 1f, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.60f));
             Widgets.DrawBoxSolid(new Rect(tagRect.x + 4f, tagRect.yMax - 3f, tagRect.width - 8f, 1f), new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.34f));
 
-            DrawOutlinedText(new Rect(tagRect.x, tagRect.y - 1f, tagRect.width, tagRect.height + 2f), label, TextAnchor.MiddleCenter, GameFont.Tiny, new Color(0.86f, 0.99f, 1f, alpha), alpha);
+            Color labelColor = collapsed
+                ? new Color(0.82f, 0.98f, 1f, alpha)
+                : new Color(0.86f, 0.99f, 1f, alpha);
+            DrawOutlinedText(new Rect(tagRect.x, tagRect.y - 1f, tagRect.width, tagRect.height + 2f), label, TextAnchor.MiddleCenter, GameFont.Tiny, labelColor, alpha);
+
+            if (!statusLabel.NullOrEmpty())
+            {
+                DrawAegisStatusLabel(tagRect, secondaryRect, statusLabel, palette, alpha);
+            }
+
             GUI.color = oldColor;
+        }
+
+        private static void DrawAegisStatusLabel(Rect tagRect, Rect secondaryRect, string label, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (label.NullOrEmpty())
+            {
+                return;
+            }
+
+            GameFont oldFont = Text.Font;
+            TextAnchor oldAnchor = Text.Anchor;
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleLeft;
+
+            float wantedWidth = Mathf.Max(52f, Text.CalcSize(label).x + 12f);
+            float x = tagRect.xMax + 6f;
+            float maxWidth = Mathf.Max(0f, secondaryRect.xMax - x - 8f);
+            if (maxWidth <= 20f)
+            {
+                Text.Font = oldFont;
+                Text.Anchor = oldAnchor;
+                return;
+            }
+
+            Rect statusRect = new Rect(x, tagRect.y - 1f, Mathf.Min(wantedWidth, maxWidth), tagRect.height + 2f);
+            float pulse = 0.74f + Mathf.Sin(Time.realtimeSinceStartup * 7.6f) * 0.16f;
+            Color divider = new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.56f);
+            Color warning = new Color(1f, 0.58f, 0.24f, alpha * Mathf.Clamp01(pulse));
+            Color shadow = new Color(0f, 0f, 0f, alpha * 0.70f);
+
+            Widgets.DrawBoxSolid(new Rect(statusRect.x - 4f, statusRect.y + 3f, 2f, statusRect.height - 6f), divider);
+            Widgets.DrawBoxSolid(new Rect(statusRect.x, statusRect.yMax - 3f, Mathf.Min(statusRect.width, 58f), 1f), new Color(warning.r, warning.g, warning.b, alpha * 0.34f));
+            GUI.color = shadow;
+            ABY_UIPolishUtility.SafeLabel(new Rect(statusRect.x + 1f, statusRect.y + 1f, statusRect.width, statusRect.height), label, 0f, 1f);
+            GUI.color = warning;
+            ABY_UIPolishUtility.SafeLabel(statusRect, label, 0f, 1f);
+
+            Text.Font = oldFont;
+            Text.Anchor = oldAnchor;
         }
 
         private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)

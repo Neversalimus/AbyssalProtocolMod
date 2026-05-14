@@ -33,6 +33,7 @@ namespace AbyssalProtocol
         public float secondaryCurrent;
         public float secondaryMax;
         public string secondaryLabel;
+        public string secondaryStatusLabel;
         public List<ABY_BossBarPhaseSnapshot> phases = new List<ABY_BossBarPhaseSnapshot>();
     }
 
@@ -241,7 +242,7 @@ namespace AbyssalProtocol
                 CompABY_ReactorSaintPhaseController controller = GetReactorSaintPhaseController(pawn);
                 CompABY_ReactorAegis aegis = GetReactorAegis(pawn);
 
-                if (aegis != null && aegis.CollapseWindowActive)
+                if (aegis != null && aegis.AegisCollapsedOrRecovering)
                 {
                     state.secondaryCriticalStateActive = true;
                     state.specialStateTag = "saint_aegis_collapsed";
@@ -392,10 +393,12 @@ namespace AbyssalProtocol
                     state.secondaryPct = Mathf.Clamp01(aegis.AegisFraction);
                     state.secondaryCurrent = Mathf.Max(0f, aegis.CurrentAegisPoints);
                     state.secondaryMax = Mathf.Max(1f, aegis.MaxAegisPoints);
-                    state.secondaryCriticalStateActive = aegis.CollapseWindowActive;
-                    state.secondaryLabel = aegis.CollapseWindowActive
-                        ? "ABY_BossBar_SecondaryAegisCollapsed".Translate()
-                        : "ABY_BossBar_SecondaryAegis".Translate();
+                    bool aegisCollapsed = aegis.AegisCollapsedOrRecovering;
+                    state.secondaryCriticalStateActive = aegisCollapsed;
+                    state.secondaryLabel = "ABY_BossBar_SecondaryAegis".Translate();
+                    state.secondaryStatusLabel = aegisCollapsed
+                        ? "ABY_BossBar_SecondaryAegisCollapseStatus".Translate()
+                        : null;
                     break;
             }
         }
