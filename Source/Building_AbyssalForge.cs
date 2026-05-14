@@ -213,25 +213,22 @@ namespace AbyssalProtocol
 
             bool powered = IsPowerActive;
             bool activeBills = BillStack != null && BillStack.Bills != null && BillStack.Bills.Count > 0;
-
-            // Forge overlays are intentionally rendered as a stable internal glow, not a breathing/pulsing animation.
-            // The previous implementation scaled and alpha-pulsed the layers every tick, which made the whole forge
-            // look like it was throbbing. For a heavy ritual-industrial workbench the correct read is constant
-            // reactor light with only state-based intensity changes from power, bills and attunement.
-            float powerFactor = powered ? 1f : 0.16f;
-            float workBoost = activeBills ? 0.08f : 0f;
-            float attunementBoost = Mathf.Clamp01((ProgressComponent?.GetCurrentAttunementTier(false) ?? 0) / 50f) * 0.10f;
+            int ticks = Find.TickManager?.TicksGame ?? 0;
+            float workBoost = activeBills ? 0.10f : 0f;
+            float attunementBoost = Mathf.Clamp01((ProgressComponent?.GetCurrentAttunementTier(false) ?? 0) / 50f) * 0.12f;
+            float powerFactor = powered ? 1f : 0.12f;
             float intensity = Mathf.Clamp01(powerFactor * (1f + workBoost + attunementBoost));
 
             Vector3 center = drawLoc;
             center.z += 0.014f;
 
+            // Stable foundation glow: the whole forge should read as lit, not breathing.
             DrawLayer(
                 VentGlowTexPath,
                 new Vector3(center.x, center.y + VentAltitude, center.z),
                 VentSize,
                 0f,
-                new Color(1f, 0.34f, 0.11f, 0.20f * intensity),
+                new Color(1f, 0.34f, 0.11f, 0.17f * intensity),
                 true);
 
             DrawLayer(
@@ -239,7 +236,7 @@ namespace AbyssalProtocol
                 new Vector3(center.x, center.y + GlowAltitude, center.z),
                 GlowSize,
                 0f,
-                new Color(1f, 0.38f, 0.13f, 0.26f * intensity),
+                new Color(1f, 0.38f, 0.13f, 0.23f * intensity),
                 true);
 
             DrawLayer(
@@ -247,7 +244,7 @@ namespace AbyssalProtocol
                 new Vector3(center.x, center.y + ReactorAltitude, center.z),
                 ReactorSize,
                 0f,
-                new Color(1f, 0.80f, 0.55f, 0.78f * intensity),
+                new Color(1f, 0.80f, 0.55f, 0.76f * intensity),
                 true);
 
             DrawLayer(
@@ -255,27 +252,91 @@ namespace AbyssalProtocol
                 new Vector3(center.x, center.y + RuneAltitude, center.z),
                 RuneSize,
                 0f,
-                new Color(1f, 0.56f, 0.20f, 0.17f * intensity),
+                new Color(1f, 0.50f, 0.16f, 0.12f * intensity),
                 true);
 
-            if (powered)
+            if (!powered)
             {
-                DrawLayer(
-                    SparkTexPath,
-                    new Vector3(center.x, center.y + SparkAltitude, center.z),
-                    SparkSize,
-                    0f,
-                    new Color(1f, 0.70f, 0.42f, 0.09f * Mathf.Clamp01(1f + workBoost)),
-                    true);
-
-                DrawLayer(
-                    GlowTexPath,
-                    new Vector3(center.x, center.y + GlowAltitude + 0.002f, center.z),
-                    GlowSize * 0.82f,
-                    0f,
-                    new Color(1f, 0.22f, 0.07f, 0.12f * Mathf.Clamp01(1f + workBoost + attunementBoost)),
-                    true);
+                return;
             }
+
+            // Active motion is deliberately confined to small flow/spark accents.
+            // This restores visible animation without scaling or alpha-pulsing the entire building.
+            float flowA = NormalizedLoop(ticks + thingIDNumber * 17, 180);
+            float flowB = NormalizedLoop(ticks + thingIDNumber * 17 + 90, 180);
+            float shimmerFast = Triangle01(NormalizedLoop(ticks + thingIDNumber * 31, 44));
+            float shimmerSlow = Triangle01(NormalizedLoop(ticks + thingIDNumber * 7, 96));
+            float workMotionBoost = activeBills ? 1.20f : 1f;
+
+            DrawFlowSweep(center, flowA, 0.18f * intensity * workMotionBoost);
+            DrawFlowSweep(center, flowB, 0.10f * intensity * workMotionBoost);
+
+            DrawLayer(
+                VentGlowTexPath,
+                new Vector3(center.x, center.y + VentAltitude + 0.0015f, center.z),
+                VentSize,
+                0f,
+                new Color(1f, 0.28f, 0.07f, (0.035f + 0.040f * shimmerSlow) * intensity * workMotionBoost),
+                true);
+
+            DrawLayer(
+                SparkTexPath,
+                new Vector3(center.x, center.y + SparkAltitude, center.z),
+                SparkSize,
+                0f,
+                new Color(1f, 0.70f, 0.42f, (0.055f + 0.050f * shimmerFast) * intensity * workMotionBoost),
+                true);
+
+            if (activeBills)
+            {
+                float workFlow = NormalizedLoop(ticks + thingIDNumber * 11, 120);
+                DrawFlowSweep(center, workFlow, 0.14f * intensity);
+            }
+        }
+
+        private static void DrawFlowSweep(Vector3 center, float flow, float alpha)
+        {
+            if (alpha <= 0.001f)
+            {
+                return;
+            }
+
+            float travel = Mathf.Lerp(-1.68f, 1.68f, flow);
+            float fade = Mathf.Sin(flow * Mathf.PI);
+            float clampedAlpha = alpha * Mathf.Clamp01(fade);
+            if (clampedAlpha <= 0.001f)
+            {
+                return;
+            }
+
+            DrawLayer(
+                RuneSweepTexPath,
+                new Vector3(center.x + travel, center.y + RuneAltitude + 0.006f, center.z),
+                new Vector2(1.42f, 0.78f),
+                0f,
+                new Color(1f, 0.62f, 0.22f, clampedAlpha),
+                true);
+        }
+
+        private static float NormalizedLoop(int ticks, int period)
+        {
+            if (period <= 1)
+            {
+                return 0f;
+            }
+
+            int wrapped = ticks % period;
+            if (wrapped < 0)
+            {
+                wrapped += period;
+            }
+
+            return wrapped / (float)period;
+        }
+
+        private static float Triangle01(float t)
+        {
+            return 1f - Mathf.Abs((Mathf.Repeat(t, 1f) * 2f) - 1f);
         }
 
         private static void DrawLayer(string texPath, Vector3 loc, Vector2 size, float angle, Color color, bool postLight)
