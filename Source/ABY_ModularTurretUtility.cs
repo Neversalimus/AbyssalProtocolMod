@@ -103,19 +103,39 @@ namespace AbyssalProtocol
             for (int i = 0; i < candidates.Count; i++)
             {
                 ABY_TurretModuleDef module = candidates[i];
-                if (module?.thingDef == null)
-                {
-                    continue;
-                }
-
-                List<Thing> things = map.listerThings.ThingsOfDef(module.thingDef);
-                if (things != null && things.Any(IsUsableLooseThing))
+                if (GetUsableLooseModuleCount(map, module) > 0)
                 {
                     return module;
                 }
             }
 
             return null;
+        }
+
+        public static int GetUsableLooseModuleCount(Map map, ABY_TurretModuleDef moduleDef)
+        {
+            if (map?.listerThings == null || moduleDef?.thingDef == null)
+            {
+                return 0;
+            }
+
+            List<Thing> things = map.listerThings.ThingsOfDef(moduleDef.thingDef);
+            if (things == null || things.Count == 0)
+            {
+                return 0;
+            }
+
+            int total = 0;
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (IsUsableLooseThing(thing))
+                {
+                    total += Mathf.Max(0, thing.stackCount);
+                }
+            }
+
+            return total;
         }
 
         public static bool TryConsumeModuleItem(Map map, ABY_TurretModuleDef moduleDef, IntVec3 priorityCell)
@@ -147,16 +167,40 @@ namespace AbyssalProtocol
             return true;
         }
 
-        public static void EjectModuleItem(Thing owner, ABY_TurretModuleDef moduleDef)
+        public static bool TryEjectModuleItem(Thing owner, ABY_TurretModuleDef moduleDef, out string reason)
         {
-            if (owner?.Map == null || moduleDef?.thingDef == null)
+            reason = null;
+            if (owner?.Map == null || !owner.Spawned)
             {
-                return;
+                reason = TranslateOrFallback("ABY_TurretRemove_NoMap", "Cannot eject the module because the chassis is not spawned on a map.");
+                return false;
+            }
+
+            if (moduleDef?.thingDef == null)
+            {
+                reason = TranslateOrFallback("ABY_TurretRemove_InvalidModule", "Cannot eject an invalid module item.");
+                return false;
             }
 
             Thing item = ThingMaker.MakeThing(moduleDef.thingDef);
             item.stackCount = 1;
-            GenPlace.TryPlaceThing(item, owner.Position, owner.Map, ThingPlaceMode.Near);
+            if (GenPlace.TryPlaceThing(item, owner.Position, owner.Map, ThingPlaceMode.Near))
+            {
+                return true;
+            }
+
+            if (!item.Destroyed)
+            {
+                item.Destroy(DestroyMode.Vanish);
+            }
+
+            reason = TranslateOrFallback("ABY_TurretRemove_NoDropCell", "Could not find a safe nearby cell for the ejected module. The module was kept installed.");
+            return false;
+        }
+
+        public static void EjectModuleItem(Thing owner, ABY_TurretModuleDef moduleDef)
+        {
+            TryEjectModuleItem(owner, moduleDef, out _);
         }
 
         public static Color SlotColor(ABY_TurretModuleSlot slot)
@@ -202,6 +246,7 @@ namespace AbyssalProtocol
                 && !thing.Destroyed
                 && thing.Spawned
                 && thing.stackCount > 0
+                && thing.Faction == null
                 && !thing.IsForbidden(Faction.OfPlayer);
         }
     }

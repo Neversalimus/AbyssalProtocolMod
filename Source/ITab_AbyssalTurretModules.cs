@@ -31,7 +31,7 @@ namespace AbyssalProtocol
             DrawHeader(new Rect(inner.x, inner.y, inner.width, 56f), comp);
             Rect contentRect = new Rect(inner.x, inner.y + 66f, inner.width, inner.height - 66f);
 
-            Rect viewRect = new Rect(0f, 0f, contentRect.width - 18f, 640f);
+            Rect viewRect = new Rect(0f, 0f, contentRect.width - 18f, 680f);
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
 
             float y = 0f;
@@ -47,7 +47,7 @@ namespace AbyssalProtocol
                 y += 100f;
             }
 
-            DrawStatsPanel(new Rect(0f, y + 4f, viewRect.width, 138f), comp);
+            DrawStatsPanel(new Rect(0f, y + 4f, viewRect.width, 162f), comp);
             Widgets.EndScrollView();
         }
 
@@ -89,7 +89,9 @@ namespace AbyssalProtocol
             Rect buttonRect = new Rect(rect.xMax - 202f, rect.y + 14f, 188f, 30f);
             if (installed == null)
             {
-                string tooltip = GetAvailableModulesTooltip(comp, slot);
+                string tooltip = comp.FeatureEnabled
+                    ? GetAvailableModulesTooltip(comp, slot)
+                    : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEditDisabled", "Re-enable modular turrets in mod settings before editing installed modules.");
                 bool enabled = comp.FeatureEnabled && ABY_ModularTurretUtility.FindAvailableModuleOnMap(comp.parent.Map, slot, comp.Props.chassisTag) != null;
                 if (AbyssalStyledWidgets.TextButton(buttonRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstallFromMap", "Install from map"), enabled, false, null, tooltip))
                 {
@@ -103,19 +105,29 @@ namespace AbyssalProtocol
                     }
                 }
             }
-            else if (AbyssalStyledWidgets.TextButton(buttonRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove", "Remove / eject"), true))
+            else
             {
-                if (slot == ABY_TurretModuleSlot.MainWeapon)
+                string tooltip = comp.FeatureEnabled
+                    ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemoveTooltip", "Ejects the installed module as an item near the chassis. If no safe nearby cell exists, the module remains installed.")
+                    : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEditDisabled", "Re-enable modular turrets in mod settings before editing installed modules.");
+                if (AbyssalStyledWidgets.TextButton(buttonRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove", "Remove / eject"), comp.FeatureEnabled, false, null, tooltip))
                 {
-                    comp.RemoveMainModule();
-                }
-                else if (slot == ABY_TurretModuleSlot.Auxiliary)
-                {
-                    comp.RemoveAuxiliaryModule();
-                }
-                else
-                {
-                    comp.RemovePassiveModule(passiveIndex);
+                    bool removed;
+                    string message;
+                    if (slot == ABY_TurretModuleSlot.MainWeapon)
+                    {
+                        removed = comp.TryRemoveMainModule(out message);
+                    }
+                    else if (slot == ABY_TurretModuleSlot.Auxiliary)
+                    {
+                        removed = comp.TryRemoveAuxiliaryModule(out message);
+                    }
+                    else
+                    {
+                        removed = comp.TryRemovePassiveModule(passiveIndex, out message);
+                    }
+
+                    Messages.Message(message ?? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemoveFailed", "Could not remove module."), comp.parent, removed ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.RejectInput, false);
                 }
             }
 
@@ -141,6 +153,7 @@ namespace AbyssalProtocol
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsRange", "Main range: {0}", comp.HasMainWeapon ? comp.ResolvedRange.ToString("0.0") : "—"),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsCooldown", "Main cooldown: {0}", comp.HasMainWeapon ? ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.ResolvedMainCooldownTicks) : "—"),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDraw", "Estimated extra module draw: {0} W", comp.ExtraPowerDraw.ToString("0")),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsTargeting", "Targeting: skips downed/dead targets and cancels burst fire if the target falls, leaves range, or loses line of sight."),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitch", "Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.")
             };
             ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 14f, rect.y + 34f, rect.width - 28f, rect.height - 40f), string.Join("\n", lines.ToArray()));
@@ -218,16 +231,7 @@ namespace AbyssalProtocol
 
             foreach (ABY_TurretModuleDef module in modules.Take(8))
             {
-                int count = 0;
-                if (module.thingDef != null && comp.parent?.Map?.listerThings != null)
-                {
-                    List<Thing> things = comp.parent.Map.listerThings.ThingsOfDef(module.thingDef);
-                    if (things != null)
-                    {
-                        count = things.Where(thing => thing != null && !thing.Destroyed && thing.Spawned && thing.stackCount > 0).Sum(thing => thing.stackCount);
-                    }
-                }
-
+                int count = ABY_ModularTurretUtility.GetUsableLooseModuleCount(comp.parent.Map, module);
                 lines.Add("• " + module.LabelCap + " x" + count);
             }
 

@@ -34,6 +34,7 @@ namespace AbyssalProtocol
         public bool HasAuxiliary => auxiliaryModule != null && auxiliaryModule.projectileDef != null;
         public bool IsPowered => PowerComp == null || PowerComp.PowerOn;
         public bool Operational => FeatureEnabled && parent.Spawned && !parent.Destroyed && IsPowered && parent.Faction == Faction.OfPlayer;
+        public bool HasActiveBurst => burstShotsRemaining > 0 && currentBurstTarget != null;
 
         public float ResolvedRange
         {
@@ -82,17 +83,7 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref currentBurstTarget, "currentBurstTarget");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                passiveModules ??= new List<ABY_TurretModuleDef>();
-                passiveModules.RemoveAll(module => module == null || module.slot != ABY_TurretModuleSlot.Passive || !ModuleAllowed(module));
-                if (mainModule != null && (mainModule.slot != ABY_TurretModuleSlot.MainWeapon || !ModuleAllowed(mainModule)))
-                {
-                    mainModule = null;
-                }
-
-                if (auxiliaryModule != null && (auxiliaryModule.slot != ABY_TurretModuleSlot.Auxiliary || !ModuleAllowed(auxiliaryModule)))
-                {
-                    auxiliaryModule = null;
-                }
+                SanitizeLoadedState();
             }
         }
 
@@ -101,6 +92,7 @@ namespace AbyssalProtocol
             base.CompTick();
             if (!Operational)
             {
+                HaltRuntimeState();
                 return;
             }
 
@@ -188,6 +180,11 @@ namespace AbyssalProtocol
                         reason = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_PassiveFull", "All passive slots are occupied.");
                         return false;
                     }
+                    if (passiveModules.Contains(moduleDef))
+                    {
+                        reason = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_PassiveDuplicate", "This passive module is already installed.");
+                        return false;
+                    }
                     return true;
 
                 default:
@@ -205,6 +202,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (!parent.Spawned || parent.Map == null)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_NoMap", "The chassis must be spawned on a map before modules can be installed.");
+                return false;
+            }
+
             ABY_TurretModuleDef module = ABY_ModularTurretUtility.FindAvailableModuleOnMap(parent.Map, slot, Props.chassisTag);
             if (module == null)
             {
@@ -218,6 +221,18 @@ namespace AbyssalProtocol
         public bool TryInstallSpecificFromMap(ABY_TurretModuleDef module, out string message)
         {
             message = null;
+            if (!FeatureEnabled)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretDisabledMessage", "Modular turret systems are disabled in mod settings.");
+                return false;
+            }
+
+            if (!parent.Spawned || parent.Map == null)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_NoMap", "The chassis must be spawned on a map before modules can be installed.");
+                return false;
+            }
+
             if (!CanInstall(module, out message))
             {
                 return false;
@@ -234,42 +249,103 @@ namespace AbyssalProtocol
             return true;
         }
 
-        public void RemoveMainModule()
+        public bool TryRemoveMainModule(out string message)
         {
-            if (mainModule == null)
+            message = null;
+            if (!FeatureEnabled)
             {
-                return;
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEditDisabled", "Re-enable modular turrets in mod settings before editing installed modules.");
+                return false;
             }
 
-            ABY_ModularTurretUtility.EjectModuleItem(parent, mainModule);
+            if (mainModule == null)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove_Empty", "This slot is already empty.");
+                return false;
+            }
+
+            ABY_TurretModuleDef module = mainModule;
+            if (!ABY_ModularTurretUtility.TryEjectModuleItem(parent, module, out string reason))
+            {
+                message = reason;
+                return false;
+            }
+
             mainModule = null;
             mainCooldownTicks = 0;
-            burstShotsRemaining = 0;
-            currentBurstTarget = null;
+            HaltBurst();
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            return true;
+        }
+
+        public bool TryRemoveAuxiliaryModule(out string message)
+        {
+            message = null;
+            if (!FeatureEnabled)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEditDisabled", "Re-enable modular turrets in mod settings before editing installed modules.");
+                return false;
+            }
+
+            if (auxiliaryModule == null)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove_Empty", "This slot is already empty.");
+                return false;
+            }
+
+            ABY_TurretModuleDef module = auxiliaryModule;
+            if (!ABY_ModularTurretUtility.TryEjectModuleItem(parent, module, out string reason))
+            {
+                message = reason;
+                return false;
+            }
+
+            auxiliaryModule = null;
+            auxiliaryCooldownTicks = 0;
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            return true;
+        }
+
+        public bool TryRemovePassiveModule(int index, out string message)
+        {
+            message = null;
+            if (!FeatureEnabled)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEditDisabled", "Re-enable modular turrets in mod settings before editing installed modules.");
+                return false;
+            }
+
+            if (index < 0 || index >= passiveModules.Count)
+            {
+                message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove_Empty", "This slot is already empty.");
+                return false;
+            }
+
+            ABY_TurretModuleDef module = passiveModules[index];
+            if (!ABY_ModularTurretUtility.TryEjectModuleItem(parent, module, out string reason))
+            {
+                message = reason;
+                return false;
+            }
+
+            passiveModules.RemoveAt(index);
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            return true;
+        }
+
+        public void RemoveMainModule()
+        {
+            TryRemoveMainModule(out _);
         }
 
         public void RemoveAuxiliaryModule()
         {
-            if (auxiliaryModule == null)
-            {
-                return;
-            }
-
-            ABY_ModularTurretUtility.EjectModuleItem(parent, auxiliaryModule);
-            auxiliaryModule = null;
-            auxiliaryCooldownTicks = 0;
+            TryRemoveAuxiliaryModule(out _);
         }
 
         public void RemovePassiveModule(int index)
         {
-            if (index < 0 || index >= passiveModules.Count)
-            {
-                return;
-            }
-
-            ABY_TurretModuleDef module = passiveModules[index];
-            ABY_ModularTurretUtility.EjectModuleItem(parent, module);
-            passiveModules.RemoveAt(index);
+            TryRemovePassiveModule(index, out _);
         }
 
         public override string CompInspectStringExtra()
@@ -333,6 +409,11 @@ namespace AbyssalProtocol
 
         private void StartMainBurst(Thing target)
         {
+            if (!IsValidLaunchTarget(target, ResolvedRange))
+            {
+                return;
+            }
+
             currentBurstTarget = target;
             burstShotsRemaining = Mathf.Max(1, mainModule?.burstShotCount ?? 1);
             burstIntervalTicks = 0;
@@ -342,10 +423,9 @@ namespace AbyssalProtocol
 
         private void TickBurst()
         {
-            if (currentBurstTarget == null || currentBurstTarget.Destroyed || !currentBurstTarget.Spawned || currentBurstTarget.Map != parent.Map)
+            if (!Operational || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange))
             {
-                burstShotsRemaining = 0;
-                currentBurstTarget = null;
+                HaltBurst();
                 return;
             }
 
@@ -357,12 +437,16 @@ namespace AbyssalProtocol
 
             if (mainModule == null || mainModule.projectileDef == null)
             {
-                burstShotsRemaining = 0;
-                currentBurstTarget = null;
+                HaltBurst();
                 return;
             }
 
-            Launch(mainModule, currentBurstTarget);
+            if (!Launch(mainModule, currentBurstTarget))
+            {
+                HaltBurst();
+                return;
+            }
+
             burstShotsRemaining--;
             burstIntervalTicks = Mathf.Max(1, mainModule.ticksBetweenBurstShots);
 
@@ -405,11 +489,6 @@ namespace AbyssalProtocol
                 }
 
                 float score = 10000f - distanceSquared;
-                if (pawn.Downed)
-                {
-                    score -= 4000f;
-                }
-
                 if (bestTarget == null || score > bestScore)
                 {
                     bestTarget = pawn;
@@ -422,7 +501,7 @@ namespace AbyssalProtocol
 
         private bool ValidTarget(Pawn pawn)
         {
-            if (pawn == null || pawn.Destroyed || !pawn.Spawned || pawn.Dead || pawn.Map != parent.Map)
+            if (pawn == null || pawn.Destroyed || !pawn.Spawned || pawn.Dead || pawn.Downed || pawn.Map != parent.Map)
             {
                 return false;
             }
@@ -440,9 +519,36 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private bool IsValidLaunchTarget(Thing target, float range)
+        {
+            if (target == null || target.Destroyed || !target.Spawned || target.Map != parent.Map || parent.Map == null)
+            {
+                return false;
+            }
+
+            Pawn pawn = target as Pawn;
+            if (pawn != null && !ValidTarget(pawn))
+            {
+                return false;
+            }
+
+            if (range > 0f && target.Position.DistanceToSquared(parent.Position) > range * range)
+            {
+                return false;
+            }
+
+            if (!GenSight.LineOfSight(parent.Position, target.Position, parent.Map, true))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private bool Launch(ABY_TurretModuleDef module, Thing target)
         {
-            if (module?.projectileDef == null || target == null || parent.Map == null)
+            float range = module != null && module.range > 0f ? module.range : ResolvedRange;
+            if (module?.projectileDef == null || !IsValidLaunchTarget(target, range))
             {
                 return false;
             }
@@ -474,6 +580,44 @@ namespace AbyssalProtocol
 
                 return false;
             }
+        }
+
+        private void SanitizeLoadedState()
+        {
+            passiveModules ??= new List<ABY_TurretModuleDef>();
+            passiveModules.RemoveAll(module => module == null || module.slot != ABY_TurretModuleSlot.Passive || !ModuleAllowed(module));
+            passiveModules = passiveModules.Distinct().Take(Mathf.Max(0, Props.passiveSlots)).ToList();
+
+            if (mainModule != null && (mainModule.slot != ABY_TurretModuleSlot.MainWeapon || !ModuleAllowed(mainModule)))
+            {
+                mainModule = null;
+            }
+
+            if (auxiliaryModule != null && (auxiliaryModule.slot != ABY_TurretModuleSlot.Auxiliary || !ModuleAllowed(auxiliaryModule)))
+            {
+                auxiliaryModule = null;
+            }
+
+            mainCooldownTicks = Mathf.Max(0, mainCooldownTicks);
+            auxiliaryCooldownTicks = Mathf.Max(0, auxiliaryCooldownTicks);
+            burstShotsRemaining = Mathf.Max(0, burstShotsRemaining);
+            burstIntervalTicks = Mathf.Max(0, burstIntervalTicks);
+            if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)
+            {
+                HaltBurst();
+            }
+        }
+
+        private void HaltRuntimeState()
+        {
+            HaltBurst();
+        }
+
+        private void HaltBurst()
+        {
+            burstShotsRemaining = 0;
+            burstIntervalTicks = 0;
+            currentBurstTarget = null;
         }
 
         private float SumPassive(Func<ABY_TurretModuleDef, float> selector)

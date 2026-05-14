@@ -20,4 +20,15 @@
   <ABY_TurretOpenForgeHintTooltip>Package 0 показывает рецепты модулей в категории Abyssal Forge “Турельные системы”. Прямое открытие Forge из слота турели запланировано для следующего UX-пакета.</ABY_TurretOpenForgeHintTooltip>
   <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
   <ABY_TurretStatsKillSwitch>Выключатель: настройка мода отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет burst-очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
+  <ABY_TurretEditDisabled>Снова включите модульные турели в настройках мода, чтобы менять установленные модули.</ABY_TurretEditDisabled>
+  <ABY_TurretRemoveTooltip>Выбрасывает установленный модуль предметом рядом с корпусом. Если безопасной клетки рядом нет, модуль остаётся установленным.</ABY_TurretRemoveTooltip>
+  <ABY_TurretRemoveFailed>Не удалось снять модуль.</ABY_TurretRemoveFailed>
+  <ABY_TurretRemove_NoMap>Нельзя выбросить модуль: корпус не заспавнен на карте.</ABY_TurretRemove_NoMap>
+  <ABY_TurretRemove_InvalidModule>Нельзя выбросить некорректный предмет модуля.</ABY_TurretRemove_InvalidModule>
+  <ABY_TurretRemove_NoDropCell>Не удалось найти безопасную клетку рядом для выброса модуля. Модуль оставлен установленным.</ABY_TurretRemove_NoDropCell>
+  <ABY_TurretRemove_Empty>Этот слот уже пуст.</ABY_TurretRemove_Empty>
+  <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
+  <ABY_TurretInstall_NoMap>Корпус должен быть заспавнен на карте перед установкой модулей.</ABY_TurretInstall_NoMap>
+  <ABY_TurretInstall_PassiveDuplicate>Этот пассивный модуль уже установлен.</ABY_TurretInstall_PassiveDuplicate>
 </LanguageData>
