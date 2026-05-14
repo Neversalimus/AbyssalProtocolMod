@@ -1,34 +1,100 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_ForgeCategory_TurretSystems>Турельные системы</ABY_ForgeCategory_TurretSystems>
-  <ABY_ForgePatternSummary_TurretSystems>Схема модульной турельной системы</ABY_ForgePatternSummary_TurretSystems>
+  <ABY_ForgePatternSummary_TurretSystems>Турельная система</ABY_ForgePatternSummary_TurretSystems>
   <ABY_ModularTurret_Tab>Модули</ABY_ModularTurret_Tab>
   <ABY_ExperimentalSystemsHeader>Экспериментальные системы / аварийные выключатели</ABY_ExperimentalSystemsHeader>
   <ABY_ExperimentalSystemsDesc>Прототипные системы живут за явными выключателями. Отключение должно останавливать runtime-поведение и скрывать Forge-рецепты без удаления save data.</ABY_ExperimentalSystemsDesc>
   <ABY_ModularTurrets_Enable>Включить прототип модульных турелей</ABY_ModularTurrets_Enable>
   <ABY_ModularTurrets_EnableDesc>Главный выключатель Package 0 для модульных турелей. Если выключено, comp турели перестаёт целиться/стрелять, постройка блокируется, а рецепты модулей скрываются из Forge. Установленные модули остаются в сейве для безопасного повторного включения.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Модульный турельный корпус Бездны</ABY_ModularTurret_Header>
-  <ABY_ModularTurret_Subtitle>Прототип framework: устанавливает свободные forge-модули с этой карты. Снятие выбрасывает предмет рядом с корпусом.</ABY_ModularTurret_Subtitle>
+  <ABY_ModularTurret_Subtitle>Устанавливает свободные forge-модули с этой карты. Основные ядра дают корпусу стрельбу; вспомогательные и пассивные слоты меняют его роль.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках мода.</ABY_TurretDisabledMessage>
+
+  <ABY_StateEnabled>включено</ABY_StateEnabled>
+  <ABY_StateDisabled>отключено</ABY_StateDisabled>
+  <ABY_StateOnline>в сети</ABY_StateOnline>
+  <ABY_StateOffline>без питания</ABY_StateOffline>
+
   <ABY_TurretSlot_Main>Основное оружие</ABY_TurretSlot_Main>
   <ABY_TurretSlot_Auxiliary>Вспомогательный</ABY_TurretSlot_Auxiliary>
   <ABY_TurretSlot_Passive>Пассивный</ABY_TurretSlot_Passive>
   <ABY_TurretRole_Generic>общий</ABY_TurretRole_Generic>
+  <ABY_TurretSlotTitle_Main>Ядро основного оружия</ABY_TurretSlotTitle_Main>
+  <ABY_TurretSlotTitle_Aux>Вспомогательный модуль</ABY_TurretSlotTitle_Aux>
+  <ABY_TurretSlotTitle_Passive>Пассивный модуль {0}</ABY_TurretSlotTitle_Passive>
+  <ABY_TurretEmpty_Main>Пусто. Корпус не будет стрелять, пока не установлено ядро основного оружия.</ABY_TurretEmpty_Main>
+  <ABY_TurretEmpty_Aux>Пусто. Вспомогательные модули добавляют независимый периодический поддерживающий выстрел.</ABY_TurretEmpty_Aux>
+  <ABY_TurretEmpty_Passive>Пусто. Пассивные модули меняют дальность, темп основного оружия или энергопотребление модулей.</ABY_TurretEmpty_Passive>
+  <ABY_TurretSlotEmpty>пусто</ABY_TurretSlotEmpty>
+
   <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
   <ABY_TurretRemove>Снять / выбросить</ABY_TurretRemove>
   <ABY_TurretOpenForgeHint>Крафт в Forge</ABY_TurretOpenForgeHint>
-  <ABY_TurretOpenForgeHintTooltip>Package 0 показывает рецепты модулей в категории Abyssal Forge “Турельные системы”. Прямое открытие Forge из слота турели запланировано для следующего UX-пакета.</ABY_TurretOpenForgeHintTooltip>
-  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
-  <ABY_TurretStatsKillSwitch>Выключатель: настройка мода отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет burst-очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
+  <ABY_TurretOpenForgeHintTooltip>Рецепты модулей находятся в Abyssal Forge → Турельные системы. Карточка Forge теперь показывает слот: основное оружие, вспомогательный или пассивный.</ABY_TurretOpenForgeHintTooltip>
   <ABY_TurretEditDisabled>Снова включите модульные турели в настройках мода, чтобы менять установленные модули.</ABY_TurretEditDisabled>
   <ABY_TurretRemoveTooltip>Выбрасывает установленный модуль предметом рядом с корпусом. Если безопасной клетки рядом нет, модуль остаётся установленным.</ABY_TurretRemoveTooltip>
+  <ABY_TurretInstallFailed>Не удалось установить модуль.</ABY_TurretInstallFailed>
   <ABY_TurretRemoveFailed>Не удалось снять модуль.</ABY_TurretRemoveFailed>
+  <ABY_TurretInstalledMessage>Установлен модуль {0}.</ABY_TurretInstalledMessage>
+  <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
+  <ABY_TurretNoAvailableModule>На этой карте нет свободного совместимого модуля.</ABY_TurretNoAvailableModule>
+  <ABY_TurretNoModuleItem>Нужный свободный предмет-модуль не найден.</ABY_TurretNoModuleItem>
+  <ABY_TurretNoCompatibleDefs>Для этого слота нет совместимых module defs.</ABY_TurretNoCompatibleDefs>
+  <ABY_TurretCompatibleModules>Совместимые модули:</ABY_TurretCompatibleModules>
+
+  <ABY_TurretInstall_Invalid>Некорректный модуль.</ABY_TurretInstall_Invalid>
+  <ABY_TurretInstall_Incompatible>Этот модуль несовместим с данным корпусом.</ABY_TurretInstall_Incompatible>
+  <ABY_TurretInstall_NoMainSlot>У этого корпуса нет слота основного оружия.</ABY_TurretInstall_NoMainSlot>
+  <ABY_TurretInstall_MainOccupied>Слот основного оружия уже занят.</ABY_TurretInstall_MainOccupied>
+  <ABY_TurretInstall_NoAuxSlot>У этого корпуса нет вспомогательного слота.</ABY_TurretInstall_NoAuxSlot>
+  <ABY_TurretInstall_AuxOccupied>Вспомогательный слот уже занят.</ABY_TurretInstall_AuxOccupied>
+  <ABY_TurretInstall_PassiveFull>Все пассивные слоты заняты.</ABY_TurretInstall_PassiveFull>
+  <ABY_TurretInstall_PassiveDuplicate>Этот пассивный модуль уже установлен.</ABY_TurretInstall_PassiveDuplicate>
+  <ABY_TurretInstall_InvalidSlot>Неподдерживаемый слот модуля.</ABY_TurretInstall_InvalidSlot>
+  <ABY_TurretInstall_NoMap>Корпус должен быть заспавнен на карте перед установкой модулей.</ABY_TurretInstall_NoMap>
   <ABY_TurretRemove_NoMap>Нельзя выбросить модуль: корпус не заспавнен на карте.</ABY_TurretRemove_NoMap>
   <ABY_TurretRemove_InvalidModule>Нельзя выбросить некорректный предмет модуля.</ABY_TurretRemove_InvalidModule>
   <ABY_TurretRemove_NoDropCell>Не удалось найти безопасную клетку рядом для выброса модуля. Модуль оставлен установленным.</ABY_TurretRemove_NoDropCell>
   <ABY_TurretRemove_Empty>Этот слот уже пуст.</ABY_TurretRemove_Empty>
-  <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
-  <ABY_TurretInstall_NoMap>Корпус должен быть заспавнен на карте перед установкой модулей.</ABY_TurretInstall_NoMap>
-  <ABY_TurretInstall_PassiveDuplicate>Этот пассивный модуль уже установлен.</ABY_TurretInstall_PassiveDuplicate>
+
+  <ABY_TurretModuleLine_Role>Роль: {0}</ABY_TurretModuleLine_Role>
+  <ABY_TurretModuleLine_Effect>Эффект: {0}</ABY_TurretModuleLine_Effect>
+  <ABY_TurretModuleProjectile>Снаряд: {0}</ABY_TurretModuleProjectile>
+  <ABY_TurretModuleFireStats>Дальность {0} · перезарядка {1} · очередь {2}</ABY_TurretModuleFireStats>
+  <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка aux {1} · очередь {2}</ABY_TurretModuleAuxStats>
+  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка {1} · питание +{2} W</ABY_TurretModulePassiveStats>
+  <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
+  <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
+  <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
+  <ABY_TurretModuleTooltipStats>Статы: {0}</ABY_TurretModuleTooltipStats>
+  <ABY_TurretModulePowerDelta>Дополнительное питание модуля: +{0} W</ABY_TurretModulePowerDelta>
+  <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
+  <ABY_TurretCooldown_Faster>-{0}% перезарядки</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_Slower>+{0}% перезарядки</ABY_TurretCooldown_Slower>
+
+  <ABY_TurretForgeSummary_Main>Слот основного оружия · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretForgeSummary_Aux>Вспомогательный слот · {0}</ABY_TurretForgeSummary_Aux>
+  <ABY_TurretForgeSummary_Passive>Пассивный слот · {0}</ABY_TurretForgeSummary_Passive>
+  <ABY_TurretForgeSummary_ChassisGeneric>Турельный корпус</ABY_TurretForgeSummary_ChassisGeneric>
+  <ABY_TurretForgeSummary_ChassisSlots>Корпус · {0} основ. / {1} aux / {2} пассив. слота</ABY_TurretForgeSummary_ChassisSlots>
+  <ABY_TurretChassisTooltipRole>Роль: пустой модульный турельный корпус. Не стреляет, пока не установлено ядро основного оружия.</ABY_TurretChassisTooltipRole>
+  <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
+  <ABY_TurretChassisTooltipRuntime>Runtime: установленные модули сохраняются внутри здания и переживают save/load и переключение kill switch.</ABY_TurretChassisTooltipRuntime>
+
+  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
+  <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
+  <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
+  <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
+  <ABY_TurretStatsPowerDraw>Дополнительное питание модулей: {0} W</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsKillSwitch>Выключатель: настройка мода отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет burst-очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
+
+  <ABY_TurretInspectDisabled>Модульная турельная система отключена в настройках.</ABY_TurretInspectDisabled>
+  <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
+  <ABY_TurretInspectAux>Вспомогательное: {0}</ABY_TurretInspectAux>
+  <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
+  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1}</ABY_TurretInspectStats>
+  <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
 </LanguageData>

@@ -10,6 +10,7 @@ namespace AbyssalProtocol
         public ThingDef thingDef;
         public List<string> compatibleChassisTags;
         public string role;
+        public string effectSummary;
         public int tier = 1;
 
         public ThingDef projectileDef;
@@ -55,5 +56,23 @@ namespace AbyssalProtocol
         }
 
         public string RoleLabel => role.NullOrEmpty() ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRole_Generic", "general") : role;
+
+        public string EffectSummary
+        {
+            get
+            {
+                if (!effectSummary.NullOrEmpty())
+                {
+                    return effectSummary;
+                }
+
+                if (!description.NullOrEmpty())
+                {
+                    return description;
+                }
+
+                return RoleLabel;
+            }
+        }
     }
 }

@@ -221,6 +221,164 @@ namespace AbyssalProtocol
             return (Mathf.Max(0, ticks) / 60f).ToString("0.0") + "s";
         }
 
+
+        public static string GetModuleForgeCardSummary(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return TranslateOrFallback("ABY_ForgePatternSummary_TurretSystems", "Turret system");
+            }
+
+            switch (module.slot)
+            {
+                case ABY_TurretModuleSlot.MainWeapon:
+                    return TranslateOrFallback("ABY_TurretForgeSummary_Main", "Main weapon slot · {0}", module.RoleLabel);
+                case ABY_TurretModuleSlot.Auxiliary:
+                    return TranslateOrFallback("ABY_TurretForgeSummary_Aux", "Auxiliary slot · {0}", module.RoleLabel);
+                default:
+                    return TranslateOrFallback("ABY_TurretForgeSummary_Passive", "Passive slot · {0}", module.RoleLabel);
+            }
+        }
+
+        public static string GetModuleEffectSummary(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return string.Empty;
+            }
+
+            string effect = module.EffectSummary;
+            return effect.NullOrEmpty() ? GetModuleForgeCardSummary(module) : effect;
+        }
+
+        public static string GetModuleStatSummary(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return string.Empty;
+            }
+
+            if (module.slot == ABY_TurretModuleSlot.MainWeapon)
+            {
+                return TranslateOrFallback(
+                    "ABY_TurretModuleFireStats",
+                    "Range {0} · cooldown {1} · burst {2}",
+                    module.range.ToString("0.0"),
+                    FormatTicksAsSeconds(module.cooldownTicks),
+                    Mathf.Max(1, module.burstShotCount));
+            }
+
+            if (module.slot == ABY_TurretModuleSlot.Auxiliary)
+            {
+                int auxCooldown = module.auxiliaryCooldownTicks > 0 ? module.auxiliaryCooldownTicks : module.cooldownTicks;
+                return TranslateOrFallback(
+                    "ABY_TurretModuleAuxStats",
+                    "Range {0} · auxiliary cooldown {1} · burst {2}",
+                    module.range.ToString("0.0"),
+                    FormatTicksAsSeconds(auxCooldown),
+                    Mathf.Max(1, module.burstShotCount));
+            }
+
+            return TranslateOrFallback(
+                "ABY_TurretModulePassiveStats",
+                "Range {0} · cooldown {1} · power +{2} W",
+                FormatSignedDecimal(module.rangeOffset),
+                FormatCooldownMultiplierEffect(module.cooldownMultiplier),
+                module.extraPowerDraw.ToString("0"));
+        }
+
+        public static string GetModuleDetailedTooltip(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return string.Empty;
+            }
+
+            List<string> lines = new List<string>
+            {
+                TranslateOrFallback("ABY_TurretModuleTooltipSlot", "Slot: {0}", module.SlotLabel),
+                TranslateOrFallback("ABY_TurretModuleTooltipRole", "Role: {0}", module.RoleLabel),
+                TranslateOrFallback("ABY_TurretModuleTooltipEffect", "Effect: {0}", GetModuleEffectSummary(module)),
+                TranslateOrFallback("ABY_TurretModuleTooltipStats", "Stats: {0}", GetModuleStatSummary(module))
+            };
+
+            if (module.projectileDef != null)
+            {
+                lines.Add(TranslateOrFallback("ABY_TurretModuleProjectile", "Projectile: {0}", module.projectileDef.label));
+            }
+
+            if (module.extraPowerDraw != 0f)
+            {
+                lines.Add(TranslateOrFallback("ABY_TurretModulePowerDelta", "Extra module power draw: +{0} W", module.extraPowerDraw.ToString("0")));
+            }
+
+            return string.Join("\n", lines.Where(line => !line.NullOrEmpty()).ToArray());
+        }
+
+        public static string GetChassisForgeCardSummary(ThingDef chassisDef)
+        {
+            CompProperties_AbyssalModularTurret comp = chassisDef?.GetCompProperties<CompProperties_AbyssalModularTurret>();
+            if (comp == null)
+            {
+                return TranslateOrFallback("ABY_TurretForgeSummary_ChassisGeneric", "Turret chassis");
+            }
+
+            return TranslateOrFallback(
+                "ABY_TurretForgeSummary_ChassisSlots",
+                "Chassis · {0} main / {1} aux / {2} passive slots",
+                Mathf.Max(0, comp.mainWeaponSlots),
+                Mathf.Max(0, comp.auxiliarySlots),
+                Mathf.Max(0, comp.passiveSlots));
+        }
+
+        public static string GetChassisDetailedTooltip(ThingDef chassisDef)
+        {
+            CompProperties_AbyssalModularTurret comp = chassisDef?.GetCompProperties<CompProperties_AbyssalModularTurret>();
+            if (comp == null)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("\n", new[]
+            {
+                TranslateOrFallback("ABY_TurretChassisTooltipRole", "Role: empty modular turret body. It cannot fire until a main weapon core is installed."),
+                TranslateOrFallback("ABY_TurretChassisTooltipSlots", "Slots: {0} main weapon, {1} auxiliary, {2} passive.", Mathf.Max(0, comp.mainWeaponSlots), Mathf.Max(0, comp.auxiliarySlots), Mathf.Max(0, comp.passiveSlots)),
+                TranslateOrFallback("ABY_TurretChassisTooltipRuntime", "Runtime: installed modules are saved inside the building and survive save/load and feature kill-switch toggles.")
+            });
+        }
+
+        public static string FormatSignedDecimal(float value)
+        {
+            if (Mathf.Abs(value) < 0.01f)
+            {
+                return "0";
+            }
+
+            return value > 0f ? "+" + value.ToString("0.0") : value.ToString("0.0");
+        }
+
+        public static string FormatCooldownMultiplierEffect(float multiplier)
+        {
+            if (multiplier <= 0f)
+            {
+                multiplier = 1f;
+            }
+
+            float delta = multiplier - 1f;
+            if (Mathf.Abs(delta) < 0.005f)
+            {
+                return TranslateOrFallback("ABY_TurretCooldown_NoChange", "no change");
+            }
+
+            int percent = Mathf.RoundToInt(Mathf.Abs(delta) * 100f);
+            if (delta < 0f)
+            {
+                return TranslateOrFallback("ABY_TurretCooldown_Faster", "-{0}% cooldown", percent);
+            }
+
+            return TranslateOrFallback("ABY_TurretCooldown_Slower", "+{0}% cooldown", percent);
+        }
+
         private static void EnsureModuleCache()
         {
             if (moduleByThingDef != null)

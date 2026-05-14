@@ -312,6 +312,17 @@ namespace AbyssalProtocol
         public static string GetPatternBrowserSummary(RecipeDef recipe)
         {
             ThingDef product = GetPrimaryProduct(recipe);
+            ABY_TurretModuleDef turretModule = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (turretModule != null)
+            {
+                return ABY_ModularTurretUtility.GetModuleForgeCardSummary(turretModule);
+            }
+
+            if (product != null && product.GetCompProperties<CompProperties_AbyssalModularTurret>() != null)
+            {
+                return ABY_ModularTurretUtility.GetChassisForgeCardSummary(product);
+            }
+
             if (product != null && product.defName == "ABY_CrownshardStormcaster")
             {
                 return TranslateOrFallback("ABY_ForgePatternSummary_CrownshardStormcaster", "Dominion storm weapon · area denial");
@@ -332,10 +343,32 @@ namespace AbyssalProtocol
                 case HeraldCategory:
                     return TranslateOrFallback("ABY_ForgePatternSummary_Herald", "Herald pattern");
                 case TurretSystemsCategory:
-                    return TranslateOrFallback("ABY_ForgePatternSummary_TurretSystems", "Modular turret system pattern");
+                    return TranslateOrFallback("ABY_ForgePatternSummary_TurretSystems", "Turret system");
                 default:
                     return TranslateOrFallback("ABY_ForgePatternSummary_Generic", "Forge pattern");
             }
+        }
+
+        public static string GetPatternBrowserDetails(RecipeDef recipe)
+        {
+            ThingDef product = GetPrimaryProduct(recipe);
+            ABY_TurretModuleDef turretModule = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (turretModule != null)
+            {
+                return ABY_ModularTurretUtility.GetModuleDetailedTooltip(turretModule);
+            }
+
+            if (product != null && product.GetCompProperties<CompProperties_AbyssalModularTurret>() != null)
+            {
+                return ABY_ModularTurretUtility.GetChassisDetailedTooltip(product);
+            }
+
+            if (product != null && !product.description.NullOrEmpty())
+            {
+                return product.description;
+            }
+
+            return recipe?.description ?? string.Empty;
         }
 
         public static string GetRecipeDisplayLabel(RecipeDef recipe)

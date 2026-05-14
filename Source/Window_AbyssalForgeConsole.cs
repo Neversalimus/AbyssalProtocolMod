@@ -446,6 +446,13 @@ namespace AbyssalProtocol
                 AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe)
             };
 
+            string patternDetails = AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe);
+            if (!patternDetails.NullOrEmpty())
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add(patternDetails);
+            }
+
             if (primaryProductCount > 1)
             {
                 tooltipLines.Add("ABY_ForgePatternOutputCount".Translate(primaryProductCount));

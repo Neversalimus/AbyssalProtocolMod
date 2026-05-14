@@ -1,34 +1,100 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_ForgeCategory_TurretSystems>Turret Systems</ABY_ForgeCategory_TurretSystems>
-  <ABY_ForgePatternSummary_TurretSystems>Modular turret system pattern</ABY_ForgePatternSummary_TurretSystems>
+  <ABY_ForgePatternSummary_TurretSystems>Turret system</ABY_ForgePatternSummary_TurretSystems>
   <ABY_ModularTurret_Tab>Modules</ABY_ModularTurret_Tab>
   <ABY_ExperimentalSystemsHeader>Experimental systems / kill switches</ABY_ExperimentalSystemsHeader>
   <ABY_ExperimentalSystemsDesc>Prototype systems live behind explicit kill switches. Disabling a system should stop runtime behavior and hide its forge exposure without deleting save data.</ABY_ExperimentalSystemsDesc>
   <ABY_ModularTurrets_Enable>Enable modular turret prototype</ABY_ModularTurrets_Enable>
   <ABY_ModularTurrets_EnableDesc>Master switch for Package 0 modular turrets. When disabled, modular turret comps stop targeting/firing, placement is blocked, and turret-module forge recipes are hidden. Installed modules remain saved for safe re-enable.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Abyssal modular turret chassis</ABY_ModularTurret_Header>
-  <ABY_ModularTurret_Subtitle>Prototype framework: install loose forge-built modules from this map. Remove ejects the item near the chassis.</ABY_ModularTurret_Subtitle>
+  <ABY_ModularTurret_Subtitle>Install loose forge-built modules from this map. Main cores make the chassis fire; auxiliary and passive slots change its role.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Modular turret systems are disabled in mod settings.</ABY_TurretDisabledMessage>
+
+  <ABY_StateEnabled>enabled</ABY_StateEnabled>
+  <ABY_StateDisabled>disabled</ABY_StateDisabled>
+  <ABY_StateOnline>online</ABY_StateOnline>
+  <ABY_StateOffline>offline</ABY_StateOffline>
+
   <ABY_TurretSlot_Main>Main weapon</ABY_TurretSlot_Main>
   <ABY_TurretSlot_Auxiliary>Auxiliary</ABY_TurretSlot_Auxiliary>
   <ABY_TurretSlot_Passive>Passive</ABY_TurretSlot_Passive>
   <ABY_TurretRole_Generic>general</ABY_TurretRole_Generic>
+  <ABY_TurretSlotTitle_Main>Main weapon core</ABY_TurretSlotTitle_Main>
+  <ABY_TurretSlotTitle_Aux>Auxiliary module</ABY_TurretSlotTitle_Aux>
+  <ABY_TurretSlotTitle_Passive>Passive module {0}</ABY_TurretSlotTitle_Passive>
+  <ABY_TurretEmpty_Main>Empty. The chassis will not fire until a main weapon core is installed.</ABY_TurretEmpty_Main>
+  <ABY_TurretEmpty_Aux>Empty. Auxiliary modules add an independent timed support shot.</ABY_TurretEmpty_Aux>
+  <ABY_TurretEmpty_Passive>Empty. Passive modules alter range, main weapon cadence, or module power draw.</ABY_TurretEmpty_Passive>
+  <ABY_TurretSlotEmpty>empty</ABY_TurretSlotEmpty>
+
   <ABY_TurretInstallFromMap>Install from map</ABY_TurretInstallFromMap>
   <ABY_TurretRemove>Remove / eject</ABY_TurretRemove>
   <ABY_TurretOpenForgeHint>Craft in Forge</ABY_TurretOpenForgeHint>
-  <ABY_TurretOpenForgeHintTooltip>Package 0 exposes module recipes in the Abyssal Forge Turret Systems category. Direct forge-opening from turret slots is planned for the next UX pass.</ABY_TurretOpenForgeHintTooltip>
-  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
-  <ABY_TurretStatsKillSwitch>Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Targeting: skips downed/dead targets and cancels burst fire if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
+  <ABY_TurretOpenForgeHintTooltip>Module recipes are in Abyssal Forge → Turret Systems. The Forge card now shows the occupied slot: main weapon, auxiliary, or passive.</ABY_TurretOpenForgeHintTooltip>
   <ABY_TurretEditDisabled>Re-enable modular turrets in mod settings before editing installed modules.</ABY_TurretEditDisabled>
   <ABY_TurretRemoveTooltip>Ejects the installed module as an item near the chassis. If no safe nearby cell exists, the module remains installed.</ABY_TurretRemoveTooltip>
+  <ABY_TurretInstallFailed>Could not install module.</ABY_TurretInstallFailed>
   <ABY_TurretRemoveFailed>Could not remove module.</ABY_TurretRemoveFailed>
+  <ABY_TurretInstalledMessage>Installed {0}.</ABY_TurretInstalledMessage>
+  <ABY_TurretRemovedMessage>Removed {0}.</ABY_TurretRemovedMessage>
+  <ABY_TurretNoAvailableModule>No compatible loose module is available on this map.</ABY_TurretNoAvailableModule>
+  <ABY_TurretNoModuleItem>The required loose module item could not be found.</ABY_TurretNoModuleItem>
+  <ABY_TurretNoCompatibleDefs>No compatible module defs exist for this slot.</ABY_TurretNoCompatibleDefs>
+  <ABY_TurretCompatibleModules>Compatible modules:</ABY_TurretCompatibleModules>
+
+  <ABY_TurretInstall_Invalid>Invalid module.</ABY_TurretInstall_Invalid>
+  <ABY_TurretInstall_Incompatible>This module is not compatible with this chassis.</ABY_TurretInstall_Incompatible>
+  <ABY_TurretInstall_NoMainSlot>This chassis has no main weapon slot.</ABY_TurretInstall_NoMainSlot>
+  <ABY_TurretInstall_MainOccupied>The main weapon slot is already occupied.</ABY_TurretInstall_MainOccupied>
+  <ABY_TurretInstall_NoAuxSlot>This chassis has no auxiliary slot.</ABY_TurretInstall_NoAuxSlot>
+  <ABY_TurretInstall_AuxOccupied>The auxiliary slot is already occupied.</ABY_TurretInstall_AuxOccupied>
+  <ABY_TurretInstall_PassiveFull>All passive slots are occupied.</ABY_TurretInstall_PassiveFull>
+  <ABY_TurretInstall_PassiveDuplicate>This passive module is already installed.</ABY_TurretInstall_PassiveDuplicate>
+  <ABY_TurretInstall_InvalidSlot>Unsupported module slot.</ABY_TurretInstall_InvalidSlot>
+  <ABY_TurretInstall_NoMap>The chassis must be spawned on a map before modules can be installed.</ABY_TurretInstall_NoMap>
   <ABY_TurretRemove_NoMap>Cannot eject the module because the chassis is not spawned on a map.</ABY_TurretRemove_NoMap>
   <ABY_TurretRemove_InvalidModule>Cannot eject an invalid module item.</ABY_TurretRemove_InvalidModule>
   <ABY_TurretRemove_NoDropCell>Could not find a safe nearby cell for the ejected module. The module was kept installed.</ABY_TurretRemove_NoDropCell>
   <ABY_TurretRemove_Empty>This slot is already empty.</ABY_TurretRemove_Empty>
-  <ABY_TurretRemovedMessage>Removed {0}.</ABY_TurretRemovedMessage>
-  <ABY_TurretInstall_NoMap>The chassis must be spawned on a map before modules can be installed.</ABY_TurretInstall_NoMap>
-  <ABY_TurretInstall_PassiveDuplicate>This passive module is already installed.</ABY_TurretInstall_PassiveDuplicate>
+
+  <ABY_TurretModuleLine_Role>Role: {0}</ABY_TurretModuleLine_Role>
+  <ABY_TurretModuleLine_Effect>Effect: {0}</ABY_TurretModuleLine_Effect>
+  <ABY_TurretModuleProjectile>Projectile: {0}</ABY_TurretModuleProjectile>
+  <ABY_TurretModuleFireStats>Range {0} · cooldown {1} · burst {2}</ABY_TurretModuleFireStats>
+  <ABY_TurretModuleAuxStats>Range {0} · aux cooldown {1} · burst {2}</ABY_TurretModuleAuxStats>
+  <ABY_TurretModulePassiveStats>Range {0} · cooldown {1} · power +{2} W</ABY_TurretModulePassiveStats>
+  <ABY_TurretModuleTooltipSlot>Slot: {0}</ABY_TurretModuleTooltipSlot>
+  <ABY_TurretModuleTooltipRole>Role: {0}</ABY_TurretModuleTooltipRole>
+  <ABY_TurretModuleTooltipEffect>Effect: {0}</ABY_TurretModuleTooltipEffect>
+  <ABY_TurretModuleTooltipStats>Stats: {0}</ABY_TurretModuleTooltipStats>
+  <ABY_TurretModulePowerDelta>Extra module power draw: +{0} W</ABY_TurretModulePowerDelta>
+  <ABY_TurretCooldown_NoChange>no change</ABY_TurretCooldown_NoChange>
+  <ABY_TurretCooldown_Faster>-{0}% cooldown</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_Slower>+{0}% cooldown</ABY_TurretCooldown_Slower>
+
+  <ABY_TurretForgeSummary_Main>Main weapon slot · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretForgeSummary_Aux>Auxiliary slot · {0}</ABY_TurretForgeSummary_Aux>
+  <ABY_TurretForgeSummary_Passive>Passive slot · {0}</ABY_TurretForgeSummary_Passive>
+  <ABY_TurretForgeSummary_ChassisGeneric>Turret chassis</ABY_TurretForgeSummary_ChassisGeneric>
+  <ABY_TurretForgeSummary_ChassisSlots>Chassis · {0} main / {1} aux / {2} passive slots</ABY_TurretForgeSummary_ChassisSlots>
+  <ABY_TurretChassisTooltipRole>Role: empty modular turret body. It cannot fire until a main weapon core is installed.</ABY_TurretChassisTooltipRole>
+  <ABY_TurretChassisTooltipSlots>Slots: {0} main weapon, {1} auxiliary, {2} passive.</ABY_TurretChassisTooltipSlots>
+  <ABY_TurretChassisTooltipRuntime>Runtime: installed modules are saved inside the building and survive save/load and feature kill-switch toggles.</ABY_TurretChassisTooltipRuntime>
+
+  <ABY_TurretStatsHeader>Runtime preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsFeature>Feature state: {0}</ABY_TurretStatsFeature>
+  <ABY_TurretStatsPower>Power: {0}</ABY_TurretStatsPower>
+  <ABY_TurretStatsRange>Main range: {0}</ABY_TurretStatsRange>
+  <ABY_TurretStatsCooldown>Main cooldown: {0}</ABY_TurretStatsCooldown>
+  <ABY_TurretStatsPowerDraw>Estimated extra module draw: {0} W</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsKillSwitch>Kill switch: mod setting disables targeting, firing, placement, and forge exposure without deleting installed modules.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsTargeting>Targeting: skips downed/dead targets and cancels burst fire if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
+
+  <ABY_TurretInspectDisabled>Modular turret framework disabled in settings.</ABY_TurretInspectDisabled>
+  <ABY_TurretInspectMain>Main: {0}</ABY_TurretInspectMain>
+  <ABY_TurretInspectAux>Auxiliary: {0}</ABY_TurretInspectAux>
+  <ABY_TurretInspectPassive>Passive: {0}/{1}</ABY_TurretInspectPassive>
+  <ABY_TurretInspectStats>Range {0} · cooldown {1}</ABY_TurretInspectStats>
+  <ABY_TurretInspectNeedsMain>No main weapon core installed.</ABY_TurretInspectNeedsMain>
 </LanguageData>

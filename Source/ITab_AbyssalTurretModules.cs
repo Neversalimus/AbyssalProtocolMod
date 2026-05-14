@@ -31,20 +31,20 @@ namespace AbyssalProtocol
             DrawHeader(new Rect(inner.x, inner.y, inner.width, 56f), comp);
             Rect contentRect = new Rect(inner.x, inner.y + 66f, inner.width, inner.height - 66f);
 
-            Rect viewRect = new Rect(0f, 0f, contentRect.width - 18f, 680f);
+            Rect viewRect = new Rect(0f, 0f, contentRect.width - 18f, 830f);
             Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
 
             float y = 0f;
-            DrawSlotCard(new Rect(0f, y, viewRect.width, 96f), comp, ABY_TurretModuleSlot.MainWeapon, comp.MainModule, -1);
-            y += 106f;
-            DrawSlotCard(new Rect(0f, y, viewRect.width, 96f), comp, ABY_TurretModuleSlot.Auxiliary, comp.AuxiliaryModule, -1);
-            y += 106f;
+            DrawSlotCard(new Rect(0f, y, viewRect.width, 118f), comp, ABY_TurretModuleSlot.MainWeapon, comp.MainModule, -1);
+            y += 128f;
+            DrawSlotCard(new Rect(0f, y, viewRect.width, 118f), comp, ABY_TurretModuleSlot.Auxiliary, comp.AuxiliaryModule, -1);
+            y += 128f;
 
             for (int i = 0; i < comp.Props.passiveSlots; i++)
             {
                 ABY_TurretModuleDef passive = i < comp.PassiveModules.Count ? comp.PassiveModules[i] : null;
-                DrawSlotCard(new Rect(0f, y, viewRect.width, 92f), comp, ABY_TurretModuleSlot.Passive, passive, i);
-                y += 100f;
+                DrawSlotCard(new Rect(0f, y, viewRect.width, 112f), comp, ABY_TurretModuleSlot.Passive, passive, i);
+                y += 120f;
             }
 
             DrawStatsPanel(new Rect(0f, y + 4f, viewRect.width, 162f), comp);
@@ -86,7 +86,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            Rect buttonRect = new Rect(rect.xMax - 202f, rect.y + 14f, 188f, 30f);
+            Rect buttonRect = new Rect(rect.xMax - 202f, rect.y + 18f, 188f, 30f);
             if (installed == null)
             {
                 string tooltip = comp.FeatureEnabled
@@ -131,7 +131,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            Rect forgeRect = new Rect(rect.xMax - 202f, rect.y + 52f, 188f, 26f);
+            Rect forgeRect = new Rect(rect.xMax - 202f, rect.y + 58f, 188f, 26f);
             if (AbyssalStyledWidgets.TextButton(forgeRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHint", "Craft in Forge"), false, false, null, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHintTooltip", "Package 0 exposes module recipes in the Abyssal Forge Turret Systems category. Direct forge-opening from turret slots is planned for the next UX pass.")))
             {
             }
@@ -196,24 +196,13 @@ namespace AbyssalProtocol
 
             List<string> parts = new List<string>
             {
-                module.LabelCap + " · " + module.RoleLabel
+                module.LabelCap + " · " + module.SlotLabel,
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Role", "Role: {0}", module.RoleLabel),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Effect", "Effect: {0}", ABY_ModularTurretUtility.GetModuleEffectSummary(module)),
+                ABY_ModularTurretUtility.GetModuleStatSummary(module)
             };
 
-            if (module.projectileDef != null)
-            {
-                parts.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleProjectile", "Projectile: {0}", module.projectileDef.label));
-            }
-
-            if (module.slot == ABY_TurretModuleSlot.MainWeapon || module.slot == ABY_TurretModuleSlot.Auxiliary)
-            {
-                parts.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleFireStats", "Range {0} · cooldown {1} · burst {2}", module.range.ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(module.cooldownTicks), Mathf.Max(1, module.burstShotCount)));
-            }
-            else
-            {
-                parts.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModulePassiveStats", "Range {0:+0.0;-0.0;0} · cooldown x{1:0.00} · power +{2:0} W", module.rangeOffset, module.cooldownMultiplier <= 0f ? 1f : module.cooldownMultiplier, module.extraPowerDraw));
-            }
-
-            return string.Join("\n", parts.ToArray());
+            return string.Join("\n", parts.Where(line => !line.NullOrEmpty()).ToArray());
         }
 
         private static string GetAvailableModulesTooltip(CompAbyssalModularTurret comp, ABY_TurretModuleSlot slot)
@@ -232,7 +221,7 @@ namespace AbyssalProtocol
             foreach (ABY_TurretModuleDef module in modules.Take(8))
             {
                 int count = ABY_ModularTurretUtility.GetUsableLooseModuleCount(comp.parent.Map, module);
-                lines.Add("• " + module.LabelCap + " x" + count);
+                lines.Add("• " + module.LabelCap + " x" + count + " — " + ABY_ModularTurretUtility.GetModuleForgeCardSummary(module));
             }
 
             return string.Join("\n", lines.ToArray());

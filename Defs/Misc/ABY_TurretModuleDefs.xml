@@ -5,6 +5,7 @@
     <defName>ABY_TMD_RiftNeedlerCore</defName>
     <label>Rift Needler Core</label>
     <description>Main weapon core for medium modular turret chassis. Fast needle bursts against lightly armored targets.</description>
+    <effectSummary>Primary gun module. Gives the chassis a fast 3-shot rift-needle burst for light enemies and swarm pressure.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_RiftNeedlerCore</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
@@ -22,6 +23,7 @@
     <defName>ABY_TMD_PlasmaLanceCore</defName>
     <label>Plasma Lance Core</label>
     <description>Main weapon core for medium modular turret chassis. Slower armor-focused ultra-plasma discharge.</description>
+    <effectSummary>Primary gun module. Replaces the main weapon with a slower long-range ultra-plasma bolt for armor and elite targets.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_PlasmaLanceCore</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
@@ -40,6 +42,7 @@
     <defName>ABY_TMD_ChoirArcEmitter</defName>
     <label>Choir Arc Emitter</label>
     <description>Auxiliary support module. Fires a slow timed canticle-wave shot independently of the main weapon.</description>
+    <effectSummary>Auxiliary module. Adds an independent timed canticle-wave support shot while the main weapon keeps firing normally.</effectSummary>
     <slot>Auxiliary</slot>
     <thingDef>ABY_TurretModule_ChoirArcEmitter</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
@@ -58,6 +61,7 @@
     <defName>ABY_TMD_CoolingLattice</defName>
     <label>Cooling Lattice</label>
     <description>Passive cadence module. Reduces main weapon cooldown at the cost of additional power draw.</description>
+    <effectSummary>Passive module. Speeds up the main weapon cycle by reducing cooldown, but increases power draw.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_CoolingLattice</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
@@ -71,6 +75,7 @@
     <defName>ABY_TMD_TargetingSigil</defName>
     <label>Targeting Sigil</label>
     <description>Passive targeting module. Extends range and stabilizes the aiming geometry.</description>
+    <effectSummary>Passive module. Extends main weapon range and improves targeting geometry, but increases power draw.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_TargetingSigil</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
@@ -85,6 +90,7 @@
     <defName>ABY_TMD_ResidueCapacitor</defName>
     <label>Residue Capacitor</label>
     <description>Passive buffering module. Gives modest range and cadence gains while adding a larger power burden.</description>
+    <effectSummary>Passive module. Modestly improves range and main weapon cadence as a balanced late basic upgrade, with a larger power burden.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_ResidueCapacitor</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>

@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftNeedlerCore</defName>
     <label>rift needler core</label>
-    <description>A compact main weapon module for abyssal turret chassis. It binds a repeating needle lattice into a stationary targeting crucible.</description>
+    <description>Slot: Main weapon. Gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -28,7 +28,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_PlasmaLanceCore</defName>
     <label>plasma lance core</label>
-    <description>A heavier main weapon module that routes a focused ultra-plasma bolt through a sealed bastion crucible. Slow, hot, and armor-focused.</description>
+    <description>Slot: Main weapon. Replaces the turret main weapon with a slower long-range ultra-plasma bolt for armored targets, elites, and early boss pressure. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -52,7 +52,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
-    <description>An auxiliary emitter that adds a slow timed canticle-wave discharge to a modular turret chassis. Designed as a first support-slot proof of concept.</description>
+    <description>Slot: Auxiliary. Adds an independent timed canticle-wave support shot while the main weapon keeps firing normally. Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
