@@ -614,7 +614,8 @@ namespace AbyssalProtocol
             ClearSigilPrimingVisual();
             StartPhase(RitualPhase.Charging, GetPhaseDurationForPendingRitual(RitualPhase.Charging));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
-            SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.95f);
+            // The legacy Archon dash/summon motes are intentionally not used here anymore.
+            // They visually fought with the dedicated SummoningCircleActivation overlay sequence.
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
 
             return true;
@@ -1582,11 +1583,6 @@ namespace AbyssalProtocol
             switch (ritualPhase)
             {
                 case RitualPhase.Charging:
-                    if (ShouldDoHashInterval(24))
-                    {
-                        SpawnMinorMote("ABY_Mote_ArchonDashTrail", (0.85f + progress * 0.35f) * archonFactor);
-                    }
-
                     if (ShouldDoHashInterval(18))
                     {
                         fxComp?.RegisterRitualPulse(Map, (0.06f + progress * 0.08f) * archonFactor);
@@ -1599,11 +1595,6 @@ namespace AbyssalProtocol
                     break;
 
                 case RitualPhase.Surge:
-                    if (ShouldDoHashInterval(10))
-                    {
-                        SpawnMinorMote("ABY_Mote_ArchonDashEntry", (1.05f + progress * 0.45f) * archonFactor);
-                    }
-
                     if (ShouldDoHashInterval(8))
                     {
                         fxComp?.RegisterRitualPulse(Map, (0.12f + progress * 0.16f) * archonFactor);
@@ -1616,11 +1607,6 @@ namespace AbyssalProtocol
                     break;
 
                 case RitualPhase.Breach:
-                    if (ShouldDoHashInterval(5))
-                    {
-                        SpawnMinorMote("ABY_Mote_ArchonDashExit", (1.50f + progress * 0.75f) * archonFactor);
-                    }
-
                     if (ShouldDoHashInterval(4))
                     {
                         fxComp?.RegisterRitualPulse(Map, (0.22f + progress * 0.28f) * archonFactor);
@@ -1628,10 +1614,6 @@ namespace AbyssalProtocol
                     break;
 
                 case RitualPhase.Cooldown:
-                    if (ShouldDoHashInterval(20))
-                    {
-                        SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.70f + (1f - progress) * 0.15f);
-                    }
                     break;
             }
         }
@@ -1642,14 +1624,12 @@ namespace AbyssalProtocol
             {
                 case RitualPhase.Charging:
                     StartPhase(RitualPhase.Surge, GetPhaseDurationForPendingRitual(RitualPhase.Surge));
-                    SpawnMinorMote("ABY_Mote_ArchonDashEntry", 1.40f);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
                     ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", RitualFocusCell, Map);
                     break;
 
                 case RitualPhase.Surge:
                     StartPhase(RitualPhase.Breach, GetPhaseDurationForPendingRitual(RitualPhase.Breach));
-                    ArchonInfernalVFXUtility.DoSummonVFX(Map, RitualFocusCell);
                     Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.36f);
                     ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", RitualFocusCell, Map);
                     break;

@@ -15,7 +15,7 @@ namespace AbyssalProtocol
         private const float BloomScale = 3.62f;
         private const float BeamWidth = 2.42f;
         private const float BeamHeight = 8.64f;
-        private const float BeamBaseAnchorFromBottom = 0.0625f;
+        private const float BeamBaseAnchorFromBottom = 0.104f;
 
         private static readonly string[] IgnitionFramePaths = BuildFramePaths("ABY_CircleIgnition");
         private static readonly string[] BloomFramePaths = BuildFramePaths("ABY_ReactorBloom");
