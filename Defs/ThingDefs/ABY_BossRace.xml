@@ -51,9 +51,9 @@
       <MoveSpeed>5.2</MoveSpeed>
       <MeleeHitChance>0.92</MeleeHitChance>
       <MeleeDPS>38</MeleeDPS>
-      <ArmorRating_Sharp>1.1</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.95</ArmorRating_Blunt>
-      <ArmorRating_Heat>1.4</ArmorRating_Heat>
+      <ArmorRating_Sharp>0.92</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.78</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.15</ArmorRating_Heat>
       <PainShockThreshold>999</PainShockThreshold>
       <ComfyTemperatureMin>-40</ComfyTemperatureMin>
       <ComfyTemperatureMax>220</ComfyTemperatureMax>
@@ -172,9 +172,9 @@
       <MoveSpeed>4.75</MoveSpeed>
       <MeleeHitChance>0.95</MeleeHitChance>
       <MeleeDPS>46</MeleeDPS>
-      <ArmorRating_Sharp>1.35</ArmorRating_Sharp>
-      <ArmorRating_Blunt>1.15</ArmorRating_Blunt>
-      <ArmorRating_Heat>1.70</ArmorRating_Heat>
+      <ArmorRating_Sharp>1.10</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.95</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.35</ArmorRating_Heat>
       <PainShockThreshold>999</PainShockThreshold>
       <ComfyTemperatureMin>-50</ComfyTemperatureMin>
       <ComfyTemperatureMax>260</ComfyTemperatureMax>
