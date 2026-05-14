@@ -19,7 +19,11 @@ namespace AbyssalProtocol
             "Things/Building/DominionGate/ABY_DominionGate_Core_Frame0",
             "Things/Building/DominionGate/ABY_DominionGate_Core_Frame1",
             "Things/Building/DominionGate/ABY_DominionGate_Core_Frame2",
-            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame3"
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame3",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame4",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame5",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame6",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Frame7"
         };
 
         private static readonly string[] CoreGlowFrameTexPaths =
@@ -27,7 +31,11 @@ namespace AbyssalProtocol
             "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame0",
             "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame1",
             "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame2",
-            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame3"
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame3",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame4",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame5",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame6",
+            "Things/Building/DominionGate/ABY_DominionGate_Core_Glow_Frame7"
         };
 
         private static readonly string[] ExitFrameTexPaths =
@@ -35,7 +43,11 @@ namespace AbyssalProtocol
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame0",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame1",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame2",
-            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3"
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame4",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame5",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame6",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame7"
         };
 
         private static readonly Texture2D JumpCommandIcon = ContentFinder<Texture2D>.Get(CoreFrameTexPaths[0], true);

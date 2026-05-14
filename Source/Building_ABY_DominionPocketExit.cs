@@ -13,7 +13,11 @@ namespace AbyssalProtocol
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame0",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame1",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame2",
-            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3"
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame3",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame4",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame5",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame6",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Frame7"
         };
 
         private static readonly string[] ExitGlowFrameTexPaths =
@@ -21,7 +25,11 @@ namespace AbyssalProtocol
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame0",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame1",
             "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame2",
-            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame3"
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame3",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame4",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame5",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame6",
+            "Things/Building/DominionGate/ABY_DominionGate_Ring_Glow_Frame7"
         };
 
         private static readonly Texture2D ExitCommandIcon = ContentFinder<Texture2D>.Get(ExitFrameTexPaths[0], true);
