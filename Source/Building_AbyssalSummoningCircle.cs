@@ -91,6 +91,9 @@ namespace AbyssalProtocol
         private int phaseTicksRemaining;
         private int phaseDuration;
         private int ritualSeed;
+        private int sigilPrimingVisualTicksRemaining;
+        private float sigilPrimingProgress;
+        private int sigilPrimingSeed;
 
         private PawnKindDef pendingPawnKindDef;
         private string pendingBossLabel;
@@ -190,6 +193,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref phaseTicksRemaining, "phaseTicksRemaining", 0);
             Scribe_Values.Look(ref phaseDuration, "phaseDuration", 0);
             Scribe_Values.Look(ref ritualSeed, "ritualSeed", 0);
+            Scribe_Values.Look(ref sigilPrimingVisualTicksRemaining, "sigilPrimingVisualTicksRemaining", 0);
+            Scribe_Values.Look(ref sigilPrimingProgress, "sigilPrimingProgress", 0f);
+            Scribe_Values.Look(ref sigilPrimingSeed, "sigilPrimingSeed", 0);
             Scribe_Defs.Look(ref pendingPawnKindDef, "pendingPawnKindDef");
             Scribe_Values.Look(ref pendingBossLabel, "pendingBossLabel");
             Scribe_Values.Look(ref pendingRitualId, "pendingRitualId");
@@ -400,6 +406,7 @@ namespace AbyssalProtocol
             TickCapacitorCharge();
             TickCapacitorRitualFeed();
             TickInstabilityState();
+            TickSigilPrimingVisual();
 
             if (!RitualActive || Map == null)
             {
@@ -604,6 +611,7 @@ namespace AbyssalProtocol
                 Messages.Message("ABY_CapacitorForcedStart_Queued".Translate(), MessageTypeDefOf.NeutralEvent, false);
             }
 
+            ClearSigilPrimingVisual();
             StartPhase(RitualPhase.Charging, GetPhaseDurationForPendingRitual(RitualPhase.Charging));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
             SpawnMinorMote("ABY_Mote_ArchonDashTrail", 0.95f);
@@ -682,6 +690,13 @@ namespace AbyssalProtocol
                 float breachPulse = 0.84f + 0.16f * Mathf.PingPong(ticks * 0.20f, 1f);
                 DrawLayer(IdleGlowGraphic, center, BreachSize * breachPulse, breachAngle * -0.65f, 0.027f);
                 DrawLayer(CoreGlowGraphic, center, BreachSize * (0.65f + ritualIntensity * 0.22f), breachAngle * 1.35f, 0.028f);
+            }
+
+            if (ritualPhase == RitualPhase.Idle && sigilPrimingVisualTicksRemaining > 0)
+            {
+                float visibility = Mathf.Clamp01(sigilPrimingVisualTicksRemaining / 14f);
+                int primingSeed = sigilPrimingSeed != 0 ? sigilPrimingSeed : thingIDNumber * 503;
+                ABY_SummoningCircleActivationVFXUtility.DrawPriming(this, center, sigilPrimingProgress, primingSeed, reducedConsoleEffects, visibility);
             }
 
             ABY_SummoningCircleActivationVFXUtility.Draw(this, center, CurrentRitualPhase, GetPhaseProgress(), ritualSeed, reducedConsoleEffects);
@@ -1511,6 +1526,50 @@ namespace AbyssalProtocol
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             int hashOffset = thingIDNumber >= 0 ? thingIDNumber : 0;
             return (ticksGame + hashOffset) % interval == 0;
+        }
+
+        public void NotifySigilPriming(float progress, int seed)
+        {
+            if (Map == null || ritualPhase != RitualPhase.Idle || !IsPoweredForRitual)
+            {
+                return;
+            }
+
+            sigilPrimingProgress = Mathf.Clamp01(progress);
+            sigilPrimingSeed = seed != 0 ? seed : thingIDNumber * 503;
+            sigilPrimingVisualTicksRemaining = 14;
+        }
+
+        public void NotifySigilPrimingEnded()
+        {
+            if (sigilPrimingVisualTicksRemaining > 0)
+            {
+                sigilPrimingVisualTicksRemaining = Mathf.Min(sigilPrimingVisualTicksRemaining, 10);
+            }
+        }
+
+        private void ClearSigilPrimingVisual()
+        {
+            sigilPrimingVisualTicksRemaining = 0;
+            sigilPrimingProgress = 0f;
+            sigilPrimingSeed = 0;
+        }
+
+        private void TickSigilPrimingVisual()
+        {
+            if (sigilPrimingVisualTicksRemaining > 0)
+            {
+                sigilPrimingVisualTicksRemaining--;
+            }
+
+            if (sigilPrimingVisualTicksRemaining <= 0)
+            {
+                sigilPrimingVisualTicksRemaining = 0;
+                if (ritualPhase == RitualPhase.Idle)
+                {
+                    sigilPrimingProgress = 0f;
+                }
+            }
         }
 
         private void TickRitualEffects()

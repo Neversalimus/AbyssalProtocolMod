@@ -22,6 +22,43 @@ namespace AbyssalProtocol
         private static readonly string[] BeamFramePaths = BuildFramePaths("ABY_AscensionBeam");
         private static readonly HashSet<string> MissingTexturePaths = new HashSet<string>();
 
+        public static void DrawPriming(
+            Building_AbyssalSummoningCircle circle,
+            Vector3 center,
+            float progress,
+            int seed,
+            bool reducedEffects,
+            float visibility)
+        {
+            if (circle == null || circle.Map == null || visibility <= 0.001f)
+            {
+                return;
+            }
+
+            float clampedProgress = Mathf.Clamp01(progress);
+            float fade = Mathf.Clamp01(visibility);
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            float pulse = 0.5f + 0.5f * Mathf.Sin((ticks + seed * 0.041f) * 0.072f);
+            float reducedFactor = reducedEffects ? 0.56f : 1f;
+            float ignitionProgress = Mathf.Clamp01(clampedProgress * 0.68f + 0.03f);
+            float ignitionAlpha = Mathf.Lerp(0.10f, 0.24f, Mathf.SmoothStep(0f, 1f, clampedProgress)) * fade * reducedFactor;
+            int ignitionFrame = FrameFromProgress(ignitionProgress);
+            float ignitionScale = IgnitionScale * Mathf.Lerp(0.84f, 0.91f, Mathf.SmoothStep(0f, 1f, clampedProgress)) * (1f + (pulse - 0.5f) * 0.018f);
+            Vector3 ignitionLoc = center;
+            ignitionLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + GroundOverlayAltitude;
+            DrawFrame(IgnitionFramePaths, ignitionFrame, ignitionLoc, new Vector2(ignitionScale, ignitionScale), 0f, ignitionAlpha, true);
+
+            if (clampedProgress > 0.72f)
+            {
+                float bloomProgress = Mathf.Clamp01((clampedProgress - 0.72f) / 0.28f) * 0.32f;
+                float bloomAlpha = Mathf.Lerp(0.04f, 0.12f, bloomProgress) * fade * reducedFactor;
+                float bloomScale = BloomScale * 0.62f * (1f + (pulse - 0.5f) * 0.030f);
+                Vector3 bloomLoc = center;
+                bloomLoc.y = AltitudeLayer.BuildingOnTop.AltitudeFor() + BloomOverlayAltitude;
+                DrawFrame(BloomFramePaths, FrameFromProgress(bloomProgress), bloomLoc, new Vector2(bloomScale, bloomScale), 0f, bloomAlpha, true);
+            }
+        }
+
         public static void Draw(
             Building_AbyssalSummoningCircle circle,
             Vector3 center,
@@ -74,12 +111,8 @@ namespace AbyssalProtocol
 
                 case Building_AbyssalSummoningCircle.ConsoleRitualPhase.Cooldown:
                     float fade = 1f - progress;
-                    DrawIgnition(center, 1f, 0.08f * fade * reducedFactor, pulse, seed);
-                    DrawBloom(center, 1f, 0.10f * fade * reducedFactor, pulse, seed);
-                    if (!reducedEffects && progress < 0.22f)
-                    {
-                        DrawBeamAfterglow(center, progress / 0.22f, pulse, seed);
-                    }
+                    DrawIgnition(center, 1f, 0.07f * fade * reducedFactor, pulse, seed);
+                    DrawBloom(center, 1f, 0.09f * fade * reducedFactor, pulse, seed);
                     break;
             }
         }

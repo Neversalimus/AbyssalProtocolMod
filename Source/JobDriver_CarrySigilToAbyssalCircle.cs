@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RimWorld;
+using UnityEngine;
 using Verse;
 using Verse.AI;
 
@@ -196,6 +197,7 @@ namespace AbyssalProtocol
                 if (Circle != null && actor.rotationTracker != null)
                 {
                     actor.rotationTracker.FaceCell(Circle.Position);
+                    Circle.NotifySigilPriming(0f, actor.thingIDNumber);
                     ABY_SoundUtility.PlayAt("ABY_SigilActivate", job.GetTarget(SigilInd).Cell, actor.MapHeld);
                 }
             };
@@ -213,11 +215,20 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                if ((actor.IsHashIntervalTick(30) || actor.jobs.curDriver.ticksLeftThisToil == GetWarmupTicks() - 1) && Circle.IsPoweredForRitual)
+                int warmupTicks = GetWarmupTicks();
+                int ticksLeft = actor.jobs.curDriver.ticksLeftThisToil;
+                float primingProgress = warmupTicks > 0 ? 1f - Mathf.Clamp01((float)ticksLeft / warmupTicks) : 1f;
+                Circle.NotifySigilPriming(primingProgress, actor.thingIDNumber);
+
+                if ((actor.IsHashIntervalTick(30) || ticksLeft == warmupTicks - 1) && Circle.IsPoweredForRitual)
                 {
                     ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", job.GetTarget(SigilInd).Cell, actor.MapHeld);
                 }
             };
+            warmup.AddFinishAction(delegate
+            {
+                Circle?.NotifySigilPrimingEnded();
+            });
             yield return warmup;
 
             Toil invoke = new Toil();
