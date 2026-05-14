@@ -12,10 +12,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_InfernalCombatFrame"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>
@@ -28,10 +29,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_NullAcolyteVestment"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>
@@ -44,10 +46,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_AbyssalGravplatePrototype"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>
@@ -60,10 +63,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>
@@ -76,10 +80,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_GatebreakerCarapace"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>
@@ -92,10 +97,11 @@
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
-            <disallowedBodyTypes>
-              <li>Fat</li>
-              <li>Hulk</li>
-            </disallowedBodyTypes>
+            <allowedBodyTypes>
+              <li>Male</li>
+              <li>Female</li>
+              <li>Thin</li>
+            </allowedBodyTypes>
           </li>
         </value>
       </li>

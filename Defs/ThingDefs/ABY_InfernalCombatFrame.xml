@@ -42,5 +42,14 @@
       <ArmorRating_Blunt>0.36</ArmorRating_Blunt>
       <ArmorRating_Heat>0.54</ArmorRating_Heat>
     </statBases>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+        <allowedBodyTypes>
+          <li>Male</li>
+          <li>Female</li>
+          <li>Thin</li>
+        </allowedBodyTypes>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

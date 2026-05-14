@@ -8,6 +8,24 @@ namespace AbyssalProtocol
     public static class ABY_ApparelBodyTypeRestrictionUtility
     {
         private const int MessageThrottleTicks = 240;
+
+        private static readonly HashSet<string> ForcedRestrictedBodyArmorDefNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "ABY_InfernalCombatFrame",
+            "ABY_NullAcolyteVestment",
+            "ABY_AbyssalGravplatePrototype",
+            "ABY_SaintAegisCarapace",
+            "ABY_GatebreakerCarapace",
+            "ABY_CrownedCorePlate"
+        };
+
+        private static readonly HashSet<string> DefaultAllowedBodyTypeDefNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Male",
+            "Female",
+            "Thin"
+        };
+
         private static readonly Dictionary<string, int> LastMessageTicksByKey = new Dictionary<string, int>();
 
         public static DefModExtension_ABY_ApparelBodyTypeRestriction GetRestriction(ThingDef apparelDef)
@@ -17,7 +35,17 @@ namespace AbyssalProtocol
 
         public static bool HasRestriction(ThingDef apparelDef)
         {
-            return GetRestriction(apparelDef) != null;
+            return GetRestriction(apparelDef) != null || IsForcedRestrictedBodyArmor(apparelDef);
+        }
+
+        public static bool IsForcedRestrictedBodyArmor(ThingDef apparelDef)
+        {
+            return !string.IsNullOrEmpty(apparelDef?.defName) && ForcedRestrictedBodyArmorDefNames.Contains(apparelDef.defName);
+        }
+
+        public static bool CanWear(Pawn pawn, Apparel apparel)
+        {
+            return CanWear(pawn, apparel?.def);
         }
 
         public static bool CanWear(Pawn pawn, ThingDef apparelDef)
@@ -30,7 +58,19 @@ namespace AbyssalProtocol
             restriction = GetRestriction(apparelDef);
             bodyTypeDefName = ResolveBodyTypeDefName(pawn);
 
-            if (restriction == null || string.IsNullOrEmpty(bodyTypeDefName))
+            if (apparelDef == null || string.IsNullOrEmpty(bodyTypeDefName))
+            {
+                return true;
+            }
+
+            // Hard fallback for the six Abyssal torso armor defs. This makes the restriction work even if
+            // a patch operation is skipped, a saved def cache is stale, or another mod strips modExtensions.
+            if (IsForcedRestrictedBodyArmor(apparelDef) && !DefaultAllowedBodyTypeDefNames.Contains(bodyTypeDefName))
+            {
+                return false;
+            }
+
+            if (restriction == null)
             {
                 return true;
             }
@@ -100,6 +140,22 @@ namespace AbyssalProtocol
             }
 
             Messages.Message(message, pawn, MessageTypeDefOf.CautionInput, false);
+        }
+
+        public static bool TryRejectIncompatibleWear(Pawn pawn, ThingDef apparelDef)
+        {
+            if (CanWear(pawn, apparelDef, out DefModExtension_ABY_ApparelBodyTypeRestriction restriction, out _))
+            {
+                return false;
+            }
+
+            TryShowRejectMessage(pawn, apparelDef, restriction);
+            return true;
+        }
+
+        public static bool TryRejectIncompatibleWear(Pawn pawn, Apparel apparel)
+        {
+            return TryRejectIncompatibleWear(pawn, apparel?.def);
         }
 
         public static bool TryRemoveIncompatibleWornApparel(Pawn pawn, bool showMessage)

@@ -75,6 +75,13 @@
         <sparkAlpha>0.40</sparkAlpha>
         <drawPriority>10</drawPriority>
       </li>
+      <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+        <allowedBodyTypes>
+          <li>Male</li>
+          <li>Female</li>
+          <li>Thin</li>
+        </allowedBodyTypes>
+      </li>
     </modExtensions>
     <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>

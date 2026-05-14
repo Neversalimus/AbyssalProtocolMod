@@ -5,8 +5,8 @@ namespace AbyssalProtocol
 {
     public sealed class ABY_ApparelBodyTypeRestrictionGameComponent : GameComponent
     {
-        private const int InitialDelayTicks = 120;
-        private const int CheckIntervalTicks = 251;
+        private const int InitialDelayTicks = 30;
+        private const int CheckIntervalTicks = 97;
 
         private int nextCheckTick = -1;
 

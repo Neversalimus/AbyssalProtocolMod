@@ -65,6 +65,13 @@
         <requiredResidue>350</requiredResidue>
         <category>Armor</category>
       </li>
+      <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
+        <allowedBodyTypes>
+          <li>Male</li>
+          <li>Female</li>
+          <li>Thin</li>
+        </allowedBodyTypes>
+      </li>
     </modExtensions>
   </ThingDef>
 
