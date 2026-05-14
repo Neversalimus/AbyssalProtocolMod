@@ -146,16 +146,6 @@
         <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
         <breakFlashScale>3.00</breakFlashScale>
         <restoreFlashScale>2.40</restoreFlashScale>
-        <drawPawnAegisOverlay>true</drawPawnAegisOverlay>
-        <activeOverlayTexPath>Pawn/ReactorSaint/Aegis/ABY_ReactorSaint_AegisActive</activeOverlayTexPath>
-        <breakOverlayTexPath>Pawn/ReactorSaint/Aegis/ABY_ReactorSaint_AegisBreak</breakOverlayTexPath>
-        <activeOverlayAlpha>0.82</activeOverlayAlpha>
-        <breakOverlayAlpha>0.92</breakOverlayAlpha>
-        <overlayDrawScale>1.0</overlayDrawScale>
-        <overlayLayerOffset>0.038</overlayLayerOffset>
-        <collapseOverlayFadeTicks>90</collapseOverlayFadeTicks>
-        <pulseActiveOverlay>true</pulseActiveOverlay>
-        <respectReducedMotion>true</respectReducedMotion>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_ReactorOverheatField">
         <hediffDefName>ABY_ReactorSaturation</hediffDefName>

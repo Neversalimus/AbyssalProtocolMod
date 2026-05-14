@@ -8,9 +8,9 @@
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
     <combatPower>3200</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
+    <minGenerationAge>20</minGenerationAge>
+    <maxGenerationAge>320</maxGenerationAge>
     <canArriveManhunter>false</canArriveManhunter>
-    <minGenerationAge>45</minGenerationAge>
-    <maxGenerationAge>260</maxGenerationAge>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>5</contentTier>
