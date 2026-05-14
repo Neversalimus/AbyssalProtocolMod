@@ -145,6 +145,15 @@ namespace AbyssalProtocol
             }
         }
 
+        public int CollapseWindowTicksRemaining
+        {
+            get
+            {
+                int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+                return Math.Max(0, collapseWindowUntilTick - ticksGame);
+            }
+        }
+
         private void StartCollapseWindow(Pawn pawn)
         {
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
