@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftNeedlerCore</defName>
     <label>rift needler core</label>
-    <description>Slot: Main weapon. Compatible chassis: Medium. Role: anti-light sustained fire. Effect: gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure. Stats: range 28.5, cooldown 2.5s, burst 3, no extra module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-light sustained fire.&#10;Effect: gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure.&#10;Range: 28.5.&#10;Cooldown: 2.5s.&#10;Burst: 3.&#10;Extra module power draw: 0 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -31,7 +31,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_PlasmaLanceCore</defName>
     <label>plasma lance core</label>
-    <description>Slot: Main weapon. Compatible chassis: Medium. Role: anti-armor lance. Effect: replaces the turret main weapon with a slower long-range ultra-plasma bolt for armor, elites, and early boss pressure. Stats: range 33.5, cooldown 4.3s, burst 1, +120 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-armor lance.&#10;Effect: replaces the turret main weapon with a slower long-range ultra-plasma bolt for armor, elites, and early boss pressure.&#10;Range: 33.5.&#10;Cooldown: 4.3s.&#10;Burst: 1.&#10;Extra module power draw: +120 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -58,7 +58,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
-    <description>Slot: Auxiliary. Compatible chassis: Medium. Role: secondary crowd pressure. Effect: adds an independent timed canticle-wave support shot while the main weapon keeps firing normally. Stats: range 30.0, auxiliary cooldown 7.0s, burst 1, +130 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Auxiliary.&#10;Compatible chassis: Medium.&#10;Role: secondary crowd pressure.&#10;Effect: adds an independent timed canticle-wave support shot while the main weapon keeps firing normally.&#10;Range: 30.0.&#10;Auxiliary cooldown: 7.0s.&#10;Burst: 1.&#10;Extra module power draw: +130 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -85,7 +85,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CoolingLattice</defName>
     <label>cooling lattice</label>
-    <description>Slot: Passive. Compatible chassis: Medium. Role: cadence stabilizer. Effect: reduces installed main weapon cooldown by 16%, making the turret fire more often. Trade-off: +70 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: cadence stabilizer.&#10;Effect: reduces installed main weapon cooldown by 16%, making the turret fire more often.&#10;Main weapon cooldown: -16%.&#10;Extra module power draw: +70 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CoolingLattice</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -112,7 +112,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_TargetingSigil</defName>
     <label>targeting sigil</label>
-    <description>Slot: Passive. Compatible chassis: Medium. Role: range and tracking. Effect: adds +3.5 cells to installed main weapon range and reserves a small future accuracy hook. Trade-off: +80 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: range and tracking.&#10;Effect: adds +3.5 cells to installed main weapon range and reserves a small future accuracy hook.&#10;Main weapon range: +3.5 cells.&#10;Extra module power draw: +80 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_TargetingSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -139,7 +139,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ResidueCapacitor</defName>
     <label>residue capacitor</label>
-    <description>Slot: Passive. Compatible chassis: Medium. Role: charge buffer. Effect: adds +1.5 cells to installed main weapon range and reduces installed main weapon cooldown by 8%. Trade-off: +120 W module power draw. Does nothing by itself until installed in a compatible chassis.</description>
+    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: charge buffer.&#10;Effect: adds +1.5 cells to installed main weapon range and reduces installed main weapon cooldown by 8%.&#10;Main weapon range: +1.5 cells.&#10;Main weapon cooldown: -8%.&#10;Extra module power draw: +120 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ResidueCapacitor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
