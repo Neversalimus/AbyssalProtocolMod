@@ -678,11 +678,32 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private Vector3 ResolveSocketWorldPosition(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return parent.DrawPos;
+            }
+
+            Vector3 socketOffset = Vector3.zero;
+            if (module.slot == ABY_TurretModuleSlot.Auxiliary)
+            {
+                socketOffset = new Vector3(Props.auxiliarySocketSideOffset, 0f, Props.auxiliarySocketForwardOffset);
+            }
+            else if (module.slot == ABY_TurretModuleSlot.MainWeapon)
+            {
+                socketOffset = new Vector3(Props.mainWeaponSocketSideOffset, 0f, Props.mainWeaponSocketForwardOffset);
+            }
+
+            return parent.DrawPos + socketOffset;
+        }
+
         private Vector3 ResolveOverlayPlaneCenter(ABY_TurretModuleDef module, Quaternion rotation)
         {
-            Vector3 anchorOffset = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
-            Vector3 pivotOffset = new Vector3(module.overlayPivotSideOffset, 0f, module.overlayPivotForwardOffset);
-            return parent.DrawPos + rotation * (anchorOffset - pivotOffset);
+            Vector3 socketWorldPos = ResolveSocketWorldPosition(module);
+            Vector3 centerNudge = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
+            Vector3 pivotFromTextureCenter = new Vector3(module.overlayPivotSideOffset, 0f, module.overlayPivotForwardOffset);
+            return socketWorldPos + rotation * (centerNudge - pivotFromTextureCenter);
         }
 
         private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target)
@@ -694,8 +715,9 @@ namespace AbyssalProtocol
 
             float angle = module.overlayRotatesToTarget && target != null ? AngleToTarget(target) : 0f;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-            Vector3 muzzleOffset = new Vector3(module.overlaySideOffset + module.overlayMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
-            Vector3 origin = parent.DrawPos + rotation * muzzleOffset;
+            Vector3 socketWorldPos = ResolveSocketWorldPosition(module);
+            Vector3 muzzleFromSocket = new Vector3(module.overlaySideOffset + module.overlayMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
+            Vector3 origin = socketWorldPos + rotation * muzzleFromSocket;
             origin.y = parent.DrawPos.y;
             return origin;
         }
