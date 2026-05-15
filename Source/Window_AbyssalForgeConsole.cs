@@ -17,6 +17,12 @@ namespace AbyssalProtocol
         private float billViewHeight = 1000f;
         private Bill mouseoverBill;
         private string selectedCategory = AbyssalForgeProgressUtility.AllCategory;
+        private string selectedTurretSystemsFilter = TurretFilterAll;
+
+        private const string TurretFilterAll = "All";
+        private const string TurretFilterMain = "Main";
+        private const string TurretFilterAuxiliary = "Auxiliary";
+        private const string TurretFilterPassive = "Passive";
 
         public Window_AbyssalForgeConsole(Building_AbyssalForge forge)
         {
@@ -273,7 +279,17 @@ namespace AbyssalProtocol
                 Rect buttonRect = new Rect(inner.x + width * i, inner.y, width - 4f, inner.height);
                 if (AbyssalStyledWidgets.TabButton(buttonRect, AbyssalForgeProgressUtility.GetCategoryLabel(category), AbyssalForgeConsoleArt.GetCategoryIcon(category), category == selectedCategory))
                 {
+                    if (selectedCategory != category)
+                    {
+                        patternScrollPosition = Vector2.zero;
+                    }
+
                     selectedCategory = category;
+                    if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory && selectedTurretSystemsFilter.NullOrEmpty())
+                    {
+                        selectedTurretSystemsFilter = TurretFilterAll;
+                    }
+
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             }
@@ -288,6 +304,7 @@ namespace AbyssalProtocol
             bool turretSystemsMode = selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory;
             List<RecipeDef> recipes = AbyssalForgeProgressUtility.GetForgeRecipes()
                 .Where(recipe => AbyssalForgeProgressUtility.RecipeMatchesCategory(recipe, selectedCategory))
+                .Where(recipe => !turretSystemsMode || TurretRecipeMatchesFilter(recipe, selectedTurretSystemsFilter))
                 .OrderBy(recipe => turretSystemsMode ? GetTurretSystemRecipeOrder(recipe) : AbyssalForgeProgressUtility.GetCategoryOrderIndex(AbyssalForgeProgressUtility.GetCategory(recipe)))
                 .ThenBy(AbyssalForgeProgressUtility.GetRequiredResidue)
                 .ThenBy(AbyssalForgeProgressUtility.GetRecipeDisplayLabel)
@@ -296,9 +313,9 @@ namespace AbyssalProtocol
             float contentTop = inner.y + 28f;
             if (turretSystemsMode)
             {
-                Rect guideRect = new Rect(inner.x, contentTop, inner.width, 34f);
-                DrawTurretSystemsGuide(guideRect);
-                contentTop += 42f;
+                Rect filterRect = new Rect(inner.x, contentTop, inner.width, 30f);
+                DrawTurretSystemsFilterRow(filterRect);
+                contentTop += 38f;
             }
 
             Rect outRect = new Rect(inner.x, contentTop, inner.width, inner.yMax - contentTop);
@@ -366,25 +383,110 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawTurretSystemsGuide(Rect rect)
+        private void DrawTurretSystemsFilterRow(Rect rect)
         {
             AbyssalForgeConsoleArt.Fill(rect, new Color(0.10f, 0.075f, 0.065f, 0.82f));
             AbyssalForgeConsoleArt.DrawOutline(rect, new Color(1f, 0.36f, 0.13f, 0.35f));
 
-            Rect labelRect = new Rect(rect.x + 10f, rect.y + 7f, 278f, 20f);
-            Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
-            ABY_UIPolishUtility.SafeLabel(labelRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_ForgeTurretSystemsGuide", "Turret progression: chassis, main weapons, auxiliary support, and passive upgrades."));
+            float buttonHeight = 22f;
+            float buttonY = rect.y + (rect.height - buttonHeight) / 2f;
+            float gap = 8f;
+            float allWidth = 62f;
+            float mainWidth = 70f;
+            float auxWidth = 62f;
+            float passiveWidth = 86f;
+            float totalWidth = allWidth + mainWidth + auxWidth + passiveWidth + gap * 3f;
+            float x = rect.x + Mathf.Max(10f, (rect.width - totalWidth) / 2f);
 
-            float chipX = rect.xMax - 296f;
-            DrawTurretSlotChip(new Rect(chipX, rect.y + 7f, 64f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Chassis", "CHASSIS"), new Color(0.62f, 0.60f, 0.55f, 1f));
-            DrawTurretSlotChip(new Rect(chipX + 70f, rect.y + 7f, 54f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Main", "MAIN"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.MainWeapon));
-            DrawTurretSlotChip(new Rect(chipX + 130f, rect.y + 7f, 48f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Aux", "AUX"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Auxiliary));
-            DrawTurretSlotChip(new Rect(chipX + 184f, rect.y + 7f, 74f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Passive", "PASSIVE"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Passive));
+            DrawTurretFilterButton(new Rect(x, buttonY, allWidth, buttonHeight), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_All", "ALL"), new Color(0.72f, 0.66f, 0.56f, 1f), TurretFilterAll);
+            x += allWidth + gap;
+            DrawTurretFilterButton(new Rect(x, buttonY, mainWidth, buttonHeight), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Main", "MAIN"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.MainWeapon), TurretFilterMain);
+            x += mainWidth + gap;
+            DrawTurretFilterButton(new Rect(x, buttonY, auxWidth, buttonHeight), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Aux", "AUX"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Auxiliary), TurretFilterAuxiliary);
+            x += auxWidth + gap;
+            DrawTurretFilterButton(new Rect(x, buttonY, passiveWidth, buttonHeight), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Passive", "PASSIVE"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Passive), TurretFilterPassive);
+
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private void DrawTurretFilterButton(Rect rect, string label, Color color, string filter)
+        {
+            bool active = selectedTurretSystemsFilter == filter;
+            bool hovered = Mouse.IsOver(rect);
+            Color fill = active
+                ? new Color(color.r * 0.30f, color.g * 0.20f, color.b * 0.14f, 0.98f)
+                : hovered
+                    ? new Color(color.r * 0.22f, color.g * 0.15f, color.b * 0.12f, 0.96f)
+                    : new Color(color.r * 0.14f, color.g * 0.10f, color.b * 0.09f, 0.92f);
+            Color outline = active
+                ? Color.Lerp(color, Color.white, 0.26f)
+                : new Color(color.r, color.g, color.b, hovered ? 0.88f : 0.62f);
+
+            AbyssalForgeConsoleArt.Fill(rect, fill);
+            AbyssalForgeConsoleArt.DrawOutline(rect, outline);
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = active ? Color.white : AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), label);
+
+            if (Widgets.ButtonInvisible(rect, false))
+            {
+                if (selectedTurretSystemsFilter != filter)
+                {
+                    selectedTurretSystemsFilter = filter;
+                    patternScrollPosition = Vector2.zero;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+
+            TooltipHandler.TipRegion(rect, GetTurretFilterTooltip(filter));
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private static string GetTurretFilterTooltip(string filter)
+        {
+            switch (filter)
+            {
+                case TurretFilterMain:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_MainTooltip", "Show modular turret main weapon cores.");
+                case TurretFilterAuxiliary:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_AuxTooltip", "Show modular turret auxiliary weapon modules.");
+                case TurretFilterPassive:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_PassiveTooltip", "Show modular turret passive upgrade modules.");
+                default:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_AllTooltip", "Show all modular turret chassis and modules.");
+            }
+        }
+
+        private static bool TurretRecipeMatchesFilter(RecipeDef recipe, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == TurretFilterAll)
+            {
+                return true;
+            }
+
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (module == null)
+            {
+                return false;
+            }
+
+            switch (filter)
+            {
+                case TurretFilterMain:
+                    return module.slot == ABY_TurretModuleSlot.MainWeapon;
+                case TurretFilterAuxiliary:
+                    return module.slot == ABY_TurretModuleSlot.Auxiliary;
+                case TurretFilterPassive:
+                    return module.slot == ABY_TurretModuleSlot.Passive;
+                default:
+                    return true;
+            }
         }
 
         private void DrawTurretSystemPatternCard(Rect rect, RecipeDef recipe, bool unlocked, bool freshlyUnlocked)
@@ -850,6 +952,8 @@ namespace AbyssalProtocol
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<RecipeDef> availableRecipes = forge?.ProgressComponent != null
                 ? forge.ProgressComponent.GetUnlockedRecipes(selectedCategory)
+                    .Where(recipe => selectedCategory != AbyssalForgeProgressUtility.TurretSystemsCategory || TurretRecipeMatchesFilter(recipe, selectedTurretSystemsFilter))
+                    .ToList()
                 : new List<RecipeDef>();
 
             for (int i = 0; i < availableRecipes.Count; i++)
