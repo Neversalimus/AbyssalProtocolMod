@@ -6,7 +6,7 @@
     <label>rift needler core</label>
     <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-light sustained fire.&#10;Effect: gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure.&#10;Range: 28.5.&#10;Cooldown: 2.5s.&#10;Burst: 3.&#10;Extra module power draw: 0 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
-      <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftNeedlerCore</texPath>
+      <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
@@ -33,7 +33,7 @@
     <label>plasma lance core</label>
     <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-armor lance.&#10;Effect: replaces the turret main weapon with a slower long-range ultra-plasma bolt for armor, elites, and early boss pressure.&#10;Range: 33.5.&#10;Cooldown: 4.3s.&#10;Burst: 1.&#10;Extra module power draw: +120 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
     <graphicData>
-      <texPath>Things/Item/TurretModules/ABY_TurretModule_PlasmaLanceCore</texPath>
+      <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
