@@ -11,15 +11,17 @@
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
     <role>anti-light sustained fire</role>
     <tier>1</tier>
-    <projectileDef>ABY_RiftNeedleProjectile</projectileDef>
+    <projectileDef>ABY_TurretRiftNeedleProjectile</projectileDef>
     <soundCast>ABY_SigilRepeaterFire</soundCast>
     <range>28.5</range>
     <cooldownTicks>150</cooldownTicks>
     <burstShotCount>3</burstShotCount>
     <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
     <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftNeedlerCore</overlayTexturePath>
-    <overlayDrawSize>1.42</overlayDrawSize>
-    <overlayForwardOffset>0.18</overlayForwardOffset>
+    <overlayDrawSize>3.25</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>0.00</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.50</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.052</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
