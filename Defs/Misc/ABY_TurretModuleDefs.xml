@@ -60,7 +60,7 @@
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
     <role>secondary crowd pressure</role>
     <tier>2</tier>
-    <projectileDef>ABY_CanticleWaveProjectile</projectileDef>
+    <projectileDef>ABY_TurretChoirArcProjectile</projectileDef>
     <soundCast>ABY_CanticleDriverFire</soundCast>
     <range>30</range>
     <cooldownTicks>420</cooldownTicks>

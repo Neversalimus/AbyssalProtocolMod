@@ -39,4 +39,24 @@
     </projectile>
   </ThingDef>
 
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretChoirArcProjectile</defName>
+    <label>turret choir arc pulse</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_ChoirArcPulse</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretChoirArcProjectile</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.74,1.16)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Blunt</damageDef>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <stoppingPower>2.60</stoppingPower>
+      <speed>78</speed>
+      <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 </Defs>
