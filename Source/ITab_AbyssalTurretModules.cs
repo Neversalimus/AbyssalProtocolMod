@@ -10,8 +10,9 @@ namespace AbyssalProtocol
     {
         private const int MaxVisualAuxiliarySlots = 3;
         private const int MaxVisualPassiveSlots = 5;
-        private const float SlotSize = 64f;
-        private const float SlotGap = 10f;
+        private const float SlotSize = 58f;
+        private const float SlotGap = 8f;
+        private const float LineHeight = 16f;
 
         private ABY_TurretModuleSlot selectedSlot = ABY_TurretModuleSlot.MainWeapon;
         private int selectedPassiveIndex = -1;
@@ -19,7 +20,7 @@ namespace AbyssalProtocol
 
         public ITab_AbyssalTurretModules()
         {
-            size = new Vector2(680f, 540f);
+            size = new Vector2(720f, 540f);
             labelKey = "ABY_ModularTurret_Tab";
         }
 
@@ -37,11 +38,11 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawBackground(root);
             Rect inner = root.ContractedBy(10f);
 
-            DrawHeader(new Rect(inner.x, inner.y, inner.width, 62f), comp);
+            DrawHeader(new Rect(inner.x, inner.y, inner.width, 58f), comp);
 
-            Rect bodyRect = new Rect(inner.x, inner.y + 72f, inner.width, inner.height - 72f);
-            Rect boardRect = new Rect(bodyRect.x, bodyRect.y, 386f, 346f);
-            Rect detailRect = new Rect(boardRect.xMax + 10f, bodyRect.y, bodyRect.width - boardRect.width - 10f, 346f);
+            Rect bodyRect = new Rect(inner.x, inner.y + 68f, inner.width, inner.height - 68f);
+            Rect boardRect = new Rect(bodyRect.x, bodyRect.y, 400f, 334f);
+            Rect detailRect = new Rect(boardRect.xMax + 10f, bodyRect.y, bodyRect.width - boardRect.width - 10f, 334f);
             Rect statsRect = new Rect(bodyRect.x, boardRect.yMax + 10f, bodyRect.width, bodyRect.height - boardRect.height - 10f);
 
             DrawSocketGrid(boardRect, comp);
@@ -79,121 +80,139 @@ namespace AbyssalProtocol
         private void DrawHeader(Rect rect, CompAbyssalModularTurret comp)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, comp.FeatureEnabled);
+            Rect inner = rect.ContractedBy(12f);
+
             Text.Font = GameFont.Medium;
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 12f, rect.y + 6f, rect.width - 24f, 28f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Header", "Abyssal modular turret chassis"));
+            DrawClippedLabel(new Rect(inner.x, inner.y + 1f, inner.width, 28f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Header", "Abyssal modular turret chassis"));
 
             Text.Font = GameFont.Tiny;
             GUI.color = comp.FeatureEnabled ? AbyssalForgeConsoleArt.TextSoftColor : new Color(1f, 0.48f, 0.36f, 1f);
             string subtitle = comp.FeatureEnabled
-                ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_GridSubtitle", "Socket board prototype: click a square to inspect, install, remove, or craft matching turret modules.")
+                ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_GridSubtitle", "Socket board: inspect squares, install modules, and preview turret output.")
                 : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretDisabledMessage", "Modular turret systems are disabled in mod settings.");
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 14f, rect.y + 33f, rect.width - 28f, 22f), subtitle);
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            DrawClippedLabel(new Rect(inner.x + 2f, inner.y + 31f, inner.width - 4f, 18f), subtitle);
+
+            ResetTextState();
         }
 
         private void DrawSocketGrid(Rect rect, CompAbyssalModularTurret comp)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, true);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridHeader", "Module socket grid"));
+
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+            DrawClippedLabel(new Rect(inner.x, inner.y, inner.width, 22f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridHeader", "Module sockets"));
 
             Text.Font = GameFont.Tiny;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 22f, inner.width, 18f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridHint", "Square slots show the chassis layout; grey sockets are reserved for future chassis capacity."));
+            DrawClippedLabel(new Rect(inner.x, inner.y + 23f, inner.width, 18f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridHint", "Click a square to inspect or change that slot."));
             GUI.color = Color.white;
 
-            float mainX = inner.x + (inner.width - SlotSize) / 2f;
-            DrawSlotSquare(new Rect(mainX, inner.y + 48f, SlotSize, SlotSize), comp, ABY_TurretModuleSlot.MainWeapon, comp.MainModule, -1, 0, comp.Props.mainWeaponSlots > 0, "MAIN", GetEmptySlotShortHint(ABY_TurretModuleSlot.MainWeapon));
+            Rect gridRect = new Rect(inner.x, inner.y + 42f, inner.width, inner.height - 42f);
+            float mainY = gridRect.y + 3f;
+            float auxY = gridRect.y + 70f;
+            float passiveTopY = gridRect.y + 139f;
+            float passiveBottomY = gridRect.y + 207f;
+
+            float mainX = gridRect.x + (gridRect.width - SlotSize) / 2f;
+            DrawSlotSquare(new Rect(mainX, mainY, SlotSize, SlotSize), comp, ABY_TurretModuleSlot.MainWeapon, comp.MainModule, -1, 0, comp.Props.mainWeaponSlots > 0, "MAIN", GetEmptySlotShortHint(ABY_TurretModuleSlot.MainWeapon));
 
             float auxGroupWidth = MaxVisualAuxiliarySlots * SlotSize + (MaxVisualAuxiliarySlots - 1) * SlotGap;
-            float auxX = inner.x + (inner.width - auxGroupWidth) / 2f;
+            float auxX = gridRect.x + (gridRect.width - auxGroupWidth) / 2f;
             for (int i = 0; i < MaxVisualAuxiliarySlots; i++)
             {
                 bool active = i < Mathf.Max(0, comp.Props.auxiliarySlots) && i == 0;
                 ABY_TurretModuleDef installed = i == 0 ? comp.AuxiliaryModule : null;
-                DrawSlotSquare(new Rect(auxX + i * (SlotSize + SlotGap), inner.y + 122f, SlotSize, SlotSize), comp, ABY_TurretModuleSlot.Auxiliary, installed, -1, i, active, "AUX " + (i + 1), active ? GetEmptySlotShortHint(ABY_TurretModuleSlot.Auxiliary) : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridFutureAux", "future"));
+                DrawSlotSquare(new Rect(auxX + i * (SlotSize + SlotGap), auxY, SlotSize, SlotSize), comp, ABY_TurretModuleSlot.Auxiliary, installed, -1, i, active, "AUX " + (i + 1), active ? GetEmptySlotShortHint(ABY_TurretModuleSlot.Auxiliary) : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridFutureAux", "Future"));
             }
 
             float passiveGroupWidth = 3 * SlotSize + 2 * SlotGap;
-            float passiveX = inner.x + (inner.width - passiveGroupWidth) / 2f;
+            float passiveX = gridRect.x + (gridRect.width - passiveGroupWidth) / 2f;
             for (int i = 0; i < 3; i++)
             {
-                DrawPassiveSlotSquare(new Rect(passiveX + i * (SlotSize + SlotGap), inner.y + 202f, SlotSize, SlotSize), comp, i);
+                DrawPassiveSlotSquare(new Rect(passiveX + i * (SlotSize + SlotGap), passiveTopY, SlotSize, SlotSize), comp, i);
             }
 
             float passiveBottomWidth = 2 * SlotSize + SlotGap;
-            float passiveBottomX = inner.x + (inner.width - passiveBottomWidth) / 2f;
+            float passiveBottomX = gridRect.x + (gridRect.width - passiveBottomWidth) / 2f;
             for (int i = 3; i < MaxVisualPassiveSlots; i++)
             {
-                DrawPassiveSlotSquare(new Rect(passiveBottomX + (i - 3) * (SlotSize + SlotGap), inner.y + 276f, SlotSize, SlotSize), comp, i);
+                DrawPassiveSlotSquare(new Rect(passiveBottomX + (i - 3) * (SlotSize + SlotGap), passiveBottomY, SlotSize, SlotSize), comp, i);
             }
+
+            ResetTextState();
         }
 
         private void DrawPassiveSlotSquare(Rect rect, CompAbyssalModularTurret comp, int index)
         {
             bool active = index < Mathf.Max(0, comp.Props.passiveSlots);
             ABY_TurretModuleDef installed = index < comp.PassiveModules.Count ? comp.PassiveModules[index] : null;
-            DrawSlotSquare(rect, comp, ABY_TurretModuleSlot.Passive, installed, index, 0, active, "PASS " + (index + 1), active ? GetEmptySlotShortHint(ABY_TurretModuleSlot.Passive) : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridFuturePassive", "future"));
+            DrawSlotSquare(rect, comp, ABY_TurretModuleSlot.Passive, installed, index, 0, active, "PASS " + (index + 1), active ? GetEmptySlotShortHint(ABY_TurretModuleSlot.Passive) : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridFuturePassive", "Future"));
         }
 
         private void DrawSlotSquare(Rect rect, CompAbyssalModularTurret comp, ABY_TurretModuleSlot slot, ABY_TurretModuleDef installed, int passiveIndex, int auxiliaryIndex, bool active, string badge, string emptyShortHint)
         {
             bool selected = IsSelected(slot, passiveIndex, auxiliaryIndex);
             bool available = active && SlotHasAvailableModule(comp, slot);
-            Color slotColor = active ? ABY_ModularTurretUtility.SlotColor(slot) : AbyssalForgeConsoleArt.TextDimColor;
+            Color slotColor = active ? ABY_ModularTurretUtility.SlotColor(slot) : new Color(0.42f, 0.42f, 0.45f, 1f);
+            Color outlineColor = selected ? Color.Lerp(slotColor, Color.white, 0.42f) : new Color(slotColor.r, slotColor.g, slotColor.b, active ? 0.62f : 0.28f);
             Color fillColor = installed != null
-                ? new Color(slotColor.r * 0.20f, slotColor.g * 0.16f, slotColor.b * 0.13f, 0.96f)
-                : active ? new Color(0.09f, 0.075f, 0.07f, 0.96f) : new Color(0.055f, 0.055f, 0.06f, 0.82f);
+                ? new Color(slotColor.r * 0.18f, slotColor.g * 0.13f, slotColor.b * 0.12f, 0.96f)
+                : active ? new Color(0.08f, 0.067f, 0.063f, 0.96f) : new Color(0.045f, 0.045f, 0.05f, 0.86f);
 
             AbyssalForgeConsoleArt.Fill(rect, fillColor);
-            AbyssalForgeConsoleArt.DrawOutline(rect, selected ? Color.Lerp(slotColor, Color.white, 0.35f) : new Color(slotColor.r, slotColor.g, slotColor.b, active ? 0.58f : 0.25f));
-            AbyssalForgeConsoleArt.Fill(new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, 2f), new Color(slotColor.r, slotColor.g, slotColor.b, active ? 0.65f : 0.25f));
+            AbyssalForgeConsoleArt.DrawOutline(rect, outlineColor);
+            AbyssalForgeConsoleArt.Fill(new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, 2f), new Color(slotColor.r, slotColor.g, slotColor.b, active ? 0.65f : 0.22f));
 
             if (!active)
             {
-                GUI.color = new Color(0.55f, 0.55f, 0.58f, 0.45f);
-                Widgets.DrawLineHorizontal(rect.x + 8f, rect.center.y, rect.width - 16f);
-                Widgets.DrawLineVertical(rect.center.x, rect.y + 8f, rect.height - 16f);
+                GUI.color = new Color(0.60f, 0.60f, 0.63f, 0.50f);
+                Widgets.DrawLineHorizontal(rect.x + 10f, rect.center.y, rect.width - 20f);
+                Text.Font = GameFont.Medium;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(new Rect(rect.x, rect.y + 16f, rect.width, 24f), "×");
                 GUI.color = Color.white;
             }
 
             Text.Font = GameFont.Tiny;
-            Text.Anchor = TextAnchor.UpperCenter;
-            GUI.color = active ? Color.white : AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 4f, rect.y + 5f, rect.width - 8f, 16f), badge);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = active ? Color.white : new Color(0.70f, 0.70f, 0.73f, 0.75f);
+            Widgets.Label(new Rect(rect.x + 3f, rect.y + 3f, rect.width - 6f, 15f), badge);
 
             if (installed?.thingDef?.uiIcon != null)
             {
-                Rect iconRect = new Rect(rect.center.x - 17f, rect.y + 22f, 34f, 26f);
-                GUI.color = active ? Color.white : new Color(0.75f, 0.75f, 0.75f, 0.65f);
+                Rect iconRect = new Rect(rect.center.x - 15f, rect.y + 21f, 30f, 24f);
+                GUI.color = active ? Color.white : new Color(0.72f, 0.72f, 0.72f, 0.58f);
                 GUI.DrawTexture(iconRect, installed.thingDef.uiIcon, ScaleMode.ScaleToFit, true);
                 GUI.color = Color.white;
             }
-            else
+            else if (active)
             {
-                GUI.color = installed != null ? slotColor : AbyssalForgeConsoleArt.TextDimColor;
-                string glyph = installed != null ? "◆" : active ? "+" : "×";
+                GUI.color = installed != null ? slotColor : new Color(slotColor.r, slotColor.g, slotColor.b, available ? 0.95f : 0.52f);
                 Text.Font = GameFont.Medium;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x, rect.y + 20f, rect.width, 24f), glyph);
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(new Rect(rect.x, rect.y + 17f, rect.width, 24f), installed != null ? "◆" : "+");
                 Text.Font = GameFont.Tiny;
             }
 
-            GUI.color = installed != null ? AbyssalForgeConsoleArt.TextSoftColor : active ? AbyssalForgeConsoleArt.TextDimColor : new Color(0.55f, 0.55f, 0.58f, 0.75f);
             string bottom = installed != null ? ShortModuleLabel(installed) : emptyShortHint;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 4f, rect.yMax - 18f, rect.width - 8f, 16f), bottom);
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = Color.white;
+            bottom = CompactText(bottom, installed != null ? 8 : 7);
+            GUI.color = installed != null ? AbyssalForgeConsoleArt.TextSoftColor : active ? AbyssalForgeConsoleArt.TextDimColor : new Color(0.56f, 0.56f, 0.60f, 0.80f);
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(new Rect(rect.x + 3f, rect.yMax - 16f, rect.width - 6f, 14f), bottom);
 
             if (selected)
             {
-                AbyssalForgeConsoleArt.DrawOutline(rect.ExpandedBy(2f), Color.Lerp(slotColor, Color.white, 0.45f));
+                AbyssalForgeConsoleArt.DrawOutline(rect.ExpandedBy(2f), Color.Lerp(slotColor, Color.white, 0.55f));
             }
-
-            if (Mouse.IsOver(rect))
+            else if (Mouse.IsOver(rect))
             {
-                AbyssalForgeConsoleArt.DrawOutline(rect, Color.Lerp(slotColor, Color.white, 0.55f));
+                AbyssalForgeConsoleArt.DrawOutline(rect, Color.Lerp(slotColor, Color.white, 0.48f));
             }
 
             if (Widgets.ButtonInvisible(rect, false))
@@ -204,6 +223,7 @@ namespace AbyssalProtocol
             }
 
             TooltipHandler.TipRegion(rect, BuildSlotTooltip(comp, slot, installed, passiveIndex, auxiliaryIndex, active, available));
+            ResetTextState();
         }
 
         private bool IsSelected(ABY_TurretModuleSlot slot, int passiveIndex, int auxiliaryIndex)
@@ -237,68 +257,113 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawPanel(rect, slotView.Installed != null);
             Rect inner = rect.ContractedBy(12f);
             Color slotColor = ABY_ModularTurretUtility.SlotColor(slotView.Slot);
-            AbyssalForgeConsoleArt.Fill(new Rect(inner.x, inner.y, 5f, 28f), slotColor);
+            AbyssalForgeConsoleArt.Fill(new Rect(inner.x, inner.y + 2f, 5f, 27f), slotColor);
 
             Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 12f, inner.y, inner.width - 12f, 24f), slotView.Title);
+            DrawClippedLabel(new Rect(inner.x + 12f, inner.y, inner.width - 12f, 22f), slotView.Title);
 
             Text.Font = GameFont.Tiny;
             GUI.color = slotView.Active ? AbyssalForgeConsoleArt.TextSoftColor : new Color(1f, 0.58f, 0.48f, 1f);
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 12f, inner.y + 24f, inner.width - 12f, 18f), slotView.StateLine);
+            DrawClippedLabel(new Rect(inner.x + 12f, inner.y + 23f, inner.width - 12f, 16f), slotView.StateLine);
             GUI.color = Color.white;
 
-            Rect infoRect = new Rect(inner.x, inner.y + 50f, inner.width, inner.height - 124f);
+            Rect infoRect = new Rect(inner.x, inner.y + 48f, inner.width, inner.height - 116f);
             DrawSelectedSlotInfo(infoRect, comp, slotView);
 
-            DrawSelectedSlotActions(new Rect(inner.x, inner.yMax - 66f, inner.width, 66f), comp, slotView);
+            DrawSelectedSlotActions(new Rect(inner.x, inner.yMax - 62f, inner.width, 62f), comp, slotView);
+            ResetTextState();
         }
 
         private void DrawSelectedSlotInfo(Rect rect, CompAbyssalModularTurret comp, SlotView slotView)
         {
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Tiny;
+
             if (!slotView.Active)
             {
-                Text.Font = GameFont.Tiny;
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(rect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridLockedDetail", "This square is reserved for larger future chassis or later module expansion. It is visible now so the player can understand the full modular layout."));
-                GUI.color = Color.white;
+                DrawWrappedText(rect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridLockedDetail", "Reserved for larger future chassis or later module expansion."), GameFont.Tiny, AbyssalForgeConsoleArt.TextDimColor);
+                ResetTextState();
                 return;
             }
 
             if (slotView.Installed == null)
             {
-                Text.Font = GameFont.Tiny;
-                GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
-                List<string> lines = new List<string>
-                {
-                    GetEmptySlotHint(slotView.Slot),
-                    string.Empty,
-                    ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridAvailableHeader", "Compatible loose modules on map:"),
-                    GetAvailableModulesTooltip(comp, slotView.Slot)
-                };
-                ABY_UIPolishUtility.SafeLabel(rect, string.Join("\n", lines.Where(line => line != null).ToArray()));
-                GUI.color = Color.white;
+                float y = rect.y;
+                y = DrawInfoParagraph(rect, y, GetEmptySlotHint(slotView.Slot), AbyssalForgeConsoleArt.TextSoftColor);
+                y += 6f;
+                DrawSectionLine(rect, ref y, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridAvailableHeader", "Compatible loose modules on map"));
+                DrawInfoParagraph(rect, y, GetAvailableModulesTooltip(comp, slotView.Slot), AbyssalForgeConsoleArt.TextDimColor);
+                ResetTextState();
                 return;
             }
 
             ABY_TurretModuleDef module = slotView.Installed;
-            List<string> detailLines = new List<string>
+            float lineY = rect.y;
+            DrawSectionLine(rect, ref lineY, module.LabelCap);
+            DrawInfoLine(rect, ref lineY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel));
+            DrawInfoLine(rect, ref lineY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Role", "Role: {0}", module.RoleLabel));
+            lineY += 5f;
+            DrawSectionLine(rect, ref lineY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_EffectHeader", "Effect"));
+            lineY = DrawInfoParagraph(rect, lineY, ABY_ModularTurretUtility.GetModuleEffectSummary(module), AbyssalForgeConsoleArt.TextSoftColor);
+            lineY += 5f;
+            DrawSectionLine(rect, ref lineY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_StatsHeader", "Stats"));
+
+            string[] statLines = BuildReadableModuleStats(module).Split('\n');
+            for (int i = 0; i < statLines.Length && lineY < rect.yMax - 2f; i++)
             {
-                module.LabelCap,
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Role", "Role: {0}", module.RoleLabel),
-                string.Empty,
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_EffectHeader", "Effect:"),
-                ABY_ModularTurretUtility.GetModuleEffectSummary(module),
-                string.Empty,
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_StatsHeader", "Stats:"),
-                BuildReadableModuleStats(module)
-            };
+                DrawInfoLine(rect, ref lineY, statLines[i]);
+            }
+
+            ResetTextState();
+        }
+
+        private void DrawSectionLine(Rect rect, ref float y, string text)
+        {
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+            DrawClippedLabel(new Rect(rect.x, y, rect.width, LineHeight), text);
+            y += LineHeight + 1f;
+        }
+
+        private void DrawInfoLine(Rect rect, ref float y, string text)
+        {
+            if (text.NullOrEmpty())
+            {
+                return;
+            }
 
             Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
-            ABY_UIPolishUtility.SafeLabel(rect, string.Join("\n", detailLines.Where(line => line != null).ToArray()));
-            GUI.color = Color.white;
+            DrawClippedLabel(new Rect(rect.x, y, rect.width, LineHeight), text);
+            y += LineHeight;
+        }
+
+        private float DrawInfoParagraph(Rect rect, float y, string text, Color color)
+        {
+            if (text.NullOrEmpty())
+            {
+                return y;
+            }
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = color;
+            float height = Mathf.Min(Text.CalcHeight(text, rect.width), Mathf.Max(20f, rect.yMax - y));
+            Widgets.Label(new Rect(rect.x, y, rect.width, height), text);
+            return y + height;
+        }
+
+        private void DrawWrappedText(Rect rect, string text, GameFont font, Color color)
+        {
+            Text.Font = font;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = color;
+            Widgets.Label(rect, text ?? string.Empty);
         }
 
         private void DrawSelectedSlotActions(Rect rect, CompAbyssalModularTurret comp, SlotView slotView)
@@ -308,8 +373,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Rect topButton = new Rect(rect.x, rect.y, rect.width, 28f);
-            Rect bottomButton = new Rect(rect.x, rect.y + 36f, rect.width, 26f);
+            Rect topButton = new Rect(rect.x, rect.y, rect.width, 27f);
+            Rect bottomButton = new Rect(rect.x, rect.y + 34f, rect.width, 25f);
 
             if (slotView.Installed == null)
             {
@@ -355,7 +420,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            AbyssalStyledWidgets.TextButton(bottomButton, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHint", "Craft in Forge"), false, false, null, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHintTooltip", "Package 0 exposes module recipes in the Abyssal Forge Turret Systems category. Direct forge-opening from turret slots is planned for the next UX pass."));
+            AbyssalStyledWidgets.TextButton(bottomButton, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHint", "Craft in Forge"), false, false, null, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretOpenForgeHintTooltip", "Module recipes are available in the Abyssal Forge Turret Systems category. Direct forge-opening from turret slots is planned."));
         }
 
         private void DrawStatsPanel(Rect rect, CompAbyssalModularTurret comp)
@@ -364,8 +429,9 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(10f);
 
             Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y, inner.width, 22f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsHeader", "Runtime preview"));
+            DrawClippedLabel(new Rect(inner.x, inner.y, inner.width, 22f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsHeader", "Runtime preview"));
 
             Text.Font = GameFont.Tiny;
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
@@ -379,7 +445,7 @@ namespace AbyssalProtocol
 
             List<string> leftLines = new List<string>
             {
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsFeature", "Feature state: {0}", comp.FeatureEnabled ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateEnabled", "enabled") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateDisabled", "disabled")),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsFeature", "Feature: {0}", comp.FeatureEnabled ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateEnabled", "enabled") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateDisabled", "disabled")),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPower", "Power: {0}", comp.IsPowered ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOnline", "online") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOffline", "offline")),
                 ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsRange", "Main range: {0}", comp.HasMainWeapon ? comp.ResolvedRange.ToString("0.0") : "—"),
                 cooldownText
@@ -387,16 +453,15 @@ namespace AbyssalProtocol
 
             List<string> rightLines = new List<string>
             {
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDraw", "Power draw: {0} W base + {1} W modules = {2} W applied", comp.ResolvedBasePowerDraw.ToString("0"), comp.ResolvedModulePowerDraw.ToString("0"), comp.ResolvedTotalPowerDraw.ToString("0")),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsTargetingShort", "Targeting: skips downed/dead targets; burst cancels on invalid targets."),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitchShort", "Kill switch: safe disable without deleting installed modules.")
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDraw", "Power draw: {0} W ({1} base + {2} modules)", comp.ResolvedTotalPowerDraw.ToString("0"), comp.ResolvedBasePowerDraw.ToString("0"), comp.ResolvedModulePowerDraw.ToString("0")),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsTargetingShort", "Targeting: skips downed/dead targets."),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitchShort", "Kill switch: keeps installed modules.")
             };
 
             float columnWidth = (inner.width - 16f) / 2f;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", leftLines.ToArray()));
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + columnWidth + 16f, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", rightLines.ToArray()));
-            GUI.color = Color.white;
-            Text.Font = GameFont.Small;
+            Widgets.Label(new Rect(inner.x, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", leftLines.ToArray()));
+            Widgets.Label(new Rect(inner.x + columnWidth + 16f, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", rightLines.ToArray()));
+            ResetTextState();
         }
 
         private SlotView GetSelectedSlotView(CompAbyssalModularTurret comp)
@@ -436,11 +501,11 @@ namespace AbyssalProtocol
             switch (slot)
             {
                 case ABY_TurretModuleSlot.MainWeapon:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyMain", "install");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyMain", "Empty");
                 case ABY_TurretModuleSlot.Auxiliary:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyAux", "support");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyAux", "Empty");
                 default:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyPassive", "tune");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretGridEmptyPassive", "Empty");
             }
         }
 
@@ -449,11 +514,11 @@ namespace AbyssalProtocol
             switch (slot)
             {
                 case ABY_TurretModuleSlot.MainWeapon:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Main", "Empty. The chassis will not fire until a main weapon core is installed.");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Main", "Empty. Install a main weapon core before the chassis can fire.");
                 case ABY_TurretModuleSlot.Auxiliary:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Aux", "Empty. Auxiliary modules add a secondary timed support shot in this prototype.");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Aux", "Empty. Auxiliary modules add secondary support fire.");
                 default:
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Passive", "Empty. Passive modules alter range, cadence, or module power draw.");
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretEmpty_Passive", "Empty. Passive modules alter range, cadence, accuracy, or power draw.");
             }
         }
 
@@ -511,10 +576,10 @@ namespace AbyssalProtocol
             }
 
             List<string> lines = new List<string>();
-            foreach (ABY_TurretModuleDef module in modules.Take(8))
+            foreach (ABY_TurretModuleDef module in modules.Take(6))
             {
                 int count = comp.parent?.Map != null ? ABY_ModularTurretUtility.GetUsableLooseModuleCount(comp.parent.Map, module) : 0;
-                lines.Add("• " + module.LabelCap + " x" + count + " — " + ABY_ModularTurretUtility.GetModuleForgeCardSummary(module));
+                lines.Add("• " + module.LabelCap + " x" + count);
             }
 
             return string.Join("\n", lines.ToArray());
@@ -538,7 +603,7 @@ namespace AbyssalProtocol
             {
                 int auxCooldown = module.auxiliaryCooldownTicks > 0 ? module.auxiliaryCooldownTicks : module.cooldownTicks;
                 lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_Range", "Range: {0}", module.range.ToString("0.0")));
-                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_AuxCooldown", "Auxiliary cooldown: {0}", ABY_ModularTurretUtility.FormatTicksAsSeconds(auxCooldown)));
+                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_AuxCooldown", "Aux cooldown: {0}", ABY_ModularTurretUtility.FormatTicksAsSeconds(auxCooldown)));
                 lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_Burst", "Burst: {0}", Mathf.Max(1, module.burstShotCount)));
             }
             else
@@ -567,6 +632,39 @@ namespace AbyssalProtocol
             }
 
             return string.Join("\n", lines.Where(line => !line.NullOrEmpty()).ToArray());
+        }
+
+        private static string CompactText(string text, int maxChars)
+        {
+            if (text.NullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            if (text.Length <= maxChars)
+            {
+                return text;
+            }
+
+            return text.Substring(0, Mathf.Max(1, maxChars - 1)) + "…";
+        }
+
+        private static void DrawClippedLabel(Rect rect, string text)
+        {
+            try
+            {
+                Widgets.Label(rect, text ?? string.Empty);
+            }
+            catch
+            {
+            }
+        }
+
+        private static void ResetTextState()
+        {
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
         }
 
         private readonly struct SlotView

@@ -18,34 +18,58 @@ namespace AbyssalProtocol
 
         public static string TranslateOrFallback(string key, string fallback)
         {
+            if (key.NullOrEmpty())
+            {
+                return fallback ?? string.Empty;
+            }
+
             try
             {
-                string translated = key.Translate();
-                return translated == key ? fallback : translated;
+                // RimWorld intentionally obfuscates missing translation keys instead of returning the raw key.
+                // Use CanTranslate first so prototype UI never shows ABY_Tùrrèt... debug text to players.
+                if (key.CanTranslate())
+                {
+                    return key.Translate().ToString();
+                }
             }
             catch
             {
-                return fallback;
             }
+
+            return fallback ?? string.Empty;
         }
 
         public static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
         {
+            string template = fallbackFormat ?? string.Empty;
+            if (!key.NullOrEmpty())
+            {
+                try
+                {
+                    if (key.CanTranslate())
+                    {
+                        template = key.Translate().ToString();
+                    }
+                }
+                catch
+                {
+                    template = fallbackFormat ?? string.Empty;
+                }
+            }
+
             try
             {
-                string translated = key.Translate();
-                string template = translated == key ? fallbackFormat : translated;
                 return string.Format(template, args);
             }
             catch
             {
                 try
                 {
-                    return string.Format(fallbackFormat, args);
+                    return string.Format(fallbackFormat ?? string.Empty, args);
                 }
                 catch
                 {
-                    return fallbackFormat;
+                    return fallbackFormat ?? string.Empty;
                 }
             }
         }
