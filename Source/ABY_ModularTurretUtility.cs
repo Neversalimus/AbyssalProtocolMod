@@ -14,6 +14,18 @@ namespace AbyssalProtocol
         private static Dictionary<ThingDef, ABY_TurretModuleDef> moduleByThingDef;
         private static readonly Dictionary<string, Material> overlayMaterialCache = new Dictionary<string, Material>();
 
+        public readonly struct LooseModuleAvailability
+        {
+            public readonly ABY_TurretModuleDef Module;
+            public readonly int Count;
+
+            public LooseModuleAvailability(ABY_TurretModuleDef module, int count)
+            {
+                Module = module;
+                Count = Mathf.Max(0, count);
+            }
+        }
+
         public static bool Enabled => AbyssalProtocolMod.Settings.enableModularTurrets;
 
         public static string TranslateOrFallback(string key, string fallback)
@@ -147,24 +159,32 @@ namespace AbyssalProtocol
                 .ToList();
         }
 
-        public static ABY_TurretModuleDef FindAvailableModuleOnMap(Map map, ABY_TurretModuleSlot slot, string chassisTag)
+        public static List<LooseModuleAvailability> GetAvailableLooseModulesOnMap(Map map, ABY_TurretModuleSlot slot, string chassisTag)
         {
+            List<LooseModuleAvailability> results = new List<LooseModuleAvailability>();
             if (map?.listerThings == null)
             {
-                return null;
+                return results;
             }
 
             List<ABY_TurretModuleDef> candidates = GetModulesForSlot(slot, chassisTag);
             for (int i = 0; i < candidates.Count; i++)
             {
                 ABY_TurretModuleDef module = candidates[i];
-                if (GetUsableLooseModuleCount(map, module) > 0)
+                int count = GetUsableLooseModuleCount(map, module);
+                if (count > 0)
                 {
-                    return module;
+                    results.Add(new LooseModuleAvailability(module, count));
                 }
             }
 
-            return null;
+            return results;
+        }
+
+        public static ABY_TurretModuleDef FindAvailableModuleOnMap(Map map, ABY_TurretModuleSlot slot, string chassisTag)
+        {
+            List<LooseModuleAvailability> available = GetAvailableLooseModulesOnMap(map, slot, chassisTag);
+            return available.Count > 0 ? available[0].Module : null;
         }
 
         public static int GetUsableLooseModuleCount(Map map, ABY_TurretModuleDef moduleDef)
