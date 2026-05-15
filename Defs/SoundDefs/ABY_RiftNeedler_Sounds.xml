@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_RiftNeedlerFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>4</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Weapons/RiftNeedler_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>23</min>
+          <max>27</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.97</min>
+          <max>1.04</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

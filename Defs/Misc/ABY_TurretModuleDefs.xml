@@ -12,7 +12,7 @@
     <role>anti-light sustained fire</role>
     <tier>1</tier>
     <projectileDef>ABY_TurretRiftNeedleProjectile</projectileDef>
-    <soundCast>ABY_SigilRepeaterFire</soundCast>
+    <soundCast>ABY_RiftNeedlerFire</soundCast>
     <range>28.5</range>
     <cooldownTicks>150</cooldownTicks>
     <burstShotCount>3</burstShotCount>
