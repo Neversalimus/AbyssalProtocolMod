@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_TurretRiftNeedleProjectile"]/thingClass</xpath>
+        <value>
+          <thingClass>AbyssalProtocol.Projectile_ABY_TurretRiftNeedle</thingClass>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_TurretRiftNeedleProjectile"]/graphicData/drawSize</xpath>
+        <value>
+          <drawSize>(0.24,1.08)</drawSize>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
