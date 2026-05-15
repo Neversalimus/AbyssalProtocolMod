@@ -445,8 +445,7 @@ namespace AbyssalProtocol
 
                 float angle = module.overlayRotatesToTarget ? aimAngle : 0f;
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                Vector3 localOffset = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
-                Vector3 drawPos = parent.DrawPos + rotation * localOffset;
+                Vector3 drawPos = ResolveOverlayPlaneCenter(module, rotation);
                 drawPos.y += Mathf.Max(0.001f, module.overlayAltitudeOffset);
 
                 float size = Mathf.Max(0.08f, module.overlayDrawSize);
@@ -679,6 +678,28 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private Vector3 ResolveOverlayPlaneCenter(ABY_TurretModuleDef module, Quaternion rotation)
+        {
+            Vector3 anchorOffset = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
+            Vector3 pivotOffset = new Vector3(module.overlayPivotSideOffset, 0f, module.overlayPivotForwardOffset);
+            return parent.DrawPos + rotation * (anchorOffset - pivotOffset);
+        }
+
+        private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target)
+        {
+            if (module == null || !module.HasOverlay || module.overlayMuzzleForwardOffset == 0f && module.overlayMuzzleSideOffset == 0f)
+            {
+                return parent.DrawPos;
+            }
+
+            float angle = module.overlayRotatesToTarget && target != null ? AngleToTarget(target) : 0f;
+            Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            Vector3 muzzleOffset = new Vector3(module.overlaySideOffset + module.overlayMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
+            Vector3 origin = parent.DrawPos + rotation * muzzleOffset;
+            origin.y = parent.DrawPos.y;
+            return origin;
+        }
+
         private bool Launch(ABY_TurretModuleDef module, Thing target)
         {
             float range = module != null && module.range > 0f ? module.range : ResolvedRange;
@@ -696,7 +717,8 @@ namespace AbyssalProtocol
             try
             {
                 LocalTargetInfo targetInfo = new LocalTargetInfo(target);
-                projectile.Launch(parent, parent.DrawPos, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
+                Vector3 launchOrigin = ResolveLaunchOrigin(module, target);
+                projectile.Launch(parent, launchOrigin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
                 module.soundCast?.PlayOneShot(SoundInfo.InMap(new TargetInfo(parent.Position, parent.Map, false), MaintenanceType.None));
                 return true;
             }

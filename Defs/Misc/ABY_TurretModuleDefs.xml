@@ -41,9 +41,11 @@
     <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
     <extraPowerDraw>120</extraPowerDraw>
     <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</overlayTexturePath>
-    <overlayDrawSize>2.35</overlayDrawSize>
-    <overlayForwardOffset>0.06</overlayForwardOffset>
-    <overlayAltitudeOffset>0.054</overlayAltitudeOffset>
+    <overlayDrawSize>2.94</overlayDrawSize>
+    <overlayForwardOffset>0.04</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.12</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.44</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.064</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
   <AbyssalProtocol.ABY_TurretModuleDef>

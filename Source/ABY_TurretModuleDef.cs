@@ -34,6 +34,15 @@ namespace AbyssalProtocol
         public float overlaySideOffset;
         public float overlayForwardOffset;
         public float overlayAltitudeOffset = 0.04f;
+
+        // Texture-local pivot/muzzle offsets, measured in map cells after drawSize scaling.
+        // RimWorld planes rotate around their texture center; these fields keep the visual mount socket anchored
+        // while still allowing long barrels to rotate cleanly over the chassis.
+        public float overlayPivotSideOffset;
+        public float overlayPivotForwardOffset;
+        public float overlayMuzzleSideOffset;
+        public float overlayMuzzleForwardOffset;
+
         public bool overlayRotatesToTarget = true;
         public bool overlayVisibleWhenDisabled;
 
