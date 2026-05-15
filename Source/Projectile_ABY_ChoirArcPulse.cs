@@ -7,6 +7,7 @@ namespace AbyssalProtocol
     public class Projectile_ABY_ChoirArcPulse : Bullet
     {
         private const int TravelSparkIntervalTicks = 5;
+        private const string ImpactSoundDefName = "ABY_ChoirArcEmitterImpact";
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
@@ -67,6 +68,7 @@ namespace AbyssalProtocol
             }
 
             ChoirArcVfxUtility.SpawnImpact(impactPosition, impactDirection, impactMap, blockedByShield);
+            ABY_SoundUtility.PlayAt(ImpactSoundDefName, impactPosition.ToIntVec3(), impactMap);
         }
     }
 }

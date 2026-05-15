@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_ChoirArcEmitterImpact</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>8</maxSimultaneous>
+    <maxVoices>4</maxVoices>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Weapons/ChoirArcEmitter_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>24~28</volumeRange>
+        <pitchRange>0.98~1.03</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
