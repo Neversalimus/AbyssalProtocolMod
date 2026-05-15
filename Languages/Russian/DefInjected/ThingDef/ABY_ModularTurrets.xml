@@ -14,4 +14,5 @@
   <ABY_TurretModule_TargetingSigil.description>Слот: пассивный.&#10;Совместимый корпус: Medium.&#10;Роль: дальность и сопровождение цели.&#10;Эффект: добавляет +3.5 клетки к дальности установленного основного оружия и оставляет небольшой задел под будущий бонус точности.&#10;Дальность основного оружия: +3.5 клетки.&#10;Доп. энергопотребление модуля: +80 W.&#10;Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_TargetingSigil.description>
   <ABY_TurretModule_ResidueCapacitor.label>residue-конденсатор</ABY_TurretModule_ResidueCapacitor.label>
   <ABY_TurretModule_ResidueCapacitor.description>Слот: пассивный.&#10;Совместимый корпус: Medium.&#10;Роль: буфер заряда.&#10;Эффект: добавляет +1.5 клетки к дальности установленного основного оружия и снижает его перезарядку на 8%.&#10;Дальность основного оружия: +1.5 клетки.&#10;Перезарядка основного оружия: -8%.&#10;Доп. энергопотребление модуля: +120 W.&#10;Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_ResidueCapacitor.description>
+  <ABY_TurretPlasmaLanceBolt.label>плазменный болт турели</ABY_TurretPlasmaLanceBolt.label>
 </LanguageData>

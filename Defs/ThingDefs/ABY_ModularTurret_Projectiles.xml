@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretPlasmaLanceBolt</defName>
+    <label>turret plasma lance bolt</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretPlasmaLanceBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.28,1.45)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>1.05</armorPenetrationBase>
+      <stoppingPower>1.65</stoppingPower>
+      <speed>85</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

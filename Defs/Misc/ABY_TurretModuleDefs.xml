@@ -33,7 +33,7 @@
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
     <role>anti-armor lance</role>
     <tier>2</tier>
-    <projectileDef>ABY_UltraPlasmaBolt</projectileDef>
+    <projectileDef>ABY_TurretPlasmaLanceBolt</projectileDef>
     <soundCast>ABY_UltraPlasmaFire</soundCast>
     <range>33.5</range>
     <cooldownTicks>260</cooldownTicks>
@@ -41,8 +41,8 @@
     <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
     <extraPowerDraw>120</extraPowerDraw>
     <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</overlayTexturePath>
-    <overlayDrawSize>1.62</overlayDrawSize>
-    <overlayForwardOffset>0.22</overlayForwardOffset>
+    <overlayDrawSize>2.35</overlayDrawSize>
+    <overlayForwardOffset>0.06</overlayForwardOffset>
     <overlayAltitudeOffset>0.054</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
