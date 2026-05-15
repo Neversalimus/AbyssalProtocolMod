@@ -16,6 +16,7 @@ namespace AbyssalProtocol
         public ThingDef projectileDef;
         public SoundDef soundCast;
         public float range = 24f;
+        public float minRange;
         public int cooldownTicks = 180;
         public int burstShotCount = 1;
         public int ticksBetweenBurstShots = 8;

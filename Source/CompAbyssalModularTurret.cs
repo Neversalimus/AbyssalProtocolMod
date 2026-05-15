@@ -10,6 +10,10 @@ namespace AbyssalProtocol
 {
     public sealed class CompAbyssalModularTurret : ThingComp
     {
+        private static readonly Color AuxiliaryRangeColor = new Color(0.62f, 0.34f, 1f, 0.62f);
+        private static readonly Color AuxiliaryMinRangeColor = new Color(0.82f, 0.46f, 1f, 0.48f);
+        private static readonly Color MainMinRangeColor = new Color(1f, 0.55f, 0.28f, 0.50f);
+
         private ABY_TurretModuleDef mainModule;
         private ABY_TurretModuleDef auxiliaryModule;
         private List<ABY_TurretModuleDef> passiveModules = new List<ABY_TurretModuleDef>();
@@ -66,6 +70,23 @@ namespace AbyssalProtocol
         }
 
         public int BaseMainCooldownTicks => mainModule != null ? mainModule.cooldownTicks : Props.baseCooldownTicks;
+
+        public float ResolvedMainMinRange => mainModule != null ? Mathf.Max(0f, mainModule.minRange) : 0f;
+
+        public float ResolvedAuxiliaryRange
+        {
+            get
+            {
+                if (auxiliaryModule == null)
+                {
+                    return 0f;
+                }
+
+                return Mathf.Max(4f, auxiliaryModule.range > 0f ? auxiliaryModule.range : ResolvedRange);
+            }
+        }
+
+        public float ResolvedAuxiliaryMinRange => auxiliaryModule != null ? Mathf.Max(0f, auxiliaryModule.minRange) : 0f;
 
         public float ResolvedBasePowerDraw => Mathf.Max(0f, Props.basePowerDraw);
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
@@ -142,7 +163,7 @@ namespace AbyssalProtocol
 
             if (HasMainWeapon && mainCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks)))
             {
-                Thing target = FindTarget(ResolvedRange);
+                Thing target = FindTarget(ResolvedRange, ResolvedMainMinRange);
                 if (target != null)
                 {
                     StartMainBurst(target);
@@ -151,7 +172,7 @@ namespace AbyssalProtocol
 
             if (HasAuxiliary && auxiliaryCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks + 11)))
             {
-                Thing auxTarget = FindTarget(Mathf.Max(4f, auxiliaryModule.range > 0f ? auxiliaryModule.range : ResolvedRange));
+                Thing auxTarget = FindTarget(ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange);
                 if (auxTarget != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(auxTarget);
@@ -174,6 +195,26 @@ namespace AbyssalProtocol
 
             DrawWeaponOverlay(mainModule, mainAimAngle, false);
             DrawWeaponOverlay(auxiliaryModule, auxiliaryAimAngle, false);
+        }
+
+        public override void PostDrawExtraSelectionOverlays()
+        {
+            base.PostDrawExtraSelectionOverlays();
+
+            if (parent == null || !parent.Spawned || parent.MapHeld == null || !FeatureEnabled)
+            {
+                return;
+            }
+
+            if (HasMainWeapon)
+            {
+                DrawMainRangeRings(ResolvedMainMinRange, ResolvedRange);
+            }
+
+            if (HasAuxiliary)
+            {
+                DrawAuxiliaryRangeRings(ResolvedAuxiliaryMinRange, ResolvedAuxiliaryRange);
+            }
         }
 
         public bool CanInstall(ABY_TurretModuleDef moduleDef, out string reason)
@@ -423,6 +464,41 @@ namespace AbyssalProtocol
             return string.Join("\n", lines);
         }
 
+        private void DrawMainRangeRings(float minRange, float maxRange)
+        {
+            DrawRangeRing(maxRange, null);
+            if (minRange > 0.1f && minRange < maxRange - 0.1f)
+            {
+                DrawRangeRing(minRange, MainMinRangeColor);
+            }
+        }
+
+        private void DrawAuxiliaryRangeRings(float minRange, float maxRange)
+        {
+            DrawRangeRing(maxRange, AuxiliaryRangeColor);
+            if (minRange > 0.1f && minRange < maxRange - 0.1f)
+            {
+                DrawRangeRing(minRange, AuxiliaryMinRangeColor);
+            }
+        }
+
+        private void DrawRangeRing(float range, Color? color)
+        {
+            if (range <= 0.1f)
+            {
+                return;
+            }
+
+            if (color.HasValue)
+            {
+                GenDraw.DrawRadiusRing(parent.Position, range, color.Value, null);
+            }
+            else
+            {
+                GenDraw.DrawRadiusRing(parent.Position, range);
+            }
+        }
+
         private void DrawWeaponOverlay(ABY_TurretModuleDef module, float aimAngle, bool forceVisible)
         {
             if (module == null || (!forceVisible && !module.overlayVisibleWhenDisabled && !FeatureEnabled))
@@ -497,7 +573,7 @@ namespace AbyssalProtocol
 
         private void StartMainBurst(Thing target)
         {
-            if (!IsValidLaunchTarget(target, ResolvedRange))
+            if (!IsValidLaunchTarget(target, ResolvedRange, ResolvedMainMinRange))
             {
                 return;
             }
@@ -512,7 +588,7 @@ namespace AbyssalProtocol
 
         private void TickBurst()
         {
-            if (!Operational || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange))
+            if (!Operational || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange))
             {
                 HaltBurst();
                 return;
@@ -551,9 +627,9 @@ namespace AbyssalProtocol
         {
             if (HasMainWeapon)
             {
-                Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange)
+                Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange)
                     ? currentBurstTarget
-                    : FindTarget(ResolvedRange);
+                    : FindTarget(ResolvedRange, ResolvedMainMinRange);
                 if (target != null)
                 {
                     mainAimAngle = AngleToTarget(target);
@@ -562,8 +638,8 @@ namespace AbyssalProtocol
 
             if (HasAuxiliary)
             {
-                float range = Mathf.Max(4f, auxiliaryModule.range > 0f ? auxiliaryModule.range : ResolvedRange);
-                Thing target = FindTarget(range);
+                float range = ResolvedAuxiliaryRange;
+                Thing target = FindTarget(range, ResolvedAuxiliaryMinRange);
                 if (target != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(target);
@@ -589,7 +665,7 @@ namespace AbyssalProtocol
             return Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
-        private Thing FindTarget(float range)
+        private Thing FindTarget(float range, float minRange = 0f)
         {
             Map map = parent.Map;
             if (map?.mapPawns == null)
@@ -598,6 +674,7 @@ namespace AbyssalProtocol
             }
 
             float rangeSquared = range * range;
+            float minRangeSquared = Mathf.Max(0f, minRange) * Mathf.Max(0f, minRange);
             Thing bestTarget = null;
             float bestScore = -999999f;
 
@@ -611,7 +688,7 @@ namespace AbyssalProtocol
                 }
 
                 float distanceSquared = pawn.Position.DistanceToSquared(parent.Position);
-                if (distanceSquared > rangeSquared)
+                if (distanceSquared > rangeSquared || distanceSquared < minRangeSquared)
                 {
                     continue;
                 }
@@ -652,7 +729,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private bool IsValidLaunchTarget(Thing target, float range)
+        private bool IsValidLaunchTarget(Thing target, float range, float minRange = 0f)
         {
             if (target == null || target.Destroyed || !target.Spawned || target.Map != parent.Map || parent.Map == null)
             {
@@ -665,7 +742,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (range > 0f && target.Position.DistanceToSquared(parent.Position) > range * range)
+            float distanceSquared = target.Position.DistanceToSquared(parent.Position);
+            if (range > 0f && distanceSquared > range * range)
+            {
+                return false;
+            }
+
+            if (minRange > 0f && distanceSquared < minRange * minRange)
             {
                 return false;
             }
@@ -722,10 +805,26 @@ namespace AbyssalProtocol
             return origin;
         }
 
+        private float ResolveModuleRange(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return ResolvedRange;
+            }
+
+            return module.slot == ABY_TurretModuleSlot.Auxiliary ? ResolvedAuxiliaryRange : ResolvedRange;
+        }
+
+        private float ResolveModuleMinRange(ABY_TurretModuleDef module)
+        {
+            return module != null ? Mathf.Max(0f, module.minRange) : 0f;
+        }
+
         private bool Launch(ABY_TurretModuleDef module, Thing target)
         {
-            float range = module != null && module.range > 0f ? module.range : ResolvedRange;
-            if (module?.projectileDef == null || !IsValidLaunchTarget(target, range))
+            float range = ResolveModuleRange(module);
+            float minRange = ResolveModuleMinRange(module);
+            if (module?.projectileDef == null || !IsValidLaunchTarget(target, range, minRange))
             {
                 return false;
             }
