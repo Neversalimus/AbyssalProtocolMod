@@ -10,8 +10,8 @@ namespace AbyssalProtocol
     {
         private const int MaxVisualAuxiliarySlots = 3;
         private const int MaxVisualPassiveSlots = 5;
-        private const float SlotSize = 58f;
-        private const float SlotGap = 8f;
+        private const float SlotSize = 56f;
+        private const float SlotGap = 7f;
         private const float LineHeight = 16f;
 
         private ABY_TurretModuleSlot selectedSlot = ABY_TurretModuleSlot.MainWeapon;
@@ -22,7 +22,7 @@ namespace AbyssalProtocol
 
         public ITab_AbyssalTurretModules()
         {
-            size = new Vector2(720f, 540f);
+            size = new Vector2(720f, 520f);
             labelKey = "ABY_ModularTurret_Tab";
         }
 
@@ -37,15 +37,15 @@ namespace AbyssalProtocol
             SanitizeSelection(comp);
             RebuildAvailabilityCache(comp);
 
-            Rect root = new Rect(0f, 8f, size.x - 18f, size.y - 14f).ContractedBy(6f);
+            Rect root = new Rect(0f, 4f, size.x - 18f, size.y - 8f).ContractedBy(6f);
             AbyssalForgeConsoleArt.DrawBackground(root);
             Rect inner = root.ContractedBy(10f);
 
             DrawHeader(new Rect(inner.x, inner.y, inner.width, 66f), comp);
 
-            Rect bodyRect = new Rect(inner.x, inner.y + 76f, inner.width, inner.height - 76f);
-            Rect boardRect = new Rect(bodyRect.x, bodyRect.y, 400f, 334f);
-            Rect detailRect = new Rect(boardRect.xMax + 10f, bodyRect.y, bodyRect.width - boardRect.width - 10f, 334f);
+            Rect bodyRect = new Rect(inner.x, inner.y + 74f, inner.width, inner.height - 74f);
+            Rect boardRect = new Rect(bodyRect.x, bodyRect.y, 400f, 318f);
+            Rect detailRect = new Rect(boardRect.xMax + 10f, bodyRect.y, bodyRect.width - boardRect.width - 10f, 318f);
             Rect statsRect = new Rect(bodyRect.x, boardRect.yMax + 10f, bodyRect.width, bodyRect.height - boardRect.height - 10f);
 
             DrawSocketGrid(boardRect, comp);
@@ -111,12 +111,12 @@ namespace AbyssalProtocol
         private void DrawHeader(Rect rect, CompAbyssalModularTurret comp)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, comp.FeatureEnabled);
-            Rect inner = rect.ContractedBy(12f);
+            Rect inner = rect.ContractedBy(8f);
 
             Text.Font = GameFont.Medium;
             Text.Anchor = TextAnchor.MiddleLeft;
             GUI.color = Color.white;
-            DrawClippedLabel(new Rect(inner.x, inner.y + 1f, inner.width, 34f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Header", "Abyssal modular turret chassis"));
+            DrawClippedLabel(new Rect(inner.x, inner.y + 2f, inner.width, 30f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_Header", "Abyssal modular turret chassis"));
 
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.UpperLeft;
@@ -124,7 +124,7 @@ namespace AbyssalProtocol
             string subtitle = comp.FeatureEnabled
                 ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_ModularTurret_GridSubtitle", "Socket board: inspect squares, install modules, and preview turret output.")
                 : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretDisabledMessage", "Modular turret systems are disabled in mod settings.");
-            DrawClippedLabel(new Rect(inner.x + 2f, inner.y + 36f, inner.width - 4f, 18f), subtitle);
+            DrawClippedLabel(new Rect(inner.x + 2f, inner.y + 32f, inner.width - 4f, 17f), subtitle);
 
             ResetTextState();
         }
@@ -145,10 +145,10 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             Rect gridRect = new Rect(inner.x, inner.y + 42f, inner.width, inner.height - 42f);
-            float mainY = gridRect.y + 3f;
-            float auxY = gridRect.y + 70f;
-            float passiveTopY = gridRect.y + 139f;
-            float passiveBottomY = gridRect.y + 207f;
+            float mainY = gridRect.y + 2f;
+            float auxY = gridRect.y + 64f;
+            float passiveTopY = gridRect.y + 128f;
+            float passiveBottomY = gridRect.y + 190f;
 
             float mainX = gridRect.x + (gridRect.width - SlotSize) / 2f;
             DrawSlotSquare(new Rect(mainX, mainY, SlotSize, SlotSize), comp, ABY_TurretModuleSlot.MainWeapon, comp.MainModule, -1, 0, comp.Props.mainWeaponSlots > 0, "MAIN", GetEmptySlotShortHint(ABY_TurretModuleSlot.MainWeapon));
@@ -322,7 +322,7 @@ namespace AbyssalProtocol
                 string lockedText = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretLockedDetail_New", "This slot is locked on the current chassis. It is not available on this chassis.");
                 float height = Mathf.Max(54f, Text.CalcHeight(lockedText, viewRect.width));
                 viewRect.height = height;
-                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect, false);
+                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
                 DrawWrappedText(new Rect(0f, 0f, viewRect.width, height), lockedText, GameFont.Tiny, AbyssalForgeConsoleArt.TextDimColor);
                 Widgets.EndScrollView();
@@ -339,7 +339,7 @@ namespace AbyssalProtocol
                 float emptyHeight = Text.CalcHeight(emptyText, viewRect.width);
                 float availableHeight = Text.CalcHeight(availableText, viewRect.width);
                 viewRect.height = Mathf.Max(outRect.height, emptyHeight + availableHeight + 46f);
-                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect, false);
+                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
                 contentY = DrawInfoParagraph(new Rect(0f, 0f, viewRect.width, viewRect.height), contentY, emptyText, AbyssalForgeConsoleArt.TextSoftColor);
                 contentY += 6f;
                 DrawSectionLine(new Rect(0f, 0f, viewRect.width, viewRect.height), ref contentY, availableHeader);
@@ -357,7 +357,7 @@ namespace AbyssalProtocol
             estimatedHeight += statLines.Length * (LineHeight + 1f);
             viewRect.height = Mathf.Max(outRect.height, estimatedHeight);
 
-            Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect, false);
+            Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
             Rect contentRect = new Rect(0f, 0f, viewRect.width, viewRect.height);
             DrawSectionLine(contentRect, ref contentY, module.LabelCap);
             DrawInfoLine(contentRect, ref contentY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel));
@@ -516,28 +516,28 @@ namespace AbyssalProtocol
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
             string cooldownText = comp.HasMainWeapon
                 ? ABY_ModularTurretUtility.TranslateOrFallback(
-                    "ABY_TurretStatsCooldownResolved",
-                    "Main cooldown: {0} → {1}",
-                    ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.BaseMainCooldownTicks),
+                    "ABY_TurretStatsMainResolvedCompact",
+                    "Main: range {0}, cooldown {1}",
+                    comp.ResolvedRange.ToString("0.0"),
                     ABY_ModularTurretUtility.FormatTicksAsSeconds(comp.ResolvedMainCooldownTicks))
-                : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsCooldown", "Main cooldown: {0}", "—");
+                : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsMainMissingCompact", "Main: no weapon core installed");
 
             List<string> leftLines = new List<string>
             {
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPower", "Chassis power: {0}", comp.IsPowered ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOnline", "online") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOffline", "offline")),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsRange", "Main range: {0}", comp.HasMainWeapon ? comp.ResolvedRange.ToString("0.0") : "—"),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPower", "Power: {0}", comp.IsPowered ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOnline", "online") : ABY_ModularTurretUtility.TranslateOrFallback("ABY_StateOffline", "offline")),
                 cooldownText
             };
 
             List<string> rightLines = new List<string>
             {
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDrawBreakdown", "Power draw: chassis {0} W + modules {1} W", comp.ResolvedBasePowerDraw.ToString("0"), comp.ResolvedModulePowerDraw.ToString("0")),
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsKillSwitchShort", "Kill switch: keeps installed modules.")
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStatsPowerDrawBreakdown", "Power draw: chassis {0} W + modules {1} W", comp.ResolvedBasePowerDraw.ToString("0"), comp.ResolvedModulePowerDraw.ToString("0"))
             };
 
             float columnWidth = (inner.width - 16f) / 2f;
-            Widgets.Label(new Rect(inner.x, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", leftLines.ToArray()));
-            Widgets.Label(new Rect(inner.x + columnWidth + 16f, inner.y + 28f, columnWidth, inner.height - 28f), string.Join("\n", rightLines.ToArray()));
+            Rect leftRect = new Rect(inner.x, inner.y + 26f, columnWidth, Mathf.Max(1f, inner.height - 28f));
+            Rect rightRect = new Rect(inner.x + columnWidth + 16f, inner.y + 26f, columnWidth, Mathf.Max(1f, inner.height - 28f));
+            Widgets.Label(leftRect, string.Join("\n", leftLines.ToArray()));
+            Widgets.Label(rightRect, string.Join("\n", rightLines.ToArray()));
             ResetTextState();
         }
 
