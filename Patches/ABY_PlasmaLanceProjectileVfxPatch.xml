@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_TurretPlasmaLanceBolt"]/thingClass</xpath>
+        <value>
+          <thingClass>AbyssalProtocol.Projectile_ABY_TurretPlasmaLanceBolt</thingClass>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="ABY_TurretPlasmaLanceBolt"]/graphicData/drawSize</xpath>
+        <value>
+          <drawSize>(0.34,1.32)</drawSize>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
