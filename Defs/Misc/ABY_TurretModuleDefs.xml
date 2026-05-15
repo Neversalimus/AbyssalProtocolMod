@@ -17,6 +17,10 @@
     <cooldownTicks>150</cooldownTicks>
     <burstShotCount>3</burstShotCount>
     <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftNeedlerCore</overlayTexturePath>
+    <overlayDrawSize>1.42</overlayDrawSize>
+    <overlayForwardOffset>0.18</overlayForwardOffset>
+    <overlayAltitudeOffset>0.052</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
   <AbyssalProtocol.ABY_TurretModuleDef>
@@ -36,6 +40,10 @@
     <burstShotCount>1</burstShotCount>
     <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
     <extraPowerDraw>120</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</overlayTexturePath>
+    <overlayDrawSize>1.62</overlayDrawSize>
+    <overlayForwardOffset>0.22</overlayForwardOffset>
+    <overlayAltitudeOffset>0.054</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
   <AbyssalProtocol.ABY_TurretModuleDef>
@@ -55,6 +63,11 @@
     <auxiliaryCooldownTicks>420</auxiliaryCooldownTicks>
     <burstShotCount>1</burstShotCount>
     <extraPowerDraw>130</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_ChoirArcEmitter</overlayTexturePath>
+    <overlayDrawSize>0.92</overlayDrawSize>
+    <overlaySideOffset>0.42</overlaySideOffset>
+    <overlayForwardOffset>-0.08</overlayForwardOffset>
+    <overlayAltitudeOffset>0.058</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
   <AbyssalProtocol.ABY_TurretModuleDef>

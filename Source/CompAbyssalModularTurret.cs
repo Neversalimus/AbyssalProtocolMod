@@ -20,6 +20,9 @@ namespace AbyssalProtocol
         private int burstIntervalTicks;
         private Thing currentBurstTarget;
 
+        private float mainAimAngle;
+        private float auxiliaryAimAngle;
+
         private CompPowerTrader cachedPowerComp;
 
         public CompProperties_AbyssalModularTurret Props => (CompProperties_AbyssalModularTurret)props;
@@ -93,6 +96,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref burstShotsRemaining, "burstShotsRemaining", 0);
             Scribe_Values.Look(ref burstIntervalTicks, "burstIntervalTicks", 0);
             Scribe_References.Look(ref currentBurstTarget, "currentBurstTarget");
+            Scribe_Values.Look(ref mainAimAngle, "mainAimAngle", 0f);
+            Scribe_Values.Look(ref auxiliaryAimAngle, "auxiliaryAimAngle", 0f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 SanitizeLoadedState();
@@ -112,6 +117,11 @@ namespace AbyssalProtocol
             {
                 HaltRuntimeState();
                 return;
+            }
+
+            if (parent.IsHashIntervalTick(15))
+            {
+                UpdateVisualAimAngles();
             }
 
             if (mainCooldownTicks > 0)
@@ -142,9 +152,13 @@ namespace AbyssalProtocol
             if (HasAuxiliary && auxiliaryCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks + 11)))
             {
                 Thing auxTarget = FindTarget(Mathf.Max(4f, auxiliaryModule.range > 0f ? auxiliaryModule.range : ResolvedRange));
-                if (auxTarget != null && Launch(auxiliaryModule, auxTarget))
+                if (auxTarget != null)
                 {
-                    auxiliaryCooldownTicks = Mathf.Max(60, auxiliaryModule.auxiliaryCooldownTicks > 0 ? auxiliaryModule.auxiliaryCooldownTicks : auxiliaryModule.cooldownTicks);
+                    auxiliaryAimAngle = AngleToTarget(auxTarget);
+                    if (Launch(auxiliaryModule, auxTarget))
+                    {
+                        auxiliaryCooldownTicks = Mathf.Max(60, auxiliaryModule.auxiliaryCooldownTicks > 0 ? auxiliaryModule.auxiliaryCooldownTicks : auxiliaryModule.cooldownTicks);
+                    }
                 }
             }
         }
@@ -158,8 +172,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            DrawModuleOverlay(mainModule, new Vector3(0f, 0f, 0.22f), 0.58f, 0.018f);
-            DrawModuleOverlay(auxiliaryModule, new Vector3(0.42f, 0f, -0.18f), 0.38f, 0.021f);
+            DrawWeaponOverlay(mainModule, mainAimAngle, false);
+            DrawWeaponOverlay(auxiliaryModule, auxiliaryAimAngle, false);
         }
 
         public bool CanInstall(ABY_TurretModuleDef moduleDef, out string reason)
@@ -409,34 +423,42 @@ namespace AbyssalProtocol
             return string.Join("\n", lines);
         }
 
-        private void DrawModuleOverlay(ABY_TurretModuleDef module, Vector3 localOffset, float size, float altitudeOffset)
+        private void DrawWeaponOverlay(ABY_TurretModuleDef module, float aimAngle, bool forceVisible)
         {
-            if (module?.thingDef == null)
+            if (module == null || (!forceVisible && !module.overlayVisibleWhenDisabled && !FeatureEnabled))
+            {
+                return;
+            }
+
+            if (!module.IsWeaponLike || !module.HasOverlay)
             {
                 return;
             }
 
             try
             {
-                Graphic graphic = module.thingDef.graphicData?.Graphic;
-                Material material = graphic?.MatSingle;
+                Material material = ABY_ModularTurretUtility.GetOverlayMaterial(module.overlayTexturePath);
                 if (material == null)
                 {
                     return;
                 }
 
-                Vector3 drawPos = parent.DrawPos + localOffset;
-                drawPos.y += Mathf.Max(0.001f, altitudeOffset);
+                float angle = module.overlayRotatesToTarget ? aimAngle : 0f;
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                Vector3 localOffset = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
+                Vector3 drawPos = parent.DrawPos + rotation * localOffset;
+                drawPos.y += Mathf.Max(0.001f, module.overlayAltitudeOffset);
 
-                Vector3 scale = new Vector3(Mathf.Max(0.05f, size), 1f, Mathf.Max(0.05f, size));
-                Matrix4x4 matrix = Matrix4x4.TRS(drawPos, Quaternion.identity, scale);
+                float size = Mathf.Max(0.08f, module.overlayDrawSize);
+                Vector3 scale = new Vector3(size, 1f, size);
+                Matrix4x4 matrix = Matrix4x4.TRS(drawPos, rotation, scale);
                 Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
             }
             catch (Exception ex)
             {
                 if (!AbyssalProtocolMod.Settings.suppressRepeatedWarnings)
                 {
-                    Log.Warning("[Abyssal Protocol] Modular turret failed to draw module overlay " + module.defName + ": " + ex.GetType().Name + " " + ex.Message);
+                    Log.Warning("[Abyssal Protocol] Modular turret failed to draw rotating overlay " + module.defName + ": " + ex.GetType().Name + " " + ex.Message);
                 }
             }
         }
@@ -482,6 +504,7 @@ namespace AbyssalProtocol
             }
 
             currentBurstTarget = target;
+            mainAimAngle = AngleToTarget(target);
             burstShotsRemaining = Mathf.Max(1, mainModule?.burstShotCount ?? 1);
             burstIntervalTicks = 0;
             mainCooldownTicks = ResolvedMainCooldownTicks;
@@ -495,6 +518,8 @@ namespace AbyssalProtocol
                 HaltBurst();
                 return;
             }
+
+            mainAimAngle = AngleToTarget(currentBurstTarget);
 
             if (burstIntervalTicks > 0)
             {
@@ -521,6 +546,48 @@ namespace AbyssalProtocol
             {
                 currentBurstTarget = null;
             }
+        }
+
+        private void UpdateVisualAimAngles()
+        {
+            if (HasMainWeapon)
+            {
+                Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange)
+                    ? currentBurstTarget
+                    : FindTarget(ResolvedRange);
+                if (target != null)
+                {
+                    mainAimAngle = AngleToTarget(target);
+                }
+            }
+
+            if (HasAuxiliary)
+            {
+                float range = Mathf.Max(4f, auxiliaryModule.range > 0f ? auxiliaryModule.range : ResolvedRange);
+                Thing target = FindTarget(range);
+                if (target != null)
+                {
+                    auxiliaryAimAngle = AngleToTarget(target);
+                }
+            }
+        }
+
+        private float AngleToTarget(Thing target)
+        {
+            if (target == null)
+            {
+                return 0f;
+            }
+
+            Vector3 from = parent.DrawPos;
+            Vector3 to = target.DrawPos;
+            Vector3 delta = to - from;
+            if (delta.sqrMagnitude <= 0.0001f)
+            {
+                return 0f;
+            }
+
+            return Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
         private Thing FindTarget(float range)
@@ -678,6 +745,8 @@ namespace AbyssalProtocol
 
             mainCooldownTicks = Mathf.Max(0, mainCooldownTicks);
             auxiliaryCooldownTicks = Mathf.Max(0, auxiliaryCooldownTicks);
+            mainAimAngle = Mathf.Repeat(mainAimAngle, 360f);
+            auxiliaryAimAngle = Mathf.Repeat(auxiliaryAimAngle, 360f);
             burstShotsRemaining = Mathf.Max(0, burstShotsRemaining);
             burstIntervalTicks = Mathf.Max(0, burstIntervalTicks);
             if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)

@@ -27,7 +27,18 @@ namespace AbyssalProtocol
         public float missRadiusOffset;
         public float extraPowerDraw;
 
+        // Package 0.6 visual overlay fields.
+        // These are intentionally data-only so the whole turret system can still be disabled cleanly by the existing master switch.
+        public string overlayTexturePath;
+        public float overlayDrawSize = 1f;
+        public float overlaySideOffset;
+        public float overlayForwardOffset;
+        public float overlayAltitudeOffset = 0.04f;
+        public bool overlayRotatesToTarget = true;
+        public bool overlayVisibleWhenDisabled;
+
         public bool IsWeaponLike => projectileDef != null && (slot == ABY_TurretModuleSlot.MainWeapon || slot == ABY_TurretModuleSlot.Auxiliary);
+        public bool HasOverlay => !overlayTexturePath.NullOrEmpty();
 
         public bool CompatibleWith(string chassisTag)
         {

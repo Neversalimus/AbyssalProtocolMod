@@ -12,6 +12,7 @@ namespace AbyssalProtocol
         public const string ForgeCategory = "TurretSystems";
 
         private static Dictionary<ThingDef, ABY_TurretModuleDef> moduleByThingDef;
+        private static readonly Dictionary<string, Material> overlayMaterialCache = new Dictionary<string, Material>();
 
         public static bool Enabled => AbyssalProtocolMod.Settings.enableModularTurrets;
 
@@ -69,6 +70,36 @@ namespace AbyssalProtocol
             }
 
             return GetModuleForThingDef(product) != null || product.GetCompProperties<CompProperties_AbyssalModularTurret>() != null;
+        }
+
+        public static Material GetOverlayMaterial(string texturePath)
+        {
+            if (texturePath.NullOrEmpty())
+            {
+                return null;
+            }
+
+            if (overlayMaterialCache.TryGetValue(texturePath, out Material material))
+            {
+                return material;
+            }
+
+            try
+            {
+                material = MaterialPool.MatFrom(texturePath, ShaderDatabase.Cutout);
+                overlayMaterialCache[texturePath] = material;
+                return material;
+            }
+            catch (Exception ex)
+            {
+                if (!AbyssalProtocolMod.Settings.suppressRepeatedWarnings)
+                {
+                    Log.Warning("[Abyssal Protocol] Failed to load modular turret overlay texture " + texturePath + ": " + ex.GetType().Name + " " + ex.Message);
+                }
+
+                overlayMaterialCache[texturePath] = null;
+                return null;
+            }
         }
 
         public static ABY_TurretModuleDef GetModuleForThingDef(ThingDef thingDef)
