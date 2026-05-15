@@ -285,15 +285,27 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(10f);
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeConsolePatternsHeader".Translate());
 
+            bool turretSystemsMode = selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory;
             List<RecipeDef> recipes = AbyssalForgeProgressUtility.GetForgeRecipes()
                 .Where(recipe => AbyssalForgeProgressUtility.RecipeMatchesCategory(recipe, selectedCategory))
+                .OrderBy(recipe => turretSystemsMode ? GetTurretSystemRecipeOrder(recipe) : AbyssalForgeProgressUtility.GetCategoryOrderIndex(AbyssalForgeProgressUtility.GetCategory(recipe)))
+                .ThenBy(AbyssalForgeProgressUtility.GetRequiredResidue)
+                .ThenBy(AbyssalForgeProgressUtility.GetRecipeDisplayLabel)
                 .ToList();
 
-            Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
+            float contentTop = inner.y + 28f;
+            if (turretSystemsMode)
+            {
+                Rect guideRect = new Rect(inner.x, contentTop, inner.width, 34f);
+                DrawTurretSystemsGuide(guideRect);
+                contentTop += 42f;
+            }
+
+            Rect outRect = new Rect(inner.x, contentTop, inner.width, inner.yMax - contentTop);
             const float scrollbarReserve = 18f;
             float contentWidth = Mathf.Max(120f, outRect.width - scrollbarReserve);
             float cardWidth = (contentWidth - 12f) / 2f;
-            float cardHeight = 180f;
+            float cardHeight = turretSystemsMode ? 196f : 180f;
             int rows = Mathf.CeilToInt(recipes.Count / 2f);
             float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, contentWidth, viewHeight);
@@ -307,9 +319,322 @@ namespace AbyssalProtocol
                 RecipeDef recipe = recipes[i];
                 bool unlocked = AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered);
                 bool freshlyUnlocked = progress.IsRecentlyUnlocked(recipe);
-                DrawPatternCard(cardRect, recipe, unlocked, freshlyUnlocked);
+                if (turretSystemsMode && IsTurretSystemRecipe(recipe))
+                {
+                    DrawTurretSystemPatternCard(cardRect, recipe, unlocked, freshlyUnlocked);
+                }
+                else
+                {
+                    DrawPatternCard(cardRect, recipe, unlocked, freshlyUnlocked);
+                }
             }
             Widgets.EndScrollView();
+        }
+
+        private static bool IsTurretSystemRecipe(RecipeDef recipe)
+        {
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            return ABY_ModularTurretUtility.GetModuleForThingDef(product) != null
+                || product?.GetCompProperties<CompProperties_AbyssalModularTurret>() != null
+                || AbyssalForgeProgressUtility.GetCategory(recipe) == AbyssalForgeProgressUtility.TurretSystemsCategory;
+        }
+
+        private static int GetTurretSystemRecipeOrder(RecipeDef recipe)
+        {
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            if (product?.GetCompProperties<CompProperties_AbyssalModularTurret>() != null)
+            {
+                return 0;
+            }
+
+            ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (module == null)
+            {
+                return 50;
+            }
+
+            switch (module.slot)
+            {
+                case ABY_TurretModuleSlot.MainWeapon:
+                    return 10;
+                case ABY_TurretModuleSlot.Auxiliary:
+                    return 20;
+                case ABY_TurretModuleSlot.Passive:
+                    return 30;
+                default:
+                    return 40;
+            }
+        }
+
+        private void DrawTurretSystemsGuide(Rect rect)
+        {
+            AbyssalForgeConsoleArt.Fill(rect, new Color(0.10f, 0.075f, 0.065f, 0.82f));
+            AbyssalForgeConsoleArt.DrawOutline(rect, new Color(1f, 0.36f, 0.13f, 0.35f));
+
+            Rect labelRect = new Rect(rect.x + 10f, rect.y + 7f, 278f, 20f);
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(labelRect, ABY_ModularTurretUtility.TranslateOrFallback("ABY_ForgeTurretSystemsGuide", "Turret progression: chassis, main weapons, auxiliary support, and passive upgrades."));
+
+            float chipX = rect.xMax - 296f;
+            DrawTurretSlotChip(new Rect(chipX, rect.y + 7f, 64f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Chassis", "CHASSIS"), new Color(0.62f, 0.60f, 0.55f, 1f));
+            DrawTurretSlotChip(new Rect(chipX + 70f, rect.y + 7f, 54f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Main", "MAIN"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.MainWeapon));
+            DrawTurretSlotChip(new Rect(chipX + 130f, rect.y + 7f, 48f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Aux", "AUX"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Auxiliary));
+            DrawTurretSlotChip(new Rect(chipX + 184f, rect.y + 7f, 74f, 20f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Passive", "PASSIVE"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Passive));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private void DrawTurretSystemPatternCard(Rect rect, RecipeDef recipe, bool unlocked, bool freshlyUnlocked)
+        {
+            if (recipe == null)
+            {
+                AbyssalForgeConsoleArt.DrawPanel(rect, false);
+                ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(10f), "Missing turret pattern");
+                return;
+            }
+
+            AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
+            AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
+
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            CompProperties_AbyssalModularTurret chassisProps = product?.GetCompProperties<CompProperties_AbyssalModularTurret>();
+            bool isChassis = chassisProps != null;
+            Color slotColor = module != null ? ABY_ModularTurretUtility.SlotColor(module.slot) : new Color(0.62f, 0.60f, 0.55f, 1f);
+
+            Rect socketRect = new Rect(rect.x + 10f, rect.y + 12f, 58f, 58f);
+            AbyssalForgeConsoleArt.Fill(socketRect, unlocked ? new Color(slotColor.r * 0.16f, slotColor.g * 0.11f, slotColor.b * 0.10f, 0.92f) : new Color(0.05f, 0.05f, 0.055f, 0.82f));
+            AbyssalForgeConsoleArt.DrawOutline(socketRect, unlocked ? slotColor : new Color(0.40f, 0.40f, 0.42f, 0.70f));
+
+            Texture2D icon = product != null ? product.uiIcon : AbyssalForgeConsoleArt.GetCategoryIcon(AbyssalForgeProgressUtility.TurretSystemsCategory);
+            if (icon != null)
+            {
+                GUI.color = unlocked ? Color.white : new Color(0.72f, 0.72f, 0.72f, 0.72f);
+                GUI.DrawTexture(socketRect.ContractedBy(8f), icon, ScaleMode.ScaleToFit, true);
+                GUI.color = Color.white;
+            }
+
+            string slotBadge = GetTurretRecipeSlotBadge(module, isChassis);
+            Rect badgeRect = new Rect(rect.x + 76f, rect.y + 10f, isChassis ? 72f : 66f, 20f);
+            DrawTurretSlotChip(badgeRect, slotBadge, slotColor);
+
+            if (freshlyUnlocked)
+            {
+                Rect newRect = new Rect(rect.xMax - 54f, rect.y + 10f, 44f, 18f);
+                AbyssalForgeConsoleArt.DrawTag(newRect, "ABY_ForgePatternNew".Translate(), true);
+            }
+
+            Def infoDef = (Def)product ?? recipe;
+            Rect infoRect = new Rect(rect.xMax - 82f, rect.y + 10f, 24f, 24f);
+            if (infoDef != null)
+            {
+                Widgets.InfoCardButton(infoRect.x, infoRect.y, infoDef);
+                TooltipHandler.TipRegion(infoRect, "ABY_ForgePatternOpenInfo".Translate());
+            }
+
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 76f, rect.y + 33f, rect.width - 166f, 22f), AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 76f, rect.y + 55f, rect.width - 90f, 18f), BuildTurretCardSubtitle(module, chassisProps));
+            GUI.color = Color.white;
+
+            float detailY = rect.y + 78f;
+            DrawTurretCardDetailLines(rect, detailY, module, chassisProps);
+
+            string unlockLine = unlocked
+                ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe))
+                : "ABY_ForgePatternLockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe));
+            GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 126f, rect.width - 20f, 18f), unlockLine);
+            GUI.color = Color.white;
+
+            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
+                ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
+                : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
+            int shownEntries = Math.Min(2, entries.Count);
+            for (int i = 0; i < shownEntries; i++)
+            {
+                DrawIngredientStateLine(new Rect(rect.x + 10f, rect.y + 146f + i * 17f, rect.width - 142f, 17f), entries[i]);
+            }
+
+            if (entries.Count > shownEntries)
+            {
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 146f + shownEntries * 17f, rect.width - 142f, 17f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
+                GUI.color = Color.white;
+            }
+
+            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
+            bool recipeAvailable = false;
+            try
+            {
+                recipeAvailable = forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.LogUIException("Forge turret pattern availability", ex);
+            }
+
+            string actionLabel;
+            if (!unlocked)
+            {
+                actionLabel = "ABY_ForgePatternLocked".Translate();
+            }
+            else if (recipeAvailable)
+            {
+                actionLabel = "ABY_ForgePatternAddBill".Translate();
+            }
+            else if (!hasAllMaterials)
+            {
+                actionLabel = "ABY_ForgePatternMissingMaterials".Translate();
+            }
+            else
+            {
+                actionLabel = "ABY_ForgePatternResearchRequired".Translate();
+            }
+
+            Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
+            if (unlocked && recipeAvailable)
+            {
+                if (AbyssalStyledWidgets.TextButton(buttonRect, actionLabel))
+                {
+                    AddBill(recipe);
+                }
+            }
+            else
+            {
+                AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, false);
+            }
+
+            TooltipHandler.TipRegion(rect, BuildTurretRecipeTooltip(recipe, module, chassisProps, freshlyUnlocked));
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private static void DrawTurretSlotChip(Rect rect, string label, Color color)
+        {
+            AbyssalForgeConsoleArt.Fill(rect, new Color(color.r * 0.18f, color.g * 0.12f, color.b * 0.10f, 0.95f));
+            AbyssalForgeConsoleArt.DrawOutline(rect, new Color(color.r, color.g, color.b, 0.82f));
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = Color.white;
+            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), label);
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private static string GetTurretRecipeSlotBadge(ABY_TurretModuleDef module, bool isChassis)
+        {
+            if (isChassis)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Chassis", "CHASSIS");
+            }
+
+            if (module == null)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Module", "MODULE");
+            }
+
+            switch (module.slot)
+            {
+                case ABY_TurretModuleSlot.MainWeapon:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Main", "MAIN");
+                case ABY_TurretModuleSlot.Auxiliary:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Aux", "AUX");
+                default:
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Passive", "PASSIVE");
+            }
+        }
+
+        private static string BuildTurretCardSubtitle(ABY_TurretModuleDef module, CompProperties_AbyssalModularTurret chassisProps)
+        {
+            if (module != null)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretForgeCardSlotRole", "Slot: {0} · Role: {1}", module.SlotLabel, module.RoleLabel);
+            }
+
+            if (chassisProps != null)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretForgeCardChassisRole", "Buildable modular defense chassis");
+            }
+
+            return ABY_ModularTurretUtility.TranslateOrFallback("ABY_ForgePatternSummary_TurretSystems", "Turret system");
+        }
+
+        private void DrawTurretCardDetailLines(Rect rect, float y, ABY_TurretModuleDef module, CompProperties_AbyssalModularTurret chassisProps)
+        {
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+
+            if (module != null)
+            {
+                string effect = ABY_ModularTurretUtility.GetModuleEffectSummary(module);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, y, rect.width - 20f, 34f), CompactTextForCard(effect, 92));
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, y + 36f, rect.width - 20f, 18f), ABY_ModularTurretUtility.GetModuleStatSummary(module));
+                return;
+            }
+
+            if (chassisProps != null)
+            {
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, y, rect.width - 20f, 18f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretForgeCardChassisSlots", "Slots: {0} main / {1} auxiliary / {2} passive", Mathf.Max(0, chassisProps.mainWeaponSlots), Mathf.Max(0, chassisProps.auxiliarySlots), Mathf.Max(0, chassisProps.passiveSlots)));
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, y + 20f, rect.width - 20f, 18f), ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretForgeCardChassisStats", "Base power {0} W · base range {1}", chassisProps.basePowerDraw.ToString("0"), chassisProps.baseRange.ToString("0.0")));
+            }
+        }
+
+        private static string BuildTurretRecipeTooltip(RecipeDef recipe, ABY_TurretModuleDef module, CompProperties_AbyssalModularTurret chassisProps, bool freshlyUnlocked)
+        {
+            List<string> tooltipLines = new List<string>();
+            if (module != null)
+            {
+                tooltipLines.Add(module.LabelCap);
+                tooltipLines.Add(ABY_ModularTurretUtility.GetModuleDetailedTooltip(module));
+            }
+            else if (chassisProps != null)
+            {
+                ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+                tooltipLines.Add(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+                tooltipLines.Add(ABY_ModularTurretUtility.GetChassisDetailedTooltip(product));
+            }
+            else
+            {
+                tooltipLines.Add(AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
+            }
+
+            string costBlock = AbyssalForgeProgressUtility.GetRecipeIngredientTooltip(recipe);
+            if (!costBlock.NullOrEmpty())
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add("ABY_ForgePatternRequirementsLabel".Translate());
+                tooltipLines.Add(costBlock);
+            }
+
+            if (freshlyUnlocked)
+            {
+                tooltipLines.Add(string.Empty);
+                tooltipLines.Add("ABY_ForgeUnlockToast".Translate(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)));
+            }
+
+            return string.Join("\n", tooltipLines.Where(line => line != null).ToArray()).Trim();
+        }
+
+        private static string CompactTextForCard(string text, int maxChars)
+        {
+            if (text.NullOrEmpty() || text.Length <= maxChars)
+            {
+                return text ?? string.Empty;
+            }
+
+            return text.Substring(0, Mathf.Max(1, maxChars - 1)) + "…";
         }
 
         private void DrawPatternCard(Rect rect, RecipeDef recipe, bool unlocked, bool freshlyUnlocked)
