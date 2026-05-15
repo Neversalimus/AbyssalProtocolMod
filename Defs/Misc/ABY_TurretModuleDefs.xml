@@ -36,7 +36,7 @@
     <role>anti-armor lance</role>
     <tier>2</tier>
     <projectileDef>ABY_TurretPlasmaLanceBolt</projectileDef>
-    <soundCast>ABY_UltraPlasmaFire</soundCast>
+    <soundCast>ABY_PlasmaLanceFire</soundCast>
     <range>33.5</range>
     <cooldownTicks>260</cooldownTicks>
     <burstShotCount>1</burstShotCount>
