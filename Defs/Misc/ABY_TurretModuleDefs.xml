@@ -130,8 +130,8 @@
     <role>charged anti-elite rail sniper</role>
     <tier>4</tier>
     <projectileDef>ABY_TurretSepulcherRailSpike</projectileDef>
-    <soundCharge>ABY_CrownspikeRailCharge</soundCharge>
-    <soundCast>ABY_PlasmaLanceFire</soundCast>
+    <soundCharge>ABY_SepulcherRailCharge</soundCharge>
+    <soundCast>ABY_SepulcherRailFire</soundCast>
     <range>52</range>
     <minRange>8</minRange>
     <cooldownTicks>720</cooldownTicks>

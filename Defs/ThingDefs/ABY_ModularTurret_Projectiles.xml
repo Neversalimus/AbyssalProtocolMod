@@ -75,7 +75,7 @@
       <armorPenetrationBase>2.25</armorPenetrationBase>
       <stoppingPower>3.20</stoppingPower>
       <speed>128</speed>
-      <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>
+      <soundImpactAnticipate>ABY_SepulcherRailImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
 
