@@ -23,6 +23,7 @@ namespace AbyssalProtocol
         private int auxiliaryCooldownTicks;
         private int burstShotsRemaining;
         private int burstIntervalTicks;
+        private int burstShotsFiredInCurrentBurst;
         private Thing currentBurstTarget;
 
         private int mainChargeTicksRemaining;
@@ -139,6 +140,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref auxiliaryCooldownTicks, "auxiliaryCooldownTicks", 0);
             Scribe_Values.Look(ref burstShotsRemaining, "burstShotsRemaining", 0);
             Scribe_Values.Look(ref burstIntervalTicks, "burstIntervalTicks", 0);
+            Scribe_Values.Look(ref burstShotsFiredInCurrentBurst, "burstShotsFiredInCurrentBurst", 0);
             Scribe_References.Look(ref currentBurstTarget, "currentBurstTarget");
             Scribe_Values.Look(ref mainChargeTicksRemaining, "mainChargeTicksRemaining", 0);
             Scribe_Values.Look(ref mainChargeTicksTotal, "mainChargeTicksTotal", 0);
@@ -835,6 +837,7 @@ namespace AbyssalProtocol
             mainAimAngle = AngleToTarget(target);
             burstShotsRemaining = Mathf.Max(1, mainModule?.burstShotCount ?? 1);
             burstIntervalTicks = 0;
+            burstShotsFiredInCurrentBurst = 0;
             mainCooldownTicks = ResolvedMainCooldownTicks;
             TickBurst();
         }
@@ -861,12 +864,14 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!Launch(mainModule, currentBurstTarget))
+            int burstShotIndex = burstShotsFiredInCurrentBurst;
+            if (!Launch(mainModule, currentBurstTarget, burstShotIndex))
             {
                 HaltBurst();
                 return;
             }
 
+            burstShotsFiredInCurrentBurst++;
             StartMainDischargeVisual(mainModule);
 
             burstShotsRemaining--;
@@ -1044,7 +1049,7 @@ namespace AbyssalProtocol
             return socketWorldPos + rotation * (centerNudge - pivotFromTextureCenter);
         }
 
-        private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target)
+        private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target, int burstShotIndex = -1)
         {
             if (module == null || !module.HasOverlay || module.overlayMuzzleForwardOffset == 0f && module.overlayMuzzleSideOffset == 0f)
             {
@@ -1054,10 +1059,29 @@ namespace AbyssalProtocol
             float angle = module.overlayRotatesToTarget && target != null ? AngleToTarget(target) : 0f;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
             Vector3 socketWorldPos = ResolveSocketWorldPosition(module);
-            Vector3 muzzleFromSocket = new Vector3(module.overlaySideOffset + module.overlayMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
+            float resolvedMuzzleSideOffset = ResolveBurstMuzzleSideOffset(module, burstShotIndex);
+            Vector3 muzzleFromSocket = new Vector3(module.overlaySideOffset + resolvedMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
             Vector3 origin = socketWorldPos + rotation * muzzleFromSocket;
             origin.y = parent.DrawPos.y;
             return origin;
+        }
+
+        private float ResolveBurstMuzzleSideOffset(ABY_TurretModuleDef module, int burstShotIndex)
+        {
+            float sideOffset = module?.overlayMuzzleSideOffset ?? 0f;
+            List<float> burstOffsets = module?.burstMuzzleSideOffsets;
+            if (burstShotIndex >= 0 && burstOffsets != null && burstOffsets.Count > 0)
+            {
+                int index = burstShotIndex % burstOffsets.Count;
+                if (index < 0)
+                {
+                    index += burstOffsets.Count;
+                }
+
+                sideOffset += burstOffsets[index];
+            }
+
+            return sideOffset;
         }
 
         private float ResolveModuleRange(ABY_TurretModuleDef module)
@@ -1075,7 +1099,7 @@ namespace AbyssalProtocol
             return module != null ? Mathf.Max(0f, module.minRange) : 0f;
         }
 
-        private bool Launch(ABY_TurretModuleDef module, Thing target)
+        private bool Launch(ABY_TurretModuleDef module, Thing target, int burstShotIndex = -1)
         {
             float range = ResolveModuleRange(module);
             float minRange = ResolveModuleMinRange(module);
@@ -1093,7 +1117,7 @@ namespace AbyssalProtocol
             try
             {
                 LocalTargetInfo targetInfo = new LocalTargetInfo(target);
-                Vector3 launchOrigin = ResolveLaunchOrigin(module, target);
+                Vector3 launchOrigin = ResolveLaunchOrigin(module, target, burstShotIndex);
                 projectile.Launch(parent, launchOrigin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
                 module.soundCast?.PlayOneShot(SoundInfo.InMap(new TargetInfo(parent.Position, parent.Map, false), MaintenanceType.None));
                 return true;
@@ -1147,6 +1171,7 @@ namespace AbyssalProtocol
             auxiliaryAimAngle = Mathf.Repeat(auxiliaryAimAngle, 360f);
             burstShotsRemaining = Mathf.Max(0, burstShotsRemaining);
             burstIntervalTicks = Mathf.Max(0, burstIntervalTicks);
+            burstShotsFiredInCurrentBurst = Mathf.Max(0, burstShotsFiredInCurrentBurst);
             mainChargeTicksRemaining = Mathf.Max(0, mainChargeTicksRemaining);
             mainChargeTicksTotal = Mathf.Max(mainChargeTicksRemaining, mainChargeTicksTotal);
             mainDischargeTicksRemaining = Mathf.Max(0, mainDischargeTicksRemaining);
@@ -1177,6 +1202,7 @@ namespace AbyssalProtocol
         {
             burstShotsRemaining = 0;
             burstIntervalTicks = 0;
+            burstShotsFiredInCurrentBurst = 0;
             currentBurstTarget = null;
         }
 

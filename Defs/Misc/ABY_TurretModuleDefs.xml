@@ -72,6 +72,13 @@
     <overlayForwardOffset>0.00</overlayForwardOffset>
     <overlayPivotForwardOffset>0.00</overlayPivotForwardOffset>
     <overlayMuzzleForwardOffset>1.48</overlayMuzzleForwardOffset>
+    <burstMuzzleSideOffsets>
+      <li>0.48</li>
+      <li>0.24</li>
+      <li>0.00</li>
+      <li>-0.24</li>
+      <li>-0.48</li>
+    </burstMuzzleSideOffsets>
     <overlayAltitudeOffset>0.066</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 

@@ -37,7 +37,7 @@
         <onCamera>true</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
-            <clipPath>ABY/SigilRepeater_Impact</clipPath>
+            <clipPath>ABY/ABY_SigilRepeater_Impact</clipPath>
           </li>
         </grains>
         <volumeRange>

@@ -46,6 +46,12 @@ namespace AbyssalProtocol
         public float overlayMuzzleSideOffset;
         public float overlayMuzzleForwardOffset;
 
+        // Optional per-shot local side offsets for burst weapons with multiple visible barrels.
+        // Values are measured in map cells relative to the module muzzle after overlay rotation.
+        // For north-facing source art, positive side offset is texture-right; when the turret turns west,
+        // this reads as top-to-bottom on screen when listed from positive to negative.
+        public List<float> burstMuzzleSideOffsets;
+
         public bool overlayRotatesToTarget = true;
         public bool overlayVisibleWhenDisabled;
 
