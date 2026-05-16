@@ -42,6 +42,28 @@
   </RecipeDef>
 
   <RecipeDef>
+    <defName>ABY_CraftTurretModule_AshChoirRepeaterCore</defName>
+    <label>forge ash choir repeater core</label>
+    <description>Bind a cycling ash-canticle feed into a turret-compatible suppression main weapon core.</description>
+    <jobString>Forging ash choir repeater core.</jobString>
+    <workAmount>2850</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>42</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>70</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>18</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>8</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_AshChoirRepeaterCore>1</ABY_TurretModule_AshChoirRepeaterCore></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>320</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
     <defName>ABY_CraftTurretModule_ChoirArcEmitter</defName>
     <label>forge choir arc emitter</label>
     <description>Assemble a secondary canticle-wave emitter for the modular turret auxiliary slot.</description>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AshChoirRepeaterMuzzle</defName>
+    <label>ash choir repeater muzzle spark</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_RiftNeedlerAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/AshChoirRepeater/ABY_AshChoirRepeaterMuzzle_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.58,0.58)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.06</solidTime>
+      <fadeOutTime>0.04</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AshChoirRepeaterImpact</defName>
+    <label>ash choir repeater impact spark</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_RiftNeedlerAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/AshChoirRepeater/ABY_AshChoirRepeaterImpact_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.56,0.56)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.06</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

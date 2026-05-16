@@ -51,6 +51,31 @@
   </AbyssalProtocol.ABY_TurretModuleDef>
 
   <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_AshChoirRepeaterCore</defName>
+    <label>Ash Choir Repeater Core</label>
+    <description>Main weapon core for medium modular turret chassis. Rapid ash-canticle repeater bursts for swarm suppression.</description>
+    <effectSummary>Primary gun module. Fires a fast 5-shot ash-canticle shard burst for light enemies, animals, and dense abyssal waves. Poor armor penetration keeps it dependent on lance or rail modules against elites.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_AshChoirRepeaterCore</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>anti-swarm ash repeater</role>
+    <tier>2</tier>
+    <projectileDef>ABY_TurretAshChoirShard</projectileDef>
+    <soundCast>ABY_AshChoirRepeaterFire</soundCast>
+    <range>30.5</range>
+    <cooldownTicks>210</cooldownTicks>
+    <burstShotCount>5</burstShotCount>
+    <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+    <extraPowerDraw>180</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_AshChoirRepeaterCore</overlayTexturePath>
+    <overlayDrawSize>3.20</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>0.00</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.48</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.066</overlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_ChoirArcEmitter</defName>
     <label>Choir Arc Emitter</label>
     <description>Auxiliary support module. Fires a slow timed canticle-wave shot independently of the main weapon.</description>

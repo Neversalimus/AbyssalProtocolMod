@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_AshChoirRepeaterFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>10</maxVoices>
+    <maxSimultaneous>5</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Weapons/RiftNeedler_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>27</min>
+          <max>31</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.92</min>
+          <max>0.98</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_AshChoirRepeaterImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>12</maxVoices>
+    <maxSimultaneous>6</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/SigilRepeater_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>18</min>
+          <max>22</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1.05</min>
+          <max>1.11</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

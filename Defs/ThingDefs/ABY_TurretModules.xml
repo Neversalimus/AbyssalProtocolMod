@@ -56,6 +56,33 @@
   </ThingDef>
 
   <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_AshChoirRepeaterCore</defName>
+    <label>ash choir repeater core</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-swarm ash repeater.&#10;Effect: fires a fast five-shot burst of ash-canticle shards for wave control and light target suppression. Poor armor penetration keeps it dependent on lance or rail modules against elites and bosses.&#10;Range: 30.5.&#10;Cooldown: 3.5s.&#10;Burst: 5.&#10;Extra module power draw: +180 W.&#10;Unlock: 320 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_AshChoirRepeaterCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>430</MarketValue>
+      <Mass>3.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>320</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
     <description>Slot: Auxiliary.&#10;Compatible chassis: Medium.&#10;Role: secondary crowd pressure.&#10;Effect: adds an independent timed canticle-wave support shot while the main weapon keeps firing normally.&#10;Range: 30.0.&#10;Auxiliary cooldown: 7.0s.&#10;Burst: 1.&#10;Extra module power draw: +130 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>

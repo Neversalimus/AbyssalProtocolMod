@@ -38,6 +38,25 @@
       <soundImpactAnticipate>ABY_SigilRepeaterImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretAshChoirShard</defName>
+    <label>turret ash choir shard</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretAshChoirShard</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretAshChoirShard</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.30,1.12)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <armorPenetrationBase>0.18</armorPenetrationBase>
+      <stoppingPower>0.55</stoppingPower>
+      <speed>68</speed>
+      <soundImpactAnticipate>ABY_AshChoirRepeaterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 
 
   <ThingDef ParentName="BaseBullet">
