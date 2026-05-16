@@ -147,11 +147,11 @@
     <overlayAltitudeOffset>0.076</overlayAltitudeOffset>
     <chargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailCharge_</chargeOverlayFramePathPrefix>
     <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
-    <chargeOverlayTicksPerFrame>5</chargeOverlayTicksPerFrame>
+    <chargeOverlayTicksPerFrame>18</chargeOverlayTicksPerFrame>
     <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
     <dischargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailDischarge_</dischargeOverlayFramePathPrefix>
     <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
-    <dischargeOverlayTicksPerFrame>1</dischargeOverlayTicksPerFrame>
+    <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.096</dischargeOverlayAltitudeOffset>
     <residualOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailResidual_</residualOverlayFramePathPrefix>
     <residualOverlayFrameCount>6</residualOverlayFrameCount>
