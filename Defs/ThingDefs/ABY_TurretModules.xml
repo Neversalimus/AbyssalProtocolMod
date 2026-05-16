@@ -218,4 +218,31 @@
     </modExtensions>
   </ThingDef>
 
+<ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_VesperLanceArray</defName>
+    <label>vesper lance array</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: charged precision sanction lance.&#10;Effect: replaces the turret main weapon with a focused Vesper sanction beam for armored targets, dangerous elites, and measured long-lane pressure. It charges briefly, then releases a hard-hitting high-velocity lance with cleaner cadence than the Sepulcher rail.&#10;Range: 40.5.&#10;Charge: 0.7s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.2s after firing.&#10;Burst: 1.&#10;Extra module power draw: +260 W.&#10;Unlock: 680 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_VesperLanceArray</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>640</MarketValue>
+      <Mass>3.8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>680</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 </Defs>

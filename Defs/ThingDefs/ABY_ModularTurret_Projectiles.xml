@@ -98,4 +98,23 @@
     </projectile>
   </ThingDef>
 
+<ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretVesperLanceBolt</defName>
+    <label>vesper sanction lance</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretVesperLanceBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretVesperLanceBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,1.92)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>26</damageAmountBase>
+      <armorPenetrationBase>1.55</armorPenetrationBase>
+      <stoppingPower>2.2</stoppingPower>
+      <speed>96</speed>
+      <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 </Defs>

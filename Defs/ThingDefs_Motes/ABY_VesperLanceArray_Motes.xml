@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_VesperLanceArrayMuzzle</defName>
+    <label>vesper lance array muzzle flare</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_PlasmaLanceAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/VesperLanceArray/ABY_VesperLanceArrayMuzzle_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.94,0.94)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.08</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_VesperLanceArrayImpact</defName>
+    <label>vesper lance array impact flare</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_PlasmaLanceAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/VesperLanceArray/ABY_VesperLanceArrayImpact_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.88,0.88)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.08</solidTime>
+      <fadeOutTime>0.06</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

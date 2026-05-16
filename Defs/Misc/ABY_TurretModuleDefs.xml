@@ -191,4 +191,40 @@
     <residualOverlayAltitudeOffset>0.092</residualOverlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+<AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_VesperLanceArray</defName>
+    <label>Vesper Lance Array</label>
+    <description>Main weapon core for medium modular turret chassis. Briefly charges, then fires a focused sanction lance for armor and elite targets.</description>
+    <effectSummary>Primary gun module. A saint-clean precision lance that sits between Plasma Lance and Sepulcher Rail: better reach and armor pressure than the former, far faster cadence than the latter.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_VesperLanceArray</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>charged precision sanction lance</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretVesperLanceBolt</projectileDef>
+    <soundCast>ABY_VesperLanceFire</soundCast>
+    <soundCharge>ABY_VesperLanceAim</soundCharge>
+    <range>40.5</range>
+    <minRange>0</minRange>
+    <cooldownTicks>312</cooldownTicks>
+    <chargeTicks>42</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>260</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_VesperLanceArray</overlayTexturePath>
+    <overlayDrawSize>3.85</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.62</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>2.08</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.068</overlayAltitudeOffset>
+    <chargeOverlayFramePathPrefix>Things/VFX/VesperLanceArray/ABY_VesperLanceArrayCharge_</chargeOverlayFramePathPrefix>
+    <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
+    <chargeOverlayTicksPerFrame>5</chargeOverlayTicksPerFrame>
+    <chargeOverlayAltitudeOffset>0.084</chargeOverlayAltitudeOffset>
+    <dischargeOverlayFramePathPrefix>Things/VFX/VesperLanceArray/ABY_VesperLanceArrayDischarge_</dischargeOverlayFramePathPrefix>
+    <dischargeOverlayFrameCount>6</dischargeOverlayFrameCount>
+    <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
+    <dischargeOverlayAltitudeOffset>0.094</dischargeOverlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 </Defs>

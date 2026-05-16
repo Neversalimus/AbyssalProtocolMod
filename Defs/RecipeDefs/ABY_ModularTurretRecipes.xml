@@ -165,4 +165,25 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1500</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+<RecipeDef>
+    <defName>ABY_CraftTurretModule_VesperLanceArray</defName>
+    <label>forge vesper lance array</label>
+    <description>Bind a saint-clean sanction chamber and collapsing beam spine into a turret-compatible precision lance core.</description>
+    <jobString>Forging vesper lance array.</jobString>
+    <workAmount>3600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>56</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>32</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>14</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_VesperLanceArray>1</ABY_TurretModule_VesperLanceArray></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>680</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 </Defs>
