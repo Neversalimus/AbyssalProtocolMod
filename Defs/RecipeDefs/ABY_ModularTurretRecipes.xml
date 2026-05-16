@@ -189,6 +189,29 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>820</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_NullArcDischarger</defName>
+    <label>forge null-arc discharger</label>
+    <description>Bind a cracked null capacitor cage and sanctified discharge prongs into a turret-compatible EMP suppression main weapon core.</description>
+    <jobString>Forging null-arc discharger.</jobString>
+    <workAmount>4200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>70</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>42</count></li>
+      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>18</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>16</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_NullArcDischarger>1</ABY_TurretModule_NullArcDischarger></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>960</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 <RecipeDef>
     <defName>ABY_CraftTurretModule_VesperLanceArray</defName>
     <label>forge vesper lance array</label>

@@ -120,6 +120,26 @@
     </projectile>
   </ThingDef>
 
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretNullArcPulse</defName>
+    <label>null-arc turret pulse</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretNullArcPulse</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretNullArcPulse</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.05,0.05)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>EMP</damageDef>
+      <damageAmountBase>24</damageAmountBase>
+      <armorPenetrationBase>0</armorPenetrationBase>
+      <stoppingPower>1.20</stoppingPower>
+      <speed>160</speed>
+      <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 <ThingDef ParentName="BaseBullet">
     <defName>ABY_TurretVesperLanceBolt</defName>
     <label>vesper sanction lance</label>

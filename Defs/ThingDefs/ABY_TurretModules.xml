@@ -247,6 +247,34 @@
     </modExtensions>
   </ThingDef>
 
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_NullArcDischarger</defName>
+    <label>null-arc discharger</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: null-arc EMP suppression.&#10;Effect: charges a sanctified capacitor, then fires a thin EMP/null-arc pulse. The primary hit applies EMP pressure and moderate damage, then chains to up to three nearby hostile pawns with reduced force. Strong against mechanoids, shield belts, and clustered elite support; weak as pure DPS against unshielded flesh.&#10;Range: 36.0.&#10;Charge: 0.6s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.8s after firing.&#10;Burst: 1.&#10;Extra module power draw: +380 W.&#10;Unlock: 960 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_NullArcDischarger</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>810</MarketValue>
+      <Mass>4.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>960</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_VesperLanceArray</defName>
     <label>vesper lance array</label>

@@ -221,6 +221,36 @@
     <overlayAltitudeOffset>0.070</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_NullArcDischarger</defName>
+    <label>Null-Arc Discharger</label>
+    <description>Main weapon core for medium modular turret chassis. Charges a sanctified null capacitor, then releases a thin EMP arc that disrupts mechs, shielded targets, and nearby electronics through chained secondary strikes.</description>
+    <effectSummary>Primary gun module. Fires a charged null-arc pulse that deals moderate direct damage, applies strong EMP pressure, and chains to up to three nearby hostile pawns. Excellent against mechs, shield belts, and clustered elite support; inefficient as raw DPS against unshielded flesh.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_NullArcDischarger</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>null-arc EMP suppression</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretNullArcPulse</projectileDef>
+    <soundCast>ABY_VesperLanceFire</soundCast>
+    <soundCharge>ABY_VesperLanceAim</soundCharge>
+    <range>36</range>
+    <minRange>0</minRange>
+    <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
+    <cooldownTicks>348</cooldownTicks>
+    <chargeTicks>36</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>380</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_NullArcDischarger</overlayTexturePath>
+    <overlayDrawSize>3.62</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.40</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.54</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.072</overlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_VesperLanceArray</defName>
     <label>Vesper Lance Array</label>
