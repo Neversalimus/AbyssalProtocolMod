@@ -15,7 +15,7 @@
             <clipPath>ABY/Weapons/ChoirArcEmitter_Impact</clipPath>
           </li>
         </grains>
-        <volumeRange>24~28</volumeRange>
+        <volumeRange>27~31</volumeRange>
         <pitchRange>0.98~1.03</pitchRange>
       </li>
     </subSounds>
