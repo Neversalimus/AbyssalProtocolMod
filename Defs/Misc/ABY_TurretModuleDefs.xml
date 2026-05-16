@@ -205,7 +205,7 @@
     <tier>3</tier>
     <projectileDef>ABY_TurretCinderMortarShell</projectileDef>
     <soundCast>ABY_AshenScattergunFire</soundCast>
-    <range>36</range>
+    <range>40</range>
     <minRange>8</minRange>
     <targetRequiresLineOfSight>false</targetRequiresLineOfSight>
     <cooldownTicks>336</cooldownTicks>
