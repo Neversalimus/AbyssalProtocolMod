@@ -215,7 +215,7 @@
     <overlayDrawSize>3.85</overlayDrawSize>
     <overlayForwardOffset>0.00</overlayForwardOffset>
     <overlayPivotForwardOffset>-0.62</overlayPivotForwardOffset>
-    <overlayMuzzleForwardOffset>2.08</overlayMuzzleForwardOffset>
+    <overlayMuzzleForwardOffset>1.72</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.068</overlayAltitudeOffset>
     <chargeOverlayFramePathPrefix>Things/VFX/VesperLanceArray/ABY_VesperLanceArrayCharge_</chargeOverlayFramePathPrefix>
     <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
