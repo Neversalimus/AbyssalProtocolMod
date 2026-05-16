@@ -163,4 +163,32 @@
     </modExtensions>
   </ThingDef>
 
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_SepulcherRailCore</defName>
+    <label>sepulcher rail core</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: charged anti-elite rail sniper.&#10;Effect: charges two massive gauss accelerator planks, then launches a single Sepulcher rail spike through the open centerline.&#10;Range: 52.0.&#10;Minimum range: 8.0.&#10;Charge: 2.5s before firing; passive cadence modules reduce this charge time.&#10;Cooldown: 12.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +520 W.&#10;Unlock: 1500 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_SepulcherRailCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1350</MarketValue>
+      <Mass>5.5</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1500</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 </Defs>

@@ -335,6 +335,17 @@ namespace AbyssalProtocol
 
             if (module.slot == ABY_TurretModuleSlot.MainWeapon)
             {
+                if (module.chargeTicks > 0)
+                {
+                    return TranslateOrFallback(
+                        "ABY_TurretModuleChargedFireStats",
+                        "Range {0} · charge {1} · cooldown {2} · burst {3}",
+                        module.range.ToString("0.0"),
+                        FormatTicksAsSeconds(module.chargeTicks),
+                        FormatTicksAsSeconds(module.cooldownTicks),
+                        Mathf.Max(1, module.burstShotCount));
+                }
+
                 return TranslateOrFallback(
                     "ABY_TurretModuleFireStats",
                     "Range {0} · cooldown {1} · burst {2}",

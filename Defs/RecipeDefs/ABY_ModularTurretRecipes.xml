@@ -121,4 +121,26 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>170</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_SepulcherRailCore</defName>
+    <label>forge sepulcher rail core</label>
+    <description>Bind a twin-plank gauss accelerator and rear injection chamber into a turret-compatible Sepulcher Rail Core.</description>
+    <jobString>Forging sepulcher rail core.</jobString>
+    <workAmount>5200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>90</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>65</count></li>
+      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>35</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>4</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_SepulcherRailCore>1</ABY_TurretModule_SepulcherRailCore></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1500</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 </Defs>

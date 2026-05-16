@@ -15,9 +15,11 @@ namespace AbyssalProtocol
 
         public ThingDef projectileDef;
         public SoundDef soundCast;
+        public SoundDef soundCharge;
         public float range = 24f;
         public float minRange;
         public int cooldownTicks = 180;
+        public int chargeTicks;
         public int burstShotCount = 1;
         public int ticksBetweenBurstShots = 8;
         public int auxiliaryCooldownTicks = 360;
@@ -46,6 +48,22 @@ namespace AbyssalProtocol
 
         public bool overlayRotatesToTarget = true;
         public bool overlayVisibleWhenDisabled;
+
+        // Optional animated overlay VFX for charged modular weapons. Frame prefixes are texture paths without the 01/02 suffix.
+        public string chargeOverlayFramePathPrefix;
+        public int chargeOverlayFrameCount = 8;
+        public int chargeOverlayTicksPerFrame = 4;
+        public float chargeOverlayAltitudeOffset = 0.080f;
+
+        public string dischargeOverlayFramePathPrefix;
+        public int dischargeOverlayFrameCount = 8;
+        public int dischargeOverlayTicksPerFrame = 1;
+        public float dischargeOverlayAltitudeOffset = 0.090f;
+
+        public string residualOverlayFramePathPrefix;
+        public int residualOverlayFrameCount = 6;
+        public int residualOverlayTicksPerFrame = 3;
+        public float residualOverlayAltitudeOffset = 0.086f;
 
         public bool IsWeaponLike => projectileDef != null && (slot == ABY_TurretModuleSlot.MainWeapon || slot == ABY_TurretModuleSlot.Auxiliary);
         public bool HasOverlay => !overlayTexturePath.NullOrEmpty();

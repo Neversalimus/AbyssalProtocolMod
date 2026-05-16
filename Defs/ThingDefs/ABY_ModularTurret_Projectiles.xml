@@ -59,4 +59,24 @@
     </projectile>
   </ThingDef>
 
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretSepulcherRailSpike</defName>
+    <label>sepulcher rail spike</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretSepulcherRailSpike</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretSepulcherRailSpike</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.40,1.62)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>62</damageAmountBase>
+      <armorPenetrationBase>2.25</armorPenetrationBase>
+      <stoppingPower>3.20</stoppingPower>
+      <speed>128</speed>
+      <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 </Defs>

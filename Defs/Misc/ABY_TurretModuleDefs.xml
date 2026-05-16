@@ -118,4 +118,45 @@
     <extraPowerDraw>120</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_SepulcherRailCore</defName>
+    <label>Sepulcher Rail Core</label>
+    <description>Main weapon core for medium modular turret chassis. A late-tier dual-rail gauss accelerator that charges before firing a single anti-elite penetrator.</description>
+    <effectSummary>Primary gun module. Charges its twin rail planks, then fires a single high-velocity rail penetrator for long-range anti-armor and anti-elite defense. Passive cooldown modules also shorten the charge window.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_SepulcherRailCore</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>charged anti-elite rail sniper</role>
+    <tier>4</tier>
+    <projectileDef>ABY_TurretSepulcherRailSpike</projectileDef>
+    <soundCharge>ABY_CrownspikeRailCharge</soundCharge>
+    <soundCast>ABY_PlasmaLanceFire</soundCast>
+    <range>52</range>
+    <minRange>8</minRange>
+    <cooldownTicks>720</cooldownTicks>
+    <chargeTicks>150</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>520</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_SepulcherRailCore</overlayTexturePath>
+    <overlayDrawSize>5.35</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-1.28</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>3.20</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.076</overlayAltitudeOffset>
+    <chargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailCharge_</chargeOverlayFramePathPrefix>
+    <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
+    <chargeOverlayTicksPerFrame>5</chargeOverlayTicksPerFrame>
+    <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
+    <dischargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailDischarge_</dischargeOverlayFramePathPrefix>
+    <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
+    <dischargeOverlayTicksPerFrame>1</dischargeOverlayTicksPerFrame>
+    <dischargeOverlayAltitudeOffset>0.096</dischargeOverlayAltitudeOffset>
+    <residualOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailResidual_</residualOverlayFramePathPrefix>
+    <residualOverlayFrameCount>6</residualOverlayFrameCount>
+    <residualOverlayTicksPerFrame>3</residualOverlayTicksPerFrame>
+    <residualOverlayAltitudeOffset>0.092</residualOverlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 </Defs>
