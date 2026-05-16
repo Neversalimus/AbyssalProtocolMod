@@ -18,6 +18,7 @@ namespace AbyssalProtocol
         public SoundDef soundCharge;
         public float range = 24f;
         public float minRange;
+        public bool targetRequiresLineOfSight = true;
         public int cooldownTicks = 180;
         public int chargeTicks;
         public int burstShotCount = 1;

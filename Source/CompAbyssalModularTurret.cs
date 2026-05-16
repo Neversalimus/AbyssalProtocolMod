@@ -112,6 +112,9 @@ namespace AbyssalProtocol
 
         public float ResolvedAuxiliaryMinRange => auxiliaryModule != null ? Mathf.Max(0f, auxiliaryModule.minRange) : 0f;
 
+        private bool MainRequiresLineOfSight => mainModule?.targetRequiresLineOfSight ?? true;
+        private bool AuxiliaryRequiresLineOfSight => auxiliaryModule?.targetRequiresLineOfSight ?? true;
+
         public float ResolvedBasePowerDraw => Mathf.Max(0f, Props.basePowerDraw);
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
         public float ResolvedModulePowerDraw => FeatureEnabled ? Mathf.Max(0f, ExtraPowerDraw) : 0f;
@@ -202,7 +205,7 @@ namespace AbyssalProtocol
 
             if (HasMainWeapon && mainCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks)))
             {
-                Thing target = FindTarget(ResolvedRange, ResolvedMainMinRange);
+                Thing target = FindTarget(ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
                 if (target != null)
                 {
                     StartMainAttack(target);
@@ -211,7 +214,7 @@ namespace AbyssalProtocol
 
             if (HasAuxiliary && auxiliaryCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks + 11)))
             {
-                Thing auxTarget = FindTarget(ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange);
+                Thing auxTarget = FindTarget(ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
                 if (auxTarget != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(auxTarget);
@@ -233,8 +236,8 @@ namespace AbyssalProtocol
             }
 
             DrawWeaponOverlay(mainModule, mainAimAngle, false);
-            DrawWeaponOverlay(auxiliaryModule, auxiliaryAimAngle, false);
             DrawMainAnimatedOverlays();
+            DrawWeaponOverlay(auxiliaryModule, auxiliaryAimAngle, false);
         }
 
         public override void PostDrawExtraSelectionOverlays()
@@ -779,7 +782,7 @@ namespace AbyssalProtocol
 
         private void StartMainAttack(Thing target)
         {
-            if (!IsValidLaunchTarget(target, ResolvedRange, ResolvedMainMinRange))
+            if (!IsValidLaunchTarget(target, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight))
             {
                 return;
             }
@@ -808,7 +811,7 @@ namespace AbyssalProtocol
 
         private void TickMainCharge()
         {
-            if (!Operational || !HasMainWeapon || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange))
+            if (!Operational || !HasMainWeapon || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight))
             {
                 HaltCharge();
                 mainCooldownTicks = Mathf.Max(mainCooldownTicks, 45);
@@ -827,7 +830,7 @@ namespace AbyssalProtocol
 
         private void StartMainBurstNow(Thing target)
         {
-            if (!IsValidLaunchTarget(target, ResolvedRange, ResolvedMainMinRange))
+            if (!IsValidLaunchTarget(target, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight))
             {
                 HaltCharge();
                 return;
@@ -844,7 +847,7 @@ namespace AbyssalProtocol
 
         private void TickBurst()
         {
-            if (!Operational || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange))
+            if (!Operational || !IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight))
             {
                 HaltBurst();
                 return;
@@ -887,9 +890,9 @@ namespace AbyssalProtocol
         {
             if (HasMainWeapon)
             {
-                Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange)
+                Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight)
                     ? currentBurstTarget
-                    : FindTarget(ResolvedRange, ResolvedMainMinRange);
+                    : FindTarget(ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
                 if (target != null)
                 {
                     mainAimAngle = AngleToTarget(target);
@@ -899,7 +902,7 @@ namespace AbyssalProtocol
             if (HasAuxiliary)
             {
                 float range = ResolvedAuxiliaryRange;
-                Thing target = FindTarget(range, ResolvedAuxiliaryMinRange);
+                Thing target = FindTarget(range, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
                 if (target != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(target);
@@ -925,7 +928,7 @@ namespace AbyssalProtocol
             return Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
-        private Thing FindTarget(float range, float minRange = 0f)
+        private Thing FindTarget(float range, float minRange = 0f, bool requireLineOfSight = true)
         {
             Map map = parent.Map;
             if (map?.mapPawns == null)
@@ -953,7 +956,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (!GenSight.LineOfSight(parent.Position, pawn.Position, map, true))
+                if (requireLineOfSight && !GenSight.LineOfSight(parent.Position, pawn.Position, map, true))
                 {
                     continue;
                 }
@@ -989,7 +992,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private bool IsValidLaunchTarget(Thing target, float range, float minRange = 0f)
+        private bool IsValidLaunchTarget(Thing target, float range, float minRange = 0f, bool requireLineOfSight = true)
         {
             if (target == null || target.Destroyed || !target.Spawned || target.Map != parent.Map || parent.Map == null)
             {
@@ -1013,7 +1016,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!GenSight.LineOfSight(parent.Position, target.Position, parent.Map, true))
+            if (requireLineOfSight && !GenSight.LineOfSight(parent.Position, target.Position, parent.Map, true))
             {
                 return false;
             }
@@ -1103,7 +1106,7 @@ namespace AbyssalProtocol
         {
             float range = ResolveModuleRange(module);
             float minRange = ResolveModuleMinRange(module);
-            if (module?.projectileDef == null || !IsValidLaunchTarget(target, range, minRange))
+            if (module?.projectileDef == null || !IsValidLaunchTarget(target, range, minRange, module.targetRequiresLineOfSight))
             {
                 return false;
             }

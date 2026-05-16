@@ -218,6 +218,35 @@
     </modExtensions>
   </ThingDef>
 
+
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CinderMortarCore</defName>
+    <label>cinder mortar core</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: indirect cinder bombardment.&#10;Effect: lobs cinder-packed shells over cover to punish clustered enemies and static firing lines. Each hit creates compact explosive splash and a short-lived hot-ash residue patch.&#10;Range: 36.0.&#10;Minimum range: 8.0.&#10;Charge: 0.4s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.6s after firing.&#10;Burst: 1.&#10;Extra module power draw: +320 W.&#10;Unlock: 820 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CinderMortarCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>720</MarketValue>
+      <Mass>4.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>820</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_VesperLanceArray</defName>
     <label>vesper lance array</label>

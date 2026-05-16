@@ -98,6 +98,28 @@
     </projectile>
   </ThingDef>
 
+
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretCinderMortarShell</defName>
+    <label>cinder mortar shell</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretCinderMortarShell</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretCinderMortarShell</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.62,1.42)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>27</damageAmountBase>
+      <armorPenetrationBase>0.42</armorPenetrationBase>
+      <stoppingPower>2.60</stoppingPower>
+      <speed>38</speed>
+      <explosionRadius>2.35</explosionRadius>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 <ThingDef ParentName="BaseBullet">
     <defName>ABY_TurretVesperLanceBolt</defName>
     <label>vesper sanction lance</label>

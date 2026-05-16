@@ -191,6 +191,36 @@
     <residualOverlayAltitudeOffset>0.092</residualOverlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CinderMortarCore</defName>
+    <label>Cinder Mortar Core</label>
+    <description>Main weapon core for medium modular turret chassis. Lobs cinder-packed shells over cover to break clustered enemies and leave a short-lived burning residue field.</description>
+    <effectSummary>Primary gun module. Fires an indirect cinder mortar shell with a minimum range, compact explosive splash, and a brief hot-ash residue patch for area denial. Excellent against clustered enemies and static firing lines; poor against enemies already inside the deadzone.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_CinderMortarCore</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>indirect cinder bombardment</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretCinderMortarShell</projectileDef>
+    <soundCast>ABY_AshenScattergunFire</soundCast>
+    <range>36</range>
+    <minRange>8</minRange>
+    <targetRequiresLineOfSight>false</targetRequiresLineOfSight>
+    <cooldownTicks>336</cooldownTicks>
+    <chargeTicks>24</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>320</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_CinderMortarCore</overlayTexturePath>
+    <overlayDrawSize>3.55</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.34</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>0.92</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.070</overlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_VesperLanceArray</defName>
     <label>Vesper Lance Array</label>
