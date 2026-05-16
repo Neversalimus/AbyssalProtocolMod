@@ -315,4 +315,32 @@
     <dischargeOverlayAltitudeOffset>0.094</dischargeOverlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+<AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_RiftFlakBloom</defName>
+    <label>Rift Flak Bloom</label>
+    <description>Main weapon core for medium modular turret chassis. Fires an unstable rift canister that blooms near the target into cutting obsidian fragments for direct anti-cluster suppression.</description>
+    <effectSummary>Primary gun module. Launches a compact rift seed that detonates into a short radial shard bloom, striking several nearby hostile pawns with small cutting fragments. Strong against light swarms and clustered raiders; weak as raw anti-armor or boss DPS.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_RiftFlakBloom</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>direct anti-cluster flak bloom</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretRiftFlakSeed</projectileDef>
+    <soundCast>ABY_RiftNeedlerFire</soundCast>
+    <range>31.5</range>
+    <minRange>3</minRange>
+    <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
+    <cooldownTicks>288</cooldownTicks>
+    <chargeTicks>18</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>350</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftFlakBloom</overlayTexturePath>
+    <overlayDrawSize>3.55</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.38</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.48</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.073</overlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 </Defs>

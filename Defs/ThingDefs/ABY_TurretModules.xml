@@ -329,4 +329,31 @@
     </modExtensions>
   </ThingDef>
 
+<ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_RiftFlakBloom</defName>
+    <label>rift flak bloom</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: direct anti-cluster flak bloom.&#10;Effect: fires a compact rift seed that blooms into cutting obsidian fragments near the target, dealing several small shard hits across clustered hostile pawns. Excellent against light swarms and dense mid-tier attackers; poor against heavy armor, bosses, and enemies outside the bloom radius.&#10;Range: 31.5.&#10;Minimum range: 3.0.&#10;Charge: 0.3s before firing; cadence modules reduce this charge time.&#10;Cooldown: 4.8s after firing.&#10;Burst: 1.&#10;Extra module power draw: +350 W.&#10;Unlock: 920 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftFlakBloom</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>790</MarketValue>
+      <Mass>4.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>920</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 </Defs>

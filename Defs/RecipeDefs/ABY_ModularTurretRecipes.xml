@@ -255,4 +255,25 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>680</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+<RecipeDef>
+    <defName>ABY_CraftTurretModule_RiftFlakBloom</defName>
+    <label>forge rift flak bloom</label>
+    <description>Bind a cracked rift canister splitter and shard-feed housings into a turret-compatible anti-cluster flak bloom module.</description>
+    <jobString>Forging rift flak bloom.</jobString>
+    <workAmount>4100</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>68</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>82</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>38</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_RiftFlakBloom>1</ABY_TurretModule_RiftFlakBloom></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>920</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 </Defs>

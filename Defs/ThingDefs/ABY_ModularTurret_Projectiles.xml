@@ -178,4 +178,23 @@
     </projectile>
   </ThingDef>
 
+<ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretRiftFlakSeed</defName>
+    <label>rift flak seed</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretRiftFlakSeed</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretRiftFlakSeed</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.40,0.92)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>11</damageAmountBase>
+      <armorPenetrationBase>0.24</armorPenetrationBase>
+      <stoppingPower>0.92</stoppingPower>
+      <speed>72</speed>
+      <soundImpactAnticipate>ABY_AshChoirRepeaterImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 </Defs>
