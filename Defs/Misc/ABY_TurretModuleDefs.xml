@@ -251,6 +251,34 @@
     <overlayAltitudeOffset>0.072</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_AbyssalHarpoonProjector</defName>
+    <label>Abyssal Harpoon Projector</label>
+    <description>Main weapon core for medium modular turret chassis. Fires an anchor-spike bolt that impales dangerous melee threats, pins them under abyssal restraint, and briefly drags non-boss targets toward the chassis.</description>
+    <effectSummary>Primary gun module. Fires a heavy abyssal harpoon bolt for anti-breach lockdown. On hit it deals piercing damage, applies a slowing tether that reduces movement and melee dodge, and can micro-yank non-boss targets one or two cells toward the turret. Bosses and huge pawns receive a reduced tether but cannot be pulled.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_AbyssalHarpoonProjector</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>anti-breach elite lockdown</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretAbyssalHarpoonBolt</projectileDef>
+    <soundCast>ABY_SpecterLashFire</soundCast>
+    <range>32</range>
+    <minRange>4</minRange>
+    <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
+    <cooldownTicks>420</cooldownTicks>
+    <chargeTicks>30</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>340</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_AbyssalHarpoonProjector</overlayTexturePath>
+    <overlayDrawSize>3.62</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.44</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.76</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.074</overlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_VesperLanceArray</defName>
     <label>Vesper Lance Array</label>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AbyssalHarpoonImpact</defName>
+    <label>abyssal harpoon pin impact</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_PlasmaLanceAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/AbyssalHarpoon/ABY_HarpoonImpact_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.88,0.88)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.13</solidTime>
+      <fadeOutTime>0.06</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AbyssalHarpoonTetherLine</defName>
+    <label>abyssal harpoon tether line</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_NullArcBeamSegment</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/AbyssalHarpoon/ABY_HarpoonTether_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,0.14)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.09</solidTime>
+      <fadeOutTime>0.06</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_AbyssalHarpoonMarker</defName>
+    <label>abyssal tether lock marker</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_PlasmaLanceAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/AbyssalHarpoon/ABY_HarpoonMarker_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.72,0.72)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.25</solidTime>
+      <fadeOutTime>0.15</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

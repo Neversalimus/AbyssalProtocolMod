@@ -275,6 +275,33 @@
     </modExtensions>
   </ThingDef>
 
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_AbyssalHarpoonProjector</defName>
+    <label>abyssal harpoon projector</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-breach elite lockdown.&#10;Effect: fires a heavy abyssal anchor-spike that pierces dangerous targets, applies a visible tether, slows movement, reduces melee dodge, and can micro-yank non-boss enemies one or two cells toward the chassis. Bosses and huge pawns receive only a reduced tether and cannot be pulled.&#10;Range: 32.0.&#10;Minimum range: 4.0.&#10;Charge: 0.5s before firing; cadence modules reduce this charge time.&#10;Cooldown: 7.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +340 W.&#10;Unlock: 1040 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_AbyssalHarpoonProjector</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>860</MarketValue>
+      <Mass>4.6</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1040</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_VesperLanceArray</defName>
     <label>vesper lance array</label>

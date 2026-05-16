@@ -212,6 +212,28 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>960</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_AbyssalHarpoonProjector</defName>
+    <label>forge abyssal harpoon projector</label>
+    <description>Bind a chained anchor-spike launcher and tether winch core into a turret-compatible anti-breach lockdown module.</description>
+    <jobString>Forging abyssal harpoon projector.</jobString>
+    <workAmount>4400</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>76</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>90</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>44</count></li>
+      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>20</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_AbyssalHarpoonProjector>1</ABY_TurretModule_AbyssalHarpoonProjector></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1040</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 <RecipeDef>
     <defName>ABY_CraftTurretModule_VesperLanceArray</defName>
     <label>forge vesper lance array</label>

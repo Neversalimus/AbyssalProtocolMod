@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_AbyssalHarpoonTether</defName>
+    <label>abyssal tether</label>
+    <description>An abyssal harpoon has bitten into the target and locked its movement into the turret's restraint geometry. Movement is heavily slowed and close-quarters evasion becomes unreliable until the tether burns out.</description>
+    <hediffClass>AbyssalProtocol.Hediff_ABY_AbyssalHarpoonTether</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(0.96, 0.12, 0.42)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>228</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.55</MoveSpeed>
+          <MeleeDodgeChance>-0.08</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_AbyssalHarpoonTether_Reduced</defName>
+    <label>reduced abyssal tether</label>
+    <description>An abyssal harpoon restraint has latched onto a target too large or too anchored to be dragged. The tether still interferes with movement and evasion, but cannot reposition the victim.</description>
+    <hediffClass>AbyssalProtocol.Hediff_ABY_AbyssalHarpoonTether</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(0.80, 0.10, 0.34)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>150</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <statOffsets>
+          <MoveSpeed>-0.24</MoveSpeed>
+          <MeleeDodgeChance>-0.03</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>
