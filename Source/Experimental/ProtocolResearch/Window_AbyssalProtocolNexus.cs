@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         private const string BackgroundPath = "UI/ABY/ProtocolResearch/ABY_NexusWindowBackground";
         private const string SmallRingPath = "UI/ABY/ProtocolResearch/ABY_SmallCategoryRingFrame";
         private const string LargeRingPath = "UI/ABY/ProtocolResearch/ABY_LargeResearchRing";
+        private const string SelectedSocketHaloPath = "UI/ABY/ProtocolResearch/ABY_LargeResearchRing_SelectedSocketHalo";
         private const string SegmentLockedPath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Locked";
         private const string SegmentAvailablePath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Available";
         private const string SegmentActivePath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Active";
@@ -21,6 +22,7 @@ namespace AbyssalProtocol
         private static readonly Texture2D BackgroundTex = ContentFinder<Texture2D>.Get(BackgroundPath, false);
         private static readonly Texture2D SmallRingTex = ContentFinder<Texture2D>.Get(SmallRingPath, false);
         private static readonly Texture2D LargeRingTex = ContentFinder<Texture2D>.Get(LargeRingPath, false);
+        private static readonly Texture2D SelectedSocketHaloTex = ContentFinder<Texture2D>.Get(SelectedSocketHaloPath, false);
         private static readonly Texture2D SegmentLockedTex = ContentFinder<Texture2D>.Get(SegmentLockedPath, false);
         private static readonly Texture2D SegmentAvailableTex = ContentFinder<Texture2D>.Get(SegmentAvailablePath, false);
         private static readonly Texture2D SegmentActiveTex = ContentFinder<Texture2D>.Get(SegmentActivePath, false);
@@ -248,8 +250,8 @@ namespace AbyssalProtocol
             Rect ringArea = new Rect(rect.x + 30f, rect.y + 70f, ringSize, ringSize);
             Rect localRingArea = new Rect(0f, 0f, ringArea.width, ringArea.height);
 
-            // Draw the new base ring as the primary visual object.
-            // Code-side overlays are intentionally lightweight and aligned to the built-in sockets.
+            // Keep the large ring and its minimal markers inside one local canvas.
+            // Navigation remains driven by the stable project list to the right.
             GUI.BeginGroup(ringArea);
             if (LargeRingTex != null)
             {
@@ -274,10 +276,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            // The new base ring art already contains the heavy socket and glow language.
-            // Keep code-side overlays restrained so the ring stays premium instead of cluttered.
             DrawRingProgressTicks(ringArea, projects);
-            DrawSelectedLayerConduit(ringArea, layers, activeLayer);
             DrawLayerNodes(ringArea, layers);
             DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
         }
@@ -289,10 +288,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            const int MaxTicks = 40;
+            const int MaxTicks = 48;
             int tickCount = Mathf.Min(MaxTicks, Mathf.Max(1, projects.Count));
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.442f;
+            float radius = ringArea.width * 0.438f;
 
             for (int i = 0; i < tickCount; i++)
             {
@@ -305,147 +304,13 @@ namespace AbyssalProtocol
                 float angle = -90f + (360f * i / tickCount);
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
-                float size = state == ABY_ProtocolResearchState.Completed ? 3.4f : 2.8f;
+                float size = state == ABY_ProtocolResearchState.Completed ? 4.6f : 3.6f;
                 Rect tickRect = new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size);
 
                 Color color = StateColor(state);
-                color.a = state == ABY_ProtocolResearchState.Locked ? 0.18f : 0.34f;
+                color.a = state == ABY_ProtocolResearchState.Locked ? 0.34f : 0.58f;
                 DrawSolid(tickRect, color);
             }
-        }
-
-
-        private static void DrawRingAmbientGlow(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
-        {
-            if (projects == null || projects.Count == 0 || LargeRingTex == null)
-            {
-                return;
-            }
-
-            int ready = CountProjects(projects, ProtocolProjectFilter.Ready);
-            int completed = CountProjects(projects, ProtocolProjectFilter.Completed);
-            float completion = projects.Count == 0 ? 0f : Mathf.Clamp01((float)completed / projects.Count);
-            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 1.18f) * 0.5f;
-
-            Color glow = ready > 0
-                ? new Color(1f, 0.46f, 0.14f, 0.055f + pulse * 0.035f)
-                : new Color(0.70f, 0.24f, 0.10f, 0.028f + pulse * 0.020f);
-
-            if (completion > 0.55f)
-            {
-                glow = Color.Lerp(glow, new Color(1f, 0.76f, 0.34f, 0.070f + pulse * 0.032f), Mathf.Clamp01(completion));
-            }
-
-            Color oldColor = GUI.color;
-            GUI.color = glow;
-            GUI.DrawTexture(ringArea.ExpandedBy(4f), LargeRingTex, ScaleMode.ScaleToFit, true);
-            GUI.color = new Color(glow.r, glow.g, glow.b, glow.a * 0.55f);
-            GUI.DrawTexture(ringArea.ExpandedBy(9f), LargeRingTex, ScaleMode.ScaleToFit, true);
-            GUI.color = oldColor;
-        }
-
-        private static void DrawInnerProtocolMotion(Rect ringArea, ResearchLayerView activeLayer)
-        {
-            Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.235f;
-            float counterRadius = ringArea.width * 0.182f;
-            float time = Time.realtimeSinceStartup;
-            Color baseColor = activeLayer == null ? new Color(1f, 0.43f, 0.18f, 1f) : StateColor(activeLayer.State);
-
-            for (int i = 0; i < 16; i++)
-            {
-                float angle = -90f + i * 22.5f + time * 6.2f;
-                float rad = angle * Mathf.Deg2Rad;
-                float pulse = 0.5f + Mathf.Sin(time * 1.6f + i * 0.71f) * 0.5f;
-                Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
-                float size = 1.8f + pulse * 1.5f;
-                DrawSolid(new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size), new Color(baseColor.r, baseColor.g, baseColor.b, 0.040f + pulse * 0.050f));
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                float angle = -90f + i * 36f - time * 4.4f;
-                float rad = angle * Mathf.Deg2Rad;
-                Vector2 pos = center + new Vector2(Mathf.Cos(rad) * counterRadius, Mathf.Sin(rad) * counterRadius);
-                DrawSolid(new Rect(pos.x - 1.25f, pos.y - 1.25f, 2.5f, 2.5f), new Color(1f, 0.55f, 0.20f, 0.045f));
-            }
-        }
-
-
-        private static void DrawStaticProtocolAnchors(Rect ringArea, List<ResearchLayerView> layers, ResearchLayerView activeLayer)
-        {
-            Vector2 center = ringArea.center;
-            float outerRadius = ringArea.width * 0.438f;
-            float innerRadius = ringArea.width * 0.338f;
-            float time = Time.realtimeSinceStartup;
-            Color stateColor = activeLayer == null ? new Color(1f, 0.42f, 0.14f, 1f) : StateColor(activeLayer.State);
-            int layerCount = layers?.Count ?? 0;
-            int availableLayers = layers == null ? 0 : layers.Count(layer => layer.AvailableCount > 0 || layer.ActiveCount > 0);
-            float readiness = layerCount == 0 ? 0f : Mathf.Clamp01((float)availableLayers / layerCount);
-
-            for (int i = 0; i < 8; i++)
-            {
-                float angle = -90f + i * 45f;
-                float rad = angle * Mathf.Deg2Rad;
-                float pulse = 0.5f + Mathf.Sin(time * 1.05f + i * 0.92f) * 0.5f;
-                float alpha = 0.085f + pulse * 0.055f + readiness * 0.045f;
-                Vector2 outer = center + new Vector2(Mathf.Cos(rad) * outerRadius, Mathf.Sin(rad) * outerRadius);
-                Vector2 inner = center + new Vector2(Mathf.Cos(rad) * innerRadius, Mathf.Sin(rad) * innerRadius);
-
-                float primary = (i % 2 == 0) ? 13f : 9f;
-                Rect outerRect = new Rect(outer.x - primary * 0.5f, outer.y - primary * 0.5f, primary, primary);
-                Color anchorColor = new Color(stateColor.r, stateColor.g, stateColor.b, alpha);
-                DrawOutline(outerRect, anchorColor);
-                DrawSolid(new Rect(outer.x - 2f, outer.y - 2f, 4f, 4f), new Color(1f, 0.58f, 0.22f, alpha * 1.45f));
-
-                if (i % 2 == 0)
-                {
-                    DrawOutline(outerRect.ExpandedBy(5f), new Color(stateColor.r, stateColor.g, stateColor.b, alpha * 0.38f));
-                }
-
-                float innerSize = (i % 2 == 0) ? 5f : 3.6f;
-                DrawSolid(new Rect(inner.x - innerSize * 0.5f, inner.y - innerSize * 0.5f, innerSize, innerSize), new Color(1f, 0.39f, 0.15f, alpha * 0.72f));
-            }
-        }
-
-        private static void DrawSelectedLayerConduit(Rect ringArea, List<ResearchLayerView> layers, ResearchLayerView activeLayer)
-        {
-            if (layers == null || activeLayer == null || layers.Count == 0)
-            {
-                return;
-            }
-
-            int index = layers.IndexOf(activeLayer);
-            if (index < 0)
-            {
-                return;
-            }
-
-            Vector2 center = ringArea.center;
-            int count = Mathf.Max(1, layers.Count);
-            float angle = SocketAngleForLayerIndex(index, count);
-            float rad = angle * Mathf.Deg2Rad;
-            Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
-            Color stateColor = StateColor(activeLayer.State);
-            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 2.15f) * 0.5f;
-            float baseAlpha = 0.045f + pulse * 0.030f;
-
-            float startRadius = ringArea.width * 0.225f;
-            float endRadius = ringArea.width * 0.348f;
-            for (int i = 0; i < 11; i++)
-            {
-                float t = i / 10f;
-                float radius = Mathf.Lerp(startRadius, endRadius, t);
-                Vector2 pos = center + dir * radius;
-                float size = Mathf.Lerp(1.4f, 2.8f, t);
-                float alpha = baseAlpha * Mathf.Lerp(0.45f, 1f, t);
-                DrawSolid(new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size), new Color(stateColor.r, stateColor.g, stateColor.b, alpha));
-            }
-
-            Vector2 innerAnchor = center + dir * startRadius;
-            Vector2 outerAnchor = center + dir * endRadius;
-            DrawOutline(new Rect(innerAnchor.x - 7f, innerAnchor.y - 7f, 14f, 14f), new Color(1f, 0.45f, 0.18f, 0.055f + pulse * 0.045f));
-            DrawOutline(new Rect(outerAnchor.x - 10f, outerAnchor.y - 10f, 20f, 20f), new Color(1f, 0.62f, 0.24f, 0.080f + pulse * 0.060f));
         }
 
         private void DrawLayerNodes(Rect ringArea, List<ResearchLayerView> layers)
@@ -456,20 +321,20 @@ namespace AbyssalProtocol
             }
 
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.388f;
+            float radius = ringArea.width * 0.382f;
             int count = Mathf.Max(1, layers.Count);
 
             for (int i = 0; i < layers.Count; i++)
             {
                 ResearchLayerView layer = layers[i];
-                float angle = SocketAngleForLayerIndex(i, count);
+                float angle = -90f + (360f * i / count);
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
 
                 bool selected = layer.Key == selectedLayerKey;
-                Rect hitRect = new Rect(pos.x - 30f, pos.y - 30f, 60f, 60f);
+                Rect hitRect = new Rect(pos.x - 26f, pos.y - 26f, 52f, 52f);
                 bool hover = Mouse.IsOver(hitRect);
-                float nodeSize = selected ? 26f : hover ? 22f : 18f;
+                float nodeSize = selected ? 36f : hover ? 32f : 28f;
                 Rect nodeRect = new Rect(pos.x - nodeSize * 0.5f, pos.y - nodeSize * 0.5f, nodeSize, nodeSize);
 
                 DrawLayerNode(nodeRect, layer, i, selected, hover);
@@ -489,80 +354,61 @@ namespace AbyssalProtocol
             }
         }
 
-        private static float SocketAngleForLayerIndex(int index, int count)
-        {
-            if (count <= 0)
-            {
-                return -90f;
-            }
-
-            int slot = Mathf.RoundToInt(index * 8f / count) % 8;
-            return -90f + slot * 45f;
-        }
-
         private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
         {
             Color stateColor = StateColor(layer.State);
-            float selectedPulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.0f) * 0.5f;
-            float idlePulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 1.15f + index * 1.71f) * 0.5f;
-            Rect backingRect = rect.ExpandedBy(selected ? 8f : hover ? 6f : 4f);
+            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 4f) * 0.5f;
+            Rect backingRect = rect.ExpandedBy(selected ? 4f : 5f);
 
-            // The replacement base ring has its own large sockets, so this is a lightweight
-            // state overlay rather than a second heavy marker drawn over the art.
+            if (selected && SelectedSocketHaloTex != null)
+            {
+                float haloSize = Mathf.Max(rect.width, rect.height) + 34f;
+                Rect haloRect = new Rect(rect.center.x - haloSize * 0.5f, rect.center.y - haloSize * 0.5f, haloSize, haloSize);
+                Color oldColor = GUI.color;
+                GUI.color = new Color(1f, 0.94f, 0.88f, 0.78f + pulse * 0.18f);
+                GUI.DrawTexture(haloRect, SelectedSocketHaloTex, ScaleMode.ScaleToFit, true);
+                GUI.color = oldColor;
+            }
+
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.74f : 0.62f));
+            if (selected)
+            {
+                DrawSolid(backingRect.ContractedBy(1f), new Color(0.16f, 0.05f, 0.02f, 0.20f + pulse * 0.10f));
+            }
+
             Color fill = stateColor;
-            fill.a = selected ? 0.42f + selectedPulse * 0.12f : hover ? 0.34f : 0.18f + idlePulse * 0.06f;
+            fill.a = selected ? 0.88f : hover ? 0.78f : 0.58f;
             DrawSolid(rect, fill);
 
             Color outline = selected
-                ? new Color(1f, 0.72f, 0.34f, 0.78f + selectedPulse * 0.14f)
+                ? new Color(1f, 0.72f, 0.34f, 0.86f)
                 : hover
-                    ? new Color(1f, 0.50f, 0.20f, 0.58f)
-                    : new Color(0.78f, 0.30f, 0.14f, 0.20f + idlePulse * 0.08f);
+                    ? new Color(1f, 0.48f, 0.20f, 0.78f)
+                    : new Color(0.72f, 0.28f, 0.14f, 0.45f);
             DrawOutline(backingRect, outline);
 
-            if (selected)
+            if (selected && SelectedSocketHaloTex == null)
             {
-                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.44f, 0.16f, 0.18f + selectedPulse * 0.12f));
-                DrawFocusBrackets(backingRect.ExpandedBy(11f), new Color(1f, 0.64f, 0.24f, 0.24f + selectedPulse * 0.18f));
+                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.42f, 0.16f, 0.30f + pulse * 0.22f));
+                DrawOutline(backingRect.ExpandedBy(10f), new Color(1f, 0.32f, 0.10f, 0.12f + pulse * 0.12f));
             }
-            else if (hover)
+            else if (selected)
             {
-                DrawFocusBrackets(backingRect.ExpandedBy(8f), new Color(1f, 0.42f, 0.16f, 0.16f));
+                DrawOutline(backingRect.ExpandedBy(2f), new Color(1f, 0.46f, 0.18f, 0.18f + pulse * 0.16f));
             }
-
-            float coreSize = selected ? 4.2f : 3.0f;
-            DrawSolid(new Rect(rect.center.x - coreSize * 0.5f, rect.center.y - coreSize * 0.5f, coreSize, coreSize), new Color(1f, 0.76f, 0.34f, selected ? 0.42f + selectedPulse * 0.18f : 0.14f + idlePulse * 0.08f));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
-            Color oldColor = GUI.color;
+            Color oldColor2 = GUI.color;
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            GUI.color = selected ? new Color(1f, 0.94f, 0.78f, 0.98f) : new Color(1f, 0.86f, 0.68f, hover ? 0.82f : 0.56f);
-            Widgets.Label(backingRect, LayerGlyph(layer, index));
+            GUI.color = selected ? Color.white : new Color(1f, 0.86f, 0.68f, 0.92f);
+            Widgets.Label(rect, LayerGlyph(layer, index));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
-            GUI.color = oldColor;
-        }
-
-        private static void DrawFocusBrackets(Rect rect, Color color)
-        {
-            float length = Mathf.Min(14f, rect.width * 0.28f);
-            const float thickness = 2f;
-
-            DrawSolid(new Rect(rect.x, rect.y, length, thickness), color);
-            DrawSolid(new Rect(rect.x, rect.y, thickness, length), color);
-
-            DrawSolid(new Rect(rect.xMax - length, rect.y, length, thickness), color);
-            DrawSolid(new Rect(rect.xMax - thickness, rect.y, thickness, length), color);
-
-            DrawSolid(new Rect(rect.x, rect.yMax - thickness, length, thickness), color);
-            DrawSolid(new Rect(rect.x, rect.yMax - length, thickness, length), color);
-
-            DrawSolid(new Rect(rect.xMax - length, rect.yMax - thickness, length, thickness), color);
-            DrawSolid(new Rect(rect.xMax - thickness, rect.yMax - length, thickness, length), color);
+            GUI.color = oldColor2;
         }
 
         private void DrawFilterStrip(Rect rect, List<ABY_ProtocolResearchDef> layerProjects)
