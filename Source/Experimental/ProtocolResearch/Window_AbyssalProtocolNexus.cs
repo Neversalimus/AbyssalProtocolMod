@@ -248,8 +248,8 @@ namespace AbyssalProtocol
             Rect ringArea = new Rect(rect.x + 30f, rect.y + 70f, ringSize, ringSize);
             Rect localRingArea = new Rect(0f, 0f, ringArea.width, ringArea.height);
 
-            // Keep the large ring and its minimal markers inside one local canvas.
-            // Navigation remains driven by the stable project list to the right.
+            // Draw the new base ring as the primary visual object.
+            // Code-side overlays are intentionally lightweight and aligned to the built-in sockets.
             GUI.BeginGroup(ringArea);
             if (LargeRingTex != null)
             {
@@ -274,10 +274,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            DrawRingAmbientGlow(ringArea, projects);
-            DrawInnerProtocolMotion(ringArea, activeLayer);
+            // The new base ring art already contains the heavy socket and glow language.
+            // Keep code-side overlays restrained so the ring stays premium instead of cluttered.
             DrawRingProgressTicks(ringArea, projects);
-            DrawStaticProtocolAnchors(ringArea, layers, activeLayer);
             DrawSelectedLayerConduit(ringArea, layers, activeLayer);
             DrawLayerNodes(ringArea, layers);
             DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
@@ -290,10 +289,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            const int MaxTicks = 48;
+            const int MaxTicks = 40;
             int tickCount = Mathf.Min(MaxTicks, Mathf.Max(1, projects.Count));
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.438f;
+            float radius = ringArea.width * 0.442f;
 
             for (int i = 0; i < tickCount; i++)
             {
@@ -306,11 +305,11 @@ namespace AbyssalProtocol
                 float angle = -90f + (360f * i / tickCount);
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
-                float size = state == ABY_ProtocolResearchState.Completed ? 4.6f : 3.6f;
+                float size = state == ABY_ProtocolResearchState.Completed ? 3.4f : 2.8f;
                 Rect tickRect = new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size);
 
                 Color color = StateColor(state);
-                color.a = state == ABY_ProtocolResearchState.Locked ? 0.34f : 0.58f;
+                color.a = state == ABY_ProtocolResearchState.Locked ? 0.18f : 0.34f;
                 DrawSolid(tickRect, color);
             }
         }
@@ -424,29 +423,29 @@ namespace AbyssalProtocol
 
             Vector2 center = ringArea.center;
             int count = Mathf.Max(1, layers.Count);
-            float angle = -90f + (360f * index / count);
+            float angle = SocketAngleForLayerIndex(index, count);
             float rad = angle * Mathf.Deg2Rad;
             Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
             Color stateColor = StateColor(activeLayer.State);
             float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 2.15f) * 0.5f;
-            float baseAlpha = 0.13f + pulse * 0.075f;
+            float baseAlpha = 0.045f + pulse * 0.030f;
 
             float startRadius = ringArea.width * 0.225f;
-            float endRadius = ringArea.width * 0.345f;
+            float endRadius = ringArea.width * 0.348f;
             for (int i = 0; i < 11; i++)
             {
                 float t = i / 10f;
                 float radius = Mathf.Lerp(startRadius, endRadius, t);
                 Vector2 pos = center + dir * radius;
-                float size = Mathf.Lerp(2.2f, 4.1f, t);
+                float size = Mathf.Lerp(1.4f, 2.8f, t);
                 float alpha = baseAlpha * Mathf.Lerp(0.45f, 1f, t);
                 DrawSolid(new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size), new Color(stateColor.r, stateColor.g, stateColor.b, alpha));
             }
 
             Vector2 innerAnchor = center + dir * startRadius;
             Vector2 outerAnchor = center + dir * endRadius;
-            DrawOutline(new Rect(innerAnchor.x - 8f, innerAnchor.y - 8f, 16f, 16f), new Color(1f, 0.45f, 0.18f, 0.16f + pulse * 0.10f));
-            DrawOutline(new Rect(outerAnchor.x - 12f, outerAnchor.y - 12f, 24f, 24f), new Color(1f, 0.62f, 0.24f, 0.20f + pulse * 0.14f));
+            DrawOutline(new Rect(innerAnchor.x - 7f, innerAnchor.y - 7f, 14f, 14f), new Color(1f, 0.45f, 0.18f, 0.055f + pulse * 0.045f));
+            DrawOutline(new Rect(outerAnchor.x - 10f, outerAnchor.y - 10f, 20f, 20f), new Color(1f, 0.62f, 0.24f, 0.080f + pulse * 0.060f));
         }
 
         private void DrawLayerNodes(Rect ringArea, List<ResearchLayerView> layers)
@@ -457,20 +456,20 @@ namespace AbyssalProtocol
             }
 
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.382f;
+            float radius = ringArea.width * 0.388f;
             int count = Mathf.Max(1, layers.Count);
 
             for (int i = 0; i < layers.Count; i++)
             {
                 ResearchLayerView layer = layers[i];
-                float angle = -90f + (360f * i / count);
+                float angle = SocketAngleForLayerIndex(i, count);
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
 
                 bool selected = layer.Key == selectedLayerKey;
-                Rect hitRect = new Rect(pos.x - 26f, pos.y - 26f, 52f, 52f);
+                Rect hitRect = new Rect(pos.x - 30f, pos.y - 30f, 60f, 60f);
                 bool hover = Mouse.IsOver(hitRect);
-                float nodeSize = selected ? 36f : hover ? 32f : 28f;
+                float nodeSize = selected ? 26f : hover ? 22f : 18f;
                 Rect nodeRect = new Rect(pos.x - nodeSize * 0.5f, pos.y - nodeSize * 0.5f, nodeSize, nodeSize);
 
                 DrawLayerNode(nodeRect, layer, i, selected, hover);
@@ -490,45 +489,49 @@ namespace AbyssalProtocol
             }
         }
 
+        private static float SocketAngleForLayerIndex(int index, int count)
+        {
+            if (count <= 0)
+            {
+                return -90f;
+            }
+
+            int slot = Mathf.RoundToInt(index * 8f / count) % 8;
+            return -90f + slot * 45f;
+        }
+
         private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
         {
             Color stateColor = StateColor(layer.State);
-            float selectedPulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.6f) * 0.5f;
-            float idlePulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 1.35f + index * 1.71f) * 0.5f;
-            Rect backingRect = rect.ExpandedBy(selected ? 8f : 5f);
+            float selectedPulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.0f) * 0.5f;
+            float idlePulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 1.15f + index * 1.71f) * 0.5f;
+            Rect backingRect = rect.ExpandedBy(selected ? 8f : hover ? 6f : 4f);
 
-            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.80f : 0.62f));
-
-            if (!selected)
-            {
-                DrawOutline(backingRect.ExpandedBy(2f), new Color(stateColor.r, stateColor.g, stateColor.b, 0.045f + idlePulse * 0.075f));
-            }
-
+            // The replacement base ring has its own large sockets, so this is a lightweight
+            // state overlay rather than a second heavy marker drawn over the art.
             Color fill = stateColor;
-            fill.a = selected ? 0.92f : hover ? 0.80f : 0.56f + idlePulse * 0.08f;
+            fill.a = selected ? 0.42f + selectedPulse * 0.12f : hover ? 0.34f : 0.18f + idlePulse * 0.06f;
             DrawSolid(rect, fill);
 
             Color outline = selected
-                ? new Color(1f, 0.70f, 0.34f, 0.98f)
+                ? new Color(1f, 0.72f, 0.34f, 0.78f + selectedPulse * 0.14f)
                 : hover
-                    ? new Color(1f, 0.48f, 0.20f, 0.82f)
-                    : new Color(0.72f, 0.28f, 0.14f, 0.42f + idlePulse * 0.12f);
+                    ? new Color(1f, 0.50f, 0.20f, 0.58f)
+                    : new Color(0.78f, 0.30f, 0.14f, 0.20f + idlePulse * 0.08f);
             DrawOutline(backingRect, outline);
 
             if (selected)
             {
-                Color halo = new Color(1f, 0.43f, 0.15f, 0.30f + selectedPulse * 0.24f);
-                DrawOutline(backingRect.ExpandedBy(5f), halo);
-                DrawOutline(backingRect.ExpandedBy(10f), new Color(1f, 0.32f, 0.10f, 0.12f + selectedPulse * 0.13f));
-                DrawFocusBrackets(backingRect.ExpandedBy(13f), new Color(1f, 0.62f, 0.24f, 0.36f + selectedPulse * 0.24f));
+                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.44f, 0.16f, 0.18f + selectedPulse * 0.12f));
+                DrawFocusBrackets(backingRect.ExpandedBy(11f), new Color(1f, 0.64f, 0.24f, 0.24f + selectedPulse * 0.18f));
             }
             else if (hover)
             {
-                DrawFocusBrackets(backingRect.ExpandedBy(8f), new Color(1f, 0.42f, 0.16f, 0.22f));
+                DrawFocusBrackets(backingRect.ExpandedBy(8f), new Color(1f, 0.42f, 0.16f, 0.16f));
             }
 
-            float coreSize = selected ? 5.4f : 3.4f;
-            DrawSolid(new Rect(rect.center.x - coreSize * 0.5f, rect.y + 4f, coreSize, coreSize), new Color(1f, 0.76f, 0.34f, selected ? 0.46f + selectedPulse * 0.25f : 0.18f + idlePulse * 0.12f));
+            float coreSize = selected ? 4.2f : 3.0f;
+            DrawSolid(new Rect(rect.center.x - coreSize * 0.5f, rect.center.y - coreSize * 0.5f, coreSize, coreSize), new Color(1f, 0.76f, 0.34f, selected ? 0.42f + selectedPulse * 0.18f : 0.14f + idlePulse * 0.08f));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
@@ -536,8 +539,8 @@ namespace AbyssalProtocol
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            GUI.color = selected ? Color.white : new Color(1f, 0.86f, 0.68f, 0.92f);
-            Widgets.Label(rect, LayerGlyph(layer, index));
+            GUI.color = selected ? new Color(1f, 0.94f, 0.78f, 0.98f) : new Color(1f, 0.86f, 0.68f, hover ? 0.82f : 0.56f);
+            Widgets.Label(backingRect, LayerGlyph(layer, index));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
