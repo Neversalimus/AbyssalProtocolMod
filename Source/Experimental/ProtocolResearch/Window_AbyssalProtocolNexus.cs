@@ -376,58 +376,66 @@ namespace AbyssalProtocol
             Vector2 nodePos = center + new Vector2(Mathf.Cos(rad) * nodeRadius, Mathf.Sin(rad) * nodeRadius);
             float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.2f) * 0.5f;
 
-            // Keep the focus feedback inside the local ring canvas. No rotated GUI.matrix
-            // calls here: rotation can leak outside the group on some IMGUI passes.
-            float focusRadius = ringArea.width * 0.425f;
-            const int markers = 15;
-            float arcHalfSpan = Mathf.Clamp(180f / count, 18f, 34f);
+            // Premium focus feedback is deliberately local-space only: no GUI.matrix rotation,
+            // no long sweep lines, and no elements that can escape the ring group.
+            float focusRadiusOuter = ringArea.width * 0.425f;
+            float focusRadiusInner = ringArea.width * 0.397f;
+            const int markers = 17;
+            float arcHalfSpan = Mathf.Clamp(190f / count, 20f, 36f);
             for (int i = 0; i < markers; i++)
             {
                 float t = markers == 1 ? 0.5f : i / (float)(markers - 1);
-                float centerWeight = 1f - Mathf.Abs(t - 0.5f) * 1.8f;
+                float centerWeight = Mathf.Clamp01(1f - Mathf.Abs(t - 0.5f) * 1.8f);
                 float markerAngle = angle - arcHalfSpan + (arcHalfSpan * 2f * t);
                 float markerRad = markerAngle * Mathf.Deg2Rad;
-                Vector2 pos = center + new Vector2(Mathf.Cos(markerRad) * focusRadius, Mathf.Sin(markerRad) * focusRadius);
-                float size = Mathf.Lerp(2.6f, 6.8f, Mathf.Clamp01(centerWeight));
-                Rect markerRect = new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size);
-                Color markerColor = new Color(1f, 0.55f, 0.22f, (0.10f + pulse * 0.10f) * Mathf.Lerp(0.45f, 1f, Mathf.Clamp01(centerWeight)));
-                DrawSolid(markerRect, markerColor);
+
+                Vector2 outerPos = center + new Vector2(Mathf.Cos(markerRad) * focusRadiusOuter, Mathf.Sin(markerRad) * focusRadiusOuter);
+                float outerSize = Mathf.Lerp(2.4f, 6.4f, centerWeight);
+                Rect outerRect = new Rect(outerPos.x - outerSize * 0.5f, outerPos.y - outerSize * 0.5f, outerSize, outerSize);
+                DrawSolid(outerRect, new Color(1f, 0.52f, 0.20f, (0.08f + pulse * 0.09f) * Mathf.Lerp(0.45f, 1f, centerWeight)));
+
+                if (i % 2 == 0)
+                {
+                    Vector2 innerPos = center + new Vector2(Mathf.Cos(markerRad) * focusRadiusInner, Mathf.Sin(markerRad) * focusRadiusInner);
+                    float innerSize = Mathf.Lerp(1.7f, 3.4f, centerWeight);
+                    Rect innerRect = new Rect(innerPos.x - innerSize * 0.5f, innerPos.y - innerSize * 0.5f, innerSize, innerSize);
+                    DrawSolid(innerRect, new Color(1f, 0.78f, 0.42f, (0.05f + pulse * 0.07f) * Mathf.Lerp(0.40f, 0.90f, centerWeight)));
+                }
             }
 
-            Rect nodeFocusRect = new Rect(nodePos.x - 42f, nodePos.y - 42f, 84f, 84f);
-            DrawOutline(nodeFocusRect, new Color(1f, 0.48f, 0.18f, 0.14f + pulse * 0.18f));
-            DrawOutline(nodeFocusRect.ContractedBy(5f), new Color(1f, 0.74f, 0.38f, 0.10f + pulse * 0.15f));
-
+            Rect nodeFocusRect = new Rect(nodePos.x - 44f, nodePos.y - 44f, 88f, 88f);
+            DrawCornerBrackets(nodeFocusRect, new Color(1f, 0.50f, 0.18f, 0.18f + pulse * 0.18f), 14f, 2f);
+            DrawCornerBrackets(nodeFocusRect.ContractedBy(6f), new Color(1f, 0.76f, 0.38f, 0.10f + pulse * 0.14f), 10f, 1f);
         }
 
         private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
         {
             Color stateColor = StateColor(layer.State);
             float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 4f) * 0.5f;
-            Rect backingRect = rect.ExpandedBy(selected ? 4f : 5f);
+            Rect backingRect = rect.ExpandedBy(selected ? 2f : 5f);
 
             if (selected && SelectedSocketHaloTex != null)
             {
-                float haloSize = Mathf.Max(rect.width, rect.height) + 34f;
+                float haloSize = Mathf.Max(rect.width, rect.height) + 48f;
                 Rect haloRect = new Rect(rect.center.x - haloSize * 0.5f, rect.center.y - haloSize * 0.5f, haloSize, haloSize);
                 Color oldColor = GUI.color;
-                GUI.color = new Color(1f, 0.94f, 0.88f, 0.78f + pulse * 0.18f);
+                GUI.color = new Color(1f, 0.94f, 0.86f, 0.82f + pulse * 0.14f);
                 GUI.DrawTexture(haloRect, SelectedSocketHaloTex, ScaleMode.ScaleToFit, true);
                 GUI.color = oldColor;
             }
 
-            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.74f : 0.62f));
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.56f : 0.62f));
             if (selected)
             {
-                DrawSolid(backingRect.ContractedBy(1f), new Color(0.16f, 0.05f, 0.02f, 0.20f + pulse * 0.10f));
+                DrawSolid(backingRect.ContractedBy(2f), new Color(0.18f, 0.055f, 0.022f, 0.14f + pulse * 0.08f));
             }
 
             Color fill = stateColor;
-            fill.a = selected ? 0.88f : hover ? 0.78f : 0.58f;
+            fill.a = selected ? 0.76f : hover ? 0.78f : 0.58f;
             DrawSolid(rect, fill);
 
             Color outline = selected
-                ? new Color(1f, 0.72f, 0.34f, 0.86f)
+                ? new Color(1f, 0.76f, 0.38f, 0.78f)
                 : hover
                     ? new Color(1f, 0.48f, 0.20f, 0.78f)
                     : new Color(0.72f, 0.28f, 0.14f, 0.45f);
@@ -440,7 +448,12 @@ namespace AbyssalProtocol
             }
             else if (selected)
             {
-                DrawOutline(backingRect.ExpandedBy(2f), new Color(1f, 0.46f, 0.18f, 0.18f + pulse * 0.16f));
+                Color contactColor = new Color(1f, 0.64f, 0.28f, 0.34f + pulse * 0.24f);
+                DrawSolid(new Rect(rect.center.x - 3f, rect.y - 7f, 6f, 4f), contactColor);
+                DrawSolid(new Rect(rect.center.x - 3f, rect.yMax + 3f, 6f, 4f), contactColor);
+                DrawSolid(new Rect(rect.x - 7f, rect.center.y - 3f, 4f, 6f), contactColor);
+                DrawSolid(new Rect(rect.xMax + 3f, rect.center.y - 3f, 4f, 6f), contactColor);
+                DrawCornerBrackets(backingRect.ExpandedBy(5f), new Color(1f, 0.54f, 0.20f, 0.24f + pulse * 0.18f), 8f, 1f);
             }
 
             TextAnchor oldAnchor = Text.Anchor;
@@ -524,12 +537,14 @@ namespace AbyssalProtocol
             int selectedLocked = selectedLayer?.LockedCount ?? 0;
             int selectedTotal = selectedLayer?.Projects?.Count ?? 0;
 
-            Rect summaryRect = new Rect(ringArea.center.x - 100f, ringArea.center.y - 41f, 200f, 82f);
-            DrawSolid(summaryRect, new Color(0.012f, 0.010f, 0.009f, 0.70f));
-            DrawOutline(summaryRect, new Color(0.92f, 0.38f, 0.14f, 0.32f));
+            Rect summaryRect = new Rect(ringArea.center.x - 100f, ringArea.center.y - 39f, 200f, 78f);
+            DrawSolid(summaryRect, new Color(0.010f, 0.008f, 0.007f, 0.66f));
+            DrawCornerBrackets(summaryRect, new Color(1f, 0.40f, 0.14f, 0.42f), 18f, 1f);
 
-            Rect headerLine = new Rect(summaryRect.x + 12f, summaryRect.y + 9f, summaryRect.width - 24f, 2f);
-            DrawSolid(headerLine, selectedLayer == null ? new Color(0.52f, 0.22f, 0.12f, 0.44f) : StateColor(selectedLayer.State));
+            Rect topLine = new Rect(summaryRect.x + 18f, summaryRect.y + 8f, summaryRect.width - 36f, 2f);
+            Rect bottomLine = new Rect(summaryRect.x + 24f, summaryRect.yMax - 10f, summaryRect.width - 48f, 1f);
+            DrawSolid(topLine, selectedLayer == null ? new Color(0.52f, 0.22f, 0.12f, 0.44f) : StateColor(selectedLayer.State));
+            DrawSolid(bottomLine, new Color(1f, 0.52f, 0.20f, 0.22f));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
@@ -538,17 +553,17 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 16f, summaryRect.width - 16f, 22f), Shorten(selectedLayer?.Label ?? "No tier selected", 28));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 14f, summaryRect.width - 16f, 22f), Shorten(selectedLayer?.Label ?? "No tier selected", 28));
 
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 40f, summaryRect.width - 16f, 18f), Shorten(selectedCategory?.LabelCap ?? "Protocol", 26));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 37f, summaryRect.width - 16f, 16f), Shorten(selectedCategory?.LabelCap ?? "Protocol", 24));
 
             GUI.color = new Color(0.92f, 0.80f, 0.68f, 1f);
             string selectedCounts = selectedLayer == null
                 ? completed + "/" + total + " decoded  •  " + ready + " ready"
                 : selectedCompleted + "/" + selectedTotal + " decoded  •  " + selectedReady + " ready  •  " + selectedLocked + " locked";
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 60f, summaryRect.width - 16f, 16f), Shorten(selectedCounts, 36));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 55f, summaryRect.width - 16f, 16f), Shorten(selectedCounts, 34));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
@@ -565,11 +580,12 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
 
             Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 3f, rect.width - 20f, 22f);
-            DrawSolid(layerRect, new Color(0.13f, 0.045f, 0.025f, 0.78f));
-            DrawOutline(layerRect, selectedLayer == null ? new Color(0.52f, 0.20f, 0.12f, 0.34f) : new Color(1f, 0.52f, 0.22f, 0.52f));
+            DrawSolid(layerRect, new Color(0.12f, 0.038f, 0.020f, 0.82f));
+            DrawOutline(layerRect, selectedLayer == null ? new Color(0.52f, 0.20f, 0.12f, 0.34f) : new Color(1f, 0.52f, 0.22f, 0.58f));
+            DrawSolid(new Rect(layerRect.x + 1f, layerRect.y + 2f, 3f, layerRect.height - 4f), selectedLayer == null ? new Color(0.52f, 0.20f, 0.12f, 0.38f) : StateColor(selectedLayer.State));
             Text.Font = GameFont.Tiny;
-            GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(layerRect.x + 6f, layerRect.y + 3f, layerRect.width - 12f, 16f), selectedLayer == null ? "Tier focus: none" : Shorten("Tier focus: " + selectedLayer.Label, 44));
+            GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : new Color(1f, 0.78f, 0.52f, 1f);
+            Widgets.Label(new Rect(layerRect.x + 9f, layerRect.y + 3f, layerRect.width - 18f, 16f), selectedLayer == null ? "Tier focus: none" : Shorten("Tier focus: " + selectedLayer.Label, 42));
             GUI.color = Color.white;
 
             Rect filterRect = new Rect(rect.x + 10f, layerRect.yMax + 5f, rect.width - 20f, 24f);
@@ -611,10 +627,15 @@ namespace AbyssalProtocol
         private void DrawProjectListRow(Rect rect, ABY_ProtocolResearchDef project)
         {
             bool selected = project == selectedProject;
-            DrawSolid(rect, selected ? new Color(0.28f, 0.12f, 0.07f, 0.88f) : new Color(0.05f, 0.045f, 0.045f, 0.76f));
-            DrawOutline(rect, selected ? new Color(1f, 0.48f, 0.20f, 0.75f) : new Color(0.52f, 0.20f, 0.12f, 0.35f));
-
             ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            DrawSolid(rect, selected ? new Color(0.24f, 0.095f, 0.050f, 0.90f) : new Color(0.05f, 0.045f, 0.045f, 0.76f));
+            DrawOutline(rect, selected ? new Color(1f, 0.50f, 0.20f, 0.72f) : new Color(0.52f, 0.20f, 0.12f, 0.35f));
+            if (selected)
+            {
+                DrawSolid(new Rect(rect.x + 1f, rect.y + 3f, 3f, rect.height - 6f), StateColor(state));
+                DrawSolid(new Rect(rect.x + 5f, rect.y + 2f, rect.width - 10f, 1f), new Color(1f, 0.58f, 0.24f, 0.22f));
+            }
+
             Rect stateRect = new Rect(rect.x + 6f, rect.y + 7f, 64f, 28f);
             DrawSegment(stateRect, project, false);
 
@@ -1380,6 +1401,18 @@ namespace AbyssalProtocol
                 default:
                     return new Color(0.48f, 0.23f, 0.16f, 1f);
             }
+        }
+
+        private static void DrawCornerBrackets(Rect rect, Color color, float length, float width)
+        {
+            DrawSolid(new Rect(rect.x, rect.y, length, width), color);
+            DrawSolid(new Rect(rect.x, rect.y, width, length), color);
+            DrawSolid(new Rect(rect.xMax - length, rect.y, length, width), color);
+            DrawSolid(new Rect(rect.xMax - width, rect.y, width, length), color);
+            DrawSolid(new Rect(rect.x, rect.yMax - width, length, width), color);
+            DrawSolid(new Rect(rect.x, rect.yMax - length, width, length), color);
+            DrawSolid(new Rect(rect.xMax - length, rect.yMax - width, length, width), color);
+            DrawSolid(new Rect(rect.xMax - width, rect.yMax - length, width, length), color);
         }
 
         private static void DrawPanel(Rect rect, bool highlighted)
