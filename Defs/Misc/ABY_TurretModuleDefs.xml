@@ -360,6 +360,13 @@
     <soundCharge>ABY_VesperLanceAim</soundCharge>
     <range>37</range>
     <minRange>0</minRange>
+    <preferLineTargets>true</preferLineTargets>
+    <lineTargetScanLength>8.5</lineTargetScanLength>
+    <lineTargetHalfWidth>0.58</lineTargetHalfWidth>
+    <lineTargetMaxBonusCount>4</lineTargetMaxBonusCount>
+    <lineTargetBonusPerPawn>1750</lineTargetBonusPerPawn>
+    <targetPriorityPointBlankPenaltyRange>2.2</targetPriorityPointBlankPenaltyRange>
+    <targetPriorityPointBlankPenalty>2500</targetPriorityPointBlankPenalty>
     <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
     <cooldownTicks>360</cooldownTicks>
     <chargeTicks>50</chargeTicks>
@@ -370,15 +377,21 @@
     <overlayDrawSize>3.65</overlayDrawSize>
     <overlayForwardOffset>0.00</overlayForwardOffset>
     <overlayPivotForwardOffset>-0.54</overlayPivotForwardOffset>
-    <overlayMuzzleForwardOffset>1.70</overlayMuzzleForwardOffset>
+    <overlayMuzzleForwardOffset>2.12</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.076</overlayAltitudeOffset>
     <chargeOverlayFramePathPrefix>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismCharge_</chargeOverlayFramePathPrefix>
     <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
-    <chargeOverlayTicksPerFrame>5</chargeOverlayTicksPerFrame>
+    <chargeOverlayTicksPerFrame>6</chargeOverlayTicksPerFrame>
     <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
+    <chargeOverlayDrawSize>1.16</chargeOverlayDrawSize>
+    <chargeOverlayForwardOffset>-0.34</chargeOverlayForwardOffset>
+    <chargeOverlayUsesMuzzleAnchor>true</chargeOverlayUsesMuzzleAnchor>
     <dischargeOverlayFramePathPrefix>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismMuzzle_</dischargeOverlayFramePathPrefix>
     <dischargeOverlayFrameCount>6</dischargeOverlayFrameCount>
     <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.098</dischargeOverlayAltitudeOffset>
+    <dischargeOverlayDrawSize>0.92</dischargeOverlayDrawSize>
+    <dischargeOverlayForwardOffset>0.06</dischargeOverlayForwardOffset>
+    <dischargeOverlayUsesMuzzleAnchor>true</dischargeOverlayUsesMuzzleAnchor>
   </AbyssalProtocol.ABY_TurretModuleDef>
 </Defs>

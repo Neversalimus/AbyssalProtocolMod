@@ -205,7 +205,7 @@ namespace AbyssalProtocol
 
             if (HasMainWeapon && mainCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks)))
             {
-                Thing target = FindTarget(ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
+                Thing target = FindTarget(mainModule, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
                 if (target != null)
                 {
                     StartMainAttack(target);
@@ -214,7 +214,7 @@ namespace AbyssalProtocol
 
             if (HasAuxiliary && auxiliaryCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks + 11)))
             {
-                Thing auxTarget = FindTarget(ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
+                Thing auxTarget = FindTarget(auxiliaryModule, ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
                 if (auxTarget != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(auxTarget);
@@ -603,7 +603,11 @@ namespace AbyssalProtocol
                     mainModule.chargeOverlayTicksPerFrame,
                     elapsed,
                     mainAimAngle,
-                    mainModule.chargeOverlayAltitudeOffset);
+                    mainModule.chargeOverlayAltitudeOffset,
+                    mainModule.chargeOverlayDrawSize,
+                    mainModule.chargeOverlaySideOffset,
+                    mainModule.chargeOverlayForwardOffset,
+                    mainModule.chargeOverlayUsesMuzzleAnchor);
             }
 
             if (mainDischargeTicksRemaining > 0 && !mainModule.dischargeOverlayFramePathPrefix.NullOrEmpty())
@@ -616,7 +620,11 @@ namespace AbyssalProtocol
                     mainModule.dischargeOverlayTicksPerFrame,
                     elapsed,
                     mainAimAngle,
-                    mainModule.dischargeOverlayAltitudeOffset);
+                    mainModule.dischargeOverlayAltitudeOffset,
+                    mainModule.dischargeOverlayDrawSize,
+                    mainModule.dischargeOverlaySideOffset,
+                    mainModule.dischargeOverlayForwardOffset,
+                    mainModule.dischargeOverlayUsesMuzzleAnchor);
             }
 
             if (mainResidualTicksRemaining > 0 && !mainModule.residualOverlayFramePathPrefix.NullOrEmpty())
@@ -629,7 +637,11 @@ namespace AbyssalProtocol
                     mainModule.residualOverlayTicksPerFrame,
                     elapsed,
                     mainAimAngle,
-                    mainModule.residualOverlayAltitudeOffset);
+                    mainModule.residualOverlayAltitudeOffset,
+                    mainModule.residualOverlayDrawSize,
+                    mainModule.residualOverlaySideOffset,
+                    mainModule.residualOverlayForwardOffset,
+                    mainModule.residualOverlayUsesMuzzleAnchor);
             }
         }
 
@@ -640,7 +652,11 @@ namespace AbyssalProtocol
             int ticksPerFrame,
             int elapsedTicks,
             float aimAngle,
-            float altitudeOffset)
+            float altitudeOffset,
+            float drawSizeOverride,
+            float sideOffset,
+            float forwardOffset,
+            bool useMuzzleAnchor)
         {
             if (module == null || framePathPrefix.NullOrEmpty())
             {
@@ -661,10 +677,10 @@ namespace AbyssalProtocol
 
                 float angle = module.overlayRotatesToTarget ? aimAngle : 0f;
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                Vector3 drawPos = ResolveOverlayPlaneCenter(module, rotation);
+                Vector3 drawPos = ResolveAnimatedOverlayPlaneCenter(module, rotation, sideOffset, forwardOffset, useMuzzleAnchor);
                 drawPos.y += Mathf.Max(0.001f, altitudeOffset);
 
-                float size = Mathf.Max(0.08f, module.overlayDrawSize);
+                float size = drawSizeOverride > 0.01f ? drawSizeOverride : Mathf.Max(0.08f, module.overlayDrawSize);
                 Matrix4x4 matrix = Matrix4x4.TRS(drawPos, rotation, new Vector3(size, 1f, size));
                 Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
             }
@@ -892,7 +908,7 @@ namespace AbyssalProtocol
             {
                 Thing target = currentBurstTarget != null && IsValidLaunchTarget(currentBurstTarget, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight)
                     ? currentBurstTarget
-                    : FindTarget(ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
+                    : FindTarget(mainModule, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
                 if (target != null)
                 {
                     mainAimAngle = AngleToTarget(target);
@@ -902,7 +918,7 @@ namespace AbyssalProtocol
             if (HasAuxiliary)
             {
                 float range = ResolvedAuxiliaryRange;
-                Thing target = FindTarget(range, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
+                Thing target = FindTarget(auxiliaryModule, range, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
                 if (target != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(target);
@@ -928,7 +944,7 @@ namespace AbyssalProtocol
             return Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
-        private Thing FindTarget(float range, float minRange = 0f, bool requireLineOfSight = true)
+        private Thing FindTarget(ABY_TurretModuleDef module, float range, float minRange = 0f, bool requireLineOfSight = true)
         {
             Map map = parent.Map;
             if (map?.mapPawns == null)
@@ -962,6 +978,11 @@ namespace AbyssalProtocol
                 }
 
                 float score = 10000f - distanceSquared;
+                if (module != null)
+                {
+                    score += ComputeModuleTargetingScoreBonus(module, pawn, distanceSquared, requireLineOfSight);
+                }
+
                 if (bestTarget == null || score > bestScore)
                 {
                     bestTarget = pawn;
@@ -1024,6 +1045,94 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private float ComputeModuleTargetingScoreBonus(ABY_TurretModuleDef module, Pawn candidate, float distanceSquared, bool requireLineOfSight)
+        {
+            if (module == null || candidate == null)
+            {
+                return 0f;
+            }
+
+            float score = 0f;
+            if (module.targetPriorityPointBlankPenaltyRange > 0.05f)
+            {
+                float distance = Mathf.Sqrt(distanceSquared);
+                if (distance < module.targetPriorityPointBlankPenaltyRange)
+                {
+                    float t = 1f - Mathf.Clamp01(distance / module.targetPriorityPointBlankPenaltyRange);
+                    score -= Mathf.Max(0f, module.targetPriorityPointBlankPenalty) * t;
+                }
+            }
+
+            if (module.preferLineTargets)
+            {
+                int extraTargets = CountPotentialLineTargets(candidate, module, requireLineOfSight);
+                if (extraTargets > 0)
+                {
+                    score += extraTargets * Mathf.Max(0f, module.lineTargetBonusPerPawn);
+                }
+            }
+
+            return score;
+        }
+
+        private int CountPotentialLineTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)
+        {
+            Map map = parent.Map;
+            if (primaryTarget == null || module == null || map?.mapPawns == null)
+            {
+                return 0;
+            }
+
+            Vector3 direction = primaryTarget.DrawPos - parent.DrawPos;
+            direction.y = 0f;
+            if (direction.sqrMagnitude <= 0.0001f)
+            {
+                return 0;
+            }
+
+            direction.Normalize();
+            float maxDistance = Mathf.Max(0.5f, module.lineTargetScanLength);
+            float halfWidth = Mathf.Max(0.05f, module.lineTargetHalfWidth);
+            int count = 0;
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == primaryTarget || !ValidTarget(pawn))
+                {
+                    continue;
+                }
+
+                Vector3 delta = pawn.DrawPos - primaryTarget.DrawPos;
+                delta.y = 0f;
+                float along = Vector3.Dot(delta, direction);
+                if (along <= 0.35f || along > maxDistance)
+                {
+                    continue;
+                }
+
+                float perpendicular = (delta - direction * along).magnitude;
+                float allowedWidth = halfWidth + Mathf.Min(0.22f, pawn.BodySize * 0.08f);
+                if (perpendicular > allowedWidth)
+                {
+                    continue;
+                }
+
+                if (requireLineOfSight && !GenSight.LineOfSight(primaryTarget.Position, pawn.Position, map, true))
+                {
+                    continue;
+                }
+
+                count++;
+                if (count >= Mathf.Max(1, module.lineTargetMaxBonusCount))
+                {
+                    break;
+                }
+            }
+
+            return count;
+        }
+
         private Vector3 ResolveSocketWorldPosition(ABY_TurretModuleDef module)
         {
             if (module == null)
@@ -1050,6 +1159,28 @@ namespace AbyssalProtocol
             Vector3 centerNudge = new Vector3(module.overlaySideOffset, 0f, module.overlayForwardOffset);
             Vector3 pivotFromTextureCenter = new Vector3(module.overlayPivotSideOffset, 0f, module.overlayPivotForwardOffset);
             return socketWorldPos + rotation * (centerNudge - pivotFromTextureCenter);
+        }
+
+        private Vector3 ResolveAnimatedOverlayPlaneCenter(ABY_TurretModuleDef module, Quaternion rotation, float localSideOffset, float localForwardOffset, bool useMuzzleAnchor)
+        {
+            if (module == null)
+            {
+                return parent.DrawPos;
+            }
+
+            Vector3 socketWorldPos = ResolveSocketWorldPosition(module);
+            float baseSideOffset = module.overlaySideOffset;
+            float baseForwardOffset = module.overlayForwardOffset;
+            if (useMuzzleAnchor)
+            {
+                baseSideOffset += module.overlayMuzzleSideOffset;
+                baseForwardOffset += module.overlayMuzzleForwardOffset;
+            }
+
+            Vector3 localOffset = new Vector3(baseSideOffset + localSideOffset, 0f, baseForwardOffset + localForwardOffset);
+            Vector3 origin = socketWorldPos + rotation * localOffset;
+            origin.y = parent.DrawPos.y;
+            return origin;
         }
 
         private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target, int burstShotIndex = -1)

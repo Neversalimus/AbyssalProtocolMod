@@ -213,7 +213,7 @@
       <damageAmountBase>18</damageAmountBase>
       <armorPenetrationBase>0.82</armorPenetrationBase>
       <stoppingPower>1.42</stoppingPower>
-      <speed>96</speed>
+      <speed>82</speed>
       <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>

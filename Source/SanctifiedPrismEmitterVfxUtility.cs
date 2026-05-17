@@ -49,7 +49,7 @@ namespace AbyssalProtocol
             Vector3 direction = destination - source;
             direction.y = 0f;
             float angle = DirectionAngle(direction);
-            SpawnAnimatedMote(MuzzleMoteDef, MuzzleFramePrefix, MuzzleFrameCount, MuzzleTicksPerFrame, MuzzleFrameCount * MuzzleTicksPerFrame, 0.72f, 0.72f, source, map, angle - 90f);
+            SpawnAnimatedMote(MuzzleMoteDef, MuzzleFramePrefix, MuzzleFrameCount, MuzzleTicksPerFrame, MuzzleFrameCount * MuzzleTicksPerFrame + 2, 0.72f, 0.72f, source, map, angle - 90f);
             FleckMaker.ThrowLightningGlow(source, map, 0.34f);
             if (Rand.Chance(0.22f))
             {
@@ -82,7 +82,7 @@ namespace AbyssalProtocol
             }
 
             float drawSize = Mathf.Clamp(0.46f * sizeMultiplier, 0.30f, 0.62f);
-            SpawnAnimatedMote(SecondaryHitMoteDef, SecondaryHitFramePrefix, SecondaryHitFrameCount, SecondaryHitTicksPerFrame, SecondaryHitFrameCount * SecondaryHitTicksPerFrame, drawSize, drawSize, position, map, Rand.Range(0f, 360f));
+            SpawnAnimatedMote(SecondaryHitMoteDef, SecondaryHitFramePrefix, SecondaryHitFrameCount, SecondaryHitTicksPerFrame, SecondaryHitFrameCount * SecondaryHitTicksPerFrame + 2, drawSize, drawSize, position, map, Rand.Range(0f, 360f));
             FleckMaker.ThrowLightningGlow(position, map, 0.32f * sizeMultiplier);
         }
 
@@ -122,7 +122,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int lifetime = faint ? 5 : 8;
+            int lifetime = faint ? 8 : 12;
             beam.start = start;
             beam.end = end;
             beam.framePathPrefix = BeamFramePrefix;
@@ -130,7 +130,7 @@ namespace AbyssalProtocol
             beam.ticksPerFrame = BeamTicksPerFrame;
             beam.ticksLeft = lifetime;
             beam.startingTicks = lifetime;
-            beam.width = faint ? 0.12f : 0.17f;
+            beam.width = faint ? 0.16f : 0.22f;
 
             IntVec3 spawnCell = start.ToIntVec3();
             if (!spawnCell.InBounds(map))

@@ -61,16 +61,37 @@ namespace AbyssalProtocol
         public int chargeOverlayFrameCount = 8;
         public int chargeOverlayTicksPerFrame = 4;
         public float chargeOverlayAltitudeOffset = 0.080f;
+        public float chargeOverlayDrawSize = -1f;
+        public float chargeOverlaySideOffset;
+        public float chargeOverlayForwardOffset;
+        public bool chargeOverlayUsesMuzzleAnchor;
 
         public string dischargeOverlayFramePathPrefix;
         public int dischargeOverlayFrameCount = 8;
         public int dischargeOverlayTicksPerFrame = 1;
         public float dischargeOverlayAltitudeOffset = 0.090f;
+        public float dischargeOverlayDrawSize = -1f;
+        public float dischargeOverlaySideOffset;
+        public float dischargeOverlayForwardOffset;
+        public bool dischargeOverlayUsesMuzzleAnchor;
 
         public string residualOverlayFramePathPrefix;
         public int residualOverlayFrameCount = 6;
         public int residualOverlayTicksPerFrame = 3;
         public float residualOverlayAltitudeOffset = 0.086f;
+        public float residualOverlayDrawSize = -1f;
+        public float residualOverlaySideOffset;
+        public float residualOverlayForwardOffset;
+        public bool residualOverlayUsesMuzzleAnchor;
+
+        // Optional target scoring hints for lane-control or close-range-averse modules.
+        public bool preferLineTargets;
+        public float lineTargetScanLength = 8f;
+        public float lineTargetHalfWidth = 0.58f;
+        public int lineTargetMaxBonusCount = 4;
+        public float lineTargetBonusPerPawn = 1600f;
+        public float targetPriorityPointBlankPenaltyRange;
+        public float targetPriorityPointBlankPenalty = 2200f;
 
         public bool IsWeaponLike => projectileDef != null && (slot == ABY_TurretModuleSlot.MainWeapon || slot == ABY_TurretModuleSlot.Auxiliary);
         public bool HasOverlay => !overlayTexturePath.NullOrEmpty();
