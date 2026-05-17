@@ -374,58 +374,30 @@ namespace AbyssalProtocol
             float rad = angle * Mathf.Deg2Rad;
             float nodeRadius = ringArea.width * 0.382f;
             Vector2 nodePos = center + new Vector2(Mathf.Cos(rad) * nodeRadius, Mathf.Sin(rad) * nodeRadius);
-            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.3f) * 0.5f;
+            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.2f) * 0.5f;
 
-            DrawGuidanceLine(center, nodePos, 2.4f, new Color(1f, 0.42f, 0.18f, 0.08f + pulse * 0.12f), 60f, 34f);
-            DrawGuidanceLine(center, nodePos, 1.2f, new Color(1f, 0.72f, 0.36f, 0.18f + pulse * 0.16f), 72f, 28f);
-
+            // Keep the focus feedback inside the local ring canvas. No rotated GUI.matrix
+            // calls here: rotation can leak outside the group on some IMGUI passes.
             float focusRadius = ringArea.width * 0.425f;
-            const int markers = 11;
-            float arcHalfSpan = Mathf.Clamp(170f / count, 16f, 32f);
+            const int markers = 15;
+            float arcHalfSpan = Mathf.Clamp(180f / count, 18f, 34f);
             for (int i = 0; i < markers; i++)
             {
                 float t = markers == 1 ? 0.5f : i / (float)(markers - 1);
+                float centerWeight = 1f - Mathf.Abs(t - 0.5f) * 1.8f;
                 float markerAngle = angle - arcHalfSpan + (arcHalfSpan * 2f * t);
                 float markerRad = markerAngle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(markerRad) * focusRadius, Mathf.Sin(markerRad) * focusRadius);
-                float size = Mathf.Lerp(3f, 6.5f, 1f - Mathf.Abs(t - 0.5f) * 1.5f);
+                float size = Mathf.Lerp(2.6f, 6.8f, Mathf.Clamp01(centerWeight));
                 Rect markerRect = new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size);
-                Color markerColor = new Color(1f, 0.56f, 0.24f, (0.08f + pulse * 0.08f) * Mathf.Lerp(0.55f, 1f, 1f - Mathf.Abs(t - 0.5f) * 1.25f));
+                Color markerColor = new Color(1f, 0.55f, 0.22f, (0.10f + pulse * 0.10f) * Mathf.Lerp(0.45f, 1f, Mathf.Clamp01(centerWeight)));
                 DrawSolid(markerRect, markerColor);
             }
 
-            Rect haloRect = new Rect(nodePos.x - 34f, nodePos.y - 34f, 68f, 68f);
-            DrawOutline(haloRect, new Color(1f, 0.52f, 0.20f, 0.14f + pulse * 0.16f));
-            DrawOutline(haloRect.ContractedBy(4f), new Color(1f, 0.72f, 0.36f, 0.10f + pulse * 0.14f));
-        }
+            Rect nodeFocusRect = new Rect(nodePos.x - 42f, nodePos.y - 42f, 84f, 84f);
+            DrawOutline(nodeFocusRect, new Color(1f, 0.48f, 0.18f, 0.14f + pulse * 0.18f));
+            DrawOutline(nodeFocusRect.ContractedBy(5f), new Color(1f, 0.74f, 0.38f, 0.10f + pulse * 0.15f));
 
-        private static void DrawGuidanceLine(Vector2 start, Vector2 end, float width, Color color, float startInset, float endInset)
-        {
-            Vector2 delta = end - start;
-            float length = delta.magnitude;
-            if (length <= startInset + endInset + 4f)
-            {
-                return;
-            }
-
-            Vector2 dir = delta / length;
-            Vector2 drawStart = start + dir * startInset;
-            Vector2 drawEnd = end - dir * endInset;
-            Vector2 drawDelta = drawEnd - drawStart;
-            float drawLength = drawDelta.magnitude;
-            if (drawLength <= 1f)
-            {
-                return;
-            }
-
-            float angle = Mathf.Atan2(drawDelta.y, drawDelta.x) * Mathf.Rad2Deg;
-            Matrix4x4 oldMatrix = GUI.matrix;
-            Color oldColor = GUI.color;
-            GUIUtility.RotateAroundPivot(angle, drawStart);
-            GUI.color = color;
-            GUI.DrawTexture(new Rect(drawStart.x, drawStart.y - width * 0.5f, drawLength, width), BaseContent.WhiteTex);
-            GUI.matrix = oldMatrix;
-            GUI.color = oldColor;
         }
 
         private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
@@ -552,40 +524,31 @@ namespace AbyssalProtocol
             int selectedLocked = selectedLayer?.LockedCount ?? 0;
             int selectedTotal = selectedLayer?.Projects?.Count ?? 0;
 
-            Rect summaryRect = new Rect(ringArea.center.x - 110f, ringArea.center.y - 58f, 220f, 116f);
-            DrawSolid(summaryRect, new Color(0.012f, 0.010f, 0.009f, 0.72f));
-            DrawOutline(summaryRect, new Color(0.78f, 0.30f, 0.12f, 0.36f));
+            Rect summaryRect = new Rect(ringArea.center.x - 100f, ringArea.center.y - 41f, 200f, 82f);
+            DrawSolid(summaryRect, new Color(0.012f, 0.010f, 0.009f, 0.70f));
+            DrawOutline(summaryRect, new Color(0.92f, 0.38f, 0.14f, 0.32f));
 
-            Rect focusRect = new Rect(summaryRect.x + 12f, summaryRect.y + 10f, summaryRect.width - 24f, 20f);
-            DrawSolid(focusRect, new Color(0.18f, 0.06f, 0.025f, 0.92f));
-            DrawOutline(focusRect, selectedLayer == null ? new Color(0.62f, 0.28f, 0.14f, 0.42f) : StateColor(selectedLayer.State));
+            Rect headerLine = new Rect(summaryRect.x + 12f, summaryRect.y + 9f, summaryRect.width - 24f, 2f);
+            DrawSolid(headerLine, selectedLayer == null ? new Color(0.52f, 0.22f, 0.12f, 0.44f) : StateColor(selectedLayer.State));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
             Color oldColor = GUI.color;
 
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(1f, 0.78f, 0.52f, 1f);
-            Widgets.Label(focusRect, selectedLayer == null ? "NO TIER SELECTED" : "ACTIVE TIER FOCUS");
-
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 34f, summaryRect.width - 16f, 22f), Shorten(selectedLayer?.Label ?? "No protocol layer", 28));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 16f, summaryRect.width - 16f, 22f), Shorten(selectedLayer?.Label ?? "No tier selected", 28));
 
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            string stateLine = selectedLayer == null ? Shorten(selectedCategory?.LabelCap ?? string.Empty, 28) : Shorten((selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer)), 40);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 56f, summaryRect.width - 16f, 18f), stateLine);
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 40f, summaryRect.width - 16f, 18f), Shorten(selectedCategory?.LabelCap ?? "Protocol", 26));
 
             GUI.color = new Color(0.92f, 0.80f, 0.68f, 1f);
             string selectedCounts = selectedLayer == null
                 ? completed + "/" + total + " decoded  •  " + ready + " ready"
                 : selectedCompleted + "/" + selectedTotal + " decoded  •  " + selectedReady + " ready  •  " + selectedLocked + " locked";
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 76f, summaryRect.width - 16f, 18f), Shorten(selectedCounts, 40));
-
-            GUI.color = new Color(0.66f, 0.58f, 0.50f, 0.96f);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 94f, summaryRect.width - 16f, 14f), Shorten((selectedCategory?.LabelCap ?? "Protocol") + "  •  layer matrix / list filters", 40));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 60f, summaryRect.width - 16f, 16f), Shorten(selectedCounts, 36));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
@@ -601,12 +564,12 @@ namespace AbyssalProtocol
             Widgets.Label(titleRect, "ABY_ProtocolResearch_ProjectListHeader".Translate());
             GUI.color = Color.white;
 
-            Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 3f, rect.width - 20f, 24f);
+            Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 3f, rect.width - 20f, 22f);
             DrawSolid(layerRect, new Color(0.13f, 0.045f, 0.025f, 0.78f));
             DrawOutline(layerRect, selectedLayer == null ? new Color(0.52f, 0.20f, 0.12f, 0.34f) : new Color(1f, 0.52f, 0.22f, 0.52f));
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(layerRect.x + 6f, layerRect.y + 4f, layerRect.width - 12f, 16f), selectedLayer == null ? "Active tier: none" : Shorten("Active tier: " + selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer), 54));
+            Widgets.Label(new Rect(layerRect.x + 6f, layerRect.y + 3f, layerRect.width - 12f, 16f), selectedLayer == null ? "Tier focus: none" : Shorten("Tier focus: " + selectedLayer.Label, 44));
             GUI.color = Color.white;
 
             Rect filterRect = new Rect(rect.x + 10f, layerRect.yMax + 5f, rect.width - 20f, 24f);
