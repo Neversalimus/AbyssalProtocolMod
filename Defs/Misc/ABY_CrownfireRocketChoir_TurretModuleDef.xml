@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CrownfireRocketChoir</defName>
+    <label>Crownfire Rocket Choir</label>
+    <description>Main weapon core for medium modular turret chassis. A vertical split-warhead rocket choir that launches one sealed carrier from alternating crownfire silos; the carrier opens above the chassis and releases eight guided micro-rockets into hostile clusters.</description>
+    <effectSummary>Primary missile module. Fires one vertical carrier rocket from alternating launch silos. The carrier splits shortly after launch into 8 fast guided micro-rockets that distribute across hostile targets near the original aim point. Excellent anti-swarm and anti-breach saturation; expensive, power hungry, and inefficient against isolated armored bosses.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_CrownfireRocketChoir</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>apex guided rocket saturation</role>
+    <tier>4</tier>
+    <projectileDef>ABY_CrownfireCarrierRocket</projectileDef>
+    <soundCharge>ABY_SepulcherRailCharge</soundCharge>
+    <soundCast>ABY_RuptureImpact</soundCast>
+    <range>38</range>
+    <minRange>7</minRange>
+    <targetRequiresLineOfSight>false</targetRequiresLineOfSight>
+    <cooldownTicks>660</cooldownTicks>
+    <chargeTicks>36</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>820</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_CrownfireRocketChoir</overlayTexturePath>
+    <overlayDrawSize>4.05</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>0.00</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>0.46</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.079</overlayAltitudeOffset>
+    <overlayRotatesToTarget>false</overlayRotatesToTarget>
+    <cycleLaunchTubes>true</cycleLaunchTubes>
+    <launchTubeSideOffsets>
+      <li>-0.54</li>
+      <li>0.54</li>
+      <li>-0.54</li>
+      <li>0.54</li>
+    </launchTubeSideOffsets>
+    <launchTubeForwardOffsets>
+      <li>0.72</li>
+      <li>0.72</li>
+      <li>0.20</li>
+      <li>0.20</li>
+    </launchTubeForwardOffsets>
+    <targetPriorityPointBlankPenaltyRange>9</targetPriorityPointBlankPenaltyRange>
+    <targetPriorityPointBlankPenalty>4200</targetPriorityPointBlankPenalty>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+</Defs>

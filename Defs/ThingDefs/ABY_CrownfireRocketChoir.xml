@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CrownfireRocketChoir</defName>
+    <label>crownfire rocket choir</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: apex guided rocket saturation.&#10;Effect: launches a hidden carrier rocket vertically from one of four alternating silos. The carrier opens above the chassis and releases eight guided micro-rockets toward hostile targets near the original aim point. Excellent against swarms, breach clusters, and dense approach lanes; costly, power hungry, and less efficient against single armored bosses.&#10;Range: 38.0.&#10;Minimum range: 7.0.&#10;Charge: 0.6s before launch.&#10;Cooldown: 11.0s after firing.&#10;Extra module power draw: +820 W.&#10;Unlock: 1500 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CrownfireRocketChoir</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <statBases>
+      <MaxHitPoints>210</MaxHitPoints>
+      <Mass>16.0</Mass>
+      <MarketValue>1850</MarketValue>
+      <Flammability>0.08</Flammability>
+    </statBases>
+    <tradeTags><li>ABY_TurretModule</li></tradeTags>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1500</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownfireCarrierRocket</defName>
+    <label>crownfire carrier rocket</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_CrownfireCarrierRocket</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownfireCarrierRocket</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,0.78)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>4</damageAmountBase>
+      <armorPenetrationBase>0.10</armorPenetrationBase>
+      <stoppingPower>0.30</stoppingPower>
+      <speed>11</speed>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownfireMicroRocket</defName>
+    <label>crownfire micro-rocket</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_CrownfireMicroRocket</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownfireMicroRocket</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.20,0.58)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <armorPenetrationBase>0.28</armorPenetrationBase>
+      <stoppingPower>0.75</stoppingPower>
+      <speed>88</speed>
+      <explosionRadius>0.75</explosionRadius>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

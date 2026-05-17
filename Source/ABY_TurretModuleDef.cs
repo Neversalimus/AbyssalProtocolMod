@@ -53,6 +53,14 @@ namespace AbyssalProtocol
         // this reads as top-to-bottom on screen when listed from positive to negative.
         public List<float> burstMuzzleSideOffsets;
 
+        // Optional one-shot launcher tube sequence for vertical-launch modules.
+        // Values are local muzzle offsets relative to the module socket; the turret comp advances
+        // the selected tube after each successful launch and persists that index through save/load.
+        public bool cycleLaunchTubes;
+        public bool randomLaunchTube;
+        public List<float> launchTubeSideOffsets;
+        public List<float> launchTubeForwardOffsets;
+
         public bool overlayRotatesToTarget = true;
         public bool overlayVisibleWhenDisabled;
 

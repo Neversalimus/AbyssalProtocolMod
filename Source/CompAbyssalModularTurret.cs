@@ -36,6 +36,7 @@ namespace AbyssalProtocol
         private int mainMuzzleOverlayTicksTotal;
         private int mainLastBurstShotIndex = -1;
         private int mainMuzzleOverlayShotIndex = -1;
+        private int mainLaunchTubeIndex;
 
         private float mainAimAngle;
         private float auxiliaryAimAngle;
@@ -159,6 +160,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref mainMuzzleOverlayTicksTotal, "mainMuzzleOverlayTicksTotal", 0);
             Scribe_Values.Look(ref mainLastBurstShotIndex, "mainLastBurstShotIndex", -1);
             Scribe_Values.Look(ref mainMuzzleOverlayShotIndex, "mainMuzzleOverlayShotIndex", -1);
+            Scribe_Values.Look(ref mainLaunchTubeIndex, "mainLaunchTubeIndex", 0);
             Scribe_Values.Look(ref mainAimAngle, "mainAimAngle", 0f);
             Scribe_Values.Look(ref auxiliaryAimAngle, "auxiliaryAimAngle", 0f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -1270,7 +1272,7 @@ namespace AbyssalProtocol
 
         private Vector3 ResolveLaunchOrigin(ABY_TurretModuleDef module, Thing target, int burstShotIndex = -1)
         {
-            if (module == null || !module.HasOverlay || module.overlayMuzzleForwardOffset == 0f && module.overlayMuzzleSideOffset == 0f)
+            if (module == null || !module.HasOverlay || module.overlayMuzzleForwardOffset == 0f && module.overlayMuzzleSideOffset == 0f && !HasLaunchTubeOffsets(module))
             {
                 return parent.DrawPos;
             }
@@ -1278,11 +1280,101 @@ namespace AbyssalProtocol
             float angle = module.overlayRotatesToTarget && target != null ? AngleToTarget(target) : 0f;
             Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
             Vector3 socketWorldPos = ResolveSocketWorldPosition(module);
-            float resolvedMuzzleSideOffset = ResolveBurstMuzzleSideOffset(module, burstShotIndex);
-            Vector3 muzzleFromSocket = new Vector3(module.overlaySideOffset + resolvedMuzzleSideOffset, 0f, module.overlayForwardOffset + module.overlayMuzzleForwardOffset);
+            int launchTubeIndex = ResolveLaunchTubeIndex(module, burstShotIndex);
+            float resolvedMuzzleSideOffset = ResolveBurstMuzzleSideOffset(module, burstShotIndex) + ResolveLaunchTubeSideOffset(module, launchTubeIndex);
+            float resolvedMuzzleForwardOffset = module.overlayMuzzleForwardOffset + ResolveLaunchTubeForwardOffset(module, launchTubeIndex);
+            Vector3 muzzleFromSocket = new Vector3(module.overlaySideOffset + resolvedMuzzleSideOffset, 0f, module.overlayForwardOffset + resolvedMuzzleForwardOffset);
             Vector3 origin = socketWorldPos + rotation * muzzleFromSocket;
             origin.y = parent.DrawPos.y;
             return origin;
+        }
+
+        private bool HasLaunchTubeOffsets(ABY_TurretModuleDef module)
+        {
+            return module != null
+                && ((module.launchTubeSideOffsets != null && module.launchTubeSideOffsets.Count > 0)
+                    || (module.launchTubeForwardOffsets != null && module.launchTubeForwardOffsets.Count > 0));
+        }
+
+        private int ResolveLaunchTubeIndex(ABY_TurretModuleDef module, int burstShotIndex)
+        {
+            int count = LaunchTubeCount(module);
+            if (count <= 0)
+            {
+                return -1;
+            }
+
+            if (module.randomLaunchTube)
+            {
+                return Rand.Range(0, count);
+            }
+
+            if (module.cycleLaunchTubes)
+            {
+                int index = mainLaunchTubeIndex % count;
+                if (index < 0)
+                {
+                    index += count;
+                }
+
+                return index;
+            }
+
+            if (burstShotIndex >= 0)
+            {
+                int index = burstShotIndex % count;
+                if (index < 0)
+                {
+                    index += count;
+                }
+
+                return index;
+            }
+
+            return 0;
+        }
+
+        private int LaunchTubeCount(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return 0;
+            }
+
+            int sideCount = module.launchTubeSideOffsets?.Count ?? 0;
+            int forwardCount = module.launchTubeForwardOffsets?.Count ?? 0;
+            return Mathf.Max(sideCount, forwardCount);
+        }
+
+        private float ResolveLaunchTubeSideOffset(ABY_TurretModuleDef module, int launchTubeIndex)
+        {
+            if (module?.launchTubeSideOffsets == null || module.launchTubeSideOffsets.Count == 0 || launchTubeIndex < 0)
+            {
+                return 0f;
+            }
+
+            return module.launchTubeSideOffsets[launchTubeIndex % module.launchTubeSideOffsets.Count];
+        }
+
+        private float ResolveLaunchTubeForwardOffset(ABY_TurretModuleDef module, int launchTubeIndex)
+        {
+            if (module?.launchTubeForwardOffsets == null || module.launchTubeForwardOffsets.Count == 0 || launchTubeIndex < 0)
+            {
+                return 0f;
+            }
+
+            return module.launchTubeForwardOffsets[launchTubeIndex % module.launchTubeForwardOffsets.Count];
+        }
+
+        private void AdvanceLaunchTubeIndex(ABY_TurretModuleDef module)
+        {
+            int count = LaunchTubeCount(module);
+            if (module == null || !module.cycleLaunchTubes || count <= 0)
+            {
+                return;
+            }
+
+            mainLaunchTubeIndex = (mainLaunchTubeIndex + 1) % count;
         }
 
         private float ResolveBurstMuzzleSideOffset(ABY_TurretModuleDef module, int burstShotIndex)
@@ -1338,6 +1430,7 @@ namespace AbyssalProtocol
                 LocalTargetInfo targetInfo = new LocalTargetInfo(target);
                 Vector3 launchOrigin = ResolveLaunchOrigin(module, target, burstShotIndex);
                 projectile.Launch(parent, launchOrigin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
+                AdvanceLaunchTubeIndex(module);
                 module.soundCast?.PlayOneShot(SoundInfo.InMap(new TargetInfo(parent.Position, parent.Map, false), MaintenanceType.None));
                 return true;
             }
@@ -1401,6 +1494,7 @@ namespace AbyssalProtocol
             mainMuzzleOverlayTicksTotal = Mathf.Max(mainMuzzleOverlayTicksRemaining, mainMuzzleOverlayTicksTotal);
             mainLastBurstShotIndex = Mathf.Max(-1, mainLastBurstShotIndex);
             mainMuzzleOverlayShotIndex = Mathf.Max(-1, mainMuzzleOverlayShotIndex);
+            mainLaunchTubeIndex = Mathf.Max(0, mainLaunchTubeIndex);
             if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)
             {
                 HaltBurst();
