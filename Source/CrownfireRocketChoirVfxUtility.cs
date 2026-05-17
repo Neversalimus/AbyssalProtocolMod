@@ -102,15 +102,36 @@ namespace AbyssalProtocol
 
         public static void SpawnMicroImpact(Vector3 position, Map map, float sizeMultiplier = 1f)
         {
-            float size = Mathf.Clamp(0.60f * sizeMultiplier, 0.36f, 0.82f);
-            SpawnAnimatedMote(MicroImpactMoteDef, MicroImpactFramePrefix, 8, 1, 9, size, size, position, map, Rand.Range(0f, 360f));
-            SpawnAnimatedMote(MicroImpactMoteDef, MicroImpactFramePrefix, 8, 1, 7, size * 0.76f, size * 0.76f, position + new Vector3(0f, 0f, 0.02f), map, Rand.Range(0f, 360f));
+            SpawnMicroDetonation(position, Vector3.forward, map, sizeMultiplier);
+        }
+
+        public static void SpawnMicroDetonation(Vector3 position, Vector3 incomingDirection, Map map, float sizeMultiplier = 1f)
+        {
+            Vector3 direction = incomingDirection;
+            direction.y = 0f;
+            if (direction.sqrMagnitude <= 0.0001f)
+            {
+                direction = Vector3.forward;
+            }
+
+            direction.Normalize();
+            Vector3 side = new Vector3(direction.z, 0f, -direction.x);
+            float size = Mathf.Clamp(0.68f * sizeMultiplier, 0.44f, 0.96f);
+            float angle = DirectionAngle(direction) - 90f;
+
+            SpawnAnimatedMote(MicroImpactMoteDef, MicroImpactFramePrefix, 8, 1, 10, size, size, position, map, angle + Rand.Range(-16f, 16f));
+            SpawnAnimatedMote(MicroImpactMoteDef, MicroImpactFramePrefix, 8, 1, 8, size * 0.74f, size * 0.74f, position - direction * 0.10f, map, angle + Rand.Range(130f, 230f));
+            SpawnAnimatedMote(MicroTrailMoteDef, MicroTrailFramePrefix, 6, 1, 6, 0.34f * sizeMultiplier, 0.34f * sizeMultiplier, position - direction * 0.16f, map, angle + 180f + Rand.Range(-18f, 18f));
+            SpawnAnimatedMote(MicroTrailMoteDef, MicroTrailFramePrefix, 6, 1, 5, 0.22f * sizeMultiplier, 0.22f * sizeMultiplier, position + side * 0.10f, map, angle + 85f + Rand.Range(-20f, 20f));
+            SpawnAnimatedMote(MicroTrailMoteDef, MicroTrailFramePrefix, 6, 1, 5, 0.22f * sizeMultiplier, 0.22f * sizeMultiplier, position - side * 0.10f, map, angle - 85f + Rand.Range(-20f, 20f));
+
             if (map != null)
             {
-                FleckMaker.ThrowLightningGlow(position, map, 0.22f * sizeMultiplier);
-                if (Rand.Chance(0.65f))
+                FleckMaker.ThrowLightningGlow(position, map, 0.30f * sizeMultiplier);
+                FleckMaker.ThrowMicroSparks(position, map);
+                if (Rand.Chance(0.72f))
                 {
-                    FleckMaker.ThrowMicroSparks(position, map);
+                    FleckMaker.ThrowMicroSparks(position - direction * 0.08f, map);
                 }
             }
         }

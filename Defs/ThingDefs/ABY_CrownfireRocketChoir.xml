@@ -46,6 +46,26 @@
   </ThingDef>
 
   <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownfireMicroRocket_Slow</defName>
+    <label>crownfire micro-rocket</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_CrownfireMicroRocket</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownfireMicroRocket</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.20,0.58)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <armorPenetrationBase>0.28</armorPenetrationBase>
+      <stoppingPower>0.75</stoppingPower>
+      <speed>62</speed>
+      <explosionRadius>0.82</explosionRadius>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
     <defName>ABY_CrownfireMicroRocket</defName>
     <label>crownfire micro-rocket</label>
     <thingClass>AbyssalProtocol.Projectile_ABY_CrownfireMicroRocket</thingClass>
@@ -60,7 +80,27 @@
       <armorPenetrationBase>0.28</armorPenetrationBase>
       <stoppingPower>0.75</stoppingPower>
       <speed>72</speed>
-      <explosionRadius>0.75</explosionRadius>
+      <explosionRadius>0.82</explosionRadius>
+      <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownfireMicroRocket_Fast</defName>
+    <label>crownfire micro-rocket</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_CrownfireMicroRocket</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownfireMicroRocket</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.20,0.58)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>10</damageAmountBase>
+      <armorPenetrationBase>0.28</armorPenetrationBase>
+      <stoppingPower>0.75</stoppingPower>
+      <speed>82</speed>
+      <explosionRadius>0.82</explosionRadius>
       <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>

@@ -15,7 +15,9 @@ namespace AbyssalProtocol
         private const float FallbackScatterRadius = 4.2f;
         private const float VisualRiseDistance = 1.58f;
         private const float VisualForwardStartOffset = 0.10f;
-        private const string MicroRocketDefName = "ABY_CrownfireMicroRocket";
+        private const string MicroRocketSlowDefName = "ABY_CrownfireMicroRocket_Slow";
+        private const string MicroRocketNormalDefName = "ABY_CrownfireMicroRocket";
+        private const string MicroRocketFastDefName = "ABY_CrownfireMicroRocket_Fast";
         private const string CarrierVisualTexturePath = "Things/Projectile/ABY_CrownfireCarrierRocket";
 
         private int ticksAlive;
@@ -25,8 +27,20 @@ namespace AbyssalProtocol
         private Vector3 launchOrigin;
         private Material cachedCarrierMaterial;
 
-        private static ThingDef microRocketDef;
-        private static ThingDef MicroRocketDef => microRocketDef ?? (microRocketDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketDefName));
+        private List<LocalTargetInfo> pendingTargets;
+        private List<Vector3> pendingReleaseDirections;
+        private Vector3 pendingSplitPosition;
+        private Vector3 pendingTargetPosition;
+        private Thing pendingInstigator;
+        private int pendingReleaseIndex;
+        private int pendingReleaseTick;
+
+        private static ThingDef microRocketSlowDef;
+        private static ThingDef microRocketNormalDef;
+        private static ThingDef microRocketFastDef;
+        private static ThingDef MicroRocketSlowDef => microRocketSlowDef ?? (microRocketSlowDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketSlowDefName));
+        private static ThingDef MicroRocketNormalDef => microRocketNormalDef ?? (microRocketNormalDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketNormalDefName));
+        private static ThingDef MicroRocketFastDef => microRocketFastDef ?? (microRocketFastDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketFastDefName));
 
         protected override void Tick()
         {
@@ -35,6 +49,12 @@ namespace AbyssalProtocol
             if (!Spawned || Map == null)
             {
                 base.Tick();
+                return;
+            }
+
+            if (splitTriggered)
+            {
+                TickPendingMicroRelease();
                 return;
             }
 
@@ -116,7 +136,9 @@ namespace AbyssalProtocol
                 CrownfireRocketChoirVfxUtility.SpawnSplitBurst(splitPosition, splitMap);
                 if (!blockedByShield)
                 {
-                    LaunchMicroRockets(splitPosition, targetPosition, splitMap, instigator);
+                    PreparePendingMicroRelease(splitPosition, targetPosition, splitMap, instigator);
+                    TickPendingMicroRelease();
+                    return;
                 }
             }
 
@@ -126,47 +148,129 @@ namespace AbyssalProtocol
             }
         }
 
-        private static void LaunchMicroRockets(Vector3 splitPosition, Vector3 targetPosition, Map map, Thing instigator)
+        private void PreparePendingMicroRelease(Vector3 splitPosition, Vector3 targetPosition, Map map, Thing instigator)
         {
-            if (map == null || MicroRocketDef == null)
+            pendingSplitPosition = splitPosition;
+            pendingTargetPosition = targetPosition;
+            pendingInstigator = instigator;
+            pendingReleaseIndex = 0;
+            pendingReleaseTick = 0;
+            pendingTargets = BuildMicroTargets(targetPosition.ToIntVec3(), splitPosition, map, instigator?.Faction);
+            pendingReleaseDirections = new List<Vector3>(MicroRocketCount);
+        }
+
+        private void TickPendingMicroRelease()
+        {
+            Map releaseMap = Map;
+            if (releaseMap == null || pendingTargets == null || pendingReleaseIndex >= MicroRocketCount)
+            {
+                if (!Destroyed)
+                {
+                    Destroy(DestroyMode.Vanish);
+                }
+
+                return;
+            }
+
+            int batchSize = pendingReleaseTick == 0 ? 3 : pendingReleaseTick == 1 ? 3 : 2;
+            int releasedThisTick = 0;
+            while (pendingReleaseIndex < MicroRocketCount && releasedThisTick < batchSize)
+            {
+                LocalTargetInfo targetInfo = pendingReleaseIndex < pendingTargets.Count
+                    ? pendingTargets[pendingReleaseIndex]
+                    : new LocalTargetInfo(RandomFallbackCell(pendingTargetPosition.ToIntVec3(), releaseMap));
+
+                if (targetInfo.IsValid)
+                {
+                    LaunchSingleMicroRocket(pendingSplitPosition, targetInfo, releaseMap, pendingInstigator, pendingReleaseIndex, pendingReleaseTick, pendingReleaseDirections);
+                }
+
+                pendingReleaseIndex++;
+                releasedThisTick++;
+            }
+
+            if (pendingReleaseDirections != null && pendingReleaseDirections.Count > 0)
+            {
+                CrownfireRocketChoirVfxUtility.SpawnSplitReleaseAccent(pendingSplitPosition, pendingReleaseDirections, releaseMap);
+                pendingReleaseDirections.Clear();
+            }
+
+            pendingReleaseTick++;
+            if (pendingReleaseIndex >= MicroRocketCount && !Destroyed)
+            {
+                Destroy(DestroyMode.Vanish);
+            }
+        }
+
+        private static void LaunchSingleMicroRocket(
+            Vector3 splitPosition,
+            LocalTargetInfo targetInfo,
+            Map map,
+            Thing instigator,
+            int rocketIndex,
+            int releaseTick,
+            List<Vector3> releaseDirections)
+        {
+            int speedProfile = ResolveSpeedProfile(rocketIndex, releaseTick);
+            ThingDef projectileDef = ResolveMicroRocketDef(speedProfile);
+            if (map == null || projectileDef == null)
             {
                 return;
             }
 
-            List<LocalTargetInfo> targets = BuildMicroTargets(targetPosition.ToIntVec3(), splitPosition, map, instigator?.Faction);
-            List<Vector3> releaseDirections = new List<Vector3>(MicroRocketCount);
-
-            for (int i = 0; i < MicroRocketCount; i++)
+            Projectile projectile = GenSpawn.Spawn(projectileDef, splitPosition.ToIntVec3(), map, WipeMode.Vanish) as Projectile;
+            if (projectile == null)
             {
-                LocalTargetInfo targetInfo = i < targets.Count ? targets[i] : new LocalTargetInfo(RandomFallbackCell(targetPosition.ToIntVec3(), map));
-                if (!targetInfo.IsValid)
-                {
-                    continue;
-                }
-
-                Projectile projectile = GenSpawn.Spawn(MicroRocketDef, splitPosition.ToIntVec3(), map, WipeMode.Vanish) as Projectile;
-                if (projectile == null)
-                {
-                    continue;
-                }
-
-                Vector3 origin = splitPosition;
-                Vector2 radial = Rand.InsideUnitCircle.normalized * Rand.Range(0.06f, 0.22f);
-                origin.x += radial.x;
-                origin.z += radial.y;
-
-                Vector3 direction = targetInfo.CenterVector3 - origin;
-                direction.y = 0f;
-                if (direction.sqrMagnitude > 0.0001f)
-                {
-                    releaseDirections.Add(direction.normalized);
-                    CrownfireRocketChoirVfxUtility.SpawnMicroTrail(origin, direction.normalized, map, 1.08f);
-                }
-
-                projectile.Launch(instigator, origin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
+                return;
             }
 
-            CrownfireRocketChoirVfxUtility.SpawnSplitReleaseAccent(splitPosition, releaseDirections, map);
+            Vector3 origin = splitPosition;
+            Vector2 radial = Rand.InsideUnitCircle.normalized * Rand.Range(0.08f, 0.28f);
+            origin.x += radial.x;
+            origin.z += radial.y;
+
+            Vector3 direction = targetInfo.CenterVector3 - origin;
+            direction.y = 0f;
+            if (direction.sqrMagnitude > 0.0001f)
+            {
+                direction.Normalize();
+                releaseDirections?.Add(direction);
+                origin += direction * (0.05f * releaseTick);
+                CrownfireRocketChoirVfxUtility.SpawnMicroTrail(origin, direction, map, speedProfile == 2 ? 1.16f : 1.04f);
+            }
+
+            if (projectile is Projectile_ABY_CrownfireMicroRocket crownfireMicro)
+            {
+                crownfireMicro.ConfigureCrownfireVisualProfile(rocketIndex, speedProfile);
+            }
+
+            projectile.Launch(instigator, origin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
+        }
+
+        private static int ResolveSpeedProfile(int rocketIndex, int releaseTick)
+        {
+            int profile = (rocketIndex + releaseTick + Rand.Range(0, 3)) % 3;
+            if (rocketIndex == 0)
+            {
+                return 1;
+            }
+
+            return profile;
+        }
+
+        private static ThingDef ResolveMicroRocketDef(int speedProfile)
+        {
+            if (speedProfile <= 0 && MicroRocketSlowDef != null)
+            {
+                return MicroRocketSlowDef;
+            }
+
+            if (speedProfile >= 2 && MicroRocketFastDef != null)
+            {
+                return MicroRocketFastDef;
+            }
+
+            return MicroRocketNormalDef ?? MicroRocketSlowDef ?? MicroRocketFastDef;
         }
 
         private static List<LocalTargetInfo> BuildMicroTargets(IntVec3 primaryCell, Vector3 splitPosition, Map map, Faction launcherFaction)
