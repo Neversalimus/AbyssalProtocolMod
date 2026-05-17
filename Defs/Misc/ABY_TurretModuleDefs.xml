@@ -181,19 +181,19 @@
     <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
     <chargeOverlayTicksPerFrame>18</chargeOverlayTicksPerFrame>
     <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
-    <chargeOverlayDrawSize>12.20</chargeOverlayDrawSize>
+    <chargeOverlayDrawSize>6.35</chargeOverlayDrawSize>
     <chargeOverlayForwardOffset>1.28</chargeOverlayForwardOffset>
     <dischargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailDischarge_</dischargeOverlayFramePathPrefix>
     <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
     <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.096</dischargeOverlayAltitudeOffset>
-    <dischargeOverlayDrawSize>9.20</dischargeOverlayDrawSize>
+    <dischargeOverlayDrawSize>6.35</dischargeOverlayDrawSize>
     <dischargeOverlayForwardOffset>1.28</dischargeOverlayForwardOffset>
     <residualOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailResidual_</residualOverlayFramePathPrefix>
     <residualOverlayFrameCount>6</residualOverlayFrameCount>
     <residualOverlayTicksPerFrame>3</residualOverlayTicksPerFrame>
     <residualOverlayAltitudeOffset>0.092</residualOverlayAltitudeOffset>
-    <residualOverlayDrawSize>8.20</residualOverlayDrawSize>
+    <residualOverlayDrawSize>6.35</residualOverlayDrawSize>
     <residualOverlayForwardOffset>1.28</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
@@ -441,11 +441,13 @@
     <chargeOverlayTicksPerFrame>6</chargeOverlayTicksPerFrame>
     <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
     <chargeOverlayDrawSize>4.08</chargeOverlayDrawSize>
+    <chargeOverlayForwardOffset>0.72</chargeOverlayForwardOffset>
     <dischargeOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussPhase_</dischargeOverlayFramePathPrefix>
     <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
     <dischargeOverlayTicksPerFrame>1</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.098</dischargeOverlayAltitudeOffset>
     <dischargeOverlayDrawSize>4.08</dischargeOverlayDrawSize>
+    <dischargeOverlayForwardOffset>0.72</dischargeOverlayForwardOffset>
     <dischargeOverlayFrameFollowsBurstShot>true</dischargeOverlayFrameFollowsBurstShot>
     <muzzleOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussMuzzle_</muzzleOverlayFramePathPrefix>
     <muzzleOverlayFrameCount>8</muzzleOverlayFrameCount>
@@ -460,6 +462,7 @@
     <residualOverlayTicksPerFrame>3</residualOverlayTicksPerFrame>
     <residualOverlayAltitudeOffset>0.094</residualOverlayAltitudeOffset>
     <residualOverlayDrawSize>4.08</residualOverlayDrawSize>
+    <residualOverlayForwardOffset>0.72</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
 </Defs>
