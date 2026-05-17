@@ -16,10 +16,6 @@ namespace AbyssalProtocol
         private const string SegmentAvailablePath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Available";
         private const string SegmentActivePath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Active";
         private const string SegmentCompletedPath = "UI/ABY/ProtocolResearch/Segments/ABY_Segment_Completed";
-        private const string RingArcLockedPath = "UI/ABY/ProtocolResearch/Segments/ABY_RingArc_Locked";
-        private const string RingArcAvailablePath = "UI/ABY/ProtocolResearch/Segments/ABY_RingArc_Available";
-        private const string RingArcActivePath = "UI/ABY/ProtocolResearch/Segments/ABY_RingArc_Active";
-        private const string RingArcCompletedPath = "UI/ABY/ProtocolResearch/Segments/ABY_RingArc_Completed";
 
         private static readonly Texture2D BackgroundTex = ContentFinder<Texture2D>.Get(BackgroundPath, false);
         private static readonly Texture2D SmallRingTex = ContentFinder<Texture2D>.Get(SmallRingPath, false);
@@ -28,10 +24,6 @@ namespace AbyssalProtocol
         private static readonly Texture2D SegmentAvailableTex = ContentFinder<Texture2D>.Get(SegmentAvailablePath, false);
         private static readonly Texture2D SegmentActiveTex = ContentFinder<Texture2D>.Get(SegmentActivePath, false);
         private static readonly Texture2D SegmentCompletedTex = ContentFinder<Texture2D>.Get(SegmentCompletedPath, false);
-        private static readonly Texture2D RingArcLockedTex = ContentFinder<Texture2D>.Get(RingArcLockedPath, false);
-        private static readonly Texture2D RingArcAvailableTex = ContentFinder<Texture2D>.Get(RingArcAvailablePath, false);
-        private static readonly Texture2D RingArcActiveTex = ContentFinder<Texture2D>.Get(RingArcActivePath, false);
-        private static readonly Texture2D RingArcCompletedTex = ContentFinder<Texture2D>.Get(RingArcCompletedPath, false);
 
         private readonly Building_ABY_ProtocolNexus nexus;
         private ABY_ProtocolResearchCategoryDef selectedCategory;
@@ -235,8 +227,8 @@ namespace AbyssalProtocol
             Rect ringArea = new Rect(rect.x + 30f, rect.y + 70f, ringSize, ringSize);
             Rect localRingArea = new Rect(0f, 0f, ringArea.width, ringArea.height);
 
-            // Keep all rotated segment overlays clipped to the ring canvas.
-            // The previous pass drew rotated plates in absolute window space; on some UI scales they visibly drifted into the category strip.
+            // Keep the large ring and its minimal markers inside one local canvas.
+            // Navigation remains driven by the stable project list to the right.
             GUI.BeginGroup(ringArea);
             if (LargeRingTex != null)
             {
@@ -262,8 +254,7 @@ namespace AbyssalProtocol
             }
 
             Vector2 center = ringArea.center;
-            float hitRadius = ringArea.width * 0.365f;
-            float hitSize = 72f;
+            float markerRadius = ringArea.width * 0.382f;
             float angleStep = 360f / Mathf.Max(1, projects.Count);
 
             for (int i = 0; i < projects.Count; i++)
@@ -271,15 +262,20 @@ namespace AbyssalProtocol
                 ABY_ProtocolResearchDef project = projects[i];
                 float angle = -90f + i * angleStep;
                 float rad = angle * Mathf.Deg2Rad;
-                Vector2 hitPos = center + new Vector2(Mathf.Cos(rad) * hitRadius, Mathf.Sin(rad) * hitRadius);
-                Rect hitRect = new Rect(hitPos.x - hitSize * 0.5f, hitPos.y - hitSize * 0.5f, hitSize, hitSize);
-                bool selected = project == selectedProject;
-                bool hover = Mouse.IsOver(hitRect);
+                Vector2 markerPos = center + new Vector2(Mathf.Cos(rad) * markerRadius, Mathf.Sin(rad) * markerRadius);
 
-                // Draw a true arc overlay derived for the static research ring instead of rotating
-                // rectangular list plates.  The earlier rectangular overlays were visually unstable
-                // because they could never match the circular metal band.
-                DrawRingProjectArc(ringArea, project, selected, hover, angle + 90f);
+                bool selected = project == selectedProject;
+                Rect hitRect = new Rect(markerPos.x - 18f, markerPos.y - 18f, 36f, 36f);
+                bool hover = Mouse.IsOver(hitRect);
+                float markerSize = selected ? 18f : hover ? 15f : 12f;
+                Rect markerRect = new Rect(markerPos.x - markerSize * 0.5f, markerPos.y - markerSize * 0.5f, markerSize, markerSize);
+
+                // Keep the large ring as a stable decorative matrix.  Earlier passes rotated
+                // full arc/segment textures over this static ring, which made them escape the
+                // ring canvas and drift into the category strip at several UI scales.  The
+                // right-side list is the authoritative navigation; the ring now only shows
+                // small non-rotated state markers anchored to the ring band.
+                DrawRingProjectMarker(markerRect, ABY_ProtocolResearchUtility.GetState(project), selected, hover);
 
                 if (Widgets.ButtonInvisible(hitRect))
                 {
@@ -294,29 +290,27 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawRingProjectArc(Rect ringArea, ABY_ProtocolResearchDef project, bool selected, bool hover, float rotationDegrees)
+        private static void DrawRingProjectMarker(Rect rect, ABY_ProtocolResearchState state, bool selected, bool hover)
         {
-            Texture2D tex = RingArcTexture(ABY_ProtocolResearchUtility.GetState(project));
-            Color oldColor = GUI.color;
-            Matrix4x4 oldMatrix = GUI.matrix;
+            Color stateColor = StateColor(state);
+            Color markerColor = stateColor;
+            markerColor.a = selected ? 0.95f : hover ? 0.82f : 0.66f;
 
-            GUIUtility.RotateAroundPivot(rotationDegrees, ringArea.center);
+            Rect backingRect = rect.ExpandedBy(selected ? 5f : 4f);
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.78f : 0.58f));
+            DrawSolid(rect, markerColor);
 
-            if (tex != null)
+            Color outlineColor = selected
+                ? new Color(1f, 0.72f, 0.36f, 0.95f)
+                : hover
+                    ? new Color(1f, 0.50f, 0.22f, 0.75f)
+                    : new Color(0.72f, 0.28f, 0.14f, 0.42f);
+
+            DrawOutline(backingRect, outlineColor);
+            if (selected)
             {
-                float alpha = selected ? 1f : hover ? 0.86f : 0.62f;
-                GUI.color = new Color(1f, 1f, 1f, alpha);
-                GUI.DrawTexture(ringArea, tex, ScaleMode.StretchToFill, true);
-
-                if (selected || hover)
-                {
-                    GUI.color = new Color(1f, 1f, 1f, selected ? 0.38f : 0.22f);
-                    GUI.DrawTexture(ringArea, tex, ScaleMode.StretchToFill, true);
-                }
+                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.44f, 0.18f, 0.45f));
             }
-
-            GUI.matrix = oldMatrix;
-            GUI.color = oldColor;
         }
 
         private void DrawProjectList(Rect rect, List<ABY_ProtocolResearchDef> projects)
@@ -523,21 +517,6 @@ namespace AbyssalProtocol
 
             GUI.color = Color.white;
             return y + 10f;
-        }
-
-        private static Texture2D RingArcTexture(ABY_ProtocolResearchState state)
-        {
-            switch (state)
-            {
-                case ABY_ProtocolResearchState.Completed:
-                    return RingArcCompletedTex;
-                case ABY_ProtocolResearchState.Active:
-                    return RingArcActiveTex;
-                case ABY_ProtocolResearchState.Available:
-                    return RingArcAvailableTex;
-                default:
-                    return RingArcLockedTex;
-            }
         }
 
         private static Texture2D SegmentTexture(ABY_ProtocolResearchState state)
