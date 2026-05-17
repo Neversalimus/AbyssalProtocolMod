@@ -75,6 +75,23 @@ namespace AbyssalProtocol
         public float dischargeOverlayForwardOffset;
         public bool dischargeOverlayUsesMuzzleAnchor;
 
+        // Optional firing-phase overlay controls for rapid burst modules.
+        // When enabled, the overlay frame follows the current burst shot index,
+        // so visual phase lanes and actual muzzle offsets stay synchronized.
+        public bool dischargeOverlayFrameFollowsBurstShot;
+
+        // Optional per-shot muzzle overlay. Frame N follows burst shot N, and can be anchored to the
+        // same burst muzzle side offset used by the projectile launch origin.
+        public string muzzleOverlayFramePathPrefix;
+        public int muzzleOverlayFrameCount = 8;
+        public int muzzleOverlayLifetimeTicks = 4;
+        public float muzzleOverlayAltitudeOffset = 0.104f;
+        public float muzzleOverlayDrawSize = -1f;
+        public float muzzleOverlaySideOffset;
+        public float muzzleOverlayForwardOffset;
+        public bool muzzleOverlayUsesMuzzleAnchor = true;
+        public bool muzzleOverlayUsesBurstMuzzleOffset = true;
+
         public string residualOverlayFramePathPrefix;
         public int residualOverlayFrameCount = 6;
         public int residualOverlayTicksPerFrame = 3;

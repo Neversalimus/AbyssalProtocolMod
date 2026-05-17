@@ -217,4 +217,24 @@
       <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretCrowncoilGaussSlug</defName>
+    <label>crowncoil gauss slug</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretCrowncoilGaussSlug</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretCrowncoilGaussSlug</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.28,0.88)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>14</damageAmountBase>
+      <armorPenetrationBase>0.48</armorPenetrationBase>
+      <stoppingPower>0.86</stoppingPower>
+      <speed>116</speed>
+      <soundImpactAnticipate>ABY_SepulcherRailImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
 </Defs>

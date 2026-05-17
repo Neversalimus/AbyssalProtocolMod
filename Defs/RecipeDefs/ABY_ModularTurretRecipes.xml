@@ -299,4 +299,27 @@
     <products><ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter></products>
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1120</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_CrowncoilGaussMinigun</defName>
+    <label>forge crowncoil gauss minigun</label>
+    <description>Bind a six-lane crowncoil accelerator, abyssal phase distributor, and reinforced rotary feed geometry into a turret-compatible apex sustained-fire module.</description>
+    <jobString>Forging crowncoil gauss minigun.</jobString>
+    <workAmount>5600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>104</count></li>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>120</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>62</count></li>
+      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>30</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_CrowncoilGaussMinigun>1</ABY_TurretModule_CrowncoilGaussMinigun></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1280</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
+
 </Defs>

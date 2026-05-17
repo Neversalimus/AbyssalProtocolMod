@@ -32,6 +32,10 @@ namespace AbyssalProtocol
         private int mainDischargeTicksTotal;
         private int mainResidualTicksRemaining;
         private int mainResidualTicksTotal;
+        private int mainMuzzleOverlayTicksRemaining;
+        private int mainMuzzleOverlayTicksTotal;
+        private int mainLastBurstShotIndex = -1;
+        private int mainMuzzleOverlayShotIndex = -1;
 
         private float mainAimAngle;
         private float auxiliaryAimAngle;
@@ -151,6 +155,10 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref mainDischargeTicksTotal, "mainDischargeTicksTotal", 0);
             Scribe_Values.Look(ref mainResidualTicksRemaining, "mainResidualTicksRemaining", 0);
             Scribe_Values.Look(ref mainResidualTicksTotal, "mainResidualTicksTotal", 0);
+            Scribe_Values.Look(ref mainMuzzleOverlayTicksRemaining, "mainMuzzleOverlayTicksRemaining", 0);
+            Scribe_Values.Look(ref mainMuzzleOverlayTicksTotal, "mainMuzzleOverlayTicksTotal", 0);
+            Scribe_Values.Look(ref mainLastBurstShotIndex, "mainLastBurstShotIndex", -1);
+            Scribe_Values.Look(ref mainMuzzleOverlayShotIndex, "mainMuzzleOverlayShotIndex", -1);
             Scribe_Values.Look(ref mainAimAngle, "mainAimAngle", 0f);
             Scribe_Values.Look(ref auxiliaryAimAngle, "auxiliaryAimAngle", 0f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -409,6 +417,10 @@ namespace AbyssalProtocol
             mainDischargeTicksTotal = 0;
             mainResidualTicksRemaining = 0;
             mainResidualTicksTotal = 0;
+            mainMuzzleOverlayTicksRemaining = 0;
+            mainMuzzleOverlayTicksTotal = 0;
+            mainLastBurstShotIndex = -1;
+            mainMuzzleOverlayShotIndex = -1;
             ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
             return true;
@@ -613,6 +625,17 @@ namespace AbyssalProtocol
             if (mainDischargeTicksRemaining > 0 && !mainModule.dischargeOverlayFramePathPrefix.NullOrEmpty())
             {
                 int elapsed = Mathf.Max(0, mainDischargeTicksTotal - mainDischargeTicksRemaining);
+                int forcedFrame = -1;
+                if (mainModule.dischargeOverlayFrameFollowsBurstShot && mainLastBurstShotIndex >= 0)
+                {
+                    int safeFrameCount = Mathf.Max(1, mainModule.dischargeOverlayFrameCount);
+                    forcedFrame = mainLastBurstShotIndex % safeFrameCount;
+                    if (forcedFrame < 0)
+                    {
+                        forcedFrame += safeFrameCount;
+                    }
+                }
+
                 DrawAnimatedModuleOverlay(
                     mainModule,
                     mainModule.dischargeOverlayFramePathPrefix,
@@ -624,7 +647,35 @@ namespace AbyssalProtocol
                     mainModule.dischargeOverlayDrawSize,
                     mainModule.dischargeOverlaySideOffset,
                     mainModule.dischargeOverlayForwardOffset,
-                    mainModule.dischargeOverlayUsesMuzzleAnchor);
+                    mainModule.dischargeOverlayUsesMuzzleAnchor,
+                    forcedFrame);
+            }
+
+            if (mainMuzzleOverlayTicksRemaining > 0 && !mainModule.muzzleOverlayFramePathPrefix.NullOrEmpty())
+            {
+                int safeFrameCount = Mathf.Max(1, mainModule.muzzleOverlayFrameCount);
+                int shotIndex = mainMuzzleOverlayShotIndex >= 0 ? mainMuzzleOverlayShotIndex : mainLastBurstShotIndex;
+                int frameIndex = shotIndex >= 0 ? shotIndex % safeFrameCount : 0;
+                if (frameIndex < 0)
+                {
+                    frameIndex += safeFrameCount;
+                }
+
+                DrawAnimatedModuleOverlay(
+                    mainModule,
+                    mainModule.muzzleOverlayFramePathPrefix,
+                    mainModule.muzzleOverlayFrameCount,
+                    1,
+                    0,
+                    mainAimAngle,
+                    mainModule.muzzleOverlayAltitudeOffset,
+                    mainModule.muzzleOverlayDrawSize,
+                    mainModule.muzzleOverlaySideOffset,
+                    mainModule.muzzleOverlayForwardOffset,
+                    mainModule.muzzleOverlayUsesMuzzleAnchor,
+                    frameIndex,
+                    shotIndex,
+                    mainModule.muzzleOverlayUsesBurstMuzzleOffset);
             }
 
             if (mainResidualTicksRemaining > 0 && !mainModule.residualOverlayFramePathPrefix.NullOrEmpty())
@@ -656,7 +707,10 @@ namespace AbyssalProtocol
             float drawSizeOverride,
             float sideOffset,
             float forwardOffset,
-            bool useMuzzleAnchor)
+            bool useMuzzleAnchor,
+            int forcedFrameIndex = -1,
+            int burstShotIndex = -1,
+            bool useBurstMuzzleSideOffset = false)
         {
             if (module == null || framePathPrefix.NullOrEmpty())
             {
@@ -667,7 +721,9 @@ namespace AbyssalProtocol
             {
                 int safeFrameCount = Mathf.Max(1, frameCount);
                 int safeTicksPerFrame = Mathf.Max(1, ticksPerFrame);
-                int frameIndex = Mathf.Clamp(elapsedTicks / safeTicksPerFrame, 0, safeFrameCount - 1);
+                int frameIndex = forcedFrameIndex >= 0
+                    ? Mathf.Clamp(forcedFrameIndex, 0, safeFrameCount - 1)
+                    : Mathf.Clamp(elapsedTicks / safeTicksPerFrame, 0, safeFrameCount - 1);
                 string path = framePathPrefix + (frameIndex + 1).ToString("00");
                 Material material = GetAnimatedOverlayMaterial(path);
                 if (material == null)
@@ -677,7 +733,7 @@ namespace AbyssalProtocol
 
                 float angle = module.overlayRotatesToTarget ? aimAngle : 0f;
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                Vector3 drawPos = ResolveAnimatedOverlayPlaneCenter(module, rotation, sideOffset, forwardOffset, useMuzzleAnchor);
+                Vector3 drawPos = ResolveAnimatedOverlayPlaneCenter(module, rotation, sideOffset, forwardOffset, useMuzzleAnchor, burstShotIndex, useBurstMuzzleSideOffset);
                 drawPos.y += Mathf.Max(0.001f, altitudeOffset);
 
                 float size = drawSizeOverride > 0.01f ? drawSizeOverride : Mathf.Max(0.08f, module.overlayDrawSize);
@@ -732,6 +788,16 @@ namespace AbyssalProtocol
             {
                 mainResidualTicksRemaining--;
             }
+
+            if (mainMuzzleOverlayTicksRemaining > 0)
+            {
+                mainMuzzleOverlayTicksRemaining--;
+                if (mainMuzzleOverlayTicksRemaining <= 0)
+                {
+                    mainMuzzleOverlayTicksTotal = 0;
+                    mainMuzzleOverlayShotIndex = -1;
+                }
+            }
         }
 
         private void StartMainDischargeVisual(ABY_TurretModuleDef module)
@@ -746,6 +812,21 @@ namespace AbyssalProtocol
             mainResidualTicksTotal = 0;
             mainDischargeTicksTotal = Mathf.Max(1, Mathf.Max(1, module.dischargeOverlayFrameCount) * Mathf.Max(1, module.dischargeOverlayTicksPerFrame));
             mainDischargeTicksRemaining = mainDischargeTicksTotal;
+        }
+
+        private void StartMainMuzzleOverlay(ABY_TurretModuleDef module, int burstShotIndex)
+        {
+            if (module == null || module.muzzleOverlayFramePathPrefix.NullOrEmpty())
+            {
+                mainMuzzleOverlayTicksRemaining = 0;
+                mainMuzzleOverlayTicksTotal = 0;
+                mainMuzzleOverlayShotIndex = -1;
+                return;
+            }
+
+            mainMuzzleOverlayShotIndex = Mathf.Max(0, burstShotIndex);
+            mainMuzzleOverlayTicksTotal = Mathf.Max(1, module.muzzleOverlayLifetimeTicks);
+            mainMuzzleOverlayTicksRemaining = mainMuzzleOverlayTicksTotal;
         }
 
         private void StartMainResidualVisual(ABY_TurretModuleDef module)
@@ -890,6 +971,8 @@ namespace AbyssalProtocol
                 return;
             }
 
+            mainLastBurstShotIndex = burstShotIndex;
+            StartMainMuzzleOverlay(mainModule, burstShotIndex);
             burstShotsFiredInCurrentBurst++;
             StartMainDischargeVisual(mainModule);
 
@@ -1161,7 +1244,7 @@ namespace AbyssalProtocol
             return socketWorldPos + rotation * (centerNudge - pivotFromTextureCenter);
         }
 
-        private Vector3 ResolveAnimatedOverlayPlaneCenter(ABY_TurretModuleDef module, Quaternion rotation, float localSideOffset, float localForwardOffset, bool useMuzzleAnchor)
+        private Vector3 ResolveAnimatedOverlayPlaneCenter(ABY_TurretModuleDef module, Quaternion rotation, float localSideOffset, float localForwardOffset, bool useMuzzleAnchor, int burstShotIndex = -1, bool useBurstMuzzleSideOffset = false)
         {
             if (module == null)
             {
@@ -1173,7 +1256,9 @@ namespace AbyssalProtocol
             float baseForwardOffset = module.overlayForwardOffset;
             if (useMuzzleAnchor)
             {
-                baseSideOffset += module.overlayMuzzleSideOffset;
+                baseSideOffset += useBurstMuzzleSideOffset && burstShotIndex >= 0
+                    ? ResolveBurstMuzzleSideOffset(module, burstShotIndex)
+                    : module.overlayMuzzleSideOffset;
                 baseForwardOffset += module.overlayMuzzleForwardOffset;
             }
 
@@ -1312,6 +1397,10 @@ namespace AbyssalProtocol
             mainDischargeTicksTotal = Mathf.Max(mainDischargeTicksRemaining, mainDischargeTicksTotal);
             mainResidualTicksRemaining = Mathf.Max(0, mainResidualTicksRemaining);
             mainResidualTicksTotal = Mathf.Max(mainResidualTicksRemaining, mainResidualTicksTotal);
+            mainMuzzleOverlayTicksRemaining = Mathf.Max(0, mainMuzzleOverlayTicksRemaining);
+            mainMuzzleOverlayTicksTotal = Mathf.Max(mainMuzzleOverlayTicksRemaining, mainMuzzleOverlayTicksTotal);
+            mainLastBurstShotIndex = Mathf.Max(-1, mainLastBurstShotIndex);
+            mainMuzzleOverlayShotIndex = Mathf.Max(-1, mainMuzzleOverlayShotIndex);
             if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)
             {
                 HaltBurst();
@@ -1330,6 +1419,10 @@ namespace AbyssalProtocol
             mainDischargeTicksTotal = 0;
             mainResidualTicksRemaining = 0;
             mainResidualTicksTotal = 0;
+            mainMuzzleOverlayTicksRemaining = 0;
+            mainMuzzleOverlayTicksTotal = 0;
+            mainMuzzleOverlayShotIndex = -1;
+            mainLastBurstShotIndex = -1;
         }
 
         private void HaltBurst()
@@ -1338,6 +1431,8 @@ namespace AbyssalProtocol
             burstIntervalTicks = 0;
             burstShotsFiredInCurrentBurst = 0;
             currentBurstTarget = null;
+            mainLastBurstShotIndex = -1;
+            mainMuzzleOverlayShotIndex = -1;
         }
 
         private void HaltCharge(bool keepTarget = false)

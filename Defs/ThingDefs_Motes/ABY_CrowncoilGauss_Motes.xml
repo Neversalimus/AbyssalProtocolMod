@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_CrowncoilGaussImpact</defName>
+    <label>crowncoil gauss slug impact</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_PlasmaLanceAnimated</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussImpact_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(0.56,0.56)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.08</solidTime>
+      <fadeOutTime>0.06</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

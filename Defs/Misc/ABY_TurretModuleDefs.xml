@@ -400,4 +400,66 @@
     <dischargeOverlayForwardOffset>0.06</dischargeOverlayForwardOffset>
     <dischargeOverlayUsesMuzzleAnchor>true</dischargeOverlayUsesMuzzleAnchor>
   </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CrowncoilGaussMinigun</defName>
+    <label>Crowncoil Gauss Minigun</label>
+    <description>Main weapon core for medium modular turret chassis. An apex sustained-fire crowncoil gauss array that cycles a rotary electromagnetic phase across six fixed rails and tears through advancing elites with high-velocity penetrators.</description>
+    <effectSummary>Primary gun module. Charges a six-lane crowncoil phase, then fires an 18-shot gauss burst. Each slug launches from the currently charged lane in sequence, so the projectile origins, muzzle flashes, and phase overlay stay synchronized. Excellent sustained anti-elite and anti-heavy-swarm pressure; power hungry and inefficient inside its deadzone.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_CrowncoilGaussMinigun</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>apex sustained gauss suppression</role>
+    <tier>4</tier>
+    <projectileDef>ABY_TurretCrowncoilGaussSlug</projectileDef>
+    <soundCharge>ABY_SepulcherRailCharge</soundCharge>
+    <soundCast>ABY_RiftNeedlerFire</soundCast>
+    <range>35</range>
+    <minRange>5</minRange>
+    <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
+    <cooldownTicks>420</cooldownTicks>
+    <chargeTicks>54</chargeTicks>
+    <burstShotCount>18</burstShotCount>
+    <ticksBetweenBurstShots>3</ticksBetweenBurstShots>
+    <extraPowerDraw>720</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_CrowncoilGaussMinigun</overlayTexturePath>
+    <overlayDrawSize>4.05</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.72</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>2.10</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.078</overlayAltitudeOffset>
+    <burstMuzzleSideOffsets>
+      <li>-0.54</li>
+      <li>-0.32</li>
+      <li>-0.11</li>
+      <li>0.11</li>
+      <li>0.32</li>
+      <li>0.54</li>
+    </burstMuzzleSideOffsets>
+    <chargeOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussCharge_</chargeOverlayFramePathPrefix>
+    <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
+    <chargeOverlayTicksPerFrame>6</chargeOverlayTicksPerFrame>
+    <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
+    <chargeOverlayDrawSize>4.08</chargeOverlayDrawSize>
+    <dischargeOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussPhase_</dischargeOverlayFramePathPrefix>
+    <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
+    <dischargeOverlayTicksPerFrame>1</dischargeOverlayTicksPerFrame>
+    <dischargeOverlayAltitudeOffset>0.098</dischargeOverlayAltitudeOffset>
+    <dischargeOverlayDrawSize>4.08</dischargeOverlayDrawSize>
+    <dischargeOverlayFrameFollowsBurstShot>true</dischargeOverlayFrameFollowsBurstShot>
+    <muzzleOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussMuzzle_</muzzleOverlayFramePathPrefix>
+    <muzzleOverlayFrameCount>8</muzzleOverlayFrameCount>
+    <muzzleOverlayLifetimeTicks>4</muzzleOverlayLifetimeTicks>
+    <muzzleOverlayAltitudeOffset>0.112</muzzleOverlayAltitudeOffset>
+    <muzzleOverlayDrawSize>0.74</muzzleOverlayDrawSize>
+    <muzzleOverlayForwardOffset>0.05</muzzleOverlayForwardOffset>
+    <muzzleOverlayUsesMuzzleAnchor>true</muzzleOverlayUsesMuzzleAnchor>
+    <muzzleOverlayUsesBurstMuzzleOffset>true</muzzleOverlayUsesBurstMuzzleOffset>
+    <residualOverlayFramePathPrefix>Things/VFX/CrowncoilGauss/ABY_CrowncoilGaussResidual_</residualOverlayFramePathPrefix>
+    <residualOverlayFrameCount>6</residualOverlayFrameCount>
+    <residualOverlayTicksPerFrame>3</residualOverlayTicksPerFrame>
+    <residualOverlayAltitudeOffset>0.094</residualOverlayAltitudeOffset>
+    <residualOverlayDrawSize>4.08</residualOverlayDrawSize>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
 </Defs>

@@ -384,4 +384,32 @@
       </li>
     </modExtensions>
   </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CrowncoilGaussMinigun</defName>
+    <label>crowncoil gauss minigun</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: apex sustained gauss suppression.&#10;Effect: charges a six-lane crowncoil phase, then fires an 18-shot burst of high-velocity gauss slugs. Projectile origins, muzzle flashes, and the rotary phase overlay cycle through the same charged lanes in order. Excellent sustained anti-elite and anti-heavy-swarm pressure; power hungry and weak inside its deadzone.&#10;Range: 35.0.&#10;Minimum range: 5.0.&#10;Charge: 0.9s before firing; cadence modules reduce this charge time.&#10;Cooldown: 7.0s after firing.&#10;Burst: 18 shots.&#10;Extra module power draw: +720 W.&#10;Unlock: 1280 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CrowncoilGaussMinigun</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1120</MarketValue>
+      <Mass>5.8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
 </Defs>
