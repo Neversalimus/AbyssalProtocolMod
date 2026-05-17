@@ -8,18 +8,22 @@ namespace AbyssalProtocol
 {
     public class Projectile_ABY_CrownfireCarrierRocket : Bullet
     {
-        private const int SplitTicks = 7;
+        private const int SplitTicks = 15;
         private const int MicroRocketCount = 8;
+        private const int VisualRiseTicks = 13;
         private const float TargetSearchRadius = 15f;
         private const float FallbackScatterRadius = 4.2f;
-        private const float MaxTimedSplitDistance = 2.15f;
+        private const float VisualRiseDistance = 1.58f;
+        private const float VisualForwardStartOffset = 0.10f;
         private const string MicroRocketDefName = "ABY_CrownfireMicroRocket";
+        private const string CarrierVisualTexturePath = "Things/Projectile/ABY_CrownfireCarrierRocket";
 
         private int ticksAlive;
         private bool launchVfxSpawned;
         private bool splitTriggered;
         private bool launchOriginInitialized;
         private Vector3 launchOrigin;
+        private Material cachedCarrierMaterial;
 
         private static ThingDef microRocketDef;
         private static ThingDef MicroRocketDef => microRocketDef ?? (microRocketDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketDefName));
@@ -51,48 +55,48 @@ namespace AbyssalProtocol
             }
 
             ticksAlive++;
-            if (ticksAlive <= 2)
+            if (ticksAlive <= 4)
             {
-                CrownfireRocketChoirVfxUtility.SpawnLaunchExhaust(ExactPosition, Map, 0.58f, 10);
+                CrownfireRocketChoirVfxUtility.SpawnLaunchExhaust(ResolveCarrierVisualPosition(), Map, 0.42f, 8);
             }
 
             if (ticksAlive >= SplitTicks)
             {
-                TriggerSplit(ResolveTimedSplitPosition(ExactPosition), blockedByShield: false);
+                TriggerSplit(ResolveCarrierVisualPosition(), blockedByShield: false);
             }
+        }
+
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            if (!launchOriginInitialized || splitTriggered)
+            {
+                return;
+            }
+
+            Vector3 drawPos = ResolveCarrierVisualPosition();
+            drawPos.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + 0.032f;
+
+            float progress = Mathf.Clamp01(ticksAlive / (float)VisualRiseTicks);
+            float ignitionScale = Mathf.Lerp(0.86f, 1.12f, Mathf.Sin(progress * Mathf.PI));
+            float launchStretch = Mathf.Lerp(0.92f, 1.10f, progress);
+            float wobble = Mathf.Sin((ticksAlive + 1) * 0.36f) * 1.8f;
+
+            DrawCarrierPlane(drawPos, wobble, new Vector3(0.50f * ignitionScale, 1f, 1.04f * launchStretch));
         }
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
-            TriggerSplit(ExactPosition, blockedByShield);
+            TriggerSplit(ResolveCarrierVisualPosition(), blockedByShield);
         }
 
-        private Vector3 ResolveTimedSplitPosition(Vector3 currentPosition)
+        private Vector3 ResolveCarrierVisualPosition()
         {
-            Vector3 origin = launchOriginInitialized ? launchOrigin : currentPosition;
-            origin.y = currentPosition.y;
-
-            Vector3 fromOrigin = currentPosition - origin;
-            fromOrigin.y = 0f;
-            if (fromOrigin.sqrMagnitude > 0.0001f)
-            {
-                float distance = Mathf.Min(MaxTimedSplitDistance, fromOrigin.magnitude);
-                Vector3 splitPosition = origin + fromOrigin.normalized * distance;
-                splitPosition.y = currentPosition.y;
-                return splitPosition;
-            }
-
-            Vector3 towardsTarget = destination - origin;
-            towardsTarget.y = 0f;
-            if (towardsTarget.sqrMagnitude <= 0.0001f)
-            {
-                towardsTarget = Vector3.forward;
-            }
-
-            towardsTarget.Normalize();
-            Vector3 fallbackPosition = origin + towardsTarget * (MaxTimedSplitDistance * 0.85f);
-            fallbackPosition.y = currentPosition.y;
-            return fallbackPosition;
+            Vector3 origin = launchOriginInitialized ? launchOrigin : ExactPosition;
+            float progress = Mathf.Clamp01(ticksAlive / (float)VisualRiseTicks);
+            float eased = 1f - Mathf.Pow(1f - progress, 2f);
+            Vector3 visualPosition = origin + Vector3.forward * (VisualForwardStartOffset + VisualRiseDistance * eased);
+            visualPosition.y = ExactPosition.y;
+            return visualPosition;
         }
 
         private void TriggerSplit(Vector3 splitPosition, bool blockedByShield)
@@ -234,6 +238,31 @@ namespace AbyssalProtocol
             }
 
             return primaryCell.InBounds(map) ? primaryCell : IntVec3.Invalid;
+        }
+
+        private void DrawCarrierPlane(Vector3 center, float angle, Vector3 scale)
+        {
+            Material material = CarrierMaterial;
+            if (material == null)
+            {
+                return;
+            }
+
+            Matrix4x4 matrix = Matrix4x4.TRS(center, Quaternion.AngleAxis(angle, Vector3.up), scale);
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+        }
+
+        private Material CarrierMaterial
+        {
+            get
+            {
+                if (cachedCarrierMaterial == null)
+                {
+                    cachedCarrierMaterial = MaterialPool.MatFrom(CarrierVisualTexturePath, ShaderDatabase.MoteGlow);
+                }
+
+                return cachedCarrierMaterial;
+            }
         }
     }
 }
