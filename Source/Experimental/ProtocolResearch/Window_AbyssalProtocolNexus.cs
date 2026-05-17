@@ -223,7 +223,8 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x + 14f, rect.y + 32f, rect.width - 28f, 34f), selectedCategory.description);
             GUI.color = Color.white;
 
-            Rect ringArea = new Rect(rect.x + 18f, rect.y + 70f, 500f, 500f);
+            float ringSize = Mathf.Min(452f, Mathf.Max(360f, rect.height - 112f));
+            Rect ringArea = new Rect(rect.x + 24f, rect.y + 58f, ringSize, ringSize);
             Vector2 center = ringArea.center;
             if (LargeRingTex != null)
             {
@@ -234,30 +235,32 @@ namespace AbyssalProtocol
                 Widgets.DrawBox(ringArea);
             }
 
-            DrawProjectSegments(center, projects);
+            DrawProjectSegments(ringArea, projects);
 
-            Rect listRect = new Rect(ringArea.xMax + 12f, rect.y + 70f, rect.width - ringArea.width - 44f, rect.height - 86f);
+            Rect listRect = new Rect(ringArea.xMax + 14f, rect.y + 70f, rect.width - ringArea.width - 52f, rect.height - 86f);
             DrawProjectList(listRect, projects);
         }
 
-        private void DrawProjectSegments(Vector2 center, List<ABY_ProtocolResearchDef> projects)
+        private void DrawProjectSegments(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
         {
             if (projects == null || projects.Count == 0)
             {
                 return;
             }
 
-            float radius = 217f;
+            Vector2 center = ringArea.center;
+            float radius = ringArea.width * 0.5f - 43f;
             float angleStep = 360f / Mathf.Max(1, projects.Count);
             for (int i = 0; i < projects.Count; i++)
             {
                 ABY_ProtocolResearchDef project = projects[i];
                 float angle = -90f + i * angleStep;
-                float rad = angle * 0.0174532924f;
+                float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
-                Rect segRect = new Rect(pos.x - 50f, pos.y - 22f, 100f, 44f);
-                DrawSegment(segRect, project, project == selectedProject);
-                if (Widgets.ButtonInvisible(segRect))
+                Rect segRect = new Rect(pos.x - 54f, pos.y - 16f, 108f, 32f);
+                float rotation = angle + 90f;
+                DrawSegment(segRect, project, project == selectedProject, rotation);
+                if (Widgets.ButtonInvisible(segRect.ExpandedBy(6f)))
                 {
                     selectedProject = project;
                     detailsScroll = Vector2.zero;
@@ -310,11 +313,18 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
         }
 
-        private void DrawSegment(Rect rect, ABY_ProtocolResearchDef project, bool selected)
+        private void DrawSegment(Rect rect, ABY_ProtocolResearchDef project, bool selected, float rotationDegrees = 0f)
         {
             ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
             Texture2D tex = SegmentTexture(state);
             Color oldColor = GUI.color;
+            Matrix4x4 oldMatrix = GUI.matrix;
+
+            if (Mathf.Abs(rotationDegrees) > 0.01f)
+            {
+                GUIUtility.RotateAroundPivot(rotationDegrees, rect.center);
+            }
+
             GUI.color = selected ? new Color(1f, 0.88f, 0.68f, 1f) : Color.white;
             if (tex != null)
             {
@@ -325,16 +335,18 @@ namespace AbyssalProtocol
                 DrawSolid(rect, StateColor(state) * 0.55f);
                 Widgets.DrawBox(rect);
             }
-            GUI.color = oldColor;
 
             if (selected)
             {
                 DrawOutline(rect.ExpandedBy(2f), new Color(1f, 0.72f, 0.36f, 0.95f));
             }
 
-            if (Mouse.IsOver(rect))
+            GUI.matrix = oldMatrix;
+            GUI.color = oldColor;
+
+            if (Mouse.IsOver(rect.ExpandedBy(6f)))
             {
-                TooltipHandler.TipRegion(rect, project.LabelCap + "\n" + project.description + "\n\n" + ABY_ProtocolResearchUtility.GetStateLabel(state));
+                TooltipHandler.TipRegion(rect.ExpandedBy(6f), project.LabelCap + "\n" + project.description + "\n\n" + ABY_ProtocolResearchUtility.GetStateLabel(state));
             }
         }
 
