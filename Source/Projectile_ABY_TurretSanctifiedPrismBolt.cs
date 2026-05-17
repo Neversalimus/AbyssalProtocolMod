@@ -19,11 +19,38 @@ namespace AbyssalProtocol
         private Vector3 launchPosition;
         private Vector3 lastExactPosition;
         private bool launchPositionInitialized;
+        private bool travelCutSpawned;
         private bool muzzleSpawned;
 
         protected override void Tick()
         {
-            Vector3 previousPosition = ExactPosition;
+            Map map = Map;
+            Vector3 currentPosition = ExactPosition;
+
+            if (map != null && !launchPositionInitialized)
+            {
+                launchPosition = currentPosition;
+                lastExactPosition = currentPosition;
+                launchPositionInitialized = true;
+            }
+
+            // Spawn the main visual BEFORE base.Tick().
+            // Fast RimWorld projectiles can impact and despawn inside base.Tick(), which made the
+            // previous per-tick travel-cut almost invisible or absent on short/medium shots.
+            if (map != null && !travelCutSpawned)
+            {
+                travelCutSpawned = true;
+                Vector3 visualEnd = destination;
+                visualEnd.y = currentPosition.y;
+                SanctifiedPrismEmitterVfxUtility.SpawnTravelCut(currentPosition, visualEnd, map, primaryShot: true);
+            }
+
+            if (map != null && !muzzleSpawned)
+            {
+                muzzleSpawned = true;
+                SanctifiedPrismEmitterVfxUtility.SpawnMuzzle(currentPosition, destination, map);
+            }
+
             base.Tick();
 
             if (!Spawned || Map == null)
@@ -32,30 +59,7 @@ namespace AbyssalProtocol
             }
 
             ticksAlive++;
-            if (!launchPositionInitialized)
-            {
-                launchPosition = previousPosition;
-                lastExactPosition = previousPosition;
-                launchPositionInitialized = true;
-            }
-
-            if (!muzzleSpawned)
-            {
-                muzzleSpawned = true;
-                SanctifiedPrismEmitterVfxUtility.SpawnMuzzle(previousPosition, destination, Map);
-            }
-
-            Vector3 currentPosition = ExactPosition;
-            if ((currentPosition - lastExactPosition).MagnitudeHorizontalSquared() > 0.01f)
-            {
-                SanctifiedPrismEmitterVfxUtility.SpawnTravelCut(lastExactPosition, currentPosition, Map);
-            }
-            else if ((currentPosition - launchPosition).MagnitudeHorizontalSquared() > 0.01f)
-            {
-                SanctifiedPrismEmitterVfxUtility.SpawnTravelCut(launchPosition, currentPosition, Map);
-            }
-
-            lastExactPosition = currentPosition;
+            lastExactPosition = ExactPosition;
         }
 
 

@@ -104,7 +104,7 @@ namespace AbyssalProtocol
         }
 
 
-        public static void SpawnTravelCut(Vector3 source, Vector3 target, Map map)
+        public static void SpawnTravelCut(Vector3 source, Vector3 target, Map map, bool primaryShot = false)
         {
             ThingDef travelDef = TravelCutMoteDef;
             if (travelDef == null || map == null)
@@ -129,7 +129,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            int lifetime = 6;
+            // For the primary shot, draw the whole muzzle-to-target incision at once.
+            // This intentionally reads as a fast guillotine trace, not as a tiny flying bullet segment.
+            int lifetime = primaryShot ? 10 : 6;
             cut.start = start;
             cut.end = end;
             cut.framePathPrefix = TravelCutFramePrefix;
@@ -137,7 +139,7 @@ namespace AbyssalProtocol
             cut.ticksPerFrame = TravelCutTicksPerFrame;
             cut.ticksLeft = lifetime;
             cut.startingTicks = lifetime;
-            cut.width = 0.26f;
+            cut.width = primaryShot ? Mathf.Clamp(0.50f + distance * 0.018f, 0.50f, 0.74f) : 0.30f;
 
             IntVec3 spawnCell = start.ToIntVec3();
             if (!spawnCell.InBounds(map))

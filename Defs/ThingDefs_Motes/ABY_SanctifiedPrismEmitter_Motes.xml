@@ -92,7 +92,7 @@
       <texPath>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismTravelCut_01</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(1.00,0.24)</drawSize>
+      <drawSize>(1.00,0.55)</drawSize>
     </graphicData>
     <mote>
       <fadeInTime>0.00</fadeInTime>
