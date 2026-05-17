@@ -7,25 +7,14 @@ namespace AbyssalProtocol
 {
     public static class ABY_BossSelectionUtility
     {
-        private sealed class SelectionProfile
-        {
-            public float widthCells;
-            public float heightCells;
-            public float yOffsetCells;
-            public int priority;
-        }
+        private const float FallbackWidthCells = 4.2f;
+        private const float FallbackHeightCells = 3.8f;
+        private const float FallbackYOffsetCells = 0f;
+        private const int FallbackPriority = 40;
 
-        private static readonly Dictionary<string, SelectionProfile> Profiles = new Dictionary<string, SelectionProfile>
-        {
-            { "ABY_ReactorSaint", new SelectionProfile { widthCells = 11.5f, heightCells = 8.8f, yOffsetCells = -0.2f, priority = 120 } },
-            { "ABY_ArchonBeast", new SelectionProfile { widthCells = 7.6f, heightCells = 6.6f, yOffsetCells = 0.0f, priority = 100 } },
-            { "ABY_ReliquaryArchonBeast", new SelectionProfile { widthCells = 8.4f, heightCells = 7.2f, yOffsetCells = 0.0f, priority = 101 } },
-            { "ABY_ArchonOfRupture", new SelectionProfile { widthCells = 8.0f, heightCells = 7.2f, yOffsetCells = 0.0f, priority = 110 } },
-            { "ABY_SiegeIdol", new SelectionProfile { widthCells = 5.8f, heightCells = 4.8f, yOffsetCells = 0.0f, priority = 65 } },
-            { "ABY_ChoirEngine", new SelectionProfile { widthCells = 5.4f, heightCells = 4.8f, yOffsetCells = 0.0f, priority = 70 } },
-            { "ABY_WardenOfAsh", new SelectionProfile { widthCells = 4.7f, heightCells = 4.2f, yOffsetCells = 0.0f, priority = 55 } },
-            { "ABY_GateWarden", new SelectionProfile { widthCells = 4.2f, heightCells = 3.8f, yOffsetCells = 0.0f, priority = 45 } }
-        };
+        private static readonly Dictionary<string, ABY_BossSelectionProfileDef> ThingProfiles = new Dictionary<string, ABY_BossSelectionProfileDef>();
+        private static readonly Dictionary<string, ABY_BossSelectionProfileDef> PawnKindProfiles = new Dictionary<string, ABY_BossSelectionProfileDef>();
+        private static bool profilesCached;
 
         public static bool TryBeginExpandedBossClick(Event currentEvent, out Pawn boss)
         {
@@ -122,7 +111,7 @@ namespace AbyssalProtocol
             // expanded hitbox. This avoids scanning every pawn on large maps and removes the visible
             // click latency reported during Reactor Saint tests.
             Pawn activeBoss = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.ActiveBoss;
-            if (IsExpandedSelectableBoss(activeBoss, out SelectionProfile activeProfile))
+            if (IsExpandedSelectableBoss(activeBoss, out ABY_BossSelectionProfileDef activeProfile))
             {
                 Rect activeRect = GetScreenSelectionRect(activeBoss, activeProfile);
                 if (activeRect.Contains(mousePosition))
@@ -138,7 +127,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (pawn == activeBoss || !IsExpandedSelectableBoss(pawn, out SelectionProfile profile))
+                if (pawn == activeBoss || !IsExpandedSelectableBoss(pawn, out ABY_BossSelectionProfileDef profile))
                 {
                     continue;
                 }
@@ -150,7 +139,7 @@ namespace AbyssalProtocol
                 }
 
                 float distance = Vector2.Distance(mousePosition, rect.center);
-                int priority = profile.priority;
+                int priority = profile?.priority ?? FallbackPriority;
                 if (priority > bestPriority || (priority == bestPriority && distance < bestDistance))
                 {
                     best = pawn;
@@ -250,7 +239,7 @@ namespace AbyssalProtocol
             return thing is Pawn || thing is Building;
         }
 
-        private static bool IsExpandedSelectableBoss(Pawn pawn, out SelectionProfile profile)
+        private static bool IsExpandedSelectableBoss(Pawn pawn, out ABY_BossSelectionProfileDef profile)
         {
             profile = null;
             if (pawn == null || pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld != Find.CurrentMap)
@@ -258,37 +247,103 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            string thingDefName = pawn.def?.defName;
-            string kindDefName = pawn.kindDef?.defName;
-            if (!thingDefName.NullOrEmpty() && Profiles.TryGetValue(thingDefName, out profile))
-            {
-                return true;
-            }
-
-            if (!kindDefName.NullOrEmpty() && Profiles.TryGetValue(kindDefName, out profile))
+            profile = FindBestProfileFor(pawn);
+            if (profile != null)
             {
                 return true;
             }
 
             if (pawn.TryGetComp<CompABY_BossTrueDeath>() != null || pawn.TryGetComp<CompABY_BossNoDowned>() != null)
             {
-                profile = new SelectionProfile { widthCells = 4.2f, heightCells = 3.8f, yOffsetCells = 0f, priority = 40 };
                 return true;
             }
 
             return false;
         }
 
-        private static Rect GetScreenSelectionRect(Pawn pawn, SelectionProfile profile)
+        private static Rect GetScreenSelectionRect(Pawn pawn, ABY_BossSelectionProfileDef profile)
         {
             Camera camera = Find.Camera;
             float pixelsPerCell = ResolvePixelsPerCell(camera);
-            Vector3 worldPos = pawn.DrawPos + new Vector3(0f, 0f, profile.yOffsetCells);
+            float yOffsetCells = profile?.yOffsetCells ?? FallbackYOffsetCells;
+            float widthCells = profile?.widthCells ?? FallbackWidthCells;
+            float heightCells = profile?.heightCells ?? FallbackHeightCells;
+            Vector3 worldPos = pawn.DrawPos + new Vector3(0f, 0f, yOffsetCells);
             Vector3 screen = camera.WorldToScreenPoint(worldPos);
             Vector2 guiPoint = new Vector2(screen.x, UI.screenHeight - screen.y);
-            float width = Mathf.Max(26f, profile.widthCells * pixelsPerCell);
-            float height = Mathf.Max(26f, profile.heightCells * pixelsPerCell);
+            float width = Mathf.Max(26f, widthCells * pixelsPerCell);
+            float height = Mathf.Max(26f, heightCells * pixelsPerCell);
             return new Rect(guiPoint.x - width * 0.5f, guiPoint.y - height * 0.5f, width, height);
+        }
+
+        private static ABY_BossSelectionProfileDef FindBestProfileFor(Pawn pawn)
+        {
+            EnsureProfilesCached();
+
+            ABY_BossSelectionProfileDef best = null;
+            string thingDefName = pawn.def?.defName;
+            if (!thingDefName.NullOrEmpty())
+            {
+                ThingProfiles.TryGetValue(thingDefName, out best);
+            }
+
+            string pawnKindDefName = pawn.kindDef?.defName;
+            if (!pawnKindDefName.NullOrEmpty() && PawnKindProfiles.TryGetValue(pawnKindDefName, out ABY_BossSelectionProfileDef kindProfile))
+            {
+                if (best == null || kindProfile.priority > best.priority)
+                {
+                    best = kindProfile;
+                }
+            }
+
+            return best;
+        }
+
+        private static void EnsureProfilesCached()
+        {
+            if (profilesCached)
+            {
+                return;
+            }
+
+            profilesCached = true;
+            ThingProfiles.Clear();
+            PawnKindProfiles.Clear();
+
+            List<ABY_BossSelectionProfileDef> allDefs = DefDatabase<ABY_BossSelectionProfileDef>.AllDefsListForReading;
+            for (int i = 0; i < allDefs.Count; i++)
+            {
+                ABY_BossSelectionProfileDef profile = allDefs[i];
+                if (profile == null)
+                {
+                    continue;
+                }
+
+                AddProfileNames(ThingProfiles, profile.bossThingDefNames, profile);
+                AddProfileNames(PawnKindProfiles, profile.bossPawnKindDefNames, profile);
+            }
+        }
+
+        private static void AddProfileNames(Dictionary<string, ABY_BossSelectionProfileDef> target, List<string> names, ABY_BossSelectionProfileDef profile)
+        {
+            if (target == null || names == null || names.Count == 0 || profile == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < names.Count; i++)
+            {
+                string name = names[i];
+                if (name.NullOrEmpty())
+                {
+                    continue;
+                }
+
+                if (!target.TryGetValue(name, out ABY_BossSelectionProfileDef existing) || profile.priority > existing.priority)
+                {
+                    target[name] = profile;
+                }
+            }
         }
 
         private static float ResolvePixelsPerCell(Camera camera)

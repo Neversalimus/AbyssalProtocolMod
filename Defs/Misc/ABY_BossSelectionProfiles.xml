@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_ReactorSaint</defName>
+    <bossThingDefNames>
+      <li>ABY_ReactorSaint</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ReactorSaint</li>
+    </bossPawnKindDefNames>
+    <widthCells>11.5</widthCells>
+    <heightCells>8.8</heightCells>
+    <yOffsetCells>-0.2</yOffsetCells>
+    <priority>120</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_ArchonBeast</defName>
+    <bossThingDefNames>
+      <li>ABY_ArchonBeast</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ArchonBeast</li>
+    </bossPawnKindDefNames>
+    <widthCells>7.6</widthCells>
+    <heightCells>6.6</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>100</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_ReliquaryArchonBeast</defName>
+    <bossThingDefNames>
+      <li>ABY_ReliquaryArchonBeast</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ReliquaryArchonBeast</li>
+    </bossPawnKindDefNames>
+    <widthCells>8.4</widthCells>
+    <heightCells>7.2</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>101</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_ArchonOfRupture</defName>
+    <bossThingDefNames>
+      <li>ABY_ArchonOfRupture</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ArchonOfRupture</li>
+    </bossPawnKindDefNames>
+    <widthCells>8.0</widthCells>
+    <heightCells>7.2</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>110</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_SiegeIdol</defName>
+    <bossThingDefNames>
+      <li>ABY_SiegeIdol</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_SiegeIdol</li>
+    </bossPawnKindDefNames>
+    <widthCells>5.8</widthCells>
+    <heightCells>4.8</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>65</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_ChoirEngine</defName>
+    <bossThingDefNames>
+      <li>ABY_ChoirEngine</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_ChoirEngine</li>
+    </bossPawnKindDefNames>
+    <widthCells>5.4</widthCells>
+    <heightCells>4.8</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>70</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_WardenOfAsh</defName>
+    <bossThingDefNames>
+      <li>ABY_WardenOfAsh</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_WardenOfAsh</li>
+    </bossPawnKindDefNames>
+    <widthCells>4.7</widthCells>
+    <heightCells>4.2</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>55</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+  <AbyssalProtocol.ABY_BossSelectionProfileDef>
+    <defName>ABY_BossSelectionProfile_GateWarden</defName>
+    <bossThingDefNames>
+      <li>ABY_GateWarden</li>
+    </bossThingDefNames>
+    <bossPawnKindDefNames>
+      <li>ABY_GateWarden</li>
+    </bossPawnKindDefNames>
+    <widthCells>4.2</widthCells>
+    <heightCells>3.8</heightCells>
+    <yOffsetCells>0.0</yOffsetCells>
+    <priority>45</priority>
+  </AbyssalProtocol.ABY_BossSelectionProfileDef>
+
+</Defs>
