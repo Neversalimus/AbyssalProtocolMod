@@ -277,7 +277,8 @@ namespace AbyssalProtocol
             DrawRingAmbientGlow(ringArea, projects);
             DrawInnerProtocolMotion(ringArea, activeLayer);
             DrawRingProgressTicks(ringArea, projects);
-            DrawRingScanSweep(ringArea, projects, activeLayer);
+            DrawStaticProtocolAnchors(ringArea, layers, activeLayer);
+            DrawSelectedLayerConduit(ringArea, layers, activeLayer);
             DrawLayerNodes(ringArea, layers);
             DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
         }
@@ -344,38 +345,6 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
         }
 
-        private static void DrawRingScanSweep(Rect ringArea, List<ABY_ProtocolResearchDef> projects, ResearchLayerView activeLayer)
-        {
-            if (projects == null || projects.Count == 0)
-            {
-                return;
-            }
-
-            Vector2 center = ringArea.center;
-            float outerRadius = ringArea.width * 0.437f;
-            float innerRadius = ringArea.width * 0.371f;
-            float sweepAngle = -90f + Mathf.Repeat(Time.realtimeSinceStartup * 17.5f, 360f);
-            Color stateColor = activeLayer == null ? new Color(1f, 0.42f, 0.14f, 1f) : StateColor(activeLayer.State);
-            int ready = CountProjects(projects, ProtocolProjectFilter.Ready);
-            float readyBoost = ready > 0 ? 1f : 0.62f;
-
-            for (int i = 0; i < 14; i++)
-            {
-                float trail = 1f - (i / 14f);
-                float angle = sweepAngle - i * 3.7f;
-                float rad = angle * Mathf.Deg2Rad;
-                float alpha = (0.12f + trail * 0.16f) * readyBoost;
-                float size = 2.8f + trail * 4.0f;
-
-                Vector2 outer = center + new Vector2(Mathf.Cos(rad) * outerRadius, Mathf.Sin(rad) * outerRadius);
-                Vector2 inner = center + new Vector2(Mathf.Cos(rad) * innerRadius, Mathf.Sin(rad) * innerRadius);
-
-                Color color = new Color(stateColor.r, stateColor.g, stateColor.b, alpha);
-                DrawSolid(new Rect(outer.x - size * 0.5f, outer.y - size * 0.5f, size, size), color);
-                DrawSolid(new Rect(inner.x - size * 0.32f, inner.y - size * 0.32f, size * 0.64f, size * 0.64f), new Color(color.r, color.g, color.b, color.a * 0.45f));
-            }
-        }
-
         private static void DrawInnerProtocolMotion(Rect ringArea, ResearchLayerView activeLayer)
         {
             Vector2 center = ringArea.center;
@@ -401,6 +370,83 @@ namespace AbyssalProtocol
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * counterRadius, Mathf.Sin(rad) * counterRadius);
                 DrawSolid(new Rect(pos.x - 1.25f, pos.y - 1.25f, 2.5f, 2.5f), new Color(1f, 0.55f, 0.20f, 0.045f));
             }
+        }
+
+
+        private static void DrawStaticProtocolAnchors(Rect ringArea, List<ResearchLayerView> layers, ResearchLayerView activeLayer)
+        {
+            Vector2 center = ringArea.center;
+            float outerRadius = ringArea.width * 0.438f;
+            float innerRadius = ringArea.width * 0.338f;
+            float time = Time.realtimeSinceStartup;
+            Color stateColor = activeLayer == null ? new Color(1f, 0.42f, 0.14f, 1f) : StateColor(activeLayer.State);
+            int layerCount = layers?.Count ?? 0;
+            int availableLayers = layers == null ? 0 : layers.Count(layer => layer.AvailableCount > 0 || layer.ActiveCount > 0);
+            float readiness = layerCount == 0 ? 0f : Mathf.Clamp01((float)availableLayers / layerCount);
+
+            for (int i = 0; i < 8; i++)
+            {
+                float angle = -90f + i * 45f;
+                float rad = angle * Mathf.Deg2Rad;
+                float pulse = 0.5f + Mathf.Sin(time * 1.05f + i * 0.92f) * 0.5f;
+                float alpha = 0.085f + pulse * 0.055f + readiness * 0.045f;
+                Vector2 outer = center + new Vector2(Mathf.Cos(rad) * outerRadius, Mathf.Sin(rad) * outerRadius);
+                Vector2 inner = center + new Vector2(Mathf.Cos(rad) * innerRadius, Mathf.Sin(rad) * innerRadius);
+
+                float primary = (i % 2 == 0) ? 13f : 9f;
+                Rect outerRect = new Rect(outer.x - primary * 0.5f, outer.y - primary * 0.5f, primary, primary);
+                Color anchorColor = new Color(stateColor.r, stateColor.g, stateColor.b, alpha);
+                DrawOutline(outerRect, anchorColor);
+                DrawSolid(new Rect(outer.x - 2f, outer.y - 2f, 4f, 4f), new Color(1f, 0.58f, 0.22f, alpha * 1.45f));
+
+                if (i % 2 == 0)
+                {
+                    DrawOutline(outerRect.ExpandedBy(5f), new Color(stateColor.r, stateColor.g, stateColor.b, alpha * 0.38f));
+                }
+
+                float innerSize = (i % 2 == 0) ? 5f : 3.6f;
+                DrawSolid(new Rect(inner.x - innerSize * 0.5f, inner.y - innerSize * 0.5f, innerSize, innerSize), new Color(1f, 0.39f, 0.15f, alpha * 0.72f));
+            }
+        }
+
+        private static void DrawSelectedLayerConduit(Rect ringArea, List<ResearchLayerView> layers, ResearchLayerView activeLayer)
+        {
+            if (layers == null || activeLayer == null || layers.Count == 0)
+            {
+                return;
+            }
+
+            int index = layers.IndexOf(activeLayer);
+            if (index < 0)
+            {
+                return;
+            }
+
+            Vector2 center = ringArea.center;
+            int count = Mathf.Max(1, layers.Count);
+            float angle = -90f + (360f * index / count);
+            float rad = angle * Mathf.Deg2Rad;
+            Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+            Color stateColor = StateColor(activeLayer.State);
+            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 2.15f) * 0.5f;
+            float baseAlpha = 0.13f + pulse * 0.075f;
+
+            float startRadius = ringArea.width * 0.225f;
+            float endRadius = ringArea.width * 0.345f;
+            for (int i = 0; i < 11; i++)
+            {
+                float t = i / 10f;
+                float radius = Mathf.Lerp(startRadius, endRadius, t);
+                Vector2 pos = center + dir * radius;
+                float size = Mathf.Lerp(2.2f, 4.1f, t);
+                float alpha = baseAlpha * Mathf.Lerp(0.45f, 1f, t);
+                DrawSolid(new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size), new Color(stateColor.r, stateColor.g, stateColor.b, alpha));
+            }
+
+            Vector2 innerAnchor = center + dir * startRadius;
+            Vector2 outerAnchor = center + dir * endRadius;
+            DrawOutline(new Rect(innerAnchor.x - 8f, innerAnchor.y - 8f, 16f, 16f), new Color(1f, 0.45f, 0.18f, 0.16f + pulse * 0.10f));
+            DrawOutline(new Rect(outerAnchor.x - 12f, outerAnchor.y - 12f, 24f, 24f), new Color(1f, 0.62f, 0.24f, 0.20f + pulse * 0.14f));
         }
 
         private void DrawLayerNodes(Rect ringArea, List<ResearchLayerView> layers)
