@@ -197,4 +197,24 @@
     </projectile>
   </ThingDef>
 
+
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_TurretSanctifiedPrismBolt</defName>
+    <label>sanctified prism bolt</label>
+    <thingClass>AbyssalProtocol.Projectile_ABY_TurretSanctifiedPrismBolt</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_TurretSanctifiedPrismBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,1.18)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>0.82</armorPenetrationBase>
+      <stoppingPower>1.42</stoppingPower>
+      <speed>96</speed>
+      <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
 </Defs>

@@ -276,4 +276,27 @@
     <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>920</requiredResidue><category>TurretSystems</category></li></modExtensions>
   </RecipeDef>
 
+
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_SanctifiedPrismEmitter</defName>
+    <label>forge sanctified prism emitter</label>
+    <description>Bind a crown-splinter prism, pale restraint bands, and a guillotine focusing aperture into a turret-compatible lane-control emitter.</description>
+    <jobString>Forging sanctified prism emitter.</jobString>
+    <workAmount>4500</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>76</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>46</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>22</count></li>
+      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>12</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <products><ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter></products>
+    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1120</requiredResidue><category>TurretSystems</category></li></modExtensions>
+  </RecipeDef>
 </Defs>

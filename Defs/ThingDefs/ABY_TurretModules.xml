@@ -356,4 +356,32 @@
     </modExtensions>
   </ThingDef>
 
+
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_SanctifiedPrismEmitter</defName>
+    <label>sanctified prism emitter</label>
+    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: sanctified line-control refraction.&#10;Effect: charges a cold prism guillotine and fires a precise sanctified bolt. The main target takes a moderate armor-pressure hit, then short refraction cuts continue through up to four hostile pawns aligned in a narrow line behind the impact. Excellent in chokepoints and firing lanes; inefficient against scattered enemies, shields, and raw boss DPS.&#10;Range: 37.0.&#10;Charge: 0.83s before firing; cadence modules reduce this charge time.&#10;Cooldown: 6.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +420 W.&#10;Unlock: 1120 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_SanctifiedPrismEmitter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories><li>Manufactured</li></thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>900</MarketValue>
+      <Mass>4.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1120</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
 </Defs>

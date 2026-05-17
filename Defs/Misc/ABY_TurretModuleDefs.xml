@@ -343,4 +343,42 @@
     <overlayAltitudeOffset>0.073</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
+
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_SanctifiedPrismEmitter</defName>
+    <label>Sanctified Prism Emitter</label>
+    <description>Main weapon core for medium modular turret chassis. Charges a cold prism guillotine, then fires a precise sanctified bolt that refracts through hostile pawns aligned behind the primary target.</description>
+    <effectSummary>Primary gun module. Fires a charged prism bolt for lane-control: the main hit deals moderate armor-pressure damage, then short refraction cuts continue through up to four hostile pawns in a narrow line behind the target. Strong in chokepoints and firing lanes; inefficient against scattered enemies, shields, and heavy boss targets.</effectSummary>
+    <slot>MainWeapon</slot>
+    <thingDef>ABY_TurretModule_SanctifiedPrismEmitter</thingDef>
+    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <role>sanctified line-control refraction</role>
+    <tier>3</tier>
+    <projectileDef>ABY_TurretSanctifiedPrismBolt</projectileDef>
+    <soundCast>ABY_VesperLanceFire</soundCast>
+    <soundCharge>ABY_VesperLanceAim</soundCharge>
+    <range>37</range>
+    <minRange>0</minRange>
+    <targetRequiresLineOfSight>true</targetRequiresLineOfSight>
+    <cooldownTicks>360</cooldownTicks>
+    <chargeTicks>50</chargeTicks>
+    <burstShotCount>1</burstShotCount>
+    <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
+    <extraPowerDraw>420</extraPowerDraw>
+    <overlayTexturePath>Things/Building/Turrets/Modules/ABY_TurretOverlay_SanctifiedPrismEmitter</overlayTexturePath>
+    <overlayDrawSize>3.65</overlayDrawSize>
+    <overlayForwardOffset>0.00</overlayForwardOffset>
+    <overlayPivotForwardOffset>-0.54</overlayPivotForwardOffset>
+    <overlayMuzzleForwardOffset>1.70</overlayMuzzleForwardOffset>
+    <overlayAltitudeOffset>0.076</overlayAltitudeOffset>
+    <chargeOverlayFramePathPrefix>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismCharge_</chargeOverlayFramePathPrefix>
+    <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
+    <chargeOverlayTicksPerFrame>5</chargeOverlayTicksPerFrame>
+    <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
+    <dischargeOverlayFramePathPrefix>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismMuzzle_</dischargeOverlayFramePathPrefix>
+    <dischargeOverlayFrameCount>6</dischargeOverlayFrameCount>
+    <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
+    <dischargeOverlayAltitudeOffset>0.098</dischargeOverlayAltitudeOffset>
+  </AbyssalProtocol.ABY_TurretModuleDef>
 </Defs>
