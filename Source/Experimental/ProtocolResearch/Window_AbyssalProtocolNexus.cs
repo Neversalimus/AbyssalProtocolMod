@@ -28,6 +28,7 @@ namespace AbyssalProtocol
         private readonly Building_ABY_ProtocolNexus nexus;
         private ABY_ProtocolResearchCategoryDef selectedCategory;
         private ABY_ProtocolResearchDef selectedProject;
+        private string selectedLayerKey;
         private Vector2 projectListScroll = Vector2.zero;
         private Vector2 detailsScroll = Vector2.zero;
         private float detailViewHeight = 600f;
@@ -72,12 +73,22 @@ namespace AbyssalProtocol
             {
                 selectedCategory = categories.FirstOrDefault();
                 selectedProject = null;
+                selectedLayerKey = null;
             }
 
             List<ABY_ProtocolResearchDef> selectedProjects = ABY_ProtocolResearchUtility.ProjectsFor(selectedCategory);
             if (selectedProject == null || !selectedProjects.Contains(selectedProject))
             {
                 selectedProject = selectedProjects.FirstOrDefault();
+                selectedLayerKey = selectedProject == null ? null : LayerKeyFor(selectedProject);
+            }
+
+            List<ResearchLayerView> selectedLayers = BuildLayerViews(selectedProjects);
+            EnsureSelectedLayer(selectedLayers);
+            List<ABY_ProtocolResearchDef> displayedProjects = ProjectsForSelectedLayer(selectedLayers, selectedProjects);
+            if (selectedProject == null || !displayedProjects.Contains(selectedProject))
+            {
+                selectedProject = displayedProjects.FirstOrDefault() ?? selectedProjects.FirstOrDefault();
             }
 
             DrawBackground(inRect);
@@ -89,7 +100,7 @@ namespace AbyssalProtocol
 
             DrawHeader(headerRect, categories);
             DrawCategoryRings(categoryRect, categories);
-            DrawCategoryDetailRing(ringRect, selectedProjects);
+            DrawCategoryDetailRing(ringRect, selectedProjects, selectedLayers, displayedProjects);
             DrawProjectDetails(rightRect, selectedProject);
         }
 
@@ -159,6 +170,7 @@ namespace AbyssalProtocol
                 {
                     selectedCategory = category;
                     selectedProject = ABY_ProtocolResearchUtility.ProjectsFor(category).FirstOrDefault();
+                    selectedLayerKey = selectedProject == null ? null : LayerKeyFor(selectedProject);
                     projectListScroll = Vector2.zero;
                     detailsScroll = Vector2.zero;
                 }
@@ -207,7 +219,7 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawCategoryDetailRing(Rect rect, List<ABY_ProtocolResearchDef> projects)
+        private void DrawCategoryDetailRing(Rect rect, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers, List<ABY_ProtocolResearchDef> displayedProjects)
         {
             DrawPanel(rect, false);
             if (selectedCategory == null)
@@ -239,81 +251,182 @@ namespace AbyssalProtocol
                 Widgets.DrawBox(localRingArea);
             }
 
-            DrawProjectSegments(localRingArea, projects);
+            DrawLayerMatrix(localRingArea, projects, layers);
             GUI.EndGroup();
 
             Rect listRect = new Rect(ringArea.xMax + 16f, rect.y + 70f, rect.width - ringArea.width - 62f, rect.height - 86f);
-            DrawProjectList(listRect, projects);
+            DrawProjectList(listRect, SelectedLayer(layers), displayedProjects);
         }
 
-        private void DrawProjectSegments(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
+        private void DrawLayerMatrix(Rect ringArea, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers)
         {
             if (projects == null || projects.Count == 0)
             {
                 return;
             }
 
-            Vector2 center = ringArea.center;
-            float markerRadius = ringArea.width * 0.382f;
-            float angleStep = 360f / Mathf.Max(1, projects.Count);
+            DrawRingProgressTicks(ringArea, projects);
+            DrawLayerNodes(ringArea, layers);
+            DrawRingCenterSummary(ringArea, projects, SelectedLayer(layers));
+        }
 
-            for (int i = 0; i < projects.Count; i++)
+        private void DrawRingProgressTicks(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
+        {
+            if (projects == null || projects.Count == 0)
             {
-                ABY_ProtocolResearchDef project = projects[i];
-                float angle = -90f + i * angleStep;
+                return;
+            }
+
+            const int MaxTicks = 48;
+            int tickCount = Mathf.Min(MaxTicks, Mathf.Max(1, projects.Count));
+            Vector2 center = ringArea.center;
+            float radius = ringArea.width * 0.438f;
+
+            for (int i = 0; i < tickCount; i++)
+            {
+                int startIndex = Mathf.FloorToInt((float)i * projects.Count / tickCount);
+                int endIndex = Mathf.FloorToInt((float)(i + 1) * projects.Count / tickCount);
+                endIndex = Mathf.Max(startIndex + 1, endIndex);
+                endIndex = Mathf.Min(projects.Count, endIndex);
+
+                ABY_ProtocolResearchState state = AggregateState(projects.GetRange(startIndex, endIndex - startIndex));
+                float angle = -90f + (360f * i / tickCount);
                 float rad = angle * Mathf.Deg2Rad;
-                Vector2 markerPos = center + new Vector2(Mathf.Cos(rad) * markerRadius, Mathf.Sin(rad) * markerRadius);
+                Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
+                float size = state == ABY_ProtocolResearchState.Completed ? 4.6f : 3.6f;
+                Rect tickRect = new Rect(pos.x - size * 0.5f, pos.y - size * 0.5f, size, size);
 
-                bool selected = project == selectedProject;
-                Rect hitRect = new Rect(markerPos.x - 18f, markerPos.y - 18f, 36f, 36f);
+                Color color = StateColor(state);
+                color.a = state == ABY_ProtocolResearchState.Locked ? 0.34f : 0.58f;
+                DrawSolid(tickRect, color);
+            }
+        }
+
+        private void DrawLayerNodes(Rect ringArea, List<ResearchLayerView> layers)
+        {
+            if (layers == null || layers.Count == 0)
+            {
+                return;
+            }
+
+            Vector2 center = ringArea.center;
+            float radius = ringArea.width * 0.382f;
+            int count = Mathf.Max(1, layers.Count);
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                ResearchLayerView layer = layers[i];
+                float angle = -90f + (360f * i / count);
+                float rad = angle * Mathf.Deg2Rad;
+                Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
+
+                bool selected = layer.Key == selectedLayerKey;
+                Rect hitRect = new Rect(pos.x - 26f, pos.y - 26f, 52f, 52f);
                 bool hover = Mouse.IsOver(hitRect);
-                float markerSize = selected ? 18f : hover ? 15f : 12f;
-                Rect markerRect = new Rect(markerPos.x - markerSize * 0.5f, markerPos.y - markerSize * 0.5f, markerSize, markerSize);
+                float nodeSize = selected ? 36f : hover ? 32f : 28f;
+                Rect nodeRect = new Rect(pos.x - nodeSize * 0.5f, pos.y - nodeSize * 0.5f, nodeSize, nodeSize);
 
-                // Keep the large ring as a stable decorative matrix.  Earlier passes rotated
-                // full arc/segment textures over this static ring, which made them escape the
-                // ring canvas and drift into the category strip at several UI scales.  The
-                // right-side list is the authoritative navigation; the ring now only shows
-                // small non-rotated state markers anchored to the ring band.
-                DrawRingProjectMarker(markerRect, ABY_ProtocolResearchUtility.GetState(project), selected, hover);
+                DrawLayerNode(nodeRect, layer, i, selected, hover);
 
                 if (Widgets.ButtonInvisible(hitRect))
                 {
-                    selectedProject = project;
+                    selectedLayerKey = layer.Key;
+                    selectedProject = layer.Projects.FirstOrDefault();
+                    projectListScroll = Vector2.zero;
                     detailsScroll = Vector2.zero;
                 }
 
                 if (hover)
                 {
-                    TooltipHandler.TipRegion(hitRect, project.LabelCap + "\n" + project.description + "\n\n" + ABY_ProtocolResearchUtility.GetStateLabel(ABY_ProtocolResearchUtility.GetState(project)));
+                    TooltipHandler.TipRegion(hitRect, layer.Label + "\n" + LayerProgressText(layer) + "\n\n" + "Click to filter the project list to this protocol layer.");
                 }
             }
         }
 
-        private static void DrawRingProjectMarker(Rect rect, ABY_ProtocolResearchState state, bool selected, bool hover)
+        private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
         {
-            Color stateColor = StateColor(state);
-            Color markerColor = stateColor;
-            markerColor.a = selected ? 0.95f : hover ? 0.82f : 0.66f;
+            Color stateColor = StateColor(layer.State);
+            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 4f) * 0.5f;
+            Rect backingRect = rect.ExpandedBy(selected ? 8f : 5f);
 
-            Rect backingRect = rect.ExpandedBy(selected ? 5f : 4f);
-            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.78f : 0.58f));
-            DrawSolid(rect, markerColor);
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.80f : 0.62f));
 
-            Color outlineColor = selected
-                ? new Color(1f, 0.72f, 0.36f, 0.95f)
+            Color fill = stateColor;
+            fill.a = selected ? 0.90f : hover ? 0.78f : 0.58f;
+            DrawSolid(rect, fill);
+
+            Color outline = selected
+                ? new Color(1f, 0.70f, 0.34f, 0.96f)
                 : hover
-                    ? new Color(1f, 0.50f, 0.22f, 0.75f)
-                    : new Color(0.72f, 0.28f, 0.14f, 0.42f);
+                    ? new Color(1f, 0.48f, 0.20f, 0.78f)
+                    : new Color(0.72f, 0.28f, 0.14f, 0.45f);
+            DrawOutline(backingRect, outline);
 
-            DrawOutline(backingRect, outlineColor);
             if (selected)
             {
-                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.44f, 0.18f, 0.45f));
+                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.42f, 0.16f, 0.30f + pulse * 0.22f));
+                DrawOutline(backingRect.ExpandedBy(10f), new Color(1f, 0.32f, 0.10f, 0.12f + pulse * 0.12f));
             }
+
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldColor = GUI.color;
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+            GUI.color = selected ? Color.white : new Color(1f, 0.86f, 0.68f, 0.92f);
+            Widgets.Label(rect, LayerGlyph(layer, index));
+
+            Text.Anchor = oldAnchor;
+            Text.Font = oldFont;
+            GUI.color = oldColor;
         }
 
-        private void DrawProjectList(Rect rect, List<ABY_ProtocolResearchDef> projects)
+        private void DrawRingCenterSummary(Rect ringArea, List<ABY_ProtocolResearchDef> projects, ResearchLayerView selectedLayer)
+        {
+            int total = projects?.Count ?? 0;
+            int completed = 0;
+            if (projects != null)
+            {
+                for (int i = 0; i < projects.Count; i++)
+                {
+                    if (ABY_ProtocolResearchUtility.GetState(projects[i]) == ABY_ProtocolResearchState.Completed)
+                    {
+                        completed++;
+                    }
+                }
+            }
+
+            Rect summaryRect = new Rect(ringArea.center.x - 112f, ringArea.center.y - 50f, 224f, 100f);
+            DrawSolid(summaryRect, new Color(0.015f, 0.012f, 0.011f, 0.74f));
+            DrawOutline(summaryRect, new Color(0.82f, 0.32f, 0.13f, 0.44f));
+
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldColor = GUI.color;
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(1f, 0.62f, 0.34f, 1f);
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 8f, summaryRect.width - 16f, 18f), "CATEGORY MATRIX");
+
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 28f, summaryRect.width - 20f, 24f), selectedCategory?.LabelCap ?? string.Empty);
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.86f, 0.78f, 0.68f, 1f);
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 52f, summaryRect.width - 20f, 18f), completed + "/" + total + " decoded");
+
+            GUI.color = selectedLayer == null ? new Color(0.70f, 0.66f, 0.60f, 1f) : StateColor(selectedLayer.State);
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 72f, summaryRect.width - 20f, 18f), selectedLayer?.Label ?? "No layer selected");
+
+            Text.Anchor = oldAnchor;
+            Text.Font = oldFont;
+            GUI.color = oldColor;
+        }
+
+        private void DrawProjectList(Rect rect, ResearchLayerView selectedLayer, List<ABY_ProtocolResearchDef> projects)
         {
             DrawPanel(rect, true);
             Rect titleRect = new Rect(rect.x + 10f, rect.y + 8f, rect.width - 20f, 20f);
@@ -322,19 +435,37 @@ namespace AbyssalProtocol
             Widgets.Label(titleRect, "ABY_ProtocolResearch_ProjectListHeader".Translate());
             GUI.color = Color.white;
 
-            Rect outRect = new Rect(rect.x + 8f, titleRect.yMax + 6f, rect.width - 16f, rect.height - 42f);
+            Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 2f, rect.width - 20f, 18f);
+            Text.Font = GameFont.Tiny;
+            GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
+            Widgets.Label(layerRect, selectedLayer == null ? "No protocol layer" : selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer));
+            GUI.color = Color.white;
+
+            Rect outRect = new Rect(rect.x + 8f, layerRect.yMax + 6f, rect.width - 16f, rect.height - 62f);
             float rowHeight = 48f;
-            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(outRect.height, projects.Count * rowHeight + 8f));
+            int projectCount = projects?.Count ?? 0;
+            Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(outRect.height, projectCount * rowHeight + 8f));
             Widgets.BeginScrollView(outRect, ref projectListScroll, viewRect);
-            for (int i = 0; i < projects.Count; i++)
+            if (projectCount == 0)
             {
-                ABY_ProtocolResearchDef project = projects[i];
-                Rect row = new Rect(0f, 4f + i * rowHeight, viewRect.width, rowHeight - 6f);
-                DrawProjectListRow(row, project);
-                if (Widgets.ButtonInvisible(row))
+                Text.Font = GameFont.Tiny;
+                GUI.color = new Color(0.72f, 0.68f, 0.62f, 1f);
+                Widgets.Label(new Rect(4f, 6f, viewRect.width - 8f, 42f), "No projects are assigned to this protocol layer.");
+                GUI.color = Color.white;
+            }
+            else
+            {
+                for (int i = 0; i < projects.Count; i++)
                 {
-                    selectedProject = project;
-                    detailsScroll = Vector2.zero;
+                    ABY_ProtocolResearchDef project = projects[i];
+                    Rect row = new Rect(0f, 4f + i * rowHeight, viewRect.width, rowHeight - 6f);
+                    DrawProjectListRow(row, project);
+                    if (Widgets.ButtonInvisible(row))
+                    {
+                        selectedProject = project;
+                        selectedLayerKey = LayerKeyFor(project);
+                        detailsScroll = Vector2.zero;
+                    }
                 }
             }
             Widgets.EndScrollView();
@@ -443,6 +574,249 @@ namespace AbyssalProtocol
 
             detailViewHeight = Mathf.Max(outRect.height + 1f, y);
             Widgets.EndScrollView();
+        }
+
+        private sealed class ResearchLayerView
+        {
+            public string Key;
+            public string Label;
+            public readonly List<ABY_ProtocolResearchDef> Projects = new List<ABY_ProtocolResearchDef>();
+            public int DisplayOrder;
+            public int CompletedCount;
+            public int ActiveCount;
+            public int AvailableCount;
+            public int LockedCount;
+            public ABY_ProtocolResearchState State;
+        }
+
+        private static List<ResearchLayerView> BuildLayerViews(List<ABY_ProtocolResearchDef> projects)
+        {
+            List<ResearchLayerView> layers = new List<ResearchLayerView>();
+            if (projects == null || projects.Count == 0)
+            {
+                return layers;
+            }
+
+            Dictionary<string, ResearchLayerView> byKey = new Dictionary<string, ResearchLayerView>();
+            for (int i = 0; i < projects.Count; i++)
+            {
+                ABY_ProtocolResearchDef project = projects[i];
+                string key = LayerKeyFor(project);
+                if (!byKey.TryGetValue(key, out ResearchLayerView layer))
+                {
+                    layer = new ResearchLayerView
+                    {
+                        Key = key,
+                        Label = LayerLabelFor(project),
+                        DisplayOrder = project?.displayOrder ?? i
+                    };
+                    byKey.Add(key, layer);
+                    layers.Add(layer);
+                }
+
+                layer.Projects.Add(project);
+                if (project != null && project.displayOrder < layer.DisplayOrder)
+                {
+                    layer.DisplayOrder = project.displayOrder;
+                }
+            }
+
+            for (int i = 0; i < layers.Count; i++)
+            {
+                CalculateLayerState(layers[i]);
+            }
+
+            return layers
+                .OrderBy(layer => layer.DisplayOrder)
+                .ThenBy(layer => layer.Label)
+                .ToList();
+        }
+
+        private void EnsureSelectedLayer(List<ResearchLayerView> layers)
+        {
+            if (layers == null || layers.Count == 0)
+            {
+                selectedLayerKey = null;
+                return;
+            }
+
+            if (!selectedLayerKey.NullOrEmpty() && layers.Any(layer => layer.Key == selectedLayerKey))
+            {
+                return;
+            }
+
+            if (selectedProject != null)
+            {
+                string projectLayerKey = LayerKeyFor(selectedProject);
+                if (layers.Any(layer => layer.Key == projectLayerKey))
+                {
+                    selectedLayerKey = projectLayerKey;
+                    return;
+                }
+            }
+
+            selectedLayerKey = layers[0].Key;
+        }
+
+        private ResearchLayerView SelectedLayer(List<ResearchLayerView> layers)
+        {
+            if (layers == null || layers.Count == 0)
+            {
+                return null;
+            }
+
+            return layers.FirstOrDefault(layer => layer.Key == selectedLayerKey) ?? layers[0];
+        }
+
+        private List<ABY_ProtocolResearchDef> ProjectsForSelectedLayer(List<ResearchLayerView> layers, List<ABY_ProtocolResearchDef> fallbackProjects)
+        {
+            ResearchLayerView layer = SelectedLayer(layers);
+            if (layer != null)
+            {
+                return layer.Projects;
+            }
+
+            return fallbackProjects ?? new List<ABY_ProtocolResearchDef>();
+        }
+
+        private static void CalculateLayerState(ResearchLayerView layer)
+        {
+            if (layer == null)
+            {
+                return;
+            }
+
+            layer.CompletedCount = 0;
+            layer.ActiveCount = 0;
+            layer.AvailableCount = 0;
+            layer.LockedCount = 0;
+
+            for (int i = 0; i < layer.Projects.Count; i++)
+            {
+                ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(layer.Projects[i]);
+                switch (state)
+                {
+                    case ABY_ProtocolResearchState.Completed:
+                        layer.CompletedCount++;
+                        break;
+                    case ABY_ProtocolResearchState.Active:
+                        layer.ActiveCount++;
+                        break;
+                    case ABY_ProtocolResearchState.Available:
+                        layer.AvailableCount++;
+                        break;
+                    default:
+                        layer.LockedCount++;
+                        break;
+                }
+            }
+
+            layer.State = AggregateState(layer.Projects);
+        }
+
+        private static ABY_ProtocolResearchState AggregateState(List<ABY_ProtocolResearchDef> projects)
+        {
+            if (projects == null || projects.Count == 0)
+            {
+                return ABY_ProtocolResearchState.Locked;
+            }
+
+            bool anyActive = false;
+            bool anyAvailable = false;
+            bool allCompleted = true;
+
+            for (int i = 0; i < projects.Count; i++)
+            {
+                ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(projects[i]);
+                if (state != ABY_ProtocolResearchState.Completed)
+                {
+                    allCompleted = false;
+                }
+
+                if (state == ABY_ProtocolResearchState.Active)
+                {
+                    anyActive = true;
+                }
+                else if (state == ABY_ProtocolResearchState.Available)
+                {
+                    anyAvailable = true;
+                }
+            }
+
+            if (allCompleted)
+            {
+                return ABY_ProtocolResearchState.Completed;
+            }
+
+            if (anyActive)
+            {
+                return ABY_ProtocolResearchState.Active;
+            }
+
+            if (anyAvailable)
+            {
+                return ABY_ProtocolResearchState.Available;
+            }
+
+            return ABY_ProtocolResearchState.Locked;
+        }
+
+        private static string LayerKeyFor(ABY_ProtocolResearchDef project)
+        {
+            string raw = project?.tierLabel;
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                return "Unclassified";
+            }
+
+            return raw.Trim();
+        }
+
+        private static string LayerLabelFor(ABY_ProtocolResearchDef project)
+        {
+            string raw = project?.tierLabel;
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                return "Unclassified protocol";
+            }
+
+            return raw.Trim();
+        }
+
+        private static string LayerProgressText(ResearchLayerView layer)
+        {
+            if (layer == null)
+            {
+                return string.Empty;
+            }
+
+            int total = layer.Projects.Count;
+            return layer.CompletedCount + "/" + total + " decoded, " + (layer.AvailableCount + layer.ActiveCount) + " available";
+        }
+
+        private static string LayerGlyph(ResearchLayerView layer, int index)
+        {
+            if (layer != null && !layer.Label.NullOrEmpty())
+            {
+                const string prefix = "Tier ";
+                if (layer.Label.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    string rest = layer.Label.Substring(prefix.Length).Trim();
+                    int dash = rest.IndexOf('—');
+                    if (dash < 0)
+                    {
+                        dash = rest.IndexOf('-');
+                    }
+
+                    string glyph = dash >= 0 ? rest.Substring(0, dash).Trim() : rest;
+                    if (!glyph.NullOrEmpty() && glyph.Length <= 5)
+                    {
+                        return glyph;
+                    }
+                }
+            }
+
+            return (index + 1).ToString();
         }
 
         private static List<string> BuildRequirementLines(ABY_ProtocolResearchDef project)
