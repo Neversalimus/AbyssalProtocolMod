@@ -10,6 +10,9 @@ namespace AbyssalProtocol
     public static class ABY_ApparelAegisFeedbackUtility
     {
         private static readonly Dictionary<string, int> LastFeedbackTickByKey = new Dictionary<string, int>();
+        private static MethodInfo cachedThrowTextMethod;
+        private static ParameterInfo[] cachedThrowTextParameters;
+        private static bool throwTextMethodResolved;
 
         public static void TriggerHit(Pawn pawn, DefModExtension_ABY_ApparelAegis ext)
         {
@@ -117,58 +120,78 @@ namespace AbyssalProtocol
 
             try
             {
-                // Reflection keeps this tolerant across minor RimWorld overload changes.
+                if (!TryResolveThrowTextMethod(out MethodInfo method, out ParameterInfo[] parameters))
+                {
+                    return;
+                }
+
+                object[] args = new object[parameters.Length];
+                args[0] = pawn.DrawPos;
+                args[1] = pawn.MapHeld;
+                args[2] = text;
+                for (int j = 3; j < parameters.Length; j++)
+                {
+                    Type t = parameters[j].ParameterType;
+                    if (t == typeof(Color))
+                    {
+                        args[j] = color;
+                    }
+                    else if (t == typeof(float))
+                    {
+                        args[j] = 1.4f;
+                    }
+                    else if (t == typeof(bool))
+                    {
+                        args[j] = false;
+                    }
+                    else if (t.IsValueType)
+                    {
+                        args[j] = Activator.CreateInstance(t);
+                    }
+                    else
+                    {
+                        args[j] = null;
+                    }
+                }
+
+                method.Invoke(null, args);
+            }
+            catch
+            {
+            }
+        }
+
+        private static bool TryResolveThrowTextMethod(out MethodInfo method, out ParameterInfo[] parameters)
+        {
+            if (!throwTextMethodResolved)
+            {
+                throwTextMethodResolved = true;
+                // Reflection keeps this tolerant across minor RimWorld overload changes. Cache the
+                // resolved overload so repeated Aegis combat text does not scan MoteMaker methods.
                 MethodInfo[] methods = typeof(MoteMaker).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
                 for (int i = 0; i < methods.Length; i++)
                 {
-                    MethodInfo method = methods[i];
-                    if (method == null || method.Name != "ThrowText")
+                    MethodInfo candidate = methods[i];
+                    if (candidate == null || candidate.Name != "ThrowText")
                     {
                         continue;
                     }
 
-                    ParameterInfo[] p = method.GetParameters();
+                    ParameterInfo[] p = candidate.GetParameters();
                     if (p.Length < 3)
                     {
                         continue;
                     }
 
-                    object[] args = new object[p.Length];
-                    args[0] = pawn.DrawPos;
-                    args[1] = pawn.MapHeld;
-                    args[2] = text;
-                    for (int j = 3; j < p.Length; j++)
-                    {
-                        Type t = p[j].ParameterType;
-                        if (t == typeof(Color))
-                        {
-                            args[j] = color;
-                        }
-                        else if (t == typeof(float))
-                        {
-                            args[j] = 1.4f;
-                        }
-                        else if (t == typeof(bool))
-                        {
-                            args[j] = false;
-                        }
-                        else if (t.IsValueType)
-                        {
-                            args[j] = Activator.CreateInstance(t);
-                        }
-                        else
-                        {
-                            args[j] = null;
-                        }
-                    }
-
-                    method.Invoke(null, args);
-                    return;
+                    cachedThrowTextMethod = candidate;
+                    cachedThrowTextParameters = p;
+                    break;
                 }
             }
-            catch
-            {
-            }
+
+            method = cachedThrowTextMethod;
+            parameters = cachedThrowTextParameters;
+            return method != null && parameters != null && parameters.Length >= 3;
         }
     }
 }

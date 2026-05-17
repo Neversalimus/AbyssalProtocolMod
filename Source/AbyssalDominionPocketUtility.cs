@@ -359,14 +359,14 @@ namespace AbyssalProtocol
             catch (Exception ex)
             {
                 Log.Error("[Abyssal Protocol] Failed to generate dominion slice normal map: " + ex);
-                TryRemoveWorldObject(tile);
+                SafeRemoveWorldObject(tile);
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
 
             if (map == null)
             {
-                TryRemoveWorldObject(tile);
+                SafeRemoveWorldObject(tile);
                 failReason = "ABY_DominionPocketRuntimeFail_MapCreate".Translate();
                 return false;
             }
@@ -1107,7 +1107,22 @@ namespace AbyssalProtocol
 
             if (session != null && session.sliceTile >= 0)
             {
-                TryRemoveWorldObject(session.sliceTile);
+                SafeRemoveWorldObject(session.sliceTile);
+            }
+        }
+
+        private static void SafeRemoveWorldObject(int tile)
+        {
+            try
+            {
+                TryRemoveWorldObject(tile);
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Warning(
+                    "dominion-slice-worldobject-cleanup-" + tile,
+                    "[Abyssal Protocol] Failed to remove dominion slice world object at tile " + tile + ": " + ex.GetType().Name + " - " + ex.Message,
+                    5000);
             }
         }
 
@@ -1119,6 +1134,11 @@ namespace AbyssalProtocol
             }
 
             List<WorldObject> all = Find.WorldObjects.AllWorldObjects;
+            if (all == null)
+            {
+                return;
+            }
+
             for (int i = all.Count - 1; i >= 0; i--)
             {
                 WorldObject worldObject = all[i];

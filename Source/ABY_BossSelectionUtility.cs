@@ -30,6 +30,11 @@ namespace AbyssalProtocol
             }
 
             Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                return false;
+            }
+
             boss = FindSelectableBossUnderMouse(map, currentEvent.mousePosition);
             if (boss == null)
             {

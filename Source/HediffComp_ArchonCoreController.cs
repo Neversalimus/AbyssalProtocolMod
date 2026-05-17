@@ -78,6 +78,7 @@ namespace AbyssalProtocol
         private const int GenericReengageLockTicks = 45;
         private const int PhaseShiftLockTicks = 60;
         private const int Phase2ReengageLockTicks = 75;
+        private const int PhaseHealthRefreshIntervalTicks = 10;
 
         private int currentPhase = 1;
         private int spawnTick = -1;
@@ -93,6 +94,10 @@ namespace AbyssalProtocol
         private int breakCrownAnchorTargetCount;
         private int lastBreakCrownStatusTick = -999999;
         private List<int> breakCrownAnchorThingIds = new List<int>();
+        private readonly Dictionary<int, Thing> breakCrownAnchorCache = new Dictionary<int, Thing>();
+
+        private int lastPhaseHealthRefreshTick = -999999;
+        private float cachedPhaseHealthPct = 1f;
 
         private ArchonEncounterState encounterState = ArchonEncounterState.Spawning;
         private int encounterStateSetTick = -999999;
@@ -307,7 +312,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float hpPct = ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
+            float hpPct = ResolveCachedPhaseHealthPercent(pawn);
 
             int newPhase;
             if (hpPct <= Props.phase3HealthPct)
@@ -349,6 +354,23 @@ namespace AbyssalProtocol
 
             SetEncounterState(ArchonEncounterState.Transitioning, PhaseShiftLockTicks);
             StopCombat(pawn);
+        }
+
+        private float ResolveCachedPhaseHealthPercent(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return cachedPhaseHealthPct;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (lastPhaseHealthRefreshTick < 0 || now - lastPhaseHealthRefreshTick >= PhaseHealthRefreshIntervalTicks)
+            {
+                cachedPhaseHealthPct = ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
+                lastPhaseHealthRefreshTick = now;
+            }
+
+            return Mathf.Clamp01(cachedPhaseHealthPct);
         }
 
         private void ApplyPhaseSeverity()
@@ -449,6 +471,7 @@ namespace AbyssalProtocol
                     GenSpawn.Spawn(anchor, anchorCell, pawn.MapHeld, Rot4.North);
                     anchor.Initialize(pawn.thingIDNumber, Mathf.Max(1, Props.breakCrownAnchorHitPoints));
                     breakCrownAnchorThingIds.Add(anchor.thingIDNumber);
+                    breakCrownAnchorCache[anchor.thingIDNumber] = anchor;
                     placedCells.Add(anchorCell);
                     spawnedAnchors.Add(anchor);
                     ArchonInfernalVFXUtility.DoSummonVFX(pawn.MapHeld, anchorCell);
@@ -505,7 +528,7 @@ namespace AbyssalProtocol
             int aliveCount = 0;
             for (int i = 0; i < breakCrownAnchorThingIds.Count; i++)
             {
-                Thing thing = FindThingById(map, breakCrownAnchorThingIds[i]);
+                Thing thing = ResolveBreakCrownAnchorById(map, breakCrownAnchorThingIds[i]);
                 if (thing != null && !thing.Destroyed && string.Equals(thing.def?.defName, "ABY_RuptureCrownAnchor", System.StringComparison.OrdinalIgnoreCase))
                 {
                     aliveCount++;
@@ -528,7 +551,7 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < breakCrownAnchorThingIds.Count; i++)
             {
-                Thing thing = FindThingById(map, breakCrownAnchorThingIds[i]);
+                Thing thing = ResolveBreakCrownAnchorById(map, breakCrownAnchorThingIds[i]);
                 if (thing == null || thing.Destroyed || !string.Equals(thing.def?.defName, "ABY_RuptureCrownAnchor", System.StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
@@ -561,24 +584,55 @@ namespace AbyssalProtocol
             }
         }
 
-        private static Thing FindThingById(Map map, int thingId)
+        private Thing ResolveBreakCrownAnchorById(Map map, int thingId)
         {
             if (map == null || thingId < 0 || map.listerThings == null)
             {
                 return null;
             }
 
-            List<Thing> things = map.listerThings.AllThings;
-            for (int i = 0; i < things.Count; i++)
+            if (breakCrownAnchorCache.TryGetValue(thingId, out Thing cached))
             {
-                Thing thing = things[i];
-                if (thing != null && thing.thingIDNumber == thingId)
+                if (IsValidBreakCrownAnchor(cached, map, thingId))
                 {
+                    return cached;
+                }
+
+                breakCrownAnchorCache.Remove(thingId);
+            }
+
+            ThingDef anchorDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_RuptureCrownAnchor");
+            if (anchorDef == null)
+            {
+                return null;
+            }
+
+            List<Thing> anchors = map.listerThings.ThingsOfDef(anchorDef);
+            if (anchors == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < anchors.Count; i++)
+            {
+                Thing thing = anchors[i];
+                if (IsValidBreakCrownAnchor(thing, map, thingId))
+                {
+                    breakCrownAnchorCache[thingId] = thing;
                     return thing;
                 }
             }
 
             return null;
+        }
+
+        private static bool IsValidBreakCrownAnchor(Thing thing, Map map, int thingId)
+        {
+            return thing != null
+                && !thing.Destroyed
+                && thing.thingIDNumber == thingId
+                && thing.MapHeld == map
+                && string.Equals(thing.def?.defName, "ABY_RuptureCrownAnchor", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private bool TryFindBreakCrownAnchorCell(Map map, IntVec3 origin, ThingDef anchorDef, List<IntVec3> alreadyPlaced, out IntVec3 cell)
