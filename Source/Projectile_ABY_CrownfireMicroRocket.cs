@@ -6,7 +6,7 @@ namespace AbyssalProtocol
 {
     public class Projectile_ABY_CrownfireMicroRocket : Bullet
     {
-        private const int TrailIntervalTicks = 4;
+        private const int TrailIntervalTicks = 2;
 
         private int ticksAlive;
         private Vector3 lastExactPosition;
@@ -38,9 +38,9 @@ namespace AbyssalProtocol
                 lastDrawDirection = movement.normalized;
             }
 
-            if (ticksAlive % TrailIntervalTicks == 0)
+            if (ticksAlive == 1 || ticksAlive % TrailIntervalTicks == 0)
             {
-                CrownfireRocketChoirVfxUtility.SpawnMicroTrail(currentPosition, lastDrawDirection, Map);
+                CrownfireRocketChoirVfxUtility.SpawnMicroTrail(currentPosition, lastDrawDirection, Map, 1f);
             }
 
             lastExactPosition = currentPosition;
@@ -58,7 +58,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            CrownfireRocketChoirVfxUtility.SpawnMicroImpact(impactPosition, impactMap, blockedByShield ? 0.72f : 1f);
+            CrownfireRocketChoirVfxUtility.SpawnMicroImpact(impactPosition, impactMap, blockedByShield ? 0.86f : 1.15f);
         }
     }
 }

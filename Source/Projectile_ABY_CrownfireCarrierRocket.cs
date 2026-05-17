@@ -8,17 +8,18 @@ namespace AbyssalProtocol
 {
     public class Projectile_ABY_CrownfireCarrierRocket : Bullet
     {
-        private const int SplitTicks = 18;
+        private const int SplitTicks = 7;
         private const int MicroRocketCount = 8;
         private const float TargetSearchRadius = 15f;
         private const float FallbackScatterRadius = 4.2f;
+        private const float MaxTimedSplitDistance = 2.15f;
         private const string MicroRocketDefName = "ABY_CrownfireMicroRocket";
 
         private int ticksAlive;
-        private Vector3 lastExactPosition;
-        private bool lastPositionInitialized;
         private bool launchVfxSpawned;
         private bool splitTriggered;
+        private bool launchOriginInitialized;
+        private Vector3 launchOrigin;
 
         private static ThingDef microRocketDef;
         private static ThingDef MicroRocketDef => microRocketDef ?? (microRocketDef = DefDatabase<ThingDef>.GetNamedSilentFail(MicroRocketDefName));
@@ -36,15 +37,10 @@ namespace AbyssalProtocol
             if (!launchVfxSpawned)
             {
                 launchVfxSpawned = true;
+                launchOrigin = previousPosition;
+                launchOriginInitialized = true;
                 CrownfireRocketChoirVfxUtility.SpawnTubeIgnition(previousPosition, Map);
-                CrownfireRocketChoirVfxUtility.SpawnLaunchExhaust(previousPosition, Map);
-            }
-
-            ticksAlive++;
-            if (ticksAlive >= SplitTicks)
-            {
-                TriggerSplit(ExactPosition, blockedByShield: false);
-                return;
+                CrownfireRocketChoirVfxUtility.SpawnLaunchExhaust(previousPosition, Map, 1f, 24);
             }
 
             base.Tick();
@@ -54,19 +50,49 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (!lastPositionInitialized)
+            ticksAlive++;
+            if (ticksAlive <= 2)
             {
-                lastExactPosition = previousPosition;
-                lastPositionInitialized = true;
+                CrownfireRocketChoirVfxUtility.SpawnLaunchExhaust(ExactPosition, Map, 0.58f, 10);
             }
 
-            lastExactPosition = ExactPosition;
+            if (ticksAlive >= SplitTicks)
+            {
+                TriggerSplit(ResolveTimedSplitPosition(ExactPosition), blockedByShield: false);
+            }
         }
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
-            Vector3 impactPosition = ExactPosition;
-            TriggerSplit(impactPosition, blockedByShield);
+            TriggerSplit(ExactPosition, blockedByShield);
+        }
+
+        private Vector3 ResolveTimedSplitPosition(Vector3 currentPosition)
+        {
+            Vector3 origin = launchOriginInitialized ? launchOrigin : currentPosition;
+            origin.y = currentPosition.y;
+
+            Vector3 fromOrigin = currentPosition - origin;
+            fromOrigin.y = 0f;
+            if (fromOrigin.sqrMagnitude > 0.0001f)
+            {
+                float distance = Mathf.Min(MaxTimedSplitDistance, fromOrigin.magnitude);
+                Vector3 splitPosition = origin + fromOrigin.normalized * distance;
+                splitPosition.y = currentPosition.y;
+                return splitPosition;
+            }
+
+            Vector3 towardsTarget = destination - origin;
+            towardsTarget.y = 0f;
+            if (towardsTarget.sqrMagnitude <= 0.0001f)
+            {
+                towardsTarget = Vector3.forward;
+            }
+
+            towardsTarget.Normalize();
+            Vector3 fallbackPosition = origin + towardsTarget * (MaxTimedSplitDistance * 0.85f);
+            fallbackPosition.y = currentPosition.y;
+            return fallbackPosition;
         }
 
         private void TriggerSplit(Vector3 splitPosition, bool blockedByShield)
@@ -79,7 +105,7 @@ namespace AbyssalProtocol
             splitTriggered = true;
             Map splitMap = Map;
             Thing instigator = Launcher;
-                        Vector3 targetPosition = destination;
+            Vector3 targetPosition = destination;
 
             if (splitMap != null)
             {
@@ -104,6 +130,8 @@ namespace AbyssalProtocol
             }
 
             List<LocalTargetInfo> targets = BuildMicroTargets(targetPosition.ToIntVec3(), splitPosition, map, instigator?.Faction);
+            List<Vector3> releaseDirections = new List<Vector3>(MicroRocketCount);
+
             for (int i = 0; i < MicroRocketCount; i++)
             {
                 LocalTargetInfo targetInfo = i < targets.Count ? targets[i] : new LocalTargetInfo(RandomFallbackCell(targetPosition.ToIntVec3(), map));
@@ -119,11 +147,22 @@ namespace AbyssalProtocol
                 }
 
                 Vector3 origin = splitPosition;
-                Vector2 radial = Rand.InsideUnitCircle.normalized * Rand.Range(0.04f, 0.18f);
+                Vector2 radial = Rand.InsideUnitCircle.normalized * Rand.Range(0.06f, 0.22f);
                 origin.x += radial.x;
                 origin.z += radial.y;
+
+                Vector3 direction = targetInfo.CenterVector3 - origin;
+                direction.y = 0f;
+                if (direction.sqrMagnitude > 0.0001f)
+                {
+                    releaseDirections.Add(direction.normalized);
+                    CrownfireRocketChoirVfxUtility.SpawnMicroTrail(origin, direction.normalized, map, 1.08f);
+                }
+
                 projectile.Launch(instigator, origin, targetInfo, targetInfo, ProjectileHitFlags.IntendedTarget, false, null, null);
             }
+
+            CrownfireRocketChoirVfxUtility.SpawnSplitReleaseAccent(splitPosition, releaseDirections, map);
         }
 
         private static List<LocalTargetInfo> BuildMicroTargets(IntVec3 primaryCell, Vector3 splitPosition, Map map, Faction launcherFaction)

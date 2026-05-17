@@ -59,7 +59,7 @@
       <damageAmountBase>10</damageAmountBase>
       <armorPenetrationBase>0.28</armorPenetrationBase>
       <stoppingPower>0.75</stoppingPower>
-      <speed>88</speed>
+      <speed>72</speed>
       <explosionRadius>0.75</explosionRadius>
       <soundImpactAnticipate>ABY_RuptureImpact</soundImpactAnticipate>
     </projectile>
