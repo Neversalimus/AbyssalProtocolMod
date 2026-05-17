@@ -254,8 +254,16 @@ namespace AbyssalProtocol
             }
 
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.5f - 56f;
+
+            // The large ring texture has a wide transparent/empty margin.  Using the outer radius makes
+            // overlay plates float outside the gold segment band, especially at the top-left/top positions.
+            // Keep markers on the visible band instead: compact, tangent-aligned inlays plus invisible hit zones.
+            float radius = ringArea.width * 0.32f;
+            float visualWidth = 54f;
+            float visualHeight = 16f;
+            float hitSize = 56f;
             float angleStep = 360f / Mathf.Max(1, projects.Count);
+
             for (int i = 0; i < projects.Count; i++)
             {
                 ABY_ProtocolResearchDef project = projects[i];
@@ -263,18 +271,55 @@ namespace AbyssalProtocol
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
 
-                // Short, inlaid plates fit the static metal/gold ring segments instead of floating as large horizontal cards.
-                Rect segRect = new Rect(pos.x - 45f, pos.y - 13f, 90f, 26f);
+                Rect markerRect = new Rect(pos.x - visualWidth * 0.5f, pos.y - visualHeight * 0.5f, visualWidth, visualHeight);
+                Rect hitRect = new Rect(pos.x - hitSize * 0.5f, pos.y - hitSize * 0.5f, hitSize, hitSize);
                 float rotation = angle + 90f;
-                DrawSegment(segRect, project, project == selectedProject, rotation);
 
-                // Use an intentionally larger unrotated hit zone; the visual plate is decorative and clipped to the ring group.
-                if (Widgets.ButtonInvisible(segRect.ExpandedBy(12f)))
+                DrawRadialProjectMarker(markerRect, project, project == selectedProject, rotation);
+
+                if (Widgets.ButtonInvisible(hitRect))
                 {
                     selectedProject = project;
                     detailsScroll = Vector2.zero;
                 }
+
+                if (Mouse.IsOver(hitRect))
+                {
+                    TooltipHandler.TipRegion(hitRect, project.LabelCap + "\n" + project.description + "\n\n" + ABY_ProtocolResearchUtility.GetStateLabel(ABY_ProtocolResearchUtility.GetState(project)));
+                }
             }
+        }
+
+        private void DrawRadialProjectMarker(Rect rect, ABY_ProtocolResearchDef project, bool selected, float rotationDegrees)
+        {
+            ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            Texture2D tex = SegmentTexture(state);
+            Color oldColor = GUI.color;
+            Matrix4x4 oldMatrix = GUI.matrix;
+
+            GUIUtility.RotateAroundPivot(rotationDegrees, rect.center);
+
+            GUI.color = selected ? new Color(1f, 0.90f, 0.68f, 0.96f) : new Color(1f, 1f, 1f, 0.84f);
+            if (tex != null)
+            {
+                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill, true);
+            }
+            else
+            {
+                DrawSolid(rect, StateColor(state) * 0.45f);
+            }
+
+            if (selected)
+            {
+                DrawOutline(rect.ExpandedBy(2f), new Color(1f, 0.76f, 0.36f, 0.95f));
+            }
+            else if (state == ABY_ProtocolResearchState.Available || state == ABY_ProtocolResearchState.Completed)
+            {
+                DrawOutline(rect, new Color(1f, 0.42f, 0.16f, 0.40f));
+            }
+
+            GUI.matrix = oldMatrix;
+            GUI.color = oldColor;
         }
 
         private void DrawProjectList(Rect rect, List<ABY_ProtocolResearchDef> projects)
