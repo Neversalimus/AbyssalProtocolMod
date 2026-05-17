@@ -276,7 +276,6 @@ namespace AbyssalProtocol
 
             DrawRingProgressTicks(ringArea, projects);
             DrawLayerNodes(ringArea, layers);
-            DrawStatusFilterNodes(ringArea, activeLayer, layerProjects);
             DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
         }
 
@@ -392,7 +391,7 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
         }
 
-        private void DrawStatusFilterNodes(Rect ringArea, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects)
+        private void DrawFilterStrip(Rect rect, List<ABY_ProtocolResearchDef> layerProjects)
         {
             List<FilterButtonView> filters = BuildFilterButtons(layerProjects);
             if (filters.Count == 0)
@@ -400,36 +399,40 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float buttonWidth = 62f;
-            float buttonHeight = 28f;
-            float gap = 5f;
-            float totalWidth = filters.Count * buttonWidth + (filters.Count - 1) * gap;
-            float startX = ringArea.center.x - totalWidth * 0.5f;
-            float y = ringArea.center.y + 82f;
+            float gap = 4f;
+            float buttonWidth = Mathf.Max(42f, (rect.width - gap * (filters.Count - 1)) / filters.Count);
+            float x = rect.x;
 
             for (int i = 0; i < filters.Count; i++)
             {
                 FilterButtonView filter = filters[i];
-                Rect rect = new Rect(startX + i * (buttonWidth + gap), y, buttonWidth, buttonHeight);
-                bool selected = selectedFilter == filter.Filter;
-                bool hover = Mouse.IsOver(rect);
+                Rect buttonRect = new Rect(x, rect.y, buttonWidth, rect.height);
+                x += buttonWidth + gap;
 
-                Color backColor = selected ? new Color(0.32f, 0.12f, 0.06f, 0.88f) : hover ? new Color(0.20f, 0.075f, 0.04f, 0.82f) : new Color(0.04f, 0.032f, 0.030f, 0.78f);
-                DrawSolid(rect, backColor);
-                DrawOutline(rect, selected ? new Color(1f, 0.58f, 0.22f, 0.92f) : hover ? new Color(1f, 0.38f, 0.16f, 0.70f) : new Color(0.58f, 0.22f, 0.12f, 0.42f));
+                bool selected = selectedFilter == filter.Filter;
+                bool hover = Mouse.IsOver(buttonRect);
+                bool enabled = filter.Count > 0 || filter.Filter == ProtocolProjectFilter.All;
+
+                Color backColor = selected
+                    ? new Color(0.30f, 0.105f, 0.045f, 0.88f)
+                    : hover
+                        ? new Color(0.16f, 0.060f, 0.035f, 0.82f)
+                        : new Color(0.035f, 0.030f, 0.028f, 0.76f);
+                DrawSolid(buttonRect, backColor);
+                DrawOutline(buttonRect, selected ? new Color(1f, 0.55f, 0.22f, 0.88f) : hover ? new Color(1f, 0.36f, 0.15f, 0.62f) : new Color(0.52f, 0.20f, 0.11f, 0.38f));
 
                 TextAnchor oldAnchor = Text.Anchor;
                 GameFont oldFont = Text.Font;
                 Color oldColor = GUI.color;
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = GameFont.Tiny;
-                GUI.color = filter.Count > 0 || filter.Filter == ProtocolProjectFilter.All ? (selected ? Color.white : new Color(0.92f, 0.78f, 0.62f, 1f)) : new Color(0.48f, 0.42f, 0.36f, 1f);
-                Widgets.Label(rect, filter.ShortLabel + " " + filter.Count);
+                GUI.color = enabled ? (selected ? Color.white : new Color(0.90f, 0.76f, 0.60f, 1f)) : new Color(0.46f, 0.40f, 0.34f, 1f);
+                Widgets.Label(buttonRect, filter.ShortLabel + " " + filter.Count);
                 Text.Anchor = oldAnchor;
                 Text.Font = oldFont;
                 GUI.color = oldColor;
 
-                if (Widgets.ButtonInvisible(rect))
+                if (Widgets.ButtonInvisible(buttonRect))
                 {
                     selectedFilter = filter.Filter;
                     List<ABY_ProtocolResearchDef> filtered = FilterProjects(layerProjects, selectedFilter);
@@ -440,7 +443,7 @@ namespace AbyssalProtocol
 
                 if (hover)
                 {
-                    TooltipHandler.TipRegion(rect, filter.Tooltip);
+                    TooltipHandler.TipRegion(buttonRect, filter.Tooltip);
                 }
             }
         }
@@ -450,40 +453,29 @@ namespace AbyssalProtocol
             int total = projects?.Count ?? 0;
             int completed = CountProjects(projects, ProtocolProjectFilter.Completed);
             int ready = CountProjects(projects, ProtocolProjectFilter.Ready);
-            ABY_ProtocolResearchDef next = NextActionProject(layerProjects) ?? NextActionProject(projects);
 
-            Rect summaryRect = new Rect(ringArea.center.x - 132f, ringArea.center.y - 72f, 264f, 140f);
-            DrawSolid(summaryRect, new Color(0.015f, 0.012f, 0.011f, 0.78f));
-            DrawOutline(summaryRect, new Color(0.82f, 0.32f, 0.13f, 0.48f));
+            Rect summaryRect = new Rect(ringArea.center.x - 96f, ringArea.center.y - 43f, 192f, 86f);
+            DrawSolid(summaryRect, new Color(0.012f, 0.010f, 0.009f, 0.66f));
+            DrawOutline(summaryRect, new Color(0.78f, 0.30f, 0.12f, 0.34f));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
             Color oldColor = GUI.color;
 
             Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = GameFont.Tiny;
-            GUI.color = new Color(1f, 0.62f, 0.34f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 7f, summaryRect.width - 16f, 18f), "PROTOCOL DIAGNOSTIC");
-
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 27f, summaryRect.width - 20f, 24f), selectedCategory?.LabelCap ?? string.Empty);
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 8f, summaryRect.width - 16f, 22f), Shorten(selectedCategory?.LabelCap ?? string.Empty, 24));
 
             Text.Font = GameFont.Tiny;
-            GUI.color = new Color(0.86f, 0.78f, 0.68f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 51f, summaryRect.width - 20f, 18f), completed + "/" + total + " decoded  •  " + ready + " ready");
+            GUI.color = new Color(0.88f, 0.78f, 0.66f, 1f);
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 32f, summaryRect.width - 16f, 18f), completed + "/" + total + " decoded  •  " + ready + " ready");
 
             GUI.color = selectedLayer == null ? new Color(0.70f, 0.66f, 0.60f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 69f, summaryRect.width - 20f, 18f), "Layer: " + (selectedLayer?.Label ?? "None"));
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 52f, summaryRect.width - 16f, 18f), Shorten(selectedLayer?.Label ?? "No protocol layer", 30));
 
-            GUI.color = new Color(0.90f, 0.80f, 0.68f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 87f, summaryRect.width - 20f, 18f), "Filter: " + FilterLabel(selectedFilter));
-
-            GUI.color = next == null ? new Color(0.62f, 0.56f, 0.50f, 1f) : StateColor(ABY_ProtocolResearchUtility.GetState(next));
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 105f, summaryRect.width - 20f, 18f), "Next: " + Shorten(next?.LabelCap ?? "No pending unlock", 32));
-
-            GUI.color = new Color(0.78f, 0.70f, 0.60f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 123f, summaryRect.width - 20f, 14f), Shorten(BlockingReasonText(next), 40));
+            GUI.color = new Color(0.66f, 0.58f, 0.50f, 0.92f);
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 68f, summaryRect.width - 16f, 14f), "Layer matrix / list filters");
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
@@ -502,10 +494,13 @@ namespace AbyssalProtocol
             Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 2f, rect.width - 20f, 18f);
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(layerRect, selectedLayer == null ? "No protocol layer" : selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer) + "  —  " + FilterLabel(selectedFilter));
+            Widgets.Label(layerRect, selectedLayer == null ? "No protocol layer" : Shorten(selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer), 58));
             GUI.color = Color.white;
 
-            Rect outRect = new Rect(rect.x + 8f, layerRect.yMax + 6f, rect.width - 16f, rect.height - 62f);
+            Rect filterRect = new Rect(rect.x + 10f, layerRect.yMax + 5f, rect.width - 20f, 24f);
+            DrawFilterStrip(filterRect, layerProjects);
+
+            Rect outRect = new Rect(rect.x + 8f, filterRect.yMax + 6f, rect.width - 16f, rect.yMax - filterRect.yMax - 14f);
             float rowHeight = 48f;
             int projectCount = projects?.Count ?? 0;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(outRect.height, projectCount * rowHeight + 8f));
@@ -516,7 +511,7 @@ namespace AbyssalProtocol
                 GUI.color = new Color(0.72f, 0.68f, 0.62f, 1f);
                 string emptyMessage = selectedFilter == ProtocolProjectFilter.All
                     ? "No projects are assigned to this protocol layer."
-                    : "No projects match this diagnostic filter. Use All or another state node.";
+                    : "No projects match this list filter. Use All or another state tab.";
                 Widgets.Label(new Rect(4f, 6f, viewRect.width - 8f, 54f), emptyMessage);
                 GUI.color = Color.white;
             }
