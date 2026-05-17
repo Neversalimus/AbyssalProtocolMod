@@ -358,43 +358,40 @@ namespace AbyssalProtocol
         {
             Color stateColor = StateColor(layer.State);
             float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 4f) * 0.5f;
-            Rect backingRect = rect.ExpandedBy(selected ? 4f : 5f);
+            bool hasSelectedHalo = selected && SelectedSocketHaloTex != null;
+            Rect backingRect = rect.ExpandedBy(hasSelectedHalo ? 2f : selected ? 4f : 5f);
 
-            if (selected && SelectedSocketHaloTex != null)
-            {
-                float haloSize = Mathf.Max(rect.width, rect.height) + 34f;
-                Rect haloRect = new Rect(rect.center.x - haloSize * 0.5f, rect.center.y - haloSize * 0.5f, haloSize, haloSize);
-                Color oldColor = GUI.color;
-                GUI.color = new Color(1f, 0.94f, 0.88f, 0.78f + pulse * 0.18f);
-                GUI.DrawTexture(haloRect, SelectedSocketHaloTex, ScaleMode.ScaleToFit, true);
-                GUI.color = oldColor;
-            }
-
-            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.74f : 0.62f));
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, hasSelectedHalo ? 0.48f : selected ? 0.74f : 0.62f));
             if (selected)
             {
-                DrawSolid(backingRect.ContractedBy(1f), new Color(0.16f, 0.05f, 0.02f, 0.20f + pulse * 0.10f));
+                DrawSolid(backingRect.ContractedBy(1f), new Color(0.16f, 0.05f, 0.02f, hasSelectedHalo ? 0.12f + pulse * 0.08f : 0.20f + pulse * 0.10f));
             }
 
             Color fill = stateColor;
-            fill.a = selected ? 0.88f : hover ? 0.78f : 0.58f;
+            fill.a = hasSelectedHalo ? 0.58f : selected ? 0.88f : hover ? 0.78f : 0.58f;
             DrawSolid(rect, fill);
 
             Color outline = selected
-                ? new Color(1f, 0.72f, 0.34f, 0.86f)
+                ? new Color(1f, 0.72f, 0.34f, hasSelectedHalo ? 0.70f : 0.86f)
                 : hover
                     ? new Color(1f, 0.48f, 0.20f, 0.78f)
                     : new Color(0.72f, 0.28f, 0.14f, 0.45f);
             DrawOutline(backingRect, outline);
 
-            if (selected && SelectedSocketHaloTex == null)
+            if (hasSelectedHalo)
             {
-                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.42f, 0.16f, 0.30f + pulse * 0.22f));
-                DrawOutline(backingRect.ExpandedBy(10f), new Color(1f, 0.32f, 0.10f, 0.12f + pulse * 0.12f));
+                float haloSize = Mathf.Max(rect.width, rect.height) + 60f;
+                Rect haloRect = new Rect(rect.center.x - haloSize * 0.5f, rect.center.y - haloSize * 0.5f, haloSize, haloSize);
+                Color oldColor = GUI.color;
+                GUI.color = new Color(1f, 0.94f, 0.88f, 0.92f + pulse * 0.08f);
+                GUI.DrawTexture(haloRect, SelectedSocketHaloTex, ScaleMode.ScaleToFit, true);
+                GUI.color = oldColor;
+                DrawOutline(backingRect.ExpandedBy(3f), new Color(1f, 0.46f, 0.18f, 0.18f + pulse * 0.14f));
             }
             else if (selected)
             {
-                DrawOutline(backingRect.ExpandedBy(2f), new Color(1f, 0.46f, 0.18f, 0.18f + pulse * 0.16f));
+                DrawOutline(backingRect.ExpandedBy(5f), new Color(1f, 0.42f, 0.16f, 0.30f + pulse * 0.22f));
+                DrawOutline(backingRect.ExpandedBy(10f), new Color(1f, 0.32f, 0.10f, 0.12f + pulse * 0.12f));
             }
 
             TextAnchor oldAnchor = Text.Anchor;
