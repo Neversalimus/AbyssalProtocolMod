@@ -305,7 +305,7 @@ namespace AbyssalProtocol
             float distance = pawn.Position.DistanceTo(building.Position);
             float score = 100f - (distance * 2.9f);
 
-            if (Props.prioritizeTurrets && building is Building_Turret)
+            if (Props.prioritizeTurrets && AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building))
             {
                 score += 140f;
             }

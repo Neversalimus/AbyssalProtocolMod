@@ -900,18 +900,7 @@ namespace AbyssalProtocol
 
         private static bool IsTurretLike(Building building)
         {
-            if (building == null)
-            {
-                return false;
-            }
-
-            if (building is Building_Turret)
-            {
-                return true;
-            }
-
-            System.Type thingClass = building.def?.thingClass;
-            return thingClass != null && typeof(Building_Turret).IsAssignableFrom(thingClass);
+            return AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building);
         }
 
         private bool CanContinueCurrentAttack(Pawn pawn)

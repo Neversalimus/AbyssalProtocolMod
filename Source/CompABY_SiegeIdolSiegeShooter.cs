@@ -576,7 +576,7 @@ namespace AbyssalProtocol
 
         private bool IsTurretLike(Building building)
         {
-            return building is Building_Turret;
+            return AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building);
         }
 
         private bool IsCoverLike(Building building)

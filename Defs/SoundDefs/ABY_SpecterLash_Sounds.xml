@@ -4,6 +4,8 @@
   <SoundDef>
     <defName>ABY_SpecterLashCharge</defName>
     <context>MapOnly</context>
+    <sustain>true</sustain>
+    <sustainFadeoutTime>0.12</sustainFadeoutTime>
     <maxSimultaneous>4</maxSimultaneous>
     <maxVoices>2</maxVoices>
     <priorityMode>PrioritizeNearest</priorityMode>

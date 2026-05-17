@@ -181,14 +181,20 @@
     <chargeOverlayFrameCount>8</chargeOverlayFrameCount>
     <chargeOverlayTicksPerFrame>18</chargeOverlayTicksPerFrame>
     <chargeOverlayAltitudeOffset>0.088</chargeOverlayAltitudeOffset>
+    <chargeOverlayDrawSize>12.20</chargeOverlayDrawSize>
+    <chargeOverlayForwardOffset>1.28</chargeOverlayForwardOffset>
     <dischargeOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailDischarge_</dischargeOverlayFramePathPrefix>
     <dischargeOverlayFrameCount>8</dischargeOverlayFrameCount>
     <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.096</dischargeOverlayAltitudeOffset>
+    <dischargeOverlayDrawSize>9.20</dischargeOverlayDrawSize>
+    <dischargeOverlayForwardOffset>1.28</dischargeOverlayForwardOffset>
     <residualOverlayFramePathPrefix>Things/VFX/SepulcherRail/ABY_SepulcherRailResidual_</residualOverlayFramePathPrefix>
     <residualOverlayFrameCount>6</residualOverlayFrameCount>
     <residualOverlayTicksPerFrame>3</residualOverlayTicksPerFrame>
     <residualOverlayAltitudeOffset>0.092</residualOverlayAltitudeOffset>
+    <residualOverlayDrawSize>8.20</residualOverlayDrawSize>
+    <residualOverlayForwardOffset>1.28</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
 
 

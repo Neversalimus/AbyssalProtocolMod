@@ -431,7 +431,7 @@ namespace AbyssalProtocol
                         score += 18f;
                     }
 
-                    if (building is Building_Turret || typeof(Building_Turret).IsAssignableFrom(building.def?.thingClass))
+                    if (AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building))
                     {
                         score += 12f;
                     }
@@ -654,7 +654,7 @@ namespace AbyssalProtocol
                         score += 10f;
                     }
 
-                    if (building is Building_Turret || typeof(Building_Turret).IsAssignableFrom(building.def?.thingClass))
+                    if (AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building))
                     {
                         score += 8f;
                     }

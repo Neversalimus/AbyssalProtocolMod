@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -396,7 +397,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!(candidate is Building))
+            Building building = candidate as Building;
+            if (building == null)
+            {
+                return false;
+            }
+
+            if (ShouldIgnoreAsHostileBuildingTarget(building))
             {
                 return false;
             }
@@ -407,6 +414,68 @@ namespace AbyssalProtocol
             }
 
             return actor.Faction.HostileTo(candidate.Faction);
+        }
+
+        public static bool IsCombatTurretLikeBuilding(Building building)
+        {
+            if (building == null || building.Destroyed)
+            {
+                return false;
+            }
+
+            if (building is Building_Turret)
+            {
+                return true;
+            }
+
+            Type thingClass = building.def?.thingClass;
+            if (thingClass != null && typeof(Building_Turret).IsAssignableFrom(thingClass))
+            {
+                return true;
+            }
+
+            CompAbyssalModularTurret modularTurret = building.TryGetComp<CompAbyssalModularTurret>();
+            return modularTurret != null && modularTurret.HasMainWeapon;
+        }
+
+        private static bool ShouldIgnoreAsHostileBuildingTarget(Building building)
+        {
+            if (building?.def == null)
+            {
+                return false;
+            }
+
+            if (IsCombatTurretLikeBuilding(building) || building is Building_Door)
+            {
+                return false;
+            }
+
+            string defName = building.def.defName ?? string.Empty;
+            string label = building.def.label ?? string.Empty;
+            bool conduitLike = ContainsTargetingToken(defName, "conduit")
+                || ContainsTargetingToken(defName, "cable")
+                || ContainsTargetingToken(defName, "wire")
+                || ContainsTargetingToken(label, "conduit")
+                || ContainsTargetingToken(label, "cable")
+                || ContainsTargetingToken(label, "wire")
+                || string.Equals(defName, "PowerConduit", StringComparison.OrdinalIgnoreCase);
+
+            if (conduitLike)
+            {
+                return true;
+            }
+
+            if (!building.def.selectable && building.def.fillPercent <= 0.05f && building.TryGetComp<CompPowerTrader>() == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool ContainsTargetingToken(string value, string token)
+        {
+            return !value.NullOrEmpty() && value.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public static bool HasRangedWeapon(Pawn pawn)
