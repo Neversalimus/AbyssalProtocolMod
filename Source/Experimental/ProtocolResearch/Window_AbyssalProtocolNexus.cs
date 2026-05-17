@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -29,6 +30,7 @@ namespace AbyssalProtocol
         private ABY_ProtocolResearchCategoryDef selectedCategory;
         private ABY_ProtocolResearchDef selectedProject;
         private string selectedLayerKey;
+        private ProtocolProjectFilter selectedFilter = ProtocolProjectFilter.All;
         private Vector2 projectListScroll = Vector2.zero;
         private Vector2 detailsScroll = Vector2.zero;
         private float detailViewHeight = 600f;
@@ -85,10 +87,16 @@ namespace AbyssalProtocol
 
             List<ResearchLayerView> selectedLayers = BuildLayerViews(selectedProjects);
             EnsureSelectedLayer(selectedLayers);
-            List<ABY_ProtocolResearchDef> displayedProjects = ProjectsForSelectedLayer(selectedLayers, selectedProjects);
-            if (selectedProject == null || !displayedProjects.Contains(selectedProject))
+            ResearchLayerView activeLayer = SelectedLayer(selectedLayers);
+            List<ABY_ProtocolResearchDef> layerProjects = ProjectsForSelectedLayer(selectedLayers, selectedProjects);
+            List<ABY_ProtocolResearchDef> displayedProjects = FilterProjects(layerProjects, selectedFilter);
+            if (displayedProjects.Count > 0 && (selectedProject == null || !displayedProjects.Contains(selectedProject)))
             {
-                selectedProject = displayedProjects.FirstOrDefault() ?? selectedProjects.FirstOrDefault();
+                selectedProject = displayedProjects.FirstOrDefault();
+            }
+            else if (displayedProjects.Count == 0 && (selectedProject == null || !layerProjects.Contains(selectedProject)))
+            {
+                selectedProject = layerProjects.FirstOrDefault() ?? selectedProjects.FirstOrDefault();
             }
 
             DrawBackground(inRect);
@@ -100,7 +108,7 @@ namespace AbyssalProtocol
 
             DrawHeader(headerRect, categories);
             DrawCategoryRings(categoryRect, categories);
-            DrawCategoryDetailRing(ringRect, selectedProjects, selectedLayers, displayedProjects);
+            DrawCategoryDetailRing(ringRect, selectedProjects, selectedLayers, activeLayer, layerProjects, displayedProjects);
             DrawProjectDetails(rightRect, selectedProject);
         }
 
@@ -171,6 +179,7 @@ namespace AbyssalProtocol
                     selectedCategory = category;
                     selectedProject = ABY_ProtocolResearchUtility.ProjectsFor(category).FirstOrDefault();
                     selectedLayerKey = selectedProject == null ? null : LayerKeyFor(selectedProject);
+                    selectedFilter = ProtocolProjectFilter.All;
                     projectListScroll = Vector2.zero;
                     detailsScroll = Vector2.zero;
                 }
@@ -219,7 +228,7 @@ namespace AbyssalProtocol
             }
         }
 
-        private void DrawCategoryDetailRing(Rect rect, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers, List<ABY_ProtocolResearchDef> displayedProjects)
+        private void DrawCategoryDetailRing(Rect rect, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects, List<ABY_ProtocolResearchDef> displayedProjects)
         {
             DrawPanel(rect, false);
             if (selectedCategory == null)
@@ -251,14 +260,14 @@ namespace AbyssalProtocol
                 Widgets.DrawBox(localRingArea);
             }
 
-            DrawLayerMatrix(localRingArea, projects, layers);
+            DrawLayerMatrix(localRingArea, projects, layers, activeLayer, layerProjects);
             GUI.EndGroup();
 
             Rect listRect = new Rect(ringArea.xMax + 16f, rect.y + 70f, rect.width - ringArea.width - 62f, rect.height - 86f);
-            DrawProjectList(listRect, SelectedLayer(layers), displayedProjects);
+            DrawProjectList(listRect, activeLayer, layerProjects, displayedProjects);
         }
 
-        private void DrawLayerMatrix(Rect ringArea, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers)
+        private void DrawLayerMatrix(Rect ringArea, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects)
         {
             if (projects == null || projects.Count == 0)
             {
@@ -267,7 +276,8 @@ namespace AbyssalProtocol
 
             DrawRingProgressTicks(ringArea, projects);
             DrawLayerNodes(ringArea, layers);
-            DrawRingCenterSummary(ringArea, projects, SelectedLayer(layers));
+            DrawStatusFilterNodes(ringArea, activeLayer, layerProjects);
+            DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
         }
 
         private void DrawRingProgressTicks(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
@@ -382,24 +392,69 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
         }
 
-        private void DrawRingCenterSummary(Rect ringArea, List<ABY_ProtocolResearchDef> projects, ResearchLayerView selectedLayer)
+        private void DrawStatusFilterNodes(Rect ringArea, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects)
         {
-            int total = projects?.Count ?? 0;
-            int completed = 0;
-            if (projects != null)
+            List<FilterButtonView> filters = BuildFilterButtons(layerProjects);
+            if (filters.Count == 0)
             {
-                for (int i = 0; i < projects.Count; i++)
-                {
-                    if (ABY_ProtocolResearchUtility.GetState(projects[i]) == ABY_ProtocolResearchState.Completed)
-                    {
-                        completed++;
-                    }
-                }
+                return;
             }
 
-            Rect summaryRect = new Rect(ringArea.center.x - 112f, ringArea.center.y - 50f, 224f, 100f);
-            DrawSolid(summaryRect, new Color(0.015f, 0.012f, 0.011f, 0.74f));
-            DrawOutline(summaryRect, new Color(0.82f, 0.32f, 0.13f, 0.44f));
+            float buttonWidth = 62f;
+            float buttonHeight = 28f;
+            float gap = 5f;
+            float totalWidth = filters.Count * buttonWidth + (filters.Count - 1) * gap;
+            float startX = ringArea.center.x - totalWidth * 0.5f;
+            float y = ringArea.center.y + 82f;
+
+            for (int i = 0; i < filters.Count; i++)
+            {
+                FilterButtonView filter = filters[i];
+                Rect rect = new Rect(startX + i * (buttonWidth + gap), y, buttonWidth, buttonHeight);
+                bool selected = selectedFilter == filter.Filter;
+                bool hover = Mouse.IsOver(rect);
+
+                Color backColor = selected ? new Color(0.32f, 0.12f, 0.06f, 0.88f) : hover ? new Color(0.20f, 0.075f, 0.04f, 0.82f) : new Color(0.04f, 0.032f, 0.030f, 0.78f);
+                DrawSolid(rect, backColor);
+                DrawOutline(rect, selected ? new Color(1f, 0.58f, 0.22f, 0.92f) : hover ? new Color(1f, 0.38f, 0.16f, 0.70f) : new Color(0.58f, 0.22f, 0.12f, 0.42f));
+
+                TextAnchor oldAnchor = Text.Anchor;
+                GameFont oldFont = Text.Font;
+                Color oldColor = GUI.color;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = GameFont.Tiny;
+                GUI.color = filter.Count > 0 || filter.Filter == ProtocolProjectFilter.All ? (selected ? Color.white : new Color(0.92f, 0.78f, 0.62f, 1f)) : new Color(0.48f, 0.42f, 0.36f, 1f);
+                Widgets.Label(rect, filter.ShortLabel + " " + filter.Count);
+                Text.Anchor = oldAnchor;
+                Text.Font = oldFont;
+                GUI.color = oldColor;
+
+                if (Widgets.ButtonInvisible(rect))
+                {
+                    selectedFilter = filter.Filter;
+                    List<ABY_ProtocolResearchDef> filtered = FilterProjects(layerProjects, selectedFilter);
+                    selectedProject = filtered.FirstOrDefault() ?? layerProjects?.FirstOrDefault();
+                    projectListScroll = Vector2.zero;
+                    detailsScroll = Vector2.zero;
+                }
+
+                if (hover)
+                {
+                    TooltipHandler.TipRegion(rect, filter.Tooltip);
+                }
+            }
+        }
+
+        private void DrawRingCenterDashboard(Rect ringArea, List<ABY_ProtocolResearchDef> projects, ResearchLayerView selectedLayer, List<ABY_ProtocolResearchDef> layerProjects)
+        {
+            int total = projects?.Count ?? 0;
+            int completed = CountProjects(projects, ProtocolProjectFilter.Completed);
+            int ready = CountProjects(projects, ProtocolProjectFilter.Ready);
+            ABY_ProtocolResearchDef next = NextActionProject(layerProjects) ?? NextActionProject(projects);
+
+            Rect summaryRect = new Rect(ringArea.center.x - 132f, ringArea.center.y - 72f, 264f, 140f);
+            DrawSolid(summaryRect, new Color(0.015f, 0.012f, 0.011f, 0.78f));
+            DrawOutline(summaryRect, new Color(0.82f, 0.32f, 0.13f, 0.48f));
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
@@ -408,25 +463,34 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
             GUI.color = new Color(1f, 0.62f, 0.34f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 8f, summaryRect.width - 16f, 18f), "CATEGORY MATRIX");
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 7f, summaryRect.width - 16f, 18f), "PROTOCOL DIAGNOSTIC");
 
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 28f, summaryRect.width - 20f, 24f), selectedCategory?.LabelCap ?? string.Empty);
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 27f, summaryRect.width - 20f, 24f), selectedCategory?.LabelCap ?? string.Empty);
 
             Text.Font = GameFont.Tiny;
             GUI.color = new Color(0.86f, 0.78f, 0.68f, 1f);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 52f, summaryRect.width - 20f, 18f), completed + "/" + total + " decoded");
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 51f, summaryRect.width - 20f, 18f), completed + "/" + total + " decoded  •  " + ready + " ready");
 
             GUI.color = selectedLayer == null ? new Color(0.70f, 0.66f, 0.60f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 72f, summaryRect.width - 20f, 18f), selectedLayer?.Label ?? "No layer selected");
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 69f, summaryRect.width - 20f, 18f), "Layer: " + (selectedLayer?.Label ?? "None"));
+
+            GUI.color = new Color(0.90f, 0.80f, 0.68f, 1f);
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 87f, summaryRect.width - 20f, 18f), "Filter: " + FilterLabel(selectedFilter));
+
+            GUI.color = next == null ? new Color(0.62f, 0.56f, 0.50f, 1f) : StateColor(ABY_ProtocolResearchUtility.GetState(next));
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 105f, summaryRect.width - 20f, 18f), "Next: " + Shorten(next?.LabelCap ?? "No pending unlock", 32));
+
+            GUI.color = new Color(0.78f, 0.70f, 0.60f, 1f);
+            Widgets.Label(new Rect(summaryRect.x + 10f, summaryRect.y + 123f, summaryRect.width - 20f, 14f), Shorten(BlockingReasonText(next), 40));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
             GUI.color = oldColor;
         }
 
-        private void DrawProjectList(Rect rect, ResearchLayerView selectedLayer, List<ABY_ProtocolResearchDef> projects)
+        private void DrawProjectList(Rect rect, ResearchLayerView selectedLayer, List<ABY_ProtocolResearchDef> layerProjects, List<ABY_ProtocolResearchDef> projects)
         {
             DrawPanel(rect, true);
             Rect titleRect = new Rect(rect.x + 10f, rect.y + 8f, rect.width - 20f, 20f);
@@ -438,7 +502,7 @@ namespace AbyssalProtocol
             Rect layerRect = new Rect(rect.x + 10f, titleRect.yMax + 2f, rect.width - 20f, 18f);
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(layerRect, selectedLayer == null ? "No protocol layer" : selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer));
+            Widgets.Label(layerRect, selectedLayer == null ? "No protocol layer" : selectedLayer.Label + "  —  " + LayerProgressText(selectedLayer) + "  —  " + FilterLabel(selectedFilter));
             GUI.color = Color.white;
 
             Rect outRect = new Rect(rect.x + 8f, layerRect.yMax + 6f, rect.width - 16f, rect.height - 62f);
@@ -450,7 +514,10 @@ namespace AbyssalProtocol
             {
                 Text.Font = GameFont.Tiny;
                 GUI.color = new Color(0.72f, 0.68f, 0.62f, 1f);
-                Widgets.Label(new Rect(4f, 6f, viewRect.width - 8f, 42f), "No projects are assigned to this protocol layer.");
+                string emptyMessage = selectedFilter == ProtocolProjectFilter.All
+                    ? "No projects are assigned to this protocol layer."
+                    : "No projects match this diagnostic filter. Use All or another state node.";
+                Widgets.Label(new Rect(4f, 6f, viewRect.width - 8f, 54f), emptyMessage);
                 GUI.color = Color.white;
             }
             else
@@ -558,6 +625,7 @@ namespace AbyssalProtocol
             float y = 0f;
 
             y = DrawParagraph(viewRect, y, "ABY_ProtocolResearch_DescriptionHeader".Translate(), project.description);
+            y = DrawListSection(viewRect, y, "Protocol Diagnostic", BuildDiagnosticLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_RequirementsHeader".Translate(), BuildRequirementLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_UnlocksHeader".Translate(), project.unlocks);
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_NotesHeader".Translate(), project.notes);
@@ -574,6 +642,23 @@ namespace AbyssalProtocol
 
             detailViewHeight = Mathf.Max(outRect.height + 1f, y);
             Widgets.EndScrollView();
+        }
+
+        private enum ProtocolProjectFilter
+        {
+            All,
+            Ready,
+            Locked,
+            Completed,
+            Gated
+        }
+
+        private sealed class FilterButtonView
+        {
+            public ProtocolProjectFilter Filter;
+            public string ShortLabel;
+            public int Count;
+            public string Tooltip;
         }
 
         private sealed class ResearchLayerView
@@ -678,6 +763,310 @@ namespace AbyssalProtocol
 
             return fallbackProjects ?? new List<ABY_ProtocolResearchDef>();
         }
+        private static List<ABY_ProtocolResearchDef> FilterProjects(List<ABY_ProtocolResearchDef> projects, ProtocolProjectFilter filter)
+        {
+            if (projects == null || projects.Count == 0)
+            {
+                return new List<ABY_ProtocolResearchDef>();
+            }
+
+            if (filter == ProtocolProjectFilter.All)
+            {
+                return projects;
+            }
+
+            List<ABY_ProtocolResearchDef> result = new List<ABY_ProtocolResearchDef>();
+            for (int i = 0; i < projects.Count; i++)
+            {
+                ABY_ProtocolResearchDef project = projects[i];
+                if (MatchesFilter(project, filter))
+                {
+                    result.Add(project);
+                }
+            }
+
+            return result;
+        }
+
+        private static bool MatchesFilter(ABY_ProtocolResearchDef project, ProtocolProjectFilter filter)
+        {
+            ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            switch (filter)
+            {
+                case ProtocolProjectFilter.Ready:
+                    return state == ABY_ProtocolResearchState.Available || state == ABY_ProtocolResearchState.Active;
+                case ProtocolProjectFilter.Locked:
+                    return state == ABY_ProtocolResearchState.Locked;
+                case ProtocolProjectFilter.Completed:
+                    return state == ABY_ProtocolResearchState.Completed;
+                case ProtocolProjectFilter.Gated:
+                    return state == ABY_ProtocolResearchState.Locked && IsExplicitlyGated(project);
+                default:
+                    return true;
+            }
+        }
+
+        private static int CountProjects(List<ABY_ProtocolResearchDef> projects, ProtocolProjectFilter filter)
+        {
+            if (projects == null || projects.Count == 0)
+            {
+                return 0;
+            }
+
+            if (filter == ProtocolProjectFilter.All)
+            {
+                return projects.Count;
+            }
+
+            int count = 0;
+            for (int i = 0; i < projects.Count; i++)
+            {
+                if (MatchesFilter(projects[i], filter))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private static List<FilterButtonView> BuildFilterButtons(List<ABY_ProtocolResearchDef> projects)
+        {
+            List<FilterButtonView> buttons = new List<FilterButtonView>();
+            buttons.Add(new FilterButtonView { Filter = ProtocolProjectFilter.All, ShortLabel = "All", Count = CountProjects(projects, ProtocolProjectFilter.All), Tooltip = "Show every project in the selected protocol layer." });
+            buttons.Add(new FilterButtonView { Filter = ProtocolProjectFilter.Ready, ShortLabel = "Ready", Count = CountProjects(projects, ProtocolProjectFilter.Ready), Tooltip = "Show projects that are available or currently active." });
+            buttons.Add(new FilterButtonView { Filter = ProtocolProjectFilter.Locked, ShortLabel = "Lock", Count = CountProjects(projects, ProtocolProjectFilter.Locked), Tooltip = "Show locked projects in this protocol layer." });
+            buttons.Add(new FilterButtonView { Filter = ProtocolProjectFilter.Completed, ShortLabel = "Done", Count = CountProjects(projects, ProtocolProjectFilter.Completed), Tooltip = "Show completed / decoded projects." });
+            buttons.Add(new FilterButtonView { Filter = ProtocolProjectFilter.Gated, ShortLabel = "Gate", Count = CountProjects(projects, ProtocolProjectFilter.Gated), Tooltip = "Show locked projects with explicit boss, sigil, material, forge, or external protocol gates." });
+            return buttons;
+        }
+
+        private static string FilterLabel(ProtocolProjectFilter filter)
+        {
+            switch (filter)
+            {
+                case ProtocolProjectFilter.Ready:
+                    return "Ready / Active";
+                case ProtocolProjectFilter.Locked:
+                    return "Locked";
+                case ProtocolProjectFilter.Completed:
+                    return "Completed";
+                case ProtocolProjectFilter.Gated:
+                    return "Explicit Gates";
+                default:
+                    return "All Projects";
+            }
+        }
+
+        private static ABY_ProtocolResearchDef NextActionProject(List<ABY_ProtocolResearchDef> projects)
+        {
+            if (projects == null || projects.Count == 0)
+            {
+                return null;
+            }
+
+            ABY_ProtocolResearchDef available = null;
+            ABY_ProtocolResearchDef gated = null;
+            ABY_ProtocolResearchDef locked = null;
+            for (int i = 0; i < projects.Count; i++)
+            {
+                ABY_ProtocolResearchDef project = projects[i];
+                ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+                if (state == ABY_ProtocolResearchState.Active)
+                {
+                    return project;
+                }
+
+                if (state == ABY_ProtocolResearchState.Available && available == null)
+                {
+                    available = project;
+                }
+                else if (state == ABY_ProtocolResearchState.Locked && IsExplicitlyGated(project) && gated == null)
+                {
+                    gated = project;
+                }
+                else if (state == ABY_ProtocolResearchState.Locked && locked == null)
+                {
+                    locked = project;
+                }
+            }
+
+            return available ?? gated ?? locked;
+        }
+
+        private static bool IsExplicitlyGated(ABY_ProtocolResearchDef project)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+
+            if (MissingResearchLabels(project).Count > 0)
+            {
+                return true;
+            }
+
+            if (ContainsGateKeyword(project.LabelCap) || ContainsGateKeyword(project.description) || ContainsGateKeyword(project.tierLabel) || ContainsGateKeyword(project.previewState))
+            {
+                return true;
+            }
+
+            if (ContainsGateKeyword(project.requirements) || ContainsGateKeyword(project.notes) || ContainsGateKeyword(project.unlocks))
+            {
+                return true;
+            }
+
+            return ABY_ProtocolResearchUtility.GetState(project) == ABY_ProtocolResearchState.Locked && ABY_ProtocolResearchUtility.PrerequisitesMet(project);
+        }
+
+        private static bool ContainsGateKeyword(List<string> lines)
+        {
+            if (lines == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (ContainsGateKeyword(lines[i]))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool ContainsGateKeyword(string text)
+        {
+            if (text.NullOrEmpty())
+            {
+                return false;
+            }
+
+            string[] gateTerms =
+            {
+                "boss", "sigil", "shard", "core", "reactor", "saint", "archon",
+                "crown", "herald", "dominion", "forge", "residue", "material",
+                "gate", "locked", "requires", "requirement", "prerequisite"
+            };
+
+            for (int i = 0; i < gateTerms.Length; i++)
+            {
+                if (text.IndexOf(gateTerms[i], StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static List<string> MissingResearchLabels(ABY_ProtocolResearchDef project)
+        {
+            List<string> missing = new List<string>();
+            if (project?.requiredResearchProjects == null)
+            {
+                return missing;
+            }
+
+            for (int i = 0; i < project.requiredResearchProjects.Count; i++)
+            {
+                ResearchProjectDef prerequisite = project.requiredResearchProjects[i];
+                if (prerequisite != null && !prerequisite.IsFinished)
+                {
+                    missing.Add(prerequisite.LabelCap);
+                }
+            }
+
+            return missing;
+        }
+
+        private static string BlockingReasonText(ABY_ProtocolResearchDef project)
+        {
+            if (project == null)
+            {
+                return "No active protocol path.";
+            }
+
+            ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            if (state == ABY_ProtocolResearchState.Completed)
+            {
+                return "Decoded.";
+            }
+
+            if (state == ABY_ProtocolResearchState.Active)
+            {
+                return "Currently active.";
+            }
+
+            if (state == ABY_ProtocolResearchState.Available)
+            {
+                return "Ready now.";
+            }
+
+            List<string> missingResearch = MissingResearchLabels(project);
+            if (missingResearch.Count > 0)
+            {
+                return "Requires research: " + Shorten(string.Join(", ", missingResearch.ToArray()), 42);
+            }
+
+            if (project.requirements != null && project.requirements.Count > 0)
+            {
+                return "Requires: " + Shorten(project.requirements[0], 48);
+            }
+
+            return "External protocol gate / future unlock.";
+        }
+
+        private static List<string> BuildDiagnosticLines(ABY_ProtocolResearchDef project)
+        {
+            List<string> lines = new List<string>();
+            if (project == null)
+            {
+                lines.Add("No project selected.");
+                return lines;
+            }
+
+            ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            lines.Add("State — " + ABY_ProtocolResearchUtility.GetStateLabel(state));
+            lines.Add("Layer — " + LayerLabelFor(project));
+            lines.Add("Filter bucket — " + DiagnosticBucketLabel(project));
+            lines.Add("Blocking reason — " + BlockingReasonText(project));
+            return lines;
+        }
+
+        private static string DiagnosticBucketLabel(ABY_ProtocolResearchDef project)
+        {
+            ABY_ProtocolResearchState state = ABY_ProtocolResearchUtility.GetState(project);
+            if (state == ABY_ProtocolResearchState.Completed)
+            {
+                return FilterLabel(ProtocolProjectFilter.Completed);
+            }
+
+            if (state == ABY_ProtocolResearchState.Available || state == ABY_ProtocolResearchState.Active)
+            {
+                return FilterLabel(ProtocolProjectFilter.Ready);
+            }
+
+            return IsExplicitlyGated(project) ? FilterLabel(ProtocolProjectFilter.Gated) : FilterLabel(ProtocolProjectFilter.Locked);
+        }
+
+        private static string Shorten(string text, int maxChars)
+        {
+            if (text.NullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            if (maxChars <= 4 || text.Length <= maxChars)
+            {
+                return text;
+            }
+
+            return text.Substring(0, maxChars - 1).TrimEnd() + "…";
+        }
+
 
         private static void CalculateLayerState(ResearchLayerView layer)
         {
