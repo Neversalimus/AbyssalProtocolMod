@@ -223,21 +223,26 @@ namespace AbyssalProtocol
             Widgets.Label(new Rect(rect.x + 14f, rect.y + 32f, rect.width - 28f, 34f), selectedCategory.description);
             GUI.color = Color.white;
 
-            float ringSize = Mathf.Min(452f, Mathf.Max(360f, rect.height - 112f));
-            Rect ringArea = new Rect(rect.x + 24f, rect.y + 58f, ringSize, ringSize);
-            Vector2 center = ringArea.center;
+            float ringSize = Mathf.Min(430f, Mathf.Max(360f, rect.height - 128f));
+            Rect ringArea = new Rect(rect.x + 30f, rect.y + 70f, ringSize, ringSize);
+            Rect localRingArea = new Rect(0f, 0f, ringArea.width, ringArea.height);
+
+            // Keep all rotated segment overlays clipped to the ring canvas.
+            // The previous pass drew rotated plates in absolute window space; on some UI scales they visibly drifted into the category strip.
+            GUI.BeginGroup(ringArea);
             if (LargeRingTex != null)
             {
-                GUI.DrawTexture(ringArea, LargeRingTex, ScaleMode.ScaleToFit, true);
+                GUI.DrawTexture(localRingArea, LargeRingTex, ScaleMode.ScaleToFit, true);
             }
             else
             {
-                Widgets.DrawBox(ringArea);
+                Widgets.DrawBox(localRingArea);
             }
 
-            DrawProjectSegments(ringArea, projects);
+            DrawProjectSegments(localRingArea, projects);
+            GUI.EndGroup();
 
-            Rect listRect = new Rect(ringArea.xMax + 14f, rect.y + 70f, rect.width - ringArea.width - 52f, rect.height - 86f);
+            Rect listRect = new Rect(ringArea.xMax + 16f, rect.y + 70f, rect.width - ringArea.width - 62f, rect.height - 86f);
             DrawProjectList(listRect, projects);
         }
 
@@ -249,7 +254,7 @@ namespace AbyssalProtocol
             }
 
             Vector2 center = ringArea.center;
-            float radius = ringArea.width * 0.5f - 43f;
+            float radius = ringArea.width * 0.5f - 56f;
             float angleStep = 360f / Mathf.Max(1, projects.Count);
             for (int i = 0; i < projects.Count; i++)
             {
@@ -257,10 +262,14 @@ namespace AbyssalProtocol
                 float angle = -90f + i * angleStep;
                 float rad = angle * Mathf.Deg2Rad;
                 Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
-                Rect segRect = new Rect(pos.x - 54f, pos.y - 16f, 108f, 32f);
+
+                // Short, inlaid plates fit the static metal/gold ring segments instead of floating as large horizontal cards.
+                Rect segRect = new Rect(pos.x - 45f, pos.y - 13f, 90f, 26f);
                 float rotation = angle + 90f;
                 DrawSegment(segRect, project, project == selectedProject, rotation);
-                if (Widgets.ButtonInvisible(segRect.ExpandedBy(6f)))
+
+                // Use an intentionally larger unrotated hit zone; the visual plate is decorative and clipped to the ring group.
+                if (Widgets.ButtonInvisible(segRect.ExpandedBy(12f)))
                 {
                     selectedProject = project;
                     detailsScroll = Vector2.zero;
