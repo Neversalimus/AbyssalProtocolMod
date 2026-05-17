@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Sigils</defName>
+    <label>sigils</label>
+    <description>Access marks, controlled invocations and the logic of sealed abyssal permissions.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Sigils</iconPath>
+    <displayOrder>10</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Weapons</defName>
+    <label>weapons</label>
+    <description>Rift carbines, anti-boss doctrine, heavy infernal systems and apex armaments.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Weapons</iconPath>
+    <displayOrder>20</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Armor</defName>
+    <label>armor</label>
+    <description>Protective shells that turn abyssal pressure into survivable military doctrine.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Armor</iconPath>
+    <displayOrder>30</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Implants</defName>
+    <label>implants</label>
+    <description>Internalized protocol hardware, cores, crown interfaces and biological breach anchoring.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Implants</iconPath>
+    <displayOrder>40</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Circle</defName>
+    <label>circle</label>
+    <description>Safety interlocks, breach geometry, containment logic and final gate architecture.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Circle</iconPath>
+    <displayOrder>50</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Forge</defName>
+    <label>forge</label>
+    <description>Residue processing, communion theory, crown logic and severance-grade analysis.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Forge</iconPath>
+    <displayOrder>60</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Turrets</defName>
+    <label>turrets</label>
+    <description>Modular turret interfaces, targeting matrices, breach lockdown and crownfire launch logic.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Turrets</iconPath>
+    <displayOrder>70</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+    <defName>ABY_PR_Category_Dominion</defName>
+    <label>dominion</label>
+    <description>Heraldic interpretation, dominion rights, metadomain forecasts and post-gate interfaces.</description>
+    <iconPath>UI/ABY/ProtocolResearch/Categories/ABY_Category_Dominion</iconPath>
+    <displayOrder>80</displayOrder>
+  </AbyssalProtocol.ABY_ProtocolResearchCategoryDef>
+
+</Defs>

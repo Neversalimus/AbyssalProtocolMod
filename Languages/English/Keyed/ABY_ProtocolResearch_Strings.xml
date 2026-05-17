@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ProtocolResearch_OpenNexusLabel>Open protocol nexus</ABY_ProtocolResearch_OpenNexusLabel>
+  <ABY_ProtocolResearch_OpenNexusDesc>Open the experimental Abyssal Protocol Matrix. This system is isolated from the current forge and summoning progression and can be removed cleanly if it does not survive testing.</ABY_ProtocolResearch_OpenNexusDesc>
+  <ABY_ProtocolResearch_InspectOnline>Protocol Nexus: powered and decoding hostile signal layers.</ABY_ProtocolResearch_InspectOnline>
+  <ABY_ProtocolResearch_InspectOffline>Protocol Nexus: offline. The matrix can still be inspected, but the active decoding overlay is dormant.</ABY_ProtocolResearch_InspectOffline>
+  <ABY_ProtocolResearch_InspectExperimental>Experimental feature island: no current unlocks are hard-gated by this building.</ABY_ProtocolResearch_InspectExperimental>
+
+  <ABY_ProtocolResearch_Title>Abyssal Protocol Nexus</ABY_ProtocolResearch_Title>
+  <ABY_ProtocolResearch_Subtitle>Experimental protocol matrix: contact, stabilization, integration, dominion and post-gate research layers.</ABY_ProtocolResearch_Subtitle>
+  <ABY_ProtocolResearch_HeaderProgress>{0} available / {1} decoded / {2} mapped</ABY_ProtocolResearch_HeaderProgress>
+  <ABY_ProtocolResearch_CategoryHeader>PROTOCOL RINGS</ABY_ProtocolResearch_CategoryHeader>
+  <ABY_ProtocolResearch_ProjectListHeader>SEGMENTS</ABY_ProtocolResearch_ProjectListHeader>
+  <ABY_ProtocolResearch_NoCategories>No protocol categories are loaded.</ABY_ProtocolResearch_NoCategories>
+  <ABY_ProtocolResearch_NoProjectSelected>No protocol segment selected.</ABY_ProtocolResearch_NoProjectSelected>
+  <ABY_ProtocolResearch_CategoryTooltip>{0} available, {1} decoded, {2} mapped.</ABY_ProtocolResearch_CategoryTooltip>
+
+  <ABY_ProtocolResearch_StateLocked>LOCKED / PLANNED</ABY_ProtocolResearch_StateLocked>
+  <ABY_ProtocolResearch_StateAvailable>AVAILABLE / ANALYZABLE</ABY_ProtocolResearch_StateAvailable>
+  <ABY_ProtocolResearch_StateActive>ACTIVE / DECODING</ABY_ProtocolResearch_StateActive>
+  <ABY_ProtocolResearch_StateCompleted>DECODED / REPRESENTED</ABY_ProtocolResearch_StateCompleted>
+
+  <ABY_ProtocolResearch_DescriptionHeader>DESCRIPTION</ABY_ProtocolResearch_DescriptionHeader>
+  <ABY_ProtocolResearch_RequirementsHeader>REQUIREMENTS</ABY_ProtocolResearch_RequirementsHeader>
+  <ABY_ProtocolResearch_UnlocksHeader>UNLOCKS / CLASSIFIES</ABY_ProtocolResearch_UnlocksHeader>
+  <ABY_ProtocolResearch_NotesHeader>IMPLEMENTATION NOTES</ABY_ProtocolResearch_NotesHeader>
+  <ABY_ProtocolResearch_RequirementMet>met</ABY_ProtocolResearch_RequirementMet>
+  <ABY_ProtocolResearch_RequirementMissing>missing</ABY_ProtocolResearch_RequirementMissing>
+  <ABY_ProtocolResearch_NoExplicitRequirements>No explicit requirements beyond the selected protocol layer.</ABY_ProtocolResearch_NoExplicitRequirements>
+  <ABY_ProtocolResearch_IsolatedWarning>This prototype is intentionally isolated. It displays planned and represented research logic, but it does not currently rewrite forge unlocks, summoning gates, recipes, boss flags or save-game progression.</ABY_ProtocolResearch_IsolatedWarning>
+</LanguageData>

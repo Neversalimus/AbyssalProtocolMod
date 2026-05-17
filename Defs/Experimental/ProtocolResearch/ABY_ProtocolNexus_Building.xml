@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BenchBase">
+    <defName>ABY_ProtocolNexus</defName>
+    <label>abyssal protocol nexus</label>
+    <description>A blacksite-grade abyssal signal decoding console. It does not replace the forge or the summoning circle; it exposes an experimental Protocol Matrix used to classify planned research layers, sigil handling, weapons, armor, implants, turrets and dominion-grade anomalies.</description>
+
+    <thingClass>AbyssalProtocol.Building_ABY_ProtocolNexus</thingClass>
+    <drawerType>MapMeshAndRealTime</drawerType>
+
+    <graphicData>
+      <texPath>Things/Building/ABY_ProtocolNexus</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>Transparent</shaderType>
+      <drawSize>(3.35,3.35)</drawSize>
+    </graphicData>
+
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0.02</staticSunShadowHeight>
+    <constructEffect>ConstructMetal</constructEffect>
+
+    <costList>
+      <Steel>260</Steel>
+      <Plasteel>90</Plasteel>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <ABY_AbyssalResidue>60</ABY_AbyssalResidue>
+    </costList>
+
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.28</fillPercent>
+    <useHitPoints>True</useHitPoints>
+
+    <statBases>
+      <WorkToBuild>9800</WorkToBuild>
+      <MaxHitPoints>460</MaxHitPoints>
+      <Flammability>0.08</Flammability>
+      <Cleanliness>-0.85</Cleanliness>
+    </statBases>
+
+    <size>(3,3)</size>
+    <designationCategory>Production</designationCategory>
+    <uiOrder>2523</uiOrder>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+    <minifiedDef IsNull="True" />
+    <thingCategories Inherit="False" />
+
+    <comps Inherit="False">
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>true</shortCircuitInRain>
+        <basePowerConsumption>950</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>4.2</glowRadius>
+        <glowColor>(255,78,32,0)</glowColor>
+      </li>
+      <li Class="CompProperties_Breakdownable" />
+    </comps>
+
+    <building>
+      <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+      <workTableRoomRole>Workshop</workTableRoomRole>
+      <workTableNotInRoomRoleFactor>0.8</workTableNotInRoomRoleFactor>
+    </building>
+
+    <researchPrerequisites>
+      <li>ABY_AbyssalSignalTheory</li>
+    </researchPrerequisites>
+
+    <placeWorkers>
+      <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+    </placeWorkers>
+  </ThingDef>
+
+</Defs>
