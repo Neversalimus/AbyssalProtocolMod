@@ -81,6 +81,27 @@
     </mote>
   </ThingDef>
 
+
+  <ThingDef ParentName="MoteBase">
+    <defName>ABY_Mote_SanctifiedPrismTravelCut</defName>
+    <label>sanctified prism travel cut</label>
+    <thingClass>AbyssalProtocol.Mote_ABY_NullArcBeamSegment</thingClass>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <graphicData>
+      <texPath>Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismTravelCut_01</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1.00,0.24)</drawSize>
+    </graphicData>
+    <mote>
+      <fadeInTime>0.00</fadeInTime>
+      <solidTime>0.05</solidTime>
+      <fadeOutTime>0.05</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
+  </ThingDef>
+
   <ThingDef ParentName="MoteBase">
     <defName>ABY_Mote_SanctifiedPrismResidualScorch</defName>
     <label>sanctified prism residual scorch</label>

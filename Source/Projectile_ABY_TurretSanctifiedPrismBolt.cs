@@ -45,12 +45,24 @@ namespace AbyssalProtocol
                 SanctifiedPrismEmitterVfxUtility.SpawnMuzzle(previousPosition, destination, Map);
             }
 
-            if (ticksAlive % 4 == 0)
+            Vector3 currentPosition = ExactPosition;
+            if ((currentPosition - lastExactPosition).MagnitudeHorizontalSquared() > 0.01f)
             {
-                FleckMaker.ThrowLightningGlow(ExactPosition, Map, 0.12f);
+                SanctifiedPrismEmitterVfxUtility.SpawnTravelCut(lastExactPosition, currentPosition, Map);
+            }
+            else if ((currentPosition - launchPosition).MagnitudeHorizontalSquared() > 0.01f)
+            {
+                SanctifiedPrismEmitterVfxUtility.SpawnTravelCut(launchPosition, currentPosition, Map);
             }
 
-            lastExactPosition = ExactPosition;
+            lastExactPosition = currentPosition;
+        }
+
+
+        protected override void DrawAt(Vector3 drawLoc, bool flip = false)
+        {
+            // The Sanctified Prism Emitter no longer presents as a visible flying bolt.
+            // Its in-flight identity is the animated travel-cut VFX spawned from Tick().
         }
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)

@@ -206,14 +206,14 @@
     <graphicData>
       <texPath>Things/Projectile/ABY_TurretSanctifiedPrismBolt</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.34,1.18)</drawSize>
+      <drawSize>(0.04,0.04)</drawSize>
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
       <damageAmountBase>18</damageAmountBase>
       <armorPenetrationBase>0.82</armorPenetrationBase>
       <stoppingPower>1.42</stoppingPower>
-      <speed>82</speed>
+      <speed>118</speed>
       <soundImpactAnticipate>ABY_VesperLanceImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>

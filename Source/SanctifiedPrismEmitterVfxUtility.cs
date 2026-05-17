@@ -10,33 +10,39 @@ namespace AbyssalProtocol
         private const string ImpactMoteDefName = "ABY_Mote_SanctifiedPrismImpact";
         private const string SecondaryHitMoteDefName = "ABY_Mote_SanctifiedPrismSecondaryHit";
         private const string BeamMoteDefName = "ABY_Mote_SanctifiedPrismBeam";
+        private const string TravelCutMoteDefName = "ABY_Mote_SanctifiedPrismTravelCut";
         private const string ResidualScorchMoteDefName = "ABY_Mote_SanctifiedPrismResidualScorch";
 
         private const string MuzzleFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismMuzzle_";
         private const string ImpactFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismImpact_";
         private const string SecondaryHitFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismSecondaryHit_";
         private const string BeamFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismBeam_";
+        private const string TravelCutFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismTravelCut_";
         private const string ResidualScorchFramePrefix = "Things/VFX/SanctifiedPrism/ABY_SanctifiedPrismResidualScorch_";
 
         private const int MuzzleFrameCount = 6;
         private const int ImpactFrameCount = 8;
         private const int SecondaryHitFrameCount = 6;
         private const int BeamFrameCount = 6;
+        private const int TravelCutFrameCount = 6;
         private const int MuzzleTicksPerFrame = 1;
         private const int ImpactTicksPerFrame = 2;
         private const int SecondaryHitTicksPerFrame = 1;
         private const int BeamTicksPerFrame = 1;
+        private const int TravelCutTicksPerFrame = 1;
 
         private static ThingDef muzzleMoteDef;
         private static ThingDef impactMoteDef;
         private static ThingDef secondaryHitMoteDef;
         private static ThingDef beamMoteDef;
+        private static ThingDef travelCutMoteDef;
         private static ThingDef residualScorchMoteDef;
 
         private static ThingDef MuzzleMoteDef => muzzleMoteDef ?? (muzzleMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(MuzzleMoteDefName));
         private static ThingDef ImpactMoteDef => impactMoteDef ?? (impactMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ImpactMoteDefName));
         private static ThingDef SecondaryHitMoteDef => secondaryHitMoteDef ?? (secondaryHitMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(SecondaryHitMoteDefName));
         private static ThingDef BeamMoteDef => beamMoteDef ?? (beamMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(BeamMoteDefName));
+        private static ThingDef TravelCutMoteDef => travelCutMoteDef ?? (travelCutMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(TravelCutMoteDefName));
         private static ThingDef ResidualScorchMoteDef => residualScorchMoteDef ?? (residualScorchMoteDef = DefDatabase<ThingDef>.GetNamedSilentFail(ResidualScorchMoteDefName));
 
         public static void SpawnMuzzle(Vector3 source, Vector3 destination, Map map)
@@ -95,6 +101,55 @@ namespace AbyssalProtocol
 
             float angle = DirectionAngle(direction);
             SpawnAnimatedMote(ResidualScorchMoteDef, ResidualScorchFramePrefix, 1, 16, 16, 0.82f, 0.82f, position, map, angle - 45f);
+        }
+
+
+        public static void SpawnTravelCut(Vector3 source, Vector3 target, Map map)
+        {
+            ThingDef travelDef = TravelCutMoteDef;
+            if (travelDef == null || map == null)
+            {
+                return;
+            }
+
+            Vector3 start = source;
+            Vector3 end = target;
+            start.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            end.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+
+            float distance = (end - start).MagnitudeHorizontal();
+            if (distance <= 0.08f)
+            {
+                return;
+            }
+
+            Mote_ABY_NullArcBeamSegment cut = ThingMaker.MakeThing(travelDef) as Mote_ABY_NullArcBeamSegment;
+            if (cut == null)
+            {
+                return;
+            }
+
+            int lifetime = 6;
+            cut.start = start;
+            cut.end = end;
+            cut.framePathPrefix = TravelCutFramePrefix;
+            cut.frameCount = TravelCutFrameCount;
+            cut.ticksPerFrame = TravelCutTicksPerFrame;
+            cut.ticksLeft = lifetime;
+            cut.startingTicks = lifetime;
+            cut.width = 0.26f;
+
+            IntVec3 spawnCell = start.ToIntVec3();
+            if (!spawnCell.InBounds(map))
+            {
+                spawnCell = end.ToIntVec3();
+            }
+            if (!spawnCell.InBounds(map))
+            {
+                return;
+            }
+
+            GenSpawn.Spawn(cut, spawnCell, map);
         }
 
         public static void SpawnRefractionBeam(Vector3 source, Vector3 target, Map map, bool faint)
