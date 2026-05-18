@@ -48,6 +48,8 @@ namespace AbyssalProtocol
         private const string ImplantsFilterEyes = "Eyes";
         private const string ImplantsFilterBody = "Body";
         private const string ImplantsFilterArms = "Arms";
+        private const string ImplantsFilterLegs = "Legs";
+        private const string ImplantsFilterNeck = "Neck";
         private const string ImplantsFilterSpine = "Spine";
         private const string ImplantsFilterOrgans = "Organs";
 
@@ -541,6 +543,8 @@ namespace AbyssalProtocol
                     new ForgeFilterOption(ImplantsFilterEyes, "Eyes", implant),
                     new ForgeFilterOption(ImplantsFilterBody, "Body", implant),
                     new ForgeFilterOption(ImplantsFilterArms, "Arms", implant),
+                    new ForgeFilterOption(ImplantsFilterLegs, "Legs", implant),
+                    new ForgeFilterOption(ImplantsFilterNeck, "Neck", implant),
                     new ForgeFilterOption(ImplantsFilterSpine, "Spine", implant),
                     new ForgeFilterOption(ImplantsFilterOrgans, "Organs", implant)
                 };
@@ -747,28 +751,59 @@ namespace AbyssalProtocol
         {
             if (filter.NullOrEmpty() || filter == WeaponsFilterAll) return true;
             string category = AbyssalForgeProgressUtility.GetCategory(recipe);
-            if (filter == WeaponsFilterHerald) return category == AbyssalForgeProgressUtility.HeraldCategory || BuildRecipeSearchText(recipe).Contains("herald");
-            if (category == AbyssalForgeProgressUtility.HeraldCategory) return false;
+            if (filter == WeaponsFilterHerald) return category == AbyssalForgeProgressUtility.HeraldCategory || IsHeraldWeaponRecipe(recipe);
             if (filter == WeaponsFilterMelee) return IsMeleeWeaponRecipe(recipe);
-            if (filter == WeaponsFilterRanged) return !IsMeleeWeaponRecipe(recipe);
+            if (filter == WeaponsFilterRanged) return IsRangedWeaponRecipe(recipe);
             return true;
         }
 
         private static int GetWeaponFilterOrder(RecipeDef recipe)
         {
-            if (AbyssalForgeProgressUtility.GetCategory(recipe) == AbyssalForgeProgressUtility.HeraldCategory || BuildRecipeSearchText(recipe).Contains("herald")) return 30;
-            return IsMeleeWeaponRecipe(recipe) ? 10 : 20;
+            if (IsMeleeWeaponRecipe(recipe)) return 10;
+            if (IsRangedWeaponRecipe(recipe)) return 20;
+            if (AbyssalForgeProgressUtility.GetCategory(recipe) == AbyssalForgeProgressUtility.HeraldCategory || IsHeraldWeaponRecipe(recipe)) return 30;
+            return 90;
+        }
+
+        private static bool IsRangedWeaponRecipe(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            if (IsForcedRangedWeaponRecipe(text))
+            {
+                return true;
+            }
+
+            return !IsMeleeWeaponRecipe(recipe);
         }
 
         private static bool IsMeleeWeaponRecipe(RecipeDef recipe)
         {
             string text = BuildRecipeSearchText(recipe);
+            if (IsForcedRangedWeaponRecipe(text))
+            {
+                return false;
+            }
+
             return text.Contains("blade")
                 || text.Contains("dagger")
-                || text.Contains("pike")
                 || text.Contains("halberd")
                 || text.Contains("maul")
                 || text.Contains("glaive");
+        }
+
+        private static bool IsForcedRangedWeaponRecipe(string text)
+        {
+            return text.Contains("ashen pike")
+                || text.Contains("canticle driver")
+                || text.Contains("anchor spiker")
+                || text.Contains("phalanx driver")
+                || text.Contains("gatebreaker spiker");
+        }
+
+        private static bool IsHeraldWeaponRecipe(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            return text.Contains("herald");
         }
 
         private static bool ArmorRecipeMatchesFilter(RecipeDef recipe, string filter)
@@ -813,8 +848,10 @@ namespace AbyssalProtocol
             if (id == ImplantsFilterEyes) return 20;
             if (id == ImplantsFilterBody) return 30;
             if (id == ImplantsFilterArms) return 40;
-            if (id == ImplantsFilterSpine) return 50;
-            if (id == ImplantsFilterOrgans) return 60;
+            if (id == ImplantsFilterLegs) return 50;
+            if (id == ImplantsFilterNeck) return 60;
+            if (id == ImplantsFilterSpine) return 70;
+            if (id == ImplantsFilterOrgans) return 80;
             return 90;
         }
 
@@ -822,10 +859,13 @@ namespace AbyssalProtocol
         {
             string text = BuildRecipeSearchText(recipe);
             if (text.Contains("eye")) return ImplantsFilterEyes;
-            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("node")) return ImplantsFilterBrain;
-            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo")) return ImplantsFilterArms;
-            if (text.Contains("spine") || text.Contains("tendon") || text.Contains("weave")) return ImplantsFilterSpine;
+            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("brain")) return ImplantsFilterBrain;
+            if (text.Contains("null chorus collar") || text.Contains("collar") || text.Contains("neck")) return ImplantsFilterNeck;
+            if (text.Contains("breach tendon weave") || text.Contains("leg") || text.Contains("tendon")) return ImplantsFilterLegs;
+            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo") || text.Contains("hand")) return ImplantsFilterArms;
+            if (text.Contains("spine")) return ImplantsFilterSpine;
             if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung")) return ImplantsFilterOrgans;
+            if (text.Contains("herald carapace mesh") || text.Contains("harmonic mesh") || text.Contains("lawwoven carapace mesh") || text.Contains("carapace mesh") || text.Contains("mesh")) return ImplantsFilterBody;
             return ImplantsFilterBody;
         }
 
