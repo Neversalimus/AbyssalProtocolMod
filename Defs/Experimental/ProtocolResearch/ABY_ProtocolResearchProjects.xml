@@ -20,6 +20,7 @@
       <li>Tier I contact layer diagnostics.</li>
       <li>Early Forge hint visibility and unknown-pattern framing.</li>
     </reveals>
+    <loreRecord>The first layer of the Protocol does not translate language. It translates response. Noise becomes address, rhythm becomes permission, and impossible geometry begins to behave like a machine waiting for a correct input.</loreRecord>
     <unlocks>
       <li>Marks the first contact layer as understood.</li>
       <li>Keeps early Forge hints legible.</li>
@@ -48,6 +49,7 @@
       <li>Low-risk summon readiness language.</li>
       <li>Early ritual entries in the Summoning/Forge progression map.</li>
     </reveals>
+    <loreRecord>A primitive breach is not a small door. It is a narrow wound taught to repeat the same shape without becoming a catastrophe. Lesser sigils answer because the cut is shallow enough for both worlds to survive the exchange.</loreRecord>
     <unlocks>
       <li>Reveals primitive breach and low-tier sigil families.</li>
     </unlocks>
@@ -75,6 +77,7 @@
       <li>Earliest resource-chain hints.</li>
       <li>Residue-linked Forge pattern classification.</li>
     </reveals>
+    <loreRecord>Residue is matter after contact has passed through it and left a pressure mark behind. It is not ash, not blood, and not ore. It is the first proof that the Abyss can leave usable weight in ordinary space.</loreRecord>
     <unlocks>
       <li>Reveals the earliest residue handling vocabulary.</li>
     </unlocks>
@@ -102,6 +105,7 @@
       <li>Initial Forge category identification.</li>
       <li>The Nexus-to-Forge reveal bridge.</li>
     </reveals>
+    <loreRecord>The Forge does not learn names first. It learns silhouettes, heat signatures, unsafe symmetries and the difference between scrap and a pattern trying to become real. Every unknown card is a shape before it is a weapon.</loreRecord>
     <unlocks>
       <li>Allows the Forge to display unknown pattern families instead of hiding them.</li>
     </unlocks>
@@ -128,6 +132,7 @@
       <li>Circle support patterns and placement logic.</li>
       <li>Stabilization-family Forge cards.</li>
     </reveals>
+    <loreRecord>A stabilizer frame is a refusal to let the breach choose its own geometry. It does not make the circle safe. It gives the wound edges, corners and a machine-readable limit.</loreRecord>
     <unlocks>
       <li>Reveals early stabilizer/module infrastructure.</li>
     </unlocks>
@@ -154,6 +159,7 @@
       <li>Early ritual-energy support modules.</li>
       <li>Energy support diagnostics for circle infrastructure.</li>
     </reveals>
+    <loreRecord>Ashbound capacitance stores ritual pressure as if it were current, but the charge remembers where it came from. The cell does not hold energy alone; it holds the disciplined remainder of a hostile reply.</loreRecord>
     <unlocks>
       <li>Reveals ashbound capacitor and early energy support patterns.</li>
     </unlocks>
@@ -180,6 +186,7 @@
       <li>Residue processing and conversion families.</li>
       <li>Basic Forge material support patterns.</li>
     </reveals>
+    <loreRecord>Processed residue becomes less like fallout and more like instruction-bearing material. The impurity is never removed completely. It is only forced into ratios that tools can survive long enough to use.</loreRecord>
     <unlocks>
       <li>Reveals early core/resource recipes.</li>
     </unlocks>
@@ -206,6 +213,7 @@
       <li>Rift Blade, Hex Pistol, Sigil Repeater and related basic arms families.</li>
       <li>Tier II weapon-pattern category hints.</li>
     </reveals>
+    <loreRecord>The earliest arms are crude translations of breach pressure into battlefield grammar: edge, barrel, repeater, impact. They are not elegant, but they prove that abyssal contact can be made repeatable in steel and grip.</loreRecord>
     <unlocks>
       <li>Reveals early weapon cards in the Forge.</li>
     </unlocks>
@@ -232,6 +240,7 @@
       <li>Ashbound kit and Infernal Combat Frame families.</li>
       <li>Basic protective accessory classification.</li>
     </reveals>
+    <loreRecord>Ashbound gear is armor for the first threshold: not made to conquer the Abyss, but to stop its residue from turning every wound into a lesson. It teaches protection through contamination kept barely below obedience.</loreRecord>
     <unlocks>
       <li>Reveals early armor/apparel cards.</li>
     </unlocks>
@@ -258,6 +267,7 @@
       <li>Rift ballistic Forge cards.</li>
       <li>Weapon-role grouping for midgame patterns.</li>
     </reveals>
+    <loreRecord>A rift projectile is not fired through space so much as delivered against the agreement that space is stable. Armor receives a brief contradiction, and tissue is forced to answer a geometry it was never built to understand.</loreRecord>
     <unlocks>
       <li>Reveals rift carbines, needlers and related mid-tier weapons.</li>
     </unlocks>
@@ -284,6 +294,7 @@
       <li>Null Marksman / Null Disruptor style cards.</li>
       <li>Counter-aura and geometry-interrupt diagnostics.</li>
     </reveals>
+    <loreRecord>Null geometry is the shape left when a signal is taught to cancel itself. It does not scream like fire or glow like a core. It removes assumptions: range, aura, certainty, and the comfort that a target is only a target.</loreRecord>
     <unlocks>
       <li>Reveals null weapon and null-field pattern families.</li>
     </unlocks>
@@ -310,6 +321,7 @@
       <li>Infernal Eye / early body upgrade families.</li>
       <li>Basic surgery and Forge-linked implant classification.</li>
     </reveals>
+    <loreRecord>An implant is the point where the Protocol stops being equipment. The body becomes a socket, and the socket learns to host instructions that were not written for flesh but can still be obeyed by it.</loreRecord>
     <unlocks>
       <li>Reveals early implant procedures.</li>
     </unlocks>
@@ -336,6 +348,7 @@
       <li>Rift / Null field gear families.</li>
       <li>Abyssal armor progression cards.</li>
     </reveals>
+    <loreRecord>Abyssal armor is not simply harder material. It is a wearable argument that the wearer should remain coherent while the battlefield becomes less certain. The plate resists damage; the pattern resists being rewritten.</loreRecord>
     <unlocks>
       <li>Reveals mid-tier armor and accessories.</li>
     </unlocks>
@@ -362,6 +375,7 @@
       <li>Choir/Warden/elite summon classification.</li>
       <li>Specialized hostile role previews in the Protocol map.</li>
     </reveals>
+    <loreRecord>Elite patterns are the first sign that the breach has doctrine. It can answer with role, not only number: hunter, sniper, brute, relay, priest. The invasion stops sounding like noise and begins to resemble command.</loreRecord>
     <unlocks>
       <li>Reveals elite encounter and mid-tier sigil families.</li>
     </unlocks>
@@ -388,6 +402,7 @@
       <li>Mid-tier implant and weapon support chains.</li>
       <li>Abyssal Core family classification.</li>
     </reveals>
+    <loreRecord>A core is an organ of the external system, not a battery recovered from it. Integration means contact has moved from residue to function: a live piece of abyssal infrastructure compelled to work inside local rules.</loreRecord>
     <unlocks>
       <li>Reveals core-powered implants and mid-tier production requirements.</li>
     </unlocks>
@@ -414,6 +429,7 @@
       <li>Targeting Sigil, Cooling Lattice, Residue Capacitor and basic module diagnostics.</li>
       <li>Turret Systems category activation.</li>
     </reveals>
+    <loreRecord>A modular turret is a station where breach logic is cut into safe slots. Targeting, cooling and discharge become replaceable rituals, each one small enough to mount and dangerous enough to classify.</loreRecord>
     <unlocks>
       <li>Reveals basic modular turret chassis/modules.</li>
     </unlocks>
@@ -440,6 +456,7 @@
       <li>Boss-gated invocation rights.</li>
       <li>Higher encounter proof requirements.</li>
     </reveals>
+    <loreRecord>An archon sigil is not a trophy mark. It is a recorded permission event, the scar of an authority that was answered and survived long enough to be copied. Handling it means touching rank, not symbol.</loreRecord>
     <unlocks>
       <li>Reveals archon and boss-gated invocation rights.</li>
     </unlocks>
@@ -466,6 +483,7 @@
       <li>Reactor Saint / domain boss summon classification.</li>
       <li>Boss-tier ritual gates and risk language.</li>
     </reveals>
+    <loreRecord>A major invocation does not call a stronger creature. It addresses a domain-bearing function and waits to see what form the answer chooses. The body that arrives is only the most visible part of the reply.</loreRecord>
     <unlocks>
       <li>Reveals Reactor Saint and major-boss invocation families.</li>
     </unlocks>
@@ -492,6 +510,7 @@
       <li>Late Forge material gates.</li>
       <li>Dominion and Final Gate prerequisite language.</li>
     </reveals>
+    <loreRecord>Crown logic is the grammar of issued authority. It describes why some entities command matter without touching it, why certain shards behave like broken titles, and why victory over a bearer can still leave jurisdiction behind.</loreRecord>
     <unlocks>
       <li>Reveals crown-tier Forge logic and late resource recipes.</li>
     </unlocks>
@@ -518,6 +537,7 @@
       <li>Vesper Lance, Litany Grinder, Phalanx Driver, Gatebreaker Spiker and related systems.</li>
       <li>Anti-boss / anti-structure weapon role grouping.</li>
     </reveals>
+    <loreRecord>Heavy infernal systems are not improved weapons. They are mobile breach machinery with triggers attached, tools made for walls, bosses and the slow collapse of defenses that ordinary force cannot persuade.</loreRecord>
     <unlocks>
       <li>Reveals heavy infernal and anti-fortification weapons.</li>
     </unlocks>
@@ -544,6 +564,7 @@
       <li>Choir / Saint / Vesper body-mod families.</li>
       <li>Late surgery and Forge-linked implant gates.</li>
     </reveals>
+    <loreRecord>Advanced implants do not ask the body to heal around them. They ask it to become compatible with pressure, hierarchy and command. The reward is power; the cost is that biology begins to read like infrastructure.</loreRecord>
     <unlocks>
       <li>Reveals advanced implant procedures.</li>
     </unlocks>
@@ -570,6 +591,7 @@
       <li>Saint Aegis / Vesper Halo / high-tier protective gear classification.</li>
       <li>Boss-resistant apparel gates.</li>
     </reveals>
+    <loreRecord>Gatebreaker carapace logic treats armor as a siege doctrine worn on the body. It is made for arenas where bosses, anchors and rupture fields punish ordinary protection for being too honest.</loreRecord>
     <unlocks>
       <li>Reveals Gatebreaker and Saint-resistant armor families.</li>
     </unlocks>
@@ -596,6 +618,7 @@
       <li>Plasma Lance, Choir Arc, Harpoon, Vesper/Cinder style lockdown systems.</li>
       <li>Mid-late automated defense gates.</li>
     </reveals>
+    <loreRecord>Lockdown systems are the answer to a breach that refuses to stay in one place. They do not close the gate. They pin its movements, punish its extensions and turn hostile access into a targetable pattern.</loreRecord>
     <unlocks>
       <li>Reveals advanced turret module families.</li>
     </unlocks>
@@ -622,6 +645,7 @@
       <li>Tier V Dominion Slice access language.</li>
       <li>Hell-entry prerequisites and warnings.</li>
     </reveals>
+    <loreRecord>Dominion entry is not travel. It is synchronization with a hostile administrative layer until a place that should not be local becomes reachable. The gate does not open to Hell; it recognizes a route through authority.</loreRecord>
     <unlocks>
       <li>Reveals Dominion entry preparation and Hell-tier routing.</li>
     </unlocks>
@@ -648,6 +672,7 @@
       <li>Hell terrain, fissure, platform and side-architecture families.</li>
       <li>Dominion map-generation diagnostics.</li>
     </reveals>
+    <loreRecord>A Dominion Slice is not a map in the ordinary sense. Its terrain is a legal surface, its ruins are clauses, and its distances obey the pressure of the domain that cut them loose from common geography.</loreRecord>
     <unlocks>
       <li>Frames Dominion terrain, pockets, approach vectors and map hazards.</li>
     </unlocks>
@@ -674,6 +699,7 @@
       <li>Dominion transfer / containment logic.</li>
       <li>Hell encounter stability and cleanup diagnostics.</li>
     </reveals>
+    <loreRecord>A pocket is a held contradiction: a fragment of hostile place forced to persist without swallowing the map around it. Stabilization does not domesticate it. It only delays the moment when the pocket remembers what it belongs to.</loreRecord>
     <unlocks>
       <li>Reveals pocket runtime, exit handling and Dominion transition support.</li>
     </unlocks>
@@ -700,6 +726,7 @@
       <li>Anchor-law objective language.</li>
       <li>Dominion boss-map failure and cleanup signals.</li>
     </reveals>
+    <loreRecord>Anchors do not support the Dominion; they enforce it. Each one holds a rule in place, and every broken anchor leaves behind evidence that the domain was less a battlefield than a court with weapons.</loreRecord>
     <unlocks>
       <li>Frames Dominion anchors, heart pressure and collapse mechanics.</li>
     </unlocks>
@@ -726,6 +753,7 @@
       <li>Crowned Core armor / hellside protective gear.</li>
       <li>Tier V apparel and survival-frame gates.</li>
     </reveals>
+    <loreRecord>Survival frames are built for ground that has stopped pretending to be neutral. In the Dominion, atmosphere, metal and shadow can all become hostile procedure. The frame exists to keep a body legible under that law.</loreRecord>
     <unlocks>
       <li>Reveals Dominion survival armor and Crowned Core defensive patterns.</li>
     </unlocks>
@@ -752,6 +780,7 @@
       <li>High-tier Forge material families.</li>
       <li>Crown/Dominion reward classification.</li>
     </reveals>
+    <loreRecord>A crowned core is not harvested from a corpse. It is extracted from a defeated right of operation. The fragment still carries the posture of command, even after the bearer that housed it has failed.</loreRecord>
     <unlocks>
       <li>Reveals Crowned Core, Dominion Crown Shard and Hell-tier reward processing.</li>
     </unlocks>
@@ -778,6 +807,7 @@
       <li>Crown-compatible body procedures.</li>
       <li>Hellside biological reward gates.</li>
     </reveals>
+    <loreRecord>Dominion biology is flesh reorganized by jurisdiction. Organs become anchors, nerves become relays, and survival becomes a matter of how much alien law a body can host before it stops being merely alive.</loreRecord>
     <unlocks>
       <li>Reveals Dominion implant families.</li>
     </unlocks>
@@ -805,6 +835,7 @@
       <li>Tier VI event architecture and anchor families.</li>
       <li>Apex encounter preparation map.</li>
     </reveals>
+    <loreRecord>The Final Gate is not the largest breach. It is architecture with an enemy inside its blueprint, a structure whose purpose is to make invasion, arena and judgment indistinguishable from one another.</loreRecord>
     <unlocks>
       <li>Frames future Final Gate access.</li>
     </unlocks>
@@ -832,6 +863,7 @@
       <li>Final boss/event classification.</li>
       <li>Gate, anchor and wave integration logic.</li>
     </reveals>
+    <loreRecord>To invoke the Crowned Gate is to address infrastructure as if it were a sovereign. The response is not a monster entering the field, but the field itself learning how to fight back.</loreRecord>
     <unlocks>
       <li>Frames future Crowned Gate encounter access.</li>
     </unlocks>
@@ -859,6 +891,7 @@
       <li>Breach Cannon / Ultra Plasma / final anti-domain weapon classification.</li>
       <li>Tier VI Forge weapon gates.</li>
     </reveals>
+    <loreRecord>Apex weapons are built for entities whose bodies are interfaces rather than limits. Their violence is shaped to strike not only the target, but the permission that allows the target to remain present.</loreRecord>
     <unlocks>
       <li>Frames future apex weapon gates.</li>
     </unlocks>
@@ -886,6 +919,7 @@
       <li>Final anti-boss turret systems.</li>
       <li>Tier VI automated defense gates.</li>
     </reveals>
+    <loreRecord>Crownfire and sepulcher systems speak in funeral geometry: launch, burial, judgment, repeat. They are artillery for domains where impact alone is insufficient and the wound must be made official.</loreRecord>
     <unlocks>
       <li>Frames final turret systems.</li>
     </unlocks>
@@ -913,6 +947,7 @@
       <li>Specter Lash / Crownspike / Crownshard style schemas.</li>
       <li>Tier VII transition into Herald content.</li>
     </reveals>
+    <loreRecord>A heraldic fragment is a message pretending to be debris. It does not describe what has arrived. It announces that something higher has noticed the sequence of answers and may now begin to forecast itself.</loreRecord>
     <unlocks>
       <li>Frames Herald weapons and fragment interpretation.</li>
     </unlocks>
@@ -940,6 +975,7 @@
       <li>Heraldic weapon/implant support chains.</li>
       <li>Post-Dominion crisis preparation hooks.</li>
     </reveals>
+    <loreRecord>The Oblivion Choir does not sing to be heard. It arranges absence into harmony until command, memory and target priority begin to lose their edges. Interface is possible only because the silence has structure.</loreRecord>
     <unlocks>
       <li>Frames future Herald combat families.</li>
     </unlocks>
@@ -967,6 +1003,7 @@
       <li>Sanctifactor and severance-system hooks.</li>
       <li>Tier VIII post-endgame crisis reserve.</li>
     </reveals>
+    <loreRecord>Godshard evidence belongs to conflicts above ordinary abyssal rank. The fracture suggests a war of principles rather than armies, where heaven-like severance and abyssal dominion are only two readable edges of a larger break.</loreRecord>
     <unlocks>
       <li>Frames future schism, godshard and severance systems.</li>
     </unlocks>
@@ -994,6 +1031,7 @@
       <li>The One Behind the God future layer.</li>
       <li>Ultimate post-causality Protocol reserve.</li>
     </reveals>
+    <loreRecord>Beyond the gate, the last recognizable powers stop looking like rulers and begin to look like terminals. The terrible possibility is not that a god waits there, but that godhood was merely the final interface a mind could name.</loreRecord>
     <unlocks>
       <li>Frames ultimate continuation hook and hidden endgame reserve.</li>
     </unlocks>
