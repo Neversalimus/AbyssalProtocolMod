@@ -86,6 +86,7 @@ Actual code and assets win over this document.
 | Too much animation/motion | P2 | UI/VFX | Distracting or unreadable | Use restrained animation; keep state/action readable. |
 | Forge communion/attunement bars regress to generic or noisy styling | P3 | Forge UI | Important state bars either look out of place or become harder to read | Keep the procedural industrial segmented gauge style: dark trough, visible black segment gaps, restrained brass/ember framing, centered labels on a dark readable capsule, subtle animation only. Do not use `rect.ContractedBy(12f)` for labels inside 20–24px bars because it collapses label height. |
 | Forge Pattern records / Next milestones clipped wrapping | P2 | Forge UI | `Next pattern` or blocker lines lose their second line or overlap following rows | Use wrapped height with padding for Tiny text and advance Y from measured height; avoid hardcoded 22px rows for wrapped milestone/upcoming pattern labels. |
+| Hard-coded English in custom UI filters/status chips | P2 | Forge/Summoning/Protocol UI localization | Russian UI shows `Search`, `Selected pattern`, `Needs resources`, raw category names, or awkward mixed-language chips | Put all player-facing text behind Keyed translation helpers; scan custom UI source for literal labels after adding filters/search/status chips. |
 
 ## Boss bar risks
 
@@ -207,6 +208,7 @@ Actual code and assets win over this document.
 | Duplicate flat language keys | P1 | localization | RimWorld language report shows duplicate or broken translation data, often when same defName exists in multiple DefInjected folders | Scan all `Languages/<lang>/DefInjected/**` keys as a flat set before packaging; avoid duplicate PawnKind/ThingDef label entries with the same key. |
 | Orphan DefInjected keys for removed/renamed defs | P1 | localization/XML | RimWorld language report warns about translation errors even when XML parses | For every DefInjected key, verify the defName exists in the matching Def type; remove stale keys when defs are renamed or deleted. |
 | English leftovers in Russian visible labels | P2 | localization/UI | Russian UI still shows English names like boss titles, difficulty names, horde labels, or recipe job strings | Run a Latin-text scan over Russian label/title/header/button/jobString values after content batches. |
+| Russian plural forms in UI counts | P2 | localization/UI | Wrong endings such as `1 требований`, `2 требований`, or cramped requirement counters | Use Russian plural-aware helper logic for numeric UI counts: 1 требование, 2-4 требования, 5+/11-14 требований. |
 | Inconsistent tone with lore docs | P2/P3 | descriptions | generic demon/fantasy feel | Use techno-infernal, ritual-industrial tone. |
 | Text says implemented when content is planned | P2 | docs/UI | player/dev confusion | Mark planned/partial/implemented clearly. |
 | Too much lore in small UI cards | P2 | UI | unreadable or cluttered | Put concise gameplay requirements in UI; keep long lore in codex/descriptions. |

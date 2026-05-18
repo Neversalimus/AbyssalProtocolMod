@@ -3,7 +3,7 @@
   <ABY_CapacitorBay_Core>основной слот</ABY_CapacitorBay_Core>
   <ABY_CapacitorBay_Auxiliary>вспомогательный слот</ABY_CapacitorBay_Auxiliary>
   <ABY_CapacitorTier_None>нет</ABY_CapacitorTier_None>
-  <ABY_CapacitorTier_Ashbound>пеплосвязанный</ABY_CapacitorTier_Ashbound>
+  <ABY_CapacitorTier_Ashbound>пепельный</ABY_CapacitorTier_Ashbound>
   <ABY_CapacitorTier_Rift>разлом</ABY_CapacitorTier_Rift>
   <ABY_CapacitorTier_Crown>корона</ABY_CapacitorTier_Crown>
   <ABY_CapacitorSlot_Empty>пусто</ABY_CapacitorSlot_Empty>

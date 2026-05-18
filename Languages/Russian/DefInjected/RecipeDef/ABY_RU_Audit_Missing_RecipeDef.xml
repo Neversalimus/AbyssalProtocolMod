@@ -2,8 +2,8 @@
 <LanguageData>
   <ABY_CraftArchonSigil.jobString>Выполняется: выковать сигила архонта.</ABY_CraftArchonSigil.jobString>
   <ABY_CraftArchonSigil.label>выковать сигила архонта</ABY_CraftArchonSigil.label>
-  <ABY_CraftAshboundCapacitorModule.jobString>Выполняется: выковать пеплосвязанный модуль-конденсатор.</ABY_CraftAshboundCapacitorModule.jobString>
-  <ABY_CraftAshboundCapacitorModule.label>выковать пеплосвязанный модуль-конденсатор</ABY_CraftAshboundCapacitorModule.label>
+  <ABY_CraftAshboundCapacitorModule.jobString>Выполняется: выковать пепельный конденсатор.</ABY_CraftAshboundCapacitorModule.jobString>
+  <ABY_CraftAshboundCapacitorModule.label>выковать пепельный конденсатор</ABY_CraftAshboundCapacitorModule.label>
   <ABY_CraftCrownCondenserModule.jobString>Выполняется: выковать коронный модуль-конденсатор.</ABY_CraftCrownCondenserModule.jobString>
   <ABY_CraftCrownCondenserModule.label>выковать коронный модуль-конденсатор</ABY_CraftCrownCondenserModule.label>
   <ABY_CraftCrownStabilizerModule.jobString>Выполняется: выковать коронный модуль-стабилизатор.</ABY_CraftCrownStabilizerModule.jobString>
@@ -12,8 +12,8 @@
   <ABY_CraftCrudeStabilizerModule.label>выковать грубый модуль-стабилизатор</ABY_CraftCrudeStabilizerModule.label>
   <ABY_CraftDominionSigil.jobString>Выполняется: выковать сигила доминиона.</ABY_CraftDominionSigil.jobString>
   <ABY_CraftDominionSigil.label>выковать сигила доминиона</ABY_CraftDominionSigil.label>
-  <ABY_CraftEmberHoundSigil.jobString>Выполняется: выковать угольный гончая сигила.</ABY_CraftEmberHoundSigil.jobString>
-  <ABY_CraftEmberHoundSigil.label>выковать угольный гончая сигила</ABY_CraftEmberHoundSigil.label>
+  <ABY_CraftEmberHoundSigil.jobString>Выполняется: выковать сигилу угольных гончих.</ABY_CraftEmberHoundSigil.jobString>
+  <ABY_CraftEmberHoundSigil.label>выковать сигилу угольных гончих</ABY_CraftEmberHoundSigil.label>
   <ABY_CraftGatebreakerAnchorHarness.jobString>Выполняется: выковать проломщик-врат якорь харнесс.</ABY_CraftGatebreakerAnchorHarness.jobString>
   <ABY_CraftNullCantorFocusSling.jobString>Выполняется: выковать нулевой кантор фокус слинг.</ABY_CraftNullCantorFocusSling.jobString>
   <ABY_CraftNullProcessionVeil.jobString>Выполняется: выковать нулевой процессия веил.</ABY_CraftNullProcessionVeil.jobString>
@@ -29,9 +29,9 @@
   <ABY_CraftResonantStabilizerModule.label>выковать резонансный модуль-стабилизатор</ABY_CraftResonantStabilizerModule.label>
   <ABY_CraftRiftCapacitorModule.jobString>Выполняется: выковать разломный модуль-конденсатор.</ABY_CraftRiftCapacitorModule.jobString>
   <ABY_CraftRiftCapacitorModule.label>выковать разломный модуль-конденсатор</ABY_CraftRiftCapacitorModule.label>
-  <ABY_CraftSaintAegisCarapace.description>Производственная процедура Бездненного Протокола для результата: выковать святой эгида панцирь. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftSaintAegisCarapace.description>
-  <ABY_CraftSaintAegisCarapace.jobString>Выполняется: выковать святой эгида панцирь.</ABY_CraftSaintAegisCarapace.jobString>
-  <ABY_CraftSaintAegisCarapace.label>выковать святой эгида панцирь</ABY_CraftSaintAegisCarapace.label>
+  <ABY_CraftSaintAegisCarapace.description>Производственная процедура Бездненного Протокола для результата: выковать панцирь святого носителя Эгиды. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftSaintAegisCarapace.description>
+  <ABY_CraftSaintAegisCarapace.jobString>Выполняется: выковать панцирь святого носителя Эгиды.</ABY_CraftSaintAegisCarapace.jobString>
+  <ABY_CraftSaintAegisCarapace.label>выковать панцирь святого носителя Эгиды</ABY_CraftSaintAegisCarapace.label>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.description>Производственная процедура Бездненного Протокола для результата: выковать бездненный гарпун проектор. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_AbyssalHarpoonProjector.description>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>Выполняется: выковать бездненный гарпун проектор.</ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.label>выковать бездненный гарпун проектор</ABY_CraftTurretModule_AbyssalHarpoonProjector.label>

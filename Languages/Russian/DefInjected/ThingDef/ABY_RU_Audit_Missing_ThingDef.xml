@@ -16,7 +16,7 @@
   <ABY_AshChoirChargeProjectile.label>пепельный хоровой заряд</ABY_AshChoirChargeProjectile.label>
   <ABY_AshChoirLauncher.description>Элемент Бездненного Протокола: пепельный хоровой пускатель. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_AshChoirLauncher.description>
   <ABY_AshChoirLauncher.label>пепельный хоровой пускатель</ABY_AshChoirLauncher.label>
-  <ABY_AshboundCapacitorModule.label>пеплосвязанный модуль-конденсатор</ABY_AshboundCapacitorModule.label>
+  <ABY_AshboundCapacitorModule.label>пепельный конденсатор</ABY_AshboundCapacitorModule.label>
   <ABY_BreachBrute.description>Элемент Бездненного Протокола: громила пролома. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_BreachBrute.description>
   <ABY_BreachCannon.description>Элемент Бездненного Протокола: пушка пролома. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_BreachCannon.description>
   <ABY_BreachCannon.label>пушка пролома</ABY_BreachCannon.label>
@@ -145,7 +145,7 @@
   <ABY_DominionSootMoundA.label>сажа насыпь</ABY_DominionSootMoundA.label>
   <ABY_DominionSootPatchA.description>Элемент Бездненного Протокола: доминион сажа пятно. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_DominionSootPatchA.description>
   <ABY_DominionSootPatchA.label>доминион сажа пятно</ABY_DominionSootPatchA.label>
-  <ABY_EmberHoundSigil.label>угольный гончая сигила</ABY_EmberHoundSigil.label>
+  <ABY_EmberHoundSigil.label>сигила угольных гончих</ABY_EmberHoundSigil.label>
   <ABY_GateWarden.description>Элемент Бездненного Протокола: страж врат. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_GateWarden.description>
   <ABY_GatebreakerMaul.description>Элемент Бездненного Протокола: проломщик-врат молот. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_GatebreakerMaul.description>
   <ABY_GatebreakerMaul.label>проломщик-врат молот</ABY_GatebreakerMaul.label>
@@ -270,8 +270,8 @@
   <ABY_Mote_NullArcDischargerBeam.label>нулевой дуга цепной луч сегмент</ABY_Mote_NullArcDischargerBeam.label>
   <ABY_Mote_NullArcDischargerImpact.label>нулевой дуга емп импакт вспышка</ABY_Mote_NullArcDischargerImpact.label>
   <ABY_Mote_NullArcDischargerMuzzle.label>нулевой дуга разрядник муззле вспышка</ABY_Mote_NullArcDischargerMuzzle.label>
-  <ABY_Mote_OblivionChoirBranchCore.label>забвение хоровой бранкх ядро</ABY_Mote_OblivionChoirBranchCore.label>
-  <ABY_Mote_OblivionChoirBranchHalo.label>забвение хоровой бранкх ореол</ABY_Mote_OblivionChoirBranchHalo.label>
+  <ABY_Mote_OblivionChoirBranchCore.label>ядро ветви Хора Забвения</ABY_Mote_OblivionChoirBranchCore.label>
+  <ABY_Mote_OblivionChoirBranchHalo.label>ореол ветви Хора Забвения</ABY_Mote_OblivionChoirBranchHalo.label>
   <ABY_Mote_PlasmaLanceImpactAnimated.label>плазменный копьё реактор импакт</ABY_Mote_PlasmaLanceImpactAnimated.label>
   <ABY_Mote_PlasmaLanceMuzzleAnimated.label>плазменный копьё реактор муззле</ABY_Mote_PlasmaLanceMuzzleAnimated.label>
   <ABY_Mote_ReactorSaintBarrageScorch.label>реактор святой залп ожог</ABY_Mote_ReactorSaintBarrageScorch.label>
@@ -281,11 +281,11 @@
   <ABY_Mote_ReactorSaintLanceAfterimage.label>реактор святой копьё послеобраз</ABY_Mote_ReactorSaintLanceAfterimage.label>
   <ABY_Mote_ReactorSaintLanceTrailCore.label>реактор святой копьё след ядро</ABY_Mote_ReactorSaintLanceTrailCore.label>
   <ABY_Mote_ReactorSaintLanceTrailHalo.label>реактор святой копьё след ореол</ABY_Mote_ReactorSaintLanceTrailHalo.label>
-  <ABY_Mote_RiftBladeDashEntry.label>рифт бладе рывок вход</ABY_Mote_RiftBladeDashEntry.label>
-  <ABY_Mote_RiftBladeDashExit.label>рифт бладе рывок выход</ABY_Mote_RiftBladeDashExit.label>
-  <ABY_Mote_RiftBladeDashShard.label>рифт бладе рывок осколок</ABY_Mote_RiftBladeDashShard.label>
-  <ABY_Mote_RiftBladeDashSpark.label>рифт бладе рывок искра</ABY_Mote_RiftBladeDashSpark.label>
-  <ABY_Mote_RiftBladeDashTrail.label>рифт бладе рывок след</ABY_Mote_RiftBladeDashTrail.label>
+  <ABY_Mote_RiftBladeDashEntry.label>вход рывка рифт-клинка</ABY_Mote_RiftBladeDashEntry.label>
+  <ABY_Mote_RiftBladeDashExit.label>выход рывка рифт-клинка</ABY_Mote_RiftBladeDashExit.label>
+  <ABY_Mote_RiftBladeDashShard.label>осколок рывка рифт-клинка</ABY_Mote_RiftBladeDashShard.label>
+  <ABY_Mote_RiftBladeDashSpark.label>искра рывка рифт-клинка</ABY_Mote_RiftBladeDashSpark.label>
+  <ABY_Mote_RiftBladeDashTrail.label>след рывка рифт-клинка</ABY_Mote_RiftBladeDashTrail.label>
   <ABY_Mote_RiftFlakBloomBurst.label>рифт зенитный раскрытие вспышка</ABY_Mote_RiftFlakBloomBurst.label>
   <ABY_Mote_RiftFlakBloomMuzzle.label>рифт зенитный раскрытие муззле пуфф</ABY_Mote_RiftFlakBloomMuzzle.label>
   <ABY_Mote_RiftFlakShardImpact.label>рифт зенитный микро осколок импакт</ABY_Mote_RiftFlakShardImpact.label>
@@ -316,9 +316,9 @@
   <ABY_NullPriest.description>Элемент Бездненного Протокола: нулевой жрец. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_NullPriest.description>
   <ABY_NullbrandGlaive.description>Элемент Бездненного Протокола: нулевая-метка глефа. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_NullbrandGlaive.description>
   <ABY_NullbrandGlaive.label>нулевая-метка глефа</ABY_NullbrandGlaive.label>
-  <ABY_OblivionChoir.label>забвение хоровой</ABY_OblivionChoir.label>
-  <ABY_OblivionChoirCell.label>хоровая ячейка</ABY_OblivionChoirCell.label>
-  <ABY_OblivionChoirCoreProjectile.label>забвение ядро</ABY_OblivionChoirCoreProjectile.label>
+  <ABY_OblivionChoir.label>хор забвения</ABY_OblivionChoir.label>
+  <ABY_OblivionChoirCell.label>ячейка Хора Забвения</ABY_OblivionChoirCell.label>
+  <ABY_OblivionChoirCoreProjectile.label>ядро Хора Забвения</ABY_OblivionChoirCoreProjectile.label>
   <ABY_Projectile_RuptureSentence.label>разрыв приговор снаряд</ABY_Projectile_RuptureSentence.label>
   <ABY_ProtocolNexus.description>Элемент Бездненного Протокола: нексус Бездненного Протокола. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_ProtocolNexus.description>
   <ABY_ProtocolNexus.label>нексус Бездненного Протокола</ABY_ProtocolNexus.label>
@@ -328,9 +328,9 @@
   <ABY_ReactorSaintCocoon.label>кокон реакторного святого</ABY_ReactorSaintCocoon.label>
   <ABY_ReliquaryArchonBeast.description>Элемент Бездненного Протокола: реликварный зверь-архонт. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_ReliquaryArchonBeast.description>
   <ABY_ResonantStabilizerModule.label>резонансный модуль-стабилизатор</ABY_ResonantStabilizerModule.label>
-  <ABY_RiftBlade.label>рифт бладе</ABY_RiftBlade.label>
+  <ABY_RiftBlade.label>рифт клинок</ABY_RiftBlade.label>
   <ABY_RiftCapacitorModule.label>разломный модуль-конденсатор</ABY_RiftCapacitorModule.label>
-  <ABY_RiftCarbine.label>рифт карбине</ABY_RiftCarbine.label>
+  <ABY_RiftCarbine.label>рифт карабин</ABY_RiftCarbine.label>
   <ABY_RiftCarbineBeamBurst.label>рифт луч вспышка</ABY_RiftCarbineBeamBurst.label>
   <ABY_RiftDagger.description>Элемент Бездненного Протокола: рифт кинжал. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_RiftDagger.description>
   <ABY_RiftDagger.label>рифт кинжал</ABY_RiftDagger.label>
@@ -346,8 +346,8 @@
   <ABY_RuptureCrownAnchor_Destabilized.description>Элемент Бездненного Протокола: дестабилизированный разрыв коронный якорь. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_RuptureCrownAnchor_Destabilized.description>
   <ABY_RuptureCrownAnchor_Destabilized.label>дестабилизированный разрыв коронный якорь</ABY_RuptureCrownAnchor_Destabilized.label>
   <ABY_RupturePortal.label>портал разрыва</ABY_RupturePortal.label>
-  <ABY_SaintAegisCarapace.description>Элемент Бездненного Протокола: святой эгида панцирь. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_SaintAegisCarapace.description>
-  <ABY_SaintAegisCarapace.label>святой эгида панцирь</ABY_SaintAegisCarapace.label>
+  <ABY_SaintAegisCarapace.description>Панцирь святого носителя Эгиды — тяжёлая бронеоболочка, собранная по реакторно-сакральной логике Бездненного Протокола. Используется в боевой прогрессии и доменных системах мода.</ABY_SaintAegisCarapace.description>
+  <ABY_SaintAegisCarapace.label>панцирь святого носителя Эгиды</ABY_SaintAegisCarapace.label>
   <ABY_SiegeIdol.description>Элемент Бездненного Протокола: осадный идол. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_SiegeIdol.description>
   <ABY_SiegeIdolBreachShell.label>осадный пролом оболочка</ABY_SiegeIdolBreachShell.label>
   <ABY_SiegeIdolPlasmaBolt.label>осадный плазменный заряд</ABY_SiegeIdolPlasmaBolt.label>
@@ -386,9 +386,9 @@
   <ABY_TurretSanctifiedPrismBolt.label>освящённый призма заряд</ABY_TurretSanctifiedPrismBolt.label>
   <ABY_TurretSepulcherRailSpike.label>сепулкхер рельс шип</ABY_TurretSepulcherRailSpike.label>
   <ABY_TurretVesperLanceBolt.label>веспер санктион копьё</ABY_TurretVesperLanceBolt.label>
-  <ABY_UltraPlasmaBeamBurst.label>ултра плазменный луч</ABY_UltraPlasmaBeamBurst.label>
-  <ABY_UltraPlasmaBolt.label>ултра плазменный заряд</ABY_UltraPlasmaBolt.label>
-  <ABY_UltraPlasmaRifle.label>ултра плазменный винтовка</ABY_UltraPlasmaRifle.label>
+  <ABY_UltraPlasmaBeamBurst.label>ультра-плазменный луч</ABY_UltraPlasmaBeamBurst.label>
+  <ABY_UltraPlasmaBolt.label>ультра-плазменный заряд</ABY_UltraPlasmaBolt.label>
+  <ABY_UltraPlasmaRifle.label>ультра плазменная винтовка</ABY_UltraPlasmaRifle.label>
   <ABY_UnstableBreachSigil.label>сигила нестабильного пролома</ABY_UnstableBreachSigil.label>
   <ABY_VerdictTendonSpine.description>Элемент Бездненного Протокола: сухожильный хребет приговора. Используется в ритуально-индустриальной инфраструктуре, боевой прогрессии или доменных системах мода.</ABY_VerdictTendonSpine.description>
   <ABY_VerdictTendonSpine.label>сухожильный хребет приговора</ABY_VerdictTendonSpine.label>

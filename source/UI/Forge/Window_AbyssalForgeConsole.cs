@@ -572,7 +572,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < options.Count; i++)
             {
                 float labelWidth = Text.CalcSize(options[i].label).x + 24f;
-                widths[i] = Mathf.Clamp(labelWidth, 54f, 108f);
+                widths[i] = Mathf.Clamp(labelWidth, 54f, 124f);
                 totalWidth += widths[i] + gap;
             }
 
@@ -606,10 +606,10 @@ namespace AbyssalProtocol
             {
                 return new List<ForgeFilterOption>
                 {
-                    new ForgeFilterOption(CoreFilterAll, "All", neutral),
-                    new ForgeFilterOption(CoreFilterResidue, "Residue", forge),
-                    new ForgeFilterOption(CoreFilterCapacitor, "Capacitor", capacitor),
-                    new ForgeFilterOption(CoreFilterStabilizer, "Stabilizer", stabilizer)
+                    new ForgeFilterOption(CoreFilterAll, GetSubfilterLabel(AbyssalForgeProgressUtility.CoreCategory, CoreFilterAll), neutral),
+                    new ForgeFilterOption(CoreFilterResidue, GetSubfilterLabel(AbyssalForgeProgressUtility.CoreCategory, CoreFilterResidue), forge),
+                    new ForgeFilterOption(CoreFilterCapacitor, GetSubfilterLabel(AbyssalForgeProgressUtility.CoreCategory, CoreFilterCapacitor), capacitor),
+                    new ForgeFilterOption(CoreFilterStabilizer, GetSubfilterLabel(AbyssalForgeProgressUtility.CoreCategory, CoreFilterStabilizer), stabilizer)
                 };
             }
 
@@ -617,10 +617,10 @@ namespace AbyssalProtocol
             {
                 return new List<ForgeFilterOption>
                 {
-                    new ForgeFilterOption(WeaponsFilterAll, "All", neutral),
-                    new ForgeFilterOption(WeaponsFilterMelee, "Melee", weapon),
-                    new ForgeFilterOption(WeaponsFilterRanged, "Ranged", weapon),
-                    new ForgeFilterOption(WeaponsFilterHerald, "Herald", herald)
+                    new ForgeFilterOption(WeaponsFilterAll, GetSubfilterLabel(AbyssalForgeProgressUtility.WeaponsCategory, WeaponsFilterAll), neutral),
+                    new ForgeFilterOption(WeaponsFilterMelee, GetSubfilterLabel(AbyssalForgeProgressUtility.WeaponsCategory, WeaponsFilterMelee), weapon),
+                    new ForgeFilterOption(WeaponsFilterRanged, GetSubfilterLabel(AbyssalForgeProgressUtility.WeaponsCategory, WeaponsFilterRanged), weapon),
+                    new ForgeFilterOption(WeaponsFilterHerald, GetSubfilterLabel(AbyssalForgeProgressUtility.WeaponsCategory, WeaponsFilterHerald), herald)
                 };
             }
 
@@ -628,13 +628,13 @@ namespace AbyssalProtocol
             {
                 return new List<ForgeFilterOption>
                 {
-                    new ForgeFilterOption(ArmorFilterAll, "All", neutral),
-                    new ForgeFilterOption(ArmorFilterArmor, "Armor", armor),
-                    new ForgeFilterOption(ArmorFilterHelmet, "Helmet", armor),
-                    new ForgeFilterOption(ArmorFilterGloves, "Gloves", armor),
-                    new ForgeFilterOption(ArmorFilterVambraces, "Vambraces", armor),
-                    new ForgeFilterOption(ArmorFilterPack, "Pack", armor),
-                    new ForgeFilterOption(ArmorFilterBoots, "Boots", armor)
+                    new ForgeFilterOption(ArmorFilterAll, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterAll), neutral),
+                    new ForgeFilterOption(ArmorFilterArmor, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterArmor), armor),
+                    new ForgeFilterOption(ArmorFilterHelmet, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterHelmet), armor),
+                    new ForgeFilterOption(ArmorFilterGloves, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterGloves), armor),
+                    new ForgeFilterOption(ArmorFilterVambraces, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterVambraces), armor),
+                    new ForgeFilterOption(ArmorFilterPack, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterPack), armor),
+                    new ForgeFilterOption(ArmorFilterBoots, GetSubfilterLabel(AbyssalForgeProgressUtility.ArmorCategory, ArmorFilterBoots), armor)
                 };
             }
 
@@ -642,15 +642,15 @@ namespace AbyssalProtocol
             {
                 return new List<ForgeFilterOption>
                 {
-                    new ForgeFilterOption(ImplantsFilterAll, "All", neutral),
-                    new ForgeFilterOption(ImplantsFilterBrain, "Brain", implant),
-                    new ForgeFilterOption(ImplantsFilterEyes, "Eyes", implant),
-                    new ForgeFilterOption(ImplantsFilterBody, "Body", implant),
-                    new ForgeFilterOption(ImplantsFilterArms, "Arms", implant),
-                    new ForgeFilterOption(ImplantsFilterLegs, "Legs", implant),
-                    new ForgeFilterOption(ImplantsFilterNeck, "Neck", implant),
-                    new ForgeFilterOption(ImplantsFilterSpine, "Spine", implant),
-                    new ForgeFilterOption(ImplantsFilterOrgans, "Organs", implant)
+                    new ForgeFilterOption(ImplantsFilterAll, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterAll), neutral),
+                    new ForgeFilterOption(ImplantsFilterBrain, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterBrain), implant),
+                    new ForgeFilterOption(ImplantsFilterEyes, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterEyes), implant),
+                    new ForgeFilterOption(ImplantsFilterBody, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterBody), implant),
+                    new ForgeFilterOption(ImplantsFilterArms, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterArms), implant),
+                    new ForgeFilterOption(ImplantsFilterLegs, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterLegs), implant),
+                    new ForgeFilterOption(ImplantsFilterNeck, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterNeck), implant),
+                    new ForgeFilterOption(ImplantsFilterSpine, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterSpine), implant),
+                    new ForgeFilterOption(ImplantsFilterOrgans, GetSubfilterLabel(AbyssalForgeProgressUtility.ImplantsCategory, ImplantsFilterOrgans), implant)
                 };
             }
 
@@ -676,6 +676,51 @@ namespace AbyssalProtocol
             if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return selectedImplantsFilter;
             if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return selectedTurretSystemsFilter;
             return string.Empty;
+        }
+
+        private static string GetSubfilterLabel(string category, string filter)
+        {
+            if (category == AbyssalForgeProgressUtility.CoreCategory)
+            {
+                if (filter == CoreFilterResidue) return TranslateOrFallback("ABY_ForgeSubfilter_Residue", "Residue");
+                if (filter == CoreFilterCapacitor) return TranslateOrFallback("ABY_ForgeSubfilter_Capacitor", "Capacitor");
+                if (filter == CoreFilterStabilizer) return TranslateOrFallback("ABY_ForgeSubfilter_Stabilizer", "Stabilizer");
+                return TranslateOrFallback("ABY_ForgeSubfilter_All", "All");
+            }
+
+            if (category == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                if (filter == WeaponsFilterMelee) return TranslateOrFallback("ABY_ForgeSubfilter_Melee", "Melee");
+                if (filter == WeaponsFilterRanged) return TranslateOrFallback("ABY_ForgeSubfilter_Ranged", "Ranged");
+                if (filter == WeaponsFilterHerald) return TranslateOrFallback("ABY_ForgeSubfilter_Herald", "Herald");
+                return TranslateOrFallback("ABY_ForgeSubfilter_All", "All");
+            }
+
+            if (category == AbyssalForgeProgressUtility.ArmorCategory)
+            {
+                if (filter == ArmorFilterArmor) return TranslateOrFallback("ABY_ForgeSubfilter_Armor", "Armor");
+                if (filter == ArmorFilterHelmet) return TranslateOrFallback("ABY_ForgeSubfilter_Helmet", "Helmet");
+                if (filter == ArmorFilterGloves) return TranslateOrFallback("ABY_ForgeSubfilter_Gloves", "Gloves");
+                if (filter == ArmorFilterVambraces) return TranslateOrFallback("ABY_ForgeSubfilter_Vambraces", "Vambraces");
+                if (filter == ArmorFilterPack) return TranslateOrFallback("ABY_ForgeSubfilter_Pack", "Pack");
+                if (filter == ArmorFilterBoots) return TranslateOrFallback("ABY_ForgeSubfilter_Boots", "Boots");
+                return TranslateOrFallback("ABY_ForgeSubfilter_All", "All");
+            }
+
+            if (category == AbyssalForgeProgressUtility.ImplantsCategory)
+            {
+                if (filter == ImplantsFilterBrain) return TranslateOrFallback("ABY_ForgeSubfilter_Brain", "Brain");
+                if (filter == ImplantsFilterEyes) return TranslateOrFallback("ABY_ForgeSubfilter_Eyes", "Eyes");
+                if (filter == ImplantsFilterBody) return TranslateOrFallback("ABY_ForgeSubfilter_Body", "Body");
+                if (filter == ImplantsFilterArms) return TranslateOrFallback("ABY_ForgeSubfilter_Arms", "Arms");
+                if (filter == ImplantsFilterLegs) return TranslateOrFallback("ABY_ForgeSubfilter_Legs", "Legs");
+                if (filter == ImplantsFilterNeck) return TranslateOrFallback("ABY_ForgeSubfilter_Neck", "Neck");
+                if (filter == ImplantsFilterSpine) return TranslateOrFallback("ABY_ForgeSubfilter_Spine", "Spine");
+                if (filter == ImplantsFilterOrgans) return TranslateOrFallback("ABY_ForgeSubfilter_Organs", "Organs");
+                return TranslateOrFallback("ABY_ForgeSubfilter_All", "All");
+            }
+
+            return filter ?? string.Empty;
         }
 
         private void SetSelectedSubfilter(string filter)
@@ -729,28 +774,28 @@ namespace AbyssalProtocol
         {
             if (category == AbyssalForgeProgressUtility.CoreCategory)
             {
-                if (filter == CoreFilterResidue) return "Show residue processing and residue-routing forge infrastructure.";
-                if (filter == CoreFilterCapacitor) return "Show capacitor and energy storage modules.";
-                if (filter == CoreFilterStabilizer) return "Show circle stabilizer modules.";
-                return "Show all forge core infrastructure patterns.";
+                if (filter == CoreFilterResidue) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Residue", "Show residue processing and residue-routing forge infrastructure.");
+                if (filter == CoreFilterCapacitor) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Capacitor", "Show capacitor and energy storage modules.");
+                if (filter == CoreFilterStabilizer) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Stabilizer", "Show circle stabilizer modules.");
+                return TranslateOrFallback("ABY_ForgeSubfilterTooltip_CoreAll", "Show all forge core infrastructure patterns.");
             }
 
             if (category == AbyssalForgeProgressUtility.WeaponsCategory)
             {
-                if (filter == WeaponsFilterMelee) return "Show melee weapons.";
-                if (filter == WeaponsFilterRanged) return "Show ranged weapons.";
-                if (filter == WeaponsFilterHerald) return "Show Herald-grade weapons moved into the Weapons category.";
-                return "Show all weapon patterns, including Herald-grade weapons.";
+                if (filter == WeaponsFilterMelee) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Melee", "Show melee weapons.");
+                if (filter == WeaponsFilterRanged) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Ranged", "Show ranged weapons.");
+                if (filter == WeaponsFilterHerald) return TranslateOrFallback("ABY_ForgeSubfilterTooltip_Herald", "Show Herald-grade weapons moved into the Weapons category.");
+                return TranslateOrFallback("ABY_ForgeSubfilterTooltip_WeaponsAll", "Show all weapon patterns, including Herald-grade weapons.");
             }
 
             if (category == AbyssalForgeProgressUtility.ArmorCategory)
             {
-                return "Show " + filter.ToLowerInvariant() + " armor slot patterns.";
+                return TranslateOrFallback("ABY_ForgeSubfilterTooltip_ArmorGeneric", "Show {0} armor slot patterns.", GetSubfilterLabel(category, filter).ToLowerInvariant());
             }
 
             if (category == AbyssalForgeProgressUtility.ImplantsCategory)
             {
-                return "Show " + filter.ToLowerInvariant() + " implant procedures.";
+                return TranslateOrFallback("ABY_ForgeSubfilterTooltip_ImplantGeneric", "Show {0} implant procedures.", GetSubfilterLabel(category, filter).ToLowerInvariant());
             }
 
             if (category == AbyssalForgeProgressUtility.TurretSystemsCategory)
@@ -1539,7 +1584,7 @@ namespace AbyssalProtocol
                 Rect emptyRect = new Rect(0f, 0f, contentWidth, 70f);
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
                 Text.Font = GameFont.Small;
-                ABY_UIPolishUtility.SafeLabel(emptyRect.ContractedBy(12f), "No forge patterns match the current search/filter.");
+                ABY_UIPolishUtility.SafeLabel(emptyRect.ContractedBy(12f), TranslateOrFallback("ABY_ForgeNoPatternsMatch", "No forge patterns match the current search/filter."));
                 GUI.color = Color.white;
             }
             else
@@ -1663,6 +1708,74 @@ namespace AbyssalProtocol
             }
         }
 
+        private static string TranslateOrFallback(string key, string fallback)
+        {
+            if (key.NullOrEmpty())
+            {
+                return fallback ?? string.Empty;
+            }
+
+            try
+            {
+                string translated = key.Translate();
+                if (!translated.NullOrEmpty() && translated != key)
+                {
+                    return translated;
+                }
+            }
+            catch
+            {
+            }
+
+            return fallback ?? key;
+        }
+
+        private static string TranslateOrFallback(string key, string fallbackFormat, params object[] args)
+        {
+            string format = TranslateOrFallback(key, fallbackFormat);
+            try
+            {
+                return string.Format(format, args ?? new object[0]);
+            }
+            catch
+            {
+                return fallbackFormat ?? key ?? string.Empty;
+            }
+        }
+
+        private static string GetRussianPluralAwareRequirementKey(string baseKey, int count)
+        {
+            int abs = Math.Abs(count);
+            int lastTwo = abs % 100;
+            int last = abs % 10;
+            if (lastTwo >= 11 && lastTwo <= 14)
+            {
+                return baseKey + "_Many";
+            }
+
+            if (last == 1)
+            {
+                return baseKey + "_One";
+            }
+
+            if (last >= 2 && last <= 4)
+            {
+                return baseKey + "_Few";
+            }
+
+            return baseKey + "_Many";
+        }
+
+        private static string FormatRequirementCount(int count)
+        {
+            return TranslateOrFallback(GetRussianPluralAwareRequirementKey("ABY_ForgeRequirementCount", count), "{0} requirements", count);
+        }
+
+        private static string FormatMoreRequirements(int count)
+        {
+            return TranslateOrFallback(GetRussianPluralAwareRequirementKey("ABY_ForgeMoreRequirements", count), "+{0} more requirements", count);
+        }
+
         private void ClearPatternStatusCache()
         {
             patternStatusCache.Clear();
@@ -1713,10 +1826,10 @@ namespace AbyssalProtocol
             string researchSummary = BuildMissingResearchSummary(recipe);
             if (!researchSummary.NullOrEmpty())
             {
-                return CompactTextForCard("Research: " + researchSummary, 24);
+                return CompactTextForCard(TranslateOrFallback("ABY_ForgePatternResearchShort", "Research: {0}", researchSummary), 24);
             }
 
-            return "Unavailable";
+            return TranslateOrFallback("ABY_ForgePatternUnavailable", "Unavailable");
         }
 
         private static string BuildRecipeUnavailableDetailLine(RecipeDef recipe)
@@ -1724,10 +1837,10 @@ namespace AbyssalProtocol
             string researchSummary = BuildMissingResearchSummary(recipe);
             if (!researchSummary.NullOrEmpty())
             {
-                return "Research required: " + researchSummary;
+                return TranslateOrFallback("ABY_ForgePatternResearchRequiredDetail", "Research required: {0}", researchSummary);
             }
 
-            return "Unavailable on this forge";
+            return TranslateOrFallback("ABY_ForgePatternUnavailableOnForge", "Unavailable on this forge");
         }
 
         private static string BuildRecipeUnavailableTooltip(RecipeDef recipe)
@@ -1735,10 +1848,10 @@ namespace AbyssalProtocol
             string researchSummary = BuildMissingResearchSummary(recipe);
             if (!researchSummary.NullOrEmpty())
             {
-                return "Required research:\n" + researchSummary;
+                return TranslateOrFallback("ABY_ForgePatternRequiredResearchTooltip", "Required research:\n{0}", researchSummary);
             }
 
-            return "This pattern is unlocked, but the recipe is not currently available on this Forge.";
+            return TranslateOrFallback("ABY_ForgePatternUnavailableTooltip", "This pattern is unlocked, but the recipe is not currently available on this Forge.");
         }
 
         private static string BuildMissingResearchSummary(RecipeDef recipe)
@@ -1795,7 +1908,7 @@ namespace AbyssalProtocol
             float[] widths = new float[options.Count];
             for (int i = 0; i < options.Count; i++)
             {
-                widths[i] = Mathf.Clamp(Text.CalcSize(options[i].label).x + 18f, 46f, 112f);
+                widths[i] = Mathf.Clamp(Text.CalcSize(options[i].label).x + 18f, 46f, 138f);
                 totalWidth += widths[i] + gap;
             }
 
@@ -1822,11 +1935,11 @@ namespace AbyssalProtocol
             int nexus = CountStatus(statusByRecipe, ForgePatternStatus.NexusLocked);
             return new List<ForgeFilterOption>
             {
-                new ForgeFilterOption(StatusFilterAll, "All " + all, new Color(0.72f, 0.66f, 0.56f, 1f)),
-                new ForgeFilterOption(StatusFilterCraftable, "Craftable " + craftable, new Color(0.45f, 0.88f, 0.48f, 1f)),
-                new ForgeFilterOption(StatusFilterMissing, "Needs resources " + missing, new Color(0.95f, 0.62f, 0.28f, 1f)),
-                new ForgeFilterOption(StatusFilterLocked, "Locked " + locked, new Color(0.82f, 0.38f, 0.30f, 1f)),
-                new ForgeFilterOption(StatusFilterNexus, "Nexus " + nexus, new Color(0.74f, 0.50f, 0.92f, 1f))
+                new ForgeFilterOption(StatusFilterAll, TranslateOrFallback("ABY_ForgeStatus_All", "All {0}", all), new Color(0.72f, 0.66f, 0.56f, 1f)),
+                new ForgeFilterOption(StatusFilterCraftable, TranslateOrFallback("ABY_ForgeStatus_Craftable", "Craftable {0}", craftable), new Color(0.45f, 0.88f, 0.48f, 1f)),
+                new ForgeFilterOption(StatusFilterMissing, TranslateOrFallback("ABY_ForgeStatus_NeedsResources", "Needs: {0}", FormatRequirementCount(missing)), new Color(0.95f, 0.62f, 0.28f, 1f)),
+                new ForgeFilterOption(StatusFilterLocked, TranslateOrFallback("ABY_ForgeStatus_Locked", "Locked {0}", locked), new Color(0.82f, 0.38f, 0.30f, 1f)),
+                new ForgeFilterOption(StatusFilterNexus, TranslateOrFallback("ABY_ForgeStatus_Nexus", "Nexus {0}", nexus), new Color(0.74f, 0.50f, 0.92f, 1f))
             };
         }
 
@@ -1889,11 +2002,11 @@ namespace AbyssalProtocol
 
         private static string GetStatusFilterTooltip(string filter)
         {
-            if (filter == StatusFilterCraftable) return "Show decoded, unlocked patterns with all currently counted ingredients available.";
-            if (filter == StatusFilterMissing) return "Show unlocked patterns that still need ingredients. This is informational only: bills can still be queued and RimWorld will resolve materials through the normal bill system.";
-            if (filter == StatusFilterLocked) return "Show decoded patterns blocked by residue, research, facility, or normal recipe availability.";
-            if (filter == StatusFilterNexus) return "Show patterns that still need Protocol Nexus decoding.";
-            return "Show every pattern matching the current category, subfilter, and search.";
+            if (filter == StatusFilterCraftable) return TranslateOrFallback("ABY_ForgeStatusTooltip_Craftable", "Show decoded, unlocked patterns with all currently counted ingredients available.");
+            if (filter == StatusFilterMissing) return TranslateOrFallback("ABY_ForgeStatusTooltip_NeedsResources", "Show unlocked patterns that still need ingredients. This is informational only: bills can still be queued and RimWorld will resolve materials through the normal bill system.");
+            if (filter == StatusFilterLocked) return TranslateOrFallback("ABY_ForgeStatusTooltip_Locked", "Show decoded patterns blocked by residue, research, facility, or normal recipe availability.");
+            if (filter == StatusFilterNexus) return TranslateOrFallback("ABY_ForgeStatusTooltip_Nexus", "Show patterns that still need Protocol Nexus decoding.");
+            return TranslateOrFallback("ABY_ForgeStatusTooltip_All", "Show every pattern matching the current category, subfilter, and search.");
         }
 
         private void DrawPatternSearchRow(Rect rect, int shownCount, int totalCount)
@@ -1906,7 +2019,7 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.MiddleLeft;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(labelRect, "Search");
+            ABY_UIPolishUtility.SafeLabel(labelRect, TranslateOrFallback("ABY_ForgeSearchLabel", "Search"));
 
             Rect fieldRect = new Rect(labelRect.xMax + 4f, rect.y + 5f, Mathf.Max(120f, rect.width - labelWidth - 176f), rect.height - 10f);
             string previous = patternSearchText ?? string.Empty;
@@ -1920,12 +2033,12 @@ namespace AbyssalProtocol
             if (patternSearchText.NullOrEmpty() && !Mouse.IsOver(fieldRect) && GUI.GetNameOfFocusedControl() != "ABYForgeSearch")
             {
                 GUI.color = new Color(0.70f, 0.62f, 0.56f, 0.58f);
-                ABY_UIPolishUtility.SafeLabel(fieldRect.ContractedBy(4f, 1f), "name, role, material…");
+                ABY_UIPolishUtility.SafeLabel(fieldRect.ContractedBy(4f, 1f), TranslateOrFallback("ABY_ForgeSearchPlaceholder", "name, role, material…"));
                 GUI.color = Color.white;
             }
 
             Rect clearRect = new Rect(fieldRect.xMax + 8f, rect.y + 4f, 58f, rect.height - 8f);
-            if (AbyssalStyledWidgets.TextButton(clearRect, "Clear", !patternSearchText.NullOrEmpty()))
+            if (AbyssalStyledWidgets.TextButton(clearRect, TranslateOrFallback("ABY_ForgeSearchClear", "Clear"), !patternSearchText.NullOrEmpty()))
             {
                 patternSearchText = string.Empty;
                 patternScrollPosition = Vector2.zero;
@@ -2216,7 +2329,7 @@ namespace AbyssalProtocol
             if (entries.Count > shownEntries)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 146f + shownEntries * 17f, rect.width - 142f, 17f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 146f + shownEntries * 17f, rect.width - 142f, 17f), FormatMoreRequirements(entries.Count - shownEntries));
                 GUI.color = Color.white;
             }
 
@@ -2394,7 +2507,7 @@ namespace AbyssalProtocol
             if (recipe == null)
             {
                 AbyssalForgeConsoleArt.DrawPanel(rect, false);
-                ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(10f), "Missing forge pattern");
+                ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(10f), TranslateOrFallback("ABY_ForgeMissingPattern", "Missing forge pattern"));
                 return;
             }
 
@@ -2458,7 +2571,7 @@ namespace AbyssalProtocol
             if (entries.Count > shownEntries)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 104f + shownEntries * 18f, rect.width - 20f, 18f), "ABY_ForgePatternMoreRequirements".Translate(entries.Count - shownEntries));
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 104f + shownEntries * 18f, rect.width - 20f, 18f), FormatMoreRequirements(entries.Count - shownEntries));
                 GUI.color = Color.white;
             }
 
@@ -2588,7 +2701,7 @@ namespace AbyssalProtocol
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "Selected pattern");
+            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), TranslateOrFallback("ABY_ForgeSelectedPatternHeader", "Selected pattern"));
             if (AbyssalStyledWidgets.UseEnhancedTheme)
             {
                 AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(inner.x, inner.y + 22f, inner.width, 5f), 0.34f);
@@ -2598,7 +2711,7 @@ namespace AbyssalProtocol
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
                 Text.Font = GameFont.Small;
-                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 34f, inner.width, 52f), "Select a pattern in the browser to inspect materials, lock state, output and action.");
+                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 34f, inner.width, 52f), TranslateOrFallback("ABY_ForgeSelectedPatternEmpty", "Select a pattern in the browser to inspect materials, lock state, output and action."));
                 GUI.color = Color.white;
                 return;
             }
@@ -2625,15 +2738,15 @@ namespace AbyssalProtocol
             bool actionEnabled = false;
             if (!decoded)
             {
-                actionLabel = "Decode in Nexus";
+                actionLabel = TranslateOrFallback("ABY_ForgeUnknownDecodeButton", "Decode in Nexus");
             }
             else if (!unlocked)
             {
-                actionLabel = "Locked";
+                actionLabel = "ABY_ForgePatternLocked".Translate();
             }
             else if (recipeAvailable)
             {
-                actionLabel = "Add bill";
+                actionLabel = "ABY_ForgePatternAddBill".Translate();
                 actionEnabled = true;
             }
             else
@@ -2652,7 +2765,7 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             float summaryHeight = Text.CalcHeight(decoded ? AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe) : ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe), contentWidth);
             float detailHeight = 0f;
-            string details = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe) : "Open the Protocol Nexus and decode the linked project to reveal this pattern.";
+            string details = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe) : TranslateOrFallback("ABY_ForgeUnknownTooltip", "Open the Protocol Nexus and decode the linked project to reveal this pattern.");
             if (!details.NullOrEmpty())
             {
                 detailHeight = Text.CalcHeight(details, contentWidth);
@@ -2697,15 +2810,15 @@ namespace AbyssalProtocol
             string subfilter = GetSelectedSubfilter();
             if (!subfilter.NullOrEmpty() && subfilter != "All")
             {
-                categoryLine += " • " + subfilter;
+                categoryLine += " • " + GetSubfilterLabel(selectedCategory, subfilter);
             }
             ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 22f, contentWidth - 94f, 18f), categoryLine);
 
             string lockLine = unlocked
-                ? "Unlocked at " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue"
-                : "Locks until " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue";
+                ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe)).ToString()
+                : "ABY_ForgePatternLockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe)).ToString();
             GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
-            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 40f, contentWidth - 94f, 18f), decoded ? lockLine : "Decode required in Protocol Nexus");
+            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 40f, contentWidth - 94f, 18f), decoded ? lockLine : TranslateOrFallback("ABY_ForgeUnknownDecodeShort", "Decode required in Protocol Nexus"));
 
             y += 68f;
             GUI.color = decoded ? AbyssalForgeConsoleArt.TextSoftColor : AbyssalForgeConsoleArt.TextDimColor;
@@ -2725,13 +2838,13 @@ namespace AbyssalProtocol
 
             GUI.color = Color.white;
             Text.Font = GameFont.Tiny;
-            ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "Requirements");
+            ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "ABY_ForgePatternRequirementsLabel".Translate());
             y += 18f;
 
             if (entries.Count == 0)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "No material data.");
+                ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "ABY_ForgePatternNoMaterialData".Translate());
                 y += 20f;
             }
             else

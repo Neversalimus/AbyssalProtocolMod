@@ -1,6 +1,22 @@
 # Abyssal Protocol — Recent Work Notes
 
 
+## Forge Russian UI localization follow-up
+
+A Forge console localization follow-up was applied on 2026-05-19 after in-game Russian UI review. It fixed remaining hard-coded English text in the Forge pattern browser/search/status/subfilter/selected-pattern panels and added C# fallback-safe keyed translation helpers for those labels.
+
+Important details:
+
+```text
+- Forge subfilters now use Keyed translations instead of raw internal English IDs.
+- Forge status chips use Russian plural-aware requirement text: 1 требование, 2-4 требования, 5+ требований, including 11-14 требований.
+- The visible bad Russian terms reported from the Forge UI pass were corrected in DefInjected and Keyed localization files.
+- Shorter Russian item labels should be preferred in tight Forge cards to avoid overlap in the selected-pattern and browser panels.
+```
+
+Future Forge UI changes should keep all player-facing labels behind Keyed translation helpers, not hard-coded English literals, even when the English string is only used as a fallback.
+
+
 ## Russian localization audit and load-error cleanup
 
 A Russian localization audit pass was applied on 2026-05-19 against the user-provided local archive. The pass removed duplicate flat Russian language keys, removed an orphan CrownshardStormcaster RecipeDef translation in both EN/RU, added missing Russian DefInjected coverage for audited gameplay defs, and translated visible Russian UI/label/job-string English leftovers.

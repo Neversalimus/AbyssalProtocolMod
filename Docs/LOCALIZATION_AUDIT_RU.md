@@ -54,3 +54,19 @@ Russian remaining Latin text values after cleanup: 0
 No C# files were changed. DLL rebuild was not required and was not performed.
 
 RimWorld runtime language report generation was not run in this environment, so the in-game Russian language loader warning is not directly smoke-tested here. The static XML/language-data validation pass is clean.
+
+## 2026-05-19 Forge UI follow-up
+
+A follow-up pass was applied after an in-game Forge console screenshot exposed remaining Russian UI problems. This pass is narrower than the full language-data cleanup above and focuses on Forge browser usability and specific incorrect Russian item names.
+
+Applied fixes:
+
+```text
+- Localized Forge search row, Clear button, subcategory buttons, status chips, selected-pattern header, empty selected-pattern state, and Forge pattern unavailable/research text.
+- Added Russian plural-aware requirement count formatting in Forge UI: 1 требование, 2-4 требования, 5+/11-14 требований.
+- Corrected reported bad Russian names: Рифт клинок, Рифт карабин, ультра плазменная винтовка, Хор Забвения, Панцирь святого носителя Эгиды, Сигила угольных гончих.
+- Replaced the cramped `пеплосвязанный модуль-конденсатор` label with a shorter `пепельный конденсатор` form for Forge card readability.
+- Corrected `Уровень настройка` to `Уровень настройки`.
+```
+
+Build status for this follow-up: C# was changed in `source/UI/Forge/Window_AbyssalForgeConsole.cs`; manual Roslyn compilation against the local `Libraries/` references succeeded and regenerated `Assemblies/AbyssalProtocol.dll`. RimWorld runtime language report was not run in-game.

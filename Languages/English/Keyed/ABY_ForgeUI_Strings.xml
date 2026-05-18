@@ -94,4 +94,66 @@
   <ABY_ForgeUnknownDecodeButton>Decode in Nexus</ABY_ForgeUnknownDecodeButton>
   <ABY_ForgeUnknownTooltip>Open the Protocol Nexus and decode the linked project to reveal this pattern.</ABY_ForgeUnknownTooltip>
   <ABY_ForgeUnknownCannotQueue>This Forge pattern has not been decoded in the Protocol Nexus yet.</ABY_ForgeUnknownCannotQueue>
+  <ABY_ForgeSearchLabel>Search</ABY_ForgeSearchLabel>
+  <ABY_ForgeSearchPlaceholder>name, role, material…</ABY_ForgeSearchPlaceholder>
+  <ABY_ForgeSearchClear>Clear</ABY_ForgeSearchClear>
+  <ABY_ForgeSubfilter_All>All</ABY_ForgeSubfilter_All>
+  <ABY_ForgeSubfilter_Residue>Residue</ABY_ForgeSubfilter_Residue>
+  <ABY_ForgeSubfilter_Capacitor>Capacitor</ABY_ForgeSubfilter_Capacitor>
+  <ABY_ForgeSubfilter_Stabilizer>Stabilizer</ABY_ForgeSubfilter_Stabilizer>
+  <ABY_ForgeSubfilter_Melee>Melee</ABY_ForgeSubfilter_Melee>
+  <ABY_ForgeSubfilter_Ranged>Ranged</ABY_ForgeSubfilter_Ranged>
+  <ABY_ForgeSubfilter_Herald>Herald</ABY_ForgeSubfilter_Herald>
+  <ABY_ForgeSubfilter_Armor>Armor</ABY_ForgeSubfilter_Armor>
+  <ABY_ForgeSubfilter_Helmet>Helmet</ABY_ForgeSubfilter_Helmet>
+  <ABY_ForgeSubfilter_Gloves>Gloves</ABY_ForgeSubfilter_Gloves>
+  <ABY_ForgeSubfilter_Vambraces>Vambraces</ABY_ForgeSubfilter_Vambraces>
+  <ABY_ForgeSubfilter_Pack>Pack</ABY_ForgeSubfilter_Pack>
+  <ABY_ForgeSubfilter_Boots>Boots</ABY_ForgeSubfilter_Boots>
+  <ABY_ForgeSubfilter_Brain>Brain</ABY_ForgeSubfilter_Brain>
+  <ABY_ForgeSubfilter_Eyes>Eyes</ABY_ForgeSubfilter_Eyes>
+  <ABY_ForgeSubfilter_Body>Body</ABY_ForgeSubfilter_Body>
+  <ABY_ForgeSubfilter_Arms>Arms</ABY_ForgeSubfilter_Arms>
+  <ABY_ForgeSubfilter_Legs>Legs</ABY_ForgeSubfilter_Legs>
+  <ABY_ForgeSubfilter_Neck>Neck</ABY_ForgeSubfilter_Neck>
+  <ABY_ForgeSubfilter_Spine>Spine</ABY_ForgeSubfilter_Spine>
+  <ABY_ForgeSubfilter_Organs>Organs</ABY_ForgeSubfilter_Organs>
+  <ABY_ForgeSubfilterTooltip_Residue>Show residue processing and residue-routing forge infrastructure.</ABY_ForgeSubfilterTooltip_Residue>
+  <ABY_ForgeSubfilterTooltip_Capacitor>Show capacitor and energy storage modules.</ABY_ForgeSubfilterTooltip_Capacitor>
+  <ABY_ForgeSubfilterTooltip_Stabilizer>Show circle stabilizer modules.</ABY_ForgeSubfilterTooltip_Stabilizer>
+  <ABY_ForgeSubfilterTooltip_CoreAll>Show all forge core infrastructure patterns.</ABY_ForgeSubfilterTooltip_CoreAll>
+  <ABY_ForgeSubfilterTooltip_Melee>Show melee weapons.</ABY_ForgeSubfilterTooltip_Melee>
+  <ABY_ForgeSubfilterTooltip_Ranged>Show ranged weapons.</ABY_ForgeSubfilterTooltip_Ranged>
+  <ABY_ForgeSubfilterTooltip_Herald>Show Herald-grade weapons moved into the Weapons category.</ABY_ForgeSubfilterTooltip_Herald>
+  <ABY_ForgeSubfilterTooltip_WeaponsAll>Show all weapon patterns, including Herald-grade weapons.</ABY_ForgeSubfilterTooltip_WeaponsAll>
+  <ABY_ForgeSubfilterTooltip_ArmorGeneric>Show {0} armor slot patterns.</ABY_ForgeSubfilterTooltip_ArmorGeneric>
+  <ABY_ForgeSubfilterTooltip_ImplantGeneric>Show {0} implant procedures.</ABY_ForgeSubfilterTooltip_ImplantGeneric>
+  <ABY_ForgeRequirementCount_One>{0} requirement</ABY_ForgeRequirementCount_One>
+  <ABY_ForgeRequirementCount_Few>{0} requirements</ABY_ForgeRequirementCount_Few>
+  <ABY_ForgeRequirementCount_Many>{0} requirements</ABY_ForgeRequirementCount_Many>
+  <ABY_ForgeMoreRequirements_One>+{0} more requirement</ABY_ForgeMoreRequirements_One>
+  <ABY_ForgeMoreRequirements_Few>+{0} more requirements</ABY_ForgeMoreRequirements_Few>
+  <ABY_ForgeMoreRequirements_Many>+{0} more requirements</ABY_ForgeMoreRequirements_Many>
+  <ABY_ForgeStatus_All>All {0}</ABY_ForgeStatus_All>
+  <ABY_ForgeStatus_Craftable>Craftable {0}</ABY_ForgeStatus_Craftable>
+  <ABY_ForgeStatus_NeedsResources>Needs: {0}</ABY_ForgeStatus_NeedsResources>
+  <ABY_ForgeStatus_Locked>Locked {0}</ABY_ForgeStatus_Locked>
+  <ABY_ForgeStatus_Nexus>Nexus {0}</ABY_ForgeStatus_Nexus>
+  <ABY_ForgeStatusTooltip_All>Show every pattern matching the current category, subfilter, and search.</ABY_ForgeStatusTooltip_All>
+  <ABY_ForgeStatusTooltip_Craftable>Show decoded, unlocked patterns with all currently counted ingredients available.</ABY_ForgeStatusTooltip_Craftable>
+  <ABY_ForgeStatusTooltip_NeedsResources>Show unlocked patterns that still need ingredients. This is informational only: bills can still be queued and RimWorld will resolve materials through the normal bill system.</ABY_ForgeStatusTooltip_NeedsResources>
+  <ABY_ForgeStatusTooltip_Locked>Show decoded patterns blocked by residue, research, facility, or normal recipe availability.</ABY_ForgeStatusTooltip_Locked>
+  <ABY_ForgeStatusTooltip_Nexus>Show patterns that still need Protocol Nexus decoding.</ABY_ForgeStatusTooltip_Nexus>
+  <ABY_ForgeNoPatternsMatch>No forge patterns match the current search/filter.</ABY_ForgeNoPatternsMatch>
+  <ABY_ForgeMissingPattern>Missing forge pattern</ABY_ForgeMissingPattern>
+  <ABY_ForgePatternResearchShort>Research: {0}</ABY_ForgePatternResearchShort>
+  <ABY_ForgePatternUnavailable>Unavailable</ABY_ForgePatternUnavailable>
+  <ABY_ForgePatternResearchRequiredDetail>Research required: {0}</ABY_ForgePatternResearchRequiredDetail>
+  <ABY_ForgePatternUnavailableOnForge>Unavailable on this forge</ABY_ForgePatternUnavailableOnForge>
+  <ABY_ForgePatternRequiredResearchTooltip>Required research:
+{0}</ABY_ForgePatternRequiredResearchTooltip>
+  <ABY_ForgePatternUnavailableTooltip>This pattern is unlocked, but the recipe is not currently available on this Forge.</ABY_ForgePatternUnavailableTooltip>
+  <ABY_ForgeSelectedPatternHeader>Selected pattern</ABY_ForgeSelectedPatternHeader>
+  <ABY_ForgeSelectedPatternEmpty>Select a pattern in the browser to inspect materials, lock state, output and action.</ABY_ForgeSelectedPatternEmpty>
+  <ABY_ForgeUnknownDecodeShort>Decode required in Protocol Nexus</ABY_ForgeUnknownDecodeShort>
 </LanguageData>

@@ -8,10 +8,10 @@
   <ABY_ForgeAttunementBand_Ascendant>восходящая настройка</ABY_ForgeAttunementBand_Ascendant>
   <ABY_ForgeAttunementBand_Dominion>доминантная настройка</ABY_ForgeAttunementBand_Dominion>
   <ABY_ForgeAttunementMetricLabel>Тир {0}/50</ABY_ForgeAttunementMetricLabel>
-  <ABY_ForgeAttunementLevelBar>Уровень настройка • тир {0}/50</ABY_ForgeAttunementLevelBar>
+  <ABY_ForgeAttunementLevelBar>Уровень настройки • тир {0}/50</ABY_ForgeAttunementLevelBar>
   <ABY_ForgeAttunementDisplayLabel>{0} · тир {1}/50</ABY_ForgeAttunementDisplayLabel>
-  <ABY_ForgeAttunementResidueProgress>Настроено остаток: {0}/{1}</ABY_ForgeAttunementResidueProgress>
-  <ABY_ForgeAttunementNextTier>Следующий тир на {0} остаток</ABY_ForgeAttunementNextTier>
+  <ABY_ForgeAttunementResidueProgress>Настроено остатка: {0}/{1}</ABY_ForgeAttunementResidueProgress>
+  <ABY_ForgeAttunementNextTier>Следующий тир на {0} остатка</ABY_ForgeAttunementNextTier>
   <ABY_ForgeAttunementMaxTier>Достигнут максимальный уровень настройки</ABY_ForgeAttunementMaxTier>
   <ABY_ForgeAttunementEffectsHeader>Текущие эффекты</ABY_ForgeAttunementEffectsHeader>
   <ABY_ForgeAttunementTooltipSuspended>Эффект приостановлен, пока на этой карте нет хотя бы одной запитанной Бездненная кузница.</ABY_ForgeAttunementTooltipSuspended>
