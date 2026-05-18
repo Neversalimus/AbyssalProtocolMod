@@ -74,55 +74,69 @@ namespace AbyssalProtocol
             if (EnhancedUI)
             {
                 float pulseEnhanced = Pulse(alert ? 2.0f : 1.4f, 0.12f);
-                Fill(rect, new Color(0.095f, 0.058f, 0.046f, 0.98f));
-                DrawOverlay(rect, OverlayTex, new Color(1f, 0.40f, 0.14f, alert ? 0.11f + pulseEnhanced * 0.04f : 0.075f));
-                DrawOutline(rect, new Color(1f, 0.36f, 0.12f, alert ? 0.74f : 0.52f));
-                Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, 2f), new Color(1f, 0.50f, 0.22f, alert ? 0.42f : 0.24f));
-                Fill(new Rect(rect.x + 18f, rect.yMax - 6f, rect.width - 36f, 1f), new Color(1f, 0.48f, 0.18f, alert ? 0.84f : 0.58f));
+                Fill(rect, new Color(0.078f, 0.045f, 0.036f, 0.985f));
+                DrawOverlay(rect, OverlayTex, new Color(1f, 0.34f, 0.12f, alert ? 0.095f + pulseEnhanced * 0.035f : 0.060f));
+                DrawOutline(rect, new Color(1f, 0.38f, 0.14f, alert ? 0.78f : 0.54f));
+
+                Rect leftRail = new Rect(rect.x + 9f, rect.y + 8f, 4f, rect.height - 16f);
+                Fill(leftRail, new Color(1f, 0.38f, 0.14f, alert ? 0.86f : 0.62f));
+                Fill(new Rect(rect.x + 18f, rect.y + 7f, rect.width - 64f, 1f), new Color(1f, 0.48f, 0.18f, alert ? 0.46f : 0.28f));
+                Fill(new Rect(rect.x + 18f, rect.yMax - 8f, rect.width - 52f, 1f), new Color(1f, 0.44f, 0.16f, alert ? 0.82f : 0.58f));
+
+                Rect titleBack = new Rect(rect.x + 20f, rect.y + 8f, Mathf.Min(rect.width - 82f, 620f), 25f);
+                Fill(titleBack, new Color(0.020f, 0.016f, 0.014f, 0.30f));
+                Fill(new Rect(titleBack.x, titleBack.yMax - 1f, titleBack.width, 1f), new Color(1f, 0.44f, 0.16f, 0.20f + pulseEnhanced * 0.10f));
+
                 if (!ReduceUIAnimation)
                 {
-                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 18f, rect.yMax - 18f, Mathf.Min(rect.width * 0.55f, 620f), 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 7f, alert ? 0.24f : 0.14f);
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 24f, rect.yMax - 20f, Mathf.Min(rect.width * 0.48f, 540f), 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 7f, alert ? 0.20f : 0.12f);
                 }
 
                 Text.Anchor = TextAnchor.UpperLeft;
                 Text.Font = GameFont.Medium;
+                Rect titleRect = new Rect(rect.x + 26f, rect.y + 7f, rect.width - 92f, 30f);
+                GUI.color = new Color(0f, 0f, 0f, 0.72f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(titleRect.x + 1.5f, titleRect.y + 1.5f, titleRect.width, titleRect.height), title);
                 GUI.color = Color.white;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 16f, rect.y + 5f, rect.width - 82f, 32f), title);
+                ABY_UIPolishUtility.SafeLabel(titleRect, title);
 
                 Text.Font = GameFont.Small;
-                GUI.color = TextSoftColor;
-                float enhancedSubtitleHeight = Text.CalcHeight(subtitle, rect.width - 96f);
-                float enhancedMaxSubtitleHeight = Mathf.Max(18f, rect.height - 38f);
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 34f, rect.width - 96f, Mathf.Min(enhancedSubtitleHeight, enhancedMaxSubtitleHeight)), subtitle);
+                Rect subtitleRect = new Rect(rect.x + 26f, rect.y + 36f, rect.width - 102f, Mathf.Max(18f, rect.height - 40f));
+                GUI.color = new Color(0.95f, 0.80f, 0.68f, 0.98f);
+                ABY_UIPolishUtility.SafeLabel(subtitleRect, subtitle);
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.UpperLeft;
-                DrawSignalGlyph(new Rect(rect.xMax - 34f, rect.y + 8f, 18f, 18f), pulseEnhanced);
+                DrawSignalGlyph(new Rect(rect.xMax - 34f, rect.y + 9f, 18f, 18f), pulseEnhanced);
                 return;
             }
 
             float pulse = Pulse(alert ? 2.0f : 1.4f, 0.12f);
-            Fill(rect, new Color(0.09f, 0.075f, 0.07f, 1f));
-            DrawOverlay(rect, HeaderTex, new Color(1f, 0.5f, 0.22f, 0.58f + pulse * (alert ? 0.14f : 0.08f)));
-            DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, alert ? 0.58f + pulse * 0.30f : 0.45f + pulse * 0.20f));
+            Fill(rect, new Color(0.082f, 0.058f, 0.052f, 1f));
+            DrawOverlay(rect, HeaderTex, new Color(1f, 0.42f, 0.18f, 0.46f + pulse * (alert ? 0.10f : 0.05f)));
+            DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, alert ? 0.62f + pulse * 0.26f : 0.46f + pulse * 0.18f));
+
+            Fill(new Rect(rect.x + 9f, rect.y + 8f, 4f, rect.height - 16f), new Color(1f, 0.42f, 0.16f, alert ? 0.88f : 0.62f));
+            Fill(new Rect(rect.x + 20f, rect.y + rect.height - 7f, rect.width - 48f, 1f), new Color(1f, 0.42f, 0.16f, 0.70f));
 
             if (!ReduceUIAnimation)
             {
-                float sweepX = rect.x - 90f + Mathf.Repeat(AnimTime * 120f, rect.width + 180f);
-                Fill(new Rect(sweepX, rect.y + rect.height - 8f, 88f, 2f), new Color(1f, 0.76f, 0.54f, alert ? 0.34f : 0.22f));
+                float sweepX = rect.x - 90f + Mathf.Repeat(AnimTime * 105f, rect.width + 180f);
+                Fill(new Rect(sweepX, rect.y + rect.height - 8f, 88f, 2f), new Color(1f, 0.76f, 0.54f, alert ? 0.30f : 0.18f));
             }
-
-            Fill(new Rect(rect.x + 16f, rect.y + rect.height - 4f, rect.width - 32f, 1f), new Color(1f, 0.42f, 0.16f, 0.72f));
 
             Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Medium;
+            Rect classicTitleRect = new Rect(rect.x + 26f, rect.y + 7f, rect.width - 86f, 31f);
+            GUI.color = new Color(0f, 0f, 0f, 0.70f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(classicTitleRect.x + 1.5f, classicTitleRect.y + 1.5f, classicTitleRect.width, classicTitleRect.height), title);
             GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 16f, rect.y + 6f, rect.width - 76f, 34f), title);
+            ABY_UIPolishUtility.SafeLabel(classicTitleRect, title);
 
             Text.Font = GameFont.Small;
-            GUI.color = TextSoftColor;
-            float subtitleHeight = Text.CalcHeight(subtitle, rect.width - 88f);
-            float maxSubtitleHeight = Mathf.Max(18f, rect.height - 40f);
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 36f, rect.width - 88f, Mathf.Min(subtitleHeight, maxSubtitleHeight)), subtitle);
+            GUI.color = new Color(0.92f, 0.78f, 0.68f, 0.98f);
+            float subtitleHeight = Text.CalcHeight(subtitle, rect.width - 98f);
+            float maxSubtitleHeight = Mathf.Max(18f, rect.height - 42f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 26f, rect.y + 37f, rect.width - 98f, Mathf.Min(subtitleHeight, maxSubtitleHeight)), subtitle);
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
 

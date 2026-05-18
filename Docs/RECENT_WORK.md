@@ -105,6 +105,8 @@ Recent Forge browser work keeps material availability informational only. The Fo
 
 Also keep the pattern browser compact: the standalone Pattern Browser section title was removed so search, subfilters, status chips, and visible cards sit higher in the narrow left column.
 
+The selected pattern panel now has its own internal scroll region while its action footer stays fixed. Do not reintroduce fixed-height truncation for long pattern descriptions or long ingredient lists. The Forge header has been restyled for a stronger infernal-tech presentation, but title/subtitle readability remains the priority.
+
 ### Custom UI remains first-class
 
 Forge, Summoning, Protocol Nexus, Boss Bar, Bestiary, and Turret UI should be treated as real project infrastructure.

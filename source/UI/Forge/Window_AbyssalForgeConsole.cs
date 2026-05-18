@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         private readonly Building_AbyssalForge forge;
 
         private Vector2 patternScrollPosition = Vector2.zero;
+        private Vector2 selectedPatternScrollPosition = Vector2.zero;
         private Vector2 billScrollPosition = Vector2.zero;
         private float billViewHeight = 1000f;
         private Bill mouseoverBill;
@@ -412,7 +413,7 @@ namespace AbyssalProtocol
                     if (selectedCategory != category)
                     {
                         patternScrollPosition = Vector2.zero;
-                        selectedPattern = null;
+                        SetSelectedPattern(null);
                     }
 
                     selectedCategory = category;
@@ -1409,11 +1410,11 @@ namespace AbyssalProtocol
 
             if (visiblePatternScratch.Count == 0)
             {
-                selectedPattern = null;
+                SetSelectedPattern(null);
             }
             else if (selectedPattern == null || !ContainsRecipe(visiblePatternScratch, selectedPattern))
             {
-                selectedPattern = visiblePatternScratch[0].recipe;
+                SetSelectedPattern(visiblePatternScratch[0].recipe);
             }
 
             float contentTop = inner.y;
@@ -1832,7 +1833,7 @@ namespace AbyssalProtocol
                 {
                     selectedStatusFilter = option.id;
                     patternScrollPosition = Vector2.zero;
-                    selectedPattern = null;
+                    SetSelectedPattern(null);
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             }
@@ -1869,7 +1870,7 @@ namespace AbyssalProtocol
             if (patternSearchText != previous)
             {
                 patternScrollPosition = Vector2.zero;
-                selectedPattern = null;
+                SetSelectedPattern(null);
             }
 
             if (patternSearchText.NullOrEmpty() && !Mouse.IsOver(fieldRect) && GUI.GetNameOfFocusedControl() != "ABYForgeSearch")
@@ -1884,7 +1885,7 @@ namespace AbyssalProtocol
             {
                 patternSearchText = string.Empty;
                 patternScrollPosition = Vector2.zero;
-                selectedPattern = null;
+                SetSelectedPattern(null);
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
             }
 
@@ -2564,92 +2565,6 @@ namespace AbyssalProtocol
             bool unlocked = progress != null && AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered);
             bool freshlyUnlocked = progress != null && progress.IsRecentlyUnlocked(recipe);
 
-            Rect iconRect = new Rect(inner.x, inner.y + 34f, 54f, 54f);
-            if (product?.uiIcon != null)
-            {
-                DrawProductPreviewIcon(iconRect, product, unlocked ? 1f : 0.76f);
-            }
-            else
-            {
-                AbyssalForgeConsoleArt.Fill(iconRect, new Color(0.08f, 0.055f, 0.045f, 0.92f));
-                AbyssalForgeConsoleArt.DrawOutline(iconRect, new Color(0.9f, 0.32f, 0.12f, 0.52f));
-            }
-
-            Rect infoRect = new Rect(inner.xMax - 26f, inner.y + 34f, 24f, 24f);
-            Def infoDef = (Def)product ?? recipe;
-            if (infoDef != null)
-            {
-                Widgets.InfoCardButton(infoRect.x, infoRect.y, infoDef);
-            }
-
-            Rect titleRect = new Rect(iconRect.xMax + 10f, inner.y + 32f, inner.width - 94f, 24f);
-            Text.Font = GameFont.Small;
-            Text.Anchor = TextAnchor.UpperLeft;
-            GUI.color = decoded ? Color.white : new Color(1f, 0.82f, 0.62f, 1f);
-            ABY_UIPolishUtility.SafeLabel(titleRect, decoded ? AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe) : ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe));
-
-            Text.Font = GameFont.Tiny;
-            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            string categoryLine = AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe));
-            string subfilter = GetSelectedSubfilter();
-            if (!subfilter.NullOrEmpty() && subfilter != "All")
-            {
-                categoryLine += " • " + subfilter;
-            }
-            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, inner.y + 56f, inner.width - 94f, 18f), categoryLine);
-
-            string lockLine = unlocked
-                ? "Unlocked at " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue"
-                : "Locks until " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue";
-            GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
-            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, inner.y + 74f, inner.width - 94f, 18f), decoded ? lockLine : "Decode required in Protocol Nexus");
-
-            float y = inner.y + 98f;
-            GUI.color = decoded ? AbyssalForgeConsoleArt.TextSoftColor : AbyssalForgeConsoleArt.TextDimColor;
-            string summary = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe) : ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe);
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, y, inner.width, 34f), CompactTextForCard(summary, 150));
-            y += 40f;
-
-            string details = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe) : "Open the Protocol Nexus and decode the linked project to reveal this pattern.";
-            if (!details.NullOrEmpty())
-            {
-                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, y, inner.width, 42f), CompactTextForCard(details, 180));
-                y += 46f;
-            }
-
-            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
-                ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
-                : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
-
-            GUI.color = Color.white;
-            Text.Font = GameFont.Tiny;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, y, inner.width, 18f), "Requirements");
-            y += 18f;
-
-            int shownEntries = Math.Min(4, entries.Count);
-            if (shownEntries == 0)
-            {
-                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, y, inner.width, 18f), "No material data.");
-                y += 20f;
-            }
-            else
-            {
-                for (int i = 0; i < shownEntries && y < inner.yMax - 38f; i++)
-                {
-                    DrawIngredientStateLine(new Rect(inner.x, y, inner.width - 6f, 17f), entries[i]);
-                    y += 17f;
-                }
-
-                if (entries.Count > shownEntries && y < inner.yMax - 38f)
-                {
-                    GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                    ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, y, inner.width, 17f), "+" + (entries.Count - shownEntries) + " more requirements");
-                    y += 17f;
-                }
-            }
-
             bool recipeAvailable = false;
             try
             {
@@ -2684,17 +2599,120 @@ namespace AbyssalProtocol
                 actionTooltip = BuildRecipeUnavailableTooltip(recipe);
             }
 
-            Rect buttonRect = new Rect(inner.xMax - 124f, inner.yMax - 30f, 118f, 28f);
+            Rect footerRect = new Rect(inner.x, inner.yMax - 34f, inner.width, 32f);
+            Rect scrollOutRect = new Rect(inner.x, inner.y + 30f, inner.width, Mathf.Max(44f, footerRect.y - inner.y - 36f));
+            const float scrollbarReserve = 18f;
+            float contentWidth = Mathf.Max(80f, scrollOutRect.width - scrollbarReserve);
+            float y = 4f;
+
+            Text.Font = GameFont.Small;
+            float summaryHeight = Text.CalcHeight(decoded ? AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe) : ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe), contentWidth);
+            float detailHeight = 0f;
+            string details = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe) : "Open the Protocol Nexus and decode the linked project to reveal this pattern.";
+            if (!details.NullOrEmpty())
+            {
+                detailHeight = Text.CalcHeight(details, contentWidth);
+            }
+
+            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
+                ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
+                : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
+            float requirementsHeight = 22f + Mathf.Max(20f, entries.Count * 17f + (entries.Count > 0 ? 0f : 2f));
+            float contentHeight = Mathf.Max(scrollOutRect.height, 94f + Mathf.Clamp(summaryHeight, 34f, 120f) + (details.NullOrEmpty() ? 0f : Mathf.Clamp(detailHeight, 34f, 130f) + 8f) + requirementsHeight + 18f);
+            Rect viewRect = new Rect(0f, 0f, contentWidth, contentHeight);
+
+            Widgets.BeginScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect, true);
+
+            Rect iconRect = new Rect(0f, y, 54f, 54f);
+            if (product?.uiIcon != null)
+            {
+                DrawProductPreviewIcon(iconRect, product, unlocked ? 1f : 0.76f);
+            }
+            else
+            {
+                AbyssalForgeConsoleArt.Fill(iconRect, new Color(0.08f, 0.055f, 0.045f, 0.92f));
+                AbyssalForgeConsoleArt.DrawOutline(iconRect, new Color(0.9f, 0.32f, 0.12f, 0.52f));
+            }
+
+            Rect infoRect = new Rect(contentWidth - 26f, y, 24f, 24f);
+            Def infoDef = (Def)product ?? recipe;
+            if (infoDef != null)
+            {
+                Widgets.InfoCardButton(infoRect.x, infoRect.y, infoDef);
+            }
+
+            Rect titleRect = new Rect(iconRect.xMax + 10f, y - 2f, contentWidth - 94f, 24f);
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = decoded ? Color.white : new Color(1f, 0.82f, 0.62f, 1f);
+            ABY_UIPolishUtility.SafeLabel(titleRect, decoded ? AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe) : ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe));
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            string categoryLine = AbyssalForgeProgressUtility.GetCategoryLabel(AbyssalForgeProgressUtility.GetCategory(recipe));
+            string subfilter = GetSelectedSubfilter();
+            if (!subfilter.NullOrEmpty() && subfilter != "All")
+            {
+                categoryLine += " • " + subfilter;
+            }
+            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 22f, contentWidth - 94f, 18f), categoryLine);
+
+            string lockLine = unlocked
+                ? "Unlocked at " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue"
+                : "Locks until " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " residue";
+            GUI.color = unlocked ? new Color(1f, 0.78f, 0.58f, 1f) : new Color(0.92f, 0.52f, 0.45f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 40f, contentWidth - 94f, 18f), decoded ? lockLine : "Decode required in Protocol Nexus");
+
+            y += 68f;
+            GUI.color = decoded ? AbyssalForgeConsoleArt.TextSoftColor : AbyssalForgeConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            string summary = decoded ? AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe) : ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe);
+            float clampedSummaryHeight = Mathf.Clamp(Text.CalcHeight(summary, contentWidth), 34f, 120f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, clampedSummaryHeight), summary);
+            y += clampedSummaryHeight + 8f;
+
+            if (!details.NullOrEmpty())
+            {
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                float clampedDetailHeight = Mathf.Clamp(Text.CalcHeight(details, contentWidth), 34f, 130f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, clampedDetailHeight), details);
+                y += clampedDetailHeight + 10f;
+            }
+
+            GUI.color = Color.white;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "Requirements");
+            y += 18f;
+
+            if (entries.Count == 0)
+            {
+                GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+                ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, 18f), "No material data.");
+                y += 20f;
+            }
+            else
+            {
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    DrawIngredientStateLine(new Rect(0f, y, contentWidth - 6f, 17f), entries[i]);
+                    y += 17f;
+                }
+            }
+
+            Widgets.EndScrollView();
+
             if (!actionDetailLine.NullOrEmpty())
             {
-                float blockerX = freshlyUnlocked ? inner.x + 58f : inner.x;
-                float blockerWidth = Mathf.Max(80f, inner.xMax - 132f - blockerX);
-                Rect blockerRect = new Rect(blockerX, inner.yMax - 31f, blockerWidth, 30f);
+                float blockerX = freshlyUnlocked ? footerRect.x + 58f : footerRect.x;
+                float blockerWidth = Mathf.Max(80f, footerRect.xMax - 132f - blockerX);
+                Rect blockerRect = new Rect(blockerX, footerRect.y + 1f, blockerWidth, 30f);
                 GUI.color = new Color(0.98f, 0.62f, 0.36f, 1f);
                 Text.Font = GameFont.Tiny;
                 ABY_UIPolishUtility.SafeLabel(blockerRect, CompactTextForCard(actionDetailLine, 90));
                 GUI.color = Color.white;
             }
+
+            Rect buttonRect = new Rect(footerRect.xMax - 124f, footerRect.y + 2f, 118f, 28f);
             if (AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, actionEnabled))
             {
                 AddBill(recipe);
@@ -2706,13 +2724,24 @@ namespace AbyssalProtocol
 
             if (freshlyUnlocked)
             {
-                Rect newRect = new Rect(inner.x, inner.yMax - 26f, 54f, 18f);
+                Rect newRect = new Rect(footerRect.x, footerRect.y + 4f, 54f, 18f);
                 AbyssalForgeConsoleArt.DrawTag(newRect, "ABY_ForgePatternNew".Translate(), true);
             }
 
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
+        }
+
+        private void SetSelectedPattern(RecipeDef recipe)
+        {
+            if (selectedPattern == recipe)
+            {
+                return;
+            }
+
+            selectedPattern = recipe;
+            selectedPatternScrollPosition = Vector2.zero;
         }
 
         private bool IsSelectedPattern(RecipeDef recipe)
@@ -2732,7 +2761,7 @@ namespace AbyssalProtocol
             {
                 if (selectedPattern != recipe)
                 {
-                    selectedPattern = recipe;
+                    SetSelectedPattern(recipe);
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
             }
