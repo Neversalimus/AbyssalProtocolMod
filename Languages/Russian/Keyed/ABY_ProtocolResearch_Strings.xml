@@ -19,6 +19,9 @@
   <ABY_ProtocolResearch_StateCompleted>ДЕКОДИРОВАНО / ПРЕДСТАВЛЕНО</ABY_ProtocolResearch_StateCompleted>
   <ABY_ProtocolResearch_DescriptionHeader>ОПИСАНИЕ</ABY_ProtocolResearch_DescriptionHeader>
   <ABY_ProtocolResearch_RequirementsHeader>ТРЕБОВАНИЯ</ABY_ProtocolResearch_RequirementsHeader>
+  <ABY_ProtocolResearch_RevealsHeader>РАСКРЫВАЕТ / ВЛИЯЕТ</ABY_ProtocolResearch_RevealsHeader>
+  <ABY_ProtocolResearch_LoreHeader>ЛОРНАЯ ЗАПИСЬ</ABY_ProtocolResearch_LoreHeader>
+  <ABY_ProtocolResearch_NoExplicitReveals>Для этого проекта не указаны конкретные Forge- или ritual-раскрытия.</ABY_ProtocolResearch_NoExplicitReveals>
   <ABY_ProtocolResearch_UnlocksHeader>ОТКРЫВАЕТ / КЛАССИФИЦИРУЕТ</ABY_ProtocolResearch_UnlocksHeader>
   <ABY_ProtocolResearch_NotesHeader>ЗАМЕТКИ РЕАЛИЗАЦИИ</ABY_ProtocolResearch_NotesHeader>
   <ABY_ProtocolResearch_RequirementMet>выполнено</ABY_ProtocolResearch_RequirementMet>

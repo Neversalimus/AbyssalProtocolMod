@@ -22,6 +22,9 @@
 
   <ABY_ProtocolResearch_DescriptionHeader>DESCRIPTION</ABY_ProtocolResearch_DescriptionHeader>
   <ABY_ProtocolResearch_RequirementsHeader>REQUIREMENTS</ABY_ProtocolResearch_RequirementsHeader>
+  <ABY_ProtocolResearch_RevealsHeader>REVEALS / AFFECTS</ABY_ProtocolResearch_RevealsHeader>
+  <ABY_ProtocolResearch_LoreHeader>LORE RECORD</ABY_ProtocolResearch_LoreHeader>
+  <ABY_ProtocolResearch_NoExplicitReveals>No explicit Forge or ritual reveal is assigned to this project.</ABY_ProtocolResearch_NoExplicitReveals>
   <ABY_ProtocolResearch_UnlocksHeader>UNLOCKS / CLASSIFIES</ABY_ProtocolResearch_UnlocksHeader>
   <ABY_ProtocolResearch_NotesHeader>IMPLEMENTATION NOTES</ABY_ProtocolResearch_NotesHeader>
   <ABY_ProtocolResearch_RequirementMet>met</ABY_ProtocolResearch_RequirementMet>

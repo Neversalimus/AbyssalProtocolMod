@@ -787,9 +787,14 @@ namespace AbyssalProtocol
             float y = 0f;
 
             y = DrawDecodeControls(viewRect, y, project);
+            y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_RevealsHeader".Translate(), BuildRevealLines(project));
             y = DrawParagraph(viewRect, y, "ABY_ProtocolResearch_DescriptionHeader".Translate(), project.description);
-            y = DrawListSection(viewRect, y, "Protocol Status", BuildDiagnosticLines(project));
+            if (!project.loreRecord.NullOrEmpty())
+            {
+                y = DrawParagraph(viewRect, y, "ABY_ProtocolResearch_LoreHeader".Translate(), project.loreRecord);
+            }
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_RequirementsHeader".Translate(), BuildRequirementLines(project));
+            y = DrawListSection(viewRect, y, "Protocol Status", BuildDiagnosticLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_UnlocksHeader".Translate(), project.unlocks);
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_NotesHeader".Translate(), project.notes);
 
@@ -1580,6 +1585,28 @@ namespace AbyssalProtocol
             }
 
             return (index + 1).ToString();
+        }
+
+
+        private static List<string> BuildRevealLines(ABY_ProtocolResearchDef project)
+        {
+            List<string> lines = new List<string>();
+            if (project?.reveals != null)
+            {
+                lines.AddRange(project.reveals);
+            }
+
+            if (lines.Count == 0 && project?.unlocks != null)
+            {
+                lines.AddRange(project.unlocks);
+            }
+
+            if (lines.Count == 0)
+            {
+                lines.Add("ABY_ProtocolResearch_NoExplicitReveals".Translate());
+            }
+
+            return lines;
         }
 
         private static List<string> BuildRequirementLines(ABY_ProtocolResearchDef project)

@@ -12,8 +12,10 @@ namespace AbyssalProtocol
         public string previewState = "Available";
         public List<ResearchProjectDef> requiredResearchProjects;
         public List<string> requirements;
+        public List<string> reveals;
         public List<string> unlocks;
         public List<string> notes;
+        public string loreRecord;
         public bool experimental = true;
         public int decodeWorkTicks = 2500;
         public bool autoDecodeWhenPrerequisitesMet;
