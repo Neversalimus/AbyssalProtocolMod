@@ -1664,6 +1664,74 @@ namespace AbyssalProtocol
             bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
             return hasAllMaterials ? ForgePatternStatus.Craftable : ForgePatternStatus.MissingMaterials;
         }
+        private static string BuildRecipeUnavailableButtonLabel(RecipeDef recipe)
+        {
+            string researchSummary = BuildMissingResearchSummary(recipe);
+            if (!researchSummary.NullOrEmpty())
+            {
+                return CompactTextForCard("Research: " + researchSummary, 24);
+            }
+
+            return "Unavailable";
+        }
+
+        private static string BuildRecipeUnavailableDetailLine(RecipeDef recipe)
+        {
+            string researchSummary = BuildMissingResearchSummary(recipe);
+            if (!researchSummary.NullOrEmpty())
+            {
+                return "Research required: " + researchSummary;
+            }
+
+            return "Unavailable on this forge";
+        }
+
+        private static string BuildRecipeUnavailableTooltip(RecipeDef recipe)
+        {
+            string researchSummary = BuildMissingResearchSummary(recipe);
+            if (!researchSummary.NullOrEmpty())
+            {
+                return "Required research:\n" + researchSummary;
+            }
+
+            return "This pattern is unlocked, but the recipe is not currently available on this Forge.";
+        }
+
+        private static string BuildMissingResearchSummary(RecipeDef recipe)
+        {
+            List<string> labels = new List<string>();
+            if (recipe == null)
+            {
+                return string.Empty;
+            }
+
+            AddMissingResearchLabel(labels, recipe.researchPrerequisite);
+
+            if (recipe.researchPrerequisites != null)
+            {
+                for (int i = 0; i < recipe.researchPrerequisites.Count; i++)
+                {
+                    AddMissingResearchLabel(labels, recipe.researchPrerequisites[i]);
+                }
+            }
+
+            return labels.Count > 0 ? string.Join(", ", labels.ToArray()) : string.Empty;
+        }
+
+        private static void AddMissingResearchLabel(List<string> labels, ResearchProjectDef project)
+        {
+            if (labels == null || project == null || project.IsFinished)
+            {
+                return;
+            }
+
+            string label = project.LabelCap.ToString();
+            if (!label.NullOrEmpty() && !labels.Contains(label))
+            {
+                labels.Add(label);
+            }
+        }
+
 
         private void DrawStatusFilterRow(Rect rect, List<ForgePatternEntry> searchEntries, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
         {
@@ -2120,6 +2188,7 @@ namespace AbyssalProtocol
             }
 
             string actionLabel;
+            string actionTooltip = null;
             if (!unlocked)
             {
                 actionLabel = "ABY_ForgePatternLocked".Translate();
@@ -2134,7 +2203,8 @@ namespace AbyssalProtocol
             }
             else
             {
-                actionLabel = "ABY_ForgePatternResearchRequired".Translate();
+                actionLabel = BuildRecipeUnavailableButtonLabel(recipe);
+                actionTooltip = BuildRecipeUnavailableTooltip(recipe);
             }
 
             Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
@@ -2148,6 +2218,10 @@ namespace AbyssalProtocol
             else
             {
                 AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, false);
+            }
+            if (!actionTooltip.NullOrEmpty())
+            {
+                TooltipHandler.TipRegion(buttonRect, actionTooltip);
             }
 
             DrawSelectedPatternOutline(rect, recipe);
@@ -2360,6 +2434,7 @@ namespace AbyssalProtocol
                 ABY_UISafetyUtility.LogUIException("Forge pattern availability", ex);
             }
             string actionLabel;
+            string actionTooltip = null;
             if (!unlocked)
             {
                 actionLabel = "ABY_ForgePatternLocked".Translate();
@@ -2374,7 +2449,8 @@ namespace AbyssalProtocol
             }
             else
             {
-                actionLabel = "ABY_ForgePatternResearchRequired".Translate();
+                actionLabel = BuildRecipeUnavailableButtonLabel(recipe);
+                actionTooltip = BuildRecipeUnavailableTooltip(recipe);
             }
 
             Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
@@ -2388,6 +2464,10 @@ namespace AbyssalProtocol
             else
             {
                 AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, false);
+            }
+            if (!actionTooltip.NullOrEmpty())
+            {
+                TooltipHandler.TipRegion(buttonRect, actionTooltip);
             }
 
             List<string> tooltipLines = new List<string>
@@ -2593,6 +2673,8 @@ namespace AbyssalProtocol
             }
 
             string actionLabel;
+            string actionDetailLine = null;
+            string actionTooltip = null;
             bool actionEnabled = false;
             if (!decoded)
             {
@@ -2613,13 +2695,29 @@ namespace AbyssalProtocol
             }
             else
             {
-                actionLabel = "Research required";
+                actionLabel = BuildRecipeUnavailableButtonLabel(recipe);
+                actionDetailLine = BuildRecipeUnavailableDetailLine(recipe);
+                actionTooltip = BuildRecipeUnavailableTooltip(recipe);
             }
 
             Rect buttonRect = new Rect(inner.xMax - 124f, inner.yMax - 30f, 118f, 28f);
+            if (!actionDetailLine.NullOrEmpty())
+            {
+                float blockerX = freshlyUnlocked ? inner.x + 58f : inner.x;
+                float blockerWidth = Mathf.Max(80f, inner.xMax - 132f - blockerX);
+                Rect blockerRect = new Rect(blockerX, inner.yMax - 31f, blockerWidth, 30f);
+                GUI.color = new Color(0.98f, 0.62f, 0.36f, 1f);
+                Text.Font = GameFont.Tiny;
+                ABY_UIPolishUtility.SafeLabel(blockerRect, CompactTextForCard(actionDetailLine, 90));
+                GUI.color = Color.white;
+            }
             if (AbyssalStyledWidgets.TextButton(buttonRect, actionLabel, actionEnabled))
             {
                 AddBill(recipe);
+            }
+            if (!actionTooltip.NullOrEmpty())
+            {
+                TooltipHandler.TipRegion(buttonRect, actionTooltip);
             }
 
             if (freshlyUnlocked)
