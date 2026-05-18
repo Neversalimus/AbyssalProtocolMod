@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <ABY_PhalanxDriver.label>phalanx driver</ABY_PhalanxDriver.label>
-  <ABY_PhalanxDriver.description>Дисциплинированная spike-винтовка horde-линии, собранная из war-lattice фрагментов. Вместо того чтобы заливать поле огнём, она выпускает короткую очередь инфернальных пенетраторов, отлично ломая плотный фронт и наказывая затяжные перестрелки из-за укрытий.</ABY_PhalanxDriver.description>
-
-  <ABY_PhalanxSpikeProjectile.label>phalanx spike</ABY_PhalanxSpikeProjectile.label>
-
+  <ABY_PhalanxDriver.label>фаланговый привод</ABY_PhalanxDriver.label>
+  <ABY_PhalanxDriver.description>Дисциплинированная спике-винтовка орда-линии, собранная из боевая решётка фрагментов. Вместо того чтобы заливать поле огнём, она выпускает короткую очередь инфернальных пенетраторов, отлично ломая плотный фронт и наказывая затяжные перестрелки из-за укрытий.</ABY_PhalanxDriver.description>
+  <ABY_PhalanxSpikeProjectile.label>фаланговый шип</ABY_PhalanxSpikeProjectile.label>
 </LanguageData>

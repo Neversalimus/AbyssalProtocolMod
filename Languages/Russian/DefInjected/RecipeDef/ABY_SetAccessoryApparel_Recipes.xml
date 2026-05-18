@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CraftGatebreakerAnchorHarness.label>выковать якорную обвязку вратолома</ABY_CraftGatebreakerAnchorHarness.label>
-  <ABY_CraftGatebreakerAnchorHarness.description>Собрать зримую противооткатную обвязку для брони Вратолома, связывая пласталевые ремни, урановые блоки давления и residue-логику в компактный анти-разломный стабилизатор.</ABY_CraftGatebreakerAnchorHarness.description>
+  <ABY_CraftGatebreakerAnchorHarness.description>Собрать зримую противооткатную обвязку для брони Вратолома, связывая пласталевые ремни, урановые блоки давления и остаток-логику в компактный анти-разломный стабилизатор.</ABY_CraftGatebreakerAnchorHarness.description>
   <ABY_CraftNullCantorFocusSling.label>выковать фокус-перевязь нулевого кантора</ABY_CraftNullCantorFocusSling.label>
-  <ABY_CraftNullCantorFocusSling.description>Собрать диагональную ритуальную фокус-перевязь с малой сигильной катушкой, тёмным тканевым проводником и стабилизационными ключами Null Cantor.</ABY_CraftNullCantorFocusSling.description>
+  <ABY_CraftNullCantorFocusSling.description>Собрать диагональную ритуальную фокус-перевязь с малой сигильной катушкой, тёмным тканевым проводником и стабилизационными ключами Нулевой Кантор.</ABY_CraftNullCantorFocusSling.description>
   <ABY_CraftNullProcessionVeil.label>выковать нулевую процессионную вуаль</ABY_CraftNullProcessionVeil.label>
   <ABY_CraftNullProcessionVeil.description>Выковать компактную нулевую полумаску из сигильной ткани, пласталевых фильтров и малой золотой логической печати.</ABY_CraftNullProcessionVeil.description>
 </LanguageData>

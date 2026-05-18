@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftArchonSigil.jobString>Выполняется: выковать сигила архонта.</ABY_CraftArchonSigil.jobString>
+  <ABY_CraftArchonSigil.label>выковать сигила архонта</ABY_CraftArchonSigil.label>
+  <ABY_CraftAshboundCapacitorModule.jobString>Выполняется: выковать пеплосвязанный модуль-конденсатор.</ABY_CraftAshboundCapacitorModule.jobString>
+  <ABY_CraftAshboundCapacitorModule.label>выковать пеплосвязанный модуль-конденсатор</ABY_CraftAshboundCapacitorModule.label>
+  <ABY_CraftCrownCondenserModule.jobString>Выполняется: выковать коронный модуль-конденсатор.</ABY_CraftCrownCondenserModule.jobString>
+  <ABY_CraftCrownCondenserModule.label>выковать коронный модуль-конденсатор</ABY_CraftCrownCondenserModule.label>
+  <ABY_CraftCrownStabilizerModule.jobString>Выполняется: выковать коронный модуль-стабилизатор.</ABY_CraftCrownStabilizerModule.jobString>
+  <ABY_CraftCrownStabilizerModule.label>выковать коронный модуль-стабилизатор</ABY_CraftCrownStabilizerModule.label>
+  <ABY_CraftCrudeStabilizerModule.jobString>Выполняется: выковать грубый модуль-стабилизатор.</ABY_CraftCrudeStabilizerModule.jobString>
+  <ABY_CraftCrudeStabilizerModule.label>выковать грубый модуль-стабилизатор</ABY_CraftCrudeStabilizerModule.label>
+  <ABY_CraftDominionSigil.jobString>Выполняется: выковать сигила доминиона.</ABY_CraftDominionSigil.jobString>
+  <ABY_CraftDominionSigil.label>выковать сигила доминиона</ABY_CraftDominionSigil.label>
+  <ABY_CraftEmberHoundSigil.jobString>Выполняется: выковать угольный гончая сигила.</ABY_CraftEmberHoundSigil.jobString>
+  <ABY_CraftEmberHoundSigil.label>выковать угольный гончая сигила</ABY_CraftEmberHoundSigil.label>
+  <ABY_CraftGatebreakerAnchorHarness.jobString>Выполняется: выковать проломщик-врат якорь харнесс.</ABY_CraftGatebreakerAnchorHarness.jobString>
+  <ABY_CraftNullCantorFocusSling.jobString>Выполняется: выковать нулевой кантор фокус слинг.</ABY_CraftNullCantorFocusSling.jobString>
+  <ABY_CraftNullProcessionVeil.jobString>Выполняется: выковать нулевой процессия веил.</ABY_CraftNullProcessionVeil.jobString>
+  <ABY_CraftResidue.jobString>Выполняется: уплотнить бездненный остаток.</ABY_CraftResidue.jobString>
+  <ABY_CraftResidue.label>уплотнить бездненный остаток</ABY_CraftResidue.label>
+  <ABY_CraftResiduePlasteelSpacer.description>Производственная процедура Бездненного Протокола для результата: уплотнить усиленный бездненный остаток. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftResiduePlasteelSpacer.description>
+  <ABY_CraftResiduePlasteelSpacer.jobString>Выполняется: уплотнить усиленный бездненный остаток.</ABY_CraftResiduePlasteelSpacer.jobString>
+  <ABY_CraftResiduePlasteelSpacer.label>уплотнить усиленный бездненный остаток</ABY_CraftResiduePlasteelSpacer.label>
+  <ABY_CraftResiduePreciousMetals.description>Производственная процедура Бездненного Протокола для результата: уплотнить золочёный бездненный остаток. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftResiduePreciousMetals.description>
+  <ABY_CraftResiduePreciousMetals.jobString>Выполняется: уплотнить золочёный бездненный остаток.</ABY_CraftResiduePreciousMetals.jobString>
+  <ABY_CraftResiduePreciousMetals.label>уплотнить золочёный бездненный остаток</ABY_CraftResiduePreciousMetals.label>
+  <ABY_CraftResonantStabilizerModule.jobString>Выполняется: выковать резонансный модуль-стабилизатор.</ABY_CraftResonantStabilizerModule.jobString>
+  <ABY_CraftResonantStabilizerModule.label>выковать резонансный модуль-стабилизатор</ABY_CraftResonantStabilizerModule.label>
+  <ABY_CraftRiftCapacitorModule.jobString>Выполняется: выковать разломный модуль-конденсатор.</ABY_CraftRiftCapacitorModule.jobString>
+  <ABY_CraftRiftCapacitorModule.label>выковать разломный модуль-конденсатор</ABY_CraftRiftCapacitorModule.label>
+  <ABY_CraftSaintAegisCarapace.description>Производственная процедура Бездненного Протокола для результата: выковать святой эгида панцирь. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftSaintAegisCarapace.description>
+  <ABY_CraftSaintAegisCarapace.jobString>Выполняется: выковать святой эгида панцирь.</ABY_CraftSaintAegisCarapace.jobString>
+  <ABY_CraftSaintAegisCarapace.label>выковать святой эгида панцирь</ABY_CraftSaintAegisCarapace.label>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.description>Производственная процедура Бездненного Протокола для результата: выковать бездненный гарпун проектор. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_AbyssalHarpoonProjector.description>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>Выполняется: выковать бездненный гарпун проектор.</ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.label>выковать бездненный гарпун проектор</ABY_CraftTurretModule_AbyssalHarpoonProjector.label>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.description>Производственная процедура Бездненного Протокола для результата: выковать пепельный хоровой повторитель ядро. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_AshChoirRepeaterCore.description>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>Выполняется: выковать пепельный хоровой повторитель ядро.</ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.label>выковать пепельный хоровой повторитель ядро</ABY_CraftTurretModule_AshChoirRepeaterCore.label>
+  <ABY_CraftTurretModule_CinderMortarCore.description>Производственная процедура Бездненного Протокола для результата: выковать угольный мортира ядро. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CinderMortarCore.description>
+  <ABY_CraftTurretModule_CinderMortarCore.jobString>Выполняется: выковать угольный мортира ядро.</ABY_CraftTurretModule_CinderMortarCore.jobString>
+  <ABY_CraftTurretModule_CinderMortarCore.label>выковать угольный мортира ядро</ABY_CraftTurretModule_CinderMortarCore.label>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.description>Производственная процедура Бездненного Протокола для результата: выковать кровнкоил гаусс миниган. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CrowncoilGaussMinigun.description>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>Выполняется: выковать кровнкоил гаусс миниган.</ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.label>выковать кровнкоил гаусс миниган</ABY_CraftTurretModule_CrowncoilGaussMinigun.label>
+  <ABY_CraftTurretModule_CrownfireRocketChoir.description>Производственная процедура Бездненного Протокола для результата: выковать коронно-огненный ракета хоровой. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CrownfireRocketChoir.description>
+  <ABY_CraftTurretModule_CrownfireRocketChoir.jobString>Выполняется: выковать коронно-огненный ракета хоровой.</ABY_CraftTurretModule_CrownfireRocketChoir.jobString>
+  <ABY_CraftTurretModule_CrownfireRocketChoir.label>выковать коронно-огненный ракета хоровой</ABY_CraftTurretModule_CrownfireRocketChoir.label>
+  <ABY_CraftTurretModule_NullArcDischarger.description>Производственная процедура Бездненного Протокола для результата: выковать нулевой дуга разрядник. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_NullArcDischarger.description>
+  <ABY_CraftTurretModule_NullArcDischarger.jobString>Выполняется: выковать нулевой дуга разрядник.</ABY_CraftTurretModule_NullArcDischarger.jobString>
+  <ABY_CraftTurretModule_NullArcDischarger.label>выковать нулевой дуга разрядник</ABY_CraftTurretModule_NullArcDischarger.label>
+  <ABY_CraftTurretModule_RiftFlakBloom.description>Производственная процедура Бездненного Протокола для результата: выковать рифт зенитный раскрытие. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_RiftFlakBloom.description>
+  <ABY_CraftTurretModule_RiftFlakBloom.jobString>Выполняется: выковать рифт зенитный раскрытие.</ABY_CraftTurretModule_RiftFlakBloom.jobString>
+  <ABY_CraftTurretModule_RiftFlakBloom.label>выковать рифт зенитный раскрытие</ABY_CraftTurretModule_RiftFlakBloom.label>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.description>Производственная процедура Бездненного Протокола для результата: выковать освящённый призма излучатель. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_SanctifiedPrismEmitter.description>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>Выполняется: выковать освящённый призма излучатель.</ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.label>выковать освящённый призма излучатель</ABY_CraftTurretModule_SanctifiedPrismEmitter.label>
+  <ABY_CraftTurretModule_SepulcherRailCore.description>Производственная процедура Бездненного Протокола для результата: выковать сепулкхер рельс ядро. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_SepulcherRailCore.description>
+  <ABY_CraftTurretModule_SepulcherRailCore.jobString>Выполняется: выковать сепулкхер рельс ядро.</ABY_CraftTurretModule_SepulcherRailCore.jobString>
+  <ABY_CraftTurretModule_SepulcherRailCore.label>выковать сепулкхер рельс ядро</ABY_CraftTurretModule_SepulcherRailCore.label>
+  <ABY_CraftTurretModule_VesperLanceArray.description>Производственная процедура Бездненного Протокола для результата: выковать веспер копьё массив. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_VesperLanceArray.description>
+  <ABY_CraftTurretModule_VesperLanceArray.jobString>Выполняется: выковать веспер копьё массив.</ABY_CraftTurretModule_VesperLanceArray.jobString>
+  <ABY_CraftTurretModule_VesperLanceArray.label>выковать веспер копьё массив</ABY_CraftTurretModule_VesperLanceArray.label>
+  <ABY_CraftVesperHaloHelm.description>Производственная процедура Бездненного Протокола для результата: выковать веспер ореол шлем. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftVesperHaloHelm.description>
+  <ABY_CraftVesperHaloHelm.jobString>Выполняется: выковать веспер ореол шлем.</ABY_CraftVesperHaloHelm.jobString>
+  <ABY_CraftVesperHaloHelm.label>выковать веспер ореол шлем</ABY_CraftVesperHaloHelm.label>
+  <ABY_InstallArchonTendonSpine.jobString>Выполняется: установить сухожильный хребет архонта.</ABY_InstallArchonTendonSpine.jobString>
+  <ABY_InstallArchonTendonSpine.label>установить сухожильный хребет архонта</ABY_InstallArchonTendonSpine.label>
+  <ABY_InstallCrownCortexSubnode.description>Производственная процедура Бездненного Протокола для результата: установить подузел коронной коры. Требует соответствующих ресурсов и уровня доступа.</ABY_InstallCrownCortexSubnode.description>
+  <ABY_InstallCrownCortexSubnode.jobString>Выполняется: установить подузел коронной коры.</ABY_InstallCrownCortexSubnode.jobString>
+  <ABY_InstallCrownCortexSubnode.label>установить подузел коронной коры</ABY_InstallCrownCortexSubnode.label>
+  <ABY_InstallDominionPulseHeart.description>Производственная процедура Бездненного Протокола для результата: установить пульс-сердце доминиона. Требует соответствующих ресурсов и уровня доступа.</ABY_InstallDominionPulseHeart.description>
+  <ABY_InstallDominionPulseHeart.jobString>Выполняется: установить пульс-сердце доминиона.</ABY_InstallDominionPulseHeart.jobString>
+  <ABY_InstallDominionPulseHeart.label>установить пульс-сердце доминиона</ABY_InstallDominionPulseHeart.label>
+  <ABY_InstallHeraldCarapaceMesh.jobString>Выполняется: установить панцирная сеть вестника.</ABY_InstallHeraldCarapaceMesh.jobString>
+  <ABY_InstallHeraldCarapaceMesh.label>установить панцирная сеть вестника</ABY_InstallHeraldCarapaceMesh.label>
+  <ABY_InstallHeraldEye.jobString>Выполняется: установить глаз вестника.</ABY_InstallHeraldEye.jobString>
+  <ABY_InstallHeraldEye.label>установить глаз вестника</ABY_InstallHeraldEye.label>
+  <ABY_InstallInfernalEye.description>Производственная процедура Бездненного Протокола для результата: установить инфернальный глаз. Требует соответствующих ресурсов и уровня доступа.</ABY_InstallInfernalEye.description>
+  <ABY_InstallInfernalEye.jobString>Выполняется: установить инфернальный глаз.</ABY_InstallInfernalEye.jobString>
+  <ABY_InstallInfernalEye.label>установить инфернальный глаз</ABY_InstallInfernalEye.label>
+  <ABY_InstallLawwovenCarapaceMesh.description>Производственная процедура Бездненного Протокола для результата: установить законоплетёная панцирная сеть. Требует соответствующих ресурсов и уровня доступа.</ABY_InstallLawwovenCarapaceMesh.description>
+  <ABY_InstallLawwovenCarapaceMesh.jobString>Выполняется: установить законоплетёная панцирная сеть.</ABY_InstallLawwovenCarapaceMesh.jobString>
+  <ABY_InstallLawwovenCarapaceMesh.label>установить законоплетёная панцирная сеть</ABY_InstallLawwovenCarapaceMesh.label>
+  <ABY_InstallVerdictTendonSpine.description>Производственная процедура Бездненного Протокола для результата: установить сухожильный хребет приговора. Требует соответствующих ресурсов и уровня доступа.</ABY_InstallVerdictTendonSpine.description>
+  <ABY_InstallVerdictTendonSpine.jobString>Выполняется: установить сухожильный хребет приговора.</ABY_InstallVerdictTendonSpine.jobString>
+  <ABY_InstallVerdictTendonSpine.label>установить сухожильный хребет приговора</ABY_InstallVerdictTendonSpine.label>
+</LanguageData>

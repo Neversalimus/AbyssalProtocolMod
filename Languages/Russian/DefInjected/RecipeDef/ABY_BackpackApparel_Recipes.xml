@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CraftAshboundFieldPack.label>выковать полевой ранец пепельной грани</ABY_CraftAshboundFieldPack.label>
-  <ABY_CraftAshboundFieldPack.description>Собрать компактный полевой ранец из стальных усилителей, residue-канистр и сдержанной упряжной рамы.</ABY_CraftAshboundFieldPack.description>
+  <ABY_CraftAshboundFieldPack.description>Собрать компактный полевой ранец из стальных усилителей, остаток-канистр и сдержанной упряжной рамы.</ABY_CraftAshboundFieldPack.description>
   <ABY_CraftAshboundFieldPack.jobString>Ковка ранца пепельной грани.</ABY_CraftAshboundFieldPack.jobString>
   <ABY_CraftRiftRelayPack.label>выковать релейный ранец разлома</ABY_CraftRiftRelayPack.label>
   <ABY_CraftRiftRelayPack.description>Выковать ранец релейного класса вокруг компактного проводника разлома и усиленной грузовой рамы.</ABY_CraftRiftRelayPack.description>

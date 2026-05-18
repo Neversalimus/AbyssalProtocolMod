@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CraftTurretModule_RiftNeedlerCore.label>выковать ядро рифтового игломёта</ABY_CraftTurretModule_RiftNeedlerCore.label>
   <ABY_CraftTurretModule_RiftNeedlerCore.description>Привязать повторяющуюся рифтовую игольную решётку к основному оружейному ядру для турели.</ABY_CraftTurretModule_RiftNeedlerCore.description>
@@ -15,7 +15,7 @@
   <ABY_CraftTurretModule_TargetingSigil.label>выковать прицельную сигилу</ABY_CraftTurretModule_TargetingSigil.label>
   <ABY_CraftTurretModule_TargetingSigil.description>Вытравить пассивную прицельную матрицу для модульных турельных корпусов.</ABY_CraftTurretModule_TargetingSigil.description>
   <ABY_CraftTurretModule_TargetingSigil.jobString>Ковка прицельной сигилы.</ABY_CraftTurretModule_TargetingSigil.jobString>
-  <ABY_CraftTurretModule_ResidueCapacitor.label>выковать residue-конденсатор</ABY_CraftTurretModule_ResidueCapacitor.label>
+  <ABY_CraftTurretModule_ResidueCapacitor.label>выковать остаточный конденсатор</ABY_CraftTurretModule_ResidueCapacitor.label>
   <ABY_CraftTurretModule_ResidueCapacitor.description>Собрать пассивный буферный конденсатор для модульных турелей.</ABY_CraftTurretModule_ResidueCapacitor.description>
-  <ABY_CraftTurretModule_ResidueCapacitor.jobString>Ковка residue-конденсатора.</ABY_CraftTurretModule_ResidueCapacitor.jobString>
+  <ABY_CraftTurretModule_ResidueCapacitor.jobString>Ковка остаточный конденсатора.</ABY_CraftTurretModule_ResidueCapacitor.jobString>
 </LanguageData>
