@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_DominionSliceEncounter_Breach>Срез доминиона сформирован. Удержите порог и прорвитесь к якорной решётке.</ABY_DominionSliceEncounter_Breach>
   <ABY_DominionSliceEncounter_Anchorfall>Якорная решётка активна. Уничтожьте оставшиеся якоря: {0}.</ABY_DominionSliceEncounter_Anchorfall>
@@ -22,13 +22,19 @@
   <ABY_DominionSliceWaveLabel_ChoirEscort>Эскорт хора</ABY_DominionSliceWaveLabel_ChoirEscort>
   <ABY_DominionSliceWaveLabel_LawPunishers>Каратели закона</ABY_DominionSliceWaveLabel_LawPunishers>
   <ABY_DominionSliceWaveLabel_AnchorWardens>Стражи якорей</ABY_DominionSliceWaveLabel_AnchorWardens>
-  <ABY_DominionSliceWaveLabel_CrownRetinue>Свитa короны</ABY_DominionSliceWaveLabel_CrownRetinue>
+  <ABY_DominionSliceWaveLabel_CrownRetinue>Свита короны</ABY_DominionSliceWaveLabel_CrownRetinue>
   <ABY_DominionSliceWaveLabel_CrownEnforcers>Коронные каратели</ABY_DominionSliceWaveLabel_CrownEnforcers>
-  <ABY_DominionSliceAnchor_SealEffect>Эффект импульса: усиливает барьер Crown-Heart и продлевает давление щита.</ABY_DominionSliceAnchor_SealEffect>
+  <ABY_DominionSliceAnchor_SealEffect>Эффект импульса: усиливает барьер Коронного сердца и продлевает давление щита.</ABY_DominionSliceAnchor_SealEffect>
   <ABY_DominionSliceAnchor_ChoirEffect>Эффект импульса: ускоряет входящие волны поддержки и притягивает эскортные ячейки.</ABY_DominionSliceAnchor_ChoirEffect>
   <ABY_DominionSliceAnchor_LawEffect>Эффект импульса: усиливает окружающее наказание и смещает состав среза к давлению снайперов и стражей.</ABY_DominionSliceAnchor_LawEffect>
   <ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>Сердце доминиона уничтожено</ABY_DominionSliceEncounter_HeartDestroyedLoreTitle>
-  <ABY_DominionSliceEncounter_HeartDestroyedLoreText>Сердце доминиона уничтожено.&#10;&#10;Якоря отказывают. Коронные линии схлопываются. Карманная область теряет связность.&#10;&#10;Это не просто выигранная битва. Ваши колонисты сломали локальный закон Бездны — физически оформленную заявку на власть.&#10;&#10;Карман наград открыт, но срез уже схлопывается. Заберите то, что осталось, и доберитесь до точки извлечения, прежде чем что-то более глубокое ответит.</ABY_DominionSliceEncounter_HeartDestroyedLoreText>
+  <ABY_DominionSliceEncounter_HeartDestroyedLoreText>Сердце доминиона уничтожено.
+
+Якоря отказывают. Коронные линии схлопываются. Карманная область теряет связность.
+
+Это не просто выигранная битва. Ваши колонисты сломали локальный закон Бездны — физически оформленную заявку на власть.
+
+Карман наград открыт, но срез уже схлопывается. Заберите то, что осталось, и доберитесь до точки извлечения, прежде чем что-то более глубокое ответит.</ABY_DominionSliceEncounter_HeartDestroyedLoreText>
   <ABY_DominionSliceEncounter_HeartGuardiansAwakened>Корона-сердце выращивает цепных стражей: пробудились аортальные харроуэры — {0}.</ABY_DominionSliceEncounter_HeartGuardiansAwakened>
   <ABY_AorticGuardianLeash_FocusAnchor>якорный пилон</ABY_AorticGuardianLeash_FocusAnchor>
   <ABY_AorticGuardianLeash_FocusHeart>Корона-сердце</ABY_AorticGuardianLeash_FocusHeart>

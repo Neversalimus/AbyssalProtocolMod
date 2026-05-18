@@ -3,22 +3,18 @@
   <ABY_ApparelAegis_Label>Эгида</ABY_ApparelAegis_Label>
   <ABY_ApparelAegis_SaintLabel>Эгида Святого</ABY_ApparelAegis_SaintLabel>
   <ABY_ApparelAegis_CrownLabel>Коронная эгида</ABY_ApparelAegis_CrownLabel>
-
   <ABY_ApparelAegis_GizmoIntegrity>Целостность щита</ABY_ApparelAegis_GizmoIntegrity>
   <ABY_ApparelAegis_SaintGizmoSubtitle>Тяжёлая решётка щита</ABY_ApparelAegis_SaintGizmoSubtitle>
   <ABY_ApparelAegis_CrownGizmoSubtitle>Быстрое коронное реле</ABY_ApparelAegis_CrownGizmoSubtitle>
-
   <ABY_ApparelAegis_StateStable>стабильна</ABY_ApparelAegis_StateStable>
   <ABY_ApparelAegis_StateRecharging>восстанавливается</ABY_ApparelAegis_StateRecharging>
   <ABY_ApparelAegis_StateCollapsed>пробита</ABY_ApparelAegis_StateCollapsed>
   <ABY_ApparelAegis_StateSuppressed>подавлена внешним щитом</ABY_ApparelAegis_StateSuppressed>
-
   <ABY_ApparelAegis_GizmoState>Состояние</ABY_ApparelAegis_GizmoState>
   <ABY_ApparelAegis_GizmoCharge>Заряд</ABY_ApparelAegis_GizmoCharge>
   <ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>Не блокирует стрельбу носителя наружу.</ABY_ApparelAegis_GizmoDoesNotBlockOutgoing>
   <ABY_ApparelAegis_GizmoNoStack>Подавляется, если надет внешний пояс щита или щитовой предмет.</ABY_ApparelAegis_GizmoNoStack>
   <ABY_ApparelAegis_GizmoRechargeDelay>Задержка восстановления</ABY_ApparelAegis_GizmoRechargeDelay>
-
   <ABY_ApparelAegis_InfoHeader>Броневая эгида</ABY_ApparelAegis_InfoHeader>
   <ABY_ApparelAegis_InfoHeaderDesc>Пассивный встроенный профиль щита этой брони.</ABY_ApparelAegis_InfoHeaderDesc>
   <ABY_ApparelAegis_InfoCapacity>Ёмкость эгиды</ABY_ApparelAegis_InfoCapacity>
@@ -35,14 +31,13 @@
   <ABY_ApparelAegis_InfoExternalShield>Внешние щиты</ABY_ApparelAegis_InfoExternalShield>
   <ABY_ApparelAegis_InfoExternalShieldValue>подавляют эгиду</ABY_ApparelAegis_InfoExternalShieldValue>
   <ABY_ApparelAegis_InfoExternalShieldDesc>Если надет пояс щита или внешний щитовой предмет, эта броневая эгида отключается, чтобы не складывать щиты.</ABY_ApparelAegis_InfoExternalShieldDesc>
-
   <ABY_ApparelAegis_BlockRanged>дальний бой</ABY_ApparelAegis_BlockRanged>
   <ABY_ApparelAegis_BlockExplosive>взрывы</ABY_ApparelAegis_BlockExplosive>
   <ABY_ApparelAegis_BlockMelee>ближний бой</ABY_ApparelAegis_BlockMelee>
   <ABY_ApparelAegis_BlockEMP>ЭМИ-разряд</ABY_ApparelAegis_BlockEMP>
   <ABY_ApparelAegis_BlockNone>ничего</ABY_ApparelAegis_BlockNone>
-  <ABY_ApparelAegis_TagSaint>SAINT</ABY_ApparelAegis_TagSaint>
-  <ABY_ApparelAegis_TagCrown>CROWN</ABY_ApparelAegis_TagCrown>
+  <ABY_ApparelAegis_TagSaint>СВЯТОЙ</ABY_ApparelAegis_TagSaint>
+  <ABY_ApparelAegis_TagCrown>КОРОНА</ABY_ApparelAegis_TagCrown>
   <ABY_ApparelAegis_GizmoPeak>Пиковая целостность</ABY_ApparelAegis_GizmoPeak>
   <ABY_ApparelAegis_GizmoRestartIn>Перезапуск через</ABY_ApparelAegis_GizmoRestartIn>
   <ABY_ApparelAegis_GizmoReforming>Решётка восстанавливается</ABY_ApparelAegis_GizmoReforming>

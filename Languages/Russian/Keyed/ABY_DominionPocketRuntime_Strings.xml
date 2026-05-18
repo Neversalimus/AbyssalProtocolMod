@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_DominionPocketRuntimeFail_NoGate>Активные Великие адские врата для генерации среза доминиона не найдены.</ABY_DominionPocketRuntimeFail_NoGate>
   <ABY_DominionPocketRuntimeFail_NoPawns>Перед открытием среза доминиона выделите хотя бы одного колониста на текущей карте.</ABY_DominionPocketRuntimeFail_NoPawns>
@@ -10,7 +10,7 @@
   <ABY_DominionPocketRuntimeFail_NoSourceMap>Не удалось определить исходную карту колонии для этого среза доминиона.</ABY_DominionPocketRuntimeFail_NoSourceMap>
   <ABY_DominionPocketRuntimeFail_NoPocketMap>Не удалось определить карту среза доминиона.</ABY_DominionPocketRuntimeFail_NoPocketMap>
   <ABY_DominionPocketRuntimeFail_NoPlayerPawns>Внутри этого среза доминиона больше не осталось пешек игрока.</ABY_DominionPocketRuntimeFail_NoPlayerPawns>
-  <ABY_DominionPocketRuntimeOpened>Runtime-срез доминиона открыт. Ударная группа введена: {0}. Размер pocket map: {1}x{2}.</ABY_DominionPocketRuntimeOpened>
+  <ABY_DominionPocketRuntimeOpened>Срез доминиона открыт. Ударная группа введена: {0}. Размер карманной карты: {1}×{2}.</ABY_DominionPocketRuntimeOpened>
   <ABY_DominionPocketRuntimeReturned>Ударная группа эвакуирована: {0}.</ABY_DominionPocketRuntimeReturned>
   <ABY_DominionPocketRuntimeCollapsed>Временный срез доминиона схлопнулся.</ABY_DominionPocketRuntimeCollapsed>
   <ABY_DominionPocketRuntimeCommand_Return>Вернуть ударную группу</ABY_DominionPocketRuntimeCommand_Return>

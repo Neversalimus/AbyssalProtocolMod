@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CircleRitual_Warden_Label>Печать надсмотрщика</ABY_CircleRitual_Warden_Label>
   <ABY_CircleRitual_Warden_Subtitle>Дисциплинированный прорыв мини-босса</ABY_CircleRitual_Warden_Subtitle>
-  <ABY_CircleRitual_Warden_Desc>Потребляет одну сигилу надсмотрщика, направляет колониста к кругу и вызывает первый дисциплинированный прорыв мини-босса. Warden of Ash приходит как тяжёлый инфернальный надзиратель с порталом в груди, пепельными импульсами и фазовыми подкреплениями импов.</ABY_CircleRitual_Warden_Desc>
-  <ABY_CircleRitual_Warden_Rewards>• Гарантированное получение пепельного ядра после убийства&#10;• Выплата residue и реальный шаг прогрессии через мини-босса&#10;• Чистый мост между ранними hostile-волнами и первым полноценным боссом</ABY_CircleRitual_Warden_Rewards>
-  <ABY_CircleRitual_Warden_SideEffects>• Вместо простой стаи появляется бронированный враждебный мини-босс&#10;• Даёт пепельные импульсы ближнего радиуса, наказывающие скученность и мили-рои&#10;• По мере потери здоровья открывает грудной портал и выпускает подкрепления импов</ABY_CircleRitual_Warden_SideEffects>
+  <ABY_CircleRitual_Warden_Desc>Потребляет одну сигилу надсмотрщика, направляет колониста к кругу и вызывает первый дисциплинированный прорыв мини-босса. Страж оф Пепел приходит как тяжёлый инфернальный надзиратель с порталом в груди, пепельными импульсами и фазовыми подкреплениями импов.</ABY_CircleRitual_Warden_Desc>
+  <ABY_CircleRitual_Warden_Rewards>• Гарантированное получение пепельного ядра после убийства
+• Выплата остаток и реальный шаг прогрессии через мини-босса
+• Чистый мост между ранними хостиле-волнами и первым полноценным боссом</ABY_CircleRitual_Warden_Rewards>
+  <ABY_CircleRitual_Warden_SideEffects>• Вместо простой стаи появляется бронированный враждебный мини-босс
+• Даёт пепельные импульсы ближнего радиуса, наказывающие скученность и мили-рои
+• По мере потери здоровья открывает грудной портал и выпускает подкрепления импов</ABY_CircleRitual_Warden_SideEffects>
   <ABY_WardenSummonSuccessLabel>Пепельный прорыв открыт</ABY_WardenSummonSuccessLabel>
-  <ABY_WardenSummonSuccessDesc>Сигила сработала. Сформирован дисциплинированный пепельный разлом, и Warden of Ash пересекает локальное пространство.</ABY_WardenSummonSuccessDesc>
+  <ABY_WardenSummonSuccessDesc>Сигила сработала. Сформирован дисциплинированный пепельный разлом, и Страж оф Пепел пересекает локальное пространство.</ABY_WardenSummonSuccessDesc>
 </LanguageData>

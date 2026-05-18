@@ -1,21 +1,19 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_ForgeCategory_TurretSystems>Турельные системы</ABY_ForgeCategory_TurretSystems>
   <ABY_ForgePatternSummary_TurretSystems>Турельная система</ABY_ForgePatternSummary_TurretSystems>
   <ABY_ModularTurret_Tab>Модули</ABY_ModularTurret_Tab>
   <ABY_ExperimentalSystemsHeader>Экспериментальные системы / аварийные выключатели</ABY_ExperimentalSystemsHeader>
-  <ABY_ExperimentalSystemsDesc>Прототипные системы живут за явными выключателями. Отключение должно останавливать runtime-поведение и скрывать Forge-рецепты без удаления save data.</ABY_ExperimentalSystemsDesc>
+  <ABY_ExperimentalSystemsDesc>Прототипные системы живут за явными выключателями. Отключение должно останавливать рунтиме-поведение и скрывать Форге-рецепты без удаления саве дата.</ABY_ExperimentalSystemsDesc>
   <ABY_ModularTurrets_Enable>Включить прототип модульных турелей</ABY_ModularTurrets_Enable>
-  <ABY_ModularTurrets_EnableDesc>Главный выключатель Package 0 для модульных турелей. Если выключено, comp турели перестаёт целиться/стрелять, постройка блокируется, а рецепты модулей скрываются из Forge. Установленные модули остаются в сейве для безопасного повторного включения.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurrets_EnableDesc>Главный выключатель Паккаге 0 для модульных турелей. Если выключено, комп турели перестаёт целиться/стрелять, постройка блокируется, а рецепты модулей скрываются из кузница. Установленные модули остаются в сейве для безопасного повторного включения.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Модульный турельный корпус Бездны</ABY_ModularTurret_Header>
-  <ABY_ModularTurret_Subtitle>Установка модулей с карты. Основное ядро стреляет; aux/пассивные модули меняют поведение.</ABY_ModularTurret_Subtitle>
+  <ABY_ModularTurret_Subtitle>Установка модулей с карты. Основное ядро стреляет; аукс/пассивные модули меняют поведение.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках мода.</ABY_TurretDisabledMessage>
-
   <ABY_StateEnabled>включено</ABY_StateEnabled>
   <ABY_StateDisabled>отключено</ABY_StateDisabled>
   <ABY_StateOnline>в сети</ABY_StateOnline>
   <ABY_StateOffline>без питания</ABY_StateOffline>
-
   <ABY_TurretSlot_Main>Основное оружие</ABY_TurretSlot_Main>
   <ABY_TurretSlot_Auxiliary>Вспомогательный</ABY_TurretSlot_Auxiliary>
   <ABY_TurretSlot_Passive>Пассивный</ABY_TurretSlot_Passive>
@@ -27,11 +25,10 @@
   <ABY_TurretEmpty_Aux>Пусто. Вспомогательные модули добавляют независимый периодический поддерживающий выстрел.</ABY_TurretEmpty_Aux>
   <ABY_TurretEmpty_Passive>Пусто. Пассивные модули меняют дальность, темп основного оружия или энергопотребление модулей.</ABY_TurretEmpty_Passive>
   <ABY_TurretSlotEmpty>пусто</ABY_TurretSlotEmpty>
-
   <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
   <ABY_TurretRemove>Снять / выбросить</ABY_TurretRemove>
-  <ABY_TurretOpenForgeHint>Крафт в Forge</ABY_TurretOpenForgeHint>
-  <ABY_TurretOpenForgeHintTooltip>Рецепты модулей находятся в Abyssal Forge → Турельные системы. Карточка Forge теперь показывает слот: основное оружие, вспомогательный или пассивный.</ABY_TurretOpenForgeHintTooltip>
+  <ABY_TurretOpenForgeHint>Крафт в кузница</ABY_TurretOpenForgeHint>
+  <ABY_TurretOpenForgeHintTooltip>Рецепты модулей находятся в Бездненная кузница → Турельные системы. Карточка кузница теперь показывает слот: основное оружие, вспомогательный или пассивный.</ABY_TurretOpenForgeHintTooltip>
   <ABY_TurretEditDisabled>Снова включите модульные турели в настройках мода, чтобы менять установленные модули.</ABY_TurretEditDisabled>
   <ABY_TurretRemoveTooltip>Выбрасывает установленный модуль предметом рядом с корпусом. Если безопасной клетки рядом нет, модуль остаётся установленным.</ABY_TurretRemoveTooltip>
   <ABY_TurretInstallFailed>Не удалось установить модуль.</ABY_TurretInstallFailed>
@@ -40,9 +37,8 @@
   <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
   <ABY_TurretNoAvailableModule>На этой карте нет свободного совместимого модуля.</ABY_TurretNoAvailableModule>
   <ABY_TurretNoModuleItem>Нужный свободный предмет-модуль не найден.</ABY_TurretNoModuleItem>
-  <ABY_TurretNoCompatibleDefs>Для этого слота нет совместимых module defs.</ABY_TurretNoCompatibleDefs>
+  <ABY_TurretNoCompatibleDefs>Для этого слота нет совместимых модуле дефс.</ABY_TurretNoCompatibleDefs>
   <ABY_TurretCompatibleModules>Совместимые модули:</ABY_TurretCompatibleModules>
-
   <ABY_TurretInstall_Invalid>Некорректный модуль.</ABY_TurretInstall_Invalid>
   <ABY_TurretInstall_Incompatible>Этот модуль несовместим с данным корпусом.</ABY_TurretInstall_Incompatible>
   <ABY_TurretInstall_NoMainSlot>У этого корпуса нет слота основного оружия.</ABY_TurretInstall_NoMainSlot>
@@ -57,48 +53,43 @@
   <ABY_TurretRemove_InvalidModule>Нельзя выбросить некорректный предмет модуля.</ABY_TurretRemove_InvalidModule>
   <ABY_TurretRemove_NoDropCell>Не удалось найти безопасную клетку рядом для выброса модуля. Модуль оставлен установленным.</ABY_TurretRemove_NoDropCell>
   <ABY_TurretRemove_Empty>Этот слот уже пуст.</ABY_TurretRemove_Empty>
-
   <ABY_TurretModuleLine_Role>Роль: {0}</ABY_TurretModuleLine_Role>
   <ABY_TurretModuleLine_Effect>Эффект: {0}</ABY_TurretModuleLine_Effect>
   <ABY_TurretModuleProjectile>Снаряд: {0}</ABY_TurretModuleProjectile>
   <ABY_TurretModuleFireStats>Дальность {0} · перезарядка {1} · очередь {2}</ABY_TurretModuleFireStats>
-  <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка aux {1} · очередь {2}</ABY_TurretModuleAuxStats>
-  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка основного {1} · потребление +{2} W</ABY_TurretModulePassiveStats>
+  <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка вспом. оружия {1} · очередь {2}</ABY_TurretModuleAuxStats>
+  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка основного {1} · потребление +{2} Вт</ABY_TurretModulePassiveStats>
   <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
   <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
   <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
   <ABY_TurretModuleTooltipStats>Статы: {0}</ABY_TurretModuleTooltipStats>
-  <ABY_TurretModulePowerDelta>Дополнительное питание модуля: +{0} W</ABY_TurretModulePowerDelta>
+  <ABY_TurretModulePowerDelta>Дополнительное питание модуля: +{0} Вт</ABY_TurretModulePowerDelta>
   <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
   <ABY_TurretCooldown_Slower>+{0}%</ABY_TurretCooldown_Slower>
-
   <ABY_TurretForgeSummary_Main>Слот основного оружия · {0}</ABY_TurretForgeSummary_Main>
   <ABY_TurretForgeSummary_Aux>Вспомогательный слот · {0}</ABY_TurretForgeSummary_Aux>
   <ABY_TurretForgeSummary_Passive>Пассивный слот · {0}</ABY_TurretForgeSummary_Passive>
   <ABY_TurretForgeSummary_ChassisGeneric>Турельный корпус</ABY_TurretForgeSummary_ChassisGeneric>
-  <ABY_TurretForgeSummary_ChassisSlots>Корпус · {0} основ. / {1} aux / {2} пассив. слота</ABY_TurretForgeSummary_ChassisSlots>
+  <ABY_TurretForgeSummary_ChassisSlots>Корпус · {0} основ. / {1} вспом. / {2} пассив. слота</ABY_TurretForgeSummary_ChassisSlots>
   <ABY_TurretChassisTooltipRole>Роль: пустой модульный турельный корпус. Не стреляет, пока не установлено ядро основного оружия.</ABY_TurretChassisTooltipRole>
   <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
-  <ABY_TurretChassisTooltipRuntime>Runtime: установленные модули сохраняются внутри здания и переживают save/load и переключение kill switch.</ABY_TurretChassisTooltipRuntime>
-
+  <ABY_TurretChassisTooltipRuntime>Рунтиме: установленные модули сохраняются внутри здания и переживают саве/лоад и переключение килл свиткх.</ABY_TurretChassisTooltipRuntime>
   <ABY_TurretStatsHeader>Предпросмотр работы</ABY_TurretStatsHeader>
   <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
   <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
   <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
   <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
   <ABY_TurretStatsCooldownResolved>Перезарядка основного: {0} → {1}</ABY_TurretStatsCooldownResolved>
-  <ABY_TurretStatsPowerDraw>Потребление: {0} W база + {1} W модули = {2} W применено</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Выключатель: отключает наведение, стрельбу, размещение и Forge-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsPowerDraw>Потребление: {0} Вт база + {1} Вт модули = {2} Вт применено</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsKillSwitch>Выключатель: отключает наведение, стрельбу, размещение и Форге-вывод без удаления установленных модулей.</ABY_TurretStatsKillSwitch>
   <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
-
   <ABY_TurretInspectDisabled>Модульная турельная система отключена в настройках.</ABY_TurretInspectDisabled>
   <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
   <ABY_TurretInspectAux>Вспомогательное: {0}</ABY_TurretInspectAux>
   <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
-  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} W</ABY_TurretInspectStats>
+  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} Вт</ABY_TurretInspectStats>
   <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
-
   <ABY_TurretInfo_Profile>Профиль турельного модуля</ABY_TurretInfo_Profile>
   <ABY_TurretInfo_ProfileDesc>Занимаемый слот и тактическая роль этого компонента модульной турели.</ABY_TurretInfo_ProfileDesc>
   <ABY_TurretInfo_CompatibleChassis>Совместимые корпуса</ABY_TurretInfo_CompatibleChassis>
@@ -108,14 +99,14 @@
   <ABY_TurretInfo_Range>Дальность турели</ABY_TurretInfo_Range>
   <ABY_TurretInfo_RangeDesc>Максимальная дальность стрельбы, которую даёт этот оружейный модуль.</ABY_TurretInfo_RangeDesc>
   <ABY_TurretInfo_MainCooldown>Перезарядка основного</ABY_TurretInfo_MainCooldown>
-  <ABY_TurretInfo_AuxCooldown>Перезарядка aux</ABY_TurretInfo_AuxCooldown>
+  <ABY_TurretInfo_AuxCooldown>Перезарядка аукс</ABY_TurretInfo_AuxCooldown>
   <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Очередь</ABY_TurretInfo_Burst>
   <ABY_TurretInfo_BurstDesc>Количество снарядов за одну активацию.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Интервал очереди</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Задержка между выстрелами внутри очереди.</ABY_TurretInfo_BurstSpacingDesc>
   <ABY_TurretInfo_Projectile>Снаряд</ABY_TurretInfo_Projectile>
-  <ABY_TurretInfo_ProjectileDesc>Projectile def, которым стреляет этот модуль.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_ProjectileDesc>Проджектиле деф, которым стреляет этот модуль.</ABY_TurretInfo_ProjectileDesc>
   <ABY_TurretInfo_RangeOffset>Бонус дальности основного</ABY_TurretInfo_RangeOffset>
   <ABY_TurretInfo_RangeOffsetDesc>Добавляется к дальности установленного основного оружия.</ABY_TurretInfo_RangeOffsetDesc>
   <ABY_TurretInfo_CooldownMultiplier>Модификатор перезарядки основного</ABY_TurretInfo_CooldownMultiplier>
@@ -123,9 +114,8 @@
   <ABY_TurretInfo_CooldownOffset>Сдвиг перезарядки основного</ABY_TurretInfo_CooldownOffset>
   <ABY_TurretInfo_CooldownOffsetDesc>Плоский сдвиг перезарядки после множителей.</ABY_TurretInfo_CooldownOffsetDesc>
   <ABY_TurretInfo_MissRadiusOffset>Сдвиг радиуса промаха</ABY_TurretInfo_MissRadiusOffset>
-  <ABY_TurretInfo_MissRadiusOffsetDesc>Прототипный targeting-offset, зарезервированный под будущую accuracy-логику.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_MissRadiusOffsetDesc>Прототипный таргетинг-оффсет, зарезервированный под будущую аккураки-логику.</ABY_TurretInfo_MissRadiusOffsetDesc>
   <ABY_TurretInfo_ExtraPowerDraw>Дополнительное энергопотребление</ABY_TurretInfo_ExtraPowerDraw>
   <ABY_TurretInfo_ExtraPowerDrawDesc>Дополнительная энергия, которую потребляет корпус, пока модуль установлен и модульные турели включены.</ABY_TurretInfo_ExtraPowerDrawDesc>
   <ABY_TurretInfo_AnyChassis>любой модульный корпус</ABY_TurretInfo_AnyChassis>
-
 </LanguageData>

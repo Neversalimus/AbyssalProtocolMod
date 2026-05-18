@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CapacitorBay_Core>основной слот</ABY_CapacitorBay_Core>
   <ABY_CapacitorBay_Auxiliary>вспомогательный слот</ABY_CapacitorBay_Auxiliary>
   <ABY_CapacitorTier_None>нет</ABY_CapacitorTier_None>
-  <ABY_CapacitorTier_Ashbound>ashbound</ABY_CapacitorTier_Ashbound>
-  <ABY_CapacitorTier_Rift>rift</ABY_CapacitorTier_Rift>
-  <ABY_CapacitorTier_Crown>crown</ABY_CapacitorTier_Crown>
+  <ABY_CapacitorTier_Ashbound>пеплосвязанный</ABY_CapacitorTier_Ashbound>
+  <ABY_CapacitorTier_Rift>разлом</ABY_CapacitorTier_Rift>
+  <ABY_CapacitorTier_Crown>корона</ABY_CapacitorTier_Crown>
   <ABY_CapacitorSlot_Empty>пусто</ABY_CapacitorSlot_Empty>
-
   <ABY_CapacitorInspect_Slots>Конденсаторы: {0} / {1} установлено</ABY_CapacitorInspect_Slots>
   <ABY_CapacitorInspect_SlotsTier>Конденсаторы: {0} / {1} установлено • высший тир: {2}</ABY_CapacitorInspect_SlotsTier>
   <ABY_CapacitorInspect_Bays>Слоты: {0} • {1}</ABY_CapacitorInspect_Bays>
@@ -17,19 +16,16 @@
   <ABY_CapacitorInspect_ChargeRate>Скорость зарядки: {0}/с</ABY_CapacitorInspect_ChargeRate>
   <ABY_CapacitorInspect_Lattice>Решётка: {0}</ABY_CapacitorInspect_Lattice>
   <ABY_CapacitorInspect_Leakage>Утечка: {0}</ABY_CapacitorInspect_Leakage>
-
   <ABY_CapacitorChargeState_NoLattice>нет решётки</ABY_CapacitorChargeState_NoLattice>
   <ABY_CapacitorChargeState_Dormant>покой</ABY_CapacitorChargeState_Dormant>
   <ABY_CapacitorChargeState_Recovering>восстановление</ABY_CapacitorChargeState_Recovering>
   <ABY_CapacitorChargeState_Priming>накачка</ABY_CapacitorChargeState_Priming>
   <ABY_CapacitorChargeState_Charged>заряжен</ABY_CapacitorChargeState_Charged>
   <ABY_CapacitorChargeState_Saturated>насыщен</ABY_CapacitorChargeState_Saturated>
-
   <ABY_CapacitorCompact>Конденсаторы: решётка отсутствует</ABY_CapacitorCompact>
   <ABY_CapacitorCompactActive>Конденсаторы: {0} установлено • {1}</ABY_CapacitorCompactActive>
   <ABY_CapacitorRecovery_None>стабильно</ABY_CapacitorRecovery_None>
   <ABY_CapacitorRecovery_Readout>~{0}с</ABY_CapacitorRecovery_Readout>
-
   <ABY_CapacitorPanel_Header>Конденсаторная решётка</ABY_CapacitorPanel_Header>
   <ABY_CapacitorPanel_State>Состояние</ABY_CapacitorPanel_State>
   <ABY_CapacitorPanel_Startup>Стартовый буфер</ABY_CapacitorPanel_Startup>
@@ -40,7 +36,6 @@
   <ABY_CapacitorPanel_Leakage>Утечка</ABY_CapacitorPanel_Leakage>
   <ABY_CapacitorPanel_Flow>Поток заряда</ABY_CapacitorPanel_Flow>
   <ABY_CapacitorPanel_Hint>Теперь конденсаторы реально ограничивают стартовый буфер ритуала, общий резерв и пропускную способность. Более сильные решётки быстрее заряжаются, чище восстанавливаются после вызова и уменьшают шанс грязного энергетического срыва при поддержанном ритуале.</ABY_CapacitorPanel_Hint>
-
   <ABY_CapacitorCommand_Install>Вставить</ABY_CapacitorCommand_Install>
   <ABY_CapacitorCommand_Remove>Снять</ABY_CapacitorCommand_Remove>
   <ABY_CapacitorMenuOption>{0} • тир {1} • доступно: {2}</ABY_CapacitorMenuOption>
@@ -48,7 +43,6 @@
   <ABY_CapacitorRemoveQueued>Снятие конденсатора из {0} поставлено в очередь.</ABY_CapacitorRemoveQueued>
   <ABY_CapacitorInstallSuccess>{0} установлен в {1}.</ABY_CapacitorInstallSuccess>
   <ABY_CapacitorRemoveSuccess>{0} снят из {1}.</ABY_CapacitorRemoveSuccess>
-
   <ABY_CapacitorFail_NoAvailable>Подходящий конденсаторный модуль сейчас недоступен на этой карте.</ABY_CapacitorFail_NoAvailable>
   <ABY_CapacitorFail_NoTechnician>Сейчас нет подходящего колониста, который может обслужить круг.</ABY_CapacitorFail_NoTechnician>
   <ABY_CapacitorFail_NotModule>Этот предмет не является допустимым абиссальным конденсаторным модулем.</ABY_CapacitorFail_NotModule>
@@ -60,7 +54,6 @@
   <ABY_CapacitorFail_Startup>Недостаточный стартовый буфер: {0} / {1}</ABY_CapacitorFail_Startup>
   <ABY_CapacitorFail_Reserve>Недостаточный запас заряда: {0} / {1}</ABY_CapacitorFail_Reserve>
   <ABY_CapacitorFail_Throughput>Недостаточная пропускная способность конденсаторов: {0} / {1}</ABY_CapacitorFail_Throughput>
-
   <ABY_CapacitorSlotRow_Empty>{0}: пусто</ABY_CapacitorSlotRow_Empty>
   <ABY_CapacitorSlotRow_Installed>{0}: {1} • {2}</ABY_CapacitorSlotRow_Installed>
   <ABY_CapacitorBayTooltip_Empty>{0} пуст. Установи сюда конденсаторный модуль, чтобы добавить ёмкость, пропускную способность и скорость зарядки.</ABY_CapacitorBayTooltip_Empty>
@@ -71,11 +64,9 @@
 Скорость зарядки: {4}/с
 Устойчивость к всплескам: {5}%
 Утечка: {6}/с</ABY_CapacitorBayTooltip_Filled>
-
   <ABY_CapacitorStatus_Support>Конденсаторы</ABY_CapacitorStatus_Support>
   <ABY_CapacitorStatus_Reserve>Резерв</ABY_CapacitorStatus_Reserve>
   <ABY_CapacitorStatus_Feed>Подача</ABY_CapacitorStatus_Feed>
-
   <ABY_CapacitorSupport_NotRequired>не требуется</ABY_CapacitorSupport_NotRequired>
   <ABY_CapacitorSupport_NoLattice>нет решётки</ABY_CapacitorSupport_NoLattice>
   <ABY_CapacitorSupport_Priming>накачка</ABY_CapacitorSupport_Priming>
@@ -84,7 +75,6 @@
   <ABY_CapacitorSupport_ThroughputLimited>не хватает пропускной способности</ABY_CapacitorSupport_ThroughputLimited>
   <ABY_CapacitorSupport_OverdrawRisk>риск перегруза</ABY_CapacitorSupport_OverdrawRisk>
   <ABY_CapacitorSupport_Ready>готово</ABY_CapacitorSupport_Ready>
-
   <ABY_CapacitorReadout_NotRequired>не требуется</ABY_CapacitorReadout_NotRequired>
   <ABY_CapacitorReadout_Startup>{0} / {1}</ABY_CapacitorReadout_Startup>
   <ABY_CapacitorReadout_Reserve>{0} / {1}</ABY_CapacitorReadout_Reserve>
@@ -101,7 +91,6 @@
   <ABY_CapacitorReadout_ChargeFlowPriming>{0}/с • накачка</ABY_CapacitorReadout_ChargeFlowPriming>
   <ABY_CapacitorEta_Value>~{0}с</ABY_CapacitorEta_Value>
   <ABY_CapacitorEta_Stalled>остановлен</ABY_CapacitorEta_Stalled>
-
   <ABY_CapacitorModeHint_NotRequired>Для этого ритуала не задано требование к конденсаторам.</ABY_CapacitorModeHint_NotRequired>
   <ABY_CapacitorModeHint_NoLattice>Установи конденсаторную решётку, чтобы открыть стартовый буфер, резерв и подачу.</ABY_CapacitorModeHint_NoLattice>
   <ABY_CapacitorModeHint_Priming>Решётка накачивается. Оценка готовности: {0}.</ABY_CapacitorModeHint_Priming>
@@ -109,10 +98,8 @@
   <ABY_CapacitorModeHint_Undercharged>Резерв ещё накапливается. Оценка готовности: {0}.</ABY_CapacitorModeHint_Undercharged>
   <ABY_CapacitorModeHint_OverdrawRisk>Поддержка уже есть, но запас подачи тонкий. Риск перегруза остаётся повышенным.</ABY_CapacitorModeHint_OverdrawRisk>
   <ABY_CapacitorModeHint_Ready>Старт, резерв и подача выровнены.</ABY_CapacitorModeHint_Ready>
-
   <ABY_CapacitorDemandSummary_None>Для этого ритуала не задано требование к конденсаторам.</ABY_CapacitorDemandSummary_None>
   <ABY_CapacitorDemandSummary>Старт {0} • резерв {1} • пропускная способность {2}</ABY_CapacitorDemandSummary>
-
   <ABY_CapacitorSupport_ForcedReady>форс-старт готов</ABY_CapacitorSupport_ForcedReady>
   <ABY_CapacitorFail_OverchannelBlocked>Оверченнел не смог стабилизировать эту решётку. Запас заряда, резерва или подачи всё ещё слишком низкий.</ABY_CapacitorFail_OverchannelBlocked>
   <ABY_CapacitorPanel_Mode>Режим</ABY_CapacitorPanel_Mode>
@@ -132,8 +119,6 @@
   <ABY_CapacitorEmergencyDump_Message>Аварийный сброс активирован. Решётка стравливает остаток враждебного заряда прямо в канал разлома.</ABY_CapacitorEmergencyDump_Message>
   <ABY_CapacitorEmergencyDump_Aftermath>Аварийный сброс завершён. Решётка спасена, но восстановление займёт больше времени.</ABY_CapacitorEmergencyDump_Aftermath>
   <ABY_CapacitorBacklash_Message>Обратный удар конденсаторов бьёт по кругу. Тяжесть структурного стресса: {0}%.</ABY_CapacitorBacklash_Message>
-
-
   <ABY_CapacitorLattice_None>нет решётки</ABY_CapacitorLattice_None>
   <ABY_CapacitorLattice_Improvised>импровизированная</ABY_CapacitorLattice_Improvised>
   <ABY_CapacitorLattice_Tuned>настроенная пара</ABY_CapacitorLattice_Tuned>

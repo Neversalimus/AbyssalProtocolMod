@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_DifficultyLabel_Default>Нормально</ABY_DifficultyLabel_Default>
-  <ABY_DifficultySettingsHeader>Протокол abyssal-сложности</ABY_DifficultySettingsHeader>
+  <ABY_DifficultySettingsHeader>Протокол бездненный-сложности</ABY_DifficultySettingsHeader>
   <ABY_DifficultySettingsDesc>Глобальный протокол угрозы для давления энкаунтеров, нестабильности, выдачи наград и будущей композиции призывов.</ABY_DifficultySettingsDesc>
   <ABY_DifficultySettingsCurrent>Текущий протокол: {0}</ABY_DifficultySettingsCurrent>
   <ABY_DifficultySettingsLock>Блокировать смену протокола после первого убийства босса</ABY_DifficultySettingsLock>
-  <ABY_DifficultySettingsLockDesc>Необязательная anti-abuse-настройка. В v3 по умолчанию выключена, но её можно снова включить и вернуть старое поведение с блокировкой сложности после первого убийства Archon Beast.</ABY_DifficultySettingsLockDesc>
+  <ABY_DifficultySettingsLockDesc>Необязательная анти-абусе-настройка. В в3 по умолчанию выключена, но её можно снова включить и вернуть старое поведение с блокировкой сложности после первого убийства Зверь-Архонт.</ABY_DifficultySettingsLockDesc>
   <ABY_DifficultySettingsLockedNow>Смена протокола уже заблокирована для этого сейва, потому что первое убийство босса было зафиксировано.</ABY_DifficultySettingsLockedNow>
-  <ABY_DifficultySettingsUnlockedNote>Save-lock сейчас по умолчанию отключён. Включи его здесь, если захочешь вернуть старую блокировку протокола на сейв.</ABY_DifficultySettingsUnlockedNote>
-
+  <ABY_DifficultySettingsUnlockedNote>блокировка сейва сейчас по умолчанию отключён. Включи его здесь, если захочешь вернуть старую блокировку протокола на сейв.</ABY_DifficultySettingsUnlockedNote>
   <ABY_DifficultyDiagnostics_Profile>Протокол: {0}</ABY_DifficultyDiagnostics_Profile>
-  <ABY_DifficultyDiagnostics_Budget>Бюджет энкаунтера: x{0}</ABY_DifficultyDiagnostics_Budget>
-  <ABY_DifficultyDiagnostics_Instability>Давление нестабильности: x{0}</ABY_DifficultyDiagnostics_Instability>
-  <ABY_DifficultyDiagnostics_Reward>Выдача residue: x{0}</ABY_DifficultyDiagnostics_Reward>
-  <ABY_DifficultyDiagnostics_TierLift>Подъём эскалации: +{0} tier контента</ABY_DifficultyDiagnostics_TierLift>
+  <ABY_DifficultyDiagnostics_Budget>Бюджет столкновения: ×{0}</ABY_DifficultyDiagnostics_Budget>
+  <ABY_DifficultyDiagnostics_Instability>Давление нестабильности: ×{0}</ABY_DifficultyDiagnostics_Instability>
+  <ABY_DifficultyDiagnostics_Reward>Выдача остатка: ×{0}</ABY_DifficultyDiagnostics_Reward>
+  <ABY_DifficultyDiagnostics_TierLift>Подъём эскалации: +{0} тир контента</ABY_DifficultyDiagnostics_TierLift>
   <ABY_DifficultyDiagnostics_Locked>После первого убийства босса смена протокола заблокирована для этого сейва.</ABY_DifficultyDiagnostics_Locked>
   <ABY_DifficultyDiagnostics_Armed>Блокировка протокола включится после первого убийства босса в этом сейве.</ABY_DifficultyDiagnostics_Armed>
   <ABY_DifficultyDiagnostics_Unlocked>Блокировка протокола сейчас отключена для этого сейва.</ABY_DifficultyDiagnostics_Unlocked>
-
   <ABY_DifficultyProfile_Normal_Label>Нормально</ABY_DifficultyProfile_Normal_Label>
-  <ABY_DifficultyProfile_Normal_Desc>Базовый abyssal-протокол. Использует текущую задуманную интенсивность мода и ничего не ослабляет.</ABY_DifficultyProfile_Normal_Desc>
-  <ABY_DifficultyProfile_Severe_Label>Severe</ABY_DifficultyProfile_Severe_Label>
-  <ABY_DifficultyProfile_Severe_Desc>Уводит круг в более жёсткие смешанные прорывы. Support и elite-сущности начинают подключаться раньше, но progression-гейты остаются нетронутыми.</ABY_DifficultyProfile_Severe_Desc>
-  <ABY_DifficultyProfile_Rupture_Label>Rupture</ABY_DifficultyProfile_Rupture_Label>
-  <ABY_DifficultyProfile_Rupture_Desc>Усиливает композицию и темп прорывов. Ценные support-юниты входят в ротацию чаще, а нестабильность быстрее наказывает за злоупотребление кругом.</ABY_DifficultyProfile_Rupture_Desc>
-  <ABY_DifficultyProfile_Dominion_Label>Dominion</ABY_DifficultyProfile_Dominion_Label>
-  <ABY_DifficultyProfile_Dominion_Desc>Настоящий hard endgame protocol. Давление dominion растёт, escort-композиции становятся жёстче, а система может зайти на один tier глубже, если контент уже легально доступен.</ABY_DifficultyProfile_Dominion_Desc>
-  <ABY_DifficultyProfile_FinalGate_Label>Final Gate</ABY_DifficultyProfile_FinalGate_Label>
-  <ABY_DifficultyProfile_FinalGate_Desc>Пиковый протокол. Круг сильнее уходит в глубокую эскалацию, будущий high-tier контент допускается раньше при правильной разметке, а длинные бои труднее стабилизировать.</ABY_DifficultyProfile_FinalGate_Desc>
-
-  <ABY_CirclePreview_Sniper_Singular>rift sniper</ABY_CirclePreview_Sniper_Singular>
-  <ABY_CirclePreview_Sniper_Plural>rift snipers</ABY_CirclePreview_Sniper_Plural>
+  <ABY_DifficultyProfile_Normal_Desc>Базовый бездненный-протокол. Использует текущую задуманную интенсивность мода и ничего не ослабляет.</ABY_DifficultyProfile_Normal_Desc>
+  <ABY_DifficultyProfile_Severe_Label>Тяжёлый</ABY_DifficultyProfile_Severe_Label>
+  <ABY_DifficultyProfile_Severe_Desc>Уводит круг в более жёсткие смешанные прорывы. поддержка и елите-сущности начинают подключаться раньше, но прогрессион-гейты остаются нетронутыми.</ABY_DifficultyProfile_Severe_Desc>
+  <ABY_DifficultyProfile_Rupture_Label>Разрыв</ABY_DifficultyProfile_Rupture_Label>
+  <ABY_DifficultyProfile_Rupture_Desc>Усиливает композицию и темп прорывов. Ценные поддержка-юниты входят в ротацию чаще, а нестабильность быстрее наказывает за злоупотребление кругом.</ABY_DifficultyProfile_Rupture_Desc>
+  <ABY_DifficultyProfile_Dominion_Label>Доминион</ABY_DifficultyProfile_Dominion_Label>
+  <ABY_DifficultyProfile_Dominion_Desc>Настоящий тяжёлый эндгейм протокол. Давление доминион растёт, ескорт-композиции становятся жёстче, а система может зайти на один тир глубже, если контент уже легально доступен.</ABY_DifficultyProfile_Dominion_Desc>
+  <ABY_DifficultyProfile_FinalGate_Label>Финальные врата</ABY_DifficultyProfile_FinalGate_Label>
+  <ABY_DifficultyProfile_FinalGate_Desc>Пиковый протокол. Круг сильнее уходит в глубокую эскалацию, будущий высокотирный контент допускается раньше при правильной разметке, а длинные бои труднее стабилизировать.</ABY_DifficultyProfile_FinalGate_Desc>
+  <ABY_CirclePreview_Sniper_Singular>разломный снайпер</ABY_CirclePreview_Sniper_Singular>
+  <ABY_CirclePreview_Sniper_Plural>разломные снайперы</ABY_CirclePreview_Sniper_Plural>
   <ABY_CirclePreview_Sapper_Singular>рифт-сапёр</ABY_CirclePreview_Sapper_Singular>
   <ABY_CirclePreview_Sapper_Plural>рифт-сапёра</ABY_CirclePreview_Sapper_Plural>
-  <ABY_CirclePreview_HaloHusk_Singular>halo husk</ABY_CirclePreview_HaloHusk_Singular>
-  <ABY_CirclePreview_HaloHusk_Plural>halo husks</ABY_CirclePreview_HaloHusk_Plural>
+  <ABY_CirclePreview_HaloHusk_Singular>ореольная оболочка</ABY_CirclePreview_HaloHusk_Singular>
+  <ABY_CirclePreview_HaloHusk_Plural>ореольная оболочкас</ABY_CirclePreview_HaloHusk_Plural>
 </LanguageData>

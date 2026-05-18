@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_ProtocolResearch_OpenNexusLabel>Открыть protocol nexus</ABY_ProtocolResearch_OpenNexusLabel>
-  <ABY_ProtocolResearch_OpenNexusDesc>Открыть матрицу Abyssal Protocol. Большое кольцо — основная лестница тиров; фильтры категорий уточняют выбранный слой.</ABY_ProtocolResearch_OpenNexusDesc>
-  <ABY_ProtocolResearch_InspectOnline>Protocol Nexus: питание есть, слои сигнала готовы к декодированию.</ABY_ProtocolResearch_InspectOnline>
-  <ABY_ProtocolResearch_InspectOffline>Protocol Nexus: выключен. Матрицу можно просматривать, но активное декодирование недоступно.</ABY_ProtocolResearch_InspectOffline>
-  <ABY_ProtocolResearch_InspectExperimental>Матрица протокола: опциональный forge-gating можно отключить в настройках.</ABY_ProtocolResearch_InspectExperimental>
-  <ABY_ProtocolResearch_Title>Abyssal Protocol Nexus</ABY_ProtocolResearch_Title>
-  <ABY_ProtocolResearch_Subtitle>Девятитировая матрица: контакт, стабилизация, интеграция, crown threshold, Dominion Slice, Final Gate и post-gate слои.</ABY_ProtocolResearch_Subtitle>
+  <ABY_ProtocolResearch_OpenNexusLabel>Открыть нексус протокола</ABY_ProtocolResearch_OpenNexusLabel>
+  <ABY_ProtocolResearch_OpenNexusDesc>Открыть матрицу Бездненный Протокол. Большое кольцо — основная лестница тиров; фильтры категорий уточняют выбранный слой.</ABY_ProtocolResearch_OpenNexusDesc>
+  <ABY_ProtocolResearch_InspectOnline>Нексус Протокола: питание есть, слои сигнала готовы к декодированию.</ABY_ProtocolResearch_InspectOnline>
+  <ABY_ProtocolResearch_InspectOffline>Нексус Протокола: выключен. Матрицу можно просматривать, но активное декодирование недоступно.</ABY_ProtocolResearch_InspectOffline>
+  <ABY_ProtocolResearch_InspectExperimental>Матрица протокола: опциональный кузница-гатинг можно отключить в настройках.</ABY_ProtocolResearch_InspectExperimental>
+  <ABY_ProtocolResearch_Title>Нексус Бездненного Протокола</ABY_ProtocolResearch_Title>
+  <ABY_ProtocolResearch_Subtitle>Девятитировая матрица: контакт, стабилизация, интеграция, корона тхресхолд, Доминион Слике, Финальные врата и пост-гате слои.</ABY_ProtocolResearch_Subtitle>
   <ABY_ProtocolResearch_HeaderProgress>{0} доступно / {1} декодировано / {2} проектов протокола</ABY_ProtocolResearch_HeaderProgress>
   <ABY_ProtocolResearch_CategoryHeader>ФИЛЬТРЫ КАТЕГОРИЙ — только выбранный тир</ABY_ProtocolResearch_CategoryHeader>
   <ABY_ProtocolResearch_ProjectListHeader>ПРОЕКТЫ ТИРА</ABY_ProtocolResearch_ProjectListHeader>
@@ -21,33 +21,33 @@
   <ABY_ProtocolResearch_RequirementsHeader>ТРЕБОВАНИЯ</ABY_ProtocolResearch_RequirementsHeader>
   <ABY_ProtocolResearch_RevealsHeader>РАСКРЫВАЕТ / ВЛИЯЕТ</ABY_ProtocolResearch_RevealsHeader>
   <ABY_ProtocolResearch_LoreHeader>ЛОРНАЯ ЗАПИСЬ</ABY_ProtocolResearch_LoreHeader>
-  <ABY_ProtocolResearch_NoExplicitReveals>Для этого проекта не указаны конкретные Forge- или ritual-раскрытия.</ABY_ProtocolResearch_NoExplicitReveals>
+  <ABY_ProtocolResearch_NoExplicitReveals>Для этого проекта не указаны конкретные Форге- или ритуал-раскрытия.</ABY_ProtocolResearch_NoExplicitReveals>
   <ABY_ProtocolResearch_UnlocksHeader>ОТКРЫВАЕТ / КЛАССИФИЦИРУЕТ</ABY_ProtocolResearch_UnlocksHeader>
   <ABY_ProtocolResearch_NotesHeader>ЗАМЕТКИ РЕАЛИЗАЦИИ</ABY_ProtocolResearch_NotesHeader>
   <ABY_ProtocolResearch_RequirementMet>выполнено</ABY_ProtocolResearch_RequirementMet>
   <ABY_ProtocolResearch_RequirementMissing>не выполнено</ABY_ProtocolResearch_RequirementMissing>
   <ABY_ProtocolResearch_NoExplicitRequirements>Нет явных требований за пределами выбранного слоя протокола.</ABY_ProtocolResearch_NoExplicitRequirements>
-  <ABY_ProtocolResearch_IsolatedWarning>Nexus идентифицирует forge-семейства шаблонов. Если опциональный forge-gating отключён, матрица остаётся картой прогрессии и не блокирует крафт.</ABY_ProtocolResearch_IsolatedWarning>
+  <ABY_ProtocolResearch_IsolatedWarning>Нексус идентифицирует кузница-семейства шаблонов. Если опциональный кузница-гатинг отключён, матрица остаётся картой прогрессии и не блокирует крафт.</ABY_ProtocolResearch_IsolatedWarning>
   <ABY_ProtocolResearch_DecodeHeader>ОПЕРАЦИЯ ДЕКОДИРОВАНИЯ</ABY_ProtocolResearch_DecodeHeader>
-  <ABY_ProtocolResearch_DecodeDecoded>Декодировано. Связанные forge-шаблоны раскрываются нормально.</ABY_ProtocolResearch_DecodeDecoded>
-  <ABY_ProtocolResearch_DecodeActive>Декодируется на этом Nexus: {0}</ABY_ProtocolResearch_DecodeActive>
-  <ABY_ProtocolResearch_DecodeReady>Готово к decode job. Оценка работы: {0}.</ABY_ProtocolResearch_DecodeReady>
-  <ABY_ProtocolResearch_DecodeAnotherActive>Этот Nexus уже декодирует: {0}</ABY_ProtocolResearch_DecodeAnotherActive>
-  <ABY_ProtocolResearch_DecodeStart>Начать decode</ABY_ProtocolResearch_DecodeStart>
+  <ABY_ProtocolResearch_DecodeDecoded>Декодировано. Связанные кузнечные шаблоны раскрываются нормально.</ABY_ProtocolResearch_DecodeDecoded>
+  <ABY_ProtocolResearch_DecodeActive>Декодируется на этом Нексус: {0}</ABY_ProtocolResearch_DecodeActive>
+  <ABY_ProtocolResearch_DecodeReady>Готово к заданию декодирования. Оценка работы: {0}.</ABY_ProtocolResearch_DecodeReady>
+  <ABY_ProtocolResearch_DecodeAnotherActive>Этот Нексус уже декодирует: {0}</ABY_ProtocolResearch_DecodeAnotherActive>
+  <ABY_ProtocolResearch_DecodeStart>Начать декоде</ABY_ProtocolResearch_DecodeStart>
   <ABY_ProtocolResearch_DecodeCancel>Отменить</ABY_ProtocolResearch_DecodeCancel>
   <ABY_ProtocolResearch_DecodeDone>Декодировано</ABY_ProtocolResearch_DecodeDone>
   <ABY_ProtocolResearch_DecodeBlocked>Заблокировано</ABY_ProtocolResearch_DecodeBlocked>
   <ABY_ProtocolResearch_DecodeNoProject>Проект протокола не выбран.</ABY_ProtocolResearch_DecodeNoProject>
-  <ABY_ProtocolResearch_DecodeGatingDisabled>Forge-gating через Protocol Nexus отключён в настройках; проект только информационный.</ABY_ProtocolResearch_DecodeGatingDisabled>
-  <ABY_ProtocolResearch_DecodeFutureReserve>Future reserve слой. Видим для roadmap/codex, но пока не декодируется.</ABY_ProtocolResearch_DecodeFutureReserve>
+  <ABY_ProtocolResearch_DecodeGatingDisabled>Форге-гатинг через Нексус Протокола отключён в настройках; проект только информационный.</ABY_ProtocolResearch_DecodeGatingDisabled>
+  <ABY_ProtocolResearch_DecodeFutureReserve>Футуре ресерве слой. Видим для роадмап/кодекс, но пока не декодируется.</ABY_ProtocolResearch_DecodeFutureReserve>
   <ABY_ProtocolResearch_DecodePrerequisites>Не выполнены требования слоя протокола.</ABY_ProtocolResearch_DecodePrerequisites>
   <ABY_ProtocolResearch_DecodeAlready>Уже декодировано.</ABY_ProtocolResearch_DecodeAlready>
   <ABY_ProtocolResearch_DecodeCompleteMessage>Протокол декодирован: {0}</ABY_ProtocolResearch_DecodeCompleteMessage>
   <ABY_ProtocolResearch_InspectActiveDecode>Активное декодирование: {0} ({1})</ABY_ProtocolResearch_InspectActiveDecode>
   <ABY_ProtocolResearch_UnknownProject>неизвестный протокол</ABY_ProtocolResearch_UnknownProject>
-  <ABY_ProtocolNexusGating_Enable>Включить forge-gating через Protocol Nexus</ABY_ProtocolNexusGating_Enable>
-  <ABY_ProtocolNexusGating_EnableDesc>Опциональная экспериментальная надстройка. Если отключить, все forge-шаблоны считаются декодированными, а Nexus остаётся codex/картой прогрессии.</ABY_ProtocolNexusGating_EnableDesc>
-  <ABY_ProtocolResearch_AllFilterLabel>ALL</ABY_ProtocolResearch_AllFilterLabel>
+  <ABY_ProtocolNexusGating_Enable>Включить кузница-гатинг через Нексус Протокола</ABY_ProtocolNexusGating_Enable>
+  <ABY_ProtocolNexusGating_EnableDesc>Опциональная экспериментальная надстройка. Если отключить, все кузнечные шаблоны считаются декодированными, а Нексус остаётся кодекс/картой прогрессии.</ABY_ProtocolNexusGating_EnableDesc>
+  <ABY_ProtocolResearch_AllFilterLabel>ВСЕ</ABY_ProtocolResearch_AllFilterLabel>
   <ABY_ProtocolResearch_AllFilterName>Все категории протокола</ABY_ProtocolResearch_AllFilterName>
   <ABY_ProtocolResearch_AllFilterTooltip>Показать все категории внутри выбранного тира протокола.</ABY_ProtocolResearch_AllFilterTooltip>
   <ABY_ProtocolResearch_CategoryFilterTooltip>{0} доступно, {1} декодировано, {2} проектов в {3}.</ABY_ProtocolResearch_CategoryFilterTooltip>
@@ -57,8 +57,8 @@
   <ABY_ProtocolResearch_TierNodeTooltip>Выбрать этот тир протокола. Фильтры категорий сверху только уточняют выбранный тир.</ABY_ProtocolResearch_TierNodeTooltip>
   <ABY_ProtocolResearch_SealedTierTooltip>Тир {0} — запечатанный слой
 В нём пока нет восстановленного проекта протокола.</ABY_ProtocolResearch_SealedTierTooltip>
-  <ABY_ProtocolResearch_NoProjectsForCategory>В этом тире нет проектов для выбранной категории. Используй All или выбери другой тир.</ABY_ProtocolResearch_NoProjectsForCategory>
-  <ABY_ProtocolResearch_NoProjectsForFilter>Нет проектов под этот фильтр состояния. Используй All или другой статус.</ABY_ProtocolResearch_NoProjectsForFilter>
+  <ABY_ProtocolResearch_NoProjectsForCategory>В этом тире нет проектов для выбранной категории. Используй Алл или выбери другой тир.</ABY_ProtocolResearch_NoProjectsForCategory>
+  <ABY_ProtocolResearch_NoProjectsForFilter>Нет проектов под этот фильтр состояния. Используй Алл или другой статус.</ABY_ProtocolResearch_NoProjectsForFilter>
   <ABY_ProtocolResearch_TierFocusNone>Фокус тира: нет</ABY_ProtocolResearch_TierFocusNone>
   <ABY_ProtocolResearch_TierFocusLabel>Фокус тира: {0} — {1}</ABY_ProtocolResearch_TierFocusLabel>
 </LanguageData>

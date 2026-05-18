@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_ForgeTabLabel>сопряжение</ABY_ForgeTabLabel>
   <ABY_ForgePanelHeader>Инфернальная решётка сопряжения</ABY_ForgePanelHeader>
-  <ABY_ForgeOverviewSubtitleShort>Внесение residue, attunement и контроль шаблонов.</ABY_ForgeOverviewSubtitleShort>
+  <ABY_ForgeOverviewSubtitleShort>Внесение остаток, настройка и контроль шаблонов.</ABY_ForgeOverviewSubtitleShort>
   <ABY_ForgeOpenConsole>Открыть консоль сопряжения</ABY_ForgeOpenConsole>
   <ABY_ForgeOpenConsoleLabel>Консоль сопряжения</ABY_ForgeOpenConsoleLabel>
-  <ABY_ForgeOpenConsoleDesc>Открыть полную консоль сопряжения для шаблонов, требований и отслеживания attunement.</ABY_ForgeOpenConsoleDesc>
+  <ABY_ForgeOpenConsoleDesc>Открыть полную консоль сопряжения для шаблонов, требований и отслеживания настройка.</ABY_ForgeOpenConsoleDesc>
   <ABY_ForgeStatusHeader>Состояние сопряжения</ABY_ForgeStatusHeader>
-  <ABY_ForgeMetricResidue>Настроено residue</ABY_ForgeMetricResidue>
-  <ABY_ForgeMetricAvailable>Residue на карте</ABY_ForgeMetricAvailable>
+  <ABY_ForgeMetricResidue>Настроено остаток</ABY_ForgeMetricResidue>
+  <ABY_ForgeMetricAvailable>Остаток на карте</ABY_ForgeMetricAvailable>
   <ABY_ForgeMetricAttunement>Аттюмент колонии</ABY_ForgeMetricAttunement>
   <ABY_ForgeMetricPower>Состояние реактора</ABY_ForgeMetricPower>
   <ABY_ForgePowerOnlineShort>онлайн</ABY_ForgePowerOnlineShort>
@@ -16,25 +16,25 @@
   <ABY_ForgeOfferHeader>Колодец внесения</ABY_ForgeOfferHeader>
   <ABY_ForgeOfferAmount>Внести {0}</ABY_ForgeOfferAmount>
   <ABY_ForgeOfferAll>Внести всё ({0})</ABY_ForgeOfferAll>
-  <ABY_ForgeOfferHintShort>Доступный residue можно сразу внести в решётку.</ABY_ForgeOfferHintShort>
-  <ABY_ForgeOfferNoneAvailable>На этой карте сейчас нет доступного abyssal residue.</ABY_ForgeOfferNoneAvailable>
-  <ABY_ForgeOfferComplete>Внесено {0} residue. Всего настроено residue: {1}.</ABY_ForgeOfferComplete>
+  <ABY_ForgeOfferHintShort>Доступный остаток можно сразу внести в решётку.</ABY_ForgeOfferHintShort>
+  <ABY_ForgeOfferNoneAvailable>На этой карте сейчас нет доступного бездненный остаток.</ABY_ForgeOfferNoneAvailable>
+  <ABY_ForgeOfferComplete>Внесено {0} остаток. Всего настроено остаток: {1}.</ABY_ForgeOfferComplete>
   <ABY_ForgeNextHeader>Телеметрия шаблонов</ABY_ForgeNextHeader>
   <ABY_ForgeUpcomingPatterns>Ближайшие шаблоны</ABY_ForgeUpcomingPatterns>
   <ABY_ForgeUnlockedSummary>Открыто {0} / {1} шаблонов в категории {2}</ABY_ForgeUnlockedSummary>
   <ABY_ForgeAllPatternsUnlocked>Все известные шаблоны уже открыты.</ABY_ForgeAllPatternsUnlocked>
-  <ABY_ForgeProgressBand>Настроено {0} residue • текущая полоса {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeProgressBand>Настроено {0} остаток • текущая полоса {1} → {2}</ABY_ForgeProgressBand>
   <ABY_ForgeCurrentBandShort>Текущая полоса {0} → {1}</ABY_ForgeCurrentBandShort>
   <ABY_ForgeCurrentBandCompleteShort>Текущая полоса завершена</ABY_ForgeCurrentBandCompleteShort>
-  <ABY_ForgeAttunementTierShort>Уровень attunement {0}/{1}</ABY_ForgeAttunementTierShort>
-  <ABY_ForgeProgressComplete>Настроено {0} residue • достигнута максимальная полоса решётки</ABY_ForgeProgressComplete>
+  <ABY_ForgeAttunementTierShort>Уровень настройка {0}/{1}</ABY_ForgeAttunementTierShort>
+  <ABY_ForgeProgressComplete>Настроено {0} остаток • достигнута максимальная полоса решётки</ABY_ForgeProgressComplete>
   <ABY_ForgeConsoleTitle>Консоль инфернального сопряжения</ABY_ForgeConsoleTitle>
-  <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная консоль для приёма residue, настройки attunement и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
+  <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная консоль для приёма остаток, настройки настройка и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
   <ABY_ForgeConsolePatternsHeader>Браузер шаблонов</ABY_ForgeConsolePatternsHeader>
   <ABY_ForgeConsoleBillsHeader>Очередь производства</ABY_ForgeConsoleBillsHeader>
   <ABY_ForgePatternNew>НОВОЕ</ABY_ForgePatternNew>
-  <ABY_ForgePatternUnlockedAt>Открывается на {0} residue</ABY_ForgePatternUnlockedAt>
-  <ABY_ForgePatternLockedAt>Закрыто до {0} residue</ABY_ForgePatternLockedAt>
+  <ABY_ForgePatternUnlockedAt>Открывается на {0} остаток</ABY_ForgePatternUnlockedAt>
+  <ABY_ForgePatternLockedAt>Закрыто до {0} остаток</ABY_ForgePatternLockedAt>
   <ABY_ForgePatternRequirementsLabel>Требования</ABY_ForgePatternRequirementsLabel>
   <ABY_ForgePatternRequirementsState>Материалы на карте</ABY_ForgePatternRequirementsState>
   <ABY_ForgePatternMoreRequirements>+ ещё {0} требований</ABY_ForgePatternMoreRequirements>
@@ -43,55 +43,55 @@
   <ABY_ForgePatternMissingMaterials>Не хватает материалов</ABY_ForgePatternMissingMaterials>
   <ABY_ForgePatternResearchRequired>Нужно исследование</ABY_ForgePatternResearchRequired>
   <ABY_ForgePatternNoMaterialData>Нет данных о материалах.</ABY_ForgePatternNoMaterialData>
-  <ABY_ForgePatternOutputCount>Выход: x{0}</ABY_ForgePatternOutputCount>
-  <ABY_ForgePatternSummary_Core>Шаблон ядра forge</ABY_ForgePatternSummary_Core>
+  <ABY_ForgePatternOutputCount>Выход: ×{0}</ABY_ForgePatternOutputCount>
+  <ABY_ForgePatternSummary_Core>Шаблон ядра кузница</ABY_ForgePatternSummary_Core>
   <ABY_ForgePatternSummary_Weapons>Шаблон оружия</ABY_ForgePatternSummary_Weapons>
   <ABY_ForgePatternSummary_Armor>Шаблон брони</ABY_ForgePatternSummary_Armor>
   <ABY_ForgePatternSummary_Implants>Шаблон импланта</ABY_ForgePatternSummary_Implants>
   <ABY_ForgePatternSummary_Ritual>Шаблон ритуальной поддержки</ABY_ForgePatternSummary_Ritual>
-  <ABY_ForgePatternSummary_Herald>Herald-шаблон</ABY_ForgePatternSummary_Herald>
-  <ABY_ForgePatternSummary_Generic>Шаблон forge</ABY_ForgePatternSummary_Generic>
+  <ABY_ForgePatternSummary_Herald>Вестник-шаблон</ABY_ForgePatternSummary_Herald>
+  <ABY_ForgePatternSummary_Generic>Шаблон кузница</ABY_ForgePatternSummary_Generic>
   <ABY_ForgePatternOpenInfo>Открыть информацию о предмете</ABY_ForgePatternOpenInfo>
   <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
-  <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить bill.</ABY_ForgeClipboardLocked>
+  <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить заказ.</ABY_ForgeClipboardLocked>
   <ABY_ForgeUnlockToast>Открыт новый шаблон: {0}</ABY_ForgeUnlockToast>
   <ABY_ForgeUnlockLetterLabel>Открыты новые шаблоны</ABY_ForgeUnlockLetterLabel>
-  <ABY_ForgeUnlockLetterDesc>Решётка forge стабилизировала новые шаблоны:
+  <ABY_ForgeUnlockLetterDesc>Решётка кузница стабилизировала новые шаблоны:
 
 {0}</ABY_ForgeUnlockLetterDesc>
-  <ABY_ForgeOverviewHintCompact>Используй полную консоль сопряжения для шаблонов, проверки требований и управления bill.</ABY_ForgeOverviewHintCompact>
+  <ABY_ForgeOverviewHintCompact>Используй полную консоль сопряжения для шаблонов, проверки требований и управления заказ.</ABY_ForgeOverviewHintCompact>
   <ABY_ForgeNextPattern>Следующий шаблон на {0}: {1}</ABY_ForgeNextPattern>
-  <ABY_ForgeNextPatternDone>Все текущие forge-шаблоны уже открыты.</ABY_ForgeNextPatternDone>
+  <ABY_ForgeNextPatternDone>Все текущие кузнечные шаблоны уже открыты.</ABY_ForgeNextPatternDone>
   <ABY_ForgeReducedEffectsOn>Эффекты: снижены</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
   <ABY_ForgeReducedEffectsToggle>Сниженные эффекты</ABY_ForgeReducedEffectsToggle>
-  <ABY_ForgeReducedEffectsDesc>Смягчает анимированные акценты внутри forge-консоли.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeReducedEffectsDesc>Смягчает анимированные акценты внутри консоли кузницы.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>Все</ABY_ForgeCategory_All>
-  <ABY_ForgeCategory_Core>Ядро forge</ABY_ForgeCategory_Core>
+  <ABY_ForgeCategory_Core>Ядро кузница</ABY_ForgeCategory_Core>
   <ABY_ForgeCategory_Weapons>Оружие</ABY_ForgeCategory_Weapons>
   <ABY_ForgeCategory_Armor>Броня</ABY_ForgeCategory_Armor>
   <ABY_ForgeCategory_Implants>Импланты</ABY_ForgeCategory_Implants>
   <ABY_ForgeCategory_Ritual>Ритуал</ABY_ForgeCategory_Ritual>
-  <ABY_ForgeCategory_Herald>Herald</ABY_ForgeCategory_Herald>
-  <ABY_ForgeInspectResidue>Сопряжение forge: внесено {0} / доступно на карте {1}</ABY_ForgeInspectResidue>
+  <ABY_ForgeCategory_Herald>Вестник</ABY_ForgeCategory_Herald>
+  <ABY_ForgeInspectResidue>Сопряжение кузница: внесено {0} / доступно на карте {1}</ABY_ForgeInspectResidue>
   <ABY_ForgeInspectNextUnlock>Следующий шаблон на {0}: {1}</ABY_ForgeInspectNextUnlock>
   <ABY_ForgeInspectAllKnown>Все текущие шаблоны уже настроены.</ABY_ForgeInspectAllKnown>
-  <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
-  <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
-  <ABY_ForgeGizmoOfferDesc>Внести abyssal residue с текущей карты в решётку forge.</ABY_ForgeGizmoOfferDesc>
-  <ABY_ForgeUnknownTag>UNKNOWN</ABY_ForgeUnknownTag>
-  <ABY_ForgeUnknownPattern>НЕИЗВЕСТНЫЙ FORGE-ШАБЛОН</ABY_ForgeUnknownPattern>
+  <ABY_ForgeInspectAttunement>Состояние настройка: {0}</ABY_ForgeInspectAttunement>
+  <ABY_ForgeGizmoOfferLabel>Внести остаток</ABY_ForgeGizmoOfferLabel>
+  <ABY_ForgeGizmoOfferDesc>Внести бездненный остаток с текущей карты в решётку кузница.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeUnknownTag>НЕИЗВЕСТНО</ABY_ForgeUnknownTag>
+  <ABY_ForgeUnknownPattern>НЕИЗВЕСТНЫЙ КУЗНИЦА-ШАБЛОН</ABY_ForgeUnknownPattern>
   <ABY_ForgeUnknownWeaponPattern>НЕИЗВЕСТНЫЙ ШАБЛОН ОРУЖИЯ</ABY_ForgeUnknownWeaponPattern>
   <ABY_ForgeUnknownArmorPattern>НЕИЗВЕСТНЫЙ ШАБЛОН БРОНИ</ABY_ForgeUnknownArmorPattern>
   <ABY_ForgeUnknownImplantPattern>НЕИЗВЕСТНАЯ ПРОЦЕДУРА ИМПЛАНТА</ABY_ForgeUnknownImplantPattern>
   <ABY_ForgeUnknownRitualPattern>НЕИЗВЕСТНЫЙ РИТУАЛЬНЫЙ ПРОТОКОЛ</ABY_ForgeUnknownRitualPattern>
-  <ABY_ForgeUnknownHeraldPattern>НЕИЗВЕСТНАЯ HERALD-СХЕМА</ABY_ForgeUnknownHeraldPattern>
+  <ABY_ForgeUnknownHeraldPattern>НЕИЗВЕСТНАЯ ВЕСТНИК-СХЕМА</ABY_ForgeUnknownHeraldPattern>
   <ABY_ForgeUnknownTurretPattern>НЕИЗВЕСТНЫЙ МОДУЛЬ ТУРЕЛИ</ABY_ForgeUnknownTurretPattern>
-  <ABY_ForgeUnknownDecodeHint>Требуется декодирование в Protocol Nexus: {0}</ABY_ForgeUnknownDecodeHint>
-  <ABY_ForgeUnknownGenericHint>Forge обнаружила шаблон, но его рабочая схема ещё не декодирована.</ABY_ForgeUnknownGenericHint>
-  <ABY_ForgeUnknownResidueLine>Порог attunement forge: {0} residue</ABY_ForgeUnknownResidueLine>
-  <ABY_ForgeUnknownMaskedDetails>Обнаружена сигнатура категории «{0}». Название, статы, рецепт и info card скрыты до декодирования.</ABY_ForgeUnknownMaskedDetails>
-  <ABY_ForgeUnknownDecodeButton>Decode в Nexus</ABY_ForgeUnknownDecodeButton>
-  <ABY_ForgeUnknownTooltip>Открой Protocol Nexus и декодируй связанный проект, чтобы раскрыть этот шаблон.</ABY_ForgeUnknownTooltip>
-  <ABY_ForgeUnknownCannotQueue>Этот forge-шаблон ещё не декодирован в Protocol Nexus.</ABY_ForgeUnknownCannotQueue>
+  <ABY_ForgeUnknownDecodeHint>Требуется декодирование в Нексус Протокола: {0}</ABY_ForgeUnknownDecodeHint>
+  <ABY_ForgeUnknownGenericHint>кузница обнаружила шаблон, но его рабочая схема ещё не декодирована.</ABY_ForgeUnknownGenericHint>
+  <ABY_ForgeUnknownResidueLine>Порог настройка кузница: {0} остаток</ABY_ForgeUnknownResidueLine>
+  <ABY_ForgeUnknownMaskedDetails>Обнаружена сигнатура категории «{0}». Название, статы, рецепт и информационная карточка скрыты до декодирования.</ABY_ForgeUnknownMaskedDetails>
+  <ABY_ForgeUnknownDecodeButton>Расшифровать в Нексус</ABY_ForgeUnknownDecodeButton>
+  <ABY_ForgeUnknownTooltip>Открой Нексус Протокола и декодируй связанный проект, чтобы раскрыть этот шаблон.</ABY_ForgeUnknownTooltip>
+  <ABY_ForgeUnknownCannotQueue>Этот кузнечный шаблон ещё не декодирован в Нексус Протокола.</ABY_ForgeUnknownCannotQueue>
 </LanguageData>

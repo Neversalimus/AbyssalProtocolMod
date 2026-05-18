@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_DominionOpsSummary_Pocket>Задача: {0}
 Директива: {1}
@@ -9,17 +9,16 @@
   <ABY_DominionPocketTelemetry_ObjectiveDormant>телеметрия среза доминиона неактивна</ABY_DominionPocketTelemetry_ObjectiveDormant>
   <ABY_DominionPocketTelemetry_ObjectiveBreach>закрепитесь в срезе и подготовьтесь к фазе якорей</ABY_DominionPocketTelemetry_ObjectiveBreach>
   <ABY_DominionPocketTelemetry_ObjectiveAnchors>уничтожьте якоря доминиона (осталось: {0})</ABY_DominionPocketTelemetry_ObjectiveAnchors>
-  <ABY_DominionPocketTelemetry_ObjectiveHeart>уничтожьте Crown-Heart до закрытия окна эвакуации ({0})</ABY_DominionPocketTelemetry_ObjectiveHeart>
+  <ABY_DominionPocketTelemetry_ObjectiveHeart>уничтожьте Коронного сердца до закрытия окна эвакуации ({0})</ABY_DominionPocketTelemetry_ObjectiveHeart>
   <ABY_DominionPocketTelemetry_ObjectiveExtract>эвакуируйте ударную группу до коллапса ({0})</ABY_DominionPocketTelemetry_ObjectiveExtract>
   <ABY_DominionPocketTelemetry_ObjectiveFailed>срез доминиона провален и схлопывается</ABY_DominionPocketTelemetry_ObjectiveFailed>
   <ABY_DominionPocketGate_InspectObjective>Задача: {0}</ABY_DominionPocketGate_InspectObjective>
   <ABY_DominionPocketGate_InspectRewards>Прогноз наград: {0}</ABY_DominionPocketGate_InspectRewards>
   <ABY_DominionPocketRuntimeExitInspect_Objective>Задача: {0}</ABY_DominionPocketRuntimeExitInspect_Objective>
   <ABY_DominionPocketRuntimeExitInspect_Rewards>Прогноз наград: {0}</ABY_DominionPocketRuntimeExitInspect_Rewards>
-  <ABY_DominionSliceHeart_InspectShieldedDetailed>Crown-Heart остаётся запечатанным, пока стоят якоря доминиона. Осталось якорей: {0}.</ABY_DominionSliceHeart_InspectShieldedDetailed>
+  <ABY_DominionSliceHeart_InspectShieldedDetailed>Коронного сердца остаётся запечатанным, пока стоят якоря доминиона. Осталось якорей: {0}.</ABY_DominionSliceHeart_InspectShieldedDetailed>
   <ABY_DominionSliceHeart_InspectRewards>Прогноз наград: {0}</ABY_DominionSliceHeart_InspectRewards>
   <ABY_DominionSliceAnchor_InspectTelemetry>Якорей ещё активно: {0}. Следующая волна: {1}.</ABY_DominionSliceAnchor_InspectTelemetry>
-
   <ABY_DominionPocketTelemetry_NoSession>нет активной сессии среза доминиона</ABY_DominionPocketTelemetry_NoSession>
   <ABY_DominionPocketTelemetry_StatusAwaiting>ожидание телеметрии среза доминиона</ABY_DominionPocketTelemetry_StatusAwaiting>
   <ABY_DominionPocketTelemetry_Team>ударная группа: {0}</ABY_DominionPocketTelemetry_Team>

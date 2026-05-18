@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_DominionSigilDisabled>Сигил доминиона остаётся запечатанным, пока круг не допущен к ритуалам класса dominion.</ABY_DominionSigilDisabled>
-
+  <ABY_DominionSigilDisabled>Сигил доминиона остаётся запечатанным, пока круг не допущен к ритуалам класса доминион.</ABY_DominionSigilDisabled>
   <ABY_CircleRitual_Dominion_Label>Запустить Великий адский портал</ABY_CircleRitual_Dominion_Label>
   <ABY_CircleRitual_Dominion_Subtitle>Внешний этап великого портала</ABY_CircleRitual_Dominion_Subtitle>
   <ABY_CircleRitual_Dominion_Desc>Поглощает одну сигилу доминиона и использует полную решётку круга, чтобы вооружить прелюдию Великого адского портала. Якоря доминиона теперь стабилизируют прорыв как короткий внешний замок входа, а не как длинную обязательную цель на уничтожение. После синхронизации портал откроется для выбранной ударной группы.</ABY_CircleRitual_Dominion_Desc>
@@ -9,21 +8,18 @@
 • Проявляет четыре внешних якоря как короткий визуальный замок входа
 • Открывает настоящий Великий адский портал для контролируемого входа ударной группы
 • Сохраняет маршрутизацию наград, возврат осколков и записи состояния портала для более глубоких ритуалов входа</ABY_CircleRitual_Dominion_Rewards>
-  <ABY_CircleRitual_Dominion_SideEffects>• Требует полный круг стабилизаторов и оба capacitor bay онлайн
-• Блокирует другие abyssal-encounter, пока активен внешний этап доминиона
-• Внешние якоря автоматически схлопываются, когда pocket dimension закрывается из-за победы, провала, выхода, отмены или аварийной очистки</ABY_CircleRitual_Dominion_SideEffects>
-
+  <ABY_CircleRitual_Dominion_SideEffects>• Требует полный круг стабилизаторов и оба конденсатор отсек онлайн
+• Блокирует другие бездненный-столкновение, пока активен внешний этап доминиона
+• Внешние якоря автоматически схлопываются, когда карманное измерение закрывается из-за победы, провала, выхода, отмены или аварийной очистки</ABY_CircleRitual_Dominion_SideEffects>
   <ABY_CircleConsoleSubtitleDominion>Телеметрия Великого адского портала активна. Текущее состояние: {0}.</ABY_CircleConsoleSubtitleDominion>
   <ABY_DominionRitualMeta>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Тир угрозы: эндгейм</ABY_DominionRitualMeta>
   <ABY_DominionRitualMetaActive>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Якоря: {2}   •   Следующая волна: {3}</ABY_DominionRitualMetaActive>
   <ABY_CircleStatus_Dominion>Доминион</ABY_CircleStatus_Dominion>
   <ABY_CircleStatus_Anchors>Якоря</ABY_CircleStatus_Anchors>
   <ABY_CircleStatus_AnchorPressure>Давление якорей</ABY_CircleStatus_AnchorPressure>
-
   <ABY_DominionCrisisAbortCommand>Оборвать стадию доминиона</ABY_DominionCrisisAbortCommand>
-  <ABY_DominionCrisisConfirmAbort>Прервать внешний этап Великого адского портала на этой карте? Это завершит текущее staging-окно и пометит запуск как отменённый.</ABY_DominionCrisisConfirmAbort>
+  <ABY_DominionCrisisConfirmAbort>Прервать внешний этап Великого адского портала на этой карте? Это завершит текущее подготовительное окно и пометит запуск как отменённый.</ABY_DominionCrisisConfirmAbort>
   <ABY_DominionCrisisAbortStarted>Стадия доминиона прервана.</ABY_DominionCrisisAbortStarted>
-
   <ABY_DominionCrisisStartLabel>Великий адский портал вооружён</ABY_DominionCrisisStartLabel>
   <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию синхронизации доминиона. Прорыв нестабилен, но Великий адский портал ещё не развернулся полностью.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Якоря доминиона проявились</ABY_DominionCrisisAnchorfallLabel>
@@ -38,15 +34,14 @@
   <ABY_DominionCrisisCompletedReason>Срез Доминиона завершён, внешний замок портала схлопнулся</ABY_DominionCrisisCompletedReason>
   <ABY_DominionCrisisFailedLabel>Стадия доминиона сорвалась</ABY_DominionCrisisFailedLabel>
   <ABY_DominionCrisisFailedDesc>Внешний этап Великого адского портала дестабилизировался до того, как круг смог принудительно открыть устойчивый путь входа. Причина срыва: {0}</ABY_DominionCrisisFailedDesc>
-  <ABY_DominionCrisisReminder>Standby доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
+  <ABY_DominionCrisisReminder>Режим ожидания доминиона остаётся вооружённым ещё {0}.</ABY_DominionCrisisReminder>
   <ABY_DominionCrisisReminderAnchors>Внешние якоря доминиона стабилизируют замок портала. Открытие через {2}.</ABY_DominionCrisisReminderAnchors>
   <ABY_DominionCrisisAnchorDestroyed>{0} потерял синхронизацию. Якорей замка осталось: {1} / {2}.</ABY_DominionCrisisAnchorDestroyed>
-
   <ABY_DominionCrisisFail_NoCircle>Нет подходящего круга призыва для синхронизации доминиона.</ABY_DominionCrisisFail_NoCircle>
   <ABY_DominionCrisisFail_AlreadyActive>На этой карте уже активно ядро кризиса доминиона.</ABY_DominionCrisisFail_AlreadyActive>
-  <ABY_DominionCrisisFail_NoResearch>Исследование dominion gate bootstrapping ещё не завершено.</ABY_DominionCrisisFail_NoResearch>
+  <ABY_DominionCrisisFail_NoResearch>Исследование доминион врата запуск ещё не завершено.</ABY_DominionCrisisFail_NoResearch>
   <ABY_DominionCrisisFail_Stabilizers>Для стадии доминиона нужно полное кольцо стабилизаторов. Установлено: {0} / {1}.</ABY_DominionCrisisFail_Stabilizers>
-  <ABY_DominionCrisisFail_Capacitors>Для стадии доминиона нужны обе активные capacitor bays. Установлено: {0} / {1}.</ABY_DominionCrisisFail_Capacitors>
+  <ABY_DominionCrisisFail_Capacitors>Для стадии доминиона нужны оба активных отсека конденсаторов. Установлено: {0} / {1}.</ABY_DominionCrisisFail_Capacitors>
   <ABY_DominionCrisisFail_CircleLost>Исходный круг призыва был потерян.</ABY_DominionCrisisFail_CircleLost>
   <ABY_DominionCrisisFail_Power>Исходный круг призыва слишком долго оставался без питания.</ABY_DominionCrisisFail_Power>
   <ABY_DominionCrisisFail_WindowExpired>Окно ожидания доминиона истекло до того, как портал удалось удержать открытым.</ABY_DominionCrisisFail_WindowExpired>
@@ -54,7 +49,6 @@
   <ABY_DominionCrisisFail_NoAnchorCell>На карте не нашлось подходящих клеток для якорей доминиона.</ABY_DominionCrisisFail_NoAnchorCell>
   <ABY_DominionCrisisFail_AnchorRemnants>На карте всё ещё осталось {0} активных якорей доминиона от незавершённого прорыва.</ABY_DominionCrisisFail_AnchorRemnants>
   <ABY_DominionCrisisAbortFail_NoActive>На этой карте нет активного ядра кризиса доминиона.</ABY_DominionCrisisAbortFail_NoActive>
-
   <ABY_DominionCrisisPhase_Dormant>спит</ABY_DominionCrisisPhase_Dormant>
   <ABY_DominionCrisisPhase_Synchronizing>синхронизация</ABY_DominionCrisisPhase_Synchronizing>
   <ABY_DominionCrisisPhase_Anchorfall>прелюдия замка портала</ABY_DominionCrisisPhase_Anchorfall>
@@ -62,106 +56,85 @@
   <ABY_DominionCrisisPhase_Cancelled>отменено</ABY_DominionCrisisPhase_Cancelled>
   <ABY_DominionCrisisPhase_Failed>сорвано</ABY_DominionCrisisPhase_Failed>
   <ABY_DominionCrisisPhase_Completed>завершено</ABY_DominionCrisisPhase_Completed>
-
   <ABY_DominionCrisisStatusLine_Active>Кризис доминиона: {0} • осталось {1}</ABY_DominionCrisisStatusLine_Active>
   <ABY_DominionCrisisStatusLine_Anchors>Кризис доминиона: {0} • якоря {1}/{2} стабилизируют • портал откроется через {3} • осталось {4}</ABY_DominionCrisisStatusLine_Anchors>
   <ABY_DominionCrisisStatusLine_Dormant>Ядро кризиса доминиона спит.</ABY_DominionCrisisStatusLine_Dormant>
   <ABY_DominionCrisisStatusLine_Terminal>Кризис доминиона: {0} • {1}</ABY_DominionCrisisStatusLine_Terminal>
-
   <ABY_DominionAnchorPreviewHeader>Якорная решётка</ABY_DominionAnchorPreviewHeader>
   <ABY_DominionAnchorPreviewSummary>Состояние якорей: {0}. Давление решётки: {1}. Окно замка: {2}.</ABY_DominionAnchorPreviewSummary>
   <ABY_DominionAnchorPreviewSummaryIdle>На этой карте ещё нет активных якорей доминиона. После синхронизации короткая внешняя якорная решётка стабилизирует входной портал.</ABY_DominionAnchorPreviewSummaryIdle>
   <ABY_DominionAnchor_ConsoleIdle>Внешняя якорная решётка ещё не активна. Прорыв всё ещё синхронизируется.</ABY_DominionAnchor_ConsoleIdle>
   <ABY_DominionAnchor_ConsoleCleared>Внешняя якорная решётка схлопнулась.</ABY_DominionAnchor_ConsoleCleared>
   <ABY_DominionAnchor_ConsoleLine>{0}: активно {1} — {2}</ABY_DominionAnchor_ConsoleLine>
-
   <ABY_DominionAnchor_StatusShort_None>активной якорной решётки нет</ABY_DominionAnchor_StatusShort_None>
   <ABY_DominionAnchor_StatusShort_Active>{0}/{1} якорей стабилизируют прорыв</ABY_DominionAnchor_StatusShort_Active>
   <ABY_DominionAnchor_StatusValue_Pending>проявление ожидается</ABY_DominionAnchor_StatusValue_Pending>
   <ABY_DominionAnchor_StatusValue_Active>{0} / {1} стабилизируют</ABY_DominionAnchor_StatusValue_Active>
-
   <ABY_DominionAnchor_Pressure_None>нет</ABY_DominionAnchor_Pressure_None>
   <ABY_DominionAnchor_Pressure_Low>низкое</ABY_DominionAnchor_Pressure_Low>
   <ABY_DominionAnchor_Pressure_High>высокое</ABY_DominionAnchor_Pressure_High>
   <ABY_DominionAnchor_Pressure_Maximum>максимальное</ABY_DominionAnchor_Pressure_Maximum>
-
   <ABY_DominionAnchor_Role_Suppression>подавление</ABY_DominionAnchor_Role_Suppression>
   <ABY_DominionAnchor_Role_Drain>дренаж</ABY_DominionAnchor_Role_Drain>
   <ABY_DominionAnchor_Role_Ward>защита</ABY_DominionAnchor_Role_Ward>
   <ABY_DominionAnchor_Role_Breach>прорыв</ABY_DominionAnchor_Role_Breach>
-
-  <ABY_DominionAnchor_Effect_Suppression>бьёт по ближайшим турелям игрока EMP-импульсами</ABY_DominionAnchor_Effect_Suppression>
-  <ABY_DominionAnchor_Effect_Drain>высасывает ближайшую энергосеть и повышает contamination</ABY_DominionAnchor_Effect_Drain>
-  <ABY_DominionAnchor_Effect_Ward>периодически ремонтирует соседние dominion-якоря</ABY_DominionAnchor_Effect_Ward>
-  <ABY_DominionAnchor_Effect_Breach>ускоряет коллапс и вталкивает дополнительное contamination</ABY_DominionAnchor_Effect_Breach>
-
+  <ABY_DominionAnchor_Effect_Suppression>бьёт по ближайшим турелям игрока ЕМП-импульсами</ABY_DominionAnchor_Effect_Suppression>
+  <ABY_DominionAnchor_Effect_Drain>высасывает ближайшую энергосеть и повышает контаминатион</ABY_DominionAnchor_Effect_Drain>
+  <ABY_DominionAnchor_Effect_Ward>периодически ремонтирует соседние доминион-якоря</ABY_DominionAnchor_Effect_Ward>
+  <ABY_DominionAnchor_Effect_Breach>ускоряет коллапс и вталкивает дополнительное контаминатион</ABY_DominionAnchor_Effect_Breach>
   <ABY_DominionAnchor_Inspect>Роль: {0}
 Эффект: {1}
 Статус прорыва: {2}</ABY_DominionAnchor_Inspect>
-
   <ABY_CircleStatus_Waves>Волновой импульс</ABY_CircleStatus_Waves>
   <ABY_CircleStatus_NextWave>Следующая волна</ABY_CircleStatus_NextWave>
-
   <ABY_DominionWavePulseLabel>Импульсы доминиона усиливаются</ABY_DominionWavePulseLabel>
-  <ABY_DominionWavePulseDesc>Anchorfall теперь проводит повторяющиеся враждебные импульсы через решётку прорыва. Первый импульс: {0}. Следующий примерно через {1}.</ABY_DominionWavePulseDesc>
+  <ABY_DominionWavePulseDesc>Падение якорей теперь проводит повторяющиеся враждебные импульсы через решётку прорыва. Первый импульс: {0}. Следующий примерно через {1}.</ABY_DominionWavePulseDesc>
   <ABY_DominionWavePulseMessage>Прошёл импульс доминиона: {0}. Следующий примерно через {1}.</ABY_DominionWavePulseMessage>
-
   <ABY_DominionWavePreviewHeader>Директор волн</ABY_DominionWavePreviewHeader>
   <ABY_DominionWavePreviewSummary>Ожидаемый импульс: {0}. Следующая волна: {1}.</ABY_DominionWavePreviewSummary>
-  <ABY_DominionWavePreviewSummaryIdle>Враждебные импульсы пока не идут. После начала anchorfall прорыв начнёт регулярно отправлять волны через активную решётку.</ABY_DominionWavePreviewSummaryIdle>
+  <ABY_DominionWavePreviewSummaryIdle>Враждебные импульсы пока не идут. После начала падение якорей прорыв начнёт регулярно отправлять волны через активную решётку.</ABY_DominionWavePreviewSummaryIdle>
   <ABY_DominionWavePreviewStatus_Dormant>не вооружено</ABY_DominionWavePreviewStatus_Dormant>
   <ABY_DominionWavePreviewStatus_Quiet>тихо</ABY_DominionWavePreviewStatus_Quiet>
-  <ABY_DominionWavePreviewStatus_ThrottledUnits>сдерживается, пока ещё живы прошлые abyssal-враги</ABY_DominionWavePreviewStatus_ThrottledUnits>
+  <ABY_DominionWavePreviewStatus_ThrottledUnits>сдерживается, пока ещё живы прошлые бездненный-враги</ABY_DominionWavePreviewStatus_ThrottledUnits>
   <ABY_DominionWavePreviewStatus_ThrottledPortals>ожидание схлопывания прошлых порталов</ABY_DominionWavePreviewStatus_ThrottledPortals>
-
-  <ABY_DominionWaveEta_Pending>ожидается anchorfall</ABY_DominionWaveEta_Pending>
+  <ABY_DominionWaveEta_Pending>ожидается падение якорей</ABY_DominionWaveEta_Pending>
   <ABY_DominionWaveEta_Queued>в очереди</ABY_DominionWaveEta_Queued>
   <ABY_DominionWaveEta_Imminent>совсем скоро</ABY_DominionWaveEta_Imminent>
-
   <ABY_DominionWavePressure_Dormant>спит</ABY_DominionWavePressure_Dormant>
   <ABY_DominionWavePressure_Low>низкое</ABY_DominionWavePressure_Low>
   <ABY_DominionWavePressure_High>высокое</ABY_DominionWavePressure_High>
   <ABY_DominionWavePressure_Severe>критическое</ABY_DominionWavePressure_Severe>
-
-  <ABY_DominionWaveConsoleIdle>Маршрутизация волн спит до начала anchorfall.</ABY_DominionWaveConsoleIdle>
+  <ABY_DominionWaveConsoleIdle>Маршрутизация волн спит до начала падение якорей.</ABY_DominionWaveConsoleIdle>
   <ABY_DominionWaveConsoleComposition>Ожидаемый импульс: {0}</ABY_DominionWaveConsoleComposition>
   <ABY_DominionWaveConsoleCadence>Интервал импульсов: примерно каждые {0}</ABY_DominionWaveConsoleCadence>
   <ABY_DominionWaveConsoleThrottle>Текущее сдерживание: {0}</ABY_DominionWaveConsoleThrottle>
   <ABY_DominionWaveConsolePressure>Давление волн: {0}</ABY_DominionWaveConsolePressure>
   <ABY_DominionWaveConsoleLastPulse>Последний импульс: {0}</ABY_DominionWaveConsoleLastPulse>
-
-  <ABY_DominionWavePack_Imps>импульс dominion-импов</ABY_DominionWavePack_Imps>
+  <ABY_DominionWavePack_Imps>импульс доминион-импов</ABY_DominionWavePack_Imps>
   <ABY_DominionWavePack_Hounds>охотничья группа доминиона</ABY_DominionWavePack_Hounds>
-  <ABY_DominionWavePack_Thralls>relay-группа доминиона</ABY_DominionWavePack_Thralls>
+  <ABY_DominionWavePack_Thralls>релаи-группа доминиона</ABY_DominionWavePack_Thralls>
   <ABY_DominionWaveSummary_Imps>{0} через {1}</ABY_DominionWaveSummary_Imps>
   <ABY_DominionWaveSummary_PortalSingle>1 портал</ABY_DominionWaveSummary_PortalSingle>
   <ABY_DominionWaveSummary_PortalPlural>{0} портала(ов)</ABY_DominionWaveSummary_PortalPlural>
   <ABY_DominionWaveComposition_Imps>{0} через {1}</ABY_DominionWaveComposition_Imps>
-
-
   <ABY_DominionRitualMetaGate>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Стабильность великого портала: {2}   •   Следующий всплеск: {3}</ABY_DominionRitualMetaGate>
   <ABY_CircleStatus_Gate>Великий портал</ABY_CircleStatus_Gate>
   <ABY_CircleStatus_GateIntegrity>Стабильность портала</ABY_CircleStatus_GateIntegrity>
-
   <ABY_DominionCrisisGateLabel>Великий адский портал проявился</ABY_DominionCrisisGateLabel>
   <ABY_DominionCrisisGateDesc>{0} полностью раскрыл прорыв. Внешняя якорная решётка удерживает порог, пока рядом с ритуальной точкой проявляется Великий адский портал. Калибровка входа скоро завершится.</ABY_DominionCrisisGateDesc>
-  <ABY_DominionCrisisReminderGate>Стабильность Великого адского портала: {0}. Следующий всплеск: {1}. Калибровка входа через {2}. Внешние якоря останутся связаны до закрытия pocket dimension.</ABY_DominionCrisisReminderGate>
+  <ABY_DominionCrisisReminderGate>Стабильность Великого адского портала: {0}. Следующий всплеск: {1}. Калибровка входа через {2}. Внешние якоря останутся связаны до закрытия карманное измерение.</ABY_DominionCrisisReminderGate>
   <ABY_DominionCrisisFail_NoGateCell>На карте не нашлось подходящих клеток для проявления Великого адского портала.</ABY_DominionCrisisFail_NoGateCell>
-  <ABY_DominionCrisisFail_GatePersisted>Великий адский портал оставался нестабильным, пока staging-окно не схлопнулось.</ABY_DominionCrisisFail_GatePersisted>
+  <ABY_DominionCrisisFail_GatePersisted>Великий адский портал оставался нестабильным, пока подготовительное окно не схлопнулось.</ABY_DominionCrisisFail_GatePersisted>
   <ABY_DominionCrisisFail_GateLost>Великий адский портал был потерян до завершения калибровки входа.</ABY_DominionCrisisFail_GateLost>
-
   <ABY_DominionCrisisPhase_Gatecore>стадия великого портала</ABY_DominionCrisisPhase_Gatecore>
   <ABY_DominionCrisisStatusLine_Gate>Кризис доминиона: {0} • великий портал {1} • следующий всплеск {2} • осталось {3}</ABY_DominionCrisisStatusLine_Gate>
-
   <ABY_DominionAnchorPreviewSummaryGate>Состояние якорей: сломаны. Состояние Великого адского портала: {0}. Стабильность: {1}. Калибровка входа: {2}.</ABY_DominionAnchorPreviewSummaryGate>
   <ABY_DominionAnchor_ConsoleGatecore>Внешняя якорная решётка синхронизирована и удерживает Великий адский портал открытым.</ABY_DominionAnchor_ConsoleGatecore>
   <ABY_DominionAnchor_StatusShort_Cleared>внешняя якорная решётка схлопнулась</ABY_DominionAnchor_StatusShort_Cleared>
   <ABY_DominionAnchor_StatusValue_Cleared>схлопнулась / ядро открыто</ABY_DominionAnchor_StatusValue_Cleared>
-
   <ABY_DominionWavePreviewStatus_Gatebound>перенаправлено через Великий адский портал</ABY_DominionWavePreviewStatus_Gatebound>
   <ABY_DominionWavePreviewSummaryGate>Теперь импульсы поддержки идут через Великий адский портал. Паттерн: {0}. Следующий всплеск: {1}.</ABY_DominionWavePreviewSummaryGate>
   <ABY_DominionWaveConsoleGatecore>Маршрутизация волн теперь напрямую подчинена внешнему этапу Великого адского портала.</ABY_DominionWaveConsoleGatecore>
-
   <ABY_DominionGatePreviewHeader>Великий адский портал</ABY_DominionGatePreviewHeader>
   <ABY_DominionGatePreviewSummary>Состояние портала: {0}. Стабильность: {1}. Следующий всплеск: {2}. Калибровка входа: {3}.</ABY_DominionGatePreviewSummary>
   <ABY_DominionGatePreviewSummaryIdle>Великий адский портал ещё не проявился. Когда короткая внешняя якорная решётка завершит синхронизацию, прорыв сконденсируется в контролируемый порог входа.</ABY_DominionGatePreviewSummaryIdle>
@@ -170,7 +143,7 @@
   <ABY_DominionGate_Status_Shaken>расшатано</ABY_DominionGate_Status_Shaken>
   <ABY_DominionGate_Status_Critical>критично</ABY_DominionGate_Status_Critical>
   <ABY_DominionGate_Integrity_Dormant>спит</ABY_DominionGate_Integrity_Dormant>
-  <ABY_DominionGate_Integrity_Value>{0}% • {1}/{2} HP</ABY_DominionGate_Integrity_Value>
+  <ABY_DominionGate_Integrity_Value>{0}% • {1}/{2} ОЗ</ABY_DominionGate_Integrity_Value>
   <ABY_DominionGate_PulseEta_Pending>заряжается</ABY_DominionGate_PulseEta_Pending>
   <ABY_DominionGate_PulseEta_Imminent>совсем скоро</ABY_DominionGate_PulseEta_Imminent>
   <ABY_DominionGate_ConsoleIdle>На этой карте пока нет проявившегося Великого адского портала.</ABY_DominionGate_ConsoleIdle>
@@ -186,15 +159,14 @@
 Следующий всплеск: {2}</ABY_DominionGate_Inspect>
   <ABY_DominionGateCall_Message>Всплеск Великого адского портала проведён: {0}. Следующий примерно через {1}.</ABY_DominionGateCall_Message>
   <ABY_DominionGate_CallSummary>подкрепления великого портала</ABY_DominionGate_CallSummary>
-
   <ABY_DominionStatusHeader>Телеметрия кризиса</ABY_DominionStatusHeader>
   <ABY_DominionOpsSummary>Цель: {0}
 Директива: {1}</ABY_DominionOpsSummary>
   <ABY_DominionOpsObjective_Dormant>На этой карте нет активного прорыва доминиона.</ABY_DominionOpsObjective_Dormant>
-  <ABY_DominionOpsObjective_Sync>Держите исходный круг под питанием, пока не проявится фаза anchorfall.</ABY_DominionOpsObjective_Sync>
+  <ABY_DominionOpsObjective_Sync>Держите исходный круг под питанием, пока не проявится фаза падение якорей.</ABY_DominionOpsObjective_Sync>
   <ABY_DominionOpsObjective_Anchors>Позвольте внешней якорной решётке стабилизировать портал доминиона.</ABY_DominionOpsObjective_Anchors>
   <ABY_DominionOpsObjective_Gate>Удержите Великий адский портал до завершения калибровки входа.</ABY_DominionOpsObjective_Gate>
-  <ABY_DominionOpsDirective_Sync>Сохраняйте питание круга, свободный фокус и готовность к переходу в первый anchorfall.</ABY_DominionOpsDirective_Sync>
+  <ABY_DominionOpsDirective_Sync>Сохраняйте питание круга, свободный фокус и готовность к переходу в первый падение якорей.</ABY_DominionOpsDirective_Sync>
   <ABY_DominionOpsDirective_Anchors>Внешние якоря активны: {0}/{1}. Состояние решётки: {2}.</ABY_DominionOpsDirective_Anchors>
   <ABY_DominionOpsDirective_Gate>Стабильность портала: {0}. Следующий всплеск: {1}.</ABY_DominionOpsDirective_Gate>
   <ABY_DominionCommand_TrackObjective>Отследить цель</ABY_DominionCommand_TrackObjective>
@@ -202,15 +174,13 @@
   <ABY_DominionCommand_TrackGate>Отследить великий портал</ABY_DominionCommand_TrackGate>
   <ABY_DominionCommand_NoObjective>На этой карте пока нет доступной цели кризиса доминиона.</ABY_DominionCommand_NoObjective>
   <ABY_DominionCompactHint>Через круг сейчас идёт телеметрия кризиса доминиона.</ABY_DominionCompactHint>
-  <ABY_DominionCompactFooter>Прорыв доминиона активен. Откройте полную консоль для отслеживания внешней якорной решётки, Великого адского портала и состояния входа в pocket dimension.</ABY_DominionCompactFooter>
-
+  <ABY_DominionCompactFooter>Прорыв доминиона активен. Откройте полную консоль для отслеживания внешней якорной решётки, Великого адского портала и состояния входа в карманное измерение.</ABY_DominionCompactFooter>
   <ABY_DominionRitualMetaCooldown>Сигилов на карте: {0}   •   Состояние кризиса: {1}   •   Перезапуск: {2}   •   Статистика: {3}</ABY_DominionRitualMetaCooldown>
   <ABY_DominionCompactHintCooldown>Латунь доминиона всё ещё восстанавливается. Повторный запуск будет доступен через {0}.</ABY_DominionCompactHintCooldown>
   <ABY_DominionCompactFooterCooldown>Статистика доминиона: {0}. Прогноз следующей награды: {1}.</ABY_DominionCompactFooterCooldown>
   <ABY_DominionCompactCooldown>Перезапуск: {0}</ABY_DominionCompactCooldown>
   <ABY_DominionCompactRecord>Статистика: {0}</ABY_DominionCompactRecord>
   <ABY_DominionCompactPayout>Следующая награда: {0}</ABY_DominionCompactPayout>
-
   <ABY_DominionCrisisFail_Cooldown>Восстановление доминионной решётки ещё не завершено. Повторный запуск будет доступен через {0}.</ABY_DominionCrisisFail_Cooldown>
   <ABY_DominionCooldown_Active>активно</ABY_DominionCooldown_Active>
   <ABY_DominionCooldown_Ready>готово</ABY_DominionCooldown_Ready>
@@ -227,21 +197,17 @@
   <ABY_DominionRewardConsoleLast>Последний итог: {0}</ABY_DominionRewardConsoleLast>
   <ABY_DominionOutcome_RewardLine>Награда / последствия: {0}</ABY_DominionOutcome_RewardLine>
   <ABY_DominionOutcome_CooldownLine>Окно повторного запуска: {0}</ABY_DominionOutcome_CooldownLine>
-  <ABY_DominionOutcome_CompletedSummary>Получено со staging-этапа: {0}</ABY_DominionOutcome_CompletedSummary>
+  <ABY_DominionOutcome_CompletedSummary>Получено со подготовка-этапа: {0}</ABY_DominionOutcome_CompletedSummary>
   <ABY_DominionOutcome_FailedSummary>Откат вызвал аварийную утечку прорыва, повредил ближайшую инфраструктуру и принудительно открыл окно восстановления.</ABY_DominionOutcome_FailedSummary>
   <ABY_DominionOutcome_FailedSummarySoft>Откат повредил ближайшую инфраструктуру, поднял загрязнение и принудительно открыл окно восстановления.</ABY_DominionOutcome_FailedSummarySoft>
   <ABY_DominionOutcome_CancelledSummary>Прорыв был заглушен заранее, но решётке всё равно нужно время, чтобы остыть и сбросить загрязнение.</ABY_DominionOutcome_CancelledSummary>
   <ABY_DominionFailure_HoundPack>охотник аварийного доминиона</ABY_DominionFailure_HoundPack>
-
   <ABY_DominionCrisisStatusLine_Cooldown>Ядро доминионного кризиса стабилизируется • повторный запуск {0} • {1}</ABY_DominionCrisisStatusLine_Cooldown>
   <ABY_DominionOpsObjective_Rearm>Подготовьте решётку к следующему доминионному прорыву.</ABY_DominionOpsObjective_Rearm>
   <ABY_DominionOpsDirective_Rearm>Окно повторного запуска: {0}. Статистика: {1}.</ABY_DominionOpsDirective_Rearm>
-
   <ABY_CircleStatus_DominionCooldown>Повторный запуск</ABY_CircleStatus_DominionCooldown>
   <ABY_CircleStatus_DominionRewards>Лента наград</ABY_CircleStatus_DominionRewards>
   <ABY_CircleStatus_DominionReplay>Статистика запусков</ABY_CircleStatus_DominionReplay>
-
-
   <ABY_DominionCalibration_Contained>сдержанный</ABY_DominionCalibration_Contained>
   <ABY_DominionCalibration_Escalated>эскалированный</ABY_DominionCalibration_Escalated>
   <ABY_DominionCalibration_Apex>пиковый</ABY_DominionCalibration_Apex>
@@ -250,7 +216,7 @@
   <ABY_DominionFxMode_Restrained>сдержанный</ABY_DominionFxMode_Restrained>
   <ABY_DominionBalanceConsoleCalibration>Калибровка: {0}</ABY_DominionBalanceConsoleCalibration>
   <ABY_DominionBalanceConsoleBudget>Бюджет рантайма: {0}</ABY_DominionBalanceConsoleBudget>
-  <ABY_DominionBalanceConsoleFx>Режим FX: {0}</ABY_DominionBalanceConsoleFx>
+  <ABY_DominionBalanceConsoleFx>Режим эффекты: {0}</ABY_DominionBalanceConsoleFx>
   <ABY_DominionBalanceConsoleMaintenance>Регулятор: {0}</ABY_DominionBalanceConsoleMaintenance>
   <ABY_DominionMaintenance_Stable>стабильно</ABY_DominionMaintenance_Stable>
   <ABY_DominionMaintenance_Portals>схлопнуло лишние порталы: {0}</ABY_DominionMaintenance_Portals>
@@ -258,34 +224,19 @@
   <ABY_DominionMaintenance_Combined>схлопнуло лишние порталы: {0}; следующий импульс отложен на {1}</ABY_DominionMaintenance_Combined>
   <ABY_CircleStatus_DominionCalibration>Калибровка</ABY_CircleStatus_DominionCalibration>
   <ABY_CircleStatus_DominionBudget>Бюджет рантайма</ABY_CircleStatus_DominionBudget>
-  <ABY_CircleStatus_DominionFx>Режим FX</ABY_CircleStatus_DominionFx>
-
+  <ABY_CircleStatus_DominionFx>Режим эффекты</ABY_CircleStatus_DominionFx>
   <ABY_DominionAnchor_ConsolePrelude>Внешняя якорная решётка: {0}/{1} якорей стабилизируют прорыв. Портал откроется через {2}.</ABY_DominionAnchor_ConsolePrelude>
-
   <ABY_DominionAnchor_ConsoleGateLinked>Внешняя якорная решётка синхронизирована: {0} якорей останутся связаны с Великим адским порталом до закрытия Среза Доминиона.</ABY_DominionAnchor_ConsoleGateLinked>
-
   <ABY_DominionAnchor_StatusShort_Prelude>{0}/{1} якорей стабилизируют замок • {2}</ABY_DominionAnchor_StatusShort_Prelude>
-
   <ABY_DominionAnchor_StatusShort_Synchronized>{0} внешних якорей синхронизированы с порталом</ABY_DominionAnchor_StatusShort_Synchronized>
-
   <ABY_DominionAnchor_StatusValue_Prelude>{0} / {1} стабилизируют • {2}</ABY_DominionAnchor_StatusValue_Prelude>
-
   <ABY_DominionAnchor_StatusValue_Synchronized>{0} связаны с порталом</ABY_DominionAnchor_StatusValue_Synchronized>
-
   <ABY_DominionAnchor_Pressure_Stabilizing>стабилизация</ABY_DominionAnchor_Pressure_Stabilizing>
-
   <ABY_DominionAnchor_Pressure_ExternalLock>внешний замок</ABY_DominionAnchor_Pressure_ExternalLock>
-
-  <ABY_DominionAnchor_Effect_PreludeStabilizer>стабилизирует внешний замок Великого адского портала до закрытия pocket dimension</ABY_DominionAnchor_Effect_PreludeStabilizer>
-
+  <ABY_DominionAnchor_Effect_PreludeStabilizer>стабилизирует внешний замок Великого адского портала до закрытия карманное измерение</ABY_DominionAnchor_Effect_PreludeStabilizer>
   <ABY_DominionOpsObjective_AnchorPrelude>Позвольте внешним якорям стабилизировать портал доминиона.</ABY_DominionOpsObjective_AnchorPrelude>
-
   <ABY_DominionOpsDirective_AnchorPrelude>Внешняя якорная решётка активна: {0} якорей. Портал откроется через {1}.</ABY_DominionOpsDirective_AnchorPrelude>
-
   <ABY_DominionWavePreviewStatus_PreludeQuiet>Волны не маршрутизируются во время короткой прелюдии замка. Портал откроется через {0}.</ABY_DominionWavePreviewStatus_PreludeQuiet>
-
   <ABY_DominionWaveEta_GateOpening>портал откроется через {0}</ABY_DominionWaveEta_GateOpening>
-
   <ABY_DominionWaveConsolePrelude>Маршрутизация волн подавлена во время короткой прелюдии замка. Великий адский портал откроется через {0}.</ABY_DominionWaveConsolePrelude>
-
 </LanguageData>
