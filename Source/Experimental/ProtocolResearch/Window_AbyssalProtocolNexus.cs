@@ -37,6 +37,9 @@ namespace AbyssalProtocol
         private Vector2 detailsScroll = Vector2.zero;
         private float detailViewHeight = 600f;
 
+        private const int OuterTierSlotCount = 8;
+        private const int ApotheosisTierSlot = 8;
+
         public Window_AbyssalProtocolNexus(Building_ABY_ProtocolNexus nexus)
         {
             this.nexus = nexus;
@@ -139,15 +142,20 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Medium;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 16f, rect.y + 8f, rect.width - 260f, 30f), "ABY_ProtocolResearch_Title".Translate());
+            Widgets.Label(new Rect(rect.x + 16f, rect.y + 8f, rect.width - 380f, 30f), "ABY_ProtocolResearch_Title".Translate());
 
             Text.Font = GameFont.Small;
             GUI.color = new Color(0.88f, 0.78f, 0.69f, 1f);
             Widgets.Label(new Rect(rect.x + 18f, rect.y + 38f, rect.width - 36f, 22f), "ABY_ProtocolResearch_Subtitle".Translate());
 
-            Text.Anchor = TextAnchor.MiddleRight;
+            Rect progressRect = new Rect(rect.xMax - 352f, rect.y + 9f, 322f, 24f);
+            DrawSolid(progressRect, new Color(0.07f, 0.030f, 0.020f, 0.74f));
+            DrawOutline(progressRect, new Color(1f, 0.42f, 0.16f, 0.36f));
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Tiny;
             GUI.color = new Color(1f, 0.78f, 0.54f, 1f);
-            Widgets.Label(new Rect(rect.xMax - 270f, rect.y + 9f, 240f, 24f), "ABY_ProtocolResearch_HeaderProgress".Translate(available, completed, total));
+            Widgets.Label(progressRect.ContractedBy(4f, 1f), Shorten("ABY_ProtocolResearch_HeaderProgress".Translate(available, completed, total), 54));
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
         }
@@ -279,7 +287,14 @@ namespace AbyssalProtocol
             DrawRingProgressTicks(ringArea, projects);
             DrawSelectedLayerFocus(ringArea, layers, activeLayer);
             DrawLayerNodes(ringArea, layers);
-            DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
+            if (!IsApotheosisLayer(activeLayer))
+            {
+                DrawRingCenterDashboard(ringArea, projects, activeLayer, layerProjects);
+            }
+            else
+            {
+                DrawApotheosisCenterNode(ringArea, activeLayer);
+            }
         }
 
         private void DrawRingProgressTicks(Rect ringArea, List<ABY_ProtocolResearchDef> projects)
@@ -316,61 +331,60 @@ namespace AbyssalProtocol
 
         private void DrawLayerNodes(Rect ringArea, List<ResearchLayerView> layers)
         {
-            if (layers == null || layers.Count == 0)
-            {
-                return;
-            }
-
             Vector2 center = ringArea.center;
             float radius = ringArea.width * 0.382f;
-            int count = Mathf.Max(1, layers.Count);
 
-            for (int i = 0; i < layers.Count; i++)
+            for (int slot = 0; slot < OuterTierSlotCount; slot++)
             {
-                ResearchLayerView layer = layers[i];
-                float angle = -90f + (360f * i / count);
-                float rad = angle * Mathf.Deg2Rad;
-                Vector2 pos = center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
+                ResearchLayerView layer = LayerForTierSlot(layers, slot);
+                Vector2 pos = TierSlotPosition(center, radius, slot);
 
-                bool selected = layer.Key == selectedLayerKey;
-                Rect hitRect = new Rect(pos.x - 26f, pos.y - 26f, 52f, 52f);
+                bool selected = layer != null && layer.Key == selectedLayerKey;
+                Rect hitRect = new Rect(pos.x - 27f, pos.y - 27f, 54f, 54f);
                 bool hover = Mouse.IsOver(hitRect);
-                float nodeSize = selected ? 36f : hover ? 32f : 28f;
+                float nodeSize = layer == null ? (hover ? 30f : 26f) : selected ? 36f : hover ? 32f : 28f;
                 Rect nodeRect = new Rect(pos.x - nodeSize * 0.5f, pos.y - nodeSize * 0.5f, nodeSize, nodeSize);
 
-                DrawLayerNode(nodeRect, layer, i, selected, hover);
+                DrawLayerNode(nodeRect, layer, slot, selected, hover);
 
-                if (Widgets.ButtonInvisible(hitRect))
+                if (layer != null)
                 {
-                    selectedLayerKey = layer.Key;
-                    selectedProject = layer.Projects.FirstOrDefault();
-                    projectListScroll = Vector2.zero;
-                    detailsScroll = Vector2.zero;
+                    if (Widgets.ButtonInvisible(hitRect))
+                    {
+                        selectedLayerKey = layer.Key;
+                        selectedProject = layer.Projects.FirstOrDefault();
+                        selectedFilter = ProtocolProjectFilter.All;
+                        projectListScroll = Vector2.zero;
+                        detailsScroll = Vector2.zero;
+                    }
+
+                    if (hover)
+                    {
+                        TooltipHandler.TipRegion(hitRect, layer.Label + "\n" + LayerProgressText(layer) + "\n\n" + "Click to filter the project list to this protocol layer.");
+                    }
                 }
-
-                if (hover)
+                else if (hover)
                 {
-                    TooltipHandler.TipRegion(hitRect, layer.Label + "\n" + LayerProgressText(layer) + "\n\n" + "Click to filter the project list to this protocol layer.");
+                    TooltipHandler.TipRegion(hitRect, "Tier " + TierGlyphForSlot(slot) + " — planned socket\nReserved for future Protocol Nexus expansion.");
                 }
             }
         }
 
         private void DrawSelectedLayerFocus(Rect ringArea, List<ResearchLayerView> layers, ResearchLayerView activeLayer)
         {
-            if (layers == null || layers.Count == 0 || activeLayer == null)
+            if (layers == null || layers.Count == 0 || activeLayer == null || IsApotheosisLayer(activeLayer))
             {
                 return;
             }
 
-            int index = layers.FindIndex(layer => layer.Key == activeLayer.Key);
-            if (index < 0)
+            int slot = TierSlotIndexFor(activeLayer.Label);
+            if (slot < 0 || slot >= OuterTierSlotCount)
             {
                 return;
             }
 
             Vector2 center = ringArea.center;
-            int count = Mathf.Max(1, layers.Count);
-            float angle = -90f + (360f * index / count);
+            float angle = TierSlotAngle(slot);
             float rad = angle * Mathf.Deg2Rad;
             float nodeRadius = ringArea.width * 0.382f;
             Vector2 nodePos = center + new Vector2(Mathf.Cos(rad) * nodeRadius, Mathf.Sin(rad) * nodeRadius);
@@ -381,7 +395,7 @@ namespace AbyssalProtocol
             float focusRadiusOuter = ringArea.width * 0.425f;
             float focusRadiusInner = ringArea.width * 0.397f;
             const int markers = 17;
-            float arcHalfSpan = Mathf.Clamp(190f / count, 20f, 36f);
+            float arcHalfSpan = 24f;
             for (int i = 0; i < markers; i++)
             {
                 float t = markers == 1 ? 0.5f : i / (float)(markers - 1);
@@ -390,14 +404,14 @@ namespace AbyssalProtocol
                 float markerRad = markerAngle * Mathf.Deg2Rad;
 
                 Vector2 outerPos = center + new Vector2(Mathf.Cos(markerRad) * focusRadiusOuter, Mathf.Sin(markerRad) * focusRadiusOuter);
-                float outerSize = Mathf.Lerp(2.4f, 6.4f, centerWeight);
+                float outerSize = Mathf.Lerp(2.4f, 6.2f, centerWeight);
                 Rect outerRect = new Rect(outerPos.x - outerSize * 0.5f, outerPos.y - outerSize * 0.5f, outerSize, outerSize);
                 DrawSolid(outerRect, new Color(1f, 0.52f, 0.20f, (0.08f + pulse * 0.09f) * Mathf.Lerp(0.45f, 1f, centerWeight)));
 
                 if (i % 2 == 0)
                 {
                     Vector2 innerPos = center + new Vector2(Mathf.Cos(markerRad) * focusRadiusInner, Mathf.Sin(markerRad) * focusRadiusInner);
-                    float innerSize = Mathf.Lerp(1.7f, 3.4f, centerWeight);
+                    float innerSize = Mathf.Lerp(1.7f, 3.2f, centerWeight);
                     Rect innerRect = new Rect(innerPos.x - innerSize * 0.5f, innerPos.y - innerSize * 0.5f, innerSize, innerSize);
                     DrawSolid(innerRect, new Color(1f, 0.78f, 0.42f, (0.05f + pulse * 0.07f) * Mathf.Lerp(0.40f, 0.90f, centerWeight)));
                 }
@@ -408,11 +422,45 @@ namespace AbyssalProtocol
             DrawCornerBrackets(nodeFocusRect.ContractedBy(6f), new Color(1f, 0.76f, 0.38f, 0.10f + pulse * 0.14f), 10f, 1f);
         }
 
-        private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int index, bool selected, bool hover)
+        private void DrawApotheosisCenterNode(Rect ringArea, ResearchLayerView activeLayer)
         {
-            Color stateColor = StateColor(layer.State);
+            if (activeLayer == null)
+            {
+                return;
+            }
+
+            Vector2 center = ringArea.center;
+            float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 3.0f) * 0.5f;
+            Rect rect = new Rect(center.x - 44f, center.y - 44f, 88f, 88f);
+
+            DrawSolid(rect, new Color(0.012f, 0.010f, 0.009f, 0.76f));
+            DrawCornerBrackets(rect, new Color(1f, 0.48f, 0.18f, 0.30f + pulse * 0.22f), 18f, 2f);
+            DrawCornerBrackets(rect.ContractedBy(8f), new Color(1f, 0.76f, 0.38f, 0.14f + pulse * 0.16f), 12f, 1f);
+
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldColor = GUI.color;
+
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            Widgets.Label(new Rect(rect.x + 4f, rect.y + 20f, rect.width - 8f, 22f), "IX");
+            Text.Font = GameFont.Tiny;
+            GUI.color = StateColor(activeLayer.State);
+            Widgets.Label(new Rect(rect.x + 4f, rect.y + 44f, rect.width - 8f, 18f), "APOTHEOSIS");
+
+            Text.Anchor = oldAnchor;
+            Text.Font = oldFont;
+            GUI.color = oldColor;
+        }
+
+        private static void DrawLayerNode(Rect rect, ResearchLayerView layer, int slot, bool selected, bool hover)
+        {
+            bool plannedOnly = layer == null;
+            ABY_ProtocolResearchState state = plannedOnly ? ABY_ProtocolResearchState.Locked : layer.State;
+            Color stateColor = plannedOnly ? new Color(0.28f, 0.15f, 0.11f, 1f) : StateColor(state);
             float pulse = 0.5f + Mathf.Sin(Time.realtimeSinceStartup * 4f) * 0.5f;
-            Rect backingRect = rect.ExpandedBy(selected ? 2f : 5f);
+            Rect backingRect = rect.ExpandedBy(selected ? 2f : plannedOnly ? 4f : 5f);
 
             if (selected && SelectedSocketHaloTex != null)
             {
@@ -424,21 +472,21 @@ namespace AbyssalProtocol
                 GUI.color = oldColor;
             }
 
-            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.56f : 0.62f));
+            DrawSolid(backingRect, new Color(0f, 0f, 0f, selected ? 0.56f : plannedOnly ? 0.48f : 0.62f));
             if (selected)
             {
                 DrawSolid(backingRect.ContractedBy(2f), new Color(0.18f, 0.055f, 0.022f, 0.14f + pulse * 0.08f));
             }
 
             Color fill = stateColor;
-            fill.a = selected ? 0.76f : hover ? 0.78f : 0.58f;
+            fill.a = selected ? 0.76f : hover ? 0.68f : plannedOnly ? 0.34f : 0.58f;
             DrawSolid(rect, fill);
 
             Color outline = selected
                 ? new Color(1f, 0.76f, 0.38f, 0.78f)
                 : hover
-                    ? new Color(1f, 0.48f, 0.20f, 0.78f)
-                    : new Color(0.72f, 0.28f, 0.14f, 0.45f);
+                    ? new Color(1f, 0.48f, 0.20f, plannedOnly ? 0.42f : 0.78f)
+                    : new Color(0.72f, 0.28f, 0.14f, plannedOnly ? 0.26f : 0.45f);
             DrawOutline(backingRect, outline);
 
             if (selected && SelectedSocketHaloTex == null)
@@ -462,8 +510,8 @@ namespace AbyssalProtocol
 
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            GUI.color = selected ? Color.white : new Color(1f, 0.86f, 0.68f, 0.92f);
-            Widgets.Label(rect, LayerGlyph(layer, index));
+            GUI.color = plannedOnly ? new Color(0.64f, 0.46f, 0.36f, 0.76f) : selected ? Color.white : new Color(1f, 0.86f, 0.68f, 0.92f);
+            Widgets.Label(rect, layer == null ? TierGlyphForSlot(slot) : LayerGlyph(layer, slot));
 
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
@@ -561,8 +609,8 @@ namespace AbyssalProtocol
 
             GUI.color = new Color(0.92f, 0.80f, 0.68f, 1f);
             string selectedCounts = selectedLayer == null
-                ? completed + "/" + total + " decoded  •  " + ready + " ready"
-                : selectedCompleted + "/" + selectedTotal + " decoded  •  " + selectedReady + " ready  •  " + selectedLocked + " locked";
+                ? completed + "/" + total + " decoded  •  R " + ready
+                : selectedCompleted + "/" + selectedTotal + " decoded  •  R " + selectedReady + "  •  L " + selectedLocked;
             Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 55f, summaryRect.width - 16f, 16f), Shorten(selectedCounts, 34));
 
             Text.Anchor = oldAnchor;
@@ -763,6 +811,105 @@ namespace AbyssalProtocol
             public int AvailableCount;
             public int LockedCount;
             public ABY_ProtocolResearchState State;
+        }
+
+        private static ResearchLayerView LayerForTierSlot(List<ResearchLayerView> layers, int slot)
+        {
+            if (layers == null)
+            {
+                return null;
+            }
+
+            return layers.FirstOrDefault(layer => TierSlotIndexFor(layer.Label) == slot);
+        }
+
+        private static bool IsApotheosisLayer(ResearchLayerView layer)
+        {
+            return layer != null && TierSlotIndexFor(layer.Label) == ApotheosisTierSlot;
+        }
+
+        private static Vector2 TierSlotPosition(Vector2 center, float radius, int slot)
+        {
+            float angle = TierSlotAngle(slot);
+            float rad = angle * Mathf.Deg2Rad;
+            return center + new Vector2(Mathf.Cos(rad) * radius, Mathf.Sin(rad) * radius);
+        }
+
+        private static float TierSlotAngle(int slot)
+        {
+            return -90f + (360f * slot / OuterTierSlotCount);
+        }
+
+        private static int TierSlotIndexFor(string label)
+        {
+            if (label.NullOrEmpty())
+            {
+                return -1;
+            }
+
+            string normalized = label.Trim().ToLowerInvariant();
+            if (normalized.Contains("apotheosis") || normalized.Contains("tier ix") || normalized.Contains("tier 9"))
+            {
+                return ApotheosisTierSlot;
+            }
+
+            if (normalized.Contains("tier i —") || normalized.Contains("tier i -") || normalized == "tier i" || normalized.StartsWith("tier i "))
+            {
+                return 0;
+            }
+
+            if (normalized.Contains("tier ii") || normalized.Contains("tier 2"))
+            {
+                return 1;
+            }
+
+            if (normalized.Contains("tier iii") || normalized.Contains("tier 3"))
+            {
+                return 2;
+            }
+
+            if (normalized.Contains("tier iv") || normalized.Contains("tier 4"))
+            {
+                return 3;
+            }
+
+            if (normalized.Contains("tier viii") || normalized.Contains("tier 8"))
+            {
+                return 7;
+            }
+
+            if (normalized.Contains("tier vii") || normalized.Contains("tier 7"))
+            {
+                return 6;
+            }
+
+            if (normalized.Contains("tier vi") || normalized.Contains("tier 6"))
+            {
+                return 5;
+            }
+
+            if (normalized.Contains("tier v") || normalized.Contains("tier 5"))
+            {
+                return 4;
+            }
+
+            return -1;
+        }
+
+        private static string TierGlyphForSlot(int slot)
+        {
+            switch (slot)
+            {
+                case 0: return "I";
+                case 1: return "II";
+                case 2: return "III";
+                case 3: return "IV";
+                case 4: return "V";
+                case 5: return "VI";
+                case 6: return "VII";
+                case 7: return "VIII";
+                default: return "IX";
+            }
         }
 
         private static List<ResearchLayerView> BuildLayerViews(List<ABY_ProtocolResearchDef> projects)
