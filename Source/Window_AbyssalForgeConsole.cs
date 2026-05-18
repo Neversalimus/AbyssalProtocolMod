@@ -24,6 +24,7 @@ namespace AbyssalProtocol
         private string selectedArmorFilter = ArmorFilterAll;
         private string selectedImplantsFilter = ImplantsFilterAll;
         private string selectedTurretSystemsFilter = TurretFilterAll;
+        private string selectedStatusFilter = StatusFilterAll;
 
         private const string CoreFilterAll = "All";
         private const string CoreFilterResidue = "Residue";
@@ -57,6 +58,20 @@ namespace AbyssalProtocol
         private const string TurretFilterMain = "Main";
         private const string TurretFilterAuxiliary = "Auxiliary";
         private const string TurretFilterPassive = "Passive";
+
+        private const string StatusFilterAll = "All";
+        private const string StatusFilterCraftable = "Craftable";
+        private const string StatusFilterMissing = "Missing";
+        private const string StatusFilterLocked = "Locked";
+        private const string StatusFilterNexus = "Nexus";
+
+        private enum ForgePatternStatus
+        {
+            Craftable,
+            MissingMaterials,
+            Locked,
+            NexusLocked
+        }
 
         private struct ForgeFilterOption
         {
@@ -827,9 +842,11 @@ namespace AbyssalProtocol
         private static string GetArmorFilterId(RecipeDef recipe)
         {
             string text = BuildRecipeSearchText(recipe);
+            if (RecipeIdentityContains(recipe, "infernal combat frame")) return ArmorFilterArmor;
+            if (RecipeIdentityContains(recipe, "ashen vambraces")) return ArmorFilterVambraces;
             if (text.Contains("pack")) return ArmorFilterPack;
-            if (text.Contains("glove") || text.Contains("gauntlet")) return ArmorFilterGloves;
             if (text.Contains("vambrace")) return ArmorFilterVambraces;
+            if (text.Contains("glove") || text.Contains("gauntlet")) return ArmorFilterGloves;
             if (text.Contains("boot") || text.Contains("greave") || text.Contains("sabatons")) return ArmorFilterBoots;
             if (text.Contains("helm") || text.Contains("cowl") || text.Contains("veil")) return ArmorFilterHelmet;
             return ArmorFilterArmor;
@@ -858,15 +875,49 @@ namespace AbyssalProtocol
         private static string GetImplantFilterId(RecipeDef recipe)
         {
             string text = BuildRecipeSearchText(recipe);
+            if (RecipeIdentityContains(recipe, "herald carapace mesh", "harmonic mesh", "lawwoven carapace mesh")) return ImplantsFilterBody;
+            if (RecipeIdentityContains(recipe, "archon tendon spine", "verdict tendon spine")) return ImplantsFilterSpine;
+            if (RecipeIdentityContains(recipe, "cinder mandible seal")) return ImplantsFilterOrgans;
+            if (RecipeIdentityContains(recipe, "null chorus collar")) return ImplantsFilterNeck;
+            if (RecipeIdentityContains(recipe, "breach tendon weave")) return ImplantsFilterLegs;
             if (text.Contains("eye")) return ImplantsFilterEyes;
             if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("brain")) return ImplantsFilterBrain;
-            if (text.Contains("null chorus collar") || text.Contains("collar") || text.Contains("neck")) return ImplantsFilterNeck;
-            if (text.Contains("breach tendon weave") || text.Contains("leg") || text.Contains("tendon")) return ImplantsFilterLegs;
-            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo") || text.Contains("hand")) return ImplantsFilterArms;
+            if (text.Contains("collar") || text.Contains("neck")) return ImplantsFilterNeck;
             if (text.Contains("spine")) return ImplantsFilterSpine;
-            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung")) return ImplantsFilterOrgans;
-            if (text.Contains("herald carapace mesh") || text.Contains("harmonic mesh") || text.Contains("lawwoven carapace mesh") || text.Contains("carapace mesh") || text.Contains("mesh")) return ImplantsFilterBody;
+            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung") || text.Contains("mandible")) return ImplantsFilterOrgans;
+            if (text.Contains("leg") || text.Contains("tendon")) return ImplantsFilterLegs;
+            if (text.Contains("carapace mesh") || text.Contains("mesh")) return ImplantsFilterBody;
+            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo") || text.Contains("hand")) return ImplantsFilterArms;
             return ImplantsFilterBody;
+        }
+
+        private static bool RecipeIdentityContains(RecipeDef recipe, params string[] fragments)
+        {
+            if (fragments == null || fragments.Length == 0)
+            {
+                return false;
+            }
+
+            string identity = BuildRecipeIdentityText(recipe);
+            for (int i = 0; i < fragments.Length; i++)
+            {
+                string fragment = fragments[i];
+                if (!fragment.NullOrEmpty() && identity.Contains(fragment.ToLowerInvariant()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string BuildRecipeIdentityText(RecipeDef recipe)
+        {
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            return ((recipe?.defName ?? string.Empty) + " "
+                + (recipe?.label ?? string.Empty) + " "
+                + (product?.defName ?? string.Empty) + " "
+                + (product?.label ?? string.Empty)).ToLowerInvariant();
         }
 
         private static string BuildRecipeSearchText(RecipeDef recipe)
@@ -930,8 +981,12 @@ namespace AbyssalProtocol
                 .ThenBy(AbyssalForgeProgressUtility.GetRecipeDisplayLabel)
                 .ToList();
 
-            List<RecipeDef> recipes = categoryRecipes
+            List<RecipeDef> searchRecipes = categoryRecipes
                 .Where(recipe => RecipeMatchesSearch(recipe, patternSearchText))
+                .ToList();
+            Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe = BuildStatusCache(searchRecipes, progress);
+            List<RecipeDef> recipes = searchRecipes
+                .Where(recipe => RecipeMatchesSelectedStatus(recipe, statusByRecipe))
                 .ToList();
 
             if (recipes.Count == 0)
@@ -954,6 +1009,10 @@ namespace AbyssalProtocol
                 DrawSubfilterRow(filterRect);
                 contentTop += 38f;
             }
+
+            Rect statusRect = new Rect(inner.x, contentTop, inner.width, 28f);
+            DrawStatusFilterRow(statusRect, searchRecipes, statusByRecipe);
+            contentTop += 34f;
 
             Rect outRect = new Rect(inner.x, contentTop, inner.width, inner.yMax - contentTop);
             const float scrollbarReserve = 18f;
@@ -999,6 +1058,209 @@ namespace AbyssalProtocol
                 }
             }
             Widgets.EndScrollView();
+        }
+
+        private Dictionary<RecipeDef, ForgePatternStatus> BuildStatusCache(List<RecipeDef> recipes, MapComponent_AbyssalForgeProgress progress)
+        {
+            Dictionary<RecipeDef, ForgePatternStatus> result = new Dictionary<RecipeDef, ForgePatternStatus>();
+            if (recipes == null)
+            {
+                return result;
+            }
+
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                RecipeDef recipe = recipes[i];
+                if (recipe != null && !result.ContainsKey(recipe))
+                {
+                    result[recipe] = ResolvePatternStatus(recipe, progress);
+                }
+            }
+
+            return result;
+        }
+
+        private bool RecipeMatchesSelectedStatus(RecipeDef recipe, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        {
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            if (selectedStatusFilter.NullOrEmpty() || selectedStatusFilter == StatusFilterAll)
+            {
+                return true;
+            }
+
+            ForgePatternStatus status;
+            if (statusByRecipe == null || !statusByRecipe.TryGetValue(recipe, out status))
+            {
+                status = ResolvePatternStatus(recipe, forge?.ProgressComponent);
+            }
+
+            if (selectedStatusFilter == StatusFilterCraftable) return status == ForgePatternStatus.Craftable;
+            if (selectedStatusFilter == StatusFilterMissing) return status == ForgePatternStatus.MissingMaterials;
+            if (selectedStatusFilter == StatusFilterLocked) return status == ForgePatternStatus.Locked;
+            if (selectedStatusFilter == StatusFilterNexus) return status == ForgePatternStatus.NexusLocked;
+            return true;
+        }
+
+        private ForgePatternStatus ResolvePatternStatus(RecipeDef recipe, MapComponent_AbyssalForgeProgress progress)
+        {
+            if (recipe == null)
+            {
+                return ForgePatternStatus.Locked;
+            }
+
+            if (!ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe))
+            {
+                return ForgePatternStatus.NexusLocked;
+            }
+
+            if (progress == null || !AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered))
+            {
+                return ForgePatternStatus.Locked;
+            }
+
+            bool recipeAvailable = false;
+            try
+            {
+                recipeAvailable = forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
+            }
+            catch (System.Exception ex)
+            {
+                ABY_UISafetyUtility.LogUIException("Forge pattern status availability", ex);
+            }
+
+            if (!recipeAvailable)
+            {
+                return ForgePatternStatus.Locked;
+            }
+
+            List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry> entries = forge?.Map != null
+                ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
+                : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
+            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
+            return hasAllMaterials ? ForgePatternStatus.Craftable : ForgePatternStatus.MissingMaterials;
+        }
+
+        private void DrawStatusFilterRow(Rect rect, List<RecipeDef> searchRecipes, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        {
+            AbyssalForgeConsoleArt.Fill(rect, new Color(0.085f, 0.062f, 0.055f, 0.76f));
+            AbyssalForgeConsoleArt.DrawOutline(rect, new Color(1f, 0.36f, 0.13f, 0.24f));
+
+            List<ForgeFilterOption> options = GetStatusFilterOptions(searchRecipes, statusByRecipe);
+            if (options.Count == 0)
+            {
+                return;
+            }
+
+            GameFont oldFont = Text.Font;
+            Text.Font = GameFont.Tiny;
+            float gap = 6f;
+            float totalWidth = -gap;
+            float[] widths = new float[options.Count];
+            for (int i = 0; i < options.Count; i++)
+            {
+                widths[i] = Mathf.Clamp(Text.CalcSize(options[i].label).x + 18f, 46f, 112f);
+                totalWidth += widths[i] + gap;
+            }
+
+            float x = rect.x + Mathf.Max(8f, (rect.width - totalWidth) * 0.5f);
+            float buttonHeight = 20f;
+            float y = rect.y + (rect.height - buttonHeight) * 0.5f;
+            for (int i = 0; i < options.Count; i++)
+            {
+                DrawStatusFilterChip(new Rect(x, y, widths[i], buttonHeight), options[i]);
+                x += widths[i] + gap;
+            }
+
+            Text.Font = oldFont;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private List<ForgeFilterOption> GetStatusFilterOptions(List<RecipeDef> searchRecipes, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        {
+            int all = searchRecipes?.Count ?? 0;
+            int craftable = CountStatus(statusByRecipe, ForgePatternStatus.Craftable);
+            int missing = CountStatus(statusByRecipe, ForgePatternStatus.MissingMaterials);
+            int locked = CountStatus(statusByRecipe, ForgePatternStatus.Locked);
+            int nexus = CountStatus(statusByRecipe, ForgePatternStatus.NexusLocked);
+            return new List<ForgeFilterOption>
+            {
+                new ForgeFilterOption(StatusFilterAll, "All " + all, new Color(0.72f, 0.66f, 0.56f, 1f)),
+                new ForgeFilterOption(StatusFilterCraftable, "Craftable " + craftable, new Color(0.45f, 0.88f, 0.48f, 1f)),
+                new ForgeFilterOption(StatusFilterMissing, "Missing " + missing, new Color(0.95f, 0.62f, 0.28f, 1f)),
+                new ForgeFilterOption(StatusFilterLocked, "Locked " + locked, new Color(0.82f, 0.38f, 0.30f, 1f)),
+                new ForgeFilterOption(StatusFilterNexus, "Nexus " + nexus, new Color(0.74f, 0.50f, 0.92f, 1f))
+            };
+        }
+
+        private static int CountStatus(Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe, ForgePatternStatus status)
+        {
+            if (statusByRecipe == null || statusByRecipe.Count == 0)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            foreach (ForgePatternStatus value in statusByRecipe.Values)
+            {
+                if (value == status)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        private void DrawStatusFilterChip(Rect rect, ForgeFilterOption option)
+        {
+            bool active = selectedStatusFilter == option.id;
+            bool hovered = Mouse.IsOver(rect);
+            Color color = option.color;
+            Color fill = active
+                ? new Color(color.r * 0.26f, color.g * 0.18f, color.b * 0.13f, 0.96f)
+                : hovered
+                    ? new Color(color.r * 0.18f, color.g * 0.13f, color.b * 0.10f, 0.88f)
+                    : new Color(color.r * 0.10f, color.g * 0.08f, color.b * 0.07f, 0.72f);
+            Color outline = active
+                ? Color.Lerp(color, Color.white, 0.20f)
+                : new Color(color.r, color.g, color.b, hovered ? 0.58f : 0.34f);
+
+            AbyssalForgeConsoleArt.Fill(rect, fill);
+            AbyssalForgeConsoleArt.DrawOutline(rect, outline);
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = active ? Color.white : AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), option.label, 0f, 8f);
+
+            if (Widgets.ButtonInvisible(rect, false))
+            {
+                if (selectedStatusFilter != option.id)
+                {
+                    selectedStatusFilter = option.id;
+                    patternScrollPosition = Vector2.zero;
+                    selectedPattern = null;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+
+            TooltipHandler.TipRegion(rect, GetStatusFilterTooltip(option.id));
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private static string GetStatusFilterTooltip(string filter)
+        {
+            if (filter == StatusFilterCraftable) return "Show decoded, unlocked patterns with all materials available now.";
+            if (filter == StatusFilterMissing) return "Show decoded and unlocked patterns that are only missing materials.";
+            if (filter == StatusFilterLocked) return "Show decoded patterns blocked by residue, research, facility, or normal recipe availability.";
+            if (filter == StatusFilterNexus) return "Show patterns that still need Protocol Nexus decoding.";
+            return "Show every pattern matching the current category, subfilter, and search.";
         }
 
         private void DrawPatternSearchRow(Rect rect, int shownCount, int totalCount)
@@ -1909,6 +2171,7 @@ namespace AbyssalProtocol
                 ? AbyssalForgeProgressUtility.GetForgeRecipes()
                     .Where(RecipeMatchesSelectedCategoryAndFilter)
                     .Where(recipe => RecipeMatchesSearch(recipe, patternSearchText))
+                    .Where(recipe => selectedStatusFilter == StatusFilterAll || RecipeMatchesSelectedStatus(recipe, null))
                     .Where(recipe => AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, forge.ProgressComponent.TotalResidueOffered))
                     .ToList()
                 : new List<RecipeDef>();
