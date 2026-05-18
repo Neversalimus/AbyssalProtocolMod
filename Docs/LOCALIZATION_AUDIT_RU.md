@@ -70,3 +70,12 @@ Applied fixes:
 ```
 
 Build status for this follow-up: C# was changed in `source/UI/Forge/Window_AbyssalForgeConsole.cs`; manual Roslyn compilation against the local `Libraries/` references succeeded and regenerated `Assemblies/AbyssalProtocol.dll`. RimWorld runtime language report was not run in-game.
+
+## 2026-05-19 glossary follow-up
+
+Added `Docs/LOCALIZATION_GLOSSARY_RU.md` to prevent future Russian localization drift after the Forge UI screenshot review exposed correct-but-awkward machine-style translations.
+
+The glossary is now the first document to check for Russian terminology before editing item names, weapon names, boss names, sigil names, Forge/Summoning UI labels, requirement counters, and research/protocol text.
+
+Specific correction captured: `Oblivion Choir` is a weapon/proper name and should be localized as `Хор Забвения`, not treated as an enemy/unit and not translated as `Забвение хоровой`.
+

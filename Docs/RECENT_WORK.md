@@ -358,3 +358,20 @@ Recommended next work after this documentation pass:
 ```
 
 - Gauge labels were moved out of the fill area in Forge status displays: communion uses a right-aligned "current band" caption above the upper bar, while attunement uses a right-aligned tier caption below the lower bar. Keep the bars themselves visually clean. The attunement bar should use 50 discrete segments to match the 50-tier system.
+
+## 2026-05-19 — Russian localization glossary
+
+Added `Docs/LOCALIZATION_GLOSSARY_RU.md` as the canonical Russian terminology guide for Abyssal Protocol localization work.
+
+Important decisions captured:
+
+```text
+- `Oblivion Choir` is a weapon/proper name: `Хор Забвения`. Do not classify it as a pawn/enemy.
+- Rift equipment should use compact hyphenated forms such as `Рифт-клинок` and `Рифт-карабин`.
+- `Sigil` is feminine in Russian: `сигила`, `эту сигилу`, `сигила угольных гончих`.
+- Requirement counts need Russian plural handling: `1 требование`, `2-4 требования`, `5+/11-14 требований`.
+- Cramped Forge card labels should prefer readable compact forms such as `пепельный конденсатор`.
+```
+
+Future Russian localization passes must check the glossary before changing `Languages/Russian/`, DefInjected labels/descriptions, Keyed UI strings, or C# player-facing strings.
+

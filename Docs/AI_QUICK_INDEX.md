@@ -52,7 +52,21 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Legacy save migration / old cleanup | `source/Legacy/` | `source/Diagnostics/`, save/load behavior |
 | Sound/SFX issue | `source/Audio/`, `Defs/SoundDefs/`, `Sounds/ABY/` | Relevant weapon/projectile/incident XML and SFX pipeline rules |
 | Asset path or missing texture | Actual XML `texPath` first | `Textures/`, `SourceAssets/Generated/`, asset-generation rules |
-| Localization/missing key | `Languages/English/`, `Languages/Russian/` | Source string keys and XML labels/descriptions |
+| Localization/missing key / Russian terminology | `Docs/LOCALIZATION_GLOSSARY_RU.md`, `Languages/English/`, `Languages/Russian/` | Source string keys, XML labels/descriptions, DefInjected, Keyed UI strings |
+
+## Russian localization workflow
+
+Before editing Russian localization, inspect:
+
+```text
+Docs/LOCALIZATION_GLOSSARY_RU.md
+Languages/English/
+Languages/Russian/
+source/ files that emit the affected Keyed strings
+Defs/ files that own the affected DefInjected keys
+```
+
+Do not machine-translate item names directly from English. Use the glossary for canonical forms such as `Рифт-клинок`, `Рифт-карабин`, `Хор Забвения`, `Панцирь святого носителя Эгиды`, `Сигила угольных гончих`, and Russian plural forms for requirement counts.
 
 ## Common integration checklist
 
@@ -64,11 +78,12 @@ For any new gameplay content:
 3. Check whether the content belongs in Forge UI, Summoning UI, Protocol Nexus, boss bar, bestiary, or turret UI.
 4. Add/modify full source files, not snippets.
 5. Add/modify full XML files or targeted patches.
-6. Add localization keys if any player-facing text is introduced.
-7. Add real assets, not mockups, when assets are required.
-8. If C# changed, build and include Assemblies/AbyssalProtocol.dll only if build succeeds.
-9. Check whether architecture docs or recent-work docs must be updated.
-10. Include a commit title and commit description in the final response.
+6. For Russian text, check `Docs/LOCALIZATION_GLOSSARY_RU.md` before translating names, categories, UI labels, or descriptions.
+7. Add localization keys if any player-facing text is introduced.
+8. Add real assets, not mockups, when assets are required.
+9. If C# changed, build and include Assemblies/AbyssalProtocol.dll only if build succeeds.
+10. Check whether architecture docs or recent-work docs must be updated.
+11. Include a commit title and commit description in the final response.
 ```
 
 ## Where new files should go

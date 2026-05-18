@@ -46,6 +46,8 @@ Docs currently expected:
 - Docs/RECENT_WORK.md
 - Docs/CONTENT_MATRIX.md
 - Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+- Docs/LOCALIZATION_AUDIT_RU.md
+- Docs/LOCALIZATION_GLOSSARY_RU.md
 ```
 
 Do not create root-level `.cs` files under `source/`.
@@ -92,7 +94,7 @@ Use these statuses in future updates:
 | Implants / hediffs / abilities | Implemented / Partial | `source/Hediffs/`, `source/Hediffs/Comps/`, `source/Bosses/Rupture/Comps/`, `source/Progression/` | `Defs/HediffDefs/`, `Defs/AbilityDefs/`, `Defs/RecipeDefs/` | implant/item icons | info cards, ability UI | Forge/research/boss drop gates | Need accurate stat/part efficiency presentation and surgery/recipe wiring. |
 | Bestiary / lore codex | Implemented / Partial | `source/UI/Bestiary/` | `Defs/ThingDefs/`, `Defs/PawnKindDefs/`, `Languages/` | UI textures | Bestiary window | encounter/progression rewards | Use lore/codex docs as tone source, but implemented state must be checked in files. |
 | Audio/music/SFX | Implemented / Expanding | `source/Audio/`, `source/Summoning/ABY_SigilEncounterMusicUtility.cs`, `source/Bosses/Shared/ABY_BossMusicUtility.cs` | `Defs/SoundDefs/`, `Defs/SongDefs/` | `Sounds/ABY/` | combat/summon/boss feedback | encounter type / weapon def | Short SFX prefer WAV; music/ambience prefer OGG. Verify decode/load. |
-| Localization | Implemented / Always required | n/a | `Languages/English/`, future `Languages/<lang>/` | n/a | all UI/defs | all systems | Add or update keys when adding UI text, defs, labels, descriptions, letters, alerts. |
+| Localization | Implemented / Always required | `Docs/LOCALIZATION_GLOSSARY_RU.md` for Russian terminology | `Languages/English/`, `Languages/Russian/`, future `Languages/<lang>/` | n/a | all UI/defs | all systems | Add or update keys when adding UI text, defs, labels, descriptions, letters, alerts. For Russian, check the glossary before translating named content or UI categories. |
 | Asset generation/integration | Implemented workflow | n/a | XML texPath users | `Textures/`, `SourceAssets/`, `Sounds/` | UI/game rendering | all systems | Source images may use green chromakey; final mod textures should be transparent PNG where appropriate. |
 | Compatibility / hotfix layer | Implemented | `source/Compatibility/`, `source/Patches/`, `Patches/` | compatibility XML patches | n/a | n/a | modpack stability | Do not treat hotfix/compat files as primary architecture unless they are actually the owner of behavior. |
 | Diagnostics/dev tools | Implemented | `source/Diagnostics/`, `source/Diagnostics/UI/` | possibly debug/dev defs | n/a | diagnostics windows/dev gizmos | dev-only | Useful for testing; should not leak into player-facing progression unless intended. |

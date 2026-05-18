@@ -208,6 +208,7 @@ Actual code and assets win over this document.
 | Duplicate flat language keys | P1 | localization | RimWorld language report shows duplicate or broken translation data, often when same defName exists in multiple DefInjected folders | Scan all `Languages/<lang>/DefInjected/**` keys as a flat set before packaging; avoid duplicate PawnKind/ThingDef label entries with the same key. |
 | Orphan DefInjected keys for removed/renamed defs | P1 | localization/XML | RimWorld language report warns about translation errors even when XML parses | For every DefInjected key, verify the defName exists in the matching Def type; remove stale keys when defs are renamed or deleted. |
 | English leftovers in Russian visible labels | P2 | localization/UI | Russian UI still shows English names like boss titles, difficulty names, horde labels, or recipe job strings | Run a Latin-text scan over Russian label/title/header/button/jobString values after content batches. |
+| Machine-translated Russian names / glossary drift | P2 | localization/UI/Defs | Awkward or wrong names such as `Рифт Бладе`, `Рифт Карбине`, `Забвение хоровой`, `святой эгида панцирь`, or malformed sigil labels | Check `Docs/LOCALIZATION_GLOSSARY_RU.md` before editing Russian text; update the glossary and localization together when terminology changes. |
 | Russian plural forms in UI counts | P2 | localization/UI | Wrong endings such as `1 требований`, `2 требований`, or cramped requirement counters | Use Russian plural-aware helper logic for numeric UI counts: 1 требование, 2-4 требования, 5+/11-14 требований. |
 | Inconsistent tone with lore docs | P2/P3 | descriptions | generic demon/fantasy feel | Use techno-infernal, ritual-industrial tone. |
 | Text says implemented when content is planned | P2 | docs/UI | player/dev confusion | Mark planned/partial/implemented clearly. |
@@ -232,11 +233,12 @@ Before producing an integration patch:
 3. Check Docs/AI_QUICK_INDEX.md for where to look first.
 4. Check Docs/RECENT_WORK.md for recent decisions.
 5. Check this risk file for known regression zones.
-6. For C# changes, build if possible and include DLL only if verified.
-7. For XML changes, check class names, defNames, duplicate fields, texPaths.
-8. For assets, verify final paths, alpha/chromakey handling, and optimization.
-9. For UI changes, check Forge/Summoning/Protocol/BossBar custom surfaces.
-10. Update architecture/docs if the change affects system ownership, layout, or recurring risk.
+6. For Russian localization, check Docs/LOCALIZATION_GLOSSARY_RU.md before changing terminology.
+7. For C# changes, build if possible and include DLL only if verified.
+8. For XML changes, check class names, defNames, duplicate fields, texPaths.
+9. For assets, verify final paths, alpha/chromakey handling, and optimization.
+10. For UI changes, check Forge/Summoning/Protocol/BossBar custom surfaces.
+11. Update architecture/docs if the change affects system ownership, layout, or recurring risk.
 ```
 
 ## Runtime smoke-test checklist after high-risk changes
