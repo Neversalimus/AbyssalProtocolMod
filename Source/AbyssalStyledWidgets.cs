@@ -304,9 +304,11 @@ namespace AbyssalProtocol
                     return TabDisabledTex;
                 }
 
+                // Generated tab pressed skins can visually contract inside their transparent canvas.
+                // Keep tabs layout-stable while the mouse is down so category labels/icons never appear to spill outside the frame.
                 if (pressed)
                 {
-                    return TabPressedTex;
+                    return active ? TabActiveTex : TabHoverTex;
                 }
 
                 if (active)
