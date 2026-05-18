@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_BossSummonSuccessLabel>Инфернальный разлом открыт</ABY_BossSummonSuccessLabel>
+  <ABY_BossSummonSuccessDesc>{0} откликнулся на сигил. На карте появился враждебный разломный босс.</ABY_BossSummonSuccessDesc>
+  <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
+  <ABY_BossSummonFail_EncounterActive>На этой карте уже активна бездненный-встреча.</ABY_BossSummonFail_EncounterActive>
+  <ABY_BossSummonFail_NoCircle>Нет доступного запитанного круг Бездны призыва.</ABY_BossSummonFail_NoCircle>
+  <ABY_BossSummonFail_AllBusy>Все круг Бездны призыва сейчас заняты.</ABY_BossSummonFail_AllBusy>
+  <ABY_BossSummonFail_AllUnpowered>Все круг Бездны призыва сейчас без питания.</ABY_BossSummonFail_AllUnpowered>
+  <ABY_BossSummonFail_AllBlocked>Все круг Бездны призыва сейчас заблокированы.</ABY_BossSummonFail_AllBlocked>
+  <ABY_BossSummonFail_NoCircleAvailable>Сейчас нет подходящего круг Бездны призыва для активации.</ABY_BossSummonFail_NoCircleAvailable>
+  <ABY_BossSummonFail_NoEdge>Не удалось найти подходящую точку прорыва у края карты.</ABY_BossSummonFail_NoEdge>
+  <ABY_BossName>Архон Разрыва</ABY_BossName>
+  <ABY_SecretBossRevealLabel>Ответил истинный архонт</ABY_SecretBossRevealLabel>
+  <ABY_SecretBossRevealDesc>Зверь погиб, так и не раскрыв первую фазу. Протокол не завершён. Формируется более великий разлом.</ABY_SecretBossRevealDesc>
+  <ABY_FirstBossKillLabel>Это было замечено</ABY_FirstBossKillLabel>
+  <ABY_FirstBossKillDesc>Первая крупная форма пала.
+Но её смерть не прервала процесс. Она завершила его.
+Некоторые структуры не распадаются молча.
+Они уходят вверх по цепи.
+Иногда после них остаётся не останок, а форма разрыва — слишком правильная, чтобы быть просто следом.
+То, что казалось вершиной, оказалось лишь первым ответом.
+Не бог.
+Даже не его голос.
+Лишь жест, на который осмелились взглянуть.
+Старые фрагменты предупреждали:
+**первого посланника убивают не для спасения, а для подтверждения, что дальнейший разговор возможен.**
+Хуже всего не тишина после.
+Хуже то, как точно она держится.
+Словно следующий шаг уже ждёт.</ABY_FirstBossKillDesc>
+  <ABY_ReactorSaintKillLabel>Святой пал слишком тихо</ABY_ReactorSaintKillLabel>
+  <ABY_ReactorSaintKillDesc>Он пал слишком тихо.
+Не было ни ярости умирающего чудовища, ни судорожного распада машины. Лишь затухающий свет в разорванных реакторных узлах и ощущение, будто на поле боя умолкло нечто большее, чем просто источник энергии.
+Даже мёртвый, этот святой не казался брошенным.
+Его корпус был собран как сосуд, его движения — как служение, его молчание — как ожидание.
+В последних вспышках не чувствовалось демонического хаоса.
+Только холодная правильность. Чужая, высокая, почти священная.
+Кто-то не просто создал его.
+Кто-то вёл его взгляд до самого конца.
+И если это был лишь послушный носитель,
+то то, что стояло по ту сторону, ещё даже не заговорило.</ABY_ReactorSaintKillDesc>
+  <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
+  <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый вестник фрагмент ядра на высокотехнологичном исследовательском столе, чтобы открыть Вестник-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
+  <ABY_SignalTheoryGuidanceLabel>Открыта теория бездненного сигнала</ABY_SignalTheoryGuidanceLabel>
+  <ABY_SignalTheoryGuidanceDesc>Изучи теорию бездненного сигнала, чтобы начать цикл призыва и открыть первую инфраструктуру Бездны.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_FirstSigilGuidanceLabel>Первая сигила готова</ABY_FirstSigilGuidanceLabel>
+  <ABY_FirstSigilGuidanceDesc>Создай аркхон сигила на Бездненная кузницы, затем активируй его на запитанном круг Бездны призыва, чтобы призвать первого босса.</ABY_FirstSigilGuidanceDesc>
+  <ABY_HeraldAnalysisCompleteLabel>Анализ фрагмента вестника завершён</ABY_HeraldAnalysisCompleteLabel>
+  <ABY_HeraldAnalysisCompleteDesc>Добытый фрагмент успешно расшифрован на высокотехнологичном исследовательском столе. Теперь через вкладку исследований Протокол Бездны доступны {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
+  <ABY_HeraldAnalysisAlreadyKnown>Анализ фрагмента вестника уже завершён. Фрагмент был возвращён.</ABY_HeraldAnalysisAlreadyKnown>
+  <ABY_HeraldAnalysisFailedMissingProject>Не удалось завершить анализ фрагмента вестника: отсутствует нужный исследовательский проект. Фрагмент был возвращён.</ABY_HeraldAnalysisFailedMissingProject>
+  <ABY_CircleFail_NoHostileFaction>Не удалось определить враждебную бездненный-фракцию для этого призыва.</ABY_CircleFail_NoHostileFaction>
+  <ABY_CircleFail_NoBossArrival>Не удалось найти корректную точку прибытия бездненный-босса.</ABY_CircleFail_NoBossArrival>
+  <ABY_CircleFail_NotPlaced>Круг призыва должен быть установлен перед использованием.</ABY_CircleFail_NotPlaced>
+  <ABY_CircleFail_Busy>Круг призыва уже обрабатывает другую активацию.</ABY_CircleFail_Busy>
+  <ABY_CircleFail_NoPower>Круг призыва не запитан.</ABY_CircleFail_NoPower>
+  <ABY_CircleFail_InteractionBlocked>Клетка взаимодействия у круга призыва заблокирована.</ABY_CircleFail_InteractionBlocked>
+  <ABY_CircleFail_FocusBlocked>Область ритуального фокуса заблокирована.</ABY_CircleFail_FocusBlocked>
+  <ABY_CircleInspect_Phase>Фаза: {0} ({1}%)</ABY_CircleInspect_Phase>
+  <ABY_CircleInspect_StalledNoPower>Остановлено: нет питания.</ABY_CircleInspect_StalledNoPower>
+  <ABY_CircleInspect_Ready>Готово к активации.</ABY_CircleInspect_Ready>
+  <ABY_CircleInspect_NotReady>Не готово: {0}</ABY_CircleInspect_NotReady>
+  <ABY_CirclePhase_Idle>ожидание</ABY_CirclePhase_Idle>
+  <ABY_CirclePhase_Charging>зарядка</ABY_CirclePhase_Charging>
+  <ABY_CirclePhase_Surge>всплеск</ABY_CirclePhase_Surge>
+  <ABY_CirclePhase_Breach>прорыв</ABY_CirclePhase_Breach>
+  <ABY_CirclePhase_Cooldown>перезарядка</ABY_CirclePhase_Cooldown>
+  <ABY_SigilActivationStarted>Активация сигила началась.</ABY_SigilActivationStarted>
+  <ABY_SigilPlacementFailed>Сигил не смог найти подходящий круг призыва.</ABY_SigilPlacementFailed>
+  <ABY_CircleTab_Label>консоль</ABY_CircleTab_Label>
+  <ABY_CircleConsoleTitle>консоль призыва</ABY_CircleConsoleTitle>
+  <ABY_CircleConsoleSubtitle>Управление разломом и ритуалом. Подготовь сигил, проверь круг и запусти призыв.</ABY_CircleConsoleSubtitle>
+  <ABY_CircleConsoleSubtitleActive>Ритуал активен. Текущая фаза: {0}.</ABY_CircleConsoleSubtitleActive>
+  <ABY_CircleTab_Subtitle>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_Subtitle>
+  <ABY_CircleTab_Hint>Полная консоль показывает сводку ритуала, готовность и назначение сигила.</ABY_CircleTab_Hint>
+  <ABY_CircleTab_Footer>Круг остаётся опасным триггером. Консоль повышает удобство, но не делает ритуал безопаснее.</ABY_CircleTab_Footer>
+  <ABY_CircleCommand_OpenConsole>Консоль призыва</ABY_CircleCommand_OpenConsole>
+  <ABY_CircleCommand_OpenConsoleDesc>Открыть полную консоль ритуала: готовность, сводка угрозы и назначение сигила.</ABY_CircleCommand_OpenConsoleDesc>
+  <ABY_CircleCommand_AssignSigil>Начать призыв</ABY_CircleCommand_AssignSigil>
+  <ABY_CircleCommand_JumpToSigil>Найти сигил</ABY_CircleCommand_JumpToSigil>
+  <ABY_CircleInspect_Sigils>Сигилов на карте: {0}</ABY_CircleInspect_Sigils>
+  <ABY_CircleInspect_Readiness>Готовность: {0}</ABY_CircleInspect_Readiness>
+  <ABY_CircleInspect_Risk>Риск: {0}</ABY_CircleInspect_Risk>
+  <ABY_CircleStatus_Power>Питание</ABY_CircleStatus_Power>
+  <ABY_CircleStatus_Focus>Фокус</ABY_CircleStatus_Focus>
+  <ABY_CircleStatus_Interaction>Доступ</ABY_CircleStatus_Interaction>
+  <ABY_CircleStatus_Sigils>Сигилы</ABY_CircleStatus_Sigils>
+  <ABY_CircleStatus_Operators>Операторы</ABY_CircleStatus_Operators>
+  <ABY_CircleStatus_Encounter>Столкновение</ABY_CircleStatus_Encounter>
+  <ABY_CircleStatus_Online>в норме</ABY_CircleStatus_Online>
+  <ABY_CircleStatus_Offline>нет</ABY_CircleStatus_Offline>
+  <ABY_CircleStatus_Clear>чисто</ABY_CircleStatus_Clear>
+  <ABY_CircleRisk_Stable>стабильно</ABY_CircleRisk_Stable>
+  <ABY_CircleRisk_Strained>напряжённо</ABY_CircleRisk_Strained>
+  <ABY_CircleRisk_Volatile>нестабильно</ABY_CircleRisk_Volatile>
+  <ABY_CircleRisk_Catastrophic>катастрофично</ABY_CircleRisk_Catastrophic>
+  <ABY_CircleReadinessSummary>{0} / {1} требований выполнено</ABY_CircleReadinessSummary>
+  <ABY_CirclePatternsHeader>Ритуалы</ABY_CirclePatternsHeader>
+  <ABY_CircleControlHeader>Управление</ABY_CircleControlHeader>
+  <ABY_CircleControlState>Текущее состояние разлома</ABY_CircleControlState>
+  <ABY_CircleStatusHeaderLong>Готовность</ABY_CircleStatusHeaderLong>
+  <ABY_CirclePreviewHeader>Сводка ритуала</ABY_CirclePreviewHeader>
+  <ABY_CirclePreviewHost>Вероятная цель призыва: {0}</ABY_CirclePreviewHost>
+  <ABY_CircleRewardsHeader>Награды</ABY_CircleRewardsHeader>
+  <ABY_CircleConsequencesHeader>Риски</ABY_CircleConsequencesHeader>
+  <ABY_CircleReducedEffects>Сниженные эффекты</ABY_CircleReducedEffects>
+  <ABY_GenericEnabled>Включено</ABY_GenericEnabled>
+  <ABY_GenericDisabled>Выключено</ABY_GenericDisabled>
+  <ABY_CircleControlToggles>Тумблеры управления</ABY_CircleControlToggles>
+  <ABY_CircleReducedEffectsDesc>Ослабляет скользящие линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
+  <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
+  <ABY_CircleUnstableBreachLetterLabel>Нестабильный разлом открыт</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл малый враждебный разлом. Из портала выходят разлом бес, а богатые колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleRitual_Unstable_Label>Открыть нестабильный разлом</ABY_CircleRitual_Unstable_Label>
+  <ABY_CircleRitual_Unstable_Subtitle>Тренировка до первого босса</ABY_CircleRitual_Unstable_Subtitle>
+  <ABY_CircleRitual_Unstable_Desc>Тратит одну сигилу нестабильного разлома и открывает малый враждебный рифт. Это раннее столкновение до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
+  <ABY_CircleRitual_Unstable_Rewards>• Ранняя репетиция враждебного призыва
+• Меньшее давление разлома до первого босса
+• Более плавный мост между кругом и боем с Зверь-Архонт</ABY_CircleRitual_Unstable_Rewards>
+  <ABY_CircleRitual_Unstable_SideEffects>• Спавнит враждебный разлом разлом бес, связанный с кругом
+• Пока разлом активен, он считается текущим бездненные столкновениям
+• Угроза ниже, чем у Зверь-Архонт, но всё ещё давит неподготовленную колонию</ABY_CircleRitual_Unstable_SideEffects>
+  <ABY_CircleRitual_Archon_Label>Призвать Зверя-Архонта</ABY_CircleRitual_Archon_Label>
+  <ABY_CircleRitual_Archon_Subtitle>Шаблон первого босса</ABY_CircleRitual_Archon_Subtitle>
+  <ABY_CircleRitual_Archon_Desc>Расходует один подготовленный аркхон сигила, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
+  <ABY_CircleRitual_Archon_Rewards>• Осколок Короны и сигила Архонта
+• Ранний бездненный лут и доступ к материалам босса</ABY_CircleRitual_Archon_Rewards>
+  <ABY_CircleRitual_Archon_SideEffects>• Открывает враждебный разлом на текущей карте
+• Требует питания и свободного центра круга
+• Фазы ритуала усиливают визуал, звук и давление столкновения</ABY_CircleRitual_Archon_SideEffects>
+  <ABY_CircleRitualMeta>Сигилов на карте: {0}   •   Бюджет угрозы: {1}</ABY_CircleRitualMeta>
+  <ABY_CircleRitualMetaScaled>Сигилов на карте: {0}   •   {1}   •   Прогноз: {2}</ABY_CircleRitualMetaScaled>
+  <ABY_CircleThreatTier>Т{0}</ABY_CircleThreatTier>
+  <ABY_CirclePreview_Imp_Singular>имп</ABY_CirclePreview_Imp_Singular>
+  <ABY_CirclePreview_Imp_Plural>импа</ABY_CirclePreview_Imp_Plural>
+  <ABY_CirclePreview_Hound_Singular>гончая</ABY_CirclePreview_Hound_Singular>
+  <ABY_CirclePreview_Hound_Plural>гончие</ABY_CirclePreview_Hound_Plural>
+  <ABY_CirclePreview_Thrall_Singular>трэлл</ABY_CirclePreview_Thrall_Singular>
+  <ABY_CirclePreview_Thrall_Plural>трэлла</ABY_CirclePreview_Thrall_Plural>
+  <ABY_CirclePreview_Zealot_Singular>фанатик</ABY_CirclePreview_Zealot_Singular>
+  <ABY_CirclePreview_Zealot_Plural>фанатика</ABY_CirclePreview_Zealot_Plural>
+  <ABY_CirclePreview_None>без противников</ABY_CirclePreview_None>
+  <ABY_CircleFail_LegacySigilRetired>Устаревшие сигила гексган-ретрансляторас выведены из активной Т1-прогрессии.</ABY_CircleFail_LegacySigilRetired>
+  <ABY_LegacySigilMigration_Message>Преобразовано устаревших сигил гексган-ретранслятора в сигилы угольной гончей: {0}.</ABY_LegacySigilMigration_Message>
+  <ABY_CircleSelect>Выбрать</ABY_CircleSelect>
+  <ABY_CircleSelected>Выбрано</ABY_CircleSelected>
+  <ABY_CircleConfirmInvocation>Назначить подготовленный сигил и приказать колонисту начать {0}? Это запустит враждебную последовательность разлома.</ABY_CircleConfirmInvocation>
+  <ABY_CircleAssignStarted>Последовательность призыва назначена. Колонист несёт сигил к кругу.</ABY_CircleAssignStarted>
+  <ABY_CircleConsoleFail_NoCircle>Для управления через консоль нет подходящего круга призыва.</ABY_CircleConsoleFail_NoCircle>
+  <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одного подготовленного аркхон сигила.</ABY_CircleConsoleFail_NoSigil>
+  <ABY_CircleConsoleFail_NoSpecificSigil>На текущей карте не найден подготовленный предмет: {0}.</ABY_CircleConsoleFail_NoSpecificSigil>
+  <ABY_CircleConsoleFail_NoSigilFallback>подготовленный сигила</ABY_CircleConsoleFail_NoSigilFallback>
+  <ABY_CircleConsoleFail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил к кругу.</ABY_CircleConsoleFail_NoOperator>
+  <ABY_CircleConsoleFail_JobStart>Не удалось запустить приказ на призыв.</ABY_CircleConsoleFail_JobStart>
+  <ABY_CircleTab_SubtitleShort>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_SubtitleShort>
+  <ABY_CircleTab_FooterShort>Полная консоль показывает сводку ритуала и назначение сигила.</ABY_CircleTab_FooterShort>
+  <ABY_CircleReducedEffectsOn>Эффекты: снижены</ABY_CircleReducedEffectsOn>
+  <ABY_CircleReducedEffectsOff>Эффекты: полные</ABY_CircleReducedEffectsOff>
+  <ABY_CircleFail_NoArrivalCell>Не удалось найти допустимую клетку прибытия для этого проявления Бездны.</ABY_CircleFail_NoArrivalCell>
+  <ABY_CircleVentFail_NoCircle>Нет доступного круга призыва для сброса загрязнения.</ABY_CircleVentFail_NoCircle>
+  <ABY_CircleVentFail_Busy>Круг призыва занят и не может сбросить загрязнение прямо сейчас.</ABY_CircleVentFail_Busy>
+  <ABY_CircleVentFail_LowContamination>Остаточное загрязнение слишком низкое для сброса.</ABY_CircleVentFail_LowContamination>
+  <ABY_CircleVentFail_Cooldown>Сброс загрязнения ещё перезаряжается: {0}.</ABY_CircleVentFail_Cooldown>
+</LanguageData>

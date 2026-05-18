@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_IncidentBreachLeakLetterLabel>Утечка разлома</ABY_IncidentBreachLeakLetterLabel>
+  <ABY_IncidentBreachLeakLetterText_ImpsOnly>Бездна дестабилизировала пространство вокруг круга призыва. На карте открыто порталов: {0}. Через разрывы прорывается примерно {1} рифт-импов.</ABY_IncidentBreachLeakLetterText_ImpsOnly>
+  <ABY_IncidentBreachLeakLetterText_WithHounds>Бездна дестабилизировала пространство вокруг круга призыва. На карте открыто порталов: {0}. Через разрывы прорывается примерно {1} рифт-импов, а следом ломятся {2} угольных гончих.</ABY_IncidentBreachLeakLetterText_WithHounds>
+</LanguageData>
