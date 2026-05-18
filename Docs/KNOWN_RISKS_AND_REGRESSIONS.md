@@ -83,7 +83,8 @@ Actual code and assets win over this document.
 | Static UI with large occupied area | P2 | Summoning circle UI/Protocol Nexus | Looks pretty but functionally weak | Add meaningful state, preview, requirement, and selection feedback. |
 | Long text without wrapping/control | P2 | UI | Overflows/cuts in localized strings | Use wrapped text and constrained card layouts. |
 | Too much animation/motion | P2 | UI/VFX | Distracting or unreadable | Use restrained animation; keep state/action readable. |
-| Forge communion/attunement bars regress to generic or noisy styling | P3 | Forge UI | Important state bars either look out of place or become harder to read | Keep the procedural industrial segmented gauge style: dark trough, visible black segment gaps, restrained brass/ember framing, centered labels on a dark readable capsule, subtle animation only. |
+| Forge communion/attunement bars regress to generic or noisy styling | P3 | Forge UI | Important state bars either look out of place or become harder to read | Keep the procedural industrial segmented gauge style: dark trough, visible black segment gaps, restrained brass/ember framing, centered labels on a dark readable capsule, subtle animation only. Do not use `rect.ContractedBy(12f)` for labels inside 20–24px bars because it collapses label height. |
+| Forge Pattern records / Next milestones clipped wrapping | P2 | Forge UI | `Next pattern` or blocker lines lose their second line or overlap following rows | Use wrapped height with padding for Tiny text and advance Y from measured height; avoid hardcoded 22px rows for wrapped milestone/upcoming pattern labels. |
 
 ## Boss bar risks
 

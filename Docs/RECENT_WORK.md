@@ -26,7 +26,9 @@ Communion/unlock progress -> ember-toned segmented industrial gauge
 Attunement progress       -> pale-gold segmented industrial gauge
 ```
 
-This is still procedural C# UI, not texture-driven. Keep the bars readable first: centered labels on a dark capsule, restrained glow, a dark trough, visible black gaps between segments, and brass/ember framing. Avoid flat full-width orange fills, noisy fantasy rune bars, or oversized animated effects. The compact Forge bills tab attunement bar should visually match the main Forge console.
+This is still procedural C# UI, not texture-driven. Keep the bars readable first: centered labels on a dark capsule that does **not** shrink vertically inside 20–24px bars, restrained glow, a dark trough, visible black gaps between segments, and brass/ember framing. Avoid flat full-width orange fills, noisy fantasy rune bars, oversized animated effects, or putting long labels directly on the segmented fill without a readable text backing. The compact Forge bills tab attunement bar should visually match the main Forge console.
+
+Recent Forge regression fix: the `Pattern records` / `Next milestones` block must use wrapped height with extra padding for milestone lines and upcoming pattern lines. Do not hardcode 22px rows for wrapped Tiny text; it causes second lines to be clipped at common UI scales.
 
 
 This document is a compact working-memory ledger for future AI-assisted development.

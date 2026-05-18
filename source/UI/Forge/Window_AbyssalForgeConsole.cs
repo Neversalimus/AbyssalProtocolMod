@@ -322,42 +322,58 @@ namespace AbyssalProtocol
 
             List<AbyssalForgeProgressUtility.MilestoneEntry> milestones = AbyssalForgeProgressUtility.GetMilestoneEntries(progress, selectedCategory);
             float leftWidth = inner.width * 0.58f;
+            float gutter = 18f;
+            Rect leftRect = new Rect(inner.x, inner.y + 30f, leftWidth, inner.height - 30f);
+            Rect rightRect = new Rect(inner.x + leftWidth + gutter, inner.y + 28f, inner.width - leftWidth - gutter, inner.height - 28f);
+
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 30f, leftWidth, 20f), "ABY_ForgeMilestonesHeader".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(leftRect.x, leftRect.y, leftRect.width, 22f), "ABY_ForgeMilestonesHeader".Translate());
             GUI.color = Color.white;
 
-            float lineY = inner.y + 54f;
+            GameFont oldFont = Text.Font;
+            Text.Font = GameFont.Tiny;
+            float lineY = leftRect.y + 28f;
             for (int i = 0; i < milestones.Count; i++)
             {
                 AbyssalForgeProgressUtility.MilestoneEntry entry = milestones[i];
+                string milestoneLine = entry.label + ": " + entry.value;
+                float height = ABY_UIPolishUtility.WrappedHeight(milestoneLine, leftRect.width, GameFont.Tiny, 24f, 10f);
+                if (lineY + height > leftRect.yMax - 2f)
+                {
+                    break;
+                }
+
                 GUI.color = entry.satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : Color.white;
-                Text.Font = GameFont.Tiny;
-                float height = Text.CalcHeight(entry.label + ": " + entry.value, leftWidth);
-                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, lineY, leftWidth, height), entry.label + ": " + entry.value);
+                ABY_UIPolishUtility.SafeLabel(new Rect(leftRect.x, lineY, leftRect.width, height), milestoneLine, 0f, 3f);
                 lineY += height + 8f;
             }
-            Text.Font = GameFont.Small;
+            Text.Font = oldFont;
             GUI.color = Color.white;
 
-            Rect rightRect = new Rect(inner.x + leftWidth + 18f, inner.y + 28f, inner.width - leftWidth - 18f, inner.height - 28f);
             string categoryLabel = AbyssalForgeProgressUtility.GetCategoryLabel(selectedCategory);
             List<RecipeDef> unlocked = progress.GetUnlockedRecipes(selectedCategory);
             List<RecipeDef> lockedAll = progress.GetLockedRecipes(selectedCategory);
             string summary = "ABY_ForgeUnlockedSummary".Translate(unlocked.Count, unlocked.Count + lockedAll.Count, categoryLabel);
 
-            Rect summaryRect = new Rect(rightRect.x, rightRect.y, rightRect.width, 52f);
-            ABY_UIPolishUtility.SafeLabel(summaryRect, summary);
+            Text.Font = GameFont.Small;
+            float summaryHeight = ABY_UIPolishUtility.WrappedHeight(summary, rightRect.width, GameFont.Small, 48f, 8f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y, rightRect.width, summaryHeight), summary, 0f, 3f);
 
+            float rightY = rightRect.y + summaryHeight + 8f;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 58f, rightRect.width, 18f), "ABY_ForgeUpcomingPatterns".Translate());
+            ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightY, rightRect.width, 22f), "ABY_ForgeUpcomingPatterns".Translate(), 0f, 3f);
             GUI.color = Color.white;
+            rightY += 24f;
 
             List<RecipeDef> locked = progress.GetLockedRecipes(selectedCategory).Take(2).ToList();
             Text.Font = GameFont.Tiny;
             if (locked.Count == 0)
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 76f, rightRect.width, 34f), "ABY_ForgeAllPatternsUnlocked".Translate());
+                string doneLine = "ABY_ForgeAllPatternsUnlocked".Translate();
+                float doneHeight = ABY_UIPolishUtility.WrappedHeight(doneLine, rightRect.width, GameFont.Tiny, 28f, 8f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightY, rightRect.width, doneHeight), doneLine, 0f, 3f);
+                rightY += doneHeight + 4f;
             }
             else
             {
@@ -365,7 +381,14 @@ namespace AbyssalProtocol
                 {
                     RecipeDef recipe = locked[i];
                     string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe);
-                    ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
+                    float height = ABY_UIPolishUtility.WrappedHeight(line, rightRect.width, GameFont.Tiny, 24f, 8f);
+                    if (rightY + height > rightRect.yMax - 30f)
+                    {
+                        break;
+                    }
+
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightY, rightRect.width, height), line, 0f, 3f);
+                    rightY += height + 4f;
                 }
             }
 
@@ -374,7 +397,8 @@ namespace AbyssalProtocol
 
             bool reduced = progress.ReducedVisualEffects;
             bool newReduced = reduced;
-            Rect checkboxRect = new Rect(rightRect.x, rightRect.y + 126f, Mathf.Min(220f, rightRect.width), 24f);
+            float checkboxY = Mathf.Min(rightRect.yMax - 26f, Mathf.Max(rightY + 8f, rightRect.y + 126f));
+            Rect checkboxRect = new Rect(rightRect.x, checkboxY, Mathf.Min(220f, rightRect.width), 24f);
             Widgets.CheckboxLabeled(checkboxRect, "ABY_ForgeReducedEffectsToggle".Translate(), ref newReduced, false, null, null, false);
             if (newReduced != reduced)
             {
