@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalBastionChassis.label>бастионный корпус Бездны</ABY_AbyssalBastionChassis.label>
   <ABY_AbyssalBastionChassis.description>Средний сигильно-связанный турельный корпус 2кс2. Сам по себе инертен и становится оружием только после установки кузница-модулей через вкладку модулей.</ABY_AbyssalBastionChassis.description>
-  <ABY_TurretModule_RiftNeedlerCore.label>ядро рифтового игломёта</ABY_TurretModule_RiftNeedlerCore.label>
+  <ABY_TurretModule_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TurretModule_RiftNeedlerCore.label>
   <ABY_TurretModule_RiftNeedlerCore.description>Слот: основное оружие.
 Совместимый корпус: средний.
 Роль: устойчивый огонь против лёгких целей.
@@ -22,7 +22,7 @@
 Очередь: 1.
 Доп. энергопотребление модуля: +120 В.
 Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_PlasmaLanceCore.description>
-  <ABY_TurretModule_ChoirArcEmitter.label>хоровой дуговой эмиттер</ABY_TurretModule_ChoirArcEmitter.label>
+  <ABY_TurretModule_ChoirArcEmitter.label>дуговой излучатель Хора</ABY_TurretModule_ChoirArcEmitter.label>
   <ABY_TurretModule_ChoirArcEmitter.description>Слот: вспомогательный.
 Совместимый корпус: средний.
 Роль: вторичное давление по толпе.
@@ -40,7 +40,7 @@
 Перезарядка основного оружия: -16%.
 Доп. энергопотребление модуля: +70 В.
 Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_CoolingLattice.description>
-  <ABY_TurretModule_TargetingSigil.label>прицельная сигила</ABY_TurretModule_TargetingSigil.label>
+  <ABY_TurretModule_TargetingSigil.label>сигила наведения</ABY_TurretModule_TargetingSigil.label>
   <ABY_TurretModule_TargetingSigil.description>Слот: пассивный.
 Совместимый корпус: средний.
 Роль: дальность и сопровождение цели.
@@ -48,7 +48,7 @@
 Дальность основного оружия: +3.5 клетки.
 Доп. энергопотребление модуля: +80 В.
 Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_TargetingSigil.description>
-  <ABY_TurretModule_ResidueCapacitor.label>остаточный конденсатор</ABY_TurretModule_ResidueCapacitor.label>
+  <ABY_TurretModule_ResidueCapacitor.label>конденсатор остатка</ABY_TurretModule_ResidueCapacitor.label>
   <ABY_TurretModule_ResidueCapacitor.description>Слот: пассивный.
 Совместимый корпус: средний.
 Роль: буфер заряда.

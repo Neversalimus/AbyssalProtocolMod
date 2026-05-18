@@ -1,22 +1,18 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_ReclaimUnstableBreachSigil.label>переработать нестабильную сигилу разлома</ABY_ReclaimUnstableBreachSigil.label>
+  <ABY_ReclaimUnstableBreachSigil.label>переработать сигилу пробоя</ABY_ReclaimUnstableBreachSigil.label>
   <ABY_ReclaimUnstableBreachSigil.description>Расколоть грубый ключ разлома и вернуть небольшое количество инертного безднического остатка. Процесс намеренно убыточен: тигель спасает пригодный пепел, а не всю ритуальную стоимость.</ABY_ReclaimUnstableBreachSigil.description>
   <ABY_ReclaimUnstableBreachSigil.jobString>Перерабатывает нестабильную сигилу разлома.</ABY_ReclaimUnstableBreachSigil.jobString>
-
   <ABY_ReclaimWardenOfAshSigil.label>переработать сигилу надзирателя</ABY_ReclaimWardenOfAshSigil.label>
   <ABY_ReclaimWardenOfAshSigil.description>Разобрать пепельный знак уровня надзирателя на пригодный к возврату остаток. Тигель сохраняет лишь часть связывающей массы, полностью разрушая командную геометрию.</ABY_ReclaimWardenOfAshSigil.description>
   <ABY_ReclaimWardenOfAshSigil.jobString>Перерабатывает сигилу надзирателя.</ABY_ReclaimWardenOfAshSigil.jobString>
-
   <ABY_ReclaimArchonSigil.label>переработать сигилу архонта</ABY_ReclaimArchonSigil.label>
   <ABY_ReclaimArchonSigil.description>Схлопнуть ключ разлома архонт-уровня и вернуть часть его стабильного ядра остатка. Процесс полностью уничтожает схему призыва босса.</ABY_ReclaimArchonSigil.description>
   <ABY_ReclaimArchonSigil.jobString>Перерабатывает сигилу архонта.</ABY_ReclaimArchonSigil.jobString>
-
   <ABY_ReclaimHordeFragment.label>переработать фрагмент орды</ABY_ReclaimHordeFragment.label>
   <ABY_ReclaimHordeFragment.description>Продавить уплотнённую боевую решётку орды через спекающую камеру и вернуть большой, но стратегически невыгодный запас остатка.</ABY_ReclaimHordeFragment.description>
   <ABY_ReclaimHordeFragment.jobString>Перерабатывает фрагмент орды.</ABY_ReclaimHordeFragment.jobString>
-
-  <ABY_SinterAbyssalRemains.label>спечь безднические останки</ABY_SinterAbyssalRemains.label>
+  <ABY_SinterAbyssalRemains.label>спечь останки Бездны</ABY_SinterAbyssalRemains.label>
   <ABY_SinterAbyssalRemains.description>Сжечь безопасный не-боссовый труп Бездны до стабильного остатка. Тигель отклоняет обычные трупы, человеческие останки, мини-боссов и тела босс-класса, чтобы нельзя было обойти цепочку наград.</ABY_SinterAbyssalRemains.description>
   <ABY_SinterAbyssalRemains.jobString>Спекает безднические останки.</ABY_SinterAbyssalRemains.jobString>
 </LanguageData>

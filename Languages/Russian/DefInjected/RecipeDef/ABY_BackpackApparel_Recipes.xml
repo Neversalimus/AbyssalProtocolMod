@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_CraftAshboundFieldPack.label>выковать полевой ранец пепельной грани</ABY_CraftAshboundFieldPack.label>
+  <ABY_CraftAshboundFieldPack.label>выковать пепельный ранец</ABY_CraftAshboundFieldPack.label>
   <ABY_CraftAshboundFieldPack.description>Собрать компактный полевой ранец из стальных усилителей, остаток-канистр и сдержанной упряжной рамы.</ABY_CraftAshboundFieldPack.description>
   <ABY_CraftAshboundFieldPack.jobString>Ковка ранца пепельной грани.</ABY_CraftAshboundFieldPack.jobString>
-  <ABY_CraftRiftRelayPack.label>выковать релейный ранец разлома</ABY_CraftRiftRelayPack.label>
+  <ABY_CraftRiftRelayPack.label>выковать рифт-ранец</ABY_CraftRiftRelayPack.label>
   <ABY_CraftRiftRelayPack.description>Выковать ранец релейного класса вокруг компактного проводника разлома и усиленной грузовой рамы.</ABY_CraftRiftRelayPack.description>
   <ABY_CraftRiftRelayPack.jobString>Ковка релейного ранца разлома.</ABY_CraftRiftRelayPack.jobString>
-  <ABY_CraftCrownConduitPack.label>выковать коронный проводниковый ранец</ABY_CraftCrownConduitPack.label>
+  <ABY_CraftCrownConduitPack.label>выковать коронный ранец</ABY_CraftCrownConduitPack.label>
   <ABY_CraftCrownConduitPack.description>Сконструировать ранец коронного тира вокруг фрагмента коронного ядра, бронированного релейного хребта и поздней канистровой решётки.</ABY_CraftCrownConduitPack.description>
   <ABY_CraftCrownConduitPack.jobString>Ковка коронного проводникового ранца.</ABY_CraftCrownConduitPack.jobString>
 </LanguageData>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalSignalTheory.label>теория бездненного сигнала</ABY_AbyssalSignalTheory.label>
-  <ABY_AshboundCapacitance.label>пеплосвязанная ёмкость</ABY_AshboundCapacitance.label>
+  <ABY_AshboundCapacitance.label>пепельная ёмкость</ABY_AshboundCapacitance.label>
   <ABY_CircleStabilizerFrames.label>каркасы стабилизаторов круга</ABY_CircleStabilizerFrames.label>
   <ABY_CrownCondensationArrays.label>коронные массивы конденсации</ABY_CrownCondensationArrays.label>
   <ABY_CrownContainmentArchitecture.label>архитектура коронного удержания</ABY_CrownContainmentArchitecture.label>
-  <ABY_DominionGateBootstrapping.label>запуск врат доминиона</ABY_DominionGateBootstrapping.label>
+  <ABY_DominionGateBootstrapping.label>начальная развёртка врат Доминиона</ABY_DominionGateBootstrapping.label>
   <ABY_ResonantLatticeStabilization.label>стабилизация резонансной решётки</ABY_ResonantLatticeStabilization.label>
-  <ABY_RiftCapacitanceMatrices.label>разломные матрицы ёмкости</ABY_RiftCapacitanceMatrices.label>
+  <ABY_RiftCapacitanceMatrices.label>рифт-ёмкостные матрицы</ABY_RiftCapacitanceMatrices.label>
 </LanguageData>

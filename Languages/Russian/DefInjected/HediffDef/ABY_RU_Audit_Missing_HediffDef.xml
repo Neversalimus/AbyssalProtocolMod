@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalAttunement.label>бездненная настройка</ABY_AbyssalAttunement.label>
   <ABY_AbyssalHarpoonTether.description>Бездненное состояние: бездненная привязь. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_AbyssalHarpoonTether.description>
@@ -11,7 +11,7 @@
   <ABY_ArchonCore.label>ядро архонта</ABY_ArchonCore.label>
   <ABY_ArchonOverrideFeedback.label>послеобраз перехвата архонта</ABY_ArchonOverrideFeedback.label>
   <ABY_ArchonOverrideSurge.label>перехват архонта</ABY_ArchonOverrideSurge.label>
-  <ABY_ArchonTendonSpine_Implant.label>сухожильный хребет архонта</ABY_ArchonTendonSpine_Implant.label>
+  <ABY_ArchonTendonSpine_Implant.label>сухожильный позвоночник архонта</ABY_ArchonTendonSpine_Implant.label>
   <ABY_ChainSnared.description>Бездненное состояние: скован цепью. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_ChainSnared.description>
   <ABY_ChainSnared.label>скован цепью</ABY_ChainSnared.label>
   <ABY_ChoirResonance.description>Бездненное состояние: хоровой резонанс. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_ChoirResonance.description>
@@ -19,24 +19,24 @@
   <ABY_CrownCortexSubnode_Implant.description>Бездненное состояние: подузел коронной коры. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_CrownCortexSubnode_Implant.description>
   <ABY_CrownCortexSubnode_Implant.label>подузел коронной коры</ABY_CrownCortexSubnode_Implant.label>
   <ABY_DifficultyScaling_Assault.description>Бездненное состояние: штурмовой протокол эскалация. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DifficultyScaling_Assault.description>
-  <ABY_DifficultyScaling_Assault.label>штурмовой протокол эскалация</ABY_DifficultyScaling_Assault.label>
+  <ABY_DifficultyScaling_Assault.label>штурмовая эскалация протокола</ABY_DifficultyScaling_Assault.label>
   <ABY_DifficultyScaling_Boss.description>Бездненное состояние: босс протокол эскалация. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DifficultyScaling_Boss.description>
-  <ABY_DifficultyScaling_Boss.label>босс протокол эскалация</ABY_DifficultyScaling_Boss.label>
+  <ABY_DifficultyScaling_Boss.label>боссовая эскалация протокола</ABY_DifficultyScaling_Boss.label>
   <ABY_DifficultyScaling_Elite.description>Бездненное состояние: элитный протокол эскалация. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DifficultyScaling_Elite.description>
-  <ABY_DifficultyScaling_Elite.label>элитный протокол эскалация</ABY_DifficultyScaling_Elite.label>
+  <ABY_DifficultyScaling_Elite.label>элитная эскалация протокола</ABY_DifficultyScaling_Elite.label>
   <ABY_DifficultyScaling_Support.description>Бездненное состояние: поддержка протокол эскалация. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DifficultyScaling_Support.description>
-  <ABY_DifficultyScaling_Support.label>поддержка протокол эскалация</ABY_DifficultyScaling_Support.label>
-  <ABY_DominionPulseHeart_Implant.description>Бездненное состояние: пульс-сердце доминиона. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DominionPulseHeart_Implant.description>
-  <ABY_DominionPulseHeart_Implant.label>пульс-сердце доминиона</ABY_DominionPulseHeart_Implant.label>
+  <ABY_DifficultyScaling_Support.label>эскалация протокола поддержки</ABY_DifficultyScaling_Support.label>
+  <ABY_DominionPulseHeart_Implant.description>Бездненное состояние: пульс-сердце Доминиона. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_DominionPulseHeart_Implant.description>
+  <ABY_DominionPulseHeart_Implant.label>пульсирующее сердце Доминиона</ABY_DominionPulseHeart_Implant.label>
   <ABY_EmberShock.label>угольный шок</ABY_EmberShock.label>
   <ABY_GateWardenBashed.description>Бездненное состояние: щит ударенный. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_GateWardenBashed.description>
-  <ABY_GateWardenBashed.label>щит ударенный</ABY_GateWardenBashed.label>
+  <ABY_GateWardenBashed.label>удар по щиту</ABY_GateWardenBashed.label>
   <ABY_GateWardenBrace.description>Бездненное состояние: упор стойка. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_GateWardenBrace.description>
-  <ABY_GateWardenBrace.label>упор стойка</ABY_GateWardenBrace.label>
+  <ABY_GateWardenBrace.label>стойка упора</ABY_GateWardenBrace.label>
   <ABY_GateWardenRush.description>Бездненное состояние: перехват рывок. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_GateWardenRush.description>
-  <ABY_GateWardenRush.label>перехват рывок</ABY_GateWardenRush.label>
+  <ABY_GateWardenRush.label>рывковый перехват</ABY_GateWardenRush.label>
   <ABY_HarvesterEssenceSurge.description>Бездненное состояние: собранный эссенция. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_HarvesterEssenceSurge.description>
-  <ABY_HarvesterEssenceSurge.label>собранный эссенция</ABY_HarvesterEssenceSurge.label>
+  <ABY_HarvesterEssenceSurge.label>собранная эссенция</ABY_HarvesterEssenceSurge.label>
   <ABY_HeraldCarapaceMesh_Implant.label>панцирная сеть вестника</ABY_HeraldCarapaceMesh_Implant.label>
   <ABY_HeraldEye_Implant.label>глаз вестника</ABY_HeraldEye_Implant.label>
   <ABY_HexMark.label>гекс-метка</ABY_HexMark.label>
@@ -50,14 +50,14 @@
   <ABY_NullPriestWard.label>нулевой оберег</ABY_NullPriestWard.label>
   <ABY_NullbrandFracture.description>Бездненное состояние: разлом нулевой метки. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_NullbrandFracture.description>
   <ABY_NullbrandFracture.label>разлом нулевой метки</ABY_NullbrandFracture.label>
-  <ABY_RiftArmorMelt.label>разломное плавление брони</ABY_RiftArmorMelt.label>
+  <ABY_RiftArmorMelt.label>рифт-плавление брони</ABY_RiftArmorMelt.label>
   <ABY_RiftDazzled.description>Бездненное состояние: ослепление разломом. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_RiftDazzled.description>
   <ABY_RiftDazzled.label>ослепление разломом</ABY_RiftDazzled.label>
-  <ABY_RuptureCarapace.label>разрыв панцирь</ABY_RuptureCarapace.label>
-  <ABY_RuptureCore.label>разрыв ядро</ABY_RuptureCore.label>
-  <ABY_RuptureCrownBearer.label>связь короны разрыва</ABY_RuptureCrownBearer.label>
+  <ABY_RuptureCarapace.label>панцирь Разрыва</ABY_RuptureCarapace.label>
+  <ABY_RuptureCore.label>ядро Разрыва</ABY_RuptureCore.label>
+  <ABY_RuptureCrownBearer.label>носитель Короны Разрыва</ABY_RuptureCrownBearer.label>
   <ABY_RuptureSentenceMark.label>приговор разрыва</ABY_RuptureSentenceMark.label>
   <ABY_UltraPlasmaDestabilization.label>плазменная дестабилизация</ABY_UltraPlasmaDestabilization.label>
   <ABY_VerdictTendonSpine_Implant.description>Бездненное состояние: сухожильный хребет приговора. Отражает воздействие ритуально-индустриальной технологии, разлома или доменной силы на тело и бой.</ABY_VerdictTendonSpine_Implant.description>
-  <ABY_VerdictTendonSpine_Implant.label>сухожильный хребет приговора</ABY_VerdictTendonSpine_Implant.label>
+  <ABY_VerdictTendonSpine_Implant.label>сухожильный позвоночник Вердикта</ABY_VerdictTendonSpine_Implant.label>
 </LanguageData>

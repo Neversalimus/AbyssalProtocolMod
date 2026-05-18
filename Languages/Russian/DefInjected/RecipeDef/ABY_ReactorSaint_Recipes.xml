@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_CraftReactorSaintSigil.label>создать сигилу святого реактора</ABY_CraftReactorSaintSigil.label>
+  <ABY_CraftReactorSaintSigil.label>создать сигилу Реакторного Святого</ABY_CraftReactorSaintSigil.label>
   <ABY_CraftReactorSaintSigil.description>Сжимает вестнические фрагменты, остаток, пласталь и космические компоненты в святого-класса сигилу-пропуск. Это первый настоящий шаг дальше стартового босс-срез: более тяжёлый прорыв, завязанный на артиллерийское давление, фазовый щит и длительное управление реакторным коллапсом.</ABY_CraftReactorSaintSigil.description>
-  <ABY_CraftReactorSaintSigil.jobString>Создание сигилы святого реактора.</ABY_CraftReactorSaintSigil.jobString>
+  <ABY_CraftReactorSaintSigil.jobString>Создание сигилы реактора святого.</ABY_CraftReactorSaintSigil.jobString>
 </LanguageData>

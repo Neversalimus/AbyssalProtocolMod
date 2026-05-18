@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <ABY_InstallAshenLiverLattice.label>установить пепельную печёночную решётку</ABY_InstallAshenLiverLattice.label>
+  <ABY_InstallAshenLiverLattice.label>установить печёночную решётку</ABY_InstallAshenLiverLattice.label>
   <ABY_InstallAshenLiverLattice.description>Установить пепельную печёночную решётку.</ABY_InstallAshenLiverLattice.description>
   <ABY_InstallAshenLiverLattice.jobString>Установка пепельной печёночной решётки.</ABY_InstallAshenLiverLattice.jobString>
-
-  <ABY_InstallCinderMandibleSeal.label>установить угольную мандибулярную печать</ABY_InstallCinderMandibleSeal.label>
+  <ABY_InstallCinderMandibleSeal.label>установить челюстную печать</ABY_InstallCinderMandibleSeal.label>
   <ABY_InstallCinderMandibleSeal.description>Установить угольную мандибулярную печать.</ABY_InstallCinderMandibleSeal.description>
   <ABY_InstallCinderMandibleSeal.jobString>Установка угольной мандибулярной печати.</ABY_InstallCinderMandibleSeal.jobString>
-
-  <ABY_InstallEmberLungArray.label>установить тлеющий лёгочный массив</ABY_InstallEmberLungArray.label>
+  <ABY_InstallEmberLungArray.label>установить угольный лёгочный массив</ABY_InstallEmberLungArray.label>
   <ABY_InstallEmberLungArray.description>Установить тлеющий лёгочный массив.</ABY_InstallEmberLungArray.description>
   <ABY_InstallEmberLungArray.jobString>Установка тлеющего лёгочного массива.</ABY_InstallEmberLungArray.jobString>
-
   <ABY_InstallAshenAnchorNode.label>установить пепельный якорный узел</ABY_InstallAshenAnchorNode.label>
   <ABY_InstallAshenAnchorNode.description>Установить пепельный якорный узел.</ABY_InstallAshenAnchorNode.description>
   <ABY_InstallAshenAnchorNode.jobString>Установка пепельного якорного узла.</ABY_InstallAshenAnchorNode.jobString>

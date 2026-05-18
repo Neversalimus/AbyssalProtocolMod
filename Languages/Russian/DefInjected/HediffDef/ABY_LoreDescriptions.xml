@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalAttunement.description>Картографический резонанс, возникающий после долгого единения с решёткой кузницы. Чем больше остаток безвозвратно отдаётся системе, тем меньше колония просто пользуется Бездной и тем больше тихо синхронизируется с ней.</ABY_AbyssalAttunement.description>
   <ABY_ArchonCarapace.description>Слоистые бездненный-пластины, распределяющие удар, жар и нагрузку по всему корпусу боевого зверя. Это броня как распределённая враждебная инженерия, а не просто защита.</ABY_ArchonCarapace.description>
@@ -15,5 +15,5 @@
   <ABY_RuptureCore.description>Коронный реактор, обёрнутый вокруг дисциплинированной нуль-сингулярности. Он даёт неестественную живучесть, потому что носитель сражается уже не как одно тело, а как локальный процесс разрыва.</ABY_RuptureCore.description>
   <ABY_RuptureCrownBearer.description>Носитель связан с Корона Разрыва и признан фрагментом враждебной власти. Это усиление лишь до тех пор, пока не задумываться, какая именно иерархия обратила на него внимание.</ABY_RuptureCrownBearer.description>
   <ABY_RuptureSentenceMark.description>Казнящая метка, наложенная коронной логикой. Движение, ритм брони и предсказание деградируют, потому что цель уже частично переведена в статус решённой задачи.</ABY_RuptureSentenceMark.description>
-  <ABY_UltraPlasmaDestabilization.description>Остатки ультра-плазмы всё ещё реагируют внутри тела. Цель страдает не только от жара: часть попадания вела себя скорее как сжатая телеметрия разлома, чем как обычный огонь.</ABY_UltraPlasmaDestabilization.description>
+  <ABY_UltraPlasmaDestabilization.description>Остатки ультраплазмы всё ещё реагируют внутри тела. Цель страдает не только от жара: часть попадания вела себя скорее как сжатая телеметрия разлома, чем как обычный огонь.</ABY_UltraPlasmaDestabilization.description>
 </LanguageData>

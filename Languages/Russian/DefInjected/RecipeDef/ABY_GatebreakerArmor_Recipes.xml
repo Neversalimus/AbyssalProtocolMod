@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_CraftGatebreakerCarapace.label>выковать панцирь взломщика врат</ABY_CraftGatebreakerCarapace.label>
-  <ABY_CraftGatebreakerCarapace.description>Пересобрать святую сердцевинную оболочку в чёрный бездновый штурмовой панцирь, предназначенный не для прошлой битвы, а для следующих врат. Этот паттерн жертвует геометрией реакторного останка ради более тяжёлой противопрорывной брони и откровенно враждебного боевого профиля.</ABY_CraftGatebreakerCarapace.description>
+  <ABY_CraftGatebreakerCarapace.label>выковать панцирь Проломщика Врат</ABY_CraftGatebreakerCarapace.label>
+  <ABY_CraftGatebreakerCarapace.description>Пересобрать святую сердцевинную оболочку в чёрный бездненный штурмовой панцирь, предназначенный не для прошлой битвы, а для следующих врат. Этот паттерн жертвует геометрией реакторного останка ради более тяжёлой противопрорывной брони и откровенно враждебного боевого профиля.</ABY_CraftGatebreakerCarapace.description>
   <ABY_CraftGatebreakerCarapace.jobString>Ковка панциря взломщика врат.</ABY_CraftGatebreakerCarapace.jobString>
-  <ABY_CraftGatebreakerHelm.label>выковать шлем взломщика врат</ABY_CraftGatebreakerHelm.label>
+  <ABY_CraftGatebreakerHelm.label>выковать шлем Проломщика Врат</ABY_CraftGatebreakerHelm.label>
   <ABY_CraftGatebreakerHelm.description>Сжать святую полевую аппаратуру и чёрную пласталь в герметичный хищный шлем врат. Результат менее церемониален, чем коронное снаряжение, и куда прямее: визор казни для контролируемых прорывов, которые ещё способны сопротивляться.</ABY_CraftGatebreakerHelm.description>
   <ABY_CraftGatebreakerHelm.jobString>Ковка шлема взломщика врат.</ABY_CraftGatebreakerHelm.jobString>
 </LanguageData>

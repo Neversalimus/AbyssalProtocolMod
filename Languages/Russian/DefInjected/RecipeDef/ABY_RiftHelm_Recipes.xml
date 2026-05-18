@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_CraftRiftHelm.label>выковать шлем разлома</ABY_CraftRiftHelm.label>
+  <ABY_CraftRiftHelm.label>выковать рифт-шлем</ABY_CraftRiftHelm.label>
   <ABY_CraftRiftHelm.description>Спрессовать пластины с остаток-прокладкой в герметичный шлем из первой инфернальной боевой линии. Он легче полного каркаса, но уже выглядит как настоящее бездное боевое снаряжение.</ABY_CraftRiftHelm.description>
   <ABY_CraftRiftHelm.jobString>Ковка шлема разлома.</ABY_CraftRiftHelm.jobString>
 </LanguageData>

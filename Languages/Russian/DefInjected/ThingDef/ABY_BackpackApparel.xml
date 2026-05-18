@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_AshboundFieldPack.label>полевой ранец пепельной грани</ABY_AshboundFieldPack.label>
+  <ABY_AshboundFieldPack.label>пепельный ранец</ABY_AshboundFieldPack.label>
   <ABY_AshboundFieldPack.description>Компактный бездный полевой ранец для ранних операторов кузницы и носильщиков прорыва. Стальные рёбра, остаток-канистры и сдержанная упряжная рама делают его полезным, не превращая носителя в ходячий алтарь.</ABY_AshboundFieldPack.description>
-  <ABY_RiftRelayPack.label>релейный ранец разлома</ABY_RiftRelayPack.label>
+  <ABY_RiftRelayPack.label>рифт-ранец</ABY_RiftRelayPack.label>
   <ABY_RiftRelayPack.description>Бездный ранец релейного класса с компактным проводником разлома, усиленной грузовой рамой и более горячей канистровой подачей. Он заметно усиливает мобильность и переноску, но носитель уже явно несёт на спине живое инфернальное устройство.</ABY_RiftRelayPack.description>
-  <ABY_CrownConduitPack.label>коронный проводниковый ранец</ABY_CrownConduitPack.label>
+  <ABY_CrownConduitPack.label>коронный ранец</ABY_CrownConduitPack.label>
   <ABY_CrownConduitPack.description>Ранец коронного тира, построенный вокруг компактного ядра власти. Это одновременно реактор, релейный узел и печать допуска: тяжёлый, дорогой и рассчитанный на колонистов поздней бездной линии.</ABY_CrownConduitPack.description>
 </LanguageData>

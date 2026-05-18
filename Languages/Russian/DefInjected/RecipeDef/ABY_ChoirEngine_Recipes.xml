@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CraftChoirEngineSigil.label>создать сигилу хоровой двигатель</ABY_CraftChoirEngineSigil.label>
-  <ABY_CraftChoirEngineSigil.description>Собирает командную сигилу прорыва из остаток, компонентов и одного Вестник фрагмент ядра. Это шаг эскалации уже после первого босса: мини-босс поддержки, который усиливает эскорт, глушит турели и наказывает статичную оборону.</ABY_CraftChoirEngineSigil.description>
-  <ABY_CraftChoirEngineSigil.jobString>Создание сигилы хоровой двигатель.</ABY_CraftChoirEngineSigil.jobString>
+  <ABY_CraftChoirEngineSigil.label>создать сигилу Хорового Двигателя</ABY_CraftChoirEngineSigil.label>
+  <ABY_CraftChoirEngineSigil.description>Собирает командную сигилу прорыва из остатка, компонентов и одного фрагмента ядра Вестника. Это шаг эскалации уже после первого босса: мини-босс поддержки, который усиливает эскорт, глушит турели и наказывает статичную оборону.</ABY_CraftChoirEngineSigil.description>
+  <ABY_CraftChoirEngineSigil.jobString>Создание сигилы Хоровой Двигатель.</ABY_CraftChoirEngineSigil.jobString>
 </LanguageData>

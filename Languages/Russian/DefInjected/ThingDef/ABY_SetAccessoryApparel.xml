@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_GatebreakerAnchorHarness.label>якорная обвязка вратолома</ABY_GatebreakerAnchorHarness.label>
-  <ABY_GatebreakerAnchorHarness.description>Зримая противооткатная обвязка, надеваемая поверх панциря Вратолома. Диагональные бреакх-ремни, боковые якоря и компактное ядро давления связывают носителя с каждым тяжёлым залпом, превращая броню не просто в защиту, а в человеческий стрелковый упор.</ABY_GatebreakerAnchorHarness.description>
+  <ABY_GatebreakerAnchorHarness.label>якорная сбруя Проломщика Врат</ABY_GatebreakerAnchorHarness.label>
+  <ABY_GatebreakerAnchorHarness.description>Зримая противооткатная сбруя, надеваемая поверх панциря Проломщика Врат. Диагональные ремни пробоя, боковые якоря и компактное ядро давления связывают носителя с каждым тяжёлым залпом, превращая броню не просто в защиту, а в человеческий стрелковый упор.</ABY_GatebreakerAnchorHarness.description>
   <ABY_NullCantorFocusSling.label>фокус-перевязь нулевого кантора</ABY_NullCantorFocusSling.label>
   <ABY_NullCantorFocusSling.description>Диагональная фокус-перевязь для нулевых аколитов и операторов ритуальных винтовок. Обмотанный тёмной тканью проводящий ремень, подвешенная сигильная катушка и малые вычислительные ключи стабилизируют Нулевой Кантор и одновременно изолируют носителя от худшей ритуальной отдачи.</ABY_NullCantorFocusSling.description>
   <ABY_NullProcessionVeil.label>нулевая процессионная вуаль</ABY_NullProcessionVeil.label>

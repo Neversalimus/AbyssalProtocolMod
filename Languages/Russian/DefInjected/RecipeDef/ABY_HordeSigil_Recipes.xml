@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_CraftHordeSigil.label>выковать сигилу врата орды</ABY_CraftHordeSigil.label>
-  <ABY_CraftHordeSigil.description>Сжимает святого реактор ядро, остаток, пласталь и космические компоненты в после Святого сигилу маршрутизации орды. Вместо именного босса этот ритуал вскрывает несколько фронтов периметрального прорыва и выпускает на карту обычные бездненный-боевые формы. Это первый осознанный арми-скале ритуал после Реакторный Святой.</ABY_CraftHordeSigil.description>
-  <ABY_CraftHordeSigil.jobString>Куется сигила врата орды.</ABY_CraftHordeSigil.jobString>
+  <ABY_CraftHordeSigil.label>выковать сигилу врат орды</ABY_CraftHordeSigil.label>
+  <ABY_CraftHordeSigil.description>Сжимает реакторное ядро святого, остаток, пласталь и космические компоненты в пост-святую сигилу маршрутизации орды. Вместо именного босса этот ритуал вскрывает несколько фронтов периметрального пробоя и выпускает обычные боевые формы Бездны.</ABY_CraftHordeSigil.description>
+  <ABY_CraftHordeSigil.jobString>Куется сигила врат орды.</ABY_CraftHordeSigil.jobString>
 </LanguageData>
