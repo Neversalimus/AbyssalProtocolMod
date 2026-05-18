@@ -26,7 +26,7 @@ Communion/unlock progress -> ember-toned segmented industrial gauge
 Attunement progress       -> pale-gold segmented industrial gauge
 ```
 
-This is still procedural C# UI, not texture-driven. Keep the bars readable first: centered labels, restrained glow, dark trough, brass/ember frame, and segmented fill. Avoid replacing them with noisy fantasy rune bars or oversized animated effects. The compact Forge bills tab attunement bar should visually match the main Forge console.
+This is still procedural C# UI, not texture-driven. Keep the bars readable first: centered labels on a dark capsule, restrained glow, a dark trough, visible black gaps between segments, and brass/ember framing. Avoid flat full-width orange fills, noisy fantasy rune bars, or oversized animated effects. The compact Forge bills tab attunement bar should visually match the main Forge console.
 
 
 This document is a compact working-memory ledger for future AI-assisted development.
