@@ -79,15 +79,25 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.ReducedEffects = progress.ReducedVisualEffects;
             AbyssalForgeConsoleArt.DrawBackground(inRect);
 
-            Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
-            Rect statusRect = new Rect(inRect.x, headerRect.yMax + 10f, 492f, 210f);
-            Rect offerRect = new Rect(statusRect.xMax + 10f, headerRect.yMax + 10f, 248f, 210f);
-            Rect nextRect = new Rect(offerRect.xMax + 10f, headerRect.yMax + 10f, inRect.width - offerRect.xMax - 10f, 210f);
-            Rect categoryRect = new Rect(inRect.x, statusRect.yMax + 10f, inRect.width, 40f);
-            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + 10f, 804f, inRect.height - categoryRect.yMax - 10f);
-            Rect rightColumnRect = new Rect(patternsRect.xMax + 10f, categoryRect.yMax + 10f, inRect.width - patternsRect.width - 10f, inRect.height - categoryRect.yMax - 10f);
-            Rect infrastructureRect = new Rect(rightColumnRect.x, rightColumnRect.y, rightColumnRect.width, 190f);
-            Rect billsRect = new Rect(rightColumnRect.x, infrastructureRect.yMax + 10f, rightColumnRect.width, rightColumnRect.height - infrastructureRect.height - 10f);
+            bool enhancedLayout = AbyssalStyledWidgets.UseEnhancedTheme;
+            float gap = enhancedLayout ? 8f : 10f;
+            float headerHeight = enhancedLayout ? 64f : 74f;
+            float summaryHeight = enhancedLayout ? 206f : 210f;
+            float categoryHeight = enhancedLayout ? 38f : 40f;
+            float statusWidth = enhancedLayout ? 486f : 492f;
+            float offerWidth = enhancedLayout ? 246f : 248f;
+            float patternWidth = enhancedLayout ? 812f : 804f;
+            float infrastructureHeight = enhancedLayout ? 184f : 190f;
+
+            Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, headerHeight);
+            Rect statusRect = new Rect(inRect.x, headerRect.yMax + gap, statusWidth, summaryHeight);
+            Rect offerRect = new Rect(statusRect.xMax + gap, headerRect.yMax + gap, offerWidth, summaryHeight);
+            Rect nextRect = new Rect(offerRect.xMax + gap, headerRect.yMax + gap, inRect.width - offerRect.xMax - gap, summaryHeight);
+            Rect categoryRect = new Rect(inRect.x, statusRect.yMax + gap, inRect.width, categoryHeight);
+            Rect patternsRect = new Rect(inRect.x, categoryRect.yMax + gap, patternWidth, inRect.height - categoryRect.yMax - gap);
+            Rect rightColumnRect = new Rect(patternsRect.xMax + gap, categoryRect.yMax + gap, inRect.width - patternWidth - gap, inRect.height - categoryRect.yMax - gap);
+            Rect infrastructureRect = new Rect(rightColumnRect.x, rightColumnRect.y, rightColumnRect.width, infrastructureHeight);
+            Rect billsRect = new Rect(rightColumnRect.x, infrastructureRect.yMax + gap, rightColumnRect.width, rightColumnRect.height - infrastructureHeight - gap);
 
             DrawHeader(headerRect, progress);
             DrawStatusPanel(statusRect, progress);
@@ -501,13 +511,15 @@ namespace AbyssalProtocol
 
         private void DrawUnknownPatternCard(Rect rect, RecipeDef recipe, bool turretCard)
         {
+            AbyssalForgeConsoleArt.DrawPanel(rect, false);
             if (AbyssalStyledWidgets.UseEnhancedTheme)
             {
-                AbyssalStyledWidgets.DrawFramedPanel(rect, AbyssalStyledWidgets.AbyssalPanelStyle.Locked, 18f, 0.98f);
+                Rect inset = rect.ContractedBy(3f);
+                AbyssalForgeConsoleArt.Fill(inset, new Color(0.018f, 0.014f, 0.012f, 0.38f));
+                AbyssalForgeConsoleArt.DrawOutline(inset, new Color(0.92f, 0.25f, 0.08f, 0.34f));
             }
             else
             {
-                AbyssalForgeConsoleArt.DrawPanel(rect, false);
                 AbyssalForgeConsoleArt.Fill(rect.ContractedBy(3f), new Color(0.012f, 0.010f, 0.010f, 0.46f));
                 AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
             }

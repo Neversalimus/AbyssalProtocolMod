@@ -74,27 +74,29 @@ namespace AbyssalProtocol
             if (EnhancedUI)
             {
                 float pulseEnhanced = Pulse(alert ? 2.0f : 1.4f, 0.12f);
-                AbyssalStyledWidgets.DrawPanel(rect, AbyssalStyledWidgets.AbyssalPanelStyle.Header, 0.98f);
-                DrawOverlay(rect, HeaderTex, new Color(1f, 0.42f, 0.16f, alert ? 0.18f + pulseEnhanced * 0.08f : 0.12f));
-                AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(rect.x + 18f, rect.yMax - 8f, rect.width - 36f, 6f), alert ? 0.95f : 0.72f);
+                Fill(rect, new Color(0.095f, 0.058f, 0.046f, 0.98f));
+                DrawOverlay(rect, OverlayTex, new Color(1f, 0.40f, 0.14f, alert ? 0.11f + pulseEnhanced * 0.04f : 0.075f));
+                DrawOutline(rect, new Color(1f, 0.36f, 0.12f, alert ? 0.74f : 0.52f));
+                Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, 2f), new Color(1f, 0.50f, 0.22f, alert ? 0.42f : 0.24f));
+                Fill(new Rect(rect.x + 18f, rect.yMax - 6f, rect.width - 36f, 1f), new Color(1f, 0.48f, 0.18f, alert ? 0.84f : 0.58f));
                 if (!ReduceUIAnimation)
                 {
-                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 18f, rect.yMax - 18f, rect.width * 0.62f, 14f), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 7f, alert ? 0.34f : 0.20f);
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 18f, rect.yMax - 18f, Mathf.Min(rect.width * 0.55f, 620f), 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 7f, alert ? 0.24f : 0.14f);
                 }
 
                 Text.Anchor = TextAnchor.UpperLeft;
                 Text.Font = GameFont.Medium;
                 GUI.color = Color.white;
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 6f, rect.width - 86f, 34f), title);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 16f, rect.y + 5f, rect.width - 82f, 32f), title);
 
                 Text.Font = GameFont.Small;
                 GUI.color = TextSoftColor;
-                float enhancedSubtitleHeight = Text.CalcHeight(subtitle, rect.width - 98f);
-                float enhancedMaxSubtitleHeight = Mathf.Max(18f, rect.height - 40f);
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 20f, rect.y + 36f, rect.width - 98f, Mathf.Min(enhancedSubtitleHeight, enhancedMaxSubtitleHeight)), subtitle);
+                float enhancedSubtitleHeight = Text.CalcHeight(subtitle, rect.width - 96f);
+                float enhancedMaxSubtitleHeight = Mathf.Max(18f, rect.height - 38f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 34f, rect.width - 96f, Mathf.Min(enhancedSubtitleHeight, enhancedMaxSubtitleHeight)), subtitle);
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.UpperLeft;
-                DrawSignalGlyph(new Rect(rect.xMax - 36f, rect.y + 10f, 18f, 18f), pulseEnhanced);
+                DrawSignalGlyph(new Rect(rect.xMax - 34f, rect.y + 8f, 18f, 18f), pulseEnhanced);
                 return;
             }
 
@@ -131,10 +133,23 @@ namespace AbyssalProtocol
         {
             if (EnhancedUI)
             {
-                AbyssalStyledWidgets.DrawFramedPanel(rect, highlighted ? AbyssalStyledWidgets.AbyssalPanelStyle.Selected : AbyssalStyledWidgets.AbyssalPanelStyle.CardDark, 18f, 0.98f);
+                float pulseEnhanced = Pulse(highlighted ? 2.0f : 1.15f, rect.x * 0.013f + rect.y * 0.009f);
+                Color fill = highlighted
+                    ? new Color(0.145f, 0.082f, 0.060f, 0.965f)
+                    : new Color(0.080f, 0.074f, 0.078f, 0.965f);
+                Color outline = highlighted
+                    ? Color.Lerp(new Color(0.78f, 0.28f, 0.10f, 0.74f), new Color(1f, 0.55f, 0.22f, 0.92f), pulseEnhanced * 0.38f)
+                    : new Color(0.76f, 0.26f, 0.10f, 0.50f);
+
+                Fill(rect, fill);
+                DrawOverlay(rect, OverlayTex, new Color(1f, 0.34f, 0.12f, highlighted ? 0.070f : 0.045f));
+                DrawOutline(rect, outline);
+                Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, 1f), new Color(1f, 0.44f, 0.16f, highlighted ? 0.42f : 0.24f));
+                Fill(new Rect(rect.x + 1f, rect.yMax - 2f, rect.width - 2f, 1f), new Color(0.92f, 0.28f, 0.10f, highlighted ? 0.34f : 0.18f));
+
                 if (highlighted && !ReduceUIAnimation)
                 {
-                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 8f, rect.y + 2f, rect.width - 16f, 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EdgeGlow, 8f, 0.20f);
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 8f, rect.y + 1f, rect.width - 16f, 10f), AbyssalStyledWidgets.AbyssalAccentAnimation.EdgeGlow, 8f, 0.13f);
                 }
                 return;
             }
