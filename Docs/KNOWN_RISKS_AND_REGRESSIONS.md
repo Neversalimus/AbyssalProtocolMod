@@ -214,6 +214,17 @@ Actual code and assets win over this document.
 | Text says implemented when content is planned | P2 | docs/UI | player/dev confusion | Mark planned/partial/implemented clearly. |
 | Too much lore in small UI cards | P2 | UI | unreadable or cluttered | Put concise gameplay requirements in UI; keep long lore in codex/descriptions. |
 
+
+## Russian localization risks
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Treating Russian localization as only XML validation | P1 | localization/UI | No load errors, but visible text is ugly, too long, or machine-translated | Check `Docs/LOCALIZATION_GLOSSARY_RU.md`, run bad-phrase scans, and review Forge/Summoning UI length. |
+| Long lore names in Forge cards | P2 | Forge UI/localization | Browser cards and selected-pattern panels look crowded or clipped | Use compact labels in `label`/recipe rows and keep full names in descriptions/tooltips. |
+| Raw English/transliterated terms in Russian mode | P2 | localization | `веил`, `слинг`, `харнесс`, `пайплайн`, `кэши`, `scanline/sweep` appear in-game | Translate as natural Russian terms and re-run Latin/transliteration scan before packaging. |
+| Wrong category for named content | P2 | localization/content | Weapon names get translated like pawns or vice versa | Check actual Def type first; `Oblivion Choir` is a weapon/proper name: `Хор Забвения`. |
+
+
 ## Documentation risks
 
 | Risk | Severity | Area | Symptoms | Prevention / check |

@@ -79,3 +79,29 @@ The glossary is now the first document to check for Russian terminology before e
 
 Specific correction captured: `Oblivion Choir` is a weapon/proper name and should be localized as `Хор Забвения`, not treated as an enemy/unit and not translated as `Забвение хоровой`.
 
+
+## 2026-05-19 glossary-driven editorial pass
+
+A broader Russian editorial localization pass was applied after the glossary was added. This pass focused on player-facing natural Russian, compact Forge-readable labels, and removal of machine-translated/transliterated wording from Russian XML.
+
+Applied fixes:
+
+```text
+- Shortened Forge-sensitive item/module labels where long strings would crowd cards or selected-pattern panels.
+- Replaced remaining awkward transliterations such as веил, слинг, харнесс, пайплайн, кэши, релаи, scanline/sweep text, and old Great Hell Gate wording.
+- Standardized Dominion wording around Великие инфернальные врата and Доминион.
+- Standardized choir, rift, sigil, aegis, residue, and horde terminology against Docs/LOCALIZATION_GLOSSARY_RU.md.
+- Kept descriptions more loreful while making UI labels shorter and easier to read in Abyssal Forge.
+```
+
+Validation after this pass:
+
+```text
+Russian XML parse errors: 0
+Russian visible Latin text values: 0
+Known bad machine-translation phrases checked: 0 remaining
+C# changed: no
+Build required: no
+RimWorld runtime language report: not run in-game
+```
+

@@ -543,6 +543,27 @@ Before adding a Russian string:
 | Boss UI | `Эгида` |
 | Tooltip/lore | `Реакторная Эгида удерживает святого в фазе боевой неуязвимости, пока её цепи не разрушены.` |
 
+## 2026-05-19 editorial additions
+
+These forms are preferred after the glossary-driven Russian editorial pass. Use short forms in Forge cards and recipe rows; keep full lore forms for descriptions/tooltips.
+
+| English / Source term | Compact Russian | Notes |
+| --- | --- | --- |
+| Ashbound Capacitor Module | пепельный конденсатор | Avoid `пеплосвязанный модуль-конденсатор` in tight UI. |
+| Rift Capacitor Module | рифт-конденсатор | Compact Forge/browser label. |
+| Crown Condenser Module | коронный конденсатор | Compact Forge/browser label. |
+| Crude Stabilizer Module | грубый стабилизатор | Compact Forge/browser label. |
+| Resonant Stabilizer Module | резонансный стабилизатор | Compact Forge/browser label. |
+| Crown Stabilizer Module | коронный стабилизатор | Compact Forge/browser label. |
+| Null Procession Veil | вуаль Нулевой Процессии | Do not use `нулевой процессия веил`. |
+| Null Cantor Focus Sling | перевязь нулевого кантора | Recipe labels may shorten to `перевязь кантора`. |
+| Gatebreaker Anchor Harness | якорная сбруя Проломщика Врат | Do not transliterate `harness`. |
+| Dominion Gate / Great Hell Gate legacy text | Великие инфернальные врата | Do not use `Великий адский портал`. |
+| Reward cache | тайник / тайники | Avoid `кэш/кэши` in Russian UI. |
+| Pipeline | цепочка | Avoid raw `пайплайн` in player-facing Russian. |
+| UI scanline/sweep | сканирующие линии / скользящие акценты | Avoid raw English terms in Russian mode. |
+
+
 ## Maintenance rule
 
 Update this glossary when:

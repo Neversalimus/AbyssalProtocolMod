@@ -1,6 +1,24 @@
 # Abyssal Protocol — Recent Work Notes
 
 
+## 2026-05-19 — Glossary-driven Russian editorial localization pass
+
+A broad Russian localization editorial pass was applied after the dedicated glossary was added. It focused on natural Russian player-facing text, compact Forge labels, and consistent Abyssal terminology rather than simple load-safe machine translation.
+
+Important details:
+
+```text
+- Forge-sensitive labels were shortened where possible: рифт-конденсатор, пепельный конденсатор, коронный конденсатор, грубый/резонансный/коронный стабилизатор.
+- Reported weapon/resource terms are kept aligned with the glossary: Рифт-клинок, Рифт-карабин, Хор Забвения, Сигила угольных гончих, Панцирь святого носителя Эгиды.
+- Dominion crisis/progression strings now avoid the old `Великий адский портал` wording and use `Великие инфернальные врата`.
+- Machine-transliterated UI and DefInjected text such as веил, слинг, харнесс, пайплайн, кэши, scanline/sweep was cleaned up.
+- C# was not changed; this pass is XML/docs-only and does not require DLL rebuild.
+```
+
+Future Russian localization work should not rely only on XML/duplicate-key validation. It must also run a terminology/editorial scan and check Forge/Summoning visual length risks.
+
+
+
 ## Forge Russian UI localization follow-up
 
 A Forge console localization follow-up was applied on 2026-05-19 after in-game Russian UI review. It fixed remaining hard-coded English text in the Forge pattern browser/search/status/subfilter/selected-pattern panels and added C# fallback-safe keyed translation helpers for those labels.
