@@ -24,6 +24,9 @@
   <ABY_ForgeUnlockedSummary>{0} / {1} patterns unlocked in {2}</ABY_ForgeUnlockedSummary>
   <ABY_ForgeAllPatternsUnlocked>All known patterns are unlocked.</ABY_ForgeAllPatternsUnlocked>
   <ABY_ForgeProgressBand>{0} residue attuned • current band {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeCurrentBandShort>Current band {0} → {1}</ABY_ForgeCurrentBandShort>
+  <ABY_ForgeCurrentBandCompleteShort>Current band complete</ABY_ForgeCurrentBandCompleteShort>
+  <ABY_ForgeAttunementTierShort>Attunement tier {0}/{1}</ABY_ForgeAttunementTierShort>
   <ABY_ForgeProgressComplete>{0} residue attuned • maximum lattice band reached</ABY_ForgeProgressComplete>
   <ABY_ForgeConsoleTitle>Infernal communion console</ABY_ForgeConsoleTitle>
   <ABY_ForgeConsoleSubtitle>Ritual-industrial control surface for residue intake, attunement shaping, and pattern deployment.</ABY_ForgeConsoleSubtitle>

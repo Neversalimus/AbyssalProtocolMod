@@ -322,3 +322,5 @@ Recommended next work after this documentation pass:
 4. Content scale pass: prepare Forge/Summoning data structures for hundreds of items/patterns.
 5. Changelog/release readiness pass: About metadata, player-facing changelog, versioning.
 ```
+
+- Gauge labels were moved out of the fill area in Forge status displays: communion uses a right-aligned "current band" caption above the upper bar, while attunement uses a right-aligned tier caption below the lower bar. Keep the bars themselves visually clean. The attunement bar should use 50 discrete segments to match the 50-tier system.

@@ -299,9 +299,9 @@ namespace AbyssalProtocol
             Fill(new Rect(gaugeRect.x, gaugeRect.y, gaugeRect.width, 1f), new Color(1f, 1f, 1f, 0.04f));
             Fill(new Rect(gaugeRect.x, gaugeRect.yMax - 1f, gaugeRect.width, 1f), new Color(0f, 0f, 0f, 0.34f));
 
-            int segmentCount = Mathf.Clamp(Mathf.FloorToInt((gaugeRect.width + 3f) / 28f), 8, 18);
-            float gap = 3f;
-            float segmentWidth = (gaugeRect.width - gap * (segmentCount - 1)) / segmentCount;
+            int segmentCount = attunement ? 50 : Mathf.Clamp(Mathf.FloorToInt((gaugeRect.width + 3f) / 28f), 8, 18);
+            float gap = attunement ? 1f : 3f;
+            float segmentWidth = Mathf.Max(1f, (gaugeRect.width - gap * (segmentCount - 1)) / segmentCount);
             float filledWidth = gaugeRect.width * fillPercent;
 
             for (int i = 0; i < segmentCount; i++)
@@ -339,25 +339,28 @@ namespace AbyssalProtocol
                 AbyssalStyledWidgets.DrawAccentAnimation(pulseRect, AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : (attunement ? 9f : 8f), alert ? 0.13f : 0.07f);
             }
 
-            Rect labelRect = new Rect(rect.x + 12f, rect.y - 3f, Mathf.Max(12f, rect.width - 24f), rect.height + 6f);
-            TextAnchor oldAnchor = Text.Anchor;
-            GameFont oldFont = Text.Font;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Text.Font = rect.height <= 22f || label.Length > 42 ? GameFont.Tiny : GameFont.Small;
-            float desiredLabelWidth = Text.CalcSize(label).x + 32f;
-            float labelWidth = Mathf.Min(labelRect.width - 8f, Mathf.Max(190f, desiredLabelWidth));
-            Rect labelBack = new Rect(labelRect.center.x - labelWidth / 2f, rect.y + 3f, labelWidth, Mathf.Max(16f, rect.height - 6f));
-            Fill(labelBack, new Color(0.008f, 0.007f, 0.007f, 0.88f));
-            Fill(new Rect(labelBack.x, labelBack.y, labelBack.width, 1f), new Color(1f, 0.82f, 0.55f, 0.10f));
-            DrawOutline(labelBack, new Color(frameColor.r, frameColor.g, frameColor.b, 0.34f));
+            if (!string.IsNullOrEmpty(label))
+            {
+                Rect labelRect = new Rect(rect.x + 12f, rect.y - 3f, Mathf.Max(12f, rect.width - 24f), rect.height + 6f);
+                TextAnchor oldAnchor = Text.Anchor;
+                GameFont oldFont = Text.Font;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = rect.height <= 22f || label.Length > 42 ? GameFont.Tiny : GameFont.Small;
+                float desiredLabelWidth = Text.CalcSize(label).x + 32f;
+                float labelWidth = Mathf.Min(labelRect.width - 8f, Mathf.Max(190f, desiredLabelWidth));
+                Rect labelBack = new Rect(labelRect.center.x - labelWidth / 2f, rect.y + 3f, labelWidth, Mathf.Max(16f, rect.height - 6f));
+                Fill(labelBack, new Color(0.008f, 0.007f, 0.007f, 0.88f));
+                Fill(new Rect(labelBack.x, labelBack.y, labelBack.width, 1f), new Color(1f, 0.82f, 0.55f, 0.10f));
+                DrawOutline(labelBack, new Color(frameColor.r, frameColor.g, frameColor.b, 0.34f));
 
-            GUI.color = new Color(0f, 0f, 0f, 0.88f);
-            ABY_UIPolishUtility.SafeLabel(new Rect(labelRect.x + 1f, labelRect.y + 1f, labelRect.width, labelRect.height), label, 0f, 1f);
-            GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(labelRect, label, 0f, 1f);
-            GUI.color = Color.white;
-            Text.Anchor = oldAnchor;
-            Text.Font = oldFont;
+                GUI.color = new Color(0f, 0f, 0f, 0.88f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(labelRect.x + 1f, labelRect.y + 1f, labelRect.width, labelRect.height), label, 0f, 1f);
+                GUI.color = Color.white;
+                ABY_UIPolishUtility.SafeLabel(labelRect, label, 0f, 1f);
+                GUI.color = Color.white;
+                Text.Anchor = oldAnchor;
+                Text.Font = oldFont;
+            }
         }
 
         public static void DrawActionButtonFrame(Rect rect, bool emphasis)

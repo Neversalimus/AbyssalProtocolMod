@@ -242,27 +242,47 @@ namespace AbyssalProtocol
             int nextThreshold = progress.GetNextUnlockResidue(selectedCategory);
             int previousThreshold = GetPreviousUnlockThreshold(progress, selectedCategory, total);
             float fill = 1f;
-            string progressLabel;
+            string currentBandLabel;
 
             if (nextThreshold > 0)
             {
                 int bandSize = Math.Max(1, nextThreshold - previousThreshold);
                 fill = Mathf.Clamp01((total - previousThreshold) / (float)bandSize);
-                progressLabel = "ABY_ForgeProgressBand".Translate(total, previousThreshold, nextThreshold);
+                currentBandLabel = "ABY_ForgeCurrentBandShort".Translate(previousThreshold, nextThreshold);
             }
             else
             {
-                progressLabel = "ABY_ForgeProgressComplete".Translate(total);
+                currentBandLabel = "ABY_ForgeCurrentBandCompleteShort".Translate();
             }
 
-            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeStatusHeader".Translate());
-            AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 24f), fill, progressLabel, progress.HasRecentUnlocks, AbyssalForgeConsoleArt.ProgressBarStyle.Communion);
-
             int attunementTier = progress.GetCurrentAttunementTier(false);
-            Rect attunementBarRect = new Rect(inner.x, inner.y + 58f, inner.width, 22f);
-            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
+            string attunementTierLabel = "ABY_ForgeAttunementTierShort".Translate(attunementTier, AbyssalForgeProgressUtility.MaxAttunementTier);
 
-            float metricY = inner.y + 90f;
+            float titleWidth = progress.HasRecentUnlocks ? inner.width - 164f : inner.width - 8f;
+            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, Mathf.Max(120f, titleWidth), 22f), "ABY_ForgeStatusHeader".Translate());
+            Text.Anchor = TextAnchor.MiddleRight;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 220f, inner.y + 1f, inner.width - 220f, 20f), currentBandLabel, 0f, 1f);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+
+            Rect communionBarRect = new Rect(inner.x, inner.y + 26f, inner.width, 24f);
+            AbyssalForgeConsoleArt.DrawProgressBar(communionBarRect, fill, string.Empty, progress.HasRecentUnlocks, AbyssalForgeConsoleArt.ProgressBarStyle.Communion);
+
+            Rect attunementBarRect = new Rect(inner.x, inner.y + 58f, inner.width, 22f);
+            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), string.Empty, false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
+
+            Text.Anchor = TextAnchor.MiddleRight;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 220f, attunementBarRect.yMax + 2f, inner.width - 220f, 18f), attunementTierLabel, 0f, 1f);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+
+            float metricY = inner.y + 100f;
             float metricWidth = (inner.width - 10f) / 2f;
 
             Rect residueRect = new Rect(inner.x, metricY, metricWidth, 42f);

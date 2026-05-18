@@ -67,12 +67,20 @@ namespace AbyssalProtocol
                 : "ABY_ForgeNextPatternDone".Translate();
 
             Rect attunementBarRect = new Rect(inner.x, inner.y, inner.width, 20f);
-            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
+            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), string.Empty, false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
 
-            Rect residueRect = new Rect(inner.x, inner.y + 28f, metricWidth, 40f);
-            Rect availableRect = new Rect(inner.x + metricWidth + 12f, inner.y + 28f, metricWidth, 40f);
-            Rect attunementRect = new Rect(inner.x, inner.y + 74f, metricWidth, 40f);
-            Rect powerRect = new Rect(inner.x + metricWidth + 12f, inner.y + 74f, metricWidth, 40f);
+            Text.Anchor = TextAnchor.MiddleRight;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 180f, attunementBarRect.yMax + 2f, inner.width - 180f, 18f), "ABY_ForgeAttunementTierShort".Translate(attunementTier, AbyssalForgeProgressUtility.MaxAttunementTier), 0f, 1f);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+
+            Rect residueRect = new Rect(inner.x, inner.y + 34f, metricWidth, 40f);
+            Rect availableRect = new Rect(inner.x + metricWidth + 12f, inner.y + 34f, metricWidth, 40f);
+            Rect attunementRect = new Rect(inner.x, inner.y + 80f, metricWidth, 40f);
+            Rect powerRect = new Rect(inner.x + metricWidth + 12f, inner.y + 80f, metricWidth, 40f);
 
             AbyssalForgeConsoleArt.DrawMetric(residueRect, "ABY_ForgeMetricResidue".Translate(), progress.TotalResidueOffered.ToString());
             AbyssalForgeConsoleArt.DrawMetric(availableRect, "ABY_ForgeMetricAvailable".Translate(), progress.CountAvailableResidue().ToString());
@@ -82,7 +90,7 @@ namespace AbyssalProtocol
             TooltipHandler.TipRegion(new Rect(inner.x, inner.y, inner.width, 118f), AbyssalForgeProgressUtility.GetAttunementTooltip(attunementTier, progress.TotalResidueOffered, progress.HasPoweredForge()));
 
             GUI.color = AbyssalForgeConsoleArt.TextSoftColor;
-            Rect nextRect = new Rect(inner.x, inner.y + 122f, inner.width, inner.height - 122f);
+            Rect nextRect = new Rect(inner.x, inner.y + 128f, inner.width, inner.height - 128f);
             Widgets.Label(nextRect, nextLine);
             GUI.color = Color.white;
         }

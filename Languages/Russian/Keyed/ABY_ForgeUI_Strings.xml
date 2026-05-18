@@ -24,6 +24,9 @@
   <ABY_ForgeUnlockedSummary>Открыто {0} / {1} шаблонов в категории {2}</ABY_ForgeUnlockedSummary>
   <ABY_ForgeAllPatternsUnlocked>Все известные шаблоны уже открыты.</ABY_ForgeAllPatternsUnlocked>
   <ABY_ForgeProgressBand>Настроено {0} residue • текущая полоса {1} → {2}</ABY_ForgeProgressBand>
+  <ABY_ForgeCurrentBandShort>Текущая полоса {0} → {1}</ABY_ForgeCurrentBandShort>
+  <ABY_ForgeCurrentBandCompleteShort>Текущая полоса завершена</ABY_ForgeCurrentBandCompleteShort>
+  <ABY_ForgeAttunementTierShort>Уровень attunement {0}/{1}</ABY_ForgeAttunementTierShort>
   <ABY_ForgeProgressComplete>Настроено {0} residue • достигнута максимальная полоса решётки</ABY_ForgeProgressComplete>
   <ABY_ForgeConsoleTitle>Консоль инфернального сопряжения</ABY_ForgeConsoleTitle>
   <ABY_ForgeConsoleSubtitle>Ритуально-индустриальная консоль для приёма residue, настройки attunement и развёртывания шаблонов.</ABY_ForgeConsoleSubtitle>
