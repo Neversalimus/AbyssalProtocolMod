@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
   <ABY_ProtocolResearch_OpenNexusLabel>Open protocol nexus</ABY_ProtocolResearch_OpenNexusLabel>
-  <ABY_ProtocolResearch_OpenNexusDesc>Open the experimental Abyssal Protocol Matrix. This system is isolated from the current forge and summoning progression and can be removed cleanly if it does not survive testing.</ABY_ProtocolResearch_OpenNexusDesc>
+  <ABY_ProtocolResearch_OpenNexusDesc>Open the Abyssal Protocol Matrix. The large ring is the primary tier ladder; category filters refine the selected layer.</ABY_ProtocolResearch_OpenNexusDesc>
   <ABY_ProtocolResearch_InspectOnline>Protocol Nexus: powered and decoding hostile signal layers.</ABY_ProtocolResearch_InspectOnline>
   <ABY_ProtocolResearch_InspectOffline>Protocol Nexus: offline. The matrix can still be inspected, but the active decoding overlay is dormant.</ABY_ProtocolResearch_InspectOffline>
-  <ABY_ProtocolResearch_InspectExperimental>Experimental feature island: no current unlocks are hard-gated by this building.</ABY_ProtocolResearch_InspectExperimental>
+  <ABY_ProtocolResearch_InspectExperimental>Protocol Matrix: optional Forge reveal gating can be toggled in mod settings.</ABY_ProtocolResearch_InspectExperimental>
 
   <ABY_ProtocolResearch_Title>Abyssal Protocol Nexus</ABY_ProtocolResearch_Title>
-  <ABY_ProtocolResearch_Subtitle>Experimental protocol matrix: contact, stabilization, integration, dominion and post-gate research layers.</ABY_ProtocolResearch_Subtitle>
-  <ABY_ProtocolResearch_HeaderProgress>{0} available / {1} decoded / {2} mapped</ABY_ProtocolResearch_HeaderProgress>
-  <ABY_ProtocolResearch_CategoryHeader>PROTOCOL RINGS</ABY_ProtocolResearch_CategoryHeader>
-  <ABY_ProtocolResearch_ProjectListHeader>SEGMENTS</ABY_ProtocolResearch_ProjectListHeader>
+  <ABY_ProtocolResearch_Subtitle>Nine-tier protocol matrix: contact, stabilization, integration, crown threshold, dominion slice, final gate and post-gate layers.</ABY_ProtocolResearch_Subtitle>
+  <ABY_ProtocolResearch_HeaderProgress>{0} available / {1} decoded / {2} protocol projects</ABY_ProtocolResearch_HeaderProgress>
+  <ABY_ProtocolResearch_CategoryHeader>CATEGORY FILTERS — selected tier only</ABY_ProtocolResearch_CategoryHeader>
+  <ABY_ProtocolResearch_ProjectListHeader>TIER PROJECTS</ABY_ProtocolResearch_ProjectListHeader>
   <ABY_ProtocolResearch_NoCategories>No protocol categories are loaded.</ABY_ProtocolResearch_NoCategories>
-  <ABY_ProtocolResearch_NoProjectSelected>No protocol segment selected.</ABY_ProtocolResearch_NoProjectSelected>
-  <ABY_ProtocolResearch_CategoryTooltip>{0} available, {1} decoded, {2} mapped.</ABY_ProtocolResearch_CategoryTooltip>
+  <ABY_ProtocolResearch_NoProjectSelected>No protocol project selected.</ABY_ProtocolResearch_NoProjectSelected>
+  <ABY_ProtocolResearch_CategoryTooltip>{0} available, {1} decoded, {2} protocol projects.</ABY_ProtocolResearch_CategoryTooltip>
 
   <ABY_ProtocolResearch_StateLocked>LOCKED / PLANNED</ABY_ProtocolResearch_StateLocked>
   <ABY_ProtocolResearch_StateAvailable>AVAILABLE / ANALYZABLE</ABY_ProtocolResearch_StateAvailable>
@@ -27,7 +27,7 @@
   <ABY_ProtocolResearch_RequirementMet>met</ABY_ProtocolResearch_RequirementMet>
   <ABY_ProtocolResearch_RequirementMissing>missing</ABY_ProtocolResearch_RequirementMissing>
   <ABY_ProtocolResearch_NoExplicitRequirements>No explicit requirements beyond the selected protocol layer.</ABY_ProtocolResearch_NoExplicitRequirements>
-  <ABY_ProtocolResearch_IsolatedWarning>This prototype is intentionally isolated. It displays planned and represented research logic, but it does not currently rewrite forge unlocks, summoning gates, recipes, boss flags or save-game progression.</ABY_ProtocolResearch_IsolatedWarning>
+  <ABY_ProtocolResearch_IsolatedWarning>The Nexus identifies Forge-linked pattern families. If optional Forge gating is disabled, this matrix remains a progression map and does not block crafting.</ABY_ProtocolResearch_IsolatedWarning>
   <ABY_ProtocolResearch_DecodeHeader>DECODE OPERATION</ABY_ProtocolResearch_DecodeHeader>
   <ABY_ProtocolResearch_DecodeDecoded>Decoded. Forge-linked patterns may now reveal normally.</ABY_ProtocolResearch_DecodeDecoded>
   <ABY_ProtocolResearch_DecodeActive>Decoding at this Nexus: {0}</ABY_ProtocolResearch_DecodeActive>
@@ -47,4 +47,18 @@
   <ABY_ProtocolResearch_UnknownProject>unknown protocol</ABY_ProtocolResearch_UnknownProject>
   <ABY_ProtocolNexusGating_Enable>Enable Protocol Nexus forge gating</ABY_ProtocolNexusGating_Enable>
   <ABY_ProtocolNexusGating_EnableDesc>Optional experimental overlay. When disabled, all Forge patterns are treated as decoded and the Nexus becomes a codex/progression map instead of a hard gate.</ABY_ProtocolNexusGating_EnableDesc>
+  <ABY_ProtocolResearch_AllFilterLabel>ALL</ABY_ProtocolResearch_AllFilterLabel>
+  <ABY_ProtocolResearch_AllFilterName>All protocol categories</ABY_ProtocolResearch_AllFilterName>
+  <ABY_ProtocolResearch_AllFilterTooltip>Show every category inside the selected protocol tier.</ABY_ProtocolResearch_AllFilterTooltip>
+  <ABY_ProtocolResearch_CategoryFilterTooltip>{0} available, {1} decoded, {2} projects in {3}.</ABY_ProtocolResearch_CategoryFilterTooltip>
+  <ABY_ProtocolResearch_NoLayerFilter>selected tier</ABY_ProtocolResearch_NoLayerFilter>
+  <ABY_ProtocolResearch_TierMatrixTitle>Protocol tier matrix</ABY_ProtocolResearch_TierMatrixTitle>
+  <ABY_ProtocolResearch_TierMatrixDesc>The large ring is the primary 9-tier ladder. Current filter: {0}.</ABY_ProtocolResearch_TierMatrixDesc>
+  <ABY_ProtocolResearch_TierNodeTooltip>Click to select this protocol tier. Category filters above only refine the selected tier.</ABY_ProtocolResearch_TierNodeTooltip>
+  <ABY_ProtocolResearch_SealedTierTooltip>Tier {0} — sealed layer
+No recovered protocol project is assigned here yet.</ABY_ProtocolResearch_SealedTierTooltip>
+  <ABY_ProtocolResearch_NoProjectsForCategory>No projects in this tier for the selected category filter. Use All or select another tier.</ABY_ProtocolResearch_NoProjectsForCategory>
+  <ABY_ProtocolResearch_NoProjectsForFilter>No projects match this status filter. Use All or another state tab.</ABY_ProtocolResearch_NoProjectsForFilter>
+  <ABY_ProtocolResearch_TierFocusNone>Tier focus: none</ABY_ProtocolResearch_TierFocusNone>
+  <ABY_ProtocolResearch_TierFocusLabel>Tier focus: {0} — {1}</ABY_ProtocolResearch_TierFocusLabel>
 </LanguageData>

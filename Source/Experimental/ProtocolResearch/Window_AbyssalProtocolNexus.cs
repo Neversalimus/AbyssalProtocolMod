@@ -77,32 +77,27 @@ namespace AbyssalProtocol
             }
 
             List<ABY_ProtocolResearchCategoryDef> categories = ABY_ProtocolResearchUtility.AllCategories();
-            if (selectedCategory == null || !categories.Contains(selectedCategory))
+            if (selectedCategory != null && !categories.Contains(selectedCategory))
             {
-                selectedCategory = categories.FirstOrDefault();
+                selectedCategory = null;
                 selectedProject = null;
-                selectedLayerKey = null;
             }
 
-            List<ABY_ProtocolResearchDef> selectedProjects = ABY_ProtocolResearchUtility.ProjectsFor(selectedCategory);
-            if (selectedProject == null || !selectedProjects.Contains(selectedProject))
-            {
-                selectedProject = selectedProjects.FirstOrDefault();
-                selectedLayerKey = selectedProject == null ? null : LayerKeyFor(selectedProject);
-            }
-
-            List<ResearchLayerView> selectedLayers = BuildLayerViews(selectedProjects);
+            List<ABY_ProtocolResearchDef> allProjects = AllProtocolProjects();
+            List<ResearchLayerView> selectedLayers = BuildLayerViews(allProjects);
             EnsureSelectedLayer(selectedLayers);
             ResearchLayerView activeLayer = SelectedLayer(selectedLayers);
-            List<ABY_ProtocolResearchDef> layerProjects = ProjectsForSelectedLayer(selectedLayers, selectedProjects);
-            List<ABY_ProtocolResearchDef> displayedProjects = FilterProjects(layerProjects, selectedFilter);
+            List<ABY_ProtocolResearchDef> layerProjects = ProjectsForSelectedLayer(selectedLayers, allProjects);
+            List<ABY_ProtocolResearchDef> categoryLayerProjects = FilterByCategory(layerProjects, selectedCategory);
+            List<ABY_ProtocolResearchDef> displayedProjects = FilterProjects(categoryLayerProjects, selectedFilter);
+
             if (displayedProjects.Count > 0 && (selectedProject == null || !displayedProjects.Contains(selectedProject)))
             {
                 selectedProject = displayedProjects.FirstOrDefault();
             }
-            else if (displayedProjects.Count == 0 && (selectedProject == null || !layerProjects.Contains(selectedProject)))
+            else if (displayedProjects.Count == 0 && (selectedProject == null || !categoryLayerProjects.Contains(selectedProject)))
             {
-                selectedProject = layerProjects.FirstOrDefault() ?? selectedProjects.FirstOrDefault();
+                selectedProject = categoryLayerProjects.FirstOrDefault() ?? layerProjects.FirstOrDefault() ?? allProjects.FirstOrDefault();
             }
 
             DrawBackground(inRect);
@@ -113,8 +108,8 @@ namespace AbyssalProtocol
             Rect rightRect = new Rect(ringRect.xMax + 16f, headerRect.yMax + 12f, inRect.width - ringRect.xMax - 36f, inRect.height - headerRect.yMax - 22f);
 
             DrawHeader(headerRect, categories);
-            DrawCategoryRings(categoryRect, categories);
-            DrawCategoryDetailRing(ringRect, selectedProjects, selectedLayers, activeLayer, layerProjects, displayedProjects);
+            DrawCategoryRings(categoryRect, categories, activeLayer, layerProjects);
+            DrawCategoryDetailRing(ringRect, allProjects, selectedLayers, activeLayer, categoryLayerProjects, displayedProjects);
             DrawProjectDetails(rightRect, selectedProject);
         }
 
@@ -161,7 +156,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
         }
 
-        private void DrawCategoryRings(Rect rect, List<ABY_ProtocolResearchCategoryDef> categories)
+        private void DrawCategoryRings(Rect rect, List<ABY_ProtocolResearchCategoryDef> categories, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects)
         {
             DrawPanel(rect, false);
             Text.Font = GameFont.Tiny;
@@ -175,37 +170,36 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float itemSize = 82f;
-            float gap = 9f;
-            float startX = rect.x + 12f;
+            float itemSize = 76f;
+            float gap = 7f;
+            float startX = rect.x + 10f;
             float y = rect.y + 25f;
+            DrawCategoryFilterRing(new Rect(startX, y, itemSize, itemSize), null, selectedCategory == null, activeLayer, layerProjects);
+
             for (int i = 0; i < categories.Count; i++)
             {
                 ABY_ProtocolResearchCategoryDef category = categories[i];
-                Rect itemRect = new Rect(startX + i * (itemSize + gap), y, itemSize, itemSize);
+                Rect itemRect = new Rect(startX + (i + 1) * (itemSize + gap), y, itemSize, itemSize);
                 bool selected = category == selectedCategory;
-                DrawCategoryRing(itemRect, category, selected);
-                if (Widgets.ButtonInvisible(itemRect))
-                {
-                    selectedCategory = category;
-                    selectedProject = ABY_ProtocolResearchUtility.ProjectsFor(category).FirstOrDefault();
-                    selectedLayerKey = selectedProject == null ? null : LayerKeyFor(selectedProject);
-                    selectedFilter = ProtocolProjectFilter.All;
-                    projectListScroll = Vector2.zero;
-                    detailsScroll = Vector2.zero;
-                }
+                DrawCategoryFilterRing(itemRect, category, selected, activeLayer, layerProjects);
             }
         }
 
-        private void DrawCategoryRing(Rect rect, ABY_ProtocolResearchCategoryDef category, bool selected)
+        private void DrawCategoryFilterRing(Rect rect, ABY_ProtocolResearchCategoryDef category, bool selected, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects)
         {
-            int available = ABY_ProtocolResearchUtility.CountAvailable(category);
-            int completed = ABY_ProtocolResearchUtility.CountVisibleCompleted(category);
-            int total = ABY_ProtocolResearchUtility.ProjectsFor(category).Count;
+            List<ABY_ProtocolResearchDef> filtered = FilterByCategory(layerProjects, category);
+            int available = CountProjects(filtered, ProtocolProjectFilter.Ready);
+            int completed = CountProjects(filtered, ProtocolProjectFilter.Completed);
+            int total = filtered.Count;
             bool hover = Mouse.IsOver(rect);
+            bool empty = total == 0;
 
             Color oldColor = GUI.color;
-            GUI.color = selected ? new Color(1f, 0.86f, 0.68f, 1f) : hover ? new Color(1f, 0.72f, 0.50f, 0.94f) : Color.white;
+            GUI.color = selected
+                ? new Color(1f, 0.86f, 0.68f, 1f)
+                : hover
+                    ? new Color(1f, 0.72f, 0.50f, empty ? 0.64f : 0.94f)
+                    : new Color(1f, 1f, 1f, empty ? 0.46f : 1f);
             if (SmallRingTex != null)
             {
                 GUI.DrawTexture(rect, SmallRingTex, ScaleMode.ScaleToFit, true);
@@ -215,26 +209,53 @@ namespace AbyssalProtocol
                 Widgets.DrawBox(rect);
             }
 
-            Texture2D icon = category.iconPath.NullOrEmpty() ? null : ContentFinder<Texture2D>.Get(category.iconPath, false);
-            if (icon != null)
+            if (category == null)
             {
-                GUI.color = selected ? Color.white : new Color(0.86f, 0.82f, 0.78f, 0.92f);
-                GUI.DrawTexture(rect.ContractedBy(18f), icon, ScaleMode.ScaleToFit, true);
+                TextAnchor oldAnchor = Text.Anchor;
+                GameFont oldFont = Text.Font;
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = GameFont.Small;
+                GUI.color = selected ? Color.white : new Color(0.88f, 0.80f, 0.70f, empty ? 0.58f : 0.92f);
+                Widgets.Label(rect.ContractedBy(18f), "ABY_ProtocolResearch_AllFilterLabel".Translate());
+                Text.Anchor = oldAnchor;
+                Text.Font = oldFont;
+            }
+            else
+            {
+                Texture2D icon = category.iconPath.NullOrEmpty() ? null : ContentFinder<Texture2D>.Get(category.iconPath, false);
+                if (icon != null)
+                {
+                    GUI.color = selected ? Color.white : new Color(0.86f, 0.82f, 0.78f, empty ? 0.45f : 0.92f);
+                    GUI.DrawTexture(rect.ContractedBy(18f), icon, ScaleMode.ScaleToFit, true);
+                }
             }
             GUI.color = oldColor;
 
             Rect countRect = new Rect(rect.x + 8f, rect.yMax - 18f, rect.width - 16f, 18f);
-            DrawSolid(countRect, new Color(0f, 0f, 0f, 0.62f));
+            DrawSolid(countRect, new Color(0f, 0f, 0f, empty ? 0.44f : 0.62f));
             Text.Anchor = TextAnchor.MiddleCenter;
             Text.Font = GameFont.Tiny;
-            GUI.color = available > 0 ? new Color(1f, 0.72f, 0.42f, 1f) : new Color(0.72f, 0.68f, 0.62f, 1f);
+            GUI.color = available > 0 ? new Color(1f, 0.72f, 0.42f, 1f) : empty ? new Color(0.48f, 0.40f, 0.34f, 1f) : new Color(0.72f, 0.68f, 0.62f, 1f);
             Widgets.Label(countRect, completed + "/" + total);
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
 
+            if (Widgets.ButtonInvisible(rect))
+            {
+                selectedCategory = category;
+                List<ABY_ProtocolResearchDef> categoryProjects = FilterByCategory(layerProjects, selectedCategory);
+                selectedProject = categoryProjects.FirstOrDefault() ?? layerProjects?.FirstOrDefault();
+                selectedFilter = ProtocolProjectFilter.All;
+                projectListScroll = Vector2.zero;
+                detailsScroll = Vector2.zero;
+            }
+
             if (hover)
             {
-                string tooltip = category.LabelCap + "\n" + category.description + "\n\n" + "ABY_ProtocolResearch_CategoryTooltip".Translate(available, completed, total);
+                string label = category == null ? "ABY_ProtocolResearch_AllFilterName".Translate() : category.LabelCap;
+                string description = category == null ? "ABY_ProtocolResearch_AllFilterTooltip".Translate() : category.description;
+                string layerLabel = activeLayer == null ? "ABY_ProtocolResearch_NoLayerFilter".Translate() : activeLayer.Label;
+                string tooltip = label + "\n" + description + "\n\n" + "ABY_ProtocolResearch_CategoryFilterTooltip".Translate(available, completed, total, layerLabel);
                 TooltipHandler.TipRegion(rect, tooltip);
             }
         }
@@ -242,25 +263,22 @@ namespace AbyssalProtocol
         private void DrawCategoryDetailRing(Rect rect, List<ABY_ProtocolResearchDef> projects, List<ResearchLayerView> layers, ResearchLayerView activeLayer, List<ABY_ProtocolResearchDef> layerProjects, List<ABY_ProtocolResearchDef> displayedProjects)
         {
             DrawPanel(rect, false);
-            if (selectedCategory == null)
-            {
-                return;
-            }
 
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
-            Widgets.Label(new Rect(rect.x + 14f, rect.y + 8f, rect.width - 28f, 24f), selectedCategory.LabelCap);
+            string title = activeLayer == null ? "ABY_ProtocolResearch_TierMatrixTitle".Translate() : activeLayer.Label;
+            Widgets.Label(new Rect(rect.x + 14f, rect.y + 8f, rect.width - 28f, 24f), title);
             Text.Font = GameFont.Tiny;
             GUI.color = new Color(0.76f, 0.72f, 0.68f, 1f);
-            Widgets.Label(new Rect(rect.x + 14f, rect.y + 32f, rect.width - 28f, 34f), selectedCategory.description);
+            string filterLabel = selectedCategory == null ? "ABY_ProtocolResearch_AllFilterName".Translate() : selectedCategory.LabelCap;
+            string tierDescription = "ABY_ProtocolResearch_TierMatrixDesc".Translate(filterLabel);
+            Widgets.Label(new Rect(rect.x + 14f, rect.y + 32f, rect.width - 28f, 34f), tierDescription);
             GUI.color = Color.white;
 
             float ringSize = Mathf.Min(430f, Mathf.Max(360f, rect.height - 128f));
             Rect ringArea = new Rect(rect.x + 30f, rect.y + 70f, ringSize, ringSize);
             Rect localRingArea = new Rect(0f, 0f, ringArea.width, ringArea.height);
 
-            // Keep the large ring and its minimal markers inside one local canvas.
-            // Navigation remains driven by the stable project list to the right.
             GUI.BeginGroup(ringArea);
             if (LargeRingTex != null)
             {
@@ -353,7 +371,8 @@ namespace AbyssalProtocol
                     if (Widgets.ButtonInvisible(hitRect))
                     {
                         selectedLayerKey = layer.Key;
-                        selectedProject = layer.Projects.FirstOrDefault();
+                        List<ABY_ProtocolResearchDef> categoryProjects = FilterByCategory(layer.Projects, selectedCategory);
+                        selectedProject = categoryProjects.FirstOrDefault() ?? layer.Projects.FirstOrDefault();
                         selectedFilter = ProtocolProjectFilter.All;
                         projectListScroll = Vector2.zero;
                         detailsScroll = Vector2.zero;
@@ -361,12 +380,12 @@ namespace AbyssalProtocol
 
                     if (hover)
                     {
-                        TooltipHandler.TipRegion(hitRect, layer.Label + "\n" + LayerProgressText(layer) + "\n\n" + "Click to filter the project list to this protocol layer.");
+                        TooltipHandler.TipRegion(hitRect, layer.Label + "\n" + LayerProgressText(layer) + "\n\n" + "ABY_ProtocolResearch_TierNodeTooltip".Translate());
                     }
                 }
                 else if (hover)
                 {
-                    TooltipHandler.TipRegion(hitRect, "Tier " + TierGlyphForSlot(slot) + " — planned socket\nReserved for future Protocol Nexus expansion.");
+                    TooltipHandler.TipRegion(hitRect, "ABY_ProtocolResearch_SealedTierTooltip".Translate(TierGlyphForSlot(slot)));
                 }
             }
         }
@@ -606,7 +625,8 @@ namespace AbyssalProtocol
 
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : StateColor(selectedLayer.State);
-            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 37f, summaryRect.width - 16f, 16f), Shorten(selectedCategory?.LabelCap ?? "Protocol", 24));
+            string centerFilterLabel = selectedCategory == null ? "ABY_ProtocolResearch_AllFilterName".Translate() : selectedCategory.LabelCap;
+            Widgets.Label(new Rect(summaryRect.x + 8f, summaryRect.y + 37f, summaryRect.width - 16f, 16f), Shorten(centerFilterLabel, 24));
 
             GUI.color = new Color(0.92f, 0.80f, 0.68f, 1f);
             string selectedCounts = selectedLayer == null
@@ -634,7 +654,9 @@ namespace AbyssalProtocol
             DrawSolid(new Rect(layerRect.x + 1f, layerRect.y + 2f, 3f, layerRect.height - 4f), selectedLayer == null ? new Color(0.52f, 0.20f, 0.12f, 0.38f) : StateColor(selectedLayer.State));
             Text.Font = GameFont.Tiny;
             GUI.color = selectedLayer == null ? new Color(0.72f, 0.68f, 0.62f, 1f) : new Color(1f, 0.78f, 0.52f, 1f);
-            Widgets.Label(new Rect(layerRect.x + 9f, layerRect.y + 3f, layerRect.width - 18f, 16f), selectedLayer == null ? "Tier focus: none" : Shorten("Tier focus: " + selectedLayer.Label, 42));
+            string categoryLabel = selectedCategory == null ? "ABY_ProtocolResearch_AllFilterName".Translate() : selectedCategory.LabelCap;
+            string tierFocus = selectedLayer == null ? "ABY_ProtocolResearch_TierFocusNone".Translate() : "ABY_ProtocolResearch_TierFocusLabel".Translate(selectedLayer.Label, categoryLabel);
+            Widgets.Label(new Rect(layerRect.x + 9f, layerRect.y + 3f, layerRect.width - 18f, 16f), Shorten(tierFocus, 48));
             GUI.color = Color.white;
 
             Rect filterRect = new Rect(rect.x + 10f, layerRect.yMax + 5f, rect.width - 20f, 24f);
@@ -650,8 +672,8 @@ namespace AbyssalProtocol
                 Text.Font = GameFont.Tiny;
                 GUI.color = new Color(0.72f, 0.68f, 0.62f, 1f);
                 string emptyMessage = selectedFilter == ProtocolProjectFilter.All
-                    ? "No projects are assigned to this protocol layer."
-                    : "No projects match this list filter. Use All or another state tab.";
+                    ? "ABY_ProtocolResearch_NoProjectsForCategory".Translate()
+                    : "ABY_ProtocolResearch_NoProjectsForFilter".Translate();
                 Widgets.Label(new Rect(4f, 6f, viewRect.width - 8f, 54f), emptyMessage);
                 GUI.color = Color.white;
             }
@@ -766,7 +788,7 @@ namespace AbyssalProtocol
 
             y = DrawDecodeControls(viewRect, y, project);
             y = DrawParagraph(viewRect, y, "ABY_ProtocolResearch_DescriptionHeader".Translate(), project.description);
-            y = DrawListSection(viewRect, y, "Protocol Diagnostic", BuildDiagnosticLines(project));
+            y = DrawListSection(viewRect, y, "Protocol Status", BuildDiagnosticLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_RequirementsHeader".Translate(), BuildRequirementLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_UnlocksHeader".Translate(), project.unlocks);
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_NotesHeader".Translate(), project.notes);
@@ -870,6 +892,30 @@ namespace AbyssalProtocol
             public int AvailableCount;
             public int LockedCount;
             public ABY_ProtocolResearchState State;
+        }
+
+
+        private static List<ABY_ProtocolResearchDef> AllProtocolProjects()
+        {
+            return DefDatabase<ABY_ProtocolResearchDef>.AllDefsListForReading
+                .OrderBy(project => project?.displayOrder ?? 0)
+                .ThenBy(project => project?.label ?? string.Empty)
+                .ToList();
+        }
+
+        private static List<ABY_ProtocolResearchDef> FilterByCategory(List<ABY_ProtocolResearchDef> projects, ABY_ProtocolResearchCategoryDef category)
+        {
+            if (projects == null || projects.Count == 0)
+            {
+                return new List<ABY_ProtocolResearchDef>();
+            }
+
+            if (category == null)
+            {
+                return projects;
+            }
+
+            return projects.Where(project => project != null && project.category == category).ToList();
         }
 
         private static ResearchLayerView LayerForTierSlot(List<ResearchLayerView> layers, int slot)
