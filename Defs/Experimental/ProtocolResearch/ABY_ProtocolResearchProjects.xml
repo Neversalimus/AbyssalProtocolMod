@@ -2,68 +2,364 @@
 <Defs>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_PrimitiveSummoningProtocols</defName>
-    <label>primitive summoning protocols</label>
-    <description>The first formal attempt to turn an abyssal response into a repeatable low-tier invocation procedure. It classifies small host calls as controlled contact rather than uncontrolled breach behavior.</description>
-    <category>ABY_PR_Category_Sigils</category>
+    <defName>ABY_PR_AbyssalSignalInterpretation</defName>
+    <label>abyssal signal interpretation</label>
+    <description>The colony learns to treat abyssal noise as an addressable response pattern rather than a random anomaly. This is the first safe vocabulary of the Protocol.</description>
+    <category>ABY_PR_Category_Forge</category>
     <tierLabel>Tier I — Contact</tierLabel>
-    <displayOrder>10</displayOrder>
+    <displayOrder>110</displayOrder>
     <previewState>Completed</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>900</decodeWorkTicks>
+    <autoDecodeWhenPrerequisitesMet>true</autoDecodeWhenPrerequisitesMet>
     <requirements>
       <li>Abyssal Signal Theory completed.</li>
-      <li>Primitive circle available.</li>
     </requirements>
     <unlocks>
-      <li>Codifies low-tier summon readiness.</li>
-      <li>Gives the Protocol Matrix its first sigil layer.</li>
+      <li>Marks the first contact layer as understood.</li>
+      <li>Keeps early Forge hints legible.</li>
     </unlocks>
     <notes>
-      <li>Preview entry only: current summoning unlocks remain controlled by existing systems.</li>
+      <li>Auto-decoded once vanilla research prerequisites are met.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ArchonSigilHandling</defName>
-    <label>archon sigil handling</label>
-    <description>A sigil is not a trophy. It is a recorded permission event. This analysis teaches the colony how archon marks can be stored, read and reproduced without confusing them with normal resources.</description>
+    <defName>ABY_PR_PrimitiveBreachProtocols</defName>
+    <label>primitive breach protocols</label>
+    <description>The first repeatable low-risk breach procedures. These protocols keep early summons small enough to be used as controlled contact rather than uncontrolled invasion.</description>
     <category>ABY_PR_Category_Sigils</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>20</displayOrder>
-    <previewState>Available</previewState>
+    <tierLabel>Tier I — Contact</tierLabel>
+    <displayOrder>120</displayOrder>
+    <previewState>Completed</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>1000</decodeWorkTicks>
+    <autoDecodeWhenPrerequisitesMet>true</autoDecodeWhenPrerequisitesMet>
     <requirements>
-      <li>Archon-class encounter evidence.</li>
-      <li>Bound or recovered sigil material.</li>
+      <li>Abyssal Signal Theory completed.</li>
     </requirements>
     <unlocks>
-      <li>Explains boss-gated invocation rights.</li>
-      <li>Prepares later boss sigil UI classification.</li>
+      <li>Reveals primitive breach and low-tier sigil families.</li>
     </unlocks>
     <notes>
-      <li>No real boss gate is modified by this experimental matrix.</li>
+      <li>Auto-decoded for early game clarity.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_ResidueRecognition</defName>
+    <label>residue recognition</label>
+    <description>The colony identifies Infernal Residue as the material shadow of contact: unstable, valuable and dangerous enough to become an industrial reagent.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier I — Contact</tierLabel>
+    <displayOrder>130</displayOrder>
+    <previewState>Completed</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>900</decodeWorkTicks>
+    <autoDecodeWhenPrerequisitesMet>true</autoDecodeWhenPrerequisitesMet>
+    <requirements>
+      <li>Abyssal Signal Theory completed.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals the earliest residue handling vocabulary.</li>
+    </unlocks>
+    <notes>
+      <li>Auto-decoded for early game clarity.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_ForgeContactVocabulary</defName>
+    <label>forge contact vocabulary</label>
+    <description>The Abyssal Forge begins to classify shapes, outputs and unsafe production signatures without yet understanding their full functions.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier I — Contact</tierLabel>
+    <displayOrder>140</displayOrder>
+    <previewState>Completed</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>1100</decodeWorkTicks>
+    <autoDecodeWhenPrerequisitesMet>true</autoDecodeWhenPrerequisitesMet>
+    <requirements>
+      <li>Abyssal Forge built or available.</li>
+    </requirements>
+    <unlocks>
+      <li>Allows the Forge to display unknown pattern families instead of hiding them.</li>
+    </unlocks>
+    <notes>
+      <li>Auto-decoded. This is the bridge between Nexus and Forge cards.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_CircleStabilizerFrames</defName>
+    <label>circle stabilizer frames</label>
+    <description>Basic stabilizer frames teach the colony to hold a breach in a repeatable geometry long enough for practical ritual use.</description>
+    <category>ABY_PR_Category_Circle</category>
+    <tierLabel>Tier II — Stabilization</tierLabel>
+    <displayOrder>210</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>1800</decodeWorkTicks>
+    <requirements>
+      <li>Abyssal Signal Theory completed.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals early stabilizer/module infrastructure.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_AshboundCapacitance</defName>
+    <label>ashbound capacitance</label>
+    <description>The first abyssal capacitors store ritual pressure as a controlled industrial load instead of a map-scale accident waiting to happen.</description>
+    <category>ABY_PR_Category_Circle</category>
+    <tierLabel>Tier II — Stabilization</tierLabel>
+    <displayOrder>220</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>1800</decodeWorkTicks>
+    <requirements>
+      <li>Abyssal Signal Theory completed.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals ashbound capacitor and early energy support patterns.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_ResidueProcessing</defName>
+    <label>residue processing</label>
+    <description>Residue stops being a trophy and becomes a processed reagent for repeatable Forge recipes, early modules and ritual-support materials.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier II — Stabilization</tierLabel>
+    <displayOrder>230</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>1700</decodeWorkTicks>
+    <requirements>
+      <li>Residue samples recovered.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals early core/resource recipes.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_BasicAbyssalArms</defName>
+    <label>basic abyssal arms</label>
+    <description>The first weapon patterns translate residue pressure into blades, pistols, repeaters and other battlefield-readable forms.</description>
+    <category>ABY_PR_Category_Weapons</category>
+    <tierLabel>Tier II — Stabilization</tierLabel>
+    <displayOrder>240</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>2200</decodeWorkTicks>
+    <requirements>
+      <li>Residue Processing.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals early weapon cards in the Forge.</li>
+    </unlocks>
+    <notes>
+      <li>One project unlocks a family, not one item.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_AshboundCombatKit</defName>
+    <label>ashbound combat kit</label>
+    <description>Early protective equipment teaches pawns to survive contact residue without pretending it is normal armor material.</description>
+    <category>ABY_PR_Category_Armor</category>
+    <tierLabel>Tier II — Stabilization</tierLabel>
+    <displayOrder>250</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>2200</decodeWorkTicks>
+    <requirements>
+      <li>Residue Processing.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals early armor/apparel cards.</li>
+    </unlocks>
+    <notes>
+      <li>One project unlocks a family, not one item.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_RiftBallistics</defName>
+    <label>rift ballistics</label>
+    <description>Rift weapons throw shaped disagreements into armor and tissue. This project classifies their stable combat roles.</description>
+    <category>ABY_PR_Category_Weapons</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>310</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3000</decodeWorkTicks>
+    <requirements>
+      <li>Basic Abyssal Arms.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals rift carbines, needlers and related mid-tier weapons.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_NullGeometryHandling</defName>
+    <label>null geometry handling</label>
+    <description>The colony learns to survive and weaponize absence: null pressure, anti-aura logic and geometry that interrupts normal targeting assumptions.</description>
+    <category>ABY_PR_Category_Weapons</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>320</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3200</decodeWorkTicks>
+    <requirements>
+      <li>Rift Ballistics.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals null weapon and null-field pattern families.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_BasicAbyssalImplants</defName>
+    <label>basic abyssal implants</label>
+    <description>The Protocol moves from external machines into colonist biology. Early implants are controlled compromises with the body.</description>
+    <category>ABY_PR_Category_Implants</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>330</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3000</decodeWorkTicks>
+    <requirements>
+      <li>Residue Processing.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals early implant procedures.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_AbyssalArmorSystems</defName>
+    <label>abyssal armor systems</label>
+    <description>Abyssal armor becomes more than plating: it is a wearable method for remaining coherent under hostile breach pressure.</description>
+    <category>ABY_PR_Category_Armor</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>340</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3200</decodeWorkTicks>
+    <requirements>
+      <li>Ashbound Combat Kit.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals mid-tier armor and accessories.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_EliteSummoningPatterns</defName>
     <label>elite summoning patterns</label>
-    <description>The colony stops calling mass and begins calling function. Elite patterns describe specialized hostile formations: snipers, brutes, priests and support nodes.</description>
+    <description>The colony stops calling mass and begins calling function: snipers, brutes, priests, relay nodes and specialized threats.</description>
     <category>ABY_PR_Category_Sigils</category>
     <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>30</displayOrder>
+    <displayOrder>350</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3400</decodeWorkTicks>
     <requirements>
-      <li>Mid-tier abyssal combat data.</li>
-      <li>Stable circle infrastructure.</li>
+      <li>Primitive Breach Protocols.</li>
     </requirements>
     <unlocks>
-      <li>Classifies elite encounter families.</li>
-      <li>Supports future targeted summoning unlocks.</li>
+      <li>Reveals elite encounter and mid-tier sigil families.</li>
     </unlocks>
     <notes>
-      <li>Intended to be linked to actual ritual defs only after the system is accepted.</li>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_CoreIntegration</defName>
+    <label>core integration</label>
+    <description>A core is not a battery. It is a functioning organ of the external system, and integrating it makes the colony part of that system.</description>
+    <category>ABY_PR_Category_Implants</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>360</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3600</decodeWorkTicks>
+    <requirements>
+      <li>Abyssal Core evidence.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals core-powered implants and mid-tier production requirements.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_ModularTurretInterface</defName>
+    <label>modular turret interface</label>
+    <description>The first turret modules translate breach logic into slots, targeting states and controlled automated defense.</description>
+    <category>ABY_PR_Category_Turrets</category>
+    <tierLabel>Tier III — Integration</tierLabel>
+    <displayOrder>370</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>3000</decodeWorkTicks>
+    <requirements>
+      <li>Forge Communion Theory represented.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals basic modular turret chassis/modules.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_ArchonSigilHandling</defName>
+    <label>archon sigil handling</label>
+    <description>An archon sigil is a recorded permission event, not a trophy. This project teaches the colony to store and reproduce that right safely.</description>
+    <category>ABY_PR_Category_Sigils</category>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>410</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4200</decodeWorkTicks>
+    <requirements>
+      <li>Archon-class encounter evidence.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals archon and boss-gated invocation rights.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
@@ -72,241 +368,208 @@
     <label>major boss invocation</label>
     <description>A major boss invocation is not a stronger summon. It is a formal request for a domain-bearing authority to answer the colony directly.</description>
     <category>ABY_PR_Category_Sigils</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Crown Shard evidence.</li>
-      <li>Advanced stabilizer or capacitor infrastructure.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames domain boss access as protocol permission.</li>
-      <li>Supports future late-tier summon gating.</li>
-    </unlocks>
-    <notes>
-      <li>Kept locked as a planned entry.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CrownedGateInvocation</defName>
-    <label>crowned gate invocation</label>
-    <description>The colony attempts to address an enemy infrastructure as an encounter. This is the invocation layer where the gate, anchors and waves become one hostile machine.</description>
-    <category>ABY_PR_Category_Sigils</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Dominion Protocol.</li>
-      <li>Final Gate Architecture.</li>
-      <li>Crowned Gate combat evidence.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies final boss event access.</li>
-      <li>Prepares post-finale escalation hooks.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only. No current final gate logic is changed.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_InfernalWeapons</defName>
-    <label>infernal weapons</label>
-    <description>The first abyssal weapons are not looted miracles. They are industrial translations of residue pressure into barrels, rails, conduits and lethal pattern logic.</description>
-    <category>ABY_PR_Category_Weapons</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Signal Theory completed.</li>
-      <li>Abyssal Forge or weapon fabrication loop available.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies early abyssal weapons.</li>
-      <li>Connects weapons to the Protocol Matrix.</li>
-    </unlocks>
-    <notes>
-      <li>Current weapon recipes remain governed by existing forge progression.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_RiftBallistics</defName>
-    <label>rift ballistics</label>
-    <description>Rift weapons do not merely fire projectiles. They throw tiny shaped disagreements into local matter, forcing armor and tissue to resolve a hostile geometry.</description>
-    <category>ABY_PR_Category_Weapons</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>20</displayOrder>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>420</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4600</decodeWorkTicks>
     <requirements>
-      <li>Recovered rift weapon data.</li>
-      <li>Residue-rich combat telemetry.</li>
+      <li>Archon Sigil Handling.</li>
     </requirements>
     <unlocks>
-      <li>Explains rift carbines, needlers and lance behavior.</li>
-      <li>Supports future weapon role grouping.</li>
+      <li>Reveals Reactor Saint and major-boss invocation families.</li>
     </unlocks>
     <notes>
-      <li>Preview only; no stat changes are applied.</li>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_CrownLogicDecoding</defName>
+    <label>crown logic decoding</label>
+    <description>The colony begins to read Crown Shards as fragments of administrative authority rather than high-grade loot.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>430</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4600</decodeWorkTicks>
+    <requirements>
+      <li>Crown Shard evidence.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals crown-tier Forge logic and late resource recipes.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_HeavyInfernalSystems</defName>
     <label>heavy infernal systems</label>
-    <description>Heavy infernal systems represent the point where the colony stops adapting guns and begins fielding mobile breach machinery.</description>
+    <description>The colony stops adapting weapons and begins fielding mobile breach machinery: heavy guns, boss-breakers and siege-grade conduits.</description>
     <category>ABY_PR_Category_Weapons</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>30</displayOrder>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>440</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4400</decodeWorkTicks>
     <requirements>
-      <li>Abyssal Core samples.</li>
-      <li>Elite or boss-grade damage telemetry.</li>
+      <li>Core Integration.</li>
     </requirements>
     <unlocks>
-      <li>Classifies heavy weapons and anti-fortification systems.</li>
-      <li>Supports future gating for late weapons.</li>
+      <li>Reveals heavy infernal and anti-fortification weapons.</li>
     </unlocks>
     <notes>
-      <li>Existing recipes are not blocked by this matrix.</li>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ApexWeaponry</defName>
-    <label>apex weaponry</label>
-    <description>Apex weapons are not simply stronger. They are designed to be legally meaningful against entities whose bodies are only interfaces.</description>
-    <category>ABY_PR_Category_Weapons</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Crown Logic Decoding.</li>
-      <li>Final Gate combat evidence.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames endgame weapons as anti-domain tools.</li>
-      <li>Supports future final-tier weapon unlocks.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_AntiBossTargeting</defName>
-    <label>anti-boss targeting doctrine</label>
-    <description>Bosses require different target logic. This protocol defines the difference between killing a pawn and disrupting a domain-bearing battlefield function.</description>
-    <category>ABY_PR_Category_Weapons</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>50</displayOrder>
+    <defName>ABY_PR_AdvancedImplants</defName>
+    <label>advanced implants</label>
+    <description>Advanced implants treat the pawn as a compatible platform for alien command pressure rather than a patient receiving surgery.</description>
+    <category>ABY_PR_Category_Implants</category>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>450</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4400</decodeWorkTicks>
     <requirements>
-      <li>Boss encounter telemetry.</li>
-      <li>Stable high-energy weapons.</li>
+      <li>Core Integration.</li>
     </requirements>
     <unlocks>
-      <li>Classifies anti-boss roles.</li>
-      <li>Supports future tooltip and UI guidance for weapons.</li>
+      <li>Reveals advanced implant procedures.</li>
     </unlocks>
     <notes>
-      <li>No targeting code is modified by this research UI.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_AshweaveReinforcement</defName>
-    <label>ashweave reinforcement</label>
-    <description>Early protective systems teach the colony to survive contact residue without pretending it is normal armor material.</description>
-    <category>ABY_PR_Category_Armor</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Residue handling.</li>
-      <li>Basic abyssal tailoring or plating.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies early armor progression.</li>
-      <li>Prepares armor category grouping.</li>
-    </unlocks>
-    <notes>
-      <li>Preview only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_AbyssalArmorSystems</defName>
-    <label>abyssal armor systems</label>
-    <description>Abyssal armor does not merely resist force. It teaches the wearer how to remain coherent while hostile breach pressure tries to rewrite the battlefield.</description>
-    <category>ABY_PR_Category_Armor</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>20</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Core Integration data.</li>
-      <li>Mid-tier combat losses.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies mid-tier armor sets.</li>
-      <li>Supports future armor unlock staging.</li>
-    </unlocks>
-    <notes>
-      <li>No apparel defs are changed by this preview.</li>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_GatebreakerCarapaceLogic</defName>
     <label>gatebreaker carapace logic</label>
-    <description>Gatebreaker doctrine treats armor as an answer to boss arenas, anchors and prolonged breach exposure rather than only bullets and claws.</description>
+    <description>Gatebreaker doctrine treats armor as a response to boss arenas, anchors and prolonged breach exposure rather than only bullets and claws.</description>
     <category>ABY_PR_Category_Armor</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>30</displayOrder>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>460</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4600</decodeWorkTicks>
     <requirements>
-      <li>Major boss telemetry.</li>
-      <li>High-grade armor samples.</li>
+      <li>Crown Logic Decoding.</li>
     </requirements>
     <unlocks>
-      <li>Classifies boss-resistant armor logic.</li>
-      <li>Supports future Gatebreaker UI explanations.</li>
+      <li>Reveals Gatebreaker and Saint-resistant armor families.</li>
     </unlocks>
     <notes>
-      <li>Preview only.</li>
+      <li>Real decode project.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CrownplateConditioning</defName>
-    <label>crownplate conditioning</label>
-    <description>Crownplate systems must survive authority, not just impact. The plate is conditioned to resist orders written into matter.</description>
-    <category>ABY_PR_Category_Armor</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
+    <defName>ABY_PR_BreachLockdownSystems</defName>
+    <label>breach lockdown systems</label>
+    <description>Advanced turret modules learn to hold breach states in place: lances, arcs, harpoons, null pressure and siege lockdown roles.</description>
+    <category>ABY_PR_Category_Turrets</category>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>470</displayOrder>
+    <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4200</decodeWorkTicks>
     <requirements>
-      <li>Crown Shard material.</li>
+      <li>Modular Turret Interface.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals advanced turret module families.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_DominionGateBootstrapping</defName>
+    <label>dominion gate bootstrapping</label>
+    <description>The circle lattice is hardened for Dominion-class synchronization: not a final gate, but the first serious attempt to enter hostile infrastructure.</description>
+    <category>ABY_PR_Category_Dominion</category>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>510</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5600</decodeWorkTicks>
+    <requirements>
       <li>Crown Logic Decoding.</li>
     </requirements>
     <unlocks>
-      <li>Frames crown-tier armor as domain resistance.</li>
-      <li>Supports future final armor gates.</li>
+      <li>Reveals Dominion entry preparation and Hell-tier routing.</li>
     </unlocks>
     <notes>
-      <li>Planned only.</li>
+      <li>Tier V is Hell/Dominion Slice, not Final Gate.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_DominionSliceCartography</defName>
+    <label>dominion slice cartography</label>
+    <description>The colony learns to read the Dominion Slice as a hostile industrial map rather than a random hell biome.</description>
+    <category>ABY_PR_Category_Dominion</category>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>520</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5400</decodeWorkTicks>
+    <requirements>
+      <li>Dominion Gate Bootstrapping.</li>
+    </requirements>
+    <unlocks>
+      <li>Frames Dominion terrain, pockets, approach vectors and map hazards.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project for Hell UI/lore.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_InfernalPocketStabilization</defName>
+    <label>infernal pocket stabilization</label>
+    <description>Pocket stabilization keeps entry, exit, transfer and collapse states legible enough to survive the trip into Hell.</description>
+    <category>ABY_PR_Category_Circle</category>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>530</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5600</decodeWorkTicks>
+    <requirements>
+      <li>Dominion Gate Bootstrapping.</li>
+    </requirements>
+    <unlocks>
+      <li>Reveals pocket runtime, exit handling and Dominion transition support.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project for Hell infrastructure.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_AnchorLawBreachAnalysis</defName>
+    <label>anchor-law breach analysis</label>
+    <description>Dominion anchors are not props. They are local law fasteners that teach the player how Hell resists extraction.</description>
+    <category>ABY_PR_Category_Dominion</category>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>540</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5600</decodeWorkTicks>
+    <requirements>
+      <li>Dominion Slice Cartography.</li>
+    </requirements>
+    <unlocks>
+      <li>Frames Dominion anchors, heart pressure and collapse mechanics.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project for Hell encounters.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
@@ -315,568 +578,237 @@
     <label>dominion survival frames</label>
     <description>Dominion survival frames are built for maps that no longer behave like ordinary RimWorld spaces.</description>
     <category>ABY_PR_Category_Armor</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Dominion pocket data.</li>
-      <li>Final Gate Architecture.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies post-boss armor survival layer.</li>
-      <li>Supports future hell/dominion gear gating.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_BasicImplants</defName>
-    <label>basic implants</label>
-    <description>The first implants move the Protocol from external infrastructure into colonist biology. This is power gained by making the body less exclusively human.</description>
-    <category>ABY_PR_Category_Implants</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Signal Theory completed.</li>
-      <li>Basic implant workbench or forge loop.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies early implant families.</li>
-      <li>Supports future implant detail cards.</li>
-    </unlocks>
-    <notes>
-      <li>Existing implant recipes remain forge-driven.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CoreIntegration</defName>
-    <label>core integration</label>
-    <description>A core is not a battery. It is a functioning organ of the external system. Integration means the colony is no longer just studying debris.</description>
-    <category>ABY_PR_Category_Implants</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>20</displayOrder>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>550</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5200</decodeWorkTicks>
     <requirements>
-      <li>Abyssal Core sample.</li>
-      <li>Forge Communion Theory.</li>
+      <li>Anchor-Law Breach Analysis.</li>
     </requirements>
     <unlocks>
-      <li>Frames core-powered implants and weapons.</li>
-      <li>Supports later material requirements.</li>
+      <li>Reveals Dominion survival armor and Crowned Core defensive patterns.</li>
     </unlocks>
     <notes>
-      <li>Preview only.</li>
+      <li>Real decode project for Hell rewards.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_AdvancedImplants</defName>
-    <label>advanced implants</label>
-    <description>Advanced implants treat the pawn as a compatible platform for alien command pressure, not merely a patient receiving surgery.</description>
-    <category>ABY_PR_Category_Implants</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>30</displayOrder>
+    <defName>ABY_PR_CrownedCoreExtraction</defName>
+    <label>crowned core extraction</label>
+    <description>The colony learns to extract and stabilize Dominion-grade authority fragments without mistaking them for ordinary boss drops.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>560</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5600</decodeWorkTicks>
     <requirements>
-      <li>Core Integration.</li>
-      <li>Elite or boss drops.</li>
+      <li>Anchor-Law Breach Analysis.</li>
     </requirements>
     <unlocks>
-      <li>Classifies late implant families.</li>
-      <li>Supports future body-mod progression UI.</li>
+      <li>Reveals Crowned Core, Dominion Crown Shard and Hell-tier reward processing.</li>
     </unlocks>
     <notes>
-      <li>No surgery recipes are modified.</li>
+      <li>Real decode project for Hell rewards.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_RuptureCrownInterface</defName>
-    <label>rupture crown interface</label>
-    <description>The Rupture Crown is not worn; it grants a position. Interface research documents the cost of making a colonist legible to crown authority.</description>
+    <defName>ABY_PR_DominionBiology</defName>
+    <label>dominion biology</label>
+    <description>The body is prepared for Dominion law: implants, organs and survival logic made from Hell exposure rather than ordinary surgery.</description>
     <category>ABY_PR_Category_Implants</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Rupture Crown artifact data.</li>
-      <li>Crown Logic Decoding.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames crown artifacts and neural risks.</li>
-      <li>Supports future crown-specific UI.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_GateAnchorBiology</defName>
-    <label>gate anchor biology</label>
-    <description>A pawn can become more than a fighter. With sufficient loss of boundary, it can become infrastructure for the ritual itself.</description>
-    <category>ABY_PR_Category_Implants</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Gate Anchor Node samples.</li>
-      <li>Final Gate Architecture.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies anchor implants and operator roles.</li>
-      <li>Supports future ritual operator mechanics.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CircleSafetyInterlocks</defName>
-    <label>circle safety interlocks</label>
-    <description>Even a primitive circle requires ways to fail less catastrophically. Safety interlocks are not safety; they are survivable failure shaping.</description>
-    <category>ABY_PR_Category_Circle</category>
-    <tierLabel>Tier I — Contact</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Signal Theory completed.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies early circle safety.</li>
-      <li>Supports future instability requirement blocks.</li>
-    </unlocks>
-    <notes>
-      <li>Existing circle behavior is unchanged.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_StabilizedGateGeometry</defName>
-    <label>stabilized gate geometry</label>
-    <description>The colony learns how to make a wound in the world open according to repeatable machine geometry rather than accident.</description>
-    <category>ABY_PR_Category_Circle</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>20</displayOrder>
+    <tierLabel>Tier V — Dominion Slice</tierLabel>
+    <displayOrder>570</displayOrder>
     <previewState>Available</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>5400</decodeWorkTicks>
     <requirements>
-      <li>Circle built.</li>
-      <li>Stabilizer concept available.</li>
+      <li>Crowned Core Extraction.</li>
     </requirements>
     <unlocks>
-      <li>Frames stabilizer and capacitor layers.</li>
-      <li>Supports future module requirements.</li>
+      <li>Reveals Dominion implant families.</li>
     </unlocks>
     <notes>
-      <li>Preview only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ContainmentLogic</defName>
-    <label>containment logic</label>
-    <description>Containment logic accepts that the door will misbehave. The task is to restrict how badly it is allowed to answer.</description>
-    <category>ABY_PR_Category_Circle</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>30</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Early instability evidence.</li>
-      <li>Stabilized Gate Geometry.</li>
-    </requirements>
-    <unlocks>
-      <li>Explains containment obelisks and mitigation systems.</li>
-      <li>Supports future failure UI.</li>
-    </unlocks>
-    <notes>
-      <li>No instability values are changed.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CrownTierConduits</defName>
-    <label>crown-tier conduits</label>
-    <description>Crown-tier conduits carry authority, not just energy. They are designed for procedures where the breach must respect a higher access layer.</description>
-    <category>ABY_PR_Category_Circle</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Crown Shard material.</li>
-      <li>Major boss evidence.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies late conduit infrastructure.</li>
-      <li>Supports crown-tier building gates.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
+      <li>Real decode project for Hell rewards.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_FinalGateArchitecture</defName>
     <label>final gate architecture</label>
-    <description>The colony stops designing a circle and begins designing a battlefield-scale architecture of invasion, anchors and refusal.</description>
-    <category>ABY_PR_Category_Circle</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
+    <description>Final Gate Architecture is the step beyond Hell-entry: designing the encounter as an enemy infrastructure rather than a place.</description>
+    <category>ABY_PR_Category_Dominion</category>
+    <tierLabel>Tier VI — Final Gate</tierLabel>
+    <displayOrder>610</displayOrder>
     <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>6200</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
-      <li>Dominion Protocol.</li>
-      <li>Crown-tier conduits.</li>
+      <li>Dominion Slice evidence.</li>
     </requirements>
     <unlocks>
-      <li>Frames final gate and anchor logic.</li>
-      <li>Supports future endgame encounter gates.</li>
+      <li>Frames future Final Gate access.</li>
     </unlocks>
     <notes>
-      <li>Planned only.</li>
+      <li>Future reserve. Current playable scope mostly ends before this.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ResidueProcessing</defName>
-    <label>residue processing</label>
-    <description>Residue is not waste. It is matter that remembers being pressed by another law, and it can be compacted into the first useful abyssal reagent.</description>
-    <category>ABY_PR_Category_Forge</category>
-    <tierLabel>Tier I — Contact</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Signal Theory completed.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies residue as research material.</li>
-      <li>Connects early economy to the Protocol Matrix.</li>
-    </unlocks>
-    <notes>
-      <li>Existing residue systems remain unchanged.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_EssenceCompression</defName>
-    <label>essence compression</label>
-    <description>The colony standardizes hostile remains into a form the forge can reason about. This is where trophies become industrial feedstock.</description>
-    <category>ABY_PR_Category_Forge</category>
-    <tierLabel>Tier II — Stabilization</tierLabel>
-    <displayOrder>20</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Residue Processing.</li>
-      <li>Sintering or reclaiming loop.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames mid-tier resource conversion.</li>
-      <li>Supports future material requirement display.</li>
-    </unlocks>
-    <notes>
-      <li>Preview only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ForgeCommunionTheory</defName>
-    <label>forge communion theory</label>
-    <description>The forge is no longer a bench. It is a negotiated industrial interface where the colony learns to manufacture its future from enemy matter.</description>
-    <category>ABY_PR_Category_Forge</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>30</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Forge built.</li>
-      <li>Residue offered to the forge.</li>
-    </requirements>
-    <unlocks>
-      <li>Explains forge attunement and unlock language.</li>
-      <li>Supports future integration with Forge Console.</li>
-    </unlocks>
-    <notes>
-      <li>No forge unlock rules are changed in this isolated version.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CrownLogicDecoding</defName>
-    <label>crown logic decoding</label>
-    <description>Crown shards are broken pieces of administration. Decoding them means reading authority as a protocol, not as symbolism.</description>
-    <category>ABY_PR_Category_Forge</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
+    <defName>ABY_PR_CrownedGateInvocation</defName>
+    <label>crowned gate invocation</label>
+    <description>The colony attempts to address an enemy infrastructure as an encounter: gate, anchors, waves and command pressure as one hostile machine.</description>
+    <category>ABY_PR_Category_Sigils</category>
+    <tierLabel>Tier VI — Final Gate</tierLabel>
+    <displayOrder>620</displayOrder>
     <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>6400</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
-      <li>Crown Shard sample.</li>
-      <li>Major boss victory.</li>
+      <li>Final Gate Architecture.</li>
     </requirements>
     <unlocks>
-      <li>Frames crown-tier unlocks.</li>
-      <li>Supports late research descriptions.</li>
+      <li>Frames future Crowned Gate encounter access.</li>
     </unlocks>
     <notes>
-      <li>Planned only.</li>
+      <li>Future reserve.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_SanctifiedSeveranceAnalysis</defName>
-    <label>sanctified severance analysis</label>
-    <description>Severance analysis studies how abyssal influence could be cut out of gear and replaced with cold controlled judgement.</description>
-    <category>ABY_PR_Category_Forge</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
+    <defName>ABY_PR_ApexWeaponry</defName>
+    <label>apex weaponry</label>
+    <description>Apex weapons are designed to be legally meaningful against entities whose bodies are only interfaces.</description>
+    <category>ABY_PR_Category_Weapons</category>
+    <tierLabel>Tier VI — Final Gate</tierLabel>
+    <displayOrder>630</displayOrder>
     <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Sanctification infrastructure.</li>
-      <li>Crown Logic Decoding.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies future sanctification/severance building.</li>
-      <li>Supports post-Saint cleansing mechanics.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_ModularTurretInterface</defName>
-    <label>modular turret interface</label>
-    <description>Abyssal turret modules are not just weapons bolted to steel. They are role-specific protocol organs fitted into a controlled chassis.</description>
-    <category>ABY_PR_Category_Turrets</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Completed</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Abyssal Forge built.</li>
-      <li>Turret module production available.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies turret modules as research family.</li>
-      <li>Supports future turret UI grouping.</li>
-    </unlocks>
-    <notes>
-      <li>Existing modular turret code remains authoritative.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_AbyssalTargetAcquisition</defName>
-    <label>abyssal target acquisition</label>
-    <description>Abyssal targeting does not ask only what is closest. It asks which hostile function must be interrupted before the breach escalates.</description>
-    <category>ABY_PR_Category_Turrets</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>20</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Combat telemetry from abyssal encounters.</li>
-      <li>Modular turret chassis.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames turret targeting doctrine.</li>
-      <li>Supports future targeting explanations.</li>
-    </unlocks>
-    <notes>
-      <li>No AI targeting logic is changed by this UI.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_BreachLockdownSystems</defName>
-    <label>breach lockdown systems</label>
-    <description>Lockdown systems are built for enemies that should not be allowed to cross a line: elites, chargers and breach-born specialists.</description>
-    <category>ABY_PR_Category_Turrets</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>30</displayOrder>
-    <previewState>Available</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Elite encounter data.</li>
-      <li>Harpoon or control module evidence.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies suppression and tether modules.</li>
-      <li>Supports anti-elite turret category.</li>
-    </unlocks>
-    <notes>
-      <li>Preview only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_CrownfireLaunchLogic</defName>
-    <label>crownfire launch logic</label>
-    <description>Crownfire launch logic turns artillery into ritual judgement: a long-range answer to entities that try to turn distance into authority.</description>
-    <category>ABY_PR_Category_Turrets</category>
-    <tierLabel>Tier IV — Dominion</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Crown-tier munitions.</li>
-      <li>Major boss telemetry.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames late rocket/artillery turret modules.</li>
-      <li>Supports future crownfire unlocks.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_SepulcherRailCalibration</defName>
-    <label>sepulcher rail calibration</label>
-    <description>Sepulcher rails require calibration against targets that are less bodies than moving breach equations.</description>
-    <category>ABY_PR_Category_Turrets</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>50</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>6200</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
       <li>Final Gate combat telemetry.</li>
+    </requirements>
+    <unlocks>
+      <li>Frames future apex weapon gates.</li>
+    </unlocks>
+    <notes>
+      <li>Future reserve.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_CrownfireSepulcherCalibration</defName>
+    <label>crownfire / sepulcher calibration</label>
+    <description>Final anti-boss turret systems require Crownfire, Sepulcher and prism logic calibrated against domain-scale targets.</description>
+    <category>ABY_PR_Category_Turrets</category>
+    <tierLabel>Tier VI — Final Gate</tierLabel>
+    <displayOrder>640</displayOrder>
+    <previewState>Locked</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>6200</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
+    <requirements>
       <li>Apex Weaponry.</li>
     </requirements>
     <unlocks>
-      <li>Classifies final anti-boss turret systems.</li>
-      <li>Supports late-game turret progression.</li>
+      <li>Frames final turret systems.</li>
     </unlocks>
     <notes>
-      <li>Planned only.</li>
+      <li>Future reserve.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_HeraldicFragmentAnalysis</defName>
     <label>heraldic fragment analysis</label>
-    <description>Some fragments are not trophies. They are messages, addresses and permissions left by entities that speak from higher layers of the invasion.</description>
+    <description>Some fragments are not trophies. They are messages, addresses and permissions left by entities speaking from higher invasion layers.</description>
     <category>ABY_PR_Category_Dominion</category>
-    <tierLabel>Tier III — Integration</tierLabel>
-    <displayOrder>10</displayOrder>
-    <previewState>Available</previewState>
+    <tierLabel>Tier VII — Herald Descent</tierLabel>
+    <displayOrder>710</displayOrder>
+    <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>7000</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
-      <li>Herald fragment evidence.</li>
-      <li>Core Integration.</li>
+      <li>Dominion Protocol evidence.</li>
     </requirements>
     <unlocks>
-      <li>Frames Herald content as interpretation rather than loot.</li>
-      <li>Supports future codex/research links.</li>
+      <li>Frames Herald weapons and fragment interpretation.</li>
     </unlocks>
     <notes>
-      <li>Preview only.</li>
+      <li>Partial/future reserve.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_DominionProtocol</defName>
-    <label>dominion protocol</label>
-    <description>Dominion Protocol is the moment where the colony stops surviving answers and begins asking for administrative layers of the Abyss by name.</description>
+    <defName>ABY_PR_OblivionChoirInterface</defName>
+    <label>oblivion choir interface</label>
+    <description>The Herald layer becomes audible as command music: crownspikes, stormcasters and choir-grade weapons that answer to something above bosses.</description>
     <category>ABY_PR_Category_Dominion</category>
-    <tierLabel>Tier V — Final Gate</tierLabel>
-    <displayOrder>20</displayOrder>
+    <tierLabel>Tier VII — Herald Descent</tierLabel>
+    <displayOrder>720</displayOrder>
     <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Crown Logic Decoding.</li>
-      <li>Dominion pocket evidence.</li>
-    </requirements>
-    <unlocks>
-      <li>Classifies dominion access as a right layer.</li>
-      <li>Supports final gate and post-game transitions.</li>
-    </unlocks>
-    <notes>
-      <li>Planned only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_MetadomainBreachTheory</defName>
-    <label>metadomain breach theory</label>
-    <description>The colony begins to suspect that known domains are only local interfaces, and that the true system is deeper than any boss can express.</description>
-    <category>ABY_PR_Category_Dominion</category>
-    <tierLabel>Post-Endgame Layer</tierLabel>
-    <displayOrder>30</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
-    <requirements>
-      <li>Dominion Protocol.</li>
-      <li>Post-boss anomaly data.</li>
-    </requirements>
-    <unlocks>
-      <li>Frames post-endgame crisis research.</li>
-      <li>Supports future hidden escalation.</li>
-    </unlocks>
-    <notes>
-      <li>Lore reserve only.</li>
-    </notes>
-  </AbyssalProtocol.ABY_ProtocolResearchDef>
-
-  <AbyssalProtocol.ABY_ProtocolResearchDef>
-    <defName>ABY_PR_HeraldDescentForecasting</defName>
-    <label>herald descent forecasting</label>
-    <description>Forecasting the Herald is not prediction. It is recognizing when a world has become legible enough to be announced.</description>
-    <category>ABY_PR_Category_Dominion</category>
-    <tierLabel>Post-Endgame Layer</tierLabel>
-    <displayOrder>40</displayOrder>
-    <previewState>Locked</previewState>
-    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>7200</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
       <li>Heraldic Fragment Analysis.</li>
-      <li>Metadomain Breach Theory.</li>
     </requirements>
     <unlocks>
-      <li>Supports future Herald crisis UI.</li>
-      <li>Frames delayed escalation warnings.</li>
+      <li>Frames future Herald combat families.</li>
     </unlocks>
     <notes>
-      <li>Lore reserve only.</li>
+      <li>Future reserve.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_SchismGodshardForensics</defName>
+    <label>schism cartography / godshard forensics</label>
+    <description>The colony maps a conflict above the known Abyss: schism traces, godshards and severance logic that do not belong to normal demons.</description>
+    <category>ABY_PR_Category_Dominion</category>
+    <tierLabel>Tier VIII — Schism / Godshard</tierLabel>
+    <displayOrder>810</displayOrder>
+    <previewState>Locked</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>7600</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
+    <requirements>
+      <li>Herald Descent evidence.</li>
+    </requirements>
+    <unlocks>
+      <li>Frames future schism, godshard and severance systems.</li>
+    </unlocks>
+    <notes>
+      <li>Future reserve.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_InterfaceBeyondTheGate</defName>
     <label>interface beyond the gate</label>
-    <description>A final forbidden hypothesis: even godlike entities may be only the last readable interface of something that has no throne, no face and no ending.</description>
+    <description>A final forbidden hypothesis: even godlike entities may be only the last readable interface of something without throne, face or ending.</description>
     <category>ABY_PR_Category_Dominion</category>
-    <tierLabel>Post-Endgame Layer</tierLabel>
-    <displayOrder>50</displayOrder>
+    <tierLabel>Tier IX — Beyond the Gate</tierLabel>
+    <displayOrder>910</displayOrder>
     <previewState>Locked</previewState>
     <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>8200</decodeWorkTicks>
+    <futureReserve>true</futureReserve>
     <requirements>
       <li>Godshard Forensics.</li>
-      <li>Final post-endgame crisis evidence.</li>
     </requirements>
     <unlocks>
-      <li>Frames the ultimate continuation hook.</li>
-      <li>Supports future secret-ending content.</li>
+      <li>Frames ultimate continuation hook and hidden endgame reserve.</li>
     </unlocks>
     <notes>
-      <li>Lore reserve only.</li>
+      <li>Future reserve only.</li>
     </notes>
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 

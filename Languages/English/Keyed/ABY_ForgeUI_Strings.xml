@@ -76,4 +76,19 @@
   <ABY_ForgeInspectAttunement>Attunement state: {0}</ABY_ForgeInspectAttunement>
   <ABY_ForgeGizmoOfferLabel>Offer residue</ABY_ForgeGizmoOfferLabel>
   <ABY_ForgeGizmoOfferDesc>Commit abyssal residue on the current map into the forge lattice.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeUnknownTag>UNKNOWN</ABY_ForgeUnknownTag>
+  <ABY_ForgeUnknownPattern>UNKNOWN FORGE PATTERN</ABY_ForgeUnknownPattern>
+  <ABY_ForgeUnknownWeaponPattern>UNKNOWN WEAPON PATTERN</ABY_ForgeUnknownWeaponPattern>
+  <ABY_ForgeUnknownArmorPattern>UNKNOWN ARMOR PATTERN</ABY_ForgeUnknownArmorPattern>
+  <ABY_ForgeUnknownImplantPattern>UNKNOWN IMPLANT PROCEDURE</ABY_ForgeUnknownImplantPattern>
+  <ABY_ForgeUnknownRitualPattern>UNKNOWN RITUAL PROTOCOL</ABY_ForgeUnknownRitualPattern>
+  <ABY_ForgeUnknownHeraldPattern>UNKNOWN HERALDIC SCHEMA</ABY_ForgeUnknownHeraldPattern>
+  <ABY_ForgeUnknownTurretPattern>UNKNOWN TURRET MODULE</ABY_ForgeUnknownTurretPattern>
+  <ABY_ForgeUnknownDecodeHint>Decode required in Protocol Nexus: {0}</ABY_ForgeUnknownDecodeHint>
+  <ABY_ForgeUnknownGenericHint>The Forge detects a pattern, but its operational schema is not yet decoded.</ABY_ForgeUnknownGenericHint>
+  <ABY_ForgeUnknownResidueLine>Forge attunement threshold: {0} residue</ABY_ForgeUnknownResidueLine>
+  <ABY_ForgeUnknownMaskedDetails>{0} signature detected. Name, stats, recipe details and info card are masked until decode completes.</ABY_ForgeUnknownMaskedDetails>
+  <ABY_ForgeUnknownDecodeButton>Decode in Nexus</ABY_ForgeUnknownDecodeButton>
+  <ABY_ForgeUnknownTooltip>Open the Protocol Nexus and decode the linked project to reveal this pattern.</ABY_ForgeUnknownTooltip>
+  <ABY_ForgeUnknownCannotQueue>This Forge pattern has not been decoded in the Protocol Nexus yet.</ABY_ForgeUnknownCannotQueue>
 </LanguageData>

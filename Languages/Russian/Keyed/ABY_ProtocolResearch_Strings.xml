@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_ProtocolResearch_OpenNexusLabel>Открыть protocol nexus</ABY_ProtocolResearch_OpenNexusLabel>
+  <ABY_ProtocolResearch_OpenNexusDesc>Открыть экспериментальную матрицу Abyssal Protocol. Система изолирована от основной forge/summoning-прогрессии и может быть отключена или вырезана.</ABY_ProtocolResearch_OpenNexusDesc>
+  <ABY_ProtocolResearch_InspectOnline>Protocol Nexus: питание есть, слои сигнала готовы к декодированию.</ABY_ProtocolResearch_InspectOnline>
+  <ABY_ProtocolResearch_InspectOffline>Protocol Nexus: выключен. Матрицу можно просматривать, но активное декодирование недоступно.</ABY_ProtocolResearch_InspectOffline>
+  <ABY_ProtocolResearch_InspectExperimental>Экспериментальный модуль: forge-gating можно отключить в настройках.</ABY_ProtocolResearch_InspectExperimental>
+  <ABY_ProtocolResearch_Title>Abyssal Protocol Nexus</ABY_ProtocolResearch_Title>
+  <ABY_ProtocolResearch_Subtitle>Экспериментальная матрица: контакт, стабилизация, интеграция, Dominion, Hell и post-gate слои.</ABY_ProtocolResearch_Subtitle>
+  <ABY_ProtocolResearch_HeaderProgress>{0} доступно / {1} декодировано / {2} размечено</ABY_ProtocolResearch_HeaderProgress>
+  <ABY_ProtocolResearch_CategoryHeader>КОЛЬЦА ПРОТОКОЛА</ABY_ProtocolResearch_CategoryHeader>
+  <ABY_ProtocolResearch_ProjectListHeader>СЕГМЕНТЫ</ABY_ProtocolResearch_ProjectListHeader>
+  <ABY_ProtocolResearch_NoCategories>Категории протокола не загружены.</ABY_ProtocolResearch_NoCategories>
+  <ABY_ProtocolResearch_NoProjectSelected>Сегмент протокола не выбран.</ABY_ProtocolResearch_NoProjectSelected>
+  <ABY_ProtocolResearch_CategoryTooltip>{0} доступно, {1} декодировано, {2} размечено.</ABY_ProtocolResearch_CategoryTooltip>
+  <ABY_ProtocolResearch_StateLocked>ЗАКРЫТО / ЗАПЛАНИРОВАНО</ABY_ProtocolResearch_StateLocked>
+  <ABY_ProtocolResearch_StateAvailable>ДОСТУПНО / МОЖНО АНАЛИЗИРОВАТЬ</ABY_ProtocolResearch_StateAvailable>
+  <ABY_ProtocolResearch_StateActive>АКТИВНО / ДЕКОДИРУЕТСЯ</ABY_ProtocolResearch_StateActive>
+  <ABY_ProtocolResearch_StateCompleted>ДЕКОДИРОВАНО / ПРЕДСТАВЛЕНО</ABY_ProtocolResearch_StateCompleted>
+  <ABY_ProtocolResearch_DescriptionHeader>ОПИСАНИЕ</ABY_ProtocolResearch_DescriptionHeader>
+  <ABY_ProtocolResearch_RequirementsHeader>ТРЕБОВАНИЯ</ABY_ProtocolResearch_RequirementsHeader>
+  <ABY_ProtocolResearch_UnlocksHeader>ОТКРЫВАЕТ / КЛАССИФИЦИРУЕТ</ABY_ProtocolResearch_UnlocksHeader>
+  <ABY_ProtocolResearch_NotesHeader>ЗАМЕТКИ РЕАЛИЗАЦИИ</ABY_ProtocolResearch_NotesHeader>
+  <ABY_ProtocolResearch_RequirementMet>выполнено</ABY_ProtocolResearch_RequirementMet>
+  <ABY_ProtocolResearch_RequirementMissing>не выполнено</ABY_ProtocolResearch_RequirementMissing>
+  <ABY_ProtocolResearch_NoExplicitRequirements>Нет явных требований за пределами выбранного слоя протокола.</ABY_ProtocolResearch_NoExplicitRequirements>
+  <ABY_ProtocolResearch_IsolatedWarning>Система намеренно сделана модульной. Если forge-gating отключён, Nexus остаётся картой/codex и не блокирует рецепты.</ABY_ProtocolResearch_IsolatedWarning>
+  <ABY_ProtocolResearch_DecodeHeader>ОПЕРАЦИЯ ДЕКОДИРОВАНИЯ</ABY_ProtocolResearch_DecodeHeader>
+  <ABY_ProtocolResearch_DecodeDecoded>Декодировано. Связанные forge-шаблоны раскрываются нормально.</ABY_ProtocolResearch_DecodeDecoded>
+  <ABY_ProtocolResearch_DecodeActive>Декодируется на этом Nexus: {0}</ABY_ProtocolResearch_DecodeActive>
+  <ABY_ProtocolResearch_DecodeReady>Готово к decode job. Оценка работы: {0}.</ABY_ProtocolResearch_DecodeReady>
+  <ABY_ProtocolResearch_DecodeAnotherActive>Этот Nexus уже декодирует: {0}</ABY_ProtocolResearch_DecodeAnotherActive>
+  <ABY_ProtocolResearch_DecodeStart>Начать decode</ABY_ProtocolResearch_DecodeStart>
+  <ABY_ProtocolResearch_DecodeCancel>Отменить</ABY_ProtocolResearch_DecodeCancel>
+  <ABY_ProtocolResearch_DecodeDone>Декодировано</ABY_ProtocolResearch_DecodeDone>
+  <ABY_ProtocolResearch_DecodeBlocked>Заблокировано</ABY_ProtocolResearch_DecodeBlocked>
+  <ABY_ProtocolResearch_DecodeNoProject>Проект протокола не выбран.</ABY_ProtocolResearch_DecodeNoProject>
+  <ABY_ProtocolResearch_DecodeGatingDisabled>Forge-gating через Protocol Nexus отключён в настройках; проект только информационный.</ABY_ProtocolResearch_DecodeGatingDisabled>
+  <ABY_ProtocolResearch_DecodeFutureReserve>Future reserve слой. Видим для roadmap/codex, но пока не декодируется.</ABY_ProtocolResearch_DecodeFutureReserve>
+  <ABY_ProtocolResearch_DecodePrerequisites>Не выполнены требования слоя протокола.</ABY_ProtocolResearch_DecodePrerequisites>
+  <ABY_ProtocolResearch_DecodeAlready>Уже декодировано.</ABY_ProtocolResearch_DecodeAlready>
+  <ABY_ProtocolResearch_DecodeCompleteMessage>Протокол декодирован: {0}</ABY_ProtocolResearch_DecodeCompleteMessage>
+  <ABY_ProtocolResearch_InspectActiveDecode>Активное декодирование: {0} ({1})</ABY_ProtocolResearch_InspectActiveDecode>
+  <ABY_ProtocolResearch_UnknownProject>неизвестный протокол</ABY_ProtocolResearch_UnknownProject>
+  <ABY_ProtocolNexusGating_Enable>Включить forge-gating через Protocol Nexus</ABY_ProtocolNexusGating_Enable>
+  <ABY_ProtocolNexusGating_EnableDesc>Опциональная экспериментальная надстройка. Если отключить, все forge-шаблоны считаются декодированными, а Nexus остаётся codex/картой прогрессии.</ABY_ProtocolNexusGating_EnableDesc>
+</LanguageData>

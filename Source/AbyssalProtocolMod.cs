@@ -188,6 +188,7 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
 
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ModularTurrets_Enable", "Enable modular turret prototype"), ref settingsData.enableModularTurrets, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ModularTurrets_EnableDesc", "Master switch for Package 0 modular turrets. When disabled, modular turret comps stop targeting/firing, placement is blocked, and turret-module forge recipes are hidden. Installed modules remain saved for safe re-enable."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ProtocolNexusGating_Enable", "Enable Protocol Nexus forge gating"), ref settingsData.enableProtocolNexusGating, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_ProtocolNexusGating_EnableDesc", "Optional experimental overlay. When disabled, all Forge patterns are treated as decoded and the Nexus becomes a codex/progression map instead of a hard gate."));
         }
 
         private static void DrawDifficultySection(Listing_Standard list, AbyssalProtocolModSettings settingsData)

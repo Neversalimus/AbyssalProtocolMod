@@ -596,7 +596,7 @@ namespace AbyssalProtocol
                     value = TranslateOrFallback(
                         "ABY_ForgeMilestone_PatternValue",
                         "{0} at {1} residue",
-                        GetRecipeDisplayLabel(nextRecipe),
+                        ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(nextRecipe),
                         GetRequiredResidue(nextRecipe)),
                     satisfied = false
                 });

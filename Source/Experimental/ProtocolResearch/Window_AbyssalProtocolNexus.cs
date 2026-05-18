@@ -4,6 +4,7 @@ using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace AbyssalProtocol
 {
@@ -763,6 +764,7 @@ namespace AbyssalProtocol
             Widgets.BeginScrollView(outRect, ref detailsScroll, viewRect);
             float y = 0f;
 
+            y = DrawDecodeControls(viewRect, y, project);
             y = DrawParagraph(viewRect, y, "ABY_ProtocolResearch_DescriptionHeader".Translate(), project.description);
             y = DrawListSection(viewRect, y, "Protocol Diagnostic", BuildDiagnosticLines(project));
             y = DrawListSection(viewRect, y, "ABY_ProtocolResearch_RequirementsHeader".Translate(), BuildRequirementLines(project));
@@ -781,6 +783,63 @@ namespace AbyssalProtocol
 
             detailViewHeight = Mathf.Max(outRect.height + 1f, y);
             Widgets.EndScrollView();
+        }
+
+
+        private float DrawDecodeControls(Rect viewRect, float y, ABY_ProtocolResearchDef project)
+        {
+            Rect rect = new Rect(0f, y, viewRect.width, 74f);
+            DrawSolid(rect, new Color(0.035f, 0.026f, 0.020f, 0.78f));
+            DrawOutline(rect, new Color(1f, 0.42f, 0.16f, 0.46f));
+
+            bool decoded = ABY_ProtocolResearchUtility.IsDecoded(project) || project.autoDecodeWhenPrerequisitesMet;
+            bool activeHere = nexus != null && nexus.ActiveDecodeProjectDefName == project.defName;
+            bool canStart = ABY_ProtocolResearchUtility.CanStartDecode(project, out string reason);
+            bool anotherActive = nexus != null && nexus.HasActiveDecode && !activeHere;
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = new Color(1f, 0.70f, 0.44f, 1f);
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 8f, rect.width - 150f, 18f), "ABY_ProtocolResearch_DecodeHeader".Translate());
+
+            GUI.color = decoded ? new Color(0.72f, 1f, 0.74f, 1f) : activeHere ? new Color(1f, 0.78f, 0.44f, 1f) : new Color(0.84f, 0.78f, 0.72f, 1f);
+            string status = decoded
+                ? "ABY_ProtocolResearch_DecodeDecoded".Translate()
+                : activeHere
+                    ? "ABY_ProtocolResearch_DecodeActive".Translate((nexus?.ActiveDecodeProgress ?? 0f).ToStringPercent())
+                    : canStart && !anotherActive
+                        ? "ABY_ProtocolResearch_DecodeReady".Translate(ABY_ProtocolResearchUtility.ResolveDecodeWorkTicks(project).ToStringTicksToPeriod())
+                        : (anotherActive ? "ABY_ProtocolResearch_DecodeAnotherActive".Translate(ABY_ProtocolResearchGateUtility.GetProtocolProjectLabel(nexus.ActiveDecodeProjectDefName)) : reason);
+            Widgets.Label(new Rect(rect.x + 10f, rect.y + 29f, rect.width - 150f, 36f), status);
+            GUI.color = Color.white;
+
+            Rect buttonRect = new Rect(rect.xMax - 132f, rect.y + 22f, 120f, 30f);
+            if (!decoded && !activeHere && canStart && !anotherActive && nexus != null && nexus.IsPowerActive)
+            {
+                if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ProtocolResearch_DecodeStart".Translate()))
+                {
+                    if (nexus.BeginDecode(project))
+                    {
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
+                    }
+                }
+            }
+            else if (activeHere)
+            {
+                if (AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ProtocolResearch_DecodeCancel".Translate()))
+                {
+                    nexus.CancelActiveDecode();
+                    SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
+                }
+            }
+            else
+            {
+                AbyssalStyledWidgets.TextButton(buttonRect, decoded ? "ABY_ProtocolResearch_DecodeDone".Translate() : "ABY_ProtocolResearch_DecodeBlocked".Translate(), false);
+            }
+
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+            return rect.yMax + 10f;
         }
 
         private enum ProtocolProjectFilter

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+    <defName>ABY_DecodeProtocolProject</defName>
+    <driverClass>AbyssalProtocol.JobDriver_ABY_DecodeProtocolProject</driverClass>
+    <reportString>decoding abyssal protocol.</reportString>
+  </JobDef>
+
+  <WorkGiverDef>
+    <defName>ABY_DecodeProtocolProject</defName>
+    <giverClass>AbyssalProtocol.WorkGiver_ABY_DecodeProtocolProject</giverClass>
+    <workType>Research</workType>
+    <priorityInType>84</priorityInType>
+    <verb>decode at</verb>
+    <gerund>decoding at</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+      <li>Sight</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>

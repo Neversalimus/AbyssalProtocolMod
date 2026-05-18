@@ -246,7 +246,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < locked.Count; i++)
                 {
                     RecipeDef recipe = locked[i];
-                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe);
+                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe);
                     ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightRect.y + 76f + i * 24f, rightRect.width, 22f), line);
                 }
             }
@@ -334,9 +334,14 @@ namespace AbyssalProtocol
                 int row = i / 2;
                 Rect cardRect = new Rect(column * (cardWidth + 12f), row * (cardHeight + 8f), cardWidth, cardHeight);
                 RecipeDef recipe = recipes[i];
+                bool decoded = ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe);
                 bool unlocked = AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered);
                 bool freshlyUnlocked = progress.IsRecentlyUnlocked(recipe);
-                if (turretSystemsMode && IsTurretSystemRecipe(recipe))
+                if (!decoded)
+                {
+                    DrawUnknownPatternCard(cardRect, recipe, turretSystemsMode && IsTurretSystemRecipe(recipe));
+                }
+                else if (turretSystemsMode && IsTurretSystemRecipe(recipe))
                 {
                     DrawTurretSystemPatternCard(cardRect, recipe, unlocked, freshlyUnlocked);
                 }
@@ -487,6 +492,53 @@ namespace AbyssalProtocol
                 default:
                     return true;
             }
+        }
+
+
+        private void DrawUnknownPatternCard(Rect rect, RecipeDef recipe, bool turretCard)
+        {
+            AbyssalForgeConsoleArt.DrawPanel(rect, false);
+            AbyssalForgeConsoleArt.Fill(rect.ContractedBy(3f), new Color(0.012f, 0.010f, 0.010f, 0.46f));
+            AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
+
+            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+            Texture2D categoryIcon = AbyssalForgeConsoleArt.GetCategoryIcon(category);
+            Rect iconRect = new Rect(rect.x + 12f, rect.y + 14f, turretCard ? 54f : 42f, turretCard ? 54f : 42f);
+            AbyssalForgeConsoleArt.Fill(iconRect.ExpandedBy(4f), new Color(0.09f, 0.022f, 0.012f, 0.84f));
+            AbyssalForgeConsoleArt.DrawOutline(iconRect.ExpandedBy(4f), new Color(1f, 0.32f, 0.12f, 0.42f));
+            if (categoryIcon != null)
+            {
+                GUI.color = new Color(1f, 0.40f, 0.18f, 0.34f);
+                GUI.DrawTexture(iconRect, categoryIcon, ScaleMode.ScaleToFit, true);
+                GUI.color = Color.white;
+            }
+
+            Rect tagRect = new Rect(rect.xMax - 86f, rect.y + 10f, 76f, 18f);
+            AbyssalForgeConsoleArt.DrawTag(tagRect, "ABY_ForgeUnknownTag".Translate(), false);
+
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = new Color(1f, 0.82f, 0.62f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + (turretCard ? 76f : 60f), rect.y + 12f, rect.width - (turretCard ? 170f : 154f), 24f), ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe));
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + (turretCard ? 76f : 60f), rect.y + 36f, rect.width - (turretCard ? 90f : 70f), 36f), ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe));
+
+            GUI.color = new Color(0.92f, 0.62f, 0.42f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + (turretCard ? 96f : 70f), rect.width - 20f, 18f), "ABY_ForgeUnknownResidueLine".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe)));
+
+            GUI.color = AbyssalForgeConsoleArt.TextDimColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + (turretCard ? 118f : 92f), rect.width - 20f, 40f), "ABY_ForgeUnknownMaskedDetails".Translate(AbyssalForgeProgressUtility.GetCategoryLabel(category)));
+            GUI.color = Color.white;
+
+            Rect buttonRect = new Rect(rect.x + rect.width - 120f, rect.y + rect.height - 34f, 108f, 28f);
+            AbyssalStyledWidgets.TextButton(buttonRect, "ABY_ForgeUnknownDecodeButton".Translate(), false);
+
+            TooltipHandler.TipRegion(rect, ABY_ProtocolResearchGateUtility.GetUnknownHint(recipe) + "\n\n" + "ABY_ForgeUnknownTooltip".Translate());
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
         }
 
         private void DrawTurretSystemPatternCard(Rect rect, RecipeDef recipe, bool unlocked, bool freshlyUnlocked)
@@ -959,6 +1011,11 @@ namespace AbyssalProtocol
             for (int i = 0; i < availableRecipes.Count; i++)
             {
                 RecipeDef recipe = availableRecipes[i];
+                if (!ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe))
+                {
+                    continue;
+                }
+
                 bool availableNow = false;
                 try
                 {
@@ -998,6 +1055,12 @@ namespace AbyssalProtocol
 
             try
             {
+                if (!ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe))
+                {
+                    Messages.Message("ABY_ForgeUnknownCannotQueue".Translate(), forge, MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+
                 if (forge?.Map?.mapPawns != null && !forge.Map.mapPawns.FreeColonists.Any(colonist => colonist != null && recipe.PawnSatisfiesSkillRequirements(colonist)))
                 {
                     Bill.CreateNoPawnsWithSkillDialog(recipe);

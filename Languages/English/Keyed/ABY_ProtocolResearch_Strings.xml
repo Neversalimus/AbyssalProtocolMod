@@ -28,4 +28,23 @@
   <ABY_ProtocolResearch_RequirementMissing>missing</ABY_ProtocolResearch_RequirementMissing>
   <ABY_ProtocolResearch_NoExplicitRequirements>No explicit requirements beyond the selected protocol layer.</ABY_ProtocolResearch_NoExplicitRequirements>
   <ABY_ProtocolResearch_IsolatedWarning>This prototype is intentionally isolated. It displays planned and represented research logic, but it does not currently rewrite forge unlocks, summoning gates, recipes, boss flags or save-game progression.</ABY_ProtocolResearch_IsolatedWarning>
+  <ABY_ProtocolResearch_DecodeHeader>DECODE OPERATION</ABY_ProtocolResearch_DecodeHeader>
+  <ABY_ProtocolResearch_DecodeDecoded>Decoded. Forge-linked patterns may now reveal normally.</ABY_ProtocolResearch_DecodeDecoded>
+  <ABY_ProtocolResearch_DecodeActive>Decoding at this Nexus: {0}</ABY_ProtocolResearch_DecodeActive>
+  <ABY_ProtocolResearch_DecodeReady>Ready for decode job. Estimated work: {0}.</ABY_ProtocolResearch_DecodeReady>
+  <ABY_ProtocolResearch_DecodeAnotherActive>This Nexus is already decoding: {0}</ABY_ProtocolResearch_DecodeAnotherActive>
+  <ABY_ProtocolResearch_DecodeStart>Begin decode</ABY_ProtocolResearch_DecodeStart>
+  <ABY_ProtocolResearch_DecodeCancel>Cancel</ABY_ProtocolResearch_DecodeCancel>
+  <ABY_ProtocolResearch_DecodeDone>Decoded</ABY_ProtocolResearch_DecodeDone>
+  <ABY_ProtocolResearch_DecodeBlocked>Blocked</ABY_ProtocolResearch_DecodeBlocked>
+  <ABY_ProtocolResearch_DecodeNoProject>No protocol project selected.</ABY_ProtocolResearch_DecodeNoProject>
+  <ABY_ProtocolResearch_DecodeGatingDisabled>Protocol Nexus forge gating is disabled in mod settings; this project is informational only.</ABY_ProtocolResearch_DecodeGatingDisabled>
+  <ABY_ProtocolResearch_DecodeFutureReserve>Future reserve layer. It is visible for roadmap/codex continuity but cannot be decoded yet.</ABY_ProtocolResearch_DecodeFutureReserve>
+  <ABY_ProtocolResearch_DecodePrerequisites>Missing prerequisites for this protocol layer.</ABY_ProtocolResearch_DecodePrerequisites>
+  <ABY_ProtocolResearch_DecodeAlready>Already decoded.</ABY_ProtocolResearch_DecodeAlready>
+  <ABY_ProtocolResearch_DecodeCompleteMessage>Protocol decoded: {0}</ABY_ProtocolResearch_DecodeCompleteMessage>
+  <ABY_ProtocolResearch_InspectActiveDecode>Active decode: {0} ({1})</ABY_ProtocolResearch_InspectActiveDecode>
+  <ABY_ProtocolResearch_UnknownProject>unknown protocol</ABY_ProtocolResearch_UnknownProject>
+  <ABY_ProtocolNexusGating_Enable>Enable Protocol Nexus forge gating</ABY_ProtocolNexusGating_Enable>
+  <ABY_ProtocolNexusGating_EnableDesc>Optional experimental overlay. When disabled, all Forge patterns are treated as decoded and the Nexus becomes a codex/progression map instead of a hard gate.</ABY_ProtocolNexusGating_EnableDesc>
 </LanguageData>

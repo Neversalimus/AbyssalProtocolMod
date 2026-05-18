@@ -15,7 +15,98 @@ namespace AbyssalProtocol
         private static readonly Vector2 OverlaySize = new Vector2(3.25f, 3.25f);
         private static readonly Texture2D CommandIcon = ContentFinder<Texture2D>.Get(CommandIconPath, false);
 
+        private string activeDecodeProjectDefName;
+        private int activeDecodeTicksRemaining;
+        private int activeDecodeTicksTotal;
+
+        public string ActiveDecodeProjectDefName => activeDecodeProjectDefName;
+        public int ActiveDecodeTicksRemaining => activeDecodeTicksRemaining;
+        public int ActiveDecodeTicksTotal => activeDecodeTicksTotal;
+        public bool HasActiveDecode => !activeDecodeProjectDefName.NullOrEmpty() && activeDecodeTicksRemaining > 0;
+        public float ActiveDecodeProgress => activeDecodeTicksTotal <= 0 ? 0f : Mathf.Clamp01(1f - (float)activeDecodeTicksRemaining / activeDecodeTicksTotal);
         public bool IsPowerActive => GetComp<CompPowerTrader>()?.PowerOn ?? true;
+
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref activeDecodeProjectDefName, "activeDecodeProjectDefName");
+            Scribe_Values.Look(ref activeDecodeTicksRemaining, "activeDecodeTicksRemaining", 0);
+            Scribe_Values.Look(ref activeDecodeTicksTotal, "activeDecodeTicksTotal", 0);
+        }
+
+        public bool BeginDecode(ABY_ProtocolResearchDef project, bool force = false)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+
+            if (!force && HasActiveDecode)
+            {
+                return false;
+            }
+
+            if (!force && !ABY_ProtocolResearchUtility.CanStartDecode(project, out _))
+            {
+                return false;
+            }
+
+            activeDecodeProjectDefName = project.defName;
+            activeDecodeTicksTotal = ABY_ProtocolResearchUtility.ResolveDecodeWorkTicks(project);
+            activeDecodeTicksRemaining = activeDecodeTicksTotal;
+            return true;
+        }
+
+        public ABY_ProtocolResearchDef ActiveDecodeProject()
+        {
+            if (activeDecodeProjectDefName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            return DefDatabase<ABY_ProtocolResearchDef>.GetNamedSilentFail(activeDecodeProjectDefName);
+        }
+
+        public void NotifyDecodeWorkTick()
+        {
+            if (!HasActiveDecode)
+            {
+                return;
+            }
+
+            activeDecodeTicksRemaining = Mathf.Max(0, activeDecodeTicksRemaining - 1);
+            if (activeDecodeTicksRemaining <= 0)
+            {
+                CompleteActiveDecode(null);
+            }
+        }
+
+        public void CompleteActiveDecode(Pawn worker)
+        {
+            if (activeDecodeProjectDefName.NullOrEmpty())
+            {
+                return;
+            }
+
+            string completed = activeDecodeProjectDefName;
+            ABY_ProtocolResearchGateUtility.MarkDecoded(completed);
+            activeDecodeProjectDefName = null;
+            activeDecodeTicksRemaining = 0;
+            activeDecodeTicksTotal = 0;
+
+            if (Spawned)
+            {
+                Messages.Message("ABY_ProtocolResearch_DecodeCompleteMessage".Translate(ABY_ProtocolResearchGateUtility.GetProtocolProjectLabel(completed)), this, MessageTypeDefOf.PositiveEvent, false);
+            }
+        }
+
+        public void CancelActiveDecode()
+        {
+            activeDecodeProjectDefName = null;
+            activeDecodeTicksRemaining = 0;
+            activeDecodeTicksTotal = 0;
+        }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
@@ -66,6 +157,10 @@ namespace AbyssalProtocol
             lines.Add(IsPowerActive
                 ? "ABY_ProtocolResearch_InspectOnline".Translate()
                 : "ABY_ProtocolResearch_InspectOffline".Translate());
+            if (HasActiveDecode)
+            {
+                lines.Add("ABY_ProtocolResearch_InspectActiveDecode".Translate(ABY_ProtocolResearchGateUtility.GetProtocolProjectLabel(activeDecodeProjectDefName), ActiveDecodeProgress.ToStringPercent()));
+            }
             lines.Add("ABY_ProtocolResearch_InspectExperimental".Translate());
             return string.Join("\n", lines);
         }

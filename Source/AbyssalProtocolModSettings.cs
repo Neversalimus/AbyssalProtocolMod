@@ -42,6 +42,7 @@ namespace AbyssalProtocol
         public bool enableBossPresentationTimeline = true;
         public bool enableBossPresentationTitleCards = true;
         public bool enableModularTurrets = true;
+        public bool enableProtocolNexusGating = false;
 
         public override void ExposeData()
         {
@@ -81,6 +82,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableBossPresentationTimeline, "enableBossPresentationTimeline", true);
             Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
             Scribe_Values.Look(ref enableModularTurrets, "enableModularTurrets", true);
+            Scribe_Values.Look(ref enableProtocolNexusGating, "enableProtocolNexusGating", false);
             ClampValues();
         }
 
@@ -134,6 +136,7 @@ namespace AbyssalProtocol
             enableBossPresentationTimeline = true;
             enableBossPresentationTitleCards = true;
             enableModularTurrets = true;
+            enableProtocolNexusGating = false;
         }
 
         public float ResolveDominionWeatherIntensity()

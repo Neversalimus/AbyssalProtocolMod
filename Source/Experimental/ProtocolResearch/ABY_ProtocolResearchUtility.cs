@@ -52,6 +52,16 @@ namespace AbyssalProtocol
                 return ABY_ProtocolResearchState.Locked;
             }
 
+            if (project.autoDecodeWhenPrerequisitesMet || IsDecoded(project))
+            {
+                return ABY_ProtocolResearchState.Completed;
+            }
+
+            if (AnyNexusActivelyDecoding(project))
+            {
+                return ABY_ProtocolResearchState.Active;
+            }
+
             string raw = project.previewState ?? string.Empty;
             if (raw.Equals("Completed", StringComparison.OrdinalIgnoreCase))
             {
@@ -63,12 +73,116 @@ namespace AbyssalProtocol
                 return ABY_ProtocolResearchState.Active;
             }
 
-            if (raw.Equals("Locked", StringComparison.OrdinalIgnoreCase))
+            if (raw.Equals("Locked", StringComparison.OrdinalIgnoreCase) || project.futureReserve)
             {
                 return ABY_ProtocolResearchState.Locked;
             }
 
             return ABY_ProtocolResearchState.Available;
+        }
+
+        public static bool IsDecoded(ABY_ProtocolResearchDef project)
+        {
+            if (project == null)
+            {
+                return false;
+            }
+
+            if (project.autoDecodeWhenPrerequisitesMet && PrerequisitesMet(project))
+            {
+                return true;
+            }
+
+            return ABY_ProtocolResearchProgressGameComponent.Current?.IsDecoded(project.defName) ?? false;
+        }
+
+        public static int ResolveDecodeWorkTicks(ABY_ProtocolResearchDef project)
+        {
+            if (project == null)
+            {
+                return 2500;
+            }
+
+            return Math.Max(300, project.decodeWorkTicks);
+        }
+
+        public static bool CanStartDecode(ABY_ProtocolResearchDef project, out string reason)
+        {
+            reason = null;
+            if (project == null)
+            {
+                reason = "ABY_ProtocolResearch_DecodeNoProject".Translate();
+                return false;
+            }
+
+            if (!AbyssalProtocolMod.Settings.enableProtocolNexusGating)
+            {
+                reason = "ABY_ProtocolResearch_DecodeGatingDisabled".Translate();
+                return false;
+            }
+
+            if (project.futureReserve)
+            {
+                reason = "ABY_ProtocolResearch_DecodeFutureReserve".Translate();
+                return false;
+            }
+
+            if (!PrerequisitesMet(project))
+            {
+                reason = "ABY_ProtocolResearch_DecodePrerequisites".Translate();
+                return false;
+            }
+
+            if (IsDecoded(project) || project.autoDecodeWhenPrerequisitesMet)
+            {
+                reason = "ABY_ProtocolResearch_DecodeAlready".Translate();
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void MarkDecoded(ABY_ProtocolResearchDef project)
+        {
+            if (project != null)
+            {
+                ABY_ProtocolResearchGateUtility.MarkDecoded(project.defName);
+            }
+        }
+
+        private static bool AnyNexusActivelyDecoding(ABY_ProtocolResearchDef project)
+        {
+            if (project == null || Current.Game == null)
+            {
+                return false;
+            }
+
+            List<Map> maps = Find.Maps;
+            if (maps == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map map = maps[i];
+                if (map?.listerThings == null)
+                {
+                    continue;
+                }
+
+                List<Thing> nexuses = map.listerThings.ThingsOfDef(ThingDef.Named("ABY_ProtocolNexus"));
+                for (int j = 0; j < nexuses.Count; j++)
+                {
+                    Building_ABY_ProtocolNexus nexus = nexuses[j] as Building_ABY_ProtocolNexus;
+                    if (nexus != null && nexus.ActiveDecodeProjectDefName == project.defName)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public static bool PrerequisitesMet(ABY_ProtocolResearchDef project)

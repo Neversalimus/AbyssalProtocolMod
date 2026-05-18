@@ -76,4 +76,19 @@
   <ABY_ForgeInspectAttunement>Состояние attunement: {0}</ABY_ForgeInspectAttunement>
   <ABY_ForgeGizmoOfferLabel>Внести residue</ABY_ForgeGizmoOfferLabel>
   <ABY_ForgeGizmoOfferDesc>Внести abyssal residue с текущей карты в решётку forge.</ABY_ForgeGizmoOfferDesc>
+  <ABY_ForgeUnknownTag>UNKNOWN</ABY_ForgeUnknownTag>
+  <ABY_ForgeUnknownPattern>НЕИЗВЕСТНЫЙ FORGE-ШАБЛОН</ABY_ForgeUnknownPattern>
+  <ABY_ForgeUnknownWeaponPattern>НЕИЗВЕСТНЫЙ ШАБЛОН ОРУЖИЯ</ABY_ForgeUnknownWeaponPattern>
+  <ABY_ForgeUnknownArmorPattern>НЕИЗВЕСТНЫЙ ШАБЛОН БРОНИ</ABY_ForgeUnknownArmorPattern>
+  <ABY_ForgeUnknownImplantPattern>НЕИЗВЕСТНАЯ ПРОЦЕДУРА ИМПЛАНТА</ABY_ForgeUnknownImplantPattern>
+  <ABY_ForgeUnknownRitualPattern>НЕИЗВЕСТНЫЙ РИТУАЛЬНЫЙ ПРОТОКОЛ</ABY_ForgeUnknownRitualPattern>
+  <ABY_ForgeUnknownHeraldPattern>НЕИЗВЕСТНАЯ HERALD-СХЕМА</ABY_ForgeUnknownHeraldPattern>
+  <ABY_ForgeUnknownTurretPattern>НЕИЗВЕСТНЫЙ МОДУЛЬ ТУРЕЛИ</ABY_ForgeUnknownTurretPattern>
+  <ABY_ForgeUnknownDecodeHint>Требуется декодирование в Protocol Nexus: {0}</ABY_ForgeUnknownDecodeHint>
+  <ABY_ForgeUnknownGenericHint>Forge обнаружила шаблон, но его рабочая схема ещё не декодирована.</ABY_ForgeUnknownGenericHint>
+  <ABY_ForgeUnknownResidueLine>Порог attunement forge: {0} residue</ABY_ForgeUnknownResidueLine>
+  <ABY_ForgeUnknownMaskedDetails>Обнаружена сигнатура категории «{0}». Название, статы, рецепт и info card скрыты до декодирования.</ABY_ForgeUnknownMaskedDetails>
+  <ABY_ForgeUnknownDecodeButton>Decode в Nexus</ABY_ForgeUnknownDecodeButton>
+  <ABY_ForgeUnknownTooltip>Открой Protocol Nexus и декодируй связанный проект, чтобы раскрыть этот шаблон.</ABY_ForgeUnknownTooltip>
+  <ABY_ForgeUnknownCannotQueue>Этот forge-шаблон ещё не декодирован в Protocol Nexus.</ABY_ForgeUnknownCannotQueue>
 </LanguageData>

@@ -15,5 +15,8 @@ namespace AbyssalProtocol
         public List<string> unlocks;
         public List<string> notes;
         public bool experimental = true;
+        public int decodeWorkTicks = 2500;
+        public bool autoDecodeWhenPrerequisitesMet;
+        public bool futureReserve;
     }
 }
