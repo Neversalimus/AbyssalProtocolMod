@@ -7,27 +7,120 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class AbyssalStyledWidgets
     {
-        private static readonly Texture2D ButtonNormalTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Button_Normal", false);
-        private static readonly Texture2D ButtonHoverTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Button_Hover", false);
-        private static readonly Texture2D ButtonPressedTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Button_Pressed", false);
-        private static readonly Texture2D ButtonDisabledTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Button_Disabled", false);
-        private static readonly Texture2D ButtonActiveTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Button_Active", false);
+        private const string EnhancedThemeRoot = "UI/AbyssalCommon/Themes/Enhanced/";
+        private const string ClassicRoot = "UI/AbyssalCommon/";
 
-        private static readonly Texture2D TabNormalTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Tab_Normal", false);
-        private static readonly Texture2D TabHoverTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Tab_Hover", false);
-        private static readonly Texture2D TabPressedTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Tab_Pressed", false);
-        private static readonly Texture2D TabDisabledTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Tab_Disabled", false);
-        private static readonly Texture2D TabActiveTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_Tab_Active", false);
+        private static readonly Texture2D ButtonNormalTex = LoadThemed("Buttons/ABY_Button_Normal");
+        private static readonly Texture2D ButtonHoverTex = LoadThemed("Buttons/ABY_Button_Hover");
+        private static readonly Texture2D ButtonPressedTex = LoadThemed("Buttons/ABY_Button_Pressed");
+        private static readonly Texture2D ButtonDisabledTex = LoadThemed("Buttons/ABY_Button_Disabled");
+        private static readonly Texture2D ButtonActiveTex = LoadThemed("Buttons/ABY_Button_Active");
 
-        private static readonly Texture2D IconFrameNormalTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_IconFrame_Normal", false);
-        private static readonly Texture2D IconFrameHoverTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_IconFrame_Hover", false);
-        private static readonly Texture2D IconFrameDisabledTex = ContentFinder<Texture2D>.Get("UI/AbyssalCommon/Buttons/ABY_IconFrame_Disabled", false);
+        private static readonly Texture2D TabNormalTex = LoadThemed("Buttons/ABY_Tab_Normal");
+        private static readonly Texture2D TabHoverTex = LoadThemed("Buttons/ABY_Tab_Hover");
+        private static readonly Texture2D TabPressedTex = LoadThemed("Buttons/ABY_Tab_Pressed");
+        private static readonly Texture2D TabDisabledTex = LoadThemed("Buttons/ABY_Tab_Disabled");
+        private static readonly Texture2D TabActiveTex = LoadThemed("Buttons/ABY_Tab_Active");
+
+        private static readonly Texture2D IconFrameNormalTex = LoadThemed("Buttons/ABY_IconFrame_Normal");
+        private static readonly Texture2D IconFrameHoverTex = LoadThemed("Buttons/ABY_IconFrame_Hover");
+        private static readonly Texture2D IconFramePressedTex = LoadThemed("Buttons/ABY_IconFrame_Pressed");
+        private static readonly Texture2D IconFrameDisabledTex = LoadThemed("Buttons/ABY_IconFrame_Disabled");
+        private static readonly Texture2D IconFrameActiveTex = LoadThemed("Buttons/ABY_IconFrame_Active");
+
+        private static readonly Texture2D PanelMainTex = LoadThemed("Panels/ABY_Panel_Main", false);
+        private static readonly Texture2D PanelCardTex = LoadThemed("Panels/ABY_Panel_Card", false);
+        private static readonly Texture2D PanelCardDarkTex = LoadThemed("Panels/ABY_Panel_Card_Dark", false);
+        private static readonly Texture2D PanelRequirementTex = LoadThemed("Panels/ABY_Panel_Requirement", false);
+        private static readonly Texture2D PanelRewardTex = LoadThemed("Panels/ABY_Panel_Reward", false);
+        private static readonly Texture2D PanelWarningTex = LoadThemed("Panels/ABY_Panel_Warning", false);
+        private static readonly Texture2D PanelLockedTex = LoadThemed("Panels/ABY_Panel_Locked", false);
+        private static readonly Texture2D PanelSelectedTex = LoadThemed("Panels/ABY_Panel_Selected", false);
+        private static readonly Texture2D PanelTooltipTex = LoadThemed("Panels/ABY_Panel_Tooltip", false);
+        private static readonly Texture2D HeaderStripTex = LoadThemed("Panels/ABY_HeaderStrip", false);
+        private static readonly Texture2D FooterStripTex = LoadThemed("Panels/ABY_FooterStrip", false);
+
+        private static readonly Texture2D DividerHorizontalTex = LoadThemed("Accents/ABY_Divider_Horizontal", false);
+        private static readonly Texture2D DividerVerticalTex = LoadThemed("Accents/ABY_Divider_Vertical", false);
+        private static readonly Texture2D CornerTopLeftTex = LoadThemed("Accents/ABY_Corner_TopLeft", false);
+        private static readonly Texture2D CornerTopRightTex = LoadThemed("Accents/ABY_Corner_TopRight", false);
+        private static readonly Texture2D CornerBottomLeftTex = LoadThemed("Accents/ABY_Corner_BottomLeft", false);
+        private static readonly Texture2D CornerBottomRightTex = LoadThemed("Accents/ABY_Corner_BottomRight", false);
+        private static readonly Texture2D SocketNormalTex = LoadThemed("Accents/ABY_Socket_Normal", false);
+        private static readonly Texture2D SocketActiveTex = LoadThemed("Accents/ABY_Socket_Active", false);
+        private static readonly Texture2D StatusStripTex = LoadThemed("Accents/ABY_StatusStrip", false);
+        private static readonly Texture2D WarningStripTex = LoadThemed("Accents/ABY_WarningStrip", false);
+
+        private static readonly Texture2D IconSummoningTex = LoadThemed("Icons/ABY_Icon_Summoning", false);
+        private static readonly Texture2D IconForgeTex = LoadThemed("Icons/ABY_Icon_Forge", false);
+        private static readonly Texture2D IconWeaponTex = LoadThemed("Icons/ABY_Icon_Weapon", false);
+        private static readonly Texture2D IconArmorTex = LoadThemed("Icons/ABY_Icon_Armor", false);
+        private static readonly Texture2D IconImplantTex = LoadThemed("Icons/ABY_Icon_Implant", false);
+        private static readonly Texture2D IconRitualMaterialTex = LoadThemed("Icons/ABY_Icon_RitualMaterial", false);
+        private static readonly Texture2D IconSigilTex = LoadThemed("Icons/ABY_Icon_Sigil", false);
+        private static readonly Texture2D IconCrownTex = LoadThemed("Icons/ABY_Icon_Crown", false);
+        private static readonly Texture2D IconResidueTex = LoadThemed("Icons/ABY_Icon_Residue", false);
+        private static readonly Texture2D IconAbyssalCoreTex = LoadThemed("Icons/ABY_Icon_AbyssalCore", false);
+        private static readonly Texture2D IconCapacitorTex = LoadThemed("Icons/ABY_Icon_Capacitor", false);
+        private static readonly Texture2D IconInstabilityTex = LoadThemed("Icons/ABY_Icon_Instability", false);
+        private static readonly Texture2D BadgeLockedTex = LoadThemed("Icons/ABY_Badge_Locked", false);
+        private static readonly Texture2D BadgeUnlockedTex = LoadThemed("Icons/ABY_Badge_Unlocked", false);
+        private static readonly Texture2D BadgeReadyTex = LoadThemed("Icons/ABY_Badge_Ready", false);
+        private static readonly Texture2D BadgeForbiddenTex = LoadThemed("Icons/ABY_Badge_Forbidden", false);
+
+        private static readonly Texture2D[] EmberScanlineFrames = LoadAnimation("Accents/ABY_EmberScanline", 8);
+        private static readonly Texture2D[] RitualSocketPulseFrames = LoadAnimation("Accents/ABY_RitualSocketPulse", 8);
+        private static readonly Texture2D[] EdgeGlowFrames = LoadAnimation("Accents/ABY_EdgeGlow", 8);
 
         private static readonly Color DefaultTextColor = new Color(0.95f, 0.91f, 0.85f, 1f);
         private static readonly Color HoverTextColor = Color.white;
         private static readonly Color ActiveTextColor = new Color(1f, 0.86f, 0.72f, 1f);
         private static readonly Color DisabledTextColor = new Color(0.58f, 0.56f, 0.54f, 1f);
         private static readonly Color IconTint = new Color(0.98f, 0.86f, 0.74f, 0.98f);
+        private static readonly Color FallbackPanelColor = new Color(0.11f, 0.075f, 0.065f, 0.94f);
+        private static readonly Color FallbackPanelOutlineColor = new Color(0.62f, 0.28f, 0.12f, 0.62f);
+
+        public enum AbyssalPanelStyle
+        {
+            Main,
+            Card,
+            CardDark,
+            Requirement,
+            Reward,
+            Warning,
+            Locked,
+            Selected,
+            Tooltip,
+            Header,
+            Footer
+        }
+
+        public enum AbyssalCategoryIcon
+        {
+            Summoning,
+            Forge,
+            Weapon,
+            Armor,
+            Implant,
+            RitualMaterial,
+            Sigil,
+            Crown,
+            Residue,
+            AbyssalCore,
+            Capacitor,
+            Instability,
+            Locked,
+            Unlocked,
+            Ready,
+            Forbidden
+        }
+
+        public enum AbyssalAccentAnimation
+        {
+            EmberScanline,
+            RitualSocketPulse,
+            EdgeGlow
+        }
 
         public static bool TextButton(Rect rect, string label, bool enabled = true, bool active = false, Texture2D icon = null, string tooltip = null)
         {
@@ -44,13 +137,134 @@ namespace AbyssalProtocol
             return ButtonInternal(rect, null, enabled, active, icon, tooltip, false, true);
         }
 
+        public static void DrawPanel(Rect rect, AbyssalPanelStyle style = AbyssalPanelStyle.Card, float alpha = 1f)
+        {
+            Texture2D texture = GetPanelTexture(style);
+            DrawTextureWithFallback(rect, texture, alpha, FallbackPanelColor, true);
+        }
+
+        public static void DrawCornerBrackets(Rect rect, float cornerSize = 42f, float alpha = 1f)
+        {
+            if (cornerSize <= 0f)
+            {
+                return;
+            }
+
+            DrawTextureWithFallback(new Rect(rect.x, rect.y, cornerSize, cornerSize), CornerTopLeftTex, alpha, Color.clear, false);
+            DrawTextureWithFallback(new Rect(rect.xMax - cornerSize, rect.y, cornerSize, cornerSize), CornerTopRightTex, alpha, Color.clear, false);
+            DrawTextureWithFallback(new Rect(rect.x, rect.yMax - cornerSize, cornerSize, cornerSize), CornerBottomLeftTex, alpha, Color.clear, false);
+            DrawTextureWithFallback(new Rect(rect.xMax - cornerSize, rect.yMax - cornerSize, cornerSize, cornerSize), CornerBottomRightTex, alpha, Color.clear, false);
+        }
+
+        public static void DrawFramedPanel(Rect rect, AbyssalPanelStyle style = AbyssalPanelStyle.Card, float cornerSize = 38f, float alpha = 1f)
+        {
+            DrawPanel(rect, style, alpha);
+            DrawCornerBrackets(rect, cornerSize, alpha);
+        }
+
+        public static void DrawDividerHorizontal(Rect rect, float alpha = 1f)
+        {
+            DrawTextureWithFallback(rect, DividerHorizontalTex, alpha, FallbackPanelOutlineColor, false);
+        }
+
+        public static void DrawDividerVertical(Rect rect, float alpha = 1f)
+        {
+            DrawTextureWithFallback(rect, DividerVerticalTex, alpha, FallbackPanelOutlineColor, false);
+        }
+
+        public static void DrawStatusSocket(Rect rect, bool active, float alpha = 1f)
+        {
+            DrawTextureWithFallback(rect, active ? SocketActiveTex : SocketNormalTex, alpha, FallbackPanelOutlineColor, false);
+        }
+
+        public static void DrawStatusStrip(Rect rect, bool warning = false, float alpha = 1f)
+        {
+            DrawTextureWithFallback(rect, warning ? WarningStripTex : StatusStripTex, alpha, warning ? new Color(0.65f, 0.12f, 0.06f, 0.72f) : FallbackPanelOutlineColor, false);
+        }
+
+        public static Texture2D GetCategoryIcon(AbyssalCategoryIcon icon)
+        {
+            switch (icon)
+            {
+                case AbyssalCategoryIcon.Summoning:
+                    return IconSummoningTex;
+                case AbyssalCategoryIcon.Forge:
+                    return IconForgeTex;
+                case AbyssalCategoryIcon.Weapon:
+                    return IconWeaponTex;
+                case AbyssalCategoryIcon.Armor:
+                    return IconArmorTex;
+                case AbyssalCategoryIcon.Implant:
+                    return IconImplantTex;
+                case AbyssalCategoryIcon.RitualMaterial:
+                    return IconRitualMaterialTex;
+                case AbyssalCategoryIcon.Sigil:
+                    return IconSigilTex;
+                case AbyssalCategoryIcon.Crown:
+                    return IconCrownTex;
+                case AbyssalCategoryIcon.Residue:
+                    return IconResidueTex;
+                case AbyssalCategoryIcon.AbyssalCore:
+                    return IconAbyssalCoreTex;
+                case AbyssalCategoryIcon.Capacitor:
+                    return IconCapacitorTex;
+                case AbyssalCategoryIcon.Instability:
+                    return IconInstabilityTex;
+                case AbyssalCategoryIcon.Locked:
+                    return BadgeLockedTex;
+                case AbyssalCategoryIcon.Unlocked:
+                    return BadgeUnlockedTex;
+                case AbyssalCategoryIcon.Ready:
+                    return BadgeReadyTex;
+                case AbyssalCategoryIcon.Forbidden:
+                    return BadgeForbiddenTex;
+                default:
+                    return null;
+            }
+        }
+
+        public static void DrawCategoryIcon(Rect rect, AbyssalCategoryIcon icon, Color? tint = null, float alpha = 1f)
+        {
+            Texture2D texture = GetCategoryIcon(icon);
+            if (texture == null)
+            {
+                return;
+            }
+
+            Color oldColor = GUI.color;
+            Color resolvedTint = tint ?? Color.white;
+            resolvedTint.a *= alpha;
+            GUI.color = resolvedTint;
+            GUI.DrawTexture(rect, texture, ScaleMode.ScaleToFit, true);
+            GUI.color = oldColor;
+        }
+
+        public static void DrawAccentAnimation(Rect rect, AbyssalAccentAnimation animation, float ticksPerFrame = 6f, float alpha = 1f)
+        {
+            Texture2D[] frames = GetAnimationFrames(animation);
+            if (frames == null || frames.Length == 0)
+            {
+                return;
+            }
+
+            if (AbyssalProtocolMod.Settings.reducedMotion)
+            {
+                DrawTextureWithFallback(rect, frames[0], alpha, Color.clear, false);
+                return;
+            }
+
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : Mathf.FloorToInt(Time.realtimeSinceStartup * 60f);
+            int frameIndex = Mathf.Abs(Mathf.FloorToInt(ticks / Mathf.Max(1f, ticksPerFrame))) % frames.Length;
+            DrawTextureWithFallback(rect, frames[frameIndex], alpha, Color.clear, false);
+        }
+
         private static bool ButtonInternal(Rect rect, string label, bool enabled, bool active, Texture2D icon, string tooltip, bool useTabStyle, bool iconOnly)
         {
             bool hovered = Mouse.IsOver(rect);
             Event currentEvent = Event.current;
             bool pressed = enabled && hovered && currentEvent != null && currentEvent.button == 0 && (currentEvent.type == EventType.MouseDown || currentEvent.type == EventType.MouseDrag);
             Texture2D background = iconOnly
-                ? GetIconFrameTexture(enabled, hovered)
+                ? GetIconFrameTexture(enabled, active, hovered, pressed)
                 : GetTexture(useTabStyle, enabled, active, hovered, pressed);
 
             DrawTexture(rect, background);
@@ -131,11 +345,21 @@ namespace AbyssalProtocol
             return ButtonNormalTex;
         }
 
-        private static Texture2D GetIconFrameTexture(bool enabled, bool hovered)
+        private static Texture2D GetIconFrameTexture(bool enabled, bool active, bool hovered, bool pressed)
         {
             if (!enabled)
             {
                 return IconFrameDisabledTex;
+            }
+
+            if (pressed && IconFramePressedTex != null)
+            {
+                return IconFramePressedTex;
+            }
+
+            if (active && IconFrameActiveTex != null)
+            {
+                return IconFrameActiveTex;
             }
 
             if (hovered)
@@ -144,6 +368,52 @@ namespace AbyssalProtocol
             }
 
             return IconFrameNormalTex;
+        }
+
+        private static Texture2D GetPanelTexture(AbyssalPanelStyle style)
+        {
+            switch (style)
+            {
+                case AbyssalPanelStyle.Main:
+                    return PanelMainTex;
+                case AbyssalPanelStyle.Card:
+                    return PanelCardTex;
+                case AbyssalPanelStyle.CardDark:
+                    return PanelCardDarkTex;
+                case AbyssalPanelStyle.Requirement:
+                    return PanelRequirementTex;
+                case AbyssalPanelStyle.Reward:
+                    return PanelRewardTex;
+                case AbyssalPanelStyle.Warning:
+                    return PanelWarningTex;
+                case AbyssalPanelStyle.Locked:
+                    return PanelLockedTex;
+                case AbyssalPanelStyle.Selected:
+                    return PanelSelectedTex;
+                case AbyssalPanelStyle.Tooltip:
+                    return PanelTooltipTex;
+                case AbyssalPanelStyle.Header:
+                    return HeaderStripTex;
+                case AbyssalPanelStyle.Footer:
+                    return FooterStripTex;
+                default:
+                    return PanelCardTex;
+            }
+        }
+
+        private static Texture2D[] GetAnimationFrames(AbyssalAccentAnimation animation)
+        {
+            switch (animation)
+            {
+                case AbyssalAccentAnimation.EmberScanline:
+                    return EmberScanlineFrames;
+                case AbyssalAccentAnimation.RitualSocketPulse:
+                    return RitualSocketPulseFrames;
+                case AbyssalAccentAnimation.EdgeGlow:
+                    return EdgeGlowFrames;
+                default:
+                    return null;
+            }
         }
 
         private static void DrawTexture(Rect rect, Texture2D texture)
@@ -157,6 +427,33 @@ namespace AbyssalProtocol
             Color oldColor = GUI.color;
             GUI.color = new Color(0.18f, 0.11f, 0.09f, 0.96f);
             GUI.DrawTexture(rect, BaseContent.WhiteTex);
+            GUI.color = oldColor;
+        }
+
+        private static void DrawTextureWithFallback(Rect rect, Texture2D texture, float alpha, Color fallbackColor, bool drawFallbackOutline)
+        {
+            Color oldColor = GUI.color;
+            if (texture != null)
+            {
+                GUI.color = new Color(oldColor.r, oldColor.g, oldColor.b, oldColor.a * Mathf.Clamp01(alpha));
+                GUI.DrawTexture(rect, texture, ScaleMode.StretchToFill, true);
+                GUI.color = oldColor;
+                return;
+            }
+
+            if (fallbackColor.a > 0f)
+            {
+                Color color = fallbackColor;
+                color.a *= Mathf.Clamp01(alpha);
+                GUI.color = color;
+                GUI.DrawTexture(rect, BaseContent.WhiteTex);
+                if (drawFallbackOutline)
+                {
+                    GUI.color = FallbackPanelOutlineColor;
+                    Widgets.DrawBox(rect, 1);
+                }
+            }
+
             GUI.color = oldColor;
         }
 
@@ -245,6 +542,33 @@ namespace AbyssalProtocol
             GUI.color = oldColor;
             Text.Font = oldFont;
             Text.Anchor = oldAnchor;
+        }
+
+        private static Texture2D LoadThemed(string relativePath, bool allowClassicFallback = true)
+        {
+            Texture2D themed = ContentFinder<Texture2D>.Get(EnhancedThemeRoot + relativePath, false);
+            if (themed != null)
+            {
+                return themed;
+            }
+
+            if (allowClassicFallback)
+            {
+                return ContentFinder<Texture2D>.Get(ClassicRoot + relativePath, false);
+            }
+
+            return null;
+        }
+
+        private static Texture2D[] LoadAnimation(string prefix, int frameCount)
+        {
+            Texture2D[] frames = new Texture2D[frameCount];
+            for (int i = 0; i < frameCount; i++)
+            {
+                frames[i] = LoadThemed(prefix + "_" + i.ToString("00"), false);
+            }
+
+            return frames;
         }
     }
 }
