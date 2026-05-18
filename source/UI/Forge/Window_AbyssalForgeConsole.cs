@@ -74,7 +74,7 @@ namespace AbyssalProtocol
 
         private const string StatusFilterAll = "All";
         private const string StatusFilterCraftable = "Craftable";
-        private const string StatusFilterMissing = "Missing";
+        private const string StatusFilterMissing = "NeedsResources";
         private const string StatusFilterLocked = "Locked";
         private const string StatusFilterNexus = "Nexus";
 
@@ -1404,7 +1404,6 @@ namespace AbyssalProtocol
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeConsolePatternsHeader".Translate());
 
             BuildFilteredPatternLists(progress);
 
@@ -1417,7 +1416,7 @@ namespace AbyssalProtocol
                 selectedPattern = visiblePatternScratch[0].recipe;
             }
 
-            float contentTop = inner.y + 28f;
+            float contentTop = inner.y;
             Rect searchRect = new Rect(inner.x, contentTop, inner.width, 30f);
             DrawPatternSearchRow(searchRect, visiblePatternScratch.Count, categoryPatternScratch.Count);
             contentTop += 36f;
@@ -1780,7 +1779,7 @@ namespace AbyssalProtocol
             {
                 new ForgeFilterOption(StatusFilterAll, "All " + all, new Color(0.72f, 0.66f, 0.56f, 1f)),
                 new ForgeFilterOption(StatusFilterCraftable, "Craftable " + craftable, new Color(0.45f, 0.88f, 0.48f, 1f)),
-                new ForgeFilterOption(StatusFilterMissing, "Missing " + missing, new Color(0.95f, 0.62f, 0.28f, 1f)),
+                new ForgeFilterOption(StatusFilterMissing, "Needs resources " + missing, new Color(0.95f, 0.62f, 0.28f, 1f)),
                 new ForgeFilterOption(StatusFilterLocked, "Locked " + locked, new Color(0.82f, 0.38f, 0.30f, 1f)),
                 new ForgeFilterOption(StatusFilterNexus, "Nexus " + nexus, new Color(0.74f, 0.50f, 0.92f, 1f))
             };
@@ -1845,8 +1844,8 @@ namespace AbyssalProtocol
 
         private static string GetStatusFilterTooltip(string filter)
         {
-            if (filter == StatusFilterCraftable) return "Show decoded, unlocked patterns with all materials available now.";
-            if (filter == StatusFilterMissing) return "Show decoded and unlocked patterns that are only missing materials.";
+            if (filter == StatusFilterCraftable) return "Show decoded, unlocked patterns with all currently counted ingredients available.";
+            if (filter == StatusFilterMissing) return "Show unlocked patterns that still need ingredients. This is informational only: bills can still be queued and RimWorld will resolve materials through the normal bill system.";
             if (filter == StatusFilterLocked) return "Show decoded patterns blocked by residue, research, facility, or normal recipe availability.";
             if (filter == StatusFilterNexus) return "Show patterns that still need Protocol Nexus decoding.";
             return "Show every pattern matching the current category, subfilter, and search.";
@@ -2176,7 +2175,6 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
             bool recipeAvailable = false;
             try
             {
@@ -2196,10 +2194,6 @@ namespace AbyssalProtocol
             else if (recipeAvailable)
             {
                 actionLabel = "ABY_ForgePatternAddBill".Translate();
-            }
-            else if (!hasAllMaterials)
-            {
-                actionLabel = "ABY_ForgePatternMissingMaterials".Translate();
             }
             else
             {
@@ -2423,7 +2417,6 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
             bool recipeAvailable = false;
             try
             {
@@ -2442,10 +2435,6 @@ namespace AbyssalProtocol
             else if (recipeAvailable)
             {
                 actionLabel = "ABY_ForgePatternAddBill".Translate();
-            }
-            else if (!hasAllMaterials)
-            {
-                actionLabel = "ABY_ForgePatternMissingMaterials".Translate();
             }
             else
             {
@@ -2661,7 +2650,6 @@ namespace AbyssalProtocol
                 }
             }
 
-            bool hasAllMaterials = entries.All(entry => entry.IsSatisfied);
             bool recipeAvailable = false;
             try
             {
@@ -2688,10 +2676,6 @@ namespace AbyssalProtocol
             {
                 actionLabel = "Add bill";
                 actionEnabled = true;
-            }
-            else if (!hasAllMaterials)
-            {
-                actionLabel = "Missing materials";
             }
             else
             {

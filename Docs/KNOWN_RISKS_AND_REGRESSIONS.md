@@ -137,6 +137,7 @@ Actual code and assets win over this document.
 | Forge unlock duplicated with research in confusing way | P1/P2 | progression/UI | player does not know whether Forge or research unlocks content | Make requirement blocks show research + forge + boss/sigil gates clearly. |
 | Attunement tier starts wrong | P1 | Forge progression | tier bonuses applied too early or not shown | Verify initial tier and thresholds after changing progression. |
 | Pattern browser scales poorly | P2 | Forge UI | dozens/hundreds of entries become unusable | Maintain categories, filters, search/subfilters, selected detail panel. |
+| Custom Forge material checks block bill creation | P1 | Forge UI/bills | player has or can obtain materials but Add Bill is disabled by Forge UI | Never gate Add Bill solely on custom material availability; let RimWorld vanilla bills resolve resources. Use material status only as informational UI. |
 | Sintering corpse recipe yield wrong | P1/P2 | Forge/recipes | always 1 residue or strange vanilla behavior | Verify custom recipe worker/building behavior in-game. |
 | Dev gizmo text missing/localization key shown | P2 | UI/localization | `ABY_*` key displayed | Add translation keys and test visible labels. |
 

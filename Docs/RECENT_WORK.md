@@ -99,6 +99,12 @@ Textures/UI/ABY/ProtocolResearch/ABY_SmallCategoryRingFrame.png
 
 Do not treat Protocol Nexus as dead code without checking the current archive.
 
+### Forge browser UX safety pass
+
+Recent Forge browser work keeps material availability informational only. The Forge UI may show resource shortage status chips, but Add Bill must not be disabled solely because a custom material availability check thinks ingredients are missing. RimWorld's vanilla bill/workgiver flow should resolve material shortages after a bill is queued.
+
+Also keep the pattern browser compact: the standalone Pattern Browser section title was removed so search, subfilters, status chips, and visible cards sit higher in the narrow left column.
+
 ### Custom UI remains first-class
 
 Forge, Summoning, Protocol Nexus, Boss Bar, Bestiary, and Turret UI should be treated as real project infrastructure.
