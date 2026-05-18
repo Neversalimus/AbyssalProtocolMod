@@ -201,8 +201,26 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
         }
 
+        public enum ProgressBarStyle
+        {
+            Standard,
+            Communion,
+            Attunement
+        }
+
         public static void DrawProgressBar(Rect rect, float fillPercent, string label, bool alert)
         {
+            DrawProgressBar(rect, fillPercent, label, alert, ProgressBarStyle.Standard);
+        }
+
+        public static void DrawProgressBar(Rect rect, float fillPercent, string label, bool alert, ProgressBarStyle style)
+        {
+            if (style == ProgressBarStyle.Communion || style == ProgressBarStyle.Attunement)
+            {
+                DrawIndustrialGaugeBar(rect, fillPercent, label, alert, style);
+                return;
+            }
+
             if (EnhancedUI)
             {
                 Fill(rect, new Color(0.035f, 0.032f, 0.034f, 0.92f));
@@ -243,6 +261,85 @@ namespace AbyssalProtocol
             Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = Color.white;
             ABY_UIPolishUtility.SafeLabel(rect, label);
+            GUI.color = Color.white;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private static void DrawIndustrialGaugeBar(Rect rect, float fillPercent, string label, bool alert, ProgressBarStyle style)
+        {
+            fillPercent = Mathf.Clamp01(fillPercent);
+            bool attunement = style == ProgressBarStyle.Attunement;
+            Color frameColor = attunement
+                ? (alert ? new Color(0.96f, 0.78f, 0.40f, 0.95f) : new Color(0.84f, 0.68f, 0.38f, 0.82f))
+                : (alert ? new Color(1f, 0.46f, 0.18f, 0.96f) : new Color(0.90f, 0.45f, 0.19f, 0.82f));
+            Color outerColor = attunement ? new Color(0.072f, 0.054f, 0.043f, 0.98f) : new Color(0.060f, 0.043f, 0.038f, 0.98f);
+            Color gaugeBackColor = attunement ? new Color(0.028f, 0.024f, 0.022f, 0.96f) : new Color(0.024f, 0.022f, 0.024f, 0.96f);
+            Color slotColor = attunement ? new Color(0.13f, 0.095f, 0.07f, 0.92f) : new Color(0.13f, 0.068f, 0.052f, 0.92f);
+            Color fillColor = attunement ? new Color(0.88f, 0.74f, 0.43f, 0.95f) : new Color(0.96f, 0.44f, 0.18f, 0.95f);
+            Color fillColorSecondary = attunement ? new Color(0.97f, 0.88f, 0.63f, 0.82f) : new Color(1f, 0.70f, 0.38f, 0.76f);
+            Color tickColor = attunement ? new Color(0.45f, 0.34f, 0.22f, 0.45f) : new Color(0.52f, 0.22f, 0.13f, 0.46f);
+            Color topLineColor = new Color(1f, 0.88f, 0.70f, attunement ? 0.20f : 0.15f);
+
+            Fill(rect, outerColor);
+            DrawOutline(rect, frameColor);
+            Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, 1f), new Color(1f, 0.88f, 0.70f, 0.14f));
+            Fill(new Rect(rect.x + 1f, rect.yMax - 2f, rect.width - 2f, 1f), new Color(0f, 0f, 0f, 0.22f));
+
+            Rect clampLeft = new Rect(rect.x + 3f, rect.y + 3f, 4f, rect.height - 6f);
+            Rect clampRight = new Rect(rect.xMax - 7f, rect.y + 3f, 4f, rect.height - 6f);
+            Fill(clampLeft, new Color(frameColor.r, frameColor.g, frameColor.b, 0.60f));
+            Fill(clampRight, new Color(frameColor.r, frameColor.g, frameColor.b, 0.60f));
+
+            Rect gaugeRect = rect.ContractedBy(3f);
+            gaugeRect.xMin += 6f;
+            gaugeRect.xMax -= 6f;
+            Fill(gaugeRect, gaugeBackColor);
+            Fill(new Rect(gaugeRect.x, gaugeRect.y, gaugeRect.width, 1f), topLineColor);
+            Fill(new Rect(gaugeRect.x, gaugeRect.yMax - 1f, gaugeRect.width, 1f), new Color(0f, 0f, 0f, 0.24f));
+
+            int segmentCount = Mathf.Clamp(Mathf.FloorToInt((gaugeRect.width + 2f) / 18f), 10, 22);
+            float gap = 1f;
+            float segmentWidth = (gaugeRect.width - gap * (segmentCount - 1)) / segmentCount;
+            float filledWidth = gaugeRect.width * fillPercent;
+
+            for (int i = 0; i < segmentCount; i++)
+            {
+                float x = gaugeRect.x + i * (segmentWidth + gap);
+                Rect segmentRect = new Rect(x, gaugeRect.y + 2f, segmentWidth, gaugeRect.height - 4f);
+                Fill(segmentRect, slotColor);
+                Fill(new Rect(segmentRect.x, segmentRect.y, segmentRect.width, 1f), new Color(1f, 1f, 1f, 0.04f));
+
+                float localFill = Mathf.Clamp(filledWidth - (x - gaugeRect.x), 0f, segmentWidth);
+                if (localFill > 0.25f)
+                {
+                    Rect fillRect = new Rect(segmentRect.x, segmentRect.y, localFill, segmentRect.height);
+                    Fill(fillRect, fillColor);
+                    Fill(new Rect(fillRect.x, fillRect.y, fillRect.width, 1f), fillColorSecondary);
+                }
+            }
+
+            for (int i = 1; i < segmentCount; i++)
+            {
+                float tickX = gaugeRect.x + i * (segmentWidth + gap) - gap * 0.5f;
+                Fill(new Rect(tickX, gaugeRect.y + 1f, 1f, gaugeRect.height - 2f), tickColor);
+            }
+
+            Rect glowRect = new Rect(gaugeRect.x, gaugeRect.y + 1f, gaugeRect.width * fillPercent, gaugeRect.height - 2f);
+            if (glowRect.width > 6f)
+            {
+                Fill(new Rect(glowRect.x, glowRect.yMax - 2f, glowRect.width, 1f), new Color(fillColor.r, fillColor.g, fillColor.b, attunement ? 0.18f : 0.24f));
+                if (!ReduceUIAnimation)
+                {
+                    AbyssalStyledWidgets.DrawAccentAnimation(glowRect, AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : (attunement ? 8f : 7f), alert ? 0.24f : (attunement ? 0.12f : 0.18f));
+                }
+            }
+
+            Rect labelRect = rect.ContractedBy(10f);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = new Color(0f, 0f, 0f, 0.72f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(labelRect.x + 1f, labelRect.y + 1f, labelRect.width, labelRect.height), label);
+            GUI.color = Color.white;
+            ABY_UIPolishUtility.SafeLabel(labelRect, label);
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }

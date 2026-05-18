@@ -256,11 +256,11 @@ namespace AbyssalProtocol
             }
 
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeStatusHeader".Translate());
-            AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 24f), fill, progressLabel, progress.HasRecentUnlocks);
+            AbyssalForgeConsoleArt.DrawProgressBar(new Rect(inner.x, inner.y + 26f, inner.width, 24f), fill, progressLabel, progress.HasRecentUnlocks, AbyssalForgeConsoleArt.ProgressBarStyle.Communion);
 
             int attunementTier = progress.GetCurrentAttunementTier(false);
             Rect attunementBarRect = new Rect(inner.x, inner.y + 58f, inner.width, 22f);
-            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false);
+            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
 
             float metricY = inner.y + 90f;
             float metricWidth = (inner.width - 10f) / 2f;

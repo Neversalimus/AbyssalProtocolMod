@@ -67,7 +67,7 @@ namespace AbyssalProtocol
                 : "ABY_ForgeNextPatternDone".Translate();
 
             Rect attunementBarRect = new Rect(inner.x, inner.y, inner.width, 20f);
-            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false);
+            AbyssalForgeConsoleArt.DrawProgressBar(attunementBarRect, AbyssalForgeProgressUtility.GetAttunementLevelFill(attunementTier), AbyssalForgeProgressUtility.GetAttunementBarLabel(attunementTier), false, AbyssalForgeConsoleArt.ProgressBarStyle.Attunement);
 
             Rect residueRect = new Rect(inner.x, inner.y + 28f, metricWidth, 40f);
             Rect availableRect = new Rect(inner.x + metricWidth + 12f, inner.y + 28f, metricWidth, 40f);
