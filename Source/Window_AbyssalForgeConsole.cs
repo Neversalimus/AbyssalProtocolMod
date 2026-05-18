@@ -26,6 +26,19 @@ namespace AbyssalProtocol
         private string selectedTurretSystemsFilter = TurretFilterAll;
         private string selectedStatusFilter = StatusFilterAll;
 
+        private readonly List<ForgePatternEntry> patternIndex = new List<ForgePatternEntry>();
+        private readonly List<RecipeDef> patternIndexSnapshot = new List<RecipeDef>();
+        private readonly List<ForgePatternEntry> categoryPatternScratch = new List<ForgePatternEntry>();
+        private readonly List<ForgePatternEntry> searchPatternScratch = new List<ForgePatternEntry>();
+        private readonly List<ForgePatternEntry> visiblePatternScratch = new List<ForgePatternEntry>();
+        private readonly List<ForgePatternEntry> billOptionScratch = new List<ForgePatternEntry>();
+        private readonly Dictionary<RecipeDef, CachedPatternStatus> patternStatusCache = new Dictionary<RecipeDef, CachedPatternStatus>();
+        private readonly Dictionary<RecipeDef, ForgePatternStatus> statusScratch = new Dictionary<RecipeDef, ForgePatternStatus>();
+        private bool patternIndexDirty = true;
+        private int lastStatusResidueSnapshot = -1;
+
+        private const int PatternStatusCacheRefreshTicks = 180;
+
         private const string CoreFilterAll = "All";
         private const string CoreFilterResidue = "Residue";
         private const string CoreFilterCapacitor = "Capacitor";
@@ -71,6 +84,37 @@ namespace AbyssalProtocol
             MissingMaterials,
             Locked,
             NexusLocked
+        }
+
+        private class CachedPatternStatus
+        {
+            public ForgePatternStatus status;
+            public int tick;
+            public int residue;
+        }
+
+        private struct ForgePatternEntry
+        {
+            public RecipeDef recipe;
+            public ThingDef product;
+            public string category;
+            public string displayLabel;
+            public string searchText;
+            public string identityText;
+            public int requiredResidue;
+            public string coreFilterId;
+            public int coreFilterOrder;
+            public bool weaponMelee;
+            public bool weaponRanged;
+            public bool weaponHerald;
+            public int weaponFilterOrder;
+            public string armorFilterId;
+            public int armorFilterOrder;
+            public string implantFilterId;
+            public int implantFilterOrder;
+            public bool isTurretSystem;
+            public string turretFilterId;
+            public int turretOrder;
         }
 
         private struct ForgeFilterOption
@@ -913,7 +957,11 @@ namespace AbyssalProtocol
 
         private static string BuildRecipeIdentityText(RecipeDef recipe)
         {
-            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            return BuildRecipeIdentityText(recipe, AbyssalForgeProgressUtility.GetPrimaryProduct(recipe));
+        }
+
+        private static string BuildRecipeIdentityText(RecipeDef recipe, ThingDef product)
+        {
             return ((recipe?.defName ?? string.Empty) + " "
                 + (recipe?.label ?? string.Empty) + " "
                 + (product?.defName ?? string.Empty) + " "
@@ -923,9 +971,14 @@ namespace AbyssalProtocol
         private static string BuildRecipeSearchText(RecipeDef recipe)
         {
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+            return BuildRecipeSearchText(recipe, product, category);
+        }
+
+        private static string BuildRecipeSearchText(RecipeDef recipe, ThingDef product, string category)
+        {
             string productLabel = product != null ? product.label : string.Empty;
             string productDef = product != null ? product.defName : string.Empty;
-            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
             string categoryLabel = AbyssalForgeProgressUtility.GetCategoryLabel(category);
             string summary = AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe);
             string details = AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe);
@@ -943,6 +996,11 @@ namespace AbyssalProtocol
 
         private static bool RecipeMatchesSearch(RecipeDef recipe, string searchText)
         {
+            return SearchTextMatches(BuildRecipeSearchText(recipe), searchText);
+        }
+
+        private static bool SearchTextMatches(string haystack, string searchText)
+        {
             if (searchText.NullOrEmpty())
             {
                 return true;
@@ -954,11 +1012,11 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            string haystack = BuildRecipeSearchText(recipe);
+            string safeHaystack = haystack ?? string.Empty;
             string[] parts = query.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < parts.Length; i++)
             {
-                if (!haystack.Contains(parts[i]))
+                if (!safeHaystack.Contains(parts[i]))
                 {
                     return false;
                 }
@@ -967,40 +1025,401 @@ namespace AbyssalProtocol
             return true;
         }
 
+        private List<ForgePatternEntry> GetForgePatternIndex()
+        {
+            List<RecipeDef> recipes = AbyssalForgeProgressUtility.GetForgeRecipes();
+            if (!patternIndexDirty && PatternIndexMatches(recipes))
+            {
+                return patternIndex;
+            }
+
+            patternIndex.Clear();
+            patternIndexSnapshot.Clear();
+            if (recipes != null)
+            {
+                for (int i = 0; i < recipes.Count; i++)
+                {
+                    RecipeDef recipe = recipes[i];
+                    if (recipe == null)
+                    {
+                        continue;
+                    }
+
+                    patternIndex.Add(BuildForgePatternEntry(recipe));
+                    patternIndexSnapshot.Add(recipe);
+                }
+            }
+
+            patternIndexDirty = false;
+            ClearPatternStatusCache();
+            return patternIndex;
+        }
+
+        private bool PatternIndexMatches(List<RecipeDef> recipes)
+        {
+            if (recipes == null || recipes.Count != patternIndexSnapshot.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                if (recipes[i] != patternIndexSnapshot[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private ForgePatternEntry BuildForgePatternEntry(RecipeDef recipe)
+        {
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+            string identity = BuildRecipeIdentityText(recipe, product);
+            string search = BuildRecipeSearchText(recipe, product, category);
+
+            bool forcedRanged = IsForcedRangedWeaponRecipe(search);
+            bool melee = !forcedRanged && IsMeleeWeaponText(search);
+            bool ranged = forcedRanged || !melee;
+            bool herald = category == AbyssalForgeProgressUtility.HeraldCategory || search.Contains("herald");
+
+            string coreFilter = ResolveCoreFilterId(search);
+            string armorFilter = ResolveArmorFilterId(search, identity);
+            string implantFilter = ResolveImplantFilterId(search, identity);
+            string turretFilter = ResolveTurretFilterId(product);
+
+            return new ForgePatternEntry
+            {
+                recipe = recipe,
+                product = product,
+                category = category,
+                displayLabel = AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe),
+                searchText = search,
+                identityText = identity,
+                requiredResidue = AbyssalForgeProgressUtility.GetRequiredResidue(recipe),
+                coreFilterId = coreFilter,
+                coreFilterOrder = ResolveCoreFilterOrder(coreFilter),
+                weaponMelee = melee,
+                weaponRanged = ranged,
+                weaponHerald = herald,
+                weaponFilterOrder = ResolveWeaponFilterOrder(melee, ranged, herald),
+                armorFilterId = armorFilter,
+                armorFilterOrder = ResolveArmorFilterOrder(armorFilter),
+                implantFilterId = implantFilter,
+                implantFilterOrder = ResolveImplantFilterOrder(implantFilter),
+                isTurretSystem = IsTurretSystemProduct(recipe, product, category),
+                turretFilterId = turretFilter,
+                turretOrder = ResolveTurretSystemOrder(product)
+            };
+        }
+
+        private static string ResolveCoreFilterId(string text)
+        {
+            string safe = text ?? string.Empty;
+            if (safe.Contains("stabilizer")) return CoreFilterStabilizer;
+            if (safe.Contains("capacitor") || safe.Contains("condenser") || safe.Contains("condensation") || safe.Contains("cell")) return CoreFilterCapacitor;
+            if (safe.Contains("residue") || safe.Contains("sinter") || safe.Contains("crucible") || safe.Contains("processing")) return CoreFilterResidue;
+            return CoreFilterResidue;
+        }
+
+        private static int ResolveCoreFilterOrder(string id)
+        {
+            if (id == CoreFilterResidue) return 10;
+            if (id == CoreFilterCapacitor) return 20;
+            if (id == CoreFilterStabilizer) return 30;
+            return 90;
+        }
+
+        private static bool IsMeleeWeaponText(string text)
+        {
+            string safe = text ?? string.Empty;
+            return safe.Contains("blade")
+                || safe.Contains("dagger")
+                || safe.Contains("halberd")
+                || safe.Contains("maul")
+                || safe.Contains("glaive");
+        }
+
+        private static int ResolveWeaponFilterOrder(bool melee, bool ranged, bool herald)
+        {
+            if (melee) return 10;
+            if (ranged) return 20;
+            if (herald) return 30;
+            return 90;
+        }
+
+        private static string ResolveArmorFilterId(string searchText, string identityText)
+        {
+            string text = searchText ?? string.Empty;
+            string identity = identityText ?? string.Empty;
+            if (identity.Contains("infernal combat frame")) return ArmorFilterArmor;
+            if (identity.Contains("ashen vambraces")) return ArmorFilterVambraces;
+            if (text.Contains("pack")) return ArmorFilterPack;
+            if (text.Contains("vambrace")) return ArmorFilterVambraces;
+            if (text.Contains("glove") || text.Contains("gauntlet")) return ArmorFilterGloves;
+            if (text.Contains("boot") || text.Contains("greave") || text.Contains("sabatons")) return ArmorFilterBoots;
+            if (text.Contains("helm") || text.Contains("cowl") || text.Contains("veil")) return ArmorFilterHelmet;
+            return ArmorFilterArmor;
+        }
+
+        private static int ResolveArmorFilterOrder(string id)
+        {
+            if (id == ArmorFilterArmor) return 10;
+            if (id == ArmorFilterHelmet) return 20;
+            if (id == ArmorFilterGloves) return 30;
+            if (id == ArmorFilterVambraces) return 40;
+            if (id == ArmorFilterPack) return 50;
+            if (id == ArmorFilterBoots) return 60;
+            return 90;
+        }
+
+        private static string ResolveImplantFilterId(string searchText, string identityText)
+        {
+            string text = searchText ?? string.Empty;
+            string identity = identityText ?? string.Empty;
+            if (IdentityTextContains(identity, "herald carapace mesh", "harmonic mesh", "lawwoven carapace mesh")) return ImplantsFilterBody;
+            if (IdentityTextContains(identity, "archon tendon spine", "verdict tendon spine")) return ImplantsFilterSpine;
+            if (IdentityTextContains(identity, "cinder mandible seal")) return ImplantsFilterOrgans;
+            if (IdentityTextContains(identity, "null chorus collar")) return ImplantsFilterNeck;
+            if (IdentityTextContains(identity, "breach tendon weave")) return ImplantsFilterLegs;
+            if (text.Contains("eye")) return ImplantsFilterEyes;
+            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("brain")) return ImplantsFilterBrain;
+            if (text.Contains("collar") || text.Contains("neck")) return ImplantsFilterNeck;
+            if (text.Contains("spine")) return ImplantsFilterSpine;
+            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung") || text.Contains("mandible")) return ImplantsFilterOrgans;
+            if (text.Contains("leg") || text.Contains("tendon")) return ImplantsFilterLegs;
+            if (text.Contains("carapace mesh") || text.Contains("mesh")) return ImplantsFilterBody;
+            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo") || text.Contains("hand")) return ImplantsFilterArms;
+            return ImplantsFilterBody;
+        }
+
+        private static int ResolveImplantFilterOrder(string id)
+        {
+            if (id == ImplantsFilterBrain) return 10;
+            if (id == ImplantsFilterEyes) return 20;
+            if (id == ImplantsFilterBody) return 30;
+            if (id == ImplantsFilterArms) return 40;
+            if (id == ImplantsFilterLegs) return 50;
+            if (id == ImplantsFilterNeck) return 60;
+            if (id == ImplantsFilterSpine) return 70;
+            if (id == ImplantsFilterOrgans) return 80;
+            return 90;
+        }
+
+        private static bool IdentityTextContains(string identity, params string[] fragments)
+        {
+            if (fragments == null || fragments.Length == 0)
+            {
+                return false;
+            }
+
+            string safe = identity ?? string.Empty;
+            for (int i = 0; i < fragments.Length; i++)
+            {
+                string fragment = fragments[i];
+                if (!fragment.NullOrEmpty() && safe.Contains(fragment.ToLowerInvariant()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsTurretSystemProduct(RecipeDef recipe, ThingDef product, string category)
+        {
+            return ABY_ModularTurretUtility.GetModuleForThingDef(product) != null
+                || product?.GetCompProperties<CompProperties_AbyssalModularTurret>() != null
+                || category == AbyssalForgeProgressUtility.TurretSystemsCategory;
+        }
+
+        private static string ResolveTurretFilterId(ThingDef product)
+        {
+            ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (module == null)
+            {
+                return TurretFilterAll;
+            }
+
+            switch (module.slot)
+            {
+                case ABY_TurretModuleSlot.MainWeapon:
+                    return TurretFilterMain;
+                case ABY_TurretModuleSlot.Auxiliary:
+                    return TurretFilterAuxiliary;
+                case ABY_TurretModuleSlot.Passive:
+                    return TurretFilterPassive;
+                default:
+                    return TurretFilterAll;
+            }
+        }
+
+        private static int ResolveTurretSystemOrder(ThingDef product)
+        {
+            if (product?.GetCompProperties<CompProperties_AbyssalModularTurret>() != null)
+            {
+                return 0;
+            }
+
+            ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
+            if (module == null)
+            {
+                return 50;
+            }
+
+            switch (module.slot)
+            {
+                case ABY_TurretModuleSlot.MainWeapon:
+                    return 10;
+                case ABY_TurretModuleSlot.Auxiliary:
+                    return 20;
+                case ABY_TurretModuleSlot.Passive:
+                    return 30;
+                default:
+                    return 40;
+            }
+        }
+
+        private bool EntryMatchesSelectedCategoryAndFilter(ForgePatternEntry entry)
+        {
+            RecipeDef recipe = entry.recipe;
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            string category = entry.category;
+            if (selectedCategory == AbyssalForgeProgressUtility.AllCategory)
+            {
+                return true;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                if (category != AbyssalForgeProgressUtility.WeaponsCategory && category != AbyssalForgeProgressUtility.HeraldCategory)
+                {
+                    return false;
+                }
+
+                return WeaponEntryMatchesFilter(entry, selectedWeaponsFilter);
+            }
+
+            if (category != selectedCategory)
+            {
+                return false;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) return selectedCoreFilter.NullOrEmpty() || selectedCoreFilter == CoreFilterAll || entry.coreFilterId == selectedCoreFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) return selectedArmorFilter.NullOrEmpty() || selectedArmorFilter == ArmorFilterAll || entry.armorFilterId == selectedArmorFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return selectedImplantsFilter.NullOrEmpty() || selectedImplantsFilter == ImplantsFilterAll || entry.implantFilterId == selectedImplantsFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return TurretEntryMatchesFilter(entry, selectedTurretSystemsFilter);
+            return true;
+        }
+
+        private static bool WeaponEntryMatchesFilter(ForgePatternEntry entry, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == WeaponsFilterAll) return true;
+            if (filter == WeaponsFilterHerald) return entry.weaponHerald;
+            if (filter == WeaponsFilterMelee) return entry.weaponMelee;
+            if (filter == WeaponsFilterRanged) return entry.weaponRanged;
+            return true;
+        }
+
+        private static bool TurretEntryMatchesFilter(ForgePatternEntry entry, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == TurretFilterAll)
+            {
+                return true;
+            }
+
+            return entry.turretFilterId == filter;
+        }
+
+        private bool EntryMatchesSearch(ForgePatternEntry entry, string searchText)
+        {
+            return SearchTextMatches(entry.searchText, searchText);
+        }
+
+        private int ComparePatternEntriesForCurrentView(ForgePatternEntry left, ForgePatternEntry right)
+        {
+            int result = GetActiveRecipeOrder(left).CompareTo(GetActiveRecipeOrder(right));
+            if (result != 0) return result;
+            result = left.requiredResidue.CompareTo(right.requiredResidue);
+            if (result != 0) return result;
+            return string.Compare(left.displayLabel, right.displayLabel, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private int GetActiveRecipeOrder(ForgePatternEntry entry)
+        {
+            if (entry.recipe == null)
+            {
+                return 9999;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.AllCategory)
+            {
+                string category = entry.category;
+                if (category == AbyssalForgeProgressUtility.HeraldCategory)
+                {
+                    category = AbyssalForgeProgressUtility.WeaponsCategory;
+                }
+
+                return AbyssalForgeProgressUtility.GetCategoryOrderIndex(category) * 100 + AbyssalForgeProgressUtility.GetCategoryOrderIndex(entry.category);
+            }
+
+            return GetSubfilterOrderForEntry(entry);
+        }
+
+        private int GetSubfilterOrderForEntry(ForgePatternEntry entry)
+        {
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) return entry.coreFilterOrder;
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory) return entry.weaponFilterOrder;
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) return entry.armorFilterOrder;
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return entry.implantFilterOrder;
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return entry.turretOrder;
+            return AbyssalForgeProgressUtility.GetCategoryOrderIndex(entry.category);
+        }
+
+        private static bool ContainsRecipe(List<ForgePatternEntry> entries, RecipeDef recipe)
+        {
+            if (entries == null || recipe == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                if (entries[i].recipe == recipe)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private void DrawPatternBrowser(Rect rect, MapComponent_AbyssalForgeProgress progress)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeConsolePatternsHeader".Translate());
 
-            bool turretSystemsMode = selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory;
-            List<RecipeDef> categoryRecipes = AbyssalForgeProgressUtility.GetForgeRecipes()
-                .Where(RecipeMatchesSelectedCategoryAndFilter)
-                .OrderBy(GetActiveRecipeOrder)
-                .ThenBy(AbyssalForgeProgressUtility.GetRequiredResidue)
-                .ThenBy(AbyssalForgeProgressUtility.GetRecipeDisplayLabel)
-                .ToList();
+            BuildFilteredPatternLists(progress);
 
-            List<RecipeDef> searchRecipes = categoryRecipes
-                .Where(recipe => RecipeMatchesSearch(recipe, patternSearchText))
-                .ToList();
-            Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe = BuildStatusCache(searchRecipes, progress);
-            List<RecipeDef> recipes = searchRecipes
-                .Where(recipe => RecipeMatchesSelectedStatus(recipe, statusByRecipe))
-                .ToList();
-
-            if (recipes.Count == 0)
+            if (visiblePatternScratch.Count == 0)
             {
                 selectedPattern = null;
             }
-            else if (selectedPattern == null || !recipes.Contains(selectedPattern))
+            else if (selectedPattern == null || !ContainsRecipe(visiblePatternScratch, selectedPattern))
             {
-                selectedPattern = recipes[0];
+                selectedPattern = visiblePatternScratch[0].recipe;
             }
 
             float contentTop = inner.y + 28f;
             Rect searchRect = new Rect(inner.x, contentTop, inner.width, 30f);
-            DrawPatternSearchRow(searchRect, recipes.Count, categoryRecipes.Count);
+            DrawPatternSearchRow(searchRect, visiblePatternScratch.Count, categoryPatternScratch.Count);
             contentTop += 36f;
 
             if (ShouldDrawSubfilterRow(selectedCategory))
@@ -1011,20 +1430,67 @@ namespace AbyssalProtocol
             }
 
             Rect statusRect = new Rect(inner.x, contentTop, inner.width, 28f);
-            DrawStatusFilterRow(statusRect, searchRecipes, statusByRecipe);
+            DrawStatusFilterRow(statusRect, searchPatternScratch, statusScratch);
             contentTop += 34f;
 
             Rect outRect = new Rect(inner.x, contentTop, inner.width, inner.yMax - contentTop);
+            DrawVirtualizedPatternCards(outRect, visiblePatternScratch, progress);
+        }
+
+        private void BuildFilteredPatternLists(MapComponent_AbyssalForgeProgress progress)
+        {
+            categoryPatternScratch.Clear();
+            searchPatternScratch.Clear();
+            visiblePatternScratch.Clear();
+
+            List<ForgePatternEntry> index = GetForgePatternIndex();
+            for (int i = 0; i < index.Count; i++)
+            {
+                ForgePatternEntry entry = index[i];
+                if (EntryMatchesSelectedCategoryAndFilter(entry))
+                {
+                    categoryPatternScratch.Add(entry);
+                }
+            }
+
+            categoryPatternScratch.Sort(ComparePatternEntriesForCurrentView);
+
+            for (int i = 0; i < categoryPatternScratch.Count; i++)
+            {
+                ForgePatternEntry entry = categoryPatternScratch[i];
+                if (EntryMatchesSearch(entry, patternSearchText))
+                {
+                    searchPatternScratch.Add(entry);
+                }
+            }
+
+            BuildStatusCache(searchPatternScratch, progress);
+
+            for (int i = 0; i < searchPatternScratch.Count; i++)
+            {
+                ForgePatternEntry entry = searchPatternScratch[i];
+                if (EntryMatchesSelectedStatus(entry, statusScratch))
+                {
+                    visiblePatternScratch.Add(entry);
+                }
+            }
+        }
+
+        private void DrawVirtualizedPatternCards(Rect outRect, List<ForgePatternEntry> entries, MapComponent_AbyssalForgeProgress progress)
+        {
             const float scrollbarReserve = 18f;
+            const int columns = 2;
             float contentWidth = Mathf.Max(120f, outRect.width - scrollbarReserve);
-            float cardWidth = (contentWidth - 12f) / 2f;
+            float cardWidth = (contentWidth - 12f) / columns;
+            bool turretSystemsMode = selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory;
             float cardHeight = turretSystemsMode ? 196f : 180f;
-            int rows = Mathf.CeilToInt(recipes.Count / 2f);
-            float viewHeight = Math.Max(outRect.height, rows * (cardHeight + 8f));
+            float rowPitch = cardHeight + 8f;
+            int rows = Mathf.CeilToInt((entries?.Count ?? 0) / (float)columns);
+            float viewHeight = Math.Max(outRect.height, rows * rowPitch);
             Rect viewRect = new Rect(0f, 0f, contentWidth, viewHeight);
 
             Widgets.BeginScrollView(outRect, ref patternScrollPosition, viewRect, true);
-            if (recipes.Count == 0)
+            if (entries == null || entries.Count == 0)
             {
                 Rect emptyRect = new Rect(0f, 0f, contentWidth, 70f);
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
@@ -1034,20 +1500,26 @@ namespace AbyssalProtocol
             }
             else
             {
-                for (int i = 0; i < recipes.Count; i++)
+                int firstVisibleRow = Mathf.Max(0, Mathf.FloorToInt(patternScrollPosition.y / rowPitch) - 1);
+                int lastVisibleRow = Mathf.Min(rows - 1, Mathf.CeilToInt((patternScrollPosition.y + outRect.height) / rowPitch) + 1);
+                int firstIndex = Mathf.Clamp(firstVisibleRow * columns, 0, entries.Count - 1);
+                int lastIndexExclusive = Mathf.Min(entries.Count, (lastVisibleRow + 1) * columns);
+
+                for (int i = firstIndex; i < lastIndexExclusive; i++)
                 {
-                    int column = i % 2;
-                    int row = i / 2;
-                    Rect cardRect = new Rect(column * (cardWidth + 12f), row * (cardHeight + 8f), cardWidth, cardHeight);
-                    RecipeDef recipe = recipes[i];
+                    int column = i % columns;
+                    int row = i / columns;
+                    Rect cardRect = new Rect(column * (cardWidth + 12f), row * rowPitch, cardWidth, cardHeight);
+                    ForgePatternEntry entry = entries[i];
+                    RecipeDef recipe = entry.recipe;
                     bool decoded = ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe);
-                    bool unlocked = AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered);
-                    bool freshlyUnlocked = progress.IsRecentlyUnlocked(recipe);
+                    bool unlocked = progress != null && AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered);
+                    bool freshlyUnlocked = progress != null && progress.IsRecentlyUnlocked(recipe);
                     if (!decoded)
                     {
-                        DrawUnknownPatternCard(cardRect, recipe, turretSystemsMode && IsTurretSystemRecipe(recipe));
+                        DrawUnknownPatternCard(cardRect, recipe, turretSystemsMode && entry.isTurretSystem);
                     }
-                    else if (turretSystemsMode && IsTurretSystemRecipe(recipe))
+                    else if (turretSystemsMode && entry.isTurretSystem)
                     {
                         DrawTurretSystemPatternCard(cardRect, recipe, unlocked, freshlyUnlocked);
                     }
@@ -1060,29 +1532,34 @@ namespace AbyssalProtocol
             Widgets.EndScrollView();
         }
 
-        private Dictionary<RecipeDef, ForgePatternStatus> BuildStatusCache(List<RecipeDef> recipes, MapComponent_AbyssalForgeProgress progress)
+        private void BuildStatusCache(List<ForgePatternEntry> entries, MapComponent_AbyssalForgeProgress progress)
         {
-            Dictionary<RecipeDef, ForgePatternStatus> result = new Dictionary<RecipeDef, ForgePatternStatus>();
-            if (recipes == null)
+            statusScratch.Clear();
+            int totalResidue = progress != null ? progress.TotalResidueOffered : -1;
+            if (lastStatusResidueSnapshot != totalResidue)
             {
-                return result;
+                patternStatusCache.Clear();
+                lastStatusResidueSnapshot = totalResidue;
             }
 
-            for (int i = 0; i < recipes.Count; i++)
+            if (entries == null)
             {
-                RecipeDef recipe = recipes[i];
-                if (recipe != null && !result.ContainsKey(recipe))
+                return;
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                RecipeDef recipe = entries[i].recipe;
+                if (recipe != null && !statusScratch.ContainsKey(recipe))
                 {
-                    result[recipe] = ResolvePatternStatus(recipe, progress);
+                    statusScratch[recipe] = GetCachedPatternStatus(recipe, progress, false);
                 }
             }
-
-            return result;
         }
 
-        private bool RecipeMatchesSelectedStatus(RecipeDef recipe, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        private bool EntryMatchesSelectedStatus(ForgePatternEntry entry, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
         {
-            if (recipe == null)
+            if (entry.recipe == null)
             {
                 return false;
             }
@@ -1093,9 +1570,9 @@ namespace AbyssalProtocol
             }
 
             ForgePatternStatus status;
-            if (statusByRecipe == null || !statusByRecipe.TryGetValue(recipe, out status))
+            if (statusByRecipe == null || !statusByRecipe.TryGetValue(entry.recipe, out status))
             {
-                status = ResolvePatternStatus(recipe, forge?.ProgressComponent);
+                status = GetCachedPatternStatus(entry.recipe, forge?.ProgressComponent, false);
             }
 
             if (selectedStatusFilter == StatusFilterCraftable) return status == ForgePatternStatus.Craftable;
@@ -1103,6 +1580,50 @@ namespace AbyssalProtocol
             if (selectedStatusFilter == StatusFilterLocked) return status == ForgePatternStatus.Locked;
             if (selectedStatusFilter == StatusFilterNexus) return status == ForgePatternStatus.NexusLocked;
             return true;
+        }
+
+        private ForgePatternStatus GetCachedPatternStatus(RecipeDef recipe, MapComponent_AbyssalForgeProgress progress, bool forceRefresh)
+        {
+            if (recipe == null)
+            {
+                return ForgePatternStatus.Locked;
+            }
+
+            int tick = CurrentGameTick();
+            int totalResidue = progress != null ? progress.TotalResidueOffered : -1;
+            CachedPatternStatus cached;
+            if (!forceRefresh && patternStatusCache.TryGetValue(recipe, out cached) && cached.residue == totalResidue && tick - cached.tick < PatternStatusCacheRefreshTicks)
+            {
+                return cached.status;
+            }
+
+            ForgePatternStatus status = ResolvePatternStatus(recipe, progress);
+            patternStatusCache[recipe] = new CachedPatternStatus
+            {
+                status = status,
+                tick = tick,
+                residue = totalResidue
+            };
+            return status;
+        }
+
+        private static int CurrentGameTick()
+        {
+            try
+            {
+                return Find.TickManager != null ? Find.TickManager.TicksGame : Environment.TickCount;
+            }
+            catch
+            {
+                return Environment.TickCount;
+            }
+        }
+
+        private void ClearPatternStatusCache()
+        {
+            patternStatusCache.Clear();
+            statusScratch.Clear();
+            lastStatusResidueSnapshot = -1;
         }
 
         private ForgePatternStatus ResolvePatternStatus(RecipeDef recipe, MapComponent_AbyssalForgeProgress progress)
@@ -1144,12 +1665,12 @@ namespace AbyssalProtocol
             return hasAllMaterials ? ForgePatternStatus.Craftable : ForgePatternStatus.MissingMaterials;
         }
 
-        private void DrawStatusFilterRow(Rect rect, List<RecipeDef> searchRecipes, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        private void DrawStatusFilterRow(Rect rect, List<ForgePatternEntry> searchEntries, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
         {
             AbyssalForgeConsoleArt.Fill(rect, new Color(0.085f, 0.062f, 0.055f, 0.76f));
             AbyssalForgeConsoleArt.DrawOutline(rect, new Color(1f, 0.36f, 0.13f, 0.24f));
 
-            List<ForgeFilterOption> options = GetStatusFilterOptions(searchRecipes, statusByRecipe);
+            List<ForgeFilterOption> options = GetStatusFilterOptions(searchEntries, statusByRecipe);
             if (options.Count == 0)
             {
                 return;
@@ -1180,9 +1701,9 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
         }
 
-        private List<ForgeFilterOption> GetStatusFilterOptions(List<RecipeDef> searchRecipes, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
+        private List<ForgeFilterOption> GetStatusFilterOptions(List<ForgePatternEntry> searchEntries, Dictionary<RecipeDef, ForgePatternStatus> statusByRecipe)
         {
-            int all = searchRecipes?.Count ?? 0;
+            int all = searchEntries?.Count ?? 0;
             int craftable = CountStatus(statusByRecipe, ForgePatternStatus.Craftable);
             int missing = CountStatus(statusByRecipe, ForgePatternStatus.MissingMaterials);
             int locked = CountStatus(statusByRecipe, ForgePatternStatus.Locked);
@@ -2167,40 +2688,58 @@ namespace AbyssalProtocol
         private List<FloatMenuOption> BuildRecipeOptions()
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
-            List<RecipeDef> availableRecipes = forge?.ProgressComponent != null
-                ? AbyssalForgeProgressUtility.GetForgeRecipes()
-                    .Where(RecipeMatchesSelectedCategoryAndFilter)
-                    .Where(recipe => RecipeMatchesSearch(recipe, patternSearchText))
-                    .Where(recipe => selectedStatusFilter == StatusFilterAll || RecipeMatchesSelectedStatus(recipe, null))
-                    .Where(recipe => AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, forge.ProgressComponent.TotalResidueOffered))
-                    .ToList()
-                : new List<RecipeDef>();
+            billOptionScratch.Clear();
 
-            for (int i = 0; i < availableRecipes.Count; i++)
+            MapComponent_AbyssalForgeProgress progress = forge?.ProgressComponent;
+            if (progress != null)
             {
-                RecipeDef recipe = availableRecipes[i];
-                if (!ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe))
+                List<ForgePatternEntry> index = GetForgePatternIndex();
+                for (int i = 0; i < index.Count; i++)
                 {
-                    continue;
-                }
+                    ForgePatternEntry entry = index[i];
+                    RecipeDef recipe = entry.recipe;
+                    if (recipe == null)
+                    {
+                        continue;
+                    }
 
-                bool availableNow = false;
-                try
-                {
-                    availableNow = recipe != null && forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
-                }
-                catch (System.Exception ex)
-                {
-                    ABY_UISafetyUtility.LogUIException("Forge bill recipe option", ex);
-                }
+                    if (!EntryMatchesSelectedCategoryAndFilter(entry) || !EntryMatchesSearch(entry, patternSearchText))
+                    {
+                        continue;
+                    }
 
-                if (!availableNow)
-                {
-                    continue;
-                }
+                    if (selectedStatusFilter != StatusFilterAll && !EntryMatchesSelectedStatus(entry, null))
+                    {
+                        continue;
+                    }
 
-                RecipeDef capturedRecipe = recipe;
-                options.Add(new FloatMenuOption(AbyssalForgeProgressUtility.GetRecipeDisplayLabel(capturedRecipe), delegate
+                    if (!AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, progress.TotalResidueOffered) || !ABY_ProtocolResearchGateUtility.IsDecodedForForge(recipe))
+                    {
+                        continue;
+                    }
+
+                    bool availableNow = false;
+                    try
+                    {
+                        availableNow = forge != null && recipe.AvailableNow && recipe.AvailableOnNow(forge);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        ABY_UISafetyUtility.LogUIException("Forge bill recipe option", ex);
+                    }
+
+                    if (availableNow)
+                    {
+                        billOptionScratch.Add(entry);
+                    }
+                }
+            }
+
+            billOptionScratch.Sort(ComparePatternEntriesForCurrentView);
+            for (int i = 0; i < billOptionScratch.Count; i++)
+            {
+                RecipeDef capturedRecipe = billOptionScratch[i].recipe;
+                options.Add(new FloatMenuOption(billOptionScratch[i].displayLabel, delegate
                 {
                     AddBill(capturedRecipe);
                 }));
@@ -2236,6 +2775,7 @@ namespace AbyssalProtocol
 
                 Bill bill = recipe.MakeNewBill();
                 forge?.BillStack?.AddBill(bill);
+                ClearPatternStatusCache();
             }
             catch (System.Exception ex)
             {
@@ -2276,6 +2816,7 @@ namespace AbyssalProtocol
                 Bill bill = BillUtility.Clipboard.Clone();
                 bill.InitializeAfterClone();
                 forge.BillStack.AddBill(bill);
+                ClearPatternStatusCache();
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera(null);
             }
         }
@@ -2295,6 +2836,7 @@ namespace AbyssalProtocol
             int consumed = forge.OfferResidue(requestedAmount);
             if (consumed > 0)
             {
+                ClearPatternStatusCache();
                 SoundDefOf.Tick_High.PlayOneShotOnCamera(null);
             }
             else
