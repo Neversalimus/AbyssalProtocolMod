@@ -17,12 +17,56 @@ namespace AbyssalProtocol
         private float billViewHeight = 1000f;
         private Bill mouseoverBill;
         private string selectedCategory = AbyssalForgeProgressUtility.AllCategory;
+        private string selectedCoreFilter = CoreFilterAll;
+        private string selectedWeaponsFilter = WeaponsFilterAll;
+        private string selectedArmorFilter = ArmorFilterAll;
+        private string selectedImplantsFilter = ImplantsFilterAll;
         private string selectedTurretSystemsFilter = TurretFilterAll;
+
+        private const string CoreFilterAll = "All";
+        private const string CoreFilterResidue = "Residue";
+        private const string CoreFilterCapacitor = "Capacitor";
+        private const string CoreFilterStabilizer = "Stabilizer";
+
+        private const string WeaponsFilterAll = "All";
+        private const string WeaponsFilterMelee = "Melee";
+        private const string WeaponsFilterRanged = "Ranged";
+        private const string WeaponsFilterHerald = "Herald";
+
+        private const string ArmorFilterAll = "All";
+        private const string ArmorFilterArmor = "Armor";
+        private const string ArmorFilterHelmet = "Helmet";
+        private const string ArmorFilterGloves = "Gloves";
+        private const string ArmorFilterVambraces = "Vambraces";
+        private const string ArmorFilterPack = "Pack";
+        private const string ArmorFilterBoots = "Boots";
+
+        private const string ImplantsFilterAll = "All";
+        private const string ImplantsFilterBrain = "Brain";
+        private const string ImplantsFilterEyes = "Eyes";
+        private const string ImplantsFilterBody = "Body";
+        private const string ImplantsFilterArms = "Arms";
+        private const string ImplantsFilterSpine = "Spine";
+        private const string ImplantsFilterOrgans = "Organs";
 
         private const string TurretFilterAll = "All";
         private const string TurretFilterMain = "Main";
         private const string TurretFilterAuxiliary = "Auxiliary";
         private const string TurretFilterPassive = "Passive";
+
+        private struct ForgeFilterOption
+        {
+            public string id;
+            public string label;
+            public Color color;
+
+            public ForgeFilterOption(string id, string label, Color color)
+            {
+                this.id = id;
+                this.label = label;
+                this.color = color;
+            }
+        }
 
         public Window_AbyssalForgeConsole(Building_AbyssalForge forge)
         {
@@ -278,13 +322,19 @@ namespace AbyssalProtocol
 
         private void DrawCategoryRow(Rect rect)
         {
+            if (selectedCategory == AbyssalForgeProgressUtility.HeraldCategory)
+            {
+                selectedCategory = AbyssalForgeProgressUtility.WeaponsCategory;
+                selectedWeaponsFilter = WeaponsFilterHerald;
+            }
+
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             if (AbyssalStyledWidgets.UseEnhancedTheme)
             {
                 AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(rect.x + 8f, rect.yMax - 6f, rect.width - 16f, 5f), 0.34f);
             }
             Rect inner = rect.ContractedBy(4f);
-            List<string> categories = AbyssalForgeProgressUtility.Categories.ToList();
+            List<string> categories = GetVisibleCategories().ToList();
             float width = inner.width / categories.Count;
 
             for (int i = 0; i < categories.Count; i++)
@@ -302,10 +352,7 @@ namespace AbyssalProtocol
                     }
 
                     selectedCategory = category;
-                    if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory && selectedTurretSystemsFilter.NullOrEmpty())
-                    {
-                        selectedTurretSystemsFilter = TurretFilterAll;
-                    }
+                    EnsureSelectedFilterForCategory();
 
                     SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
                 }
@@ -365,6 +412,428 @@ namespace AbyssalProtocol
             Text.Anchor = oldAnchor;
         }
 
+        private static IEnumerable<string> GetVisibleCategories()
+        {
+            foreach (string category in AbyssalForgeProgressUtility.Categories)
+            {
+                if (category == AbyssalForgeProgressUtility.HeraldCategory)
+                {
+                    continue;
+                }
+
+                yield return category;
+            }
+        }
+
+        private void EnsureSelectedFilterForCategory()
+        {
+            if (selectedCoreFilter.NullOrEmpty()) selectedCoreFilter = CoreFilterAll;
+            if (selectedWeaponsFilter.NullOrEmpty()) selectedWeaponsFilter = WeaponsFilterAll;
+            if (selectedArmorFilter.NullOrEmpty()) selectedArmorFilter = ArmorFilterAll;
+            if (selectedImplantsFilter.NullOrEmpty()) selectedImplantsFilter = ImplantsFilterAll;
+            if (selectedTurretSystemsFilter.NullOrEmpty()) selectedTurretSystemsFilter = TurretFilterAll;
+        }
+
+        private static bool ShouldDrawSubfilterRow(string category)
+        {
+            return category == AbyssalForgeProgressUtility.CoreCategory
+                || category == AbyssalForgeProgressUtility.WeaponsCategory
+                || category == AbyssalForgeProgressUtility.ArmorCategory
+                || category == AbyssalForgeProgressUtility.ImplantsCategory
+                || category == AbyssalForgeProgressUtility.TurretSystemsCategory;
+        }
+
+        private void DrawSubfilterRow(Rect rect)
+        {
+            EnsureSelectedFilterForCategory();
+            AbyssalForgeConsoleArt.Fill(rect, new Color(0.10f, 0.075f, 0.065f, 0.82f));
+            AbyssalForgeConsoleArt.DrawOutline(rect, new Color(1f, 0.36f, 0.13f, 0.35f));
+
+            List<ForgeFilterOption> options = GetFilterOptionsForSelectedCategory();
+            if (options.Count == 0)
+            {
+                return;
+            }
+
+            GameFont oldFont = Text.Font;
+            Text.Font = GameFont.Tiny;
+            float gap = 8f;
+            float totalWidth = -gap;
+            float[] widths = new float[options.Count];
+            for (int i = 0; i < options.Count; i++)
+            {
+                float labelWidth = Text.CalcSize(options[i].label).x + 24f;
+                widths[i] = Mathf.Clamp(labelWidth, 54f, 108f);
+                totalWidth += widths[i] + gap;
+            }
+
+            float buttonHeight = 22f;
+            float buttonY = rect.y + (rect.height - buttonHeight) / 2f;
+            float x = rect.x + Mathf.Max(10f, (rect.width - totalWidth) / 2f);
+            for (int i = 0; i < options.Count; i++)
+            {
+                ForgeFilterOption option = options[i];
+                DrawForgeFilterButton(new Rect(x, buttonY, widths[i], buttonHeight), option);
+                x += widths[i] + gap;
+            }
+
+            Text.Font = oldFont;
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private List<ForgeFilterOption> GetFilterOptionsForSelectedCategory()
+        {
+            Color neutral = new Color(0.72f, 0.66f, 0.56f, 1f);
+            Color forge = new Color(0.92f, 0.48f, 0.22f, 1f);
+            Color capacitor = new Color(0.95f, 0.62f, 0.28f, 1f);
+            Color stabilizer = new Color(0.76f, 0.64f, 0.36f, 1f);
+            Color weapon = new Color(0.92f, 0.36f, 0.22f, 1f);
+            Color armor = new Color(0.78f, 0.64f, 0.50f, 1f);
+            Color implant = new Color(0.82f, 0.52f, 0.84f, 1f);
+            Color herald = new Color(0.94f, 0.74f, 0.30f, 1f);
+
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory)
+            {
+                return new List<ForgeFilterOption>
+                {
+                    new ForgeFilterOption(CoreFilterAll, "All", neutral),
+                    new ForgeFilterOption(CoreFilterResidue, "Residue", forge),
+                    new ForgeFilterOption(CoreFilterCapacitor, "Capacitor", capacitor),
+                    new ForgeFilterOption(CoreFilterStabilizer, "Stabilizer", stabilizer)
+                };
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                return new List<ForgeFilterOption>
+                {
+                    new ForgeFilterOption(WeaponsFilterAll, "All", neutral),
+                    new ForgeFilterOption(WeaponsFilterMelee, "Melee", weapon),
+                    new ForgeFilterOption(WeaponsFilterRanged, "Ranged", weapon),
+                    new ForgeFilterOption(WeaponsFilterHerald, "Herald", herald)
+                };
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory)
+            {
+                return new List<ForgeFilterOption>
+                {
+                    new ForgeFilterOption(ArmorFilterAll, "All", neutral),
+                    new ForgeFilterOption(ArmorFilterArmor, "Armor", armor),
+                    new ForgeFilterOption(ArmorFilterHelmet, "Helmet", armor),
+                    new ForgeFilterOption(ArmorFilterGloves, "Gloves", armor),
+                    new ForgeFilterOption(ArmorFilterVambraces, "Vambraces", armor),
+                    new ForgeFilterOption(ArmorFilterPack, "Pack", armor),
+                    new ForgeFilterOption(ArmorFilterBoots, "Boots", armor)
+                };
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory)
+            {
+                return new List<ForgeFilterOption>
+                {
+                    new ForgeFilterOption(ImplantsFilterAll, "All", neutral),
+                    new ForgeFilterOption(ImplantsFilterBrain, "Brain", implant),
+                    new ForgeFilterOption(ImplantsFilterEyes, "Eyes", implant),
+                    new ForgeFilterOption(ImplantsFilterBody, "Body", implant),
+                    new ForgeFilterOption(ImplantsFilterArms, "Arms", implant),
+                    new ForgeFilterOption(ImplantsFilterSpine, "Spine", implant),
+                    new ForgeFilterOption(ImplantsFilterOrgans, "Organs", implant)
+                };
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory)
+            {
+                return new List<ForgeFilterOption>
+                {
+                    new ForgeFilterOption(TurretFilterAll, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretFilter_All", "ALL"), neutral),
+                    new ForgeFilterOption(TurretFilterMain, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Main", "MAIN"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.MainWeapon)),
+                    new ForgeFilterOption(TurretFilterAuxiliary, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Aux", "AUX"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Auxiliary)),
+                    new ForgeFilterOption(TurretFilterPassive, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotBadge_Passive", "PASSIVE"), ABY_ModularTurretUtility.SlotColor(ABY_TurretModuleSlot.Passive))
+                };
+            }
+
+            return new List<ForgeFilterOption>();
+        }
+
+        private string GetSelectedSubfilter()
+        {
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) return selectedCoreFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory) return selectedWeaponsFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) return selectedArmorFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return selectedImplantsFilter;
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return selectedTurretSystemsFilter;
+            return string.Empty;
+        }
+
+        private void SetSelectedSubfilter(string filter)
+        {
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) selectedCoreFilter = filter;
+            else if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory) selectedWeaponsFilter = filter;
+            else if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) selectedArmorFilter = filter;
+            else if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) selectedImplantsFilter = filter;
+            else if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) selectedTurretSystemsFilter = filter;
+        }
+
+        private void DrawForgeFilterButton(Rect rect, ForgeFilterOption option)
+        {
+            string current = GetSelectedSubfilter();
+            bool active = current == option.id;
+            bool hovered = Mouse.IsOver(rect);
+            Color color = option.color;
+            Color fill = active
+                ? new Color(color.r * 0.30f, color.g * 0.20f, color.b * 0.14f, 0.98f)
+                : hovered
+                    ? new Color(color.r * 0.22f, color.g * 0.15f, color.b * 0.12f, 0.96f)
+                    : new Color(color.r * 0.14f, color.g * 0.10f, color.b * 0.09f, 0.92f);
+            Color outline = active
+                ? Color.Lerp(color, Color.white, 0.26f)
+                : new Color(color.r, color.g, color.b, hovered ? 0.88f : 0.62f);
+
+            AbyssalForgeConsoleArt.Fill(rect, fill);
+            AbyssalForgeConsoleArt.DrawOutline(rect, outline);
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = active ? Color.white : AbyssalForgeConsoleArt.TextSoftColor;
+            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), option.label);
+
+            if (Widgets.ButtonInvisible(rect, false))
+            {
+                if (current != option.id)
+                {
+                    SetSelectedSubfilter(option.id);
+                    patternScrollPosition = Vector2.zero;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+
+            TooltipHandler.TipRegion(rect, GetSubfilterTooltip(selectedCategory, option.id));
+            Text.Anchor = TextAnchor.UpperLeft;
+            GUI.color = Color.white;
+        }
+
+        private static string GetSubfilterTooltip(string category, string filter)
+        {
+            if (category == AbyssalForgeProgressUtility.CoreCategory)
+            {
+                if (filter == CoreFilterResidue) return "Show residue processing and residue-routing forge infrastructure.";
+                if (filter == CoreFilterCapacitor) return "Show capacitor and energy storage modules.";
+                if (filter == CoreFilterStabilizer) return "Show circle stabilizer modules.";
+                return "Show all forge core infrastructure patterns.";
+            }
+
+            if (category == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                if (filter == WeaponsFilterMelee) return "Show melee weapons.";
+                if (filter == WeaponsFilterRanged) return "Show ranged weapons.";
+                if (filter == WeaponsFilterHerald) return "Show Herald-grade weapons moved into the Weapons category.";
+                return "Show all weapon patterns, including Herald-grade weapons.";
+            }
+
+            if (category == AbyssalForgeProgressUtility.ArmorCategory)
+            {
+                return "Show " + filter.ToLowerInvariant() + " armor slot patterns.";
+            }
+
+            if (category == AbyssalForgeProgressUtility.ImplantsCategory)
+            {
+                return "Show " + filter.ToLowerInvariant() + " implant procedures.";
+            }
+
+            if (category == AbyssalForgeProgressUtility.TurretSystemsCategory)
+            {
+                return GetTurretFilterTooltip(filter);
+            }
+
+            return string.Empty;
+        }
+
+        private bool RecipeMatchesSelectedCategoryAndFilter(RecipeDef recipe)
+        {
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+            if (selectedCategory == AbyssalForgeProgressUtility.AllCategory)
+            {
+                return true;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                if (category != AbyssalForgeProgressUtility.WeaponsCategory && category != AbyssalForgeProgressUtility.HeraldCategory)
+                {
+                    return false;
+                }
+
+                return WeaponRecipeMatchesFilter(recipe, selectedWeaponsFilter);
+            }
+
+            if (category != selectedCategory)
+            {
+                return false;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) return CoreRecipeMatchesFilter(recipe, selectedCoreFilter);
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) return ArmorRecipeMatchesFilter(recipe, selectedArmorFilter);
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return ImplantRecipeMatchesFilter(recipe, selectedImplantsFilter);
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return TurretRecipeMatchesFilter(recipe, selectedTurretSystemsFilter);
+            return true;
+        }
+
+        private int GetActiveRecipeOrder(RecipeDef recipe)
+        {
+            if (recipe == null)
+            {
+                return 9999;
+            }
+
+            if (selectedCategory == AbyssalForgeProgressUtility.AllCategory)
+            {
+                string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+                if (category == AbyssalForgeProgressUtility.HeraldCategory)
+                {
+                    category = AbyssalForgeProgressUtility.WeaponsCategory;
+                }
+
+                return AbyssalForgeProgressUtility.GetCategoryOrderIndex(category) * 100 + GetSubfilterOrderForRecipe(recipe);
+            }
+
+            return GetSubfilterOrderForRecipe(recipe);
+        }
+
+        private int GetSubfilterOrderForRecipe(RecipeDef recipe)
+        {
+            if (selectedCategory == AbyssalForgeProgressUtility.CoreCategory) return GetCoreFilterOrder(recipe);
+            if (selectedCategory == AbyssalForgeProgressUtility.WeaponsCategory) return GetWeaponFilterOrder(recipe);
+            if (selectedCategory == AbyssalForgeProgressUtility.ArmorCategory) return GetArmorFilterOrder(recipe);
+            if (selectedCategory == AbyssalForgeProgressUtility.ImplantsCategory) return GetImplantFilterOrder(recipe);
+            if (selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory) return GetTurretSystemRecipeOrder(recipe);
+            return AbyssalForgeProgressUtility.GetCategoryOrderIndex(AbyssalForgeProgressUtility.GetCategory(recipe));
+        }
+
+        private static bool CoreRecipeMatchesFilter(RecipeDef recipe, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == CoreFilterAll) return true;
+            return GetCoreFilterId(recipe) == filter;
+        }
+
+        private static int GetCoreFilterOrder(RecipeDef recipe)
+        {
+            string id = GetCoreFilterId(recipe);
+            if (id == CoreFilterResidue) return 10;
+            if (id == CoreFilterCapacitor) return 20;
+            if (id == CoreFilterStabilizer) return 30;
+            return 90;
+        }
+
+        private static string GetCoreFilterId(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            if (text.Contains("stabilizer")) return CoreFilterStabilizer;
+            if (text.Contains("capacitor") || text.Contains("condenser") || text.Contains("condensation") || text.Contains("cell")) return CoreFilterCapacitor;
+            if (text.Contains("residue") || text.Contains("sinter") || text.Contains("crucible") || text.Contains("processing")) return CoreFilterResidue;
+            return CoreFilterResidue;
+        }
+
+        private static bool WeaponRecipeMatchesFilter(RecipeDef recipe, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == WeaponsFilterAll) return true;
+            string category = AbyssalForgeProgressUtility.GetCategory(recipe);
+            if (filter == WeaponsFilterHerald) return category == AbyssalForgeProgressUtility.HeraldCategory || BuildRecipeSearchText(recipe).Contains("herald");
+            if (category == AbyssalForgeProgressUtility.HeraldCategory) return false;
+            if (filter == WeaponsFilterMelee) return IsMeleeWeaponRecipe(recipe);
+            if (filter == WeaponsFilterRanged) return !IsMeleeWeaponRecipe(recipe);
+            return true;
+        }
+
+        private static int GetWeaponFilterOrder(RecipeDef recipe)
+        {
+            if (AbyssalForgeProgressUtility.GetCategory(recipe) == AbyssalForgeProgressUtility.HeraldCategory || BuildRecipeSearchText(recipe).Contains("herald")) return 30;
+            return IsMeleeWeaponRecipe(recipe) ? 10 : 20;
+        }
+
+        private static bool IsMeleeWeaponRecipe(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            return text.Contains("blade")
+                || text.Contains("dagger")
+                || text.Contains("pike")
+                || text.Contains("halberd")
+                || text.Contains("maul")
+                || text.Contains("glaive");
+        }
+
+        private static bool ArmorRecipeMatchesFilter(RecipeDef recipe, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == ArmorFilterAll) return true;
+            return GetArmorFilterId(recipe) == filter;
+        }
+
+        private static int GetArmorFilterOrder(RecipeDef recipe)
+        {
+            string id = GetArmorFilterId(recipe);
+            if (id == ArmorFilterArmor) return 10;
+            if (id == ArmorFilterHelmet) return 20;
+            if (id == ArmorFilterGloves) return 30;
+            if (id == ArmorFilterVambraces) return 40;
+            if (id == ArmorFilterPack) return 50;
+            if (id == ArmorFilterBoots) return 60;
+            return 90;
+        }
+
+        private static string GetArmorFilterId(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            if (text.Contains("pack")) return ArmorFilterPack;
+            if (text.Contains("glove") || text.Contains("gauntlet")) return ArmorFilterGloves;
+            if (text.Contains("vambrace")) return ArmorFilterVambraces;
+            if (text.Contains("boot") || text.Contains("greave") || text.Contains("sabatons")) return ArmorFilterBoots;
+            if (text.Contains("helm") || text.Contains("cowl") || text.Contains("veil")) return ArmorFilterHelmet;
+            return ArmorFilterArmor;
+        }
+
+        private static bool ImplantRecipeMatchesFilter(RecipeDef recipe, string filter)
+        {
+            if (filter.NullOrEmpty() || filter == ImplantsFilterAll) return true;
+            return GetImplantFilterId(recipe) == filter;
+        }
+
+        private static int GetImplantFilterOrder(RecipeDef recipe)
+        {
+            string id = GetImplantFilterId(recipe);
+            if (id == ImplantsFilterBrain) return 10;
+            if (id == ImplantsFilterEyes) return 20;
+            if (id == ImplantsFilterBody) return 30;
+            if (id == ImplantsFilterArms) return 40;
+            if (id == ImplantsFilterSpine) return 50;
+            if (id == ImplantsFilterOrgans) return 60;
+            return 90;
+        }
+
+        private static string GetImplantFilterId(RecipeDef recipe)
+        {
+            string text = BuildRecipeSearchText(recipe);
+            if (text.Contains("eye")) return ImplantsFilterEyes;
+            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("node")) return ImplantsFilterBrain;
+            if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo")) return ImplantsFilterArms;
+            if (text.Contains("spine") || text.Contains("tendon") || text.Contains("weave")) return ImplantsFilterSpine;
+            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung")) return ImplantsFilterOrgans;
+            return ImplantsFilterBody;
+        }
+
+        private static string BuildRecipeSearchText(RecipeDef recipe)
+        {
+            ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            string productLabel = product != null ? product.label : string.Empty;
+            string productDef = product != null ? product.defName : string.Empty;
+            return ((recipe?.defName ?? string.Empty) + " " + (recipe?.label ?? string.Empty) + " " + productDef + " " + productLabel).ToLowerInvariant();
+        }
+
         private void DrawPatternBrowser(Rect rect, MapComponent_AbyssalForgeProgress progress)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
@@ -373,18 +842,17 @@ namespace AbyssalProtocol
 
             bool turretSystemsMode = selectedCategory == AbyssalForgeProgressUtility.TurretSystemsCategory;
             List<RecipeDef> recipes = AbyssalForgeProgressUtility.GetForgeRecipes()
-                .Where(recipe => AbyssalForgeProgressUtility.RecipeMatchesCategory(recipe, selectedCategory))
-                .Where(recipe => !turretSystemsMode || TurretRecipeMatchesFilter(recipe, selectedTurretSystemsFilter))
-                .OrderBy(recipe => turretSystemsMode ? GetTurretSystemRecipeOrder(recipe) : AbyssalForgeProgressUtility.GetCategoryOrderIndex(AbyssalForgeProgressUtility.GetCategory(recipe)))
+                .Where(RecipeMatchesSelectedCategoryAndFilter)
+                .OrderBy(GetActiveRecipeOrder)
                 .ThenBy(AbyssalForgeProgressUtility.GetRequiredResidue)
                 .ThenBy(AbyssalForgeProgressUtility.GetRecipeDisplayLabel)
                 .ToList();
 
             float contentTop = inner.y + 28f;
-            if (turretSystemsMode)
+            if (ShouldDrawSubfilterRow(selectedCategory))
             {
                 Rect filterRect = new Rect(inner.x, contentTop, inner.width, 30f);
-                DrawTurretSystemsFilterRow(filterRect);
+                DrawSubfilterRow(filterRect);
                 contentTop += 38f;
             }
 
@@ -565,6 +1033,20 @@ namespace AbyssalProtocol
         }
 
 
+        private static void DrawProductPreviewIcon(Rect rect, ThingDef product, float alpha = 0.96f)
+        {
+            if (product?.uiIcon == null)
+            {
+                return;
+            }
+
+            Color oldColor = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, alpha);
+            GUI.DrawTexture(rect, product.uiIcon, ScaleMode.ScaleToFit, true);
+            GUI.color = oldColor;
+            TooltipHandler.TipRegion(rect, product.LabelCap);
+        }
+
         private void DrawUnknownPatternCard(Rect rect, RecipeDef recipe, bool turretCard)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
@@ -627,6 +1109,9 @@ namespace AbyssalProtocol
             CompProperties_AbyssalModularTurret chassisProps = product?.GetCompProperties<CompProperties_AbyssalModularTurret>();
             bool isChassis = chassisProps != null;
             Color slotColor = module != null ? ABY_ModularTurretUtility.SlotColor(module.slot) : new Color(0.62f, 0.60f, 0.55f, 1f);
+            Rect productIconRect = new Rect(rect.x + 12f, rect.y + 36f, 38f, 38f);
+            DrawProductPreviewIcon(productIconRect, product, unlocked ? 0.98f : 0.74f);
+            float contentX = product != null && product.uiIcon != null ? rect.x + 58f : rect.x + 12f;
 
             string slotBadge = GetTurretRecipeSlotBadge(module, isChassis);
             Rect badgeRect = new Rect(rect.x + 12f, rect.y + 10f, isChassis ? 72f : 66f, 20f);
@@ -649,11 +1134,11 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 12f, rect.y + 33f, rect.width - 104f, 22f), AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
+            ABY_UIPolishUtility.SafeLabel(new Rect(contentX, rect.y + 33f, rect.xMax - contentX - 88f, 22f), AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             Text.Font = GameFont.Tiny;
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 12f, rect.y + 55f, rect.width - 24f, 18f), BuildTurretCardSubtitle(module, chassisProps));
+            ABY_UIPolishUtility.SafeLabel(new Rect(contentX, rect.y + 55f, rect.xMax - contentX - 18f, 18f), BuildTurretCardSubtitle(module, chassisProps));
             GUI.color = Color.white;
 
             float detailY = rect.y + 78f;
@@ -861,6 +1346,9 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
+            Rect productIconRect = new Rect(rect.x + 12f, rect.y + 12f, 42f, 42f);
+            DrawProductPreviewIcon(productIconRect, product, unlocked ? 0.98f : 0.74f);
+            float contentX = product != null && product.uiIcon != null ? rect.x + 62f : rect.x + 12f;
 
             if (freshlyUnlocked)
             {
@@ -876,18 +1364,18 @@ namespace AbyssalProtocol
                 TooltipHandler.TipRegion(infoRect, "ABY_ForgePatternOpenInfo".Translate());
             }
 
-            Rect labelRect = new Rect(rect.x + 12f, rect.y + 10f, rect.width - 106f, 22f);
+            Rect labelRect = new Rect(contentX, rect.y + 10f, rect.xMax - contentX - 88f, 22f);
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             ABY_UIPolishUtility.SafeLabel(labelRect, AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe));
 
             GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 12f, rect.y + 31f, rect.width - 24f, 18f), AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
+            ABY_UIPolishUtility.SafeLabel(new Rect(contentX, rect.y + 31f, rect.xMax - contentX - 18f, 18f), AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
 
             int primaryProductCount = AbyssalForgeProgressUtility.GetPrimaryProductCount(recipe);
             if (primaryProductCount > 1)
             {
-                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 12f, rect.y + 48f, rect.width - 24f, 18f), "ABY_ForgePatternOutputCount".Translate(primaryProductCount));
+                ABY_UIPolishUtility.SafeLabel(new Rect(contentX, rect.y + 48f, rect.xMax - contentX - 18f, 18f), "ABY_ForgePatternOutputCount".Translate(primaryProductCount));
             }
             GUI.color = Color.white;
 
@@ -1057,8 +1545,9 @@ namespace AbyssalProtocol
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
             List<RecipeDef> availableRecipes = forge?.ProgressComponent != null
-                ? forge.ProgressComponent.GetUnlockedRecipes(selectedCategory)
-                    .Where(recipe => selectedCategory != AbyssalForgeProgressUtility.TurretSystemsCategory || TurretRecipeMatchesFilter(recipe, selectedTurretSystemsFilter))
+                ? AbyssalForgeProgressUtility.GetForgeRecipes()
+                    .Where(RecipeMatchesSelectedCategoryAndFilter)
+                    .Where(recipe => AbyssalForgeProgressUtility.IsRecipeUnlocked(recipe, forge.ProgressComponent.TotalResidueOffered))
                     .ToList()
                 : new List<RecipeDef>();
 
