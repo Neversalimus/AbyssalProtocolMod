@@ -1,0 +1,860 @@
+using System.Collections.Generic;
+using RimWorld;
+using UnityEngine;
+using Verse;
+
+namespace AbyssalProtocol
+{
+    [StaticConstructorOnStartup]
+    public static class AbyssalBossBarRenderer
+    {
+        private static readonly Texture2D DefaultFrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Frame", false);
+        private static readonly Texture2D DefaultFillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Fill", false);
+        private static readonly Texture2D DefaultTrailTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_Trail", false);
+        private static readonly Texture2D DefaultSubFillTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_SubFill", false);
+        private static readonly Texture2D DefaultIconFrameTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_IconFrame", false);
+        private static readonly Texture2D DefaultIconTex = ContentFinder<Texture2D>.Get("UI/AbyssalBossBar/ABY_BossBar_DefaultBossIcon", false);
+
+        private static readonly Dictionary<string, Texture2D> IconCache = new Dictionary<string, Texture2D>();
+        private static readonly Dictionary<string, Texture2D> TextureCache = new Dictionary<string, Texture2D>();
+
+        private static int trackedBossId = -1;
+        private static float displayedHealthPct = 1f;
+        private static float displayedTrailPct = 1f;
+        private static float displayedSecondaryPct = 1f;
+        private static float displayedAlpha;
+        private static float displayedSpecialPulse;
+        private static Rect lastInteractiveRect = Rect.zero;
+        private static Rect lastCalibrationButtonRect = Rect.zero;
+
+        public static void ResetVisualState()
+        {
+            trackedBossId = -1;
+            displayedHealthPct = 1f;
+            displayedTrailPct = 1f;
+            displayedSecondaryPct = 1f;
+            displayedAlpha = 0f;
+            displayedSpecialPulse = 0f;
+            lastInteractiveRect = Rect.zero;
+            lastCalibrationButtonRect = Rect.zero;
+        }
+
+        public static bool MouseOverInteractiveRect(Vector2 mousePosition)
+        {
+            return lastInteractiveRect.width > 0f && lastInteractiveRect.height > 0f && lastInteractiveRect.Contains(mousePosition);
+        }
+
+        public static bool HandleInput(Event currentEvent)
+        {
+            if (currentEvent == null || currentEvent.type != EventType.MouseDown || currentEvent.button != 0)
+            {
+                return false;
+            }
+
+            AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+            if (settings == null || !settings.enableBossBars || !settings.showCalibrationButton)
+            {
+                return false;
+            }
+
+            if (lastCalibrationButtonRect.width <= 0f || lastCalibrationButtonRect.height <= 0f)
+            {
+                return false;
+            }
+
+            if (!lastCalibrationButtonRect.Contains(currentEvent.mousePosition))
+            {
+                return false;
+            }
+
+            Window_ABY_BossBarCalibration.OpenWindow();
+            currentEvent.Use();
+            return true;
+        }
+
+        public static void Draw(ABY_BossBarState state)
+        {
+            if (state?.boss == null || state.profile == null)
+            {
+                return;
+            }
+
+            AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+            if (!settings.enableBossBars)
+            {
+                ResetVisualState();
+                return;
+            }
+
+            if (Current.ProgramState != ProgramState.Playing || Find.CurrentMap == null || state.boss.MapHeld != Find.CurrentMap)
+            {
+                return;
+            }
+
+            settings.ClampValues();
+            ABY_BossBarStylePalette palette = ResolvePalette(state.profile.styleId);
+            SyncAnimatedValues(state, settings);
+
+            float scale = settings.globalScale;
+            float nameHeight = 22f * scale;
+            float barHeight = settings.height * scale;
+            float secondaryHeight = state.hasSecondaryBar && settings.showSecondaryBars ? Mathf.Max(12f, barHeight * 0.38f) : 0f;
+            float secondaryGap = secondaryHeight > 0f ? Mathf.Max(16f, 18f * scale) : 0f;
+            float footerHeight = 0f;
+            float iconSize = settings.iconSize * scale;
+            float gap = settings.gap * scale;
+            float barWidth = settings.width * scale;
+            float rightBackingExtensionWidth = Mathf.Max(18f * scale, barWidth * 0.035f);
+            float textWidth = barWidth + rightBackingExtensionWidth;
+            float totalWidth = iconSize + gap + textWidth;
+            float totalHeight = Mathf.Max(iconSize, nameHeight + barHeight + secondaryGap + secondaryHeight + footerHeight);
+
+            Rect screenRect = UI.screenWidth > 0 && UI.screenHeight > 0
+                ? new Rect(0f, 0f, UI.screenWidth, UI.screenHeight)
+                : new Rect(0f, 0f, Screen.width, Screen.height);
+            Vector2 topLeft = settings.ResolveTopLeft(screenRect, new Vector2(totalWidth, totalHeight));
+            Rect rootRect = settings.ClampRectToSafeArea(new Rect(topLeft.x, topLeft.y, totalWidth, totalHeight), screenRect);
+            Rect iconRect = new Rect(rootRect.x, rootRect.y + Mathf.Max(0f, totalHeight - iconSize) * 0.5f, iconSize, iconSize);
+            Rect textRoot = new Rect(iconRect.xMax + gap, rootRect.y, textWidth, totalHeight);
+            Rect nameRect = new Rect(textRoot.x, textRoot.y, textRoot.width, nameHeight);
+            Rect mainBarRect = new Rect(textRoot.x, nameRect.yMax + 4f * scale, barWidth, barHeight);
+            Rect secondaryRect = new Rect(mainBarRect.x, mainBarRect.yMax + secondaryGap, barWidth, secondaryHeight);
+            Rect footerRect = new Rect(mainBarRect.x, totalHeight - footerHeight > 0f ? rootRect.yMax - footerHeight : secondaryRect.yMax, textRoot.width, footerHeight);
+
+            DrawBackdrop(rootRect, state, palette, displayedAlpha, settings.reducedMotion);
+            DrawIcon(iconRect, state, palette, displayedAlpha);
+            DrawHeader(nameRect, state, palette, displayedAlpha, settings);
+            DrawMainBar(mainBarRect, state, palette, displayedAlpha, settings);
+
+            if (secondaryHeight > 0f)
+            {
+                DrawAegisTethers(mainBarRect, secondaryRect, state, palette, displayedAlpha, settings);
+                DrawSecondaryBar(secondaryRect, state, palette, displayedAlpha, settings);
+                DrawAegisTag(mainBarRect, secondaryRect, state, palette, displayedAlpha);
+            }
+
+            if (footerHeight > 0f)
+            {
+                DrawFooter(footerRect, state, palette, displayedAlpha, settings);
+            }
+
+            Rect calibrationRect = Rect.zero;
+            if (settings.showCalibrationButton)
+            {
+                calibrationRect = ResolveCalibrationButtonRect(rootRect, screenRect, settings, scale);
+                DrawCalibrationButton(calibrationRect);
+            }
+
+            lastCalibrationButtonRect = calibrationRect;
+            lastInteractiveRect = rootRect.ExpandedBy(8f);
+            if (settings.showCalibrationButton && calibrationRect.width > 0f)
+            {
+                lastInteractiveRect = Union(lastInteractiveRect, calibrationRect.ExpandedBy(8f));
+            }
+        }
+
+        private static void SyncAnimatedValues(ABY_BossBarState state, AbyssalProtocolModSettings settings)
+        {
+            int bossId = state.boss.thingIDNumber;
+            if (bossId != trackedBossId)
+            {
+                trackedBossId = bossId;
+                displayedHealthPct = state.healthPct;
+                displayedTrailPct = state.healthPct;
+                displayedSecondaryPct = state.secondaryPct;
+                displayedAlpha = 0f;
+                displayedSpecialPulse = 0f;
+            }
+
+            float realtime = Time.unscaledDeltaTime <= 0f ? 0.016f : Time.unscaledDeltaTime;
+            float fastLerp = settings.reducedMotion ? 16f : 11.5f;
+            float trailLerp = settings.reducedMotion ? 10f : 3.25f;
+
+            displayedAlpha = Mathf.MoveTowards(displayedAlpha, 1f, realtime * (settings.reducedMotion ? 6f : 3.2f));
+            float specialTarget = state.criticalStateActive ? 1f : (state.introStateActive ? 0.45f : 0f);
+            displayedSpecialPulse = Mathf.Lerp(displayedSpecialPulse, specialTarget, 1f - Mathf.Exp(-(settings.reducedMotion ? 7f : 4.2f) * realtime));
+            displayedHealthPct = Mathf.Lerp(displayedHealthPct, state.healthPct, 1f - Mathf.Exp(-fastLerp * realtime));
+
+            if (state.healthPct >= displayedTrailPct)
+            {
+                displayedTrailPct = Mathf.Lerp(displayedTrailPct, state.healthPct, 1f - Mathf.Exp(-(fastLerp + 2f) * realtime));
+            }
+            else
+            {
+                displayedTrailPct = Mathf.Lerp(displayedTrailPct, state.healthPct, 1f - Mathf.Exp(-trailLerp * realtime));
+            }
+
+            if (state.hasSecondaryBar)
+            {
+                displayedSecondaryPct = Mathf.Lerp(displayedSecondaryPct, state.secondaryPct, 1f - Mathf.Exp(-fastLerp * realtime));
+            }
+            else
+            {
+                displayedSecondaryPct = 0f;
+            }
+
+            displayedHealthPct = Mathf.Clamp01(displayedHealthPct);
+            displayedTrailPct = Mathf.Clamp01(displayedTrailPct);
+            displayedSecondaryPct = Mathf.Clamp01(displayedSecondaryPct);
+        }
+
+        private static void DrawBackdrop(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, bool reducedMotion)
+        {
+            float pulse = reducedMotion ? 0.15f : 0.20f + Mathf.Sin(Time.realtimeSinceStartup * 2.3f) * 0.08f;
+            Color oldColor = GUI.color;
+            GUI.color = new Color(palette.backdrop.r, palette.backdrop.g, palette.backdrop.b, alpha * 0.86f);
+            GUI.DrawTexture(rect, BaseContent.WhiteTex);
+            GUI.color = new Color(palette.glow.r, palette.glow.g, palette.glow.b, alpha * (0.09f + pulse));
+            GUI.DrawTexture(rect.ContractedBy(2f), BaseContent.WhiteTex);
+
+            if (state != null)
+            {
+                if (state.introStateActive)
+                {
+                    float shieldPulse = reducedMotion ? 0.24f : 0.28f + Mathf.Sin(Time.realtimeSinceStartup * 3.6f) * 0.10f;
+                    GUI.color = new Color(1f, 0.82f, 0.74f, alpha * shieldPulse * Mathf.Clamp01(0.55f + displayedSpecialPulse));
+                    GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, 3f), BaseContent.WhiteTex);
+                    GUI.DrawTexture(new Rect(rect.x, rect.yMax - 3f, rect.width, 3f), BaseContent.WhiteTex);
+                }
+                else if (state.criticalStateActive)
+                {
+                    float frenzyPulse = reducedMotion ? 0.28f : 0.24f + Mathf.Sin(Time.realtimeSinceStartup * 6.1f) * 0.14f;
+                    GUI.color = new Color(1f, 0.18f, 0.16f, alpha * (0.18f + frenzyPulse) * Mathf.Clamp01(0.35f + displayedSpecialPulse));
+                    GUI.DrawTexture(rect.ExpandedBy(4f), BaseContent.WhiteTex);
+                }
+                else if (state.specialStateTag == "saint_aegis_collapsed")
+                {
+                    float collapsePulse = reducedMotion ? 0.20f : 0.22f + Mathf.Sin(Time.realtimeSinceStartup * 7.4f) * 0.10f;
+                    GUI.color = new Color(0.72f, 0.95f, 1f, alpha * (0.16f + collapsePulse));
+                    GUI.DrawTexture(rect.ExpandedBy(3f), BaseContent.WhiteTex);
+                    GUI.color = new Color(1f, 0.62f, 0.22f, alpha * 0.22f);
+                    GUI.DrawTexture(new Rect(rect.x, rect.yMax - 2f, rect.width, 2f), BaseContent.WhiteTex);
+                }
+            }
+
+            GUI.color = oldColor;
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 2f, rect.width, 2f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.9f));
+        }
+
+        private static void DrawIcon(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha)
+        {
+            Texture2D icon = ResolveIconTexture(state.profile);
+            Color oldColor = GUI.color;
+            GUI.color = new Color(1f, 1f, 1f, alpha);
+            GUI.DrawTexture(rect, ResolveIconFrameTexture(state.profile) ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.color = state?.profile != null && state.profile.useRawIconColors
+                ? new Color(1f, 1f, 1f, alpha)
+                : new Color(palette.iconTint.r, palette.iconTint.g, palette.iconTint.b, alpha);
+            GUI.DrawTexture(rect.ContractedBy(rect.width * 0.12f), icon ?? DefaultIconTex ?? BaseContent.BadTex, ScaleMode.ScaleToFit, true);
+            GUI.color = oldColor;
+        }
+
+        private static void DrawHeader(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            string label = (state.displayLabel ?? string.Empty).ToUpperInvariant();
+            string phaseLabel = settings.showPhaseLabel ? "ABY_BossBar_PhaseLabel".Translate(state.currentPhaseLabel).ToString().ToUpperInvariant() : string.Empty;
+            float phaseWidth = phaseLabel.NullOrEmpty() ? 0f : Mathf.Min(174f, rect.width * 0.27f);
+            Rect titleRect = phaseWidth > 0f
+                ? new Rect(rect.x + 2f, rect.y + 2f, rect.width - phaseWidth - 14f, rect.height)
+                : new Rect(rect.x + 2f, rect.y + 2f, rect.width - 4f, rect.height);
+            Rect phaseRect = phaseWidth > 0f
+                ? new Rect(rect.xMax - phaseWidth - 36f, rect.y + 3f, phaseWidth, Mathf.Max(18f, rect.height - 4f))
+                : Rect.zero;
+
+            DrawBossTitle(titleRect, label, palette, alpha);
+
+            if (!phaseLabel.NullOrEmpty())
+            {
+                DrawPhaseBadge(phaseRect, phaseLabel, palette, alpha);
+            }
+        }
+
+        private static void DrawBossTitle(Rect rect, string label, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (label.NullOrEmpty())
+            {
+                return;
+            }
+
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.MiddleLeft;
+            Color oldColor = GUI.color;
+            float textWidth = Mathf.Min(rect.width - 4f, Text.CalcSize(label).x);
+            Rect textRect = new Rect(rect.x + 2f, rect.y + 1f, rect.width, rect.height);
+            Rect underlineRect = new Rect(textRect.x, rect.yMax - 4f, Mathf.Max(8f, textWidth + 2f), 1f);
+
+            // Keep the title accent tied to the actual text width. The previous glow strip
+            // overextended toward the phase marker and looked like a broken underline.
+            Widgets.DrawBoxSolid(new Rect(underlineRect.x, underlineRect.y - 1f, underlineRect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.18f));
+            Widgets.DrawBoxSolid(underlineRect, new Color(palette.text.r, palette.text.g, palette.text.b, alpha * 0.58f));
+            Widgets.DrawBoxSolid(new Rect(underlineRect.x, underlineRect.y + 1f, underlineRect.width, 1f), new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.18f));
+
+            GUI.color = new Color(0f, 0f, 0f, alpha * 0.52f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(textRect.x + 1f, textRect.y + 1f, textRect.width, textRect.height), label);
+            GUI.color = new Color(palette.text.r, palette.text.g, palette.text.b, alpha);
+            ABY_UIPolishUtility.SafeLabel(textRect, label);
+
+            GUI.color = oldColor;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private static void DrawPhaseBadge(Rect rect, string label, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (rect.width <= 10f || rect.height <= 10f)
+            {
+                return;
+            }
+
+            Rect badgeRect = new Rect(rect.x, rect.y + 2f, rect.width, rect.height - 2f);
+            Color oldColor = GUI.color;
+            Widgets.DrawBoxSolid(badgeRect, new Color(0.03f, 0.055f, 0.065f, alpha * 0.44f));
+            Widgets.DrawBoxSolid(new Rect(badgeRect.x, badgeRect.y, badgeRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.76f));
+            Widgets.DrawBoxSolid(new Rect(badgeRect.x, badgeRect.yMax - 1f, badgeRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.50f));
+            Widgets.DrawBoxSolid(new Rect(badgeRect.x, badgeRect.y, 1f, badgeRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.76f));
+            Widgets.DrawBoxSolid(new Rect(badgeRect.xMax - 1f, badgeRect.y, 1f, badgeRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.76f));
+
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = new Color(0f, 0f, 0f, alpha * 0.58f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(badgeRect.x + 1f, badgeRect.y + 1f, badgeRect.width, badgeRect.height), label);
+            GUI.color = new Color(0.90f, 0.98f, 1f, alpha);
+            ABY_UIPolishUtility.SafeLabel(badgeRect, label);
+            GUI.color = oldColor;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
+        private static void DrawMainBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
+        {
+            Texture2D frameTex = ResolveFrameTexture(state?.profile);
+            Texture2D fillTex = ResolveFillTexture(state?.profile);
+            Texture2D trailTex = ResolveTrailTexture(state?.profile);
+
+            GUI.color = new Color(1f, 1f, 1f, alpha * 0.92f);
+            GUI.DrawTexture(rect, frameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.color = Color.white;
+
+            Rect shellRect = rect.ContractedBy(1f);
+            Rect innerRect = rect.ContractedBy(4f);
+            Widgets.DrawBoxSolid(shellRect, new Color(0.03f, 0.03f, 0.04f, alpha * 0.90f));
+            Widgets.DrawBoxSolid(innerRect, new Color(palette.backFill.r, palette.backFill.g, palette.backFill.b, alpha * 0.98f));
+
+            if (displayedTrailPct > 0.001f)
+            {
+                Rect trailRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedTrailPct, innerRect.height);
+                Widgets.DrawBoxSolid(trailRect, new Color(palette.trail.r, palette.trail.g, palette.trail.b, alpha * 0.48f));
+                DrawTexturedFill(trailRect, trailTex, new Color(1f, 1f, 1f, alpha * 0.42f));
+            }
+
+            if (displayedHealthPct > 0.001f)
+            {
+                Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedHealthPct, innerRect.height);
+                Widgets.DrawBoxSolid(fillRect, new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.98f));
+                DrawTexturedFill(fillRect, fillTex, new Color(1f, 1f, 1f, alpha * 0.32f));
+                Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(3f, fillRect.height)), new Color(1f, 0.92f, 0.82f, alpha * 0.22f));
+
+                if (!settings.reducedMotion && fillRect.width > 24f)
+                {
+                    float sheenWidth = Mathf.Min(96f, fillRect.width * 0.28f);
+                    float sheenX = fillRect.x - sheenWidth + Mathf.Repeat(Time.realtimeSinceStartup * 110f, fillRect.width + sheenWidth);
+                    Widgets.DrawBoxSolid(new Rect(sheenX, fillRect.y, sheenWidth, fillRect.height), new Color(1f, 0.95f, 0.85f, alpha * 0.14f));
+                }
+            }
+
+            if (state.introStateActive)
+            {
+                DrawIntroShieldOverlay(innerRect, alpha, settings.reducedMotion);
+            }
+            else if (state.criticalStateActive)
+            {
+                DrawCriticalPhaseOverlay(innerRect, palette, alpha, settings.reducedMotion);
+            }
+
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 1f, rect.width, 1f), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, 1f, rect.height), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+            Widgets.DrawBoxSolid(new Rect(rect.xMax - 1f, rect.y, 1f, rect.height), new Color(palette.border.r, palette.border.g, palette.border.b, alpha * 0.95f));
+
+            GUI.color = new Color(1f, 1f, 1f, alpha * 0.16f);
+            GUI.DrawTexture(rect, frameTex ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.color = Color.white;
+
+            if (state.profile.showPhaseMarkers && settings.showPhaseMarkers)
+            {
+                DrawPhaseMarkers(rect, innerRect, state, palette, alpha);
+            }
+
+            if (settings.showHealthNumbers)
+            {
+                string value = Mathf.RoundToInt(state.currentHealth) + " / " + Mathf.RoundToInt(state.maxHealth);
+                Rect valueRect = new Rect(innerRect.x + 8f, innerRect.y, innerRect.width - 16f, innerRect.height);
+                DrawOutlinedText(valueRect, value, TextAnchor.MiddleRight, GameFont.Tiny, new Color(1f, 0.93f, 0.82f, alpha), alpha);
+            }
+        }
+
+        private static void DrawIntroShieldOverlay(Rect innerRect, float alpha, bool reducedMotion)
+        {
+            float speed = reducedMotion ? 48f : 82f;
+            float lineWidth = 12f;
+            float spacing = 28f;
+            float offset = Mathf.Repeat(Time.realtimeSinceStartup * speed, spacing);
+            for (float x = innerRect.x - spacing; x < innerRect.xMax + spacing; x += spacing)
+            {
+                Rect lineRect = new Rect(x + offset, innerRect.y, lineWidth, innerRect.height);
+                Widgets.DrawBoxSolid(lineRect, new Color(1f, 0.88f, 0.82f, alpha * 0.11f * Mathf.Clamp01(0.55f + displayedSpecialPulse)));
+            }
+        }
+
+        private static void DrawCriticalPhaseOverlay(Rect innerRect, ABY_BossBarStylePalette palette, float alpha, bool reducedMotion)
+        {
+            float pulse = reducedMotion ? 0.22f : 0.16f + Mathf.Sin(Time.realtimeSinceStartup * 7.4f) * 0.10f;
+            Widgets.DrawBoxSolid(new Rect(innerRect.x, innerRect.y, innerRect.width, 2f), new Color(1f, 0.32f, 0.26f, alpha * (0.24f + pulse) * Mathf.Clamp01(0.40f + displayedSpecialPulse)));
+            Widgets.DrawBoxSolid(new Rect(innerRect.x, innerRect.yMax - 2f, innerRect.width, 2f), new Color(1f, 0.20f, 0.18f, alpha * (0.30f + pulse) * Mathf.Clamp01(0.40f + displayedSpecialPulse)));
+        }
+
+        private static void DrawAegisTethers(Rect mainBarRect, Rect secondaryRect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
+        {
+            if (secondaryRect.height <= 0f || mainBarRect.width <= 10f)
+            {
+                return;
+            }
+
+            Rect tagRect = ResolveAegisTagRect(mainBarRect, secondaryRect);
+            if (tagRect.width <= 8f || tagRect.height <= 8f)
+            {
+                return;
+            }
+
+            bool active = state != null && state.hasSecondaryBar && state.secondaryPct > 0.001f && state.secondaryMax > 0f;
+            float pulse = settings.reducedMotion ? 0.10f : 0.13f + Mathf.Sin(Time.realtimeSinceStartup * 5.4f) * 0.05f;
+            Color cyan = active
+                ? new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * (0.44f + pulse))
+                : new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.12f);
+            Color core = active
+                ? new Color(0.88f, 1f, 1f, alpha * 0.58f)
+                : new Color(0.88f, 1f, 1f, alpha * 0.12f);
+            Color ember = active
+                ? new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.16f)
+                : new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.05f);
+
+            // Reference layout: AEGIS is an external hanging module under the HP bar,
+            // not a label drawn inside the shield bar. Tethers connect HP -> tag -> shield.
+            int count = 3;
+            for (int i = 0; i < count; i++)
+            {
+                float t = count <= 1 ? 0.5f : i / (float)(count - 1);
+                float x = Mathf.Lerp(tagRect.x + 10f, tagRect.xMax - 10f, t);
+
+                float upperTop = mainBarRect.yMax - 1f;
+                float upperBottom = tagRect.y + 1f;
+                float upperHeight = Mathf.Max(2f, upperBottom - upperTop);
+                Widgets.DrawBoxSolid(new Rect(x - 2f, upperTop, 4f, upperHeight), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.30f));
+                Widgets.DrawBoxSolid(new Rect(x - 0.5f, upperTop, 1f, upperHeight), core);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, upperTop - 1f, 6f, 2f), ember);
+                Widgets.DrawBoxSolid(new Rect(x - 3f, upperBottom - 1f, 6f, 2f), cyan);
+
+                float lowerTop = tagRect.yMax - 1f;
+                float lowerBottom = secondaryRect.y + 1f;
+                float lowerHeight = Mathf.Max(2f, lowerBottom - lowerTop);
+                Widgets.DrawBoxSolid(new Rect(x - 1.5f, lowerTop, 3f, lowerHeight), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.22f));
+                Widgets.DrawBoxSolid(new Rect(x - 0.5f, lowerTop, 1f, lowerHeight), new Color(core.r, core.g, core.b, core.a * 0.72f));
+                Widgets.DrawBoxSolid(new Rect(x - 3f, lowerBottom - 1f, 6f, 2f), new Color(cyan.r, cyan.g, cyan.b, cyan.a * 0.80f));
+            }
+        }
+
+        private static Rect ResolveAegisTagRect(Rect mainBarRect, Rect secondaryRect)
+        {
+            float width = Mathf.Min(76f, Mathf.Max(58f, mainBarRect.width * 0.13f));
+            float height = Mathf.Max(12f, Mathf.Min(14f, secondaryRect.y - mainBarRect.yMax - 4f));
+            float x = mainBarRect.x + 11f;
+            float y = mainBarRect.yMax + Mathf.Max(1f, (secondaryRect.y - mainBarRect.yMax - height) * 0.5f);
+            return new Rect(x, y, width, height);
+        }
+
+        private static void DrawAegisTag(Rect mainBarRect, Rect secondaryRect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (state == null || state.secondaryLabel.NullOrEmpty() || secondaryRect.height <= 0f)
+            {
+                return;
+            }
+
+            Rect tagRect = ResolveAegisTagRect(mainBarRect, secondaryRect);
+            string label = state.secondaryLabel.ToUpperInvariant();
+            string statusLabel = state.secondaryStatusLabel.NullOrEmpty() ? string.Empty : state.secondaryStatusLabel.ToUpperInvariant();
+            bool collapsed = state.secondaryCriticalStateActive || !statusLabel.NullOrEmpty();
+            Color oldColor = GUI.color;
+
+            // Light external module: readable, but not the heavy dark block that fought the shield bar.
+            Widgets.DrawBoxSolid(tagRect, new Color(0.025f, 0.055f, 0.065f, alpha * 0.58f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, tagRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.76f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.yMax - 1f, tagRect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.58f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.60f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.xMax - 1f, tagRect.y, 1f, tagRect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.60f));
+            Widgets.DrawBoxSolid(new Rect(tagRect.x + 4f, tagRect.yMax - 3f, tagRect.width - 8f, 1f), new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.34f));
+
+            Color labelColor = collapsed
+                ? new Color(0.82f, 0.98f, 1f, alpha)
+                : new Color(0.86f, 0.99f, 1f, alpha);
+            DrawOutlinedText(new Rect(tagRect.x, tagRect.y - 1f, tagRect.width, tagRect.height + 2f), label, TextAnchor.MiddleCenter, GameFont.Tiny, labelColor, alpha);
+
+            if (!statusLabel.NullOrEmpty())
+            {
+                DrawAegisStatusLabel(tagRect, secondaryRect, statusLabel, palette, alpha);
+            }
+
+            GUI.color = oldColor;
+        }
+
+        private static void DrawAegisStatusLabel(Rect tagRect, Rect secondaryRect, string label, ABY_BossBarStylePalette palette, float alpha)
+        {
+            if (label.NullOrEmpty())
+            {
+                return;
+            }
+
+            GameFont oldFont = Text.Font;
+            TextAnchor oldAnchor = Text.Anchor;
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleLeft;
+
+            float wantedWidth = Mathf.Max(52f, Text.CalcSize(label).x + 12f);
+            float x = tagRect.xMax + 6f;
+            float maxWidth = Mathf.Max(0f, secondaryRect.xMax - x - 8f);
+            if (maxWidth <= 20f)
+            {
+                Text.Font = oldFont;
+                Text.Anchor = oldAnchor;
+                return;
+            }
+
+            Rect statusRect = new Rect(x, tagRect.y - 1f, Mathf.Min(wantedWidth, maxWidth), tagRect.height + 2f);
+            float pulse = 0.74f + Mathf.Sin(Time.realtimeSinceStartup * 7.6f) * 0.16f;
+            Color divider = new Color(palette.fill.r, palette.fill.g, palette.fill.b, alpha * 0.56f);
+            Color warning = new Color(1f, 0.58f, 0.24f, alpha * Mathf.Clamp01(pulse));
+            Color shadow = new Color(0f, 0f, 0f, alpha * 0.70f);
+
+            Widgets.DrawBoxSolid(new Rect(statusRect.x - 4f, statusRect.y + 3f, 2f, statusRect.height - 6f), divider);
+            Widgets.DrawBoxSolid(new Rect(statusRect.x, statusRect.yMax - 3f, Mathf.Min(statusRect.width, 58f), 1f), new Color(warning.r, warning.g, warning.b, alpha * 0.34f));
+            GUI.color = shadow;
+            ABY_UIPolishUtility.SafeLabel(new Rect(statusRect.x + 1f, statusRect.y + 1f, statusRect.width, statusRect.height), label, 0f, 1f);
+            GUI.color = warning;
+            ABY_UIPolishUtility.SafeLabel(statusRect, label, 0f, 1f);
+
+            Text.Font = oldFont;
+            Text.Anchor = oldAnchor;
+        }
+
+        private static void DrawSecondaryBar(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
+        {
+            Texture2D subFillTex = ResolveSubFillTexture(state?.profile);
+            Widgets.DrawBoxSolid(rect, new Color(0.028f, 0.040f, 0.048f, alpha * 0.92f));
+            Rect innerRect = rect.ContractedBy(2f);
+            Widgets.DrawBoxSolid(innerRect, new Color(0.06f, 0.13f, 0.17f, alpha * 0.78f));
+            if (displayedSecondaryPct > 0.001f)
+            {
+                Rect fillRect = new Rect(innerRect.x, innerRect.y, innerRect.width * displayedSecondaryPct, innerRect.height);
+                Widgets.DrawBoxSolid(fillRect, new Color(palette.secondaryFill.r, palette.secondaryFill.g, palette.secondaryFill.b, alpha * 0.86f));
+                DrawTexturedFill(fillRect, subFillTex, new Color(1f, 1f, 1f, alpha * 0.48f));
+                Widgets.DrawBoxSolid(new Rect(fillRect.x, fillRect.y, fillRect.width, Mathf.Min(2f, fillRect.height)), new Color(1f, 1f, 1f, alpha * 0.12f));
+            }
+
+            if (state.secondaryCriticalStateActive)
+            {
+                float pulse = settings.reducedMotion ? 0.22f : 0.24f + Mathf.Sin(Time.realtimeSinceStartup * 8.2f) * 0.10f;
+                GUI.color = new Color(0.68f, 0.94f, 1f, alpha * pulse);
+                GUI.DrawTexture(rect.ExpandedBy(2f), BaseContent.WhiteTex);
+                GUI.color = Color.white;
+            }
+
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, rect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.80f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.yMax - 1f, rect.width, 1f), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.64f));
+            Widgets.DrawBoxSolid(new Rect(rect.x, rect.y, 1f, rect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.66f));
+            Widgets.DrawBoxSolid(new Rect(rect.xMax - 1f, rect.y, 1f, rect.height), new Color(palette.secondaryText.r, palette.secondaryText.g, palette.secondaryText.b, alpha * 0.66f));
+
+            if (settings.showHealthNumbers)
+            {
+                string value = Mathf.RoundToInt(state.secondaryCurrent) + " / " + Mathf.RoundToInt(state.secondaryMax);
+                Rect valueRect = new Rect(rect.x + 8f, rect.y - 1f, rect.width - 16f, rect.height + 2f);
+                DrawOutlinedText(valueRect, value, TextAnchor.MiddleRight, GameFont.Tiny, new Color(0.88f, 1f, 1f, alpha), alpha);
+            }
+        }
+
+        private static void DrawFooter(Rect rect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha, AbyssalProtocolModSettings settings)
+        {
+            // Health numbers are drawn directly inside the main bar for readability.
+        }
+
+        private static void DrawOutlinedText(Rect rect, string text, TextAnchor anchor, GameFont font, Color color, float alpha)
+        {
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            Color oldColor = GUI.color;
+            Text.Anchor = anchor;
+            Text.Font = font;
+
+            Color shadow = new Color(0f, 0f, 0f, alpha * 0.74f);
+            GUI.color = shadow;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty, 0f, 1f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x - 1f, rect.y + 1f, rect.width, rect.height), text ?? string.Empty, 0f, 1f);
+            GUI.color = color;
+            ABY_UIPolishUtility.SafeLabel(rect, text ?? string.Empty, 0f, 1f);
+
+            GUI.color = oldColor;
+            Text.Anchor = oldAnchor;
+            Text.Font = oldFont;
+        }
+
+        private static Rect Union(Rect a, Rect b)
+        {
+            if (a.width <= 0f || a.height <= 0f)
+            {
+                return b;
+            }
+            if (b.width <= 0f || b.height <= 0f)
+            {
+                return a;
+            }
+            float xMin = Mathf.Min(a.xMin, b.xMin);
+            float yMin = Mathf.Min(a.yMin, b.yMin);
+            float xMax = Mathf.Max(a.xMax, b.xMax);
+            float yMax = Mathf.Max(a.yMax, b.yMax);
+            return Rect.MinMaxRect(xMin, yMin, xMax, yMax);
+        }
+
+        private static void DrawCalibrationButton(Rect rect)
+        {
+            if (rect.width < 20f || rect.height < 12f)
+            {
+                return;
+            }
+
+            string label = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossBar_AdjustShort", "Adjust");
+            Color oldColor = GUI.color;
+            GUI.color = Color.white;
+            // Draw-only during Repaint; actual click handling remains in HandleInput so boss-bar
+            // state is not rebuilt on mouse events. This restores the normal abyssal button art.
+            AbyssalStyledWidgets.TextButton(rect, label);
+            GUI.color = oldColor;
+        }
+
+        private static Rect ResolveCalibrationButtonRect(Rect rootRect, Rect screenRect, AbyssalProtocolModSettings settings, float scale)
+        {
+            Rect rect = new Rect(rootRect.xMax - 96f * scale, rootRect.y - 30f * scale, 96f * scale, 26f * scale);
+            float minY = screenRect.y + settings.safeMargin;
+            if (rect.y < minY)
+            {
+                rect.y = rootRect.yMax + 4f * scale;
+            }
+
+            return settings.ClampRectToSafeArea(rect, screenRect, -4f);
+        }
+
+        private static void DrawPhaseMarkers(Rect frameRect, Rect innerRect, ABY_BossBarState state, ABY_BossBarStylePalette palette, float alpha)
+        {
+            List<ABY_BossBarPhaseSnapshot> phases = state.phases;
+            if (phases == null || phases.Count == 0)
+            {
+                return;
+            }
+
+            Text.Font = GameFont.Tiny;
+            for (int i = 0; i < phases.Count; i++)
+            {
+                ABY_BossBarPhaseSnapshot phase = phases[i];
+                if (phase == null || phase.phaseIndex <= 1)
+                {
+                    continue;
+                }
+
+                float pct = Mathf.Clamp01(phase.triggerHealthPct);
+                float x = innerRect.x + innerRect.width * pct;
+                Color tickColor = phase.current ? palette.border : (phase.reached ? palette.phaseReached : palette.phasePending);
+                Widgets.DrawBoxSolid(new Rect(x - 1f, frameRect.y + 2f, 2f, frameRect.height - 4f), new Color(tickColor.r, tickColor.g, tickColor.b, alpha * 0.92f));
+                if (!phase.label.NullOrEmpty())
+                {
+                    Color oldColor = GUI.color;
+                    GUI.color = new Color(tickColor.r, tickColor.g, tickColor.b, alpha);
+                    Rect labelRect = new Rect(x - 16f, frameRect.y - 14f, 32f, 14f);
+                    labelRect.x = Mathf.Clamp(labelRect.x, frameRect.x, frameRect.xMax - labelRect.width);
+                    Text.Anchor = TextAnchor.UpperCenter;
+                    Widgets.Label(labelRect, phase.label);
+                    Text.Anchor = TextAnchor.UpperLeft;
+                    GUI.color = oldColor;
+                }
+            }
+        }
+
+        private static void DrawTexturedFill(Rect rect, Texture2D texture, Color color)
+        {
+            if (rect.width <= 0.5f || rect.height <= 0.5f)
+            {
+                return;
+            }
+
+            Color oldColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture(rect, texture ?? BaseContent.WhiteTex, ScaleMode.StretchToFill, true);
+            GUI.color = oldColor;
+        }
+
+        private static Texture2D ResolveIconTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.iconTexPath, DefaultIconTex, IconCache);
+        }
+
+        private static Texture2D ResolveIconFrameTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.iconFrameTexPath, DefaultIconFrameTex, TextureCache);
+        }
+
+        private static Texture2D ResolveFrameTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.frameTexPath, DefaultFrameTex, TextureCache);
+        }
+
+        private static Texture2D ResolveFillTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.fillTexPath, DefaultFillTex, TextureCache);
+        }
+
+        private static Texture2D ResolveTrailTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.trailTexPath, DefaultTrailTex, TextureCache);
+        }
+
+        private static Texture2D ResolveSubFillTexture(ABY_BossBarProfileDef profile)
+        {
+            return ResolveCachedTexture(profile?.subFillTexPath, DefaultSubFillTex, TextureCache);
+        }
+
+        private static Texture2D ResolveCachedTexture(string texPath, Texture2D fallback, Dictionary<string, Texture2D> cache)
+        {
+            if (texPath.NullOrEmpty())
+            {
+                return fallback;
+            }
+
+            if (cache.TryGetValue(texPath, out Texture2D cached))
+            {
+                return cached ?? fallback;
+            }
+
+            Texture2D loaded = ContentFinder<Texture2D>.Get(texPath, false);
+            cache[texPath] = loaded;
+            return loaded ?? fallback;
+        }
+
+        private static ABY_BossBarStylePalette ResolvePalette(string styleId)
+        {
+            switch (styleId)
+            {
+                case "abyssal_archon":
+                    return new ABY_BossBarStylePalette(
+                        new Color(0.10f, 0.065f, 0.055f, 0.96f),
+                        new Color(0.17f, 0.10f, 0.075f, 1f),
+                        new Color(0.88f, 0.26f, 0.12f, 1f),
+                        new Color(1f, 0.56f, 0.22f, 1f),
+                        new Color(1f, 0.74f, 0.54f, 1f),
+                        new Color(0.99f, 0.93f, 0.88f, 1f),
+                        new Color(1f, 0.82f, 0.66f, 1f),
+                        new Color(0.82f, 0.46f, 0.24f, 1f),
+                        new Color(0.38f, 0.20f, 0.12f, 1f),
+                        new Color(0.17f, 0.10f, 0.07f, 1f),
+                        new Color(0.98f, 0.46f, 0.18f, 1f),
+                        new Color(1f, 0.48f, 0.20f, 0.58f));
+                case "abyssal_rupture":
+                    return new ABY_BossBarStylePalette(
+                        new Color(0.12f, 0.05f, 0.055f, 0.96f),
+                        new Color(0.18f, 0.08f, 0.08f, 1f),
+                        new Color(0.70f, 0.09f, 0.10f, 1f),
+                        new Color(1f, 0.20f, 0.20f, 1f),
+                        new Color(1f, 0.68f, 0.60f, 1f),
+                        new Color(1f, 0.90f, 0.90f, 1f),
+                        new Color(1f, 0.74f, 0.66f, 1f),
+                        new Color(0.72f, 0.25f, 0.28f, 1f),
+                        new Color(0.34f, 0.14f, 0.15f, 1f),
+                        new Color(0.16f, 0.10f, 0.11f, 1f),
+                        new Color(0.84f, 0.14f, 0.14f, 1f),
+                        new Color(1f, 0.30f, 0.26f, 0.60f));
+                case "abyssal_reactor_saint":
+                    return new ABY_BossBarStylePalette(
+                        new Color(0.07f, 0.08f, 0.11f, 0.96f),
+                        new Color(0.10f, 0.10f, 0.14f, 1f),
+                        new Color(0.86f, 0.42f, 0.18f, 1f),
+                        new Color(1f, 0.58f, 0.24f, 1f),
+                        new Color(0.62f, 0.92f, 1f, 1f),
+                        new Color(0.94f, 0.97f, 1f, 1f),
+                        new Color(0.74f, 0.90f, 1f, 1f),
+                        new Color(0.72f, 0.82f, 0.90f, 1f),
+                        new Color(0.30f, 0.42f, 0.52f, 1f),
+                        new Color(0.14f, 0.18f, 0.22f, 1f),
+                        new Color(0.62f, 0.92f, 1f, 1f),
+                        new Color(0.30f, 0.70f, 0.95f, 0.55f));
+                default:
+                    return new ABY_BossBarStylePalette(
+                        new Color(0.11f, 0.07f, 0.06f, 0.96f),
+                        new Color(0.15f, 0.09f, 0.07f, 1f),
+                        new Color(0.86f, 0.30f, 0.12f, 1f),
+                        new Color(1f, 0.54f, 0.22f, 1f),
+                        new Color(1f, 0.78f, 0.62f, 1f),
+                        new Color(0.98f, 0.93f, 0.88f, 1f),
+                        new Color(1f, 0.82f, 0.70f, 1f),
+                        new Color(0.74f, 0.40f, 0.24f, 1f),
+                        new Color(0.32f, 0.18f, 0.12f, 1f),
+                        new Color(0.15f, 0.10f, 0.08f, 1f),
+                        new Color(0.96f, 0.44f, 0.18f, 1f),
+                        new Color(1f, 0.58f, 0.24f, 0.50f));
+            }
+        }
+
+        private sealed class ABY_BossBarStylePalette
+        {
+            public readonly Color backdrop;
+            public readonly Color backFill;
+            public readonly Color trail;
+            public readonly Color fill;
+            public readonly Color border;
+            public readonly Color text;
+            public readonly Color iconTint;
+            public readonly Color phaseReached;
+            public readonly Color phasePending;
+            public readonly Color phaseText;
+            public readonly Color secondaryFill;
+            public readonly Color secondaryText;
+            public readonly Color glow;
+
+            public ABY_BossBarStylePalette(
+                Color backdrop,
+                Color backFill,
+                Color trail,
+                Color fill,
+                Color border,
+                Color text,
+                Color iconTint,
+                Color phaseReached,
+                Color phasePending,
+                Color phaseText,
+                Color secondaryFill,
+                Color secondaryText)
+            {
+                this.backdrop = backdrop;
+                this.backFill = backFill;
+                this.trail = trail;
+                this.fill = fill;
+                this.border = border;
+                this.text = text;
+                this.iconTint = iconTint;
+                this.phaseReached = phaseReached;
+                this.phasePending = phasePending;
+                this.phaseText = phaseText;
+                this.secondaryFill = secondaryFill;
+                this.secondaryText = secondaryText;
+                glow = new Color(fill.r, fill.g, fill.b, 0.15f);
+            }
+        }
+    }
+}
