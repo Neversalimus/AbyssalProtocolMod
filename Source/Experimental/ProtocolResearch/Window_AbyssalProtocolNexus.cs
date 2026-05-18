@@ -907,52 +907,83 @@ namespace AbyssalProtocol
             }
 
             string normalized = label.Trim().ToLowerInvariant();
-            if (normalized.Contains("apotheosis") || normalized.Contains("tier ix") || normalized.Contains("tier 9"))
+            if (normalized.Contains("apotheosis"))
             {
                 return ApotheosisTierSlot;
             }
 
-            if (normalized.Contains("tier i —") || normalized.Contains("tier i -") || normalized == "tier i" || normalized.StartsWith("tier i "))
+            string token = ExtractTierToken(normalized);
+            switch (token)
             {
-                return 0;
+                case "1":
+                case "i":
+                    return 0;
+                case "2":
+                case "ii":
+                    return 1;
+                case "3":
+                case "iii":
+                    return 2;
+                case "4":
+                case "iv":
+                    return 3;
+                case "5":
+                case "v":
+                    return 4;
+                case "6":
+                case "vi":
+                    return 5;
+                case "7":
+                case "vii":
+                    return 6;
+                case "8":
+                case "viii":
+                    return 7;
+                case "9":
+                case "ix":
+                    return ApotheosisTierSlot;
+                default:
+                    return -1;
+            }
+        }
+
+        private static string ExtractTierToken(string normalizedLabel)
+        {
+            if (normalizedLabel.NullOrEmpty())
+            {
+                return string.Empty;
             }
 
-            if (normalized.Contains("tier ii") || normalized.Contains("tier 2"))
+            int tierIndex = normalizedLabel.IndexOf("tier ", StringComparison.Ordinal);
+            if (tierIndex < 0)
             {
-                return 1;
+                return string.Empty;
             }
 
-            if (normalized.Contains("tier iii") || normalized.Contains("tier 3"))
+            int tokenStart = tierIndex + 5;
+            while (tokenStart < normalizedLabel.Length && char.IsWhiteSpace(normalizedLabel[tokenStart]))
             {
-                return 2;
+                tokenStart++;
             }
 
-            if (normalized.Contains("tier iv") || normalized.Contains("tier 4"))
+            int tokenEnd = tokenStart;
+            while (tokenEnd < normalizedLabel.Length)
             {
-                return 3;
+                char c = normalizedLabel[tokenEnd];
+                if (!char.IsLetterOrDigit(c))
+                {
+                    break;
+                }
+
+                tokenEnd++;
             }
 
-            if (normalized.Contains("tier viii") || normalized.Contains("tier 8"))
+            if (tokenEnd <= tokenStart)
             {
-                return 7;
+                return string.Empty;
             }
 
-            if (normalized.Contains("tier vii") || normalized.Contains("tier 7"))
-            {
-                return 6;
-            }
-
-            if (normalized.Contains("tier vi") || normalized.Contains("tier 6"))
-            {
-                return 5;
-            }
-
-            if (normalized.Contains("tier v") || normalized.Contains("tier 5"))
-            {
-                return 4;
-            }
-
-            return -1;
+            return normalizedLabel.Substring(tokenStart, tokenEnd - tokenStart);
         }
 
         private static string TierGlyphForSlot(int slot)
