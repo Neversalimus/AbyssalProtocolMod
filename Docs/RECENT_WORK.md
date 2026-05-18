@@ -1,5 +1,23 @@
 # Abyssal Protocol — Recent Work Notes
 
+
+## Russian localization audit and load-error cleanup
+
+A Russian localization audit pass was applied on 2026-05-19 against the user-provided local archive. The pass removed duplicate flat Russian language keys, removed an orphan CrownshardStormcaster RecipeDef translation in both EN/RU, added missing Russian DefInjected coverage for audited gameplay defs, and translated visible Russian UI/label/job-string English leftovers.
+
+Validation after the pass:
+
+```text
+XML parse errors: 0
+Russian duplicate flat keys: 0
+Russian orphan DefInjected keys: 0
+English orphan DefInjected keys: 0
+Audited missing Russian DefInjected fields: 0
+Visible Russian Latin label/title/jobString leftovers: 0
+```
+
+Future content batches that add Defs should run the same localization checks before packaging: duplicate flat language keys, orphan DefInjected defNames, missing Russian label/description/jobString fields, and Latin leftovers in visible Russian labels.
+
 ## Recent UI work — shared Abyssal scrollbars
 
 A shared procedural Abyssal scrollbar wrapper now lives in `source/UI/Shared/AbyssalStyledWidgets.cs`. It deliberately does **not** modify `GUI.skin` globally and does not require scrollbar PNG assets. It overlays a narrow obsidian/brass/ember scrollbar on top of normal RimWorld scroll behavior so wheel/drag behavior remains safe while the visual style matches Abyssal custom UI.

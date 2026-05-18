@@ -203,7 +203,10 @@ Actual code and assets win over this document.
 
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
-| Missing translation keys | P2 | UI/Defs | raw `ABY_*` keys shown | Add keys under `Languages/English/` and test visible UI. |
+| Missing translation keys | P2 | UI/Defs | raw `ABY_*` keys shown | Add keys under `Languages/English/` and `Languages/Russian/` and test visible UI. |
+| Duplicate flat language keys | P1 | localization | RimWorld language report shows duplicate or broken translation data, often when same defName exists in multiple DefInjected folders | Scan all `Languages/<lang>/DefInjected/**` keys as a flat set before packaging; avoid duplicate PawnKind/ThingDef label entries with the same key. |
+| Orphan DefInjected keys for removed/renamed defs | P1 | localization/XML | RimWorld language report warns about translation errors even when XML parses | For every DefInjected key, verify the defName exists in the matching Def type; remove stale keys when defs are renamed or deleted. |
+| English leftovers in Russian visible labels | P2 | localization/UI | Russian UI still shows English names like boss titles, difficulty names, horde labels, or recipe job strings | Run a Latin-text scan over Russian label/title/header/button/jobString values after content batches. |
 | Inconsistent tone with lore docs | P2/P3 | descriptions | generic demon/fantasy feel | Use techno-infernal, ritual-industrial tone. |
 | Text says implemented when content is planned | P2 | docs/UI | player/dev confusion | Mark planned/partial/implemented clearly. |
 | Too much lore in small UI cards | P2 | UI | unreadable or cluttered | Put concise gameplay requirements in UI; keep long lore in codex/descriptions. |
