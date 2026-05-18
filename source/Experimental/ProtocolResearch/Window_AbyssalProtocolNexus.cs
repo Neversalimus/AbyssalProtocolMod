@@ -666,7 +666,7 @@ namespace AbyssalProtocol
             float rowHeight = 48f;
             int projectCount = projects?.Count ?? 0;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(outRect.height, projectCount * rowHeight + 8f));
-            Widgets.BeginScrollView(outRect, ref projectListScroll, viewRect);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref projectListScroll, viewRect);
             if (projectCount == 0)
             {
                 Text.Font = GameFont.Tiny;
@@ -692,7 +692,7 @@ namespace AbyssalProtocol
                     }
                 }
             }
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref projectListScroll, viewRect);
         }
 
         private void DrawProjectListRow(Rect rect, ABY_ProtocolResearchDef project)
@@ -783,7 +783,7 @@ namespace AbyssalProtocol
 
             Rect outRect = new Rect(rect.x + 12f, headerRect.yMax + 10f, rect.width - 24f, rect.height - headerRect.height - 34f);
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, detailViewHeight);
-            Widgets.BeginScrollView(outRect, ref detailsScroll, viewRect);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailsScroll, viewRect);
             float y = 0f;
 
             y = DrawDecodeControls(viewRect, y, project);
@@ -809,7 +809,7 @@ namespace AbyssalProtocol
             y = warningRect.yMax + 12f;
 
             detailViewHeight = Mathf.Max(outRect.height + 1f, y);
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailsScroll, viewRect);
         }
 
 

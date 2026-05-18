@@ -322,10 +322,10 @@ namespace AbyssalProtocol
                 string lockedText = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretLockedDetail_New", "This slot is locked on the current chassis. It is not available on this chassis.");
                 float height = Mathf.Max(54f, Text.CalcHeight(lockedText, viewRect.width));
                 viewRect.height = height;
-                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
+                AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
                 DrawWrappedText(new Rect(0f, 0f, viewRect.width, height), lockedText, GameFont.Tiny, AbyssalForgeConsoleArt.TextDimColor);
-                Widgets.EndScrollView();
+                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
                 ResetTextState();
                 return;
             }
@@ -339,12 +339,12 @@ namespace AbyssalProtocol
                 float emptyHeight = Text.CalcHeight(emptyText, viewRect.width);
                 float availableHeight = Text.CalcHeight(availableText, viewRect.width);
                 viewRect.height = Mathf.Max(outRect.height, emptyHeight + availableHeight + 46f);
-                Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
+                AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
                 contentY = DrawInfoParagraph(new Rect(0f, 0f, viewRect.width, viewRect.height), contentY, emptyText, AbyssalForgeConsoleArt.TextSoftColor);
                 contentY += 6f;
                 DrawSectionLine(new Rect(0f, 0f, viewRect.width, viewRect.height), ref contentY, availableHeader);
                 DrawInfoParagraph(new Rect(0f, 0f, viewRect.width, viewRect.height), contentY, availableText, AbyssalForgeConsoleArt.TextDimColor);
-                Widgets.EndScrollView();
+                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
                 ResetTextState();
                 return;
             }
@@ -357,7 +357,7 @@ namespace AbyssalProtocol
             estimatedHeight += statLines.Length * (LineHeight + 1f);
             viewRect.height = Mathf.Max(outRect.height, estimatedHeight);
 
-            Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
             Rect contentRect = new Rect(0f, 0f, viewRect.width, viewRect.height);
             DrawSectionLine(contentRect, ref contentY, module.LabelCap);
             DrawInfoLine(contentRect, ref contentY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel));
@@ -371,7 +371,7 @@ namespace AbyssalProtocol
             {
                 DrawInfoLine(contentRect, ref contentY, statLines[i]);
             }
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
 
             ResetTextState();
         }

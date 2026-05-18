@@ -192,6 +192,7 @@ Actual code and assets win over this document.
 | Expensive per-tick loops over all pawns/buildings | P1 | runtime | TPS drops on large maps | Use throttling, map components carefully, cache where safe. |
 | Excessive VFX spawning | P1/P2 | combat/boss/Dominion | FPS/TPS drop during fights | Cap VFX, use restrained motes, avoid redundant spawn loops. |
 | UI work in OnGUI too heavy | P2 | UI | stutter when windows/boss bar open | Cache textures/layout where safe; avoid expensive searches every frame. |
+| Raw vanilla scrollbars in Abyssal custom UI | P3 | UI/style | gray scrollbar visually breaks Forge/Summoning/Nexus style | Use `AbyssalStyledWidgets.BeginAbyssalScrollView` / `EndAbyssalScrollView` or `DrawAbyssalVerticalScrollbar`; do not modify `GUI.skin` globally. |
 | Large unoptimized textures | P2 | VRAM/loading | memory bloat | Lossless optimize by default; downscale only after readability check. |
 | Presentation scaffolding left active | P2 | boss/Dominion | unnecessary runtime overhead | Remove or gate dev/test presentation systems. |
 

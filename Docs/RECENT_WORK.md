@@ -1,5 +1,23 @@
 # Abyssal Protocol — Recent Work Notes
 
+## Recent UI work — shared Abyssal scrollbars
+
+A shared procedural Abyssal scrollbar wrapper now lives in `source/UI/Shared/AbyssalStyledWidgets.cs`. It deliberately does **not** modify `GUI.skin` globally and does not require scrollbar PNG assets. It overlays a narrow obsidian/brass/ember scrollbar on top of normal RimWorld scroll behavior so wheel/drag behavior remains safe while the visual style matches Abyssal custom UI.
+
+Applied to current custom scroll regions in:
+
+```text
+source/UI/Forge/Window_AbyssalForgeConsole.cs
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+source/Experimental/ProtocolResearch/Window_AbyssalProtocolNexus.cs
+source/UI/Bestiary/Window_ABY_BestiaryCodex.cs
+source/UI/Turrets/ITab_AbyssalTurretModules.cs
+source/UI/BossBar/Window_ABY_BossBarCalibration.cs
+```
+
+Future custom Abyssal windows should prefer `AbyssalStyledWidgets.BeginAbyssalScrollView(...)` / `EndAbyssalScrollView(...)` or `DrawAbyssalVerticalScrollbar(...)` over raw `Widgets.BeginScrollView` when the scrollbar is visible to the player. Avoid global scrollbar skin changes.
+
+
 This document is a compact working-memory ledger for future AI-assisted development.
 It is not a player-facing changelog and not a substitute for Git history.
 Use it to avoid repeating old work, confusing current systems with older backups, or missing recent architectural decisions.

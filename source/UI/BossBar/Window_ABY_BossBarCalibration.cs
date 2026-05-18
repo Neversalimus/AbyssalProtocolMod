@@ -68,7 +68,7 @@ namespace AbyssalProtocol
 
             Rect contentRect = new Rect(bgRect.x + 10f, headerRect.yMax + 8f, bgRect.width - 20f, bgRect.height - headerRect.height - 16f);
             Rect viewRect = new Rect(0f, 0f, contentRect.width - 18f, 760f);
-            Widgets.BeginScrollView(contentRect, ref scrollPosition, viewRect);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(contentRect, ref scrollPosition, viewRect);
 
             float curY = 0f;
             DrawPreviewStatus(viewRect, ref curY);
@@ -116,7 +116,7 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(contentRect, ref scrollPosition, viewRect);
             settings.ClampValues();
         }
 

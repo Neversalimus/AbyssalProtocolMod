@@ -1489,7 +1489,7 @@ namespace AbyssalProtocol
             float viewHeight = Math.Max(outRect.height, rows * rowPitch);
             Rect viewRect = new Rect(0f, 0f, contentWidth, viewHeight);
 
-            Widgets.BeginScrollView(outRect, ref patternScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref patternScrollPosition, viewRect);
             if (entries == null || entries.Count == 0)
             {
                 Rect emptyRect = new Rect(0f, 0f, contentWidth, 70f);
@@ -1529,7 +1529,7 @@ namespace AbyssalProtocol
                     }
                 }
             }
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref patternScrollPosition, viewRect);
         }
 
         private void BuildStatusCache(List<ForgePatternEntry> entries, MapComponent_AbyssalForgeProgress progress)
@@ -2621,7 +2621,7 @@ namespace AbyssalProtocol
             float contentHeight = Mathf.Max(scrollOutRect.height, 94f + Mathf.Clamp(summaryHeight, 34f, 120f) + (details.NullOrEmpty() ? 0f : Mathf.Clamp(detailHeight, 34f, 130f) + 8f) + requirementsHeight + 18f);
             Rect viewRect = new Rect(0f, 0f, contentWidth, contentHeight);
 
-            Widgets.BeginScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect);
 
             Rect iconRect = new Rect(0f, y, 54f, 54f);
             if (product?.uiIcon != null)
@@ -2699,7 +2699,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect);
 
             if (!actionDetailLine.NullOrEmpty())
             {
@@ -2794,6 +2794,7 @@ namespace AbyssalProtocol
 
             Rect listRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             mouseoverBill = forge.BillStack.DoListing(listRect, BuildRecipeOptions, ref billScrollPosition, ref billViewHeight);
+            AbyssalStyledWidgets.DrawAbyssalVerticalScrollbar(listRect, ref billScrollPosition, new Rect(0f, 0f, listRect.width, billViewHeight));
         }
 
         private List<FloatMenuOption> BuildRecipeOptions()

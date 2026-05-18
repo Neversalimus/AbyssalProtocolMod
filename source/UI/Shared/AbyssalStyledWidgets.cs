@@ -274,6 +274,123 @@ namespace AbyssalProtocol
             DrawTextureWithFallback(rect, frames[frameIndex], alpha, Color.clear, false);
         }
 
+        public static void BeginAbyssalScrollView(Rect outRect, ref Vector2 scrollPosition, Rect viewRect, bool showVanillaScrollbar = true)
+        {
+            Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect, showVanillaScrollbar);
+        }
+
+        public static void EndAbyssalScrollView(Rect outRect, ref Vector2 scrollPosition, Rect viewRect, bool drawVerticalScrollbar = true)
+        {
+            Widgets.EndScrollView();
+            if (drawVerticalScrollbar)
+            {
+                DrawAbyssalVerticalScrollbar(outRect, ref scrollPosition, viewRect);
+            }
+        }
+
+        public static void DrawAbyssalVerticalScrollbar(Rect outRect, ref Vector2 scrollPosition, Rect viewRect)
+        {
+            if (outRect.width <= 0f || outRect.height <= 0f || viewRect.height <= outRect.height + 1f)
+            {
+                return;
+            }
+
+            const float coverWidth = 16f;
+            const float trackWidth = 8f;
+            const float trackInset = 4f;
+            const float minThumbHeight = 28f;
+
+            Rect coverRect = new Rect(outRect.xMax - coverWidth, outRect.y, coverWidth, outRect.height);
+            Rect trackRect = new Rect(
+                coverRect.x + (coverRect.width - trackWidth) * 0.5f,
+                coverRect.y + trackInset,
+                trackWidth,
+                Mathf.Max(1f, coverRect.height - trackInset * 2f));
+
+            if (trackRect.height <= 1f)
+            {
+                return;
+            }
+
+            float maxScroll = Mathf.Max(1f, viewRect.height - outRect.height);
+            scrollPosition.y = Mathf.Clamp(scrollPosition.y, 0f, maxScroll);
+            float normalized = Mathf.Clamp01(scrollPosition.y / maxScroll);
+            float thumbHeight = Mathf.Clamp(trackRect.height * Mathf.Clamp01(outRect.height / Mathf.Max(outRect.height, viewRect.height)), minThumbHeight, trackRect.height);
+            float travel = Mathf.Max(0f, trackRect.height - thumbHeight);
+            Rect thumbRect = new Rect(trackRect.x, trackRect.y + travel * normalized, trackRect.width, thumbHeight);
+
+            int controlId = GUIUtility.GetControlID(FocusType.Passive, coverRect);
+            Event currentEvent = Event.current;
+            bool hovered = Mouse.IsOver(coverRect);
+            bool active = GUIUtility.hotControl == controlId;
+
+            if (currentEvent != null)
+            {
+                if (currentEvent.type == EventType.MouseDown && currentEvent.button == 0 && coverRect.Contains(currentEvent.mousePosition))
+                {
+                    GUIUtility.hotControl = controlId;
+                    active = true;
+                    SetAbyssalScrollbarPositionFromMouse(trackRect, thumbHeight, maxScroll, ref scrollPosition, currentEvent.mousePosition.y);
+                    currentEvent.Use();
+                }
+                else if (active && currentEvent.type == EventType.MouseDrag && currentEvent.button == 0)
+                {
+                    SetAbyssalScrollbarPositionFromMouse(trackRect, thumbHeight, maxScroll, ref scrollPosition, currentEvent.mousePosition.y);
+                    currentEvent.Use();
+                }
+                else if (active && currentEvent.type == EventType.MouseUp && currentEvent.button == 0)
+                {
+                    GUIUtility.hotControl = 0;
+                    active = false;
+                    currentEvent.Use();
+                }
+            }
+
+            DrawAbyssalScrollbarRect(coverRect, new Color(0.035f, 0.027f, 0.024f, hovered || active ? 0.94f : 0.82f));
+            DrawAbyssalScrollbarRect(trackRect, new Color(0.075f, 0.055f, 0.048f, hovered || active ? 0.92f : 0.72f));
+            DrawAbyssalScrollbarOutline(trackRect, new Color(0.68f, 0.24f, 0.10f, hovered || active ? 0.42f : 0.24f));
+
+            Color thumbFill = active
+                ? new Color(0.42f, 0.18f, 0.08f, 0.98f)
+                : hovered
+                    ? new Color(0.34f, 0.14f, 0.065f, 0.96f)
+                    : new Color(0.22f, 0.105f, 0.055f, 0.92f);
+            Color thumbOutline = active
+                ? new Color(1f, 0.58f, 0.22f, 0.92f)
+                : hovered
+                    ? new Color(1f, 0.43f, 0.16f, 0.74f)
+                    : new Color(0.86f, 0.30f, 0.11f, 0.54f);
+
+            Rect thumbInset = thumbRect.ContractedBy(1f);
+            DrawAbyssalScrollbarRect(thumbInset, thumbFill);
+            DrawAbyssalScrollbarOutline(thumbInset, thumbOutline);
+            DrawAbyssalScrollbarRect(new Rect(thumbInset.x + 1f, thumbInset.y + 2f, Mathf.Max(1f, thumbInset.width - 2f), 1f), new Color(1f, 0.54f, 0.20f, active ? 0.60f : hovered ? 0.44f : 0.26f));
+            DrawAbyssalScrollbarRect(new Rect(thumbInset.x + 1f, thumbInset.yMax - 3f, Mathf.Max(1f, thumbInset.width - 2f), 1f), new Color(0.70f, 0.18f, 0.08f, active ? 0.58f : hovered ? 0.38f : 0.22f));
+        }
+
+        private static void SetAbyssalScrollbarPositionFromMouse(Rect trackRect, float thumbHeight, float maxScroll, ref Vector2 scrollPosition, float mouseY)
+        {
+            float travel = Mathf.Max(1f, trackRect.height - thumbHeight);
+            float normalized = Mathf.Clamp01((mouseY - trackRect.y - thumbHeight * 0.5f) / travel);
+            scrollPosition.y = Mathf.Clamp(normalized * maxScroll, 0f, maxScroll);
+        }
+
+        private static void DrawAbyssalScrollbarRect(Rect rect, Color color)
+        {
+            Color oldColor = GUI.color;
+            GUI.color = color;
+            GUI.DrawTexture(rect, BaseContent.WhiteTex);
+            GUI.color = oldColor;
+        }
+
+        private static void DrawAbyssalScrollbarOutline(Rect rect, Color color)
+        {
+            Color oldColor = GUI.color;
+            GUI.color = color;
+            Widgets.DrawBox(rect, 1);
+            GUI.color = oldColor;
+        }
+
         private static bool ButtonInternal(Rect rect, string label, bool enabled, bool active, Texture2D icon, string tooltip, bool useTabStyle, bool iconOnly)
         {
             bool hovered = Mouse.IsOver(rect);

@@ -162,14 +162,14 @@ namespace AbyssalProtocol
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
 
-            Widgets.BeginScrollView(outRect, ref ritualScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref ritualScrollPosition, viewRect);
             for (int i = 0; i < rituals.Count; i++)
             {
                 AbyssalSummoningConsoleUtility.RitualDefinition ritual = rituals[i];
                 Rect cardRect = new Rect(0f, i * (cardHeight + 8f), viewRect.width, cardHeight);
                 DrawRitualCard(cardRect, ritual, ritual.Id == selected.Id);
             }
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref ritualScrollPosition, viewRect);
         }
 
 
@@ -413,7 +413,7 @@ namespace AbyssalProtocol
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
-            Widgets.BeginScrollView(outRect, ref statusScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
             float y = 0f;
             if (dominionUiMode)
             {
@@ -457,7 +457,7 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
         }
 
         private void DrawSystemsPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -484,9 +484,9 @@ namespace AbyssalProtocol
             float contentHeight = GetCapacitorContentHeight(ritual);
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
-            Widgets.BeginScrollView(outRect, ref capacitorScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref capacitorScrollPosition, viewRect);
             DrawCapacitorPanel(new Rect(0f, 0f, viewRect.width, contentHeight), ritual);
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref capacitorScrollPosition, viewRect);
         }
 
         private void DrawCapacitorPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -565,9 +565,9 @@ namespace AbyssalProtocol
             float contentHeight = GetModuleContentHeight();
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
-            Widgets.BeginScrollView(outRect, ref stabilizerScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref stabilizerScrollPosition, viewRect);
             DrawModulePanel(new Rect(0f, 0f, viewRect.width, contentHeight));
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref stabilizerScrollPosition, viewRect);
         }
 
         private void DrawModulePanel(Rect rect)
@@ -611,9 +611,9 @@ namespace AbyssalProtocol
             float contentHeight = GetRitualPreviewContentHeight(ritual, Mathf.Max(0f, outRect.width - 16f));
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
-            Widgets.BeginScrollView(outRect, ref ritualPreviewScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref ritualPreviewScrollPosition, viewRect);
             DrawRitualPreviewPanel(new Rect(0f, 0f, viewRect.width, contentHeight), ritual);
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref ritualPreviewScrollPosition, viewRect);
         }
 
         private void DrawRitualPreviewPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

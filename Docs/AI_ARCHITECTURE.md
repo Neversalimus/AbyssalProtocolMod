@@ -68,7 +68,7 @@ Treat this as a first-class system, not temporary overlay code.
 
 Subareas:
 
-- `UI/Shared/` — reusable styled widgets, layout helpers, colors, textures, buttons, text utilities.
+- `UI/Shared/` — reusable styled widgets, layout helpers, colors, textures, buttons, text utilities, and the shared procedural Abyssal scroll view/scrollbar wrapper.
 - `UI/Forge/` — Abyssal Forge compact tab and full Forge/Communion UI support.
 - `UI/Summoning/` — Summoning Circle compact tab and full Summoning Console support.
 - `UI/BossBar/` — boss bar renderer, boss bar profile defs, phase entries, Aegis overlay renderer.

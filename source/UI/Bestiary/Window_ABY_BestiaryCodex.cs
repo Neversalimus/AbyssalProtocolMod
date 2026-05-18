@@ -208,12 +208,12 @@ namespace AbyssalProtocol
             Rect outRect = new Rect(inner.x, inner.y + 28f, inner.width, inner.height - 28f);
             float cardHeight = 118f;
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, visibleEntries.Count * (cardHeight + 6f)));
-            Widgets.BeginScrollView(outRect, ref listScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref listScrollPosition, viewRect);
             for (int i = 0; i < visibleEntries.Count; i++)
             {
                 DrawBrowserCard(new Rect(0f, i * (cardHeight + 6f), viewRect.width, cardHeight), visibleEntries[i]);
             }
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref listScrollPosition, viewRect);
         }
 
         private void DrawBrowserCard(Rect rect, ABY_BestiaryEntryDefinition entry)
@@ -289,7 +289,7 @@ namespace AbyssalProtocol
             Rect outRect = new Rect(inner.x, headerRect.yMax + 8f, inner.width, inner.height - headerRect.height - 8f);
             float contentHeight = 600f;
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
-            Widgets.BeginScrollView(outRect, ref detailScrollPosition, viewRect, true);
+            AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
 
             float y = 0f;
             y = DrawTextSection(new Rect(0f, y, viewRect.width, 92f), "ABY_Bestiary_Section_Summary".Translate(), unlocked ? ABY_BestiaryUtility.GetSummary(entry.EntryId) : "ABY_Bestiary_LockedSummary".Translate());
@@ -302,7 +302,7 @@ namespace AbyssalProtocol
             y += 8f;
             DrawExtractionSection(new Rect(0f, y, viewRect.width, 86f));
 
-            Widgets.EndScrollView();
+            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
         }
 
         private void DrawDetailHeader(Rect rect, ABY_BestiaryEntryDefinition entry, bool unlocked, int kills)
