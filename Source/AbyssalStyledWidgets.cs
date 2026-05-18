@@ -80,6 +80,22 @@ namespace AbyssalProtocol
         private static readonly Color FallbackPanelColor = new Color(0.11f, 0.075f, 0.065f, 0.94f);
         private static readonly Color FallbackPanelOutlineColor = new Color(0.62f, 0.28f, 0.12f, 0.62f);
 
+        public static bool UseEnhancedTheme
+        {
+            get
+            {
+                return AbyssalProtocolMod.Settings.uiStyle == ABY_UIStyle.Enhanced;
+            }
+        }
+
+        public static bool ReduceAbyssalUIAnimation
+        {
+            get
+            {
+                return AbyssalProtocolMod.Settings.reduceAbyssalUIAnimation;
+            }
+        }
+
         public enum AbyssalPanelStyle
         {
             Main,
@@ -247,7 +263,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (AbyssalProtocolMod.Settings.reducedMotion)
+            if (ReduceAbyssalUIAnimation)
             {
                 DrawTextureWithFallback(rect, frames[0], alpha, Color.clear, false);
                 return;
@@ -263,11 +279,18 @@ namespace AbyssalProtocol
             bool hovered = Mouse.IsOver(rect);
             Event currentEvent = Event.current;
             bool pressed = enabled && hovered && currentEvent != null && currentEvent.button == 0 && (currentEvent.type == EventType.MouseDown || currentEvent.type == EventType.MouseDrag);
-            Texture2D background = iconOnly
-                ? GetIconFrameTexture(enabled, active, hovered, pressed)
-                : GetTexture(useTabStyle, enabled, active, hovered, pressed);
 
-            DrawTexture(rect, background);
+            if (!UseEnhancedTheme)
+            {
+                DrawClassicButtonBackground(rect, enabled, active, hovered, pressed, useTabStyle, iconOnly);
+            }
+            else
+            {
+                Texture2D background = iconOnly
+                    ? GetIconFrameTexture(enabled, active, hovered, pressed)
+                    : GetTexture(useTabStyle, enabled, active, hovered, pressed);
+                DrawTexture(rect, background);
+            }
 
             if (!iconOnly && hovered && enabled)
             {
@@ -418,6 +441,49 @@ namespace AbyssalProtocol
             }
         }
 
+        private static void DrawClassicButtonBackground(Rect rect, bool enabled, bool active, bool hovered, bool pressed, bool useTabStyle, bool iconOnly)
+        {
+            Color fill;
+            Color outline;
+            if (!enabled)
+            {
+                fill = new Color(0.12f, 0.11f, 0.105f, iconOnly ? 0.72f : 0.88f);
+                outline = new Color(0.34f, 0.30f, 0.27f, 0.70f);
+            }
+            else if (pressed)
+            {
+                fill = new Color(0.22f, 0.10f, 0.065f, 0.98f);
+                outline = new Color(1f, 0.42f, 0.16f, 0.92f);
+            }
+            else if (active)
+            {
+                fill = new Color(0.27f, 0.08f, 0.035f, 0.98f);
+                outline = new Color(1f, 0.50f, 0.20f, 0.95f);
+            }
+            else if (hovered)
+            {
+                fill = new Color(0.17f, 0.095f, 0.065f, 0.96f);
+                outline = new Color(0.95f, 0.38f, 0.14f, 0.86f);
+            }
+            else
+            {
+                fill = new Color(0.10f, 0.075f, 0.065f, iconOnly ? 0.76f : 0.94f);
+                outline = new Color(0.56f, 0.23f, 0.11f, 0.74f);
+            }
+
+            Color oldColor = GUI.color;
+            GUI.color = fill;
+            GUI.DrawTexture(rect, BaseContent.WhiteTex);
+            GUI.color = outline;
+            Widgets.DrawBox(rect, 1);
+            if ((active || hovered) && enabled)
+            {
+                GUI.color = new Color(1f, 0.52f, 0.20f, active ? 0.22f : 0.12f);
+                GUI.DrawTexture(new Rect(rect.x + 4f, rect.yMax - 3f, rect.width - 8f, 1f), BaseContent.WhiteTex);
+            }
+            GUI.color = oldColor;
+        }
+
         private static void DrawTexture(Rect rect, Texture2D texture)
         {
             if (texture != null)
@@ -506,16 +572,25 @@ namespace AbyssalProtocol
                 Mathf.Max(1f, rect.width - horizontalInset * 2f),
                 Mathf.Max(1f, rect.height - verticalInset * 2f));
 
+            bool tabWithIcon = useTabStyle && icon != null;
             if (icon != null)
             {
-                labelRect.xMin += useTabStyle ? 28f : 26f;
+                if (tabWithIcon)
+                {
+                    labelRect.xMin = rect.x + Mathf.Min(36f, rect.width * 0.30f);
+                    labelRect.width = Mathf.Max(1f, rect.xMax - 8f - labelRect.xMin);
+                }
+                else
+                {
+                    labelRect.xMin += 26f;
+                }
             }
 
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
             Color oldColor = GUI.color;
 
-            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Anchor = tabWithIcon ? TextAnchor.MiddleLeft : TextAnchor.MiddleCenter;
             Text.Font = rect.height <= 24f ? GameFont.Tiny : GameFont.Small;
             if (Text.CalcSize(label).x > labelRect.width - 4f)
             {

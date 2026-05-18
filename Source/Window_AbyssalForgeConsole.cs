@@ -269,6 +269,10 @@ namespace AbyssalProtocol
         private void DrawCategoryRow(Rect rect)
         {
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(rect.x + 8f, rect.yMax - 6f, rect.width - 16f, 5f), 0.34f);
+            }
             Rect inner = rect.ContractedBy(4f);
             List<string> categories = AbyssalForgeProgressUtility.Categories.ToList();
             float width = inner.width / categories.Count;
@@ -497,15 +501,29 @@ namespace AbyssalProtocol
 
         private void DrawUnknownPatternCard(Rect rect, RecipeDef recipe, bool turretCard)
         {
-            AbyssalForgeConsoleArt.DrawPanel(rect, false);
-            AbyssalForgeConsoleArt.Fill(rect.ContractedBy(3f), new Color(0.012f, 0.010f, 0.010f, 0.46f));
-            AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawFramedPanel(rect, AbyssalStyledWidgets.AbyssalPanelStyle.Locked, 18f, 0.98f);
+            }
+            else
+            {
+                AbyssalForgeConsoleArt.DrawPanel(rect, false);
+                AbyssalForgeConsoleArt.Fill(rect.ContractedBy(3f), new Color(0.012f, 0.010f, 0.010f, 0.46f));
+                AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
+            }
 
             string category = AbyssalForgeProgressUtility.GetCategory(recipe);
             Texture2D categoryIcon = AbyssalForgeConsoleArt.GetCategoryIcon(category);
             Rect iconRect = new Rect(rect.x + 12f, rect.y + 14f, turretCard ? 54f : 42f, turretCard ? 54f : 42f);
-            AbyssalForgeConsoleArt.Fill(iconRect.ExpandedBy(4f), new Color(0.09f, 0.022f, 0.012f, 0.84f));
-            AbyssalForgeConsoleArt.DrawOutline(iconRect.ExpandedBy(4f), new Color(1f, 0.32f, 0.12f, 0.42f));
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawStatusSocket(iconRect.ExpandedBy(4f), false, 0.82f);
+            }
+            else
+            {
+                AbyssalForgeConsoleArt.Fill(iconRect.ExpandedBy(4f), new Color(0.09f, 0.022f, 0.012f, 0.84f));
+                AbyssalForgeConsoleArt.DrawOutline(iconRect.ExpandedBy(4f), new Color(1f, 0.32f, 0.12f, 0.42f));
+            }
             if (categoryIcon != null)
             {
                 GUI.color = new Color(1f, 0.40f, 0.18f, 0.34f);
@@ -560,8 +578,15 @@ namespace AbyssalProtocol
             Color slotColor = module != null ? ABY_ModularTurretUtility.SlotColor(module.slot) : new Color(0.62f, 0.60f, 0.55f, 1f);
 
             Rect socketRect = new Rect(rect.x + 10f, rect.y + 12f, 58f, 58f);
-            AbyssalForgeConsoleArt.Fill(socketRect, unlocked ? new Color(slotColor.r * 0.16f, slotColor.g * 0.11f, slotColor.b * 0.10f, 0.92f) : new Color(0.05f, 0.05f, 0.055f, 0.82f));
-            AbyssalForgeConsoleArt.DrawOutline(socketRect, unlocked ? slotColor : new Color(0.40f, 0.40f, 0.42f, 0.70f));
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawStatusSocket(socketRect, unlocked, unlocked ? 0.92f : 0.62f);
+            }
+            else
+            {
+                AbyssalForgeConsoleArt.Fill(socketRect, unlocked ? new Color(slotColor.r * 0.16f, slotColor.g * 0.11f, slotColor.b * 0.10f, 0.92f) : new Color(0.05f, 0.05f, 0.055f, 0.82f));
+                AbyssalForgeConsoleArt.DrawOutline(socketRect, unlocked ? slotColor : new Color(0.40f, 0.40f, 0.42f, 0.70f));
+            }
 
             Texture2D icon = product != null ? product.uiIcon : AbyssalForgeConsoleArt.GetCategoryIcon(AbyssalForgeProgressUtility.TurretSystemsCategory);
             if (icon != null)
@@ -806,6 +831,10 @@ namespace AbyssalProtocol
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             Texture2D icon = product != null ? product.uiIcon : null;
             Rect iconRect = new Rect(rect.x + 10f, rect.y + 12f, 42f, 42f);
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawStatusSocket(iconRect.ExpandedBy(4f), unlocked, unlocked ? 0.78f : 0.54f);
+            }
             if (icon != null)
             {
                 GUI.color = unlocked ? Color.white : new Color(0.72f, 0.72f, 0.72f, 0.72f);
@@ -968,16 +997,27 @@ namespace AbyssalProtocol
 
         private void DrawIngredientStateLine(Rect rect, AbyssalForgeProgressUtility.IngredientAvailabilityEntry entry)
         {
-            Rect labelRect = new Rect(rect.x, rect.y, rect.width - 72f, rect.height);
-            Rect countRect = new Rect(rect.xMax - 70f, rect.y, 70f, rect.height);
-
             GUI.color = Color.white;
             if (entry == null)
             {
-                ABY_UIPolishUtility.SafeLabel(labelRect, "missing ingredient");
+                ABY_UIPolishUtility.SafeLabel(rect, "missing ingredient");
                 return;
             }
 
+            Rect labelRect;
+            Rect countRect = new Rect(rect.xMax - 70f, rect.y, 70f, rect.height);
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                Rect badgeRect = new Rect(rect.x, rect.y + 1f, 14f, 14f);
+                AbyssalStyledWidgets.DrawCategoryIcon(badgeRect, entry.IsSatisfied ? AbyssalStyledWidgets.AbyssalCategoryIcon.Ready : AbyssalStyledWidgets.AbyssalCategoryIcon.Forbidden, Color.white, entry.IsSatisfied ? 0.82f : 0.72f);
+                labelRect = new Rect(rect.x + 18f, rect.y, rect.width - 90f, rect.height);
+            }
+            else
+            {
+                labelRect = new Rect(rect.x, rect.y, rect.width - 72f, rect.height);
+            }
+
+            GUI.color = Color.white;
             ABY_UIPolishUtility.SafeLabel(labelRect, ABY_UISafetyUtility.SafeString(entry.label, "ingredient"));
             GUI.color = entry.IsSatisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.58f, 0.52f, 1f);
             Text.Anchor = TextAnchor.UpperRight;
@@ -991,6 +1031,10 @@ namespace AbyssalProtocol
             AbyssalForgeConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
             AbyssalForgeConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_ForgeConsoleBillsHeader".Translate());
+            if (AbyssalStyledWidgets.UseEnhancedTheme)
+            {
+                AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(inner.x, inner.y + 22f, inner.width - 28f, 5f), 0.34f);
+            }
 
             Rect pasteRect = new Rect(inner.xMax - 24f, inner.y, 24f, 24f);
             DrawPasteButton(pasteRect);

@@ -43,6 +43,8 @@ namespace AbyssalProtocol
         public bool enableBossPresentationTitleCards = true;
         public bool enableModularTurrets = true;
         public bool enableProtocolNexusGating = false;
+        public ABY_UIStyle uiStyle = ABY_UIStyle.Enhanced;
+        public bool reduceAbyssalUIAnimation = false;
 
         public override void ExposeData()
         {
@@ -83,6 +85,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableBossPresentationTitleCards, "enableBossPresentationTitleCards", true);
             Scribe_Values.Look(ref enableModularTurrets, "enableModularTurrets", true);
             Scribe_Values.Look(ref enableProtocolNexusGating, "enableProtocolNexusGating", false);
+            Scribe_Values.Look(ref uiStyle, "uiStyle", ABY_UIStyle.Enhanced);
+            Scribe_Values.Look(ref reduceAbyssalUIAnimation, "reduceAbyssalUIAnimation", false);
             ClampValues();
         }
 
@@ -137,6 +141,8 @@ namespace AbyssalProtocol
             enableBossPresentationTitleCards = true;
             enableModularTurrets = true;
             enableProtocolNexusGating = false;
+            uiStyle = ABY_UIStyle.Enhanced;
+            reduceAbyssalUIAnimation = false;
         }
 
         public float ResolveDominionWeatherIntensity()

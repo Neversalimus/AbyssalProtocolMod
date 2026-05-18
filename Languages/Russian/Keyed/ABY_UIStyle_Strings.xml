@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_UIStyleSettingsHeader>Стиль интерфейса Бездны</ABY_UIStyleSettingsHeader>
+  <ABY_UIStyleSettingsDesc>Выбирает общий скин для Forge, Summoning и других кастомных консолей Abyssal Protocol. Classic сохраняет сдержанный процедурный интерфейс; Enhanced использует новый нарезанный UI-kit.</ABY_UIStyleSettingsDesc>
+  <ABY_UIStyle_Classic>Classic</ABY_UIStyle_Classic>
+  <ABY_UIStyle_Enhanced>Enhanced</ABY_UIStyle_Enhanced>
+  <ABY_UIStyle_ReduceAnimation>Уменьшить анимацию Abyssal UI</ABY_UIStyle_ReduceAnimation>
+  <ABY_UIStyle_ReduceAnimationDesc>Отключает опциональные scanline, пульсацию сокетов и декоративные sweep-акценты Enhanced UI. Это отдельная настройка от уменьшенной анимации boss bar.</ABY_UIStyle_ReduceAnimationDesc>
+</LanguageData>

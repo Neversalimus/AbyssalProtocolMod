@@ -40,15 +40,29 @@ namespace AbyssalProtocol
         public static bool ReducedEffects { get; set; }
 
         private static float AnimTime => Time.realtimeSinceStartup;
+        private static bool EnhancedUI => AbyssalStyledWidgets.UseEnhancedTheme;
+        private static bool ReduceUIAnimation => ReducedEffects || AbyssalStyledWidgets.ReduceAbyssalUIAnimation;
 
         public static void DrawBackground(Rect rect)
         {
+            if (EnhancedUI)
+            {
+                Fill(rect, BackColor);
+                DrawOverlay(rect, OverlayTex, new Color(1f, 0.36f, 0.14f, ReduceUIAnimation ? 0.035f : 0.07f));
+                DrawOutline(rect, new Color(1f, 0.40f, 0.14f, 0.58f));
+                if (!ReduceUIAnimation)
+                {
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 8f, rect.y + rect.height - 20f, rect.width - 16f, 18f), AbyssalStyledWidgets.AbyssalAccentAnimation.EdgeGlow, 8f, 0.20f);
+                }
+                return;
+            }
+
             float pulse = Pulse(1.05f, 0.35f);
             Fill(rect, BackColor);
             DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, (ReducedEffects ? 0.07f : 0.12f) + pulse * (ReducedEffects ? 0.02f : 0.06f)));
             DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, pulse * 0.35f));
 
-            if (!ReducedEffects)
+            if (!ReduceUIAnimation)
             {
                 float scanY = rect.y + Mathf.Repeat(AnimTime * 24f, Mathf.Max(1f, rect.height - 4f));
                 Fill(new Rect(rect.x + 2f, scanY, rect.width - 4f, 1f), new Color(1f, 0.55f, 0.24f, 0.06f));
@@ -57,12 +71,39 @@ namespace AbyssalProtocol
 
         public static void DrawHeader(Rect rect, string title, string subtitle, bool alert)
         {
+            if (EnhancedUI)
+            {
+                float pulseEnhanced = Pulse(alert ? 2.0f : 1.4f, 0.12f);
+                AbyssalStyledWidgets.DrawPanel(rect, AbyssalStyledWidgets.AbyssalPanelStyle.Header, 0.98f);
+                DrawOverlay(rect, HeaderTex, new Color(1f, 0.42f, 0.16f, alert ? 0.18f + pulseEnhanced * 0.08f : 0.12f));
+                AbyssalStyledWidgets.DrawDividerHorizontal(new Rect(rect.x + 18f, rect.yMax - 8f, rect.width - 36f, 6f), alert ? 0.95f : 0.72f);
+                if (!ReduceUIAnimation)
+                {
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 18f, rect.yMax - 18f, rect.width * 0.62f, 14f), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 7f, alert ? 0.34f : 0.20f);
+                }
+
+                Text.Anchor = TextAnchor.UpperLeft;
+                Text.Font = GameFont.Medium;
+                GUI.color = Color.white;
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y + 6f, rect.width - 86f, 34f), title);
+
+                Text.Font = GameFont.Small;
+                GUI.color = TextSoftColor;
+                float enhancedSubtitleHeight = Text.CalcHeight(subtitle, rect.width - 98f);
+                float enhancedMaxSubtitleHeight = Mathf.Max(18f, rect.height - 40f);
+                ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 20f, rect.y + 36f, rect.width - 98f, Mathf.Min(enhancedSubtitleHeight, enhancedMaxSubtitleHeight)), subtitle);
+                GUI.color = Color.white;
+                Text.Anchor = TextAnchor.UpperLeft;
+                DrawSignalGlyph(new Rect(rect.xMax - 36f, rect.y + 10f, 18f, 18f), pulseEnhanced);
+                return;
+            }
+
             float pulse = Pulse(alert ? 2.0f : 1.4f, 0.12f);
             Fill(rect, new Color(0.09f, 0.075f, 0.07f, 1f));
             DrawOverlay(rect, HeaderTex, new Color(1f, 0.5f, 0.22f, 0.58f + pulse * (alert ? 0.14f : 0.08f)));
             DrawOutline(rect, Color.Lerp(AccentSoftColor, AccentColor, alert ? 0.58f + pulse * 0.30f : 0.45f + pulse * 0.20f));
 
-            if (!ReducedEffects)
+            if (!ReduceUIAnimation)
             {
                 float sweepX = rect.x - 90f + Mathf.Repeat(AnimTime * 120f, rect.width + 180f);
                 Fill(new Rect(sweepX, rect.y + rect.height - 8f, 88f, 2f), new Color(1f, 0.76f, 0.54f, alert ? 0.34f : 0.22f));
@@ -88,13 +129,23 @@ namespace AbyssalProtocol
 
         public static void DrawPanel(Rect rect, bool highlighted)
         {
+            if (EnhancedUI)
+            {
+                AbyssalStyledWidgets.DrawFramedPanel(rect, highlighted ? AbyssalStyledWidgets.AbyssalPanelStyle.Selected : AbyssalStyledWidgets.AbyssalPanelStyle.CardDark, 18f, 0.98f);
+                if (highlighted && !ReduceUIAnimation)
+                {
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 8f, rect.y + 2f, rect.width - 16f, 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EdgeGlow, 8f, 0.20f);
+                }
+                return;
+            }
+
             float pulse = Pulse(highlighted ? 2.1f : 1.25f, highlighted ? 0.35f : 0.12f);
             Fill(rect, highlighted ? PanelAltColor : PanelColor);
             DrawOverlay(rect, OverlayTex, new Color(1f, 0.48f, 0.22f, highlighted ? 0.10f + pulse * (ReducedEffects ? 0.02f : 0.05f) : 0.05f + pulse * (ReducedEffects ? 0.02f : 0.03f)));
             DrawOutline(rect, highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.35f + pulse * 0.25f) : Color.Lerp(AccentSoftColor, AccentColor, 0.10f + pulse * 0.12f));
             Fill(new Rect(rect.x, rect.y, rect.width, 2f), highlighted ? Color.Lerp(AccentSoftColor, AccentColor, 0.40f + pulse * 0.25f) : AccentSoftColor);
 
-            if (!ReducedEffects)
+            if (!ReduceUIAnimation)
             {
                 float sweep = rect.x - 70f + Mathf.Repeat(AnimTime * (highlighted ? 72f : 44f), rect.width + 140f);
                 Fill(new Rect(sweep, rect.y + 1f, 68f, 1f), new Color(1f, 0.76f, 0.54f, highlighted ? 0.20f : 0.10f));
@@ -123,13 +174,35 @@ namespace AbyssalProtocol
 
         public static void DrawProgressBar(Rect rect, float fillPercent, string label, bool alert)
         {
+            if (EnhancedUI)
+            {
+                Fill(rect, new Color(0.035f, 0.032f, 0.034f, 0.92f));
+                DrawOutline(rect, alert ? new Color(1f, 0.44f, 0.16f, 0.92f) : new Color(0.95f, 0.36f, 0.13f, 0.70f));
+                Rect enhancedFillRect = new Rect(rect.x + 2f, rect.y + 2f, (rect.width - 4f) * Mathf.Clamp01(fillPercent), rect.height - 4f);
+                if (enhancedFillRect.width > 1f)
+                {
+                    Color enhancedFillColor = alert ? new Color(1f, 0.54f, 0.22f, 0.92f) : new Color(0.92f, 0.40f, 0.16f, 0.86f);
+                    Fill(enhancedFillRect, enhancedFillColor);
+                    if (!ReduceUIAnimation)
+                    {
+                        AbyssalStyledWidgets.DrawAccentAnimation(new Rect(enhancedFillRect.x, enhancedFillRect.y, enhancedFillRect.width, enhancedFillRect.height), AbyssalStyledWidgets.AbyssalAccentAnimation.EmberScanline, alert ? 4f : 8f, alert ? 0.30f : 0.18f);
+                    }
+                }
+                Text.Anchor = TextAnchor.MiddleCenter;
+                GUI.color = Color.white;
+                ABY_UIPolishUtility.SafeLabel(rect, label);
+                GUI.color = Color.white;
+                Text.Anchor = TextAnchor.UpperLeft;
+                return;
+            }
+
             Fill(rect, new Color(0.04f, 0.04f, 0.045f, 1f));
             Rect fillRect = new Rect(rect.x + 2f, rect.y + 2f, (rect.width - 4f) * Mathf.Clamp01(fillPercent), rect.height - 4f);
             Color fillColor = alert ? new Color(1f, 0.54f, 0.22f, 1f) : new Color(0.92f, 0.42f, 0.18f, 1f);
             Fill(fillRect, fillColor);
             DrawOverlay(fillRect, HeaderTex, new Color(1f, 0.72f, 0.42f, 0.20f + Pulse(alert ? 3.0f : 2.2f, 0.55f) * (alert ? 0.18f : 0.08f)));
 
-            if (fillRect.width > 20f && !ReducedEffects)
+            if (fillRect.width > 20f && !ReduceUIAnimation)
             {
                 float sheenWidth = Mathf.Min(80f, fillRect.width);
                 float sheenX = fillRect.x - sheenWidth + Mathf.Repeat(AnimTime * (alert ? 94f : 68f), fillRect.width + sheenWidth);
@@ -159,9 +232,18 @@ namespace AbyssalProtocol
                 return;
             }
 
+            if (EnhancedUI)
+            {
+                if (freshlyUnlocked || !ReduceUIAnimation)
+                {
+                    AbyssalStyledWidgets.DrawAccentAnimation(new Rect(rect.x + 8f, rect.y + 4f, rect.width - 16f, 12f), AbyssalStyledWidgets.AbyssalAccentAnimation.EdgeGlow, freshlyUnlocked ? 4f : 8f, freshlyUnlocked ? 0.30f : 0.16f);
+                }
+                return;
+            }
+
             float pulse = Pulse(freshlyUnlocked ? 3.2f : 2.35f, rect.x * 0.01f + rect.y * 0.01f);
             Fill(new Rect(rect.x + 1f, rect.y + 1f, rect.width - 2f, freshlyUnlocked ? 3f : 2f), new Color(1f, 0.72f, 0.50f, freshlyUnlocked ? 0.16f + pulse * 0.12f : 0.08f + pulse * 0.08f));
-            if (!ReducedEffects)
+            if (!ReduceUIAnimation)
             {
                 float sweepX = rect.x - 36f + Mathf.Repeat(AnimTime * (freshlyUnlocked ? 92f : 58f) + rect.y * 0.4f, rect.width + 72f);
                 Fill(new Rect(sweepX, rect.y + rect.height - 22f, 34f, 1f), new Color(1f, 0.82f, 0.66f, freshlyUnlocked ? 0.28f : 0.18f));
@@ -170,6 +252,18 @@ namespace AbyssalProtocol
 
         public static void DrawTag(Rect rect, string label, bool alert)
         {
+            if (EnhancedUI)
+            {
+                AbyssalStyledWidgets.DrawStatusStrip(rect, alert, alert ? 0.95f : 0.72f);
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = GameFont.Tiny;
+                GUI.color = Color.white;
+                ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), label);
+                GUI.color = Color.white;
+                Text.Anchor = TextAnchor.UpperLeft;
+                return;
+            }
+
             Fill(rect, alert ? new Color(0.85f, 0.26f, 0.08f, 0.92f) : new Color(0.35f, 0.18f, 0.10f, 0.92f));
             DrawOutline(rect, alert ? new Color(1f, 0.72f, 0.44f, 0.9f) : AccentSoftColor);
             Text.Anchor = TextAnchor.MiddleCenter;
@@ -182,6 +276,15 @@ namespace AbyssalProtocol
 
         public static Texture2D GetCategoryIcon(string category)
         {
+            if (EnhancedUI)
+            {
+                Texture2D enhancedIcon = GetEnhancedCategoryIcon(category);
+                if (enhancedIcon != null)
+                {
+                    return enhancedIcon;
+                }
+            }
+
             if (category == AbyssalForgeProgressUtility.CoreCategory)
             {
                 return IconCoreTex;
@@ -220,6 +323,51 @@ namespace AbyssalProtocol
             return IconAllTex;
         }
 
+        private static Texture2D GetEnhancedCategoryIcon(string category)
+        {
+            if (category == AbyssalForgeProgressUtility.AllCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Forge);
+            }
+
+            if (category == AbyssalForgeProgressUtility.CoreCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.AbyssalCore) ?? AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Forge);
+            }
+
+            if (category == AbyssalForgeProgressUtility.WeaponsCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Weapon);
+            }
+
+            if (category == AbyssalForgeProgressUtility.ArmorCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Armor);
+            }
+
+            if (category == AbyssalForgeProgressUtility.ImplantsCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Implant);
+            }
+
+            if (category == AbyssalForgeProgressUtility.RitualCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.RitualMaterial);
+            }
+
+            if (category == AbyssalForgeProgressUtility.HeraldCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Crown);
+            }
+
+            if (category == AbyssalForgeProgressUtility.TurretSystemsCategory)
+            {
+                return AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Capacitor) ?? AbyssalStyledWidgets.GetCategoryIcon(AbyssalStyledWidgets.AbyssalCategoryIcon.Weapon);
+            }
+
+            return null;
+        }
+
         public static void DrawCategoryButton(Rect rect, string category, bool selected)
         {
             DrawPanel(rect, selected);
@@ -236,9 +384,9 @@ namespace AbyssalProtocol
                 GUI.color = oldColor;
             }
 
-            Text.Anchor = TextAnchor.MiddleCenter;
+            Text.Anchor = TextAnchor.MiddleLeft;
             GUI.color = selected ? Color.Lerp(new Color(1f, 0.72f, 0.52f, 1f), Color.white, Pulse(2.2f, rect.y * 0.01f) * 0.45f) : Color.white;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 18f, rect.y, rect.width - 22f, rect.height), AbyssalForgeProgressUtility.GetCategoryLabel(category));
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 36f, rect.y, rect.width - 42f, rect.height), AbyssalForgeProgressUtility.GetCategoryLabel(category));
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
         }
@@ -282,8 +430,8 @@ namespace AbyssalProtocol
 
         private static float Pulse(float speed, float offset)
         {
-            float value = (Mathf.Sin(AnimTime * speed * (ReducedEffects ? 0.45f : 1f) + offset) + 1f) * 0.5f;
-            if (!ReducedEffects)
+            float value = (Mathf.Sin(AnimTime * speed * (ReduceUIAnimation ? 0.45f : 1f) + offset) + 1f) * 0.5f;
+            if (!ReduceUIAnimation)
             {
                 return value;
             }

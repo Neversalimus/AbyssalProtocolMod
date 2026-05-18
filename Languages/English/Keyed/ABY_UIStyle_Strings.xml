@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_UIStyleSettingsHeader>Abyssal UI style</ABY_UIStyleSettingsHeader>
+  <ABY_UIStyleSettingsDesc>Choose the shared skin used by Forge, Summoning and other Abyssal custom consoles. Classic keeps the restrained procedural interface; Enhanced uses the new sliced UI kit.</ABY_UIStyleSettingsDesc>
+  <ABY_UIStyle_Classic>Classic</ABY_UIStyle_Classic>
+  <ABY_UIStyle_Enhanced>Enhanced</ABY_UIStyle_Enhanced>
+  <ABY_UIStyle_ReduceAnimation>Reduce Abyssal UI animation</ABY_UIStyle_ReduceAnimation>
+  <ABY_UIStyle_ReduceAnimationDesc>Disables optional scanlines, socket pulses and enhanced UI accent sweeps. This is separate from boss bar reduced motion.</ABY_UIStyle_ReduceAnimationDesc>
+</LanguageData>

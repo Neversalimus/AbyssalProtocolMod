@@ -47,13 +47,15 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1250f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1320f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
 
             list.Gap(4f);
             DrawDifficultySection(list, s);
+            list.GapLine();
+            DrawUIStyleSection(list, s);
             list.GapLine();
 
             bool previousChargeSounds = s.enableWeaponChargeSounds;
@@ -119,6 +121,35 @@ namespace AbyssalProtocol
             Settings.ClampValues();
             base.WriteSettings();
             ABY_WeaponChargeSoundUtility.ApplyCurrentSettings();
+        }
+
+
+        private static void DrawUIStyleSection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
+        {
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyleSettingsHeader", "Abyssal UI style"));
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            Widgets.Label(ABY_UIPolishUtility.TextRect(list.GetRect(40f)), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyleSettingsDesc", "Choose the shared skin used by Forge, Summoning and other Abyssal custom consoles. Classic keeps the restrained procedural interface; Enhanced uses the new sliced UI kit."));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            Rect row = list.GetRect(34f);
+            float gap = 8f;
+            float cellWidth = (row.width - gap) * 0.5f;
+            DrawUIStyleButton(new Rect(row.x, row.y, cellWidth, 34f), settingsData, ABY_UIStyle.Classic, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyle_Classic", "Classic"));
+            DrawUIStyleButton(new Rect(row.x + cellWidth + gap, row.y, cellWidth, 34f), settingsData, ABY_UIStyle.Enhanced, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyle_Enhanced", "Enhanced"));
+
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyle_ReduceAnimation", "Reduce Abyssal UI animation"), ref settingsData.reduceAbyssalUIAnimation, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_UIStyle_ReduceAnimationDesc", "Disables optional scanlines, socket pulses and enhanced UI accent sweeps. This is separate from boss bar reduced motion."));
+            list.Gap(4f);
+        }
+
+        private static void DrawUIStyleButton(Rect rect, AbyssalProtocolModSettings settingsData, ABY_UIStyle targetStyle, string label)
+        {
+            bool active = settingsData.uiStyle == targetStyle;
+            if (AbyssalStyledWidgets.TextButton(rect, label, true, active))
+            {
+                settingsData.uiStyle = targetStyle;
+            }
         }
 
 
