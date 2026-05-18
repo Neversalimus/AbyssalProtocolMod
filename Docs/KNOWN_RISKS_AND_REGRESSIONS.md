@@ -79,6 +79,7 @@ Actual code and assets win over this document.
 | Clipped text / cut lower letters | P1 | UI | Labels look broken, descenders clipped | Use existing UI safety/text helpers; test at target sizes. |
 | Scrollbar/content overlap | P1 | Forge/Protocol/Summoning UI | Browser/card content under scrollbar | Reserve scrollbar space and test long lists. |
 | Button style regression | P1 | UI/Shared | Custom buttons revert to vanilla/unstyled or inconsistent states | Reuse `source/UI/Shared/` styling and existing button state assets. |
+| Tab hover wash/white rectangle regression | P2 | UI/Shared / Forge categories | Category/tab hover shows a pale rectangular overlay that does not match Abyssal skins | Do not draw the generic `BaseContent.WhiteTex` hover wash over tab-style buttons; rely on tab hover textures and custom content tinting. |
 | Overloaded circular/ring UI | P1/P2 | Protocol Nexus/Summoning | Content does not fit, unreadable at scale | Prefer category/filter/detail panels over stuffing dozens of items into ring area. |
 | Static UI with large occupied area | P2 | Summoning circle UI/Protocol Nexus | Looks pretty but functionally weak | Add meaningful state, preview, requirement, and selection feedback. |
 | Long text without wrapping/control | P2 | UI | Overflows/cuts in localized strings | Use wrapped text and constrained card layouts. |

@@ -409,10 +409,10 @@ namespace AbyssalProtocol
                 DrawTexture(rect, background);
             }
 
-            if (!iconOnly && hovered && enabled)
+            if (!iconOnly && !useTabStyle && hovered && enabled)
             {
                 Color oldColor = GUI.color;
-                GUI.color = new Color(1f, 0.86f, 0.68f, useTabStyle ? 0.06f : 0.08f);
+                GUI.color = new Color(1f, 0.86f, 0.68f, 0.08f);
                 GUI.DrawTexture(rect.ContractedBy(2f), BaseContent.WhiteTex);
                 GUI.color = oldColor;
             }
