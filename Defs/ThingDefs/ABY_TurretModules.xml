@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftNeedlerCore</defName>
     <label>rift needler core</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-light sustained fire.&#10;Effect: gives a modular turret chassis a fast 3-shot rift-needle burst for light enemies, animals, and swarm pressure.&#10;Range: 28.5.&#10;Cooldown: 2.5s.&#10;Burst: 3.&#10;Extra module power draw: 0 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A weapon core built around a rift-needle lattice. Once bound to a turret frame, it unleashes rapid bursts against light targets and dense swarms.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -31,7 +31,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_PlasmaLanceCore</defName>
     <label>plasma lance core</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-armor lance.&#10;Effect: replaces the turret main weapon with a slower long-range ultra-plasma bolt for armor, elites, and early boss pressure.&#10;Range: 33.5.&#10;Cooldown: 4.3s.&#10;Burst: 1.&#10;Extra module power draw: +120 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A weapon core with a sealed ultra-plasma channel. It fires slowly at long range and is built to crack armor, elite targets and early boss shells.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -58,7 +58,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_AshChoirRepeaterCore</defName>
     <label>ash choir repeater core</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-swarm ash repeater.&#10;Effect: fires a fast five-shot burst of ash-canticle shards for wave control and light target suppression. Poor armor penetration keeps it dependent on lance or rail modules against elites and bosses.&#10;Range: 30.5.&#10;Cooldown: 3.5s.&#10;Burst: 5.&#10;Extra module power draw: +180 W.&#10;Unlock: 320 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A weapon core with a cycling ash-canticle feed. It throws short shard bursts through light targets, animals and dense abyssal waves.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_AshChoirRepeaterCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -85,7 +85,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
-    <description>Slot: Auxiliary.&#10;Compatible chassis: Medium.&#10;Role: secondary crowd pressure.&#10;Effect: adds an independent timed canticle-wave support shot while the main weapon keeps firing normally.&#10;Range: 30.0.&#10;Auxiliary cooldown: 7.0s.&#10;Burst: 1.&#10;Extra module power draw: +130 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A secondary Choir system that adds a timed canticle strike against clustered enemies.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -112,7 +112,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CoolingLattice</defName>
     <label>cooling lattice</label>
-    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: cadence stabilizer.&#10;Effect: reduces installed main weapon cooldown by 16%, making the turret fire more often.&#10;Main weapon cooldown: -16%.&#10;Extra module power draw: +70 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A bound heat-sink lattice that tightens the firing cycle of the installed main weapon at the cost of higher power draw.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CoolingLattice</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -139,7 +139,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_TargetingSigil</defName>
     <label>targeting sigil</label>
-    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: range and tracking.&#10;Effect: adds +3.5 cells to installed main weapon range and reserves a small future accuracy hook.&#10;Main weapon range: +3.5 cells.&#10;Extra module power draw: +80 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A passive sigil that extends sighting geometry and steadies long-range tracking.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_TargetingSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -166,7 +166,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ResidueCapacitor</defName>
     <label>residue capacitor</label>
-    <description>Slot: Passive.&#10;Compatible chassis: Medium.&#10;Role: charge buffer.&#10;Effect: adds +1.5 cells to installed main weapon range and reduces installed main weapon cooldown by 8%.&#10;Main weapon range: +1.5 cells.&#10;Main weapon cooldown: -8%.&#10;Extra module power draw: +120 W.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A passive abyssal charge buffer that modestly improves turret reach and firing cadence.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ResidueCapacitor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -194,7 +194,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_SepulcherRailCore</defName>
     <label>sepulcher rail core</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: charged anti-elite rail sniper.&#10;Effect: charges two massive gauss accelerator planks, then launches a single Sepulcher rail spike through the open centerline.&#10;Range: 52.0.&#10;Minimum range: 8.0.&#10;Charge: 2.5s before firing; passive cadence modules reduce this charge time.&#10;Cooldown: 12.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +520 W.&#10;Unlock: 1500 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A heavy rail core that charges sepulcher guides before one long-range penetrator shot against armored elites.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_SepulcherRailCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -223,7 +223,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CinderMortarCore</defName>
     <label>cinder mortar core</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: indirect cinder bombardment.&#10;Effect: lobs cinder-packed shells over cover to punish clustered enemies and static firing lines. Each hit creates compact explosive splash and a short-lived hot-ash residue patch.&#10;Range: 40.0.&#10;Minimum range: 8.0.&#10;Charge: 0.4s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.6s after firing.&#10;Burst: 1.&#10;Extra module power draw: +320 W.&#10;Unlock: 820 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>An indirect cinder mortar for pressure against clusters and static firing lines. It is poor once enemies break inside its dead zone.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CinderMortarCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -251,7 +251,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_NullArcDischarger</defName>
     <label>null-arc discharger</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: null-arc EMP suppression.&#10;Effect: charges a sanctified capacitor, then fires a thin EMP/null-arc pulse. The primary hit applies EMP pressure and moderate damage, then chains to up to three nearby hostile pawns with reduced force. Strong against mechanoids, shield belts, and clustered elite support; weak as pure DPS against unshielded flesh.&#10;Range: 36.0.&#10;Charge: 0.6s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.8s after firing.&#10;Burst: 1.&#10;Extra module power draw: +380 W.&#10;Unlock: 960 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A null-arc suppression system that burns shields, stuns machines and chains through clustered elite support.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_NullArcDischarger</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -278,7 +278,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_AbyssalHarpoonProjector</defName>
     <label>abyssal harpoon projector</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: anti-breach elite lockdown.&#10;Effect: fires a heavy abyssal anchor-spike that pierces dangerous targets, applies a visible tether, slows movement, reduces melee dodge, and can micro-yank non-boss enemies one or two cells toward the chassis. Bosses and huge pawns receive only a reduced tether and cannot be pulled.&#10;Range: 32.0.&#10;Minimum range: 4.0.&#10;Charge: 0.5s before firing; cadence modules reduce this charge time.&#10;Cooldown: 7.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +340 W.&#10;Unlock: 1040 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A heavy harpoon assembly for locking down elite targets. It pierces, slows and drags lesser enemies off their line.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_AbyssalHarpoonProjector</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -305,7 +305,7 @@
 <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_VesperLanceArray</defName>
     <label>vesper lance array</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: charged precision sanction lance.&#10;Effect: replaces the turret main weapon with a focused Vesper sanction beam for armored targets, dangerous elites, and measured long-lane pressure. It charges briefly, then releases a hard-hitting high-velocity lance with cleaner cadence than the Sepulcher rail.&#10;Range: 40.5.&#10;Charge: 0.7s before firing; cadence modules reduce this charge time.&#10;Cooldown: 5.2s after firing.&#10;Burst: 1.&#10;Extra module power draw: +260 W.&#10;Unlock: 680 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A saint-clean sanction lance for precise armor pressure: longer reaching than plasma and far faster than a sepulcher rail.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_VesperLanceArray</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -332,7 +332,7 @@
 <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftFlakBloom</defName>
     <label>rift flak bloom</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: direct anti-cluster flak bloom.&#10;Effect: fires a compact rift seed that blooms into cutting obsidian fragments near the target, dealing several small shard hits across clustered hostile pawns. Excellent against light swarms and dense mid-tier attackers; poor against heavy armor, bosses, and enemies outside the bloom radius.&#10;Range: 31.5.&#10;Minimum range: 3.0.&#10;Charge: 0.3s before firing; cadence modules reduce this charge time.&#10;Cooldown: 4.8s after firing.&#10;Burst: 1.&#10;Extra module power draw: +350 W.&#10;Unlock: 920 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A rift seed that blossoms into cutting fragments around the impact point, punishing light swarms and clustered groups.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftFlakBloom</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -361,7 +361,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_SanctifiedPrismEmitter</defName>
     <label>sanctified prism emitter</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: sanctified line-control refraction.&#10;Effect: charges a cold prism guillotine and fires a precise sanctified bolt. The main target takes a moderate armor-pressure hit, then short refraction cuts continue through up to four hostile pawns aligned in a narrow line behind the impact. Excellent in chokepoints and firing lanes; inefficient against scattered enemies, shields, and raw boss DPS.&#10;Range: 37.0.&#10;Charge: 0.83s before firing; cadence modules reduce this charge time.&#10;Cooldown: 6.0s after firing.&#10;Burst: 1.&#10;Extra module power draw: +420 W.&#10;Unlock: 1120 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A prism emitter that drives a narrow judgment cut through enemies standing in line.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_SanctifiedPrismEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -388,7 +388,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CrowncoilGaussMinigun</defName>
     <label>crowncoil gauss minigun</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: apex sustained gauss suppression.&#10;Effect: charges a six-lane crowncoil phase, then fires an 18-shot burst of high-velocity gauss slugs. Projectile origins, muzzle flashes, and the rotary phase overlay cycle through the same charged lanes in order. Excellent sustained anti-elite and anti-heavy-swarm pressure; power hungry and weak inside its deadzone.&#10;Range: 35.0.&#10;Minimum range: 5.0.&#10;Charge: 0.9s before firing; cadence modules reduce this charge time.&#10;Cooldown: 7.0s after firing.&#10;Burst: 18 shots.&#10;Extra module power draw: +720 W.&#10;Unlock: 1280 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>An apex crowncoil gauss system for sustained suppression against elites and heavy swarms. Power hungry and weak inside its dead zone.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CrowncoilGaussMinigun</texPath>
       <graphicClass>Graphic_Single</graphicClass>

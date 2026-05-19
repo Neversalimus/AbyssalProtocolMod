@@ -4,7 +4,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CrownfireRocketChoir</defName>
     <label>crownfire rocket choir</label>
-    <description>Slot: Main weapon.&#10;Compatible chassis: Medium.&#10;Role: apex guided rocket saturation.&#10;Effect: launches a hidden carrier rocket vertically from one of four alternating silos. The carrier opens above the chassis and releases eight guided micro-rockets toward hostile targets near the original aim point. Excellent against swarms, breach clusters, and dense approach lanes; costly, power hungry, and less efficient against single armored bosses.&#10;Range: 38.0.&#10;Minimum range: 7.0.&#10;Charge: 0.6s before launch.&#10;Cooldown: 11.0s after firing.&#10;Extra module power draw: +820 W.&#10;Unlock: 1500 forge residue.&#10;Does nothing by itself until installed in a compatible chassis.</description>
+    <description>A vertical rocket choir that opens guided crownfire over the target zone. Strong against swarms, breach packs and dense approaches.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CrownfireRocketChoir</texPath>
       <graphicClass>Graphic_Single</graphicClass>

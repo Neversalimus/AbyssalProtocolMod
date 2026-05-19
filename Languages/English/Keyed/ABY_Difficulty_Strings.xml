@@ -19,7 +19,7 @@
   <ABY_DifficultyDiagnostics_Unlocked>Protocol lock is currently disabled for this save.</ABY_DifficultyDiagnostics_Unlocked>
 
   <ABY_DifficultyProfile_Normal_Label>Normal</ABY_DifficultyProfile_Normal_Label>
-  <ABY_DifficultyProfile_Normal_Desc>Baseline Abyssal protocol. Uses the current intended summon pressure without softening the mod.</ABY_DifficultyProfile_Normal_Desc>
+  <ABY_DifficultyProfile_Normal_Desc>Baseline Abyssal protocol. Uses the intended summon pressure without reducing the threat.</ABY_DifficultyProfile_Normal_Desc>
   <ABY_DifficultyProfile_Severe_Label>Severe</ABY_DifficultyProfile_Severe_Label>
   <ABY_DifficultyProfile_Severe_Desc>Pushes the circle into harder mixed-pressure breaches. Support and elite pieces begin appearing earlier, but progression gates stay intact.</ABY_DifficultyProfile_Severe_Desc>
   <ABY_DifficultyProfile_Rupture_Label>Rupture</ABY_DifficultyProfile_Rupture_Label>

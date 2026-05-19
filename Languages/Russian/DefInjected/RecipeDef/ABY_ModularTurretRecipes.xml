@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CraftTurretModule_RiftNeedlerCore.label>выковать ядро рифтового игломёта</ABY_CraftTurretModule_RiftNeedlerCore.label>
-  <ABY_CraftTurretModule_RiftNeedlerCore.description>Привязать повторяющуюся рифтовую игольную решётку к основному оружейному ядру для турели.</ABY_CraftTurretModule_RiftNeedlerCore.description>
-  <ABY_CraftTurretModule_RiftNeedlerCore.jobString>Ковка ядра рифтового игломёта.</ABY_CraftTurretModule_RiftNeedlerCore.jobString>
-  <ABY_CraftTurretModule_PlasmaLanceCore.label>выковать ядро плазменного копья</ABY_CraftTurretModule_PlasmaLanceCore.label>
-  <ABY_CraftTurretModule_PlasmaLanceCore.description>Привязать запечатанный ультраплазменный канал к бронебойному оружейному ядру для турели.</ABY_CraftTurretModule_PlasmaLanceCore.description>
-  <ABY_CraftTurretModule_PlasmaLanceCore.jobString>Ковка ядра плазменного копья.</ABY_CraftTurretModule_PlasmaLanceCore.jobString>
-  <ABY_CraftTurretModule_ChoirArcEmitter.label>выковать хоровой дуговой эмиттер</ABY_CraftTurretModule_ChoirArcEmitter.label>
-  <ABY_CraftTurretModule_ChoirArcEmitter.description>Собрать вторичный кантильный эмиттер для вспомогательного слота модульной турели.</ABY_CraftTurretModule_ChoirArcEmitter.description>
-  <ABY_CraftTurretModule_ChoirArcEmitter.jobString>Ковка хорового дугового эмиттера.</ABY_CraftTurretModule_ChoirArcEmitter.jobString>
-  <ABY_CraftTurretModule_CoolingLattice.label>выковать охлаждающую решётку</ABY_CraftTurretModule_CoolingLattice.label>
-  <ABY_CraftTurretModule_CoolingLattice.description>Собрать пассивную теплоотводную решётку для модульных турелей.</ABY_CraftTurretModule_CoolingLattice.description>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.description>Собрать якорный шипомёт и цепной привод для сдерживания элитных целей.</ABY_CraftTurretModule_AbyssalHarpoonProjector.description>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>Ковка бездненного гарпунного проектора.</ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>
+  <ABY_CraftTurretModule_AbyssalHarpoonProjector.label>выковать бездненный гарпунный проектор</ABY_CraftTurretModule_AbyssalHarpoonProjector.label>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.description>Связать пепельно-кантильную подачу с основным оружейным ядром турели.</ABY_CraftTurretModule_AshChoirRepeaterCore.description>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>Ковка ядра Пепельного Хора.</ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>
+  <ABY_CraftTurretModule_AshChoirRepeaterCore.label>выковать ядро Пепельного Хора</ABY_CraftTurretModule_AshChoirRepeaterCore.label>
+  <ABY_CraftTurretModule_ChoirArcEmitter.description>Собрать кантильный излучатель для бездненной турельной рамы.</ABY_CraftTurretModule_ChoirArcEmitter.description>
+  <ABY_CraftTurretModule_ChoirArcEmitter.jobString>Ковка дугового излучателя Хора.</ABY_CraftTurretModule_ChoirArcEmitter.jobString>
+  <ABY_CraftTurretModule_ChoirArcEmitter.label>выковать дуговой излучатель Хора</ABY_CraftTurretModule_ChoirArcEmitter.label>
+  <ABY_CraftTurretModule_CinderMortarCore.description>Собрать угольную мортирную камеру и подачу шлаковых зарядов для турели.</ABY_CraftTurretModule_CinderMortarCore.description>
+  <ABY_CraftTurretModule_CinderMortarCore.jobString>Ковка ядра угольной мортиры.</ABY_CraftTurretModule_CinderMortarCore.jobString>
+  <ABY_CraftTurretModule_CinderMortarCore.label>выковать ядро угольной мортиры</ABY_CraftTurretModule_CinderMortarCore.label>
+  <ABY_CraftTurretModule_CoolingLattice.description>Собрать связанную теплоотводную решётку для турельного корпуса.</ABY_CraftTurretModule_CoolingLattice.description>
   <ABY_CraftTurretModule_CoolingLattice.jobString>Ковка охлаждающей решётки.</ABY_CraftTurretModule_CoolingLattice.jobString>
-  <ABY_CraftTurretModule_TargetingSigil.label>выковать прицельную сигилу</ABY_CraftTurretModule_TargetingSigil.label>
-  <ABY_CraftTurretModule_TargetingSigil.description>Вытравить пассивную прицельную матрицу для модульных турельных корпусов.</ABY_CraftTurretModule_TargetingSigil.description>
-  <ABY_CraftTurretModule_TargetingSigil.jobString>Ковка прицельной сигилы.</ABY_CraftTurretModule_TargetingSigil.jobString>
-  <ABY_CraftTurretModule_ResidueCapacitor.label>выковать остаточный конденсатор</ABY_CraftTurretModule_ResidueCapacitor.label>
-  <ABY_CraftTurretModule_ResidueCapacitor.description>Собрать пассивный буферный конденсатор для модульных турелей.</ABY_CraftTurretModule_ResidueCapacitor.description>
-  <ABY_CraftTurretModule_ResidueCapacitor.jobString>Ковка остаточный конденсатора.</ABY_CraftTurretModule_ResidueCapacitor.jobString>
+  <ABY_CraftTurretModule_CoolingLattice.label>выковать охлаждающую решётку</ABY_CraftTurretModule_CoolingLattice.label>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.description>Связать коронный ускоритель и усиленную роторную подачу в вершину турельного подавления.</ABY_CraftTurretModule_CrowncoilGaussMinigun.description>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>Ковка гаусс-минигана Коронной Катушки.</ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>
+  <ABY_CraftTurretModule_CrowncoilGaussMinigun.label>выковать гаусс-миниган Коронной Катушки</ABY_CraftTurretModule_CrowncoilGaussMinigun.label>
+  <ABY_CraftTurretModule_NullArcDischarger.description>Связать нулевой конденсатор и освящённые разрядные зубцы в систему подавления.</ABY_CraftTurretModule_NullArcDischarger.description>
+  <ABY_CraftTurretModule_NullArcDischarger.jobString>Ковка нуль-дугового разрядника.</ABY_CraftTurretModule_NullArcDischarger.jobString>
+  <ABY_CraftTurretModule_NullArcDischarger.label>выковать нуль-дуговой разрядник</ABY_CraftTurretModule_NullArcDischarger.label>
+  <ABY_CraftTurretModule_PlasmaLanceCore.description>Запечатать ультраплазменный канал в бронебойном ядре турели.</ABY_CraftTurretModule_PlasmaLanceCore.description>
+  <ABY_CraftTurretModule_PlasmaLanceCore.jobString>Ковка ядра плазменного копья.</ABY_CraftTurretModule_PlasmaLanceCore.jobString>
+  <ABY_CraftTurretModule_PlasmaLanceCore.label>выковать ядро плазменного копья</ABY_CraftTurretModule_PlasmaLanceCore.label>
+  <ABY_CraftTurretModule_ResidueCapacitor.description>Собрать буферный конденсатор бездненного заряда для турельного корпуса.</ABY_CraftTurretModule_ResidueCapacitor.description>
+  <ABY_CraftTurretModule_ResidueCapacitor.jobString>Ковка конденсатора остатка.</ABY_CraftTurretModule_ResidueCapacitor.jobString>
+  <ABY_CraftTurretModule_ResidueCapacitor.label>выковать конденсатор остатка</ABY_CraftTurretModule_ResidueCapacitor.label>
+  <ABY_CraftTurretModule_RiftFlakBloom.description>Собрать расщепитель рифт-семени и осколочную подачу для противогруппового удара.</ABY_CraftTurretModule_RiftFlakBloom.description>
+  <ABY_CraftTurretModule_RiftFlakBloom.jobString>Ковка рифт-осколочного цветка.</ABY_CraftTurretModule_RiftFlakBloom.jobString>
+  <ABY_CraftTurretModule_RiftFlakBloom.label>выковать рифт-осколочный цветок</ABY_CraftTurretModule_RiftFlakBloom.label>
+  <ABY_CraftTurretModule_RiftNeedlerCore.description>Привязать рифтовую игольную решётку к основному оружейному ядру турели.</ABY_CraftTurretModule_RiftNeedlerCore.description>
+  <ABY_CraftTurretModule_RiftNeedlerCore.jobString>Ковка ядра Рифт-игломёта.</ABY_CraftTurretModule_RiftNeedlerCore.jobString>
+  <ABY_CraftTurretModule_RiftNeedlerCore.label>выковать ядро Рифт-игломёта</ABY_CraftTurretModule_RiftNeedlerCore.label>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.description>Собрать коронный призматический осколок и фокусирующую апертуру для удара по линии.</ABY_CraftTurretModule_SanctifiedPrismEmitter.description>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>Ковка освящённого призменного излучателя.</ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>
+  <ABY_CraftTurretModule_SanctifiedPrismEmitter.label>выковать освящённый призменный излучатель</ABY_CraftTurretModule_SanctifiedPrismEmitter.label>
+  <ABY_CraftTurretModule_SepulcherRailCore.description>Связать парные склеповые направляющие с тяжёлым рельсовым ядром турели.</ABY_CraftTurretModule_SepulcherRailCore.description>
+  <ABY_CraftTurretModule_SepulcherRailCore.jobString>Ковка ядра Склепового рельса.</ABY_CraftTurretModule_SepulcherRailCore.jobString>
+  <ABY_CraftTurretModule_SepulcherRailCore.label>выковать ядро Склепового рельса</ABY_CraftTurretModule_SepulcherRailCore.label>
+  <ABY_CraftTurretModule_TargetingSigil.description>Вытравить сигилу дальнего наведения для турельного корпуса.</ABY_CraftTurretModule_TargetingSigil.description>
+  <ABY_CraftTurretModule_TargetingSigil.jobString>Ковка сигилы наведения.</ABY_CraftTurretModule_TargetingSigil.jobString>
+  <ABY_CraftTurretModule_TargetingSigil.label>выковать сигилу наведения</ABY_CraftTurretModule_TargetingSigil.label>
+  <ABY_CraftTurretModule_VesperLanceArray.description>Связать камеру святого приговора и сжимающийся лучевой хребет в точное копьё турели.</ABY_CraftTurretModule_VesperLanceArray.description>
+  <ABY_CraftTurretModule_VesperLanceArray.jobString>Ковка массива Веспер-копья.</ABY_CraftTurretModule_VesperLanceArray.jobString>
+  <ABY_CraftTurretModule_VesperLanceArray.label>выковать массив Веспер-копья</ABY_CraftTurretModule_VesperLanceArray.label>
 </LanguageData>

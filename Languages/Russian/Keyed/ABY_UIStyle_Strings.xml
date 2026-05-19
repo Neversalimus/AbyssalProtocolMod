@@ -5,5 +5,5 @@
   <ABY_UIStyle_Classic>Классический</ABY_UIStyle_Classic>
   <ABY_UIStyle_Enhanced>Расширенный</ABY_UIStyle_Enhanced>
   <ABY_UIStyle_ReduceAnimation>Уменьшить анимацию Бездненный интерфейс</ABY_UIStyle_ReduceAnimation>
-  <ABY_UIStyle_ReduceAnimationDesc>Отключает опциональные сканлине, пульсацию сокетов и декоративные свееп-акценты Расширенный интерфейс. Это отдельная настройка от уменьшенной анимации панель босса.</ABY_UIStyle_ReduceAnimationDesc>
+  <ABY_UIStyle_ReduceAnimationDesc>Отключает дополнительные скан-линии, пульсацию гнёзд и декоративные скользящие акценты расширенного интерфейса. Это отдельная настройка, не связанная с упрощённой анимацией панели босса.</ABY_UIStyle_ReduceAnimationDesc>
 </LanguageData>

@@ -1,6 +1,23 @@
 # Abyssal Protocol — Recent Work Notes
 
 
+## 2026-05-19 — Turret localization and non-technical description cleanup
+
+A follow-up localization pass removed remaining English turret module text from the Russian Forge/turret UI and rewrote player-facing module descriptions so they describe weapons, effects, and lore rather than implementation details.
+
+Important details:
+
+```text
+- Custom turret module fields are localized through Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml.
+- Modular turret ThingDef and RecipeDef localization now uses diegetic weapon/module descriptions instead of Slot/Role/Effect boilerplate in item descriptions.
+- Oblivion Choir and Breach Cannon descriptions were cleaned so they no longer mention animated projectiles, mod implementation, reload internals, or technical projectile behavior.
+- English base descriptions were also cleaned to avoid reintroducing technical text through fallback language data.
+- C# was not changed; this pass is XML/docs-only and does not require a DLL rebuild.
+```
+
+Future localization work must scan both English and Russian player-facing descriptions for implementation words such as `mod`, `projectile is animated`, `runtime`, `def`, `save/load`, and similar technical wording. Descriptions should be weapon/lore-facing unless the string is explicitly a dev/debug setting.
+
+
 ## 2026-05-19 — Glossary-driven Russian editorial localization pass
 
 A broad Russian localization editorial pass was applied after the dedicated glossary was added. It focused on natural Russian player-facing text, compact Forge labels, and consistent Abyssal terminology rather than simple load-safe machine translation.

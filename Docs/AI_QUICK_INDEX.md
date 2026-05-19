@@ -66,6 +66,19 @@ source/ files that emit the affected Keyed strings
 Defs/ files that own the affected DefInjected keys
 ```
 
+
+For modular turret localization specifically, also inspect:
+
+```text
+Defs/Misc/ABY_TurretModuleDefs.xml
+Languages/English/DefInjected/ABY_TurretModuleDef/
+Languages/Russian/DefInjected/ABY_TurretModuleDef/
+Languages/<Lang>/DefInjected/ThingDef/ABY_ModularTurrets.xml
+Languages/<Lang>/DefInjected/RecipeDef/ABY_ModularTurretRecipes.xml
+```
+
+Do not leave tactical role/effect summaries as raw English in Russian Forge cards.
+
 Do not machine-translate item names directly from English. Use the glossary for canonical forms such as `Рифт-клинок`, `Рифт-карабин`, `Хор Забвения`, `Панцирь святого носителя Эгиды`, `Сигила угольных гончих`, and Russian plural forms for requirement counts.
 
 ## Common integration checklist

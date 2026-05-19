@@ -64,7 +64,7 @@
   <ABY_ForgeReducedEffectsOn>Эффекты: снижены</ABY_ForgeReducedEffectsOn>
   <ABY_ForgeReducedEffectsOff>Эффекты: полные</ABY_ForgeReducedEffectsOff>
   <ABY_ForgeReducedEffectsToggle>Сниженные эффекты</ABY_ForgeReducedEffectsToggle>
-  <ABY_ForgeReducedEffectsDesc>Смягчает анимированные акценты внутри консоли кузницы.</ABY_ForgeReducedEffectsDesc>
+  <ABY_ForgeReducedEffectsDesc>Смягчает движущиеся акценты внутри консоли кузницы.</ABY_ForgeReducedEffectsDesc>
   <ABY_ForgeCategory_All>Всё</ABY_ForgeCategory_All>
   <ABY_ForgeCategory_Core>Ядро кузницы</ABY_ForgeCategory_Core>
   <ABY_ForgeCategory_Weapons>Оружие</ABY_ForgeCategory_Weapons>

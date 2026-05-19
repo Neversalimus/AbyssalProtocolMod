@@ -46,7 +46,7 @@
   <ABY_FirstSigilGuidanceLabel>Первая сигила готова</ABY_FirstSigilGuidanceLabel>
   <ABY_FirstSigilGuidanceDesc>Создай аркхон сигила на Бездненная кузницы, затем активируй его на запитанном круг Бездны призыва, чтобы призвать первого босса.</ABY_FirstSigilGuidanceDesc>
   <ABY_HeraldAnalysisCompleteLabel>Анализ фрагмента вестника завершён</ABY_HeraldAnalysisCompleteLabel>
-  <ABY_HeraldAnalysisCompleteDesc>Добытый фрагмент успешно расшифрован на высокотехнологичном исследовательском столе. Теперь через вкладку исследований Протокол Бездны доступны {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
+  <ABY_HeraldAnalysisCompleteDesc>Добытый фрагмент успешно расшифрован на высокотехнологичном исследовательском столе. Теперь в исследованиях Протокола Бездны доступны {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
   <ABY_HeraldAnalysisAlreadyKnown>Анализ фрагмента вестника уже завершён. Фрагмент был возвращён.</ABY_HeraldAnalysisAlreadyKnown>
   <ABY_HeraldAnalysisFailedMissingProject>Не удалось завершить анализ фрагмента вестника: отсутствует нужный исследовательский проект. Фрагмент был возвращён.</ABY_HeraldAnalysisFailedMissingProject>
   <ABY_CircleFail_NoHostileFaction>Не удалось определить враждебную бездненный-фракцию для этого призыва.</ABY_CircleFail_NoHostileFaction>
@@ -107,7 +107,7 @@
   <ABY_GenericEnabled>Включено</ABY_GenericEnabled>
   <ABY_GenericDisabled>Выключено</ABY_GenericDisabled>
   <ABY_CircleControlToggles>Тумблеры управления</ABY_CircleControlToggles>
-  <ABY_CircleReducedEffectsDesc>Ослабляет скользящие линии, вращение печати и другие анимированные акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
+  <ABY_CircleReducedEffectsDesc>Ослабляет скользящие линии, вращение печати и другие движущиеся акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
   <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
   <ABY_CircleUnstableBreachLetterLabel>Нестабильный разлом открыт</ABY_CircleUnstableBreachLetterLabel>
   <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл малый враждебный разлом. Из портала выходят разлом бес, а богатые колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>

@@ -4,7 +4,7 @@
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_Normal</defName>
     <label>Normal</label>
-    <description>Baseline Abyssal protocol. Uses the current intended summon pressure without softening the mod.</description>
+    <description>Baseline Abyssal protocol. Uses the intended summon pressure without reducing the threat.</description>
     <labelKey>ABY_DifficultyProfile_Normal_Label</labelKey>
     <descriptionKey>ABY_DifficultyProfile_Normal_Desc</descriptionKey>
     <order>0</order>

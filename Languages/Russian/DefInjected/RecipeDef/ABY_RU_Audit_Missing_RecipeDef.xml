@@ -32,36 +32,6 @@
   <ABY_CraftSaintAegisCarapace.description>Кузнечная процедура Протокола Бездны: выковать панцирь святого носителя Эгиды. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftSaintAegisCarapace.description>
   <ABY_CraftSaintAegisCarapace.jobString>Выполняется: выковать панцирь святого носителя Эгиды.</ABY_CraftSaintAegisCarapace.jobString>
   <ABY_CraftSaintAegisCarapace.label>выковать панцирь Эгиды</ABY_CraftSaintAegisCarapace.label>
-  <ABY_CraftTurretModule_AbyssalHarpoonProjector.description>Кузнечная процедура Протокола Бездны: выковать гарпунный проектор. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_AbyssalHarpoonProjector.description>
-  <ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>Выполняется: выковать гарпунный проектор.</ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>
-  <ABY_CraftTurretModule_AbyssalHarpoonProjector.label>выковать гарпунный проектор</ABY_CraftTurretModule_AbyssalHarpoonProjector.label>
-  <ABY_CraftTurretModule_AshChoirRepeaterCore.description>Кузнечная процедура Протокола Бездны: выковать ядро Пепельного Хора. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_AshChoirRepeaterCore.description>
-  <ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>Выполняется: выковать ядро Пепельного Хора.</ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>
-  <ABY_CraftTurretModule_AshChoirRepeaterCore.label>выковать ядро Пепельного Хора</ABY_CraftTurretModule_AshChoirRepeaterCore.label>
-  <ABY_CraftTurretModule_CinderMortarCore.description>Кузнечная процедура Протокола Бездны: выковать ядро угольной мортиры. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CinderMortarCore.description>
-  <ABY_CraftTurretModule_CinderMortarCore.jobString>Выполняется: выковать ядро угольной мортиры.</ABY_CraftTurretModule_CinderMortarCore.jobString>
-  <ABY_CraftTurretModule_CinderMortarCore.label>выковать ядро угольной мортиры</ABY_CraftTurretModule_CinderMortarCore.label>
-  <ABY_CraftTurretModule_CrowncoilGaussMinigun.description>Кузнечная процедура Протокола Бездны: выковать гаусс-миниган Короны. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CrowncoilGaussMinigun.description>
-  <ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>Выполняется: выковать гаусс-миниган Короны.</ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>
-  <ABY_CraftTurretModule_CrowncoilGaussMinigun.label>выковать гаусс-миниган Короны</ABY_CraftTurretModule_CrowncoilGaussMinigun.label>
-  <ABY_CraftTurretModule_CrownfireRocketChoir.description>Кузнечная процедура Протокола Бездны: выковать ракетный Хор Короны. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_CrownfireRocketChoir.description>
-  <ABY_CraftTurretModule_CrownfireRocketChoir.jobString>Выполняется: выковать ракетный Хор Короны.</ABY_CraftTurretModule_CrownfireRocketChoir.jobString>
-  <ABY_CraftTurretModule_CrownfireRocketChoir.label>выковать ракетный Хор Короны</ABY_CraftTurretModule_CrownfireRocketChoir.label>
-  <ABY_CraftTurretModule_NullArcDischarger.description>Кузнечная процедура Протокола Бездны: выковать нуль-дуговой разрядник. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_NullArcDischarger.description>
-  <ABY_CraftTurretModule_NullArcDischarger.jobString>Выполняется: выковать нуль-дуговой разрядник.</ABY_CraftTurretModule_NullArcDischarger.jobString>
-  <ABY_CraftTurretModule_NullArcDischarger.label>выковать нуль-дуговой разрядник</ABY_CraftTurretModule_NullArcDischarger.label>
-  <ABY_CraftTurretModule_RiftFlakBloom.description>Кузнечная процедура Протокола Бездны: выковать рифт-зенитный цветок. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_RiftFlakBloom.description>
-  <ABY_CraftTurretModule_RiftFlakBloom.jobString>Выполняется: выковать рифт-зенитный цветок.</ABY_CraftTurretModule_RiftFlakBloom.jobString>
-  <ABY_CraftTurretModule_RiftFlakBloom.label>выковать рифт-зенитный цветок</ABY_CraftTurretModule_RiftFlakBloom.label>
-  <ABY_CraftTurretModule_SanctifiedPrismEmitter.description>Кузнечная процедура Протокола Бездны: выковать призм-излучатель. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_SanctifiedPrismEmitter.description>
-  <ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>Выполняется: выковать призм-излучатель.</ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>
-  <ABY_CraftTurretModule_SanctifiedPrismEmitter.label>выковать призм-излучатель</ABY_CraftTurretModule_SanctifiedPrismEmitter.label>
-  <ABY_CraftTurretModule_SepulcherRailCore.description>Кузнечная процедура Протокола Бездны: выковать ядро рельса Гробницы. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_SepulcherRailCore.description>
-  <ABY_CraftTurretModule_SepulcherRailCore.jobString>Выполняется: выковать ядро рельса Гробницы.</ABY_CraftTurretModule_SepulcherRailCore.jobString>
-  <ABY_CraftTurretModule_SepulcherRailCore.label>выковать ядро рельса Гробницы</ABY_CraftTurretModule_SepulcherRailCore.label>
-  <ABY_CraftTurretModule_VesperLanceArray.description>Кузнечная процедура Протокола Бездны: выковать массив Веспер-копья. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftTurretModule_VesperLanceArray.description>
-  <ABY_CraftTurretModule_VesperLanceArray.jobString>Выполняется: выковать массив Веспер-копья.</ABY_CraftTurretModule_VesperLanceArray.jobString>
-  <ABY_CraftTurretModule_VesperLanceArray.label>выковать массив Веспер-копья</ABY_CraftTurretModule_VesperLanceArray.label>
   <ABY_CraftVesperHaloHelm.description>Кузнечная процедура Протокола Бездны: выковать шлем Веспер-ореола. Требует соответствующих ресурсов и уровня доступа.</ABY_CraftVesperHaloHelm.description>
   <ABY_CraftVesperHaloHelm.jobString>Выполняется: выковать шлем Веспер-ореола.</ABY_CraftVesperHaloHelm.jobString>
   <ABY_CraftVesperHaloHelm.label>выковать шлем Веспер-ореола</ABY_CraftVesperHaloHelm.label>

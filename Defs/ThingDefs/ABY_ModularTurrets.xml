@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_AbyssalBastionChassis</defName>
     <label>abyssal bastion chassis</label>
-    <description>A medium 2x2 sigil-bound turret shell. It is inert by itself and only becomes a weapon after forge-built turret modules are installed through its module tab.</description>
+    <description>A medium 2x2 sigil-bound turret shell. Inert on its own, it becomes a weapon only after abyssal weapon systems are installed into its frame.</description>
     <thingClass>Building</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <tickerType>Normal</tickerType>

@@ -249,3 +249,16 @@ Update this file when:
 ```
 
 Do not update it for isolated balance or typo changes unless the matrix would become misleading.
+
+
+## Modular turret localization ownership
+
+Custom turret module definitions in `Defs/Misc/ABY_TurretModuleDefs.xml` are not standard ThingDefs. Their player-facing fields must be localized through:
+
+```text
+Languages/English/DefInjected/ABY_TurretModuleDef/
+Languages/Russian/DefInjected/ABY_TurretModuleDef/
+```
+
+Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/ThingDef/`, and crafting text belongs to `Languages/<Lang>/DefInjected/RecipeDef/`. Keep all three layers synchronized so Forge cards, item info, and recipe bills do not drift.
+

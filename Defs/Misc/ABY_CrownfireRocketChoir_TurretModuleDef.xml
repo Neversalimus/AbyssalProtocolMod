@@ -5,7 +5,7 @@
     <defName>ABY_TMD_CrownfireRocketChoir</defName>
     <label>Crownfire Rocket Choir</label>
     <description>Main weapon core for medium modular turret chassis. A vertical split-warhead rocket choir that launches one sealed carrier from alternating crownfire silos; the carrier opens above the chassis and releases eight guided micro-rockets into hostile clusters.</description>
-    <effectSummary>Primary missile module. Fires one vertical carrier rocket from alternating launch silos. The carrier splits shortly after launch into 8 fast guided micro-rockets that distribute across hostile targets near the original aim point. Excellent anti-swarm and anti-breach saturation; expensive, power hungry, and inefficient against isolated armored bosses.</effectSummary>
+    <effectSummary>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_CrownfireRocketChoir</thingDef>
     <compatibleChassisTags><li>Medium</li></compatibleChassisTags>

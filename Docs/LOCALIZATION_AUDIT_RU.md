@@ -105,3 +105,24 @@ Build required: no
 RimWorld runtime language report: not run in-game
 ```
 
+
+
+## 2026-05-19 — Turret module and technical-description follow-up
+
+Scope:
+
+```text
+- Russian Forge/turret module cards and tooltips.
+- English and Russian modular turret module descriptions.
+- Oblivion Choir and Breach Cannon player-facing weapon descriptions.
+- Selected base English descriptions that could leak technical implementation text through fallback.
+```
+
+Validation focus:
+
+```text
+- No remaining player-facing `Primary gun module` / `Primary missile module` turret descriptions.
+- No remaining player-facing `projectile is animated`, `animated breach`, `external choir-cell`, `runtime`, `def`, `save/load`, or `системах мода` wording in audited text nodes.
+- Russian custom `ABY_TurretModuleDef` fields now have DefInjected localization coverage.
+```
+

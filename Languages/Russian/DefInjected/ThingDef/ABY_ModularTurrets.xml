@@ -1,61 +1,36 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <ABY_AbyssalBastionChassis.description>Средний сигильно-связанный турельный корпус 2×2. Сам по себе инертен и становится оружием только после установки бездненных боевых систем в его раму.</ABY_AbyssalBastionChassis.description>
   <ABY_AbyssalBastionChassis.label>бастионный корпус Бездны</ABY_AbyssalBastionChassis.label>
-  <ABY_AbyssalBastionChassis.description>Средний сигильно-связанный турельный корпус 2кс2. Сам по себе инертен и становится оружием только после установки кузница-модулей через вкладку модулей.</ABY_AbyssalBastionChassis.description>
-  <ABY_TurretModule_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TurretModule_RiftNeedlerCore.label>
-  <ABY_TurretModule_RiftNeedlerCore.description>Слот: основное оружие.
-Совместимый корпус: средний.
-Роль: устойчивый огонь против лёгких целей.
-Эффект: даёт модульной турели быструю очередь из 3 рифтовых игл против лёгких врагов, животных и толпы.
-Дальность: 28.5.
-Перезарядка: 2.5с.
-Очередь: 3.
-Доп. энергопотребление модуля: 0 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_RiftNeedlerCore.description>
-  <ABY_TurretModule_PlasmaLanceCore.label>ядро плазменного копья</ABY_TurretModule_PlasmaLanceCore.label>
-  <ABY_TurretModule_PlasmaLanceCore.description>Слот: основное оружие.
-Совместимый корпус: средний.
-Роль: антиброневое копьё.
-Эффект: заменяет основную стрельбу турели на более медленный дальнобойный ультраплазменный заряд против брони, элиты и раннего боссового давления.
-Дальность: 33.5.
-Перезарядка: 4.3с.
-Очередь: 1.
-Доп. энергопотребление модуля: +120 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_PlasmaLanceCore.description>
+  <ABY_TurretModule_AbyssalHarpoonProjector.description>Тяжёлый гарпунный узел для сдерживания элитных целей. Пронзает цель, замедляет продвижение и сбивает меньших врагов с линии атаки.</ABY_TurretModule_AbyssalHarpoonProjector.description>
+  <ABY_TurretModule_AbyssalHarpoonProjector.label>бездненный гарпунный проектор</ABY_TurretModule_AbyssalHarpoonProjector.label>
+  <ABY_TurretModule_AshChoirRepeaterCore.description>Оружейное ядро с пепельно-кантильной подачей. Обрушивает короткие серии осколков по лёгким целям, животным и плотным бездненным волнам.</ABY_TurretModule_AshChoirRepeaterCore.description>
+  <ABY_TurretModule_AshChoirRepeaterCore.label>ядро Пепельного Хора</ABY_TurretModule_AshChoirRepeaterCore.label>
+  <ABY_TurretModule_ChoirArcEmitter.description>Вспомогательная система Хора, добавляющая периодический кантильный удар по скоплениям врагов.</ABY_TurretModule_ChoirArcEmitter.description>
   <ABY_TurretModule_ChoirArcEmitter.label>дуговой излучатель Хора</ABY_TurretModule_ChoirArcEmitter.label>
-  <ABY_TurretModule_ChoirArcEmitter.description>Слот: вспомогательный.
-Совместимый корпус: средний.
-Роль: вторичное давление по толпе.
-Эффект: добавляет независимый периодический кантильный поддерживающий выстрел, пока основное оружие продолжает стрелять отдельно.
-Дальность: 30.0.
-Перезарядка вспомогательного модуля: 7.0с.
-Очередь: 1.
-Доп. энергопотребление модуля: +130 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_ChoirArcEmitter.description>
+  <ABY_TurretModule_CinderMortarCore.description>Навесная угольная мортира для давления по скоплениям и огневым линиям. Не любит цели, прорвавшиеся слишком близко.</ABY_TurretModule_CinderMortarCore.description>
+  <ABY_TurretModule_CinderMortarCore.label>ядро угольной мортиры</ABY_TurretModule_CinderMortarCore.label>
+  <ABY_TurretModule_CoolingLattice.description>Связанная теплоотводная решётка, ускоряющая цикл стрельбы установленного основного оружия ценой большего расхода энергии.</ABY_TurretModule_CoolingLattice.description>
   <ABY_TurretModule_CoolingLattice.label>охлаждающая решётка</ABY_TurretModule_CoolingLattice.label>
-  <ABY_TurretModule_CoolingLattice.description>Слот: пассивный.
-Совместимый корпус: средний.
-Роль: стабилизатор темпа.
-Эффект: снижает перезарядку установленного основного оружия на 16%, заставляя турель стрелять чаще.
-Перезарядка основного оружия: -16%.
-Доп. энергопотребление модуля: +70 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_CoolingLattice.description>
-  <ABY_TurretModule_TargetingSigil.label>сигила наведения</ABY_TurretModule_TargetingSigil.label>
-  <ABY_TurretModule_TargetingSigil.description>Слот: пассивный.
-Совместимый корпус: средний.
-Роль: дальность и сопровождение цели.
-Эффект: добавляет +3.5 клетки к дальности установленного основного оружия и оставляет небольшой задел под будущий бонус точности.
-Дальность основного оружия: +3.5 клетки.
-Доп. энергопотребление модуля: +80 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_TargetingSigil.description>
+  <ABY_TurretModule_CrowncoilGaussMinigun.description>Вершинная коронная гаусс-система для длительного подавления элиты и тяжёлых стай. Очень прожорлива и плохо переносит ближний прорыв.</ABY_TurretModule_CrowncoilGaussMinigun.description>
+  <ABY_TurretModule_CrowncoilGaussMinigun.label>гаусс-миниган Коронной Катушки</ABY_TurretModule_CrowncoilGaussMinigun.label>
+  <ABY_TurretModule_NullArcDischarger.description>Нуль-дуговая система подавления, выжигающая щиты, оглушающая машины и перескакивающая по плотной элитной поддержке.</ABY_TurretModule_NullArcDischarger.description>
+  <ABY_TurretModule_NullArcDischarger.label>нуль-дуговой разрядник</ABY_TurretModule_NullArcDischarger.label>
+  <ABY_TurretModule_PlasmaLanceCore.description>Оружейное ядро с запечатанным ультраплазменным каналом. Медленно стреляет на дальнюю дистанцию и рассчитано на броню, элиту и ранние боссовые оболочки.</ABY_TurretModule_PlasmaLanceCore.description>
+  <ABY_TurretModule_PlasmaLanceCore.label>ядро плазменного копья</ABY_TurretModule_PlasmaLanceCore.label>
+  <ABY_TurretModule_ResidueCapacitor.description>Пассивный буфер бездненного заряда, немного повышающий дальность и темп стрельбы турели.</ABY_TurretModule_ResidueCapacitor.description>
   <ABY_TurretModule_ResidueCapacitor.label>конденсатор остатка</ABY_TurretModule_ResidueCapacitor.label>
-  <ABY_TurretModule_ResidueCapacitor.description>Слот: пассивный.
-Совместимый корпус: средний.
-Роль: буфер заряда.
-Эффект: добавляет +1.5 клетки к дальности установленного основного оружия и снижает его перезарядку на 8%.
-Дальность основного оружия: +1.5 клетки.
-Перезарядка основного оружия: -8%.
-Доп. энергопотребление модуля: +120 В.
-Сам по себе не работает, пока не установлен в совместимый корпус.</ABY_TurretModule_ResidueCapacitor.description>
+  <ABY_TurretModule_RiftFlakBloom.description>Рифт-семя, раскрывающееся режущим осколочным цветком вокруг удара. Лучше всего работает по лёгким стаям и плотным группам.</ABY_TurretModule_RiftFlakBloom.description>
+  <ABY_TurretModule_RiftFlakBloom.label>рифт-осколочный цветок</ABY_TurretModule_RiftFlakBloom.label>
+  <ABY_TurretModule_RiftNeedlerCore.description>Оружейное ядро с рифтовой игольной решёткой. После привязки к турельной раме даёт быструю очередь против лёгких целей и плотных стай.</ABY_TurretModule_RiftNeedlerCore.description>
+  <ABY_TurretModule_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TurretModule_RiftNeedlerCore.label>
+  <ABY_TurretModule_SanctifiedPrismEmitter.description>Призменный излучатель, проводящий узкий удар сквозь линию целей и наказывающий врагов, стоящих друг за другом.</ABY_TurretModule_SanctifiedPrismEmitter.description>
+  <ABY_TurretModule_SanctifiedPrismEmitter.label>освящённый призменный излучатель</ABY_TurretModule_SanctifiedPrismEmitter.label>
+  <ABY_TurretModule_SepulcherRailCore.description>Тяжёлое рельсовое ядро, заряжающее склеповые направляющие перед одним дальним пробивающим выстрелом по элите.</ABY_TurretModule_SepulcherRailCore.description>
+  <ABY_TurretModule_SepulcherRailCore.label>ядро Склепового рельса</ABY_TurretModule_SepulcherRailCore.label>
+  <ABY_TurretModule_TargetingSigil.description>Пассивная сигила, расширяющая геометрию наведения и удержание цели на дальних дистанциях.</ABY_TurretModule_TargetingSigil.description>
+  <ABY_TurretModule_TargetingSigil.label>сигила наведения</ABY_TurretModule_TargetingSigil.label>
+  <ABY_TurretModule_VesperLanceArray.description>Очищенное копьё-приговор для точного давления по броне: дальнобойнее плазмы и быстрее склепового рельса.</ABY_TurretModule_VesperLanceArray.description>
+  <ABY_TurretModule_VesperLanceArray.label>массив Веспер-копья</ABY_TurretModule_VesperLanceArray.label>
   <ABY_TurretPlasmaLanceBolt.label>плазменный болт турели</ABY_TurretPlasmaLanceBolt.label>
 </LanguageData>

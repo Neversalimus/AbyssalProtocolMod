@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_TMD_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TMD_RiftNeedlerCore.label>
+  <ABY_TMD_RiftNeedlerCore.role>против лёгких целей</ABY_TMD_RiftNeedlerCore.role>
+  <ABY_TMD_RiftNeedlerCore.effectSummary>Выпускает быструю очередь из трёх рифтовых игл, сбивая лёгкие цели и сдерживая плотные стаи до сближения.</ABY_TMD_RiftNeedlerCore.effectSummary>
+  <ABY_TMD_PlasmaLanceCore.label>ядро плазменного копья</ABY_TMD_PlasmaLanceCore.label>
+  <ABY_TMD_PlasmaLanceCore.role>против брони</ABY_TMD_PlasmaLanceCore.role>
+  <ABY_TMD_PlasmaLanceCore.effectSummary>Бьёт медленным дальнобойным ультраплазменным копьём, рассчитанным на броню, элиту и ранние боссовые оболочки.</ABY_TMD_PlasmaLanceCore.effectSummary>
+  <ABY_TMD_AshChoirRepeaterCore.label>ядро Пепельного Хора</ABY_TMD_AshChoirRepeaterCore.label>
+  <ABY_TMD_AshChoirRepeaterCore.role>против стай</ABY_TMD_AshChoirRepeaterCore.role>
+  <ABY_TMD_AshChoirRepeaterCore.effectSummary>Прочёсывает поле пятью пепельно-кантильными осколками. Хорошо давит животных, лёгких врагов и плотные волны, но слабо работает по тяжёлой броне.</ABY_TMD_AshChoirRepeaterCore.effectSummary>
+  <ABY_TMD_ChoirArcEmitter.label>дуговой излучатель Хора</ABY_TMD_ChoirArcEmitter.label>
+  <ABY_TMD_ChoirArcEmitter.role>давление по толпе</ABY_TMD_ChoirArcEmitter.role>
+  <ABY_TMD_ChoirArcEmitter.effectSummary>Периодически выпускает кантильную волну по скоплениям врагов, не сбивая ритм основного оружия.</ABY_TMD_ChoirArcEmitter.effectSummary>
+  <ABY_TMD_CoolingLattice.label>охлаждающая решётка</ABY_TMD_CoolingLattice.label>
+  <ABY_TMD_CoolingLattice.role>стабилизация темпа</ABY_TMD_CoolingLattice.role>
+  <ABY_TMD_CoolingLattice.effectSummary>Отводит избыток жара через связанную решётку, ускоряя цикл стрельбы ценой повышенного энергопотребления.</ABY_TMD_CoolingLattice.effectSummary>
+  <ABY_TMD_TargetingSigil.label>сигила наведения</ABY_TMD_TargetingSigil.label>
+  <ABY_TMD_TargetingSigil.role>дальность и сопровождение</ABY_TMD_TargetingSigil.role>
+  <ABY_TMD_TargetingSigil.effectSummary>Расширяет геометрию наведения и удерживает дальнее сопровождение цели, требуя дополнительной энергии для активной сигилы.</ABY_TMD_TargetingSigil.effectSummary>
+  <ABY_TMD_ResidueCapacitor.label>конденсатор остатка</ABY_TMD_ResidueCapacitor.label>
+  <ABY_TMD_ResidueCapacitor.role>буфер заряда</ABY_TMD_ResidueCapacitor.role>
+  <ABY_TMD_ResidueCapacitor.effectSummary>Накапливает бездненный заряд между выстрелами, немного повышая дальность и темп стрельбы при большем расходе энергии.</ABY_TMD_ResidueCapacitor.effectSummary>
+  <ABY_TMD_SepulcherRailCore.label>ядро Склепового рельса</ABY_TMD_SepulcherRailCore.label>
+  <ABY_TMD_SepulcherRailCore.role>против элиты</ABY_TMD_SepulcherRailCore.role>
+  <ABY_TMD_SepulcherRailCore.effectSummary>Заряжает две склеповые направляющие и отправляет один сверхскоростной пробойник в бронированную элиту на большой дистанции.</ABY_TMD_SepulcherRailCore.effectSummary>
+  <ABY_TMD_CinderMortarCore.label>ядро угольной мортиры</ABY_TMD_CinderMortarCore.label>
+  <ABY_TMD_CinderMortarCore.role>навесной огонь</ABY_TMD_CinderMortarCore.role>
+  <ABY_TMD_CinderMortarCore.effectSummary>Бросает навесной угольный заряд, разрывающийся горячим пеплом. Силен против скоплений врагов и неподвижных огневых линий.</ABY_TMD_CinderMortarCore.effectSummary>
+  <ABY_TMD_NullArcDischarger.label>нуль-дуговой разрядник</ABY_TMD_NullArcDischarger.label>
+  <ABY_TMD_NullArcDischarger.role>ЭМИ-подавление</ABY_TMD_NullArcDischarger.role>
+  <ABY_TMD_NullArcDischarger.effectSummary>Выпускает заряженный нуль-дуговой импульс, выжигающий щиты, оглушающий машины и перескакивающий по плотной элитной поддержке.</ABY_TMD_NullArcDischarger.effectSummary>
+  <ABY_TMD_AbyssalHarpoonProjector.label>бездненный гарпунный проектор</ABY_TMD_AbyssalHarpoonProjector.label>
+  <ABY_TMD_AbyssalHarpoonProjector.role>сдерживание элиты</ABY_TMD_AbyssalHarpoonProjector.role>
+  <ABY_TMD_AbyssalHarpoonProjector.effectSummary>Вбивает тяжёлый бездненный гарпун в цель, замедляя продвижение и стаскивая меньшие тела с линии атаки.</ABY_TMD_AbyssalHarpoonProjector.effectSummary>
+  <ABY_TMD_VesperLanceArray.label>массив Веспер-копья</ABY_TMD_VesperLanceArray.label>
+  <ABY_TMD_VesperLanceArray.role>точечный приговор</ABY_TMD_VesperLanceArray.role>
+  <ABY_TMD_VesperLanceArray.effectSummary>Проецирует очищенное копьё-приговор: дальше и жёстче плазмы по броне, но заметно быстрее склепового рельса.</ABY_TMD_VesperLanceArray.effectSummary>
+  <ABY_TMD_RiftFlakBloom.label>рифт-осколочный цветок</ABY_TMD_RiftFlakBloom.label>
+  <ABY_TMD_RiftFlakBloom.role>против скоплений</ABY_TMD_RiftFlakBloom.role>
+  <ABY_TMD_RiftFlakBloom.effectSummary>Запускает компактное рифт-семя, раскрывающееся режущими осколками вокруг удара. Наказывает лёгкие стаи и плотные группы рейдеров.</ABY_TMD_RiftFlakBloom.effectSummary>
+  <ABY_TMD_SanctifiedPrismEmitter.label>освящённый призменный излучатель</ABY_TMD_SanctifiedPrismEmitter.label>
+  <ABY_TMD_SanctifiedPrismEmitter.role>контроль линии</ABY_TMD_SanctifiedPrismEmitter.role>
+  <ABY_TMD_SanctifiedPrismEmitter.effectSummary>Бьёт заряженным призменным лучом по узкой линии, преломляя приговор через врагов за первой целью.</ABY_TMD_SanctifiedPrismEmitter.effectSummary>
+  <ABY_TMD_CrowncoilGaussMinigun.label>гаусс-миниган Коронной Катушки</ABY_TMD_CrowncoilGaussMinigun.label>
+  <ABY_TMD_CrowncoilGaussMinigun.role>гаусс-подавление</ABY_TMD_CrowncoilGaussMinigun.role>
+  <ABY_TMD_CrowncoilGaussMinigun.effectSummary>Набирает шестифазный коронный заряд и обрушивает восемнадцать гаусс-ударов для длительного давления по элите и тяжёлым стаям.</ABY_TMD_CrowncoilGaussMinigun.effectSummary>
+  <ABY_TMD_CrownfireRocketChoir.label>ракетный Хор Коронного Пламени</ABY_TMD_CrownfireRocketChoir.label>
+  <ABY_TMD_CrownfireRocketChoir.role>ракетное насыщение</ABY_TMD_CrownfireRocketChoir.role>
+  <ABY_TMD_CrownfireRocketChoir.effectSummary>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TMD_CrownfireRocketChoir.effectSummary>
+</LanguageData>

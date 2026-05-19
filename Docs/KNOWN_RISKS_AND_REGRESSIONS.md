@@ -34,6 +34,15 @@ Actual code and assets win over this document.
 | P2 | Noticeable quality, balance, usability, or presentation issue. |
 | P3 | Polish issue, minor inconsistency, or future maintainability risk. |
 
+
+## Localization and player-facing text risks
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Technical implementation text in item/weapon descriptions | P2 | localization / DefInjected / XML descriptions | Players see lines about mods, runtime, defs, save/load, animated projectiles, projectile internals, or framework behavior | Descriptions should be weapon/lore-facing. Keep technical wording only in dev/debug settings or internal comments. Scan both English base defs and Russian localization before packaging. |
+| Custom turret module fields not localized | P2 | modular turrets / Forge UI | Forge cards show English `Slot`, `Role`, `Effect`, `Primary gun module`, or raw internal tactical roles in Russian mode | Localize `ABY_TurretModuleDef` fields through `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml`; also cover ThingDef/RecipeDef text for module items. |
+| Long turret/Forge labels overflowing cards | P2 | Forge UI / turret modules | Pattern cards and selected panel clip or overlap text | Prefer short labels in tight cards and move long lore to descriptions/tooltips. Use glossary short forms where possible. |
+
 ## Source/build/package risks
 
 | Risk | Severity | Area | Symptoms | Prevention / check |

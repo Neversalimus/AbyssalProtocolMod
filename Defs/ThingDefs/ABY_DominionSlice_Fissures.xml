@@ -29,7 +29,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>ABY_DominionFissureBlocker</defName>
     <label>dominion fissure blocker</label>
-    <description>Invisible blocker used by Dominion Slice hemoplasm fissures.</description>
+    <description>A sealed obstruction beneath a hemoplasmic Dominion fissure.</description>
     <category>Building</category>
     <drawerType>RealtimeOnly</drawerType>
     <tickerType>Never</tickerType>
@@ -57,7 +57,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathNorthWest</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A continuous hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthWest_Sheet_A</texPath>
@@ -80,7 +80,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathNorthEast</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A continuous hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_NorthEast_Sheet_A</texPath>
@@ -103,7 +103,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathWestMid</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A continuous hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</texPath>
@@ -126,7 +126,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathShortWestMid</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A short continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A short hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_WestMid_Sheet_A</texPath>
@@ -149,7 +149,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathSouthEast</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A continuous hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthEast_Sheet_A</texPath>
@@ -172,7 +172,7 @@
   <ThingDef ParentName="ABY_DominionFissurePathVisualBase">
     <defName>ABY_DominionFissurePathSouthWest</defName>
     <label>dominion hemoplasm fissure path</label>
-    <description>A continuous animated Dominion fissure path visual. Blocking is handled by invisible blocker cells.</description>
+    <description>A continuous hemoplasmic fissure where the Dominion has split the floor open from below.</description>
     <size>(1,1)</size>
     <graphicData>
       <texPath>Things/Building/DominionSlice/Fissures/ABY_DominionFissure_Path_SouthWest_Sheet_A</texPath>

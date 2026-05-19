@@ -17,7 +17,7 @@
   <ABY_CrucibleRequirementPowered>Хотя бы один тигель запитан</ABY_CrucibleRequirementPowered>
   <ABY_CrucibleRequirementCorpses>Есть разрешённые безопасные останки Бездны</ABY_CrucibleRequirementCorpses>
   <ABY_CrucibleSelectButton>Выбрать тигель</ABY_CrucibleSelectButton>
-  <ABY_CrucibleSelectButtonTip>Выбирает лучший доступный тигель спекания. Билл на переработку добавляется на самом тигеле, в его вкладке Биллс, а не через очередь кузница.</ABY_CrucibleSelectButtonTip>
+  <ABY_CrucibleSelectButtonTip>Выбирает лучший доступный тигель спекания. Задание на переработку добавляется на самом тигеле, через его список заданий, а не через очередь кузницы.</ABY_CrucibleSelectButtonTip>
   <ABY_CrucibleSelectButtonDisabledTip>На карте нет построенного тигля, который можно выбрать.</ABY_CrucibleSelectButtonDisabledTip>
   <ABY_CrucibleBestCandidateNone>Лучший материал: отсутствует</ABY_CrucibleBestCandidateNone>
   <ABY_CrucibleBestCandidate>Лучший материал: {0} → ~{1} остаток</ABY_CrucibleBestCandidate>

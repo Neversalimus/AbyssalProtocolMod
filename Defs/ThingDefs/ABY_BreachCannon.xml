@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_BreachCannon</defName>
     <label>breach cannon</label>
-    <description>A portable siege relic rebuilt around a raised rift-optic rail, a monolithic stock and a caged abyssal pressure heart. The breach cannon is slow, heavy and brutally deliberate: each shot hammers a stabilized rupture bolt through armor, cover and fortified targets with catastrophic force.</description>
+    <description>A portable siege relic rebuilt around a raised rift-optic rail, a monolithic stock and a caged abyssal pressure heart. The breach cannon is slow, heavy and brutally deliberate: each shot hammers a stabilized rupture charge through armor, cover and fortified targets with catastrophic force.</description>
     <techLevel>Spacer</techLevel>
 
     <graphicData>
