@@ -257,6 +257,12 @@ namespace AbyssalProtocol
 
         public static void DrawAccentAnimation(Rect rect, AbyssalAccentAnimation animation, float ticksPerFrame = 6f, float alpha = 1f)
         {
+            Event currentEvent = Event.current;
+            if (currentEvent != null && currentEvent.type != EventType.Repaint)
+            {
+                return;
+            }
+
             Texture2D[] frames = GetAnimationFrames(animation);
             if (frames == null || frames.Length == 0)
             {

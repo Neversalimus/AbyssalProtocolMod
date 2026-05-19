@@ -16,6 +16,11 @@ namespace AbyssalProtocol
         private Vector2 stabilizerScrollPosition = Vector2.zero;
         private Vector2 ritualPreviewScrollPosition = Vector2.zero;
         private Vector2 statusScrollPosition = Vector2.zero;
+        private readonly List<AbyssalSummoningConsoleUtility.RitualDefinition> cachedRituals = new List<AbyssalSummoningConsoleUtility.RitualDefinition>();
+        private int cachedRitualTick = -1;
+        private string cachedRitualStateKey = string.Empty;
+
+        private const int RitualListCacheRefreshTicks = 90;
 
         public Window_AbyssalSummoningConsole(Building_AbyssalSummoningCircle circle)
         {
@@ -88,13 +93,65 @@ namespace AbyssalProtocol
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetSelectedRitual()
         {
-            AbyssalSummoningConsoleUtility.RitualDefinition ritual = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).FirstOrDefault(r => r.Id == selectedRitualId);
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetCachedRituals();
+            AbyssalSummoningConsoleUtility.RitualDefinition ritual = rituals.FirstOrDefault(r => r.Id == selectedRitualId);
             if (ritual == null)
             {
-                ritual = AbyssalSummoningConsoleUtility.GetDefaultRitual();
+                ritual = AbyssalSummoningConsoleUtility.GetSuggestedRitual(circle) ?? AbyssalSummoningConsoleUtility.GetDefaultRitual();
                 selectedRitualId = ritual.Id;
             }
             return ritual;
+        }
+
+        private List<AbyssalSummoningConsoleUtility.RitualDefinition> GetCachedRituals()
+        {
+            int tick = CurrentGameTick();
+            string stateKey = BuildRitualCacheStateKey();
+            if (cachedRituals.Count > 0 && cachedRitualStateKey == stateKey && tick - cachedRitualTick < RitualListCacheRefreshTicks)
+            {
+                return cachedRituals;
+            }
+
+            cachedRituals.Clear();
+            IEnumerable<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle);
+            if (rituals != null)
+            {
+                cachedRituals.AddRange(rituals);
+            }
+            cachedRitualTick = tick;
+            cachedRitualStateKey = stateKey;
+            return cachedRituals;
+        }
+
+        private string BuildRitualCacheStateKey()
+        {
+            if (circle == null)
+            {
+                return string.Empty;
+            }
+
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            return string.Concat(
+                circle.RitualActive ? "1" : "0", "|",
+                circle.CapacitorOverchannelEnabled ? "1" : "0", "|",
+                circle.CapacitorEmergencyDumpEnabled ? "1" : "0", "|",
+                dominionCrisis != null && dominionCrisis.IsActive ? "1" : "0", "|",
+                dominionCrisis != null ? dominionCrisis.CompletionCount.ToString() : "0", "|",
+                dominionCrisis != null ? dominionCrisis.FailureCount.ToString() : "0", "|",
+                dominionCrisis != null ? dominionCrisis.CancelledCount.ToString() : "0", "|",
+                dominionCrisis != null && dominionCrisis.CooldownTicksRemaining > 0 ? "1" : "0");
+        }
+
+        private static int CurrentGameTick()
+        {
+            try
+            {
+                return Find.TickManager != null ? Find.TickManager.TicksGame : System.Environment.TickCount;
+            }
+            catch
+            {
+                return System.Environment.TickCount;
+            }
         }
 
         private void DrawHeader(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -156,7 +213,7 @@ namespace AbyssalProtocol
             Rect inner = rect.ContractedBy(10f);
             AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CirclePatternsHeader".Translate());
 
-            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = AbyssalSummoningConsoleUtility.GetRitualsForCircle(circle).ToList();
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetCachedRituals();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
             float cardHeight = 110f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));

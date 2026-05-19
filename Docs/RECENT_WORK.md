@@ -1,5 +1,27 @@
 # Abyssal Protocol — Recent Work Notes
 
+## UI hot-path pass — Forge/Summoning console caching
+
+A low-risk custom UI performance pass was applied to avoid repeating expensive list work every OnGUI event while preserving the current fragile layout/styling work.
+
+Changed areas:
+
+```text
+source/UI/Forge/Window_AbyssalForgeConsole.cs
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+source/UI/Shared/AbyssalStyledWidgets.cs
+```
+
+Key behavior:
+
+- Forge pattern browser now uses a dirty-key cache for category/subfilter/status/search/residue/tick-bucket state instead of rebuilding filtered/sorted pattern lists every frame.
+- Forge material/status evaluation remains informational and uses cached statuses with a small refresh budget per pass, avoiding a full expensive refresh spike after cache expiry.
+- Summoning Console ritual list retrieval is cached for short intervals and invalidated by ritual/Dominion/capacitor state changes.
+- Decorative shared UI accent animations now draw only during `EventType.Repaint`, avoiding non-render OnGUI work.
+
+Do not replace this with a large UI refactor unless profiling proves it is needed. Keep tab hover/pressed behavior, shared Abyssal scrollbars, SafeLabel clipping protection, and current Enhanced/Classic layout rules intact. If a status appears delayed by up to a short cache interval, remember Forge material availability is informational only; vanilla bills remain the authoritative crafting path.
+
+
 
 ## 2026-05-19 — Turret localization and non-technical description cleanup
 

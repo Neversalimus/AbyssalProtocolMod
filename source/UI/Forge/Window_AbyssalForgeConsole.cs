@@ -36,9 +36,19 @@ namespace AbyssalProtocol
         private readonly Dictionary<RecipeDef, CachedPatternStatus> patternStatusCache = new Dictionary<RecipeDef, CachedPatternStatus>();
         private readonly Dictionary<RecipeDef, ForgePatternStatus> statusScratch = new Dictionary<RecipeDef, ForgePatternStatus>();
         private bool patternIndexDirty = true;
+        private int patternIndexVersion;
         private int lastStatusResidueSnapshot = -1;
+        private int filteredPatternCacheIndexVersion = -1;
+        private int filteredPatternCacheResidue = int.MinValue;
+        private int filteredPatternCacheTickBucket = -1;
+        private string filteredPatternCacheCategory = string.Empty;
+        private string filteredPatternCacheSubfilter = string.Empty;
+        private string filteredPatternCacheStatus = string.Empty;
+        private string filteredPatternCacheSearch = string.Empty;
 
         private const int PatternStatusCacheRefreshTicks = 180;
+        private const int PatternListCacheRefreshTicks = 60;
+        private const int PatternStatusRefreshBudgetPerPass = 14;
 
         private const string CoreFilterAll = "All";
         private const string CoreFilterResidue = "Residue";
@@ -1141,7 +1151,9 @@ namespace AbyssalProtocol
             }
 
             patternIndexDirty = false;
+            patternIndexVersion++;
             ClearPatternStatusCache();
+            InvalidateFilteredPatternCache();
             return patternIndex;
         }
 
@@ -1528,11 +1540,37 @@ namespace AbyssalProtocol
 
         private void BuildFilteredPatternLists(MapComponent_AbyssalForgeProgress progress)
         {
+            List<ForgePatternEntry> index = GetForgePatternIndex();
+            int totalResidue = progress != null ? progress.TotalResidueOffered : -1;
+            int tickBucket = CurrentGameTick() / PatternListCacheRefreshTicks;
+            string currentCategory = selectedCategory ?? string.Empty;
+            string currentSubfilter = GetSelectedSubfilter() ?? string.Empty;
+            string currentStatus = selectedStatusFilter ?? string.Empty;
+            string currentSearch = patternSearchText ?? string.Empty;
+
+            if (filteredPatternCacheIndexVersion == patternIndexVersion
+                && filteredPatternCacheResidue == totalResidue
+                && filteredPatternCacheTickBucket == tickBucket
+                && filteredPatternCacheCategory == currentCategory
+                && filteredPatternCacheSubfilter == currentSubfilter
+                && filteredPatternCacheStatus == currentStatus
+                && filteredPatternCacheSearch == currentSearch)
+            {
+                return;
+            }
+
+            filteredPatternCacheIndexVersion = patternIndexVersion;
+            filteredPatternCacheResidue = totalResidue;
+            filteredPatternCacheTickBucket = tickBucket;
+            filteredPatternCacheCategory = currentCategory;
+            filteredPatternCacheSubfilter = currentSubfilter;
+            filteredPatternCacheStatus = currentStatus;
+            filteredPatternCacheSearch = currentSearch;
+
             categoryPatternScratch.Clear();
             searchPatternScratch.Clear();
             visiblePatternScratch.Clear();
 
-            List<ForgePatternEntry> index = GetForgePatternIndex();
             for (int i = 0; i < index.Count; i++)
             {
                 ForgePatternEntry entry = index[i];
@@ -1547,7 +1585,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < categoryPatternScratch.Count; i++)
             {
                 ForgePatternEntry entry = categoryPatternScratch[i];
-                if (EntryMatchesSearch(entry, patternSearchText))
+                if (EntryMatchesSearch(entry, currentSearch))
                 {
                     searchPatternScratch.Add(entry);
                 }
@@ -1636,13 +1674,23 @@ namespace AbyssalProtocol
                 return;
             }
 
+            int refreshBudget = PatternStatusRefreshBudgetPerPass;
             for (int i = 0; i < entries.Count; i++)
             {
                 RecipeDef recipe = entries[i].recipe;
-                if (recipe != null && !statusScratch.ContainsKey(recipe))
+                if (recipe == null || statusScratch.ContainsKey(recipe))
                 {
-                    statusScratch[recipe] = GetCachedPatternStatus(recipe, progress, false);
+                    continue;
                 }
+
+                ForgePatternStatus status = GetCachedPatternStatus(recipe, progress, false);
+                if (refreshBudget > 0 && NeedsPatternStatusRefresh(recipe, progress))
+                {
+                    status = GetCachedPatternStatus(recipe, progress, true);
+                    refreshBudget--;
+                }
+
+                statusScratch[recipe] = status;
             }
         }
 
@@ -1681,7 +1729,7 @@ namespace AbyssalProtocol
             int tick = CurrentGameTick();
             int totalResidue = progress != null ? progress.TotalResidueOffered : -1;
             CachedPatternStatus cached;
-            if (!forceRefresh && patternStatusCache.TryGetValue(recipe, out cached) && cached.residue == totalResidue && tick - cached.tick < PatternStatusCacheRefreshTicks)
+            if (!forceRefresh && patternStatusCache.TryGetValue(recipe, out cached) && cached.residue == totalResidue)
             {
                 return cached.status;
             }
@@ -1694,6 +1742,34 @@ namespace AbyssalProtocol
                 residue = totalResidue
             };
             return status;
+        }
+
+        private bool NeedsPatternStatusRefresh(RecipeDef recipe, MapComponent_AbyssalForgeProgress progress)
+        {
+            if (recipe == null)
+            {
+                return false;
+            }
+
+            int totalResidue = progress != null ? progress.TotalResidueOffered : -1;
+            CachedPatternStatus cached;
+            if (!patternStatusCache.TryGetValue(recipe, out cached) || cached.residue != totalResidue)
+            {
+                return true;
+            }
+
+            return CurrentGameTick() - cached.tick >= PatternStatusCacheRefreshTicks;
+        }
+
+        private void InvalidateFilteredPatternCache()
+        {
+            filteredPatternCacheIndexVersion = -1;
+            filteredPatternCacheResidue = int.MinValue;
+            filteredPatternCacheTickBucket = -1;
+            filteredPatternCacheCategory = string.Empty;
+            filteredPatternCacheSubfilter = string.Empty;
+            filteredPatternCacheStatus = string.Empty;
+            filteredPatternCacheSearch = string.Empty;
         }
 
         private static int CurrentGameTick()
@@ -1781,6 +1857,7 @@ namespace AbyssalProtocol
             patternStatusCache.Clear();
             statusScratch.Clear();
             lastStatusResidueSnapshot = -1;
+            InvalidateFilteredPatternCache();
         }
 
         private ForgePatternStatus ResolvePatternStatus(RecipeDef recipe, MapComponent_AbyssalForgeProgress progress)
