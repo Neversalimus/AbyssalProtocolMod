@@ -50,31 +50,46 @@ namespace AbyssalProtocol
 
             if (now >= nextVoidVeilTick)
             {
-                EmitVoidVeil(intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                {
+                    EmitVoidVeil(intensity);
+                }
                 nextVoidVeilTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(135f, 225f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextRimPulseTick)
             {
-                EmitVoidRimPulses(intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    EmitVoidRimPulses(intensity);
+                }
                 nextRimPulseTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(85f, 145f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextVoidCrackTick)
             {
-                EmitVoidCracks(intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                {
+                    EmitVoidCracks(intensity);
+                }
                 nextVoidCrackTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(115f, 190f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextBoundaryRiftTick)
             {
-                EmitBoundaryRifts(intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    EmitBoundaryRifts(intensity);
+                }
                 nextBoundaryRiftTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(220f, 380f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextShardTick)
             {
-                EmitEdgeShards(intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                {
+                    EmitEdgeShards(intensity);
+                }
                 nextShardTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(125f, 230f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
         }
@@ -104,7 +119,7 @@ namespace AbyssalProtocol
 
         private void EmitVoidVeil(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(2f + intensity * 1.45f), 3, 6);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(2f + intensity * 1.45f)), 1, 5);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -122,7 +137,7 @@ namespace AbyssalProtocol
 
         private void EmitVoidRimPulses(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(3f + intensity * 2.25f), 4, 8);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(3f + intensity * 2.25f)), 1, 6);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -140,7 +155,7 @@ namespace AbyssalProtocol
 
         private void EmitVoidCracks(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(1.25f + intensity * 1.75f), 2, 5);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(1.25f + intensity * 1.75f)), 1, 4);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -158,7 +173,7 @@ namespace AbyssalProtocol
 
         private void EmitBoundaryRifts(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(0.75f + intensity * 1.15f), 1, 4);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(0.75f + intensity * 1.15f)), 1, 3);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -176,7 +191,7 @@ namespace AbyssalProtocol
 
         private void EmitEdgeShards(float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(1.15f + intensity * 1.25f), 2, 5);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(1.15f + intensity * 1.25f)), 1, 4);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;

@@ -37,7 +37,12 @@ namespace AbyssalProtocol
         private Vector2 projectListScroll = Vector2.zero;
         private Vector2 detailsScroll = Vector2.zero;
         private float detailViewHeight = 600f;
+        private int headerCacheTick = -999999;
+        private int headerCacheTotal;
+        private int headerCacheAvailable;
+        private int headerCacheCompleted;
 
+        private const int HeaderSummaryCacheRefreshTicks = 90;
         private const int OuterTierSlotCount = 8;
         private const int ApotheosisTierSlot = 8;
 
@@ -113,6 +118,36 @@ namespace AbyssalProtocol
             DrawProjectDetails(rightRect, selectedProject);
         }
 
+        private void ResolveHeaderSummary(List<ABY_ProtocolResearchCategoryDef> categories, out int total, out int available, out int completed)
+        {
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : Environment.TickCount;
+            if (now - headerCacheTick < HeaderSummaryCacheRefreshTicks)
+            {
+                total = headerCacheTotal;
+                available = headerCacheAvailable;
+                completed = headerCacheCompleted;
+                return;
+            }
+
+            total = ABY_ProtocolResearchUtility.AllProjects().Count;
+            available = 0;
+            completed = 0;
+            if (categories != null)
+            {
+                for (int i = 0; i < categories.Count; i++)
+                {
+                    ABY_ProtocolResearchCategoryDef category = categories[i];
+                    available += ABY_ProtocolResearchUtility.CountAvailable(category);
+                    completed += ABY_ProtocolResearchUtility.CountVisibleCompleted(category);
+                }
+            }
+
+            headerCacheTick = now;
+            headerCacheTotal = total;
+            headerCacheAvailable = available;
+            headerCacheCompleted = completed;
+        }
+
         private static void DrawBackground(Rect rect)
         {
             if (BackgroundTex != null)
@@ -131,9 +166,7 @@ namespace AbyssalProtocol
         private void DrawHeader(Rect rect, List<ABY_ProtocolResearchCategoryDef> categories)
         {
             DrawPanel(rect, false);
-            int total = DefDatabase<ABY_ProtocolResearchDef>.AllDefsListForReading.Count;
-            int available = categories.Sum(ABY_ProtocolResearchUtility.CountAvailable);
-            int completed = categories.Sum(ABY_ProtocolResearchUtility.CountVisibleCompleted);
+            ResolveHeaderSummary(categories, out int total, out int available, out int completed);
 
             Text.Anchor = TextAnchor.UpperLeft;
             Text.Font = GameFont.Medium;
@@ -902,10 +935,7 @@ namespace AbyssalProtocol
 
         private static List<ABY_ProtocolResearchDef> AllProtocolProjects()
         {
-            return DefDatabase<ABY_ProtocolResearchDef>.AllDefsListForReading
-                .OrderBy(project => project?.displayOrder ?? 0)
-                .ThenBy(project => project?.label ?? string.Empty)
-                .ToList();
+            return ABY_ProtocolResearchUtility.AllProjects();
         }
 
         private static List<ABY_ProtocolResearchDef> FilterByCategory(List<ABY_ProtocolResearchDef> projects, ABY_ProtocolResearchCategoryDef category)

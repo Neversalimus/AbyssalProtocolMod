@@ -6,13 +6,13 @@ namespace AbyssalProtocol
 {
     /// <summary>
     /// Shared low-frequency map target cache for Abyssal combat/runtime systems.
-    /// Avoids each pawn, turret, halo and compatibility component re-scanning mapPawns/AllThings on its own tick cadence.
-    /// The cache is intentionally conservative: it refreshes often enough for combat responsiveness, while callers still
-    /// validate faction, range, LOS and spawned state before acting.
+    /// Avoids each pawn, turret, projectile, halo and compatibility component re-scanning mapPawns/AllThings
+    /// on its own tick cadence. Callers must still validate faction, range, LOS and spawned state before acting.
     /// </summary>
     public static class ABY_RuntimeTargetCache
     {
         private const int PawnRefreshIntervalTicks = 30;
+        private const int ThingIdRefreshIntervalTicks = 90;
         private const int FullCleanupIntervalTicks = 1800;
 
         private static readonly IReadOnlyList<Pawn> EmptyPawnList = new List<Pawn>(0);
@@ -22,9 +22,11 @@ namespace AbyssalProtocol
         private sealed class MapCache
         {
             public int nextPawnRefreshTick = -1;
+            public int nextThingIdRefreshTick = -1;
             public int lastSeenTick;
             public readonly List<Pawn> spawnedLivingPawns = new List<Pawn>(96);
             public readonly List<Pawn> combatTargetPawns = new List<Pawn>(96);
+            public readonly Dictionary<int, Thing> thingsById = new Dictionary<int, Thing>(256);
         }
 
         public static IReadOnlyList<Pawn> SpawnedLivingPawnsFor(Map map)
@@ -79,34 +81,31 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IReadOnlyList<Pawn> pawns = SpawnedLivingPawnsFor(map);
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (pawn != null && pawn.thingIDNumber == thingId)
-                {
-                    thing = pawn;
-                    return true;
-                }
-            }
-
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
+            MapCache cache = ResolveCache(map);
+            if (cache == null)
             {
                 return false;
             }
 
-            for (int i = 0; i < allThings.Count; i++)
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (cache.nextThingIdRefreshTick < 0 || now >= cache.nextThingIdRefreshTick)
             {
-                Thing candidate = allThings[i];
-                if (candidate != null && candidate.thingIDNumber == thingId)
-                {
-                    thing = candidate;
-                    return true;
-                }
+                RefreshThingIdCache(map, cache, now);
             }
 
-            return false;
+            if (!cache.thingsById.TryGetValue(thingId, out thing))
+            {
+                return false;
+            }
+
+            if (thing == null || thing.Destroyed || thing.MapHeld != map)
+            {
+                cache.thingsById.Remove(thingId);
+                thing = null;
+                return false;
+            }
+
+            return true;
         }
 
         public static void NotifyLikelyStateChanged(Map map)
@@ -119,6 +118,7 @@ namespace AbyssalProtocol
             if (CachesByMapId.TryGetValue(map.uniqueID, out MapCache cache))
             {
                 cache.nextPawnRefreshTick = -1;
+                cache.nextThingIdRefreshTick = -1;
             }
         }
 
@@ -175,6 +175,29 @@ namespace AbyssalProtocol
 
             int stagger = Math.Abs(map.uniqueID % 7);
             cache.nextPawnRefreshTick = now + PawnRefreshIntervalTicks + stagger;
+        }
+
+        private static void RefreshThingIdCache(Map map, MapCache cache, int now)
+        {
+            cache.thingsById.Clear();
+
+            List<Thing> allThings = map.listerThings?.AllThings;
+            if (allThings != null)
+            {
+                for (int i = 0; i < allThings.Count; i++)
+                {
+                    Thing thing = allThings[i];
+                    if (thing == null || thing.Destroyed || thing.MapHeld != map)
+                    {
+                        continue;
+                    }
+
+                    cache.thingsById[thing.thingIDNumber] = thing;
+                }
+            }
+
+            int stagger = Math.Abs((map.uniqueID * 13) % 17);
+            cache.nextThingIdRefreshTick = now + ThingIdRefreshIntervalTicks + stagger;
         }
 
         private static void CleanupDeadMapCaches(int now)

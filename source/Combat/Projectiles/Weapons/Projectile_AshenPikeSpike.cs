@@ -34,7 +34,7 @@ namespace AbyssalProtocol
                 lastPositionInitialized = true;
             }
 
-            if (ticksAlive % TrailIntervalTicks == 0)
+            if (ticksAlive % TrailIntervalTicks == 0 && ABY_VfxBudget.TrySpend(Map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 SpawnTrail(lastExactPosition, ExactPosition, Map);
             }

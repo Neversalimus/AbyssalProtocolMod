@@ -281,3 +281,14 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | Shared VFX budget | Implemented | `source/Combat/VFX/ABY_VfxBudget.cs` | n/a | Performance settings affect it indirectly | Optional presentation only. Do not gate damage, targeting, rewards, or save/load behavior on this budget. |
 | TPS optimized hot loops | Implemented / ongoing | `source/Compatibility/`, `source/Apparel/`, `source/Combat/`, `source/Bosses/Rupture/`, `source/Comps/`, `source/Dominion/` | mass enemy scan intervals in `Defs/ThingDefs/` | Forge/Summoning/shared UI should respect reduced animation | Future combat/Dominion additions should be checked against this matrix before adding new timers. |
 
+
+## Remaining TPS optimization matrix — 2026-05-19
+
+| System | Status | Source owner | XML/assets | UI exposure | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Thing-ID runtime lookup cache | Implemented | `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | n/a | n/a | Replaces repeated delayed-target `AllThings` scans. Cache can be stale briefly; callers must still validate spawned/destroyed state. |
+| Projectile trail VFX budgeting | Implemented | `source/Combat/Projectiles/Weapons/`, `source/Combat/VFX/ABY_VfxBudget.cs` | projectile textures/flecks unchanged | Performance settings only | Presentation-only gate for repeated trail/spark/arc ticks. Damage and impact logic must remain outside the budget. |
+| Reactor Saint projectile presentation budget | Implemented | `source/Bosses/ReactorSaint/VFX/ABY_ReactorSaintProjectileVfxUtility.cs` | Reactor Saint projectile visuals unchanged | Performance settings only | Uses shared VFX budget rather than an isolated local budget. |
+| Anti-tame / animal workflow throttling | Implemented | `source/Pawns/MapComponents/`, `source/Pawns/ABY_AntiTameUtility.cs`, `source/Compatibility/ABY_LargeModpackHotfixBUtility.cs` | n/a | n/a | Longer intervals and runtime caches reduce baseline compatibility-tax. |
+| Protocol Nexus UI cache | Implemented | `source/Experimental/ProtocolResearch/ABY_ProtocolResearchUtility.cs`, `Window_AbyssalProtocolNexus.cs` | n/a | Protocol Nexus | Cached project/category/header data prevents repeated sorting/filtering in draw paths. |
+| Dominion ambient/edge/collapse VFX budget | Implemented | `source/Dominion/MapComponents/` | Dominion VFX assets unchanged | Performance settings only | Optional spectacle is reduced under budget pressure; reward/extraction gameplay must not depend on skipped visuals. |

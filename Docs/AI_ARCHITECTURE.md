@@ -432,3 +432,17 @@ Rules for future AI work:
 3. Optional flecks, motes, beams, trails, Dominion ambience, and decorative UI/gameplay effects should pass through `ABY_VfxBudget` or existing performance settings.
 4. Gameplay effects, damage, targeting validity, and save/load state must not depend on the visual budget; only optional presentation should be skipped.
 
+
+## Remaining TPS optimization layer — 2026-05-19
+
+The second TPS pass extends the shared performance architecture instead of adding isolated throttles.
+
+Additional ownership notes:
+
+- `source/Core/Runtime/ABY_RuntimeTargetCache.cs` now also owns a throttled per-map thing-ID cache. Use `TryFindThingById` for delayed beam/projectile/stream targets instead of scanning `map.listerThings.AllThings` in every lookup.
+- `source/Combat/VFX/ABY_VfxBudget.cs` is now the default gate for optional projectile trails, Reactor Saint projectile presentation, Dominion ambient/void-edge/collapse spectacle, and high-frequency combat decorative effects.
+- `source/Pawns/MapComponents/MapComponent_ABY_AntiTameGuard.cs`, `source/Pawns/MapComponents/MapComponent_ABY_AntiAnimalWorkflowV3.cs`, `source/Pawns/ABY_AntiTameUtility.cs`, and `source/Compatibility/ABY_LargeModpackHotfixBUtility.cs` use slower intervals and cached pawn/portal lookups. Future anti-tame or modpack-compatibility repairs should follow this pattern.
+- `source/Experimental/ProtocolResearch/ABY_ProtocolResearchUtility.cs` owns cached Protocol Nexus project/category/ThingDef lists. `Window_AbyssalProtocolNexus.cs` should avoid sorting/filtering all protocol projects every OnGUI frame and should use these cached lists.
+- Projectile `Tick()` methods under `source/Combat/Projectiles/Weapons/` may still own their gameplay logic, but optional trail/spark/arc presentation should be gated before spawning flecks/motes.
+
+Regression rule: when adding a new recurring runtime effect, first decide whether it belongs to gameplay state, target selection, or optional presentation. Gameplay state must remain deterministic and ungated by visual budgets; target selection should use runtime caches where possible; optional presentation should use performance settings and/or `ABY_VfxBudget`.

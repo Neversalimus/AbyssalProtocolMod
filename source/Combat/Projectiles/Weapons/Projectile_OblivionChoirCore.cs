@@ -80,12 +80,12 @@ namespace AbyssalProtocol
                 lastDrawDirection = movement.normalized;
             }
 
-            if (ticksAlive % TrailIntervalTicks == 0)
+            if (ticksAlive % TrailIntervalTicks == 0 && ABY_VfxBudget.TrySpend(Map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 SpawnTrail(lastExactPosition, currentPosition, Map, ticksAlive, lastBranchHits);
             }
 
-            if (ticksAlive % CorePulseIntervalTicks == 0)
+            if (ticksAlive % CorePulseIntervalTicks == 0 && ABY_VfxBudget.TrySpend(Map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 SpawnCorePulse(currentPosition, Map, ticksAlive, lastBranchHits);
             }
@@ -329,12 +329,12 @@ namespace AbyssalProtocol
 
         private void DetonateResonanceAround(IntVec3 impactCell, Vector3 impactPosition, Map map, Thing instigator)
         {
-            if (map?.mapPawns?.AllPawnsSpawned == null)
+            if (map == null)
             {
                 return;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];

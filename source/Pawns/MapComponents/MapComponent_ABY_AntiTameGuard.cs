@@ -4,7 +4,7 @@ namespace AbyssalProtocol
 {
     public class MapComponent_ABY_AntiTameGuard : MapComponent
     {
-        private const int GuardIntervalTicks = 30;
+        private const int GuardIntervalTicks = 180;
         private int nextGuardTick;
 
         public MapComponent_ABY_AntiTameGuard(Map map) : base(map)

@@ -171,19 +171,20 @@ namespace AbyssalProtocol
 
         public static Pawn FindClosestHostilePawn(Pawn pawn, float maxDistance, bool requireLineOfSight)
         {
-            if (pawn?.Map?.mapPawns == null)
+            if (pawn?.Map == null)
             {
                 return null;
             }
 
-            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return null;
             }
 
             Pawn best = null;
-            float bestDistance = Math.Max(0.1f, maxDistance);
+            float resolvedMax = Math.Max(0.1f, maxDistance);
+            float bestDistanceSquared = resolvedMax * resolvedMax;
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn candidate = pawns[i];
@@ -192,8 +193,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > bestDistance)
+                float distanceSquared = pawn.Position.DistanceToSquared(candidate.Position);
+                if (distanceSquared > bestDistanceSquared)
                 {
                     continue;
                 }
@@ -203,7 +204,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                bestDistance = distance;
+                bestDistanceSquared = distanceSquared;
                 best = candidate;
             }
 

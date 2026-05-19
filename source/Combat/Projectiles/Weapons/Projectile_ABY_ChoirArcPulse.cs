@@ -46,7 +46,7 @@ namespace AbyssalProtocol
                 ChoirArcVfxUtility.SpawnMuzzle(previousPosition, destination, Map);
             }
 
-            if (ticksAlive % TravelSparkIntervalTicks == 0)
+            if (ticksAlive % TravelSparkIntervalTicks == 0 && ABY_VfxBudget.TrySpend(Map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 ChoirArcVfxUtility.SpawnTravelSpark(currentPosition, Map);
             }

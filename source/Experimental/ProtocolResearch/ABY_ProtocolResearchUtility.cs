@@ -18,12 +18,37 @@ namespace AbyssalProtocol
     {
         public const string FeatureId = "ExperimentalProtocolResearch";
 
+        private static List<ABY_ProtocolResearchCategoryDef> cachedCategories;
+        private static List<ABY_ProtocolResearchDef> cachedAllProjects;
+        private static readonly Dictionary<ABY_ProtocolResearchCategoryDef, List<ABY_ProtocolResearchDef>> CachedProjectsByCategory = new Dictionary<ABY_ProtocolResearchCategoryDef, List<ABY_ProtocolResearchDef>>();
+        private static ThingDef cachedProtocolNexusDef;
+
         public static List<ABY_ProtocolResearchCategoryDef> AllCategories()
         {
-            return DefDatabase<ABY_ProtocolResearchCategoryDef>.AllDefsListForReading
+            if (cachedCategories != null)
+            {
+                return cachedCategories;
+            }
+
+            cachedCategories = DefDatabase<ABY_ProtocolResearchCategoryDef>.AllDefsListForReading
                 .OrderBy(def => def.displayOrder)
                 .ThenBy(def => def.label)
                 .ToList();
+            return cachedCategories;
+        }
+
+        public static List<ABY_ProtocolResearchDef> AllProjects()
+        {
+            if (cachedAllProjects != null)
+            {
+                return cachedAllProjects;
+            }
+
+            cachedAllProjects = DefDatabase<ABY_ProtocolResearchDef>.AllDefsListForReading
+                .OrderBy(project => project?.displayOrder ?? 0)
+                .ThenBy(project => project?.label ?? string.Empty)
+                .ToList();
+            return cachedAllProjects;
         }
 
         public static List<ABY_ProtocolResearchDef> ProjectsFor(ABY_ProtocolResearchCategoryDef category)
@@ -33,11 +58,16 @@ namespace AbyssalProtocol
                 return new List<ABY_ProtocolResearchDef>();
             }
 
-            return DefDatabase<ABY_ProtocolResearchDef>.AllDefsListForReading
+            if (CachedProjectsByCategory.TryGetValue(category, out List<ABY_ProtocolResearchDef> cached))
+            {
+                return cached;
+            }
+
+            List<ABY_ProtocolResearchDef> projects = AllProjects()
                 .Where(def => def.category == category)
-                .OrderBy(def => def.displayOrder)
-                .ThenBy(def => def.label)
                 .ToList();
+            CachedProjectsByCategory[category] = projects;
+            return projects;
         }
 
         public static ABY_ProtocolResearchState GetState(ABY_ProtocolResearchDef project)
@@ -171,7 +201,13 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                List<Thing> nexuses = map.listerThings.ThingsOfDef(ThingDef.Named("ABY_ProtocolNexus"));
+                cachedProtocolNexusDef = cachedProtocolNexusDef ?? DefDatabase<ThingDef>.GetNamedSilentFail("ABY_ProtocolNexus");
+                if (cachedProtocolNexusDef == null)
+                {
+                    continue;
+                }
+
+                List<Thing> nexuses = map.listerThings.ThingsOfDef(cachedProtocolNexusDef);
                 for (int j = 0; j < nexuses.Count; j++)
                 {
                     Building_ABY_ProtocolNexus nexus = nexuses[j] as Building_ABY_ProtocolNexus;

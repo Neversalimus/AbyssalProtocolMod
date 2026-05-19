@@ -429,7 +429,7 @@ namespace AbyssalProtocol
             Pawn bestTarget = null;
             float bestScore = float.MinValue;
 
-            IReadOnlyList<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(caster.MapHeld);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn candidate = pawns[i];
@@ -502,7 +502,7 @@ namespace AbyssalProtocol
             }
 
             float radiusSquared = Props.avoidFriendlyRadius * Props.avoidFriendlyRadius;
-            IReadOnlyList<Pawn> pawns = caster.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(caster.MapHeld);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];

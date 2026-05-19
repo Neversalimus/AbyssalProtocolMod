@@ -83,11 +83,20 @@ namespace AbyssalProtocol
             ABY_DominionPocketSession session = ResolveSession();
             IntVec3 heartCell = ResolveHeartCell(encounter, session);
             IntVec3 extraction = ResolveExtractionCell(session);
-            DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(heartCell, map);
+            if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 6))
+            {
+                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(heartCell, map);
+            }
             if (extraction.IsValid)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, 0.72f);
-                DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, 0.72f);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, 0.72f);
+                }
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, 0.72f);
+                }
             }
             collapseStartBurstDone = true;
         }
@@ -99,7 +108,10 @@ namespace AbyssalProtocol
 
             if (!collapseStartBurstDone)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(ResolveHeartCell(encounter, session), map);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 6))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseStartBurst(ResolveHeartCell(encounter, session), map);
+                }
                 collapseStartBurstDone = true;
             }
 
@@ -112,60 +124,81 @@ namespace AbyssalProtocol
 
             if (now >= nextShockwaveTick)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnHeartShockwave(heartCell, map, urgency);
-                nextShockwaveTick = now + (urgency >= 0.75f ? 210 : 330);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 5))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnHeartShockwave(heartCell, map, urgency);
+                }
+                nextShockwaveTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 210 : 330);
             }
 
             if (now >= nextExtractionGlowTick)
             {
                 if (extraction.IsValid)
                 {
-                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, urgency);
+                    if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                    {
+                        DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionBeacon(extraction, map, urgency);
+                    }
                 }
 
-                nextExtractionGlowTick = now + (urgency >= 0.75f ? 58 : 96);
+                nextExtractionGlowTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 58 : 96);
             }
 
             if (now >= nextExtractionGuideTick)
             {
                 if (extraction.IsValid)
                 {
-                    DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, urgency);
+                    if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                    {
+                        DominionSliceCollapseSpectacleVfxUtility.SpawnExtractionGuidance(heartCell, extraction, map, urgency);
+                    }
                 }
 
-                nextExtractionGuideTick = now + (urgency >= 0.75f ? 118 : 185);
+                nextExtractionGuideTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 118 : 185);
             }
 
             if (victory && now >= nextRewardGlowTick)
             {
                 if (reward.IsValid)
                 {
-                    DominionSliceCollapseSpectacleVfxUtility.SpawnRewardBeacon(reward, map, urgency);
+                    if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                    {
+                        DominionSliceCollapseSpectacleVfxUtility.SpawnRewardBeacon(reward, map, urgency);
+                    }
                 }
 
-                nextRewardGlowTick = now + (urgency >= 0.75f ? 135 : 210);
+                nextRewardGlowTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 135 : 210);
             }
 
             if (victory && now >= nextRewardGuideTick)
             {
                 if (reward.IsValid && extraction.IsValid)
                 {
-                    DominionSliceCollapseSpectacleVfxUtility.SpawnRewardGuidance(reward, extraction, map, urgency);
+                    if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                    {
+                        DominionSliceCollapseSpectacleVfxUtility.SpawnRewardGuidance(reward, extraction, map, urgency);
+                    }
                 }
 
-                nextRewardGuideTick = now + (urgency >= 0.75f ? 170 : 260);
+                nextRewardGuideTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 170 : 260);
             }
 
             if (now >= nextEdgeInstabilityTick)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnEdgeInstability(map, urgency);
-                nextEdgeInstabilityTick = now + (urgency >= 0.75f ? 55 : 95);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnEdgeInstability(map, urgency);
+                }
+                nextEdgeInstabilityTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 55 : 95);
             }
 
             if (now >= nextWarningPulseTick)
             {
-                DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseWarningPulse(heartCell, map, urgency);
-                nextWarningPulseTick = now + (urgency >= 0.75f ? 240 : 420);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    DominionSliceCollapseSpectacleVfxUtility.SpawnCollapseWarningPulse(heartCell, map, urgency);
+                }
+                nextWarningPulseTick = now + ABY_VfxBudget.ScaleInterval(urgency >= 0.75f ? 240 : 420);
             }
         }
 

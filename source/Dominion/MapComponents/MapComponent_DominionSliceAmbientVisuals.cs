@@ -50,25 +50,37 @@ namespace AbyssalProtocol
 
             if (now >= nextEmberTick)
             {
-                EmitAmbientEmbers(encounter, intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 2))
+                {
+                    EmitAmbientEmbers(encounter, intensity);
+                }
                 nextEmberTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(30f, 54f) / Mathf.Max(0.55f, intensity)), performanceSettings);
             }
 
             if (now >= nextPressurePulseTick)
             {
-                EmitPressurePulse(encounter, intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 4))
+                {
+                    EmitPressurePulse(encounter, intensity);
+                }
                 nextPressurePulseTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(150f, 240f) / Mathf.Max(0.65f, intensity)), performanceSettings);
             }
 
             if (now >= nextEdgeSparkTick)
             {
-                EmitEdgeSparks(encounter, intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 2))
+                {
+                    EmitEdgeSparks(encounter, intensity);
+                }
                 nextEdgeSparkTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(100f, 180f) / Mathf.Max(0.65f, intensity)), performanceSettings);
             }
 
             if (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse && now >= nextCollapseWarningTick)
             {
-                EmitCollapseWarning(encounter, intensity);
+                if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 5))
+                {
+                    EmitCollapseWarning(encounter, intensity);
+                }
                 nextCollapseWarningTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(90, 150), performanceSettings);
             }
         }
@@ -98,7 +110,7 @@ namespace AbyssalProtocol
 
         private void EmitAmbientEmbers(MapComponent_DominionSliceEncounter encounter, float intensity)
         {
-            int count = Mathf.Clamp(Mathf.RoundToInt(1.5f + intensity * 1.8f), 2, 6);
+            int count = Mathf.Clamp(ABY_VfxBudget.ScaleCount(Mathf.RoundToInt(1.5f + intensity * 1.8f)), 1, 5);
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell;
@@ -128,7 +140,7 @@ namespace AbyssalProtocol
 
         private void EmitEdgeSparks(MapComponent_DominionSliceEncounter encounter, float intensity)
         {
-            int count = encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse ? 3 : 1 + (Rand.Chance(0.35f) ? 1 : 0);
+            int count = ABY_VfxBudget.ScaleCount(encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse ? 3 : 1 + (Rand.Chance(0.35f) ? 1 : 0));
             for (int i = 0; i < count; i++)
             {
                 IntVec3 cell = RandomPeripheralCell();

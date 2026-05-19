@@ -348,3 +348,25 @@ Regression rules:
 - Dominion map maintenance must stay chunked; avoid restoring one-pass full-map cleanup in runtime ticks.
 - Modular turrets should keep cached target retention and staggered scan intervals; avoid per-tick reacquisition for every turret.
 
+
+## 2026-05-19 — Remaining TPS optimization regression checklist
+
+Potential regressions introduced by the remaining optimization layer:
+
+| Area | What could regress | In-game check |
+| --- | --- | --- |
+| Runtime thing-ID cache | Delayed beam/stream target lookups may resolve stale or missing targets for up to the cache interval after destruction/despawn. | Fire Specter Lash / delayed projectile effects at pawns and buildings, then destroy/despawn targets; verify no red errors and beams stop or retarget cleanly. |
+| Projectile VFX budget | Trails, sparks, choir arcs, plasma pulses, and rocket micro-target visuals may become too sparse in Reduced/Minimal. | Test Rift Carbine, Ultra Plasma, Hexgun, Null Bolt, Ashen Pike, Choir Arc, Siege Idol shell, Crownfire carrier, and Oblivion Choir Core on Full/Reduced/Minimal. Damage must remain unchanged. |
+| Reactor Saint projectile VFX | Saint volleys may look quieter because local VFX budget was replaced by shared combat budget. | Spawn Reactor Saint, observe salvos on Full/Reduced/Minimal; confirm gameplay damage/targeting still happens and no projectile VFX errors appear. |
+| Anti-tame guard intervals | Tame/train/slaughter designations on abyssal monsters may persist a few seconds longer than before. | Try taming/training/slaughter designations on abyssal monsters; verify designations are removed without red errors and without blocking normal non-abyssal animals. |
+| Large modpack portal hotfix | Cached hostile portal def-name list may miss unusual defs if another mod dynamically creates defs after load. | Start horde/portal encounters with large modpack active; verify special portals are not prematurely collapsed and orphaned hostile portals still hard-stop correctly. |
+| Dominion ambient/edge/collapse budget | Minimal/Reduced modes may hide too much collapse/extraction/reward guidance. | Enter Dominion Slice, trigger collapse/reward/extraction phases, compare Full vs Reduced vs Minimal; ensure the map remains readable and guidance is still understandable. |
+| Protocol Nexus UI cache | Header summary or project/category counts could lag until the refresh interval. | Open Protocol Nexus, start/finish decode, change project selection/category; verify buttons, locks, progress, and summary update within a short interval and no stale action is possible. |
+| Abyssal monster brain cache | Enemy retargeting may lag slightly if combat target cache has just refreshed. | Spawn groups of abyssal monsters, down/kill visible colonist targets, verify enemies retarget without standing idle for long. |
+| Implant ability friendly-fire cache | Friendly-fire checks may briefly use cached pawn lists. | Use implant abilities near moving friendly pawns; verify friendly-fire avoidance is still acceptable and no obvious self-blocking happens. |
+
+Rules after testing:
+
+- If a visual looks too quiet but gameplay works, tune `ABY_VfxBudget` category costs or per-effect spend frequency rather than removing the budget gate.
+- If targeting feels sluggish, reduce the relevant cache interval before reverting to direct `AllPawnsSpawned`/`AllThings` scans.
+- If UI state lags, invalidate the relevant Protocol Nexus cache on state change instead of moving sorting/filtering back into `DoWindowContents`.

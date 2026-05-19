@@ -38,7 +38,7 @@ namespace AbyssalProtocol
                 lastPositionInitialized = true;
             }
 
-            if (ticksAlive % TrailIntervalTicks == 0)
+            if (ticksAlive % TrailIntervalTicks == 0 && ABY_VfxBudget.TrySpend(Map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 Vector3 point = Vector3.Lerp(lastExactPosition, ExactPosition, 0.5f);
                 FleckMaker.ThrowLightningGlow(point, Map, TrailGlowSize);

@@ -32,10 +32,6 @@ namespace AbyssalProtocol
         private static ThingDef barrageScorchDef;
         private static ThingDef barrageShockDef;
 
-        private const int MaxVfxBudgetPerTick = 8;
-        private static int budgetTick = -1;
-        private static int budgetMapId = -1;
-        private static int budgetUsed;
 
         private static ThingDef LanceTrailHaloDef => lanceTrailHaloDef ?? (lanceTrailHaloDef = DefDatabase<ThingDef>.GetNamedSilentFail(LanceTrailHaloDefName));
         private static ThingDef LanceTrailCoreDef => lanceTrailCoreDef ?? (lanceTrailCoreDef = DefDatabase<ThingDef>.GetNamedSilentFail(LanceTrailCoreDefName));
@@ -294,28 +290,12 @@ namespace AbyssalProtocol
 
         private static bool TryConsumeVfxBudget(Map map, int cost)
         {
-            if (map == null || cost <= 0 || Find.TickManager == null)
+            if (map == null || cost <= 0)
             {
                 return true;
             }
 
-            int tick = Find.TickManager.TicksGame;
-            int mapId = map.uniqueID;
-            if (budgetTick != tick || budgetMapId != mapId)
-            {
-                budgetTick = tick;
-                budgetMapId = mapId;
-                budgetUsed = 0;
-            }
-
-            int maxBudget = AbyssalProtocolMod.Settings.reducedMotion ? 8 : MaxVfxBudgetPerTick;
-            if (budgetUsed + cost > maxBudget)
-            {
-                return false;
-            }
-
-            budgetUsed += cost;
-            return true;
+            return ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatHeavy, cost);
         }
 
         private static bool IsPawnTarget(Thing hitThing)

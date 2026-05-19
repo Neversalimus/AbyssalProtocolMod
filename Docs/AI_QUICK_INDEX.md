@@ -194,3 +194,14 @@ For TPS, stutter, scan-loop, VFX density, or large-encounter performance tasks, 
 | Dominion maintenance spikes | `source/Dominion/MapComponents/MapComponent_ABY_DominionAtmosphere.cs` | Dominion generation and weather/VFX map components |
 | Specter Lash stream stutter | `source/Combat/MapComponents/SpecterLashStreamGameComponent.cs` | `source/Combat/VFX/HarmonyPatch_SpecterLashProjector.cs`, related mote defs |
 
+
+## Remaining TPS optimization routing — 2026-05-19
+
+| Symptom / task | Start here | Also check |
+| --- | --- | --- |
+| Beam or delayed projectile target lookup scans `AllThings` | `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | `source/Combat/MapComponents/`, `source/Combat/Projectiles/`, Specter Lash callers |
+| Generic projectile trail spam | `source/Combat/Projectiles/Weapons/` | `source/Combat/VFX/ABY_VfxBudget.cs`, Reactor Saint VFX utility |
+| Reactor Saint projectile VFX stutter | `source/Bosses/ReactorSaint/VFX/ABY_ReactorSaintProjectileVfxUtility.cs` | `source/Combat/VFX/ABY_VfxBudget.cs` |
+| Anti-tame / anti-animal workflow TPS | `source/Pawns/MapComponents/MapComponent_ABY_AntiTameGuard.cs`, `source/Pawns/MapComponents/MapComponent_ABY_AntiAnimalWorkflowV3.cs` | `source/Pawns/ABY_AntiTameUtility.cs`, `source/Compatibility/ABY_LargeModpackHotfixBUtility.cs` |
+| Protocol Nexus UI allocations / stale sorting | `source/Experimental/ProtocolResearch/ABY_ProtocolResearchUtility.cs` | `source/Experimental/ProtocolResearch/Window_AbyssalProtocolNexus.cs` |
+| Dominion collapse or edge VFX overload | `source/Dominion/MapComponents/MapComponent_DominionSliceCollapseSpectacle.cs`, `source/Dominion/MapComponents/MapComponent_DominionSliceVoidEdgeVisuals.cs` | `source/Dominion/MapComponents/MapComponent_DominionSliceAmbientVisuals.cs`, `source/Combat/VFX/ABY_VfxBudget.cs` |

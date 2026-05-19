@@ -4,7 +4,7 @@ namespace AbyssalProtocol
 {
     public class MapComponent_ABY_AntiAnimalWorkflowV3 : MapComponent
     {
-        private const int GuardIntervalTicks = 30;
+        private const int GuardIntervalTicks = 240;
         private int nextGuardTick;
 
         public MapComponent_ABY_AntiAnimalWorkflowV3(Map map) : base(map)

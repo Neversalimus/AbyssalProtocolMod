@@ -276,18 +276,61 @@ namespace AbyssalProtocol
         private static List<LocalTargetInfo> BuildMicroTargets(IntVec3 primaryCell, Vector3 splitPosition, Map map, Faction launcherFaction)
         {
             List<LocalTargetInfo> result = new List<LocalTargetInfo>(MicroRocketCount);
-            if (map?.mapPawns != null)
+            if (map != null)
             {
                 float radiusSquared = TargetSearchRadius * TargetSearchRadius;
-                IEnumerable<Pawn> candidates = map.mapPawns.AllPawnsSpawned
-                    .Where(pawn => IsValidMicroTarget(pawn, launcherFaction, map))
-                    .Where(pawn => pawn.Position.DistanceToSquared(primaryCell) <= radiusSquared || pawn.Position.DistanceToSquared(splitPosition.ToIntVec3()) <= radiusSquared)
-                    .OrderBy(pawn => pawn.Position.DistanceToSquared(primaryCell))
-                    .ThenBy(pawn => pawn.Position.DistanceToSquared(splitPosition.ToIntVec3()));
-
-                foreach (Pawn pawn in candidates)
+                IntVec3 splitCell = splitPosition.ToIntVec3();
+                IReadOnlyList<Pawn> candidates = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+                Pawn[] bestPawns = new Pawn[MicroRocketCount];
+                float[] bestScores = new float[MicroRocketCount];
+                for (int i = 0; i < bestScores.Length; i++)
                 {
-                    result.Add(new LocalTargetInfo(pawn));
+                    bestScores[i] = float.MaxValue;
+                }
+
+                for (int i = 0; i < candidates.Count; i++)
+                {
+                    Pawn pawn = candidates[i];
+                    if (!IsValidMicroTarget(pawn, launcherFaction, map))
+                    {
+                        continue;
+                    }
+
+                    float primaryDistance = pawn.Position.DistanceToSquared(primaryCell);
+                    float splitDistance = pawn.Position.DistanceToSquared(splitCell);
+                    if (primaryDistance > radiusSquared && splitDistance > radiusSquared)
+                    {
+                        continue;
+                    }
+
+                    float score = primaryDistance + splitDistance * 0.18f;
+                    for (int slot = 0; slot < bestPawns.Length; slot++)
+                    {
+                        if (score >= bestScores[slot])
+                        {
+                            continue;
+                        }
+
+                        for (int move = bestPawns.Length - 1; move > slot; move--)
+                        {
+                            bestPawns[move] = bestPawns[move - 1];
+                            bestScores[move] = bestScores[move - 1];
+                        }
+
+                        bestPawns[slot] = pawn;
+                        bestScores[slot] = score;
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < bestPawns.Length; i++)
+                {
+                    if (bestPawns[i] == null)
+                    {
+                        continue;
+                    }
+
+                    result.Add(new LocalTargetInfo(bestPawns[i]));
                     if (result.Count >= MicroRocketCount)
                     {
                         break;

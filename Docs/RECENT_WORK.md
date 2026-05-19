@@ -518,3 +518,12 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - UI shared animation now respects reduced/minimal performance settings more aggressively.
 - Build verified with local Roslyn compile against bundled RimWorld/Unity/Harmony libraries.
 
+
+## 2026-05-19 — Remaining TPS optimization layer
+
+- Extended `ABY_RuntimeTargetCache` with a throttled thing-ID lookup cache for delayed target resolution without repeated `AllThings` scans.
+- Reused shared combat target caches in Abyssal monster brain logic, implant ability targeting, friendly-fire checks, Oblivion Choir resonance, and Crownfire micro-target selection.
+- Routed additional projectile trails, Reactor Saint projectile presentation, Dominion ambient/void-edge/collapse spectacle, and repeated combat decorative effects through `ABY_VfxBudget`.
+- Reduced baseline compatibility-tax from anti-tame and anti-animal workflow components by increasing scan intervals and using cached pawn/portal lookups.
+- Cached Protocol Nexus project/category/header data to reduce repeated sorting and summary work in UI draw paths.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.

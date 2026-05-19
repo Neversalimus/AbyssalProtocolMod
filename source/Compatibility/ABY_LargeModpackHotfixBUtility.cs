@@ -16,6 +16,7 @@ namespace AbyssalProtocol
         private const string ImpPortalDefName = "ABY_ImpPortal";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const int HordeQueueStaleGraceTicks = 900;
+        private static List<string> cachedHostileAbyssalPortalDefNames;
 
         public static bool IsAbyssalPawn(Pawn pawn)
         {
@@ -172,8 +173,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return;
             }
@@ -211,8 +212,8 @@ namespace AbyssalProtocol
             }
 
             Faction abyssal = ResolveAbyssalFaction();
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return;
             }
@@ -333,8 +334,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return false;
             }
@@ -352,37 +353,65 @@ namespace AbyssalProtocol
 
         public static bool HasActiveHostileAbyssalPortal(Map map)
         {
-            if (map?.listerThings?.AllThings == null)
+            if (map == null)
             {
                 return false;
             }
 
-            List<Thing> things = map.listerThings.AllThings;
-            for (int i = 0; i < things.Count; i++)
+            List<string> portalDefNames = HostileAbyssalPortalDefNames();
+            for (int i = 0; i < portalDefNames.Count; i++)
             {
-                Thing thing = things[i];
-                if (thing == null || thing.Destroyed || !thing.Spawned || thing.def == null)
+                IReadOnlyList<Thing> portals = ABY_RuntimeTargetCache.SpawnedThingsOfDefName(map, portalDefNames[i]);
+                for (int j = 0; j < portals.Count; j++)
                 {
-                    continue;
-                }
-
-                string defName = thing.def.defName ?? string.Empty;
-                if (IsFriendlyDominionPortalDef(defName))
-                {
-                    continue;
-                }
-
-                if (string.Equals(defName, ImpPortalDefName, StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(defName, RupturePortalDefName, StringComparison.OrdinalIgnoreCase)
-                    || (defName.IndexOf("ABY_", StringComparison.OrdinalIgnoreCase) >= 0
-                        && defName.IndexOf("Portal", StringComparison.OrdinalIgnoreCase) >= 0
-                        && !IsFriendlyDominionPortalDef(defName)))
-                {
-                    return true;
+                    Thing portal = portals[j];
+                    if (portal != null && !portal.Destroyed && portal.Spawned)
+                    {
+                        return true;
+                    }
                 }
             }
 
             return false;
+        }
+
+        private static List<string> HostileAbyssalPortalDefNames()
+        {
+            if (cachedHostileAbyssalPortalDefNames != null)
+            {
+                return cachedHostileAbyssalPortalDefNames;
+            }
+
+            cachedHostileAbyssalPortalDefNames = new List<string>(8);
+            List<ThingDef> defs = DefDatabase<ThingDef>.AllDefsListForReading;
+            for (int i = 0; i < defs.Count; i++)
+            {
+                string defName = defs[i]?.defName ?? string.Empty;
+                if (defName.NullOrEmpty())
+                {
+                    continue;
+                }
+
+                bool explicitPortal = string.Equals(defName, ImpPortalDefName, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(defName, RupturePortalDefName, StringComparison.OrdinalIgnoreCase);
+                bool genericAbyssalPortal = defName.IndexOf("ABY_", StringComparison.OrdinalIgnoreCase) >= 0
+                    && defName.IndexOf("Portal", StringComparison.OrdinalIgnoreCase) >= 0;
+                if ((explicitPortal || genericAbyssalPortal) && !IsFriendlyDominionPortalDef(defName))
+                {
+                    cachedHostileAbyssalPortalDefNames.Add(defName);
+                }
+            }
+
+            if (!cachedHostileAbyssalPortalDefNames.Contains(ImpPortalDefName))
+            {
+                cachedHostileAbyssalPortalDefNames.Add(ImpPortalDefName);
+            }
+            if (!cachedHostileAbyssalPortalDefNames.Contains(RupturePortalDefName))
+            {
+                cachedHostileAbyssalPortalDefNames.Add(RupturePortalDefName);
+            }
+
+            return cachedHostileAbyssalPortalDefNames;
         }
 
         public static Faction ResolveAbyssalFaction()

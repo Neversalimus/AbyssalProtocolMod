@@ -139,8 +139,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return;
             }
@@ -190,8 +190,8 @@ namespace AbyssalProtocol
             }
 
             Faction abyssalFaction = ResolveAbyssalFaction();
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return;
             }
