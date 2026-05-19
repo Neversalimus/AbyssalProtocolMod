@@ -12,26 +12,28 @@ namespace AbyssalProtocol
         private const int ShortCombatJobExpiry = 32;
         private const int RepositionJobExpiry = 55;
         private const int MeleeJobExpiry = 70;
+        private const float CombatBuildingSearchRange = 45f;
+        private const float CombatBuildingThreatBias = 18f;
 
         public static bool TryStabilizeAIGotoNearestHostileResult(Pawn pawn, ref Job job)
         {
-            if (!ABY_AbyssalMonsterRoleUtility.ShouldUseMonsterBrain(pawn) || job == null)
+            if (!ABY_AbyssalMonsterRoleUtility.ShouldUseMonsterBrain(pawn))
             {
                 return false;
             }
 
-            if (job.def != JobDefOf.Goto && job.def != JobDefOf.Wait_Combat)
+            if (job != null && job.def != JobDefOf.Goto && job.def != JobDefOf.Wait_Combat && job.def != JobDefOf.AttackMelee)
             {
                 return false;
             }
 
-            Pawn target = ResolveJobTargetPawn(pawn, job) ?? FindClosestHostilePawn(pawn, 45f, false);
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            Thing target = ResolveJobTargetThing(pawn, job) ?? FindClosestPriorityHostileThing(pawn, CombatBuildingSearchRange, false);
+            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return false;
             }
 
-            if (!TryCreateTacticalJob(pawn, target, job.def, out Job tacticalJob))
+            if (!TryCreateTacticalJob(pawn, target, job?.def, out Job tacticalJob))
             {
                 return false;
             }
@@ -58,21 +60,27 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (currentJob.def != JobDefOf.Wait_Combat && currentJob.def != JobDefOf.Goto)
+            if (currentJob.def != JobDefOf.Wait_Combat && currentJob.def != JobDefOf.Goto && currentJob.def != JobDefOf.AttackMelee)
             {
                 return false;
             }
 
             ABY_AbyssalMonsterCombatProfile profile = ABY_AbyssalMonsterRoleUtility.ResolveProfile(pawn);
-            if (!profile.HasRangedStance)
+            if (!profile.HasRangedStance && currentJob.def != JobDefOf.AttackMelee)
             {
                 return false;
             }
 
-            Pawn target = ResolveJobTargetPawn(pawn, currentJob) ?? FindClosestHostilePawn(pawn, Math.Max(profile.MaxRange, 35f), false);
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            Thing target = ResolveJobTargetThing(pawn, currentJob) ?? FindClosestPriorityHostileThing(pawn, Math.Max(profile.MaxRange, 35f), false);
+            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return false;
+            }
+
+            if (target is Building && currentJob.def != JobDefOf.AttackMelee && !profile.HasRangedStance)
+            {
+                pawn.jobs.TryTakeOrderedJob(MakeMeleeJob(target), JobTag.Misc);
+                return true;
             }
 
             bool hasFireSolution = HasFireSolution(pawn, target, profile);
@@ -103,8 +111,13 @@ namespace AbyssalProtocol
 
         public static bool TryCreateTacticalJob(Pawn pawn, Pawn target, JobDef sourceJobDef, out Job tacticalJob)
         {
+            return TryCreateTacticalJob(pawn, (Thing)target, sourceJobDef, out tacticalJob);
+        }
+
+        public static bool TryCreateTacticalJob(Pawn pawn, Thing target, JobDef sourceJobDef, out Job tacticalJob)
+        {
             tacticalJob = null;
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return false;
             }
@@ -115,16 +128,19 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            float distance = pawn.Position.DistanceTo(target.Position);
-            if (distance <= Math.Max(1.95f, profile.PanicMeleeRange) && ShouldMeleeNow(pawn, target, profile, distance))
+            float distance = pawn.Position.DistanceTo(target.PositionHeld);
+            Pawn targetPawn = target as Pawn;
+            bool targetIsCombatBuilding = target is Building building && AbyssalThreatPawnUtility.IsCombatTurretLikeBuilding(building);
+
+            if (targetPawn != null && distance <= Math.Max(1.95f, profile.PanicMeleeRange) && ShouldMeleeNow(pawn, targetPawn, profile, distance))
             {
-                tacticalJob = MakeMeleeJob(target);
+                tacticalJob = MakeMeleeJob(targetPawn);
                 return true;
             }
 
             if (!profile.HasRangedStance)
             {
-                if (distance <= 1.95f)
+                if (targetIsCombatBuilding || distance <= 1.95f)
                 {
                     tacticalJob = MakeMeleeJob(target);
                     return true;
@@ -141,16 +157,16 @@ namespace AbyssalProtocol
                     return true;
                 }
 
-                if (distance <= Math.Max(1.95f, profile.PanicMeleeRange))
+                if (targetPawn != null && distance <= Math.Max(1.95f, profile.PanicMeleeRange))
                 {
-                    tacticalJob = MakeMeleeJob(target);
+                    tacticalJob = MakeMeleeJob(targetPawn);
                     return true;
                 }
             }
 
             if (HasFireSolution(pawn, target, profile))
             {
-                pawn.rotationTracker?.FaceTarget(target.Position);
+                pawn.rotationTracker?.FaceTarget(target.PositionHeld);
                 if (profile.HoldPositionWhenReady)
                 {
                     pawn.pather?.StopDead();
@@ -163,6 +179,12 @@ namespace AbyssalProtocol
             if (distance <= profile.MaxRange + 2.5f && TryCreateRepositionJob(pawn, target, profile, out Job repositionJob))
             {
                 tacticalJob = repositionJob;
+                return true;
+            }
+
+            if (targetIsCombatBuilding && distance <= Math.Max(6f, profile.MaxRange + 8f))
+            {
+                tacticalJob = MakeMeleeJob(target);
                 return true;
             }
 
@@ -211,7 +233,84 @@ namespace AbyssalProtocol
             return best;
         }
 
-        private static bool TryCreateRepositionJob(Pawn pawn, Pawn target, ABY_AbyssalMonsterCombatProfile profile, out Job job)
+        private static Thing FindClosestPriorityHostileThing(Pawn pawn, float maxDistance, bool requireLineOfSight)
+        {
+            if (pawn?.Map == null)
+            {
+                return null;
+            }
+
+            Thing best = null;
+            float resolvedMax = Math.Max(0.1f, maxDistance);
+            float bestScore = float.MaxValue;
+            float maxDistanceSquared = resolvedMax * resolvedMax;
+
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
+            if (pawns != null)
+            {
+                for (int i = 0; i < pawns.Count; i++)
+                {
+                    Pawn candidate = pawns[i];
+                    if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, candidate))
+                    {
+                        continue;
+                    }
+
+                    float distanceSquared = pawn.Position.DistanceToSquared(candidate.PositionHeld);
+                    if (distanceSquared > maxDistanceSquared)
+                    {
+                        continue;
+                    }
+
+                    if (requireLineOfSight && !GenSight.LineOfSight(pawn.Position, candidate.PositionHeld, pawn.Map))
+                    {
+                        continue;
+                    }
+
+                    float score = distanceSquared;
+                    if (score < bestScore)
+                    {
+                        bestScore = score;
+                        best = candidate;
+                    }
+                }
+            }
+
+            IReadOnlyList<Building> buildings = ABY_RuntimeTargetCache.CombatTargetBuildingsFor(pawn.Map);
+            if (buildings != null)
+            {
+                for (int i = 0; i < buildings.Count; i++)
+                {
+                    Building building = buildings[i];
+                    if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, building))
+                    {
+                        continue;
+                    }
+
+                    float distanceSquared = pawn.Position.DistanceToSquared(building.PositionHeld);
+                    if (distanceSquared > maxDistanceSquared)
+                    {
+                        continue;
+                    }
+
+                    if (requireLineOfSight && !GenSight.LineOfSight(pawn.Position, building.PositionHeld, pawn.Map))
+                    {
+                        continue;
+                    }
+
+                    float score = Mathf.Max(0f, distanceSquared - CombatBuildingThreatBias * CombatBuildingThreatBias);
+                    if (score < bestScore)
+                    {
+                        bestScore = score;
+                        best = building;
+                    }
+                }
+            }
+
+            return best;
+        }
+
+        private static bool TryCreateRepositionJob(Pawn pawn, Thing target, ABY_AbyssalMonsterCombatProfile profile, out Job job)
         {
             job = null;
             if (!TryFindFiringCell(pawn, target, profile, out IntVec3 firingCell))
@@ -223,11 +322,11 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private static bool TryFindFiringCell(Pawn pawn, Pawn target, ABY_AbyssalMonsterCombatProfile profile, out IntVec3 firingCell)
+        private static bool TryFindFiringCell(Pawn pawn, Thing target, ABY_AbyssalMonsterCombatProfile profile, out IntVec3 firingCell)
         {
             firingCell = IntVec3.Invalid;
             Map map = pawn?.Map;
-            if (map == null || target == null)
+            if (map == null || target == null || target.Destroyed)
             {
                 return false;
             }
@@ -246,13 +345,13 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float targetDistance = cell.DistanceTo(target.Position);
+                float targetDistance = cell.DistanceTo(target.PositionHeld);
                 if (targetDistance < Math.Max(0f, profile.MinRange) || targetDistance > Math.Max(2f, profile.MaxRange))
                 {
                     continue;
                 }
 
-                if (!GenSight.LineOfSight(cell, target.Position, map))
+                if (!GenSight.LineOfSight(cell, target.PositionHeld, map))
                 {
                     continue;
                 }
@@ -281,20 +380,20 @@ namespace AbyssalProtocol
             return firingCell.IsValid;
         }
 
-        private static bool HasFireSolution(Pawn pawn, Pawn target, ABY_AbyssalMonsterCombatProfile profile)
+        private static bool HasFireSolution(Pawn pawn, Thing target, ABY_AbyssalMonsterCombatProfile profile)
         {
-            if (!AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            if (!AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return false;
             }
 
-            float distance = pawn.Position.DistanceTo(target.Position);
+            float distance = pawn.Position.DistanceTo(target.PositionHeld);
             if (distance < Math.Max(0f, profile.MinRange) || distance > Math.Max(2f, profile.MaxRange))
             {
                 return false;
             }
 
-            return GenSight.LineOfSight(pawn.Position, target.Position, pawn.Map);
+            return GenSight.LineOfSight(pawn.Position, target.PositionHeld, pawn.Map);
         }
 
         private static bool ShouldMeleeNow(Pawn pawn, Pawn target, ABY_AbyssalMonsterCombatProfile profile, float distance)
@@ -317,21 +416,21 @@ namespace AbyssalProtocol
             return distance <= Math.Max(1.95f, profile.PanicMeleeRange);
         }
 
-        private static Pawn ResolveJobTargetPawn(Pawn pawn, Job job)
+        private static Thing ResolveJobTargetThing(Pawn pawn, Job job)
         {
             if (job == null)
             {
                 return null;
             }
 
-            Pawn target = job.targetA.Thing as Pawn;
-            if (AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            Thing target = job.targetA.Thing;
+            if (AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return target;
             }
 
-            target = job.targetB.Thing as Pawn;
-            if (AbyssalThreatPawnUtility.IsValidHostileTarget(pawn, target))
+            target = job.targetB.Thing;
+            if (AbyssalThreatPawnUtility.IsValidHostileThingTarget(pawn, target))
             {
                 return target;
             }
@@ -339,7 +438,7 @@ namespace AbyssalProtocol
             return null;
         }
 
-        private static Job MakeMeleeJob(Pawn target)
+        private static Job MakeMeleeJob(Thing target)
         {
             Job melee = JobMaker.MakeJob(JobDefOf.AttackMelee, target);
             melee.expiryInterval = MeleeJobExpiry;

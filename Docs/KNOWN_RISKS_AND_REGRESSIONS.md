@@ -395,24 +395,25 @@ In-game checks:
 - Place modular turrets and spawn Abyssal Host pawns; turrets should acquire and fire without relation red errors.
 - Test Choir/Null/Halo/Warden AoE effects and turret projectile impacts; effects should hit enemies and avoid allies without relation red errors.
 
-## 2026-05-19 — Dominion combat relation and held-map impact-sound guard
+## 2026-05-19 — Modular turret aggro regression
 
-Observed after TPS/faction safety work:
+Observed behavior:
 
-- Vanilla melee and projectile damage can still call `Faction.RelationWith` directly from `PreApplyDamage`, bypassing Abyssal safe hostility helpers.
-- Dominion pocket combat can trigger `ImpactSoundUtility.PlayImpactSound` null references when a hit thing or pocket map is in an unusual held/unparented transition state.
-- External trait-behavior think nodes can throw on custom Abyssal hostile pawns and spam yellow warnings even when a finalizer safely converts the result to `NoJob`.
+- Abyssal monsters could ignore player modular turrets after weapon modules were installed.
+
+Cause:
+
+- The modular turret is a custom comp-driven building, not necessarily a vanilla `Building_Turret` target from the perspective of every pawn AI path.
+- The TPS cache pass made many target selectors pawn-cache first, so enemies that did not have dedicated building targeting could continue to prefer only colonist pawns.
 
 Regression rules:
 
-- Do not rely only on replacing `HostileTo` call sites; hidden encounter factions must also have repaired vanilla relation rows for vanilla melee/damage paths.
-- Keep `ABY_FactionRelationRepairGameComponent` and `HarmonyPatch_ABY_FactionRelationRepair_RelationWith` together: the game component repairs existing saves, while the Harmony prefix catches late/generated relation checks before vanilla logs red errors.
-- If Dominion combat damage breaks in `ImpactSoundUtility`, treat the sound as optional presentation and suppress only the sound exception, not the damage logic.
-- Abyssal hostile pawns should not run colonist-style trait-behavior think nodes from external mods; they use Abyssal combat AI and should fail closed to `ThinkResult.NoJob`.
+- Combat-capable modular turrets must be included in `ABY_RuntimeTargetCache.CombatTargetBuildingsFor` when they have a main weapon module installed.
+- Abyssal monster brain and ranged shooter comps should consider hostile combat buildings through shared helpers, not by scanning `AllThings`.
+- Do not make every decorative or passive building a monster target; only turret-like/weaponized defenses should be promoted to combat-building threat targets by default.
 
 In-game checks:
 
-- Load an existing save with `ABY_AbyssalHost` already present and fight in melee; verify no `null relation with PlayerColony` red errors appear.
-- Enter Dominion Slice, allow Chain Zealots and Hexgun Thralls to hit colonists; verify damage applies without `ImpactSoundUtility`/`PositionHeld` red errors.
-- Spawn 30+ Abyssal pawns in a large modpack; verify no repeated yellow `Suppressed ThinkNode_TraitBehaviors exception` warnings appear.
-- Select the Great Infernal Gate entry gizmo in Russian and English; verify the safe entry command shows a short localized label, not the raw key.
+- Install a main weapon module on an Abyssal modular turret, spawn melee Abyssal pawns nearby, and verify at least some of them path to attack the turret when it is the nearest/most relevant threat.
+- Spawn Hexgun Thralls, Rift Sappers, and Siege Idols against a base with modular turrets and colonists; verify they can target/fire at modular turrets without ignoring colonists forever.
+- Remove the main weapon module or depower the turret and verify enemies do not over-prioritize it as a combat threat.

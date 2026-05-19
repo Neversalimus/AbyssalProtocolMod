@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RimWorld;
 using Verse;
 
 namespace AbyssalProtocol
@@ -17,6 +18,7 @@ namespace AbyssalProtocol
 
         private static readonly IReadOnlyList<Pawn> EmptyPawnList = new List<Pawn>(0);
         private static readonly IReadOnlyList<Thing> EmptyThingList = new List<Thing>(0);
+        private static readonly IReadOnlyList<Building> EmptyBuildingList = new List<Building>(0);
         private static readonly Dictionary<int, MapCache> CachesByMapId = new Dictionary<int, MapCache>();
 
         private sealed class MapCache
@@ -26,6 +28,7 @@ namespace AbyssalProtocol
             public int lastSeenTick;
             public readonly List<Pawn> spawnedLivingPawns = new List<Pawn>(96);
             public readonly List<Pawn> combatTargetPawns = new List<Pawn>(96);
+            public readonly List<Building> combatTargetBuildings = new List<Building>(24);
             public readonly Dictionary<int, Thing> thingsById = new Dictionary<int, Thing>(256);
         }
 
@@ -39,6 +42,12 @@ namespace AbyssalProtocol
         {
             MapCache cache = ResolveCache(map);
             return cache != null ? cache.combatTargetPawns : EmptyPawnList;
+        }
+
+        public static IReadOnlyList<Building> CombatTargetBuildingsFor(Map map)
+        {
+            MapCache cache = ResolveCache(map);
+            return cache != null ? cache.combatTargetBuildings : EmptyBuildingList;
         }
 
         public static IReadOnlyList<Thing> SpawnedThingsOfDefName(Map map, string defName)
@@ -152,6 +161,7 @@ namespace AbyssalProtocol
         {
             cache.spawnedLivingPawns.Clear();
             cache.combatTargetPawns.Clear();
+            cache.combatTargetBuildings.Clear();
 
             IReadOnlyList<Pawn> pawns = map.mapPawns?.AllPawnsSpawned;
             if (pawns != null)
@@ -173,8 +183,50 @@ namespace AbyssalProtocol
                 }
             }
 
+
+
+            List<Building> buildings = map.listerBuildings?.allBuildingsColonist;
+            if (buildings != null)
+            {
+                for (int i = 0; i < buildings.Count; i++)
+                {
+                    Building building = buildings[i];
+                    if (building == null || building.Destroyed || !building.Spawned || building.MapHeld != map || building.Faction == null)
+                    {
+                        continue;
+                    }
+
+                    if (IsRuntimeCombatBuilding(building))
+                    {
+                        cache.combatTargetBuildings.Add(building);
+                    }
+                }
+            }
+
             int stagger = Math.Abs(map.uniqueID % 7);
             cache.nextPawnRefreshTick = now + PawnRefreshIntervalTicks + stagger;
+        }
+
+        private static bool IsRuntimeCombatBuilding(Building building)
+        {
+            if (building == null || building.Destroyed || building.def == null)
+            {
+                return false;
+            }
+
+            if (building is Building_Turret)
+            {
+                return true;
+            }
+
+            Type thingClass = building.def.thingClass;
+            if (thingClass != null && typeof(Building_Turret).IsAssignableFrom(thingClass))
+            {
+                return true;
+            }
+
+            CompAbyssalModularTurret modularTurret = building.TryGetComp<CompAbyssalModularTurret>();
+            return modularTurret != null && modularTurret.HasMainWeapon;
         }
 
         private static void RefreshThingIdCache(Map map, MapCache cache, int now)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -123,9 +124,10 @@ namespace AbyssalProtocol
 
             if (Props.preferBuildingTargets)
             {
-                foreach (Thing thing in pawn.Map.listerThings.AllThings)
+                IReadOnlyList<Building> buildings = ABY_RuntimeTargetCache.CombatTargetBuildingsFor(pawn.Map);
+                for (int i = 0; i < buildings.Count; i++)
                 {
-                    Building building = thing as Building;
+                    Building building = buildings[i];
                     if (!CanConsiderBuildingTarget(pawn, building))
                     {
                         continue;
@@ -140,7 +142,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
             if (pawns == null)
             {
                 return best;
@@ -245,13 +247,13 @@ namespace AbyssalProtocol
 
         private int CountNearbyPlayerPawns(Map map, IntVec3 center, float radius)
         {
-            if (map?.mapPawns?.AllPawnsSpawned == null)
+            if (map == null)
             {
                 return 0;
             }
 
             int count = 0;
-            var pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];

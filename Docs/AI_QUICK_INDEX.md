@@ -217,16 +217,16 @@ Start here when logs mention `Faction ... has null relation with PlayerColony`, 
 
 Rule: do not call vanilla `HostileTo` directly in ABY hidden-faction hot paths. Use `ABY_FactionHostilityUtility.SafeHostileTo(...)`.
 
-### Hidden faction relation / Dominion combat regression guards
+## Modular turret aggro / monsters ignoring turrets
 
-Look first:
+Start here when Abyssal enemies ignore player modular turrets or only attack colonists:
 
-- `source/Core/Runtime/ABY_FactionHostilityUtility.cs`
-- `source/Core/Runtime/ABY_FactionRelationRepairGameComponent.cs`
-- `source/Core/Runtime/HarmonyPatch_ABY_FactionRelationRepair.cs`
-- `source/Compatibility/HarmonyPatch_ABY_DominionImpactSoundGuard.cs`
-- `source/Compatibility/HarmonyPatch_ABY_AbyssalThinkNodeTraitGuard.cs`
-- `source/Compatibility/ABY_LargeModpackCompatPatches.cs`
-- `source/Dominion/CompABY_DominionGateSafePocket.cs`
+- `source/Core/Runtime/ABY_RuntimeTargetCache.cs`
+- `source/Encounters/AbyssalThreatPawnUtility.cs`
+- `source/Pawns/ABY_AbyssalMonsterBrain.cs`
+- `source/Comps/CompHexgunThrallShooter.cs`
+- `source/Comps/CompABY_RiftSapperShooter.cs`
+- `source/Comps/CompABY_SiegeIdolSiegeShooter.cs`
+- `source/Comps/CompAbyssalModularTurret.cs`
 
-Use these when debugging `Faction ... has null relation with PlayerColony`, Dominion pocket melee/projectile damage null refs, repeated trait-behavior warning spam on Abyssal pawns, or raw safe gate command labels.
+Rule: Abyssal modular turrets are custom comp-driven combat buildings, not guaranteed vanilla turret classes. Use the runtime combat-building cache and `IsCombatTurretLikeBuilding` rather than checking only `Building_Turret` or pawn targets.

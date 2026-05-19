@@ -535,11 +535,10 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - Fixed red errors where `ABY_AbyssalHost` or blank generated hidden factions could have no relation row with `PlayerColony` during turret scans or Reactor Saint arrival aggression.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
 
-## 2026-05-19 — Dominion combat relation and UI regression fix
+## 2026-05-19 — Modular turret aggro fix
 
-- Added persistent Abyssal faction relation repair through `ABY_FactionRelationRepairGameComponent` and a Harmony prefix on `Faction.RelationWith`.
-- Hidden `ABY_AbyssalHost` factions now get hostile relation rows with `PlayerColony`, protecting vanilla melee/projectile damage paths that never call Abyssal safe hostility helpers.
-- Added an impact-sound finalizer guard for Abyssal/Dominion combat contexts to prevent optional vanilla impact sound playback from breaking damage ticks on transitioning or unparented Dominion pocket maps.
-- Added a direct TraitBehaviors think-node prefix for Abyssal hostile pawns and made the older large-modpack finalizer silent, preventing repeated yellow warning spam during large waves.
-- Added localized safe Dominion gate command labels/descriptions and shortened the safe entry gizmo label to avoid raw key wrapping on the command button.
+- Extended `ABY_RuntimeTargetCache` with a cached combat-building list for player-owned vanilla turrets and Abyssal modular turrets with installed main weapon modules.
+- Added shared threat helpers for hostile combat-building selection in `AbyssalThreatPawnUtility`.
+- Updated `ABY_AbyssalMonsterBrain` so Abyssal pawns can create tactical melee/reposition/hold jobs against hostile combat buildings when appropriate.
+- Updated Hexgun-style shooters, Rift Sappers, and Siege Idols to consider cached combat buildings and cached pawn lists without returning to broad `AllThings` scans.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.

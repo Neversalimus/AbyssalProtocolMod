@@ -378,7 +378,7 @@ namespace AbyssalProtocol
 
             if (Props.preferBuildingTargets)
             {
-                List<Building> buildings = pawn.Map.listerBuildings?.allBuildingsColonist;
+                IReadOnlyList<Building> buildings = ABY_RuntimeTargetCache.CombatTargetBuildingsFor(pawn.Map);
                 if (buildings != null)
                 {
                     for (int i = 0; i < buildings.Count; i++)
@@ -399,7 +399,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            IReadOnlyList<Pawn> pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
             if (pawns == null)
             {
                 return best;
@@ -487,13 +487,13 @@ namespace AbyssalProtocol
 
         private int CountNearbyPlayerPawns(Map map, IntVec3 center, float radius)
         {
-            if (map?.mapPawns?.AllPawnsSpawned == null)
+            if (map == null)
             {
                 return 0;
             }
 
             int count = 0;
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];

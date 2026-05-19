@@ -204,6 +204,160 @@ namespace AbyssalProtocol
             return best;
         }
 
+        public static Thing FindBestThingTarget(
+            Pawn pawn,
+            float minRange,
+            float maxRange,
+            bool preferFarthestTargets,
+            bool preferRangedTargets,
+            bool requireRangedTargets,
+            bool includeCombatBuildings,
+            float rangedTargetBias = 0f,
+            float healthWeight = 0f,
+            float combatBuildingBias = 22f)
+        {
+            Pawn bestPawn = FindBestTarget(
+                pawn,
+                minRange,
+                maxRange,
+                preferFarthestTargets,
+                preferRangedTargets,
+                requireRangedTargets,
+                rangedTargetBias,
+                healthWeight);
+
+            Building bestBuilding = includeCombatBuildings
+                ? FindBestHostileCombatBuilding(pawn, minRange, maxRange, preferFarthestTargets, combatBuildingBias)
+                : null;
+
+            if (bestPawn == null)
+            {
+                return bestBuilding;
+            }
+
+            if (bestBuilding == null)
+            {
+                return bestPawn;
+            }
+
+            float pawnDistance = pawn.Position.DistanceTo(bestPawn.PositionHeld);
+            float buildingDistance = pawn.Position.DistanceTo(bestBuilding.PositionHeld);
+            float pawnScore = preferFarthestTargets ? pawnDistance : -pawnDistance;
+            float buildingScore = (preferFarthestTargets ? buildingDistance : -buildingDistance) + Mathf.Max(0f, combatBuildingBias);
+            return buildingScore >= pawnScore ? (Thing)bestBuilding : bestPawn;
+        }
+
+        public static Building FindBestHostileCombatBuilding(Pawn actor, float minRange, float maxRange, bool preferFarthestTargets, float scoreBias = 0f)
+        {
+            if (actor?.Map == null)
+            {
+                return null;
+            }
+
+            IReadOnlyList<Building> buildings = ABY_RuntimeTargetCache.CombatTargetBuildingsFor(actor.Map);
+            if (buildings == null || buildings.Count == 0)
+            {
+                return null;
+            }
+
+            Building best = null;
+            float bestScore = preferFarthestTargets ? float.MinValue : float.MaxValue;
+            float resolvedMinRange = Mathf.Max(0f, minRange);
+            float resolvedMaxRange = maxRange > 0f ? maxRange : float.MaxValue;
+            float minRangeSquared = resolvedMinRange * resolvedMinRange;
+            float maxRangeSquared = resolvedMaxRange >= 9999f ? float.MaxValue : resolvedMaxRange * resolvedMaxRange;
+
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                Building building = buildings[i];
+                if (!IsValidHostileThingTarget(actor, building))
+                {
+                    continue;
+                }
+
+                float distanceSquared = actor.Position.DistanceToSquared(building.PositionHeld);
+                if (distanceSquared < minRangeSquared || distanceSquared > maxRangeSquared)
+                {
+                    continue;
+                }
+
+                if (!GenSight.LineOfSight(actor.Position, building.PositionHeld, actor.Map))
+                {
+                    continue;
+                }
+
+                float distance = Mathf.Sqrt(distanceSquared);
+                float score = preferFarthestTargets ? distance : distance;
+                if (IsCombatTurretLikeBuilding(building))
+                {
+                    score += preferFarthestTargets ? Mathf.Max(0f, scoreBias) : -Mathf.Max(0f, scoreBias);
+                }
+
+                if (preferFarthestTargets)
+                {
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        best = building;
+                    }
+                }
+                else if (score < bestScore)
+                {
+                    bestScore = score;
+                    best = building;
+                }
+            }
+
+            return best;
+        }
+
+        public static Thing FindClosestHostileThingWithin(Pawn actor, float maxDistance, bool includeCombatBuildings, bool requireLineOfSight = false)
+        {
+            if (actor?.Map == null)
+            {
+                return null;
+            }
+
+            Thing best = FindClosestThreatWithin(actor, maxDistance);
+            float bestDistanceSquared = best != null ? actor.Position.DistanceToSquared(best.PositionHeld) : maxDistance * maxDistance;
+
+            if (!includeCombatBuildings)
+            {
+                return best;
+            }
+
+            IReadOnlyList<Building> buildings = ABY_RuntimeTargetCache.CombatTargetBuildingsFor(actor.Map);
+            if (buildings == null || buildings.Count == 0)
+            {
+                return best;
+            }
+
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                Building building = buildings[i];
+                if (!IsValidHostileThingTarget(actor, building))
+                {
+                    continue;
+                }
+
+                float distanceSquared = actor.Position.DistanceToSquared(building.PositionHeld);
+                if (distanceSquared > bestDistanceSquared)
+                {
+                    continue;
+                }
+
+                if (requireLineOfSight && !GenSight.LineOfSight(actor.Position, building.PositionHeld, actor.Map))
+                {
+                    continue;
+                }
+
+                bestDistanceSquared = distanceSquared;
+                best = building;
+            }
+
+            return best;
+        }
+
         public static Pawn FindClosestThreatWithin(Pawn pawn, float maxDistance)
         {
             if (pawn?.Map == null)
@@ -269,6 +423,54 @@ namespace AbyssalProtocol
                 float moveCost = pawn.Position.DistanceTo(cell);
                 float score = (threatDistance * 2.8f) - (moveCost * 0.75f);
                 if (GenSight.LineOfSight(cell, threat.Position, map))
+                {
+                    score += 1.6f;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    retreatCell = cell;
+                }
+            }
+
+            return retreatCell.IsValid;
+        }
+
+        public static bool TryFindRetreatCell(Pawn pawn, Thing threat, float preferredMinRange, int searchRadius, out IntVec3 retreatCell)
+        {
+            retreatCell = IntVec3.Invalid;
+            Map map = pawn?.Map;
+            if (map == null || threat == null || threat.Destroyed || threat.MapHeld != map)
+            {
+                return false;
+            }
+
+            if (threat is Pawn threatPawn)
+            {
+                return TryFindRetreatCell(pawn, threatPawn, preferredMinRange, searchRadius, out retreatCell);
+            }
+
+            float currentDistance = pawn.Position.DistanceTo(threat.PositionHeld);
+            float bestScore = float.MinValue;
+            int radius = Mathf.Max(4, searchRadius);
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(pawn.Position, radius, true))
+            {
+                if (!cell.InBounds(map) || !cell.Standable(map) || CellHasOtherPawn(cell, map, pawn))
+                {
+                    continue;
+                }
+
+                float threatDistance = cell.DistanceTo(threat.PositionHeld);
+                if (threatDistance <= currentDistance + 1.9f || threatDistance < preferredMinRange + 1.2f)
+                {
+                    continue;
+                }
+
+                float moveCost = pawn.Position.DistanceTo(cell);
+                float score = (threatDistance * 2.8f) - (moveCost * 0.75f);
+                if (GenSight.LineOfSight(cell, threat.PositionHeld, map))
                 {
                     score += 1.6f;
                 }

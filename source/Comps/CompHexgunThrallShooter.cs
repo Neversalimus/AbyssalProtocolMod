@@ -120,7 +120,7 @@ namespace AbyssalProtocol
             }
 
             nextSearchTick = ticksGame + Math.Max(5, Props.scanIntervalTicks);
-            Pawn target = FindBestTarget(pawn);
+            Thing target = FindBestTarget(pawn);
             if (target == null)
             {
                 return;
@@ -165,26 +165,28 @@ namespace AbyssalProtocol
             return ABY_AbyssalRangedBrain.CanOperateHostilePawn(pawn);
         }
 
-        private Pawn FindBestTarget(Pawn pawn)
+        private Thing FindBestTarget(Pawn pawn)
         {
             float minimumTargetRange = Props.targetMinRange >= 0f
                 ? Props.targetMinRange
                 : Mathf.Max(0f, Props.preferredMinRange);
 
-            return AbyssalThreatPawnUtility.FindBestTarget(
+            return AbyssalThreatPawnUtility.FindBestThingTarget(
                 pawn,
                 minimumTargetRange,
                 Props.range,
                 Props.preferFarthestTargets,
                 Props.preferRangedTargets,
                 false,
+                true,
                 4.5f,
-                0f);
+                0f,
+                26f);
         }
 
         private bool CanFireAt(Pawn shooter, Thing target)
         {
-            return ABY_AbyssalRangedBrain.HasPawnFireSolution(shooter, target, 0f, Props.range);
+            return ABY_AbyssalRangedBrain.HasThingFireSolution(shooter, target, 0f, Props.range);
         }
 
         private bool TryMaintainSpacing(Pawn pawn)

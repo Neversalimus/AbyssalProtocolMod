@@ -462,8 +462,19 @@ Use this helper in Abyssal hot paths where one side can be `ABY_AbyssalHost`, an
 Rules:
 
 1. Prefer `ABY_FactionHostilityUtility.SafeHostileTo(...)` over direct `HostileTo(...)` for ABY target selection and AoE logic.
-2. `ABY_FactionRelationRepairGameComponent` repairs existing-save relation rows, and `HarmonyPatch_ABY_FactionRelationRepair_RelationWith` catches late/generated ABY relation checks before vanilla `RelationWith` can log red errors. Keep these with the hostility utility.
-3. `HarmonyPatch_ABY_DominionImpactSoundGuard` suppresses optional impact-sound null references in Abyssal/Dominion combat contexts only; it must not be expanded into a general damage suppressor.
 2. `ABY_AbyssalHost` is treated as hostile to non-Abyssal factions without calling vanilla `RelationWith` when the relation row is missing.
 3. Missing non-Abyssal relation rows fall back conservatively instead of spamming red errors in per-tick target scans.
 4. Do not reintroduce direct hidden-faction `HostileTo` calls into turret, boss, projectile, aura, or runtime-cache code.
+
+## Modular turret threat targeting — 2026-05-19
+
+Player-owned Abyssal modular turrets are not vanilla `Building_Turret` classes; their weapon behavior is owned by `source/Comps/CompAbyssalModularTurret.cs`. Because of that, vanilla and generic Abyssal pawn targeting can miss them unless the ABY runtime cache and threat utility expose them as combat buildings.
+
+Ownership notes:
+
+- `source/Core/Runtime/ABY_RuntimeTargetCache.cs` now also caches player-owned combat buildings: vanilla turrets and modular turrets with a main weapon module installed.
+- `source/Encounters/AbyssalThreatPawnUtility.cs` owns shared hostile combat-building validation and selection helpers.
+- `source/Pawns/ABY_AbyssalMonsterBrain.cs` may turn stale or missing hostile-pawn jobs into tactical jobs against nearby hostile combat buildings.
+- `source/Comps/CompHexgunThrallShooter.cs`, `source/Comps/CompABY_RiftSapperShooter.cs`, and `source/Comps/CompABY_SiegeIdolSiegeShooter.cs` should use runtime cached pawns/buildings rather than fresh broad map scans.
+
+Regression rule: if a new player defense building is functionally a turret but not a `Building_Turret`, add it to the runtime combat-building path or expose it through an equivalent helper. Do not rely only on vanilla hostile-pawn targeting for Abyssal enemies.
