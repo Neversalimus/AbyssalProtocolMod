@@ -478,3 +478,14 @@ Ownership notes:
 - `source/Comps/CompHexgunThrallShooter.cs`, `source/Comps/CompABY_RiftSapperShooter.cs`, and `source/Comps/CompABY_SiegeIdolSiegeShooter.cs` should use runtime cached pawns/buildings rather than fresh broad map scans.
 
 Regression rule: if a new player defense building is functionally a turret but not a `Building_Turret`, add it to the runtime combat-building path or expose it through an equivalent helper. Do not rely only on vanilla hostile-pawn targeting for Abyssal enemies.
+
+## Hidden/passive structure target filtering — 2026-05-19
+
+Abyssal target selection must distinguish real tactical structures from passive utility overlays. Hidden conduits, hidden cables, invisible wires, and similar utility infrastructure can be indestructible or not meaningful as combat targets.
+
+Shared ownership:
+
+- `source/Encounters/AbyssalThreatPawnUtility.cs` owns building target validation through `IsValidHostileBuildingTarget(...)` and `ShouldIgnoreAsHostileBuildingTarget(...)`.
+- Breach, boss, projectile splash, and monster AI code should call the shared utility before assigning an attack job or applying special anti-structure damage.
+
+Valid structure targets include combat turrets, Abyssal modular turrets with main weapons, doors, real walls, barricades, sandbags, barriers, and other visible/destroyable tactical blockers. Hidden/invisible/conduit/cable/wire utility structures are filtered out unless explicitly combat-capable.

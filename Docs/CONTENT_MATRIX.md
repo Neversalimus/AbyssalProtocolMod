@@ -305,3 +305,9 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | --- | --- | --- | --- | --- | --- |
 | Modular turret combat-building aggro | Implemented | `source/Core/Runtime/ABY_RuntimeTargetCache.cs`, `source/Encounters/AbyssalThreatPawnUtility.cs`, `source/Pawns/ABY_AbyssalMonsterBrain.cs` | `Defs/ThingDefs/ABY_ModularTurrets.xml` | Modular turret install UI/gizmos unchanged | Abyssal enemies now see player modular turrets with installed main weapon modules as hostile combat buildings. |
 | Ranged Abyssal building targeting | Implemented | `source/Comps/CompHexgunThrallShooter.cs`, `source/Comps/CompABY_RiftSapperShooter.cs`, `source/Comps/CompABY_SiegeIdolSiegeShooter.cs` | Enemy pawn XML unchanged | n/a | Hexgun-style shooters, Rift Sappers, and Siege Idols can consider cached combat buildings without reintroducing broad `AllThings` scans. |
+
+## Structure targeting safety — 2026-05-19
+
+| System | Status | Source owner | XML/assets | UI exposure | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Hidden/passive utility structure filter | Implemented | `source/Encounters/AbyssalThreatPawnUtility.cs` | n/a | n/a | Filters hidden conduits/cables/wires/invisible passive utility buildings out of Abyssal monster, boss, and special structure-damage targeting while preserving walls, doors, barricades, barriers, and turrets as valid targets. |

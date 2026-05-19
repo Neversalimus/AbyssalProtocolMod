@@ -124,7 +124,9 @@ namespace AbyssalProtocol
                 || !building.Spawned
                 || building.Destroyed
                 || building.def == null
-                || !building.def.useHitPoints)
+                || !building.def.useHitPoints
+                || !building.def.destroyable
+                || AbyssalThreatPawnUtility.ShouldIgnoreAsHostileBuildingTarget(building))
             {
                 return false;
             }

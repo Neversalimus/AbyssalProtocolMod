@@ -597,13 +597,27 @@ namespace AbyssalProtocol
                 return IsValidHostileTarget(actor, pawnCandidate);
             }
 
-            if (candidate.def == null || !candidate.def.useHitPoints)
+            return candidate is Building building && IsValidHostileBuildingTarget(actor, building, false);
+        }
+
+        public static bool IsValidHostileBuildingTarget(Pawn actor, Building building, bool allowUnfactionedPlayerHomeStructures)
+        {
+            if (actor == null || building == null || building.Destroyed || !building.Spawned)
             {
                 return false;
             }
 
-            Building building = candidate as Building;
-            if (building == null)
+            if (actor.Faction == null || actor.MapHeld == null || building.MapHeld != actor.MapHeld)
+            {
+                return false;
+            }
+
+            if (building.def == null || !building.def.useHitPoints || !building.def.destroyable)
+            {
+                return false;
+            }
+
+            if (building.HitPoints <= 0 || building.MaxHitPoints <= 0)
             {
                 return false;
             }
@@ -613,12 +627,22 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (candidate.Faction == null)
+            if (building.Faction != null)
+            {
+                return ABY_FactionHostilityUtility.SafeHostileTo(actor.Faction, building.Faction);
+            }
+
+            if (!allowUnfactionedPlayerHomeStructures || actor.MapHeld == null || !actor.MapHeld.IsPlayerHome)
             {
                 return false;
             }
 
-            return ABY_FactionHostilityUtility.SafeHostileTo(actor.Faction, candidate.Faction);
+            if (building.def.building == null || building.def.building.isNaturalRock)
+            {
+                return false;
+            }
+
+            return IsBreachableUnfactionedPlayerStructure(building);
         }
 
         public static bool IsCombatTurretLikeBuilding(Building building)
@@ -643,16 +667,21 @@ namespace AbyssalProtocol
             return modularTurret != null && modularTurret.HasMainWeapon;
         }
 
-        private static bool ShouldIgnoreAsHostileBuildingTarget(Building building)
+        public static bool ShouldIgnoreAsHostileBuildingTarget(Building building)
         {
             if (building?.def == null)
             {
-                return false;
+                return true;
             }
 
             if (IsCombatTurretLikeBuilding(building) || building is Building_Door)
             {
                 return false;
+            }
+
+            if (!building.def.destroyable || !building.def.useHitPoints)
+            {
+                return true;
             }
 
             string defName = building.def.defName ?? string.Empty;
@@ -670,12 +699,64 @@ namespace AbyssalProtocol
                 return true;
             }
 
+            bool hiddenUtilityLike = ContainsTargetingToken(defName, "hidden")
+                || ContainsTargetingToken(defName, "invisible")
+                || ContainsTargetingToken(label, "hidden")
+                || ContainsTargetingToken(label, "invisible");
+
+            if (hiddenUtilityLike && building.def.fillPercent <= 0.10f && building.TryGetComp<CompPowerTrader>() == null)
+            {
+                return true;
+            }
+
             if (!building.def.selectable && building.def.fillPercent <= 0.05f && building.TryGetComp<CompPowerTrader>() == null)
             {
                 return true;
             }
 
             return false;
+        }
+
+        public static bool IsBreachableUnfactionedPlayerStructure(Building building)
+        {
+            if (building?.def == null || ShouldIgnoreAsHostileBuildingTarget(building))
+            {
+                return false;
+            }
+
+            if (building is Building_Door || IsCombatTurretLikeBuilding(building))
+            {
+                return true;
+            }
+
+            if (building.def.building == null || building.def.building.isNaturalRock)
+            {
+                return false;
+            }
+
+            if (building.def.Fillage == FillCategory.Full)
+            {
+                return true;
+            }
+
+            if (building.def.fillPercent >= 0.45f && building.def.selectable)
+            {
+                return true;
+            }
+
+            return IsBarrierLikeBuilding(building);
+        }
+
+        public static bool IsBarrierLikeBuilding(Building building)
+        {
+            string defName = building?.def?.defName ?? string.Empty;
+            string label = building?.def?.label ?? string.Empty;
+            return ContainsTargetingToken(defName, "Barricade")
+                || ContainsTargetingToken(defName, "Sandbag")
+                || ContainsTargetingToken(defName, "Barrier")
+                || ContainsTargetingToken(label, "barricade")
+                || ContainsTargetingToken(label, "sandbag")
+                || ContainsTargetingToken(label, "barrier");
         }
 
         private static bool ContainsTargetingToken(string value, string token)

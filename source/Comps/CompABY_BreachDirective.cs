@@ -252,7 +252,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (building.Map != pawn.MapHeld || building.def == null || !building.def.useHitPoints)
+            if (building.MapHeld != pawn.MapHeld)
             {
                 return false;
             }
@@ -262,27 +262,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (building == currentBreachTarget)
-            {
-                return true;
-            }
-
-            Faction pawnFaction = pawn.Faction;
-            Faction buildingFaction = building.Faction;
-            if (pawnFaction != null && buildingFaction != null)
-            {
-                return ABY_FactionHostilityUtility.SafeHostileTo(pawnFaction, buildingFaction);
-            }
-
-            if (buildingFaction == null && pawn.MapHeld != null && pawn.MapHeld.IsPlayerHome)
-            {
-                if (building.def.building != null && !building.def.building.isNaturalRock)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(pawn, building, true);
         }
 
         private bool IsStillValidBreachTarget(Pawn pawn, Thing thing, float preserveRange)
@@ -346,10 +326,7 @@ namespace AbyssalProtocol
 
         private static bool IsBarrierLike(Building building)
         {
-            string defName = building.def?.defName ?? string.Empty;
-            return defName.IndexOf("Barricade", System.StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Sandbag", System.StringComparison.OrdinalIgnoreCase) >= 0
-                || defName.IndexOf("Barrier", System.StringComparison.OrdinalIgnoreCase) >= 0;
+            return AbyssalThreatPawnUtility.IsBarrierLikeBuilding(building);
         }
 
         private bool IsThinWallLike(Building building)

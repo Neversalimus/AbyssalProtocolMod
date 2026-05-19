@@ -161,7 +161,9 @@ namespace AbyssalProtocol
                 && building.Spawned
                 && !building.Destroyed
                 && building.def != null
-                && building.def.useHitPoints;
+                && building.def.useHitPoints
+                && building.def.destroyable
+                && !AbyssalThreatPawnUtility.ShouldIgnoreAsHostileBuildingTarget(building);
         }
 
         private void DrawPlane(Vector3 center, float angle, Vector3 scale, Material material)

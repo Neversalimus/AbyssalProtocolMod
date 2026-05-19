@@ -230,3 +230,14 @@ Start here when Abyssal enemies ignore player modular turrets or only attack col
 - `source/Comps/CompAbyssalModularTurret.cs`
 
 Rule: Abyssal modular turrets are custom comp-driven combat buildings, not guaranteed vanilla turret classes. Use the runtime combat-building cache and `IsCombatTurretLikeBuilding` rather than checking only `Building_Turret` or pawn targets.
+
+## Monsters or bosses attack hidden cables / invisible utility structures
+
+Start here when Abyssal pawns choose immortal/passive structures such as hidden conduits, hidden cables, invisible utility overlays, or other non-combat infrastructure as attack targets:
+
+- `source/Encounters/AbyssalThreatPawnUtility.cs`
+- `source/Comps/CompABY_BreachDirective.cs`
+- `source/Bosses/ReactorSaint/Comps/CompABY_ReactorSaintShooter.cs`
+- structure-bonus projectile files under `source/Combat/Projectiles/`
+
+Rule: use `AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(...)` for target assignment and `ShouldIgnoreAsHostileBuildingTarget(...)` before special structure damage. Do not target hidden/invisible/conduit/cable/wire structures unless they are explicit combat turrets.

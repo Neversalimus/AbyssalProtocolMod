@@ -542,3 +542,10 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - Updated `ABY_AbyssalMonsterBrain` so Abyssal pawns can create tactical melee/reposition/hold jobs against hostile combat buildings when appropriate.
 - Updated Hexgun-style shooters, Rift Sappers, and Siege Idols to consider cached combat buildings and cached pawn lists without returning to broad `AllThings` scans.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
+
+## 2026-05-19 — Hidden utility structure targeting guard
+
+- Centralized hidden/passive structure filtering in `AbyssalThreatPawnUtility`.
+- Breach directive target selection now uses the shared hostile building validator instead of accepting all player-home unfactioned structures.
+- Reactor Saint melee structure-crush and several structure splash bonus paths now ignore hidden/invisible/conduit/cable/wire utility buildings.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.

@@ -417,3 +417,26 @@ In-game checks:
 - Install a main weapon module on an Abyssal modular turret, spawn melee Abyssal pawns nearby, and verify at least some of them path to attack the turret when it is the nearest/most relevant threat.
 - Spawn Hexgun Thralls, Rift Sappers, and Siege Idols against a base with modular turrets and colonists; verify they can target/fire at modular turrets without ignoring colonists forever.
 - Remove the main weapon module or depower the turret and verify enemies do not over-prioritize it as a combat threat.
+
+## 2026-05-19 — Hidden utility structure targeting regression
+
+Observed behavior:
+
+- Breach-oriented Abyssal pawns could choose invisible/hidden utility structures such as hidden power cables as their breach target.
+- These structures can be indestructible or functionally non-combat, causing monsters to waste time attacking a target that should never be a tactical objective.
+
+Cause:
+
+- Some breach and structure-damage paths validated buildings only through broad `useHitPoints` / player-home checks instead of the shared hostile building target filter.
+- The modular turret aggro fix correctly promoted weaponized defenses as targets, but breach logic still allowed passive/hidden structures in its separate all-building scan.
+
+Regression rules:
+
+- New monster, boss, projectile, or breach code must use `AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(...)` or `ShouldIgnoreAsHostileBuildingTarget(...)` before assigning an AttackMelee job or applying special anti-structure damage.
+- Hidden/invisible/conduit/cable/wire utility buildings are never valid Abyssal tactical targets unless they are explicitly combat-capable turrets.
+- Doors, walls, barricades, sandbags, barriers, and real turret-like defenses remain valid targets.
+
+In-game checks:
+
+- Spawn Breach Brutes/Chain Zealots near hidden cables and visible walls/doors. They should choose walls, doors, turrets, barricades, colonists, or other real targets, not hidden cables.
+- Spawn Reactor Saint / Rift Sappers / Siege Idols near hidden cables and player defenses. Their bonus structure damage should not repeatedly target hidden utility objects.

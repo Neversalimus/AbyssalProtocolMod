@@ -203,7 +203,7 @@ namespace AbyssalProtocol
             float bestDistance = float.MaxValue;
             foreach (Building building in pawn.MapHeld.listerBuildings.allBuildingsColonist)
             {
-                if (building == null || building.Destroyed)
+                if (!AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(pawn, building, true))
                 {
                     continue;
                 }

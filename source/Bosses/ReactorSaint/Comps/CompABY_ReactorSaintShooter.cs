@@ -1446,7 +1446,7 @@ namespace AbyssalProtocol
             }
 
             Building building = pawn.CurJob.targetA.Thing as Building;
-            if (!IsValidStructureTarget(building))
+            if (!IsValidStructureTarget(pawn, building))
             {
                 return;
             }
@@ -1470,13 +1470,9 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(building.DrawPos, pawn.Map);
         }
 
-        private static bool IsValidStructureTarget(Building building)
+        private static bool IsValidStructureTarget(Pawn pawn, Building building)
         {
-            return building != null
-                && building.Spawned
-                && !building.Destroyed
-                && building.def != null
-                && building.def.useHitPoints;
+            return AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(pawn, building, true);
         }
 
         private int GetWarmupTicksForCurrentMode()
