@@ -51,6 +51,7 @@ Actual code and assets win over this document.
 | Creating uppercase `Source/` | P0 | repository layout | Case-sensitive duplicate path on GitHub/Linux; local Windows confusion | Use lowercase `source/` only. |
 | Shipping DLL without matching source | P0 | patch packaging | Future development loses source parity | Any C# change must include full changed `.cs` files and DLL only if build verified. |
 | Claiming build success without actual build | P0 | workflow | False confidence, broken mod package | Only state Build verified after real `dotnet build` success. |
+| Compiling `AbyssalProtocol.dll` against .NET Core/.NET 9 reference assemblies | P0 | build/runtime | RimWorld load shows `ReflectionTypeLoadException`, then many `Could not find type named AbyssalProtocol...` XML errors | For emergency Roslyn builds, use bundled .NET Framework-style references: `mscorlib.dll`, `System.dll`, `System.Core.dll`, RimWorld `Assembly-CSharp.dll`, Unity modules, and Harmony. Verify assembly refs do not include `System.Runtime, Version=9.0.0.0`. |
 | Including `source/bin/` or `source/obj/` in delta zips | P2 | packaging | Dirty archives, confusing generated code | Exclude build artifacts from user-facing zips. |
 | Ignoring local archive priority when user says it is current | P1 | workflow | Work based on stale GitHub state | Use local archive first when explicitly current/up to date. |
 | Using docs as authority over actual code | P1 | workflow | Wrong path or stale assumption | Docs are maps; actual archive files win. |

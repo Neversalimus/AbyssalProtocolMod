@@ -1,5 +1,24 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-20 — Emergency rebuild for monster info-card icon regression
+- The previous monster info-card icon patch accidentally shipped a DLL compiled against .NET 9 reference assemblies. RimWorld/Mono then failed type discovery with `ReflectionTypeLoadException`, causing many XML class/type lookup red errors at load.
+- Rebuilt `Assemblies/AbyssalProtocol.dll` against the bundled RimWorld/Unity/Harmony libraries and .NET Framework-style `mscorlib`/`System.Core` references only.
+- Replaced the runtime icon normalizer with a no-op compatibility stub and moved monster info-card icon sizing into explicit ThingDef `uiIconScale` / `uiIconOffset` XML values.
+- This keeps the visual fix while removing the risky startup/static-constructor path.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/UI/Shared/ABY_MonsterInfoCardIconNormalizer.cs
+Defs/ThingDefs/ABY_* hostile pawn XML files
+Docs/BUILD_AND_SOURCE_LAYOUT.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
+Build verified with direct Roslyn compile using bundled `Libraries/mscorlib.dll`, `Libraries/System.dll`, `Libraries/System.Core.dll`, RimWorld `Assembly-CSharp.dll`, Unity modules, and Harmony. The rebuilt assembly references `mscorlib 4.0.0.0` / `System.Core 4.0.0.0`, not `System.Runtime 9.0.0.0`.
+
 ## 2026-05-19 — Monster info-card icon normalization
 - Added a runtime normalization pass for hostile Abyssal pawn info-card icons so oversized pawn portraits no longer overlap or crowd the monster name in the vanilla info card header.
 - All hostile Abyssal pawn ThingDefs now receive a unified `uiIconScale` based on their actual draw size, with a stricter ceiling for exceptionally large boss profiles.

@@ -7,6 +7,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.50</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/SiegeIdol/ABY_SiegeIdol</texPath>
       <graphicClass>Graphic_Multi</graphicClass>

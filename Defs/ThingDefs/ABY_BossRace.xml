@@ -7,6 +7,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.73</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/ArchonBeast/ArchonBeast</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -130,6 +132,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.66</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/ArchonBeastReliquary/ArchonBeastReliquary</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -251,6 +255,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.51</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/ArchonOfRupture/ArchonOfRupture</texPath>
       <graphicClass>Graphic_Multi</graphicClass>

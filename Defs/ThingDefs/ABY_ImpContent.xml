@@ -7,6 +7,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.86</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/RiftImp/ABY_RiftImp</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
@@ -103,6 +105,8 @@
     <thingClass>AbyssalProtocol.Building_AbyssalImpPortal</thingClass>
     <category>Building</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.65</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <tickerType>Normal</tickerType>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>
@@ -133,6 +137,8 @@
     <thingClass>AbyssalProtocol.Building_AbyssalRupturePortal</thingClass>
     <category>Building</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.34</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <tickerType>Normal</tickerType>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <drawOffscreen>true</drawOffscreen>

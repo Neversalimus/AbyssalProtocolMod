@@ -8,6 +8,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.73</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/WardenOfAsh/WardenOfAsh</texPath>
       <graphicClass>Graphic_Multi</graphicClass>

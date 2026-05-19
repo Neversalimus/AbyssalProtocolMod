@@ -8,6 +8,8 @@
     <thingClass>Pawn</thingClass>
     <category>Pawn</category>
     <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.34</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
     <graphicData>
       <texPath>Pawn/ChoirEngine/ABY_ChoirEngine</texPath>
       <graphicClass>Graphic_Multi</graphicClass>

@@ -228,3 +228,19 @@ BuildOutput/
 ```
 
 `BuildOutput/` must not be committed as playable mod content unless explicitly requested for a release artifact.
+## Emergency Roslyn build reference rule
+
+When the normal `dotnet build source/AbyssalProtocol.csproj -c Release` path cannot restore/use the .NET Framework reference pack in the sandbox, a direct Roslyn compile is acceptable only if it targets the bundled RimWorld/Unity/Harmony libraries and .NET Framework-style base assemblies.
+
+Required reference shape for the produced DLL:
+
+```text
+mscorlib, Version=4.0.0.0
+System.Core, Version=4.0.0.0
+Assembly-CSharp
+UnityEngine.CoreModule
+0Harmony
+```
+
+Do not compile the mod DLL against `.NET 9` / `Microsoft.NETCore.App.Ref` reference assemblies. A DLL referencing `System.Runtime, Version=9.0.0.0` can load-fail in RimWorld/Mono with `ReflectionTypeLoadException`, which then cascades into many XML `Could not find type named AbyssalProtocol...` red errors.
+
