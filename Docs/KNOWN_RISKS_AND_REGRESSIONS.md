@@ -108,6 +108,7 @@ Actual code and assets win over this document.
 | Phase display stale/wrong | P1 | Boss state/UI | Phase 3 then reverts to Phase 2, or wrong phase text | Source phase from canonical boss state; avoid cached stale display state. |
 | HP numeric updates but fill does not | P1 | Boss bar | Numbers change while bar stays static | Verify fill fraction source and repaint/update path. |
 | Boss selection overlay too large/small | P2 | boss selection | awkward clickable area or debug feel | Use Def-driven boss selection profiles. |
+| Monster info-card header icon too large or inconsistent | P2 | pawn info card / presentation | Monster icon overlaps the name or looks wildly different between hostile Abyssal pawns | Preserve the hostile Abyssal runtime `uiIconScale` normalization pass and regression-test a small, medium, and very large monster info card after sprite or drawSize changes. |
 
 ## Reactor Saint risks
 

@@ -1,5 +1,18 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-19 — Monster info-card icon normalization
+- Added a runtime normalization pass for hostile Abyssal pawn info-card icons so oversized pawn portraits no longer overlap or crowd the monster name in the vanilla info card header.
+- All hostile Abyssal pawn ThingDefs now receive a unified `uiIconScale` based on their actual draw size, with a stricter ceiling for exceptionally large boss profiles.
+- The normalization is automatic and Def-driven, so newly added hostile Abyssal monsters inherit the same clean info-card presentation without per-def hand tuning.
+
+Changed area:
+
+```text
+source/UI/Shared/ABY_MonsterInfoCardIconNormalizer.cs
+```
+
+Keep this runtime pass if new monster sprites are added. Do not reintroduce per-def random icon scaling unless a specific creature genuinely needs a bespoke exception.
+
 ## 2026-05-19 — Performance audit breakdown pass
 - Performance audit window now separates map summary, Abyssal entity breakdown, horde/portal state, Dominion state, and component presence.
 - Added top-count diagnostics for Abyssal PawnKinds, factions, pawn states, ThingDefs, thing categories, and corpse inner pawn kinds.
