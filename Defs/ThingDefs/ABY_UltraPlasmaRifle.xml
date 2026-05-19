@@ -1,20 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_UltraPlasmaRifle</defName>
     <label>ultra plasma rifle</label>
-    <description>An ultra-tech plasma rifle rebuilt from breach records cut out of heraldic architecture. It fires custom cyan plasma bolts with extreme armor penetration. Repeated hits destabilize the target into a short-lived plasma overload.</description>
+    <description>A plasma rifle rebuilt around breach records cut from heraldic architecture. It projects disciplined cyan overfire with extreme armor pressure and leaves the target struggling to contain what was forced through it.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/PlasmaRifle_UHT</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.36,0.47)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <statBases>
       <WorkToMake>90000</WorkToMake>
       <Mass>6.5</Mass>
@@ -24,7 +20,6 @@
       <AccuracyLong>0.46</AccuracyLong>
       <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
     </statBases>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>12</Crafting>
@@ -33,7 +28,6 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
       <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
@@ -41,11 +35,9 @@
       <ComponentSpacer>12</ComponentSpacer>
       <Steel>750</Steel>
     </costList>
-
     <weaponTags>
       <li>SpacerGun</li>
     </weaponTags>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -61,7 +53,6 @@
         <muzzleFlashScale>11</muzzleFlashScale>
       </li>
     </verbs>
-
     <tools>
       <li>
         <label>stock</label>
@@ -81,7 +72,6 @@
         <cooldownTime>2</cooldownTime>
       </li>
     </tools>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>5000</requiredResidue>
@@ -89,7 +79,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_UltraPlasmaBolt</defName>
     <label>ultra plasma bolt</label>
@@ -108,7 +97,6 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_UltraPlasmaBeamBurst</defName>
     <label>ultra plasma beam</label>
@@ -127,5 +115,4 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

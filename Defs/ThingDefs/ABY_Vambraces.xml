@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AshenVambraces</defName>
     <thingClass>Apparel</thingClass>
@@ -40,12 +39,11 @@
       <ArmorRating_Heat>0.06</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_RiftVectorVambraces</defName>
     <thingClass>Apparel</thingClass>
     <label>rift vector vambraces</label>
-    <description>Mid-tier forearm modules that stabilize recoil, tool pressure and melee commitment through paired rift-vector conduits. Violet-red channels across the plates make every movement feel corrected by something just outside normal geometry.</description>
+    <description>Forearm braces that stabilize recoil, tool pressure and melee commitment through paired rift-vector conduits. Violet-red channels across the plates make every movement feel corrected by something just outside normal geometry.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_RiftVectorVambraces</texPath>
@@ -83,7 +81,6 @@
       <ArmorRating_Heat>0.10</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_CrownAuthorityVambraces</defName>
     <thingClass>Apparel</thingClass>
@@ -128,5 +125,4 @@
       <ArmorRating_Heat>0.15</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

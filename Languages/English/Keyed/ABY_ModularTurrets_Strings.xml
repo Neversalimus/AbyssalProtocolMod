@@ -102,11 +102,11 @@
   <ABY_TurretInfo_AuxCooldown>Auxiliary cooldown</ABY_TurretInfo_AuxCooldown>
   <ABY_TurretInfo_CooldownDesc>Time before this module can fire again.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Burst</ABY_TurretInfo_Burst>
-  <ABY_TurretInfo_BurstDesc>Shots released per firing cycle.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstDesc>Number of separate strikes released in one attack.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Burst spacing</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Delay between shots inside a burst.</ABY_TurretInfo_BurstSpacingDesc>
-  <ABY_TurretInfo_Projectile>Shot</ABY_TurretInfo_Projectile>
-  <ABY_TurretInfo_ProjectileDesc>The fired charge or bolt used by this weapon system.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_Projectile>Warhead</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Payload used by the weapon path.</ABY_TurretInfo_ProjectileDesc>
   <ABY_TurretInfo_RangeOffset>Main range offset</ABY_TurretInfo_RangeOffset>
   <ABY_TurretInfo_RangeOffsetDesc>Added to the installed main weapon range.</ABY_TurretInfo_RangeOffsetDesc>
   <ABY_TurretInfo_CooldownMultiplier>Main cooldown modifier</ABY_TurretInfo_CooldownMultiplier>
@@ -140,10 +140,10 @@
   <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Unleashes three rift needles in rapid succession, cutting down lightly armored enemies and pressing back dense swarms before they can close.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
   <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>Plasma Lance Core</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
   <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>anti-armor lance</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Hurls a slower ultra-plasma lance with the reach and pressure needed to crack armor, elite targets and early boss shells.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Hurls a slow ultra-plasma lance built for reach, pressure and the patient cracking of heavy armor.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
   <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>Ash Choir Repeater Core</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>anti-swarm ash repeater</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Rakes the field with five ash-canticle shards, excellent for animals, light enemies and packed abyssal waves, but weak against heavy armor.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Rakes the field with five ash-canticle shards, cruel against animals, light enemies and packed abyssal waves.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>Choir Arc Emitter</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>crowd pressure</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
@@ -178,8 +178,8 @@
   <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>line-control refraction</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
   <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Fires a charged prism bolt that cuts through a narrow lane, refracting judgment through enemies standing behind the first target.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
   <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>Crowncoil Gauss Minigun</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>apex gauss suppression</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Builds a six-lane crowncoil phase before pouring out an eighteen-shot gauss storm for sustained pressure against elites and heavy swarms.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>crowncoil suppression</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Builds a six-lane crowncoil phase before pouring out a gauss storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
   <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>Crownfire Rocket Choir</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>guided rocket saturation</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>

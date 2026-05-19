@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_AnchorSpiker</defName>
     <label>anchor spiker</label>
-    <description>A techno-infernal harpoon rifle built around a caged rift chamber and a brutal anchor-spike launch assembly. It fires a single stabilized breach spike with strong armor cracking power, giving the forge a deliberate mid-high tier marksman option that feels heavier than a needler but lighter and more practical than a breach cannon.</description>
+    <description>A techno-infernal harpoon rifle built around a caged rift chamber and a brutal anchor-spike launch assembly. Each shot drives a stabilized breach spike into armor, pinning the target under the weight of hostile geometry.</description>
     <techLevel>Spacer</techLevel>
     <graphicData>
       <texPath>Things/Weapon/ABY_AnchorSpiker</texPath>

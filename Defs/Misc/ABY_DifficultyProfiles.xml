@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_Normal</defName>
     <label>Normal</label>
@@ -19,11 +18,10 @@
     <bossRoleWeightMultiplier>1.00</bossRoleWeightMultiplier>
     <extraContentTier>0</extraContentTier>
   </AbyssalProtocol.ABY_DifficultyProfileDef>
-
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_Severe</defName>
     <label>Severe</label>
-    <description>Pushes the circle into harder mixed-pressure breaches. Support and elite pieces begin appearing earlier, but progression gates stay intact.</description>
+    <description>Pushes the circle into harsher mixed-pressure breaches. Support and elite pieces appear earlier, but the old seals still decide how far the ritual may reach.</description>
     <labelKey>ABY_DifficultyProfile_Severe_Label</labelKey>
     <descriptionKey>ABY_DifficultyProfile_Severe_Desc</descriptionKey>
     <order>1</order>
@@ -38,7 +36,6 @@
     <bossRoleWeightMultiplier>1.05</bossRoleWeightMultiplier>
     <extraContentTier>0</extraContentTier>
   </AbyssalProtocol.ABY_DifficultyProfileDef>
-
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_Rupture</defName>
     <label>Rupture</label>
@@ -57,11 +54,10 @@
     <bossRoleWeightMultiplier>1.10</bossRoleWeightMultiplier>
     <extraContentTier>0</extraContentTier>
   </AbyssalProtocol.ABY_DifficultyProfileDef>
-
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_Dominion</defName>
     <label>Dominion</label>
-    <description>Hard endgame protocol. Dominion pressure rises, escort mixes sharpen, and the system is allowed to reach one tier deeper when legal content exists.</description>
+    <description>A hard dominion protocol. Pressure rises, escorts sharpen, and the circle is permitted to call deeper shapes when the colony has earned the right.</description>
     <labelKey>ABY_DifficultyProfile_Dominion_Label</labelKey>
     <descriptionKey>ABY_DifficultyProfile_Dominion_Desc</descriptionKey>
     <order>3</order>
@@ -76,11 +72,10 @@
     <bossRoleWeightMultiplier>1.16</bossRoleWeightMultiplier>
     <extraContentTier>1</extraContentTier>
   </AbyssalProtocol.ABY_DifficultyProfileDef>
-
   <AbyssalProtocol.ABY_DifficultyProfileDef>
     <defName>ABY_Difficulty_FinalGate</defName>
     <label>Final Gate</label>
-    <description>Apex protocol. The circle leans into deep escalation, future high-tier content is allowed in sooner when tagged for it, and long fights become harsher to stabilize.</description>
+    <description>An apex protocol. The circle leans into deep escalation, answers become harsher, and long fights are given less room to stabilize.</description>
     <labelKey>ABY_DifficultyProfile_FinalGate_Label</labelKey>
     <descriptionKey>ABY_DifficultyProfile_FinalGate_Desc</descriptionKey>
     <order>4</order>
@@ -95,5 +90,4 @@
     <bossRoleWeightMultiplier>1.22</bossRoleWeightMultiplier>
     <extraContentTier>1</extraContentTier>
   </AbyssalProtocol.ABY_DifficultyProfileDef>
-
 </Defs>

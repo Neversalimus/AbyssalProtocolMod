@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AshboundTreadBoots</defName>
     <thingClass>Apparel</thingClass>
@@ -40,12 +39,11 @@
       <ArmorRating_Heat>0.06</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_RiftstepGreaves</defName>
     <thingClass>Apparel</thingClass>
     <label>riftstep greaves</label>
-    <description>Mid-tier riftstep greaves with plasteel calf braces, stabilized heel conduits and violet-red phase anchors under the sole. They do not teleport the wearer; they simply make every step feel as if the ground has been ordered to cooperate.</description>
+    <description>Riftstep greaves with plasteel calf braces, stabilized heel conduits and violet-red phase anchors under the sole. They do not teleport the wearer; they simply make every step feel as if the ground has been ordered to cooperate.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_RiftstepGreaves</texPath>
@@ -82,7 +80,6 @@
       <ArmorRating_Heat>0.10</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_CrownpathSabatons</defName>
     <thingClass>Apparel</thingClass>
@@ -125,5 +122,4 @@
       <ArmorRating_Heat>0.15</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

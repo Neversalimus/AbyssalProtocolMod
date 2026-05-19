@@ -1,42 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BenchBase">
     <defName>ABY_AbyssalForge</defName>
     <label>abyssal forge</label>
-    <description>A cathedral-scale techno-demonic fabrication engine. The expanded forge houses an overclocked infernal reactor lattice, side crucibles, and abyssal conduit banks for residue communion, pattern unlocking, and late-tier weaponsmithing.</description>
-
+    <description>A cathedral-scale techno-demonic fabrication engine. The expanded forge houses an overclocked infernal reactor lattice, side crucibles and abyssal conduit banks where residue is taught to become weapon, armor and ritual law.</description>
     <thingClass>AbyssalProtocol.Building_AbyssalForge</thingClass>
     <drawerType>MapMeshAndRealTime</drawerType>
-
     <graphicData>
       <texPath>Things/Building/ABY_AbyssalForge</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(6.20,2.22)</drawSize>
     </graphicData>
-
     <castEdgeShadows>false</castEdgeShadows>
     <staticSunShadowHeight>0.05</staticSunShadowHeight>
     <constructEffect>ConstructMetal</constructEffect>
-
     <costList>
       <Steel>360</Steel>
       <Plasteel>120</Plasteel>
       <ComponentIndustrial>8</ComponentIndustrial>
       <ComponentSpacer>4</ComponentSpacer>
     </costList>
-
     <altitudeLayer>Building</altitudeLayer>
     <fillPercent>0.24</fillPercent>
     <useHitPoints>True</useHitPoints>
-
     <statBases>
       <WorkToBuild>15000</WorkToBuild>
       <MaxHitPoints>520</MaxHitPoints>
       <Flammability>0.06</Flammability>
       <Cleanliness>-2.5</Cleanliness>
     </statBases>
-
     <size>(6,2)</size>
     <designationCategory>Production</designationCategory>
     <uiOrder>2521</uiOrder>
@@ -48,11 +40,9 @@
     <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
     <minifiedDef IsNull="True" />
     <thingCategories Inherit="False" />
-
     <inspectorTabs>
       <li>AbyssalProtocol.ITab_AbyssalForgeBills</li>
     </inspectorTabs>
-
     <comps Inherit="False">
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
@@ -71,21 +61,17 @@
       </li>
       <li Class="CompProperties_Breakdownable" />
     </comps>
-
     <building>
       <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
       <workTableRoomRole>Workshop</workTableRoomRole>
       <workTableNotInRoomRoleFactor>0.8</workTableNotInRoomRoleFactor>
     </building>
-
     <researchPrerequisites>
       <li>ABY_AbyssalSignalTheory</li>
     </researchPrerequisites>
-
     <placeWorkers>
       <li>PlaceWorker_ShowFacilitiesConnections</li>
       <li>PlaceWorker_PreventInteractionSpotOverlap</li>
     </placeWorkers>
   </ThingDef>
-
 </Defs>

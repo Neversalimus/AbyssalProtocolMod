@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CrownCortexSubnode</defName>
     <label>crown cortex subnode</label>
-    <description>An auxiliary dominion cognition module forged around a crown shard and seated beside the brain instead of replacing it. It deepens ordered thought, pattern recognition and calm pre-combat timing while leaving the host's original mind intact.</description>
+    <description>An auxiliary dominion cognition graft forged around a crown shard and seated beside the brain instead of replacing it. It deepens ordered thought, pattern recognition and calm pre-combat timing while leaving the host’s original mind intact.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_CrownCortexSubnode</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -43,7 +42,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionPulseHeart</defName>
     <label>dominion pulse heart</label>
@@ -87,7 +85,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_VerdictTendonSpine</defName>
     <label>verdict tendon spine</label>
@@ -132,7 +129,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_LawwovenCarapaceMesh</defName>
     <label>lawwoven carapace mesh</label>
@@ -176,5 +172,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

@@ -48,7 +48,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AegisSinkKidney</defName>
     <label>aegis sink kidney</label>
-    <description>A saint-tier renal sink wrapped in infernal heat vanes and containment channels. It filters harder, stabilizes blood chemistry under prolonged punishment, and bleeds reactor heat away from the body instead of letting it spike through exposed flesh.</description>
+    <description>A renal sink wrapped in infernal heat vanes and containment channels. It filters harder, stabilizes blood chemistry under prolonged punishment and bleeds reactor heat away from the body instead of letting it spike through exposed flesh.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_AegisSinkKidney</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -137,7 +137,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HaloSubcoreNode</defName>
     <label>halo subcore node</label>
-    <description>An auxiliary saint-tier cognition node mounted beside the brain instead of replacing it. The halo ring handles ordering and rhythm, while the subcore drives clarity, learning, and cold combat anticipation through a second line of thought the bearer never quite stops hearing.</description>
+    <description>An auxiliary cognition node mounted beside the brain instead of replacing it. The halo ring handles ordering and rhythm, while the subcore drives clarity, learning and cold combat anticipation through a second line of thought the bearer never fully owns.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_HaloSubcoreNode</texPath>
       <graphicClass>Graphic_Single</graphicClass>

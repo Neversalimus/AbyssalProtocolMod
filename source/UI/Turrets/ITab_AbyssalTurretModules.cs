@@ -359,7 +359,7 @@ namespace AbyssalProtocol
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
             Rect contentRect = new Rect(0f, 0f, viewRect.width, viewRect.height);
-            DrawSectionLine(contentRect, ref contentY, module.LabelCap);
+            DrawSectionLine(contentRect, ref contentY, module.LocalizedLabelCap);
             DrawInfoLine(contentRect, ref contentY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel));
             DrawInfoLine(contentRect, ref contentY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Role", "Role: {0}", module.RoleLabel));
             contentY += 5f;
@@ -611,7 +611,7 @@ namespace AbyssalProtocol
                 return string.Empty;
             }
 
-            string label = module.label ?? module.defName;
+            string label = module.LocalizedLabel;
             if (label.NullOrEmpty())
             {
                 return string.Empty;

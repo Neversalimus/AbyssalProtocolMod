@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_CohortSyncSubnode.label>узел синхронизации когорты</ABY_CohortSyncSubnode.label>
-  <ABY_CohortSyncSubnode.description>Вспомогательный мозговой модуль боевой решётки, выкованный из стабилизированного фрагмента орды. Он не заменяет сознание, а гнездится рядом с ним, удерживая в порядке враждебное давление, ритм отряда и наведение.</ABY_CohortSyncSubnode.description>
+  <ABY_CohortSyncSubnode.description>Вспомогательный когнитивный трансплантат военной решётки, выкованный из стабилизированного фрагмента орды. Он не заменяет разум, а гнездится рядом, удерживая давление, ритм группы и наведение в строю.</ABY_CohortSyncSubnode.description>
   <ABY_BoundClawArray.label>массив связанных когтей</ABY_BoundClawArray.label>
   <ABY_BoundClawArray.description>Штурмовая предплечная решёточная система, собранная вокруг фрагмента орды и вписанная в атаку носителя. Она не создаёт отдельный удар, но заметно усиливает манипуляцию, жёсткость атаки и ближнюю летальность по сравнению с обычными протезами.</ABY_BoundClawArray.description>
   <ABY_BreachTendonWeave.label>сухожильное плетение пробоя</ABY_BreachTendonWeave.label>

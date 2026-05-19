@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_CraftAshboundFieldPack.label>forge ashbound field pack</ABY_CraftAshboundFieldPack.label>
   <ABY_CraftAshboundFieldPack.description>Assemble a compact field pack from steel bracing, residue canisters and a restrained harness frame.</ABY_CraftAshboundFieldPack.description>
@@ -7,6 +7,6 @@
   <ABY_CraftRiftRelayPack.description>Forge a relay-grade abyssal pack around a compact rift conduit and reinforced load frame.</ABY_CraftRiftRelayPack.description>
   <ABY_CraftRiftRelayPack.jobString>Forging rift relay pack.</ABY_CraftRiftRelayPack.jobString>
   <ABY_CraftCrownConduitPack.label>forge crown conduit pack</ABY_CraftCrownConduitPack.label>
-  <ABY_CraftCrownConduitPack.description>Construct a crown-tier conduit pack around a crowned core fragment, plated relay spine and late-line canister lattice.</ABY_CraftCrownConduitPack.description>
+  <ABY_CraftCrownConduitPack.description>Construct a conduit pack around a crowned core fragment, plated relay spine and late-line canister lattice.</ABY_CraftCrownConduitPack.description>
   <ABY_CraftCrownConduitPack.jobString>Forging crown conduit pack.</ABY_CraftCrownConduitPack.jobString>
 </LanguageData>

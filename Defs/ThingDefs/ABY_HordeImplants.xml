@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CohortSyncSubnode</defName>
     <label>cohort sync subnode</label>
-    <description>An auxiliary war-lattice brain module forged from a stabilized horde fragment. Rather than replacing the mind, it nests beside it and keeps hostile pressure, squad timing and targeting rhythm in ordered alignment.</description>
+    <description>An auxiliary war-lattice cognition graft forged from a stabilized horde fragment. Rather than replacing the mind, it nests beside it and keeps hostile pressure, squad timing and targeting rhythm in ordered alignment.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_CohortSyncSubnode</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -45,7 +44,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BoundClawArray</defName>
     <label>bound claw array</label>
@@ -90,7 +88,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BreachTendonWeave</defName>
     <label>breach tendon weave</label>
@@ -135,7 +132,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_NullChorusCollar</defName>
     <label>null chorus collar</label>
@@ -180,5 +176,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_ReclaimUnstableBreachSigil.label>переработать сигилу пробоя</ABY_ReclaimUnstableBreachSigil.label>
   <ABY_ReclaimUnstableBreachSigil.description>Расколоть грубый ключ разлома и вернуть небольшое количество инертного безднического остатка. Процесс намеренно убыточен: тигель спасает пригодный пепел, а не всю ритуальную стоимость.</ABY_ReclaimUnstableBreachSigil.description>
@@ -13,6 +13,6 @@
   <ABY_ReclaimHordeFragment.description>Продавить уплотнённую боевую решётку орды через спекающую камеру и вернуть большой, но стратегически невыгодный запас остатка.</ABY_ReclaimHordeFragment.description>
   <ABY_ReclaimHordeFragment.jobString>Перерабатывает фрагмент орды.</ABY_ReclaimHordeFragment.jobString>
   <ABY_SinterAbyssalRemains.label>спечь останки Бездны</ABY_SinterAbyssalRemains.label>
-  <ABY_SinterAbyssalRemains.description>Сжечь безопасный не-боссовый труп Бездны до стабильного остатка. Тигель отклоняет обычные трупы, человеческие останки, мини-боссов и тела босс-класса, чтобы нельзя было обойти цепочку наград.</ABY_SinterAbyssalRemains.description>
+  <ABY_SinterAbyssalRemains.description>Сжечь безопасный небоссовый бездненный труп до стабильного остатка. Тигель отвергает обычные тела, гуманоидные останки, мини-боссов и боссовые оболочки: некоторые трофеи нельзя редуцировать, не потеряв несомый ими закон.</ABY_SinterAbyssalRemains.description>
   <ABY_SinterAbyssalRemains.jobString>Спекает безднические останки.</ABY_SinterAbyssalRemains.jobString>
 </LanguageData>

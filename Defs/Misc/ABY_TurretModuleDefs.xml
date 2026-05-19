@@ -29,7 +29,7 @@
     <defName>ABY_TMD_PlasmaLanceCore</defName>
     <label>Plasma Lance Core</label>
     <description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</description>
-    <effectSummary>Hurls a slower ultra-plasma lance with the reach and pressure needed to crack armor, elite targets and early boss shells.</effectSummary>
+    <effectSummary>Hurls a slow ultra-plasma lance built for reach, pressure and the patient cracking of heavy armor.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_PlasmaLanceCore</thingDef>
     <compatibleChassisTags>
@@ -55,7 +55,7 @@
     <defName>ABY_TMD_AshChoirRepeaterCore</defName>
     <label>Ash Choir Repeater Core</label>
     <description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</description>
-    <effectSummary>Rakes the field with five ash-canticle shards, excellent for animals, light enemies and packed abyssal waves, but weak against heavy armor.</effectSummary>
+    <effectSummary>Rakes the field with five ash-canticle shards, cruel against animals, light enemies and packed abyssal waves.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_AshChoirRepeaterCore</thingDef>
     <compatibleChassisTags>
@@ -412,13 +412,13 @@
     <defName>ABY_TMD_CrowncoilGaussMinigun</defName>
     <label>Crowncoil Gauss Minigun</label>
     <description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</description>
-    <effectSummary>Builds a six-lane crowncoil phase before pouring out an eighteen-shot gauss storm for sustained pressure against elites and heavy swarms.</effectSummary>
+    <effectSummary>Builds a six-lane crowncoil phase before pouring out a gauss storm of repeated verdicts against elite bodies and heavy swarms.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_CrowncoilGaussMinigun</thingDef>
     <compatibleChassisTags>
       <li>Medium</li>
     </compatibleChassisTags>
-    <role>apex gauss suppression</role>
+    <role>crowncoil suppression</role>
     <tier>4</tier>
     <projectileDef>ABY_TurretCrowncoilGaussSlug</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>

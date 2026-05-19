@@ -5,10 +5,10 @@
   <ABY_TMD_RiftNeedlerCore.effectSummary>Выпускает быструю очередь из трёх рифтовых игл, сбивая лёгкие цели и сдерживая плотные стаи до сближения.</ABY_TMD_RiftNeedlerCore.effectSummary>
   <ABY_TMD_PlasmaLanceCore.label>ядро плазменного копья</ABY_TMD_PlasmaLanceCore.label>
   <ABY_TMD_PlasmaLanceCore.role>против брони</ABY_TMD_PlasmaLanceCore.role>
-  <ABY_TMD_PlasmaLanceCore.effectSummary>Бьёт медленным дальнобойным ультраплазменным копьём, рассчитанным на броню, элиту и ранние боссовые оболочки.</ABY_TMD_PlasmaLanceCore.effectSummary>
+  <ABY_TMD_PlasmaLanceCore.effectSummary>Бьёт медленным ультраплазменным копьём для дальнего давления и терпеливого вскрытия тяжёлой брони.</ABY_TMD_PlasmaLanceCore.effectSummary>
   <ABY_TMD_AshChoirRepeaterCore.label>ядро Пепельного Хора</ABY_TMD_AshChoirRepeaterCore.label>
   <ABY_TMD_AshChoirRepeaterCore.role>против стай</ABY_TMD_AshChoirRepeaterCore.role>
-  <ABY_TMD_AshChoirRepeaterCore.effectSummary>Прочёсывает поле пятью пепельно-кантильными осколками. Хорошо давит животных, лёгких врагов и плотные волны, но слабо работает по тяжёлой броне.</ABY_TMD_AshChoirRepeaterCore.effectSummary>
+  <ABY_TMD_AshChoirRepeaterCore.effectSummary>Прочёсывает поле пятью пепельно-кантильными осколками, жестоко работая по животным, лёгким врагам и плотным волнам Бездны.</ABY_TMD_AshChoirRepeaterCore.effectSummary>
   <ABY_TMD_ChoirArcEmitter.label>дуговой излучатель Хора</ABY_TMD_ChoirArcEmitter.label>
   <ABY_TMD_ChoirArcEmitter.role>давление по толпе</ABY_TMD_ChoirArcEmitter.role>
   <ABY_TMD_ChoirArcEmitter.effectSummary>Периодически выпускает кантильную волну по скоплениям врагов, не сбивая ритм основного оружия.</ABY_TMD_ChoirArcEmitter.effectSummary>
@@ -43,8 +43,8 @@
   <ABY_TMD_SanctifiedPrismEmitter.role>контроль линии</ABY_TMD_SanctifiedPrismEmitter.role>
   <ABY_TMD_SanctifiedPrismEmitter.effectSummary>Бьёт заряженным призменным лучом по узкой линии, преломляя приговор через врагов за первой целью.</ABY_TMD_SanctifiedPrismEmitter.effectSummary>
   <ABY_TMD_CrowncoilGaussMinigun.label>гаусс-миниган Коронной Катушки</ABY_TMD_CrowncoilGaussMinigun.label>
-  <ABY_TMD_CrowncoilGaussMinigun.role>гаусс-подавление</ABY_TMD_CrowncoilGaussMinigun.role>
-  <ABY_TMD_CrowncoilGaussMinigun.effectSummary>Набирает шестифазный коронный заряд и обрушивает восемнадцать гаусс-ударов для длительного давления по элите и тяжёлым стаям.</ABY_TMD_CrowncoilGaussMinigun.effectSummary>
+  <ABY_TMD_CrowncoilGaussMinigun.role>коронное подавление</ABY_TMD_CrowncoilGaussMinigun.role>
+  <ABY_TMD_CrowncoilGaussMinigun.effectSummary>Набирает шестифазный коронный заряд и обрушивает гаусс-бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TMD_CrowncoilGaussMinigun.effectSummary>
   <ABY_TMD_CrownfireRocketChoir.label>ракетный Хор Коронного Пламени</ABY_TMD_CrownfireRocketChoir.label>
   <ABY_TMD_CrownfireRocketChoir.role>ракетное насыщение</ABY_TMD_CrownfireRocketChoir.role>
   <ABY_TMD_CrownfireRocketChoir.effectSummary>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TMD_CrownfireRocketChoir.effectSummary>

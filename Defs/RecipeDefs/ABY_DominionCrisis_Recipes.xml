@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftDominionSigil</defName>
     <label>forge dominion sigil</label>
-    <description>Condenses a crown-tier invocation wafer used to bootstrap the Great Infernal Gate staging sequence. This is not a normal summon key. It arms the circle for a full-scale endgame breach and later portal-entry escalation.</description>
+    <description>Condense a crown-marked invocation wafer for the Great Infernal Gate prelude. It is not a normal summon key; it arms the circle for a dominion breach the colony has only begun to understand.</description>
     <jobString>Forging dominion sigil.</jobString>
     <workAmount>3600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -59,5 +58,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

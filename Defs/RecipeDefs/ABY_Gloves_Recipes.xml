@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftAshenGripGloves</defName>
     <label>forge ashen grip gloves</label>
@@ -50,11 +49,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftRiftConduitGloves</defName>
     <label>forge rift conduit gloves</label>
-    <description>Build mid-tier conduit gloves around plasteel hand plates and a stabilized rift feedback lattice.</description>
+    <description>Build conduit gloves around plasteel hand plates and a stabilized rift feedback lattice.</description>
     <jobString>Forging rift conduit gloves.</jobString>
     <workAmount>1550</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -108,7 +106,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownsealGauntlets</defName>
     <label>forge crownseal gauntlets</label>
@@ -174,5 +171,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

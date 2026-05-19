@@ -102,11 +102,11 @@
   <ABY_TurretInfo_AuxCooldown>Перезарядка вспом. модуля</ABY_TurretInfo_AuxCooldown>
   <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Очередь</ABY_TurretInfo_Burst>
-  <ABY_TurretInfo_BurstDesc>Количество выстрелов за один цикл огня.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstDesc>Количество отдельных ударов за одну атаку.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Интервал очереди</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Задержка между выстрелами внутри очереди.</ABY_TurretInfo_BurstSpacingDesc>
-  <ABY_TurretInfo_Projectile>Снаряд</ABY_TurretInfo_Projectile>
-  <ABY_TurretInfo_ProjectileDesc>Заряд или болт, которым стреляет эта оружейная система.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_Projectile>Боевой заряд</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Боевой заряд, который ведёт оружейный тракт.</ABY_TurretInfo_ProjectileDesc>
   <ABY_TurretInfo_RangeOffset>Бонус дальности основного</ABY_TurretInfo_RangeOffset>
   <ABY_TurretInfo_RangeOffsetDesc>Добавляется к дальности установленного основного оружия.</ABY_TurretInfo_RangeOffsetDesc>
   <ABY_TurretInfo_CooldownMultiplier>Модификатор перезарядки основного</ABY_TurretInfo_CooldownMultiplier>
@@ -140,10 +140,10 @@
   <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Выпускает быструю очередь из трёх рифтовых игл, сбивая лёгкие цели и сдерживая плотные стаи до сближения.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
   <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>ядро плазменного копья</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
   <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>против брони</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Бьёт медленным дальнобойным ультраплазменным копьём, рассчитанным на броню, элиту и ранние боссовые оболочки.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Бьёт медленным ультраплазменным копьём для дальнего давления и терпеливого вскрытия тяжёлой брони.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
   <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>ядро Пепельного Хора</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>против стай</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Прочёсывает поле пятью пепельно-кантильными осколками. Хорошо давит животных, лёгких врагов и плотные волны, но слабо работает по тяжёлой броне.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Прочёсывает поле пятью пепельно-кантильными осколками, жестоко работая по животным, лёгким врагам и плотным волнам Бездны.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>дуговой излучатель Хора</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>давление по толпе</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Периодически выпускает кантильную волну по скоплениям врагов, не сбивая ритм основного оружия.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
@@ -178,8 +178,8 @@
   <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>контроль линии</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
   <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Бьёт заряженным призменным лучом по узкой линии, преломляя приговор через врагов за первой целью.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
   <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>гаусс-миниган Коронной Катушки</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>гаусс-подавление</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Набирает шестифазный коронный заряд и обрушивает восемнадцать гаусс-ударов для длительного давления по элите и тяжёлым стаям.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>коронное подавление</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Набирает шестифазный коронный заряд и обрушивает гаусс-бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
   <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>ракетный Хор Коронного Пламени</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>ракетное насыщение</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>

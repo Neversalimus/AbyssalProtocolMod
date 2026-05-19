@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftAshenVambraces</defName>
     <label>forge ashen vambraces</label>
@@ -50,11 +49,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftRiftVectorVambraces</defName>
     <label>forge rift vector vambraces</label>
-    <description>Build mid-tier forearm modules around plasteel braces and paired rift-vector conduits.</description>
+    <description>Build forearm braces around plasteel supports and paired rift-vector conduits.</description>
     <jobString>Forging rift vector vambraces.</jobString>
     <workAmount>1850</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -108,7 +106,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownAuthorityVambraces</defName>
     <label>forge crown authority vambraces</label>
@@ -174,5 +171,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

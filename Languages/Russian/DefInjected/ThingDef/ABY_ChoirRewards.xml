@@ -5,9 +5,9 @@
   <ABY_CanticleSubcoreNode.label>подузел кантикля</ABY_CanticleSubcoreNode.label>
   <ABY_CanticleSubcoreNode.description>Вспомогательный хоровой подузел, монтируемый рядом с мозгом, а не вместо него. Он даёт вторую линию упорядоченного мышления, настроенную на обучение, ритм наведения и спокойный предвыстрельный темп.</ABY_CanticleSubcoreNode.description>
   <ABY_ResonanceServoArm.label>резонансная серворука</ABY_ResonanceServoArm.label>
-  <ABY_ResonanceServoArm.description>Серворука хорового паттерна, созданная для контролируемого обращения с оружием, а не для грубой боссовой экзекуции. Она усиливает манипуляцию и дальнобойный ритм, не дотягиваясь до точности поздних наград.</ABY_ResonanceServoArm.description>
+  <ABY_ResonanceServoArm.description>Серворука хорового образца для точной работы, а не грубой святой казни. Она придаёт труду и стрельбе холодный ровный ритм, будто второе дирижирование стягивает каждое движение.</ABY_ResonanceServoArm.description>
   <ABY_HarmonicMesh.label>гармоническая сеть</ABY_HarmonicMesh.label>
-  <ABY_HarmonicMesh.description>Складная подкожная хоровая сеть, распределяющая удар, жар и кровопотерю через дисциплинированную резонансную решётку. Она легче поздних боссовых бронеимплантов, но заметно превосходит обычную защитную хирургию.</ABY_HarmonicMesh.description>
+  <ABY_HarmonicMesh.description>Сложенная подкожная хоровая сеть, распределяющая удар, жар и кровопотерю по дисциплинированной резонансной решётке. Она достаточно лёгкая для имплантации, но слишком упорядоченная, чтобы казаться живой.</ABY_HarmonicMesh.description>
   <ABY_ChoirSinkKidney.label>почка-поглотитель Хора</ABY_ChoirSinkKidney.label>
   <ABY_ChoirSinkKidney.description>Резонансно-охлаждённый почечный теплоотвод, который жёстче фильтрует кровь, режет кровопотерю и уводит враждебное тепловое давление от мягких тканей, пока оно не сорвало организм в каскадный коллапс.</ABY_ChoirSinkKidney.description>
   <ABY_CanticleDriver.label>кантикль-драйвер</ABY_CanticleDriver.label>

@@ -312,3 +312,10 @@ Checklist for future logging changes:
 - Prefer silence over red errors when diagnostics fail during early startup.
 - If a C# source fix already exists, make sure `Assemblies/AbyssalProtocol.dll` is rebuilt from the same source before packaging.
 ```
+
+## 2026-05-19 — Custom turret Def localization regression
+
+- Risk: custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` may still appear as raw English in Forge UI if code reads the raw field directly.
+- Rule: UI code must use localized wrapper properties (`LocalizedLabel`, `LocalizedLabelCap`, `RoleLabel`, `EffectSummary`) or explicit Keyed lookups, not raw `label`, `role`, or `effectSummary`.
+- Do not add player-facing turret text that mentions `projectile`, runtime behavior, save/load, kill switches, module defs, or other implementation details.
+- Forge-visible descriptions should be short enough for cards and should use lore/gameplay phrasing rather than progression/tier labels.

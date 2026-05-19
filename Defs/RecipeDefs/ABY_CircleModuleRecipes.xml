@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftCrudeStabilizerModule</defName>
     <label>forge crude stabilizer module</label>
-    <description>Assemble a heavy first-tier circle module that can later be inserted into one edge of the abyssal summoning circle to improve early containment.</description>
+    <description>Assemble a heavy circle frame that can be inserted into one edge of the abyssal summoning circle to keep early containment from tearing the world too sharply.</description>
     <jobString>Forging crude stabilizer module.</jobString>
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -51,11 +50,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftResonantStabilizerModule</defName>
     <label>forge resonant stabilizer module</label>
-    <description>Build a tuned second-tier circle stabilizer with better resonance control and stronger suppression of bleedoff around repeated rituals.</description>
+    <description>Build a tuned circle stabilizer with stronger resonance control and cleaner suppression of bleedoff around repeated rituals.</description>
     <jobString>Forging resonant stabilizer module.</jobString>
     <workAmount>2400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -110,11 +108,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownStabilizerModule</defName>
     <label>forge crown stabilizer module</label>
-    <description>Fabricate a crown-tier restraint engine for high-threat ritual work. These are intended for circles that are expected to survive serious breach pressure instead of merely limping through it.</description>
+    <description>Assemble a crown-pattern stabilizer meant for severe containment duty during late ritual work.</description>
     <jobString>Forging crown stabilizer module.</jobString>
     <workAmount>3400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -177,5 +174,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

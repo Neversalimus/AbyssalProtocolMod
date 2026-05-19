@@ -388,10 +388,6 @@ namespace AbyssalProtocol
                 TranslateOrFallback("ABY_TurretModuleTooltipStats", "Stats: {0}", GetModuleStatSummary(module))
             };
 
-            if (module.projectileDef != null)
-            {
-                lines.Add(TranslateOrFallback("ABY_TurretModuleProjectile", "Projectile: {0}", module.projectileDef.label));
-            }
 
             if (module.extraPowerDraw != 0f)
             {

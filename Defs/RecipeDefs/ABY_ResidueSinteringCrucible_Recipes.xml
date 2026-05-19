@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_ReclaimUnstableBreachSigil</defName>
     <label>reclaim unstable breach sigil</label>
@@ -25,7 +24,6 @@
       <ABY_AbyssalResidue>3</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_ReclaimWardenOfAshSigil</defName>
     <label>reclaim warden sigil</label>
@@ -50,7 +48,6 @@
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_ReclaimArchonSigil</defName>
     <label>reclaim archon sigil</label>
@@ -75,7 +72,6 @@
       <ABY_AbyssalResidue>9</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_ReclaimHordeFragment</defName>
     <label>reclaim horde fragment</label>
@@ -100,11 +96,10 @@
       <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_SinterAbyssalRemains</defName>
     <label>sinter abyssal remains</label>
-    <description>Burn a safe, non-boss abyssal corpse down to stable residue. The crucible rejects ordinary corpses, humanlike remains, minibosses and boss-class bodies so progression rewards cannot be bypassed.</description>
+    <description>Burn a safe, non-boss abyssal corpse down to stable residue. The crucible rejects ordinary corpses, humanlike remains, minibosses and boss-class bodies; some trophies cannot be reduced without losing the law they carry.</description>
     <jobString>Sintering abyssal remains.</jobString>
     <workerClass>AbyssalProtocol.RecipeWorker_ABY_SinterAbyssalCorpse</workerClass>
     <workAmount>850</workAmount>
@@ -167,7 +162,7 @@
             <li>Corpse_ABY_RiftSniper</li>
             <li>Corpse_ABY_NullPriest</li>
             <li>Corpse_ABY_RiftSapper</li>
-        <li>Corpse_ABY_BreachBrute</li>
+            <li>Corpse_ABY_BreachBrute</li>
             <li>Corpse_ABY_Harvester</li>
             <li>Corpse_ABY_GateWarden</li>
             <li>Corpse_ABY_SiegeIdol</li>
@@ -187,5 +182,4 @@
       <ABY_AbyssalResidue>1</ABY_AbyssalResidue>
     </products>
   </RecipeDef>
-
 </Defs>

@@ -65,7 +65,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ResonanceServoArm</defName>
     <label>resonance servo arm</label>
-    <description>A choir-pattern servo armature built for controlled handling rather than brutal saint-grade execution. It improves manipulation and ranged cadence without fully reaching later boss-tier precision.</description>
+    <description>A choir-pattern servo armature built for controlled handling rather than brutal saint-grade execution. It lends the bearer a colder, steadier rhythm in work and gunfire, as if a second conductor were tightening every movement.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_ResonanceServoArm</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -109,7 +109,7 @@
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HarmonicMesh</defName>
     <label>harmonic mesh</label>
-    <description>A folded subdermal choir weave that spreads impact, heat and blood loss through a disciplined resonance lattice. It is lighter than later boss-tier armor implants, but far superior to ordinary protective surgery.</description>
+    <description>A folded subdermal choir weave that spreads impact, heat and blood loss through a disciplined resonance lattice. It is light enough to hide under skin, but far too ordered to feel biological.</description>
     <graphicData>
       <texPath>Things/Implant/ABY_HarmonicMesh</texPath>
       <graphicClass>Graphic_Single</graphicClass>

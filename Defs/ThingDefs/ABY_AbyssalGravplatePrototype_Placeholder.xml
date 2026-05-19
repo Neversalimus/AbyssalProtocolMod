@@ -1,11 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
-  <!--
-    Abyssal Gravplate dormant relic.
-    This sealed dominion armor line is present as a hidden relic pattern and is not yet reachable through ordinary colony progression.
-  -->
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplatePrototype</defName>
     <thingClass>Apparel</thingClass>
@@ -107,12 +101,11 @@
       <ArmorRating_Heat>1.02</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplateHelmPrototype</defName>
     <thingClass>Apparel</thingClass>
     <label>abyssal gravplate helm</label>
-    <description>A sealed helm for the dormant gravplate line. Its compact horned faceplate, violet lenses and red crown-core venting make it feel less like protective equipment and more like a permission mask for a higher tier of abyssal motion.</description>
+    <description>A sealed helm from a dormant gravplate line. Its compact horned faceplate, violet lenses and red crown-core venting make it feel less like protective equipment and more like a permission mask for forbidden motion.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_AbyssalGravplateHelmPrototype</texPath>
@@ -148,5 +141,4 @@
       <ArmorRating_Heat>0.90</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

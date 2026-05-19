@@ -140,7 +140,7 @@ namespace AbyssalProtocol
             AddEntry(result, category, ref order,
                 "ABY_TurretInfo_Burst", "Burst",
                 Math.Max(1, module.burstShotCount).ToString(),
-                "ABY_TurretInfo_BurstDesc", "Number of projectiles fired per activation.");
+                "ABY_TurretInfo_BurstDesc", "Number of separate strikes released in one attack.");
 
             if (module.burstShotCount > 1)
             {
@@ -150,13 +150,6 @@ namespace AbyssalProtocol
                     "ABY_TurretInfo_BurstSpacingDesc", "Delay between shots inside a burst.");
             }
 
-            if (module.projectileDef != null)
-            {
-                AddEntry(result, category, ref order,
-                    "ABY_TurretInfo_Projectile", "Projectile",
-                    module.projectileDef.LabelCap,
-                    "ABY_TurretInfo_ProjectileDesc", "Projectile def fired by this module.");
-            }
         }
 
         private static void AppendPassiveEntries(List<StatDrawEntry> result, StatCategoryDef category, ABY_TurretModuleDef module, ref int order)

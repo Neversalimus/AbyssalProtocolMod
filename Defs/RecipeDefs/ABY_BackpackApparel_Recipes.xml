@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftAshboundFieldPack</defName>
     <label>forge ashbound field pack</label>
@@ -16,15 +15,27 @@
     </recipeUsers>
     <ingredients>
       <li>
-        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
         <count>8</count>
       </li>
       <li>
-        <filter><thingDefs><li>Steel</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
         <count>35</count>
       </li>
       <li>
-        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
         <count>2</count>
       </li>
     </ingredients>
@@ -38,7 +49,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftRiftRelayPack</defName>
     <label>forge rift relay pack</label>
@@ -54,19 +64,35 @@
     </recipeUsers>
     <ingredients>
       <li>
-        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
         <count>20</count>
       </li>
       <li>
-        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
         <count>50</count>
       </li>
       <li>
-        <filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
         <count>4</count>
       </li>
       <li>
-        <filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
         <count>1</count>
       </li>
     </ingredients>
@@ -80,11 +106,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownConduitPack</defName>
     <label>forge crown conduit pack</label>
-    <description>Construct a crown-tier conduit pack around a crowned core fragment, plated relay spine and late-line canister lattice.</description>
+    <description>Construct a conduit pack around a crowned core fragment, plated relay spine and late-line canister lattice.</description>
     <jobString>Forging crown conduit pack.</jobString>
     <workAmount>4200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -96,23 +121,43 @@
     </recipeUsers>
     <ingredients>
       <li>
-        <filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
         <count>40</count>
       </li>
       <li>
-        <filter><thingDefs><li>Plasteel</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
         <count>80</count>
       </li>
       <li>
-        <filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
         <count>2</count>
       </li>
       <li>
-        <filter><thingDefs><li>Gold</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
         <count>6</count>
       </li>
       <li>
-        <filter><thingDefs><li>ABY_CrownedCoreFragment</li></thingDefs></filter>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownedCoreFragment</li>
+          </thingDefs>
+        </filter>
         <count>1</count>
       </li>
     </ingredients>
@@ -126,5 +171,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

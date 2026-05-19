@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AshboundFieldPack.label>ashbound field pack</ABY_AshboundFieldPack.label>
   <ABY_AshboundFieldPack.description>A compact abyssal field pack built for early forge operators and breach-line haulers. Steel ribs, residue canisters and a restrained harness frame make it useful without turning the wearer into a walking shrine.</ABY_AshboundFieldPack.description>
   <ABY_RiftRelayPack.label>rift relay pack</ABY_RiftRelayPack.label>
   <ABY_RiftRelayPack.description>A relay-grade abyssal pack with a compact rift conduit, stronger load frame and hotter canister feed. It pushes mobility and hauling beyond the ashbound baseline, but the wearer is unmistakably carrying a live infernal device.</ABY_RiftRelayPack.description>
   <ABY_CrownConduitPack.label>crown conduit pack</ABY_CrownConduitPack.label>
-  <ABY_CrownConduitPack.description>A crown-tier conduit pack built around a compact authority core. It is part reactor, part relay and part command seal: heavy, expensive and designed for colonists trusted with the late abyssal line.</ABY_CrownConduitPack.description>
+  <ABY_CrownConduitPack.description>A conduit pack built around a compact authority core. It is part reactor, part relay and part command seal: heavy, expensive and meant for colonists trusted to carry the late abyssal line on their back.</ABY_CrownConduitPack.description>
 </LanguageData>

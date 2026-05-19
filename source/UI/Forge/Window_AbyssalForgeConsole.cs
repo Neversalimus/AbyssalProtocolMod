@@ -2461,7 +2461,7 @@ namespace AbyssalProtocol
             List<string> tooltipLines = new List<string>();
             if (module != null)
             {
-                tooltipLines.Add(module.LabelCap);
+                tooltipLines.Add(module.LocalizedLabelCap);
                 tooltipLines.Add(ABY_ModularTurretUtility.GetModuleDetailedTooltip(module));
             }
             else if (chassisProps != null)

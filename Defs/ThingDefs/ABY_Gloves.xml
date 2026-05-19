@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AshenGripGloves</defName>
     <thingClass>Apparel</thingClass>
@@ -40,12 +39,11 @@
       <ArmorRating_Heat>0.06</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_RiftConduitGloves</defName>
     <thingClass>Apparel</thingClass>
     <label>rift conduit gloves</label>
-    <description>Mid-tier conduit gloves that stabilize a weapon, tool or ritual implement through the hands instead of the bench. Violet-red microchannels run across the knuckles, improving precision while quietly teaching the wearer to trust abyssal feedback.</description>
+    <description>Conduit gloves that stabilize a weapon, tool or ritual implement through the hands instead of the bench. Violet-red microchannels run across the knuckles, improving precision while quietly teaching the wearer to trust abyssal feedback.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_RiftConduitGloves</texPath>
@@ -82,7 +80,6 @@
       <ArmorRating_Heat>0.10</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_CrownsealGauntlets</defName>
     <thingClass>Apparel</thingClass>
@@ -125,5 +122,4 @@
       <ArmorRating_Heat>0.14</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

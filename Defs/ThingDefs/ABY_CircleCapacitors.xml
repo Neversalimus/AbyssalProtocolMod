@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_AshboundCapacitorModule</defName>
     <label>ashbound capacitor module</label>
@@ -38,7 +37,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_RiftCapacitorModule</defName>
     <label>rift capacitor module</label>
@@ -76,11 +74,10 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_CrownCondenserModule</defName>
     <label>crown condenser module</label>
-    <description>A high-tier abyssal condenser built around a crown lattice, pressure-shunted cooling plates, and a tightly collared infernal core. It is meant for boss-grade ritual throughput and stores enough hostile charge to make the circle feel truly armed.</description>
+    <description>An abyssal condenser built around a crown lattice, pressure-shunted cooling plates and a tightly collared infernal core. It stores enough hostile charge to make the circle feel less like a tool and more like a weapon waiting for permission.</description>
     <graphicData>
       <texPath>Things/Item/ABY_CrownCondenserModule</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -114,5 +111,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

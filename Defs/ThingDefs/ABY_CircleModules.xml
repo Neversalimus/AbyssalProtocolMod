@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_CrudeStabilizerModule</defName>
     <label>crude stabilizer module</label>
@@ -33,7 +32,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_ResonantStabilizerModule</defName>
     <label>resonant stabilizer module</label>
@@ -66,11 +64,10 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_CrownStabilizerModule</defName>
     <label>crown stabilizer module</label>
-    <description>A crown-tier restraint engine for the outer ring. Its spined vanes and focused infernal emitter are designed for circles expected to survive elite breach geometry instead of collapsing into self-harm and residue blowback.</description>
+    <description>A crown-pattern restraint engine for the outer ring. Its spined vanes and focused infernal emitter are built for circles expected to endure severe breach geometry without folding into residue blowback.</description>
     <graphicData>
       <texPath>Things/Item/ABY_CrownStabilizerModule</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -99,5 +96,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftAshboundTreadBoots</defName>
     <label>forge ashbound tread boots</label>
@@ -50,11 +49,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftRiftstepGreaves</defName>
     <label>forge riftstep greaves</label>
-    <description>Build mid-tier riftstep greaves around plasteel calf braces, stabilized heel conduits and phase-anchor soles.</description>
+    <description>Build riftstep greaves around plasteel calf braces, stabilized heel conduits and phase-anchor soles.</description>
     <jobString>Forging riftstep greaves.</jobString>
     <workAmount>1750</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -108,7 +106,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownpathSabatons</defName>
     <label>forge crownpath sabatons</label>
@@ -174,5 +171,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

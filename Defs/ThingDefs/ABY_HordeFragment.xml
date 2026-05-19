@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HordeFragment</defName>
     <label>horde fragment</label>
-    <description>A condensed war-lattice shard left behind when a horde breach folds in on itself. It is not a boss core, but it still carries the disciplined routing logic of a full abyssal offensive and can be reforged into the Litany Grinder, Phalanx Driver, or Cohort Halberd once the Abyssal Forge reaches the corresponding horde tiers.</description>
+    <description>A condensed war-lattice shard left behind when a horde breach folds in on itself. It is not a boss core, but it still carries the disciplined routing logic of a full abyssal offensive and can be reforged into weapons that remember mass violence.</description>
     <graphicData>
       <texPath>Things/Item/ABY_HordeFragment</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -17,5 +16,4 @@
       <Flammability>0</Flammability>
     </statBases>
   </ThingDef>
-
 </Defs>

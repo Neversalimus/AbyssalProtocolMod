@@ -439,3 +439,11 @@ Important details:
 - Tick access stays behind `SafeTicks()` because `Find.TickManager` can dereference unavailable game state during early loading.
 - The DLL was rebuilt from the updated source and should replace older localization-patch DLLs that may be out of sync with source.
 ```
+
+## 2026-05-19 — Turret localization bridge and lore-description cleanup
+
+- Fixed modular turret Forge/UI text that continued to show raw English `ABY_TurretModuleDef` labels, roles and effect summaries in Russian mode.
+- `ABY_TurretModuleDef` now exposes localized label/role/effect properties backed by `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*` and `ABY_TurretModuleEffect_*` Keyed entries, because relying only on custom DefInjected fields was not enough for the Forge cards/tooltips.
+- Removed the projectile line from the modular turret detailed tooltip and info card so player-facing turret text no longer exposes implementation projectile defs.
+- Rewrote a batch of weapon/apparel/recipe descriptions to remove tier/progression/prototype/projectile wording and keep the text in lore/gameplay tone.
+- Runtime smoke test still required in-game, especially in Abyssal Forge > Turret Systems.

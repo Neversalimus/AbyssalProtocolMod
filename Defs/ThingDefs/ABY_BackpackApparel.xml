@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AshboundFieldPack</defName>
     <thingClass>AbyssalProtocol.Apparel_ABY_Backpack</thingClass>
@@ -44,7 +43,6 @@
       <ArmorRating_Heat>0.08</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_RiftRelayPack</defName>
     <thingClass>AbyssalProtocol.Apparel_ABY_Backpack</thingClass>
@@ -89,12 +87,11 @@
       <ArmorRating_Heat>0.10</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_CrownConduitPack</defName>
     <thingClass>AbyssalProtocol.Apparel_ABY_Backpack</thingClass>
     <label>crown conduit pack</label>
-    <description>A crown-tier conduit pack built around a compact authority core. It is part reactor, part relay and part command seal: heavy, expensive and designed for colonists trusted with the late abyssal line.</description>
+    <description>A conduit pack built around a compact authority core. It is part reactor, part relay and part command seal: heavy, expensive and meant for colonists trusted to carry the late abyssal line on their back.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_CrownConduitPack</texPath>
@@ -135,5 +132,4 @@
       <ArmorRating_Heat>0.18</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

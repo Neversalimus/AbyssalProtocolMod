@@ -3,7 +3,7 @@
   <RecipeDef>
     <defName>ABY_CraftResidue</defName>
     <label>condense abyssal residue</label>
-    <description>Industrial ritual process that converts metal and components into inert abyssal residue.</description>
+    <description>Condense raw infernal traces into stable abyssal residue for forging, ritual fuel and deeper communion.</description>
     <jobString>Condensing abyssal residue.</jobString>
     <workAmount>900</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -108,7 +108,7 @@
   <RecipeDef>
     <defName>ABY_CraftUnstableBreachSigil</defName>
     <label>forge unstable breach sigil</label>
-    <description>Compress residue into a crude breach-key for the first hostile rehearsal pattern. This opens a smaller early rift meant to teach the summon loop before the first boss tier.</description>
+    <description>Compress residue into a crude breach-key that opens a small hostile rehearsal rift and teaches the circle to answer under pressure.</description>
     <jobString>Forging unstable breach sigil.</jobString>
     <workAmount>950</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -154,7 +154,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftWardenOfAshSigil</defName>
     <label>forge mark of the warden</label>
@@ -204,7 +203,6 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftArchonSigil</defName>
     <label>forge archon sigil</label>

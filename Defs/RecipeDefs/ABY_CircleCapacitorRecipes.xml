@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftAshboundCapacitorModule</defName>
     <label>forge ashbound capacitor module</label>
-    <description>Compress residue, alloy and industrial clamps into the first abyssal charge-buffer module for the summoning circle.</description>
+    <description>Fabricate an ashbound capacitor able to hold the first disciplined charge states of the summoning circle.</description>
     <jobString>Forging ashbound capacitor module.</jobString>
     <workAmount>1800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -51,11 +50,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftRiftCapacitorModule</defName>
     <label>forge rift capacitor module</label>
-    <description>Build a phase-fed capacitor chamber with nested infernal coils for the circle's heavier ritual loads.</description>
+    <description>Forge a rift capacitor tuned to reshape unstable ritual load into reusable breach current.</description>
     <jobString>Forging rift capacitor module.</jobString>
     <workAmount>2600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -110,11 +108,10 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownCondenserModule</defName>
     <label>forge crown condenser module</label>
-    <description>Assemble a crown-grade condenser lattice for boss-tier ritual buffering and sustained infernal feed.</description>
+    <description>Build a crown-pattern condenser for the heaviest ritual loads and the most dangerous circle states.</description>
     <jobString>Forging crown condenser module.</jobString>
     <workAmount>3600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -169,5 +166,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

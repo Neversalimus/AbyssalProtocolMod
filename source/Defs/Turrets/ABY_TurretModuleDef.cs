@@ -121,6 +121,17 @@ namespace AbyssalProtocol
         public bool IsWeaponLike => projectileDef != null && (slot == ABY_TurretModuleSlot.MainWeapon || slot == ABY_TurretModuleSlot.Auxiliary);
         public bool HasOverlay => !overlayTexturePath.NullOrEmpty();
 
+        public string LocalizedLabel
+        {
+            get
+            {
+                string fallback = label.NullOrEmpty() ? defName : label;
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLabel_" + defName, fallback);
+            }
+        }
+
+        public string LocalizedLabelCap => LocalizedLabel.NullOrEmpty() ? string.Empty : LocalizedLabel.CapitalizeFirst();
+
         public bool CompatibleWith(string chassisTag)
         {
             if (compatibleChassisTags == null || compatibleChassisTags.Count == 0)
@@ -147,23 +158,21 @@ namespace AbyssalProtocol
             }
         }
 
-        public string RoleLabel => role.NullOrEmpty() ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRole_Generic", "general") : role;
+        public string RoleLabel
+        {
+            get
+            {
+                string fallback = role.NullOrEmpty() ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRole_Generic", "general") : role;
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleRole_" + defName, fallback);
+            }
+        }
 
         public string EffectSummary
         {
             get
             {
-                if (!effectSummary.NullOrEmpty())
-                {
-                    return effectSummary;
-                }
-
-                if (!description.NullOrEmpty())
-                {
-                    return description;
-                }
-
-                return RoleLabel;
+                string fallback = !effectSummary.NullOrEmpty() ? effectSummary : (!description.NullOrEmpty() ? description : RoleLabel);
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleEffect_" + defName, fallback);
             }
         }
     }

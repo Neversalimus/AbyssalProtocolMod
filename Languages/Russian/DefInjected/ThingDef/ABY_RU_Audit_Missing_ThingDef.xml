@@ -1,181 +1,181 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalForge.label>бездненная кузница</ABY_AbyssalForge.label>
-  <ABY_AbyssalGravplateHelmPrototype.description>Элемент Протокола Бездны: бездненный гравишлем. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_AbyssalGravplateHelmPrototype.description>
+  <ABY_AbyssalGravplateHelmPrototype.description>Запечатанный шлем из спящей линии гравиплит. Компактная рогатая маска, фиолетовые линзы и красное коронное вентилирование делают его скорее разрешением на запретное движение, чем обычной защитой.</ABY_AbyssalGravplateHelmPrototype.description>
   <ABY_AbyssalGravplateHelmPrototype.label>бездненный гравишлем</ABY_AbyssalGravplateHelmPrototype.label>
-  <ABY_AbyssalGravplatePrototype.description>Элемент Протокола Бездны: бездненный гравипанцирь. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_AbyssalGravplatePrototype.description>
+  <ABY_AbyssalGravplatePrototype.description>Элемент Протокола Бездны: бездненный гравипанцирь. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_AbyssalGravplatePrototype.description>
   <ABY_AbyssalGravplatePrototype.label>бездненный гравипанцирь</ABY_AbyssalGravplatePrototype.label>
   <ABY_AbyssalResidue.label>бездненный остаток</ABY_AbyssalResidue.label>
   <ABY_AnchorSpikeProjectile.label>якорный шип</ABY_AnchorSpikeProjectile.label>
-  <ABY_AnchorSpiker.description>Элемент Протокола Бездны: якорный шипомёт. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_AnchorSpiker.description>
+  <ABY_AnchorSpiker.description>Техно-инфернальная гарпунная винтовка вокруг запертой рифт-камеры и грубой сборки якорного шипа. Каждый выстрел вбивает стабилизированный пробой в броню и придавливает цель тяжестью чужой геометрии.</ABY_AnchorSpiker.description>
   <ABY_AnchorSpiker.label>якорный шипомёт</ABY_AnchorSpiker.label>
-  <ABY_AorticChainHarrower.description>Элемент Протокола Бездны: аортальный цепной боронитель. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_AorticChainHarrower.description>
+  <ABY_AorticChainHarrower.description>Элемент Протокола Бездны: аортальный цепной боронитель. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_AorticChainHarrower.description>
   <ABY_ArchonOverrideAmpoule.label>ампула перехвата архонта</ABY_ArchonOverrideAmpoule.label>
   <ABY_ArchonSigil.label>сигила Архонта</ABY_ArchonSigil.label>
   <ABY_ArchonTendonSpine.label>сухожильный позвоночник архонта</ABY_ArchonTendonSpine.label>
   <ABY_AshChoirChargeProjectile.label>пепельный хоровой заряд</ABY_AshChoirChargeProjectile.label>
-  <ABY_AshChoirLauncher.description>Элемент Протокола Бездны: пепельный хоровой пускатель. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_AshChoirLauncher.description>
+  <ABY_AshChoirLauncher.description>Компактный инфернально-технический резонансный метатель, отправляющий запечатанные заряды Пепельного Хора в плотные построения. Заряд рвётся управляемым импульсом пепла, сигнального шума и пурпурного жара.</ABY_AshChoirLauncher.description>
   <ABY_AshChoirLauncher.label>пепельный хоровой пускатель</ABY_AshChoirLauncher.label>
   <ABY_AshboundCapacitorModule.label>пепельный конденсатор</ABY_AshboundCapacitorModule.label>
-  <ABY_BreachBrute.description>Элемент Протокола Бездны: громила пролома. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_BreachBrute.description>
+  <ABY_BreachBrute.description>Элемент Протокола Бездны: громила пролома. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_BreachBrute.description>
   <ABY_BreachCannon.description>Тяжёлая осадная пушка, собранная вокруг рифт-оптической направляющей и запертого сердца бездненного давления. Каждый выстрел медленно, но неумолимо пробивает броню, укрытия и укреплённые цели.</ABY_BreachCannon.description>
   <ABY_BreachCannon.label>пушка пролома</ABY_BreachCannon.label>
   <ABY_BreachCannonBolt.label>заряд пушки пролома</ABY_BreachCannonBolt.label>
-  <ABY_ChainZealot.description>Элемент Протокола Бездны: цепной фанатик. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_ChainZealot.description>
+  <ABY_ChainZealot.description>Элемент Протокола Бездны: цепной фанатик. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_ChainZealot.description>
   <ABY_CinderResiduePatch.label>пятно угольного остатка</ABY_CinderResiduePatch.label>
   <ABY_CrownCondenserModule.label>коронный конденсатор</ABY_CrownCondenserModule.label>
-  <ABY_CrownCortexSubnode.description>Элемент Протокола Бездны: подузел коронной коры. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_CrownCortexSubnode.description>
+  <ABY_CrownCortexSubnode.description>Вспомогательный доминионный когнитивный трансплантат вокруг осколка Короны. Он садится рядом с мозгом, углубляя порядок мысли, распознавание схем и холодную подготовку к бою.</ABY_CrownCortexSubnode.description>
   <ABY_CrownCortexSubnode.label>подузел коронной коры</ABY_CrownCortexSubnode.label>
   <ABY_CrownOfRupture.label>Корона Разрыва</ABY_CrownOfRupture.label>
   <ABY_CrownStabilizerModule.label>коронный стабилизатор</ABY_CrownStabilizerModule.label>
   <ABY_CrownspikeBolt.label>коронно-шиповой заряд</ABY_CrownspikeBolt.label>
-  <ABY_CrownspikeRail.description>Элемент Протокола Бездны: коронно-шиповой рельс. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_CrownspikeRail.description>
+  <ABY_CrownspikeRail.description>Элемент Протокола Бездны: коронно-шиповой рельс. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_CrownspikeRail.description>
   <ABY_CrownspikeRail.label>коронно-шиповой рельс</ABY_CrownspikeRail.label>
   <ABY_CrudeStabilizerModule.label>грубый стабилизатор</ABY_CrudeStabilizerModule.label>
-  <ABY_DominionAnchorPlatformUnderlay_Choir.description>Элемент Протокола Бездны: платформа якоря Хора. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionAnchorPlatformUnderlay_Choir.description>
+  <ABY_DominionAnchorPlatformUnderlay_Choir.description>Элемент Протокола Бездны: платформа якоря Хора. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionAnchorPlatformUnderlay_Choir.description>
   <ABY_DominionAnchorPlatformUnderlay_Choir.label>платформа якоря Хора</ABY_DominionAnchorPlatformUnderlay_Choir.label>
-  <ABY_DominionAnchorPlatformUnderlay_Law.description>Элемент Протокола Бездны: платформа якоря Закона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionAnchorPlatformUnderlay_Law.description>
+  <ABY_DominionAnchorPlatformUnderlay_Law.description>Элемент Протокола Бездны: платформа якоря Закона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionAnchorPlatformUnderlay_Law.description>
   <ABY_DominionAnchorPlatformUnderlay_Law.label>платформа якоря Закона</ABY_DominionAnchorPlatformUnderlay_Law.label>
-  <ABY_DominionAnchorPlatformUnderlay_Seal.description>Элемент Протокола Бездны: платформа якоря Печати. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionAnchorPlatformUnderlay_Seal.description>
+  <ABY_DominionAnchorPlatformUnderlay_Seal.description>Элемент Протокола Бездны: платформа якоря Печати. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionAnchorPlatformUnderlay_Seal.description>
   <ABY_DominionAnchorPlatformUnderlay_Seal.label>платформа якоря Печати</ABY_DominionAnchorPlatformUnderlay_Seal.label>
   <ABY_DominionAnchor_Breach.label>якорь пробоя</ABY_DominionAnchor_Breach.label>
   <ABY_DominionAnchor_Drain.label>якорь истощения</ABY_DominionAnchor_Drain.label>
   <ABY_DominionAnchor_Suppression.label>якорь подавления</ABY_DominionAnchor_Suppression.label>
   <ABY_DominionAnchor_Ward.label>защитный якорь</ABY_DominionAnchor_Ward.label>
-  <ABY_DominionAshPatchA.description>Элемент Протокола Бездны: пепельное пятно. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionAshPatchA.description>
+  <ABY_DominionAshPatchA.description>Элемент Протокола Бездны: пепельное пятно. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionAshPatchA.description>
   <ABY_DominionAshPatchA.label>пепельное пятно</ABY_DominionAshPatchA.label>
-  <ABY_DominionAshPatchB.description>Элемент Протокола Бездны: пятно пепельного металла. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionAshPatchB.description>
+  <ABY_DominionAshPatchB.description>Элемент Протокола Бездны: пятно пепельного металла. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionAshPatchB.description>
   <ABY_DominionAshPatchB.label>пятно пепельного металла</ABY_DominionAshPatchB.label>
-  <ABY_DominionBackWallShellNorth.description>Элемент Протокола Бездны: задняя оболочка стены Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionBackWallShellNorth.description>
+  <ABY_DominionBackWallShellNorth.description>Элемент Протокола Бездны: задняя оболочка стены Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionBackWallShellNorth.description>
   <ABY_DominionBackWallShellNorth.label>задняя оболочка стены Доминиона</ABY_DominionBackWallShellNorth.label>
-  <ABY_DominionBrokenConduitSpineA.description>Элемент Протокола Бездны: сломанный проводящий хребет. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionBrokenConduitSpineA.description>
+  <ABY_DominionBrokenConduitSpineA.description>Элемент Протокола Бездны: сломанный проводящий хребет. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionBrokenConduitSpineA.description>
   <ABY_DominionBrokenConduitSpineA.label>сломанный проводящий хребет</ABY_DominionBrokenConduitSpineA.label>
-  <ABY_DominionBrokenPlateDustA.description>Элемент Протокола Бездны: пыль битых плит. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionBrokenPlateDustA.description>
+  <ABY_DominionBrokenPlateDustA.description>Элемент Протокола Бездны: пыль битых плит. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionBrokenPlateDustA.description>
   <ABY_DominionBrokenPlateDustA.label>пыль битых плит</ABY_DominionBrokenPlateDustA.label>
-  <ABY_DominionConduitScrapA.description>Элемент Протокола Бездны: обломки проводника Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionConduitScrapA.description>
+  <ABY_DominionConduitScrapA.description>Элемент Протокола Бездны: обломки проводника Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionConduitScrapA.description>
   <ABY_DominionConduitScrapA.label>обломки проводника Доминиона</ABY_DominionConduitScrapA.label>
-  <ABY_DominionConduitScrapB.description>Элемент Протокола Бездны: сломанные обломки проводника. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionConduitScrapB.description>
+  <ABY_DominionConduitScrapB.description>Элемент Протокола Бездны: сломанные обломки проводника. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionConduitScrapB.description>
   <ABY_DominionConduitScrapB.label>сломанные обломки проводника</ABY_DominionConduitScrapB.label>
   <ABY_DominionCrownShard.label>осколок короны Доминиона</ABY_DominionCrownShard.label>
-  <ABY_DominionDarkScatterA.description>Элемент Протокола Бездны: тёмная россыпь. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionDarkScatterA.description>
+  <ABY_DominionDarkScatterA.description>Элемент Протокола Бездны: тёмная россыпь. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionDarkScatterA.description>
   <ABY_DominionDarkScatterA.label>тёмная россыпь</ABY_DominionDarkScatterA.label>
-  <ABY_DominionDustClusterA.description>Элемент Протокола Бездны: скопление мёртвой пыли. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionDustClusterA.description>
+  <ABY_DominionDustClusterA.description>Элемент Протокола Бездны: скопление мёртвой пыли. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionDustClusterA.description>
   <ABY_DominionDustClusterA.label>скопление мёртвой пыли</ABY_DominionDustClusterA.label>
-  <ABY_DominionEdgeMegastructureCornerA.description>Элемент Протокола Бездны: угол краевой мегаструктуры. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionEdgeMegastructureCornerA.description>
+  <ABY_DominionEdgeMegastructureCornerA.description>Элемент Протокола Бездны: угол краевой мегаструктуры. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionEdgeMegastructureCornerA.description>
   <ABY_DominionEdgeMegastructureCornerA.label>угол краевой мегаструктуры</ABY_DominionEdgeMegastructureCornerA.label>
-  <ABY_DominionEdgeMegastructureStraightA.description>Элемент Протокола Бездны: фрагмент краевой мегаструктуры. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionEdgeMegastructureStraightA.description>
+  <ABY_DominionEdgeMegastructureStraightA.description>Элемент Протокола Бездны: фрагмент краевой мегаструктуры. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionEdgeMegastructureStraightA.description>
   <ABY_DominionEdgeMegastructureStraightA.label>фрагмент краевой мегаструктуры</ABY_DominionEdgeMegastructureStraightA.label>
-  <ABY_DominionEdgeVoidTearA.description>Элемент Протокола Бездны: краевой разрыв пустоты. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionEdgeVoidTearA.description>
+  <ABY_DominionEdgeVoidTearA.description>Элемент Протокола Бездны: краевой разрыв пустоты. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionEdgeVoidTearA.description>
   <ABY_DominionEdgeVoidTearA.label>краевой разрыв пустоты</ABY_DominionEdgeVoidTearA.label>
-  <ABY_DominionEntrySeamScarSouth.description>Элемент Протокола Бездны: шрам выхода через шов. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionEntrySeamScarSouth.description>
+  <ABY_DominionEntrySeamScarSouth.description>Элемент Протокола Бездны: шрам выхода через шов. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionEntrySeamScarSouth.description>
   <ABY_DominionEntrySeamScarSouth.label>шрам выхода через шов</ABY_DominionEntrySeamScarSouth.label>
-  <ABY_DominionExcavationScarA.description>Элемент Протокола Бездны: шрам раскопа. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionExcavationScarA.description>
+  <ABY_DominionExcavationScarA.description>Элемент Протокола Бездны: шрам раскопа. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionExcavationScarA.description>
   <ABY_DominionExcavationScarA.label>шрам раскопа</ABY_DominionExcavationScarA.label>
-  <ABY_DominionExcavationScarB.description>Элемент Протокола Бездны: длинный шрам раскопа. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionExcavationScarB.description>
+  <ABY_DominionExcavationScarB.description>Элемент Протокола Бездны: длинный шрам раскопа. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionExcavationScarB.description>
   <ABY_DominionExcavationScarB.label>длинный шрам раскопа</ABY_DominionExcavationScarB.label>
-  <ABY_DominionFissureBlocker.description>Элемент Протокола Бездны: блокиратор трещины Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissureBlocker.description>
+  <ABY_DominionFissureBlocker.description>Элемент Протокола Бездны: блокиратор трещины Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissureBlocker.description>
   <ABY_DominionFissureBlocker.label>блокиратор трещины Доминиона</ABY_DominionFissureBlocker.label>
-  <ABY_DominionFissurePathNorthEast.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathNorthEast.description>
+  <ABY_DominionFissurePathNorthEast.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathNorthEast.description>
   <ABY_DominionFissurePathNorthEast.label>гемоплазменный путь трещин</ABY_DominionFissurePathNorthEast.label>
-  <ABY_DominionFissurePathNorthWest.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathNorthWest.description>
+  <ABY_DominionFissurePathNorthWest.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathNorthWest.description>
   <ABY_DominionFissurePathNorthWest.label>гемоплазменный путь трещин</ABY_DominionFissurePathNorthWest.label>
-  <ABY_DominionFissurePathShortWestMid.description>Элемент Протокола Бездны: короткий путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathShortWestMid.description>
+  <ABY_DominionFissurePathShortWestMid.description>Элемент Протокола Бездны: короткий путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathShortWestMid.description>
   <ABY_DominionFissurePathShortWestMid.label>короткий путь трещин</ABY_DominionFissurePathShortWestMid.label>
-  <ABY_DominionFissurePathSouthEast.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathSouthEast.description>
+  <ABY_DominionFissurePathSouthEast.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathSouthEast.description>
   <ABY_DominionFissurePathSouthEast.label>гемоплазменный путь трещин</ABY_DominionFissurePathSouthEast.label>
-  <ABY_DominionFissurePathSouthWest.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathSouthWest.description>
+  <ABY_DominionFissurePathSouthWest.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathSouthWest.description>
   <ABY_DominionFissurePathSouthWest.label>гемоплазменный путь трещин</ABY_DominionFissurePathSouthWest.label>
-  <ABY_DominionFissurePathWestMid.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionFissurePathWestMid.description>
+  <ABY_DominionFissurePathWestMid.description>Элемент Протокола Бездны: гемоплазменный путь трещин. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionFissurePathWestMid.description>
   <ABY_DominionFissurePathWestMid.label>гемоплазменный путь трещин</ABY_DominionFissurePathWestMid.label>
   <ABY_DominionGateCore.label>великие инфернальные врата</ABY_DominionGateCore.label>
-  <ABY_DominionHeartFloorFractureLarge.description>Элемент Протокола Бездны: разлом пола сердца Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionHeartFloorFractureLarge.description>
+  <ABY_DominionHeartFloorFractureLarge.description>Элемент Протокола Бездны: разлом пола сердца Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionHeartFloorFractureLarge.description>
   <ABY_DominionHeartFloorFractureLarge.label>разлом пола сердца Доминиона</ABY_DominionHeartFloorFractureLarge.label>
-  <ABY_DominionHeartPlatformUnderlay.description>Элемент Протокола Бездны: платформа сердца Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionHeartPlatformUnderlay.description>
+  <ABY_DominionHeartPlatformUnderlay.description>Элемент Протокола Бездны: платформа сердца Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionHeartPlatformUnderlay.description>
   <ABY_DominionHeartPlatformUnderlay.label>платформа сердца Доминиона</ABY_DominionHeartPlatformUnderlay.label>
-  <ABY_DominionIndustrialWreckageA.description>Элемент Протокола Бездны: индустриальные обломки Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionIndustrialWreckageA.description>
+  <ABY_DominionIndustrialWreckageA.description>Элемент Протокола Бездны: индустриальные обломки Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionIndustrialWreckageA.description>
   <ABY_DominionIndustrialWreckageA.label>индустриальные обломки Доминиона</ABY_DominionIndustrialWreckageA.label>
-  <ABY_DominionMachineWreckReactorRibA.description>Элемент Протокола Бездны: реакторное ребро Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionMachineWreckReactorRibA.description>
+  <ABY_DominionMachineWreckReactorRibA.description>Элемент Протокола Бездны: реакторное ребро Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionMachineWreckReactorRibA.description>
   <ABY_DominionMachineWreckReactorRibA.label>реакторное ребро Доминиона</ABY_DominionMachineWreckReactorRibA.label>
-  <ABY_DominionPerimeterBarricadeA.description>Элемент Протокола Бездны: баррикада периметра Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPerimeterBarricadeA.description>
+  <ABY_DominionPerimeterBarricadeA.description>Элемент Протокола Бездны: баррикада периметра Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPerimeterBarricadeA.description>
   <ABY_DominionPerimeterBarricadeA.label>баррикада периметра Доминиона</ABY_DominionPerimeterBarricadeA.label>
-  <ABY_DominionPerimeterBarricadeBrokenA.description>Элемент Протокола Бездны: сломанная баррикада периметра. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPerimeterBarricadeBrokenA.description>
+  <ABY_DominionPerimeterBarricadeBrokenA.description>Элемент Протокола Бездны: сломанная баррикада периметра. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPerimeterBarricadeBrokenA.description>
   <ABY_DominionPerimeterBarricadeBrokenA.label>сломанная баррикада периметра</ABY_DominionPerimeterBarricadeBrokenA.label>
-  <ABY_DominionPerimeterCollapseA.description>Элемент Протокола Бездны: обвал периметра Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPerimeterCollapseA.description>
+  <ABY_DominionPerimeterCollapseA.description>Элемент Протокола Бездны: обвал периметра Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPerimeterCollapseA.description>
   <ABY_DominionPerimeterCollapseA.label>обвал периметра Доминиона</ABY_DominionPerimeterCollapseA.label>
-  <ABY_DominionPerimeterCollapseB.description>Элемент Протокола Бездны: руинный обвал Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPerimeterCollapseB.description>
+  <ABY_DominionPerimeterCollapseB.description>Элемент Протокола Бездны: руинный обвал Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPerimeterCollapseB.description>
   <ABY_DominionPerimeterCollapseB.label>руинный обвал Доминиона</ABY_DominionPerimeterCollapseB.label>
-  <ABY_DominionPlateClusterA.description>Элемент Протокола Бездны: скопление плит Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPlateClusterA.description>
+  <ABY_DominionPlateClusterA.description>Элемент Протокола Бездны: скопление плит Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPlateClusterA.description>
   <ABY_DominionPlateClusterA.label>скопление плит Доминиона</ABY_DominionPlateClusterA.label>
-  <ABY_DominionPlateClusterB.description>Элемент Протокола Бездны: скопление битых плит Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPlateClusterB.description>
+  <ABY_DominionPlateClusterB.description>Элемент Протокола Бездны: скопление битых плит Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPlateClusterB.description>
   <ABY_DominionPlateClusterB.label>скопление битых плит Доминиона</ABY_DominionPlateClusterB.label>
-  <ABY_DominionPlateCollapseLargeA.description>Элемент Протокола Бездны: крупный обвал плит Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPlateCollapseLargeA.description>
+  <ABY_DominionPlateCollapseLargeA.description>Элемент Протокола Бездны: крупный обвал плит Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPlateCollapseLargeA.description>
   <ABY_DominionPlateCollapseLargeA.label>крупный обвал плит Доминиона</ABY_DominionPlateCollapseLargeA.label>
-  <ABY_DominionPulseHeart.description>Элемент Протокола Бездны: пульсирующее сердце Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionPulseHeart.description>
+  <ABY_DominionPulseHeart.description>Элемент Протокола Бездны: пульсирующее сердце Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionPulseHeart.description>
   <ABY_DominionPulseHeart.label>пульсирующее сердце Доминиона</ABY_DominionPulseHeart.label>
-  <ABY_DominionReactorRingFragmentA.description>Элемент Протокола Бездны: фрагмент реакторного кольца. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionReactorRingFragmentA.description>
+  <ABY_DominionReactorRingFragmentA.description>Элемент Протокола Бездны: фрагмент реакторного кольца. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionReactorRingFragmentA.description>
   <ABY_DominionReactorRingFragmentA.label>фрагмент реакторного кольца</ABY_DominionReactorRingFragmentA.label>
-  <ABY_DominionRubblePileA.description>Элемент Протокола Бездны: куча обломков Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRubblePileA.description>
+  <ABY_DominionRubblePileA.description>Элемент Протокола Бездны: куча обломков Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRubblePileA.description>
   <ABY_DominionRubblePileA.label>куча обломков Доминиона</ABY_DominionRubblePileA.label>
-  <ABY_DominionRuinWallCornerA.description>Элемент Протокола Бездны: угол руинной стены Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallCornerA.description>
+  <ABY_DominionRuinWallCornerA.description>Элемент Протокола Бездны: угол руинной стены Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallCornerA.description>
   <ABY_DominionRuinWallCornerA.label>угол руинной стены Доминиона</ABY_DominionRuinWallCornerA.label>
-  <ABY_DominionRuinWallCornerBrokenA.description>Элемент Протокола Бездны: сломанный угол руинной стены. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallCornerBrokenA.description>
+  <ABY_DominionRuinWallCornerBrokenA.description>Элемент Протокола Бездны: сломанный угол руинной стены. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallCornerBrokenA.description>
   <ABY_DominionRuinWallCornerBrokenA.label>сломанный угол руинной стены</ABY_DominionRuinWallCornerBrokenA.label>
-  <ABY_DominionRuinWallStraightA.description>Элемент Протокола Бездны: сегмент руинной стены Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallStraightA.description>
+  <ABY_DominionRuinWallStraightA.description>Элемент Протокола Бездны: сегмент руинной стены Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallStraightA.description>
   <ABY_DominionRuinWallStraightA.label>сегмент руинной стены Доминиона</ABY_DominionRuinWallStraightA.label>
-  <ABY_DominionRuinWallStraightBrokenA.description>Элемент Протокола Бездны: сломанная руинная стена. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallStraightBrokenA.description>
+  <ABY_DominionRuinWallStraightBrokenA.description>Элемент Протокола Бездны: сломанная руинная стена. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallStraightBrokenA.description>
   <ABY_DominionRuinWallStraightBrokenA.label>сломанная руинная стена</ABY_DominionRuinWallStraightBrokenA.label>
-  <ABY_DominionRuinWallTJunctionA.description>Элемент Протокола Бездны: Т-узел руинной стены. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallTJunctionA.description>
+  <ABY_DominionRuinWallTJunctionA.description>Элемент Протокола Бездны: Т-узел руинной стены. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallTJunctionA.description>
   <ABY_DominionRuinWallTJunctionA.label>Т-узел руинной стены</ABY_DominionRuinWallTJunctionA.label>
-  <ABY_DominionRuinWallTJunctionBrokenA.description>Элемент Протокола Бездны: сломанный Т-узел руинной стены. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionRuinWallTJunctionBrokenA.description>
+  <ABY_DominionRuinWallTJunctionBrokenA.description>Элемент Протокола Бездны: сломанный Т-узел руинной стены. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionRuinWallTJunctionBrokenA.description>
   <ABY_DominionRuinWallTJunctionBrokenA.label>сломанный Т-узел руинной стены</ABY_DominionRuinWallTJunctionBrokenA.label>
-  <ABY_DominionScorchCraterA.description>Элемент Протокола Бездны: ожоговый кратер Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionScorchCraterA.description>
+  <ABY_DominionScorchCraterA.description>Элемент Протокола Бездны: ожоговый кратер Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionScorchCraterA.description>
   <ABY_DominionScorchCraterA.label>ожоговый кратер Доминиона</ABY_DominionScorchCraterA.label>
-  <ABY_DominionSideRoomFloorUnderlayA.description>Элемент Протокола Бездны: пол боковой камеры Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionSideRoomFloorUnderlayA.description>
+  <ABY_DominionSideRoomFloorUnderlayA.description>Элемент Протокола Бездны: пол боковой камеры Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionSideRoomFloorUnderlayA.description>
   <ABY_DominionSideRoomFloorUnderlayA.label>пол боковой камеры Доминиона</ABY_DominionSideRoomFloorUnderlayA.label>
-  <ABY_DominionSideRoomMachineBayWest.description>Элемент Протокола Бездны: оболочка машинного отсека. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionSideRoomMachineBayWest.description>
+  <ABY_DominionSideRoomMachineBayWest.description>Элемент Протокола Бездны: оболочка машинного отсека. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionSideRoomMachineBayWest.description>
   <ABY_DominionSideRoomMachineBayWest.label>оболочка машинного отсека</ABY_DominionSideRoomMachineBayWest.label>
-  <ABY_DominionSideRoomReliquaryBayEast.description>Элемент Протокола Бездны: оболочка реликварного отсека. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionSideRoomReliquaryBayEast.description>
+  <ABY_DominionSideRoomReliquaryBayEast.description>Элемент Протокола Бездны: оболочка реликварного отсека. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionSideRoomReliquaryBayEast.description>
   <ABY_DominionSideRoomReliquaryBayEast.label>оболочка реликварного отсека</ABY_DominionSideRoomReliquaryBayEast.label>
   <ABY_DominionSigil.label>сигила Доминиона</ABY_DominionSigil.label>
-  <ABY_DominionSootMoundA.description>Элемент Протокола Бездны: насыпь сажи. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionSootMoundA.description>
+  <ABY_DominionSootMoundA.description>Элемент Протокола Бездны: насыпь сажи. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionSootMoundA.description>
   <ABY_DominionSootMoundA.label>насыпь сажи</ABY_DominionSootMoundA.label>
-  <ABY_DominionSootPatchA.description>Элемент Протокола Бездны: пятно сажи Доминиона. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_DominionSootPatchA.description>
+  <ABY_DominionSootPatchA.description>Элемент Протокола Бездны: пятно сажи Доминиона. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_DominionSootPatchA.description>
   <ABY_DominionSootPatchA.label>пятно сажи Доминиона</ABY_DominionSootPatchA.label>
   <ABY_EmberHoundSigil.label>сигила угольных гончих</ABY_EmberHoundSigil.label>
-  <ABY_GateWarden.description>Элемент Протокола Бездны: страж врат. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_GateWarden.description>
-  <ABY_GatebreakerMaul.description>Элемент Протокола Бездны: молот Проломщика Врат. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_GatebreakerMaul.description>
+  <ABY_GateWarden.description>Элемент Протокола Бездны: страж врат. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_GateWarden.description>
+  <ABY_GatebreakerMaul.description>Элемент Протокола Бездны: молот Проломщика Врат. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_GatebreakerMaul.description>
   <ABY_GatebreakerMaul.label>молот Проломщика Врат</ABY_GatebreakerMaul.label>
-  <ABY_Harvester.description>Элемент Протокола Бездны: жнец. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Harvester.description>
+  <ABY_Harvester.description>Элемент Протокола Бездны: жнец. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Harvester.description>
   <ABY_HeraldCarapaceMesh.label>панцирная сеть вестника</ABY_HeraldCarapaceMesh.label>
   <ABY_HeraldCoreFragment.label>фрагмент ядра Вестника</ABY_HeraldCoreFragment.label>
   <ABY_HeraldEye.label>глаз вестника</ABY_HeraldEye.label>
-  <ABY_HexPistol.description>Элемент Протокола Бездны: гекс-пистолет. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_HexPistol.description>
+  <ABY_HexPistol.description>Элемент Протокола Бездны: гекс-пистолет. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_HexPistol.description>
   <ABY_HexPistol.label>гекс-пистолет</ABY_HexPistol.label>
   <ABY_HexPistolBolt.label>заряд гекс-пистолета</ABY_HexPistolBolt.label>
-  <ABY_Hexgun.description>Элемент Протокола Бездны: гексган. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Hexgun.description>
+  <ABY_Hexgun.description>Элемент Протокола Бездны: гексган. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Hexgun.description>
   <ABY_Hexgun.label>гексган</ABY_Hexgun.label>
   <ABY_HexgunBolt.label>заряд хексгана</ABY_HexgunBolt.label>
   <ABY_HexgunRelaySigil.label>ретрансляторная сигила хексгана</ABY_HexgunRelaySigil.label>
   <ABY_ImpPortal.label>портал бездненных бесов</ABY_ImpPortal.label>
-  <ABY_InfernalEye.description>Элемент Протокола Бездны: инфернальный глаз. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_InfernalEye.description>
+  <ABY_InfernalEye.description>Стабилизированный бездненный глаз для захвата целей и боевой точности. Он позволяет видеть слабые места так, будто тело на миг стало читаемой схемой.</ABY_InfernalEye.description>
   <ABY_InfernalEye.label>инфернальный глаз</ABY_InfernalEye.label>
-  <ABY_LawwovenCarapaceMesh.description>Элемент Протокола Бездны: законоплетёная панцирная сеть. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_LawwovenCarapaceMesh.description>
+  <ABY_LawwovenCarapaceMesh.description>Элемент Протокола Бездны: законоплетёная панцирная сеть. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_LawwovenCarapaceMesh.description>
   <ABY_LawwovenCarapaceMesh.label>законоплетёная панцирная сеть</ABY_LawwovenCarapaceMesh.label>
-  <ABY_Manifestation_ArchonBeastArrival.description>Элемент Протокола Бездны: проявление Зверя-Архонта. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_ArchonBeastArrival.description>
+  <ABY_Manifestation_ArchonBeastArrival.description>Элемент Протокола Бездны: проявление Зверя-Архонта. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_ArchonBeastArrival.description>
   <ABY_Manifestation_ArchonBeastArrival.label>проявление Зверя-Архонта</ABY_Manifestation_ArchonBeastArrival.label>
-  <ABY_Manifestation_BreachBruteArrival.description>Элемент Протокола Бездны: проявление пробойного громилы. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_BreachBruteArrival.description>
+  <ABY_Manifestation_BreachBruteArrival.description>Элемент Протокола Бездны: проявление пробойного громилы. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_BreachBruteArrival.description>
   <ABY_Manifestation_BreachBruteArrival.label>проявление пробойного громилы</ABY_Manifestation_BreachBruteArrival.label>
-  <ABY_Manifestation_ReactorSaintArrival.description>Элемент Протокола Бездны: входящий кокон Реакторного Святого. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_ReactorSaintArrival.description>
+  <ABY_Manifestation_ReactorSaintArrival.description>Элемент Протокола Бездны: входящий кокон Реакторного Святого. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_ReactorSaintArrival.description>
   <ABY_Manifestation_ReactorSaintArrival.label>входящий кокон Реакторного Святого</ABY_Manifestation_ReactorSaintArrival.label>
-  <ABY_Manifestation_ReactorSaintArrivalControlled.description>Элемент Протокола Бездны: проявление Реакторного Святого. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_ReactorSaintArrivalControlled.description>
+  <ABY_Manifestation_ReactorSaintArrivalControlled.description>Элемент Протокола Бездны: проявление Реакторного Святого. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_ReactorSaintArrivalControlled.description>
   <ABY_Manifestation_ReactorSaintArrivalControlled.label>проявление Реакторного Святого</ABY_Manifestation_ReactorSaintArrivalControlled.label>
-  <ABY_Manifestation_ReactorSaintDeparture.description>Элемент Протокола Бездны: исходящий кокон Реакторного Святого. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_ReactorSaintDeparture.description>
+  <ABY_Manifestation_ReactorSaintDeparture.description>Элемент Протокола Бездны: исходящий кокон Реакторного Святого. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_ReactorSaintDeparture.description>
   <ABY_Manifestation_ReactorSaintDeparture.label>исходящий кокон Реакторного Святого</ABY_Manifestation_ReactorSaintDeparture.label>
-  <ABY_Manifestation_SeamBreach.description>Элемент Протокола Бездны: проявление пробоя шва. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_SeamBreach.description>
+  <ABY_Manifestation_SeamBreach.description>Элемент Протокола Бездны: проявление пробоя шва. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_SeamBreach.description>
   <ABY_Manifestation_SeamBreach.label>проявление пробоя шва</ABY_Manifestation_SeamBreach.label>
-  <ABY_Manifestation_SigilBloom.description>Элемент Протокола Бездны: проявление цветения сигилы. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_SigilBloom.description>
+  <ABY_Manifestation_SigilBloom.description>Элемент Протокола Бездны: проявление цветения сигилы. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_SigilBloom.description>
   <ABY_Manifestation_SigilBloom.label>проявление цветения сигилы</ABY_Manifestation_SigilBloom.label>
-  <ABY_Manifestation_StaticPhaseIn.description>Элемент Протокола Бездны: проявление статического фазового входа. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_Manifestation_StaticPhaseIn.description>
+  <ABY_Manifestation_StaticPhaseIn.description>Элемент Протокола Бездны: проявление статического фазового входа. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_Manifestation_StaticPhaseIn.description>
   <ABY_Manifestation_StaticPhaseIn.label>проявление статического фазового входа</ABY_Manifestation_StaticPhaseIn.label>
   <ABY_Mote_AbyssalHarpoonImpact.label>удар бездненного гарпуна</ABY_Mote_AbyssalHarpoonImpact.label>
   <ABY_Mote_AbyssalHarpoonMarker.label>замковый маркер гарпуна</ABY_Mote_AbyssalHarpoonMarker.label>
@@ -303,48 +303,48 @@
   <ABY_Mote_VesperLanceArrayImpact.label>удар массива Веспер-копья</ABY_Mote_VesperLanceArrayImpact.label>
   <ABY_Mote_VesperLanceArrayMuzzle.label>дульная вспышка Веспер-массива</ABY_Mote_VesperLanceArrayMuzzle.label>
   <ABY_NullBoltProjectile.label>нулевой заряд</ABY_NullBoltProjectile.label>
-  <ABY_NullDisruptor.description>Элемент Протокола Бездны: нулевой дисруптор. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_NullDisruptor.description>
+  <ABY_NullDisruptor.description>Элемент Протокола Бездны: нулевой дисруптор. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_NullDisruptor.description>
   <ABY_NullDisruptor.label>нулевой дисруптор</ABY_NullDisruptor.label>
   <ABY_NullDisruptorPulse.label>нулевой дисруптор пульс</ABY_NullDisruptorPulse.label>
-  <ABY_NullMarksmanRifle.description>Элемент Протокола Бездны: нулевая стрелковая винтовка. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_NullMarksmanRifle.description>
+  <ABY_NullMarksmanRifle.description>Элемент Протокола Бездны: нулевая стрелковая винтовка. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_NullMarksmanRifle.description>
   <ABY_NullMarksmanRifle.label>нулевая стрелковая винтовка</ABY_NullMarksmanRifle.label>
   <ABY_NullMarksmanSpikeProjectile.label>нулевой стрелковый шип</ABY_NullMarksmanSpikeProjectile.label>
-  <ABY_NullPriest.description>Элемент Протокола Бездны: нулевой жрец. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_NullPriest.description>
-  <ABY_NullbrandGlaive.description>Элемент Протокола Бездны: глефа Нулевого Клейма. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_NullbrandGlaive.description>
+  <ABY_NullPriest.description>Бездненный полевой жрец, делающий весь пробой опаснее, не превращаясь в простую груду урона. Нулевые жрецы укрепляют близкие тела Бездны, размыкают защиту важных целей и открывают краткие микроразломы там, где линия должна была удержаться.</ABY_NullPriest.description>
+  <ABY_NullbrandGlaive.description>Элемент Протокола Бездны: глефа Нулевого Клейма. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_NullbrandGlaive.description>
   <ABY_NullbrandGlaive.label>глефа Нулевого Клейма</ABY_NullbrandGlaive.label>
   <ABY_OblivionChoir.label>Хор Забвения</ABY_OblivionChoir.label>
   <ABY_OblivionChoirCell.label>ячейка Хора Забвения</ABY_OblivionChoirCell.label>
   <ABY_OblivionChoirCoreProjectile.label>ядро Хора Забвения</ABY_OblivionChoirCoreProjectile.label>
   <ABY_Projectile_RuptureSentence.label>снаряд приговора Разрыва</ABY_Projectile_RuptureSentence.label>
-  <ABY_ProtocolNexus.description>Элемент Протокола Бездны: нексус Бездненного Протокола. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_ProtocolNexus.description>
+  <ABY_ProtocolNexus.description>Элемент Протокола Бездны: нексус Бездненного Протокола. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_ProtocolNexus.description>
   <ABY_ProtocolNexus.label>нексус Бездненного Протокола</ABY_ProtocolNexus.label>
   <ABY_ReactorSaintBarrageShell.label>снаряд залпа святого</ABY_ReactorSaintBarrageShell.label>
   <ABY_ReactorSaintBolt.label>реакторный копейный заряд</ABY_ReactorSaintBolt.label>
-  <ABY_ReactorSaintCocoon.description>Элемент Протокола Бездны: кокон Реакторного Святого. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_ReactorSaintCocoon.description>
+  <ABY_ReactorSaintCocoon.description>Элемент Протокола Бездны: кокон Реакторного Святого. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_ReactorSaintCocoon.description>
   <ABY_ReactorSaintCocoon.label>кокон Реакторного Святого</ABY_ReactorSaintCocoon.label>
-  <ABY_ReliquaryArchonBeast.description>Элемент Протокола Бездны: реликварный зверь-архонт. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_ReliquaryArchonBeast.description>
+  <ABY_ReliquaryArchonBeast.description>Элемент Протокола Бездны: реликварный зверь-архонт. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_ReliquaryArchonBeast.description>
   <ABY_ResonantStabilizerModule.label>резонансный стабилизатор</ABY_ResonantStabilizerModule.label>
   <ABY_RiftBlade.label>Рифт-клинок</ABY_RiftBlade.label>
   <ABY_RiftCapacitorModule.label>рифт-конденсатор</ABY_RiftCapacitorModule.label>
   <ABY_RiftCarbine.label>Рифт-карабин</ABY_RiftCarbine.label>
   <ABY_RiftCarbineBeamBurst.label>вспышка Рифт-карабина</ABY_RiftCarbineBeamBurst.label>
-  <ABY_RiftDagger.description>Элемент Протокола Бездны: Рифт-кинжал. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RiftDagger.description>
+  <ABY_RiftDagger.description>Элемент Протокола Бездны: Рифт-кинжал. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_RiftDagger.description>
   <ABY_RiftDagger.label>Рифт-кинжал</ABY_RiftDagger.label>
   <ABY_RiftNeedleProjectile.label>рифт-игла</ABY_RiftNeedleProjectile.label>
-  <ABY_RiftNeedler.description>Элемент Протокола Бездны: Рифт-игломёт. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RiftNeedler.description>
+  <ABY_RiftNeedler.description>Компактный техно-инфернальный карабин, выпускающий ритуальные рифт-иглы дисциплинированной очередью. Он предпочитает чистую дальность, управляемый разлом и терпеливую работу по цели грубой массе огня.</ABY_RiftNeedler.description>
   <ABY_RiftNeedler.label>Рифт-игломёт</ABY_RiftNeedler.label>
-  <ABY_RiftSniper.description>Элемент Протокола Бездны: рифт-снайпер. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RiftSniper.description>
+  <ABY_RiftSniper.description>Элемент Протокола Бездны: рифт-снайпер. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_RiftSniper.description>
   <ABY_RiftSniperBolt.label>рифт-копейный снаряд</ABY_RiftSniperBolt.label>
-  <ABY_RuptureCrownAnchor.description>Элемент Протокола Бездны: якорь Короны Разрыва. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RuptureCrownAnchor.description>
+  <ABY_RuptureCrownAnchor.description>Элемент Протокола Бездны: якорь Короны Разрыва. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_RuptureCrownAnchor.description>
   <ABY_RuptureCrownAnchor.label>якорь Короны Разрыва</ABY_RuptureCrownAnchor.label>
-  <ABY_RuptureCrownAnchor_Broken.description>Элемент Протокола Бездны: сломанный якорь Короны Разрыва. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RuptureCrownAnchor_Broken.description>
+  <ABY_RuptureCrownAnchor_Broken.description>Элемент Протокола Бездны: сломанный якорь Короны Разрыва. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_RuptureCrownAnchor_Broken.description>
   <ABY_RuptureCrownAnchor_Broken.label>сломанный якорь Короны Разрыва</ABY_RuptureCrownAnchor_Broken.label>
-  <ABY_RuptureCrownAnchor_Destabilized.description>Элемент Протокола Бездны: дестабилизированный якорь Короны Разрыва. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_RuptureCrownAnchor_Destabilized.description>
+  <ABY_RuptureCrownAnchor_Destabilized.description>Элемент Протокола Бездны: дестабилизированный якорь Короны Разрыва. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_RuptureCrownAnchor_Destabilized.description>
   <ABY_RuptureCrownAnchor_Destabilized.label>дестабилизированный якорь Короны Разрыва</ABY_RuptureCrownAnchor_Destabilized.label>
   <ABY_RupturePortal.label>портал разрыва</ABY_RupturePortal.label>
   <ABY_SaintAegisCarapace.description>Панцирь святого носителя Эгиды — тяжёлая бронеоболочка, собранная по реакторно-сакральной логике Протокола Бездны. Её пластины удерживают ударную геометрию Эгиды и принимают часть доменного давления на себя.</ABY_SaintAegisCarapace.description>
   <ABY_SaintAegisCarapace.label>панцирь святого носителя Эгиды</ABY_SaintAegisCarapace.label>
-  <ABY_SiegeIdol.description>Элемент Протокола Бездны: осадный идол. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_SiegeIdol.description>
+  <ABY_SiegeIdol.description>Элемент Протокола Бездны: осадный идол. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_SiegeIdol.description>
   <ABY_SiegeIdolBreachShell.label>пробойный снаряд идола</ABY_SiegeIdolBreachShell.label>
   <ABY_SiegeIdolPlasmaBolt.label>осадный плазменный заряд</ABY_SiegeIdolPlasmaBolt.label>
   <ABY_SigilVault.label>хранилище сигил Бездны</ABY_SigilVault.label>
@@ -366,8 +366,8 @@
   <ABY_UltraPlasmaBolt.label>ультраплазменный заряд</ABY_UltraPlasmaBolt.label>
   <ABY_UltraPlasmaRifle.label>ультра плазменная винтовка</ABY_UltraPlasmaRifle.label>
   <ABY_UnstableBreachSigil.label>сигила нестабильного пролома</ABY_UnstableBreachSigil.label>
-  <ABY_VerdictTendonSpine.description>Элемент Протокола Бездны: сухожильный позвоночник Вердикта. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_VerdictTendonSpine.description>
+  <ABY_VerdictTendonSpine.description>Элемент Протокола Бездны: сухожильный позвоночник Вердикта. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_VerdictTendonSpine.description>
   <ABY_VerdictTendonSpine.label>сухожильный позвоночник Вердикта</ABY_VerdictTendonSpine.label>
-  <ABY_VesperHaloHelm.description>Элемент Протокола Бездны: веспер ореол шлем. Связан с ритуально-индустриальной инфраструктурой, боевой прогрессией или доменными системами Протокола.</ABY_VesperHaloHelm.description>
+  <ABY_VesperHaloHelm.description>Элемент Протокола Бездны: веспер ореол шлем. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_VesperHaloHelm.description>
   <ABY_VesperHaloHelm.label>веспер ореол шлем</ABY_VesperHaloHelm.label>
 </LanguageData>

@@ -385,7 +385,7 @@ namespace AbyssalProtocol
 
             Install(module);
             ApplyPowerDraw();
-            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstalledMessage", "Installed {0}.", module.LabelCap);
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstalledMessage", "Installed {0}.", module.LocalizedLabelCap);
             return true;
         }
 
@@ -424,7 +424,7 @@ namespace AbyssalProtocol
             mainLastBurstShotIndex = -1;
             mainMuzzleOverlayShotIndex = -1;
             ApplyPowerDraw();
-            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LocalizedLabelCap);
             return true;
         }
 
@@ -453,7 +453,7 @@ namespace AbyssalProtocol
             auxiliaryModule = null;
             auxiliaryCooldownTicks = 0;
             ApplyPowerDraw();
-            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LocalizedLabelCap);
             return true;
         }
 
@@ -481,7 +481,7 @@ namespace AbyssalProtocol
 
             passiveModules.RemoveAt(index);
             ApplyPowerDraw();
-            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LabelCap);
+            message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LocalizedLabelCap);
             return true;
         }
 
