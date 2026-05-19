@@ -84,7 +84,7 @@ namespace AbyssalProtocol
         {
             get
             {
-                return AbyssalProtocolMod.Settings.uiStyle == ABY_UIStyle.Enhanced;
+                return AbyssalProtocolMod.Settings == null || AbyssalProtocolMod.Settings.uiStyle == ABY_UIStyle.Enhanced;
             }
         }
 
@@ -92,7 +92,8 @@ namespace AbyssalProtocol
         {
             get
             {
-                return AbyssalProtocolMod.Settings.reduceAbyssalUIAnimation;
+                AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+                return settings != null && (settings.reduceAbyssalUIAnimation || settings.reducedMotion || settings.visualIntensity != ABY_VisualIntensity.Full);
             }
         }
 

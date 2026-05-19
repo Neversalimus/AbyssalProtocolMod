@@ -60,10 +60,13 @@ namespace AbyssalProtocol
 
             if (now >= nextNodeTick)
             {
-                DominionSliceFlowVfxUtility.SpawnFlowNode(heart, map, intensity);
-                if (phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse && extraction.IsValid)
+                if (TrySpendDominionFlow(phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse ? 3 : 2))
                 {
-                    DominionSliceFlowVfxUtility.SpawnFlowNode(extraction, map, intensity * 1.15f);
+                    DominionSliceFlowVfxUtility.SpawnFlowNode(heart, map, intensity);
+                    if (phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse && extraction.IsValid)
+                    {
+                        DominionSliceFlowVfxUtility.SpawnFlowNode(extraction, map, intensity * 1.15f);
+                    }
                 }
 
                 nextNodeTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetNodeInterval(phase), performanceSettings);
@@ -73,7 +76,10 @@ namespace AbyssalProtocol
             {
                 if (now >= nextEntryFlowTick)
                 {
-                    DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.72f, false, 4);
+                    if (TrySpendDominionFlow(2))
+                    {
+                        DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.72f, false, 4);
+                    }
                     nextEntryFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(170, 240), performanceSettings);
                 }
 
@@ -90,7 +96,10 @@ namespace AbyssalProtocol
 
                 if (now >= nextEntryFlowTick)
                 {
-                    DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.55f, false, 3);
+                    if (TrySpendDominionFlow(2))
+                    {
+                        DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.55f, false, 3);
+                    }
                     nextEntryFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(190, 270), performanceSettings);
                 }
 
@@ -101,8 +110,11 @@ namespace AbyssalProtocol
             {
                 if (now >= nextHeartFlowTick)
                 {
-                    DominionSliceFlowVfxUtility.SpawnFlowSurge(heart, map, intensity);
-                    DominionSliceFlowVfxUtility.SpawnRadialFlow(heart, map, intensity, 7, 12f);
+                    if (TrySpendDominionFlow(4))
+                    {
+                        DominionSliceFlowVfxUtility.SpawnFlowSurge(heart, map, intensity);
+                        DominionSliceFlowVfxUtility.SpawnRadialFlow(heart, map, intensity, ABY_VfxBudget.ScaleCount(7), 12f);
+                    }
                     nextHeartFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(95, 140), performanceSettings);
                 }
 
@@ -113,24 +125,24 @@ namespace AbyssalProtocol
             {
                 if (now >= nextCollapseFlowTick)
                 {
-                    if (extraction.IsValid)
+                    if (extraction.IsValid && TrySpendDominionFlow(5))
                     {
-                        DominionSliceFlowVfxUtility.SpawnFlowLine(heart, extraction, map, intensity * 1.25f, true, 7);
+                        DominionSliceFlowVfxUtility.SpawnFlowLine(heart, extraction, map, intensity * 1.25f, true, ABY_VfxBudget.ScaleCount(7));
                         DominionSliceFlowVfxUtility.SpawnFlowSurge(extraction, map, intensity * 1.15f);
                     }
 
-                    nextCollapseFlowTick = now + Rand.RangeInclusive(58, 92);
+                    nextCollapseFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(58, 92), performanceSettings);
                 }
 
                 if (session != null && session.victoryAchieved && now >= nextRewardFlowTick)
                 {
-                    if (reward.IsValid && extraction.IsValid)
+                    if (reward.IsValid && extraction.IsValid && TrySpendDominionFlow(3))
                     {
-                        DominionSliceFlowVfxUtility.SpawnFlowLine(reward, extraction, map, intensity * 0.95f, true, 5);
+                        DominionSliceFlowVfxUtility.SpawnFlowLine(reward, extraction, map, intensity * 0.95f, true, ABY_VfxBudget.ScaleCount(5));
                         DominionSliceFlowVfxUtility.SpawnFlowNode(reward, map, intensity * 0.72f);
                     }
 
-                    nextRewardFlowTick = now + Rand.RangeInclusive(125, 185);
+                    nextRewardFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(125, 185), performanceSettings);
                 }
             }
         }
@@ -145,14 +157,19 @@ namespace AbyssalProtocol
             for (int i = 0; i < session.anchorCells.Count; i++)
             {
                 IntVec3 anchorCell = ClampToMap(session.anchorCells[i]);
-                if (!anchorCell.IsValid)
+                if (!anchorCell.IsValid || !TrySpendDominionFlow(2))
                 {
                     continue;
                 }
 
-                DominionSliceFlowVfxUtility.SpawnFlowLine(anchorCell, heartCell, map, intensity, false, 5);
+                DominionSliceFlowVfxUtility.SpawnFlowLine(anchorCell, heartCell, map, intensity, false, ABY_VfxBudget.ScaleCount(5));
                 DominionSliceFlowVfxUtility.SpawnFlowNode(anchorCell, map, intensity * 0.82f);
             }
+        }
+
+        private bool TrySpendDominionFlow(int cost)
+        {
+            return ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, cost);
         }
 
         private ABY_DominionPocketSession ResolveSession()

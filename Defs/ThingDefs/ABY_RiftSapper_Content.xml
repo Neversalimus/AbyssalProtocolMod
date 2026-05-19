@@ -103,7 +103,7 @@
         <range>18.5</range>
         <warmupTicks>58</warmupTicks>
         <cooldownTicks>138</cooldownTicks>
-        <scanIntervalTicks>15</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <preferredMinRange>7.2</preferredMinRange>
         <targetMinRange>4.6</targetMinRange>
         <retreatSearchRadius>9</retreatSearchRadius>

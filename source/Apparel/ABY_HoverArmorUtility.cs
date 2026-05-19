@@ -9,8 +9,22 @@ namespace AbyssalProtocol
 {
     public static class ABY_HoverArmorUtility
     {
+        private const int HoverStateCacheTicks = 10;
+        private const int CacheCleanupIntervalTicks = 900;
+
+        private static readonly Dictionary<int, CachedHoverState> HoverStateCacheByPawnId = new Dictionary<int, CachedHoverState>();
         private static FieldInfo pawnDrawerPawnField;
         private static bool pawnDrawerPawnFieldResolved;
+        private static int lastCacheCleanupTick = -1;
+
+        private struct CachedHoverState
+        {
+            public int nextRefreshTick;
+            public int lastSeenTick;
+            public int mapId;
+            public bool active;
+            public ABY_HoverArmorExtension extension;
+        }
 
         public static bool IsHoverActive(Pawn pawn)
         {
@@ -25,8 +39,40 @@ namespace AbyssalProtocol
         public static bool TryGetActiveHoverExtension(Pawn pawn, out ABY_HoverArmorExtension extension)
         {
             extension = null;
+            if (!IsPotentialHoverPawn(pawn))
+            {
+                return false;
+            }
 
-            if (pawn == null || pawn.Dead || pawn.Destroyed || !pawn.Spawned || pawn.MapHeld == null)
+            int ticks = SafeTicksGame();
+            CleanupCacheIfNeeded(ticks);
+
+            int pawnId = pawn.thingIDNumber;
+            if (HoverStateCacheByPawnId.TryGetValue(pawnId, out CachedHoverState cached)
+                && cached.nextRefreshTick > ticks
+                && cached.mapId == pawn.MapHeld.uniqueID)
+            {
+                extension = cached.extension;
+                return cached.active;
+            }
+
+            bool active = TryGetActiveHoverExtensionUncached(pawn, out extension);
+            HoverStateCacheByPawnId[pawnId] = new CachedHoverState
+            {
+                active = active,
+                extension = extension,
+                mapId = pawn.MapHeld.uniqueID,
+                lastSeenTick = ticks,
+                nextRefreshTick = ticks + HoverStateCacheTicks + Math.Abs(pawnId % 3)
+            };
+            return active;
+        }
+
+        public static bool TryGetActiveHoverExtensionUncached(Pawn pawn, out ABY_HoverArmorExtension extension)
+        {
+            extension = null;
+
+            if (!IsPotentialHoverPawn(pawn))
             {
                 return false;
             }
@@ -74,6 +120,14 @@ namespace AbyssalProtocol
 
             extension = best;
             return extension != null;
+        }
+
+        public static void Invalidate(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                HoverStateCacheByPawnId.Remove(pawn.thingIDNumber);
+            }
         }
 
         public static float GetDraftedMoveSpeedBonus(Pawn pawn)
@@ -139,6 +193,44 @@ namespace AbyssalProtocol
             }
 
             return Environment.TickCount & int.MaxValue;
+        }
+
+        private static bool IsPotentialHoverPawn(Pawn pawn)
+        {
+            return pawn != null && !pawn.Dead && !pawn.Destroyed && pawn.Spawned && pawn.MapHeld != null;
+        }
+
+        private static void CleanupCacheIfNeeded(int ticks)
+        {
+            if (HoverStateCacheByPawnId.Count == 0 || (lastCacheCleanupTick >= 0 && ticks - lastCacheCleanupTick < CacheCleanupIntervalTicks))
+            {
+                return;
+            }
+
+            lastCacheCleanupTick = ticks;
+            List<int> remove = null;
+            foreach (KeyValuePair<int, CachedHoverState> pair in HoverStateCacheByPawnId)
+            {
+                if (ticks - pair.Value.lastSeenTick > CacheCleanupIntervalTicks * 2)
+                {
+                    if (remove == null)
+                    {
+                        remove = new List<int>();
+                    }
+
+                    remove.Add(pair.Key);
+                }
+            }
+
+            if (remove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < remove.Count; i++)
+            {
+                HoverStateCacheByPawnId.Remove(remove[i]);
+            }
         }
 
         private static FieldInfo ResolvePawnDrawerPawnField()

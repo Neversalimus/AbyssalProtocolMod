@@ -113,7 +113,7 @@
         </anchorDefNames>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_GateWardenBrace">
-        <scanIntervalTicks>15</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <triggerEnemyRange>6.6</triggerEnemyRange>
         <braceHediffDefName>ABY_GateWardenBrace</braceHediffDefName>
         <braceSeverity>0.64</braceSeverity>
@@ -121,7 +121,7 @@
         <woundedBraceSeverity>0.95</woundedBraceSeverity>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_GateWardenShieldBash">
-        <scanIntervalTicks>12</scanIntervalTicks>
+        <scanIntervalTicks>36</scanIntervalTicks>
         <cooldownTicks>210</cooldownTicks>
         <cooldownJitterTicks>35</cooldownJitterTicks>
         <bashRange>1.42</bashRange>

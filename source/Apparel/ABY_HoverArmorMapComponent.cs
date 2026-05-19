@@ -10,10 +10,13 @@ namespace AbyssalProtocol
     {
         private const float RingYOffset = 0.018f;
         private const float FlightRigPawnBackOffset = -0.034f;
-        private const int MaxSparks = 96;
+        private const int BaseMaxSparks = 96;
+        private const int ActivePawnRefreshIntervalTicks = 60;
         private readonly List<HoverSpark> sparks = new List<HoverSpark>();
+        private readonly List<Pawn> activeHoverPawns = new List<Pawn>();
         private readonly Dictionary<Pawn, int> nextSparkTickByPawn = new Dictionary<Pawn, int>();
         private readonly Dictionary<Pawn, int> activeSinceTickByPawn = new Dictionary<Pawn, int>();
+        private int nextActivePawnRefreshTick;
 
         public ABY_HoverArmorMapComponent(Map map) : base(map)
         {
@@ -28,19 +31,28 @@ namespace AbyssalProtocol
             CleanupActiveSinceSchedule();
             TickSparks(now);
 
-            IReadOnlyList<Pawn> pawns = map?.mapPawns?.AllPawnsSpawned;
-            if (pawns == null || pawns.Count == 0)
+            if (now >= nextActivePawnRefreshTick)
+            {
+                RefreshActiveHoverPawns(now);
+            }
+
+            if (activeHoverPawns.Count == 0)
             {
                 return;
             }
 
-            UpdateActiveSince(pawns, now);
-
-            for (int i = 0; i < pawns.Count; i++)
+            for (int i = activeHoverPawns.Count - 1; i >= 0; i--)
             {
-                Pawn pawn = pawns[i];
-                if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(pawn, out ABY_HoverArmorExtension extension))
+                Pawn pawn = activeHoverPawns[i];
+                if (!IsTrackedPawnStillValid(pawn) || !ABY_HoverArmorUtility.TryGetActiveHoverExtension(pawn, out ABY_HoverArmorExtension extension))
                 {
+                    activeHoverPawns.RemoveAt(i);
+                    if (pawn != null)
+                    {
+                        activeSinceTickByPawn.Remove(pawn);
+                        nextSparkTickByPawn.Remove(pawn);
+                        ABY_HoverArmorUtility.Invalidate(pawn);
+                    }
                     continue;
                 }
 
@@ -55,7 +67,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                int interval = Mathf.Max(6, extension.sparkIntervalTicks);
+                int interval = ABY_VfxBudget.ScaleInterval(Mathf.Max(8, extension.sparkIntervalTicks));
                 nextSparkTickByPawn[pawn] = now + interval;
                 TryAddSpark(pawn, extension, now);
             }
@@ -76,17 +88,24 @@ namespace AbyssalProtocol
             DrawSparks(ticks);
         }
 
-        private void UpdateActiveSince(IReadOnlyList<Pawn> pawns, int ticks)
+        private void RefreshActiveHoverPawns(int ticks)
         {
+            nextActivePawnRefreshTick = ticks + ActivePawnRefreshIntervalTicks + Mathf.Abs((map?.uniqueID ?? 0) % 11);
+            activeHoverPawns.Clear();
+
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(pawn, out _))
+                if (!ABY_HoverArmorUtility.TryGetActiveHoverExtensionUncached(pawn, out _))
                 {
                     activeSinceTickByPawn.Remove(pawn);
+                    nextSparkTickByPawn.Remove(pawn);
+                    ABY_HoverArmorUtility.Invalidate(pawn);
                     continue;
                 }
 
+                activeHoverPawns.Add(pawn);
                 if (!activeSinceTickByPawn.ContainsKey(pawn))
                 {
                     activeSinceTickByPawn[pawn] = ticks;
@@ -94,17 +113,21 @@ namespace AbyssalProtocol
             }
         }
 
+        private bool IsTrackedPawnStillValid(Pawn pawn)
+        {
+            return pawn != null && !pawn.Destroyed && !pawn.Dead && pawn.Spawned && pawn.MapHeld == map;
+        }
+
         private void DrawActiveFlightRigs(int ticks)
         {
-            IReadOnlyList<Pawn> pawns = map?.mapPawns?.AllPawnsSpawned;
-            if (pawns == null || pawns.Count == 0)
+            if (activeHoverPawns.Count == 0)
             {
-                return;
+                RefreshActiveHoverPawns(ticks);
             }
 
-            for (int i = 0; i < pawns.Count; i++)
+            for (int i = 0; i < activeHoverPawns.Count; i++)
             {
-                Pawn pawn = pawns[i];
+                Pawn pawn = activeHoverPawns[i];
                 if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(pawn, out ABY_HoverArmorExtension extension))
                 {
                     continue;
@@ -152,15 +175,14 @@ namespace AbyssalProtocol
 
         private void DrawActiveHoverRings(int ticks)
         {
-            IReadOnlyList<Pawn> pawns = map?.mapPawns?.AllPawnsSpawned;
-            if (pawns == null || pawns.Count == 0)
+            if (activeHoverPawns.Count == 0)
             {
-                return;
+                RefreshActiveHoverPawns(ticks);
             }
 
-            for (int i = 0; i < pawns.Count; i++)
+            for (int i = 0; i < activeHoverPawns.Count; i++)
             {
-                Pawn pawn = pawns[i];
+                Pawn pawn = activeHoverPawns[i];
                 if (!ABY_HoverArmorUtility.TryGetActiveHoverExtension(pawn, out ABY_HoverArmorExtension extension))
                 {
                     continue;
@@ -196,7 +218,7 @@ namespace AbyssalProtocol
 
         private void TryAddSpark(Pawn pawn, ABY_HoverArmorExtension extension, int ticks)
         {
-            if (extension.sparkTexPath.NullOrEmpty() || sparks.Count >= MaxSparks)
+            if (extension.sparkTexPath.NullOrEmpty() || sparks.Count >= ResolveMaxSparks())
             {
                 return;
             }
@@ -205,6 +227,11 @@ namespace AbyssalProtocol
             Vector3 randomJitter = new Vector3(Rand.Range(-0.07f, 0.07f), 0f, Rand.Range(-0.05f, 0.05f));
             Vector3 pos = pawn.DrawPos + offset + randomJitter;
             pos.y = AltitudeLayer.MoteLow.AltitudeFor() + RingYOffset + 0.006f;
+
+            if (!ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.UIOrDecorative, 1))
+            {
+                return;
+            }
 
             sparks.Add(new HoverSpark
             {
@@ -216,6 +243,16 @@ namespace AbyssalProtocol
                 Alpha = Mathf.Clamp01(extension.sparkAlpha),
                 Angle = Rand.Range(0f, 360f)
             });
+        }
+
+        private static int ResolveMaxSparks()
+        {
+            if (ABY_PerformanceSettingsUtility.IsMinimal)
+            {
+                return 24;
+            }
+
+            return ABY_PerformanceSettingsUtility.IsReducedOrLower ? 48 : BaseMaxSparks;
         }
 
         private void TickSparks(int ticks)

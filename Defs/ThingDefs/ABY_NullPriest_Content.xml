@@ -96,14 +96,14 @@
         <cooldownTicks>240</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
-        <scanIntervalTicks>18</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <preferredMinRange>8.8</preferredMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_NullPriestAura">
-        <scanIntervalTicks>30</scanIntervalTicks>
+        <scanIntervalTicks>60</scanIntervalTicks>
         <allyRadius>8.8</allyRadius>
         <allySeverity>0.42</allySeverity>
       </li>

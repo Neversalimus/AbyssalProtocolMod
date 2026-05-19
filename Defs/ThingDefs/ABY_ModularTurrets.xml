@@ -72,7 +72,7 @@
         <passiveSlots>2</passiveSlots>
         <baseRange>24</baseRange>
         <baseCooldownTicks>210</baseCooldownTicks>
-        <targetScanIntervalTicks>30</targetScanIntervalTicks>
+        <targetScanIntervalTicks>60</targetScanIntervalTicks>
         <basePowerDraw>650</basePowerDraw>
         <mainWeaponSocketSideOffset>0</mainWeaponSocketSideOffset>
         <mainWeaponSocketForwardOffset>0</mainWeaponSocketForwardOffset>

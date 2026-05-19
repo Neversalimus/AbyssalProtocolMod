@@ -98,7 +98,7 @@
         <range>31.9</range>
         <warmupTicks>92</warmupTicks>
         <cooldownTicks>180</cooldownTicks>
-        <scanIntervalTicks>18</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <deployTicks>42</deployTicks>
         <telegraphIntervalTicks>12</telegraphIntervalTicks>
         <anchoredIdleReleaseTicks>150</anchoredIdleReleaseTicks>

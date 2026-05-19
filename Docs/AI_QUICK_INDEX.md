@@ -181,3 +181,16 @@ source/Dominion/MapComponents/
 ```
 
 The performance audit window is opened from Abyssal Protocol mod settings, diagnostics/performance area. It is a dev/testing aid, not player progression UI.
+
+## Performance/TPS quick routing — 2026-05-19
+
+For TPS, stutter, scan-loop, VFX density, or large-encounter performance tasks, inspect these first:
+
+| Symptom / task | Start here | Also check |
+| --- | --- | --- |
+| Repeated pawn/thing/map scans | `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | callers in `source/Compatibility/`, `source/Comps/`, `source/Combat/`, `source/Bosses/`, `source/Apparel/` |
+| Optional VFX overload / beams / trails / Dominion ambience | `source/Combat/VFX/ABY_VfxBudget.cs` | `source/Combat/MapComponents/`, `source/Dominion/MapComponents/`, projectile VFX utilities |
+| Modular turret targeting TPS | `source/Comps/CompAbyssalModularTurret.cs` | `source/Comps/Properties/CompProperties_AbyssalModularTurret.cs`, `Defs/ThingDefs/ABY_ModularTurrets.xml` |
+| Dominion maintenance spikes | `source/Dominion/MapComponents/MapComponent_ABY_DominionAtmosphere.cs` | Dominion generation and weather/VFX map components |
+| Specter Lash stream stutter | `source/Combat/MapComponents/SpecterLashStreamGameComponent.cs` | `source/Combat/VFX/HarmonyPatch_SpecterLashProjector.cs`, related mote defs |
+

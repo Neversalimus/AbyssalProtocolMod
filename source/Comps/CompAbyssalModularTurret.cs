@@ -25,6 +25,10 @@ namespace AbyssalProtocol
         private int burstIntervalTicks;
         private int burstShotsFiredInCurrentBurst;
         private Thing currentBurstTarget;
+        private Thing cachedMainTarget;
+        private Thing cachedAuxiliaryTarget;
+        private int cachedMainTargetValidUntilTick;
+        private int cachedAuxiliaryTargetValidUntilTick;
 
         private int mainChargeTicksRemaining;
         private int mainChargeTicksTotal;
@@ -184,7 +188,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (parent.IsHashIntervalTick(15))
+            if (parent.IsHashIntervalTick(30))
             {
                 UpdateVisualAimAngles();
             }
@@ -213,18 +217,18 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (HasMainWeapon && mainCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks)))
+            if (HasMainWeapon && mainCooldownTicks <= 0)
             {
-                Thing target = FindTarget(mainModule, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight);
+                Thing target = ResolveCachedOrScannedTarget(ref cachedMainTarget, ref cachedMainTargetValidUntilTick, mainModule, ResolvedRange, ResolvedMainMinRange, MainRequiresLineOfSight, 0);
                 if (target != null)
                 {
                     StartMainAttack(target);
                 }
             }
 
-            if (HasAuxiliary && auxiliaryCooldownTicks <= 0 && parent.IsHashIntervalTick(Mathf.Max(1, Props.targetScanIntervalTicks + 11)))
+            if (HasAuxiliary && auxiliaryCooldownTicks <= 0)
             {
-                Thing auxTarget = FindTarget(auxiliaryModule, ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight);
+                Thing auxTarget = ResolveCachedOrScannedTarget(ref cachedAuxiliaryTarget, ref cachedAuxiliaryTargetValidUntilTick, auxiliaryModule, ResolvedAuxiliaryRange, ResolvedAuxiliaryMinRange, AuxiliaryRequiresLineOfSight, 11);
                 if (auxTarget != null)
                 {
                     auxiliaryAimAngle = AngleToTarget(auxTarget);
@@ -1029,10 +1033,30 @@ namespace AbyssalProtocol
             return Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg;
         }
 
+        private Thing ResolveCachedOrScannedTarget(ref Thing cachedTarget, ref int validUntilTick, ABY_TurretModuleDef module, float range, float minRange, bool requireLineOfSight, int tickOffset)
+        {
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (ticks < validUntilTick && IsValidLaunchTarget(cachedTarget, range, minRange, requireLineOfSight))
+            {
+                return cachedTarget;
+            }
+
+            int interval = Mathf.Max(45, Props.targetScanIntervalTicks);
+            int hash = parent != null ? parent.thingIDNumber : 0;
+            if (((ticks + hash + tickOffset) % interval) != 0)
+            {
+                return null;
+            }
+
+            cachedTarget = FindTarget(module, range, minRange, requireLineOfSight);
+            validUntilTick = cachedTarget != null ? ticks + Mathf.Min(90, Mathf.Max(30, interval * 2)) : ticks + Mathf.Max(20, interval / 2);
+            return cachedTarget;
+        }
+
         private Thing FindTarget(ABY_TurretModuleDef module, float range, float minRange = 0f, bool requireLineOfSight = true)
         {
             Map map = parent.Map;
-            if (map?.mapPawns == null)
+            if (map == null)
             {
                 return null;
             }
@@ -1042,7 +1066,7 @@ namespace AbyssalProtocol
             Thing bestTarget = null;
             float bestScore = -999999f;
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];

@@ -104,7 +104,7 @@
         <cooldownTicks>126</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
-        <scanIntervalTicks>20</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
       </li>
     </comps>
   </ThingDef>

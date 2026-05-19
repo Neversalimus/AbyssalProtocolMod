@@ -95,8 +95,11 @@ namespace AbyssalProtocol
             if (source.MapHeld != null)
             {
                 ABY_SoundUtility.PlayAt(PulseSoundDefName, targetPos.ToIntVec3(), source.MapHeld);
-                FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, damageEnabled ? 0.88f : 0.54f);
-                FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
+                if (ABY_VfxBudget.TrySpend(source.MapHeld, ABY_VfxBudgetCategory.CombatHeavy, 2))
+                {
+                    FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, damageEnabled ? 0.88f : 0.54f);
+                    FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
+                }
             }
 
             if (damageEnabled && target != null)
@@ -128,7 +131,7 @@ namespace AbyssalProtocol
                 staticTargetPos = targetPos
             });
 
-            if (source.MapHeld != null)
+            if (source.MapHeld != null && ABY_VfxBudget.TrySpend(source.MapHeld, ABY_VfxBudgetCategory.CombatHeavy, 2))
             {
                 FleckMaker.ThrowLightningGlow(targetPos, source.MapHeld, blockedByShield ? 0.78f : 0.92f);
                 FleckMaker.ThrowMicroSparks(targetPos, source.MapHeld);
@@ -184,7 +187,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (ticksGame % GetVisualIntervalTicks() == 0)
+                int visualInterval = GetVisualIntervalTicks();
+                if (((ticksGame + stream.seed) % visualInterval) == 0)
                 {
                     SpawnBeamVisuals(map, source, stream.staticTargetPos, stream.seed, ticksGame, target != null);
                 }
@@ -200,12 +204,17 @@ namespace AbyssalProtocol
         private int GetVisualIntervalTicks()
         {
             int count = activeStreams != null ? activeStreams.Count : 0;
+            int interval = VisualIntervalTicks;
             if (count >= 6)
             {
-                return 2;
+                interval = 3;
+            }
+            else if (count >= 3)
+            {
+                interval = 2;
             }
 
-            return VisualIntervalTicks;
+            return ABY_VfxBudget.ScaleInterval(interval);
         }
 
         private int GetSegmentCap()
@@ -373,11 +382,14 @@ namespace AbyssalProtocol
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
             target.TakeDamage(damageInfo);
-            FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.58f);
-            FleckMaker.ThrowMicroSparks(target.DrawPos, map);
-            if (Rand.Chance(0.55f))
+            if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatHeavy, 2))
             {
+                FleckMaker.ThrowLightningGlow(target.DrawPos, map, 0.58f);
                 FleckMaker.ThrowMicroSparks(target.DrawPos, map);
+                if (Rand.Chance(0.55f) && ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatLight, 1))
+                {
+                    FleckMaker.ThrowMicroSparks(target.DrawPos, map);
+                }
             }
             ABY_SoundUtility.PlayAt(PulseSoundDefName, target.PositionHeld, map);
         }
@@ -406,7 +418,8 @@ namespace AbyssalProtocol
             sourcePos += normal * EndpointInset;
             targetPos -= normal * EndpointInset;
 
-            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 0.48f), 5, GetSegmentCap());
+            int segmentCap = Mathf.Max(4, ABY_VfxBudget.ScaleCount(GetSegmentCap()));
+            int segmentCount = Mathf.Clamp(Mathf.CeilToInt(distance * 0.48f), 4, segmentCap);
             Vector3 previousPoint = sourcePos;
             float amplitude = Mathf.Lerp(BaseAmplitude, MaxAmplitude, Mathf.Clamp01(distance / 14f));
             float phaseBase = ticksGame * 0.42f + seed * 0.017f;
@@ -440,10 +453,13 @@ namespace AbyssalProtocol
             float haloWidth = Mathf.Lerp(0.42f, 0.82f, envelope) * (isTrackingThing ? 1.0f : 0.72f);
             float coreWidth = Mathf.Lerp(0.12f, 0.23f, envelope) * (isTrackingThing ? 1.0f : 0.76f);
 
-            SpawnBeamThing(beamHaloDef, start, end, map, haloWidth, BeamSegmentLifetimeTicks, BeamHaloTexturePath, true);
-            SpawnBeamThing(beamCoreDef, start, end, map, coreWidth, BeamSegmentLifetimeTicks - 1, BeamCoreTexturePath, false);
+            if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatHeavy, 1))
+            {
+                SpawnBeamThing(beamHaloDef, start, end, map, haloWidth, BeamSegmentLifetimeTicks, BeamHaloTexturePath, true);
+                SpawnBeamThing(beamCoreDef, start, end, map, coreWidth, BeamSegmentLifetimeTicks - 1, BeamCoreTexturePath, false);
+            }
 
-            if (sparkMoteDef != null && segmentIndex > 1 && segmentIndex < segmentCount - 1 && ((segmentIndex + seed + ticksGame) % 5 == 0))
+            if (sparkMoteDef != null && segmentIndex > 1 && segmentIndex < segmentCount - 1 && ((segmentIndex + seed + ticksGame) % 5 == 0) && ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatLight, 1))
             {
                 Vector3 sparkPoint = Vector3.Lerp(start, end, 0.5f);
                 sparkPoint.y = Altitudes.AltitudeFor(AltitudeLayer.MoteOverhead) + 0.004f;
@@ -538,22 +554,8 @@ namespace AbyssalProtocol
 
         private static Thing FindThing(Map map, int thingId)
         {
-            if (thingId < 0 || map?.listerThings == null)
-            {
-                return null;
-            }
-
-            List<Thing> things = map.listerThings.AllThings;
-            for (int i = 0; i < things.Count; i++)
-            {
-                Thing thing = things[i];
-                if (thing != null && thing.thingIDNumber == thingId)
-                {
-                    return thing;
-                }
-            }
-
-            return null;
+            Thing thing;
+            return ABY_RuntimeTargetCache.TryFindThingById(map, thingId, out thing) ? thing : null;
         }
 
         private static void PlayTailIfPossible(Pawn source, Map fallbackMap)

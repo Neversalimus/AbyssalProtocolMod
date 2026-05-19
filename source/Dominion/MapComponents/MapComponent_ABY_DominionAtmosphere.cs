@@ -7,6 +7,8 @@ namespace AbyssalProtocol
     {
         private const int ScanIntervalTicks = 600;
         private const int MaintenanceIntervalTicks = 1800;
+        private const int MaintenanceChunkIntervalTicks = 30;
+        private const int MaintenanceCellsPerRun = 2200;
         private const int AmbientIntervalMinTicks = 1250;
         private const int AmbientIntervalMaxTicks = 2600;
         private const int WeatherIntervalMinTicks = 80;
@@ -24,6 +26,7 @@ namespace AbyssalProtocol
         private int nextWeatherStateChangeTick;
         private int dominionWeatherStateInt;
         private int maintenanceRuns;
+        private int maintenanceCellIndex;
         private int ambientPulses;
         private int weatherBursts;
 
@@ -102,6 +105,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextWeatherStateChangeTick, "ABY_nextDominionWeatherStateChangeTick", 0);
             Scribe_Values.Look(ref dominionWeatherStateInt, "ABY_dominionWeatherState", (int)ABY_DominionWeatherState.Ashfall);
             Scribe_Values.Look(ref maintenanceRuns, "ABY_atmosphereMaintenanceRuns", 0);
+            Scribe_Values.Look(ref maintenanceCellIndex, "ABY_atmosphereMaintenanceCellIndex", 0);
             Scribe_Values.Look(ref ambientPulses, "ABY_atmosphereAmbientPulses", 0);
             Scribe_Values.Look(ref weatherBursts, "ABY_dominionWeatherBursts", 0);
 
@@ -140,7 +144,6 @@ namespace AbyssalProtocol
             if (now >= nextMaintenanceTick)
             {
                 RunDominionMaintenance();
-                nextMaintenanceTick = now + MaintenanceIntervalTicks;
             }
 
             if (now >= nextAmbientPulseTick)
@@ -170,10 +173,28 @@ namespace AbyssalProtocol
 
             try
             {
-                TerrainDef baseTerrain = ABY_DominionAtmosphereUtility.ResolveDominionBaseTerrain();
-                CellRect whole = new CellRect(0, 0, map.Size.x, map.Size.z);
-                foreach (IntVec3 cell in whole)
+                int width = map.Size.x;
+                int height = map.Size.z;
+                int totalCells = Math.Max(0, width * height);
+                if (totalCells <= 0)
                 {
+                    nextMaintenanceTick = CurrentTick + MaintenanceIntervalTicks;
+                    return;
+                }
+
+                if (maintenanceCellIndex < 0 || maintenanceCellIndex >= totalCells)
+                {
+                    maintenanceCellIndex = 0;
+                }
+
+                TerrainDef baseTerrain = ABY_DominionAtmosphereUtility.ResolveDominionBaseTerrain();
+                int processed = 0;
+                while (processed < MaintenanceCellsPerRun && maintenanceCellIndex < totalCells)
+                {
+                    int index = maintenanceCellIndex++;
+                    processed++;
+
+                    IntVec3 cell = new IntVec3(index % width, 0, index / width);
                     if (!cell.InBounds(map))
                     {
                         continue;
@@ -201,14 +222,25 @@ namespace AbyssalProtocol
                     }
                 }
 
-                maintenanceRuns++;
-                if (AbyssalProtocolMod.Settings?.verboseDiagnostics ?? false)
+                if (maintenanceCellIndex >= totalCells)
                 {
-                    ABY_LogThrottleUtility.Message("dominion-atmosphere-maintenance-" + map.uniqueID, "[Abyssal Protocol] Dominion atmosphere maintenance ran on map " + map.uniqueID + " (runs=" + maintenanceRuns + ").", 5000);
+                    maintenanceCellIndex = 0;
+                    maintenanceRuns++;
+                    nextMaintenanceTick = CurrentTick + MaintenanceIntervalTicks;
+                    if (AbyssalProtocolMod.Settings?.verboseDiagnostics ?? false)
+                    {
+                        ABY_LogThrottleUtility.Message("dominion-atmosphere-maintenance-" + map.uniqueID, "[Abyssal Protocol] Dominion atmosphere maintenance completed on map " + map.uniqueID + " (runs=" + maintenanceRuns + ").", 5000);
+                    }
+                }
+                else
+                {
+                    nextMaintenanceTick = CurrentTick + MaintenanceChunkIntervalTicks;
                 }
             }
             catch (Exception ex)
             {
+                maintenanceCellIndex = 0;
+                nextMaintenanceTick = CurrentTick + MaintenanceIntervalTicks;
                 ABY_LogThrottleUtility.Warning("dominion-atmosphere-maintenance", "[Abyssal Protocol] Dominion atmosphere maintenance failed: " + ex.GetType().Name + ": " + ex.Message, 5000);
             }
         }
@@ -222,6 +254,11 @@ namespace AbyssalProtocol
 
             AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
             if (settings != null && (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(settings) || settings.reducedMotion))
+            {
+                return;
+            }
+
+            if (!ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.DominionAmbient, 3))
             {
                 return;
             }

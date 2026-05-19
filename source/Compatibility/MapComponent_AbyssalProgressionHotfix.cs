@@ -8,21 +8,32 @@ namespace AbyssalProtocol
 {
     /// <summary>
     /// Compatibility guardrails for very large progression-style modpacks.
-    /// This component intentionally avoids compile-time references to the rest of Abyssal Protocol
-    /// so it can be carried forward safely as a small hotfix source file.
+    /// Optimized to avoid one monolithic every-60-ticks scan over pawns, designations and AllThings.
+    /// Each guard now runs on its own staggered cadence and uses def-specific listers / shared pawn cache where safe.
     /// </summary>
     public class MapComponent_AbyssalProgressionHotfix : MapComponent
     {
-        private const int SlowTickInterval = 60;
+        private const int TamingGuardIntervalTicks = 300;
+        private const int SigilFocusIntervalTicks = 150;
+        private const int FoggedPortalIntervalTicks = 240;
+        private const int HordePressureIntervalTicks = 60;
+        private const int OrphanGateIntervalTicks = 300;
         private const int ExtraHordeIntervalTicks = 720;
         private const int MaxExtraHordeBurstsPerWave = 4;
         private const string AbyssalPrefix = "ABY_";
         private const string CommandGateDefName = "ABY_HordeCommandGate";
         private const string ImpPortalDefName = "ABY_ImpPortal";
+        private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string SummoningCircleDefName = "ABY_SummoningCircle";
 
+        private static readonly string[] PortalDefNames = { ImpPortalDefName, RupturePortalDefName };
         private static bool profilesRelaxed;
         private int nextSlowTick;
+        private int nextTamingGuardTick;
+        private int nextSigilFocusTick;
+        private int nextFoggedPortalTick;
+        private int nextHordePressureTick;
+        private int nextOrphanGateTick;
         private int nextExtraHordeTick = -1;
         private int extraHordeBurstsUsed;
         private bool hordeSeenThisActivation;
@@ -35,6 +46,11 @@ namespace AbyssalProtocol
         {
             base.ExposeData();
             Scribe_Values.Look(ref nextSlowTick, "abyFullProg_nextSlowTick", 0);
+            Scribe_Values.Look(ref nextTamingGuardTick, "abyFullProg_nextTamingGuardTick", 0);
+            Scribe_Values.Look(ref nextSigilFocusTick, "abyFullProg_nextSigilFocusTick", 0);
+            Scribe_Values.Look(ref nextFoggedPortalTick, "abyFullProg_nextFoggedPortalTick", 0);
+            Scribe_Values.Look(ref nextHordePressureTick, "abyFullProg_nextHordePressureTick", 0);
+            Scribe_Values.Look(ref nextOrphanGateTick, "abyFullProg_nextOrphanGateTick", 0);
             Scribe_Values.Look(ref nextExtraHordeTick, "abyFullProg_nextExtraHordeTick", -1);
             Scribe_Values.Look(ref extraHordeBurstsUsed, "abyFullProg_extraHordeBurstsUsed", 0);
             Scribe_Values.Look(ref hordeSeenThisActivation, "abyFullProg_hordeSeenThisActivation", false);
@@ -51,17 +67,57 @@ namespace AbyssalProtocol
             }
 
             int tick = Find.TickManager.TicksGame;
-            if (tick < nextSlowTick)
+            BackfillSchedulesIfNeeded(tick);
+
+            if (tick >= nextTamingGuardTick)
             {
-                return;
+                nextTamingGuardTick = tick + TamingGuardIntervalTicks + Math.Abs(map.uniqueID % 37);
+                PreventAbyssalTaming();
             }
 
-            nextSlowTick = tick + SlowTickInterval;
-            PreventAbyssalTaming();
-            MoveSigilsOffSummoningCircleFocus();
-            RelocateFoggedAbyssalPortals();
-            TickHordePressureBoost(tick);
-            AutoCollapseOrphanedCommandGates();
+            if (tick >= nextSigilFocusTick)
+            {
+                nextSigilFocusTick = tick + SigilFocusIntervalTicks + Math.Abs(map.uniqueID % 23);
+                MoveSigilsOffSummoningCircleFocus();
+            }
+
+            if (tick >= nextFoggedPortalTick)
+            {
+                nextFoggedPortalTick = tick + FoggedPortalIntervalTicks + Math.Abs(map.uniqueID % 41);
+                RelocateFoggedAbyssalPortals();
+            }
+
+            if (tick >= nextHordePressureTick)
+            {
+                nextHordePressureTick = tick + HordePressureIntervalTicks;
+                TickHordePressureBoost(tick);
+            }
+
+            if (tick >= nextOrphanGateTick)
+            {
+                nextOrphanGateTick = tick + OrphanGateIntervalTicks + Math.Abs(map.uniqueID % 53);
+                AutoCollapseOrphanedCommandGates();
+            }
+        }
+
+        private void BackfillSchedulesIfNeeded(int tick)
+        {
+            if (nextSlowTick > 0)
+            {
+                int baseTick = nextSlowTick;
+                nextSlowTick = 0;
+                if (nextTamingGuardTick <= 0) nextTamingGuardTick = baseTick;
+                if (nextSigilFocusTick <= 0) nextSigilFocusTick = baseTick + 17;
+                if (nextFoggedPortalTick <= 0) nextFoggedPortalTick = baseTick + 31;
+                if (nextHordePressureTick <= 0) nextHordePressureTick = baseTick;
+                if (nextOrphanGateTick <= 0) nextOrphanGateTick = baseTick + 47;
+            }
+
+            if (nextTamingGuardTick <= 0) nextTamingGuardTick = tick + 30;
+            if (nextSigilFocusTick <= 0) nextSigilFocusTick = tick + 45;
+            if (nextFoggedPortalTick <= 0) nextFoggedPortalTick = tick + 60;
+            if (nextHordePressureTick <= 0) nextHordePressureTick = tick + 15;
+            if (nextOrphanGateTick <= 0) nextOrphanGateTick = tick + 90;
         }
 
         private static void RelaxEarlyCapacitorProfilesOnce()
@@ -108,70 +164,75 @@ namespace AbyssalProtocol
 
         private void PreventAbyssalTaming()
         {
-            if (map.designationManager != null)
-            {
-                List<Designation> toRemove = null;
-                List<Designation> all = map.designationManager.AllDesignations;
-                for (int i = 0; i < all.Count; i++)
-                {
-                    Designation designation = all[i];
-                    if (designation != null && designation.def == DesignationDefOf.Tame && designation.target.Thing is Pawn pawn && IsAbyssalPawn(pawn))
-                    {
-                        if (toRemove == null)
-                        {
-                            toRemove = new List<Designation>();
-                        }
-
-                        toRemove.Add(designation);
-                    }
-                }
-
-                if (toRemove != null)
-                {
-                    for (int i = 0; i < toRemove.Count; i++)
-                    {
-                        map.designationManager.RemoveDesignation(toRemove[i]);
-                    }
-                }
-            }
-
+            RemoveAbyssalTameDesignations();
             Faction abyssalFaction = ResolveAbyssalFaction();
-            IReadOnlyList<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
-            if (pawns == null)
+            if (abyssalFaction == null)
             {
                 return;
             }
 
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (!IsAbyssalPawn(pawn) || pawn.Dead)
+                if (!IsAbyssalPawn(pawn))
                 {
                     continue;
                 }
 
                 if (pawn.Faction == Faction.OfPlayer || pawn.Faction == null)
                 {
-                    if (abyssalFaction != null)
-                    {
-                        pawn.SetFaction(abyssalFaction);
-                    }
+                    pawn.SetFaction(abyssalFaction);
                 }
+            }
+        }
+
+        private void RemoveAbyssalTameDesignations()
+        {
+            if (map.designationManager == null)
+            {
+                return;
+            }
+
+            List<Designation> all = map.designationManager.AllDesignations;
+            if (all == null || all.Count == 0)
+            {
+                return;
+            }
+
+            List<Designation> toRemove = null;
+            for (int i = 0; i < all.Count; i++)
+            {
+                Designation designation = all[i];
+                if (designation != null && designation.def == DesignationDefOf.Tame && designation.target.Thing is Pawn pawn && IsAbyssalPawn(pawn))
+                {
+                    if (toRemove == null)
+                    {
+                        toRemove = new List<Designation>();
+                    }
+
+                    toRemove.Add(designation);
+                }
+            }
+
+            if (toRemove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < toRemove.Count; i++)
+            {
+                map.designationManager.RemoveDesignation(toRemove[i]);
             }
         }
 
         private void MoveSigilsOffSummoningCircleFocus()
         {
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
+            IReadOnlyList<Thing> circles = ABY_RuntimeTargetCache.SpawnedThingsOfDefName(map, SummoningCircleDefName);
+            for (int i = 0; i < circles.Count; i++)
             {
-                return;
-            }
-
-            for (int i = 0; i < allThings.Count; i++)
-            {
-                Thing circle = allThings[i];
-                if (circle == null || circle.Destroyed || !circle.Spawned || circle.def?.defName != SummoningCircleDefName)
+                Thing circle = circles[i];
+                if (circle == null || circle.Destroyed || !circle.Spawned || circle.def == null)
                 {
                     continue;
                 }
@@ -201,39 +262,37 @@ namespace AbyssalProtocol
 
         private void RelocateFoggedAbyssalPortals()
         {
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
+            for (int p = 0; p < PortalDefNames.Length; p++)
             {
-                return;
-            }
+                IReadOnlyList<Thing> portals = ABY_RuntimeTargetCache.SpawnedThingsOfDefName(map, PortalDefNames[p]);
+                for (int i = portals.Count - 1; i >= 0; i--)
+                {
+                    Thing thing = portals[i];
+                    if (thing == null || thing.Destroyed || !thing.Spawned)
+                    {
+                        continue;
+                    }
 
-            for (int i = allThings.Count - 1; i >= 0; i--)
-            {
-                Thing thing = allThings[i];
-                if (thing == null || thing.Destroyed || !thing.Spawned || !IsAbyssalPortal(thing))
-                {
-                    continue;
-                }
+                    if (!thing.PositionHeld.Fogged(map))
+                    {
+                        continue;
+                    }
 
-                if (!thing.PositionHeld.Fogged(map))
-                {
-                    continue;
-                }
-
-                if (TryFindVisiblePerimeterCell(thing.PositionHeld, out IntVec3 destination))
-                {
-                    MoveThingSafely(thing, destination);
-                }
-                else
-                {
-                    thing.Destroy(DestroyMode.Vanish);
+                    if (TryFindVisiblePerimeterCell(thing.PositionHeld, out IntVec3 destination))
+                    {
+                        MoveThingSafely(thing, destination);
+                    }
+                    else
+                    {
+                        thing.Destroy(DestroyMode.Vanish);
+                    }
                 }
             }
         }
 
         private void TickHordePressureBoost(int tick)
         {
-            bool activeHorde = HasSpawnedThingDef(CommandGateDefName);
+            bool activeHorde = ABY_RuntimeTargetCache.HasSpawnedThingDef(map, CommandGateDefName);
             if (!activeHorde)
             {
                 hordeSeenThisActivation = false;
@@ -258,6 +317,7 @@ namespace AbyssalProtocol
             if (TrySpawnExtraHordeBurst())
             {
                 extraHordeBurstsUsed++;
+                ABY_RuntimeTargetCache.NotifyLikelyStateChanged(map);
             }
 
             nextExtraHordeTick = tick + ExtraHordeIntervalTicks;
@@ -294,7 +354,7 @@ namespace AbyssalProtocol
                 spawnedAny = true;
             }
 
-            if (spawnedAny)
+            if (spawnedAny && ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatLight, 2))
             {
                 FleckMaker.ThrowLightningGlow(cell.ToVector3Shifted(), map, 1.2f);
             }
@@ -304,21 +364,21 @@ namespace AbyssalProtocol
 
         private void AutoCollapseOrphanedCommandGates()
         {
+            if (!ABY_RuntimeTargetCache.HasSpawnedThingDef(map, CommandGateDefName))
+            {
+                return;
+            }
+
             if (HasActiveAbyssalPortal() || HasLivingAbyssalHostiles())
             {
                 return;
             }
 
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
+            IReadOnlyList<Thing> gates = ABY_RuntimeTargetCache.SpawnedThingsOfDefName(map, CommandGateDefName);
+            for (int i = gates.Count - 1; i >= 0; i--)
             {
-                return;
-            }
-
-            for (int i = allThings.Count - 1; i >= 0; i--)
-            {
-                Thing thing = allThings[i];
-                if (thing != null && !thing.Destroyed && thing.Spawned && thing.def?.defName == CommandGateDefName)
+                Thing thing = gates[i];
+                if (thing != null && !thing.Destroyed && thing.Spawned)
                 {
                     thing.Destroy(DestroyMode.KillFinalize);
                 }
@@ -327,12 +387,7 @@ namespace AbyssalProtocol
 
         private bool HasLivingAbyssalHostiles()
         {
-            IReadOnlyList<Pawn> pawns = map.mapPawns != null ? map.mapPawns.AllPawnsSpawned : null;
-            if (pawns == null)
-            {
-                return false;
-            }
-
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
@@ -352,35 +407,9 @@ namespace AbyssalProtocol
 
         private bool HasActiveAbyssalPortal()
         {
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
+            for (int i = 0; i < PortalDefNames.Length; i++)
             {
-                return false;
-            }
-
-            for (int i = 0; i < allThings.Count; i++)
-            {
-                if (IsAbyssalPortal(allThings[i]))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool HasSpawnedThingDef(string defName)
-        {
-            List<Thing> allThings = map.listerThings?.AllThings;
-            if (allThings == null)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < allThings.Count; i++)
-            {
-                Thing thing = allThings[i];
-                if (thing != null && !thing.Destroyed && thing.Spawned && thing.def?.defName == defName)
+                if (ABY_RuntimeTargetCache.HasSpawnedThingDef(map, PortalDefNames[i]))
                 {
                     return true;
                 }
@@ -446,19 +475,14 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (cell.GetEdifice(map) != null)
-            {
-                return false;
-            }
-
-            return true;
+            return cell.GetEdifice(map) == null;
         }
 
         private bool TryFindVisiblePerimeterCell(IntVec3 origin, out IntVec3 result)
         {
             result = IntVec3.Invalid;
 
-            for (int i = 0; i < 240; i++)
+            for (int i = 0; i < 180; i++)
             {
                 IntVec3 cell = origin.IsValid
                     ? origin + GenRadial.RadialPattern[Rand.Range(0, GenRadial.NumCellsInRadius(38f))]
@@ -504,17 +528,6 @@ namespace AbyssalProtocol
             Rot4 rotation = thing.Rotation;
             thing.DeSpawn(DestroyMode.Vanish);
             GenSpawn.Spawn(thing, destination, map, rotation);
-        }
-
-        private static bool IsAbyssalPortal(Thing thing)
-        {
-            if (thing == null || thing.Destroyed || !thing.Spawned)
-            {
-                return false;
-            }
-
-            string defName = thing.def?.defName ?? string.Empty;
-            return defName == ImpPortalDefName || (defName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase) && defName.IndexOf("Portal", StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private static bool IsAbyssalSigilThing(Thing thing)

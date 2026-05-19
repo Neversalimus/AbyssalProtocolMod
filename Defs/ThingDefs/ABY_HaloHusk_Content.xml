@@ -97,7 +97,7 @@
         <markCooldownTicks>1260</markCooldownTicks>
         <markCooldownVariance>180</markCooldownVariance>
         <markDurationTicks>600</markDurationTicks>
-        <scanIntervalTicks>18</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <minTargetRange>7.5</minTargetRange>
         <maxTargetRange>24.5</maxTargetRange>
         <preferRangedTargets>true</preferRangedTargets>
@@ -107,7 +107,7 @@
         <minRefreshTicksRemaining>180</minRefreshTicksRemaining>
       </li>
       <li Class="AbyssalProtocol.CompProperties_ABY_HaloStep">
-        <scanIntervalTicks>12</scanIntervalTicks>
+        <scanIntervalTicks>36</scanIntervalTicks>
         <cooldownTicks>840</cooldownTicks>
         <cooldownVarianceTicks>120</cooldownVarianceTicks>
         <triggerEnemyRange>3.25</triggerEnemyRange>
@@ -135,7 +135,7 @@
         <cooldownTicks>138</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
-        <scanIntervalTicks>18</scanIntervalTicks>
+        <scanIntervalTicks>45</scanIntervalTicks>
         <preferredMinRange>8.8</preferredMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>

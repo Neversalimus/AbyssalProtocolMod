@@ -136,8 +136,8 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return null;
             }
@@ -146,6 +146,8 @@ namespace AbyssalProtocol
             float bestScore = preferFarthestTargets ? float.MinValue : float.MaxValue;
             float resolvedMinRange = Mathf.Max(0f, minRange);
             float resolvedMaxRange = maxRange > 0f ? maxRange : float.MaxValue;
+            float minRangeSquared = resolvedMinRange * resolvedMinRange;
+            float maxRangeSquared = resolvedMaxRange >= 9999f ? float.MaxValue : resolvedMaxRange * resolvedMaxRange;
 
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -155,13 +157,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance < resolvedMinRange || distance > resolvedMaxRange)
-                {
-                    continue;
-                }
-
-                if (!GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
+                float distanceSquared = pawn.Position.DistanceToSquared(candidate.Position);
+                if (distanceSquared < minRangeSquared || distanceSquared > maxRangeSquared)
                 {
                     continue;
                 }
@@ -172,6 +169,12 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                if (!GenSight.LineOfSight(pawn.Position, candidate.Position, pawn.Map))
+                {
+                    continue;
+                }
+
+                float distance = Mathf.Sqrt(distanceSquared);
                 float score = distance;
                 if (preferRangedTargets && hasRangedWeapon)
                 {
@@ -209,9 +212,9 @@ namespace AbyssalProtocol
             }
 
             Pawn best = null;
-            float bestDistance = maxDistance;
-            var pawns = pawn.Map.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            float bestDistanceSquared = maxDistance * maxDistance;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.Map);
+            if (pawns == null || pawns.Count == 0)
             {
                 return null;
             }
@@ -224,13 +227,13 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                float distance = pawn.Position.DistanceTo(candidate.Position);
-                if (distance > bestDistance)
+                float distanceSquared = pawn.Position.DistanceToSquared(candidate.Position);
+                if (distanceSquared > bestDistanceSquared)
                 {
                     continue;
                 }
 
-                bestDistance = distance;
+                bestDistanceSquared = distanceSquared;
                 best = candidate;
             }
 

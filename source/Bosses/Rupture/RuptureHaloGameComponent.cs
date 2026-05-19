@@ -7,7 +7,13 @@ namespace AbyssalProtocol
 {
     public class RuptureHaloGameComponent : GameComponent
     {
+        private const int ScanIntervalTicks = 180;
+        private const int HaloRefreshIntervalTicks = 180;
+        private const int CooldownSyncIntervalTicks = 60;
+
         private readonly Dictionary<int, int> nextHaloRefreshTickByPawn = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> nextCooldownSyncTickByPawn = new Dictionary<int, int>();
+        private readonly HashSet<int> activePawnIds = new HashSet<int>();
         private ThingDef ringDef;
 
         public RuptureHaloGameComponent(Game game)
@@ -22,7 +28,7 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager.TicksGame;
-            if (ticksGame % 30 != 0)
+            if (ticksGame % ScanIntervalTicks != 0)
             {
                 return;
             }
@@ -38,17 +44,17 @@ namespace AbyssalProtocol
                 return;
             }
 
-            HashSet<int> activePawnIds = new HashSet<int>();
+            activePawnIds.Clear();
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
                 Map map = maps[i];
-                if (map?.mapPawns == null)
+                if (map == null)
                 {
                     continue;
                 }
 
-                var pawns = map.mapPawns.AllPawnsSpawned;
+                IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn pawn = pawns[j];
@@ -62,15 +68,17 @@ namespace AbyssalProtocol
                     {
                         activePawnIds.Add(pawn.thingIDNumber);
                         EnsureBearerHediff(pawn, bearerDef);
-                        SyncCooldownFromCrown(pawn, crownComp);
 
-                        if (ringDef != null)
+                        if (!nextCooldownSyncTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextSyncTick) || ticksGame >= nextSyncTick)
                         {
-                            if (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextTick) || ticksGame >= nextTick)
-                            {
-                                RefreshHaloFor(pawn, ticksGame);
-                                nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + 150;
-                            }
+                            SyncCooldownFromCrown(pawn, crownComp);
+                            nextCooldownSyncTickByPawn[pawn.thingIDNumber] = ticksGame + CooldownSyncIntervalTicks;
+                        }
+
+                        if (ringDef != null && (!nextHaloRefreshTickByPawn.TryGetValue(pawn.thingIDNumber, out int nextTick) || ticksGame >= nextTick))
+                        {
+                            RefreshHaloFor(pawn, ticksGame);
+                            nextHaloRefreshTickByPawn[pawn.thingIDNumber] = ticksGame + HaloRefreshIntervalTicks;
                         }
                     }
                     else
@@ -80,13 +88,19 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (nextHaloRefreshTickByPawn.Count <= 0)
+            CleanupStalePawnState(nextHaloRefreshTickByPawn);
+            CleanupStalePawnState(nextCooldownSyncTickByPawn);
+        }
+
+        private void CleanupStalePawnState(Dictionary<int, int> state)
+        {
+            if (state.Count <= 0)
             {
                 return;
             }
 
             List<int> stalePawnIds = null;
-            foreach (KeyValuePair<int, int> pair in nextHaloRefreshTickByPawn)
+            foreach (KeyValuePair<int, int> pair in state)
             {
                 if (!activePawnIds.Contains(pair.Key))
                 {
@@ -106,7 +120,7 @@ namespace AbyssalProtocol
 
             for (int i = 0; i < stalePawnIds.Count; i++)
             {
-                nextHaloRefreshTickByPawn.Remove(stalePawnIds[i]);
+                state.Remove(stalePawnIds[i]);
             }
         }
 
@@ -154,7 +168,12 @@ namespace AbyssalProtocol
 
         private void RefreshHaloFor(Pawn pawn, int ticksGame)
         {
-            if (ringDef == null)
+            if (ringDef == null || pawn?.MapHeld == null)
+            {
+                return;
+            }
+
+            if (!ABY_VfxBudget.TrySpend(pawn.MapHeld, ABY_VfxBudgetCategory.UIOrDecorative, 1))
             {
                 return;
             }

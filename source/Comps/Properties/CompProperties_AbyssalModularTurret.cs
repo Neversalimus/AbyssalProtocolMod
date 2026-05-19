@@ -11,7 +11,7 @@ namespace AbyssalProtocol
         public int passiveSlots = 2;
         public float baseRange = 24f;
         public int baseCooldownTicks = 210;
-        public int targetScanIntervalTicks = 30;
+        public int targetScanIntervalTicks = 45;
         public float basePowerDraw = 650f;
 
         // Socket anchors are chassis-local map offsets where weapon-module pivots are locked.

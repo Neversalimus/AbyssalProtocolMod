@@ -417,3 +417,18 @@ source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs
 The in-game visual intensity settings are presentation-only. They must not change gameplay rewards, encounter composition, AI, boss progression, or save-critical logic. They may reduce optional ambient Dominion VFX, UI animation, map presentation effects, title cards, weather intensity, and VFX interval density.
 
 Do not implement runtime texture downscaling inside RimWorld unless there is a strong, tested reason. Prefer build-time texture budget scripts and pre-optimized PNGs.
+
+## Runtime performance systems — 2026-05-19
+
+A shared TPS optimization layer now exists and should be reused before adding any new recurring map/pawn scans:
+
+- `source/Core/Runtime/ABY_RuntimeTargetCache.cs` owns low-frequency per-map caches for spawned living pawns, combat target pawns, and def-scoped spawned things.
+- `source/Combat/VFX/ABY_VfxBudget.cs` owns per-map soft budgets for optional combat, Dominion, and decorative VFX.
+
+Rules for future AI work:
+
+1. Do not add new `Find.Maps`, `map.mapPawns.AllPawnsSpawned`, `map.listerThings.AllThings`, or broad `AllDesignations` loops on short intervals unless there is no narrower source.
+2. Prefer `ABY_RuntimeTargetCache` for target selection, aura scans, turret scans, halo/crown tracking, hover-apparel tracking, and compatibility repair loops.
+3. Optional flecks, motes, beams, trails, Dominion ambience, and decorative UI/gameplay effects should pass through `ABY_VfxBudget` or existing performance settings.
+4. Gameplay effects, damage, targeting validity, and save/load state must not depend on the visual budget; only optional presentation should be skipped.
+

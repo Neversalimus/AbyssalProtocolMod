@@ -336,3 +336,15 @@ Checklist for future logging changes:
 |---|---|---|---|---|
 | Misreading MapComponent presence as active Dominion Hell | P1 | Diagnostics / Dominion | Empty or horde-test map shows Dominion atmosphere/slice/crisis components as `present`, causing false suspicion of active Dominion Hell | Treat component presence as normal; use performance audit's Dominion state section: `marked`, `session`, `pocket reason`, `slice active`, and ambient active reason. |
 | Raw Abyssal thing counts are too broad without breakdown | P1 | Diagnostics / horde testing | Horde tests show high `Abyssal things`/`Abyssal pawns` counts but do not identify whether they are live pawns, corpses, portals, buildings, or leftover state | Use top PawnKind/ThingDef/category breakdown and portal-wave snapshot before attempting cleanup or balance fixes. |
+
+## 2026-05-19 — TPS scan-loop regression guard
+
+Recurring risk: adding independent short-interval map/pawn/thing scans to many systems will recreate late-game TPS loss during horde, turret, boss, and Dominion encounters.
+
+Regression rules:
+
+- Do not add new 12–60 tick `AllPawnsSpawned`, `AllThings`, `Find.Maps`, or full-map cell sweeps without checking whether `ABY_RuntimeTargetCache`, `ThingsOfDef`, or chunked processing can be used instead.
+- Do not spawn optional projectile trails, beam segments, Dominion flows, hover sparks, or decorative UI/gameplay motes without checking visual intensity and/or `ABY_VfxBudget`.
+- Dominion map maintenance must stay chunked; avoid restoring one-pass full-map cleanup in runtime ticks.
+- Modular turrets should keep cached target retention and staggered scan intervals; avoid per-tick reacquisition for every turret.
+

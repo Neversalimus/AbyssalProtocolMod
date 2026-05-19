@@ -9,7 +9,7 @@ namespace AbyssalProtocol
 {
     public class RiftBladeDashGameComponent : GameComponent
     {
-        private const int ScanIntervalTicks = 30;
+        private const int ScanIntervalTicks = 45;
 
         private static readonly IntVec3[] AdjacentOffsets =
         {
@@ -62,7 +62,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+                IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
                 for (int j = 0; j < pawns.Count; j++)
                 {
                     Pawn pawn = pawns[j];
@@ -246,7 +246,10 @@ namespace AbyssalProtocol
             }
 
             IntVec3 start = pawn.Position;
-            SpawnDashEffects(map, start, destination, extension);
+            if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatHeavy, 5))
+            {
+                SpawnDashEffects(map, start, destination, extension);
+            }
 
             if (ABY_AbyssalDashRuntime.TryStartDash(
                 pawn,
@@ -294,11 +297,11 @@ namespace AbyssalProtocol
                 perpendicular,
                 extension.sparkMoteDef,
                 extension.sparkMoteScale,
-                Math.Max(1, extension.endpointParticleBurst - 1),
+                ABY_VfxBudget.ScaleCount(Math.Max(1, extension.endpointParticleBurst - 1)),
                 extension.particleJitter * 0.70f,
                 0.10f);
 
-            int steps = Math.Max(0, extension.trailSteps);
+            int steps = ABY_VfxBudget.ScaleCount(Math.Max(0, extension.trailSteps));
             for (int i = 1; i <= steps; i++)
             {
                 float t = (float)i / (steps + 1);
@@ -330,7 +333,7 @@ namespace AbyssalProtocol
                 perpendicular,
                 extension.sparkMoteDef,
                 extension.sparkMoteScale,
-                Math.Max(1, extension.endpointParticleBurst),
+                ABY_VfxBudget.ScaleCount(Math.Max(1, extension.endpointParticleBurst)),
                 extension.particleJitter * 0.85f,
                 0.12f);
             SpawnParticleBurst(
@@ -340,7 +343,7 @@ namespace AbyssalProtocol
                 perpendicular,
                 extension.shardMoteDef,
                 extension.shardMoteScale,
-                Math.Max(1, extension.endpointParticleBurst - 1),
+                ABY_VfxBudget.ScaleCount(Math.Max(1, extension.endpointParticleBurst - 1)),
                 extension.particleJitter * 0.55f,
                 0.08f);
 
@@ -385,7 +388,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MoteMaker.MakeStaticMote(pos, map, moteDef, scale);
+            if (ABY_VfxBudget.TrySpend(map, ABY_VfxBudgetCategory.CombatLight, 1))
+            {
+                MoteMaker.MakeStaticMote(pos, map, moteDef, scale);
+            }
         }
 
         private static void TryPlaySound(Map map, IntVec3 cell, string defName)

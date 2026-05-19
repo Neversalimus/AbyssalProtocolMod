@@ -272,3 +272,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | Release packager | `Tools/ABY_BuildReleasePackage.py`, `Tools/texture_budget_rules.json` | Builds a clean playable release zip without `SourceAssets/`, tools, temp files, or build output | Does not compile C#. |
 | In-game performance settings | `source/Core/Bootstrap/AbyssalProtocolModSettings.cs`, `source/Core/Bootstrap/ABY_PerformanceSettingsUtility.cs` | Visual intensity presets and optional Dominion ambient VFX control | Presentation-only; must not alter gameplay. |
 | Performance audit window | `source/Diagnostics/ABY_PerformanceAuditUtility.cs`, `source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs` | Dev/testing snapshot for map counts, Abyssal counts, and performance toggles | Open from mod settings diagnostics/performance area. |
+
+## Runtime performance matrix — 2026-05-19
+
+| System | Status | Source owner | XML/assets | UI exposure | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Shared runtime target cache | Implemented | `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | n/a | n/a | Reuse for broad pawn/thing targeting or scan-heavy runtime systems. Keeps gameplay validation in callers. |
+| Shared VFX budget | Implemented | `source/Combat/VFX/ABY_VfxBudget.cs` | n/a | Performance settings affect it indirectly | Optional presentation only. Do not gate damage, targeting, rewards, or save/load behavior on this budget. |
+| TPS optimized hot loops | Implemented / ongoing | `source/Compatibility/`, `source/Apparel/`, `source/Combat/`, `source/Bosses/Rupture/`, `source/Comps/`, `source/Dominion/` | mass enemy scan intervals in `Defs/ThingDefs/` | Forge/Summoning/shared UI should respect reduced animation | Future combat/Dominion additions should be checked against this matrix before adding new timers. |
+

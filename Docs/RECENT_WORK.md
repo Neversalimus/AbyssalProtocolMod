@@ -506,3 +506,15 @@ source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs
 ```
 
 It is opened from Abyssal Protocol mod settings via the diagnostics/performance button and reports current visual settings, map counts, Abyssal thing/pawn counts, and key Dominion component presence.
+
+## 2026-05-19 — TPS runtime cache and VFX budget pass
+
+- Added `ABY_RuntimeTargetCache` as the shared per-map low-frequency pawn/thing cache for hot runtime systems.
+- Added `ABY_VfxBudget` as the shared soft budget for optional combat, Dominion, and decorative VFX.
+- Reduced broad scans in progression hotfix, hover armor, Rift Blade dash, Rupture halo, threat targeting, Specter Lash streams, and modular turrets.
+- Raised XML scan intervals for several mass enemy abilities and modular turrets.
+- Chunked Dominion atmosphere maintenance to avoid full-map maintenance spikes.
+- Routed Dominion flow/collapse/reward visuals and Specter Lash beam segments through the VFX budget.
+- UI shared animation now respects reduced/minimal performance settings more aggressively.
+- Build verified with local Roslyn compile against bundled RimWorld/Unity/Harmony libraries.
+
