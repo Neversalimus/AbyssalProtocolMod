@@ -43,14 +43,14 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (key.NullOrEmpty())
+                if (string.IsNullOrEmpty(key))
                 {
                     key = "default";
                 }
 
                 int now = SafeTicks();
                 int delay = Math.Max(1, throttleTicks);
-                if (AbyssalProtocolMod.Settings != null && !AbyssalProtocolMod.Settings.suppressRepeatedWarnings)
+                if (!SafeSuppressRepeatedWarnings())
                 {
                     delay = 1;
                 }
@@ -77,6 +77,20 @@ namespace AbyssalProtocol
             {
                 // If throttle state itself is unavailable during early startup, prefer silence over a red error.
                 return false;
+            }
+        }
+
+        private static bool SafeSuppressRepeatedWarnings()
+        {
+            try
+            {
+                AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
+                return settings == null || settings.suppressRepeatedWarnings;
+            }
+            catch
+            {
+                // Mod settings can be unavailable while StaticConstructorOnStartup classes are being called.
+                return true;
             }
         }
 

@@ -426,3 +426,16 @@ Important details:
 
 After the turret pass, remaining malformed Russian machine-translation fragments were cleaned in horde reward text, Choir Engine ritual text, Forge milestone UI, UI style settings, and first-sigil guidance. This follow-up remained XML/docs/localization-only: no C# source or DLL changes were made.
 
+
+## 2026-05-19 — Startup-safe log throttle rebuild
+
+Fixed a red startup error path where `ABY_LargeModpackCompatPatches` could trip through `ABY_LogThrottleUtility.CanLog` during very early `StaticConstructorOnStartup` loading.
+
+Important details:
+
+```text
+- `ABY_LogThrottleUtility` now avoids Verse string helpers inside the throttle gate.
+- Settings access is isolated behind `SafeSuppressRepeatedWarnings()` so missing early mod settings cannot escape into static constructors.
+- Tick access stays behind `SafeTicks()` because `Find.TickManager` can dereference unavailable game state during early loading.
+- The DLL was rebuilt from the updated source and should replace older localization-patch DLLs that may be out of sync with source.
+```

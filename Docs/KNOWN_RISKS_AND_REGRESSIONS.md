@@ -299,3 +299,16 @@ Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear di
 
 Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
 
+
+## Static constructor logging must be startup-safe
+
+`[StaticConstructorOnStartup]` classes run while RimWorld is still building play data. Do not let optional compatibility patches, Harmony guards, or diagnostics call logging helpers that assume `Find.TickManager`, `Current.Game`, or mod settings are fully initialized.
+
+Checklist for future logging changes:
+
+```text
+- Do not use Verse string helpers inside low-level log throttle gates when plain `string.IsNullOrEmpty` is enough.
+- Wrap settings access separately from tick access.
+- Prefer silence over red errors when diagnostics fail during early startup.
+- If a C# source fix already exists, make sure `Assemblies/AbyssalProtocol.dll` is rebuilt from the same source before packaging.
+```
