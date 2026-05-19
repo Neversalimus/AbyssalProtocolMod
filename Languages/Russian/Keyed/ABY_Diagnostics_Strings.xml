@@ -22,4 +22,19 @@
   <ABY_BossPresentation_MapEffectsDesc>Добавляет сдержанные уникальные импульсы на карте вокруг активных боссов и моментов призыва.</ABY_BossPresentation_MapEffectsDesc>
   <ABY_BossExpandedSelection_Enable>Включить расширенное выделение боссов</ABY_BossExpandedSelection_Enable>
   <ABY_BossExpandedSelection_EnableDesc>Позволяет выделять крупных Абиссал-боссов кликом по их видимому телу, а не только по центральной клетке пешки.</ABY_BossExpandedSelection_EnableDesc>
+
+  <ABY_PerformanceSettingsHeader>Производительность / интенсивность визуала Бездны</ABY_PerformanceSettingsHeader>
+  <ABY_PerformanceSettingsDesc>Пресеты производительности снижают плотность опциональных VFX и визуальное движение, не меняя геймплей, награды, ИИ или логику боссов. Минимальный режим полезен для слабых ноутбуков и тяжёлых модпаков.</ABY_PerformanceSettingsDesc>
+  <ABY_Performance_Full>Полный</ABY_Performance_Full>
+  <ABY_Performance_Reduced>Сниженный</ABY_Performance_Reduced>
+  <ABY_Performance_Minimal>Минимальный</ABY_Performance_Minimal>
+  <ABY_Performance_FullDesc>Полная презентация Abyssal Protocol. Рекомендуется, если производительность и видеопамять комфортны.</ABY_Performance_FullDesc>
+  <ABY_Performance_ReducedDesc>Меньшая визуальная нагрузка: сниженное движение, более лёгкая погода Dominion, меньше анимаций UI и более редкие ambient VFX.</ABY_Performance_ReducedDesc>
+  <ABY_Performance_MinimalDesc>Минимальная опциональная визуальная нагрузка: сниженное движение, без декоративных Dominion ambient VFX, без title cards боссов, ниже интенсивность погоды и минимум UI-акцентов.</ABY_Performance_MinimalDesc>
+  <ABY_Performance_DominionAmbient>Включить Dominion ambient VFX</ABY_Performance_DominionAmbient>
+  <ABY_Performance_DominionAmbientDesc>Управляет опциональными ambient-импульсами Dominion Slice, cohesion-акцентами, edge-эффектами и декоративной атмосферой карты. Боевые механики остаются активны.</ABY_Performance_DominionAmbientDesc>
+  <ABY_Performance_DevAudit>Показывать кнопку окна аудита производительности</ABY_Performance_DevAudit>
+  <ABY_Performance_DevAuditDesc>Показывает dev-кнопку в настройках для проверки активных Abyssal VFX, пешек, состояния карты и переключателей производительности.</ABY_Performance_DevAuditDesc>
+  <ABY_Performance_CurrentScale>Текущий масштаб VFX: {0}; пример интервала 120 -&gt; {1} тиков</ABY_Performance_CurrentScale>
+  <ABY_Performance_OpenAudit>Аудит производительности</ABY_Performance_OpenAudit>
 </LanguageData>

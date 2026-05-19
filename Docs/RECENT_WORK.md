@@ -469,3 +469,33 @@ Important details:
 - Removed the projectile line from the modular turret detailed tooltip and info card so player-facing turret text no longer exposes implementation projectile defs.
 - Rewrote a batch of weapon/apparel/recipe descriptions to remove tier/progression/prototype/projectile wording and keep the text in lore/gameplay tone.
 - Runtime smoke test still required in-game, especially in Abyssal Forge > Turret Systems.
+
+## 2026-05-19 — Optimization tooling and in-game performance controls
+
+Added repository-side optimization tools:
+
+- `Tools/texture_budget_rules.json`
+- `Tools/ABY_TextureAudit.py`
+- `Tools/ABY_OptimizeTextures.py`
+- `Tools/ABY_BuildReleasePackage.py`
+
+Added docs:
+
+- `Docs/TEXTURE_BUDGET.md`
+- `Docs/RELEASE_PACKAGING.md`
+
+Added in-game visual intensity presets under mod settings:
+
+- Full
+- Reduced
+- Minimal
+
+The presets reduce optional presentation load without changing gameplay. Dominion ambient VFX components now respect the performance settings by scaling intensity/intervals or disabling optional ambient visuals in Minimal mode.
+
+Added a performance audit window at:
+
+```text
+source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs
+```
+
+It is opened from Abyssal Protocol mod settings via the diagnostics/performance button and reports current visual settings, map counts, Abyssal thing/pawn counts, and key Dominion component presence.

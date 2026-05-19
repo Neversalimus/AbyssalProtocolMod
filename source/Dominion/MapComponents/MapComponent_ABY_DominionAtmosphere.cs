@@ -221,7 +221,7 @@ namespace AbyssalProtocol
             }
 
             AbyssalProtocolModSettings settings = AbyssalProtocolMod.Settings;
-            if (settings != null && (!settings.enableBossMapPresentationEffects || settings.reducedMotion))
+            if (settings != null && (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(settings) || settings.reducedMotion))
             {
                 return;
             }
@@ -246,7 +246,7 @@ namespace AbyssalProtocol
             try
             {
                 float intensity = settings.ResolveDominionWeatherIntensity();
-                bool reduced = settings.reducedMotion;
+                bool reduced = settings.reducedMotion || settings.visualIntensity != ABY_VisualIntensity.Full;
                 ABY_DominionWeatherUtility.EmitWeatherBurst(map, CurrentWeatherState, intensity, reduced);
                 weatherBursts++;
 
@@ -272,7 +272,8 @@ namespace AbyssalProtocol
             float intensity = settings.ResolveDominionWeatherIntensity();
             float min = WeatherIntervalMinTicks / Math.Max(0.65f, intensity);
             float max = WeatherIntervalMaxTicks / Math.Max(0.65f, intensity);
-            return Rand.Range(Math.Max(80, (int)min), Math.Max(120, (int)max));
+            int interval = Rand.Range(Math.Max(80, (int)min), Math.Max(120, (int)max));
+            return ABY_PerformanceSettingsUtility.ScaleVfxInterval(interval, settings);
         }
 
         private void ChooseNextWeatherState(int now, bool initial)

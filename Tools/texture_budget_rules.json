@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "description": "Abyssal Protocol texture budget rules for audit and safe release optimization.",
+  "global": {
+    "warn_rgba_mib_total": 650,
+    "warn_png_mib_total": 95,
+    "default_warn_above_side": 512,
+    "default_safe_max_side": null
+  },
+  "rules": [
+    {
+      "name": "UI icons and commands",
+      "pattern": "Textures/UI/**",
+      "warn_above_side": 512,
+      "safe_max_side": 256,
+      "auto_resize": false,
+      "note": "Generic UI assets. Most icons should be 128-256, but panel/backdrop skins need manual review."
+    },
+    {
+      "name": "Command icons",
+      "pattern": "Textures/UI/ABY/Commands/*.png",
+      "warn_above_side": 256,
+      "safe_max_side": 128,
+      "auto_resize": true,
+      "note": "Small gizmo/command icons."
+    },
+    {
+      "name": "Protocol Research category icons",
+      "pattern": "Textures/UI/ABY/ProtocolResearch/Categories/*.png",
+      "warn_above_side": 256,
+      "safe_max_side": 128,
+      "auto_resize": true,
+      "note": "Drawn inside small Protocol Nexus category rings."
+    },
+    {
+      "name": "Small VFX frames",
+      "pattern": "Textures/Things/VFX/**/*.png",
+      "warn_above_side": 512,
+      "safe_max_side": 384,
+      "auto_resize": false,
+      "note": "VFX are often safe to reduce, but sheet/beam assets need manual review."
+    },
+    {
+      "name": "Projectiles",
+      "pattern": "Textures/Things/Projectile/*.png",
+      "warn_above_side": 512,
+      "safe_max_side": 256,
+      "auto_resize": true,
+      "note": "Projectile graphics are usually drawn small or stretched."
+    },
+    {
+      "name": "Non-boss pawns",
+      "pattern": "Textures/Pawn/**/*.png",
+      "warn_above_side": 512,
+      "safe_max_side": 384,
+      "auto_resize": false,
+      "exclude_contains": ["Archon", "ReactorSaint"],
+      "note": "Non-boss monsters can normally stay at 384 after visual verification. Boss/hero sprites are excluded."
+    },
+    {
+      "name": "Building overlays",
+      "pattern": "Textures/Things/Building/**/*Overlay*.png",
+      "warn_above_side": 512,
+      "safe_max_side": 384,
+      "auto_resize": true,
+      "note": "Glow/overlay layers are usually safer than base building art."
+    },
+    {
+      "name": "Dominion fissure sheets",
+      "pattern": "Textures/Things/Building/DominionSlice/Fissures/*.png",
+      "warn_above_side": 1024,
+      "safe_max_side": null,
+      "manual_review": true,
+      "note": "Medium-risk: check seam readability in-game before further reductions."
+    },
+    {
+      "name": "Boss and hero pawns",
+      "pattern": "Textures/Pawn/Archon*/**/*.png",
+      "warn_above_side": 1024,
+      "safe_max_side": null,
+      "auto_resize": false,
+      "manual_review": true,
+      "note": "High-risk boss/hero sprites: never auto-resize."
+    },
+    {
+      "name": "Reactor Saint",
+      "pattern": "Textures/Pawn/ReactorSaint/**/*.png",
+      "warn_above_side": 1024,
+      "safe_max_side": null,
+      "auto_resize": false,
+      "manual_review": true,
+      "note": "High-risk boss presentation and Aegis sprites: never auto-resize."
+    }
+  ],
+  "release_excludes": [
+    ".git/**",
+    "SourceAssets/**",
+    "Tools/**",
+    "BuildOutput/**",
+    "*.psd",
+    "*.kra",
+    "*.xcf",
+    "*.blend",
+    "*.tmp",
+    "*.bak",
+    "**/__pycache__/**",
+    "**/.DS_Store"
+  ],
+  "release_includes": [
+    "About/**",
+    "Assemblies/**",
+    "Defs/**",
+    "Languages/**",
+    "Patches/**",
+    "Sounds/**",
+    "Textures/**",
+    "Docs/**"
+  ]
+}

@@ -384,3 +384,36 @@ When preparing a patch:
 - Do not include dev-only `Libraries/`.
 - Mention whether build was verified.
 - Include a commit title and commit description.
+
+## Release optimization and performance tools
+
+The project now has a repository-side release optimization layer and an in-game performance diagnostics layer.
+
+Repository-side tools live in:
+
+```text
+Tools/texture_budget_rules.json
+Tools/ABY_TextureAudit.py
+Tools/ABY_OptimizeTextures.py
+Tools/ABY_BuildReleasePackage.py
+```
+
+Documentation:
+
+```text
+Docs/TEXTURE_BUDGET.md
+Docs/RELEASE_PACKAGING.md
+```
+
+Runtime performance/settings code lives in:
+
+```text
+source/Core/Bootstrap/ABY_VisualIntensity.cs
+source/Core/Bootstrap/ABY_PerformanceSettingsUtility.cs
+source/Diagnostics/ABY_PerformanceAuditUtility.cs
+source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs
+```
+
+The in-game visual intensity settings are presentation-only. They must not change gameplay rewards, encounter composition, AI, boss progression, or save-critical logic. They may reduce optional ambient Dominion VFX, UI animation, map presentation effects, title cards, weather intensity, and VFX interval density.
+
+Do not implement runtime texture downscaling inside RimWorld unless there is a strong, tested reason. Prefer build-time texture budget scripts and pre-optimized PNGs.

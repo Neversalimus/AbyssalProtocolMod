@@ -47,7 +47,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1320f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1540f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -56,6 +56,8 @@ namespace AbyssalProtocol
             DrawDifficultySection(list, s);
             list.GapLine();
             DrawUIStyleSection(list, s);
+            list.GapLine();
+            DrawPerformanceSection(list, s);
             list.GapLine();
 
             bool previousChargeSounds = s.enableWeaponChargeSounds;
@@ -153,6 +155,49 @@ namespace AbyssalProtocol
         }
 
 
+        private static void DrawPerformanceSection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
+        {
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_PerformanceSettingsHeader", "Abyssal performance / visual intensity"));
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.84f, 0.78f, 0.72f, 1f);
+            Widgets.Label(ABY_UIPolishUtility.TextRect(list.GetRect(44f)), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_PerformanceSettingsDesc", "Performance presets reduce optional VFX density and visual motion without changing gameplay, rewards, AI, or boss logic. Use Minimal on low-end laptops or heavy modpacks."));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            Rect row = list.GetRect(34f);
+            float gap = 8f;
+            float cellWidth = (row.width - gap * 2f) / 3f;
+            DrawPerformancePresetButton(new Rect(row.x, row.y, cellWidth, 34f), settingsData, ABY_VisualIntensity.Full);
+            DrawPerformancePresetButton(new Rect(row.x + cellWidth + gap, row.y, cellWidth, 34f), settingsData, ABY_VisualIntensity.Reduced);
+            DrawPerformancePresetButton(new Rect(row.x + (cellWidth + gap) * 2f, row.y, cellWidth, 34f), settingsData, ABY_VisualIntensity.Minimal);
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.88f, 0.82f, 0.78f, 1f);
+            Widgets.Label(ABY_UIPolishUtility.TextRect(list.GetRect(42f)), ABY_PerformanceSettingsUtility.ResolveDescription(settingsData.visualIntensity));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_DominionAmbient", "Enable Dominion ambient VFX"), ref settingsData.enableDominionAmbientVfx, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_DominionAmbientDesc", "Controls optional Dominion Slice ambient pulses, cohesion accents, edge effects, and decorative map atmosphere. Combat-critical mechanics remain active."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_DevAudit", "Enable performance audit window button"), ref settingsData.enableDevPerformanceAuditWindow, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_DevAuditDesc", "Shows a development-only audit button in these settings for checking active Abyssal VFX, pawns, map state, and performance toggles."));
+
+            Text.Font = GameFont.Tiny;
+            GUI.color = new Color(0.78f, 0.92f, 1f, 1f);
+            Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_CurrentScale", "Current VFX scale: {0}; sample interval 120 -> {1} ticks", ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(settingsData).ToString("F2"), ABY_PerformanceSettingsUtility.ScaleVfxInterval(120, settingsData).ToString()));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            list.Gap(4f);
+        }
+
+        private static void DrawPerformancePresetButton(Rect rect, AbyssalProtocolModSettings settingsData, ABY_VisualIntensity intensity)
+        {
+            bool active = settingsData.visualIntensity == intensity;
+            if (AbyssalStyledWidgets.TextButton(rect, ABY_PerformanceSettingsUtility.ResolveLabel(intensity), true, active))
+            {
+                ABY_PerformanceSettingsUtility.ApplyPreset(settingsData, intensity);
+            }
+        }
+
+
         private static void DrawDiagnosticsSection(Listing_Standard list, AbyssalProtocolModSettings settingsData)
         {
             Widgets.Label(list.GetRect(24f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DiagnosticsSettingsHeader", "Stability / diagnostics / UI polish"));
@@ -195,8 +240,11 @@ namespace AbyssalProtocol
             }
 
             Rect row = list.GetRect(32f);
-            Rect openRect = new Rect(row.x, row.y, (row.width - 8f) * 0.5f, 32f);
-            Rect logRect = new Rect(openRect.xMax + 8f, row.y, row.width - openRect.width - 8f, 32f);
+            float buttonGap = 8f;
+            float buttonWidth = (row.width - buttonGap * 2f) / 3f;
+            Rect openRect = new Rect(row.x, row.y, buttonWidth, 32f);
+            Rect logRect = new Rect(openRect.xMax + buttonGap, row.y, buttonWidth, 32f);
+            Rect perfRect = new Rect(logRect.xMax + buttonGap, row.y, buttonWidth, 32f);
             if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_OpenWindow", "Open diagnostics")))
             {
                 Window_ABY_Diagnostics.OpenWindow();
@@ -204,6 +252,10 @@ namespace AbyssalProtocol
             if (AbyssalStyledWidgets.TextButton(logRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_LogNow", "Log snapshot now")))
             {
                 ABY_StabilityDiagnosticsUtility.LogSnapshot(true);
+            }
+            if (settingsData.enableDevPerformanceAuditWindow && AbyssalStyledWidgets.TextButton(perfRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_OpenAudit", "Performance audit")))
+            {
+                Window_ABY_PerformanceAudit.OpenWindow();
             }
 
             list.Gap(4f);

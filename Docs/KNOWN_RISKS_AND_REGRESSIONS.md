@@ -320,3 +320,13 @@ Checklist for future logging changes:
 - Rule: UI code must use localized wrapper properties (`LocalizedLabel`, `LocalizedLabelCap`, `RoleLabel`, `EffectSummary`) or explicit Keyed lookups, not raw `label`, `role`, or `effectSummary`.
 - Do not add player-facing turret text that mentions `projectile`, runtime behavior, save/load, kill switches, module defs, or other implementation details.
 - Forge-visible descriptions should be short enough for cards and should use lore/gameplay phrasing rather than progression/tier labels.
+
+## Optimization / packaging risks
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Runtime texture downscale temptation | P2 | performance/assets | Memory spikes, cache confusion, first-use lag | Prefer build-time texture budget tools and pre-optimized PNGs; do not downscale Unity textures at runtime by default. |
+| Release package includes dev/source assets | P1 | packaging | Workshop zip becomes huge or includes chromakey/source art | Use `Tools/ABY_BuildReleasePackage.py`; exclude `SourceAssets/`, `Tools/`, `BuildOutput/`, source art formats, and caches. |
+| Texture optimizer touches boss/hero sprites automatically | P1 | assets | Bosses become blurry or lose silhouette | Keep boss/hero groups manual-review only in `texture_budget_rules.json`. |
+| Performance preset changes gameplay | P0/P1 | settings/runtime | Reduced/Minimal changes rewards, AI, boss logic, encounter composition | Visual intensity presets must only affect optional presentation/VFX/UI motion/weather density. |
+| Dominion ambient VFX disabled too aggressively | P2 | Dominion visuals | Slice feels sterile in Minimal/Reduced mode | Minimal may disable optional ambient VFX; Reduced should keep lighter ambient visuals with longer intervals. |

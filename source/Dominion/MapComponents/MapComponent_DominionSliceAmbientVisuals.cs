@@ -39,31 +39,37 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalProtocolModSettings performanceSettings = AbyssalProtocolMod.Settings;
+            if (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(performanceSettings))
+            {
+                return;
+            }
+
             int now = Find.TickManager.TicksGame;
-            float intensity = GetPhaseIntensity(encounter);
+            float intensity = GetPhaseIntensity(encounter) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(performanceSettings);
 
             if (now >= nextEmberTick)
             {
                 EmitAmbientEmbers(encounter, intensity);
-                nextEmberTick = now + Mathf.RoundToInt(Rand.Range(30f, 54f) / Mathf.Max(0.55f, intensity));
+                nextEmberTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(30f, 54f) / Mathf.Max(0.55f, intensity)), performanceSettings);
             }
 
             if (now >= nextPressurePulseTick)
             {
                 EmitPressurePulse(encounter, intensity);
-                nextPressurePulseTick = now + Mathf.RoundToInt(Rand.Range(150f, 240f) / Mathf.Max(0.65f, intensity));
+                nextPressurePulseTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(150f, 240f) / Mathf.Max(0.65f, intensity)), performanceSettings);
             }
 
             if (now >= nextEdgeSparkTick)
             {
                 EmitEdgeSparks(encounter, intensity);
-                nextEdgeSparkTick = now + Mathf.RoundToInt(Rand.Range(100f, 180f) / Mathf.Max(0.65f, intensity));
+                nextEdgeSparkTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(100f, 180f) / Mathf.Max(0.65f, intensity)), performanceSettings);
             }
 
             if (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse && now >= nextCollapseWarningTick)
             {
                 EmitCollapseWarning(encounter, intensity);
-                nextCollapseWarningTick = now + Rand.RangeInclusive(90, 150);
+                nextCollapseWarningTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(90, 150), performanceSettings);
             }
         }
 

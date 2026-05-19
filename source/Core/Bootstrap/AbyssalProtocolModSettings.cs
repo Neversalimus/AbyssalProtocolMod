@@ -45,6 +45,9 @@ namespace AbyssalProtocol
         public bool enableProtocolNexusGating = false;
         public ABY_UIStyle uiStyle = ABY_UIStyle.Enhanced;
         public bool reduceAbyssalUIAnimation = false;
+        public ABY_VisualIntensity visualIntensity = ABY_VisualIntensity.Full;
+        public bool enableDominionAmbientVfx = true;
+        public bool enableDevPerformanceAuditWindow = true;
 
         public override void ExposeData()
         {
@@ -87,6 +90,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref enableProtocolNexusGating, "enableProtocolNexusGating", false);
             Scribe_Values.Look(ref uiStyle, "uiStyle", ABY_UIStyle.Enhanced);
             Scribe_Values.Look(ref reduceAbyssalUIAnimation, "reduceAbyssalUIAnimation", false);
+            Scribe_Values.Look(ref visualIntensity, "visualIntensity", ABY_VisualIntensity.Full);
+            Scribe_Values.Look(ref enableDominionAmbientVfx, "enableDominionAmbientVfx", true);
+            Scribe_Values.Look(ref enableDevPerformanceAuditWindow, "enableDevPerformanceAuditWindow", true);
             ClampValues();
         }
 
@@ -143,12 +149,25 @@ namespace AbyssalProtocol
             enableProtocolNexusGating = false;
             uiStyle = ABY_UIStyle.Enhanced;
             reduceAbyssalUIAnimation = false;
+            visualIntensity = ABY_VisualIntensity.Full;
+            enableDominionAmbientVfx = true;
+            enableDevPerformanceAuditWindow = true;
         }
 
         public float ResolveDominionWeatherIntensity()
         {
             ClampValues();
-            return dominionWeatherIntensity;
+            return Mathf.Clamp(dominionWeatherIntensity * ABY_PerformanceSettingsUtility.ResolveWeatherIntensityScale(this), 0.05f, 1.50f);
+        }
+
+        public bool ShouldRunDominionAmbientVfx()
+        {
+            return ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(this);
+        }
+
+        public int ScaleVfxInterval(int ticks)
+        {
+            return ABY_PerformanceSettingsUtility.ScaleVfxInterval(ticks, this);
         }
 
         public Vector2 ResolveTopLeft(Rect screenRect, Vector2 totalSize)

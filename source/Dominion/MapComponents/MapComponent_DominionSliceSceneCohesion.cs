@@ -42,6 +42,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalProtocolModSettings performanceSettings = AbyssalProtocolMod.Settings;
+            if (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(performanceSettings))
+            {
+                return;
+            }
+
             int now = Find.TickManager.TicksGame;
             MapComponent_DominionSliceEncounter.SlicePhase phase = encounter.CurrentPhase;
             ABY_DominionPocketSession session = ResolveSession();
@@ -53,7 +59,7 @@ namespace AbyssalProtocol
                 SpawnPhaseTransitionSignature(encounter, session, phase);
             }
 
-            float intensity = GetIntensity(encounter, session);
+            float intensity = GetIntensity(encounter, session) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(performanceSettings);
             IntVec3 heartCell = ResolveHeartCell(encounter, session);
             IntVec3 entryCell = ResolveEntryCell(session);
             IntVec3 extractionCell = ResolveExtractionCell(session);
@@ -62,31 +68,31 @@ namespace AbyssalProtocol
             if (now >= nextHeartCohesionTick)
             {
                 DominionSliceSceneCohesionVfxUtility.SpawnHeartCohesionHalo(heartCell, map, intensity, phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse);
-                nextHeartCohesionTick = now + GetHeartInterval(phase);
+                nextHeartCohesionTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetHeartInterval(phase), performanceSettings);
             }
 
             if (now >= nextAxisCohesionTick)
             {
                 SpawnAxisCohesion(phase, heartCell, entryCell, extractionCell, rewardCell, session, intensity);
-                nextAxisCohesionTick = now + GetAxisInterval(phase);
+                nextAxisCohesionTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetAxisInterval(phase), performanceSettings);
             }
 
             if (now >= nextEdgeCohesionTick)
             {
                 DominionSliceSceneCohesionVfxUtility.SpawnSubtleEdgeCohesion(map, intensity, phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse);
-                nextEdgeCohesionTick = now + GetEdgeInterval(phase);
+                nextEdgeCohesionTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetEdgeInterval(phase), performanceSettings);
             }
 
             if (now >= nextPhaseSealTick)
             {
                 DominionSliceSceneCohesionVfxUtility.SpawnCrownSeal(heartCell, map, intensity, encounter.LiveAnchorCount);
-                nextPhaseSealTick = now + GetSealInterval(phase);
+                nextPhaseSealTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetSealInterval(phase), performanceSettings);
             }
 
             if (now >= nextQuietEmberTick)
             {
                 DominionSliceSceneCohesionVfxUtility.SpawnQuietEmbers(map, heartCell, intensity, phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse);
-                nextQuietEmberTick = now + GetEmberInterval(phase);
+                nextQuietEmberTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetEmberInterval(phase), performanceSettings);
             }
         }
 
@@ -102,7 +108,7 @@ namespace AbyssalProtocol
         private void SpawnPhaseTransitionSignature(MapComponent_DominionSliceEncounter encounter, ABY_DominionPocketSession session, MapComponent_DominionSliceEncounter.SlicePhase phase)
         {
             IntVec3 heartCell = ResolveHeartCell(encounter, session);
-            float intensity = GetIntensity(encounter, session);
+            float intensity = GetIntensity(encounter, session) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale();
             DominionSliceSceneCohesionVfxUtility.SpawnPhaseTransitionSeal(heartCell, map, intensity, phase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse);
         }
 

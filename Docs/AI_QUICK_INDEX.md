@@ -154,3 +154,30 @@ When no docs are updated, final response should include a short note such as:
 ```text
 Architecture docs not changed: this was an isolated XML/asset/balance fix and did not affect system ownership or source layout.
 ```
+
+## Optimization / release packaging / performance settings
+
+For texture budget and release packaging tasks, look first at:
+
+```text
+Tools/texture_budget_rules.json
+Tools/ABY_TextureAudit.py
+Tools/ABY_OptimizeTextures.py
+Tools/ABY_BuildReleasePackage.py
+Docs/TEXTURE_BUDGET.md
+Docs/RELEASE_PACKAGING.md
+```
+
+For in-game visual intensity, low-end performance settings, and the performance audit window, look first at:
+
+```text
+source/Core/Bootstrap/AbyssalProtocolModSettings.cs
+source/Core/Bootstrap/AbyssalProtocolMod.cs
+source/Core/Bootstrap/ABY_VisualIntensity.cs
+source/Core/Bootstrap/ABY_PerformanceSettingsUtility.cs
+source/Diagnostics/ABY_PerformanceAuditUtility.cs
+source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs
+source/Dominion/MapComponents/
+```
+
+The performance audit window is opened from Abyssal Protocol mod settings, diagnostics/performance area. It is a dev/testing aid, not player progression UI.

@@ -39,37 +39,43 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalProtocolModSettings performanceSettings = AbyssalProtocolMod.Settings;
+            if (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(performanceSettings))
+            {
+                return;
+            }
+
             int now = Find.TickManager.TicksGame;
-            float intensity = GetPhaseIntensity(encounter);
+            float intensity = GetPhaseIntensity(encounter) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(performanceSettings);
 
             if (now >= nextVoidVeilTick)
             {
                 EmitVoidVeil(intensity);
-                nextVoidVeilTick = now + Mathf.RoundToInt(Rand.Range(135f, 225f) / Mathf.Max(0.70f, intensity));
+                nextVoidVeilTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(135f, 225f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextRimPulseTick)
             {
                 EmitVoidRimPulses(intensity);
-                nextRimPulseTick = now + Mathf.RoundToInt(Rand.Range(85f, 145f) / Mathf.Max(0.70f, intensity));
+                nextRimPulseTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(85f, 145f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextVoidCrackTick)
             {
                 EmitVoidCracks(intensity);
-                nextVoidCrackTick = now + Mathf.RoundToInt(Rand.Range(115f, 190f) / Mathf.Max(0.70f, intensity));
+                nextVoidCrackTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(115f, 190f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextBoundaryRiftTick)
             {
                 EmitBoundaryRifts(intensity);
-                nextBoundaryRiftTick = now + Mathf.RoundToInt(Rand.Range(220f, 380f) / Mathf.Max(0.70f, intensity));
+                nextBoundaryRiftTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(220f, 380f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
 
             if (now >= nextShardTick)
             {
                 EmitEdgeShards(intensity);
-                nextShardTick = now + Mathf.RoundToInt(Rand.Range(125f, 230f) / Mathf.Max(0.70f, intensity));
+                nextShardTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Mathf.RoundToInt(Rand.Range(125f, 230f) / Mathf.Max(0.70f, intensity)), performanceSettings);
             }
         }
 

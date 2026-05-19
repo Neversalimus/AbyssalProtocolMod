@@ -42,6 +42,12 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalProtocolModSettings performanceSettings = AbyssalProtocolMod.Settings;
+            if (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(performanceSettings))
+            {
+                return;
+            }
+
             ABY_DominionPocketSession session = ResolveSession();
             int now = Find.TickManager.TicksGame;
             MapComponent_DominionSliceEncounter.SlicePhase phase = encounter.CurrentPhase;
@@ -50,7 +56,7 @@ namespace AbyssalProtocol
             IntVec3 entry = ResolveEntryCell(session);
             IntVec3 extraction = ResolveExtractionCell(session);
             IntVec3 reward = ResolveRewardPocketCell(session);
-            float intensity = GetPhaseIntensity(encounter, session);
+            float intensity = GetPhaseIntensity(encounter, session) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(performanceSettings);
 
             if (now >= nextNodeTick)
             {
@@ -60,7 +66,7 @@ namespace AbyssalProtocol
                     DominionSliceFlowVfxUtility.SpawnFlowNode(extraction, map, intensity * 1.15f);
                 }
 
-                nextNodeTick = now + GetNodeInterval(phase);
+                nextNodeTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetNodeInterval(phase), performanceSettings);
             }
 
             if (phase == MapComponent_DominionSliceEncounter.SlicePhase.Breach)
@@ -68,7 +74,7 @@ namespace AbyssalProtocol
                 if (now >= nextEntryFlowTick)
                 {
                     DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.72f, false, 4);
-                    nextEntryFlowTick = now + Rand.RangeInclusive(170, 240);
+                    nextEntryFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(170, 240), performanceSettings);
                 }
 
                 return;
@@ -79,13 +85,13 @@ namespace AbyssalProtocol
                 if (now >= nextAnchorFlowTick)
                 {
                     EmitAnchorFlows(session, heart, intensity);
-                    nextAnchorFlowTick = now + Rand.RangeInclusive(85, 125);
+                    nextAnchorFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(85, 125), performanceSettings);
                 }
 
                 if (now >= nextEntryFlowTick)
                 {
                     DominionSliceFlowVfxUtility.SpawnFlowLine(entry, heart, map, intensity * 0.55f, false, 3);
-                    nextEntryFlowTick = now + Rand.RangeInclusive(190, 270);
+                    nextEntryFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(190, 270), performanceSettings);
                 }
 
                 return;
@@ -97,7 +103,7 @@ namespace AbyssalProtocol
                 {
                     DominionSliceFlowVfxUtility.SpawnFlowSurge(heart, map, intensity);
                     DominionSliceFlowVfxUtility.SpawnRadialFlow(heart, map, intensity, 7, 12f);
-                    nextHeartFlowTick = now + Rand.RangeInclusive(95, 140);
+                    nextHeartFlowTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(95, 140), performanceSettings);
                 }
 
                 return;

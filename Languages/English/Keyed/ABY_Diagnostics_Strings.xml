@@ -22,4 +22,19 @@
   <ABY_BossPresentation_MapEffectsDesc>Adds restrained boss-specific map pulses around active bosses and summon moments.</ABY_BossPresentation_MapEffectsDesc>
   <ABY_BossExpandedSelection_Enable>Enable expanded boss selection</ABY_BossExpandedSelection_Enable>
   <ABY_BossExpandedSelection_EnableDesc>Allows large Abyssal bosses to be selected by clicking their visual body, not only the pawn center cell.</ABY_BossExpandedSelection_EnableDesc>
+
+  <ABY_PerformanceSettingsHeader>Abyssal performance / visual intensity</ABY_PerformanceSettingsHeader>
+  <ABY_PerformanceSettingsDesc>Performance presets reduce optional VFX density and visual motion without changing gameplay, rewards, AI, or boss logic. Use Minimal on low-end laptops or heavy modpacks.</ABY_PerformanceSettingsDesc>
+  <ABY_Performance_Full>Full</ABY_Performance_Full>
+  <ABY_Performance_Reduced>Reduced</ABY_Performance_Reduced>
+  <ABY_Performance_Minimal>Minimal</ABY_Performance_Minimal>
+  <ABY_Performance_FullDesc>Full Abyssal presentation. Recommended when performance and VRAM are comfortable.</ABY_Performance_FullDesc>
+  <ABY_Performance_ReducedDesc>Lower optional visual load: reduced motion, lighter Dominion weather, reduced UI animation, and slower ambient VFX intervals.</ABY_Performance_ReducedDesc>
+  <ABY_Performance_MinimalDesc>Lowest optional visual load: reduced motion, no decorative Dominion ambient VFX, no boss title cards, reduced weather intensity, and UI accents minimized.</ABY_Performance_MinimalDesc>
+  <ABY_Performance_DominionAmbient>Enable Dominion ambient VFX</ABY_Performance_DominionAmbient>
+  <ABY_Performance_DominionAmbientDesc>Controls optional Dominion Slice ambient pulses, cohesion accents, edge effects, and decorative map atmosphere. Combat-critical mechanics remain active.</ABY_Performance_DominionAmbientDesc>
+  <ABY_Performance_DevAudit>Enable performance audit window button</ABY_Performance_DevAudit>
+  <ABY_Performance_DevAuditDesc>Shows a development-only audit button in these settings for checking active Abyssal VFX, pawns, map state, and performance toggles.</ABY_Performance_DevAuditDesc>
+  <ABY_Performance_CurrentScale>Current VFX scale: {0}; sample interval 120 -&gt; {1} ticks</ABY_Performance_CurrentScale>
+  <ABY_Performance_OpenAudit>Performance audit</ABY_Performance_OpenAudit>
 </LanguageData>

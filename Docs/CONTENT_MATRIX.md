@@ -262,3 +262,13 @@ Languages/Russian/DefInjected/ABY_TurretModuleDef/
 
 Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/ThingDef/`, and crafting text belongs to `Languages/<Lang>/DefInjected/RecipeDef/`. Keep all three layers synchronized so Forge cards, item info, and recipe bills do not drift.
 
+
+## Optimization and release tooling
+
+| Area | Files | Purpose | Notes |
+| --- | --- | --- | --- |
+| Texture budget audit | `Tools/ABY_TextureAudit.py`, `Tools/texture_budget_rules.json` | Reports texture payload, VRAM estimates, and warning/manual-review candidates | Audit-only by default. |
+| Safe texture optimizer | `Tools/ABY_OptimizeTextures.py`, `Tools/texture_budget_rules.json` | Applies only safe/whitelisted auto-resize rules | Boss/hero and manual-review categories are never auto-resized. |
+| Release packager | `Tools/ABY_BuildReleasePackage.py`, `Tools/texture_budget_rules.json` | Builds a clean playable release zip without `SourceAssets/`, tools, temp files, or build output | Does not compile C#. |
+| In-game performance settings | `source/Core/Bootstrap/AbyssalProtocolModSettings.cs`, `source/Core/Bootstrap/ABY_PerformanceSettingsUtility.cs` | Visual intensity presets and optional Dominion ambient VFX control | Presentation-only; must not alter gameplay. |
+| Performance audit window | `source/Diagnostics/ABY_PerformanceAuditUtility.cs`, `source/Diagnostics/UI/Window_ABY_PerformanceAudit.cs` | Dev/testing snapshot for map counts, Abyssal counts, and performance toggles | Open from mod settings diagnostics/performance area. |

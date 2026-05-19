@@ -201,3 +201,30 @@ After moving source files or changing module layout:
 5. Launch RimWorld and check for class load errors.
 6. Open Forge, Summoning, Protocol Nexus, and boss bar if those systems are touched.
 ```
+
+## Release tooling layout
+
+Repository maintenance tools are allowed under:
+
+```text
+Tools/
+```
+
+Current tool files:
+
+```text
+Tools/texture_budget_rules.json
+Tools/ABY_TextureAudit.py
+Tools/ABY_OptimizeTextures.py
+Tools/ABY_BuildReleasePackage.py
+```
+
+These tools are development/release helpers and are excluded from clean release packages by default. They do not belong under `source/` and should not be compiled into `Assemblies/AbyssalProtocol.dll`.
+
+Clean release package output goes under:
+
+```text
+BuildOutput/
+```
+
+`BuildOutput/` must not be committed as playable mod content unless explicitly requested for a release artifact.

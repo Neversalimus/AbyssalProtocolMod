@@ -39,32 +39,38 @@ namespace AbyssalProtocol
                 return;
             }
 
+            AbyssalProtocolModSettings performanceSettings = AbyssalProtocolMod.Settings;
+            if (!ABY_PerformanceSettingsUtility.ShouldRunDominionAmbientVfx(performanceSettings))
+            {
+                return;
+            }
+
             int now = Find.TickManager.TicksGame;
-            float intensity = GetPhaseIntensity(encounter);
+            float intensity = GetPhaseIntensity(encounter) * ABY_PerformanceSettingsUtility.ResolveVfxIntensityScale(performanceSettings);
             IntVec3 heartCell = ResolveHeartCell(encounter);
 
             if (now >= nextPhaseRingTick)
             {
                 EmitPhaseRings(encounter, heartCell, intensity);
-                nextPhaseRingTick = now + GetPhaseRingInterval(encounter);
+                nextPhaseRingTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetPhaseRingInterval(encounter), performanceSettings);
             }
 
             if (now >= nextConduitPulseTick)
             {
                 EmitConduitPulses(encounter, heartCell, intensity);
-                nextConduitPulseTick = now + GetConduitPulseInterval(encounter);
+                nextConduitPulseTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(GetConduitPulseInterval(encounter), performanceSettings);
             }
 
             if (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Anchorfall && now >= nextAnchorGlyphTick)
             {
                 EmitAnchorGlyphs(encounter, intensity);
-                nextAnchorGlyphTick = now + Rand.RangeInclusive(140, 210);
+                nextAnchorGlyphTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(Rand.RangeInclusive(140, 210), performanceSettings);
             }
 
             if ((encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.HeartExposed || encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse) && now >= nextHeartCrackTick)
             {
                 EmitHeartFloorCracks(heartCell, intensity, encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse);
-                nextHeartCrackTick = now + (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse ? Rand.RangeInclusive(70, 105) : Rand.RangeInclusive(115, 165));
+                nextHeartCrackTick = now + ABY_PerformanceSettingsUtility.ScaleVfxInterval(encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse ? Rand.RangeInclusive(70, 105) : Rand.RangeInclusive(115, 165), performanceSettings);
             }
         }
 
