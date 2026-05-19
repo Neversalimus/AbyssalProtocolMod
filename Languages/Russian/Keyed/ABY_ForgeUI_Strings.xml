@@ -56,7 +56,7 @@
   <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить заказ.</ABY_ForgeClipboardLocked>
   <ABY_ForgeUnlockToast>Открыт новый шаблон: {0}</ABY_ForgeUnlockToast>
   <ABY_ForgeUnlockLetterLabel>Открыты новые шаблоны</ABY_ForgeUnlockLetterLabel>
-  <ABY_ForgeUnlockLetterDesc>Решётка кузница стабилизировала новые шаблоны:
+  <ABY_ForgeUnlockLetterDesc>Решётка кузницы стабилизировала новые шаблоны:
 
 {0}</ABY_ForgeUnlockLetterDesc>
   <ABY_ForgeOverviewHintCompact>Используй полную консоль сопряжения для шаблонов, проверки требований и управления заказами.</ABY_ForgeOverviewHintCompact>

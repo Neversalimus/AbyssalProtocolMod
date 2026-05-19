@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_ModSettingsCategory>Бездненный Протокол</ABY_ModSettingsCategory>
+  <ABY_ModSettingsCategory>Протокол Бездны</ABY_ModSettingsCategory>
   <ABY_BossBar_Enable>Включить бездненную панель босса</ABY_BossBar_Enable>
-  <ABY_BossBar_EnableDesc>Показывает кастомный интерфейс босса Бездненный Протокол для поддерживаемых активных боссов.</ABY_BossBar_EnableDesc>
+  <ABY_BossBar_EnableDesc>Показывает интерфейс босса Протокола Бездны для поддерживаемых активных боссов.</ABY_BossBar_EnableDesc>
   <ABY_BossBar_ShowHealthNumbers>Показывать числа здоровья</ABY_BossBar_ShowHealthNumbers>
   <ABY_BossBar_ShowHealthNumbersDesc>Показывает текущее и максимальное здоровье на полосе босса.</ABY_BossBar_ShowHealthNumbersDesc>
   <ABY_BossBar_ShowPhaseMarkers>Показывать маркеры фаз</ABY_BossBar_ShowPhaseMarkers>
@@ -55,5 +55,5 @@
   <ABY_BossBar_CalibrationPreviewActive>Текущая цель превью: {0}</ABY_BossBar_CalibrationPreviewActive>
   <ABY_BossBar_CalibrationPreviewMissing>На этой карте сейчас нет активного поддерживаемого босса. Настраивать раскладка всё равно можно, но ливе-превью лучше всего работает, когда активен Зверь-Архонт, Аркхон оф Разрыв или Реакторный Святой.</ABY_BossBar_CalibrationPreviewMissing>
   <ABY_WeaponChargeSounds_Enable>Включить звуки зарядки оружия</ABY_WeaponChargeSounds_Enable>
-  <ABY_WeaponChargeSounds_EnableDesc>Включает или выключает бездненный-звуки прогрева / зарядки оружия. По умолчанию отключено. При включении звуки идут через безопасный разовый, без бесконечного сустаин-повтора.</ABY_WeaponChargeSounds_EnableDesc>
+  <ABY_WeaponChargeSounds_EnableDesc>Включает или выключает звуки Бездны прогрева / зарядки оружия. По умолчанию отключено. При включении звуки идут через безопасный разовый, без бесконечного зацикленного повтора.</ABY_WeaponChargeSounds_EnableDesc>
 </LanguageData>

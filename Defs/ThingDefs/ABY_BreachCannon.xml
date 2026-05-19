@@ -1,26 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_BreachCannon</defName>
     <label>breach cannon</label>
-    <description>A portable siege relic rebuilt around a raised rift-optic rail, a monolithic stock and a caged abyssal pressure heart. The breach cannon is slow, heavy and brutally deliberate: each shot hammers a stabilized rupture charge through armor, cover and fortified targets with catastrophic force.</description>
+    <description>A slow, brutal breach cannon built to punch through heavy armor and hardened positions. It does not spray a battlefield; it opens one target until the target stops being closed.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_BreachCannon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(2.15,0.72)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <weaponTags>
       <li>Gun</li>
       <li>RangedHeavy</li>
       <li>SpacerGun</li>
     </weaponTags>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>13</Crafting>
@@ -29,7 +24,6 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
       <ABY_AbyssalResidue>46</ABY_AbyssalResidue>
@@ -37,7 +31,6 @@
       <Uranium>90</Uranium>
       <ComponentSpacer>9</ComponentSpacer>
     </costList>
-
     <statBases>
       <WorkToMake>82000</WorkToMake>
       <Mass>8.9</Mass>
@@ -48,7 +41,6 @@
       <AccuracyLong>0.67</AccuracyLong>
       <RangedWeapon_Cooldown>5.05</RangedWeapon_Cooldown>
     </statBases>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -63,7 +55,6 @@
         <muzzleFlashScale>18</muzzleFlashScale>
       </li>
     </verbs>
-
     <tools>
       <li>
         <label>stock</label>
@@ -84,7 +75,6 @@
         <armorPenetration>0.24</armorPenetration>
       </li>
     </tools>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>7000</requiredResidue>
@@ -92,7 +82,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_BreachCannonBolt</defName>
     <label>breach cannon bolt</label>
@@ -111,5 +100,4 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

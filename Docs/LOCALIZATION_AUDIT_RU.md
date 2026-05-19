@@ -98,7 +98,7 @@ Validation after this pass:
 
 ```text
 Russian XML parse errors: 0
-Russian visible Latin text values: 0
+Russian known bad machine-translation phrases: 0
 Known bad machine-translation phrases checked: 0 remaining
 C# changed: no
 Build required: no
@@ -124,5 +124,22 @@ Validation focus:
 - No remaining player-facing `Primary gun module` / `Primary missile module` turret descriptions.
 - No remaining player-facing `projectile is animated`, `animated breach`, `external choir-cell`, `runtime`, `def`, `save/load`, or `системах мода` wording in audited text nodes.
 - Russian custom `ABY_TurretModuleDef` fields now have DefInjected localization coverage.
+```
+
+## 2026-05-19 — Turret/UI technical text cleanup
+
+- Refreshed modular turret role/effect localization through custom DefInjected fields and mirrored Keyed entries.
+- Removed raw English role/effect leakage from Forge turret cards.
+- Replaced technical wording in turret, Specter Lash, Dominion and support UI strings.
+- Standardized Great Infernal Gate terminology in Russian as `Великие инфернальные врата`.
+- Kept Forge-visible labels short to avoid card clipping.
+## 2026-05-19 — Final Russian cleanup follow-up
+
+Additional follow-up after the turret pass:
+
+```text
+- Cleaned remaining malformed Russian machine-translation fragments in horde weapons, horde implants, Choir Engine ritual text, Forge milestone text, UI style settings, and first-sigil guidance.
+- Rechecked English and Russian turret/weapon descriptions for technical implementation wording.
+- Kept this pass XML/docs/localization only; C# runtime code was not changed.
 ```
 

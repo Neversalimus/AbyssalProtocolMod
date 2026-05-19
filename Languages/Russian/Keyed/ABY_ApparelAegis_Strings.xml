@@ -27,7 +27,7 @@
   <ABY_ApparelAegis_InfoBlocksDesc>Классы урона, перехватываемые до обычного расчёта брони.</ABY_ApparelAegis_InfoBlocksDesc>
   <ABY_ApparelAegis_InfoOutgoing>Стрельба наружу</ABY_ApparelAegis_InfoOutgoing>
   <ABY_ApparelAegis_InfoOutgoingValue>не блокируется</ABY_ApparelAegis_InfoOutgoingValue>
-  <ABY_ApparelAegis_InfoOutgoingDesc>Эта кастомная броневая эгида перехватывает только входящий урон и не мешает носителю стрелять наружу.</ABY_ApparelAegis_InfoOutgoingDesc>
+  <ABY_ApparelAegis_InfoOutgoingDesc>Эта броневая эгида перехватывает только входящий урон и не мешает носителю стрелять наружу.</ABY_ApparelAegis_InfoOutgoingDesc>
   <ABY_ApparelAegis_InfoExternalShield>Внешние щиты</ABY_ApparelAegis_InfoExternalShield>
   <ABY_ApparelAegis_InfoExternalShieldValue>подавляют эгиду</ABY_ApparelAegis_InfoExternalShieldValue>
   <ABY_ApparelAegis_InfoExternalShieldDesc>Если надет пояс щита или внешний щитовой предмет, эта броневая эгида отключается, чтобы не складывать щиты.</ABY_ApparelAegis_InfoExternalShieldDesc>

@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_CrownfireRocketChoir</defName>
     <label>Crownfire Rocket Choir</label>
-    <description>Main weapon core for medium modular turret chassis. A vertical split-warhead rocket choir that launches one sealed carrier from alternating crownfire silos; the carrier opens above the chassis and releases eight guided micro-rockets into hostile clusters.</description>
+    <description>A crownfire carrier choir that breaks open above the battlefield, scattering guided fire across swarms and breach packs.</description>
     <effectSummary>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_CrownfireRocketChoir</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>apex guided rocket saturation</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>guided rocket saturation</role>
     <tier>4</tier>
     <projectileDef>ABY_CrownfireCarrierRocket</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
@@ -45,5 +46,4 @@
     <targetPriorityPointBlankPenaltyRange>9</targetPriorityPointBlankPenaltyRange>
     <targetPriorityPointBlankPenalty>4200</targetPriorityPointBlankPenalty>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
 </Defs>

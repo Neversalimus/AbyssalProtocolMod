@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalForge.description>An infernal-industrial forge built to process the trophies of the Abyss into weapons, implants and higher forms of access. The moment a colony begins using one, it stops merely resisting the intrusion and starts manufacturing its future out of enemy matter.</ABY_AbyssalForge.description>
   <ABY_AbyssalResidue.description>The basic material ash left behind when local matter survives contact with hostile law. Residue is not simple loot; it is proof that reality has already been bent hard enough to leave a usable scar.</ABY_AbyssalResidue.description>
@@ -40,7 +40,7 @@
   <ABY_RupturePortal.description>A hotter and more disciplined portal breach that carries mid-tier hostility instead of mere noise. Where these appear, intrusion has advanced from harassment to deliberate pressure.</ABY_RupturePortal.description>
   <ABY_SigilVault.description>A reinforced archive for bound sigils. It keeps rights of invocation organized, visible and recoverable instead of letting crown-marked tokens vanish into ordinary storage.</ABY_SigilVault.description>
   <ABY_SpecterLashAnchor.description>The anchor seed fired by a Specter Lash projector. On impact it writes a temporary point of hostile ownership into the target and lets the tether do the rest.</ABY_SpecterLashAnchor.description>
-  <ABY_SpecterLashProjector.description>A residue-fed tether projector that replaces a conventional shot with a sustained curved containment lash. The visible beam and its damage pulses now come from the same lock, so the victim burns only while the lash is actually attached.</ABY_SpecterLashProjector.description>
+  <ABY_SpecterLashProjector.description>A residue-fed tether projector that replaces a conventional shot with a sustained curved containment lash. When the lock holds, the target burns under a visible strand of hostile ownership until the bond snaps.</ABY_SpecterLashProjector.description>
   <ABY_SummoningCircle.description>The first machine of direct negotiation with the Abyss. To the untrained eye it is a ritual circle; to an engineer it is a containment interface; to whatever listens beyond the breach, it is an invitation.</ABY_SummoningCircle.description>
   <ABY_UltraPlasmaBeamBurst.description>A stretched ultra-plasma discharge tuned for concentrated armor-breaking impact. The beam is clean only in appearance; underneath it is still a coerced rupture phenomenon.</ABY_UltraPlasmaBeamBurst.description>
   <ABY_UltraPlasmaBolt.description>A dense cyan plasma bolt carrying breach-conditioned heat. It burns like advanced energy fire and destabilizes like something that should never have fit inside a rifle.</ABY_UltraPlasmaBolt.description>

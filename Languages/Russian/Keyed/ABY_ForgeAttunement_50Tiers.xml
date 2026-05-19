@@ -14,9 +14,9 @@
   <ABY_ForgeAttunementNextTier>Следующий тир на {0} остатка</ABY_ForgeAttunementNextTier>
   <ABY_ForgeAttunementMaxTier>Достигнут максимальный уровень настройки</ABY_ForgeAttunementMaxTier>
   <ABY_ForgeAttunementEffectsHeader>Текущие эффекты</ABY_ForgeAttunementEffectsHeader>
-  <ABY_ForgeAttunementTooltipSuspended>Эффект приостановлен, пока на этой карте нет хотя бы одной запитанной Бездненная кузница.</ABY_ForgeAttunementTooltipSuspended>
+  <ABY_ForgeAttunementTooltipSuspended>Эффект приостановлен, пока на этой карте нет хотя бы одной запитанной Бездненной кузницы.</ABY_ForgeAttunementTooltipSuspended>
   <ABY_ForgeAttunementInstability>Нестабильность призыва</ABY_ForgeAttunementInstability>
-  <ABY_ForgeAttunementForgeBillSpeed>Скорость заказов кузница</ABY_ForgeAttunementForgeBillSpeed>
+  <ABY_ForgeAttunementForgeBillSpeed>Скорость заказов кузницы</ABY_ForgeAttunementForgeBillSpeed>
   <ABY_ForgeAttunementCurrentTier>Текущий тир: {0}/50</ABY_ForgeAttunementCurrentTier>
   <ABY_ForgeAttunementResidueRemaining>До следующего тира: {0}</ABY_ForgeAttunementResidueRemaining>
   <ABY_ForgeAttunementActive>Статус: активно на этой карте</ABY_ForgeAttunementActive>

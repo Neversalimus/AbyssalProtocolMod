@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_UIStyleSettingsHeader>Стиль интерфейса Бездны</ABY_UIStyleSettingsHeader>
-  <ABY_UIStyleSettingsDesc>Выбирает общий скин для кузница, Суммонинг и других кастомных консолей Бездненный Протокол. Классический сохраняет сдержанный процедурный интерфейс; Расширенный использует новый нарезанный интерфейс-кит.</ABY_UIStyleSettingsDesc>
+  <ABY_UIStyleSettingsDesc>Выбирает общий стиль для кузницы, призыва и других консолей Протокола Бездны. Классический режим сохраняет сдержанный процедурный интерфейс; расширенный использует новый набор декоративных панелей.</ABY_UIStyleSettingsDesc>
   <ABY_UIStyle_Classic>Классический</ABY_UIStyle_Classic>
   <ABY_UIStyle_Enhanced>Расширенный</ABY_UIStyle_Enhanced>
-  <ABY_UIStyle_ReduceAnimation>Уменьшить анимацию Бездненный интерфейс</ABY_UIStyle_ReduceAnimation>
+  <ABY_UIStyle_ReduceAnimation>Уменьшить анимацию интерфейса Бездны</ABY_UIStyle_ReduceAnimation>
   <ABY_UIStyle_ReduceAnimationDesc>Отключает дополнительные скан-линии, пульсацию гнёзд и декоративные скользящие акценты расширенного интерфейса. Это отдельная настройка, не связанная с упрощённой анимацией панели босса.</ABY_UIStyle_ReduceAnimationDesc>
 </LanguageData>

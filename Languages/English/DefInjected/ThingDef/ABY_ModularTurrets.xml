@@ -1,34 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
-  <ABY_TurretModule_AbyssalHarpoonProjector.description>A heavy harpoon assembly for locking down elite targets. It pierces, slows and drags lesser enemies off their line.</ABY_TurretModule_AbyssalHarpoonProjector.description>
-  <ABY_TurretModule_AbyssalHarpoonProjector.label>abyssal harpoon projector</ABY_TurretModule_AbyssalHarpoonProjector.label>
-  <ABY_TurretModule_AshChoirRepeaterCore.description>A weapon core with a cycling ash-canticle feed. It throws short shard bursts through light targets, animals and dense abyssal waves.</ABY_TurretModule_AshChoirRepeaterCore.description>
-  <ABY_TurretModule_AshChoirRepeaterCore.label>ash choir repeater core</ABY_TurretModule_AshChoirRepeaterCore.label>
-  <ABY_TurretModule_ChoirArcEmitter.description>A secondary Choir system that adds a timed canticle strike against clustered enemies.</ABY_TurretModule_ChoirArcEmitter.description>
-  <ABY_TurretModule_ChoirArcEmitter.label>choir arc emitter</ABY_TurretModule_ChoirArcEmitter.label>
-  <ABY_TurretModule_CinderMortarCore.description>An indirect cinder mortar for pressure against clusters and static firing lines. It is poor once enemies break inside its dead zone.</ABY_TurretModule_CinderMortarCore.description>
-  <ABY_TurretModule_CinderMortarCore.label>cinder mortar core</ABY_TurretModule_CinderMortarCore.label>
-  <ABY_TurretModule_CoolingLattice.description>A bound heat-sink lattice that tightens the firing cycle of the installed main weapon at the cost of higher power draw.</ABY_TurretModule_CoolingLattice.description>
-  <ABY_TurretModule_CoolingLattice.label>cooling lattice</ABY_TurretModule_CoolingLattice.label>
-  <ABY_TurretModule_CrowncoilGaussMinigun.description>An apex crowncoil gauss system for sustained suppression against elites and heavy swarms. Power hungry and weak inside its dead zone.</ABY_TurretModule_CrowncoilGaussMinigun.description>
-  <ABY_TurretModule_CrowncoilGaussMinigun.label>crowncoil gauss minigun</ABY_TurretModule_CrowncoilGaussMinigun.label>
-  <ABY_TurretModule_NullArcDischarger.description>A null-arc suppression system that burns shields, stuns machines and chains through clustered elite support.</ABY_TurretModule_NullArcDischarger.description>
-  <ABY_TurretModule_NullArcDischarger.label>null-arc discharger</ABY_TurretModule_NullArcDischarger.label>
-  <ABY_TurretModule_PlasmaLanceCore.description>A weapon core with a sealed ultra-plasma channel. It fires slowly at long range and is built to crack armor, elite targets and early boss shells.</ABY_TurretModule_PlasmaLanceCore.description>
-  <ABY_TurretModule_PlasmaLanceCore.label>plasma lance core</ABY_TurretModule_PlasmaLanceCore.label>
-  <ABY_TurretModule_ResidueCapacitor.description>A passive abyssal charge buffer that modestly improves turret reach and firing cadence.</ABY_TurretModule_ResidueCapacitor.description>
-  <ABY_TurretModule_ResidueCapacitor.label>residue capacitor</ABY_TurretModule_ResidueCapacitor.label>
-  <ABY_TurretModule_RiftFlakBloom.description>A rift seed that blossoms into cutting fragments around the impact point, punishing light swarms and clustered groups.</ABY_TurretModule_RiftFlakBloom.description>
-  <ABY_TurretModule_RiftFlakBloom.label>rift flak bloom</ABY_TurretModule_RiftFlakBloom.label>
-  <ABY_TurretModule_RiftNeedlerCore.description>A weapon core built around a rift-needle lattice. Once bound to a turret frame, it unleashes rapid bursts against light targets and dense swarms.</ABY_TurretModule_RiftNeedlerCore.description>
-  <ABY_TurretModule_RiftNeedlerCore.label>rift needler core</ABY_TurretModule_RiftNeedlerCore.label>
-  <ABY_TurretModule_SanctifiedPrismEmitter.description>A prism emitter that drives a narrow judgment cut through enemies standing in line.</ABY_TurretModule_SanctifiedPrismEmitter.description>
-  <ABY_TurretModule_SanctifiedPrismEmitter.label>sanctified prism emitter</ABY_TurretModule_SanctifiedPrismEmitter.label>
-  <ABY_TurretModule_SepulcherRailCore.description>A heavy rail core that charges sepulcher guides before one long-range penetrator shot against armored elites.</ABY_TurretModule_SepulcherRailCore.description>
-  <ABY_TurretModule_SepulcherRailCore.label>sepulcher rail core</ABY_TurretModule_SepulcherRailCore.label>
-  <ABY_TurretModule_TargetingSigil.description>A passive sigil that extends sighting geometry and steadies long-range tracking.</ABY_TurretModule_TargetingSigil.description>
-  <ABY_TurretModule_TargetingSigil.label>targeting sigil</ABY_TurretModule_TargetingSigil.label>
-  <ABY_TurretModule_VesperLanceArray.description>A saint-clean sanction lance for precise armor pressure: longer reaching than plasma and far faster than a sepulcher rail.</ABY_TurretModule_VesperLanceArray.description>
-  <ABY_TurretModule_VesperLanceArray.label>vesper lance array</ABY_TurretModule_VesperLanceArray.label>
+  <ABY_TurretModule_AbyssalHarpoonProjector.description>A brutal projector that pins the advance with abyssal harpoons, turning momentum into restraint.</ABY_TurretModule_AbyssalHarpoonProjector.description>
+  <ABY_TurretModule_AbyssalHarpoonProjector.label>Abyssal Harpoon Projector</ABY_TurretModule_AbyssalHarpoonProjector.label>
+  <ABY_TurretModule_AshChoirRepeaterCore.description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</ABY_TurretModule_AshChoirRepeaterCore.description>
+  <ABY_TurretModule_AshChoirRepeaterCore.label>Ash Choir Repeater Core</ABY_TurretModule_AshChoirRepeaterCore.label>
+  <ABY_TurretModule_ChoirArcEmitter.description>A secondary canticle emitter that answers clusters with a slow Choir pulse, leaving the main weapon free to keep firing.</ABY_TurretModule_ChoirArcEmitter.description>
+  <ABY_TurretModule_ChoirArcEmitter.label>Choir Arc Emitter</ABY_TurretModule_ChoirArcEmitter.label>
+  <ABY_TurretModule_CinderMortarCore.description>An arcing cinder heart for punishing clusters, entrenched shooters and enemies that mistake distance for safety.</ABY_TurretModule_CinderMortarCore.description>
+  <ABY_TurretModule_CinderMortarCore.label>Cinder Mortar Core</ABY_TurretModule_CinderMortarCore.label>
+  <ABY_TurretModule_CoolingLattice.description>A bound heat lattice that pulls waste heat out of the weapon path, forcing a tighter firing cadence at a heavier power cost.</ABY_TurretModule_CoolingLattice.description>
+  <ABY_TurretModule_CoolingLattice.label>Cooling Lattice</ABY_TurretModule_CoolingLattice.label>
+  <ABY_TurretModule_CrowncoilGaussMinigun.description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TurretModule_CrowncoilGaussMinigun.description>
+  <ABY_TurretModule_CrowncoilGaussMinigun.label>Crowncoil Gauss Minigun</ABY_TurretModule_CrowncoilGaussMinigun.label>
+  <ABY_TurretModule_NullArcDischarger.description>A null-arc coil that turns stored charge into a punishing pulse against shields, machines and clustered elite support.</ABY_TurretModule_NullArcDischarger.description>
+  <ABY_TurretModule_NullArcDischarger.label>Null-Arc Discharger</ABY_TurretModule_NullArcDischarger.label>
+  <ABY_TurretModule_PlasmaLanceCore.description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</ABY_TurretModule_PlasmaLanceCore.description>
+  <ABY_TurretModule_PlasmaLanceCore.label>Plasma Lance Core</ABY_TurretModule_PlasmaLanceCore.label>
+  <ABY_TurretModule_ResidueCapacitor.description>A residue-fed charge vessel that steadies the weapon between bursts, improving reach and cadence without becoming a weapon itself.</ABY_TurretModule_ResidueCapacitor.description>
+  <ABY_TurretModule_ResidueCapacitor.label>Residue Capacitor</ABY_TurretModule_ResidueCapacitor.label>
+  <ABY_TurretModule_RiftFlakBloom.description>A compact rift seed that blossoms into cutting fragments around impact, made to punish bodies packed too closely together.</ABY_TurretModule_RiftFlakBloom.description>
+  <ABY_TurretModule_RiftFlakBloom.label>Rift Flak Bloom</ABY_TurretModule_RiftFlakBloom.label>
+  <ABY_TurretModule_RiftNeedlerCore.description>A rift-needle lattice bound into a turret heart. It snaps out quick bursts that tear through light targets and slow dense swarms.</ABY_TurretModule_RiftNeedlerCore.description>
+  <ABY_TurretModule_RiftNeedlerCore.label>Rift Needler Core</ABY_TurretModule_RiftNeedlerCore.label>
+  <ABY_TurretModule_SanctifiedPrismEmitter.description>A prism emitter that compresses sanctified violence into a narrow line, punishing enemies who stack behind one another.</ABY_TurretModule_SanctifiedPrismEmitter.description>
+  <ABY_TurretModule_SanctifiedPrismEmitter.label>Sanctified Prism Emitter</ABY_TurretModule_SanctifiedPrismEmitter.label>
+  <ABY_TurretModule_SepulcherRailCore.description>Twin sepulcher rails drink power in silence before releasing one long, decisive penetrator against armored elites.</ABY_TurretModule_SepulcherRailCore.description>
+  <ABY_TurretModule_SepulcherRailCore.label>Sepulcher Rail Core</ABY_TurretModule_SepulcherRailCore.label>
+  <ABY_TurretModule_TargetingSigil.description>A targeting sigil that stretches sighting geometry into a colder, steadier line of judgment.</ABY_TurretModule_TargetingSigil.description>
+  <ABY_TurretModule_TargetingSigil.label>Targeting Sigil</ABY_TurretModule_TargetingSigil.label>
+  <ABY_TurretModule_VesperLanceArray.description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</ABY_TurretModule_VesperLanceArray.description>
+  <ABY_TurretModule_VesperLanceArray.label>Vesper Lance Array</ABY_TurretModule_VesperLanceArray.label>
   <ABY_TurretPlasmaLanceBolt.label>turret plasma bolt</ABY_TurretPlasmaLanceBolt.label>
 </LanguageData>

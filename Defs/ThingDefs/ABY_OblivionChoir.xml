@@ -1,19 +1,15 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_OblivionChoir</defName>
     <label>oblivion choir</label>
-    <description>A forge-born annihilation cannon that stabilizes a choir-core inside a self-cycling abyssal chamber. Each shot advances like a miniature breach-heart, lashing nearby targets with intelligent resonance branches before detonating in a violent infernal bloom. Enemies repeatedly touched by the choir carry a temporary harmonic mark that answers the final blast, and the impact leaves a short-lived scar of breach-song behind.</description>
+    <description>A heavy chorus-weapon that fires abyssal notes as physical verdicts. Each discharge sounds less like a shot than a sentence being enforced by the breach.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/ABY_OblivionChoir</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <statBases>
       <WorkToMake>160000</WorkToMake>
       <Mass>11.8</Mass>
@@ -23,7 +19,6 @@
       <AccuracyLong>0.60</AccuracyLong>
       <RangedWeapon_Cooldown>4.95</RangedWeapon_Cooldown>
     </statBases>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>13</Crafting>
@@ -32,7 +27,6 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
       <ABY_AbyssalResidue>180</ABY_AbyssalResidue>
       <Plasteel>160</Plasteel>
@@ -41,11 +35,9 @@
       <ComponentIndustrial>8</ComponentIndustrial>
       <ComponentSpacer>4</ComponentSpacer>
     </costList>
-
     <weaponTags>
       <li>SpacerGun</li>
     </weaponTags>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -61,7 +53,6 @@
         <muzzleFlashScale>14</muzzleFlashScale>
       </li>
     </verbs>
-
     <tools>
       <li>
         <label>housing</label>
@@ -81,7 +72,6 @@
         <cooldownTime>2.2</cooldownTime>
       </li>
     </tools>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>10000</requiredResidue>
@@ -89,7 +79,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_OblivionChoirCell</defName>
     <label>choir cell</label>
@@ -115,7 +104,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_OblivionChoirCoreProjectile</defName>
     <label>oblivion core</label>
@@ -134,5 +122,4 @@
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

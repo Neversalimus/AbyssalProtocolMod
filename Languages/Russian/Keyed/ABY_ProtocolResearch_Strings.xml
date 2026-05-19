@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_ProtocolResearch_OpenNexusLabel>Открыть нексус протокола</ABY_ProtocolResearch_OpenNexusLabel>
-  <ABY_ProtocolResearch_OpenNexusDesc>Открыть матрицу Бездненный Протокол. Большое кольцо — основная лестница тиров; фильтры категорий уточняют выбранный слой.</ABY_ProtocolResearch_OpenNexusDesc>
+  <ABY_ProtocolResearch_OpenNexusDesc>Открыть матрицу Протокола Бездны. Большое кольцо — основная лестница тиров; фильтры категорий уточняют выбранный слой.</ABY_ProtocolResearch_OpenNexusDesc>
   <ABY_ProtocolResearch_InspectOnline>Нексус Протокола: питание есть, слои сигнала готовы к декодированию.</ABY_ProtocolResearch_InspectOnline>
   <ABY_ProtocolResearch_InspectOffline>Нексус Протокола: выключен. Матрицу можно просматривать, но активное декодирование недоступно.</ABY_ProtocolResearch_InspectOffline>
-  <ABY_ProtocolResearch_InspectExperimental>Матрица протокола: опциональный кузница-гатинг можно отключить в настройках.</ABY_ProtocolResearch_InspectExperimental>
+  <ABY_ProtocolResearch_InspectExperimental>Матрица протокола: опциональное ограничение кузницы можно отключить в настройках.</ABY_ProtocolResearch_InspectExperimental>
   <ABY_ProtocolResearch_Title>Нексус Бездненного Протокола</ABY_ProtocolResearch_Title>
   <ABY_ProtocolResearch_Subtitle>Девятитировая матрица: контакт, стабилизация, интеграция, корона тхресхолд, Доминион Слике, Финальные врата и пост-гате слои.</ABY_ProtocolResearch_Subtitle>
   <ABY_ProtocolResearch_HeaderProgress>{0} доступно / {1} декодировано / {2} проектов протокола</ABY_ProtocolResearch_HeaderProgress>
@@ -27,7 +27,7 @@
   <ABY_ProtocolResearch_RequirementMet>выполнено</ABY_ProtocolResearch_RequirementMet>
   <ABY_ProtocolResearch_RequirementMissing>не выполнено</ABY_ProtocolResearch_RequirementMissing>
   <ABY_ProtocolResearch_NoExplicitRequirements>Нет явных требований за пределами выбранного слоя протокола.</ABY_ProtocolResearch_NoExplicitRequirements>
-  <ABY_ProtocolResearch_IsolatedWarning>Нексус идентифицирует кузница-семейства шаблонов. Если опциональный кузница-гатинг отключён, матрица остаётся картой прогрессии и не блокирует крафт.</ABY_ProtocolResearch_IsolatedWarning>
+  <ABY_ProtocolResearch_IsolatedWarning>Нексус идентифицирует семейства шаблонов кузницы. Если опциональное ограничение кузницы отключён, матрица остаётся картой прогрессии и не блокирует крафт.</ABY_ProtocolResearch_IsolatedWarning>
   <ABY_ProtocolResearch_DecodeHeader>ОПЕРАЦИЯ ДЕКОДИРОВАНИЯ</ABY_ProtocolResearch_DecodeHeader>
   <ABY_ProtocolResearch_DecodeDecoded>Декодировано. Связанные кузнечные шаблоны раскрываются нормально.</ABY_ProtocolResearch_DecodeDecoded>
   <ABY_ProtocolResearch_DecodeActive>Декодируется на этом Нексус: {0}</ABY_ProtocolResearch_DecodeActive>
@@ -45,7 +45,7 @@
   <ABY_ProtocolResearch_DecodeCompleteMessage>Протокол декодирован: {0}</ABY_ProtocolResearch_DecodeCompleteMessage>
   <ABY_ProtocolResearch_InspectActiveDecode>Активное декодирование: {0} ({1})</ABY_ProtocolResearch_InspectActiveDecode>
   <ABY_ProtocolResearch_UnknownProject>неизвестный протокол</ABY_ProtocolResearch_UnknownProject>
-  <ABY_ProtocolNexusGating_Enable>Включить кузница-гатинг через Нексус Протокола</ABY_ProtocolNexusGating_Enable>
+  <ABY_ProtocolNexusGating_Enable>Включить ограничение кузницы через Нексус Протокола</ABY_ProtocolNexusGating_Enable>
   <ABY_ProtocolNexusGating_EnableDesc>Опциональная экспериментальная надстройка. Если отключить, все кузнечные шаблоны считаются декодированными, а Нексус остаётся кодекс/картой прогрессии.</ABY_ProtocolNexusGating_EnableDesc>
   <ABY_ProtocolResearch_AllFilterLabel>ВСЕ</ABY_ProtocolResearch_AllFilterLabel>
   <ABY_ProtocolResearch_AllFilterName>Все категории протокола</ABY_ProtocolResearch_AllFilterName>

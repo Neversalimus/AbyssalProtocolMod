@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_ForgeDevResidueButton>Отладка: выдать 1000 остаток</ABY_ForgeDevResidueButton>
-  <ABY_ForgeDevResidueDesc>Добавляет 1000 остаток прямо в прогресс кузница сопряжение без расхода предметов на карте.</ABY_ForgeDevResidueDesc>
+  <ABY_ForgeDevResidueDesc>Добавляет 1000 остатка прямо в прогресс сопряжения кузницы без расхода предметов на карте.</ABY_ForgeDevResidueDesc>
   <ABY_ForgeDevResidueApplied>Отладка: добавлено {0} остаток. Всего настроено остаток: {1}.</ABY_ForgeDevResidueApplied>
   <ABY_ForgeDevImmortalityLabel>Отладка: переключить якорь стазиса</ABY_ForgeDevImmortalityLabel>
   <ABY_ForgeDevImmortalityDesc>Открывает контролируемый список пешек на карте и переключает запретный якорь стазиса для любой размещённой пешки.</ABY_ForgeDevImmortalityDesc>

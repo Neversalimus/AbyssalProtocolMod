@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_CrucibleInfrastructureHeader>Инфраструктура спекания</ABY_CrucibleInfrastructureHeader>
-  <ABY_CrucibleStateUnavailable>Протокол отсутствует: дефс тигля недоступны</ABY_CrucibleStateUnavailable>
+  <ABY_CrucibleStateUnavailable>Протокол отсутствует: настройки тигля недоступны</ABY_CrucibleStateUnavailable>
   <ABY_CrucibleStateResearchLocked>Сигнальный замок: нужна «Теория сигнала Бездны»</ABY_CrucibleStateResearchLocked>
   <ABY_CrucibleStateNotBuilt>Тигель спекания остаток не построен</ABY_CrucibleStateNotBuilt>
   <ABY_CrucibleStateOffline>Холодный тигель: нет запитанного узла</ABY_CrucibleStateOffline>
@@ -28,6 +28,6 @@
   <ABY_CrucibleTooltipYield>Оценка доступного выхода: {0} остаток</ABY_CrucibleTooltipYield>
   <ABY_CrucibleInfrastructureTooltipCorpseRules>Принимаются только вхителистед останки Бездны низкого, среднего и элитного тира. Хуманлике, ванилла-животные, босс и минибосс трупы отклоняются. Запрещённые трупы не считаются консолью и не используются пешками.</ABY_CrucibleInfrastructureTooltipCorpseRules>
   <ABY_CrucibleInfrastructureTooltipResidueScale>Выход масштабируется по тиру: малые останки Бездны 5–8 остаток, средние 10–18, элитные 18–25.</ABY_CrucibleInfrastructureTooltipResidueScale>
-  <ABY_CrucibleInfrastructureTooltipHint>Добавляй заказс на самом тигеле спекания остаток. Убедись, что трупы разрешены и доступны по пути; сопряжение Консоле у кузница только показывает статус этой инфраструктуры и помогает быстро найти её.</ABY_CrucibleInfrastructureTooltipHint>
+  <ABY_CrucibleInfrastructureTooltipHint>Добавляй задания на самом тигеле спекания остатка. Убедись, что трупы разрешены и доступны по пути; консоль сопряжения кузницы только показывает статус этой инфраструктуры и помогает быстро найти её.</ABY_CrucibleInfrastructureTooltipHint>
   <ABY_CrucibleIconUnavailable>НЕТ ЗНАЧКА</ABY_CrucibleIconUnavailable>
 </LanguageData>

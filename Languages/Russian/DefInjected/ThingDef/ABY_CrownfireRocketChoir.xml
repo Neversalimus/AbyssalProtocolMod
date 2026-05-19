@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_CrownfireCarrierRocket.label>носитель Коронного Пламени</ABY_CrownfireCarrierRocket.label>
   <ABY_CrownfireMicroRocket.label>микроракета Коронного Пламени</ABY_CrownfireMicroRocket.label>
   <ABY_CrownfireMicroRocket_Fast.label>микроракета Коронного Пламени</ABY_CrownfireMicroRocket_Fast.label>
   <ABY_CrownfireMicroRocket_Slow.label>микроракета Коронного Пламени</ABY_CrownfireMicroRocket_Slow.label>
-  <ABY_TurretModule_CrownfireRocketChoir.description>Вертикальная ракетная система, раскрывающая над целью управляемый рой коронного пламени. Сильна против стай, групп прорыва и плотных подходов.</ABY_TurretModule_CrownfireRocketChoir.description>
+  <ABY_TurretModule_CrownfireRocketChoir.description>Хор носителей коронного пламени, раскрывающийся над полем боя и рассеивающий управляемый огонь по стаям и прорывным группам.</ABY_TurretModule_CrownfireRocketChoir.description>
   <ABY_TurretModule_CrownfireRocketChoir.label>ракетный Хор Коронного Пламени</ABY_TurretModule_CrownfireRocketChoir.label>
+  <ABY_CrownfireRocketChoir.description>Оружие Коронного Пламени, раскрывающееся над зоной удара и рассеивающее управляемый огонь по стаям, прорывным группам и открытым построениям.</ABY_CrownfireRocketChoir.description>
 </LanguageData>

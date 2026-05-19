@@ -292,3 +292,10 @@ Update this file when:
 ```
 
 Do not update for isolated harmless edits unless the risk knowledge would be lost.
+
+## Russian turret localization: custom Def fields can leak raw English
+
+Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear directly in Forge cards and turret tooltips if missing localization data. Keep both `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` custom-field translations and mirrored `ABY_TurretModuleRole_<defName>` / `ABY_TurretModuleEffect_<defName>` Keyed entries in sync. A future C# hardening pass may route these accessors through keyed lookup, but this patch intentionally leaves runtime code unchanged.
+
+Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
+

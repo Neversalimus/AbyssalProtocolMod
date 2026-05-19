@@ -5,13 +5,13 @@
   <ABY_Diagnostics_Enable>Включить периодическую диагностику</ABY_Diagnostics_Enable>
   <ABY_Diagnostics_EnableDesc>Пишет тхроттлед-снимок состояния во время загруженной игры. По умолчанию выключено.</ABY_Diagnostics_EnableDesc>
   <ABY_Diagnostics_HarmonyReport>Логировать отчёт Гармония при загрузке</ABY_Diagnostics_HarmonyReport>
-  <ABY_Diagnostics_HarmonyReportDesc>Пишет компактный счётчик Хармони-патчей Бездненный Протокол после старта.</ABY_Diagnostics_HarmonyReportDesc>
+  <ABY_Diagnostics_HarmonyReportDesc>Пишет компактный счётчик Harmony-патчей Протокола Бездны после старта.</ABY_Diagnostics_HarmonyReportDesc>
   <ABY_Diagnostics_DebugInspect>Показывать отладочные инспект-строки</ABY_Diagnostics_DebugInspect>
   <ABY_Diagnostics_DebugInspectDesc>Показывает дополнительные инспект-строки, например истинные ОЗ боссов. Только для тестов.</ABY_Diagnostics_DebugInspectDesc>
   <ABY_Diagnostics_Verbose>Подробная диагностика</ABY_Diagnostics_Verbose>
   <ABY_Diagnostics_VerboseDesc>Добавляет тхроттлед-сообщения восстановления ИИ и периодические снимки состояния. Использовать только при отладке.</ABY_Diagnostics_VerboseDesc>
   <ABY_Diagnostics_UIPolish>Включить полировку текста Бездненный интерфейс</ABY_Diagnostics_UIPolish>
-  <ABY_Diagnostics_UIPolishDesc>Добавляет небольшой отступ и защиту от обрезания для кастомных Бездненный надписи/кнопки.</ABY_Diagnostics_UIPolishDesc>
+  <ABY_Diagnostics_UIPolishDesc>Добавляет небольшой отступ и защиту от обрезания для бездненных надписей и кнопок.</ABY_Diagnostics_UIPolishDesc>
   <ABY_Diagnostics_ThrottleWarnings>Ограничивать повторяющиеся предупреждения</ABY_Diagnostics_ThrottleWarnings>
   <ABY_Diagnostics_ThrottleWarningsDesc>Не даёт совместимостным предупреждениям спамить лог.</ABY_Diagnostics_ThrottleWarningsDesc>
   <ABY_Diagnostics_OpenWindow>Открыть диагностику</ABY_Diagnostics_OpenWindow>

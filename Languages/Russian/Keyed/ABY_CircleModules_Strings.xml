@@ -27,7 +27,7 @@
   <ABY_CircleModuleInstallSuccess>{0} установлен на {1}.</ABY_CircleModuleInstallSuccess>
   <ABY_CircleModuleRemoveSuccess>{0} снят с {1}.</ABY_CircleModuleRemoveSuccess>
 
-  <ABY_CircleModuleFail_NoModuleDef>Не передан корректный деф модуля круга.</ABY_CircleModuleFail_NoModuleDef>
+  <ABY_CircleModuleFail_NoModuleDef>Не найдено корректное определение модуля круга.</ABY_CircleModuleFail_NoModuleDef>
   <ABY_CircleModuleFail_NotAModule>{0} не является модулем круга.</ABY_CircleModuleFail_NotAModule>
   <ABY_CircleModuleFail_NoSlot>На {0} нет слота для модуля.</ABY_CircleModuleFail_NoSlot>
   <ABY_CircleModuleFail_SlotOccupied>{0} уже занят модулем.</ABY_CircleModuleFail_SlotOccupied>

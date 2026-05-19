@@ -1,16 +1,17 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftNeedlerCore</defName>
     <label>rift needler core</label>
-    <description>A weapon core built around a rift-needle lattice. Once bound to a turret frame, it unleashes rapid bursts against light targets and dense swarms.</description>
+    <description>A rift-needle lattice bound into a turret heart. It snaps out quick bursts that tear through light targets and slow dense swarms.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_RiftNeedlerCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>210</MarketValue>
@@ -27,17 +28,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_PlasmaLanceCore</defName>
     <label>plasma lance core</label>
-    <description>A weapon core with a sealed ultra-plasma channel. It fires slowly at long range and is built to crack armor, elite targets and early boss shells.</description>
+    <description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_PlasmaLanceCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>360</MarketValue>
@@ -54,17 +56,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_AshChoirRepeaterCore</defName>
     <label>ash choir repeater core</label>
-    <description>A weapon core with a cycling ash-canticle feed. It throws short shard bursts through light targets, animals and dense abyssal waves.</description>
+    <description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_AshChoirRepeaterCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>430</MarketValue>
@@ -81,17 +84,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ChoirArcEmitter</defName>
     <label>choir arc emitter</label>
-    <description>A secondary Choir system that adds a timed canticle strike against clustered enemies.</description>
+    <description>A secondary canticle emitter that answers clusters with a slow Choir pulse, leaving the main weapon free to keep firing.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ChoirArcEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>300</MarketValue>
@@ -108,17 +112,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CoolingLattice</defName>
     <label>cooling lattice</label>
-    <description>A bound heat-sink lattice that tightens the firing cycle of the installed main weapon at the cost of higher power draw.</description>
+    <description>A bound heat lattice that pulls waste heat out of the weapon path, forcing a tighter firing cadence at a heavier power cost.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CoolingLattice</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>145</MarketValue>
@@ -135,17 +140,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_TargetingSigil</defName>
     <label>targeting sigil</label>
-    <description>A passive sigil that extends sighting geometry and steadies long-range tracking.</description>
+    <description>A targeting sigil that stretches sighting geometry into a colder, steadier line of judgment.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_TargetingSigil</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>160</MarketValue>
@@ -162,17 +168,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ResidueCapacitor</defName>
     <label>residue capacitor</label>
-    <description>A passive abyssal charge buffer that modestly improves turret reach and firing cadence.</description>
+    <description>A residue-fed charge vessel that steadies the weapon between bursts, improving reach and cadence without becoming a weapon itself.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_ResidueCapacitor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>190</MarketValue>
@@ -189,18 +196,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_SepulcherRailCore</defName>
     <label>sepulcher rail core</label>
-    <description>A heavy rail core that charges sepulcher guides before one long-range penetrator shot against armored elites.</description>
+    <description>Twin sepulcher rails drink power in silence before releasing one long, decisive penetrator against armored elites.</description>
     <graphicData>
       <texPath>Things/Building/Turrets/Modules/ABY_TurretOverlay_SepulcherRailCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>1350</MarketValue>
@@ -217,19 +224,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CinderMortarCore</defName>
     <label>cinder mortar core</label>
-    <description>An indirect cinder mortar for pressure against clusters and static firing lines. It is poor once enemies break inside its dead zone.</description>
+    <description>An arcing cinder heart for punishing clusters, entrenched shooters and enemies that mistake distance for safety.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CinderMortarCore</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>720</MarketValue>
@@ -246,18 +252,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_NullArcDischarger</defName>
     <label>null-arc discharger</label>
-    <description>A null-arc suppression system that burns shields, stuns machines and chains through clustered elite support.</description>
+    <description>A null-arc coil that turns stored charge into a punishing pulse against shields, machines and clustered elite support.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_NullArcDischarger</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>810</MarketValue>
@@ -274,17 +280,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_AbyssalHarpoonProjector</defName>
     <label>abyssal harpoon projector</label>
-    <description>A heavy harpoon assembly for locking down elite targets. It pierces, slows and drags lesser enemies off their line.</description>
+    <description>A brutal projector that pins the advance with abyssal harpoons, turning momentum into restraint.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_AbyssalHarpoonProjector</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>860</MarketValue>
@@ -301,17 +308,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-<ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_VesperLanceArray</defName>
     <label>vesper lance array</label>
-    <description>A saint-clean sanction lance for precise armor pressure: longer reaching than plasma and far faster than a sepulcher rail.</description>
+    <description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_VesperLanceArray</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>640</MarketValue>
@@ -328,17 +336,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-<ThingDef ParentName="ResourceBase">
+  <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_RiftFlakBloom</defName>
     <label>rift flak bloom</label>
-    <description>A rift seed that blossoms into cutting fragments around the impact point, punishing light swarms and clustered groups.</description>
+    <description>A compact rift seed that blossoms into cutting fragments around impact, made to punish bodies packed too closely together.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_RiftFlakBloom</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>790</MarketValue>
@@ -355,19 +364,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
-
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_SanctifiedPrismEmitter</defName>
     <label>sanctified prism emitter</label>
-    <description>A prism emitter that drives a narrow judgment cut through enemies standing in line.</description>
+    <description>A prism emitter that compresses sanctified violence into a narrow line, punishing enemies who stack behind one another.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_SanctifiedPrismEmitter</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>900</MarketValue>
@@ -384,17 +392,18 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_CrowncoilGaussMinigun</defName>
     <label>crowncoil gauss minigun</label>
-    <description>An apex crowncoil gauss system for sustained suppression against elites and heavy swarms. Power hungry and weak inside its dead zone.</description>
+    <description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</description>
     <graphicData>
       <texPath>Things/Item/TurretModules/ABY_TurretModule_CrowncoilGaussMinigun</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories><li>Manufactured</li></thingCategories>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
     <tradeability>Sellable</tradeability>
     <statBases>
       <MarketValue>1120</MarketValue>
@@ -411,5 +420,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

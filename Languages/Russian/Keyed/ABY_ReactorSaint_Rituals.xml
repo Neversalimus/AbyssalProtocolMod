@@ -2,7 +2,7 @@
 <LanguageData>
   <ABY_CircleRitual_ReactorSaint_Label>Зажечь Святого Реактора</ABY_CircleRitual_ReactorSaint_Label>
   <ABY_CircleRitual_ReactorSaint_Subtitle>Прорыв биомеханического реактор-босса</ABY_CircleRitual_ReactorSaint_Subtitle>
-  <ABY_CircleRitual_ReactorSaint_Desc>Потребляет одну сигилу Реакторный Святой, направляет колониста к кругу и вызывает запечатанный реакторный кокон рядом с базой. Кокон падает с мощным разломным ударом, долго остаётся закрытым, затем выпускает Инфернал Реакторный Святой и после этого сгорает, уходя обратно в небо.</ABY_CircleRitual_ReactorSaint_Desc>
+  <ABY_CircleRitual_ReactorSaint_Desc>Потребляет одну сигилу Реакторный Святой, направляет колониста к кругу и вызывает запечатанный реакторный кокон рядом с базой. Кокон падает с мощным разломным ударом, долго остаётся закрытым, затем выпускает Инфернальный Реакторный Святой и после этого сгорает, уходя обратно в небо.</ABY_CircleRitual_ReactorSaint_Desc>
   <ABY_CircleRitual_ReactorSaint_Rewards>• Второй полноценный тир босса после первого вертикал слике
 • Даёт святого реактор ядро, космические компоненты и высокий объём остаток
 • Заставляет играть от рассредоточения против артиллерийского давления и долгого босс-давление</ABY_CircleRitual_ReactorSaint_Rewards>
@@ -10,5 +10,5 @@
 • Бьёт рядом с базой разломным взрывом перед раскрытием
 • После выпуска босса ещё остаётся на поле, а затем уходит обратно в небо</ABY_CircleRitual_ReactorSaint_SideEffects>
   <ABY_ReactorSaintSummonSuccessLabel>Святой Реактор освобождён</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>Запечатанный кокон раскрылся. Инфернал Реакторный Святой вышел из разлома и полностью вошёл в бой.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaintSummonSuccessDesc>Запечатанный кокон раскрылся. Инфернальный Реакторный Святой вышел из разлома и полностью вошёл в бой.</ABY_ReactorSaintSummonSuccessDesc>
 </LanguageData>

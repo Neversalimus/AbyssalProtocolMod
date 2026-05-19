@@ -695,13 +695,13 @@
       <li>Dominion Gate Bootstrapping.</li>
     </requirements>
     <reveals>
-      <li>Infernal pocket runtime classification.</li>
+      <li>Infernal pocket classification.</li>
       <li>Dominion transfer / containment logic.</li>
       <li>Hell encounter stability and cleanup diagnostics.</li>
     </reveals>
     <loreRecord>A pocket is a held contradiction: a fragment of hostile place forced to persist without swallowing the map around it. Stabilization does not domesticate it. It only delays the moment when the pocket remembers what it belongs to.</loreRecord>
     <unlocks>
-      <li>Reveals pocket runtime, exit handling and Dominion transition support.</li>
+      <li>Reveals pocket stability, exit handling and Dominion transition support.</li>
     </unlocks>
     <notes>
       <li>Real decode project for Hell infrastructure.</li>

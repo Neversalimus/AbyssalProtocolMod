@@ -13,13 +13,13 @@
   <ABY_SigilVault_LinkHint>Круг не привязан. Привяжи хранилище, чтобы оно стало выделенным податчиком сигилов для одного круга призыва.</ABY_SigilVault_LinkHint>
   <ABY_SigilVault_LinkLabel>Привязать к кругу</ABY_SigilVault_LinkLabel>
   <ABY_SigilVault_ChangeLinkLabel>Сменить круг</ABY_SigilVault_ChangeLinkLabel>
-  <ABY_SigilVault_LinkDesc>Выберите бездненный-круг призыва, который должно обслуживать это хранилище.</ABY_SigilVault_LinkDesc>
+  <ABY_SigilVault_LinkDesc>Выберите круг Бездны призыва, который должно обслуживать это хранилище.</ABY_SigilVault_LinkDesc>
   <ABY_SigilVault_UnlinkLabel>Разорвать связь</ABY_SigilVault_UnlinkLabel>
   <ABY_SigilVault_UnlinkDesc>Удалить текущую постоянную связь этого хранилища с кругом.</ABY_SigilVault_UnlinkDesc>
   <ABY_SigilVault_JumpToLinkedCircleLabel>К кругу</ABY_SigilVault_JumpToLinkedCircleLabel>
-  <ABY_SigilVault_JumpToLinkedCircleDesc>Переместить камеру к связанному бездненный-кругу призыва.</ABY_SigilVault_JumpToLinkedCircleDesc>
+  <ABY_SigilVault_JumpToLinkedCircleDesc>Переместить камеру к связанному круг Бездныу призыва.</ABY_SigilVault_JumpToLinkedCircleDesc>
   <ABY_SigilVault_StageToLinkedCircleLabel>Подать к кругу</ABY_SigilVault_StageToLinkedCircleLabel>
-  <ABY_SigilVault_StageToLinkedCircleDesc>Выберите один сохранённый сигил и отправьте его из хранилища к текущему связанному бездненный-кругу призыва.</ABY_SigilVault_StageToLinkedCircleDesc>
+  <ABY_SigilVault_StageToLinkedCircleDesc>Выберите один сохранённый сигил и отправьте его из хранилища к текущему связанному круг Бездныу призыва.</ABY_SigilVault_StageToLinkedCircleDesc>
   <ABY_SigilVault_StageOption>Подать {0} ({1})</ABY_SigilVault_StageOption>
   <ABY_SigilVault_StageSuccess>{1} несёт {0} из хранилища к {2}.</ABY_SigilVault_StageSuccess>
   <ABY_SigilVault_EjectOneLabel>Извлечь один</ABY_SigilVault_EjectOneLabel>
@@ -37,8 +37,8 @@
   <ABY_SigilVault_Disabled_NoSigils>Внутри нет сигилов.</ABY_SigilVault_Disabled_NoSigils>
   <ABY_SigilVault_Disabled_NoLink>Нет связанного круга призыва.</ABY_SigilVault_Disabled_NoLink>
   <ABY_SigilVault_Fail_NoStoredSigils>В этом хранилище нет доступных сигилов.</ABY_SigilVault_Fail_NoStoredSigils>
-  <ABY_SigilVault_Fail_NoCircle>На этой карте нет бездненный-круга призыва.</ABY_SigilVault_Fail_NoCircle>
-  <ABY_SigilVault_Fail_NoReadyCircle>Сейчас нет бездненный-круга призыва, готового принять сигил.</ABY_SigilVault_Fail_NoReadyCircle>
+  <ABY_SigilVault_Fail_NoCircle>На этой карте нет круг Бездныа призыва.</ABY_SigilVault_Fail_NoCircle>
+  <ABY_SigilVault_Fail_NoReadyCircle>Сейчас нет круг Бездныа призыва, готового принять сигил.</ABY_SigilVault_Fail_NoReadyCircle>
   <ABY_SigilVault_Fail_NoLink>Это хранилище ещё не связано ни с одним кругом призыва.</ABY_SigilVault_Fail_NoLink>
   <ABY_SigilVault_Fail_LinkBlocked>Связанный круг сейчас не готов принять сигил.</ABY_SigilVault_Fail_LinkBlocked>
   <ABY_SigilVault_Fail_LinkBlockedReason>Связанный круг не готов: {0}</ABY_SigilVault_Fail_LinkBlockedReason>

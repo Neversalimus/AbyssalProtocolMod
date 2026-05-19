@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_ForgeCategory_TurretSystems>Турельные системы</ABY_ForgeCategory_TurretSystems>
   <ABY_ForgePatternSummary_TurretSystems>Турельная система</ABY_ForgePatternSummary_TurretSystems>
@@ -62,7 +62,7 @@
   <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
   <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
   <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
-  <ABY_TurretModuleTooltipStats>Статы: {0}</ABY_TurretModuleTooltipStats>
+  <ABY_TurretModuleTooltipStats>Параметры: {0}</ABY_TurretModuleTooltipStats>
   <ABY_TurretModulePowerDelta>Доп. питание: +{0} Вт</ABY_TurretModulePowerDelta>
   <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
@@ -74,7 +74,7 @@
   <ABY_TurretForgeSummary_ChassisSlots>Корпус · {0} осн. / {1} вспом. / {2} пасс.</ABY_TurretForgeSummary_ChassisSlots>
   <ABY_TurretChassisTooltipRole>Роль: пустой турельный корпус. Не стреляет, пока не установлено ядро основного оружия.</ABY_TurretChassisTooltipRole>
   <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
-  <ABY_TurretChassisTooltipRuntime>Установленные системы хранятся внутри здания и остаются целыми, если турельная сеть отключена.</ABY_TurretChassisTooltipRuntime>
+  <ABY_TurretChassisTooltipRuntime>Установленные системы остаются закреплены в корпусе, пока их не снимут.</ABY_TurretChassisTooltipRuntime>
   <ABY_TurretStatsHeader>Предпросмотр работы</ABY_TurretStatsHeader>
   <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
   <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
@@ -82,7 +82,7 @@
   <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
   <ABY_TurretStatsCooldownResolved>Перезарядка основного: {0} → {1}</ABY_TurretStatsCooldownResolved>
   <ABY_TurretStatsPowerDraw>Потребление: {0} Вт база + {1} Вт модули = {2} Вт применено</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Выключатель безопасности: отключает наведение, стрельбу, размещение и рецепты кузницы, не снимая установленные системы.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsKillSwitch>Отключает наведение, стрельбу, размещение и рецепты кузницы, не снимая уже установленные системы.</ABY_TurretStatsKillSwitch>
   <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
   <ABY_TurretInspectDisabled>Модульные турельные системы отключены в настройках.</ABY_TurretInspectDisabled>
   <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
@@ -99,10 +99,10 @@
   <ABY_TurretInfo_Range>Дальность турели</ABY_TurretInfo_Range>
   <ABY_TurretInfo_RangeDesc>Максимальная дальность стрельбы, которую даёт этот оружейный модуль.</ABY_TurretInfo_RangeDesc>
   <ABY_TurretInfo_MainCooldown>Перезарядка основного</ABY_TurretInfo_MainCooldown>
-  <ABY_TurretInfo_AuxCooldown>Перезарядка аукс</ABY_TurretInfo_AuxCooldown>
+  <ABY_TurretInfo_AuxCooldown>Перезарядка вспом. модуля</ABY_TurretInfo_AuxCooldown>
   <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Очередь</ABY_TurretInfo_Burst>
-  <ABY_TurretInfo_BurstDesc>Количество снарядов за одну активацию.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstDesc>Количество выстрелов за один цикл огня.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Интервал очереди</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Задержка между выстрелами внутри очереди.</ABY_TurretInfo_BurstSpacingDesc>
   <ABY_TurretInfo_Projectile>Снаряд</ABY_TurretInfo_Projectile>
@@ -120,7 +120,7 @@
   <ABY_TurretInfo_AnyChassis>любой модульный корпус</ABY_TurretInfo_AnyChassis>
   <ABY_TurretModuleLine_Slot>Слот: {0}</ABY_TurretModuleLine_Slot>
   <ABY_TurretModuleLine_EffectHeader>Эффект</ABY_TurretModuleLine_EffectHeader>
-  <ABY_TurretModuleLine_StatsHeader>Статы</ABY_TurretModuleLine_StatsHeader>
+  <ABY_TurretModuleLine_StatsHeader>Параметры</ABY_TurretModuleLine_StatsHeader>
   <ABY_TurretFilter_All>ВСЁ</ABY_TurretFilter_All>
   <ABY_TurretSlotBadge_Main>ОСН.</ABY_TurretSlotBadge_Main>
   <ABY_TurretSlotBadge_Aux>ВСП.</ABY_TurretSlotBadge_Aux>

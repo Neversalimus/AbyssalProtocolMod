@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_TMD_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TMD_RiftNeedlerCore.label>
   <ABY_TMD_RiftNeedlerCore.role>против лёгких целей</ABY_TMD_RiftNeedlerCore.role>
@@ -48,4 +48,20 @@
   <ABY_TMD_CrownfireRocketChoir.label>ракетный Хор Коронного Пламени</ABY_TMD_CrownfireRocketChoir.label>
   <ABY_TMD_CrownfireRocketChoir.role>ракетное насыщение</ABY_TMD_CrownfireRocketChoir.role>
   <ABY_TMD_CrownfireRocketChoir.effectSummary>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TMD_CrownfireRocketChoir.effectSummary>
+  <ABY_TMD_RiftNeedlerCore.description>Рифтовая игольная решётка, впаянная в турельное сердце. Быстрые очереди режут лёгкие цели и замедляют плотные стаи.</ABY_TMD_RiftNeedlerCore.description>
+  <ABY_TMD_PlasmaLanceCore.description>Запечатанный ультраплазменный канал для методичного вскрытия брони. Жертвует темпом ради дальности и силы удара.</ABY_TMD_PlasmaLanceCore.description>
+  <ABY_TMD_AshChoirRepeaterCore.description>Циклическая подача пепельных кантилей для подавления массы, а не вскрытия брони. Ритм жестокий, быстрый и намеренно расточительный.</ABY_TMD_AshChoirRepeaterCore.description>
+  <ABY_TMD_ChoirArcEmitter.description>Вспомогательный кантильный излучатель, отвечающий на скопления медленным импульсом Хора и не сбивающий работу основного оружия.</ABY_TMD_ChoirArcEmitter.description>
+  <ABY_TMD_CoolingLattice.description>Связанная тепловая решётка, вытягивающая лишний жар из оружейного тракта и ускоряющая цикл стрельбы ценой питания.</ABY_TMD_CoolingLattice.description>
+  <ABY_TMD_TargetingSigil.description>Сигила наведения, растягивающая геометрию прицела в холодную и устойчивую линию приговора.</ABY_TMD_TargetingSigil.description>
+  <ABY_TMD_ResidueCapacitor.description>Зарядный сосуд на остатке, стабилизирующий оружие между очередями и немного повышающий дальность с темпом.</ABY_TMD_ResidueCapacitor.description>
+  <ABY_TMD_SepulcherRailCore.description>Две склеповые направляющие молча пьют энергию, прежде чем выпустить один дальний и решающий пробойник по бронированной элите.</ABY_TMD_SepulcherRailCore.description>
+  <ABY_TMD_CinderMortarCore.description>Навесное угольное сердце для наказания скоплений, неподвижных стрелков и врагов, принявших дистанцию за безопасность.</ABY_TMD_CinderMortarCore.description>
+  <ABY_TMD_NullArcDischarger.description>Нуль-дуговая катушка, превращающая накопленный заряд в карающий импульс против щитов, машин и плотной элитной поддержки.</ABY_TMD_NullArcDischarger.description>
+  <ABY_TMD_AbyssalHarpoonProjector.description>Жестокий проектор, прибивающий наступление бездненными гарпунами и превращающий рывок врага в сдерживание.</ABY_TMD_AbyssalHarpoonProjector.description>
+  <ABY_TMD_VesperLanceArray.description>Очищенный массив копья-приговора: точнее плазмы, легче склепового рельса и достаточно жесток для элитной брони.</ABY_TMD_VesperLanceArray.description>
+  <ABY_TMD_RiftFlakBloom.description>Компактное рифт-семя, раскрывающееся режущими осколками вокруг удара и наказывающее слишком плотные группы.</ABY_TMD_RiftFlakBloom.description>
+  <ABY_TMD_SanctifiedPrismEmitter.description>Призменный излучатель, сжимающий освящённое насилие в узкую линию и карающий врагов, стоящих друг за другом.</ABY_TMD_SanctifiedPrismEmitter.description>
+  <ABY_TMD_CrowncoilGaussMinigun.description>Двигатель Коронной Катушки, превращающий гаусс-огонь в бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TMD_CrowncoilGaussMinigun.description>
+  <ABY_TMD_CrownfireRocketChoir.description>Хор носителей коронного пламени, раскрывающийся над полем боя и рассеивающий управляемый огонь по стаям и прорывным группам.</ABY_TMD_CrownfireRocketChoir.description>
 </LanguageData>

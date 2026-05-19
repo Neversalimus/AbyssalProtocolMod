@@ -3,7 +3,7 @@
   <ABY_BossSummonSuccessLabel>Инфернальный разлом открыт</ABY_BossSummonSuccessLabel>
   <ABY_BossSummonSuccessDesc>{0} откликнулся на сигил. На карте появился враждебный разломный босс.</ABY_BossSummonSuccessDesc>
   <ABY_BossSummonFail_NoMap>Этот сигил можно использовать только на активной карте.</ABY_BossSummonFail_NoMap>
-  <ABY_BossSummonFail_EncounterActive>На этой карте уже активна бездненный-встреча.</ABY_BossSummonFail_EncounterActive>
+  <ABY_BossSummonFail_EncounterActive>На этой карте уже активно столкновение Бездны.</ABY_BossSummonFail_EncounterActive>
   <ABY_BossSummonFail_NoCircle>Нет доступного запитанного бездненный круг призыва.</ABY_BossSummonFail_NoCircle>
   <ABY_BossSummonFail_AllBusy>Все бездненный круг призыва сейчас заняты.</ABY_BossSummonFail_AllBusy>
   <ABY_BossSummonFail_AllUnpowered>Все бездненный круг призыва сейчас без питания.</ABY_BossSummonFail_AllUnpowered>
@@ -51,15 +51,15 @@
   <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
   <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый вестник фрагмент ядра на высокотехнологичном исследовательском столе, чтобы открыть Вестник-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
   <ABY_SignalTheoryGuidanceLabel>открыта бездненный сигнал теория</ABY_SignalTheoryGuidanceLabel>
-  <ABY_SignalTheoryGuidanceDesc>Изучи Бездненный Сигнал Тхеори, чтобы начать суммон лооп и открыть первую бездненный-инфраструктуру.</ABY_SignalTheoryGuidanceDesc>
+  <ABY_SignalTheoryGuidanceDesc>Изучи теорию бездненного сигнала, чтобы начать цикл призывов и открыть первую инфраструктуру Бездны.</ABY_SignalTheoryGuidanceDesc>
   <ABY_FirstSigilGuidanceLabel>Первый сигил готов</ABY_FirstSigilGuidanceLabel>
-  <ABY_FirstSigilGuidanceDesc>Создай аркхон сигила на Бездненная кузница, затем активируй его на запитанном бездненный круг призыва, чтобы призвать первого босса.</ABY_FirstSigilGuidanceDesc>
+  <ABY_FirstSigilGuidanceDesc>Создай сигилу архонта в Бездненной кузнице, затем активируй её на запитанном круге призыва Бездны, чтобы призвать первого босса.</ABY_FirstSigilGuidanceDesc>
   <ABY_HeraldAnalysisCompleteLabel>Анализ фрагмента вестника завершён</ABY_HeraldAnalysisCompleteLabel>
   <ABY_HeraldAnalysisCompleteDesc>Добытый фрагмент успешно расшифрован на высокотехнологичном исследовательском столе. Теперь в исследованиях Протокола Бездны доступны {0} и {1}.</ABY_HeraldAnalysisCompleteDesc>
   <ABY_HeraldAnalysisAlreadyKnown>Анализ фрагмента вестника уже завершён. Фрагмент был возвращён.</ABY_HeraldAnalysisAlreadyKnown>
   <ABY_HeraldAnalysisFailedMissingProject>Не удалось завершить анализ фрагмента вестника: отсутствует нужный исследовательский проект. Фрагмент был возвращён.</ABY_HeraldAnalysisFailedMissingProject>
-  <ABY_CircleFail_NoHostileFaction>Не удалось определить враждебную бездненный-фракцию для этого призыва.</ABY_CircleFail_NoHostileFaction>
-  <ABY_CircleFail_NoBossArrival>Не удалось найти корректную точку прибытия бездненный-босса.</ABY_CircleFail_NoBossArrival>
+  <ABY_CircleFail_NoHostileFaction>Не удалось определить враждебную фракцию Бездны для этого призыва.</ABY_CircleFail_NoHostileFaction>
+  <ABY_CircleFail_NoBossArrival>Не удалось найти корректную точку прибытия босса Бездны.</ABY_CircleFail_NoBossArrival>
   <ABY_CircleFail_NotPlaced>Круг призыва должен быть установлен перед использованием.</ABY_CircleFail_NotPlaced>
   <ABY_CircleFail_Busy>Круг призыва уже обрабатывает другую активацию.</ABY_CircleFail_Busy>
   <ABY_CircleFail_NoPower>Круг призыва не запитан.</ABY_CircleFail_NoPower>
@@ -127,14 +127,14 @@
 • Меньшее давление разлома до первого босса
 • Более плавный мост между кругом и боем с Зверь-Архонт</ABY_CircleRitual_Unstable_Rewards>
   <ABY_CircleRitual_Unstable_SideEffects>• Спавнит враждебный разлом разлом бес, связанный с кругом
-• Пока разлом активен, он считается текущим бездненный-столкновением
+• Пока разлом активен, он считается текущим столкновением Бездны
 • Угроза ниже, чем у Зверь-Архонт, но всё ещё давит неподготовленную колонию</ABY_CircleRitual_Unstable_SideEffects>
   <ABY_CircleRitual_Archon_Label>Призвать Зверь-Архонт</ABY_CircleRitual_Archon_Label>
   <ABY_CircleRitual_Archon_Subtitle>Шаблон первого босса</ABY_CircleRitual_Archon_Subtitle>
-  <ABY_CircleRitual_Archon_Desc>Расходует один подготовленный аркхон сигила, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
+  <ABY_CircleRitual_Archon_Desc>Расходует одну подготовленную сигилу архонта, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
   <ABY_CircleRitual_Archon_Rewards>• Прогрессия первого боевого цикла
 • Доступ к продолжению вестник-линии
-• Ранний бездненный-лут и гейт материалов босса</ABY_CircleRitual_Archon_Rewards>
+• Ранний трофеи Бездны и гейт материалов босса</ABY_CircleRitual_Archon_Rewards>
   <ABY_CircleRitual_Archon_SideEffects>• Открывает враждебный разлом на текущей карте
 • Требует питания и свободного центра круга
 • Фазы ритуала усиливают визуал, звук и давление столкновения</ABY_CircleRitual_Archon_SideEffects>
@@ -157,7 +157,7 @@
   <ABY_CircleConfirmInvocation>Назначить подготовленный сигил и приказать колонисту начать {0}? Это запустит враждебную последовательность разлома.</ABY_CircleConfirmInvocation>
   <ABY_CircleAssignStarted>Последовательность призыва назначена. Колонист несёт сигил к кругу.</ABY_CircleAssignStarted>
   <ABY_CircleConsoleFail_NoCircle>Для управления через консоль нет подходящего круга призыва.</ABY_CircleConsoleFail_NoCircle>
-  <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одного подготовленного аркхон сигила.</ABY_CircleConsoleFail_NoSigil>
+  <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одной подготовленной сигилы архонта.</ABY_CircleConsoleFail_NoSigil>
   <ABY_CircleConsoleFail_NoSpecificSigil>На текущей карте не найден подготовленный предмет: {0}.</ABY_CircleConsoleFail_NoSpecificSigil>
   <ABY_CircleConsoleFail_NoSigilFallback>подготовленный сигила</ABY_CircleConsoleFail_NoSigilFallback>
   <ABY_CircleConsoleFail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил к кругу.</ABY_CircleConsoleFail_NoOperator>

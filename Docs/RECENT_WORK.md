@@ -410,3 +410,19 @@ Important decisions captured:
 
 Future Russian localization passes must check the glossary before changing `Languages/Russian/`, DefInjected labels/descriptions, Keyed UI strings, or C# player-facing strings.
 
+## 2026-05-19 — Russian turret localization hardening pass
+
+A follow-up pass made turret module localization robust against raw custom-def fields leaking into Forge cards and tooltips.
+
+Important details:
+
+```text
+- Turret module `ABY_TurretModuleDef` DefInjected fields and mirrored Keyed role/effect entries were refreshed so existing Forge/tooltips have localized data without changing C# runtime code in this patch.
+- Forge turret cards no longer need raw Slot:/Role: prefixes and should stay compact for Abyssal Forge layout.
+- Turret tooltips no longer expose projectile def names as player-facing implementation details.
+- Russian turret badge labels are intentionally short: ОСН., ВСП., ПАСС., КОРПУС, СИСТ.
+```
+## 2026-05-19 — Russian localization final cleanup follow-up
+
+After the turret pass, remaining malformed Russian machine-translation fragments were cleaned in horde reward text, Choir Engine ritual text, Forge milestone UI, UI style settings, and first-sigil guidance. This follow-up remained XML/docs/localization-only: no C# source or DLL changes were made.
+

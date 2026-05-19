@@ -2,17 +2,17 @@
 <LanguageData>
   <ABY_CircleRitual_Horde_Label>Открыть Врата Орды</ABY_CircleRitual_Horde_Label>
   <ABY_CircleRitual_Horde_Subtitle>Пост-Святой многовекторный армейский прорыв</ABY_CircleRitual_Horde_Subtitle>
-  <ABY_CircleRitual_Horde_Desc>Потребляет одну врата орды сигила, направляет колониста к кругу и вскрывает несколько внешних фронтов разлома по периметру карты. Из них волнами идут обычные бездненный-боевые формы. Это не ритуал босса, а первый осознанный арми-скале суммон после Реакторный Святой.</ABY_CircleRitual_Horde_Desc>
+  <ABY_CircleRitual_Horde_Desc>Потребляет одну сигилу врат орды, направляет колониста к кругу и вскрывает несколько внешних фронтов разлома по периметру карты. Из них волнами идут обычные боевые формы Бездны. Это не ритуал босса, а первый осознанный массовый армейский призыв после Реакторный Святой.</ABY_CircleRitual_Horde_Desc>
   <ABY_CircleRitual_Horde_Rewards>
 • Очень высокий приток остаток и широкая зачисточная добыча
-• Первое после Святого испытание обороны против целой бездненный-армии
+• Первое после Святого испытание обороны против целой армии Бездны
 • Опирается на обычные вражеские формы мода, а не на лестницу наград от боссов и мини-боссов</ABY_CircleRitual_Horde_Rewards>
   <ABY_CircleRitual_Horde_SideEffects>
 • Открывает сразу несколько фронтов разлома по периметру вместо одного локального спавна
 • Очень сильно масштабируется от колонии, богатства и протокола сложности
 • Даже огромная волна не выдаёт награды уровня босс/минибосс</ABY_CircleRitual_Horde_SideEffects>
   <ABY_HordeGateSummonSuccessLabel>Врата Орды открыт</ABY_HordeGateSummonSuccessLabel>
-  <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные фронты разрыва. Обычные бездненный-боевые формы входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
+  <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные фронты разрыва. Обычные боевые формы Бездны входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
   <ABY_CircleRewardGuaranteed_Horde>Гарантированно: кэш схлопывания прорыва с высоким выходом остаток, осколками орды и трофейный лом-добычей. При наличии командные врата его уничтожение даёт отдельный бонус.</ABY_CircleRewardGuaranteed_Horde>
   <ABY_CircleRewardProgression_Horde>Прогрессия: проверяет позднюю многовекторную оборону после Реакторный Святой и питает отдельный после Святого экономика-слой, а не босс-тир ядра.</ABY_CircleRewardProgression_Horde>
   <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Доктрина: {1}   •   Фронты: {2}   •   Импульсы: {3}   •   Командные врата: {4}   •   Прогноз: {5}   •   Протокол: {6}</ABY_HordeRitualMeta>
@@ -108,11 +108,11 @@
   <ABY_HordeEconomy_LineClosure>Кэш схлопывания прорыва: {0}</ABY_HordeEconomy_LineClosure>
   <ABY_HordeEconomy_LineCommand>Бонус за убийство командного узла: {0}</ABY_HordeEconomy_LineCommand>
   <ABY_HordeEconomy_LineCommandAbsent>Для этого прогноза бонусный командный ноде не ожидается.</ABY_HordeEconomy_LineCommandAbsent>
-  <ABY_HordeEconomy_LineFragmentArms>Ветка перековки осколков: Литани измельчитель косит массу, Пхаланкс Дривер ломает тяжёлый фронт, а Кохорт Халберд якорит бронированный ближний бой.</ABY_HordeEconomy_LineFragmentArms>
-  <ABY_HordeEconomy_LineNoBoss>Через Хорде паиоут не идут ядра боссов, святого какхе и уникальные награды минибоссов.</ABY_HordeEconomy_LineNoBoss>
+  <ABY_HordeEconomy_LineFragmentArms>Ветка перековки осколков: Измельчитель Литании косит массу, Фаланговый пробиватель ломает тяжёлый фронт, а алебарда когорты удерживает бронированный ближний бой.</ABY_HordeEconomy_LineFragmentArms>
+  <ABY_HordeEconomy_LineNoBoss>Через выплаты орды не проходят ядра боссов, тайники святого и уникальные награды мини-боссов.</ABY_HordeEconomy_LineNoBoss>
   <ABY_HordeEconomy_LineBacklash>Дополнительный откат: +{0}% жара нестабильности и +{1}% давления заражения при запуске.</ABY_HordeEconomy_LineBacklash>
   <ABY_HordeEconomy_BulletinClosure>{0} остаток + {1} осколка</ABY_HordeEconomy_BulletinClosure>
   <ABY_HordeEconomy_BulletinBacklash>Жар +{0}% / Заражение +{1}%</ABY_HordeEconomy_BulletinBacklash>
-  <ABY_HordeEconomy_ClosureSpawned>Операция {0} начинает схлопываться. У последнего активного фронта выплёскивается конденсированная орда-добыча.</ABY_HordeEconomy_ClosureSpawned>
-  <ABY_HordeEconomy_CommandSpawned>Командные врата доктрины {0} разрываются в трофейный лом. Его конденсированные военные фрагменты и маршрутизированные кэши снабжения высыпаются на поле боя.</ABY_HordeEconomy_CommandSpawned>
+  <ABY_HordeEconomy_ClosureSpawned>Операция {0} начинает схлопываться. У последнего активного фронта выплёскивается конденсированная добыча орды.</ABY_HordeEconomy_ClosureSpawned>
+  <ABY_HordeEconomy_CommandSpawned>Командные врата доктрины {0} разрываются в трофейный лом. Его конденсированные военные фрагменты и перенаправленные запасы снабжения высыпаются на поле боя.</ABY_HordeEconomy_CommandSpawned>
 </LanguageData>

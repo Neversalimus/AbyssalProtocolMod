@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_RiftNeedlerCore</defName>
     <label>Rift Needler Core</label>
-    <description>Main weapon core for medium modular turret chassis. Fast needle bursts against lightly armored targets.</description>
+    <description>A rift-needle lattice bound into a turret heart. It snaps out quick bursts that tear through light targets and slow dense swarms.</description>
     <effectSummary>Unleashes three rift needles in rapid succession, cutting down lightly armored enemies and pressing back dense swarms before they can close.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_RiftNeedlerCore</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>anti-light sustained fire</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>anti-light burst fire</role>
     <tier>1</tier>
     <projectileDef>ABY_TurretRiftNeedleProjectile</projectileDef>
     <soundCast>ABY_RiftNeedlerFire</soundCast>
@@ -24,15 +25,16 @@
     <overlayMuzzleForwardOffset>1.50</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.052</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_PlasmaLanceCore</defName>
     <label>Plasma Lance Core</label>
-    <description>Main weapon core for medium modular turret chassis. Slower armor-focused ultra-plasma discharge.</description>
+    <description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</description>
     <effectSummary>Hurls a slower ultra-plasma lance with the reach and pressure needed to crack armor, elite targets and early boss shells.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_PlasmaLanceCore</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
     <role>anti-armor lance</role>
     <tier>2</tier>
     <projectileDef>ABY_TurretPlasmaLanceBolt</projectileDef>
@@ -49,15 +51,16 @@
     <overlayMuzzleForwardOffset>1.48</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.064</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_AshChoirRepeaterCore</defName>
     <label>Ash Choir Repeater Core</label>
-    <description>Main weapon core for medium modular turret chassis. Rapid ash-canticle repeater bursts for swarm suppression.</description>
+    <description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</description>
     <effectSummary>Rakes the field with five ash-canticle shards, excellent for animals, light enemies and packed abyssal waves, but weak against heavy armor.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_AshChoirRepeaterCore</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
     <role>anti-swarm ash repeater</role>
     <tier>2</tier>
     <projectileDef>ABY_TurretAshChoirShard</projectileDef>
@@ -81,16 +84,17 @@
     </burstMuzzleSideOffsets>
     <overlayAltitudeOffset>0.066</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_ChoirArcEmitter</defName>
     <label>Choir Arc Emitter</label>
-    <description>Auxiliary support module. Fires a slow timed canticle-wave shot independently of the main weapon.</description>
+    <description>A secondary canticle emitter that answers clusters with a slow Choir pulse, leaving the main weapon free to keep firing.</description>
     <effectSummary>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</effectSummary>
     <slot>Auxiliary</slot>
     <thingDef>ABY_TurretModule_ChoirArcEmitter</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>secondary crowd pressure</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>crowd pressure</role>
     <tier>2</tier>
     <projectileDef>ABY_TurretChoirArcProjectile</projectileDef>
     <soundCast>ABY_CanticleDriverFire</soundCast>
@@ -105,61 +109,64 @@
     <overlayForwardOffset>0</overlayForwardOffset>
     <overlayAltitudeOffset>0.096</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_CoolingLattice</defName>
     <label>Cooling Lattice</label>
-    <description>Passive cadence module. Reduces main weapon cooldown at the cost of additional power draw.</description>
+    <description>A bound heat lattice that pulls waste heat out of the weapon path, forcing a tighter firing cadence at a heavier power cost.</description>
     <effectSummary>Bleeds excess heat through a bound lattice, tightening the firing cycle at the cost of higher power draw.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_CoolingLattice</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
     <role>cadence stabilizer</role>
     <tier>1</tier>
     <cooldownMultiplier>0.84</cooldownMultiplier>
     <extraPowerDraw>70</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_TargetingSigil</defName>
     <label>Targeting Sigil</label>
-    <description>Passive targeting module. Extends range and stabilizes the aiming geometry.</description>
+    <description>A targeting sigil that stretches sighting geometry into a colder, steadier line of judgment.</description>
     <effectSummary>Extends the turret’s sighting geometry and steadies long-range tracking, demanding extra power to hold the sigil active.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_TargetingSigil</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
     <role>range and tracking</role>
     <tier>1</tier>
     <rangeOffset>3.5</rangeOffset>
     <missRadiusOffset>-0.2</missRadiusOffset>
     <extraPowerDraw>80</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_ResidueCapacitor</defName>
     <label>Residue Capacitor</label>
-    <description>Passive buffering module. Gives modest range and cadence gains while adding a larger power burden.</description>
+    <description>A residue-fed charge vessel that steadies the weapon between bursts, improving reach and cadence without becoming a weapon itself.</description>
     <effectSummary>Stores abyssal charge between shots, modestly extending reach and cadence while drawing more power from the grid.</effectSummary>
     <slot>Passive</slot>
     <thingDef>ABY_TurretModule_ResidueCapacitor</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
     <role>charge buffer</role>
     <tier>2</tier>
     <rangeOffset>1.5</rangeOffset>
     <cooldownMultiplier>0.92</cooldownMultiplier>
     <extraPowerDraw>120</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_SepulcherRailCore</defName>
     <label>Sepulcher Rail Core</label>
-    <description>Main weapon core for medium modular turret chassis. A late-tier dual-rail gauss accelerator that charges before firing a single anti-elite penetrator.</description>
+    <description>Twin sepulcher rails drink power in silence before releasing one long, decisive penetrator against armored elites.</description>
     <effectSummary>Charges twin sepulcher rails before driving a single high-velocity penetrator into armored elites at extreme range.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_SepulcherRailCore</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>charged anti-elite rail sniper</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>anti-elite rail shot</role>
     <tier>4</tier>
     <projectileDef>ABY_TurretSepulcherRailSpike</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
@@ -196,18 +203,17 @@
     <residualOverlayDrawSize>6.35</residualOverlayDrawSize>
     <residualOverlayForwardOffset>1.28</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_CinderMortarCore</defName>
     <label>Cinder Mortar Core</label>
-    <description>Main weapon core for medium modular turret chassis. Lobs cinder-packed shells over cover to break clustered enemies and leave a short-lived burning residue field.</description>
+    <description>An arcing cinder heart for punishing clusters, entrenched shooters and enemies that mistake distance for safety.</description>
     <effectSummary>Throws an arcing cinder shell that bursts into hot ash and compact splash, strong against clustered enemies and static firing lines.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_CinderMortarCore</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>indirect cinder bombardment</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>indirect cinder fire</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretCinderMortarShell</projectileDef>
     <soundCast>ABY_AshenScattergunFire</soundCast>
@@ -226,17 +232,17 @@
     <overlayMuzzleForwardOffset>0.92</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.070</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_NullArcDischarger</defName>
     <label>Null-Arc Discharger</label>
-    <description>Main weapon core for medium modular turret chassis. Charges a sanctified null capacitor, then releases a thin EMP arc that disrupts mechs, shielded targets, and nearby electronics through chained secondary strikes.</description>
+    <description>A null-arc coil that turns stored charge into a punishing pulse against shields, machines and clustered elite support.</description>
     <effectSummary>Releases a charged null-arc pulse that burns shields, stuns machines and chains through clustered elite support.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_NullArcDischarger</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>null-arc EMP suppression</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>EMP suppression</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretNullArcPulse</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
@@ -256,16 +262,17 @@
     <overlayMuzzleForwardOffset>1.54</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.072</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_AbyssalHarpoonProjector</defName>
     <label>Abyssal Harpoon Projector</label>
-    <description>Main weapon core for medium modular turret chassis. Fires an anchor-spike bolt that impales dangerous melee threats, pins them under abyssal restraint, and briefly drags non-boss targets toward the chassis.</description>
+    <description>A brutal projector that pins the advance with abyssal harpoons, turning momentum into restraint.</description>
     <effectSummary>Drives a heavy abyssal harpoon into breach targets, slowing their advance and dragging lesser bodies off their line.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_AbyssalHarpoonProjector</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>anti-breach elite lockdown</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>elite lockdown</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretAbyssalHarpoonBolt</projectileDef>
     <soundCast>ABY_SpecterLashFire</soundCast>
@@ -284,16 +291,17 @@
     <overlayMuzzleForwardOffset>1.76</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.074</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-<AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_VesperLanceArray</defName>
     <label>Vesper Lance Array</label>
-    <description>Main weapon core for medium modular turret chassis. Briefly charges, then fires a focused sanction lance for armor and elite targets.</description>
+    <description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</description>
     <effectSummary>Projects a saint-clean lance with better reach and armor pressure than plasma while firing far faster than a sepulcher rail.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_VesperLanceArray</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>charged precision sanction lance</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>precision sanction lance</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretVesperLanceBolt</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
@@ -320,16 +328,17 @@
     <dischargeOverlayTicksPerFrame>2</dischargeOverlayTicksPerFrame>
     <dischargeOverlayAltitudeOffset>0.094</dischargeOverlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-<AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_RiftFlakBloom</defName>
     <label>Rift Flak Bloom</label>
-    <description>Main weapon core for medium modular turret chassis. Fires an unstable rift canister that blooms near the target into cutting obsidian fragments for direct anti-cluster suppression.</description>
+    <description>A compact rift seed that blossoms into cutting fragments around impact, made to punish bodies packed too closely together.</description>
     <effectSummary>Launches a compact rift seed that blooms into cutting shards around the impact point, punishing light swarms and clustered raiders.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_RiftFlakBloom</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>direct anti-cluster flak bloom</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>anti-cluster flak bloom</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretRiftFlakSeed</projectileDef>
     <soundCast>ABY_RiftNeedlerFire</soundCast>
@@ -348,18 +357,17 @@
     <overlayMuzzleForwardOffset>1.48</overlayMuzzleForwardOffset>
     <overlayAltitudeOffset>0.073</overlayAltitudeOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
-
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_SanctifiedPrismEmitter</defName>
     <label>Sanctified Prism Emitter</label>
-    <description>Main weapon core for medium modular turret chassis. Charges a cold prism guillotine, then fires a precise sanctified bolt that refracts through hostile pawns aligned behind the primary target.</description>
+    <description>A prism emitter that compresses sanctified violence into a narrow line, punishing enemies who stack behind one another.</description>
     <effectSummary>Fires a charged prism bolt that cuts through a narrow lane, refracting judgment through enemies standing behind the first target.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_SanctifiedPrismEmitter</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>sanctified line-control refraction</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>line-control refraction</role>
     <tier>3</tier>
     <projectileDef>ABY_TurretSanctifiedPrismBolt</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
@@ -400,16 +408,17 @@
     <dischargeOverlayForwardOffset>0.06</dischargeOverlayForwardOffset>
     <dischargeOverlayUsesMuzzleAnchor>true</dischargeOverlayUsesMuzzleAnchor>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_CrowncoilGaussMinigun</defName>
     <label>Crowncoil Gauss Minigun</label>
-    <description>Main weapon core for medium modular turret chassis. An apex sustained-fire crowncoil gauss array that cycles a rotary electromagnetic phase across six fixed rails and tears through advancing elites with high-velocity penetrators.</description>
+    <description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</description>
     <effectSummary>Builds a six-lane crowncoil phase before pouring out an eighteen-shot gauss storm for sustained pressure against elites and heavy swarms.</effectSummary>
     <slot>MainWeapon</slot>
     <thingDef>ABY_TurretModule_CrowncoilGaussMinigun</thingDef>
-    <compatibleChassisTags><li>Medium</li></compatibleChassisTags>
-    <role>apex sustained gauss suppression</role>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>apex gauss suppression</role>
     <tier>4</tier>
     <projectileDef>ABY_TurretCrowncoilGaussSlug</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
@@ -464,5 +473,4 @@
     <residualOverlayDrawSize>4.08</residualOverlayDrawSize>
     <residualOverlayForwardOffset>0.72</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
 </Defs>

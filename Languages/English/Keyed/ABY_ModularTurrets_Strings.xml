@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_ForgeCategory_TurretSystems>Turret Systems</ABY_ForgeCategory_TurretSystems>
   <ABY_ForgePatternSummary_TurretSystems>Turret system</ABY_ForgePatternSummary_TurretSystems>
   <ABY_ModularTurret_Tab>Modules</ABY_ModularTurret_Tab>
   <ABY_ExperimentalSystemsHeader>Experimental systems / safety switches</ABY_ExperimentalSystemsHeader>
-  <ABY_ExperimentalSystemsDesc>Experimental systems are kept behind explicit switches. Disabling one stops its behavior and hides its Forge exposure without destroying installed equipment.</ABY_ExperimentalSystemsDesc>
+  <ABY_ExperimentalSystemsDesc>Experimental systems are kept behind separate safety toggles. Disabling one stops its gameplay behavior and hides its Forge recipes without destroying already installed equipment.</ABY_ExperimentalSystemsDesc>
   <ABY_ModularTurrets_Enable>Enable modular turrets</ABY_ModularTurrets_Enable>
-  <ABY_ModularTurrets_EnableDesc>Allows abyssal turret chassis to accept interchangeable weapon, auxiliary and passive systems. Disabling it makes the chassis inert while keeping installed parts intact.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurrets_EnableDesc>Allows abyssal turret bodies to accept interchangeable weapon, auxiliary and passive systems. Disabling the system makes the chassis inert, but installed parts remain attached.</ABY_ModularTurrets_EnableDesc>
   <ABY_ModularTurret_Header>Abyssal modular turret chassis</ABY_ModularTurret_Header>
   <ABY_ModularTurret_Subtitle>Install turret systems from the map. The main core fires; auxiliary and passive systems alter behavior.</ABY_ModularTurret_Subtitle>
   <ABY_TurretDisabledMessage>Modular turret systems are disabled in settings.</ABY_TurretDisabledMessage>
@@ -74,7 +74,7 @@
   <ABY_TurretForgeSummary_ChassisSlots>Chassis · {0} main / {1} aux / {2} passive</ABY_TurretForgeSummary_ChassisSlots>
   <ABY_TurretChassisTooltipRole>Role: empty modular turret body. It cannot fire until a main weapon core is installed.</ABY_TurretChassisTooltipRole>
   <ABY_TurretChassisTooltipSlots>Slots: {0} main weapon, {1} auxiliary, {2} passive.</ABY_TurretChassisTooltipSlots>
-  <ABY_TurretChassisTooltipRuntime>Installed systems are stored inside the building and remain intact if the turret network is disabled.</ABY_TurretChassisTooltipRuntime>
+  <ABY_TurretChassisTooltipRuntime>Installed systems remain anchored to the chassis until removed.</ABY_TurretChassisTooltipRuntime>
   <ABY_TurretStatsHeader>Operating preview</ABY_TurretStatsHeader>
   <ABY_TurretStatsFeature>Feature state: {0}</ABY_TurretStatsFeature>
   <ABY_TurretStatsPower>Power: {0}</ABY_TurretStatsPower>
@@ -82,7 +82,7 @@
   <ABY_TurretStatsCooldown>Main cooldown: {0}</ABY_TurretStatsCooldown>
   <ABY_TurretStatsCooldownResolved>Main cooldown: {0} → {1}</ABY_TurretStatsCooldownResolved>
   <ABY_TurretStatsPowerDraw>Power draw: {0} W base + {1} W modules = {2} W applied</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Safety switch: disables targeting, firing, placement and Forge exposure without removing installed systems.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsKillSwitch>Disables targeting, firing, placement and Forge recipes without removing installed systems.</ABY_TurretStatsKillSwitch>
   <ABY_TurretStatsTargeting>Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
   <ABY_TurretInspectDisabled>Modular turret systems are disabled in settings.</ABY_TurretInspectDisabled>
   <ABY_TurretInspectMain>Main: {0}</ABY_TurretInspectMain>
@@ -102,7 +102,7 @@
   <ABY_TurretInfo_AuxCooldown>Auxiliary cooldown</ABY_TurretInfo_AuxCooldown>
   <ABY_TurretInfo_CooldownDesc>Time before this module can fire again.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Burst</ABY_TurretInfo_Burst>
-  <ABY_TurretInfo_BurstDesc>Number of projectiles fired per activation.</ABY_TurretInfo_BurstDesc>
+  <ABY_TurretInfo_BurstDesc>Shots released per firing cycle.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Burst spacing</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Delay between shots inside a burst.</ABY_TurretInfo_BurstSpacingDesc>
   <ABY_TurretInfo_Projectile>Shot</ABY_TurretInfo_Projectile>
@@ -145,7 +145,7 @@
   <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>anti-swarm ash repeater</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Rakes the field with five ash-canticle shards, excellent for animals, light enemies and packed abyssal waves, but weak against heavy armor.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
   <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>Choir Arc Emitter</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>secondary crowd pressure</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>crowd pressure</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
   <ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>Cooling Lattice</ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>
   <ABY_TurretModuleRole_ABY_TMD_CoolingLattice>cadence stabilizer</ABY_TurretModuleRole_ABY_TMD_CoolingLattice>

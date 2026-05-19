@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_TMD_RiftNeedlerCore.label>Rift Needler Core</ABY_TMD_RiftNeedlerCore.label>
+  <ABY_TMD_RiftNeedlerCore.role>anti-light burst fire</ABY_TMD_RiftNeedlerCore.role>
+  <ABY_TMD_RiftNeedlerCore.effectSummary>Unleashes three rift needles in rapid succession, cutting down lightly armored enemies and pressing back dense swarms before they can close.</ABY_TMD_RiftNeedlerCore.effectSummary>
+  <ABY_TMD_RiftNeedlerCore.description>A rift-needle lattice bound into a turret heart. It snaps out quick bursts that tear through light targets and slow dense swarms.</ABY_TMD_RiftNeedlerCore.description>
+  <ABY_TMD_PlasmaLanceCore.label>Plasma Lance Core</ABY_TMD_PlasmaLanceCore.label>
+  <ABY_TMD_PlasmaLanceCore.role>anti-armor lance</ABY_TMD_PlasmaLanceCore.role>
+  <ABY_TMD_PlasmaLanceCore.effectSummary>Hurls a slower ultra-plasma lance with the reach and pressure needed to crack armor, elite targets and early boss shells.</ABY_TMD_PlasmaLanceCore.effectSummary>
+  <ABY_TMD_PlasmaLanceCore.description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</ABY_TMD_PlasmaLanceCore.description>
+  <ABY_TMD_AshChoirRepeaterCore.label>Ash Choir Repeater Core</ABY_TMD_AshChoirRepeaterCore.label>
+  <ABY_TMD_AshChoirRepeaterCore.role>anti-swarm ash repeater</ABY_TMD_AshChoirRepeaterCore.role>
+  <ABY_TMD_AshChoirRepeaterCore.effectSummary>Rakes the field with five ash-canticle shards, excellent for animals, light enemies and packed abyssal waves, but weak against heavy armor.</ABY_TMD_AshChoirRepeaterCore.effectSummary>
+  <ABY_TMD_AshChoirRepeaterCore.description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</ABY_TMD_AshChoirRepeaterCore.description>
+  <ABY_TMD_ChoirArcEmitter.label>Choir Arc Emitter</ABY_TMD_ChoirArcEmitter.label>
+  <ABY_TMD_ChoirArcEmitter.role>crowd pressure</ABY_TMD_ChoirArcEmitter.role>
+  <ABY_TMD_ChoirArcEmitter.effectSummary>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</ABY_TMD_ChoirArcEmitter.effectSummary>
+  <ABY_TMD_ChoirArcEmitter.description>A secondary canticle emitter that answers clusters with a slow Choir pulse, leaving the main weapon free to keep firing.</ABY_TMD_ChoirArcEmitter.description>
+  <ABY_TMD_CoolingLattice.label>Cooling Lattice</ABY_TMD_CoolingLattice.label>
+  <ABY_TMD_CoolingLattice.role>cadence stabilizer</ABY_TMD_CoolingLattice.role>
+  <ABY_TMD_CoolingLattice.effectSummary>Bleeds excess heat through a bound lattice, tightening the firing cycle at the cost of higher power draw.</ABY_TMD_CoolingLattice.effectSummary>
+  <ABY_TMD_CoolingLattice.description>A bound heat lattice that pulls waste heat out of the weapon path, forcing a tighter firing cadence at a heavier power cost.</ABY_TMD_CoolingLattice.description>
+  <ABY_TMD_TargetingSigil.label>Targeting Sigil</ABY_TMD_TargetingSigil.label>
+  <ABY_TMD_TargetingSigil.role>range and tracking</ABY_TMD_TargetingSigil.role>
+  <ABY_TMD_TargetingSigil.effectSummary>Extends the turret’s sighting geometry and steadies long-range tracking, demanding extra power to hold the sigil active.</ABY_TMD_TargetingSigil.effectSummary>
+  <ABY_TMD_TargetingSigil.description>A targeting sigil that stretches sighting geometry into a colder, steadier line of judgment.</ABY_TMD_TargetingSigil.description>
+  <ABY_TMD_ResidueCapacitor.label>Residue Capacitor</ABY_TMD_ResidueCapacitor.label>
+  <ABY_TMD_ResidueCapacitor.role>charge buffer</ABY_TMD_ResidueCapacitor.role>
+  <ABY_TMD_ResidueCapacitor.effectSummary>Stores abyssal charge between shots, modestly extending reach and cadence while drawing more power from the grid.</ABY_TMD_ResidueCapacitor.effectSummary>
+  <ABY_TMD_ResidueCapacitor.description>A residue-fed charge vessel that steadies the weapon between bursts, improving reach and cadence without becoming a weapon itself.</ABY_TMD_ResidueCapacitor.description>
+  <ABY_TMD_SepulcherRailCore.label>Sepulcher Rail Core</ABY_TMD_SepulcherRailCore.label>
+  <ABY_TMD_SepulcherRailCore.role>anti-elite rail shot</ABY_TMD_SepulcherRailCore.role>
+  <ABY_TMD_SepulcherRailCore.effectSummary>Charges twin sepulcher rails before driving a single high-velocity penetrator into armored elites at extreme range.</ABY_TMD_SepulcherRailCore.effectSummary>
+  <ABY_TMD_SepulcherRailCore.description>Twin sepulcher rails drink power in silence before releasing one long, decisive penetrator against armored elites.</ABY_TMD_SepulcherRailCore.description>
+  <ABY_TMD_CinderMortarCore.label>Cinder Mortar Core</ABY_TMD_CinderMortarCore.label>
+  <ABY_TMD_CinderMortarCore.role>indirect cinder fire</ABY_TMD_CinderMortarCore.role>
+  <ABY_TMD_CinderMortarCore.effectSummary>Throws an arcing cinder shell that bursts into hot ash and compact splash, strong against clustered enemies and static firing lines.</ABY_TMD_CinderMortarCore.effectSummary>
+  <ABY_TMD_CinderMortarCore.description>An arcing cinder heart for punishing clusters, entrenched shooters and enemies that mistake distance for safety.</ABY_TMD_CinderMortarCore.description>
+  <ABY_TMD_NullArcDischarger.label>Null-Arc Discharger</ABY_TMD_NullArcDischarger.label>
+  <ABY_TMD_NullArcDischarger.role>EMP suppression</ABY_TMD_NullArcDischarger.role>
+  <ABY_TMD_NullArcDischarger.effectSummary>Releases a charged null-arc pulse that burns shields, stuns machines and chains through clustered elite support.</ABY_TMD_NullArcDischarger.effectSummary>
+  <ABY_TMD_NullArcDischarger.description>A null-arc coil that turns stored charge into a punishing pulse against shields, machines and clustered elite support.</ABY_TMD_NullArcDischarger.description>
+  <ABY_TMD_AbyssalHarpoonProjector.label>Abyssal Harpoon Projector</ABY_TMD_AbyssalHarpoonProjector.label>
+  <ABY_TMD_AbyssalHarpoonProjector.role>elite lockdown</ABY_TMD_AbyssalHarpoonProjector.role>
+  <ABY_TMD_AbyssalHarpoonProjector.effectSummary>Drives a heavy abyssal harpoon into breach targets, slowing their advance and dragging lesser bodies off their line.</ABY_TMD_AbyssalHarpoonProjector.effectSummary>
+  <ABY_TMD_AbyssalHarpoonProjector.description>A brutal projector that pins the advance with abyssal harpoons, turning momentum into restraint.</ABY_TMD_AbyssalHarpoonProjector.description>
+  <ABY_TMD_VesperLanceArray.label>Vesper Lance Array</ABY_TMD_VesperLanceArray.label>
+  <ABY_TMD_VesperLanceArray.role>precision sanction lance</ABY_TMD_VesperLanceArray.role>
+  <ABY_TMD_VesperLanceArray.effectSummary>Projects a saint-clean lance with better reach and armor pressure than plasma while firing far faster than a sepulcher rail.</ABY_TMD_VesperLanceArray.effectSummary>
+  <ABY_TMD_VesperLanceArray.description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</ABY_TMD_VesperLanceArray.description>
+  <ABY_TMD_RiftFlakBloom.label>Rift Flak Bloom</ABY_TMD_RiftFlakBloom.label>
+  <ABY_TMD_RiftFlakBloom.role>anti-cluster flak bloom</ABY_TMD_RiftFlakBloom.role>
+  <ABY_TMD_RiftFlakBloom.effectSummary>Launches a compact rift seed that blooms into cutting shards around the impact point, punishing light swarms and clustered raiders.</ABY_TMD_RiftFlakBloom.effectSummary>
+  <ABY_TMD_RiftFlakBloom.description>A compact rift seed that blossoms into cutting fragments around impact, made to punish bodies packed too closely together.</ABY_TMD_RiftFlakBloom.description>
+  <ABY_TMD_SanctifiedPrismEmitter.label>Sanctified Prism Emitter</ABY_TMD_SanctifiedPrismEmitter.label>
+  <ABY_TMD_SanctifiedPrismEmitter.role>line-control refraction</ABY_TMD_SanctifiedPrismEmitter.role>
+  <ABY_TMD_SanctifiedPrismEmitter.effectSummary>Fires a charged prism bolt that cuts through a narrow lane, refracting judgment through enemies standing behind the first target.</ABY_TMD_SanctifiedPrismEmitter.effectSummary>
+  <ABY_TMD_SanctifiedPrismEmitter.description>A prism emitter that compresses sanctified violence into a narrow line, punishing enemies who stack behind one another.</ABY_TMD_SanctifiedPrismEmitter.description>
+  <ABY_TMD_CrowncoilGaussMinigun.label>Crowncoil Gauss Minigun</ABY_TMD_CrowncoilGaussMinigun.label>
+  <ABY_TMD_CrowncoilGaussMinigun.role>apex gauss suppression</ABY_TMD_CrowncoilGaussMinigun.role>
+  <ABY_TMD_CrowncoilGaussMinigun.effectSummary>Builds a six-lane crowncoil phase before pouring out an eighteen-shot gauss storm for sustained pressure against elites and heavy swarms.</ABY_TMD_CrowncoilGaussMinigun.effectSummary>
+  <ABY_TMD_CrowncoilGaussMinigun.description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TMD_CrowncoilGaussMinigun.description>
+  <ABY_TMD_CrownfireRocketChoir.label>Crownfire Rocket Choir</ABY_TMD_CrownfireRocketChoir.label>
+  <ABY_TMD_CrownfireRocketChoir.role>guided rocket saturation</ABY_TMD_CrownfireRocketChoir.role>
+  <ABY_TMD_CrownfireRocketChoir.effectSummary>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</ABY_TMD_CrownfireRocketChoir.effectSummary>
+  <ABY_TMD_CrownfireRocketChoir.description>A crownfire carrier choir that breaks open above the battlefield, scattering guided fire across swarms and breach packs.</ABY_TMD_CrownfireRocketChoir.description>
+</LanguageData>
