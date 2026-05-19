@@ -306,7 +306,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (pawn.HostileTo(other) && pawn.PositionHeld.DistanceTo(other.PositionHeld) <= radius)
+                if (ABY_FactionHostilityUtility.SafeHostileTo(pawn, other) && pawn.PositionHeld.DistanceTo(other.PositionHeld) <= radius)
                 {
                     return true;
                 }
@@ -324,18 +324,18 @@ namespace AbyssalProtocol
 
             if (thing is Building_Turret turret)
             {
-                return turret.Faction != null && owner.Faction.HostileTo(turret.Faction);
+                return turret.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner.Faction, turret.Faction);
             }
 
             if (thing is Pawn mech && mech.RaceProps != null && mech.RaceProps.IsMechanoid)
             {
-                return mech.Faction != null && owner.Faction.HostileTo(mech.Faction);
+                return mech.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner.Faction, mech.Faction);
             }
 
             if (thing is Building building)
             {
                 bool powered = building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null;
-                return powered && building.Faction != null && owner.Faction.HostileTo(building.Faction);
+                return powered && building.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner.Faction, building.Faction);
             }
 
             return false;

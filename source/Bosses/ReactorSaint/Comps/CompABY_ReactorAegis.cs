@@ -171,7 +171,7 @@ namespace AbyssalProtocol
             }
 
             Pawn instigatorPawn = instigator as Pawn;
-            if (instigatorPawn != null && instigatorPawn.Faction != null && pawn.Faction != null && !pawn.Faction.HostileTo(instigatorPawn.Faction))
+            if (instigatorPawn != null && instigatorPawn.Faction != null && pawn.Faction != null && !ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, instigatorPawn.Faction))
             {
                 return false;
             }
@@ -186,7 +186,7 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            if (instigator is Building building && building.Faction != null && pawn.Faction != null && pawn.Faction.HostileTo(building.Faction))
+            if (instigator is Building building && building.Faction != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, building.Faction))
             {
                 return true;
             }

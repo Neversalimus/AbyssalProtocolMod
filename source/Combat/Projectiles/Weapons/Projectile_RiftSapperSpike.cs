@@ -134,7 +134,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return instigator.Faction.HostileTo(building.Faction);
+            return ABY_FactionHostilityUtility.SafeHostileTo(instigator.Faction, building.Faction);
         }
 
         private static bool IsCoverLike(Building building)

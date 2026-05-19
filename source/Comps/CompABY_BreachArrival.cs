@@ -101,7 +101,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (Props.onlyWhenHostileToPlayer && Faction.OfPlayer != null && !pawn.Faction.HostileTo(Faction.OfPlayer))
+            if (Props.onlyWhenHostileToPlayer && Faction.OfPlayer != null && !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
             {
                 return false;
             }

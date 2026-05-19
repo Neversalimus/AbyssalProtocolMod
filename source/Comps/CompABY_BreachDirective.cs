@@ -271,7 +271,7 @@ namespace AbyssalProtocol
             Faction buildingFaction = building.Faction;
             if (pawnFaction != null && buildingFaction != null)
             {
-                return pawnFaction.HostileTo(buildingFaction);
+                return ABY_FactionHostilityUtility.SafeHostileTo(pawnFaction, buildingFaction);
             }
 
             if (buildingFaction == null && pawn.MapHeld != null && pawn.MapHeld.IsPlayerHome)

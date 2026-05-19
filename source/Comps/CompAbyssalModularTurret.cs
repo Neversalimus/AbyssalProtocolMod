@@ -1114,7 +1114,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!pawn.Faction.HostileTo(parent.Faction))
+            if (!ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, parent.Faction))
             {
                 return false;
             }

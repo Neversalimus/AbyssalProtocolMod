@@ -1390,7 +1390,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return targetPawn.HostileTo(pawn);
+            return ABY_FactionHostilityUtility.SafeHostileTo(targetPawn, pawn);
         }
 
         private void BeginReengage(Pawn pawn, bool forceNow)
@@ -1588,7 +1588,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!target.HostileTo(source))
+            if (!ABY_FactionHostilityUtility.SafeHostileTo(target, source))
             {
                 return false;
             }
@@ -1608,7 +1608,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!target.HostileTo(source))
+            if (!ABY_FactionHostilityUtility.SafeHostileTo(target, source))
             {
                 return false;
             }

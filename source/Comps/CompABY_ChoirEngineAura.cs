@@ -84,12 +84,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return owner.Faction == other.Faction && !owner.HostileTo(other);
+            return owner.Faction == other.Faction && !ABY_FactionHostilityUtility.SafeHostileTo(owner, other);
         }
 
         private static bool IsEnemyTarget(Pawn owner, Pawn other)
         {
-            return owner?.Faction != null && other?.Faction != null && owner.HostileTo(other);
+            return owner?.Faction != null && other?.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner, other);
         }
     }
 }

@@ -370,3 +370,27 @@ Rules after testing:
 - If a visual looks too quiet but gameplay works, tune `ABY_VfxBudget` category costs or per-effect spend frequency rather than removing the budget gate.
 - If targeting feels sluggish, reduce the relevant cache interval before reverting to direct `AllPawnsSpawned`/`AllThings` scans.
 - If UI state lags, invalidate the relevant Protocol Nexus cache on state change instead of moving sorting/filtering back into `DoWindowContents`.
+
+## 2026-05-19 — Hidden faction relation safety regression
+
+Observed runtime regression after the TPS targeting-cache pass:
+
+- `Faction ... has null relation with PlayerColony. Returning dummy relation.`
+- stack traces from modular turret target scans and boss aggression target selection.
+
+Cause:
+
+- Hidden/generated encounter factions such as `ABY_AbyssalHost` can exist in saves without a normal relation row to `PlayerColony`.
+- Calling vanilla `Faction.HostileTo` / `Pawn.HostileTo` / `RelationWith` from frequent target scans logs a red error before returning a dummy relation.
+
+Regression rules:
+
+- New Abyssal target-selection, projectile splash, aura, boss, turret, anti-tame, or compatibility code should prefer `ABY_FactionHostilityUtility.SafeHostileTo(...)` over direct `HostileTo(...)` when one side may be an Abyssal pawn/faction.
+- Direct vanilla hostility checks are still acceptable for purely vanilla actors with guaranteed normal relations, but do not use them in ABY hidden-faction hot paths.
+- If red relation errors return, inspect the stack trace and replace the exact hot-path hostility check rather than reverting runtime target caching.
+
+In-game checks:
+
+- Spawn Reactor Saint from cocoon and verify boss aggression starts without relation red errors.
+- Place modular turrets and spawn Abyssal Host pawns; turrets should acquire and fire without relation red errors.
+- Test Choir/Null/Halo/Warden AoE effects and turret projectile impacts; effects should hit enemies and avoid allies without relation red errors.

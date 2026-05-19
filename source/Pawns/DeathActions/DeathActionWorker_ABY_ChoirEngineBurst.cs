@@ -34,15 +34,15 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (thing is Building_Turret turret && turret.Faction != null && pawn.Faction != null && pawn.Faction.HostileTo(turret.Faction))
+                if (thing is Building_Turret turret && turret.Faction != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, turret.Faction))
                 {
                     turret.TakeDamage(new DamageInfo(DamageDefOf.EMP, TurretEmpDamage, 0f, -1f, pawn));
                 }
-                else if (thing is Pawn mech && mech.RaceProps != null && mech.RaceProps.IsMechanoid && mech.Faction != null && pawn.Faction != null && pawn.Faction.HostileTo(mech.Faction))
+                else if (thing is Pawn mech && mech.RaceProps != null && mech.RaceProps.IsMechanoid && mech.Faction != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, mech.Faction))
                 {
                     mech.TakeDamage(new DamageInfo(DamageDefOf.EMP, MechEmpDamage, 0f, -1f, pawn));
                 }
-                else if (thing is Building building && (building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null) && building.Faction != null && pawn.Faction != null && pawn.Faction.HostileTo(building.Faction))
+                else if (thing is Building building && (building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null) && building.Faction != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, building.Faction))
                 {
                     building.TakeDamage(new DamageInfo(DamageDefOf.EMP, BuildingEmpDamage, 0f, -1f, pawn));
                 }

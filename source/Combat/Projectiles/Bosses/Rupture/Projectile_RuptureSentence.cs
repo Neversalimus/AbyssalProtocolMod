@@ -57,7 +57,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return targetPawn.HostileTo(caster);
+            return ABY_FactionHostilityUtility.SafeHostileTo(targetPawn, caster);
         }
 
         private Pawn ResolveImpactPawn(Thing hitThing)

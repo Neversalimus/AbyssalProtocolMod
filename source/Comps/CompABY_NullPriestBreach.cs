@@ -361,7 +361,7 @@ namespace AbyssalProtocol
                 List<Thing> things = cell.GetThingList(map);
                 for (int i = 0; i < things.Count; i++)
                 {
-                    if (!(things[i] is Pawn victim) || victim == pawn || victim.Dead || victim.Downed || !pawn.HostileTo(victim) || !affected.Add(victim))
+                    if (!(things[i] is Pawn victim) || victim == pawn || victim.Dead || victim.Downed || !ABY_FactionHostilityUtility.SafeHostileTo(pawn, victim) || !affected.Add(victim))
                     {
                         continue;
                     }

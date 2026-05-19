@@ -996,7 +996,7 @@ namespace AbyssalProtocol
             int count = 0;
             foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
             {
-                if (pawn == null || pawn.Destroyed || pawn.Dead || !pawn.HostileTo(Faction.OfPlayer))
+                if (pawn == null || pawn.Destroyed || pawn.Dead || !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
                 {
                     continue;
                 }

@@ -77,7 +77,7 @@ namespace AbyssalProtocol
 
             try
             {
-                return pawn.HostileTo(Faction.OfPlayer);
+                return ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
             }
             catch
             {
@@ -611,7 +611,7 @@ namespace AbyssalProtocol
             }
 
             return !string.Equals(pawn.Faction.def?.defName, AbyssalFactionDefName, StringComparison.OrdinalIgnoreCase)
-                && !pawn.HostileTo(Faction.OfPlayer);
+                && !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         private static bool IsFriendlyDominionPortalDef(string defName)

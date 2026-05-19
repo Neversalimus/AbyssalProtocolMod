@@ -15,7 +15,7 @@ namespace AbyssalProtocol
 
             return pawn.Faction != null
                 && Faction.OfPlayer != null
-                && pawn.Faction.HostileTo(Faction.OfPlayer);
+                && ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         public static bool HasPawnFireSolution(Pawn shooter, Thing target, float minRange, float maxRange)

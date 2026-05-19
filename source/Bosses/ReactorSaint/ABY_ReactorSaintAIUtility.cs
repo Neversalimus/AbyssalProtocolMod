@@ -49,7 +49,7 @@ namespace AbyssalProtocol
                 && !pawn.Downed
                 && pawn.Faction != null
                 && Faction.OfPlayer != null
-                && pawn.Faction.HostileTo(Faction.OfPlayer);
+                && ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         public static bool HasValidFireSolution(Pawn pawn, float maxRange)

@@ -71,7 +71,7 @@ namespace AbyssalProtocol
             EnsureHostileFaction(pawn);
 
             Faction playerFaction = Faction.OfPlayer;
-            if (pawn.Faction == null || playerFaction == null || !pawn.Faction.HostileTo(playerFaction))
+            if (pawn.Faction == null || playerFaction == null || !ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, playerFaction))
             {
                 return false;
             }
@@ -375,7 +375,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return actor.Faction.HostileTo(candidate.Faction);
+            return ABY_FactionHostilityUtility.SafeHostileTo(actor.Faction, candidate.Faction);
         }
 
         public static bool IsValidHostileThingTarget(Pawn actor, Thing candidate)
@@ -416,7 +416,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return actor.Faction.HostileTo(candidate.Faction);
+            return ABY_FactionHostilityUtility.SafeHostileTo(actor.Faction, candidate.Faction);
         }
 
         public static bool IsCombatTurretLikeBuilding(Building building)

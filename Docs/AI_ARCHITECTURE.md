@@ -446,3 +446,22 @@ Additional ownership notes:
 - Projectile `Tick()` methods under `source/Combat/Projectiles/Weapons/` may still own their gameplay logic, but optional trail/spark/arc presentation should be gated before spawning flecks/motes.
 
 Regression rule: when adding a new recurring runtime effect, first decide whether it belongs to gameplay state, target selection, or optional presentation. Gameplay state must remain deterministic and ungated by visual budgets; target selection should use runtime caches where possible; optional presentation should use performance settings and/or `ABY_VfxBudget`.
+
+## Hidden faction hostility safety — 2026-05-19
+
+Hidden or generated Abyssal encounter factions can lack a normal relation row with `PlayerColony` in existing saves or mid-encounter generated state. Vanilla `Faction.HostileTo`, `Pawn.HostileTo`, and `RelationWith` log red errors when called in that state.
+
+Shared helper:
+
+```text
+source/Core/Runtime/ABY_FactionHostilityUtility.cs
+```
+
+Use this helper in Abyssal hot paths where one side can be `ABY_AbyssalHost`, an ABY pawn kind, a boss, a projectile instigator, a modular turret target, an aura target, or a compatibility/anti-tame guard.
+
+Rules:
+
+1. Prefer `ABY_FactionHostilityUtility.SafeHostileTo(...)` over direct `HostileTo(...)` for ABY target selection and AoE logic.
+2. `ABY_AbyssalHost` is treated as hostile to non-Abyssal factions without calling vanilla `RelationWith` when the relation row is missing.
+3. Missing non-Abyssal relation rows fall back conservatively instead of spamming red errors in per-tick target scans.
+4. Do not reintroduce direct hidden-faction `HostileTo` calls into turret, boss, projectile, aura, or runtime-cache code.

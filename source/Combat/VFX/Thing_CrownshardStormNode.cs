@@ -172,7 +172,7 @@ namespace AbyssalProtocol
                 sourceFaction = Faction.OfPlayer;
             }
 
-            return thing.Faction != null && thing.Faction.HostileTo(sourceFaction);
+            return thing.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(thing.Faction, sourceFaction);
         }
 
         private int ScoreTarget(Thing thing)

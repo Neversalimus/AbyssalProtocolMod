@@ -527,3 +527,10 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - Reduced baseline compatibility-tax from anti-tame and anti-animal workflow components by increasing scan intervals and using cached pawn/portal lookups.
 - Cached Protocol Nexus project/category/header data to reduce repeated sorting and summary work in UI draw paths.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
+
+## 2026-05-19 — Hidden faction relation red-error fix
+
+- Added `ABY_FactionHostilityUtility` as a relation-safe hostility helper for hidden/generated Abyssal factions.
+- Replaced high-risk direct `HostileTo` calls in modular turrets, boss targeting/aggression, abyssal threat utility, projectile splash checks, aura checks, anti-tame workflows, and several boss/ability systems.
+- Fixed red errors where `ABY_AbyssalHost` or blank generated hidden factions could have no relation row with `PlayerColony` during turret scans or Reactor Saint arrival aggression.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.

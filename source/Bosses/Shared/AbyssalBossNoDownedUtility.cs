@@ -46,7 +46,7 @@ namespace AbyssalProtocol
                 pawn.health.CheckForStateChange(null, null);
             }
 
-            if (!pawn.Downed && forceLordReengage && pawn.Spawned && pawn.MapHeld != null && pawn.Faction != null && pawn.HostileTo(Faction.OfPlayer))
+            if (!pawn.Downed && forceLordReengage && pawn.Spawned && pawn.MapHeld != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
             {
                 AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
             }

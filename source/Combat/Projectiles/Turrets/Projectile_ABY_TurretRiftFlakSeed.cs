@@ -203,7 +203,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (launcherFaction == null || pawn.Faction == null || !pawn.Faction.HostileTo(launcherFaction))
+            if (launcherFaction == null || pawn.Faction == null || !ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, launcherFaction))
             {
                 return false;
             }

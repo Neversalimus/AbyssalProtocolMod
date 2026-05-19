@@ -118,7 +118,7 @@ namespace AbyssalProtocol
                 List<Thing> things = cell.GetThingList(pawn.MapHeld);
                 for (int i = 0; i < things.Count; i++)
                 {
-                    if (things[i] is Pawn other && other != pawn && !other.Dead && pawn.HostileTo(other))
+                    if (things[i] is Pawn other && other != pawn && !other.Dead && ABY_FactionHostilityUtility.SafeHostileTo(pawn, other))
                     {
                         return true;
                     }
@@ -186,7 +186,7 @@ namespace AbyssalProtocol
                 List<Thing> things = cell.GetThingList(map);
                 for (int i = 0; i < things.Count; i++)
                 {
-                    if (things[i] is Pawn victim && victim != pawn && !victim.Dead && pawn.HostileTo(victim) && damagedPawns.Add(victim))
+                    if (things[i] is Pawn victim && victim != pawn && !victim.Dead && ABY_FactionHostilityUtility.SafeHostileTo(pawn, victim) && damagedPawns.Add(victim))
                     {
                         int damage = Math.Max(1, GenMath.RoundRandom(Props.pulseDamage * falloff));
                         DamageInfo dinfo = new DamageInfo(

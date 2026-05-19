@@ -93,7 +93,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    if (launcherPawn != null && !launcherPawn.HostileTo(pawn))
+                    if (launcherPawn != null && !ABY_FactionHostilityUtility.SafeHostileTo(launcherPawn, pawn))
                     {
                         continue;
                     }

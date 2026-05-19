@@ -719,7 +719,7 @@ namespace AbyssalProtocol
             if (!target.RaceProps.IsFlesh)
                 return false;
 
-            return target.HostileTo(source);
+            return ABY_FactionHostilityUtility.SafeHostileTo(target, source);
         }
 
         private static bool IsValidDashTarget(Pawn source, Pawn target)
@@ -730,7 +730,7 @@ namespace AbyssalProtocol
             if (target.Dead || !target.Spawned)
                 return false;
 
-            return target.HostileTo(source);
+            return ABY_FactionHostilityUtility.SafeHostileTo(target, source);
         }
 
         private static void ApplyHeatstroke(Pawn target, float severityAmount)

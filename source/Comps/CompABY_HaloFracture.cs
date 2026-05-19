@@ -109,12 +109,12 @@ namespace AbyssalProtocol
 
             if (sourceFaction != null && target.Faction != null)
             {
-                return sourceFaction.HostileTo(target.Faction);
+                return ABY_FactionHostilityUtility.SafeHostileTo(sourceFaction, target.Faction);
             }
 
             if (sourcePawn != null)
             {
-                return target.HostileTo(sourcePawn);
+                return ABY_FactionHostilityUtility.SafeHostileTo(target, sourcePawn);
             }
 
             return false;

@@ -278,7 +278,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return pawn.Faction.HostileTo(launcherFaction);
+            return ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, launcherFaction);
         }
 
         private static bool IsBossOrHuge(Pawn pawn)

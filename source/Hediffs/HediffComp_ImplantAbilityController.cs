@@ -189,7 +189,7 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            if (Props.onlyAutoCastHostilePawns && !caster.HostileTo(target))
+            if (Props.onlyAutoCastHostilePawns && !ABY_FactionHostilityUtility.SafeHostileTo(caster, target))
             {
                 return true;
             }

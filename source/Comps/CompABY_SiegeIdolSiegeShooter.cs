@@ -233,7 +233,7 @@ namespace AbyssalProtocol
                 && !pawn.Downed
                 && pawn.Faction != null
                 && Faction.OfPlayer != null
-                && pawn.Faction.HostileTo(Faction.OfPlayer);
+                && ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         private bool TryBreakForCloseThreat(Pawn pawn, int ticksGame)

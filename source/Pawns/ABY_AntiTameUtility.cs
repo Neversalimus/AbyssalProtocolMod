@@ -265,7 +265,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return pawn.Faction == null || Faction.OfPlayer == null || pawn.Faction.HostileTo(Faction.OfPlayer);
+            return pawn.Faction == null || Faction.OfPlayer == null || ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         public static bool IsAbyssalRaceDef(ThingDef def)
@@ -331,7 +331,7 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            return pawn.Faction?.def?.defName != AbyssalFactionDefName && !pawn.HostileTo(Faction.OfPlayer);
+            return pawn.Faction?.def?.defName != AbyssalFactionDefName && !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn);
         }
 
         private static void NormalizePawnAnimalState(Pawn pawn)

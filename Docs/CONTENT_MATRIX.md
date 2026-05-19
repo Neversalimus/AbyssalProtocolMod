@@ -292,3 +292,9 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | Anti-tame / animal workflow throttling | Implemented | `source/Pawns/MapComponents/`, `source/Pawns/ABY_AntiTameUtility.cs`, `source/Compatibility/ABY_LargeModpackHotfixBUtility.cs` | n/a | n/a | Longer intervals and runtime caches reduce baseline compatibility-tax. |
 | Protocol Nexus UI cache | Implemented | `source/Experimental/ProtocolResearch/ABY_ProtocolResearchUtility.cs`, `Window_AbyssalProtocolNexus.cs` | n/a | Protocol Nexus | Cached project/category/header data prevents repeated sorting/filtering in draw paths. |
 | Dominion ambient/edge/collapse VFX budget | Implemented | `source/Dominion/MapComponents/` | Dominion VFX assets unchanged | Performance settings only | Optional spectacle is reduced under budget pressure; reward/extraction gameplay must not depend on skipped visuals. |
+
+## Runtime safety utility — hidden faction hostility
+
+| System | Source owner | Purpose | Integration notes |
+|---|---|---|---|
+| Hidden faction hostility safety | `source/Core/Runtime/ABY_FactionHostilityUtility.cs` | Prevents red `Faction ... has null relation with PlayerColony` errors when ABY hidden/generated factions are checked by target scans, boss aggression, turrets, auras, or projectiles. | Use `SafeHostileTo(...)` in ABY hot paths instead of direct vanilla `HostileTo(...)` whenever ABY pawns/factions or generated hidden factions can be involved. |

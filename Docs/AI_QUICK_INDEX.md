@@ -205,3 +205,14 @@ For TPS, stutter, scan-loop, VFX density, or large-encounter performance tasks, 
 | Anti-tame / anti-animal workflow TPS | `source/Pawns/MapComponents/MapComponent_ABY_AntiTameGuard.cs`, `source/Pawns/MapComponents/MapComponent_ABY_AntiAnimalWorkflowV3.cs` | `source/Pawns/ABY_AntiTameUtility.cs`, `source/Compatibility/ABY_LargeModpackHotfixBUtility.cs` |
 | Protocol Nexus UI allocations / stale sorting | `source/Experimental/ProtocolResearch/ABY_ProtocolResearchUtility.cs` | `source/Experimental/ProtocolResearch/Window_AbyssalProtocolNexus.cs` |
 | Dominion collapse or edge VFX overload | `source/Dominion/MapComponents/MapComponent_DominionSliceCollapseSpectacle.cs`, `source/Dominion/MapComponents/MapComponent_DominionSliceVoidEdgeVisuals.cs` | `source/Dominion/MapComponents/MapComponent_DominionSliceAmbientVisuals.cs`, `source/Combat/VFX/ABY_VfxBudget.cs` |
+
+## Hidden faction / hostility red errors
+
+Start here when logs mention `Faction ... has null relation with PlayerColony`, `RelationWith`, `HostileTo`, turret target scans, boss aggression, or Abyssal Host relation rows:
+
+- `source/Core/Runtime/ABY_FactionHostilityUtility.cs`
+- `source/Encounters/AbyssalThreatPawnUtility.cs`
+- `source/Comps/CompAbyssalModularTurret.cs`
+- boss/projectile/aura files shown in the stack trace
+
+Rule: do not call vanilla `HostileTo` directly in ABY hidden-faction hot paths. Use `ABY_FactionHostilityUtility.SafeHostileTo(...)`.

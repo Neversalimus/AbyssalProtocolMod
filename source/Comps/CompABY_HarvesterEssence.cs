@@ -370,7 +370,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (owner.Faction != deadPawn.Faction || owner.HostileTo(deadPawn))
+            if (owner.Faction != deadPawn.Faction || ABY_FactionHostilityUtility.SafeHostileTo(owner, deadPawn))
             {
                 return false;
             }

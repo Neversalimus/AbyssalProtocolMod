@@ -231,10 +231,10 @@ namespace AbyssalProtocol
 
             if (pawn.Faction != null && other.Faction != null)
             {
-                return pawn.Faction.HostileTo(other.Faction);
+                return ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, other.Faction);
             }
 
-            return other.HostileTo(pawn);
+            return ABY_FactionHostilityUtility.SafeHostileTo(other, pawn);
         }
 
         private static bool IsHostileInstigator(Pawn pawn, Thing instigator)
@@ -252,7 +252,7 @@ namespace AbyssalProtocol
 
             if (pawn.Faction != null && instigator.Faction != null)
             {
-                return pawn.Faction.HostileTo(instigator.Faction);
+                return ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, instigator.Faction);
             }
 
             return false;

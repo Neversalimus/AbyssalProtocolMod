@@ -66,7 +66,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (owner.Faction != other.Faction || owner.HostileTo(other))
+            if (owner.Faction != other.Faction || ABY_FactionHostilityUtility.SafeHostileTo(owner, other))
             {
                 return false;
             }

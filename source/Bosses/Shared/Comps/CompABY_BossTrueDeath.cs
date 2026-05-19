@@ -394,7 +394,7 @@ namespace AbyssalProtocol
         private void TryForceReengage()
         {
             Pawn pawn = PawnParent;
-            if (pawn == null || !Props.forceLordReengage || pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null || pawn.Faction == null || !pawn.HostileTo(Faction.OfPlayer))
+            if (pawn == null || !Props.forceLordReengage || pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld == null || pawn.Faction == null || !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
             {
                 return;
             }

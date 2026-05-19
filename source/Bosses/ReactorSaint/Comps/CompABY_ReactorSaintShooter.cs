@@ -418,7 +418,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (pawn.Faction == null || Faction.OfPlayer == null || !pawn.Faction.HostileTo(Faction.OfPlayer))
+            if (pawn.Faction == null || Faction.OfPlayer == null || !ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
             {
                 return false;
             }
@@ -1156,7 +1156,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (!shooter.Faction.HostileTo(pawn.Faction))
+                if (!ABY_FactionHostilityUtility.SafeHostileTo(shooter.Faction, pawn.Faction))
                 {
                     continue;
                 }
