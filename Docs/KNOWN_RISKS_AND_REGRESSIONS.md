@@ -330,3 +330,9 @@ Checklist for future logging changes:
 | Texture optimizer touches boss/hero sprites automatically | P1 | assets | Bosses become blurry or lose silhouette | Keep boss/hero groups manual-review only in `texture_budget_rules.json`. |
 | Performance preset changes gameplay | P0/P1 | settings/runtime | Reduced/Minimal changes rewards, AI, boss logic, encounter composition | Visual intensity presets must only affect optional presentation/VFX/UI motion/weather density. |
 | Dominion ambient VFX disabled too aggressively | P2 | Dominion visuals | Slice feels sterile in Minimal/Reduced mode | Minimal may disable optional ambient VFX; Reduced should keep lighter ambient visuals with longer intervals. |
+
+## Diagnostics interpretation risks
+| Risk | Severity | Area | Symptom | Mitigation |
+|---|---|---|---|---|
+| Misreading MapComponent presence as active Dominion Hell | P1 | Diagnostics / Dominion | Empty or horde-test map shows Dominion atmosphere/slice/crisis components as `present`, causing false suspicion of active Dominion Hell | Treat component presence as normal; use performance audit's Dominion state section: `marked`, `session`, `pocket reason`, `slice active`, and ambient active reason. |
+| Raw Abyssal thing counts are too broad without breakdown | P1 | Diagnostics / horde testing | Horde tests show high `Abyssal things`/`Abyssal pawns` counts but do not identify whether they are live pawns, corpses, portals, buildings, or leftover state | Use top PawnKind/ThingDef/category breakdown and portal-wave snapshot before attempting cleanup or balance fixes. |

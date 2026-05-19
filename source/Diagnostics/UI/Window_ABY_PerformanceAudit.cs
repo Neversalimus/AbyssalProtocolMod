@@ -10,7 +10,7 @@ namespace AbyssalProtocol
         private Vector2 scroll;
         private List<string> cachedLines;
 
-        public override Vector2 InitialSize => new Vector2(780f, 680f);
+        public override Vector2 InitialSize => new Vector2(920f, 760f);
 
         public Window_ABY_PerformanceAudit()
         {

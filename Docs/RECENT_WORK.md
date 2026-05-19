@@ -1,5 +1,12 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-19 — Performance audit breakdown pass
+- Performance audit window now separates map summary, Abyssal entity breakdown, horde/portal state, Dominion state, and component presence.
+- Added top-count diagnostics for Abyssal PawnKinds, factions, pawn states, ThingDefs, thing categories, and corpse inner pawn kinds.
+- Added portal/horde internals snapshot for queued portal requests, used portal cells, front anchors, next portal timing, command gate status, and horde watchdog timing.
+- Clarified Dominion diagnostics: component presence is not treated as active Dominion Hell. Audit now reports whether the map is marked as Dominion, whether a session exists, why pocket detection is true/false, and whether ambient VFX can actually run on the current map.
+
+
 ## UI hot-path pass — Forge/Summoning console caching
 
 A low-risk custom UI performance pass was applied to avoid repeating expensive list work every OnGUI event while preserving the current fragile layout/styling work.
