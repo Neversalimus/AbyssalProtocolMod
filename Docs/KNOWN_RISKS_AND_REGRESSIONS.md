@@ -394,3 +394,25 @@ In-game checks:
 - Spawn Reactor Saint from cocoon and verify boss aggression starts without relation red errors.
 - Place modular turrets and spawn Abyssal Host pawns; turrets should acquire and fire without relation red errors.
 - Test Choir/Null/Halo/Warden AoE effects and turret projectile impacts; effects should hit enemies and avoid allies without relation red errors.
+
+## 2026-05-19 — Dominion combat relation and held-map impact-sound guard
+
+Observed after TPS/faction safety work:
+
+- Vanilla melee and projectile damage can still call `Faction.RelationWith` directly from `PreApplyDamage`, bypassing Abyssal safe hostility helpers.
+- Dominion pocket combat can trigger `ImpactSoundUtility.PlayImpactSound` null references when a hit thing or pocket map is in an unusual held/unparented transition state.
+- External trait-behavior think nodes can throw on custom Abyssal hostile pawns and spam yellow warnings even when a finalizer safely converts the result to `NoJob`.
+
+Regression rules:
+
+- Do not rely only on replacing `HostileTo` call sites; hidden encounter factions must also have repaired vanilla relation rows for vanilla melee/damage paths.
+- Keep `ABY_FactionRelationRepairGameComponent` and `HarmonyPatch_ABY_FactionRelationRepair_RelationWith` together: the game component repairs existing saves, while the Harmony prefix catches late/generated relation checks before vanilla logs red errors.
+- If Dominion combat damage breaks in `ImpactSoundUtility`, treat the sound as optional presentation and suppress only the sound exception, not the damage logic.
+- Abyssal hostile pawns should not run colonist-style trait-behavior think nodes from external mods; they use Abyssal combat AI and should fail closed to `ThinkResult.NoJob`.
+
+In-game checks:
+
+- Load an existing save with `ABY_AbyssalHost` already present and fight in melee; verify no `null relation with PlayerColony` red errors appear.
+- Enter Dominion Slice, allow Chain Zealots and Hexgun Thralls to hit colonists; verify damage applies without `ImpactSoundUtility`/`PositionHeld` red errors.
+- Spawn 30+ Abyssal pawns in a large modpack; verify no repeated yellow `Suppressed ThinkNode_TraitBehaviors exception` warnings appear.
+- Select the Great Infernal Gate entry gizmo in Russian and English; verify the safe entry command shows a short localized label, not the raw key.

@@ -462,6 +462,8 @@ Use this helper in Abyssal hot paths where one side can be `ABY_AbyssalHost`, an
 Rules:
 
 1. Prefer `ABY_FactionHostilityUtility.SafeHostileTo(...)` over direct `HostileTo(...)` for ABY target selection and AoE logic.
+2. `ABY_FactionRelationRepairGameComponent` repairs existing-save relation rows, and `HarmonyPatch_ABY_FactionRelationRepair_RelationWith` catches late/generated ABY relation checks before vanilla `RelationWith` can log red errors. Keep these with the hostility utility.
+3. `HarmonyPatch_ABY_DominionImpactSoundGuard` suppresses optional impact-sound null references in Abyssal/Dominion combat contexts only; it must not be expanded into a general damage suppressor.
 2. `ABY_AbyssalHost` is treated as hostile to non-Abyssal factions without calling vanilla `RelationWith` when the relation row is missing.
 3. Missing non-Abyssal relation rows fall back conservatively instead of spamming red errors in per-tick target scans.
 4. Do not reintroduce direct hidden-faction `HostileTo` calls into turret, boss, projectile, aura, or runtime-cache code.

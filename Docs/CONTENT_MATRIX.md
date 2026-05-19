@@ -298,3 +298,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | System | Source owner | Purpose | Integration notes |
 |---|---|---|---|
 | Hidden faction hostility safety | `source/Core/Runtime/ABY_FactionHostilityUtility.cs` | Prevents red `Faction ... has null relation with PlayerColony` errors when ABY hidden/generated factions are checked by target scans, boss aggression, turrets, auras, or projectiles. | Use `SafeHostileTo(...)` in ABY hot paths instead of direct vanilla `HostileTo(...)` whenever ABY pawns/factions or generated hidden factions can be involved. |
+
+## Runtime safety / Dominion combat regression guards — 2026-05-19
+
+| Area | Ownership | Integration notes |
+| --- | --- | --- |
+| Hidden Abyssal faction relation repair | `source/Core/Runtime/ABY_FactionHostilityUtility.cs`, `source/Core/Runtime/ABY_FactionRelationRepairGameComponent.cs`, `source/Core/Runtime/HarmonyPatch_ABY_FactionRelationRepair.cs` | Existing saves and generated hidden factions must have hostile relation rows with `PlayerColony`; vanilla melee/damage code does not use ABY safe hostility helpers. |
+| Dominion combat impact-sound guard | `source/Compatibility/HarmonyPatch_ABY_DominionImpactSoundGuard.cs` | Suppresses optional `ImpactSoundUtility` null refs only in Abyssal/Dominion contexts so damage ticks continue. |
+| Abyssal trait think-node guard | `source/Compatibility/HarmonyPatch_ABY_AbyssalThinkNodeTraitGuard.cs`, `source/Compatibility/ABY_LargeModpackCompatPatches.cs` | Abyssal hostile pawns skip colonist-style TraitBehaviors jobs and fail closed to `NoJob` without warning spam. |
+| Safe Dominion gate command localization | `source/Dominion/CompABY_DominionGateSafePocket.cs`, `Languages/*/Keyed/ABY_PackageC_GateFlow.xml` | Safe enter/extract gizmos use short localized labels to avoid raw key wrapping on command buttons. |

@@ -110,7 +110,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    if (instigator != null && !GenHostility.HostileTo(instigator, pawn))
+                    if (instigator != null && !ABY_FactionHostilityUtility.SafeHostileTo(instigator, pawn))
                     {
                         continue;
                     }

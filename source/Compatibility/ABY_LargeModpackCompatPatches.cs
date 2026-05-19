@@ -89,12 +89,10 @@ namespace AbyssalProtocol
                 return exception;
             }
 
+            // Abyssal hostile pawns use custom combat AI; external trait/need think nodes are optional
+            // large-modpack behavior. Suppress silently here because repeated warning logs become their own
+            // performance and usability problem during large abyssal waves.
             result = ThinkResult.NoJob;
-            string pawnKey = pawn != null ? pawn.thingIDNumber.ToString() : "unknown";
-            ABY_LogThrottleUtility.Warning(
-                "thinknode-suppressed-" + source + "-" + pawnKey,
-                "[Abyssal Protocol] Suppressed " + source + " exception for abyssal pawn " + (pawn?.LabelShortCap ?? "unknown") + ": " + exception.GetType().Name + " - " + exception.Message,
-                5000);
             return null;
         }
 

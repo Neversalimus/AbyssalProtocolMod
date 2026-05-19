@@ -427,6 +427,7 @@ namespace AbyssalProtocol
                 Faction faction = Find.FactionManager.FirstFactionOfDef(def);
                 if (faction != null)
                 {
+                    ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(faction, Faction.OfPlayer);
                     return faction;
                 }
 
@@ -437,6 +438,7 @@ namespace AbyssalProtocol
                     {
                         Find.FactionManager.Add(generated);
                     }
+                    ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(generated, Faction.OfPlayer);
                     return generated;
                 }
             }

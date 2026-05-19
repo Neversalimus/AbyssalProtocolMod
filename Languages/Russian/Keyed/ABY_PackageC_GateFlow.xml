@@ -13,6 +13,10 @@
   <ABY_DominionPocketFlowStatus_Deployed>ударная группа уже внутри среза доминиона</ABY_DominionPocketFlowStatus_Deployed>
   <ABY_DominionPocketCommand_Enter>Войти в Великие адские врата</ABY_DominionPocketCommand_Enter>
   <ABY_DominionPocketCommand_EnterDesc>Отправить задрафченную ударную группу в нестабильный срез доминиона. Если задрафченных колонистов нет, выделенные колонисты будут проведены через портал как аварийная мера.</ABY_DominionPocketCommand_EnterDesc>
+  <ABY_DominionPocketCommand_SafeEnter>Войти в Ад</ABY_DominionPocketCommand_SafeEnter>
+  <ABY_DominionPocketCommand_SafeEnterDesc>Безопасно открыть срез доминиона и перенести ударную группу через портал с изоляцией ошибок по каждой пешке.</ABY_DominionPocketCommand_SafeEnterDesc>
+  <ABY_DominionPocketCommand_SafeExtract>Эвакуировать</ABY_DominionPocketCommand_SafeExtract>
+  <ABY_DominionPocketCommand_SafeExtractDesc>Безопасно вернуть ударную группу из среза доминиона с изоляцией ошибок по каждой пешке.</ABY_DominionPocketCommand_SafeExtractDesc>
   <ABY_DominionPocketCommand_Jump>Перейти к ударной группе</ABY_DominionPocketCommand_Jump>
   <ABY_DominionPocketCommand_JumpDesc>Переместить камеру к активному срезу доминиона, связанному с этими Великими адскими вратами.</ABY_DominionPocketCommand_JumpDesc>
   <ABY_DominionPocketCommand_Extract>Эвакуировать ударную группу</ABY_DominionPocketCommand_Extract>

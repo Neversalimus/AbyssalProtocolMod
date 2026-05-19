@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using RimWorld;
 using Verse;
@@ -12,7 +13,8 @@ namespace AbyssalProtocol
     /// RimWorld logs a red error when Faction.HostileTo/RelationWith is called for factions that do not
     /// have a relation row with PlayerColony. Hidden/generated encounter factions such as ABY_AbyssalHost
     /// can hit that state in existing saves or mid-encounter generated factions. These helpers preserve the
-    /// intended Abyssal hostility without calling RelationWith when the relation entry is missing.
+    /// intended Abyssal hostility without calling RelationWith when the relation entry is missing, and can also
+    /// repair the missing relation rows so vanilla melee/damage code remains safe.
     /// </summary>
     public static class ABY_FactionHostilityUtility
     {
@@ -21,6 +23,8 @@ namespace AbyssalProtocol
 
         private static readonly FieldInfo RelationsField = typeof(Faction).GetField("relations", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         private static readonly FieldInfo RelationOtherField = typeof(FactionRelation).GetField("other", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        private static readonly FieldInfo RelationKindField = typeof(FactionRelation).GetField("kind", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        private static readonly FieldInfo RelationGoodwillField = typeof(FactionRelation).GetField("baseGoodwill", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
         public static bool IsAbyssalFaction(Faction faction)
         {
@@ -61,6 +65,7 @@ namespace AbyssalProtocol
             bool targetAbyssal = IsAbyssalFaction(target);
             if (sourceAbyssal || targetAbyssal)
             {
+                EnsureHostileRelationIfAbyssalPair(source, target);
                 return sourceAbyssal != targetAbyssal;
             }
 
@@ -83,12 +88,12 @@ namespace AbyssalProtocol
             bool targetAbyssal = IsAbyssalPawn(target);
             if (sourceAbyssal || targetAbyssal)
             {
+                EnsureHostileRelationIfAbyssalPair(source.Faction, target.Faction);
                 return sourceAbyssal != targetAbyssal;
             }
 
             return SafeHostileTo(source.Faction, target.Faction);
         }
-
 
         public static bool SafeHostileTo(Pawn source, Faction target)
         {
@@ -101,6 +106,7 @@ namespace AbyssalProtocol
             bool targetAbyssal = IsAbyssalFaction(target);
             if (sourceAbyssal || targetAbyssal)
             {
+                EnsureHostileRelationIfAbyssalPair(source.Faction, target);
                 return sourceAbyssal != targetAbyssal;
             }
 
@@ -123,6 +129,7 @@ namespace AbyssalProtocol
             bool targetAbyssal = target is Pawn targetPawnOnly && IsAbyssalPawn(targetPawnOnly);
             if (sourceAbyssal || targetAbyssal)
             {
+                EnsureHostileRelationIfAbyssalPair(source.Faction, target.Faction);
                 return sourceAbyssal != targetAbyssal;
             }
 
@@ -140,6 +147,7 @@ namespace AbyssalProtocol
             bool targetAbyssal = IsAbyssalPawn(target);
             if (sourceAbyssal || targetAbyssal)
             {
+                EnsureHostileRelationIfAbyssalPair(source, target.Faction);
                 return sourceAbyssal != targetAbyssal;
             }
 
@@ -155,10 +163,64 @@ namespace AbyssalProtocol
 
             if (IsAbyssalPawn(pawn))
             {
+                EnsureHostileRelationIfAbyssalPair(pawn.Faction, Faction.OfPlayer);
                 return true;
             }
 
             return SafeHostileTo(pawn.Faction, Faction.OfPlayer);
+        }
+
+        public static void RepairAllAbyssalFactionRelations()
+        {
+            try
+            {
+                if (Find.FactionManager?.AllFactionsListForReading == null || Faction.OfPlayer == null)
+                {
+                    return;
+                }
+
+                List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+                for (int i = 0; i < factions.Count; i++)
+                {
+                    Faction faction = factions[i];
+                    if (IsAbyssalFaction(faction))
+                    {
+                        EnsureHostileRelationPair(faction, Faction.OfPlayer);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Warning("aby-faction-relation-repair-all", "[Abyssal Protocol] Abyssal faction relation repair failed: " + ex.Message, 5000);
+            }
+        }
+
+        public static void EnsureHostileRelationIfAbyssalPair(Faction source, Faction target)
+        {
+            if (source == null || target == null || source == target)
+            {
+                return;
+            }
+
+            bool sourceAbyssal = IsAbyssalFaction(source);
+            bool targetAbyssal = IsAbyssalFaction(target);
+            if (sourceAbyssal == targetAbyssal)
+            {
+                return;
+            }
+
+            EnsureHostileRelationPair(source, target);
+        }
+
+        public static void EnsureHostileRelationPair(Faction a, Faction b)
+        {
+            if (a == null || b == null || a == b)
+            {
+                return;
+            }
+
+            EnsureOneWayHostileRelation(a, b);
+            EnsureOneWayHostileRelation(b, a);
         }
 
         private static bool HasRecordedRelation(Faction source, Faction target)
@@ -201,6 +263,51 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private static void EnsureOneWayHostileRelation(Faction source, Faction target)
+        {
+            if (source == null || target == null || source == target || RelationsField == null || RelationOtherField == null)
+            {
+                return;
+            }
+
+            object relationsObject = RelationsField.GetValue(source);
+            if (!(relationsObject is IList relations))
+            {
+                return;
+            }
+
+            for (int i = 0; i < relations.Count; i++)
+            {
+                object relation = relations[i];
+                if (relation == null)
+                {
+                    continue;
+                }
+
+                object other = RelationOtherField.GetValue(relation);
+                if (ReferenceEquals(other, target))
+                {
+                    SetRelationHostile(relation);
+                    return;
+                }
+            }
+
+            FactionRelation newRelation = new FactionRelation(target, FactionRelationKind.Hostile);
+            SetRelationHostile(newRelation);
+            relations.Add(newRelation);
+        }
+
+        private static void SetRelationHostile(object relation)
+        {
+            if (relation == null)
+            {
+                return;
+            }
+
+            RelationKindField?.SetValue(relation, FactionRelationKind.Hostile);
+            RelationGoodwillField?.SetValue(relation, -100);
         }
 
         private static bool FallbackHostility(Faction source, Faction target)

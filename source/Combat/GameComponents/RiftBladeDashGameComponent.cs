@@ -156,7 +156,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!GenHostility.HostileTo(pawn, target))
+            if (!ABY_FactionHostilityUtility.SafeHostileTo(pawn, target))
             {
                 return false;
             }

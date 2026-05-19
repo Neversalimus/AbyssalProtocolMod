@@ -216,3 +216,17 @@ Start here when logs mention `Faction ... has null relation with PlayerColony`, 
 - boss/projectile/aura files shown in the stack trace
 
 Rule: do not call vanilla `HostileTo` directly in ABY hidden-faction hot paths. Use `ABY_FactionHostilityUtility.SafeHostileTo(...)`.
+
+### Hidden faction relation / Dominion combat regression guards
+
+Look first:
+
+- `source/Core/Runtime/ABY_FactionHostilityUtility.cs`
+- `source/Core/Runtime/ABY_FactionRelationRepairGameComponent.cs`
+- `source/Core/Runtime/HarmonyPatch_ABY_FactionRelationRepair.cs`
+- `source/Compatibility/HarmonyPatch_ABY_DominionImpactSoundGuard.cs`
+- `source/Compatibility/HarmonyPatch_ABY_AbyssalThinkNodeTraitGuard.cs`
+- `source/Compatibility/ABY_LargeModpackCompatPatches.cs`
+- `source/Dominion/CompABY_DominionGateSafePocket.cs`
+
+Use these when debugging `Faction ... has null relation with PlayerColony`, Dominion pocket melee/projectile damage null refs, repeated trait-behavior warning spam on Abyssal pawns, or raw safe gate command labels.

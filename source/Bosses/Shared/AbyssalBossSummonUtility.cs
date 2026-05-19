@@ -31,6 +31,7 @@ namespace AbyssalProtocol
                 Faction abyssal = Find.FactionManager.FirstFactionOfDef(abyssalDef);
                 if (abyssal != null)
                 {
+                    ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(abyssal, Faction.OfPlayer);
                     return abyssal;
                 }
 
@@ -44,6 +45,7 @@ namespace AbyssalProtocol
                             Find.FactionManager.Add(generated);
                         }
 
+                        ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(generated, Faction.OfPlayer);
                         return generated;
                     }
                 }

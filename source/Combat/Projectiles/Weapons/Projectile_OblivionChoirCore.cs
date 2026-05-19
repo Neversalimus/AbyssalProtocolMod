@@ -205,7 +205,7 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                return Launcher == null || GenHostility.HostileTo(Launcher, pawn);
+                return Launcher == null || ABY_FactionHostilityUtility.SafeHostileTo(Launcher, pawn);
             }
 
             Building building = thing as Building;
@@ -221,7 +221,7 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                if (Launcher != null && !GenHostility.HostileTo(Launcher, building))
+                if (Launcher != null && !ABY_FactionHostilityUtility.SafeHostileTo(Launcher, building))
                 {
                     return false;
                 }
@@ -343,7 +343,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (instigator != null && !GenHostility.HostileTo(instigator, pawn))
+                if (instigator != null && !ABY_FactionHostilityUtility.SafeHostileTo(instigator, pawn))
                 {
                     continue;
                 }
