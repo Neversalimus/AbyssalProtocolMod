@@ -288,4 +288,7 @@ Directive: {1}</ABY_DominionOpsSummary>
 
   <ABY_DominionWaveConsolePrelude>Wave routing is suppressed during the short gate-lock prelude. The Great Infernal Gate will open in {0}.</ABY_DominionWaveConsolePrelude>
 
+  <ABY_DominionWavePack_Zealots>dominion breach cell</ABY_DominionWavePack_Zealots>
+  <ABY_DominionWavePack_Snipers>dominion mark pack</ABY_DominionWavePack_Snipers>
+  <ABY_DominionWavePack_HaloHusks>dominion halo cell</ABY_DominionWavePack_HaloHusks>
 </LanguageData>

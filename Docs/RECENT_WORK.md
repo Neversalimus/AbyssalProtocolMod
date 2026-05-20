@@ -606,9 +606,11 @@ This is a large-modpack compatibility layer, not a gameplay rebalance. It is mea
 
 Validation after this pass: direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries succeeded. Runtime smoke testing in the target modpack is still required.
 
-## 2026-05-20 — Rupture Crown and Harvester/Aortic cleanup
+## 2026-05-20 — Audit cleanup pass
 
-- Localized the remaining player-facing Rupture Crown inspect, disable, recharge, no-target, radius, and success messages through keyed English/Russian strings.
-- Replaced Harvester essence full tracked-ID cache clears with bounded oldest-entry trimming so long sessions do not forget all recently processed corpses/pawns at once.
-- Routed Aortic Chain Lash target selection through `ABY_RuntimeTargetCache.CombatTargetPawnsFor(...)` and guarded lash damage through the shared combat-stack safety utility.
-- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
+- Added the missing `ABY_ReactorSaintImpact` SoundDef used by Reactor Saint and apparel aegis break feedback.
+- Moved the base Abyssal faction icon path to the real in-game texture path `UI/Icons/ABY_FactionIcon`.
+- Neutralized an orphan Crownfire Rocket Choir DefInjected localization file that referenced a removed ThingDef.
+- Added missing EN/RU Keyed strings for Dominion pocket transfer failures, Dominion weather/music settings, Harrower animation toggles, implant fallback summaries, and modular turret grid/stat labels.
+- Cleaned several player-facing Russian technical leftovers in difficulty, protocol nexus, summoning rewards, diagnostics, and ritual preview text.
+

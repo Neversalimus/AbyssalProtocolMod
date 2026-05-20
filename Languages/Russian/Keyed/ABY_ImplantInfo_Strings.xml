@@ -14,4 +14,6 @@
   <ABY_ImplantInfo_HungerRateDesc>Изменяет скорость голода на {0}, пока имплант установлен.</ABY_ImplantInfo_HungerRateDesc>
   <ABY_ImplantInfo_Profile>Профиль импланта</ABY_ImplantInfo_Profile>
   <ABY_ImplantInfo_ProfileDesc>Краткое описание импланта и того, как он изменяет носителя.</ABY_ImplantInfo_ProfileDesc>
+  <ABY_ImplantInfo_FallbackSummary>Специализированный имплант Бездны, навсегда меняющий носителя через интеграцию: {0}.</ABY_ImplantInfo_FallbackSummary>
+  <ABY_ImplantInfo_FallbackSummaryGeneric>Специализированный имплант Бездны для контролируемой интеграции с носителем.</ABY_ImplantInfo_FallbackSummaryGeneric>
 </LanguageData>

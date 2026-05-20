@@ -101,4 +101,30 @@
     </subSounds>
   </SoundDef>
 
+
+  <SoundDef>
+    <defName>ABY_ReactorSaintImpact</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/Rupture_Impact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>32</min>
+          <max>37</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.78</min>
+          <max>0.86</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
 </Defs>

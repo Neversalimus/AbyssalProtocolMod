@@ -183,4 +183,32 @@
   <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>ракетный Хор Коронного Пламени</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>ракетное насыщение</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
+  <ABY_ModularTurret_GridSubtitle>Панель разъёмов: осмотрите ячейки, установите модули и проверьте выход турели.</ABY_ModularTurret_GridSubtitle>
+  <ABY_TurretGridHeader>Разъёмы модулей</ABY_TurretGridHeader>
+  <ABY_TurretGridHint>Нажмите на ячейку, чтобы осмотреть или изменить этот слот.</ABY_TurretGridHint>
+  <ABY_TurretGridAvailableHeader_OnMap>Модули на текущей карте</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretLockedDetail_New>Этот слот заблокирован на текущем шасси и недоступен для этой турели.</ABY_TurretLockedDetail_New>
+  <ABY_TurretGridActiveSlot>Активный слот шасси</ABY_TurretGridActiveSlot>
+  <ABY_TurretGridLockedState>Заблокировано на этом шасси</ABY_TurretGridLockedState>
+  <ABY_TurretGridEmptyMain>Пусто</ABY_TurretGridEmptyMain>
+  <ABY_TurretGridEmptyAux>Пусто</ABY_TurretGridEmptyAux>
+  <ABY_TurretGridEmptyPassive>Пусто</ABY_TurretGridEmptyPassive>
+  <ABY_TurretGridLockedTooltip>Заблокировано на этом шасси. Этот слот недоступен для текущей турели.</ABY_TurretGridLockedTooltip>
+  <ABY_TurretGridAvailable>На карте есть совместимый свободный модуль.</ABY_TurretGridAvailable>
+  <ABY_TurretGridUnavailable>На карте сейчас нет совместимого свободного модуля.</ABY_TurretGridUnavailable>
+  <ABY_TurretSlotTitle_AuxIndexed>Вспомогательный модуль {0}</ABY_TurretSlotTitle_AuxIndexed>
+  <ABY_TurretStatsHeader_Operational>Рабочая сводка</ABY_TurretStatsHeader_Operational>
+  <ABY_TurretStatsMainMissingCompact>Основной слот: оружейное ядро не установлено</ABY_TurretStatsMainMissingCompact>
+  <ABY_TurretStatsPowerDrawBreakdown>Потребление: шасси {0} Вт + модули {1} Вт</ABY_TurretStatsPowerDrawBreakdown>
+  <ABY_TurretStat_Range>Дальность: {0}</ABY_TurretStat_Range>
+  <ABY_TurretStat_MainCooldown>Основная перезарядка: {0}</ABY_TurretStat_MainCooldown>
+  <ABY_TurretStat_Burst>Очередь: {0}</ABY_TurretStat_Burst>
+  <ABY_TurretStat_AuxCooldown>Перезарядка поддержки: {0}</ABY_TurretStat_AuxCooldown>
+  <ABY_TurretStat_RangeOffset>Изменение дальности: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_CooldownEffect>Влияние на перезарядку: {0}</ABY_TurretStat_CooldownEffect>
+  <ABY_TurretStat_CooldownOffset>Смещение перезарядки: {0}</ABY_TurretStat_CooldownOffset>
+  <ABY_TurretStat_MissRadiusOffset>Смещение разброса: {0}</ABY_TurretStat_MissRadiusOffset>
+  <ABY_TurretStat_Projectile>Снаряд: {0}</ABY_TurretStat_Projectile>
+  <ABY_TurretStat_ExtraPower>Дополнительное потребление: +{0} Вт</ABY_TurretStat_ExtraPower>
+  <ABY_TurretGridLocked>Заблокировано</ABY_TurretGridLocked>
 </LanguageData>

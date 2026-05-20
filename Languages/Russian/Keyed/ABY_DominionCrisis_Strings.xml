@@ -239,4 +239,7 @@
   <ABY_DominionWavePreviewStatus_PreludeQuiet>Волны не маршрутизируются во время короткой прелюдии замка. Портал откроется через {0}.</ABY_DominionWavePreviewStatus_PreludeQuiet>
   <ABY_DominionWaveEta_GateOpening>врата откроются через {0}</ABY_DominionWaveEta_GateOpening>
   <ABY_DominionWaveConsolePrelude>Маршрутизация волн подавлена во время короткой прелюдии замка. Великие инфернальные врата откроются через {0}.</ABY_DominionWaveConsolePrelude>
+  <ABY_DominionWavePack_Zealots>прорывная ячейка Доминиона</ABY_DominionWavePack_Zealots>
+  <ABY_DominionWavePack_Snipers>метящая группа Доминиона</ABY_DominionWavePack_Snipers>
+  <ABY_DominionWavePack_HaloHusks>ореольная ячейка Доминиона</ABY_DominionWavePack_HaloHusks>
 </LanguageData>

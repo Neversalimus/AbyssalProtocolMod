@@ -19,4 +19,7 @@
   <ABY_DominionPocketRuntimeExitInspect_Unlinked>Этот якорь эвакуации больше не связан с живой сессией среза доминиона.</ABY_DominionPocketRuntimeExitInspect_Unlinked>
   <ABY_DominionPocketRuntimeSource_Unknown>неизвестная исходная карта</ABY_DominionPocketRuntimeSource_Unknown>
   <ABY_DominionPocketRuntimeFail_EnvironmentBuild>Не удалось стабилизировать окружение среза доминиона.</ABY_DominionPocketRuntimeFail_EnvironmentBuild>
+  <ABY_DominionPocketRuntimeFail_NoPawnsTransferred>Не удалось перенести ни одного бойца в срез Доминиона.</ABY_DominionPocketRuntimeFail_NoPawnsTransferred>
+  <ABY_DominionPocketRuntimeFail_NoReturnTransfer>Не удалось вернуть ни одного бойца из среза Доминиона.</ABY_DominionPocketRuntimeFail_NoReturnTransfer>
+  <ABY_DominionPocketRuntimePartialTransfer>Срез Доминиона открыт, но перенесено только {0}/{1} выбранных пешек. Проверьте ошибки SpawnSetup от сторонних модов.</ABY_DominionPocketRuntimePartialTransfer>
 </LanguageData>

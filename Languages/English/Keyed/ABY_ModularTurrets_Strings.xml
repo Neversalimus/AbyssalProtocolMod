@@ -183,4 +183,32 @@
   <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>Crownfire Rocket Choir</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>guided rocket saturation</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
   <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
+  <ABY_ModularTurret_GridSubtitle>Socket board: inspect squares, install modules, and preview turret output.</ABY_ModularTurret_GridSubtitle>
+  <ABY_TurretGridHeader>Module sockets</ABY_TurretGridHeader>
+  <ABY_TurretGridHint>Click a square to inspect or change that slot.</ABY_TurretGridHint>
+  <ABY_TurretGridAvailableHeader_OnMap>Modules currently on map</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretLockedDetail_New>This slot is locked on the current chassis. It is not available on this chassis.</ABY_TurretLockedDetail_New>
+  <ABY_TurretGridActiveSlot>Active chassis slot</ABY_TurretGridActiveSlot>
+  <ABY_TurretGridLockedState>Locked on this chassis</ABY_TurretGridLockedState>
+  <ABY_TurretGridEmptyMain>Empty</ABY_TurretGridEmptyMain>
+  <ABY_TurretGridEmptyAux>Empty</ABY_TurretGridEmptyAux>
+  <ABY_TurretGridEmptyPassive>Empty</ABY_TurretGridEmptyPassive>
+  <ABY_TurretGridLockedTooltip>Locked on this chassis. This slot is not available on the current chassis.</ABY_TurretGridLockedTooltip>
+  <ABY_TurretGridAvailable>Compatible loose module available on map.</ABY_TurretGridAvailable>
+  <ABY_TurretGridUnavailable>No compatible loose module currently available on map.</ABY_TurretGridUnavailable>
+  <ABY_TurretSlotTitle_AuxIndexed>Auxiliary module {0}</ABY_TurretSlotTitle_AuxIndexed>
+  <ABY_TurretStatsHeader_Operational>Operational summary</ABY_TurretStatsHeader_Operational>
+  <ABY_TurretStatsMainMissingCompact>Main: no weapon core installed</ABY_TurretStatsMainMissingCompact>
+  <ABY_TurretStatsPowerDrawBreakdown>Power draw: chassis {0} W + modules {1} W</ABY_TurretStatsPowerDrawBreakdown>
+  <ABY_TurretStat_Range>Range: {0}</ABY_TurretStat_Range>
+  <ABY_TurretStat_MainCooldown>Main cooldown: {0}</ABY_TurretStat_MainCooldown>
+  <ABY_TurretStat_Burst>Burst: {0}</ABY_TurretStat_Burst>
+  <ABY_TurretStat_AuxCooldown>Aux cooldown: {0}</ABY_TurretStat_AuxCooldown>
+  <ABY_TurretStat_RangeOffset>Range offset: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_CooldownEffect>Cooldown effect: {0}</ABY_TurretStat_CooldownEffect>
+  <ABY_TurretStat_CooldownOffset>Cooldown offset: {0}</ABY_TurretStat_CooldownOffset>
+  <ABY_TurretStat_MissRadiusOffset>Miss radius offset: {0}</ABY_TurretStat_MissRadiusOffset>
+  <ABY_TurretStat_Projectile>Projectile: {0}</ABY_TurretStat_Projectile>
+  <ABY_TurretStat_ExtraPower>Extra power draw: +{0} W</ABY_TurretStat_ExtraPower>
+  <ABY_TurretGridLocked>Locked</ABY_TurretGridLocked>
 </LanguageData>

@@ -1,10 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CrownfireCarrierRocket.label>crownfire carrier rocket</ABY_CrownfireCarrierRocket.label>
-  <ABY_CrownfireMicroRocket.label>crownfire micro-rocket</ABY_CrownfireMicroRocket.label>
-  <ABY_CrownfireMicroRocket_Fast.label>crownfire micro-rocket</ABY_CrownfireMicroRocket_Fast.label>
-  <ABY_CrownfireMicroRocket_Slow.label>crownfire micro-rocket</ABY_CrownfireMicroRocket_Slow.label>
-  <ABY_TurretModule_CrownfireRocketChoir.description>A crownfire carrier choir that breaks open above the battlefield, scattering guided fire across swarms and breach packs.</ABY_TurretModule_CrownfireRocketChoir.description>
-  <ABY_TurretModule_CrownfireRocketChoir.label>Crownfire Rocket Choir</ABY_TurretModule_CrownfireRocketChoir.label>
-  <ABY_CrownfireRocketChoir.description>A crownfire choir weapon that opens above the target zone and scatters guided fire through swarms, breach packs and exposed formations.</ABY_CrownfireRocketChoir.description>
 </LanguageData>

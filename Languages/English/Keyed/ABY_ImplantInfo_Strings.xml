@@ -14,4 +14,6 @@
   <ABY_ImplantInfo_HungerRateDesc>Changes hunger rate by {0} while the implant is installed.</ABY_ImplantInfo_HungerRateDesc>
   <ABY_ImplantInfo_Profile>Implant profile</ABY_ImplantInfo_Profile>
   <ABY_ImplantInfo_ProfileDesc>Summary of what this implant is and how it alters the host.</ABY_ImplantInfo_ProfileDesc>
+  <ABY_ImplantInfo_FallbackSummary>A specialized abyssal implant that permanently alters the host through {0} integration.</ABY_ImplantInfo_FallbackSummary>
+  <ABY_ImplantInfo_FallbackSummaryGeneric>A specialized abyssal implant built for disciplined host integration.</ABY_ImplantInfo_FallbackSummaryGeneric>
 </LanguageData>

@@ -49,7 +49,7 @@
 И если это был лишь послушный носитель,
 то то, что стояло по ту сторону, ещё даже не заговорило.</ABY_ReactorSaintKillDesc>
   <ABY_HeraldIntegrationUnlockedLabel>Интеграция вестника разблокирована</ABY_HeraldIntegrationUnlockedLabel>
-  <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруй добытый вестник фрагмент ядра на высокотехнологичном исследовательском столе, чтобы открыть Вестник-оружие и импланты.</ABY_HeraldIntegrationUnlockedDesc>
+  <ABY_HeraldIntegrationUnlockedDesc>Открыт путь анализа фрагмента. Расшифруйте добытый фрагмент ядра Вестника на высокотехнологичном исследовательском столе, чтобы открыть оружие и импланты Вестника.</ABY_HeraldIntegrationUnlockedDesc>
   <ABY_SignalTheoryGuidanceLabel>открыта бездненный сигнал теория</ABY_SignalTheoryGuidanceLabel>
   <ABY_SignalTheoryGuidanceDesc>Изучи теорию бездненного сигнала, чтобы начать цикл призывов и открыть первую инфраструктуру Бездны.</ABY_SignalTheoryGuidanceDesc>
   <ABY_FirstSigilGuidanceLabel>Первый сигил готов</ABY_FirstSigilGuidanceLabel>
@@ -134,7 +134,7 @@
   <ABY_CircleRitual_Archon_Desc>Расходует одну подготовленную сигилу архонта, направляет колониста к кругу, заряжает разлом и вызывает первое крупное техно-демоническое столкновение.</ABY_CircleRitual_Archon_Desc>
   <ABY_CircleRitual_Archon_Rewards>• Прогрессия первого боевого цикла
 • Доступ к продолжению вестник-линии
-• Ранний трофеи Бездны и гейт материалов босса</ABY_CircleRitual_Archon_Rewards>
+• Ранние трофеи Бездны и материальная печать первого босса</ABY_CircleRitual_Archon_Rewards>
   <ABY_CircleRitual_Archon_SideEffects>• Открывает враждебный разлом на текущей карте
 • Требует питания и свободного центра круга
 • Фазы ритуала усиливают визуал, звук и давление столкновения</ABY_CircleRitual_Archon_SideEffects>
@@ -150,7 +150,7 @@
   <ABY_CirclePreview_Zealot_Singular>фанатик</ABY_CirclePreview_Zealot_Singular>
   <ABY_CirclePreview_Zealot_Plural>фанатика</ABY_CirclePreview_Zealot_Plural>
   <ABY_CirclePreview_None>без противников</ABY_CirclePreview_None>
-  <ABY_CircleFail_LegacySigilRetired>Устаревшие сигила гексган-ретрансляторас выведены из активной Т1-прогрессии.</ABY_CircleFail_LegacySigilRetired>
+  <ABY_CircleFail_LegacySigilRetired>Устаревшие сигилы гексган-ретранслятора выведены из ранней ветки допуска.</ABY_CircleFail_LegacySigilRetired>
   <ABY_LegacySigilMigration_Message>Преобразовано устаревших сигил гексган-ретранслятора в сигилы угольной гончей: {0}.</ABY_LegacySigilMigration_Message>
   <ABY_CircleSelect>Выбрать</ABY_CircleSelect>
   <ABY_CircleSelected>Выбрано</ABY_CircleSelected>
@@ -159,7 +159,7 @@
   <ABY_CircleConsoleFail_NoCircle>Для управления через консоль нет подходящего круга призыва.</ABY_CircleConsoleFail_NoCircle>
   <ABY_CircleConsoleFail_NoSigil>На текущей карте не найдено ни одной подготовленной сигилы архонта.</ABY_CircleConsoleFail_NoSigil>
   <ABY_CircleConsoleFail_NoSpecificSigil>На текущей карте не найден подготовленный предмет: {0}.</ABY_CircleConsoleFail_NoSpecificSigil>
-  <ABY_CircleConsoleFail_NoSigilFallback>подготовленный сигила</ABY_CircleConsoleFail_NoSigilFallback>
+  <ABY_CircleConsoleFail_NoSigilFallback>подготовленная сигила</ABY_CircleConsoleFail_NoSigilFallback>
   <ABY_CircleConsoleFail_NoOperator>Сейчас нет подходящего колониста, который может отнести сигил к кругу.</ABY_CircleConsoleFail_NoOperator>
   <ABY_CircleConsoleFail_JobStart>Не удалось запустить приказ на призыв.</ABY_CircleConsoleFail_JobStart>
   <ABY_CircleTab_SubtitleShort>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_SubtitleShort>

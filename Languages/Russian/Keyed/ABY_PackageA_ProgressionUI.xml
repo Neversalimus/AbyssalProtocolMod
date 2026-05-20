@@ -3,14 +3,14 @@
   <ABY_CircleTagsHeader>Тактический профиль</ABY_CircleTagsHeader>
   <ABY_CircleMilestonesHeader>Следующие вехи</ABY_CircleMilestonesHeader>
   <ABY_CircleMilestone_Command>Командный путь</ABY_CircleMilestone_Command>
-  <ABY_CircleMilestone_CommandReady>Путь инвокации чист. Подготовленный сигил, оператор и состояние круга подходят для запуска.</ABY_CircleMilestone_CommandReady>
-  <ABY_CircleMilestone_CommandBlocked>Сначала убери блокер: {0}</ABY_CircleMilestone_CommandBlocked>
+  <ABY_CircleMilestone_CommandReady>Контур призыва чист. Подготовленный сигил, оператор и состояние круга подходят для запуска.</ABY_CircleMilestone_CommandReady>
+  <ABY_CircleMilestone_CommandBlocked>Сначалаа убери блокер: {0}</ABY_CircleMilestone_CommandBlocked>
   <ABY_CircleMilestone_Reward>Фокус награды</ABY_CircleMilestone_Reward>
   <ABY_CircleMilestone_Next>Следующая эскалация</ABY_CircleMilestone_Next>
   <ABY_CircleMilestone_NextValue>После этого прорыва логично эскалировать в {0}.</ABY_CircleMilestone_NextValue>
   <ABY_CircleMilestone_NextFinal>Этот ритуал уже находится на текущей вершине лестницы эскалации.</ABY_CircleMilestone_NextFinal>
-  <ABY_CircleMilestone_StageFromVault>Сначала выведи подготовленный сигил из связанного ваулт, а уже потом запускай инвокацию.</ABY_CircleMilestone_StageFromVault>
-  <ABY_CircleCommandReady>Путь инвокации чист. Сигил, оператор и состояние круга подходят для запуска.</ABY_CircleCommandReady>
+  <ABY_CircleMilestone_StageFromVault>Сначалаа выведите подготовленную сигилу из связанного хранилища, затем запускайте призыв.</ABY_CircleMilestone_StageFromVault>
+  <ABY_CircleCommandReady>Контур призыва чист. Сигил, оператор и состояние круга подходят для запуска.</ABY_CircleCommandReady>
   <ABY_CircleCommandBlocked>Текущий блокер: {0}</ABY_CircleCommandBlocked>
   <ABY_CircleRoleTag_Swarm>рой</ABY_CircleRoleTag_Swarm>
   <ABY_CircleRoleTag_Rehearsal>репетиция</ABY_CircleRoleTag_Rehearsal>
@@ -19,7 +19,7 @@
   <ABY_CircleRoleTag_Miniboss>мини-босс</ABY_CircleRoleTag_Miniboss>
   <ABY_CircleRoleTag_AntiCluster>анти-скученность</ABY_CircleRoleTag_AntiCluster>
   <ABY_CircleRoleTag_Boss>босс</ABY_CircleRoleTag_Boss>
-  <ABY_CircleRoleTag_PhaseEncounter>фазовый столкновение</ABY_CircleRoleTag_PhaseEncounter>
+  <ABY_CircleRoleTag_PhaseEncounter>фазовое столкновение</ABY_CircleRoleTag_PhaseEncounter>
   <ABY_CircleRoleTag_SupportSuppression>подавление поддержки</ABY_CircleRoleTag_SupportSuppression>
   <ABY_CircleRoleTag_TurretPressure>давление на турели</ABY_CircleRoleTag_TurretPressure>
   <ABY_CircleRoleTag_ShieldArtillery>щиты и артиллерия</ABY_CircleRoleTag_ShieldArtillery>
@@ -27,31 +27,31 @@
   <ABY_CircleRoleTag_ObjectiveEncounter>сценарий с целью</ABY_CircleRoleTag_ObjectiveEncounter>
   <ABY_CircleRoleTag_WavePressure>давление волнами</ABY_CircleRoleTag_WavePressure>
   <ABY_CircleRewardGuaranteed_Unstable>Гарантированно: остаток и обычный лут малого разлома.</ABY_CircleRewardGuaranteed_Unstable>
-  <ABY_CircleRewardProgression_Unstable>Прогрессия: обучает цикл призыва до первого босса.</ABY_CircleRewardProgression_Unstable>
-  <ABY_CircleRewardGuaranteed_Ember>Гарантированно: остаток, звериный клеануп-лут и более серьёзная репетиция охотничьей стаи.</ABY_CircleRewardGuaranteed_Ember>
-  <ABY_CircleRewardProgression_Ember>Прогрессия: проверяет защиту тыла перед переходом к мини-боссам.</ABY_CircleRewardProgression_Ember>
-  <ABY_CircleRewardGuaranteed_Warden>Гарантированно: 1 Асхен ядро и остаток за первый настоящий шаг через мини-босса.</ABY_CircleRewardGuaranteed_Warden>
-  <ABY_CircleRewardProgression_Warden>Прогрессия: открывает первую ветку пепельного оружия и имплантов.</ABY_CircleRewardProgression_Warden>
-  <ABY_CircleRewardGuaranteed_Archon>Гарантированно: Вестник фрагмент ядрас и Аркхон Оверриде Ампоуле с первого настоящего босса.</ABY_CircleRewardGuaranteed_Archon>
-  <ABY_CircleRewardProgression_Archon>Прогрессия: снимает первый босс-гейт и делает вестник-сиде продолжение реально важным.</ABY_CircleRewardProgression_Archon>
+  <ABY_CircleRewardProgression_Unstable>Допуск: обучает цикл призыва до первого босса.</ABY_CircleRewardProgression_Unstable>
+  <ABY_CircleRewardGuaranteed_Ember>Гарантированно: остаток, звериный трофеи зачистки и более серьёзная репетиция охотничьей стаи.</ABY_CircleRewardGuaranteed_Ember>
+  <ABY_CircleRewardProgression_Ember>Допуск: проверяет защиту тыла перед переходом к мини-боссам.</ABY_CircleRewardProgression_Ember>
+  <ABY_CircleRewardGuaranteed_Warden>Гарантированно: 1 Пепельное ядро и остаток за первый настоящий шаг через мини-босса.</ABY_CircleRewardGuaranteed_Warden>
+  <ABY_CircleRewardProgression_Warden>Допуск: открывает первую ветку пепельного оружия и имплантов.</ABY_CircleRewardProgression_Warden>
+  <ABY_CircleRewardGuaranteed_Archon>Гарантированно: фрагмент ядра Вестника и ампулу Архонтского подавления с первого настоящего босса.</ABY_CircleRewardGuaranteed_Archon>
+  <ABY_CircleRewardProgression_Archon>Допуск: снимает первую печать босса и делает ветку Вестника реально важным.</ABY_CircleRewardProgression_Archon>
   <ABY_CircleRewardGuaranteed_Choir>Гарантированно: 1 резонансное ядро Хора и более крупная выплата остатка.</ABY_CircleRewardGuaranteed_Choir>
-  <ABY_CircleRewardProgression_Choir>Прогрессия: открывает ветку наград поддержки вокруг хоровых имплантов и звуковой винтовки «Кантикль».</ABY_CircleRewardProgression_Choir>
-  <ABY_CircleRewardGuaranteed_Reactor>Гарантированно: 1 Реакторный Святой ядро, остаток и космический-граде трофейный лом.</ABY_CircleRewardGuaranteed_Reactor>
-  <ABY_CircleRewardProgression_Reactor>Прогрессия: питает святого-класс фабрикатион и ведёт колонию в позднюю эскалацию.</ABY_CircleRewardProgression_Reactor>
-  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: награды этапа Великих инфернальных врат, схард-материалы, записи состояния прорыва и поздние прогрессионные трофеи при успешном удержании порога.</ABY_CircleRewardGuaranteed_Dominion>
-  <ABY_CircleRewardProgression_Dominion>Прогрессия: вооружает пролог Великих инфернальных врат и сохраняет маршрутизацию наград и исходов доминиона для более глубоких входных ритуалов.</ABY_CircleRewardProgression_Dominion>
+  <ABY_CircleRewardProgression_Choir>Допуск: открывает ветку наград поддержки вокруг хоровых имплантов и звуковой винтовки «Кантикль».</ABY_CircleRewardProgression_Choir>
+  <ABY_CircleRewardGuaranteed_Reactor>Гарантированно: 1 ядро Реакторного Святого, остаток и трофейный лом космического уровня.</ABY_CircleRewardGuaranteed_Reactor>
+  <ABY_CircleRewardProgression_Reactor>Допуск: питает производство класса Святого и ведёт колонию в позднюю эскалацию.</ABY_CircleRewardProgression_Reactor>
+  <ABY_CircleRewardGuaranteed_Dominion>Гарантированно: награды этапа Великих инфернальных врат, осколочные материалы, записи состояния прорыва и поздние трофеи допуска при успешном удержании порога.</ABY_CircleRewardGuaranteed_Dominion>
+  <ABY_CircleRewardProgression_Dominion>Допуск: вооружает пролог Великих инфернальных врат и сохраняет маршрутизацию наград и исходов доминиона для более глубоких входных ритуалов.</ABY_CircleRewardProgression_Dominion>
   <ABY_CircleRewardFollowUp_Generic>Следом: следующий чистый шаг эскалации — {0}.</ABY_CircleRewardFollowUp_Generic>
   <ABY_CircleRewardFollowUp_Final>Следом: это уже текущая вершина ритуальной ветки.</ABY_CircleRewardFollowUp_Final>
   <ABY_ForgeMilestonesHeader>Следующие вехи</ABY_ForgeMilestonesHeader>
-  <ABY_ForgeMilestone_Pattern>Следующий паттерн</ABY_ForgeMilestone_Pattern>
-  <ABY_ForgeMilestone_PatternValue>{0} при {1} остаток</ABY_ForgeMilestone_PatternValue>
+  <ABY_ForgeMilestone_Pattern>Следующий шаблон</ABY_ForgeMilestone_Pattern>
+  <ABY_ForgeMilestone_PatternValue>{0} при {1} остатка</ABY_ForgeMilestone_PatternValue>
   <ABY_ForgeMilestone_PatternComplete>Все текущие шаблоны этой категории уже настроены.</ABY_ForgeMilestone_PatternComplete>
   <ABY_ForgeMilestone_Attunement>Следующая настройка</ABY_ForgeMilestone_Attunement>
-  <ABY_ForgeMilestone_AttunementValue>{0} при {1} остаток</ABY_ForgeMilestone_AttunementValue>
+  <ABY_ForgeMilestone_AttunementValue>{0} при {1} остатка</ABY_ForgeMilestone_AttunementValue>
   <ABY_ForgeMilestone_AttunementComplete>Решётка уже достигла текущего предела настройки.</ABY_ForgeMilestone_AttunementComplete>
   <ABY_ForgeMilestone_Blocker>Текущий блокер</ABY_ForgeMilestone_Blocker>
-  <ABY_ForgeMilestone_BlockerPower>Нет ни одной запитанной кузницы. Сначала верни питание решётке, иначе эффекты настройки не будут работать как надо.</ABY_ForgeMilestone_BlockerPower>
-  <ABY_ForgeMilestone_BlockerResidue>На карте нет свободного остатка. Сначала добудь ещё, потом продавливай следующее открытие.</ABY_ForgeMilestone_BlockerResidue>
+  <ABY_ForgeMilestone_BlockerPower>Нет ни одной запитанной кузницы. Сначалаа верни питание решётке, иначе эффекты настройки не будут работать как надо.</ABY_ForgeMilestone_BlockerPower>
+  <ABY_ForgeMilestone_BlockerResidue>На карте нет свободного остатка. Сначалаа добудь ещё, потом продавливай следующее открытие.</ABY_ForgeMilestone_BlockerResidue>
   <ABY_ForgeMilestone_BlockerOfferMore>Нужно ещё {0} остатка, чтобы дотянуться до следующего паттерна.</ABY_ForgeMilestone_BlockerOfferMore>
   <ABY_ForgeMilestone_BlockerClear>Путь остатка открыт. Дальше всё зависит от материалов и очереди производства.</ABY_ForgeMilestone_BlockerClear>
   <ABY_ProgressRecap_Archon_Label>Зафиксирован сдвиг протокола</ABY_ProgressRecap_Archon_Label>

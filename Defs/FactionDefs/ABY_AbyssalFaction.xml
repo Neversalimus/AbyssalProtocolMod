@@ -19,7 +19,7 @@
     <autoFlee>false</autoFlee>
     <canUseAvoidGrid>true</canUseAvoidGrid>
     <hostileToFactionlessHumanlikes>true</hostileToFactionlessHumanlikes>
-    <factionIconPath>About/ModIcon</factionIconPath>
+    <factionIconPath>UI/Icons/ABY_FactionIcon</factionIconPath>
     <colorSpectrum>
       <li>(0.68, 0.10, 0.12)</li>
       <li>(0.92, 0.32, 0.14)</li>

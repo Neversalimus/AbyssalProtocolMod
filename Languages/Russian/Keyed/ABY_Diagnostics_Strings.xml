@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <ABY_DiagnosticsSettingsHeader>Стабилизация / диагностика / полировка интерфейса</ABY_DiagnosticsSettingsHeader>
-  <ABY_DiagnosticsSettingsDesc>Опциональные инструменты для проверки Хармони-хуков, истинные ОЗ боссов, восстановления ИИ монстров и более безопасной отрисовки текста в Бездненный интерфейс. Подробную диагностику лучше включать только на тестах.</ABY_DiagnosticsSettingsDesc>
+  <ABY_DiagnosticsSettingsDesc>Опциональные инструменты для проверки Harmony-патчей, истинного здоровья боссов, восстановления ИИ монстров и более безопасной отрисовки текста в интерфейсе Бездны. Подробную диагностику лучше включать только на тестах.</ABY_DiagnosticsSettingsDesc>
   <ABY_Diagnostics_Enable>Включить периодическую диагностику</ABY_Diagnostics_Enable>
-  <ABY_Diagnostics_EnableDesc>Пишет тхроттлед-снимок состояния во время загруженной игры. По умолчанию выключено.</ABY_Diagnostics_EnableDesc>
-  <ABY_Diagnostics_HarmonyReport>Логировать отчёт Гармония при загрузке</ABY_Diagnostics_HarmonyReport>
+  <ABY_Diagnostics_EnableDesc>Пишет ограниченный по частоте снимок состояния во время загруженной игры. По умолчанию выключено.</ABY_Diagnostics_EnableDesc>
+  <ABY_Diagnostics_HarmonyReport>Логировать отчёт Harmony при загрузке</ABY_Diagnostics_HarmonyReport>
   <ABY_Diagnostics_HarmonyReportDesc>Пишет компактный счётчик Harmony-патчей Протокола Бездны после старта.</ABY_Diagnostics_HarmonyReportDesc>
   <ABY_Diagnostics_DebugInspect>Показывать отладочные инспект-строки</ABY_Diagnostics_DebugInspect>
   <ABY_Diagnostics_DebugInspectDesc>Показывает дополнительные инспект-строки, например истинные ОЗ боссов. Только для тестов.</ABY_Diagnostics_DebugInspectDesc>
   <ABY_Diagnostics_Verbose>Подробная диагностика</ABY_Diagnostics_Verbose>
-  <ABY_Diagnostics_VerboseDesc>Добавляет тхроттлед-сообщения восстановления ИИ и периодические снимки состояния. Использовать только при отладке.</ABY_Diagnostics_VerboseDesc>
-  <ABY_Diagnostics_UIPolish>Включить полировку текста Бездненный интерфейс</ABY_Diagnostics_UIPolish>
+  <ABY_Diagnostics_VerboseDesc>Добавляет ограниченные по частоте сообщения восстановления ИИ и периодические снимки состояния. Использовать только при отладке.</ABY_Diagnostics_VerboseDesc>
+  <ABY_Diagnostics_UIPolish>Включить полировку текста интерфейса Бездны</ABY_Diagnostics_UIPolish>
   <ABY_Diagnostics_UIPolishDesc>Добавляет небольшой отступ и защиту от обрезания для бездненных надписей и кнопок.</ABY_Diagnostics_UIPolishDesc>
   <ABY_Diagnostics_ThrottleWarnings>Ограничивать повторяющиеся предупреждения</ABY_Diagnostics_ThrottleWarnings>
   <ABY_Diagnostics_ThrottleWarningsDesc>Не даёт совместимостным предупреждениям спамить лог.</ABY_Diagnostics_ThrottleWarningsDesc>
@@ -30,11 +30,21 @@
   <ABY_Performance_Minimal>Минимальный</ABY_Performance_Minimal>
   <ABY_Performance_FullDesc>Полная презентация Abyssal Protocol. Рекомендуется, если производительность и видеопамять комфортны.</ABY_Performance_FullDesc>
   <ABY_Performance_ReducedDesc>Меньшая визуальная нагрузка: сниженное движение, более лёгкая погода Dominion, меньше анимаций UI и более редкие ambient VFX.</ABY_Performance_ReducedDesc>
-  <ABY_Performance_MinimalDesc>Минимальная опциональная визуальная нагрузка: сниженное движение, без декоративных Dominion ambient VFX, без title cards боссов, ниже интенсивность погоды и минимум UI-акцентов.</ABY_Performance_MinimalDesc>
-  <ABY_Performance_DominionAmbient>Включить Dominion ambient VFX</ABY_Performance_DominionAmbient>
-  <ABY_Performance_DominionAmbientDesc>Управляет опциональными ambient-импульсами Dominion Slice, cohesion-акцентами, edge-эффектами и декоративной атмосферой карты. Боевые механики остаются активны.</ABY_Performance_DominionAmbientDesc>
+  <ABY_Performance_MinimalDesc>Минимальная опциональная визуальная нагрузка: сниженное движение, без декоративных атмосферные VFX Доминиона, без title cards боссов, ниже интенсивность погоды и минимум UI-акцентов.</ABY_Performance_MinimalDesc>
+  <ABY_Performance_DominionAmbient>Включить атмосферные VFX Доминиона</ABY_Performance_DominionAmbient>
+  <ABY_Performance_DominionAmbientDesc>Управляет опциональными атмосферными импульсами среза Доминиона, акцентами целостности и краевыми эффектами и декоративной атмосферой карты. Боевые механики остаются активны.</ABY_Performance_DominionAmbientDesc>
   <ABY_Performance_DevAudit>Показывать кнопку окна аудита производительности</ABY_Performance_DevAudit>
-  <ABY_Performance_DevAuditDesc>Показывает dev-кнопку в настройках для проверки активных Abyssal VFX, пешек, состояния карты и переключателей производительности.</ABY_Performance_DevAuditDesc>
+  <ABY_Performance_DevAuditDesc>Показывает отладочную кнопку в настройках для проверки активных VFX Бездны, пешек, состояния карты и переключателей производительности.</ABY_Performance_DevAuditDesc>
   <ABY_Performance_CurrentScale>Текущий масштаб VFX: {0}; пример интервала 120 -&gt; {1} тиков</ABY_Performance_CurrentScale>
   <ABY_Performance_OpenAudit>Аудит производительности</ABY_Performance_OpenAudit>
+  <ABY_DominionWeather_Enable>Включить адскую погоду Доминиона</ABY_DominionWeather_Enable>
+  <ABY_DominionWeather_EnableDesc>Добавляет внутри карманных карт Доминиона сдержанный слой пеплопада, статической завесы и печного дрейфа. Использует существующие VFX Бездны и учитывает режим сниженного движения.</ABY_DominionWeather_EnableDesc>
+  <ABY_DominionWeather_Intensity>Интенсивность погоды Доминиона: {0}</ABY_DominionWeather_Intensity>
+  <ABY_DominionPocketMusic_Enable>Включить музыку кармана Доминиона</ABY_DominionPocketMusic_Enable>
+  <ABY_DominionPocketMusic_EnableDesc>Проигрывает отдельную зацикленную адскую тему, пока игрок находится в активном карманном измерении Доминиона. Защитный механизм возвращает обычную музыку, если карман неожиданно закрывается.</ABY_DominionPocketMusic_EnableDesc>
+  <ABY_HarrowerAnimation_Enable>Включить анимацию тела Аортального цепного Потрошителя</ABY_HarrowerAnimation_Enable>
+  <ABY_HarrowerAnimation_EnableDesc>Экспериментальная overlay-анимация для стражей сердца в срезе Доминиона. При ошибке отрисовки она автоматически отключается, после теста её можно включить снова.</ABY_HarrowerAnimation_EnableDesc>
+  <ABY_HarrowerAnimation_RuntimeDisabled>Анимация Аортального Потрошителя автоматически отключена в этой сессии: {0}</ABY_HarrowerAnimation_RuntimeDisabled>
+  <ABY_HarrowerAnimation_DebugEnabled>Анимация аортального тела: включена</ABY_HarrowerAnimation_DebugEnabled>
+  <ABY_HarrowerAnimation_DebugDisabled>Анимация аортального тела: отключена</ABY_HarrowerAnimation_DebugDisabled>
 </LanguageData>

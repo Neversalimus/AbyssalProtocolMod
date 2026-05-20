@@ -473,22 +473,10 @@ In-game checks:
 - Confirm impact VFX/sounds still play when base impact succeeds.
 - Confirm red `Exception ticking ABY_* projectile` spam does not recur when external combat hooks throw during damage resolution.
 
-## 2026-05-20 — Harvester memory and Aortic Chain Lash scan rules
+## Fixed / watch: audit cleanup items — 2026-05-20
 
-Observed risks:
+- `ABY_ReactorSaintImpact` is now a real SoundDef. Keep this name available because Reactor Saint and apparel aegis extensions use it as their default break feedback sound.
+- Base faction icon paths should point to textures under `Textures/`, not `About/ModIcon`; `About/ModIcon` is for the mod list, not reliable in-game faction rendering.
+- Removed/or neutralized orphan DefInjected files for deleted defs instead of leaving stale translation keys that can confuse future audits.
+- When adding new custom UI strings, add both English and Russian Keyed entries at the same time; do not rely on fallback strings for player-facing turret grid, Dominion, protocol, or settings UI.
 
-- Harvester essence previously cleared its entire corpse/death-pawn memory set when the cap was exceeded, which could allow repeated processing in very long sessions.
-- Aortic Chain Lash previously scanned `map.mapPawns.AllPawnsSpawned` directly per comp instead of using the shared runtime target cache.
-- Rupture Crown wearable commands still had direct English player-facing messages after Rupture Sentence ability localization was added.
-
-Regression rules:
-
-- Do not use full `HashSet.Clear()` as a long-session memory cap for gameplay-processing caches unless duplicate processing is harmless. Prefer bounded oldest-entry trimming or a queue+set pair.
-- New recurring pawn target scans in combat comps should prefer `ABY_RuntimeTargetCache` and still validate faction/range/LOS locally.
-- New player-facing Rupture/Crown ability messages must use keyed localization in both English and Russian.
-
-In-game checks:
-
-- Use Rupture Crown as a player item on a Russian install and verify inspect text, disabled command reason, recharge rejection, no-target rejection, and success message are localized.
-- Run long Harvester-heavy fights and verify the Harvester does not repeatedly reward the same nearby corpse after its tracking set grows.
-- Spawn multiple Aortic Chain Harrowers and verify lash targeting still works without returning to broad pawn-list scans.

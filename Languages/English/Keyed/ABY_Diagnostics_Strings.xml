@@ -37,4 +37,14 @@
   <ABY_Performance_DevAuditDesc>Shows a development-only audit button in these settings for checking active Abyssal VFX, pawns, map state, and performance toggles.</ABY_Performance_DevAuditDesc>
   <ABY_Performance_CurrentScale>Current VFX scale: {0}; sample interval 120 -&gt; {1} ticks</ABY_Performance_CurrentScale>
   <ABY_Performance_OpenAudit>Performance audit</ABY_Performance_OpenAudit>
+  <ABY_DominionWeather_Enable>Enable Dominion hell weather</ABY_DominionWeather_Enable>
+  <ABY_DominionWeather_EnableDesc>Adds a restrained hell-only ashfall, static veil and furnace drift layer inside Dominion pocket maps. Uses existing Abyssal VFX assets and honors reduced motion.</ABY_DominionWeather_EnableDesc>
+  <ABY_DominionWeather_Intensity>Dominion weather intensity: {0}</ABY_DominionWeather_Intensity>
+  <ABY_DominionPocketMusic_Enable>Enable Dominion pocket music</ABY_DominionPocketMusic_Enable>
+  <ABY_DominionPocketMusic_EnableDesc>Plays the dedicated looped hell track while the player is inside an active Dominion pocket dimension. A guard automatically restores normal music if the pocket closes unexpectedly.</ABY_DominionPocketMusic_EnableDesc>
+  <ABY_HarrowerAnimation_Enable>Enable Aortic Chain Harrower body animation</ABY_HarrowerAnimation_Enable>
+  <ABY_HarrowerAnimation_EnableDesc>Experimental overlay animation for the Dominion Slice heart guardians. If it throws a render exception, it auto-disables and can be re-enabled here after testing.</ABY_HarrowerAnimation_EnableDesc>
+  <ABY_HarrowerAnimation_RuntimeDisabled>Aortic Harrower animation was auto-disabled this session: {0}</ABY_HarrowerAnimation_RuntimeDisabled>
+  <ABY_HarrowerAnimation_DebugEnabled>Aortic body animation: enabled</ABY_HarrowerAnimation_DebugEnabled>
+  <ABY_HarrowerAnimation_DebugDisabled>Aortic body animation: disabled</ABY_HarrowerAnimation_DebugDisabled>
 </LanguageData>
