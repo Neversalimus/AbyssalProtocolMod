@@ -517,3 +517,22 @@ Important rules:
 - Shadow-mode logs are for balance comparison only. Do not treat shadow output as proof that the directed planner is ready to replace a ritual.
 - Any migration from authored wave composition to directed templates must be done ritual-by-ritual with in-game playtests, save/load checks, and reward pacing review.
 - If validator warnings appear after adding content, fix the XML ownership first: pool ids, role names, difficulty refs, budget costs, boss profile refs, and template coverage.
+
+## 2026-05-20 — Dominion pocket music load-order warning guard
+
+Observed behavior:
+
+- Loading a save while the player camera/current map is inside a Dominion pocket can trigger `[Abyssal Protocol] Could not start Dominion pocket music; will retry.` even when the rest of the Dominion runtime is functioning.
+- This warning is usually a music-manager readiness/load-order issue, not evidence that the pocket map, encounter, or save state failed.
+
+Regression rules:
+
+- Do not reintroduce immediate warning logs on the first failed hell-music start attempt after load.
+- Keep a short post-load grace window and repeated-failure threshold before warning, because RimWorld and music-related mods may need several realtime seconds after save load before accepting forced track changes.
+- Real music-start failures should still be visible through throttled warnings after repeated failures; do not replace the system with permanently silent catches.
+
+In-game checks:
+
+- Save inside an active Dominion pocket, reload, and verify no immediate music warning appears during the first few realtime seconds.
+- Remain inside the pocket long enough to confirm the hell-pocket theme either starts or retries without log spam.
+- Exit/close the pocket and verify normal music restoration still occurs without repeated restore warnings.

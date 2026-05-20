@@ -17,6 +17,9 @@ namespace AbyssalProtocol
         private const float ProbeDelaySeconds = 1.5f;
         private const float ProbeIntervalSeconds = 0.75f;
         private const float RestoreRetryDelaySeconds = 1.0f;
+        private const float PostLoadStartDelaySeconds = 3.0f;
+        private const float PostLoadWarningGraceSeconds = 8.0f;
+        private const int StartFailureWarningAttempts = 5;
         private const int WarningThrottleTicks = 900;
 
         private string activeSessionId;
@@ -27,7 +30,9 @@ namespace AbyssalProtocol
         private float expectedEndRealtime = -1f;
         private float nextProbeRealtime = -1f;
         private float nextRestoreRetryRealtime = -1f;
+        private float suppressStartWarningsUntilRealtime = -1f;
         private int missingSongChecks;
+        private int startFailureCount;
         private int lastWarnTick = -999999;
 
         public ABY_DominionPocketMusicGameComponent(Game game)
@@ -50,6 +55,7 @@ namespace AbyssalProtocol
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 ResetRealtimeState(keepRestoreQueued: hellSongRestoreQueued || forceRestoreRequested);
+                SuppressStartWarningsAfterLoad();
             }
         }
 
@@ -242,10 +248,11 @@ namespace AbyssalProtocol
 
             if (!started)
             {
-                WarnThrottled("[Abyssal Protocol] Could not start Dominion pocket music; will retry.");
+                RegisterStartFailure(now);
                 return false;
             }
 
+            startFailureCount = 0;
             hellSongRestoreQueued = true;
             forceRestoreRequested = false;
             nextStartRealtime = now + HellPocketSongLengthSeconds - RestartLeadSeconds;
@@ -270,6 +277,7 @@ namespace AbyssalProtocol
             expectedEndRealtime = -1f;
             nextProbeRealtime = -1f;
             missingSongChecks = 0;
+            startFailureCount = 0;
         }
 
         private void TryRestoreVanillaMusic(MusicManagerPlay music, SongDef hellSong)
@@ -311,6 +319,7 @@ namespace AbyssalProtocol
             nextProbeRealtime = -1f;
             nextRestoreRetryRealtime = -1f;
             missingSongChecks = 0;
+            startFailureCount = 0;
             if (!keepRestoreQueued)
             {
                 hellSongRestoreQueued = false;
@@ -328,7 +337,9 @@ namespace AbyssalProtocol
             nextStartRealtime = Time.realtimeSinceStartup + 0.05f;
             expectedEndRealtime = -1f;
             nextProbeRealtime = Time.realtimeSinceStartup + ProbeDelaySeconds;
+            suppressStartWarningsUntilRealtime = Time.realtimeSinceStartup + ProbeDelaySeconds;
             missingSongChecks = 0;
+            startFailureCount = 0;
         }
 
         private void ResetRuntimeState(bool clearSession)
@@ -341,6 +352,35 @@ namespace AbyssalProtocol
                 activeSessionId = null;
                 activePocketMapId = -1;
             }
+        }
+
+
+        private void SuppressStartWarningsAfterLoad()
+        {
+            float now = Time.realtimeSinceStartup;
+            suppressStartWarningsUntilRealtime = now + PostLoadWarningGraceSeconds;
+            if (nextStartRealtime < 0f)
+            {
+                nextStartRealtime = now + PostLoadStartDelaySeconds;
+            }
+
+            if (nextProbeRealtime < 0f)
+            {
+                nextProbeRealtime = now + PostLoadStartDelaySeconds + ProbeDelaySeconds;
+            }
+
+            startFailureCount = 0;
+        }
+
+        private void RegisterStartFailure(float now)
+        {
+            startFailureCount++;
+            if (now < suppressStartWarningsUntilRealtime || startFailureCount < StartFailureWarningAttempts)
+            {
+                return;
+            }
+
+            WarnThrottled("[Abyssal Protocol] Dominion pocket music has not accepted a start request after " + startFailureCount + " attempts; retrying quietly.");
         }
 
         private void WarnThrottled(string message)

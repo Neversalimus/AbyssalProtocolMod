@@ -651,3 +651,10 @@ source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
 ```
 
 Do not use shadow-mode output as automatic authorization to migrate T1, Dominion, or boss escort waves. It is a comparison tool for future playtest-driven encounter migration.
+
+## 2026-05-20 — Dominion pocket music post-load warning guard
+
+- Hardened `ABY_DominionPocketMusicGameComponent` so loading directly inside an active Dominion pocket gives RimWorld's music manager a short post-load grace window before attempting/logging forced hell-track start failures.
+- Replaced the immediate first-attempt warning with repeated-failure tracking; Dominion pocket music now warns only after several failed start attempts outside the grace window while continuing to retry quietly.
+- This is a log-noise and load-order safety fix only: it does not change Dominion combat, map transfer, encounter logic, or the selected hell-pocket song.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
