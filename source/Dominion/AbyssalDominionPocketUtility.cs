@@ -309,6 +309,11 @@ namespace AbyssalProtocol
             ABY_DominionPocketMusicGameComponent.NotifyPocketClosed(session);
             SafeDestroyPocketMap(pocketMap, session);
             ABY_DominionPocketRuntimeGameComponent.Get()?.ForgetSession(session?.sessionId);
+            if (session != null)
+            {
+                Map sourceMap = ResolveMap(session.sourceMapId);
+                ABY_RuntimeTargetCache.NotifyLikelyStateChanged(sourceMap);
+            }
 
             if (!silent)
             {
@@ -1035,6 +1040,12 @@ namespace AbyssalProtocol
             if (pawn.drafter != null)
             {
                 pawn.drafter.Drafted = false;
+            }
+
+            ABY_RuntimeTargetCache.NotifyLikelyStateChanged(targetMap);
+            if (ABY_FactionHostilityUtility.IsAbyssalPawn(pawn))
+            {
+                AbyssalThreatPawnUtility.EnsureHostileFaction(pawn);
             }
         }
 

@@ -54,7 +54,9 @@ namespace AbyssalProtocol
                 Rect outRect = new Rect(inRect.x, inRect.y + 88f, inRect.width, inRect.height - 96f);
                 Rect viewRect = new Rect(0f, 0f, outRect.width - 18f, Mathf.Max(outRect.height, ResolveViewHeight(outRect.width - 18f)));
                 Widgets.BeginScrollView(outRect, ref scroll, viewRect);
-                float y = 0f;
+                try
+                {
+                    float y = 0f;
                 if (cachedLines == null)
                 {
                     cachedLines = ABY_PerformanceAuditUtility.BuildStatusLines();
@@ -68,7 +70,11 @@ namespace AbyssalProtocol
                     y += height;
                 }
 
-                Widgets.EndScrollView();
+                }
+                finally
+                {
+                    Widgets.EndScrollView();
+                }
             });
         }
 

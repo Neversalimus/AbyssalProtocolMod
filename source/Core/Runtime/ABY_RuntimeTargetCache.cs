@@ -131,6 +131,17 @@ namespace AbyssalProtocol
             }
         }
 
+
+        public static void ClearForMap(Map map)
+        {
+            if (map == null)
+            {
+                return;
+            }
+
+            CachesByMapId.Remove(map.uniqueID);
+        }
+
         private static MapCache ResolveCache(Map map)
         {
             if (map == null)
@@ -176,7 +187,7 @@ namespace AbyssalProtocol
 
                     cache.spawnedLivingPawns.Add(pawn);
 
-                    if (!pawn.Downed && pawn.Faction != null)
+                    if (!pawn.Downed && (pawn.Faction != null || ABY_FactionHostilityUtility.IsAbyssalPawn(pawn)))
                     {
                         cache.combatTargetPawns.Add(pawn);
                     }

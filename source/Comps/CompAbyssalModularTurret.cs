@@ -1041,6 +1041,9 @@ namespace AbyssalProtocol
                 return cachedTarget;
             }
 
+            cachedTarget = null;
+            validUntilTick = 0;
+
             int interval = Mathf.Max(45, Props.targetScanIntervalTicks);
             int hash = parent != null ? parent.thingIDNumber : 0;
             if (((ticks + hash + tickOffset) % interval) != 0)
@@ -1109,7 +1112,17 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (pawn.Faction == null || parent.Faction == null)
+            if (parent.Faction == null)
+            {
+                return false;
+            }
+
+            if (pawn.Faction == null && ABY_FactionHostilityUtility.IsAbyssalPawn(pawn))
+            {
+                AbyssalThreatPawnUtility.EnsureHostileFaction(pawn);
+            }
+
+            if (pawn.Faction == null)
             {
                 return false;
             }
@@ -1527,6 +1540,11 @@ namespace AbyssalProtocol
             {
                 HaltCharge();
             }
+
+            cachedMainTarget = null;
+            cachedAuxiliaryTarget = null;
+            cachedMainTargetValidUntilTick = 0;
+            cachedAuxiliaryTargetValidUntilTick = 0;
         }
 
         private void HaltRuntimeState()
@@ -1541,6 +1559,10 @@ namespace AbyssalProtocol
             mainMuzzleOverlayTicksTotal = 0;
             mainMuzzleOverlayShotIndex = -1;
             mainLastBurstShotIndex = -1;
+            cachedMainTarget = null;
+            cachedAuxiliaryTarget = null;
+            cachedMainTargetValidUntilTick = 0;
+            cachedAuxiliaryTargetValidUntilTick = 0;
         }
 
         private void HaltBurst()

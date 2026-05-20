@@ -667,3 +667,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Log messages now include projectile def and launcher def context without dumping a full warning stack for this expected interop path.
 - This is a log-noise and compatibility hardening pass only: successful projectile impacts, damage, VFX, sounds, and post-impact logic are unchanged.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-20 — Dominion pocket combat/turret runtime hardening
+
+- Added a large-modpack Lord.Notify_PawnLost finalizer guard for abyssal pawns to prevent stale Lord state from producing red "Error while killing ... during phase 5" logs during mass Dominion/projectile deaths.
+- Hardened modular turret targeting after Dominion pocket transitions by invalidating runtime target caches on pawn map transfer and pocket collapse.
+- Allowed the runtime target cache and modular turret target validation to recover abyssal pawns whose hostile faction is temporarily missing after unusual map-transfer/save-load paths.
+- Hardened mod settings and diagnostic scroll views with try/finally EndScrollView guards so UI exceptions cannot leave RimWorld's mouse-position stack unbalanced.
+- Build verified with direct local Roslyn compile.

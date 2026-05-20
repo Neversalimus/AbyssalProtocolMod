@@ -556,3 +556,10 @@ In-game checks:
 - Fire Hexgun/Hexgun Thrall projectiles in the large modpack and confirm the old warning stack no longer appears repeatedly.
 - Confirm normal Hex Mark application and impact VFX still occur when base impact succeeds.
 - Confirm gameplay continues if an external combat stack still throws during `base.Impact(...)`.
+
+## Dominion pocket / large modpack kill-path and turret targeting notes
+
+- In large combat stacks, abyssal pawns killed by custom projectiles inside Dominion or immediately after returning can hit stale vanilla Lord state and log `Error while killing ... during phase 5` from `Lord.RemovePawn`. Abyssal Protocol now suppresses this only for abyssal pawns and performs best-effort lord cleanup.
+- `AttackTargetsCache` may still emit harmless deregistration warnings for pawns that external kill/despawn stacks never registered as attack targets. Treat this as lower priority unless it correlates with broken AI or repeated TPS issues.
+- Modular turrets depend on runtime target caches. After pocket map transfers or pocket collapse, target caches must be invalidated so turrets reacquire home-map enemies quickly.
+- When handling UI scroll views, always pair `BeginScrollView` with `EndScrollView` in `finally`; an exception between them causes RimWorld's "Mouse position stack is not empty" error.
