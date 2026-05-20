@@ -562,3 +562,18 @@ In-game checks:
 Observed in a large modpack: after returning from the Dominion pocket, RimWorld could log `Mouse position stack is not empty. There were more calls to BeginScrollView than EndScrollView.` The stack only points to `Widgets.EnsureMousePositionStackEmpty`, so the leaking scroll owner is not directly visible. Video evidence showed the warning appears immediately after Dominion extraction while third-party UI overlays are present.
 
 Mitigation added: Dominion pocket enter/jump/return actions triggered from UI now defer the actual map-transfer/collapse work by one Unity frame via `ABY_DeferredUIActionGameComponent`, and core Abyssal diagnostic/settings scroll views use try/finally EndScrollView guards. Do not reintroduce direct Dominion map transfers from IMGUI button delegates unless this regression has been retested in a large modpack.
+
+
+## 2026-05-20 — DLL/source synchronization can cause XML class lookup storms
+
+If XML defs reference a new `AbyssalProtocol.*` `DefModExtension`, comp, worker, hediff comp, incident worker, projectile, or UI class, the shipped `Assemblies/AbyssalProtocol.dll` must be rebuilt from the same source tree before packaging. Otherwise RimWorld loads XML first, cannot resolve the missing runtime type, and reports many repeated red errors such as `Could not find type named AbyssalProtocol.ABY_ResidueSinteringExtension` across every def that uses the class.
+
+Regression guard:
+
+```text
+- After adding XML-referenced C# classes, rebuild the DLL before packaging.
+- Verify the rebuilt assembly contains the new class name.
+- Do not ship XML references to classes that only exist in source but not in Assemblies/AbyssalProtocol.dll.
+- Keep using Framework-style RimWorld/Unity/Harmony references for emergency Roslyn builds; do not compile against .NET 9 reference assemblies.
+```
+

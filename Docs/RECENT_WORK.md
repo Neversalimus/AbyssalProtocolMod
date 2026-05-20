@@ -1,5 +1,22 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-20 — Emergency rebuild for residue sintering extension load errors
+- Rebuilt `Assemblies/AbyssalProtocol.dll` from the current `source/` tree after runtime logs showed repeated XML load failures for pawn kind defs referencing `AbyssalProtocol.ABY_ResidueSinteringExtension`.
+- The C# source file already existed at `source/Defs/Common/ABY_ResidueSinteringExtension.cs`, but the shipped assembly did not expose the type, causing many red `Could not find type named AbyssalProtocol.ABY_ResidueSinteringExtension` errors during Def loading.
+- The rebuild was performed with direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries, not .NET 9 reference assemblies.
+- No gameplay XML, residue values, Forge UI behavior, or progression thresholds were changed; this is an assembly/source synchronization fix.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
+Build verified by direct Roslyn compile and by confirming the rebuilt assembly metadata contains `ABY_ResidueSinteringExtension`. Runtime smoke testing in RimWorld is still required.
+
+
 ## 2026-05-20 — Large modpack predator and Melee Animation compatibility pass
 - Disabled vanilla predator/food-hunting behavior on abyssal summoned animal-style hostile pawns and animal-style bosses by making the affected races hungerless and non-predatory: Ember Hound, Rift Imp, Archon Beast, Reliquary Archon Beast, and Archon of Rupture.
 - This prevents summoned abyssal entities from creating vanilla predator letters such as `An ember hound is hunting <colonist> for food!` during horde/sigil combat. Their hostile behavior should remain driven by lords, think trees, comps, and encounter logic rather than food needs.
