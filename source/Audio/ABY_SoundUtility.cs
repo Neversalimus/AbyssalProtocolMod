@@ -24,7 +24,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            SoundDef soundDef = DefDatabase<SoundDef>.GetNamedSilentFail(soundDefName);
+            SoundDef soundDef = ABY_DefCache.SoundDefNamed(soundDefName);
             if (soundDef == null)
             {
                 return;
