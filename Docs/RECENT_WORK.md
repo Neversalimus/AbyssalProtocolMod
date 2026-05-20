@@ -739,3 +739,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added explicit `ABY_TurretModuleDef` validation because the recent passive/aegis turret module expansion increased the chance that malformed module XML could surface only during startup diagnostics.
 - The validator remains diagnostic-only: it reports concrete data issues but does not rewrite defs, block encounters, alter turret mechanics or hide gameplay failures.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-21 — Turret Aegis gizmo and single-Aegis enforcement
+
+- Restored modular turret Aegis status exposure by resolving the installed Aegis module explicitly instead of relying only on summed passive shield values.
+- Enforced one Aegis passive shield module per turret chassis through install validation and runtime sanitization.
+- Legacy duplicate Aegis stacks are non-stacking at runtime: only the strongest/highest-tier Aegis module contributes shield capacity/recharge or passive stat effects.
+

@@ -147,39 +147,39 @@ namespace AbyssalProtocol
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
         public float ResolvedModulePowerDraw => FeatureEnabled ? ExtraPowerDraw : 0f;
         public float ResolvedTotalPowerDraw => Mathf.Max(0f, ResolvedBasePowerDraw + ResolvedModulePowerDraw);
-        public float ResolvedPassiveShieldMax => Mathf.Max(0f, SumPassive(module => Mathf.Max(0f, module.turretShieldMax)));
+        public ABY_TurretModuleDef InstalledAegisModule => ResolveInstalledAegisModule();
+        public float ResolvedPassiveShieldMax
+        {
+            get
+            {
+                ABY_TurretModuleDef aegis = InstalledAegisModule;
+                return aegis != null ? Mathf.Max(0f, aegis.turretShieldMax) : 0f;
+            }
+        }
         public float PassiveShieldPoints => Mathf.Clamp(passiveShieldPoints, 0f, ResolvedPassiveShieldMax);
-        public bool HasPassiveShield => ResolvedPassiveShieldMax > 0.01f;
-        public float ResolvedPassiveShieldRechargePerTick => Mathf.Max(0f, SumPassive(module => Mathf.Max(0f, module.turretShieldRechargePerTick)));
+        public bool HasPassiveShield => InstalledAegisModule != null && ResolvedPassiveShieldMax > 0.01f;
+        public float ResolvedPassiveShieldRechargePerTick
+        {
+            get
+            {
+                ABY_TurretModuleDef aegis = InstalledAegisModule;
+                return aegis != null ? Mathf.Max(0f, aegis.turretShieldRechargePerTick) : 0f;
+            }
+        }
 
         public int ResolvedPassiveShieldRechargeDelayTicks
         {
             get
             {
-                int delay = 0;
-                if (passiveModules == null)
-                {
-                    return 0;
-                }
-
-                for (int i = 0; i < passiveModules.Count; i++)
-                {
-                    ABY_TurretModuleDef module = passiveModules[i];
-                    if (module != null && module.turretShieldMax > 0.01f)
-                    {
-                        int moduleDelay = Mathf.Max(60, module.turretShieldRechargeDelayTicks);
-                        delay = delay <= 0 ? moduleDelay : Mathf.Min(delay, moduleDelay);
-                    }
-                }
-
-                return delay;
+                ABY_TurretModuleDef aegis = InstalledAegisModule;
+                return aegis != null ? Mathf.Max(60, aegis.turretShieldRechargeDelayTicks) : 0;
             }
         }
 
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-            passiveModules ??= new List<ABY_TurretModuleDef>();
+            EnsurePassiveModuleList();
             ApplyPowerDraw();
         }
 
@@ -195,6 +195,7 @@ namespace AbyssalProtocol
             Scribe_Defs.Look(ref mainModule, "mainModule");
             Scribe_Defs.Look(ref auxiliaryModule, "auxiliaryModule");
             Scribe_Collections.Look(ref passiveModules, "passiveModules", LookMode.Def);
+            EnsurePassiveModuleList();
             Scribe_Values.Look(ref mainCooldownTicks, "mainCooldownTicks", 0);
             Scribe_Values.Look(ref auxiliaryCooldownTicks, "auxiliaryCooldownTicks", 0);
             Scribe_Values.Look(ref burstShotsRemaining, "burstShotsRemaining", 0);
@@ -392,6 +393,7 @@ namespace AbyssalProtocol
                     return true;
 
                 case ABY_TurretModuleSlot.Passive:
+                    EnsurePassiveModuleList();
                     if (passiveModules.Count >= Mathf.Max(0, Props.passiveSlots))
                     {
                         reason = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_PassiveFull", "All passive slots are occupied.");
@@ -400,6 +402,11 @@ namespace AbyssalProtocol
                     if (passiveModules.Contains(moduleDef))
                     {
                         reason = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_PassiveDuplicate", "This passive module is already installed.");
+                        return false;
+                    }
+                    if (IsAegisModule(moduleDef) && InstalledAegisModule != null)
+                    {
+                        reason = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInstall_AegisOccupied", "This chassis can sustain only one Aegis module at a time.");
                         return false;
                     }
                     return true;
@@ -544,6 +551,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            EnsurePassiveModuleList();
             if (index < 0 || index >= passiveModules.Count)
             {
                 message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemove_Empty", "This slot is already empty.");
@@ -592,14 +600,15 @@ namespace AbyssalProtocol
             string aux = auxiliaryModule != null ? auxiliaryModule.LabelCap : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretSlotEmpty", "empty");
             lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectMain", "Main: {0}", main));
             lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectAux", "Auxiliary: {0}", aux));
+            EnsurePassiveModuleList();
             lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectPassive", "Passive: {0}/{1}", passiveModules.Count, Props.passiveSlots));
+            if (HasPassiveShield)
+            {
+                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectAegis", "Aegis {0}/{1}", PassiveShieldPoints.ToString("0"), ResolvedPassiveShieldMax.ToString("0")));
+            }
             if (HasMainWeapon)
             {
                 lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectStats", "Range {0} · cooldown {1} · power {2} W", ResolvedRange.ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(ResolvedMainCooldownTicks), ResolvedTotalPowerDraw.ToString("0")));
-                if (HasPassiveShield)
-                {
-                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectAegis", "Aegis {0}/{1}", PassiveShieldPoints.ToString("0"), ResolvedPassiveShieldMax.ToString("0")));
-                }
             }
             else
             {
@@ -620,7 +629,12 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (!FeatureEnabled || parent == null || parent.Faction != Faction.OfPlayer || !HasPassiveShield)
+            if (!FeatureEnabled || parent == null || !HasPassiveShield)
+            {
+                yield break;
+            }
+
+            if (parent.Faction != null && parent.Faction != Faction.OfPlayer)
             {
                 yield break;
             }
@@ -724,7 +738,7 @@ namespace AbyssalProtocol
             {
                 ABY_TurretModuleDef module = passiveModules[i];
                 string defName = module?.defName;
-                if (!defName.NullOrEmpty() && defName.IndexOf(namePart, StringComparison.OrdinalIgnoreCase) >= 0 && module.turretShieldMax > 0.01f)
+                if (IsAegisModule(module) && !defName.NullOrEmpty() && defName.IndexOf(namePart, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     return true;
                 }
@@ -1079,6 +1093,11 @@ namespace AbyssalProtocol
                     auxiliaryCooldownTicks = Mathf.Min(auxiliaryCooldownTicks, 120);
                     break;
                 case ABY_TurretModuleSlot.Passive:
+                    EnsurePassiveModuleList();
+                    if (IsAegisModule(module) && InstalledAegisModule != null)
+                    {
+                        return;
+                    }
                     passiveModules.Add(module);
                     RefreshPassiveShieldAfterModuleChange(true);
                     break;
@@ -1465,7 +1484,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < passiveModules.Count; i++)
             {
                 ABY_TurretModuleDef passive = passiveModules[i];
-                if (passive != null)
+                if (IsRuntimeActivePassiveModule(passive))
                 {
                     score += ComputeModuleTargetingScoreBonus(passive, candidate, distanceSquared, requireLineOfSight);
                 }
@@ -1849,6 +1868,68 @@ namespace AbyssalProtocol
             }
         }
 
+        private void EnsurePassiveModuleList()
+        {
+            passiveModules ??= new List<ABY_TurretModuleDef>();
+        }
+
+        private ABY_TurretModuleDef ResolveInstalledAegisModule()
+        {
+            if (passiveModules == null || passiveModules.Count == 0)
+            {
+                return null;
+            }
+
+            ABY_TurretModuleDef best = null;
+            for (int i = 0; i < passiveModules.Count; i++)
+            {
+                ABY_TurretModuleDef module = passiveModules[i];
+                if (!IsAegisModule(module))
+                {
+                    continue;
+                }
+
+                if (best == null || module.turretShieldMax > best.turretShieldMax || (Math.Abs(module.turretShieldMax - best.turretShieldMax) < 0.001f && module.tier > best.tier))
+                {
+                    best = module;
+                }
+            }
+
+            return best;
+        }
+
+        private static bool IsAegisModule(ABY_TurretModuleDef module)
+        {
+            if (module == null || module.slot != ABY_TurretModuleSlot.Passive)
+            {
+                return false;
+            }
+
+            if (module.turretShieldMax > 0.01f)
+            {
+                return true;
+            }
+
+            string defName = module.defName;
+            if (!defName.NullOrEmpty() && defName.IndexOf("Aegis", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return true;
+            }
+
+            string role = module.role;
+            return !role.NullOrEmpty() && role.IndexOf("aegis", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private bool IsRuntimeActivePassiveModule(ABY_TurretModuleDef module)
+        {
+            if (module == null)
+            {
+                return false;
+            }
+
+            return !IsAegisModule(module) || module == InstalledAegisModule;
+        }
+
         private void ApplyPowerDraw()
         {
             CompPowerTrader powerComp = PowerComp;
@@ -1862,7 +1943,7 @@ namespace AbyssalProtocol
 
         private void SanitizeLoadedState()
         {
-            passiveModules ??= new List<ABY_TurretModuleDef>();
+            EnsurePassiveModuleList();
             passiveModules.RemoveAll(module => module == null || module.slot != ABY_TurretModuleSlot.Passive || !ModuleAllowed(module));
             passiveModules = passiveModules.Distinct().Take(Mathf.Max(0, Props.passiveSlots)).ToList();
 
@@ -2059,7 +2140,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < passiveModules.Count; i++)
             {
                 ABY_TurretModuleDef module = passiveModules[i];
-                if (module != null && module.incomingDamageMultiplier > 0f && Math.Abs(module.incomingDamageMultiplier - 1f) > 0.0001f)
+                if (IsRuntimeActivePassiveModule(module) && module.incomingDamageMultiplier > 0f && Math.Abs(module.incomingDamageMultiplier - 1f) > 0.0001f)
                 {
                     multiplier *= module.incomingDamageMultiplier;
                 }
@@ -2074,7 +2155,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < passiveModules.Count; i++)
             {
                 ABY_TurretModuleDef module = passiveModules[i];
-                if (module != null)
+                if (IsRuntimeActivePassiveModule(module))
                 {
                     total += selector(module);
                 }
@@ -2089,7 +2170,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < passiveModules.Count; i++)
             {
                 ABY_TurretModuleDef module = passiveModules[i];
-                if (module != null && module.cooldownMultiplier > 0f && Math.Abs(module.cooldownMultiplier - 1f) > 0.0001f)
+                if (IsRuntimeActivePassiveModule(module) && module.cooldownMultiplier > 0f && Math.Abs(module.cooldownMultiplier - 1f) > 0.0001f)
                 {
                     multiplier *= module.cooldownMultiplier;
                 }

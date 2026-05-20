@@ -97,6 +97,7 @@
   <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} Вт</ABY_TurretInspectStats>
   <ABY_TurretInstallFailed>Не удалось установить модуль.</ABY_TurretInstallFailed>
   <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
+  <ABY_TurretInstall_AegisOccupied>Этот корпус может поддерживать только один модуль Эгиды одновременно.</ABY_TurretInstall_AegisOccupied>
   <ABY_TurretInstall_AuxOccupied>Вспомогательный слот уже занят.</ABY_TurretInstall_AuxOccupied>
   <ABY_TurretInstall_Incompatible>Этот модуль несовместим с данным корпусом.</ABY_TurretInstall_Incompatible>
   <ABY_TurretInstall_Invalid>Некорректный модуль.</ABY_TurretInstall_Invalid>

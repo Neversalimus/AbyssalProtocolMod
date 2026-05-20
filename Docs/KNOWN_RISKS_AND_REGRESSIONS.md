@@ -612,3 +612,10 @@ In-game checks:
 - Load with encounter data validation enabled and confirm there is no generic `Encounter validation failed: NullReferenceException` warning.
 - Use the diagnostics window or "Validate encounters" button to confirm concrete warnings/notes are visible if data is malformed.
 - Install passive/aegis turret modules and verify their gameplay behavior is unchanged by the validator.
+
+## Modular turret Aegis modules
+
+- Aegis passive modules must not stack on the same turret. Shield capacity/recharge and passive stat effects should resolve from one installed Aegis module only.
+- The read-only Aegis status gizmo should appear whenever a player/factionless selected turret has an installed passive shield module, even if the turret is offline or lacks a main weapon core.
+- Do not gate the Aegis gizmo on main weapon presence; the shield module is a passive chassis system.
+

@@ -334,3 +334,11 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | System | Status | Source | Defs/assets | UI exposure | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Passive turret aegis modules | Implemented / needs smoke test | `source/Comps/CompAbyssalModularTurret.cs`, `source/Defs/Turrets/ABY_TurretModuleDef.cs`, `source/UI/Turrets/ITab_AbyssalTurretModules.cs`, `source/Comps/CompABY_TurretModuleInfoCard.cs` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`, `Textures/Things/Item/TurretModules/` | turret inspect string, ITab stat text, module info card | Shield modules add `turretShieldMax`, recharge-per-tick and recharge-delay fields. They absorb incoming damage before damage multipliers and recharge only while operational. |
+
+### Modular turret Aegis passive modules
+
+- Source owner: `source/Comps/CompAbyssalModularTurret.cs`.
+- Def owner: `Defs/Misc/ABY_TurretModuleDefs.xml` and matching module ThingDefs/recipes.
+- Localization owner: `Languages/*/Keyed/ABY_ModularTurrets_Strings.xml`.
+- Integration rule: only one Aegis/passive shield module is allowed per turret; the status gizmo is read-only and uses the shared `Gizmo_ABY_AegisStatus` presentation.
+

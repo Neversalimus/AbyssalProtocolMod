@@ -97,6 +97,7 @@
   <ABY_TurretInspectStats>Range {0} · cooldown {1} · power {2} W</ABY_TurretInspectStats>
   <ABY_TurretInstallFailed>Could not install module.</ABY_TurretInstallFailed>
   <ABY_TurretInstallFromMap>Install from map</ABY_TurretInstallFromMap>
+  <ABY_TurretInstall_AegisOccupied>This chassis can sustain only one Aegis module at a time.</ABY_TurretInstall_AegisOccupied>
   <ABY_TurretInstall_AuxOccupied>The auxiliary slot is already occupied.</ABY_TurretInstall_AuxOccupied>
   <ABY_TurretInstall_Incompatible>This module is not compatible with this chassis.</ABY_TurretInstall_Incompatible>
   <ABY_TurretInstall_Invalid>Invalid module.</ABY_TurretInstall_Invalid>
