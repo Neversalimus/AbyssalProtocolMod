@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_RiftNeedlerCore</defName>
     <label>forge rift needler core</label>
@@ -11,16 +10,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>45</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>45</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_RiftNeedlerCore>1</ABY_TurretModule_RiftNeedlerCore></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>80</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_RiftNeedlerCore>1</ABY_TurretModule_RiftNeedlerCore>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>80</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_PlasmaLanceCore</defName>
     <label>forge plasma lance core</label>
@@ -31,16 +59,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>32</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>25</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>1</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_PlasmaLanceCore>1</ABY_TurretModule_PlasmaLanceCore></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>190</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_PlasmaLanceCore>1</ABY_TurretModule_PlasmaLanceCore>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>190</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_AshChoirRepeaterCore</defName>
     <label>forge ash choir repeater core</label>
@@ -51,18 +108,61 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>42</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>70</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>4</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>8</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>42</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>70</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_AshChoirRepeaterCore>1</ABY_TurretModule_AshChoirRepeaterCore></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>320</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_AshChoirRepeaterCore>1</ABY_TurretModule_AshChoirRepeaterCore>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>320</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_ChoirArcEmitter</defName>
     <label>forge choir arc emitter</label>
@@ -73,16 +173,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>28</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>55</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>3</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>28</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>55</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_ChoirArcEmitter>1</ABY_TurretModule_ChoirArcEmitter></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>260</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_ChoirArcEmitter>1</ABY_TurretModule_ChoirArcEmitter>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>260</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_CoolingLattice</defName>
     <label>forge cooling lattice</label>
@@ -93,16 +222,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>12</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>30</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_CoolingLattice>1</ABY_TurretModule_CoolingLattice></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>110</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_CoolingLattice>1</ABY_TurretModule_CoolingLattice>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>110</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_TargetingSigil</defName>
     <label>forge targeting sigil</label>
@@ -113,16 +271,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>14</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>25</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_TargetingSigil>1</ABY_TurretModule_TargetingSigil></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>140</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_TargetingSigil>1</ABY_TurretModule_TargetingSigil>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>140</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_ResidueCapacitor</defName>
     <label>forge residue capacitor</label>
@@ -133,17 +320,45 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>12</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_ResidueCapacitor>1</ABY_TurretModule_ResidueCapacitor></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>170</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_ResidueCapacitor>1</ABY_TurretModule_ResidueCapacitor>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>170</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_SepulcherRailCore</defName>
     <label>forge sepulcher rail core</label>
@@ -154,19 +369,53 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>90</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>65</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>35</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>4</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>90</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>65</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_SepulcherRailCore>1</ABY_TurretModule_SepulcherRailCore></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1500</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_SepulcherRailCore>1</ABY_TurretModule_SepulcherRailCore>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1500</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_CinderMortarCore</defName>
     <label>forge cinder mortar core</label>
@@ -177,19 +426,61 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>64</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>95</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>36</count></li>
-      <li><filter><thingDefs><li>Chemfuel</li></thingDefs></filter><count>45</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>64</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>95</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>36</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Chemfuel</li>
+          </thingDefs>
+        </filter>
+        <count>45</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_CinderMortarCore>1</ABY_TurretModule_CinderMortarCore></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>820</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_CinderMortarCore>1</ABY_TurretModule_CinderMortarCore>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>820</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_NullArcDischarger</defName>
     <label>forge null-arc discharger</label>
@@ -200,18 +491,61 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>70</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>42</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>16</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>70</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>42</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>16</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_NullArcDischarger>1</ABY_TurretModule_NullArcDischarger></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>960</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_NullArcDischarger>1</ABY_TurretModule_NullArcDischarger>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>960</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_AbyssalHarpoonProjector</defName>
     <label>forge abyssal harpoon projector</label>
@@ -222,19 +556,62 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>76</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>90</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>44</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>20</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>76</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>90</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>44</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_AbyssalHarpoonProjector>1</ABY_TurretModule_AbyssalHarpoonProjector></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1040</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_AbyssalHarpoonProjector>1</ABY_TurretModule_AbyssalHarpoonProjector>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1040</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-<RecipeDef>
+  <RecipeDef>
     <defName>ABY_CraftTurretModule_VesperLanceArray</defName>
     <label>forge vesper lance array</label>
     <description>Bind a saint-clean sanction chamber and collapsing beam spine into a turret-compatible precision lance core.</description>
@@ -244,18 +621,54 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>56</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>32</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>14</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>56</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_VesperLanceArray>1</ABY_TurretModule_VesperLanceArray></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>680</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_VesperLanceArray>1</ABY_TurretModule_VesperLanceArray>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>680</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-<RecipeDef>
+  <RecipeDef>
     <defName>ABY_CraftTurretModule_RiftFlakBloom</defName>
     <label>forge rift flak bloom</label>
     <description>Bind a cracked rift canister splitter and shard-feed housings into a turret-compatible anti-cluster flak bloom module.</description>
@@ -265,19 +678,53 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>68</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>82</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>38</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>68</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>82</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>38</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_RiftFlakBloom>1</ABY_TurretModule_RiftFlakBloom></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>920</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_RiftFlakBloom>1</ABY_TurretModule_RiftFlakBloom>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>920</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
-
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_SanctifiedPrismEmitter</defName>
     <label>forge sanctified prism emitter</label>
@@ -288,18 +735,61 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>76</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>46</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>22</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>12</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>3</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>76</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>46</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>22</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1120</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1120</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_CrowncoilGaussMinigun</defName>
     <label>forge crowncoil gauss minigun</label>
@@ -310,16 +800,588 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>104</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>120</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>62</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>30</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>3</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>104</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>120</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>62</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_CrowncoilGaussMinigun>1</ABY_TurretModule_CrowncoilGaussMinigun></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1280</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_CrowncoilGaussMinigun>1</ABY_TurretModule_CrowncoilGaussMinigun>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_BlackoutPowerRegulator</defName>
+    <label>forge blackout power regulator</label>
+    <description>Assemble a blackout power regulator for abyssal modular turret chassis.</description>
+    <jobString>Forging blackout power regulator.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_BlackoutPowerRegulator>1</ABY_TurretModule_BlackoutPowerRegulator>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>130</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_OverpressureCycleGovernor</defName>
+    <label>forge overpressure cycle governor</label>
+    <description>Assemble an overpressure cycle governor for abyssal modular turret chassis.</description>
+    <jobString>Forging overpressure cycle governor.</jobString>
+    <workAmount>1750</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>26</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>50</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_OverpressureCycleGovernor>1</ABY_TurretModule_OverpressureCycleGovernor>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>240</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_LongChoirLens</defName>
+    <label>forge long choir lens</label>
+    <description>Assemble a long choir lens for abyssal modular turret chassis.</description>
+    <jobString>Forging long choir lens.</jobString>
+    <workAmount>1900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>30</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_LongChoirLens>1</ABY_TurretModule_LongChoirLens>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_CloseQuartersInterlock</defName>
+    <label>forge close-quarters interlock</label>
+    <description>Assemble a close-quarters interlock for abyssal modular turret chassis.</description>
+    <jobString>Forging close-quarters interlock.</jobString>
+    <workAmount>2600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>42</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>28</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_CloseQuartersInterlock>1</ABY_TurretModule_CloseQuartersInterlock>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>460</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_AbyssalThreatPrioritizer</defName>
+    <label>forge abyssal threat prioritizer</label>
+    <description>Assemble an abyssal threat prioritizer for abyssal modular turret chassis.</description>
+    <jobString>Forging abyssal threat prioritizer.</jobString>
+    <workAmount>3000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>55</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>14</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_AbyssalThreatPrioritizer>1</ABY_TurretModule_AbyssalThreatPrioritizer>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>620</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_AntiSwarmPatternScanner</defName>
+    <label>forge anti-swarm pattern scanner</label>
+    <description>Assemble an anti-swarm pattern scanner for abyssal modular turret chassis.</description>
+    <jobString>Forging anti-swarm pattern scanner.</jobString>
+    <workAmount>2900</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>50</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>24</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_AntiSwarmPatternScanner>1</ABY_TurretModule_AntiSwarmPatternScanner>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>580</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_ShieldBurnCapacitor</defName>
+    <label>forge shield-burn capacitor</label>
+    <description>Assemble a shield-burn capacitor for abyssal modular turret chassis.</description>
+    <jobString>Forging shield-burn capacitor.</jobString>
+    <workAmount>4100</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>55</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_ShieldBurnCapacitor>1</ABY_TurretModule_ShieldBurnCapacitor>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1200</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_SanctifiedStabilizerPlate</defName>
+    <label>forge sanctified stabilizer plate</label>
+    <description>Assemble a sanctified stabilizer plate for abyssal modular turret chassis.</description>
+    <jobString>Forging sanctified stabilizer plate.</jobString>
+    <workAmount>3950</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>75</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>70</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>20</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_SanctifiedStabilizerPlate>1</ABY_TurretModule_SanctifiedStabilizerPlate>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1150</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_EmergencyHeatDump</defName>
+    <label>forge emergency heat dump</label>
+    <description>Assemble an emergency heat dump for abyssal modular turret chassis.</description>
+    <jobString>Forging emergency heat dump.</jobString>
+    <workAmount>4250</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>85</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>60</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>22</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_EmergencyHeatDump>1</ABY_TurretModule_EmergencyHeatDump>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1250</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
 </Defs>

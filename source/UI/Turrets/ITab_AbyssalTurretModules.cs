@@ -697,6 +697,26 @@ namespace AbyssalProtocol
                     lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_CooldownOffset", "Cooldown offset: {0}", ABY_ModularTurretUtility.FormatTicksAsSeconds(module.cooldownOffsetTicks)));
                 }
 
+                if (Mathf.Abs(module.minRangeOffset) > 0.001f)
+                {
+                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_MinRangeOffset", "Minimum range offset: {0}", ABY_ModularTurretUtility.FormatSignedDecimal(module.minRangeOffset)));
+                }
+
+                if (module.idleCooldownRecoveryPerTick > 0.001f)
+                {
+                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_CooldownRecovery", "Cooldown recovery: {0} ticks/tick", module.idleCooldownRecoveryPerTick.ToString("0.0")));
+                }
+
+                if (module.incomingDamageMultiplier > 0f && Mathf.Abs(module.incomingDamageMultiplier - 1f) > 0.001f)
+                {
+                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_DamageMultiplier", "Incoming damage: {0}%", Mathf.RoundToInt(module.incomingDamageMultiplier * 100f)));
+                }
+
+                if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
+                {
+                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_TargetingLogic", "Targeting logic: enhanced"));
+                }
+
                 if (Mathf.Abs(module.missRadiusOffset) > 0.001f)
                 {
                     lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_MissRadiusOffset", "Miss radius offset: {0}", ABY_ModularTurretUtility.FormatSignedDecimal(module.missRadiusOffset)));
@@ -710,7 +730,7 @@ namespace AbyssalProtocol
 
             if (Mathf.Abs(module.extraPowerDraw) > 0.001f)
             {
-                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_ExtraPower", "Extra power draw: +{0} W", module.extraPowerDraw.ToString("0")));
+                lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_ExtraPower", "Extra power draw: {0}", ABY_ModularTurretUtility.FormatPowerDelta(module.extraPowerDraw)));
             }
 
             return string.Join("\n", lines.Where(line => !line.NullOrEmpty()).ToArray());

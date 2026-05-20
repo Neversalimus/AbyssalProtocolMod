@@ -577,3 +577,10 @@ Regression guard:
 - Keep using Framework-style RimWorld/Unity/Harmony references for emergency Roslyn builds; do not compile against .NET 9 reference assemblies.
 ```
 
+
+## 2026-05-20 — Passive modular turret module integration risks
+
+- Passive modules with negative `extraPowerDraw` require `ResolvedModulePowerDraw` to preserve the signed module sum; do not re-clamp module draw to zero before combining with base chassis draw, or Blackout Power Regulator becomes a fake module.
+- Passive target-priority modules must keep using the existing throttled turret target scan and cached combat pawn list. Do not add per-tick global pawn scans for prioritizer/scanner modules.
+- When adding passive module effects, expose them in both item info cards and the turret ITab. Otherwise the module may work but look like an unexplained black-box stat change.
+- Final integrated turret module item icons must be true alpha PNGs under `Textures/Things/Item/TurretModules/`; green chromakey belongs only to source sheets, not runtime textures.

@@ -351,9 +351,12 @@ Do not expand legacy systems unless fixing migration from old saves or old def n
 - `source/Combat/VFX/`
 - `source/UI/Turrets/`
 - `source/Defs/Turrets/`
+- `source/Comps/CompAbyssalModularTurret.cs` when module effects change targeting, power draw, range, cooldown, or damage handling
 - `source/World/Things/` or `World/Buildings/` if needed
 - XML turret module defs, item defs, projectile defs, mote defs, recipes, sound defs
 - textures and localization
+
+Passive modular turret modules are not just labels. Supported passive effects include signed module power draw, range/minimum-range offsets, cooldown multipliers/offsets, fractional cooldown recovery, incoming damage multipliers, and target-priority hints evaluated during the existing throttled target scan. Keep UI stat summaries synchronized when adding new passive fields.
 
 ## High-risk areas
 

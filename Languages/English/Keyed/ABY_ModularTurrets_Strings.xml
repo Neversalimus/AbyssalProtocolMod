@@ -1,214 +1,254 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
+  <ABY_ExperimentalSystemsDesc>Experimental systems are kept behind separate safety toggles. Disabling one stops its gameplay behavior and hides its Forge recipes without destroying already installed equipment.</ABY_ExperimentalSystemsDesc>
+  <ABY_ExperimentalSystemsHeader>Experimental systems / safety switches</ABY_ExperimentalSystemsHeader>
   <ABY_ForgeCategory_TurretSystems>Turret Systems</ABY_ForgeCategory_TurretSystems>
   <ABY_ForgePatternSummary_TurretSystems>Turret system</ABY_ForgePatternSummary_TurretSystems>
-  <ABY_ModularTurret_Tab>Modules</ABY_ModularTurret_Tab>
-  <ABY_ExperimentalSystemsHeader>Experimental systems / safety switches</ABY_ExperimentalSystemsHeader>
-  <ABY_ExperimentalSystemsDesc>Experimental systems are kept behind separate safety toggles. Disabling one stops its gameplay behavior and hides its Forge recipes without destroying already installed equipment.</ABY_ExperimentalSystemsDesc>
-  <ABY_ModularTurrets_Enable>Enable modular turrets</ABY_ModularTurrets_Enable>
-  <ABY_ModularTurrets_EnableDesc>Allows abyssal turret bodies to accept interchangeable weapon, auxiliary and passive systems. Disabling the system makes the chassis inert, but installed parts remain attached.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurret_GridSubtitle>Socket board: inspect squares, install modules, and preview turret output.</ABY_ModularTurret_GridSubtitle>
   <ABY_ModularTurret_Header>Abyssal modular turret chassis</ABY_ModularTurret_Header>
   <ABY_ModularTurret_Subtitle>Install turret systems from the map. The main core fires; auxiliary and passive systems alter behavior.</ABY_ModularTurret_Subtitle>
-  <ABY_TurretDisabledMessage>Modular turret systems are disabled in settings.</ABY_TurretDisabledMessage>
-  <ABY_StateEnabled>enabled</ABY_StateEnabled>
+  <ABY_ModularTurret_Tab>Modules</ABY_ModularTurret_Tab>
+  <ABY_ModularTurrets_Enable>Enable modular turrets</ABY_ModularTurrets_Enable>
+  <ABY_ModularTurrets_EnableDesc>Allows abyssal turret bodies to accept interchangeable weapon, auxiliary and passive systems. Disabling the system makes the chassis inert, but installed parts remain attached.</ABY_ModularTurrets_EnableDesc>
   <ABY_StateDisabled>disabled</ABY_StateDisabled>
-  <ABY_StateOnline>online</ABY_StateOnline>
+  <ABY_StateEnabled>enabled</ABY_StateEnabled>
   <ABY_StateOffline>offline</ABY_StateOffline>
-  <ABY_TurretSlot_Main>Main weapon</ABY_TurretSlot_Main>
-  <ABY_TurretSlot_Auxiliary>Auxiliary</ABY_TurretSlot_Auxiliary>
-  <ABY_TurretSlot_Passive>Passive</ABY_TurretSlot_Passive>
-  <ABY_TurretRole_Generic>general</ABY_TurretRole_Generic>
-  <ABY_TurretSlotTitle_Main>Main weapon core</ABY_TurretSlotTitle_Main>
-  <ABY_TurretSlotTitle_Aux>Auxiliary module</ABY_TurretSlotTitle_Aux>
-  <ABY_TurretSlotTitle_Passive>Passive module {0}</ABY_TurretSlotTitle_Passive>
-  <ABY_TurretEmpty_Main>Empty. The chassis will not fire until a main weapon core is installed.</ABY_TurretEmpty_Main>
-  <ABY_TurretEmpty_Aux>Empty. Auxiliary modules add an independent timed support shot.</ABY_TurretEmpty_Aux>
-  <ABY_TurretEmpty_Passive>Empty. Passive modules alter range, main weapon cadence, or module power draw.</ABY_TurretEmpty_Passive>
-  <ABY_TurretSlotEmpty>empty</ABY_TurretSlotEmpty>
-  <ABY_TurretInstallFromMap>Install from map</ABY_TurretInstallFromMap>
-  <ABY_TurretRemove>Remove / eject</ABY_TurretRemove>
-  <ABY_TurretOpenForgeHint>Craft in Forge</ABY_TurretOpenForgeHint>
-  <ABY_TurretOpenForgeHintTooltip>Turret system recipes are in Abyssal Forge → Turret Systems. Forge cards show whether a part is main, auxiliary, passive or a chassis.</ABY_TurretOpenForgeHintTooltip>
-  <ABY_TurretEditDisabled>Re-enable modular turrets in mod settings before editing installed modules.</ABY_TurretEditDisabled>
-  <ABY_TurretRemoveTooltip>Ejects the installed module as an item near the chassis. If no safe nearby cell exists, the module remains installed.</ABY_TurretRemoveTooltip>
-  <ABY_TurretInstallFailed>Could not install module.</ABY_TurretInstallFailed>
-  <ABY_TurretRemoveFailed>Could not remove module.</ABY_TurretRemoveFailed>
-  <ABY_TurretInstalledMessage>Installed {0}.</ABY_TurretInstalledMessage>
-  <ABY_TurretRemovedMessage>Removed {0}.</ABY_TurretRemovedMessage>
-  <ABY_TurretNoAvailableModule>No compatible loose module is available on this map.</ABY_TurretNoAvailableModule>
-  <ABY_TurretNoModuleItem>The required loose module item could not be found.</ABY_TurretNoModuleItem>
-  <ABY_TurretNoCompatibleDefs>No compatible systems exist for this slot.</ABY_TurretNoCompatibleDefs>
+  <ABY_StateOnline>online</ABY_StateOnline>
+  <ABY_TurretChassisTooltipRole>Role: empty modular turret body. It cannot fire until a main weapon core is installed.</ABY_TurretChassisTooltipRole>
+  <ABY_TurretChassisTooltipRuntime>Installed systems remain anchored to the chassis until removed.</ABY_TurretChassisTooltipRuntime>
+  <ABY_TurretChassisTooltipSlots>Slots: {0} main weapon, {1} auxiliary, {2} passive.</ABY_TurretChassisTooltipSlots>
   <ABY_TurretCompatibleModules>Compatible modules:</ABY_TurretCompatibleModules>
-  <ABY_TurretInstall_Invalid>Invalid module.</ABY_TurretInstall_Invalid>
-  <ABY_TurretInstall_Incompatible>This module is not compatible with this chassis.</ABY_TurretInstall_Incompatible>
-  <ABY_TurretInstall_NoMainSlot>This chassis has no main weapon slot.</ABY_TurretInstall_NoMainSlot>
-  <ABY_TurretInstall_MainOccupied>The main weapon slot is already occupied.</ABY_TurretInstall_MainOccupied>
-  <ABY_TurretInstall_NoAuxSlot>This chassis has no auxiliary slot.</ABY_TurretInstall_NoAuxSlot>
-  <ABY_TurretInstall_AuxOccupied>The auxiliary slot is already occupied.</ABY_TurretInstall_AuxOccupied>
-  <ABY_TurretInstall_PassiveFull>All passive slots are occupied.</ABY_TurretInstall_PassiveFull>
-  <ABY_TurretInstall_PassiveDuplicate>This passive module is already installed.</ABY_TurretInstall_PassiveDuplicate>
-  <ABY_TurretInstall_InvalidSlot>Unsupported module slot.</ABY_TurretInstall_InvalidSlot>
-  <ABY_TurretInstall_NoMap>The chassis must be spawned on a map before modules can be installed.</ABY_TurretInstall_NoMap>
-  <ABY_TurretRemove_NoMap>Cannot eject the module because the chassis is not spawned on a map.</ABY_TurretRemove_NoMap>
-  <ABY_TurretRemove_InvalidModule>Cannot eject an invalid module item.</ABY_TurretRemove_InvalidModule>
-  <ABY_TurretRemove_NoDropCell>Could not find a safe nearby cell for the ejected module. The module was kept installed.</ABY_TurretRemove_NoDropCell>
-  <ABY_TurretRemove_Empty>This slot is already empty.</ABY_TurretRemove_Empty>
-  <ABY_TurretModuleLine_Role>Role: {0}</ABY_TurretModuleLine_Role>
-  <ABY_TurretModuleLine_Effect>Effect: {0}</ABY_TurretModuleLine_Effect>
-  <ABY_TurretModuleProjectile>Shot: {0}</ABY_TurretModuleProjectile>
-  <ABY_TurretModuleFireStats>Range {0} · cooldown {1} · burst {2}</ABY_TurretModuleFireStats>
-  <ABY_TurretModuleAuxStats>Range {0} · aux cooldown {1} · burst {2}</ABY_TurretModuleAuxStats>
-  <ABY_TurretModulePassiveStats>Range {0} · main cooldown {1} · power draw +{2} W</ABY_TurretModulePassiveStats>
-  <ABY_TurretModuleTooltipSlot>Slot: {0}</ABY_TurretModuleTooltipSlot>
-  <ABY_TurretModuleTooltipRole>Role: {0}</ABY_TurretModuleTooltipRole>
-  <ABY_TurretModuleTooltipEffect>Effect: {0}</ABY_TurretModuleTooltipEffect>
-  <ABY_TurretModuleTooltipStats>Stats: {0}</ABY_TurretModuleTooltipStats>
-  <ABY_TurretModulePowerDelta>Extra power draw: +{0} W</ABY_TurretModulePowerDelta>
-  <ABY_TurretCooldown_NoChange>no change</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_NoChange>no change</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Slower>+{0}%</ABY_TurretCooldown_Slower>
-  <ABY_TurretForgeSummary_Main>Main weapon · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretDisabledMessage>Modular turret systems are disabled in settings.</ABY_TurretDisabledMessage>
+  <ABY_TurretEditDisabled>Re-enable modular turrets in mod settings before editing installed modules.</ABY_TurretEditDisabled>
+  <ABY_TurretEmpty_Aux>Empty. Auxiliary modules add an independent timed support shot.</ABY_TurretEmpty_Aux>
+  <ABY_TurretEmpty_Main>Empty. The chassis will not fire until a main weapon core is installed.</ABY_TurretEmpty_Main>
+  <ABY_TurretEmpty_Passive>Empty. Passive modules alter range, main weapon cadence, or module power draw.</ABY_TurretEmpty_Passive>
+  <ABY_TurretFilter_All>ALL</ABY_TurretFilter_All>
+  <ABY_TurretFilter_AllTooltip>Show all modular turret chassis and systems.</ABY_TurretFilter_AllTooltip>
+  <ABY_TurretFilter_AuxTooltip>Show auxiliary weapon systems.</ABY_TurretFilter_AuxTooltip>
+  <ABY_TurretFilter_MainTooltip>Show main weapon cores.</ABY_TurretFilter_MainTooltip>
+  <ABY_TurretFilter_PassiveTooltip>Show passive upgrade systems.</ABY_TurretFilter_PassiveTooltip>
+  <ABY_TurretForgeCardChassisRole>Buildable modular defense chassis</ABY_TurretForgeCardChassisRole>
+  <ABY_TurretForgeCardChassisSlots>Slots: {0} main / {1} aux / {2} passive</ABY_TurretForgeCardChassisSlots>
+  <ABY_TurretForgeCardChassisStats>Base power {0} W · base range {1}</ABY_TurretForgeCardChassisStats>
+  <ABY_TurretForgeCardSlotRole>{0} · {1}</ABY_TurretForgeCardSlotRole>
   <ABY_TurretForgeSummary_Aux>Auxiliary · {0}</ABY_TurretForgeSummary_Aux>
-  <ABY_TurretForgeSummary_Passive>Passive · {0}</ABY_TurretForgeSummary_Passive>
   <ABY_TurretForgeSummary_ChassisGeneric>Turret chassis</ABY_TurretForgeSummary_ChassisGeneric>
   <ABY_TurretForgeSummary_ChassisSlots>Chassis · {0} main / {1} aux / {2} passive</ABY_TurretForgeSummary_ChassisSlots>
-  <ABY_TurretChassisTooltipRole>Role: empty modular turret body. It cannot fire until a main weapon core is installed.</ABY_TurretChassisTooltipRole>
-  <ABY_TurretChassisTooltipSlots>Slots: {0} main weapon, {1} auxiliary, {2} passive.</ABY_TurretChassisTooltipSlots>
-  <ABY_TurretChassisTooltipRuntime>Installed systems remain anchored to the chassis until removed.</ABY_TurretChassisTooltipRuntime>
-  <ABY_TurretStatsHeader>Operating preview</ABY_TurretStatsHeader>
-  <ABY_TurretStatsFeature>Feature state: {0}</ABY_TurretStatsFeature>
-  <ABY_TurretStatsPower>Power: {0}</ABY_TurretStatsPower>
-  <ABY_TurretStatsRange>Main range: {0}</ABY_TurretStatsRange>
-  <ABY_TurretStatsCooldown>Main cooldown: {0}</ABY_TurretStatsCooldown>
-  <ABY_TurretStatsCooldownResolved>Main cooldown: {0} → {1}</ABY_TurretStatsCooldownResolved>
-  <ABY_TurretStatsPowerDraw>Power draw: {0} W base + {1} W modules = {2} W applied</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Disables targeting, firing, placement and Forge recipes without removing installed systems.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
-  <ABY_TurretInspectDisabled>Modular turret systems are disabled in settings.</ABY_TurretInspectDisabled>
-  <ABY_TurretInspectMain>Main: {0}</ABY_TurretInspectMain>
-  <ABY_TurretInspectAux>Auxiliary: {0}</ABY_TurretInspectAux>
-  <ABY_TurretInspectPassive>Passive: {0}/{1}</ABY_TurretInspectPassive>
-  <ABY_TurretInspectStats>Range {0} · cooldown {1} · power {2} W</ABY_TurretInspectStats>
-  <ABY_TurretInspectNeedsMain>No main weapon core installed.</ABY_TurretInspectNeedsMain>
-  <ABY_TurretInfo_Profile>Turret module profile</ABY_TurretInfo_Profile>
-  <ABY_TurretInfo_ProfileDesc>The occupied slot and tactical role of this modular turret component.</ABY_TurretInfo_ProfileDesc>
-  <ABY_TurretInfo_CompatibleChassis>Compatible chassis</ABY_TurretInfo_CompatibleChassis>
-  <ABY_TurretInfo_CompatibleChassisDesc>Chassis tags that can accept this module.</ABY_TurretInfo_CompatibleChassisDesc>
-  <ABY_TurretInfo_Effect>Effect</ABY_TurretInfo_Effect>
-  <ABY_TurretInfo_EffectDesc>What this module does after installation.</ABY_TurretInfo_EffectDesc>
-  <ABY_TurretInfo_Range>Turret range</ABY_TurretInfo_Range>
-  <ABY_TurretInfo_RangeDesc>Maximum firing range provided by this weapon module.</ABY_TurretInfo_RangeDesc>
-  <ABY_TurretInfo_MainCooldown>Main cooldown</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretForgeSummary_Main>Main weapon · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretForgeSummary_Passive>Passive · {0}</ABY_TurretForgeSummary_Passive>
+  <ABY_TurretGridActiveSlot>Active chassis slot</ABY_TurretGridActiveSlot>
+  <ABY_TurretGridAvailable>Compatible loose module available on map.</ABY_TurretGridAvailable>
+  <ABY_TurretGridAvailableHeader_OnMap>Modules currently on map</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretGridEmptyAux>Empty</ABY_TurretGridEmptyAux>
+  <ABY_TurretGridEmptyMain>Empty</ABY_TurretGridEmptyMain>
+  <ABY_TurretGridEmptyPassive>Empty</ABY_TurretGridEmptyPassive>
+  <ABY_TurretGridHeader>Module sockets</ABY_TurretGridHeader>
+  <ABY_TurretGridHint>Click a square to inspect or change that slot.</ABY_TurretGridHint>
+  <ABY_TurretGridLocked>Locked</ABY_TurretGridLocked>
+  <ABY_TurretGridLockedState>Locked on this chassis</ABY_TurretGridLockedState>
+  <ABY_TurretGridLockedTooltip>Locked on this chassis. This slot is not available on the current chassis.</ABY_TurretGridLockedTooltip>
+  <ABY_TurretGridUnavailable>No compatible loose module currently available on map.</ABY_TurretGridUnavailable>
+  <ABY_TurretInfo_AnyChassis>any modular chassis</ABY_TurretInfo_AnyChassis>
   <ABY_TurretInfo_AuxCooldown>Auxiliary cooldown</ABY_TurretInfo_AuxCooldown>
-  <ABY_TurretInfo_CooldownDesc>Time before this module can fire again.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Burst</ABY_TurretInfo_Burst>
   <ABY_TurretInfo_BurstDesc>Number of separate strikes released in one attack.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Burst spacing</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Delay between shots inside a burst.</ABY_TurretInfo_BurstSpacingDesc>
-  <ABY_TurretInfo_Projectile>Warhead</ABY_TurretInfo_Projectile>
-  <ABY_TurretInfo_ProjectileDesc>Payload used by the weapon path.</ABY_TurretInfo_ProjectileDesc>
-  <ABY_TurretInfo_RangeOffset>Main range offset</ABY_TurretInfo_RangeOffset>
-  <ABY_TurretInfo_RangeOffsetDesc>Added to the installed main weapon range.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_CompatibleChassis>Compatible chassis</ABY_TurretInfo_CompatibleChassis>
+  <ABY_TurretInfo_CompatibleChassisDesc>Chassis tags that can accept this module.</ABY_TurretInfo_CompatibleChassisDesc>
+  <ABY_TurretInfo_CooldownDesc>Time before this module can fire again.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_CooldownMultiplier>Main cooldown modifier</ABY_TurretInfo_CooldownMultiplier>
   <ABY_TurretInfo_CooldownMultiplierDesc>Multiplies the installed main weapon cooldown. Negative values are faster.</ABY_TurretInfo_CooldownMultiplierDesc>
   <ABY_TurretInfo_CooldownOffset>Main cooldown offset</ABY_TurretInfo_CooldownOffset>
   <ABY_TurretInfo_CooldownOffsetDesc>Flat cooldown shift added after multiplier effects.</ABY_TurretInfo_CooldownOffsetDesc>
-  <ABY_TurretInfo_MissRadiusOffset>Miss radius offset</ABY_TurretInfo_MissRadiusOffset>
-  <ABY_TurretInfo_MissRadiusOffsetDesc>Aiming correction reserved for later targeting refinement.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_CooldownRecovery>Cooldown recovery</ABY_TurretInfo_CooldownRecovery>
+  <ABY_TurretInfo_CooldownRecoveryDesc>Additional cooldown recovery applied while the main weapon is cooling down.</ABY_TurretInfo_CooldownRecoveryDesc>
+  <ABY_TurretInfo_DamageMultiplier>Incoming damage</ABY_TurretInfo_DamageMultiplier>
+  <ABY_TurretInfo_DamageMultiplierDesc>Multiplier applied to incoming damage before it reaches the modular turret chassis.</ABY_TurretInfo_DamageMultiplierDesc>
+  <ABY_TurretInfo_Effect>Effect</ABY_TurretInfo_Effect>
+  <ABY_TurretInfo_EffectDesc>What this module does after installation.</ABY_TurretInfo_EffectDesc>
   <ABY_TurretInfo_ExtraPowerDraw>Extra power draw</ABY_TurretInfo_ExtraPowerDraw>
   <ABY_TurretInfo_ExtraPowerDrawDesc>Additional power consumed by the chassis while this module is installed and modular turrets are enabled.</ABY_TurretInfo_ExtraPowerDrawDesc>
-  <ABY_TurretInfo_AnyChassis>any modular chassis</ABY_TurretInfo_AnyChassis>
-  <ABY_TurretModuleLine_Slot>Slot: {0}</ABY_TurretModuleLine_Slot>
-  <ABY_TurretModuleLine_EffectHeader>Effect</ABY_TurretModuleLine_EffectHeader>
-  <ABY_TurretModuleLine_StatsHeader>Stats</ABY_TurretModuleLine_StatsHeader>
-  <ABY_TurretFilter_All>ALL</ABY_TurretFilter_All>
-  <ABY_TurretSlotBadge_Main>MAIN</ABY_TurretSlotBadge_Main>
-  <ABY_TurretSlotBadge_Aux>AUX</ABY_TurretSlotBadge_Aux>
-  <ABY_TurretSlotBadge_Passive>PASSIVE</ABY_TurretSlotBadge_Passive>
-  <ABY_TurretSlotBadge_Chassis>CHASSIS</ABY_TurretSlotBadge_Chassis>
-  <ABY_TurretSlotBadge_Module>SYSTEM</ABY_TurretSlotBadge_Module>
-  <ABY_TurretFilter_AllTooltip>Show all modular turret chassis and systems.</ABY_TurretFilter_AllTooltip>
-  <ABY_TurretFilter_MainTooltip>Show main weapon cores.</ABY_TurretFilter_MainTooltip>
-  <ABY_TurretFilter_AuxTooltip>Show auxiliary weapon systems.</ABY_TurretFilter_AuxTooltip>
-  <ABY_TurretFilter_PassiveTooltip>Show passive upgrade systems.</ABY_TurretFilter_PassiveTooltip>
-  <ABY_TurretForgeCardSlotRole>{0} · {1}</ABY_TurretForgeCardSlotRole>
-  <ABY_TurretForgeCardChassisRole>Buildable modular defense chassis</ABY_TurretForgeCardChassisRole>
-  <ABY_TurretForgeCardChassisSlots>Slots: {0} main / {1} aux / {2} passive</ABY_TurretForgeCardChassisSlots>
-  <ABY_TurretForgeCardChassisStats>Base power {0} W · base range {1}</ABY_TurretForgeCardChassisStats>
-  <ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>Rift Needler Core</ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>anti-light burst fire</ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Unleashes three rift needles in rapid succession, cutting down lightly armored enemies and pressing back dense swarms before they can close.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>Plasma Lance Core</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>anti-armor lance</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Hurls a slow ultra-plasma lance built for reach, pressure and the patient cracking of heavy armor.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>Ash Choir Repeater Core</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>anti-swarm ash repeater</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Rakes the field with five ash-canticle shards, cruel against animals, light enemies and packed abyssal waves.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>Choir Arc Emitter</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>crowd pressure</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>Cooling Lattice</ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleRole_ABY_TMD_CoolingLattice>cadence stabilizer</ABY_TurretModuleRole_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>Bleeds excess heat through a bound lattice, tightening the firing cycle at the cost of higher power draw.</ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>Targeting Sigil</ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleRole_ABY_TMD_TargetingSigil>range and tracking</ABY_TurretModuleRole_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>Extends the turret’s sighting geometry and steadies long-range tracking, demanding extra power to hold the sigil active.</ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>Residue Capacitor</ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>charge buffer</ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>Stores abyssal charge between shots, modestly extending reach and cadence while drawing more power from the grid.</ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>Sepulcher Rail Core</ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>anti-elite rail shot</ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>Charges twin sepulcher rails before driving a single high-velocity penetrator into armored elites at extreme range.</ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>Cinder Mortar Core</ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>indirect cinder fire</ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>Throws an arcing cinder shell that bursts into hot ash and compact splash, strong against clustered enemies and static firing lines.</ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>Null-Arc Discharger</ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>EMP suppression</ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>Releases a charged null-arc pulse that burns shields, stuns machines and chains through clustered elite support.</ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>Abyssal Harpoon Projector</ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>elite lockdown</ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>Drives a heavy abyssal harpoon into breach targets, slowing their advance and dragging lesser bodies off their line.</ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>Vesper Lance Array</ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>precision sanction lance</ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>Projects a saint-clean lance with better reach and armor pressure than plasma while firing far faster than a sepulcher rail.</ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>Rift Flak Bloom</ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>anti-cluster flak bloom</ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>Launches a compact rift seed that blooms into cutting shards around the impact point, punishing light swarms and clustered raiders.</ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>Sanctified Prism Emitter</ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>line-control refraction</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Fires a charged prism bolt that cuts through a narrow lane, refracting judgment through enemies standing behind the first target.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>Crowncoil Gauss Minigun</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>crowncoil suppression</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Builds a six-lane crowncoil phase before pouring out a gauss storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>Crownfire Rocket Choir</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
-  <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>guided rocket saturation</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
-  <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
-  <ABY_ModularTurret_GridSubtitle>Socket board: inspect squares, install modules, and preview turret output.</ABY_ModularTurret_GridSubtitle>
-  <ABY_TurretGridHeader>Module sockets</ABY_TurretGridHeader>
-  <ABY_TurretGridHint>Click a square to inspect or change that slot.</ABY_TurretGridHint>
-  <ABY_TurretGridAvailableHeader_OnMap>Modules currently on map</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretInfo_MainCooldown>Main cooldown</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretInfo_MinRangeOffset>Minimum range offset</ABY_TurretInfo_MinRangeOffset>
+  <ABY_TurretInfo_MinRangeOffsetDesc>Added to the installed main and auxiliary weapon minimum range. Negative values let close-range-locked weapons fire nearer to the chassis.</ABY_TurretInfo_MinRangeOffsetDesc>
+  <ABY_TurretInfo_MissRadiusOffset>Miss radius offset</ABY_TurretInfo_MissRadiusOffset>
+  <ABY_TurretInfo_MissRadiusOffsetDesc>Aiming correction reserved for later targeting refinement.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_Profile>Turret module profile</ABY_TurretInfo_Profile>
+  <ABY_TurretInfo_ProfileDesc>The occupied slot and tactical role of this modular turret component.</ABY_TurretInfo_ProfileDesc>
+  <ABY_TurretInfo_Projectile>Warhead</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Payload used by the weapon path.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_Range>Turret range</ABY_TurretInfo_Range>
+  <ABY_TurretInfo_RangeDesc>Maximum firing range provided by this weapon module.</ABY_TurretInfo_RangeDesc>
+  <ABY_TurretInfo_RangeOffset>Main range offset</ABY_TurretInfo_RangeOffset>
+  <ABY_TurretInfo_RangeOffsetDesc>Added to the installed main weapon range.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_TargetingLogic>Targeting logic</ABY_TurretInfo_TargetingLogic>
+  <ABY_TurretInfo_TargetingLogicDesc>Adds passive scoring hints during the turret's existing throttled target scan. This does not create a per-tick global scan.</ABY_TurretInfo_TargetingLogicDesc>
+  <ABY_TurretInfo_TargetingLogicValue>enhanced</ABY_TurretInfo_TargetingLogicValue>
+  <ABY_TurretInspectAux>Auxiliary: {0}</ABY_TurretInspectAux>
+  <ABY_TurretInspectDisabled>Modular turret systems are disabled in settings.</ABY_TurretInspectDisabled>
+  <ABY_TurretInspectMain>Main: {0}</ABY_TurretInspectMain>
+  <ABY_TurretInspectNeedsMain>No main weapon core installed.</ABY_TurretInspectNeedsMain>
+  <ABY_TurretInspectPassive>Passive: {0}/{1}</ABY_TurretInspectPassive>
+  <ABY_TurretInspectStats>Range {0} · cooldown {1} · power {2} W</ABY_TurretInspectStats>
+  <ABY_TurretInstallFailed>Could not install module.</ABY_TurretInstallFailed>
+  <ABY_TurretInstallFromMap>Install from map</ABY_TurretInstallFromMap>
+  <ABY_TurretInstall_AuxOccupied>The auxiliary slot is already occupied.</ABY_TurretInstall_AuxOccupied>
+  <ABY_TurretInstall_Incompatible>This module is not compatible with this chassis.</ABY_TurretInstall_Incompatible>
+  <ABY_TurretInstall_Invalid>Invalid module.</ABY_TurretInstall_Invalid>
+  <ABY_TurretInstall_InvalidSlot>Unsupported module slot.</ABY_TurretInstall_InvalidSlot>
+  <ABY_TurretInstall_MainOccupied>The main weapon slot is already occupied.</ABY_TurretInstall_MainOccupied>
+  <ABY_TurretInstall_NoAuxSlot>This chassis has no auxiliary slot.</ABY_TurretInstall_NoAuxSlot>
+  <ABY_TurretInstall_NoMainSlot>This chassis has no main weapon slot.</ABY_TurretInstall_NoMainSlot>
+  <ABY_TurretInstall_NoMap>The chassis must be spawned on a map before modules can be installed.</ABY_TurretInstall_NoMap>
+  <ABY_TurretInstall_PassiveDuplicate>This passive module is already installed.</ABY_TurretInstall_PassiveDuplicate>
+  <ABY_TurretInstall_PassiveFull>All passive slots are occupied.</ABY_TurretInstall_PassiveFull>
+  <ABY_TurretInstalledMessage>Installed {0}.</ABY_TurretInstalledMessage>
   <ABY_TurretLockedDetail_New>This slot is locked on the current chassis. It is not available on this chassis.</ABY_TurretLockedDetail_New>
-  <ABY_TurretGridActiveSlot>Active chassis slot</ABY_TurretGridActiveSlot>
-  <ABY_TurretGridLockedState>Locked on this chassis</ABY_TurretGridLockedState>
-  <ABY_TurretGridEmptyMain>Empty</ABY_TurretGridEmptyMain>
-  <ABY_TurretGridEmptyAux>Empty</ABY_TurretGridEmptyAux>
-  <ABY_TurretGridEmptyPassive>Empty</ABY_TurretGridEmptyPassive>
-  <ABY_TurretGridLockedTooltip>Locked on this chassis. This slot is not available on the current chassis.</ABY_TurretGridLockedTooltip>
-  <ABY_TurretGridAvailable>Compatible loose module available on map.</ABY_TurretGridAvailable>
-  <ABY_TurretGridUnavailable>No compatible loose module currently available on map.</ABY_TurretGridUnavailable>
+  <ABY_TurretModuleAuxStats>Range {0} · aux cooldown {1} · burst {2}</ABY_TurretModuleAuxStats>
+  <ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>Drives a heavy abyssal harpoon into breach targets, slowing their advance and dragging lesser bodies off their line.</ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleEffect_ABY_TMD_AbyssalThreatPrioritizer>Biases target scans toward high-combat-power enemies, bosses, minibosses and construct-like threats.</ABY_TurretModuleEffect_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleEffect_ABY_TMD_AntiSwarmPatternScanner>Biases target scans toward clustered enemies without adding a new per-tick global scan.</ABY_TurretModuleEffect_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Rakes the field with five ash-canticle shards, cruel against animals, light enemies and packed abyssal waves.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleEffect_ABY_TMD_BlackoutPowerRegulator>Reduces total turret power draw while slowing the main firing cycle.</ABY_TurretModuleEffect_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Adds a timed canticle-wave strike that pulses through crowds while the turret’s main weapon keeps its own rhythm.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>Throws an arcing cinder shell that bursts into hot ash and compact splash, strong against clustered enemies and static firing lines.</ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleEffect_ABY_TMD_CloseQuartersInterlock>Reduces main and auxiliary minimum range, making close engagements safer for mortar, rail and harpoon loadouts.</ABY_TurretModuleEffect_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>Bleeds excess heat through a bound lattice, tightening the firing cycle at the cost of higher power draw.</ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Builds a six-lane crowncoil phase before pouring out a gauss storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Launches a vertical crownfire carrier that splits into guided micro-rockets over the target zone, saturating swarms and breach packs with sacred fire.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleEffect_ABY_TMD_EmergencyHeatDump>Adds extra main cooldown recovery while the turret is cooling down, at very high power cost.</ABY_TurretModuleEffect_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleEffect_ABY_TMD_LongChoirLens>Extends firing range at the cost of a slightly slower main cycle and additional power draw.</ABY_TurretModuleEffect_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>Releases a charged null-arc pulse that burns shields, stuns machines and chains through clustered elite support.</ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleEffect_ABY_TMD_OverpressureCycleGovernor>Greatly accelerates the main firing cycle, but shortens reach and draws heavy power.</ABY_TurretModuleEffect_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Hurls a slow ultra-plasma lance built for reach, pressure and the patient cracking of heavy armor.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>Stores abyssal charge between shots, modestly extending reach and cadence while drawing more power from the grid.</ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>Launches a compact rift seed that blooms into cutting shards around the impact point, punishing light swarms and clustered raiders.</ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Unleashes three rift needles in rapid succession, cutting down lightly armored enemies and pressing back dense swarms before they can close.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Fires a charged prism bolt that cuts through a narrow lane, refracting judgment through enemies standing behind the first target.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedStabilizerPlate>Reduces incoming damage to the modular turret chassis, but slightly slows the main firing cycle and draws additional power.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>Charges twin sepulcher rails before driving a single high-velocity penetrator into armored elites at extreme range.</ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ShieldBurnCapacitor>Prioritizes shielded, mechanoid and construct-like targets while slightly improving range and cadence at a high power cost.</ABY_TurretModuleEffect_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>Extends the turret’s sighting geometry and steadies long-range tracking, demanding extra power to hold the sigil active.</ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>Projects a saint-clean lance with better reach and armor pressure than plasma while firing far faster than a sepulcher rail.</ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleFireStats>Range {0} · cooldown {1} · burst {2}</ABY_TurretModuleFireStats>
+  <ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>Abyssal Harpoon Projector</ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleLabel_ABY_TMD_AbyssalThreatPrioritizer>Abyssal Threat Prioritizer</ABY_TurretModuleLabel_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleLabel_ABY_TMD_AntiSwarmPatternScanner>Anti-Swarm Pattern Scanner</ABY_TurretModuleLabel_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>Ash Choir Repeater Core</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleLabel_ABY_TMD_BlackoutPowerRegulator>Blackout Power Regulator</ABY_TurretModuleLabel_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>Choir Arc Emitter</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>Cinder Mortar Core</ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleLabel_ABY_TMD_CloseQuartersInterlock>Close-Quarters Interlock</ABY_TurretModuleLabel_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>Cooling Lattice</ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>Crowncoil Gauss Minigun</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>Crownfire Rocket Choir</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleLabel_ABY_TMD_EmergencyHeatDump>Emergency Heat Dump</ABY_TurretModuleLabel_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleLabel_ABY_TMD_LongChoirLens>Long Choir Lens</ABY_TurretModuleLabel_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>Null-Arc Discharger</ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleLabel_ABY_TMD_OverpressureCycleGovernor>Overpressure Cycle Governor</ABY_TurretModuleLabel_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>Plasma Lance Core</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>Residue Capacitor</ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>Rift Flak Bloom</ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>Rift Needler Core</ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>Sanctified Prism Emitter</ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedStabilizerPlate>Sanctified Stabilizer Plate</ABY_TurretModuleLabel_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>Sepulcher Rail Core</ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleLabel_ABY_TMD_ShieldBurnCapacitor>Shield-Burn Capacitor</ABY_TurretModuleLabel_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>Targeting Sigil</ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>Vesper Lance Array</ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleLine_Effect>Effect: {0}</ABY_TurretModuleLine_Effect>
+  <ABY_TurretModuleLine_EffectHeader>Effect</ABY_TurretModuleLine_EffectHeader>
+  <ABY_TurretModuleLine_Role>Role: {0}</ABY_TurretModuleLine_Role>
+  <ABY_TurretModuleLine_Slot>Slot: {0}</ABY_TurretModuleLine_Slot>
+  <ABY_TurretModuleLine_StatsHeader>Stats</ABY_TurretModuleLine_StatsHeader>
+  <ABY_TurretModulePassiveStats>Range {0} · main cooldown {1} · power {2}</ABY_TurretModulePassiveStats>
+  <ABY_TurretModulePowerDelta>Extra module power draw: {0}</ABY_TurretModulePowerDelta>
+  <ABY_TurretModuleProjectile>Shot: {0}</ABY_TurretModuleProjectile>
+  <ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>elite lockdown</ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleRole_ABY_TMD_AbyssalThreatPrioritizer>elite target scoring</ABY_TurretModuleRole_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleRole_ABY_TMD_AntiSwarmPatternScanner>cluster target scoring</ABY_TurretModuleRole_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>anti-swarm ash repeater</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleRole_ABY_TMD_BlackoutPowerRegulator>grid load governor</ABY_TurretModuleRole_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>crowd pressure</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>indirect cinder fire</ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleRole_ABY_TMD_CloseQuartersInterlock>minimum range control</ABY_TurretModuleRole_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleRole_ABY_TMD_CoolingLattice>cadence stabilizer</ABY_TurretModuleRole_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>crowncoil suppression</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>guided rocket saturation</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleRole_ABY_TMD_EmergencyHeatDump>thermal recovery</ABY_TurretModuleRole_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleRole_ABY_TMD_LongChoirLens>long-range sighting</ABY_TurretModuleRole_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>EMP suppression</ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleRole_ABY_TMD_OverpressureCycleGovernor>cycle overpressure</ABY_TurretModuleRole_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>anti-armor lance</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>charge buffer</ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>anti-cluster flak bloom</ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>anti-light burst fire</ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>line-control refraction</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleRole_ABY_TMD_SanctifiedStabilizerPlate>chassis hardening</ABY_TurretModuleRole_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>anti-elite rail shot</ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleRole_ABY_TMD_ShieldBurnCapacitor>anti-shield targeting</ABY_TurretModuleRole_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleRole_ABY_TMD_TargetingSigil>range and tracking</ABY_TurretModuleRole_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>precision sanction lance</ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleTooltipEffect>Effect: {0}</ABY_TurretModuleTooltipEffect>
+  <ABY_TurretModuleTooltipRole>Role: {0}</ABY_TurretModuleTooltipRole>
+  <ABY_TurretModuleTooltipSlot>Slot: {0}</ABY_TurretModuleTooltipSlot>
+  <ABY_TurretModuleTooltipStats>Stats: {0}</ABY_TurretModuleTooltipStats>
+  <ABY_TurretNoAvailableModule>No compatible loose module is available on this map.</ABY_TurretNoAvailableModule>
+  <ABY_TurretNoCompatibleDefs>No compatible systems exist for this slot.</ABY_TurretNoCompatibleDefs>
+  <ABY_TurretNoModuleItem>The required loose module item could not be found.</ABY_TurretNoModuleItem>
+  <ABY_TurretOpenForgeHint>Craft in Forge</ABY_TurretOpenForgeHint>
+  <ABY_TurretOpenForgeHintTooltip>Turret system recipes are in Abyssal Forge → Turret Systems. Forge cards show whether a part is main, auxiliary, passive or a chassis.</ABY_TurretOpenForgeHintTooltip>
+  <ABY_TurretRemove>Remove / eject</ABY_TurretRemove>
+  <ABY_TurretRemoveFailed>Could not remove module.</ABY_TurretRemoveFailed>
+  <ABY_TurretRemoveTooltip>Ejects the installed module as an item near the chassis. If no safe nearby cell exists, the module remains installed.</ABY_TurretRemoveTooltip>
+  <ABY_TurretRemove_Empty>This slot is already empty.</ABY_TurretRemove_Empty>
+  <ABY_TurretRemove_InvalidModule>Cannot eject an invalid module item.</ABY_TurretRemove_InvalidModule>
+  <ABY_TurretRemove_NoDropCell>Could not find a safe nearby cell for the ejected module. The module was kept installed.</ABY_TurretRemove_NoDropCell>
+  <ABY_TurretRemove_NoMap>Cannot eject the module because the chassis is not spawned on a map.</ABY_TurretRemove_NoMap>
+  <ABY_TurretRemovedMessage>Removed {0}.</ABY_TurretRemovedMessage>
+  <ABY_TurretRole_Generic>general</ABY_TurretRole_Generic>
+  <ABY_TurretSlotBadge_Aux>AUX</ABY_TurretSlotBadge_Aux>
+  <ABY_TurretSlotBadge_Chassis>CHASSIS</ABY_TurretSlotBadge_Chassis>
+  <ABY_TurretSlotBadge_Main>MAIN</ABY_TurretSlotBadge_Main>
+  <ABY_TurretSlotBadge_Module>SYSTEM</ABY_TurretSlotBadge_Module>
+  <ABY_TurretSlotBadge_Passive>PASSIVE</ABY_TurretSlotBadge_Passive>
+  <ABY_TurretSlotEmpty>empty</ABY_TurretSlotEmpty>
+  <ABY_TurretSlotTitle_Aux>Auxiliary module</ABY_TurretSlotTitle_Aux>
   <ABY_TurretSlotTitle_AuxIndexed>Auxiliary module {0}</ABY_TurretSlotTitle_AuxIndexed>
-  <ABY_TurretStatsHeader_Operational>Operational summary</ABY_TurretStatsHeader_Operational>
-  <ABY_TurretStatsMainMissingCompact>Main: no weapon core installed</ABY_TurretStatsMainMissingCompact>
-  <ABY_TurretStatsPowerDrawBreakdown>Power draw: chassis {0} W + modules {1} W</ABY_TurretStatsPowerDrawBreakdown>
-  <ABY_TurretStat_Range>Range: {0}</ABY_TurretStat_Range>
-  <ABY_TurretStat_MainCooldown>Main cooldown: {0}</ABY_TurretStat_MainCooldown>
-  <ABY_TurretStat_Burst>Burst: {0}</ABY_TurretStat_Burst>
+  <ABY_TurretSlotTitle_Main>Main weapon core</ABY_TurretSlotTitle_Main>
+  <ABY_TurretSlotTitle_Passive>Passive module {0}</ABY_TurretSlotTitle_Passive>
+  <ABY_TurretSlot_Auxiliary>Auxiliary</ABY_TurretSlot_Auxiliary>
+  <ABY_TurretSlot_Main>Main weapon</ABY_TurretSlot_Main>
+  <ABY_TurretSlot_Passive>Passive</ABY_TurretSlot_Passive>
   <ABY_TurretStat_AuxCooldown>Aux cooldown: {0}</ABY_TurretStat_AuxCooldown>
-  <ABY_TurretStat_RangeOffset>Range offset: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_Burst>Burst: {0}</ABY_TurretStat_Burst>
   <ABY_TurretStat_CooldownEffect>Cooldown effect: {0}</ABY_TurretStat_CooldownEffect>
   <ABY_TurretStat_CooldownOffset>Cooldown offset: {0}</ABY_TurretStat_CooldownOffset>
+  <ABY_TurretStat_CooldownRecovery>Cooldown recovery: {0} ticks/tick</ABY_TurretStat_CooldownRecovery>
+  <ABY_TurretStat_DamageMultiplier>Incoming damage: {0}%</ABY_TurretStat_DamageMultiplier>
+  <ABY_TurretStat_ExtraPower>Extra power draw: {0}</ABY_TurretStat_ExtraPower>
+  <ABY_TurretStat_MainCooldown>Main cooldown: {0}</ABY_TurretStat_MainCooldown>
+  <ABY_TurretStat_MinRangeOffset>Minimum range offset: {0}</ABY_TurretStat_MinRangeOffset>
   <ABY_TurretStat_MissRadiusOffset>Miss radius offset: {0}</ABY_TurretStat_MissRadiusOffset>
   <ABY_TurretStat_Projectile>Projectile: {0}</ABY_TurretStat_Projectile>
-  <ABY_TurretStat_ExtraPower>Extra power draw: +{0} W</ABY_TurretStat_ExtraPower>
-  <ABY_TurretGridLocked>Locked</ABY_TurretGridLocked>
+  <ABY_TurretStat_Range>Range: {0}</ABY_TurretStat_Range>
+  <ABY_TurretStat_RangeOffset>Range offset: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_TargetingLogic>Targeting logic: enhanced</ABY_TurretStat_TargetingLogic>
+  <ABY_TurretStatsCooldown>Main cooldown: {0}</ABY_TurretStatsCooldown>
+  <ABY_TurretStatsCooldownResolved>Main cooldown: {0} → {1}</ABY_TurretStatsCooldownResolved>
+  <ABY_TurretStatsFeature>Feature state: {0}</ABY_TurretStatsFeature>
+  <ABY_TurretStatsHeader>Operating preview</ABY_TurretStatsHeader>
+  <ABY_TurretStatsHeader_Operational>Operational summary</ABY_TurretStatsHeader_Operational>
+  <ABY_TurretStatsKillSwitch>Disables targeting, firing, placement and Forge recipes without removing installed systems.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsMainMissingCompact>Main: no weapon core installed</ABY_TurretStatsMainMissingCompact>
+  <ABY_TurretStatsPower>Power: {0}</ABY_TurretStatsPower>
+  <ABY_TurretStatsPowerDraw>Power draw: {0} W base + {1} W modules = {2} W applied</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsPowerDrawBreakdown>Power draw: chassis {0} W + modules {1} W</ABY_TurretStatsPowerDrawBreakdown>
+  <ABY_TurretStatsRange>Main range: {0}</ABY_TurretStatsRange>
+  <ABY_TurretStatsTargeting>Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
 </LanguageData>

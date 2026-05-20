@@ -1,26 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.description>Собрать якорный шипомёт и цепной привод для сдерживания элитных целей.</ABY_CraftTurretModule_AbyssalHarpoonProjector.description>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>Ковка бездненного гарпунного проектора.</ABY_CraftTurretModule_AbyssalHarpoonProjector.jobString>
   <ABY_CraftTurretModule_AbyssalHarpoonProjector.label>выковать бездненный гарпунный проектор</ABY_CraftTurretModule_AbyssalHarpoonProjector.label>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.description>Собрать бездненный приоритизатор угроз для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_AbyssalThreatPrioritizer.description>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.jobString>Куется бездненный приоритизатор угроз.</ABY_CraftTurretModule_AbyssalThreatPrioritizer.jobString>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.label>выковать бездненный приоритизатор угроз</ABY_CraftTurretModule_AbyssalThreatPrioritizer.label>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.description>Собрать сканер противороевого паттерна для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_AntiSwarmPatternScanner.description>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.jobString>Куется сканер противороевого паттерна.</ABY_CraftTurretModule_AntiSwarmPatternScanner.jobString>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.label>выковать сканер противороевого паттерна</ABY_CraftTurretModule_AntiSwarmPatternScanner.label>
   <ABY_CraftTurretModule_AshChoirRepeaterCore.description>Связать пепельно-кантильную подачу с основным оружейным ядром турели.</ABY_CraftTurretModule_AshChoirRepeaterCore.description>
   <ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>Ковка ядра Пепельного Хора.</ABY_CraftTurretModule_AshChoirRepeaterCore.jobString>
   <ABY_CraftTurretModule_AshChoirRepeaterCore.label>выковать ядро Пепельного Хора</ABY_CraftTurretModule_AshChoirRepeaterCore.label>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.description>Собрать регулятор Чёрного Сбоя для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_BlackoutPowerRegulator.description>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.jobString>Куется регулятор Чёрного Сбоя.</ABY_CraftTurretModule_BlackoutPowerRegulator.jobString>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.label>выковать регулятор Чёрного Сбоя</ABY_CraftTurretModule_BlackoutPowerRegulator.label>
   <ABY_CraftTurretModule_ChoirArcEmitter.description>Собрать кантильный излучатель для бездненной турельной рамы.</ABY_CraftTurretModule_ChoirArcEmitter.description>
   <ABY_CraftTurretModule_ChoirArcEmitter.jobString>Ковка дугового излучателя Хора.</ABY_CraftTurretModule_ChoirArcEmitter.jobString>
   <ABY_CraftTurretModule_ChoirArcEmitter.label>выковать дуговой излучатель Хора</ABY_CraftTurretModule_ChoirArcEmitter.label>
   <ABY_CraftTurretModule_CinderMortarCore.description>Собрать угольную мортирную камеру и подачу шлаковых зарядов для турели.</ABY_CraftTurretModule_CinderMortarCore.description>
   <ABY_CraftTurretModule_CinderMortarCore.jobString>Ковка ядра угольной мортиры.</ABY_CraftTurretModule_CinderMortarCore.jobString>
   <ABY_CraftTurretModule_CinderMortarCore.label>выковать ядро угольной мортиры</ABY_CraftTurretModule_CinderMortarCore.label>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.description>Собрать интерлок ближнего допуска для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_CloseQuartersInterlock.description>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.jobString>Куется интерлок ближнего допуска.</ABY_CraftTurretModule_CloseQuartersInterlock.jobString>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.label>выковать интерлок ближнего допуска</ABY_CraftTurretModule_CloseQuartersInterlock.label>
   <ABY_CraftTurretModule_CoolingLattice.description>Собрать связанную теплоотводную решётку для турельного корпуса.</ABY_CraftTurretModule_CoolingLattice.description>
   <ABY_CraftTurretModule_CoolingLattice.jobString>Ковка охлаждающей решётки.</ABY_CraftTurretModule_CoolingLattice.jobString>
   <ABY_CraftTurretModule_CoolingLattice.label>выковать охлаждающую решётку</ABY_CraftTurretModule_CoolingLattice.label>
   <ABY_CraftTurretModule_CrowncoilGaussMinigun.description>Связать коронный ускоритель и усиленную роторную подачу в вершину турельного подавления.</ABY_CraftTurretModule_CrowncoilGaussMinigun.description>
   <ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>Ковка гаусс-минигана Коронной Катушки.</ABY_CraftTurretModule_CrowncoilGaussMinigun.jobString>
   <ABY_CraftTurretModule_CrowncoilGaussMinigun.label>выковать гаусс-миниган Коронной Катушки</ABY_CraftTurretModule_CrowncoilGaussMinigun.label>
+  <ABY_CraftTurretModule_EmergencyHeatDump.description>Собрать аварийный сброс жара для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_EmergencyHeatDump.description>
+  <ABY_CraftTurretModule_EmergencyHeatDump.jobString>Куется аварийный сброс жара.</ABY_CraftTurretModule_EmergencyHeatDump.jobString>
+  <ABY_CraftTurretModule_EmergencyHeatDump.label>выковать аварийный сброс жара</ABY_CraftTurretModule_EmergencyHeatDump.label>
+  <ABY_CraftTurretModule_LongChoirLens.description>Собрать линза Дальнего Хора для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_LongChoirLens.description>
+  <ABY_CraftTurretModule_LongChoirLens.jobString>Куется линза Дальнего Хора.</ABY_CraftTurretModule_LongChoirLens.jobString>
+  <ABY_CraftTurretModule_LongChoirLens.label>выковать линза Дальнего Хора</ABY_CraftTurretModule_LongChoirLens.label>
   <ABY_CraftTurretModule_NullArcDischarger.description>Связать нулевой конденсатор и освящённые разрядные зубцы в систему подавления.</ABY_CraftTurretModule_NullArcDischarger.description>
   <ABY_CraftTurretModule_NullArcDischarger.jobString>Ковка нуль-дугового разрядника.</ABY_CraftTurretModule_NullArcDischarger.jobString>
   <ABY_CraftTurretModule_NullArcDischarger.label>выковать нуль-дуговой разрядник</ABY_CraftTurretModule_NullArcDischarger.label>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.description>Собрать регулятор избыточного давления для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_OverpressureCycleGovernor.description>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.jobString>Куется регулятор избыточного давления.</ABY_CraftTurretModule_OverpressureCycleGovernor.jobString>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.label>выковать регулятор избыточного давления</ABY_CraftTurretModule_OverpressureCycleGovernor.label>
   <ABY_CraftTurretModule_PlasmaLanceCore.description>Запечатать ультраплазменный канал в бронебойном ядре турели.</ABY_CraftTurretModule_PlasmaLanceCore.description>
   <ABY_CraftTurretModule_PlasmaLanceCore.jobString>Ковка ядра плазменного копья.</ABY_CraftTurretModule_PlasmaLanceCore.jobString>
   <ABY_CraftTurretModule_PlasmaLanceCore.label>выковать ядро плазменного копья</ABY_CraftTurretModule_PlasmaLanceCore.label>
@@ -36,9 +57,15 @@
   <ABY_CraftTurretModule_SanctifiedPrismEmitter.description>Собрать коронный призматический осколок и фокусирующую апертуру для удара по линии.</ABY_CraftTurretModule_SanctifiedPrismEmitter.description>
   <ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>Ковка освящённого призменного излучателя.</ABY_CraftTurretModule_SanctifiedPrismEmitter.jobString>
   <ABY_CraftTurretModule_SanctifiedPrismEmitter.label>выковать освящённый призменный излучатель</ABY_CraftTurretModule_SanctifiedPrismEmitter.label>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.description>Собрать освящённая стабилизирующая плита для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_SanctifiedStabilizerPlate.description>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.jobString>Куется освящённая стабилизирующая плита.</ABY_CraftTurretModule_SanctifiedStabilizerPlate.jobString>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.label>выковать освящённая стабилизирующая плита</ABY_CraftTurretModule_SanctifiedStabilizerPlate.label>
   <ABY_CraftTurretModule_SepulcherRailCore.description>Связать парные склеповые направляющие с тяжёлым рельсовым ядром турели.</ABY_CraftTurretModule_SepulcherRailCore.description>
   <ABY_CraftTurretModule_SepulcherRailCore.jobString>Ковка ядра Склепового рельса.</ABY_CraftTurretModule_SepulcherRailCore.jobString>
   <ABY_CraftTurretModule_SepulcherRailCore.label>выковать ядро Склепового рельса</ABY_CraftTurretModule_SepulcherRailCore.label>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.description>Собрать конденсатор выжигания щитов для бездненного модульного турельного корпуса.</ABY_CraftTurretModule_ShieldBurnCapacitor.description>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>Куется конденсатор выжигания щитов.</ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.label>выковать конденсатор выжигания щитов</ABY_CraftTurretModule_ShieldBurnCapacitor.label>
   <ABY_CraftTurretModule_TargetingSigil.description>Вытравить сигилу дальнего наведения для турельного корпуса.</ABY_CraftTurretModule_TargetingSigil.description>
   <ABY_CraftTurretModule_TargetingSigil.jobString>Ковка сигилы наведения.</ABY_CraftTurretModule_TargetingSigil.jobString>
   <ABY_CraftTurretModule_TargetingSigil.label>выковать сигилу наведения</ABY_CraftTurretModule_TargetingSigil.label>

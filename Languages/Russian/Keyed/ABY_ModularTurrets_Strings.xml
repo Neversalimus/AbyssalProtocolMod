@@ -1,214 +1,254 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
+  <ABY_ExperimentalSystemsDesc>Экспериментальные системы вынесены за отдельные выключатели. Отключение останавливает их работу и скрывает рецепты кузницы, но не уничтожает уже установленное снаряжение.</ABY_ExperimentalSystemsDesc>
+  <ABY_ExperimentalSystemsHeader>Экспериментальные системы / выключатели безопасности</ABY_ExperimentalSystemsHeader>
   <ABY_ForgeCategory_TurretSystems>Турельные системы</ABY_ForgeCategory_TurretSystems>
   <ABY_ForgePatternSummary_TurretSystems>Турельная система</ABY_ForgePatternSummary_TurretSystems>
-  <ABY_ModularTurret_Tab>Модули</ABY_ModularTurret_Tab>
-  <ABY_ExperimentalSystemsHeader>Экспериментальные системы / выключатели безопасности</ABY_ExperimentalSystemsHeader>
-  <ABY_ExperimentalSystemsDesc>Экспериментальные системы вынесены за отдельные выключатели. Отключение останавливает их работу и скрывает рецепты кузницы, но не уничтожает уже установленное снаряжение.</ABY_ExperimentalSystemsDesc>
-  <ABY_ModularTurrets_Enable>Включить модульные турели</ABY_ModularTurrets_Enable>
-  <ABY_ModularTurrets_EnableDesc>Разрешает турельным корпусам Бездны принимать сменные оружейные, вспомогательные и пассивные системы. При отключении корпус становится инертным, но установленные части сохраняются.</ABY_ModularTurrets_EnableDesc>
+  <ABY_ModularTurret_GridSubtitle>Панель разъёмов: осмотрите ячейки, установите модули и проверьте выход турели.</ABY_ModularTurret_GridSubtitle>
   <ABY_ModularTurret_Header>Модульный турельный корпус Бездны</ABY_ModularTurret_Header>
   <ABY_ModularTurret_Subtitle>Установка турельных систем с карты. Основное ядро стреляет; вспомогательные и пассивные системы меняют поведение.</ABY_ModularTurret_Subtitle>
-  <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках.</ABY_TurretDisabledMessage>
-  <ABY_StateEnabled>включено</ABY_StateEnabled>
+  <ABY_ModularTurret_Tab>Модули</ABY_ModularTurret_Tab>
+  <ABY_ModularTurrets_Enable>Включить модульные турели</ABY_ModularTurrets_Enable>
+  <ABY_ModularTurrets_EnableDesc>Разрешает турельным корпусам Бездны принимать сменные оружейные, вспомогательные и пассивные системы. При отключении корпус становится инертным, но установленные части сохраняются.</ABY_ModularTurrets_EnableDesc>
   <ABY_StateDisabled>отключено</ABY_StateDisabled>
-  <ABY_StateOnline>в сети</ABY_StateOnline>
+  <ABY_StateEnabled>включено</ABY_StateEnabled>
   <ABY_StateOffline>без питания</ABY_StateOffline>
-  <ABY_TurretSlot_Main>Основное оружие</ABY_TurretSlot_Main>
-  <ABY_TurretSlot_Auxiliary>Вспомогательный</ABY_TurretSlot_Auxiliary>
-  <ABY_TurretSlot_Passive>Пассивный</ABY_TurretSlot_Passive>
-  <ABY_TurretRole_Generic>общий</ABY_TurretRole_Generic>
-  <ABY_TurretSlotTitle_Main>Ядро основного оружия</ABY_TurretSlotTitle_Main>
-  <ABY_TurretSlotTitle_Aux>Вспомогательный модуль</ABY_TurretSlotTitle_Aux>
-  <ABY_TurretSlotTitle_Passive>Пассивный модуль {0}</ABY_TurretSlotTitle_Passive>
-  <ABY_TurretEmpty_Main>Пусто. Корпус не будет стрелять, пока не установлено ядро основного оружия.</ABY_TurretEmpty_Main>
-  <ABY_TurretEmpty_Aux>Пусто. Вспомогательные модули добавляют независимый периодический поддерживающий выстрел.</ABY_TurretEmpty_Aux>
-  <ABY_TurretEmpty_Passive>Пусто. Пассивные модули меняют дальность, темп основного оружия или энергопотребление модулей.</ABY_TurretEmpty_Passive>
-  <ABY_TurretSlotEmpty>пусто</ABY_TurretSlotEmpty>
-  <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
-  <ABY_TurretRemove>Снять / выбросить</ABY_TurretRemove>
-  <ABY_TurretOpenForgeHint>Крафт в кузнице</ABY_TurretOpenForgeHint>
-  <ABY_TurretOpenForgeHintTooltip>Рецепты турельных систем находятся в Бездненной кузнице → Турельные системы. Карточки показывают тип: основное, вспомогательное, пассивное или корпус.</ABY_TurretOpenForgeHintTooltip>
-  <ABY_TurretEditDisabled>Снова включите модульные турели в настройках, чтобы менять установленные модули.</ABY_TurretEditDisabled>
-  <ABY_TurretRemoveTooltip>Выбрасывает установленный модуль предметом рядом с корпусом. Если безопасной клетки рядом нет, модуль остаётся установленным.</ABY_TurretRemoveTooltip>
-  <ABY_TurretInstallFailed>Не удалось установить модуль.</ABY_TurretInstallFailed>
-  <ABY_TurretRemoveFailed>Не удалось снять модуль.</ABY_TurretRemoveFailed>
-  <ABY_TurretInstalledMessage>Установлен модуль {0}.</ABY_TurretInstalledMessage>
-  <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
-  <ABY_TurretNoAvailableModule>На этой карте нет свободного совместимого модуля.</ABY_TurretNoAvailableModule>
-  <ABY_TurretNoModuleItem>Нужный свободный предмет-модуль не найден.</ABY_TurretNoModuleItem>
-  <ABY_TurretNoCompatibleDefs>Для этого слота нет совместимых систем.</ABY_TurretNoCompatibleDefs>
+  <ABY_StateOnline>в сети</ABY_StateOnline>
+  <ABY_TurretChassisTooltipRole>Роль: пустой турельный корпус. Не стреляет, пока не установлено ядро основного оружия.</ABY_TurretChassisTooltipRole>
+  <ABY_TurretChassisTooltipRuntime>Установленные системы остаются закреплены в корпусе, пока их не снимут.</ABY_TurretChassisTooltipRuntime>
+  <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
   <ABY_TurretCompatibleModules>Совместимые модули:</ABY_TurretCompatibleModules>
-  <ABY_TurretInstall_Invalid>Некорректный модуль.</ABY_TurretInstall_Invalid>
-  <ABY_TurretInstall_Incompatible>Этот модуль несовместим с данным корпусом.</ABY_TurretInstall_Incompatible>
-  <ABY_TurretInstall_NoMainSlot>У этого корпуса нет слота основного оружия.</ABY_TurretInstall_NoMainSlot>
-  <ABY_TurretInstall_MainOccupied>Слот основного оружия уже занят.</ABY_TurretInstall_MainOccupied>
-  <ABY_TurretInstall_NoAuxSlot>У этого корпуса нет вспомогательного слота.</ABY_TurretInstall_NoAuxSlot>
-  <ABY_TurretInstall_AuxOccupied>Вспомогательный слот уже занят.</ABY_TurretInstall_AuxOccupied>
-  <ABY_TurretInstall_PassiveFull>Все пассивные слоты заняты.</ABY_TurretInstall_PassiveFull>
-  <ABY_TurretInstall_PassiveDuplicate>Этот пассивный модуль уже установлен.</ABY_TurretInstall_PassiveDuplicate>
-  <ABY_TurretInstall_InvalidSlot>Неподдерживаемый слот модуля.</ABY_TurretInstall_InvalidSlot>
-  <ABY_TurretInstall_NoMap>Корпус должен быть размещён на карте перед установкой модулей.</ABY_TurretInstall_NoMap>
-  <ABY_TurretRemove_NoMap>Нельзя выбросить модуль: корпус не размещён на карте.</ABY_TurretRemove_NoMap>
-  <ABY_TurretRemove_InvalidModule>Нельзя выбросить некорректный предмет модуля.</ABY_TurretRemove_InvalidModule>
-  <ABY_TurretRemove_NoDropCell>Не удалось найти безопасную клетку рядом для выброса модуля. Модуль оставлен установленным.</ABY_TurretRemove_NoDropCell>
-  <ABY_TurretRemove_Empty>Этот слот уже пуст.</ABY_TurretRemove_Empty>
-  <ABY_TurretModuleLine_Role>Роль: {0}</ABY_TurretModuleLine_Role>
-  <ABY_TurretModuleLine_Effect>Эффект: {0}</ABY_TurretModuleLine_Effect>
-  <ABY_TurretModuleProjectile>Снаряд: {0}</ABY_TurretModuleProjectile>
-  <ABY_TurretModuleFireStats>Дальность {0} · перезарядка {1} · очередь {2}</ABY_TurretModuleFireStats>
-  <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка вспом. оружия {1} · очередь {2}</ABY_TurretModuleAuxStats>
-  <ABY_TurretModulePassiveStats>Дальность {0} · перезарядка основного {1} · потребление +{2} Вт</ABY_TurretModulePassiveStats>
-  <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
-  <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
-  <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
-  <ABY_TurretModuleTooltipStats>Параметры: {0}</ABY_TurretModuleTooltipStats>
-  <ABY_TurretModulePowerDelta>Доп. питание: +{0} Вт</ABY_TurretModulePowerDelta>
-  <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Faster>-{0}%</ABY_TurretCooldown_Faster>
+  <ABY_TurretCooldown_NoChange>без изменений</ABY_TurretCooldown_NoChange>
   <ABY_TurretCooldown_Slower>+{0}%</ABY_TurretCooldown_Slower>
-  <ABY_TurretForgeSummary_Main>Основное · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretDisabledMessage>Модульные турельные системы отключены в настройках.</ABY_TurretDisabledMessage>
+  <ABY_TurretEditDisabled>Снова включите модульные турели в настройках, чтобы менять установленные модули.</ABY_TurretEditDisabled>
+  <ABY_TurretEmpty_Aux>Пусто. Вспомогательные модули добавляют независимый периодический поддерживающий выстрел.</ABY_TurretEmpty_Aux>
+  <ABY_TurretEmpty_Main>Пусто. Корпус не будет стрелять, пока не установлено ядро основного оружия.</ABY_TurretEmpty_Main>
+  <ABY_TurretEmpty_Passive>Пусто. Пассивные модули меняют дальность, темп основного оружия или энергопотребление модулей.</ABY_TurretEmpty_Passive>
+  <ABY_TurretFilter_All>ВСЁ</ABY_TurretFilter_All>
+  <ABY_TurretFilter_AllTooltip>Показать все турельные корпуса и системы.</ABY_TurretFilter_AllTooltip>
+  <ABY_TurretFilter_AuxTooltip>Показать вспомогательные оружейные системы.</ABY_TurretFilter_AuxTooltip>
+  <ABY_TurretFilter_MainTooltip>Показать ядра основного оружия.</ABY_TurretFilter_MainTooltip>
+  <ABY_TurretFilter_PassiveTooltip>Показать пассивные системы улучшения.</ABY_TurretFilter_PassiveTooltip>
+  <ABY_TurretForgeCardChassisRole>Сборный турельный корпус</ABY_TurretForgeCardChassisRole>
+  <ABY_TurretForgeCardChassisSlots>Слоты: {0} осн. / {1} вспом. / {2} пасс.</ABY_TurretForgeCardChassisSlots>
+  <ABY_TurretForgeCardChassisStats>Базовое питание {0} Вт · базовая дальность {1}</ABY_TurretForgeCardChassisStats>
+  <ABY_TurretForgeCardSlotRole>{0} · {1}</ABY_TurretForgeCardSlotRole>
   <ABY_TurretForgeSummary_Aux>Вспомогательное · {0}</ABY_TurretForgeSummary_Aux>
-  <ABY_TurretForgeSummary_Passive>Пассивное · {0}</ABY_TurretForgeSummary_Passive>
   <ABY_TurretForgeSummary_ChassisGeneric>Турельный корпус</ABY_TurretForgeSummary_ChassisGeneric>
   <ABY_TurretForgeSummary_ChassisSlots>Корпус · {0} осн. / {1} вспом. / {2} пасс.</ABY_TurretForgeSummary_ChassisSlots>
-  <ABY_TurretChassisTooltipRole>Роль: пустой турельный корпус. Не стреляет, пока не установлено ядро основного оружия.</ABY_TurretChassisTooltipRole>
-  <ABY_TurretChassisTooltipSlots>Слоты: {0} основное оружие, {1} вспомогательный, {2} пассивный.</ABY_TurretChassisTooltipSlots>
-  <ABY_TurretChassisTooltipRuntime>Установленные системы остаются закреплены в корпусе, пока их не снимут.</ABY_TurretChassisTooltipRuntime>
-  <ABY_TurretStatsHeader>Предпросмотр работы</ABY_TurretStatsHeader>
-  <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
-  <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
-  <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
-  <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
-  <ABY_TurretStatsCooldownResolved>Перезарядка основного: {0} → {1}</ABY_TurretStatsCooldownResolved>
-  <ABY_TurretStatsPowerDraw>Потребление: {0} Вт база + {1} Вт модули = {2} Вт применено</ABY_TurretStatsPowerDraw>
-  <ABY_TurretStatsKillSwitch>Отключает наведение, стрельбу, размещение и рецепты кузницы, не снимая уже установленные системы.</ABY_TurretStatsKillSwitch>
-  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
-  <ABY_TurretInspectDisabled>Модульные турельные системы отключены в настройках.</ABY_TurretInspectDisabled>
-  <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
-  <ABY_TurretInspectAux>Вспомогательное: {0}</ABY_TurretInspectAux>
-  <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
-  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} Вт</ABY_TurretInspectStats>
-  <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
-  <ABY_TurretInfo_Profile>Профиль турельного модуля</ABY_TurretInfo_Profile>
-  <ABY_TurretInfo_ProfileDesc>Занимаемый слот и тактическая роль этого компонента модульной турели.</ABY_TurretInfo_ProfileDesc>
-  <ABY_TurretInfo_CompatibleChassis>Совместимые корпуса</ABY_TurretInfo_CompatibleChassis>
-  <ABY_TurretInfo_CompatibleChassisDesc>Теги корпусов, которые могут принять этот модуль.</ABY_TurretInfo_CompatibleChassisDesc>
-  <ABY_TurretInfo_Effect>Эффект</ABY_TurretInfo_Effect>
-  <ABY_TurretInfo_EffectDesc>Что модуль делает после установки.</ABY_TurretInfo_EffectDesc>
-  <ABY_TurretInfo_Range>Дальность турели</ABY_TurretInfo_Range>
-  <ABY_TurretInfo_RangeDesc>Максимальная дальность стрельбы, которую даёт этот оружейный модуль.</ABY_TurretInfo_RangeDesc>
-  <ABY_TurretInfo_MainCooldown>Перезарядка основного</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretForgeSummary_Main>Основное · {0}</ABY_TurretForgeSummary_Main>
+  <ABY_TurretForgeSummary_Passive>Пассивное · {0}</ABY_TurretForgeSummary_Passive>
+  <ABY_TurretGridActiveSlot>Активный слот шасси</ABY_TurretGridActiveSlot>
+  <ABY_TurretGridAvailable>На карте есть совместимый свободный модуль.</ABY_TurretGridAvailable>
+  <ABY_TurretGridAvailableHeader_OnMap>Модули на текущей карте</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretGridEmptyAux>Пусто</ABY_TurretGridEmptyAux>
+  <ABY_TurretGridEmptyMain>Пусто</ABY_TurretGridEmptyMain>
+  <ABY_TurretGridEmptyPassive>Пусто</ABY_TurretGridEmptyPassive>
+  <ABY_TurretGridHeader>Разъёмы модулей</ABY_TurretGridHeader>
+  <ABY_TurretGridHint>Нажмите на ячейку, чтобы осмотреть или изменить этот слот.</ABY_TurretGridHint>
+  <ABY_TurretGridLocked>Заблокировано</ABY_TurretGridLocked>
+  <ABY_TurretGridLockedState>Заблокировано на этом шасси</ABY_TurretGridLockedState>
+  <ABY_TurretGridLockedTooltip>Заблокировано на этом шасси. Этот слот недоступен для текущей турели.</ABY_TurretGridLockedTooltip>
+  <ABY_TurretGridUnavailable>На карте сейчас нет совместимого свободного модуля.</ABY_TurretGridUnavailable>
+  <ABY_TurretInfo_AnyChassis>любой модульный корпус</ABY_TurretInfo_AnyChassis>
   <ABY_TurretInfo_AuxCooldown>Перезарядка вспом. модуля</ABY_TurretInfo_AuxCooldown>
-  <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_Burst>Очередь</ABY_TurretInfo_Burst>
   <ABY_TurretInfo_BurstDesc>Количество отдельных ударов за одну атаку.</ABY_TurretInfo_BurstDesc>
   <ABY_TurretInfo_BurstSpacing>Интервал очереди</ABY_TurretInfo_BurstSpacing>
   <ABY_TurretInfo_BurstSpacingDesc>Задержка между выстрелами внутри очереди.</ABY_TurretInfo_BurstSpacingDesc>
-  <ABY_TurretInfo_Projectile>Боевой заряд</ABY_TurretInfo_Projectile>
-  <ABY_TurretInfo_ProjectileDesc>Боевой заряд, который ведёт оружейный тракт.</ABY_TurretInfo_ProjectileDesc>
-  <ABY_TurretInfo_RangeOffset>Бонус дальности основного</ABY_TurretInfo_RangeOffset>
-  <ABY_TurretInfo_RangeOffsetDesc>Добавляется к дальности установленного основного оружия.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_CompatibleChassis>Совместимые корпуса</ABY_TurretInfo_CompatibleChassis>
+  <ABY_TurretInfo_CompatibleChassisDesc>Теги корпусов, которые могут принять этот модуль.</ABY_TurretInfo_CompatibleChassisDesc>
+  <ABY_TurretInfo_CooldownDesc>Время до следующего выстрела этого модуля.</ABY_TurretInfo_CooldownDesc>
   <ABY_TurretInfo_CooldownMultiplier>Модификатор перезарядки основного</ABY_TurretInfo_CooldownMultiplier>
   <ABY_TurretInfo_CooldownMultiplierDesc>Множитель перезарядки установленного основного оружия. Отрицательные значения быстрее.</ABY_TurretInfo_CooldownMultiplierDesc>
   <ABY_TurretInfo_CooldownOffset>Сдвиг перезарядки основного</ABY_TurretInfo_CooldownOffset>
   <ABY_TurretInfo_CooldownOffsetDesc>Плоский сдвиг перезарядки после множителей.</ABY_TurretInfo_CooldownOffsetDesc>
-  <ABY_TurretInfo_MissRadiusOffset>Сдвиг радиуса промаха</ABY_TurretInfo_MissRadiusOffset>
-  <ABY_TurretInfo_MissRadiusOffsetDesc>Поправка наведения для будущей настройки точности.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_CooldownRecovery>Восстановление перезарядки</ABY_TurretInfo_CooldownRecovery>
+  <ABY_TurretInfo_CooldownRecoveryDesc>Дополнительное восстановление перезарядки, пока основное оружие остывает.</ABY_TurretInfo_CooldownRecoveryDesc>
+  <ABY_TurretInfo_DamageMultiplier>Входящий урон</ABY_TurretInfo_DamageMultiplier>
+  <ABY_TurretInfo_DamageMultiplierDesc>Множитель входящего урона перед тем, как он дойдёт до модульного турельного корпуса.</ABY_TurretInfo_DamageMultiplierDesc>
+  <ABY_TurretInfo_Effect>Эффект</ABY_TurretInfo_Effect>
+  <ABY_TurretInfo_EffectDesc>Что модуль делает после установки.</ABY_TurretInfo_EffectDesc>
   <ABY_TurretInfo_ExtraPowerDraw>Дополнительное энергопотребление</ABY_TurretInfo_ExtraPowerDraw>
   <ABY_TurretInfo_ExtraPowerDrawDesc>Дополнительная энергия, которую потребляет корпус, пока модуль установлен и модульные турели включены.</ABY_TurretInfo_ExtraPowerDrawDesc>
-  <ABY_TurretInfo_AnyChassis>любой модульный корпус</ABY_TurretInfo_AnyChassis>
-  <ABY_TurretModuleLine_Slot>Слот: {0}</ABY_TurretModuleLine_Slot>
-  <ABY_TurretModuleLine_EffectHeader>Эффект</ABY_TurretModuleLine_EffectHeader>
-  <ABY_TurretModuleLine_StatsHeader>Параметры</ABY_TurretModuleLine_StatsHeader>
-  <ABY_TurretFilter_All>ВСЁ</ABY_TurretFilter_All>
-  <ABY_TurretSlotBadge_Main>ОСН.</ABY_TurretSlotBadge_Main>
-  <ABY_TurretSlotBadge_Aux>ВСП.</ABY_TurretSlotBadge_Aux>
-  <ABY_TurretSlotBadge_Passive>ПАСС.</ABY_TurretSlotBadge_Passive>
-  <ABY_TurretSlotBadge_Chassis>КОРПУС</ABY_TurretSlotBadge_Chassis>
-  <ABY_TurretSlotBadge_Module>СИСТ.</ABY_TurretSlotBadge_Module>
-  <ABY_TurretFilter_AllTooltip>Показать все турельные корпуса и системы.</ABY_TurretFilter_AllTooltip>
-  <ABY_TurretFilter_MainTooltip>Показать ядра основного оружия.</ABY_TurretFilter_MainTooltip>
-  <ABY_TurretFilter_AuxTooltip>Показать вспомогательные оружейные системы.</ABY_TurretFilter_AuxTooltip>
-  <ABY_TurretFilter_PassiveTooltip>Показать пассивные системы улучшения.</ABY_TurretFilter_PassiveTooltip>
-  <ABY_TurretForgeCardSlotRole>{0} · {1}</ABY_TurretForgeCardSlotRole>
-  <ABY_TurretForgeCardChassisRole>Сборный турельный корпус</ABY_TurretForgeCardChassisRole>
-  <ABY_TurretForgeCardChassisSlots>Слоты: {0} осн. / {1} вспом. / {2} пасс.</ABY_TurretForgeCardChassisSlots>
-  <ABY_TurretForgeCardChassisStats>Базовое питание {0} Вт · базовая дальность {1}</ABY_TurretForgeCardChassisStats>
-  <ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>ядро Рифт-игломёта</ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>против лёгких целей</ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Выпускает быструю очередь из трёх рифтовых игл, сбивая лёгкие цели и сдерживая плотные стаи до сближения.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
-  <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>ядро плазменного копья</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>против брони</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Бьёт медленным ультраплазменным копьём для дальнего давления и терпеливого вскрытия тяжёлой брони.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
-  <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>ядро Пепельного Хора</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>против стай</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Прочёсывает поле пятью пепельно-кантильными осколками, жестоко работая по животным, лёгким врагам и плотным волнам Бездны.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
-  <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>дуговой излучатель Хора</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>давление по толпе</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Периодически выпускает кантильную волну по скоплениям врагов, не сбивая ритм основного оружия.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
-  <ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>охлаждающая решётка</ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleRole_ABY_TMD_CoolingLattice>стабилизация темпа</ABY_TurretModuleRole_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>Отводит избыток жара через связанную решётку, ускоряя цикл стрельбы ценой повышенного энергопотребления.</ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>
-  <ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>сигила наведения</ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleRole_ABY_TMD_TargetingSigil>дальность и сопровождение</ABY_TurretModuleRole_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>Расширяет геометрию наведения и удерживает дальнее сопровождение цели, требуя дополнительной энергии для активной сигилы.</ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>
-  <ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>конденсатор остатка</ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>буфер заряда</ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>Накапливает бездненный заряд между выстрелами, немного повышая дальность и темп стрельбы при большем расходе энергии.</ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>
-  <ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>ядро Склепового рельса</ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>против элиты</ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>Заряжает две склеповые направляющие и отправляет один сверхскоростной пробойник в бронированную элиту на большой дистанции.</ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>
-  <ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>ядро угольной мортиры</ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>навесной огонь</ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>Бросает навесной угольный заряд, разрывающийся горячим пеплом. Силен против скоплений врагов и неподвижных огневых линий.</ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>
-  <ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>нуль-дуговой разрядник</ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>ЭМИ-подавление</ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>Выпускает заряженный нуль-дуговой импульс, выжигающий щиты, оглушающий машины и перескакивающий по плотной элитной поддержке.</ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>
-  <ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>бездненный гарпунный проектор</ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>сдерживание элиты</ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>Вбивает тяжёлый бездненный гарпун в цель, замедляя продвижение и стаскивая меньшие тела с линии атаки.</ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>
-  <ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>массив Веспер-копья</ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>точечный приговор</ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>Проецирует очищенное копьё-приговор: дальше и жёстче плазмы по броне, но заметно быстрее склепового рельса.</ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>
-  <ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>рифт-осколочный цветок</ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>против скоплений</ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>Запускает компактное рифт-семя, раскрывающееся режущими осколками вокруг удара. Наказывает лёгкие стаи и плотные группы рейдеров.</ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>
-  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>освящённый призменный излучатель</ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>контроль линии</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Бьёт заряженным призменным лучом по узкой линии, преломляя приговор через врагов за первой целью.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
-  <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>гаусс-миниган Коронной Катушки</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>коронное подавление</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Набирает шестифазный коронный заряд и обрушивает гаусс-бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
-  <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>ракетный Хор Коронного Пламени</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
-  <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>ракетное насыщение</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
-  <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
-  <ABY_ModularTurret_GridSubtitle>Панель разъёмов: осмотрите ячейки, установите модули и проверьте выход турели.</ABY_ModularTurret_GridSubtitle>
-  <ABY_TurretGridHeader>Разъёмы модулей</ABY_TurretGridHeader>
-  <ABY_TurretGridHint>Нажмите на ячейку, чтобы осмотреть или изменить этот слот.</ABY_TurretGridHint>
-  <ABY_TurretGridAvailableHeader_OnMap>Модули на текущей карте</ABY_TurretGridAvailableHeader_OnMap>
+  <ABY_TurretInfo_MainCooldown>Перезарядка основного</ABY_TurretInfo_MainCooldown>
+  <ABY_TurretInfo_MinRangeOffset>Изменение минимальной дальности</ABY_TurretInfo_MinRangeOffset>
+  <ABY_TurretInfo_MinRangeOffsetDesc>Добавляется к минимальной дальности основного и вспомогательного оружия. Отрицательные значения позволяют оружию с ближней блокировкой стрелять ближе к корпусу.</ABY_TurretInfo_MinRangeOffsetDesc>
+  <ABY_TurretInfo_MissRadiusOffset>Сдвиг радиуса промаха</ABY_TurretInfo_MissRadiusOffset>
+  <ABY_TurretInfo_MissRadiusOffsetDesc>Поправка наведения для будущей настройки точности.</ABY_TurretInfo_MissRadiusOffsetDesc>
+  <ABY_TurretInfo_Profile>Профиль турельного модуля</ABY_TurretInfo_Profile>
+  <ABY_TurretInfo_ProfileDesc>Занимаемый слот и тактическая роль этого компонента модульной турели.</ABY_TurretInfo_ProfileDesc>
+  <ABY_TurretInfo_Projectile>Боевой заряд</ABY_TurretInfo_Projectile>
+  <ABY_TurretInfo_ProjectileDesc>Боевой заряд, который ведёт оружейный тракт.</ABY_TurretInfo_ProjectileDesc>
+  <ABY_TurretInfo_Range>Дальность турели</ABY_TurretInfo_Range>
+  <ABY_TurretInfo_RangeDesc>Максимальная дальность стрельбы, которую даёт этот оружейный модуль.</ABY_TurretInfo_RangeDesc>
+  <ABY_TurretInfo_RangeOffset>Бонус дальности основного</ABY_TurretInfo_RangeOffset>
+  <ABY_TurretInfo_RangeOffsetDesc>Добавляется к дальности установленного основного оружия.</ABY_TurretInfo_RangeOffsetDesc>
+  <ABY_TurretInfo_TargetingLogic>Логика наведения</ABY_TurretInfo_TargetingLogic>
+  <ABY_TurretInfo_TargetingLogicDesc>Добавляет пассивные подсказки оценки целей во время уже существующего ограниченного сканирования турели. Не создаёт новое глобальное сканирование каждый тик.</ABY_TurretInfo_TargetingLogicDesc>
+  <ABY_TurretInfo_TargetingLogicValue>усилена</ABY_TurretInfo_TargetingLogicValue>
+  <ABY_TurretInspectAux>Вспомогательное: {0}</ABY_TurretInspectAux>
+  <ABY_TurretInspectDisabled>Модульные турельные системы отключены в настройках.</ABY_TurretInspectDisabled>
+  <ABY_TurretInspectMain>Основное: {0}</ABY_TurretInspectMain>
+  <ABY_TurretInspectNeedsMain>Не установлено ядро основного оружия.</ABY_TurretInspectNeedsMain>
+  <ABY_TurretInspectPassive>Пассивные: {0}/{1}</ABY_TurretInspectPassive>
+  <ABY_TurretInspectStats>Дальность {0} · перезарядка {1} · питание {2} Вт</ABY_TurretInspectStats>
+  <ABY_TurretInstallFailed>Не удалось установить модуль.</ABY_TurretInstallFailed>
+  <ABY_TurretInstallFromMap>Установить с карты</ABY_TurretInstallFromMap>
+  <ABY_TurretInstall_AuxOccupied>Вспомогательный слот уже занят.</ABY_TurretInstall_AuxOccupied>
+  <ABY_TurretInstall_Incompatible>Этот модуль несовместим с данным корпусом.</ABY_TurretInstall_Incompatible>
+  <ABY_TurretInstall_Invalid>Некорректный модуль.</ABY_TurretInstall_Invalid>
+  <ABY_TurretInstall_InvalidSlot>Неподдерживаемый слот модуля.</ABY_TurretInstall_InvalidSlot>
+  <ABY_TurretInstall_MainOccupied>Слот основного оружия уже занят.</ABY_TurretInstall_MainOccupied>
+  <ABY_TurretInstall_NoAuxSlot>У этого корпуса нет вспомогательного слота.</ABY_TurretInstall_NoAuxSlot>
+  <ABY_TurretInstall_NoMainSlot>У этого корпуса нет слота основного оружия.</ABY_TurretInstall_NoMainSlot>
+  <ABY_TurretInstall_NoMap>Корпус должен быть размещён на карте перед установкой модулей.</ABY_TurretInstall_NoMap>
+  <ABY_TurretInstall_PassiveDuplicate>Этот пассивный модуль уже установлен.</ABY_TurretInstall_PassiveDuplicate>
+  <ABY_TurretInstall_PassiveFull>Все пассивные слоты заняты.</ABY_TurretInstall_PassiveFull>
+  <ABY_TurretInstalledMessage>Установлен модуль {0}.</ABY_TurretInstalledMessage>
   <ABY_TurretLockedDetail_New>Этот слот заблокирован на текущем шасси и недоступен для этой турели.</ABY_TurretLockedDetail_New>
-  <ABY_TurretGridActiveSlot>Активный слот шасси</ABY_TurretGridActiveSlot>
-  <ABY_TurretGridLockedState>Заблокировано на этом шасси</ABY_TurretGridLockedState>
-  <ABY_TurretGridEmptyMain>Пусто</ABY_TurretGridEmptyMain>
-  <ABY_TurretGridEmptyAux>Пусто</ABY_TurretGridEmptyAux>
-  <ABY_TurretGridEmptyPassive>Пусто</ABY_TurretGridEmptyPassive>
-  <ABY_TurretGridLockedTooltip>Заблокировано на этом шасси. Этот слот недоступен для текущей турели.</ABY_TurretGridLockedTooltip>
-  <ABY_TurretGridAvailable>На карте есть совместимый свободный модуль.</ABY_TurretGridAvailable>
-  <ABY_TurretGridUnavailable>На карте сейчас нет совместимого свободного модуля.</ABY_TurretGridUnavailable>
+  <ABY_TurretModuleAuxStats>Дальность {0} · перезарядка вспом. оружия {1} · очередь {2}</ABY_TurretModuleAuxStats>
+  <ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>Вбивает тяжёлый бездненный гарпун в цель, замедляя продвижение и стаскивая меньшие тела с линии атаки.</ABY_TurretModuleEffect_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleEffect_ABY_TMD_AbyssalThreatPrioritizer>Смещает выбор целей к врагам с высокой боевой мощью, боссам, мини-боссам и конструкто-подобным угрозам.</ABY_TurretModuleEffect_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleEffect_ABY_TMD_AntiSwarmPatternScanner>Смещает выбор целей к плотным скоплениям врагов без нового глобального сканирования каждый тик.</ABY_TurretModuleEffect_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>Прочёсывает поле пятью пепельно-кантильными осколками, жестоко работая по животным, лёгким врагам и плотным волнам Бездны.</ABY_TurretModuleEffect_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleEffect_ABY_TMD_BlackoutPowerRegulator>Снижает общее потребление турели, но замедляет основной цикл стрельбы.</ABY_TurretModuleEffect_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>Периодически выпускает кантильную волну по скоплениям врагов, не сбивая ритм основного оружия.</ABY_TurretModuleEffect_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>Бросает навесной угольный заряд, разрывающийся горячим пеплом. Силен против скоплений врагов и неподвижных огневых линий.</ABY_TurretModuleEffect_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleEffect_ABY_TMD_CloseQuartersInterlock>Снижает минимальную дальность основного и вспомогательного оружия, помогая мортирным, рельсовым и гарпунным сборкам вблизи.</ABY_TurretModuleEffect_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>Отводит избыток жара через связанную решётку, ускоряя цикл стрельбы ценой повышенного энергопотребления.</ABY_TurretModuleEffect_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>Набирает шестифазный коронный заряд и обрушивает гаусс-бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TurretModuleEffect_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>Поднимает носитель коронного пламени, который распадается над целью на управляемые микроракеты и заливает стаи священным огнём.</ABY_TurretModuleEffect_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleEffect_ABY_TMD_EmergencyHeatDump>Добавляет дополнительное восстановление основной перезарядки, пока турель остывает, ценой очень высокого расхода энергии.</ABY_TurretModuleEffect_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleEffect_ABY_TMD_LongChoirLens>Увеличивает дальность стрельбы ценой немного более медленного основного цикла и дополнительного питания.</ABY_TurretModuleEffect_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>Выпускает заряженный нуль-дуговой импульс, выжигающий щиты, оглушающий машины и перескакивающий по плотной элитной поддержке.</ABY_TurretModuleEffect_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleEffect_ABY_TMD_OverpressureCycleGovernor>Сильно ускоряет основной цикл стрельбы, но сокращает дальность и требует много энергии.</ABY_TurretModuleEffect_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>Бьёт медленным ультраплазменным копьём для дальнего давления и терпеливого вскрытия тяжёлой брони.</ABY_TurretModuleEffect_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>Накапливает бездненный заряд между выстрелами, немного повышая дальность и темп стрельбы при большем расходе энергии.</ABY_TurretModuleEffect_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>Запускает компактное рифт-семя, раскрывающееся режущими осколками вокруг удара. Наказывает лёгкие стаи и плотные группы рейдеров.</ABY_TurretModuleEffect_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>Выпускает быструю очередь из трёх рифтовых игл, сбивая лёгкие цели и сдерживая плотные стаи до сближения.</ABY_TurretModuleEffect_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>Бьёт заряженным призменным лучом по узкой линии, преломляя приговор через врагов за первой целью.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleEffect_ABY_TMD_SanctifiedStabilizerPlate>Снижает входящий урон по модульной турели, но немного замедляет основной цикл и требует дополнительного питания.</ABY_TurretModuleEffect_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>Заряжает две склеповые направляющие и отправляет один сверхскоростной пробойник в бронированную элиту на большой дистанции.</ABY_TurretModuleEffect_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ShieldBurnCapacitor>Выставляет приоритет по щитовым, механоидным и конструкто-подобным целям, немного повышая дальность и темп ценой высокого расхода энергии.</ABY_TurretModuleEffect_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>Расширяет геометрию наведения и удерживает дальнее сопровождение цели, требуя дополнительной энергии для активной сигилы.</ABY_TurretModuleEffect_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>Проецирует очищенное копьё-приговор: дальше и жёстче плазмы по броне, но заметно быстрее склепового рельса.</ABY_TurretModuleEffect_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleFireStats>Дальность {0} · перезарядка {1} · очередь {2}</ABY_TurretModuleFireStats>
+  <ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>бездненный гарпунный проектор</ABY_TurretModuleLabel_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleLabel_ABY_TMD_AbyssalThreatPrioritizer>бездненный приоритизатор угроз</ABY_TurretModuleLabel_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleLabel_ABY_TMD_AntiSwarmPatternScanner>сканер противороевого паттерна</ABY_TurretModuleLabel_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>ядро Пепельного Хора</ABY_TurretModuleLabel_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleLabel_ABY_TMD_BlackoutPowerRegulator>регулятор Чёрного Сбоя</ABY_TurretModuleLabel_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>дуговой излучатель Хора</ABY_TurretModuleLabel_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>ядро угольной мортиры</ABY_TurretModuleLabel_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleLabel_ABY_TMD_CloseQuartersInterlock>интерлок ближнего допуска</ABY_TurretModuleLabel_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>охлаждающая решётка</ABY_TurretModuleLabel_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>гаусс-миниган Коронной Катушки</ABY_TurretModuleLabel_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>ракетный Хор Коронного Пламени</ABY_TurretModuleLabel_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleLabel_ABY_TMD_EmergencyHeatDump>аварийный сброс жара</ABY_TurretModuleLabel_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleLabel_ABY_TMD_LongChoirLens>линза Дальнего Хора</ABY_TurretModuleLabel_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>нуль-дуговой разрядник</ABY_TurretModuleLabel_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleLabel_ABY_TMD_OverpressureCycleGovernor>регулятор избыточного давления</ABY_TurretModuleLabel_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>ядро плазменного копья</ABY_TurretModuleLabel_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>конденсатор остатка</ABY_TurretModuleLabel_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>рифт-осколочный цветок</ABY_TurretModuleLabel_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>ядро Рифт-игломёта</ABY_TurretModuleLabel_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>освящённый призменный излучатель</ABY_TurretModuleLabel_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleLabel_ABY_TMD_SanctifiedStabilizerPlate>освящённая стабилизирующая плита</ABY_TurretModuleLabel_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>ядро Склепового рельса</ABY_TurretModuleLabel_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleLabel_ABY_TMD_ShieldBurnCapacitor>конденсатор выжигания щитов</ABY_TurretModuleLabel_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>сигила наведения</ABY_TurretModuleLabel_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>массив Веспер-копья</ABY_TurretModuleLabel_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleLine_Effect>Эффект: {0}</ABY_TurretModuleLine_Effect>
+  <ABY_TurretModuleLine_EffectHeader>Эффект</ABY_TurretModuleLine_EffectHeader>
+  <ABY_TurretModuleLine_Role>Роль: {0}</ABY_TurretModuleLine_Role>
+  <ABY_TurretModuleLine_Slot>Слот: {0}</ABY_TurretModuleLine_Slot>
+  <ABY_TurretModuleLine_StatsHeader>Параметры</ABY_TurretModuleLine_StatsHeader>
+  <ABY_TurretModulePassiveStats>Дальность {0} · основная перезарядка {1} · питание {2}</ABY_TurretModulePassiveStats>
+  <ABY_TurretModulePowerDelta>Дополнительное потребление модуля: {0}</ABY_TurretModulePowerDelta>
+  <ABY_TurretModuleProjectile>Снаряд: {0}</ABY_TurretModuleProjectile>
+  <ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>сдерживание элиты</ABY_TurretModuleRole_ABY_TMD_AbyssalHarpoonProjector>
+  <ABY_TurretModuleRole_ABY_TMD_AbyssalThreatPrioritizer>оценка элитных целей</ABY_TurretModuleRole_ABY_TMD_AbyssalThreatPrioritizer>
+  <ABY_TurretModuleRole_ABY_TMD_AntiSwarmPatternScanner>оценка скоплений</ABY_TurretModuleRole_ABY_TMD_AntiSwarmPatternScanner>
+  <ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>против стай</ABY_TurretModuleRole_ABY_TMD_AshChoirRepeaterCore>
+  <ABY_TurretModuleRole_ABY_TMD_BlackoutPowerRegulator>регулятор нагрузки сети</ABY_TurretModuleRole_ABY_TMD_BlackoutPowerRegulator>
+  <ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>давление по толпе</ABY_TurretModuleRole_ABY_TMD_ChoirArcEmitter>
+  <ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>навесной огонь</ABY_TurretModuleRole_ABY_TMD_CinderMortarCore>
+  <ABY_TurretModuleRole_ABY_TMD_CloseQuartersInterlock>контроль минимальной дальности</ABY_TurretModuleRole_ABY_TMD_CloseQuartersInterlock>
+  <ABY_TurretModuleRole_ABY_TMD_CoolingLattice>стабилизация темпа</ABY_TurretModuleRole_ABY_TMD_CoolingLattice>
+  <ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>коронное подавление</ABY_TurretModuleRole_ABY_TMD_CrowncoilGaussMinigun>
+  <ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>ракетное насыщение</ABY_TurretModuleRole_ABY_TMD_CrownfireRocketChoir>
+  <ABY_TurretModuleRole_ABY_TMD_EmergencyHeatDump>термическое восстановление</ABY_TurretModuleRole_ABY_TMD_EmergencyHeatDump>
+  <ABY_TurretModuleRole_ABY_TMD_LongChoirLens>дальнее наведение</ABY_TurretModuleRole_ABY_TMD_LongChoirLens>
+  <ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>ЭМИ-подавление</ABY_TurretModuleRole_ABY_TMD_NullArcDischarger>
+  <ABY_TurretModuleRole_ABY_TMD_OverpressureCycleGovernor>избыточный цикл</ABY_TurretModuleRole_ABY_TMD_OverpressureCycleGovernor>
+  <ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>против брони</ABY_TurretModuleRole_ABY_TMD_PlasmaLanceCore>
+  <ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>буфер заряда</ABY_TurretModuleRole_ABY_TMD_ResidueCapacitor>
+  <ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>против скоплений</ABY_TurretModuleRole_ABY_TMD_RiftFlakBloom>
+  <ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>против лёгких целей</ABY_TurretModuleRole_ABY_TMD_RiftNeedlerCore>
+  <ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>контроль линии</ABY_TurretModuleRole_ABY_TMD_SanctifiedPrismEmitter>
+  <ABY_TurretModuleRole_ABY_TMD_SanctifiedStabilizerPlate>укрепление корпуса</ABY_TurretModuleRole_ABY_TMD_SanctifiedStabilizerPlate>
+  <ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>против элиты</ABY_TurretModuleRole_ABY_TMD_SepulcherRailCore>
+  <ABY_TurretModuleRole_ABY_TMD_ShieldBurnCapacitor>антищитное наведение</ABY_TurretModuleRole_ABY_TMD_ShieldBurnCapacitor>
+  <ABY_TurretModuleRole_ABY_TMD_TargetingSigil>дальность и сопровождение</ABY_TurretModuleRole_ABY_TMD_TargetingSigil>
+  <ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>точечный приговор</ABY_TurretModuleRole_ABY_TMD_VesperLanceArray>
+  <ABY_TurretModuleTooltipEffect>Эффект: {0}</ABY_TurretModuleTooltipEffect>
+  <ABY_TurretModuleTooltipRole>Роль: {0}</ABY_TurretModuleTooltipRole>
+  <ABY_TurretModuleTooltipSlot>Слот: {0}</ABY_TurretModuleTooltipSlot>
+  <ABY_TurretModuleTooltipStats>Параметры: {0}</ABY_TurretModuleTooltipStats>
+  <ABY_TurretNoAvailableModule>На этой карте нет свободного совместимого модуля.</ABY_TurretNoAvailableModule>
+  <ABY_TurretNoCompatibleDefs>Для этого слота нет совместимых систем.</ABY_TurretNoCompatibleDefs>
+  <ABY_TurretNoModuleItem>Нужный свободный предмет-модуль не найден.</ABY_TurretNoModuleItem>
+  <ABY_TurretOpenForgeHint>Крафт в кузнице</ABY_TurretOpenForgeHint>
+  <ABY_TurretOpenForgeHintTooltip>Рецепты турельных систем находятся в Бездненной кузнице → Турельные системы. Карточки показывают тип: основное, вспомогательное, пассивное или корпус.</ABY_TurretOpenForgeHintTooltip>
+  <ABY_TurretRemove>Снять / выбросить</ABY_TurretRemove>
+  <ABY_TurretRemoveFailed>Не удалось снять модуль.</ABY_TurretRemoveFailed>
+  <ABY_TurretRemoveTooltip>Выбрасывает установленный модуль предметом рядом с корпусом. Если безопасной клетки рядом нет, модуль остаётся установленным.</ABY_TurretRemoveTooltip>
+  <ABY_TurretRemove_Empty>Этот слот уже пуст.</ABY_TurretRemove_Empty>
+  <ABY_TurretRemove_InvalidModule>Нельзя выбросить некорректный предмет модуля.</ABY_TurretRemove_InvalidModule>
+  <ABY_TurretRemove_NoDropCell>Не удалось найти безопасную клетку рядом для выброса модуля. Модуль оставлен установленным.</ABY_TurretRemove_NoDropCell>
+  <ABY_TurretRemove_NoMap>Нельзя выбросить модуль: корпус не размещён на карте.</ABY_TurretRemove_NoMap>
+  <ABY_TurretRemovedMessage>Снят модуль {0}.</ABY_TurretRemovedMessage>
+  <ABY_TurretRole_Generic>общий</ABY_TurretRole_Generic>
+  <ABY_TurretSlotBadge_Aux>ВСП.</ABY_TurretSlotBadge_Aux>
+  <ABY_TurretSlotBadge_Chassis>КОРПУС</ABY_TurretSlotBadge_Chassis>
+  <ABY_TurretSlotBadge_Main>ОСН.</ABY_TurretSlotBadge_Main>
+  <ABY_TurretSlotBadge_Module>СИСТ.</ABY_TurretSlotBadge_Module>
+  <ABY_TurretSlotBadge_Passive>ПАСС.</ABY_TurretSlotBadge_Passive>
+  <ABY_TurretSlotEmpty>пусто</ABY_TurretSlotEmpty>
+  <ABY_TurretSlotTitle_Aux>Вспомогательный модуль</ABY_TurretSlotTitle_Aux>
   <ABY_TurretSlotTitle_AuxIndexed>Вспомогательный модуль {0}</ABY_TurretSlotTitle_AuxIndexed>
-  <ABY_TurretStatsHeader_Operational>Рабочая сводка</ABY_TurretStatsHeader_Operational>
-  <ABY_TurretStatsMainMissingCompact>Основной слот: оружейное ядро не установлено</ABY_TurretStatsMainMissingCompact>
-  <ABY_TurretStatsPowerDrawBreakdown>Потребление: шасси {0} Вт + модули {1} Вт</ABY_TurretStatsPowerDrawBreakdown>
-  <ABY_TurretStat_Range>Дальность: {0}</ABY_TurretStat_Range>
-  <ABY_TurretStat_MainCooldown>Основная перезарядка: {0}</ABY_TurretStat_MainCooldown>
-  <ABY_TurretStat_Burst>Очередь: {0}</ABY_TurretStat_Burst>
+  <ABY_TurretSlotTitle_Main>Ядро основного оружия</ABY_TurretSlotTitle_Main>
+  <ABY_TurretSlotTitle_Passive>Пассивный модуль {0}</ABY_TurretSlotTitle_Passive>
+  <ABY_TurretSlot_Auxiliary>Вспомогательный</ABY_TurretSlot_Auxiliary>
+  <ABY_TurretSlot_Main>Основное оружие</ABY_TurretSlot_Main>
+  <ABY_TurretSlot_Passive>Пассивный</ABY_TurretSlot_Passive>
   <ABY_TurretStat_AuxCooldown>Перезарядка поддержки: {0}</ABY_TurretStat_AuxCooldown>
-  <ABY_TurretStat_RangeOffset>Изменение дальности: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_Burst>Очередь: {0}</ABY_TurretStat_Burst>
   <ABY_TurretStat_CooldownEffect>Влияние на перезарядку: {0}</ABY_TurretStat_CooldownEffect>
   <ABY_TurretStat_CooldownOffset>Смещение перезарядки: {0}</ABY_TurretStat_CooldownOffset>
+  <ABY_TurretStat_CooldownRecovery>Восстановление перезарядки: {0} тиков/тик</ABY_TurretStat_CooldownRecovery>
+  <ABY_TurretStat_DamageMultiplier>Входящий урон: {0}%</ABY_TurretStat_DamageMultiplier>
+  <ABY_TurretStat_ExtraPower>Дополнительное потребление: {0}</ABY_TurretStat_ExtraPower>
+  <ABY_TurretStat_MainCooldown>Основная перезарядка: {0}</ABY_TurretStat_MainCooldown>
+  <ABY_TurretStat_MinRangeOffset>Изменение минимальной дальности: {0}</ABY_TurretStat_MinRangeOffset>
   <ABY_TurretStat_MissRadiusOffset>Смещение разброса: {0}</ABY_TurretStat_MissRadiusOffset>
   <ABY_TurretStat_Projectile>Снаряд: {0}</ABY_TurretStat_Projectile>
-  <ABY_TurretStat_ExtraPower>Дополнительное потребление: +{0} Вт</ABY_TurretStat_ExtraPower>
-  <ABY_TurretGridLocked>Заблокировано</ABY_TurretGridLocked>
+  <ABY_TurretStat_Range>Дальность: {0}</ABY_TurretStat_Range>
+  <ABY_TurretStat_RangeOffset>Изменение дальности: {0}</ABY_TurretStat_RangeOffset>
+  <ABY_TurretStat_TargetingLogic>Логика наведения: усилена</ABY_TurretStat_TargetingLogic>
+  <ABY_TurretStatsCooldown>Перезарядка основного оружия: {0}</ABY_TurretStatsCooldown>
+  <ABY_TurretStatsCooldownResolved>Перезарядка основного: {0} → {1}</ABY_TurretStatsCooldownResolved>
+  <ABY_TurretStatsFeature>Состояние системы: {0}</ABY_TurretStatsFeature>
+  <ABY_TurretStatsHeader>Предпросмотр работы</ABY_TurretStatsHeader>
+  <ABY_TurretStatsHeader_Operational>Рабочая сводка</ABY_TurretStatsHeader_Operational>
+  <ABY_TurretStatsKillSwitch>Отключает наведение, стрельбу, размещение и рецепты кузницы, не снимая уже установленные системы.</ABY_TurretStatsKillSwitch>
+  <ABY_TurretStatsMainMissingCompact>Основной слот: оружейное ядро не установлено</ABY_TurretStatsMainMissingCompact>
+  <ABY_TurretStatsPower>Питание: {0}</ABY_TurretStatsPower>
+  <ABY_TurretStatsPowerDraw>Потребление: {0} Вт база + {1} Вт модули = {2} Вт применено</ABY_TurretStatsPowerDraw>
+  <ABY_TurretStatsPowerDrawBreakdown>Потребление: шасси {0} Вт + модули {1} Вт</ABY_TurretStatsPowerDrawBreakdown>
+  <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
+  <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
 </LanguageData>

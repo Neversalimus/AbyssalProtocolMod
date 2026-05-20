@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.description>Assemble a abyssal threat prioritizer for abyssal modular turret chassis.</ABY_CraftTurretModule_AbyssalThreatPrioritizer.description>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.jobString>Forging abyssal threat prioritizer.</ABY_CraftTurretModule_AbyssalThreatPrioritizer.jobString>
+  <ABY_CraftTurretModule_AbyssalThreatPrioritizer.label>forge abyssal threat prioritizer</ABY_CraftTurretModule_AbyssalThreatPrioritizer.label>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.description>Assemble a anti-swarm pattern scanner for abyssal modular turret chassis.</ABY_CraftTurretModule_AntiSwarmPatternScanner.description>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.jobString>Forging anti-swarm pattern scanner.</ABY_CraftTurretModule_AntiSwarmPatternScanner.jobString>
+  <ABY_CraftTurretModule_AntiSwarmPatternScanner.label>forge anti-swarm pattern scanner</ABY_CraftTurretModule_AntiSwarmPatternScanner.label>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.description>Assemble a blackout power regulator for abyssal modular turret chassis.</ABY_CraftTurretModule_BlackoutPowerRegulator.description>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.jobString>Forging blackout power regulator.</ABY_CraftTurretModule_BlackoutPowerRegulator.jobString>
+  <ABY_CraftTurretModule_BlackoutPowerRegulator.label>forge blackout power regulator</ABY_CraftTurretModule_BlackoutPowerRegulator.label>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.description>Assemble a close-quarters interlock for abyssal modular turret chassis.</ABY_CraftTurretModule_CloseQuartersInterlock.description>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.jobString>Forging close-quarters interlock.</ABY_CraftTurretModule_CloseQuartersInterlock.jobString>
+  <ABY_CraftTurretModule_CloseQuartersInterlock.label>forge close-quarters interlock</ABY_CraftTurretModule_CloseQuartersInterlock.label>
+  <ABY_CraftTurretModule_EmergencyHeatDump.description>Assemble a emergency heat dump for abyssal modular turret chassis.</ABY_CraftTurretModule_EmergencyHeatDump.description>
+  <ABY_CraftTurretModule_EmergencyHeatDump.jobString>Forging emergency heat dump.</ABY_CraftTurretModule_EmergencyHeatDump.jobString>
+  <ABY_CraftTurretModule_EmergencyHeatDump.label>forge emergency heat dump</ABY_CraftTurretModule_EmergencyHeatDump.label>
+  <ABY_CraftTurretModule_LongChoirLens.description>Assemble a long choir lens for abyssal modular turret chassis.</ABY_CraftTurretModule_LongChoirLens.description>
+  <ABY_CraftTurretModule_LongChoirLens.jobString>Forging long choir lens.</ABY_CraftTurretModule_LongChoirLens.jobString>
+  <ABY_CraftTurretModule_LongChoirLens.label>forge long choir lens</ABY_CraftTurretModule_LongChoirLens.label>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.description>Assemble a overpressure cycle governor for abyssal modular turret chassis.</ABY_CraftTurretModule_OverpressureCycleGovernor.description>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.jobString>Forging overpressure cycle governor.</ABY_CraftTurretModule_OverpressureCycleGovernor.jobString>
+  <ABY_CraftTurretModule_OverpressureCycleGovernor.label>forge overpressure cycle governor</ABY_CraftTurretModule_OverpressureCycleGovernor.label>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.description>Assemble a sanctified stabilizer plate for abyssal modular turret chassis.</ABY_CraftTurretModule_SanctifiedStabilizerPlate.description>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.jobString>Forging sanctified stabilizer plate.</ABY_CraftTurretModule_SanctifiedStabilizerPlate.jobString>
+  <ABY_CraftTurretModule_SanctifiedStabilizerPlate.label>forge sanctified stabilizer plate</ABY_CraftTurretModule_SanctifiedStabilizerPlate.label>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.description>Assemble a shield-burn capacitor for abyssal modular turret chassis.</ABY_CraftTurretModule_ShieldBurnCapacitor.description>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>Forging shield-burn capacitor.</ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>
+  <ABY_CraftTurretModule_ShieldBurnCapacitor.label>forge shield-burn capacitor</ABY_CraftTurretModule_ShieldBurnCapacitor.label>
+</LanguageData>

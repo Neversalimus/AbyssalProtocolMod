@@ -367,10 +367,10 @@ namespace AbyssalProtocol
 
             return TranslateOrFallback(
                 "ABY_TurretModulePassiveStats",
-                "Range {0} · main cooldown {1} · power draw +{2} W",
+                "Range {0} · main cooldown {1} · power {2}",
                 FormatSignedDecimal(module.rangeOffset),
                 FormatCooldownMultiplierEffect(module.cooldownMultiplier),
-                module.extraPowerDraw.ToString("0"));
+                FormatPowerDelta(module.extraPowerDraw));
         }
 
         public static string GetModuleDetailedTooltip(ABY_TurretModuleDef module)
@@ -391,7 +391,7 @@ namespace AbyssalProtocol
 
             if (module.extraPowerDraw != 0f)
             {
-                lines.Add(TranslateOrFallback("ABY_TurretModulePowerDelta", "Extra module power draw: +{0} W", module.extraPowerDraw.ToString("0")));
+                lines.Add(TranslateOrFallback("ABY_TurretModulePowerDelta", "Extra module power draw: {0}", FormatPowerDelta(module.extraPowerDraw)));
             }
 
             return string.Join("\n", lines.Where(line => !line.NullOrEmpty()).ToArray());
@@ -437,6 +437,16 @@ namespace AbyssalProtocol
             }
 
             return value > 0f ? "+" + value.ToString("0.0") : value.ToString("0.0");
+        }
+
+        public static string FormatPowerDelta(float watts)
+        {
+            if (Mathf.Abs(watts) < 0.5f)
+            {
+                return "0 W";
+            }
+
+            return watts > 0f ? "+" + watts.ToString("0") + " W" : watts.ToString("0") + " W";
         }
 
         public static string FormatCooldownMultiplierEffect(float multiplier)

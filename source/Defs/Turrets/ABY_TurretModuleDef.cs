@@ -26,10 +26,25 @@ namespace AbyssalProtocol
         public int auxiliaryCooldownTicks = 360;
 
         public float rangeOffset;
+        public float minRangeOffset;
         public float cooldownMultiplier = 1f;
         public int cooldownOffsetTicks;
         public float missRadiusOffset;
         public float extraPowerDraw;
+        public float idleCooldownRecoveryPerTick;
+        public float incomingDamageMultiplier = 1f;
+
+        // Optional passive target scoring hints. These are intentionally additive and only evaluated during
+        // the existing throttled target scan, so passive targeting modules do not add per-tick map scans.
+        public float targetPriorityCombatPowerScale;
+        public float targetPriorityBossBonus;
+        public float targetPriorityConstructBonus;
+        public float targetPriorityMechanoidBonus;
+        public float targetPriorityShieldedBonus;
+        public bool preferClusteredTargets;
+        public float clusterTargetScanRadius = 4f;
+        public int clusterTargetMaxBonusCount = 5;
+        public float clusterTargetBonusPerPawn = 900f;
 
         // Package 0.6 visual overlay fields.
         // These are intentionally data-only so the whole turret system can still be disabled cleanly by the existing master switch.

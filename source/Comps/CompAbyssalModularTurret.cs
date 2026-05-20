@@ -41,6 +41,7 @@ namespace AbyssalProtocol
         private int mainLastBurstShotIndex = -1;
         private int mainMuzzleOverlayShotIndex = -1;
         private int mainLaunchTubeIndex;
+        private float passiveCooldownRecoveryRemainder;
 
         private float mainAimAngle;
         private float auxiliaryAimAngle;
@@ -104,7 +105,15 @@ namespace AbyssalProtocol
             }
         }
 
-        public float ResolvedMainMinRange => mainModule != null ? Mathf.Max(0f, mainModule.minRange) : 0f;
+        public float ResolvedMainMinRange
+        {
+            get
+            {
+                float minRange = mainModule != null ? mainModule.minRange : 0f;
+                minRange += SumPassive(module => module.minRangeOffset);
+                return Mathf.Max(0f, minRange);
+            }
+        }
 
         public float ResolvedAuxiliaryRange
         {
@@ -119,14 +128,22 @@ namespace AbyssalProtocol
             }
         }
 
-        public float ResolvedAuxiliaryMinRange => auxiliaryModule != null ? Mathf.Max(0f, auxiliaryModule.minRange) : 0f;
+        public float ResolvedAuxiliaryMinRange
+        {
+            get
+            {
+                float minRange = auxiliaryModule != null ? auxiliaryModule.minRange : 0f;
+                minRange += SumPassive(module => module.minRangeOffset);
+                return Mathf.Max(0f, minRange);
+            }
+        }
 
         private bool MainRequiresLineOfSight => mainModule?.targetRequiresLineOfSight ?? true;
         private bool AuxiliaryRequiresLineOfSight => auxiliaryModule?.targetRequiresLineOfSight ?? true;
 
         public float ResolvedBasePowerDraw => Mathf.Max(0f, Props.basePowerDraw);
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
-        public float ResolvedModulePowerDraw => FeatureEnabled ? Mathf.Max(0f, ExtraPowerDraw) : 0f;
+        public float ResolvedModulePowerDraw => FeatureEnabled ? ExtraPowerDraw : 0f;
         public float ResolvedTotalPowerDraw => Mathf.Max(0f, ResolvedBasePowerDraw + ResolvedModulePowerDraw);
 
         public override void Initialize(CompProperties props)
@@ -165,12 +182,29 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref mainLastBurstShotIndex, "mainLastBurstShotIndex", -1);
             Scribe_Values.Look(ref mainMuzzleOverlayShotIndex, "mainMuzzleOverlayShotIndex", -1);
             Scribe_Values.Look(ref mainLaunchTubeIndex, "mainLaunchTubeIndex", 0);
+            Scribe_Values.Look(ref passiveCooldownRecoveryRemainder, "passiveCooldownRecoveryRemainder", 0f);
             Scribe_Values.Look(ref mainAimAngle, "mainAimAngle", 0f);
             Scribe_Values.Look(ref auxiliaryAimAngle, "auxiliaryAimAngle", 0f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 SanitizeLoadedState();
                 ApplyPowerDraw();
+            }
+        }
+
+        public override void PostPreApplyDamage(ref DamageInfo dinfo, out bool absorbed)
+        {
+            absorbed = false;
+
+            if (passiveModules == null || passiveModules.Count == 0)
+            {
+                return;
+            }
+
+            float multiplier = PassiveIncomingDamageMultiplier();
+            if (multiplier < 0.999f)
+            {
+                dinfo.SetAmount(Mathf.Max(0f, dinfo.Amount * multiplier));
             }
         }
 
@@ -198,6 +232,7 @@ namespace AbyssalProtocol
             if (mainCooldownTicks > 0)
             {
                 mainCooldownTicks--;
+                ApplyPassiveCooldownRecovery();
             }
 
             if (auxiliaryCooldownTicks > 0)
@@ -1094,6 +1129,7 @@ namespace AbyssalProtocol
                 {
                     score += ComputeModuleTargetingScoreBonus(module, pawn, distanceSquared, requireLineOfSight);
                 }
+                score += ComputePassiveTargetingScoreBonus(pawn, distanceSquared, requireLineOfSight);
 
                 if (bestTarget == null || score > bestScore)
                 {
@@ -1185,6 +1221,31 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (module.targetPriorityCombatPowerScale > 0.001f)
+            {
+                score += Mathf.Max(0f, candidate.kindDef?.combatPower ?? 0f) * module.targetPriorityCombatPowerScale;
+            }
+
+            if (module.targetPriorityBossBonus > 0.001f && ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(candidate))
+            {
+                score += module.targetPriorityBossBonus;
+            }
+
+            if (module.targetPriorityConstructBonus > 0.001f && ABY_AbyssalPawnClassificationUtility.IsConstructPhysiologyPawn(candidate))
+            {
+                score += module.targetPriorityConstructBonus;
+            }
+
+            if (module.targetPriorityMechanoidBonus > 0.001f && (candidate.RaceProps?.IsMechanoid ?? false))
+            {
+                score += module.targetPriorityMechanoidBonus;
+            }
+
+            if (module.targetPriorityShieldedBonus > 0.001f && HasActiveShield(candidate))
+            {
+                score += module.targetPriorityShieldedBonus;
+            }
+
             if (module.preferLineTargets)
             {
                 int extraTargets = CountPotentialLineTargets(candidate, module, requireLineOfSight);
@@ -1194,7 +1255,56 @@ namespace AbyssalProtocol
                 }
             }
 
+            if (module.preferClusteredTargets)
+            {
+                int extraTargets = CountClusterTargets(candidate, module, requireLineOfSight);
+                if (extraTargets > 0)
+                {
+                    score += extraTargets * Mathf.Max(0f, module.clusterTargetBonusPerPawn);
+                }
+            }
+
             return score;
+        }
+
+        private float ComputePassiveTargetingScoreBonus(Pawn candidate, float distanceSquared, bool requireLineOfSight)
+        {
+            if (candidate == null || passiveModules == null || passiveModules.Count == 0)
+            {
+                return 0f;
+            }
+
+            float score = 0f;
+            for (int i = 0; i < passiveModules.Count; i++)
+            {
+                ABY_TurretModuleDef passive = passiveModules[i];
+                if (passive != null)
+                {
+                    score += ComputeModuleTargetingScoreBonus(passive, candidate, distanceSquared, requireLineOfSight);
+                }
+            }
+
+            return score;
+        }
+
+        private static bool HasActiveShield(Pawn pawn)
+        {
+            if (pawn?.apparel?.WornApparel == null)
+            {
+                return false;
+            }
+
+            List<Apparel> worn = pawn.apparel.WornApparel;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                CompShield shield = worn[i]?.GetComp<CompShield>();
+                if (shield != null && shield.ShieldState == ShieldState.Active)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private int CountPotentialLineTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)
@@ -1247,6 +1357,47 @@ namespace AbyssalProtocol
 
                 count++;
                 if (count >= Mathf.Max(1, module.lineTargetMaxBonusCount))
+                {
+                    break;
+                }
+            }
+
+            return count;
+        }
+
+        private int CountClusterTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)
+        {
+            Map map = parent.Map;
+            if (primaryTarget == null || module == null || map == null)
+            {
+                return 0;
+            }
+
+            float radius = Mathf.Max(0.5f, module.clusterTargetScanRadius);
+            float radiusSquared = radius * radius;
+            int maxBonusCount = Mathf.Max(1, module.clusterTargetMaxBonusCount);
+            int count = 0;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn == primaryTarget || !ValidTarget(pawn))
+                {
+                    continue;
+                }
+
+                if (pawn.Position.DistanceToSquared(primaryTarget.Position) > radiusSquared)
+                {
+                    continue;
+                }
+
+                if (requireLineOfSight && !GenSight.LineOfSight(parent.Position, pawn.Position, map, true))
+                {
+                    continue;
+                }
+
+                count++;
+                if (count >= maxBonusCount)
                 {
                     break;
                 }
@@ -1532,6 +1683,7 @@ namespace AbyssalProtocol
             mainLastBurstShotIndex = Mathf.Max(-1, mainLastBurstShotIndex);
             mainMuzzleOverlayShotIndex = Mathf.Max(-1, mainMuzzleOverlayShotIndex);
             mainLaunchTubeIndex = Mathf.Max(0, mainLaunchTubeIndex);
+            passiveCooldownRecoveryRemainder = Mathf.Clamp(passiveCooldownRecoveryRemainder, 0f, 2f);
             if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)
             {
                 HaltBurst();
@@ -1583,6 +1735,45 @@ namespace AbyssalProtocol
             {
                 currentBurstTarget = null;
             }
+        }
+
+        private void ApplyPassiveCooldownRecovery()
+        {
+            if (mainCooldownTicks <= 0 || passiveModules == null || passiveModules.Count == 0)
+            {
+                return;
+            }
+
+            float recovery = SumPassive(module => Mathf.Max(0f, module.idleCooldownRecoveryPerTick));
+            if (recovery <= 0.001f)
+            {
+                return;
+            }
+
+            passiveCooldownRecoveryRemainder += recovery;
+            int wholeTicks = Mathf.FloorToInt(passiveCooldownRecoveryRemainder);
+            if (wholeTicks <= 0)
+            {
+                return;
+            }
+
+            passiveCooldownRecoveryRemainder -= wholeTicks;
+            mainCooldownTicks = Mathf.Max(0, mainCooldownTicks - wholeTicks);
+        }
+
+        private float PassiveIncomingDamageMultiplier()
+        {
+            float multiplier = 1f;
+            for (int i = 0; i < passiveModules.Count; i++)
+            {
+                ABY_TurretModuleDef module = passiveModules[i];
+                if (module != null && module.incomingDamageMultiplier > 0f && Math.Abs(module.incomingDamageMultiplier - 1f) > 0.0001f)
+                {
+                    multiplier *= module.incomingDamageMultiplier;
+                }
+            }
+
+            return Mathf.Clamp(multiplier, 0.05f, 4f);
         }
 
         private float SumPassive(Func<ABY_TurretModuleDef, float> selector)

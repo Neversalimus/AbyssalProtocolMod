@@ -2,18 +2,32 @@
 <LanguageData>
   <ABY_TurretModule_AbyssalHarpoonProjector.description>A brutal projector that pins the advance with abyssal harpoons, turning momentum into restraint.</ABY_TurretModule_AbyssalHarpoonProjector.description>
   <ABY_TurretModule_AbyssalHarpoonProjector.label>Abyssal Harpoon Projector</ABY_TurretModule_AbyssalHarpoonProjector.label>
+  <ABY_TurretModule_AbyssalThreatPrioritizer.description>A compact turret support brain that weighs hostile mass, command signatures and abyssal hierarchy before the chassis chooses a target.</ABY_TurretModule_AbyssalThreatPrioritizer.description>
+  <ABY_TurretModule_AbyssalThreatPrioritizer.label>Abyssal Threat Prioritizer</ABY_TurretModule_AbyssalThreatPrioritizer.label>
+  <ABY_TurretModule_AntiSwarmPatternScanner.description>A fan-array scanner that reads clustered motion and teaches the chassis to punish bodies that move as a swarm.</ABY_TurretModule_AntiSwarmPatternScanner.description>
+  <ABY_TurretModule_AntiSwarmPatternScanner.label>Anti-Swarm Pattern Scanner</ABY_TurretModule_AntiSwarmPatternScanner.label>
   <ABY_TurretModule_AshChoirRepeaterCore.description>A cycling ash-canticle feed for suppressing bodies rather than breaking armor. Its rhythm is cruel, fast and deliberately wasteful.</ABY_TurretModule_AshChoirRepeaterCore.description>
   <ABY_TurretModule_AshChoirRepeaterCore.label>Ash Choir Repeater Core</ABY_TurretModule_AshChoirRepeaterCore.label>
+  <ABY_TurretModule_BlackoutPowerRegulator.description>A load-governor block that dims hungry abyssal circuits, trading firing tempo for a colder and more obedient grid draw.</ABY_TurretModule_BlackoutPowerRegulator.description>
+  <ABY_TurretModule_BlackoutPowerRegulator.label>Blackout Power Regulator</ABY_TurretModule_BlackoutPowerRegulator.label>
   <ABY_TurretModule_ChoirArcEmitter.description>A secondary canticle emitter that answers clusters with a slow Choir pulse, leaving the main weapon free to keep firing.</ABY_TurretModule_ChoirArcEmitter.description>
   <ABY_TurretModule_ChoirArcEmitter.label>Choir Arc Emitter</ABY_TurretModule_ChoirArcEmitter.label>
   <ABY_TurretModule_CinderMortarCore.description>An arcing cinder heart for punishing clusters, entrenched shooters and enemies that mistake distance for safety.</ABY_TurretModule_CinderMortarCore.description>
   <ABY_TurretModule_CinderMortarCore.label>Cinder Mortar Core</ABY_TurretModule_CinderMortarCore.label>
+  <ABY_TurretModule_CloseQuartersInterlock.description>A limiter assembly that lets close-range locks open earlier, allowing heavy modules to engage nearer threats without fully collapsing safety geometry.</ABY_TurretModule_CloseQuartersInterlock.description>
+  <ABY_TurretModule_CloseQuartersInterlock.label>Close-Quarters Interlock</ABY_TurretModule_CloseQuartersInterlock.label>
   <ABY_TurretModule_CoolingLattice.description>A bound heat lattice that pulls waste heat out of the weapon path, forcing a tighter firing cadence at a heavier power cost.</ABY_TurretModule_CoolingLattice.description>
   <ABY_TurretModule_CoolingLattice.label>Cooling Lattice</ABY_TurretModule_CoolingLattice.label>
   <ABY_TurretModule_CrowncoilGaussMinigun.description>A crowncoil engine that turns disciplined gauss fire into a storm of repeated verdicts against elite bodies and heavy swarms.</ABY_TurretModule_CrowncoilGaussMinigun.description>
   <ABY_TurretModule_CrowncoilGaussMinigun.label>Crowncoil Gauss Minigun</ABY_TurretModule_CrowncoilGaussMinigun.label>
+  <ABY_TurretModule_EmergencyHeatDump.description>A violent purge assembly that vents stored heat between firing cycles, helping an overheated turret recover before the next verdict.</ABY_TurretModule_EmergencyHeatDump.description>
+  <ABY_TurretModule_EmergencyHeatDump.label>Emergency Heat Dump</ABY_TurretModule_EmergencyHeatDump.label>
+  <ABY_TurretModule_LongChoirLens.description>An elongated choir-aligned sighting lens that stretches turret geometry into a patient long-range verdict.</ABY_TurretModule_LongChoirLens.description>
+  <ABY_TurretModule_LongChoirLens.label>Long Choir Lens</ABY_TurretModule_LongChoirLens.label>
   <ABY_TurretModule_NullArcDischarger.description>A null-arc coil that turns stored charge into a punishing pulse against shields, machines and clustered elite support.</ABY_TurretModule_NullArcDischarger.description>
   <ABY_TurretModule_NullArcDischarger.label>Null-Arc Discharger</ABY_TurretModule_NullArcDischarger.label>
+  <ABY_TurretModule_OverpressureCycleGovernor.description>A brutal pressure governor that forces the weapon path into a harsher rhythm, sacrificing reach and grid stability for cadence.</ABY_TurretModule_OverpressureCycleGovernor.description>
+  <ABY_TurretModule_OverpressureCycleGovernor.label>Overpressure Cycle Governor</ABY_TurretModule_OverpressureCycleGovernor.label>
   <ABY_TurretModule_PlasmaLanceCore.description>A sealed ultra-plasma channel tuned for patient armor breaking. It favors long reach and impact over rate of fire.</ABY_TurretModule_PlasmaLanceCore.description>
   <ABY_TurretModule_PlasmaLanceCore.label>Plasma Lance Core</ABY_TurretModule_PlasmaLanceCore.label>
   <ABY_TurretModule_ResidueCapacitor.description>A residue-fed charge vessel that steadies the weapon between bursts, improving reach and cadence without becoming a weapon itself.</ABY_TurretModule_ResidueCapacitor.description>
@@ -24,8 +38,12 @@
   <ABY_TurretModule_RiftNeedlerCore.label>Rift Needler Core</ABY_TurretModule_RiftNeedlerCore.label>
   <ABY_TurretModule_SanctifiedPrismEmitter.description>A prism emitter that compresses sanctified violence into a narrow line, punishing enemies who stack behind one another.</ABY_TurretModule_SanctifiedPrismEmitter.description>
   <ABY_TurretModule_SanctifiedPrismEmitter.label>Sanctified Prism Emitter</ABY_TurretModule_SanctifiedPrismEmitter.label>
+  <ABY_TurretModule_SanctifiedStabilizerPlate.description>A pale-gold stabilizer slab that clamps the chassis under judgment geometry, dulling incoming punishment at the cost of firing aggression.</ABY_TurretModule_SanctifiedStabilizerPlate.description>
+  <ABY_TurretModule_SanctifiedStabilizerPlate.label>Sanctified Stabilizer Plate</ABY_TurretModule_SanctifiedStabilizerPlate.label>
   <ABY_TurretModule_SepulcherRailCore.description>Twin sepulcher rails drink power in silence before releasing one long, decisive penetrator against armored elites.</ABY_TurretModule_SepulcherRailCore.description>
   <ABY_TurretModule_SepulcherRailCore.label>Sepulcher Rail Core</ABY_TurretModule_SepulcherRailCore.label>
+  <ABY_TurretModule_ShieldBurnCapacitor.description>A crown-fed capacitor that locks turret attention onto shields, machines and construct bodies before their protection can dominate the field.</ABY_TurretModule_ShieldBurnCapacitor.description>
+  <ABY_TurretModule_ShieldBurnCapacitor.label>Shield-Burn Capacitor</ABY_TurretModule_ShieldBurnCapacitor.label>
   <ABY_TurretModule_TargetingSigil.description>A targeting sigil that stretches sighting geometry into a colder, steadier line of judgment.</ABY_TurretModule_TargetingSigil.description>
   <ABY_TurretModule_TargetingSigil.label>Targeting Sigil</ABY_TurretModule_TargetingSigil.label>
   <ABY_TurretModule_VesperLanceArray.description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</ABY_TurretModule_VesperLanceArray.description>

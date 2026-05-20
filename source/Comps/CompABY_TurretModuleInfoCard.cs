@@ -103,7 +103,7 @@ namespace AbyssalProtocol
                 {
                     AddEntry(result, category, ref order,
                         "ABY_TurretInfo_ExtraPowerDraw", "Extra power draw",
-                        "+" + module.extraPowerDraw.ToString("0") + " W",
+                        ABY_ModularTurretUtility.FormatPowerDelta(module.extraPowerDraw),
                         "ABY_TurretInfo_ExtraPowerDrawDesc", "Additional power consumed by the chassis while this module is installed and modular turrets are enabled.");
                 }
             }
@@ -181,6 +181,38 @@ namespace AbyssalProtocol
                     "ABY_TurretInfo_CooldownOffset", "Main cooldown offset",
                     FormatSignedTicks(module.cooldownOffsetTicks),
                     "ABY_TurretInfo_CooldownOffsetDesc", "Flat cooldown shift added after multiplier effects.");
+            }
+
+            if (Math.Abs(module.minRangeOffset) > 0.01f)
+            {
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_MinRangeOffset", "Minimum range offset",
+                    ABY_ModularTurretUtility.FormatSignedDecimal(module.minRangeOffset),
+                    "ABY_TurretInfo_MinRangeOffsetDesc", "Added to the installed main and auxiliary weapon minimum range. Negative values let close-range-locked weapons fire nearer to the chassis.");
+            }
+
+            if (module.idleCooldownRecoveryPerTick > 0.001f)
+            {
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_CooldownRecovery", "Cooldown recovery",
+                    module.idleCooldownRecoveryPerTick.ToString("0.0") + " ticks/tick",
+                    "ABY_TurretInfo_CooldownRecoveryDesc", "Additional cooldown recovery applied while the main weapon is cooling down.");
+            }
+
+            if (module.incomingDamageMultiplier > 0f && Math.Abs(module.incomingDamageMultiplier - 1f) > 0.001f)
+            {
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_DamageMultiplier", "Incoming damage",
+                    Math.Round(module.incomingDamageMultiplier * 100f).ToString("0") + "%",
+                    "ABY_TurretInfo_DamageMultiplierDesc", "Multiplier applied to incoming damage before it reaches the modular turret chassis.");
+            }
+
+            if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
+            {
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_TargetingLogic", "Targeting logic",
+                    ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInfo_TargetingLogicValue", "enhanced"),
+                    "ABY_TurretInfo_TargetingLogicDesc", "Adds passive scoring hints during the turret's existing throttled target scan. This does not create a per-tick global scan.");
             }
 
             if (Math.Abs(module.missRadiusOffset) > 0.01f)

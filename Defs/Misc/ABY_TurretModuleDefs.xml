@@ -473,4 +473,153 @@
     <residualOverlayDrawSize>4.08</residualOverlayDrawSize>
     <residualOverlayForwardOffset>0.72</residualOverlayForwardOffset>
   </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_BlackoutPowerRegulator</defName>
+    <label>Blackout Power Regulator</label>
+    <description>A load-governor block that dims hungry abyssal circuits, trading firing tempo for a colder and more obedient grid draw.</description>
+    <effectSummary>Reduces total turret power draw while slowing the main firing cycle.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_BlackoutPowerRegulator</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>grid load governor</role>
+    <tier>1</tier>
+    <cooldownMultiplier>1.10</cooldownMultiplier>
+    <extraPowerDraw>-180</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_OverpressureCycleGovernor</defName>
+    <label>Overpressure Cycle Governor</label>
+    <description>A brutal pressure governor that forces the weapon path into a harsher rhythm, sacrificing reach and grid stability for cadence.</description>
+    <effectSummary>Greatly accelerates the main firing cycle, but shortens reach and draws heavy power.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_OverpressureCycleGovernor</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>cycle overpressure</role>
+    <tier>2</tier>
+    <cooldownMultiplier>0.78</cooldownMultiplier>
+    <rangeOffset>-2</rangeOffset>
+    <extraPowerDraw>220</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_LongChoirLens</defName>
+    <label>Long Choir Lens</label>
+    <description>An elongated choir-aligned sighting lens that stretches turret geometry into a patient long-range verdict.</description>
+    <effectSummary>Extends firing range at the cost of a slightly slower main cycle and additional power draw.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_LongChoirLens</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>long-range sighting</role>
+    <tier>2</tier>
+    <rangeOffset>5</rangeOffset>
+    <cooldownMultiplier>1.08</cooldownMultiplier>
+    <extraPowerDraw>150</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CloseQuartersInterlock</defName>
+    <label>Close-Quarters Interlock</label>
+    <description>A limiter assembly that lets close-range locks open earlier, allowing heavy modules to engage nearer threats without fully collapsing safety geometry.</description>
+    <effectSummary>Reduces main and auxiliary minimum range, making close engagements safer for mortar, rail and harpoon loadouts.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_CloseQuartersInterlock</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>minimum range control</role>
+    <tier>3</tier>
+    <minRangeOffset>-4</minRangeOffset>
+    <cooldownMultiplier>0.96</cooldownMultiplier>
+    <extraPowerDraw>120</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_AbyssalThreatPrioritizer</defName>
+    <label>Abyssal Threat Prioritizer</label>
+    <description>A compact turret support brain that weighs hostile mass, command signatures and abyssal hierarchy before the chassis chooses a target.</description>
+    <effectSummary>Biases target scans toward high-combat-power enemies, bosses, minibosses and construct-like threats.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_AbyssalThreatPrioritizer</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>elite target scoring</role>
+    <tier>3</tier>
+    <targetPriorityCombatPowerScale>45</targetPriorityCombatPowerScale>
+    <targetPriorityBossBonus>3500</targetPriorityBossBonus>
+    <targetPriorityConstructBonus>1200</targetPriorityConstructBonus>
+    <extraPowerDraw>180</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_AntiSwarmPatternScanner</defName>
+    <label>Anti-Swarm Pattern Scanner</label>
+    <description>A fan-array scanner that reads clustered motion and teaches the chassis to punish bodies that move as a swarm.</description>
+    <effectSummary>Biases target scans toward clustered enemies without adding a new per-tick global scan.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_AntiSwarmPatternScanner</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>cluster target scoring</role>
+    <tier>3</tier>
+    <preferClusteredTargets>true</preferClusteredTargets>
+    <clusterTargetScanRadius>4.5</clusterTargetScanRadius>
+    <clusterTargetMaxBonusCount>6</clusterTargetMaxBonusCount>
+    <clusterTargetBonusPerPawn>1050</clusterTargetBonusPerPawn>
+    <rangeOffset>0.5</rangeOffset>
+    <extraPowerDraw>170</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_ShieldBurnCapacitor</defName>
+    <label>Shield-Burn Capacitor</label>
+    <description>A crown-fed capacitor that locks turret attention onto shields, machines and construct bodies before their protection can dominate the field.</description>
+    <effectSummary>Prioritizes shielded, mechanoid and construct-like targets while slightly improving range and cadence at a high power cost.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_ShieldBurnCapacitor</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>anti-shield targeting</role>
+    <tier>4</tier>
+    <targetPriorityMechanoidBonus>2600</targetPriorityMechanoidBonus>
+    <targetPriorityShieldedBonus>2200</targetPriorityShieldedBonus>
+    <targetPriorityConstructBonus>1800</targetPriorityConstructBonus>
+    <rangeOffset>1</rangeOffset>
+    <cooldownMultiplier>0.96</cooldownMultiplier>
+    <extraPowerDraw>360</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_SanctifiedStabilizerPlate</defName>
+    <label>Sanctified Stabilizer Plate</label>
+    <description>A pale-gold stabilizer slab that clamps the chassis under judgment geometry, dulling incoming punishment at the cost of firing aggression.</description>
+    <effectSummary>Reduces incoming damage to the modular turret chassis, but slightly slows the main firing cycle and draws additional power.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_SanctifiedStabilizerPlate</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>chassis hardening</role>
+    <tier>4</tier>
+    <incomingDamageMultiplier>0.82</incomingDamageMultiplier>
+    <cooldownMultiplier>1.05</cooldownMultiplier>
+    <extraPowerDraw>240</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_EmergencyHeatDump</defName>
+    <label>Emergency Heat Dump</label>
+    <description>A violent purge assembly that vents stored heat between firing cycles, helping an overheated turret recover before the next verdict.</description>
+    <effectSummary>Adds extra main cooldown recovery while the turret is cooling down, at very high power cost.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_EmergencyHeatDump</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>thermal recovery</role>
+    <tier>4</tier>
+    <idleCooldownRecoveryPerTick>0.35</idleCooldownRecoveryPerTick>
+    <extraPowerDraw>420</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
 </Defs>

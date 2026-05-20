@@ -4,18 +4,32 @@
   <ABY_AbyssalBastionChassis.label>бастионный корпус Бездны</ABY_AbyssalBastionChassis.label>
   <ABY_TurretModule_AbyssalHarpoonProjector.description>Жестокий проектор, прибивающий наступление бездненными гарпунами и превращающий рывок врага в сдерживание.</ABY_TurretModule_AbyssalHarpoonProjector.description>
   <ABY_TurretModule_AbyssalHarpoonProjector.label>бездненный гарпунный проектор</ABY_TurretModule_AbyssalHarpoonProjector.label>
+  <ABY_TurretModule_AbyssalThreatPrioritizer.description>Компактный турельный мозг поддержки, взвешивающий массу угрозы, командные сигнатуры и бездненную иерархию перед выбором цели.</ABY_TurretModule_AbyssalThreatPrioritizer.description>
+  <ABY_TurretModule_AbyssalThreatPrioritizer.label>бездненный приоритизатор угроз</ABY_TurretModule_AbyssalThreatPrioritizer.label>
+  <ABY_TurretModule_AntiSwarmPatternScanner.description>Веерный сканер, считывающий плотное движение и обучающий корпус карать тела, движущиеся роем.</ABY_TurretModule_AntiSwarmPatternScanner.description>
+  <ABY_TurretModule_AntiSwarmPatternScanner.label>сканер противороевого паттерна</ABY_TurretModule_AntiSwarmPatternScanner.label>
   <ABY_TurretModule_AshChoirRepeaterCore.description>Циклическая подача пепельных кантилей для подавления массы, а не вскрытия брони. Ритм жестокий, быстрый и намеренно расточительный.</ABY_TurretModule_AshChoirRepeaterCore.description>
   <ABY_TurretModule_AshChoirRepeaterCore.label>ядро Пепельного Хора</ABY_TurretModule_AshChoirRepeaterCore.label>
+  <ABY_TurretModule_BlackoutPowerRegulator.description>Блок сетевого сдерживания, приглушающий прожорливые бездненные контуры и меняющий темп стрельбы на более послушную нагрузку сети.</ABY_TurretModule_BlackoutPowerRegulator.description>
+  <ABY_TurretModule_BlackoutPowerRegulator.label>регулятор Чёрного Сбоя</ABY_TurretModule_BlackoutPowerRegulator.label>
   <ABY_TurretModule_ChoirArcEmitter.description>Вспомогательный кантильный излучатель, отвечающий на скопления медленным импульсом Хора и не сбивающий работу основного оружия.</ABY_TurretModule_ChoirArcEmitter.description>
   <ABY_TurretModule_ChoirArcEmitter.label>дуговой излучатель Хора</ABY_TurretModule_ChoirArcEmitter.label>
   <ABY_TurretModule_CinderMortarCore.description>Навесное угольное сердце для наказания скоплений, неподвижных стрелков и врагов, принявших дистанцию за безопасность.</ABY_TurretModule_CinderMortarCore.description>
   <ABY_TurretModule_CinderMortarCore.label>ядро угольной мортиры</ABY_TurretModule_CinderMortarCore.label>
+  <ABY_TurretModule_CloseQuartersInterlock.description>Ограничительный узел, раньше открывающий ближние блокировки и позволяющий тяжёлым модулям бить по близким целям без полного срыва геометрии безопасности.</ABY_TurretModule_CloseQuartersInterlock.description>
+  <ABY_TurretModule_CloseQuartersInterlock.label>интерлок ближнего допуска</ABY_TurretModule_CloseQuartersInterlock.label>
   <ABY_TurretModule_CoolingLattice.description>Связанная тепловая решётка, вытягивающая лишний жар из оружейного тракта и ускоряющая цикл стрельбы ценой питания.</ABY_TurretModule_CoolingLattice.description>
   <ABY_TurretModule_CoolingLattice.label>охлаждающая решётка</ABY_TurretModule_CoolingLattice.label>
   <ABY_TurretModule_CrowncoilGaussMinigun.description>Двигатель Коронной Катушки, превращающий гаусс-огонь в бурю повторяющихся приговоров по элите и тяжёлым стаям.</ABY_TurretModule_CrowncoilGaussMinigun.description>
   <ABY_TurretModule_CrowncoilGaussMinigun.label>гаусс-миниган Коронной Катушки</ABY_TurretModule_CrowncoilGaussMinigun.label>
+  <ABY_TurretModule_EmergencyHeatDump.description>Жестокий узел продувки, сбрасывающий накопленный жар между циклами стрельбы и ускоряющий восстановление турели перед следующим приговором.</ABY_TurretModule_EmergencyHeatDump.description>
+  <ABY_TurretModule_EmergencyHeatDump.label>аварийный сброс жара</ABY_TurretModule_EmergencyHeatDump.label>
+  <ABY_TurretModule_LongChoirLens.description>Вытянутая хоровая линза наведения, растягивающая геометрию турели в терпеливый дальний приговор.</ABY_TurretModule_LongChoirLens.description>
+  <ABY_TurretModule_LongChoirLens.label>линза Дальнего Хора</ABY_TurretModule_LongChoirLens.label>
   <ABY_TurretModule_NullArcDischarger.description>Нуль-дуговая катушка, превращающая накопленный заряд в карающий импульс против щитов, машин и плотной элитной поддержки.</ABY_TurretModule_NullArcDischarger.description>
   <ABY_TurretModule_NullArcDischarger.label>нуль-дуговой разрядник</ABY_TurretModule_NullArcDischarger.label>
+  <ABY_TurretModule_OverpressureCycleGovernor.description>Жестокий регулятор давления, вгоняющий оружейный тракт в более резкий ритм ценой дальности и стабильности сети.</ABY_TurretModule_OverpressureCycleGovernor.description>
+  <ABY_TurretModule_OverpressureCycleGovernor.label>регулятор избыточного давления</ABY_TurretModule_OverpressureCycleGovernor.label>
   <ABY_TurretModule_PlasmaLanceCore.description>Запечатанный ультраплазменный канал для методичного вскрытия брони. Жертвует темпом ради дальности и силы удара.</ABY_TurretModule_PlasmaLanceCore.description>
   <ABY_TurretModule_PlasmaLanceCore.label>ядро плазменного копья</ABY_TurretModule_PlasmaLanceCore.label>
   <ABY_TurretModule_ResidueCapacitor.description>Зарядный сосуд на остатке, стабилизирующий оружие между очередями и немного повышающий дальность с темпом.</ABY_TurretModule_ResidueCapacitor.description>
@@ -26,8 +40,12 @@
   <ABY_TurretModule_RiftNeedlerCore.label>ядро Рифт-игломёта</ABY_TurretModule_RiftNeedlerCore.label>
   <ABY_TurretModule_SanctifiedPrismEmitter.description>Призменный излучатель, сжимающий освящённое насилие в узкую линию и карающий врагов, стоящих друг за другом.</ABY_TurretModule_SanctifiedPrismEmitter.description>
   <ABY_TurretModule_SanctifiedPrismEmitter.label>освящённый призменный излучатель</ABY_TurretModule_SanctifiedPrismEmitter.label>
+  <ABY_TurretModule_SanctifiedStabilizerPlate.description>Бледно-золотая стабилизирующая плита, зажимающая корпус в геометрии приговора и притупляющая входящий урон ценой агрессии стрельбы.</ABY_TurretModule_SanctifiedStabilizerPlate.description>
+  <ABY_TurretModule_SanctifiedStabilizerPlate.label>освящённая стабилизирующая плита</ABY_TurretModule_SanctifiedStabilizerPlate.label>
   <ABY_TurretModule_SepulcherRailCore.description>Две склеповые направляющие молча пьют энергию, прежде чем выпустить один дальний и решающий пробойник по бронированной элите.</ABY_TurretModule_SepulcherRailCore.description>
   <ABY_TurretModule_SepulcherRailCore.label>ядро Склепового рельса</ABY_TurretModule_SepulcherRailCore.label>
+  <ABY_TurretModule_ShieldBurnCapacitor.description>Коронный конденсатор, привязывающий внимание турели к щитам, машинам и конструкто-телам до того, как их защита начнёт диктовать бой.</ABY_TurretModule_ShieldBurnCapacitor.description>
+  <ABY_TurretModule_ShieldBurnCapacitor.label>конденсатор выжигания щитов</ABY_TurretModule_ShieldBurnCapacitor.label>
   <ABY_TurretModule_TargetingSigil.description>Сигила наведения, растягивающая геометрию прицела в холодную и устойчивую линию приговора.</ABY_TurretModule_TargetingSigil.description>
   <ABY_TurretModule_TargetingSigil.label>сигила наведения</ABY_TurretModule_TargetingSigil.label>
   <ABY_TurretModule_VesperLanceArray.description>Очищенный массив копья-приговора: точнее плазмы, легче склепового рельса и достаточно жесток для элитной брони.</ABY_TurretModule_VesperLanceArray.description>

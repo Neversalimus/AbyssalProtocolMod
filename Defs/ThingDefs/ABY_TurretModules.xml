@@ -420,4 +420,256 @@
       </li>
     </modExtensions>
   </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_BlackoutPowerRegulator</defName>
+    <label>blackout power regulator</label>
+    <description>A load-governor block that dims hungry abyssal circuits, trading firing tempo for a colder and more obedient grid draw.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_BlackoutPowerRegulator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>150</MarketValue>
+      <Mass>1.6</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>130</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_OverpressureCycleGovernor</defName>
+    <label>overpressure cycle governor</label>
+    <description>A brutal pressure governor that forces the weapon path into a harsher rhythm, sacrificing reach and grid stability for cadence.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_OverpressureCycleGovernor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>260</MarketValue>
+      <Mass>1.9</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>240</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_LongChoirLens</defName>
+    <label>long choir lens</label>
+    <description>An elongated choir-aligned sighting lens that stretches turret geometry into a patient long-range verdict.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_LongChoirLens</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>290</MarketValue>
+      <Mass>1.8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CloseQuartersInterlock</defName>
+    <label>close-quarters interlock</label>
+    <description>A limiter assembly that lets close-range locks open earlier, allowing heavy modules to engage nearer threats without fully collapsing safety geometry.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CloseQuartersInterlock</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>420</MarketValue>
+      <Mass>2.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>460</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_AbyssalThreatPrioritizer</defName>
+    <label>abyssal threat prioritizer</label>
+    <description>A compact turret support brain that weighs hostile mass, command signatures and abyssal hierarchy before the chassis chooses a target.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_AbyssalThreatPrioritizer</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>520</MarketValue>
+      <Mass>1.9</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>620</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_AntiSwarmPatternScanner</defName>
+    <label>anti-swarm pattern scanner</label>
+    <description>A fan-array scanner that reads clustered motion and teaches the chassis to punish bodies that move as a swarm.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_AntiSwarmPatternScanner</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>500</MarketValue>
+      <Mass>1.7</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>580</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_ShieldBurnCapacitor</defName>
+    <label>shield-burn capacitor</label>
+    <description>A crown-fed capacitor that locks turret attention onto shields, machines and construct bodies before their protection can dominate the field.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_ShieldBurnCapacitor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>880</MarketValue>
+      <Mass>2.6</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1200</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_SanctifiedStabilizerPlate</defName>
+    <label>sanctified stabilizer plate</label>
+    <description>A pale-gold stabilizer slab that clamps the chassis under judgment geometry, dulling incoming punishment at the cost of firing aggression.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_SanctifiedStabilizerPlate</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>820</MarketValue>
+      <Mass>3.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1150</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_EmergencyHeatDump</defName>
+    <label>emergency heat dump</label>
+    <description>A violent purge assembly that vents stored heat between firing cycles, helping an overheated turret recover before the next verdict.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_EmergencyHeatDump</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>900</MarketValue>
+      <Mass>2.8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1250</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
 </Defs>

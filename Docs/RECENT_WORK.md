@@ -702,3 +702,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - This is a UI readability pass only: no recipes, unlock thresholds, residue economy, crafting behavior, assets, or gameplay balance were changed.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
 
+
+## 2026-05-20 — Passive modular turret module expansion
+
+- Added a 12-icon passive turret module sheet integration: existing Cooling Lattice, Targeting Sigil, and Residue Capacitor received new transparent item icons, and nine new passive modules were added across Signal, Breach, Integration, and Crown tiers.
+- Added new passive module defs, item ThingDefs, Forge recipes, EN/RU module/item/recipe localization, and Keyed Forge/turret UI strings for Blackout Power Regulator, Overpressure Cycle Governor, Long Choir Lens, Close-Quarters Interlock, Abyssal Threat Prioritizer, Anti-Swarm Pattern Scanner, Shield-Burn Capacitor, Sanctified Stabilizer Plate, and Emergency Heat Dump.
+- Extended `ABY_TurretModuleDef` and `CompAbyssalModularTurret` so these passives are real mechanics rather than fake descriptions: negative module power draw can reduce total chassis draw, minimum range offsets affect main/aux weapons, passive target-priority hints are evaluated during the existing throttled target scan, cluster targeting uses the cached combat pawn list, incoming damage multipliers can harden the chassis, and cooldown recovery supports fractional per-tick heat dump behavior.
+- Updated turret module info cards and ITab stat text so new passive effects and negative/positive power deltas are player-readable.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required, especially Forge > Turret Systems and installed passive module stat summaries.
