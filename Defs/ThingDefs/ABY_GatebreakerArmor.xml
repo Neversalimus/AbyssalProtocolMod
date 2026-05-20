@@ -135,7 +135,7 @@
       <Gold>3</Gold>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <PsychicSensitivity>-0.05</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>

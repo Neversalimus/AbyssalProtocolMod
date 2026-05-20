@@ -117,7 +117,7 @@
       <Gold>2</Gold>
     </costList>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <PsychicSensitivity>-0.08</PsychicSensitivity>
       <ResearchSpeed>0.03</ResearchSpeed>
     </equippedStatOffsets>

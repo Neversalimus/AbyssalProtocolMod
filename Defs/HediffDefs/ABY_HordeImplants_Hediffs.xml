@@ -21,7 +21,7 @@
         <statOffsets>
           <MentalBreakThreshold>0.08</MentalBreakThreshold>
           <SocialImpact>0.10</SocialImpact>
-          <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+          <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
         </statOffsets>
         <statFactors>
           <RestFallRateFactor>1.03</RestFallRateFactor>
@@ -51,7 +51,7 @@
         </capMods>
         <statOffsets>
           <MeleeHitChance>0.06</MeleeHitChance>
-          <MeleeDodgeChance>0.03</MeleeDodgeChance>
+          <MeleeDodgeChance>0.10</MeleeDodgeChance>
           <PainShockThreshold>0.04</PainShockThreshold>
           <PawnBeauty>-0.30</PawnBeauty>
         </statOffsets>
@@ -80,7 +80,7 @@
         </capMods>
         <statOffsets>
           <MoveSpeed>0.08</MoveSpeed>
-          <MeleeDodgeChance>0.05</MeleeDodgeChance>
+          <MeleeDodgeChance>0.10</MeleeDodgeChance>
         </statOffsets>
       </li>
     </stages>

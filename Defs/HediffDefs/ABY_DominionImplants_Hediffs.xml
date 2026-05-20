@@ -84,7 +84,7 @@
         <statOffsets>
           <MoveSpeed>0.13</MoveSpeed>
           <CarryingCapacity>25</CarryingCapacity>
-          <MeleeDodgeChance>0.05</MeleeDodgeChance>
+          <MeleeDodgeChance>0.10</MeleeDodgeChance>
           <PainShockThreshold>0.06</PainShockThreshold>
           <PawnBeauty>-0.25</PawnBeauty>
         </statOffsets>

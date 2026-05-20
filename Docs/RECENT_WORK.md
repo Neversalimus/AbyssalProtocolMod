@@ -1,3 +1,10 @@
+## 2026-05-21 — Apparel and implant stat-card readability pass
+
+- Audited player-facing apparel and implant hediff defs for `ShootingAccuracyPawn` and `MeleeDodgeChance` values that were below the 0.10 display threshold.
+- Raised nonzero sub-0.10 shooting accuracy and dodge values on apparel/implants to `0.10` or `-0.10` while preserving the original sign.
+- Left enemy/boss/internal scaling hediffs, attunement tiers and temporary combat debuffs untouched.
+- No C# changes were required; this is an XML balance/readability pass.
+
 
 ## 2026-05-21 — Execution Logic Core passive turret module
 

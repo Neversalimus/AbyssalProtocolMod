@@ -28,7 +28,7 @@
       <ComponentIndustrial>1</ComponentIndustrial>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>1600</WorkToMake>

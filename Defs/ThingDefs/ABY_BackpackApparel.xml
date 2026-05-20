@@ -31,7 +31,7 @@
       <MoveSpeed>0.08</MoveSpeed>
       <CarryingCapacity>20</CarryingCapacity>
       <WorkSpeedGlobal>0.04</WorkSpeedGlobal>
-      <MeleeDodgeChance>-0.03</MeleeDodgeChance>
+      <MeleeDodgeChance>-0.10</MeleeDodgeChance>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>1400</WorkToMake>
@@ -74,7 +74,7 @@
       <MoveSpeed>0.15</MoveSpeed>
       <CarryingCapacity>35</CarryingCapacity>
       <WorkSpeedGlobal>0.06</WorkSpeedGlobal>
-      <MeleeDodgeChance>-0.04</MeleeDodgeChance>
+      <MeleeDodgeChance>-0.10</MeleeDodgeChance>
       <PsychicSensitivity>0.05</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
@@ -119,7 +119,7 @@
       <MoveSpeed>0.22</MoveSpeed>
       <CarryingCapacity>55</CarryingCapacity>
       <WorkSpeedGlobal>0.08</WorkSpeedGlobal>
-      <MeleeDodgeChance>-0.05</MeleeDodgeChance>
+      <MeleeDodgeChance>-0.10</MeleeDodgeChance>
       <PsychicSensitivity>0.10</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>

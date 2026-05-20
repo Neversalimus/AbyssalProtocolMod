@@ -84,7 +84,7 @@
       <Gold>3</Gold>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.08</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>3100</WorkToMake>

@@ -82,7 +82,7 @@
           </li>
         </capMods>
         <statOffsets>
-          <ShootingAccuracyPawn>0.06</ShootingAccuracyPawn>
+          <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
           <AimingDelayFactor>-0.08</AimingDelayFactor>
           <MeleeHitChance>0.02</MeleeHitChance>
         </statOffsets>

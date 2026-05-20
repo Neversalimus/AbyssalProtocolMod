@@ -67,7 +67,7 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.04</GeneralLaborSpeed>
-      <ShootingAccuracyPawn>0.03</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <MeleeHitChance>0.03</MeleeHitChance>
       <PsychicSensitivity>0.03</PsychicSensitivity>
     </equippedStatOffsets>
@@ -110,9 +110,9 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.06</GeneralLaborSpeed>
-      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <MeleeHitChance>0.04</MeleeHitChance>
-      <MeleeDodgeChance>0.02</MeleeDodgeChance>
+      <MeleeDodgeChance>0.10</MeleeDodgeChance>
       <PsychicSensitivity>0.06</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>

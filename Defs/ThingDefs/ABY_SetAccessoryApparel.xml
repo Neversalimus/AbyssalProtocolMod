@@ -30,7 +30,7 @@
       <ComponentIndustrial>1</ComponentIndustrial>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <MoveSpeed>-0.02</MoveSpeed>
     </equippedStatOffsets>
     <statBases>
@@ -78,7 +78,7 @@
       <Gold>1</Gold>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.02</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
       <ResearchSpeed>0.03</ResearchSpeed>
       <PsychicSensitivity>-0.03</PsychicSensitivity>
     </equippedStatOffsets>
@@ -129,7 +129,7 @@
     <equippedStatOffsets>
       <PsychicSensitivity>-0.05</PsychicSensitivity>
       <ResearchSpeed>0.02</ResearchSpeed>
-      <ShootingAccuracyPawn>-0.01</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>1200</WorkToMake>
