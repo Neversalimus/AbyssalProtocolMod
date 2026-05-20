@@ -7,6 +7,7 @@ namespace AbyssalProtocol
     public sealed class ABY_DominionPocketRuntimeGameComponent : GameComponent
     {
         private const int MaintenanceIntervalTicks = 180;
+        private const int VictoryExtractionGraceTicks = 7200;
 
         private int nextMaintenanceTick;
         private bool dominionHeartDestroyedLoreLetterSent;
@@ -156,6 +157,7 @@ namespace AbyssalProtocol
 
         private void RunMaintenance()
         {
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             if (sessions == null)
             {
                 sessions = new List<ABY_DominionPocketSession>();
@@ -201,8 +203,31 @@ namespace AbyssalProtocol
                 }
 
                 ReconcileVictoryState(session, pocketMap);
+                if (session.victoryAchieved && session.victoryAchievedTick <= 0)
+                {
+                    session.victoryAchievedTick = now;
+                }
+
                 session.lastKnownPocketPawnCount = AbyssalDominionPocketUtility.GetPocketPlayerCount(pocketMap);
                 AbyssalDominionPocketUtility.TryEnsurePocketExit(session, pocketMap);
+
+                if (session.victoryAchieved && IsVictoryExtractionGraceExpired(session, now))
+                {
+                    if (session.lastKnownPocketPawnCount > 0)
+                    {
+                        string failReason;
+                        if (AbyssalDominionPocketSafeUtility.TryReturnPocketSliceSafe(session, true, out failReason))
+                        {
+                            continue;
+                        }
+
+                        ABY_LogThrottleUtility.Warning("aby-dominion-victory-auto-return-failed", "[Abyssal Protocol] Dominion victory auto-return failed after extraction grace: " + failReason, 2500);
+                    }
+                    else if (AbyssalDominionPocketUtility.TryFinalizeOrphanedVictorySession(session, pocketMap, true))
+                    {
+                        continue;
+                    }
+                }
 
                 MapComponent_DominionCrisis crisis = sourceMap.GetComponent<MapComponent_DominionCrisis>();
                 if (crisis != null && crisis.IsTerminal && !session.victoryAchieved)
@@ -215,8 +240,14 @@ namespace AbyssalProtocol
                 {
                     if (session.victoryAchieved)
                     {
-                        // Package 3: a victory session is extraction-pending/cleanup-pending, not a loss.
-                        // Large modpacks can temporarily hide/despawn pawns during transfer; do not fail it here.
+                        // A victory session is extraction-pending/cleanup-pending, not a loss.
+                        // Large modpacks can temporarily hide/despawn pawns during transfer; after the grace
+                        // expires, finalize rewards and remove the orphaned pocket instead of extending forever.
+                        if (IsVictoryExtractionGraceExpired(session, now) && AbyssalDominionPocketUtility.TryFinalizeOrphanedVictorySession(session, pocketMap, true))
+                        {
+                            continue;
+                        }
+
                         continue;
                     }
 
@@ -241,6 +272,11 @@ namespace AbyssalProtocol
             if (encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse)
             {
                 session.victoryAchieved = true;
+                if (session.victoryAchievedTick <= 0 && Find.TickManager != null)
+                {
+                    session.victoryAchievedTick = Find.TickManager.TicksGame;
+                }
+
                 if (session.collapseAtTick <= 0 && Find.TickManager != null)
                 {
                     session.collapseAtTick = Find.TickManager.TicksGame + 3600;
@@ -254,6 +290,22 @@ namespace AbyssalProtocol
                 IntVec3 focusCell = session.heartCell.IsValid ? session.heartCell : pocketMap.Center;
                 TrySendDominionHeartDestroyedLoreLetterOnce(pocketMap, focusCell);
             }
+        }
+
+        private static bool IsVictoryExtractionGraceExpired(ABY_DominionPocketSession session, int now)
+        {
+            if (session == null || !session.victoryAchieved)
+            {
+                return false;
+            }
+
+            int startTick = session.victoryAchievedTick > 0 ? session.victoryAchievedTick : session.collapseAtTick - 3600;
+            if (startTick <= 0)
+            {
+                return false;
+            }
+
+            return now - startTick >= VictoryExtractionGraceTicks;
         }
     }
 }

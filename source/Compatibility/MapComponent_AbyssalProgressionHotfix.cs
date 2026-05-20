@@ -504,14 +504,38 @@ namespace AbyssalProtocol
 
         private void MoveThingSafely(Thing thing, IntVec3 destination)
         {
-            if (thing == null || thing.Destroyed || !thing.Spawned || !destination.IsValid)
+            if (thing == null || thing.Destroyed || !thing.Spawned || map == null || !destination.IsValid || !destination.InBounds(map))
             {
                 return;
             }
 
+            Map originalMap = thing.Map;
+            IntVec3 originalPosition = thing.Position;
             Rot4 rotation = thing.Rotation;
-            thing.DeSpawn(DestroyMode.Vanish);
-            GenSpawn.Spawn(thing, destination, map, rotation);
+            try
+            {
+                thing.DeSpawn(DestroyMode.Vanish);
+                GenSpawn.Spawn(thing, destination, map, rotation);
+                ABY_RuntimeTargetCache.NotifyLikelyStateChanged(map);
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Failed to move abyssal runtime thing " + (thing.def?.defName ?? thing.ToStringSafe()) + " to " + destination + ": " + ex.Message);
+                if (thing.Destroyed || thing.Spawned || originalMap == null || !originalPosition.IsValid || !originalPosition.InBounds(originalMap))
+                {
+                    return;
+                }
+
+                try
+                {
+                    GenSpawn.Spawn(thing, originalPosition, originalMap, rotation);
+                    ABY_RuntimeTargetCache.NotifyLikelyStateChanged(originalMap);
+                }
+                catch (Exception rollbackEx)
+                {
+                    Log.Warning("[Abyssal Protocol] Failed to roll back abyssal runtime thing move for " + (thing.def?.defName ?? thing.ToStringSafe()) + ": " + rollbackEx.Message);
+                }
+            }
         }
 
         private static bool IsAbyssalSigilThing(Thing thing)

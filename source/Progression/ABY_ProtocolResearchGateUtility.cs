@@ -28,7 +28,7 @@ namespace AbyssalProtocol
         {
             if (projectDefName.NullOrEmpty())
             {
-                return true;
+                return false;
             }
 
             if (!GatingEnabled)

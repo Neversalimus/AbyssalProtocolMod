@@ -594,3 +594,13 @@ Regression guard:
 - Passive turret shield modules use a custom shield pool inside `CompAbyssalModularTurret`; future damage-related changes must preserve `PostPreApplyDamage` absorption order, save/load fields and recharge clamping.
 - Do not represent shield modules only as incoming damage multipliers: players need a visible, rechargeable aegis pool to understand why the module is different from armor/stabilizer passives.
 - Turret module item icons should stay optimized for UI use; avoid reintroducing 512x512+ inventory icons unless a module needs large overlay art.
+
+## 2026-05-21 — Runtime safety hardening from audit
+
+Regression guards added after the Choir Scar / encounter planner / Dominion victory audit:
+
+- Oblivion Choir scar effects must remain capped and faction-aware. Do not remove `MaxActiveScars`, fallback faction/abyssal serialization, or `ABY_RuntimeTargetCache.TryFindThingById` instigator lookup unless replacing them with an equally bounded cache path. A missing instigator must fail closed or use serialized faction context; it must not damage all pawns indiscriminately.
+- Encounter candidate planning should not rescan every `PawnKindDef` for each plan in large modpacks. Keep candidate caching keyed by pool, base tier, allowed tier, and difficulty profile; invalidate or expand the key if future settings add candidate-affecting dimensions.
+- Runtime relocation helpers must not `DeSpawn` a thing and then perform an unguarded `GenSpawn.Spawn`. Keep rollback logic for sigil/portal moves so a spawn exception does not permanently delete the thing.
+- Dominion pocket victory must not become an infinite active session. Preserve the victory grace window plus safe auto-return/orphan-finalization path; do not convert a recorded victory into failure just because pawns are temporarily hidden/despawned during a modded transfer.
+- Direct protocol research decode checks should fail closed for empty def names, while recipe-level forge checks may still treat missing requirements as ungated.

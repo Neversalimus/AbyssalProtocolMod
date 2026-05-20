@@ -8,6 +8,8 @@ namespace AbyssalProtocol
 {
     public static class AbyssalEncounterDirectorUtility
     {
+        private static readonly Dictionary<string, List<Candidate>> CandidateCache = new Dictionary<string, List<Candidate>>();
+
         public sealed class DirectedEntry
         {
             public PawnKindDef KindDef;
@@ -588,8 +590,15 @@ namespace AbyssalProtocol
 
         private static List<Candidate> GetCandidates(string poolId, int baseContentTier, int allowedContentTier)
         {
-            List<Candidate> result = new List<Candidate>();
             ABY_DifficultyProfileDef profile = AbyssalDifficultyUtility.GetCurrentProfile();
+            string cacheKey = GetCandidateCacheKey(poolId, baseContentTier, allowedContentTier, profile);
+            List<Candidate> cached;
+            if (CandidateCache.TryGetValue(cacheKey, out cached))
+            {
+                return new List<Candidate>(cached);
+            }
+
+            List<Candidate> result = new List<Candidate>();
             List<PawnKindDef> defs = DefDatabase<PawnKindDef>.AllDefsListForReading;
             for (int i = 0; i < defs.Count; i++)
             {
@@ -629,7 +638,16 @@ namespace AbyssalProtocol
                 });
             }
 
+            CandidateCache[cacheKey] = new List<Candidate>(result);
             return result;
+        }
+
+        private static string GetCandidateCacheKey(string poolId, int baseContentTier, int allowedContentTier, ABY_DifficultyProfileDef profile)
+        {
+            return (poolId ?? string.Empty)
+                + "|" + Math.Max(0, baseContentTier)
+                + "|" + Math.Max(0, allowedContentTier)
+                + "|" + (profile?.defName ?? string.Empty);
         }
 
         private static void ApplyRoleMinimums(
@@ -789,8 +807,8 @@ namespace AbyssalProtocol
                 weight *= kindPenalty;
             }
 
-            string role = (candidate.Extension.role ?? string.Empty).ToLowerInvariant();
-            if (role == "support")
+            string role = candidate.Extension.role ?? string.Empty;
+            if (string.Equals(role, "support", StringComparison.OrdinalIgnoreCase))
             {
                 if (plan.GetRoleCount("assault") <= 0 && plan.TotalUnits > 0)
                 {
@@ -803,7 +821,7 @@ namespace AbyssalProtocol
                     weight *= 0.78f;
                 }
             }
-            else if (role == "elite")
+            else if (string.Equals(role, "elite", StringComparison.OrdinalIgnoreCase))
             {
                 if (plan.GetRoleCount("elite") > 0 && plan.GetRoleCount("assault") <= 0)
                 {
@@ -820,7 +838,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            if (plan.TotalUnits >= 8 && role != "assault")
+            if (plan.TotalUnits >= 8 && !string.Equals(role, "assault", StringComparison.OrdinalIgnoreCase))
             {
                 weight *= 0.84f;
             }
@@ -919,11 +937,10 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            string safe = sought.ToLowerInvariant();
             for (int i = 0; i < values.Count; i++)
             {
                 string value = values[i];
-                if (!value.NullOrEmpty() && value.ToLowerInvariant() == safe)
+                if (!value.NullOrEmpty() && string.Equals(value, sought, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }

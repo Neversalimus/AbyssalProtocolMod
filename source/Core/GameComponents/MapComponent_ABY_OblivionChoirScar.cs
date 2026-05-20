@@ -12,6 +12,7 @@ namespace AbyssalProtocol
         private const float DefaultDamage = 3.5f;
         private const float DefaultArmorPenetration = 0.20f;
         private const int DefaultLifetimeTicks = 210;
+        private const int MaxActiveScars = 24;
 
         private List<ChoirScar> scars = new List<ChoirScar>();
 
@@ -75,6 +76,12 @@ namespace AbyssalProtocol
             }
 
             int currentTick = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            component.PruneInvalidOrExpiredScars(currentTick);
+            if (component.scars.Count >= MaxActiveScars)
+            {
+                component.RemoveOldestScar();
+            }
+
             component.scars.Add(new ChoirScar
             {
                 cell = cell,
@@ -82,6 +89,8 @@ namespace AbyssalProtocol
                 nextDamageTick = currentTick + 8,
                 radius = Mathf.Max(0.5f, radius),
                 instigatorThingId = instigator != null ? instigator.thingIDNumber : -1,
+                instigatorFactionDefName = instigator?.Faction?.def?.defName,
+                instigatorWasAbyssal = instigator is Pawn instigatorPawn && ABY_FactionHostilityUtility.IsAbyssalPawn(instigatorPawn),
                 seed = Rand.RangeInclusive(1, 999999)
             });
         }
@@ -110,7 +119,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    if (instigator != null && !ABY_FactionHostilityUtility.SafeHostileTo(instigator, pawn))
+                    if (!CanScarDamagePawn(scar, instigator, pawn))
                     {
                         continue;
                     }
@@ -154,24 +163,85 @@ namespace AbyssalProtocol
             }
         }
 
+        private bool CanScarDamagePawn(ChoirScar scar, Thing instigator, Pawn pawn)
+        {
+            if (scar == null || pawn == null)
+            {
+                return false;
+            }
+
+            if (instigator != null)
+            {
+                return ABY_FactionHostilityUtility.SafeHostileTo(instigator, pawn);
+            }
+
+            if (scar.instigatorWasAbyssal)
+            {
+                return !ABY_FactionHostilityUtility.IsAbyssalPawn(pawn);
+            }
+
+            Faction faction = ResolveInstigatorFaction(scar.instigatorFactionDefName);
+            return faction != null && ABY_FactionHostilityUtility.SafeHostileTo(faction, pawn);
+        }
+
         private Thing ResolveInstigator(int thingId)
         {
-            if (thingId < 0 || map?.listerThings == null)
+            Thing thing;
+            return ABY_RuntimeTargetCache.TryFindThingById(map, thingId, out thing) ? thing : null;
+        }
+
+        private Faction ResolveInstigatorFaction(string factionDefName)
+        {
+            if (factionDefName.NullOrEmpty() || Find.FactionManager?.AllFactionsListForReading == null)
             {
                 return null;
             }
 
-            List<Thing> allThings = map.listerThings.AllThings;
-            for (int i = 0; i < allThings.Count; i++)
+            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
+            for (int i = 0; i < factions.Count; i++)
             {
-                Thing thing = allThings[i];
-                if (thing != null && thing.thingIDNumber == thingId)
+                Faction faction = factions[i];
+                if (string.Equals(faction?.def?.defName, factionDefName, System.StringComparison.OrdinalIgnoreCase))
                 {
-                    return thing;
+                    return faction;
                 }
             }
 
             return null;
+        }
+
+        private void PruneInvalidOrExpiredScars(int currentTick)
+        {
+            for (int i = scars.Count - 1; i >= 0; i--)
+            {
+                ChoirScar scar = scars[i];
+                if (scar == null || currentTick >= scar.expireTick || !scar.cell.IsValid || !scar.cell.InBounds(map))
+                {
+                    scars.RemoveAt(i);
+                }
+            }
+        }
+
+        private void RemoveOldestScar()
+        {
+            if (scars.Count == 0)
+            {
+                return;
+            }
+
+            int oldestIndex = 0;
+            int oldestExpireTick = scars[0] != null ? scars[0].expireTick : int.MinValue;
+            for (int i = 1; i < scars.Count; i++)
+            {
+                int expireTick = scars[i] != null ? scars[i].expireTick : int.MinValue;
+                if (expireTick < oldestExpireTick)
+                {
+                    oldestExpireTick = expireTick;
+                    oldestIndex = i;
+                }
+            }
+
+            scars.RemoveAt(oldestIndex);
         }
 
         private class ChoirScar : IExposable
@@ -181,6 +251,8 @@ namespace AbyssalProtocol
             public int nextDamageTick;
             public float radius;
             public int instigatorThingId;
+            public string instigatorFactionDefName;
+            public bool instigatorWasAbyssal;
             public int seed;
 
             public void ExposeData()
@@ -190,6 +262,8 @@ namespace AbyssalProtocol
                 Scribe_Values.Look(ref nextDamageTick, "nextDamageTick");
                 Scribe_Values.Look(ref radius, "radius", DefaultRadius);
                 Scribe_Values.Look(ref instigatorThingId, "instigatorThingId", -1);
+                Scribe_Values.Look(ref instigatorFactionDefName, "instigatorFactionDefName");
+                Scribe_Values.Look(ref instigatorWasAbyssal, "instigatorWasAbyssal", false);
                 Scribe_Values.Look(ref seed, "seed", 0);
             }
         }

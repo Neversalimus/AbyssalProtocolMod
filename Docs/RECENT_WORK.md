@@ -1,3 +1,33 @@
+## 2026-05-21 — Runtime safety and large-modpack performance hardening
+
+Applied a focused C# hardening pass for audit-reported runtime risks without changing content balance, XML defs, textures, or UI layout.
+
+Changed behavior:
+- `MapComponent_ABY_OblivionChoirScar` now caps active scars at 24, prunes expired scars before adding a new one, resolves saved instigators through `ABY_RuntimeTargetCache`, and stores faction/abyssal fallback data so lingering scars do not become factionless friendly-fire zones after the source pawn dies.
+- `AbyssalEncounterDirectorUtility.GetCandidates` now caches candidate lists by encounter pool, base tier, allowed tier, and current difficulty profile, avoiding repeated full `PawnKindDef` scans in large modpacks. The case-insensitive list helper no longer allocates lowercase copies inside the comparison loop.
+- `MapComponent_AbyssalProgressionHotfix.MoveThingSafely` now wraps despawn/spawn relocation in rollback logic so sigils or fogged portals are not lost if `GenSpawn.Spawn` throws after `DeSpawn`.
+- Direct `ABY_ProtocolResearchGateUtility.IsDecoded("")` now fails closed while `IsDecodedForForge` still treats recipes with no protocol requirement as ungated.
+- Dominion pocket victory sessions now track `victoryAchievedTick`; after a grace window, runtime maintenance attempts a safe auto-return for stuck pawns or finalizes reward/cleanup for orphaned victory pockets instead of extending extraction forever.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Core/GameComponents/MapComponent_ABY_OblivionChoirScar.cs
+source/Encounters/AbyssalEncounterDirectorUtility.cs
+source/Compatibility/MapComponent_AbyssalProgressionHotfix.cs
+source/Progression/ABY_ProtocolResearchGateUtility.cs
+source/Dominion/ABY_DominionPocketSession.cs
+source/Dominion/ABY_DominionPocketRuntimeGameComponent.cs
+source/Dominion/AbyssalDominionPocketUtility.cs
+source/Dominion/AbyssalDominionPocketSafeUtility.cs
+source/Dominion/MapComponents/MapComponent_DominionSliceEncounter.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
+Build verified with direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries. The rebuilt assembly references `mscorlib` / `System.Core`, not .NET 9 reference assemblies. Runtime smoke testing in RimWorld is still required.
+
 
 ## 2026-05-21 — Execution Logic Core passive turret module
 

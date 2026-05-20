@@ -204,6 +204,11 @@ namespace AbyssalProtocol
             if (encounter != null && encounter.CurrentPhase == MapComponent_DominionSliceEncounter.SlicePhase.Collapse)
             {
                 session.victoryAchieved = true;
+                if (session.victoryAchievedTick <= 0 && Find.TickManager != null)
+                {
+                    session.victoryAchievedTick = Find.TickManager.TicksGame;
+                }
+
                 if (session.collapseAtTick <= 0 && Find.TickManager != null)
                 {
                     session.collapseAtTick = Find.TickManager.TicksGame + 3600;

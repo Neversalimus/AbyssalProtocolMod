@@ -1175,6 +1175,10 @@ namespace AbyssalProtocol
                 if (finalVictory)
                 {
                     session.victoryAchieved = true;
+                    if (session.victoryAchievedTick <= 0)
+                    {
+                        session.victoryAchievedTick = phaseStartedTick;
+                    }
                 }
                 session.collapseAtTick = collapseAtTick;
                 if (session.rewardSummary.NullOrEmpty())

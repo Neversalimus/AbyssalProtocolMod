@@ -379,6 +379,34 @@ namespace AbyssalProtocol
             return true;
         }
 
+
+        public static bool TryFinalizeOrphanedVictorySession(ABY_DominionPocketSession session, Map pocketMap, bool silent)
+        {
+            if (session == null || !session.victoryAchieved)
+            {
+                return false;
+            }
+
+            Map sourceMap = ResolveMap(session.sourceMapId);
+            if (sourceMap == null)
+            {
+                return false;
+            }
+
+            IntVec3 returnCell = session.sourceReturnCell.IsValid ? session.sourceReturnCell : sourceMap.Center;
+            if (!returnCell.InBounds(sourceMap) || !returnCell.Standable(sourceMap))
+            {
+                if (!CellFinder.TryFindRandomCellNear(sourceMap.Center, sourceMap, 8, c => c.Standable(sourceMap), out returnCell))
+                {
+                    returnCell = sourceMap.Center;
+                }
+            }
+
+            ResolvePocketVictoryToSourceMap(session, pocketMap, sourceMap, returnCell);
+            CollapsePocketSlice(session, pocketMap, silent);
+            return true;
+        }
+
         private static void ResolvePocketVictoryToSourceMap(ABY_DominionPocketSession session, Map pocketMap, Map sourceMap, IntVec3 returnCell)
         {
             if (session == null || sourceMap == null)
