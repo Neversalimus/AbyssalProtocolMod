@@ -2278,7 +2278,7 @@ namespace AbyssalProtocol
         }
 
 
-        private static void DrawForgeTierRail(Rect cardRect, RecipeDef recipe, bool unlocked, bool decoded)
+        private static void DrawForgeTierRail(Rect cardRect, RecipeDef recipe, bool unlocked, bool decoded, bool emphasized = false)
         {
             if (recipe == null)
             {
@@ -2290,11 +2290,20 @@ namespace AbyssalProtocol
             Color hotColor = GetForgeTierHotColor(tier, unlocked, decoded);
             Rect railRect = new Rect(cardRect.x + 3f, cardRect.y + 5f, 5f, Mathf.Max(4f, cardRect.height - 10f));
 
-            DrawForgeTierGlow(railRect, hotColor, decoded ? 0.34f : 0.18f, unlocked ? 1f : 0.72f);
-            AbyssalForgeConsoleArt.Fill(railRect, new Color(tierColor.r * 0.48f, tierColor.g * 0.38f, tierColor.b * 0.34f, decoded ? 0.76f : 0.52f));
-            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 1f, railRect.y + 1f, 3f, railRect.height - 2f), tierColor);
-            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 2f, railRect.y + 2f, 1f, railRect.height - 4f), Color.Lerp(hotColor, Color.white, decoded ? 0.32f : 0.10f));
-            AbyssalForgeConsoleArt.DrawOutline(new Rect(railRect.x - 1f, railRect.y, railRect.width + 2f, railRect.height), new Color(hotColor.r, hotColor.g, hotColor.b, decoded ? 0.76f : 0.42f));
+            float glowIntensity = emphasized ? (decoded ? 0.31f : 0.17f) : (decoded ? 0.18f : 0.09f);
+            float stateMultiplier = emphasized ? (unlocked ? 1f : 0.70f) : (unlocked ? 0.72f : 0.46f);
+            float railAlpha = emphasized ? (decoded ? 0.78f : 0.54f) : (decoded ? 0.64f : 0.42f);
+            float coreAlpha = emphasized ? tierColor.a : tierColor.a * 0.78f;
+            float hotAlpha = emphasized ? hotColor.a : hotColor.a * 0.58f;
+            float outlineAlpha = emphasized ? (decoded ? 0.74f : 0.42f) : (decoded ? 0.48f : 0.24f);
+
+            DrawForgeTierGlow(railRect, hotColor, glowIntensity, stateMultiplier);
+            AbyssalForgeConsoleArt.Fill(railRect, new Color(tierColor.r * 0.40f, tierColor.g * 0.30f, tierColor.b * 0.30f, railAlpha));
+            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 1f, railRect.y + 1f, 3f, railRect.height - 2f), new Color(tierColor.r, tierColor.g, tierColor.b, coreAlpha));
+            Color innerHot = Color.Lerp(hotColor, Color.white, emphasized ? 0.30f : 0.14f);
+            innerHot.a = decoded ? hotAlpha : hotAlpha * 0.72f;
+            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 2f, railRect.y + 2f, 1f, railRect.height - 4f), innerHot);
+            AbyssalForgeConsoleArt.DrawOutline(new Rect(railRect.x - 1f, railRect.y, railRect.width + 2f, railRect.height), new Color(hotColor.r, hotColor.g, hotColor.b, outlineAlpha));
             TooltipHandler.TipRegion(railRect.ExpandedBy(6f), AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
         }
 
@@ -2447,7 +2456,7 @@ namespace AbyssalProtocol
                 AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
             }
 
-            DrawForgeTierRail(rect, recipe, false, true);
+            DrawForgeTierRail(rect, recipe, false, true, Mouse.IsOver(rect));
             string category = AbyssalForgeProgressUtility.GetCategory(recipe);
 
             Rect tagRect = new Rect(rect.xMax - 86f, rect.y + 10f, 76f, 18f);
@@ -2491,7 +2500,7 @@ namespace AbyssalProtocol
 
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
-            DrawForgeTierRail(rect, recipe, unlocked, true);
+            DrawForgeTierRail(rect, recipe, unlocked, true, freshlyUnlocked || IsSelectedPattern(recipe) || Mouse.IsOver(rect));
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
@@ -2738,7 +2747,7 @@ namespace AbyssalProtocol
 
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
-            DrawForgeTierRail(rect, recipe, unlocked, true);
+            DrawForgeTierRail(rect, recipe, unlocked, true, freshlyUnlocked || IsSelectedPattern(recipe) || Mouse.IsOver(rect));
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             Rect productIconRect = new Rect(rect.x + 12f, rect.y + 12f, 42f, 42f);
