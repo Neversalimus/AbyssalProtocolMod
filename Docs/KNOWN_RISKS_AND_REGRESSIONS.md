@@ -536,3 +536,23 @@ In-game checks:
 - Save inside an active Dominion pocket, reload, and verify no immediate music warning appears during the first few realtime seconds.
 - Remain inside the pocket long enough to confirm the hell-pocket theme either starts or retries without log spam.
 - Exit/close the pocket and verify normal music restoration still occurs without repeated restore warnings.
+
+## 2026-05-20 — Projectile base-impact interop warnings should stay non-fatal
+
+Observed behavior:
+
+- In large combat modpacks, `Bullet.Impact(...)` can throw `NullReferenceException` inside vanilla or externally patched combat chains while an Abyssal projectile is the visible top-level caller.
+- Known visible context: `Projectile_HexgunBurst base impact` logged through `ABY_ProjectileImpactSafetyUtility`.
+
+Regression rules:
+
+- Expected `NullReferenceException` from `base.Impact(...)` should remain non-fatal and should not produce repeated stack-trace warnings during combat.
+- The projectile should be safely removed after a suppressed base-impact failure so it does not continue ticking.
+- Unexpected post-impact/direct-damage exceptions should still use throttled warnings so real Abyssal regressions remain visible.
+- Do not replace this path with a completely silent catch; use throttled messages for expected external base-impact failures and warnings for unexpected stages.
+
+In-game checks:
+
+- Fire Hexgun/Hexgun Thrall projectiles in the large modpack and confirm the old warning stack no longer appears repeatedly.
+- Confirm normal Hex Mark application and impact VFX still occur when base impact succeeds.
+- Confirm gameplay continues if an external combat stack still throws during `base.Impact(...)`.

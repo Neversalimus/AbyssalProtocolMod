@@ -658,3 +658,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Replaced the immediate first-attempt warning with repeated-failure tracking; Dominion pocket music now warns only after several failed start attempts outside the grace window while continuing to retry quietly.
 - This is a log-noise and load-order safety fix only: it does not change Dominion combat, map transfer, encounter logic, or the selected hell-pocket song.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-20 — Projectile base-impact warning demotion
+
+- Refined `ABY_ProjectileImpactSafetyUtility` for the recurring `Projectile_HexgunBurst base impact` / external combat-stack `NullReferenceException` pattern seen in large combat modpacks.
+- Expected `NullReferenceException` failures thrown inside vanilla/external `base.Impact(...)` are now treated as non-fatal suppressed base-impact events and logged as throttled messages instead of stack-trace warnings.
+- Added a pre-base-impact projectile validity guard so already-destroyed/despawned projectiles skip base impact cleanly instead of feeding invalid state into patched combat stacks.
+- Log messages now include projectile def and launcher def context without dumping a full warning stack for this expected interop path.
+- This is a log-noise and compatibility hardening pass only: successful projectile impacts, damage, VFX, sounds, and post-impact logic are unchanged.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
