@@ -1,3 +1,31 @@
+## 2026-05-21 — Encounter validation hardening and turret Aegis gizmo
+
+Fixed a load-time encounter validation warning path and added a read-only Aegis status gizmo for player modular turrets that have passive shield modules installed.
+
+Changed behavior:
+- `ABY_EncounterValidationUtility` now runs startup validation in isolated stages and uses guarded DefDatabase access, so a null or temporarily unavailable validation input reports a scoped warning instead of collapsing into the generic `Encounter validation failed: NullReferenceException` message.
+- English/Russian `ABY_BreakCrown_*` keyed entries no longer contain empty translation values, removing a likely English translation-data error while preserving the secret mechanic being silent in code.
+- `CompAbyssalModularTurret` now exposes a styled read-only `Gizmo_ABY_AegisStatus` card for player-owned turrets with passive Aegis modules, showing charge, state, restart delay and recharge tooltip.
+- Added localized English/Russian turret Aegis gizmo strings.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Encounters/ABY_EncounterValidationUtility.cs
+source/Comps/CompAbyssalModularTurret.cs
+Languages/English/Keyed/ABY_BreakCrown_Strings.xml
+Languages/Russian/Keyed/ABY_BreakCrown_Strings.xml
+Languages/English/Keyed/ABY_ModularTurrets_Strings.xml
+Languages/Russian/Keyed/ABY_ModularTurrets_Strings.xml
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
+Build verified with direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries. Runtime smoke testing in RimWorld is still required.
+
+
 ## 2026-05-21 — Runtime safety and large-modpack performance hardening
 
 Applied a focused C# hardening pass for audit-reported runtime risks without changing content balance, XML defs, textures, or UI layout.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_BreakCrown_Start></ABY_BreakCrown_Start>
-  <ABY_BreakCrown_Unlocked></ABY_BreakCrown_Unlocked>
+  <ABY_BreakCrown_Start>Скрытые якоря короны пробуждаются под разрывом.</ABY_BreakCrown_Start>
+  <ABY_BreakCrown_Unlocked>Сломанная корона открывает запретный путь разрыва.</ABY_BreakCrown_Unlocked>
   <ABY_BreakCrown_Failed>Якоря короны схлопываются.</ABY_BreakCrown_Failed>
 </LanguageData>

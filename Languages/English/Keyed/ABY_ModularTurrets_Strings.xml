@@ -263,4 +263,22 @@
   <ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>Execution Logic Core</ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>wounded target execution</ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>Biases target scans toward wounded hostile pawns, especially critically damaged targets, without adding a new per-tick global scan.</ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>
+  <ABY_TurretAegisGizmo_Label>Turret Aegis</ABY_TurretAegisGizmo_Label>
+  <ABY_TurretAegisGizmo_Subtitle>Passive shield lattice</ABY_TurretAegisGizmo_Subtitle>
+  <ABY_TurretAegisGizmo_Tag>TURRET</ABY_TurretAegisGizmo_Tag>
+  <ABY_TurretAegisGizmo_StateStable>stable</ABY_TurretAegisGizmo_StateStable>
+  <ABY_TurretAegisGizmo_StateStabilizing>stabilizing</ABY_TurretAegisGizmo_StateStabilizing>
+  <ABY_TurretAegisGizmo_StateRecharging>recharging</ABY_TurretAegisGizmo_StateRecharging>
+  <ABY_TurretAegisGizmo_StateReforming>reforming</ABY_TurretAegisGizmo_StateReforming>
+  <ABY_TurretAegisGizmo_StateRestart>restart in {0}</ABY_TurretAegisGizmo_StateRestart>
+  <ABY_TurretAegisGizmo_StateUnpowered>unpowered</ABY_TurretAegisGizmo_StateUnpowered>
+  <ABY_TurretAegisGizmo_DetailFull>Peak integrity</ABY_TurretAegisGizmo_DetailFull>
+  <ABY_TurretAegisGizmo_DetailRecharge>Recharge +{0}/s</ABY_TurretAegisGizmo_DetailRecharge>
+  <ABY_TurretAegisGizmo_DetailDelay>Restart delay {0}</ABY_TurretAegisGizmo_DetailDelay>
+  <ABY_TurretAegisGizmo_DetailUnpowered>Power lost</ABY_TurretAegisGizmo_DetailUnpowered>
+  <ABY_TurretAegisGizmo_Tooltip>A passive module-generated aegis field that absorbs incoming turret damage before the chassis is harmed.</ABY_TurretAegisGizmo_Tooltip>
+  <ABY_TurretAegisGizmo_TooltipState>State</ABY_TurretAegisGizmo_TooltipState>
+  <ABY_TurretAegisGizmo_TooltipCharge>Charge</ABY_TurretAegisGizmo_TooltipCharge>
+  <ABY_TurretAegisGizmo_TooltipRecharge>Recharge</ABY_TurretAegisGizmo_TooltipRecharge>
+  <ABY_TurretAegisGizmo_TooltipDelay>Restart delay</ABY_TurretAegisGizmo_TooltipDelay>
 </LanguageData>

@@ -579,6 +579,170 @@ namespace AbyssalProtocol
             TryRemovePassiveModule(index, out _);
         }
 
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
+            {
+                yield return gizmo;
+            }
+
+            if (!FeatureEnabled || !HasPassiveShield || parent == null || parent.Destroyed || parent.Faction != Faction.OfPlayer)
+            {
+                yield break;
+            }
+
+            float maxShield = ResolvedPassiveShieldMax;
+            if (maxShield <= 0.01f)
+            {
+                yield break;
+            }
+
+            passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, maxShield);
+            if (parent.Spawned && IsPowered)
+            {
+                TickPassiveShieldRecharge();
+            }
+
+            bool suppressed = !IsPowered;
+            bool collapsed = !suppressed && passiveShieldPoints <= 0.001f;
+            string label = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Label", "Turret Aegis");
+            string subtitle = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Subtitle", "Passive shield lattice");
+            string state = ResolvePassiveShieldGizmoState(suppressed, collapsed, maxShield);
+            string points = ABY_ApparelAegisUtility.FormatPoints(passiveShieldPoints, maxShield);
+            string detail = BuildPassiveShieldGizmoDetail(suppressed, collapsed, maxShield);
+            string tooltip = BuildPassiveShieldGizmoTooltip(state, maxShield);
+            Texture2D icon = ResolvePassiveShieldGizmoIcon();
+
+            yield return new Gizmo_ABY_AegisStatus(
+                label,
+                subtitle,
+                state,
+                points,
+                detail,
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Tag", "TURRET"),
+                tooltip,
+                "Aegis",
+                passiveShieldPoints,
+                maxShield,
+                suppressed,
+                collapsed,
+                icon);
+        }
+
+        private string ResolvePassiveShieldGizmoState(bool suppressed, bool collapsed, float maxShield)
+        {
+            if (suppressed)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateUnpowered", "unpowered");
+            }
+
+            if (collapsed)
+            {
+                int remaining = RemainingPassiveShieldDelayTicks();
+                if (remaining > 0)
+                {
+                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateRestart", "restart in {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remaining));
+                }
+
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateReforming", "reforming");
+            }
+
+            if (passiveShieldPoints >= maxShield - 0.001f)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateStable", "stable");
+            }
+
+            int delay = RemainingPassiveShieldDelayTicks();
+            if (delay > 0)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateStabilizing", "stabilizing");
+            }
+
+            return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateRecharging", "recharging");
+        }
+
+        private string BuildPassiveShieldGizmoDetail(bool suppressed, bool collapsed, float maxShield)
+        {
+            if (suppressed)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailUnpowered", "Power lost");
+            }
+
+            int remaining = RemainingPassiveShieldDelayTicks();
+            if (remaining > 0)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailDelay", "Restart delay {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remaining));
+            }
+
+            float rechargePerSecond = ResolvedPassiveShieldRechargePerTick * 60f;
+            if (passiveShieldPoints >= maxShield - 0.001f)
+            {
+                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailFull", "Peak integrity");
+            }
+
+            return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailRecharge", "Recharge +{0}/s", rechargePerSecond.ToString("0.#"));
+        }
+
+        private string BuildPassiveShieldGizmoTooltip(string state, float maxShield)
+        {
+            string text = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Tooltip", "A passive module-generated aegis field that absorbs incoming turret damage before the chassis is harmed.");
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipState", "State") + ": " + state;
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipCharge", "Charge") + ": " + ABY_ApparelAegisUtility.FormatPoints(passiveShieldPoints, maxShield);
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipRecharge", "Recharge") + ": +" + (ResolvedPassiveShieldRechargePerTick * 60f).ToString("0.#") + "/s";
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipDelay", "Restart delay") + ": " + ABY_ApparelAegisUtility.SecondsFromTicks(ResolvedPassiveShieldRechargeDelayTicks);
+            return text;
+        }
+
+        private int RemainingPassiveShieldDelayTicks()
+        {
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int elapsed = ticks - passiveShieldLastDamagedTick;
+            return Mathf.Max(0, Mathf.Max(60, ResolvedPassiveShieldRechargeDelayTicks) - elapsed);
+        }
+
+        private Texture2D ResolvePassiveShieldGizmoIcon()
+        {
+            ABY_TurretModuleDef shieldModule = FirstPassiveShieldModule();
+            if (shieldModule?.thingDef?.uiIcon != null)
+            {
+                return shieldModule.thingDef.uiIcon;
+            }
+
+            if (parent?.def?.uiIcon != null)
+            {
+                return parent.def.uiIcon;
+            }
+
+            try
+            {
+                return ContentFinder<Texture2D>.Get("UI/Gizmos/ABY_AegisGeneric", false);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private ABY_TurretModuleDef FirstPassiveShieldModule()
+        {
+            if (passiveModules == null)
+            {
+                return null;
+            }
+
+            for (int i = 0; i < passiveModules.Count; i++)
+            {
+                ABY_TurretModuleDef module = passiveModules[i];
+                if (module != null && module.turretShieldMax > 0.01f)
+                {
+                    return module;
+                }
+            }
+
+            return null;
+        }
+
         public override string CompInspectStringExtra()
         {
             List<string> lines = new List<string>();

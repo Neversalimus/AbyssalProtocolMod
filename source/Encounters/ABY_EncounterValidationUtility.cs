@@ -210,14 +210,16 @@ namespace AbyssalProtocol
         private static ABY_EncounterValidationReport BuildReport()
         {
             ABY_EncounterValidationReport report = new ABY_EncounterValidationReport();
-            HashSet<string> knownPools = BuildKnownPoolSet();
-            HashSet<string> knownRoles = BuildKnownRoleSet();
+            HashSet<string> knownPools = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> knownRoles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            ValidatePawnKindScaling(report, knownPools);
-            ValidateTemplates(report, knownPools, knownRoles);
-            ValidateDoctrines(report, knownPools, knownRoles);
-            ValidateEscalationPackages(report, knownPools, knownRoles);
-            ValidatePoolCoverage(report, knownPools);
+            RunValidationStage(report, "known pool index", () => knownPools = BuildKnownPoolSet() ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            RunValidationStage(report, "known role index", () => knownRoles = BuildKnownRoleSet() ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            RunValidationStage(report, "pawn kind scaling", () => ValidatePawnKindScaling(report, knownPools));
+            RunValidationStage(report, "encounter templates", () => ValidateTemplates(report, knownPools, knownRoles));
+            RunValidationStage(report, "threat doctrines", () => ValidateDoctrines(report, knownPools, knownRoles));
+            RunValidationStage(report, "boss escalation packages", () => ValidateEscalationPackages(report, knownPools, knownRoles));
+            RunValidationStage(report, "pool coverage", () => ValidatePoolCoverage(report, knownPools));
 
             if (report.Issues.Count == 0)
             {
@@ -230,7 +232,7 @@ namespace AbyssalProtocol
         private static HashSet<string> BuildKnownPoolSet()
         {
             HashSet<string> pools = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            List<ABY_EncounterTemplateDef> templates = DefDatabase<ABY_EncounterTemplateDef>.AllDefsListForReading;
+            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
             for (int i = 0; i < templates.Count; i++)
             {
                 string poolId = templates[i]?.poolId;
@@ -240,7 +242,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            List<PawnKindDef> pawns = DefDatabase<PawnKindDef>.AllDefsListForReading;
+            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -259,7 +261,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            List<ABY_ThreatDoctrineDef> doctrines = DefDatabase<ABY_ThreatDoctrineDef>.AllDefsListForReading;
+            List<ABY_ThreatDoctrineDef> doctrines = SafeAllDefs<ABY_ThreatDoctrineDef>();
             for (int i = 0; i < doctrines.Count; i++)
             {
                 if (doctrines[i]?.poolIds == null)
@@ -283,7 +285,7 @@ namespace AbyssalProtocol
         private static HashSet<string> BuildKnownRoleSet()
         {
             HashSet<string> roles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            List<PawnKindDef> pawns = DefDatabase<PawnKindDef>.AllDefsListForReading;
+            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -305,7 +307,7 @@ namespace AbyssalProtocol
 
         private static void ValidatePawnKindScaling(ABY_EncounterValidationReport report, HashSet<string> knownPools)
         {
-            List<PawnKindDef> pawns = DefDatabase<PawnKindDef>.AllDefsListForReading;
+            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
             for (int i = 0; i < pawns.Count; i++)
             {
                 PawnKindDef pawn = pawns[i];
@@ -369,7 +371,7 @@ namespace AbyssalProtocol
 
         private static void ValidateTemplates(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_EncounterTemplateDef> templates = DefDatabase<ABY_EncounterTemplateDef>.AllDefsListForReading;
+            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
             for (int i = 0; i < templates.Count; i++)
             {
                 ABY_EncounterTemplateDef template = templates[i];
@@ -422,7 +424,7 @@ namespace AbyssalProtocol
 
         private static void ValidateDoctrines(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_ThreatDoctrineDef> doctrines = DefDatabase<ABY_ThreatDoctrineDef>.AllDefsListForReading;
+            List<ABY_ThreatDoctrineDef> doctrines = SafeAllDefs<ABY_ThreatDoctrineDef>();
             for (int i = 0; i < doctrines.Count; i++)
             {
                 ABY_ThreatDoctrineDef doctrine = doctrines[i];
@@ -481,7 +483,7 @@ namespace AbyssalProtocol
 
         private static void ValidateEscalationPackages(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_BossEscalationPackageDef> packages = DefDatabase<ABY_BossEscalationPackageDef>.AllDefsListForReading;
+            List<ABY_BossEscalationPackageDef> packages = SafeAllDefs<ABY_BossEscalationPackageDef>();
             for (int i = 0; i < packages.Count; i++)
             {
                 ABY_BossEscalationPackageDef package = packages[i];
@@ -685,7 +687,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<ABY_EncounterTemplateDef> templates = DefDatabase<ABY_EncounterTemplateDef>.AllDefsListForReading;
+            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
             for (int i = 0; i < templates.Count; i++)
             {
                 ABY_EncounterTemplateDef template = templates[i];
@@ -705,7 +707,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<PawnKindDef> pawns = DefDatabase<PawnKindDef>.AllDefsListForReading;
+            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -724,6 +726,37 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+
+        private static void RunValidationStage(ABY_EncounterValidationReport report, string stageName, Action action)
+        {
+            if (action == null)
+            {
+                return;
+            }
+
+            try
+            {
+                action();
+            }
+            catch (Exception ex)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, "EncounterValidation", "Skipped " + (stageName ?? "unknown stage") + " after " + ex.GetType().Name + ": " + ex.Message);
+            }
+        }
+
+        private static List<T> SafeAllDefs<T>() where T : Def
+        {
+            try
+            {
+                return DefDatabase<T>.AllDefsListForReading ?? new List<T>();
+            }
+            catch (Exception ex)
+            {
+                ABY_StabilityDiagnosticsUtility.Verbose("encounter-validation-defdb-" + typeof(T).Name, "Encounter validation could not read DefDatabase<" + typeof(T).Name + ">: " + ex.GetType().Name + ": " + ex.Message, StartupThrottleTicks);
+                return new List<T>();
+            }
         }
 
         private static void Add(ABY_EncounterValidationReport report, ABY_EncounterValidationSeverity severity, string source, string message)
