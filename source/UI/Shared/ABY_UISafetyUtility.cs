@@ -20,6 +20,7 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
+                RecoverMousePositionStack();
                 LogUIException(context, ex);
                 return false;
             }
@@ -38,6 +39,7 @@ namespace AbyssalProtocol
 
         public static void DrawWindowFallback(Rect inRect, string title, Exception ex)
         {
+            RecoverMousePositionStack();
             LogUIException(title, ex);
 
             GUI.color = Color.white;
@@ -53,6 +55,18 @@ namespace AbyssalProtocol
                 new Rect(inner.x, inner.y + 42f, inner.width, 96f),
                 "Abyssal Protocol recovered this UI panel from a null/compatibility error. Close and reopen the panel; gameplay state was not changed by this fallback.");
             GUI.color = Color.white;
+        }
+
+
+        public static void RecoverMousePositionStack()
+        {
+            try
+            {
+                Widgets.EnsureMousePositionStackEmpty();
+            }
+            catch
+            {
+            }
         }
 
         public static string SafeString(string value, string fallback)

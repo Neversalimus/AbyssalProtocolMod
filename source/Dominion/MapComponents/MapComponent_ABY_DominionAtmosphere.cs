@@ -342,30 +342,51 @@ namespace AbyssalProtocol
         private void ScheduleInitialTicks()
         {
             int now = CurrentTick;
-            nextScanTick = now + Rand.Range(120, 420);
+
+            // Map Preview detects Rand usage inside MapComponent constructors/loading and reports it as a compatibility
+            // issue. These first schedules do not need true randomness; deterministic jitter preserves staggered work
+            // without consuming RimWorld's global RNG during map construction or save loading. Runtime VFX/weather ticks
+            // still use Rand after the component is live.
+            nextScanTick = now + DeterministicRange(120, 420, 11);
             if (nextMaintenanceTick <= now)
             {
-                nextMaintenanceTick = now + Rand.Range(300, 900);
+                nextMaintenanceTick = now + DeterministicRange(300, 900, 23);
             }
 
             if (nextAmbientPulseTick <= now)
             {
-                nextAmbientPulseTick = now + Rand.Range(AmbientIntervalMinTicks, AmbientIntervalMaxTicks);
+                nextAmbientPulseTick = now + DeterministicRange(AmbientIntervalMinTicks, AmbientIntervalMaxTicks, 37);
             }
 
             if (nextWeatherTick <= now)
             {
-                nextWeatherTick = now + Rand.Range(40, 100);
+                nextWeatherTick = now + DeterministicRange(40, 100, 41);
             }
 
             if (nextWeatherStateChangeTick <= now)
             {
-                nextWeatherStateChangeTick = now + Rand.Range(WeatherStateMinTicks, WeatherStateMaxTicks);
+                nextWeatherStateChangeTick = now + DeterministicRange(WeatherStateMinTicks, WeatherStateMaxTicks, 53);
             }
 
             if (dominionWeatherStateInt < 0 || dominionWeatherStateInt > (int)ABY_DominionWeatherState.FurnaceDrift)
             {
                 dominionWeatherStateInt = (int)ABY_DominionWeatherState.Ashfall;
+            }
+        }
+
+        private int DeterministicRange(int minInclusive, int maxExclusive, int salt)
+        {
+            if (maxExclusive <= minInclusive)
+            {
+                return minInclusive;
+            }
+
+            unchecked
+            {
+                int mapId = map != null ? map.uniqueID : 0;
+                uint hash = (uint)(mapId * 397) ^ (uint)(salt * 1009) ^ (uint)(minInclusive * 37) ^ (uint)(maxExclusive * 17);
+                int span = Math.Max(1, maxExclusive - minInclusive);
+                return minInclusive + (int)(hash % (uint)span);
             }
         }
 

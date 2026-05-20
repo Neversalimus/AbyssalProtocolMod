@@ -61,6 +61,9 @@ Actual code and assets win over this document.
 
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
+| Pick Up And Haul comp serialized on temporary Abyssal hostile pawns | P0/P1 | compatibility / save-load | Red load errors mentioning `ThingsHauledToInventory`, `Could not get load IDs list`, or `Tried to register the same list of load IDs twice` on ABY pawns in WorldPawns | Keep the narrow compatibility guard that strips `PickUpAndHaul.CompHauledToInventory` only from Abyssal hostile pawns during comp initialization and save/load exposure. Do not let temporary encounter monsters/bosses carry external hauling inventory crossrefs. |
+| `Rand` usage in `MapComponent` constructors/loading | P2 | compatibility / Map Preview | Map Preview warns about RNG usage in a map component constructor and previews may be inaccurate | Do not call `Rand` from `MapComponent` constructors or PostLoadInit initial scheduling. Use deterministic jitter for construction/load and reserve `Rand` for live runtime ticks. |
+| Caught custom UI exception leaves RimWorld mouse position stack unbalanced | P2 | UI / compatibility | Red error: `Mouse position stack is not empty. There were more calls to BeginScrollView than EndScrollView.` after a panel exception | Prefer `try/finally` around new scroll-view drawing paths and keep `ABY_UISafetyUtility.RecoverMousePositionStack()` in fallback guards. |
 | Wrong override access modifier | P0 | C# compile | Compile error on `Tick`, `DrawAt`, etc. | Match base method access exactly. |
 | Wrong RimWorld version signature | P0 | C# compile/runtime | Compile errors or methods not called | Check current RimWorld 1.6 signatures before editing death actions, comps, incidents, jobs. |
 | Invalid `Find.Game` / API assumptions | P0 | C# compile | Compile error | Inspect actual references and existing utilities first. |

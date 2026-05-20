@@ -1,5 +1,25 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-20 — Large modpack save/load compatibility hardening
+- Added a narrow Pick Up And Haul compatibility guard that removes `PickUpAndHaul.CompHauledToInventory` only from Abyssal hostile pawns during comp initialization and save/load exposure.
+- This prevents `ThingsHauledToInventory` duplicate/missing load ID crossref errors on temporary Abyssal monsters and bosses stored in WorldPawns or moved through Dominion/boss cleanup flows.
+- Reworked `MapComponent_ABY_DominionAtmosphere` initial scheduling to use deterministic jitter instead of `Rand` during map component construction/load, avoiding Map Preview constructor-RNG warnings.
+- Added UI safety recovery for caught Abyssal UI exceptions so a failed custom panel is less likely to leave RimWorld's mouse position stack unbalanced.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Patches/Compatibility/HarmonyPatch_ABY_PickUpAndHaulCompatibility.cs
+source/Dominion/MapComponents/MapComponent_ABY_DominionAtmosphere.cs
+source/UI/Shared/ABY_UISafetyUtility.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
+Build verified with direct Roslyn compile using bundled RimWorld/Unity/Harmony libraries and .NET Framework-style `mscorlib`/`System`/`System.Core` references.
+
 ## 2026-05-20 — Emergency rebuild for monster info-card icon regression
 - The previous monster info-card icon patch accidentally shipped a DLL compiled against .NET 9 reference assemblies. RimWorld/Mono then failed type discovery with `ReflectionTypeLoadException`, causing many XML class/type lookup red errors at load.
 - Rebuilt `Assemblies/AbyssalProtocol.dll` against the bundled RimWorld/Unity/Harmony libraries and .NET Framework-style `mscorlib`/`System.Core` references only.
