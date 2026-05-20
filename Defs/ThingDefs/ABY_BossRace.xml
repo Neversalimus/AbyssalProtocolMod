@@ -31,7 +31,7 @@
       <body>QuadrupedAnimalWithHooves</body>
       <baseBodySize>3.2</baseBodySize>
       <baseHealthScale>4.8</baseHealthScale>
-      <baseHungerRate>1.2</baseHungerRate>
+      <baseHungerRate>0</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
@@ -39,7 +39,7 @@
       <gestationPeriodDays>12</gestationPeriodDays>
       <lifeExpectancy>400</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
-      <predator>true</predator>
+      <predator>false</predator>
       <foodType>CarnivoreAnimal</foodType>
       <lifeStageAges>
         <li>
@@ -154,7 +154,7 @@
       <body>QuadrupedAnimalWithHooves</body>
       <baseBodySize>3.55</baseBodySize>
       <baseHealthScale>5.65</baseHealthScale>
-      <baseHungerRate>1.2</baseHungerRate>
+      <baseHungerRate>0</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
@@ -162,7 +162,7 @@
       <gestationPeriodDays>12</gestationPeriodDays>
       <lifeExpectancy>500</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
-      <predator>true</predator>
+      <predator>false</predator>
       <foodType>CarnivoreAnimal</foodType>
       <lifeStageAges>
         <li>
@@ -277,7 +277,7 @@
       <body>QuadrupedAnimalWithHooves</body>
       <baseBodySize>4.8</baseBodySize>
       <baseHealthScale>8.6</baseHealthScale>
-      <baseHungerRate>0.85</baseHungerRate>
+      <baseHungerRate>0</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
@@ -285,7 +285,7 @@
       <gestationPeriodDays>18</gestationPeriodDays>
       <lifeExpectancy>1000</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
-      <predator>true</predator>
+      <predator>false</predator>
       <foodType>CarnivoreAnimal</foodType>
       <lifeStageAges>
         <li>

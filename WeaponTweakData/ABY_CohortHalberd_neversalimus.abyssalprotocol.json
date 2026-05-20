@@ -1,0 +1,18 @@
+{
+  "TextureModID": "neversalimus.abyssalprotocol",
+  "ItemDefName": "ABY_CohortHalberd",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.36,
+  "OffY": -0.01,
+  "Rotation": 0.0,
+  "BladeStart": 0.48,
+  "BladeEnd": 1.06,
+  "MeleeWeaponType": 7,
+  "TrailTint": {
+    "r": 0.95,
+    "g": 0.67,
+    "b": 0.22,
+    "a": 0.88
+  }
+}

@@ -31,7 +31,7 @@
       <body>QuadrupedAnimalWithHooves</body>
       <baseBodySize>0.94</baseBodySize>
       <baseHealthScale>1.18</baseHealthScale>
-      <baseHungerRate>0.48</baseHungerRate>
+      <baseHungerRate>0</baseHungerRate>
       <fleshType>Normal</fleshType>
       <intelligence>ToolUser</intelligence>
       <manhunterOnDamageChance>0</manhunterOnDamageChance>
@@ -39,7 +39,7 @@
       <gestationPeriodDays>10</gestationPeriodDays>
       <lifeExpectancy>110</lifeExpectancy>
       <herdAnimal>false</herdAnimal>
-      <predator>true</predator>
+      <predator>false</predator>
       <foodType>CarnivoreAnimal</foodType>
       <lifeStageAges>
         <li>

@@ -1,0 +1,19 @@
+{
+  "TextureModID": "neversalimus.abyssalprotocol",
+  "ItemDefName": "ABY_RiftBlade",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.18,
+  "OffY": 0.02,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.34,
+  "BladeEnd": 0.84,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.86,
+    "g": 0.18,
+    "b": 0.92,
+    "a": 0.92
+  }
+}

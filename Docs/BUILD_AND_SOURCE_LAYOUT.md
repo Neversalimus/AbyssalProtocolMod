@@ -129,6 +129,17 @@ Build succeeded
 Assemblies/AbyssalProtocol.dll updated
 ```
 
+
+## External mod compatibility data
+
+Some compatibility data is not C# source and should remain at repository root when the consuming mod expects it there.
+
+```text
+WeaponTweakData/
+```
+
+`WeaponTweakData/` contains JSON entries consumed by Melee Animation for per-weapon offsets, rotation, hand mode, blade positions, and melee animation type. Do not move these JSON files under `source/`, and do not compile them into `Assemblies/AbyssalProtocol.dll`. Add or update one JSON file when adding a new Abyssal melee weapon that should animate correctly with Melee Animation.
+
 ## What not to package
 
 Do not include generated build folders in user-facing delta zips:

@@ -97,6 +97,7 @@ Use these statuses in future updates:
 | Localization | Implemented / Always required | `Docs/LOCALIZATION_GLOSSARY_RU.md` for Russian terminology | `Languages/English/`, `Languages/Russian/`, future `Languages/<lang>/` | n/a | all UI/defs | all systems | Add or update keys when adding UI text, defs, labels, descriptions, letters, alerts. For Russian, check the glossary before translating named content or UI categories. |
 | Asset generation/integration | Implemented workflow | n/a | XML texPath users | `Textures/`, `SourceAssets/`, `Sounds/` | UI/game rendering | all systems | Source images may use green chromakey; final mod textures should be transparent PNG where appropriate. |
 | Compatibility / hotfix layer | Implemented | `source/Compatibility/`, `source/Patches/`, `Patches/` | compatibility XML patches | n/a | n/a | modpack stability | Do not treat hotfix/compat files as primary architecture unless they are actually the owner of behavior. |
+| Melee Animation compatibility data | Implemented | n/a | `WeaponTweakData/*.json` | melee weapon textures under `Textures/Things/Weapon/` | external Melee Animation editor/runtime | melee weapon `ThingDef`s | Root-level JSON data consumed by Melee Animation. Add/update one entry for each new Abyssal melee weapon to avoid missing tweak-data warnings. |
 | Diagnostics/dev tools | Implemented | `source/Diagnostics/`, `source/Diagnostics/UI/` | possibly debug/dev defs | n/a | diagnostics windows/dev gizmos | dev-only | Useful for testing; should not leak into player-facing progression unless intended. |
 | Legacy/migration | Implemented | `source/Legacy/` | legacy patches/old defs if present | n/a | n/a | save compatibility | Do not expand as active gameplay unless explicitly working on migration/cleanup. |
 
@@ -141,6 +142,7 @@ source/Combat/Projectiles/    if custom projectile class
 source/Combat/VFX/            if custom VFX utility
 source/Combat/Verbs/          if custom verb
 Textures/                     weapon icon/projectile/VFX
+WeaponTweakData/              add/update JSON if the weapon is melee and should be compatible with Melee Animation
 Sounds/                       audio
 Languages/                    labels/descriptions
 Forge UI / Protocol gates     check exposure/unlock

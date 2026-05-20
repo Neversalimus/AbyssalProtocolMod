@@ -53,6 +53,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Sound/SFX issue | `source/Audio/`, `Defs/SoundDefs/`, `Sounds/ABY/` | Relevant weapon/projectile/incident XML and SFX pipeline rules |
 | Asset path or missing texture | Actual XML `texPath` first | `Textures/`, `SourceAssets/Generated/`, asset-generation rules |
 | Localization/missing key / Russian terminology | `Docs/LOCALIZATION_GLOSSARY_RU.md`, `Languages/English/`, `Languages/Russian/` | Source string keys, XML labels/descriptions, DefInjected, Keyed UI strings |
+| Melee Animation missing weapon tweak data warning | `WeaponTweakData/` | melee weapon `ThingDef`s in `Defs/ThingDefs/`, weapon textures under `Textures/Things/Weapon/`, Melee Animation tweak editor for exact offsets |
 
 ## Russian localization workflow
 
@@ -125,6 +126,7 @@ Harmony patches                       -> source/Patches/ or module-specific patc
 Diagnostics/dev windows               -> source/Diagnostics/
 Legacy migrations                     -> source/Legacy/
 Audio helpers                         -> source/Audio/
+Melee Animation weapon tweak data  -> WeaponTweakData/ at repository root (JSON, not C#; do not move under source/)
 ```
 
 ## High-risk systems
