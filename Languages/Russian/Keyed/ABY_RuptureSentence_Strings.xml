@@ -2,4 +2,9 @@
 <LanguageData>
   <ABY_RuptureSentence_NoTargets>В радиусе Разрыва нет враждебных или нейтральных неколониальных пешек.</ABY_RuptureSentence_NoTargets>
   <ABY_RuptureSentence_CollapsedTargets>Приговор Разрыва схлопнул целей: {0}.</ABY_RuptureSentence_CollapsedTargets>
+  <ABY_RuptureCrown_Recharging>Приговор Разрыва ещё перезаряжается.</ABY_RuptureCrown_Recharging>
+  <ABY_RuptureCrown_RechargingWithTime>Заряд короны ещё восстанавливается: {0}.</ABY_RuptureCrown_RechargingWithTime>
+  <ABY_RuptureCrown_InspectReady>Заряд Разрыва: готов</ABY_RuptureCrown_InspectReady>
+  <ABY_RuptureCrown_InspectRecharging>Заряд Разрыва восстанавливается: {0}</ABY_RuptureCrown_InspectRecharging>
+  <ABY_RuptureCrown_CommandRadius>Радиус: {0} клеток.</ABY_RuptureCrown_CommandRadius>
 </LanguageData>

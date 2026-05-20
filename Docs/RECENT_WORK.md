@@ -605,3 +605,10 @@ Important details:
 This is a large-modpack compatibility layer, not a gameplay rebalance. It is meant to prevent external combat stacks such as CombatAI/Yayo/MVCF/Hospitality/HAR/VEF from turning Abyssal projectile impacts into repeated red `Exception ticking projectile` logs. Do not replace it with silent empty `catch` blocks; keep throttled warnings so real regressions remain visible.
 
 Validation after this pass: direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries succeeded. Runtime smoke testing in the target modpack is still required.
+
+## 2026-05-20 — Rupture Crown and Harvester/Aortic cleanup
+
+- Localized the remaining player-facing Rupture Crown inspect, disable, recharge, no-target, radius, and success messages through keyed English/Russian strings.
+- Replaced Harvester essence full tracked-ID cache clears with bounded oldest-entry trimming so long sessions do not forget all recently processed corpses/pawns at once.
+- Routed Aortic Chain Lash target selection through `ABY_RuntimeTargetCache.CombatTargetPawnsFor(...)` and guarded lash damage through the shared combat-stack safety utility.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.

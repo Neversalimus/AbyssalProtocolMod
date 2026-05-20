@@ -2,4 +2,9 @@
 <LanguageData>
   <ABY_RuptureSentence_NoTargets>No hostile or neutral non-colony pawns are within rupture radius.</ABY_RuptureSentence_NoTargets>
   <ABY_RuptureSentence_CollapsedTargets>Rupture Verdict collapsed {0} target(s).</ABY_RuptureSentence_CollapsedTargets>
+  <ABY_RuptureCrown_Recharging>Rupture Verdict is still recharging.</ABY_RuptureCrown_Recharging>
+  <ABY_RuptureCrown_RechargingWithTime>Crown charge is still recharging: {0}.</ABY_RuptureCrown_RechargingWithTime>
+  <ABY_RuptureCrown_InspectReady>Rupture charge: ready</ABY_RuptureCrown_InspectReady>
+  <ABY_RuptureCrown_InspectRecharging>Rupture charge recharging: {0}</ABY_RuptureCrown_InspectRecharging>
+  <ABY_RuptureCrown_CommandRadius>Radius: {0} cells.</ABY_RuptureCrown_CommandRadius>
 </LanguageData>

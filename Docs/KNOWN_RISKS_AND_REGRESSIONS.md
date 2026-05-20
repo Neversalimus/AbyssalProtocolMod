@@ -472,3 +472,23 @@ In-game checks:
 - Test Choir Arc, Sepulcher Rail, Reactor Saint projectiles, Crownfire micro-rockets, Oblivion Choir, Rift Sapper spike, Ashen Scatter, and modular turret projectiles in a combat-heavy modpack.
 - Confirm impact VFX/sounds still play when base impact succeeds.
 - Confirm red `Exception ticking ABY_* projectile` spam does not recur when external combat hooks throw during damage resolution.
+
+## 2026-05-20 — Harvester memory and Aortic Chain Lash scan rules
+
+Observed risks:
+
+- Harvester essence previously cleared its entire corpse/death-pawn memory set when the cap was exceeded, which could allow repeated processing in very long sessions.
+- Aortic Chain Lash previously scanned `map.mapPawns.AllPawnsSpawned` directly per comp instead of using the shared runtime target cache.
+- Rupture Crown wearable commands still had direct English player-facing messages after Rupture Sentence ability localization was added.
+
+Regression rules:
+
+- Do not use full `HashSet.Clear()` as a long-session memory cap for gameplay-processing caches unless duplicate processing is harmless. Prefer bounded oldest-entry trimming or a queue+set pair.
+- New recurring pawn target scans in combat comps should prefer `ABY_RuntimeTargetCache` and still validate faction/range/LOS locally.
+- New player-facing Rupture/Crown ability messages must use keyed localization in both English and Russian.
+
+In-game checks:
+
+- Use Rupture Crown as a player item on a Russian install and verify inspect text, disabled command reason, recharge rejection, no-target rejection, and success message are localized.
+- Run long Harvester-heavy fights and verify the Harvester does not repeatedly reward the same nearby corpse after its tracking set grows.
+- Spawn multiple Aortic Chain Harrowers and verify lash targeting still works without returning to broad pawn-list scans.

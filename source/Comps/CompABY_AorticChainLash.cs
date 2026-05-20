@@ -216,7 +216,10 @@ namespace AbyssalProtocol
                     -1f,
                     pawn);
 
-                target.TakeDamage(damageInfo);
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(
+                    target,
+                    damageInfo,
+                    "AorticChainLash");
             }
 
             ABY_ProjectileProcUtility.ApplyOrRefreshFixedHediff(
@@ -229,12 +232,12 @@ namespace AbyssalProtocol
         private Pawn FindBestLashTarget(Pawn pawn, Thing focus)
         {
             Map map = pawn?.MapHeld;
-            if (map?.mapPawns?.AllPawnsSpawned == null || focus == null)
+            if (map == null || focus == null)
             {
                 return null;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             Pawn best = null;
             float bestScore = float.MinValue;
             float minRange = Mathf.Max(0f, Props.minRange);

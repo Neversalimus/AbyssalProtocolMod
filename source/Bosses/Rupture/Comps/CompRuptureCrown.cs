@@ -304,10 +304,10 @@ namespace AbyssalProtocol
         {
             if (IsReady)
             {
-                return "Rupture charge: ready";
+                return "ABY_RuptureCrown_InspectReady".Translate();
             }
 
-            return "Rupture charge recharging: " + TicksUntilRecharged.ToStringTicksToPeriod();
+            return "ABY_RuptureCrown_InspectRecharging".Translate(TicksUntilRecharged.ToStringTicksToPeriod());
         }
 
         public override IEnumerable<Gizmo> CompGetWornGizmosExtra()
@@ -327,7 +327,7 @@ namespace AbyssalProtocol
             Command_Action command = new Command_Action
             {
                 defaultLabel = Props.commandLabel,
-                defaultDesc = Props.commandDesc + "\n\nRadius: " + Mathf.RoundToInt(Props.effectRadius) + " cells.",
+                defaultDesc = Props.commandDesc + "\n\n" + "ABY_RuptureCrown_CommandRadius".Translate(Mathf.RoundToInt(Props.effectRadius)),
                 icon = RuptureCrownUtility.CommandIcon,
                 iconDrawScale = 1f,
                 defaultIconColor = Color.white,
@@ -339,11 +339,11 @@ namespace AbyssalProtocol
 
             if (!IsReady)
             {
-                command.Disable("Crown charge is still recharging: " + TicksUntilRecharged.ToStringTicksToPeriod());
+                command.Disable("ABY_RuptureCrown_RechargingWithTime".Translate(TicksUntilRecharged.ToStringTicksToPeriod()));
             }
             else if (RuptureCrownUtility.CountEligibleTargets(wearer, Props.effectRadius) <= 0)
             {
-                command.Disable("No hostile or neutral non-colony pawns are within rupture radius.");
+                command.Disable("ABY_RuptureSentence_NoTargets".Translate());
             }
 
             yield return command;
@@ -360,7 +360,7 @@ namespace AbyssalProtocol
             {
                 if (wearer.Faction == Faction.OfPlayer)
                 {
-                    Messages.Message("Rupture Verdict is still recharging.", wearer, MessageTypeDefOf.RejectInput, false);
+                    Messages.Message("ABY_RuptureCrown_Recharging".Translate(), wearer, MessageTypeDefOf.RejectInput, false);
                 }
 
                 return false;
@@ -371,7 +371,7 @@ namespace AbyssalProtocol
             {
                 if (wearer.Faction == Faction.OfPlayer)
                 {
-                    Messages.Message("No hostile or neutral non-colony pawns are within rupture radius.", wearer, MessageTypeDefOf.RejectInput, false);
+                    Messages.Message("ABY_RuptureSentence_NoTargets".Translate(), wearer, MessageTypeDefOf.RejectInput, false);
                 }
 
                 return false;
@@ -393,7 +393,7 @@ namespace AbyssalProtocol
 
             if (wearer.Faction == Faction.OfPlayer)
             {
-                Messages.Message("Rupture Verdict collapsed " + affectedCount + " target(s).", new LookTargets(wearer), MessageTypeDefOf.NeutralEvent, false);
+                Messages.Message("ABY_RuptureSentence_CollapsedTargets".Translate(affectedCount), new LookTargets(wearer), MessageTypeDefOf.NeutralEvent, false);
             }
 
             return true;

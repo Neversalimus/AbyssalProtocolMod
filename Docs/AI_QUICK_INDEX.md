@@ -38,7 +38,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Boss bar, boss phase text, Aegis bar/chains | `source/UI/BossBar/` | `source/Bosses/Shared/`, `source/Bosses/ReactorSaint/`, `Defs/Misc/`, `Textures/UI/ABY/BossBar/` |
 | Archon Beast / Archon of Rupture behavior | `source/Bosses/Archon/` | `source/Bosses/Shared/`, `source/Pawns/`, `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `source/UI/BossBar/` |
 | Reactor Saint behavior, AI, cocoon, Aegis | `source/Bosses/ReactorSaint/` | `source/Bosses/Shared/`, `source/UI/BossBar/`, `source/Combat/`, `Defs/ThingDefs/`, `Defs/PawnKindDefs/` |
-| Rupture-specific crown/halo/secret boss logic | `source/Bosses/Rupture/` | `source/Bosses/Archon/`, `source/Bosses/Shared/`, `source/UI/BossBar/` |
+| Rupture-specific crown/halo/secret boss logic | `source/Bosses/Rupture/` | `source/Bosses/Archon/`, `source/Bosses/Shared/`, `source/UI/BossBar/`, `Languages/*/Keyed/ABY_RuptureSentence_Strings.xml` |
 | Dominion pocket/slice/hell dimension | `source/Dominion/` | `source/World/`, `Defs/MapGeneratorDefs/`, `Defs/TerrainDefs/`, `Defs/ThingDefs/`, `Textures/Terrain/`, `Textures/Things/Building/DominionSlice/` |
 | Dominion visuals, atmosphere, collapse, flow, void edge | `source/Dominion/VFX/`, `source/Dominion/MapComponents/` | `Defs/ThingDefs_Motes/`, `Textures/Effects/`, `Textures/Things/Building/DominionSlice/` |
 | Modular turret behavior, modules, sockets, targeting | `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Defs/Turrets/` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml` |
@@ -258,3 +258,4 @@ source/Combat/Projectiles/Bosses/
 ```
 
 Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.
+| Harvester / Aortic Chain combat comps | `source/Comps/CompABY_HarvesterEssence.cs`, `source/Comps/CompABY_AorticChainLash.cs` | `source/Core/Runtime/ABY_RuntimeTargetCache.cs`, `source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs` |
