@@ -54,7 +54,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_SiegeIdolBreachShell", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null || !impactCell.IsValid)
             {
@@ -72,7 +75,10 @@ namespace AbyssalProtocol
             }
 
             ApplyStructureBlastBonus(impactCell, impactMap, instigator);
-            GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Burn, instigator, ExplosionDamage, ExplosionArmorPenetration);
+            ABY_ProjectileImpactSafetyUtility.TryRunPostImpactAction(this, "Projectile_ABY_SiegeIdolBreachShell", "explosion", () =>
+            {
+                GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Burn, instigator, ExplosionDamage, ExplosionArmorPenetration);
+            });
         }
 
         private static void ApplyStructureBlastBonus(IntVec3 impactCell, Map map, Thing instigator)
@@ -103,7 +109,7 @@ namespace AbyssalProtocol
                         damage += TurretBonusDamage;
                     }
 
-                    building.TakeDamage(new DamageInfo(
+                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
                         DamageDefOf.Bomb,
                         damage,
                         StructureArmorPenetration,
@@ -111,7 +117,7 @@ namespace AbyssalProtocol
                         instigator,
                         null,
                         null,
-                        DamageInfo.SourceCategory.ThingOrUnknown));
+                        DamageInfo.SourceCategory.ThingOrUnknown), "Projectile_ABY_SiegeIdolBreachShell");
                 }
             }
         }

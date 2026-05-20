@@ -48,7 +48,10 @@ namespace AbyssalProtocol
 
             CrownshardStormVfxUtility.SpawnSeedImpact(impactMap, impactDrawPos, blockedByShield);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_CrownshardStormSeed", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null || !impactCell.InBounds(impactMap))
             {

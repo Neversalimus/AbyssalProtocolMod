@@ -56,7 +56,10 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             Pawn impactPawn = ResolveImpactPawn(hitThing);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_VesperLanceBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

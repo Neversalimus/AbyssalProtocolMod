@@ -59,7 +59,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Vector3 impactDirection = lastDrawDirection;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretPlasmaLanceBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

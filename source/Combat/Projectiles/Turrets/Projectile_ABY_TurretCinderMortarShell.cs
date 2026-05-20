@@ -58,7 +58,10 @@ namespace AbyssalProtocol
             Vector3 impactDirection = lastDrawDirection;
             IntVec3 impactCell = impactPosition.ToIntVec3();
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretCinderMortarShell", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

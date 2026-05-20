@@ -53,7 +53,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Pawn launcherPawn = Launcher as Pawn;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_NullBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

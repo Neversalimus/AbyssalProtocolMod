@@ -588,3 +588,20 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - Reactor Saint melee structure-crush and several structure splash bonus paths now ignore hidden/invisible/conduit/cable/wire utility buildings.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
 - Fixed Rupture phase HP polling to use a 10-tick cache, localized Rupture Sentence player messages, made Protocol Nexus decode speed scale with Intellectual skill, cached Abyssal faction resolution for large modpacks, and added guarded impact handling for Choir Arc / Sepulcher Rail projectiles when external combat stacks throw during damage resolution.
+
+## 2026-05-20 — Broad projectile impact safety pass
+
+A broad compatibility pass extended `ABY_ProjectileImpactSafetyUtility` from two known offenders to the whole custom projectile family under `source/Combat/Projectiles/`.
+
+Important details:
+
+```text
+- Every custom projectile override that calls `base.Impact(hitThing, blockedByShield)` now routes the vanilla damage pipeline through `TryRunBaseImpact(...)`.
+- Direct `Thing.TakeDamage(...)` calls inside projectile post-impact logic were replaced with `TryApplyDamage(...)`.
+- Projectile-triggered `GenExplosion.DoExplosion(...)` calls are wrapped with throttled post-impact safety handling.
+- `ABY_ProjectileProcUtility` now routes its damage helper through the same safety utility and catches external hediff/proc exceptions.
+```
+
+This is a large-modpack compatibility layer, not a gameplay rebalance. It is meant to prevent external combat stacks such as CombatAI/Yayo/MVCF/Hospitality/HAR/VEF from turning Abyssal projectile impacts into repeated red `Exception ticking projectile` logs. Do not replace it with silent empty `catch` blocks; keep throttled warnings so real regressions remain visible.
+
+Validation after this pass: direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries succeeded. Runtime smoke testing in the target modpack is still required.

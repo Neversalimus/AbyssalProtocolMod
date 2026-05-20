@@ -244,3 +244,17 @@ Start here when Abyssal pawns choose immortal/passive structures such as hidden 
 
 Rule: use `AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(...)` for target assignment and `ShouldIgnoreAsHostileBuildingTarget(...)` before special structure damage. Do not target hidden/invisible/conduit/cable/wire structures unless they are explicit combat turrets.
 - Projectile impact compatibility: source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs and individual projectile classes under source/Combat/Projectiles/Weapons or Turrets. Use this for external combat-stack exceptions thrown during base Bullet.Impact.
+
+## Projectile safety routing
+
+For red errors during projectile impact, weapon/turret projectile ticks, external combat-stack exceptions, `Bullet.Impact`, `TakeDamage`, `DamageWorker`, `Lord.RemovePawn`, CombatAI/Yayo/MVCF/Hospitality/HAR hooks, inspect:
+
+```text
+source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs
+source/Combat/VFX/ABY_ProjectileProcUtility.cs
+source/Combat/Projectiles/Weapons/
+source/Combat/Projectiles/Turrets/
+source/Combat/Projectiles/Bosses/
+```
+
+Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.

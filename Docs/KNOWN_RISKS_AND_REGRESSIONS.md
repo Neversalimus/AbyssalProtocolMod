@@ -451,3 +451,24 @@ In-game checks:
 - Spawn Breach Brutes/Chain Zealots near hidden cables and visible walls/doors. They should choose walls, doors, turrets, barricades, colonists, or other real targets, not hidden cables.
 - Spawn Reactor Saint / Rift Sappers / Siege Idols near hidden cables and player defenses. Their bonus structure damage should not repeatedly target hidden utility objects.
 - Large combat mod stacks can throw inside damage/downed/job reactions after Abyssal projectiles call vanilla Bullet.Impact. Keep custom high-impact projectile classes wrapped with ABY_ProjectileImpactSafetyUtility when they are known to trigger external TargetInvocationException/NullReferenceException paths.
+
+## 2026-05-20 — Projectile impact safety regression rules
+
+Observed behavior:
+
+- In large combat modpacks, Abyssal projectiles can become the visible top-level source of red errors even when the exception is thrown deeper inside vanilla/external `Bullet.Impact -> TakeDamage -> DamageWorker -> HealthTracker -> Lord/ThinkNode` chains.
+- Known examples included Choir Arc Pulse and Sepulcher Rail Spike hitting pawns while CombatAI/Yayo/VEF/Hospitality/MVCF/HAR hooks were active.
+
+Regression rules:
+
+- New custom projectiles that override `Impact(...)` and call `base.Impact(...)` must use `ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(...)`.
+- New projectile post-impact direct damage should use `ABY_ProjectileImpactSafetyUtility.TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`, not raw `Thing.TakeDamage(...)`, unless there is a strong reason and the call is otherwise guarded.
+- Projectile explosions that are likely to touch pawns/buildings in combat mod stacks should run through `TryRunPostImpactAction(...)`.
+- Do not hide exceptions with empty catch blocks. Use the shared safety utility so warnings are throttled and searchable.
+- If a projectile fails during base impact, it should vanish rather than continue ticking forever.
+
+In-game checks:
+
+- Test Choir Arc, Sepulcher Rail, Reactor Saint projectiles, Crownfire micro-rockets, Oblivion Choir, Rift Sapper spike, Ashen Scatter, and modular turret projectiles in a combat-heavy modpack.
+- Confirm impact VFX/sounds still play when base impact succeeds.
+- Confirm red `Exception ticking ABY_* projectile` spam does not recur when external combat hooks throw during damage resolution.

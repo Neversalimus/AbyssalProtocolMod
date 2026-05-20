@@ -103,7 +103,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ResolveVisualPosition(ExactPosition);
             Vector3 incomingDirection = ResolveVisualDirection();
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_CrownfireMicroRocket", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

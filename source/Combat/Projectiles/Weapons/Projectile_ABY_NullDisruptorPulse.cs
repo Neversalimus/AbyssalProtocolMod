@@ -18,7 +18,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_NullDisruptorPulse", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {
@@ -52,7 +55,7 @@ namespace AbyssalProtocol
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            mechanoid.TakeDamage(damageInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(mechanoid, damageInfo, "Projectile_ABY_NullDisruptorPulse");
         }
 
         private static void SpawnImpactFeedback(Vector3 position, Map map, bool blockedByShield)

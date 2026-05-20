@@ -50,7 +50,10 @@ namespace AbyssalProtocol
             Pawn directPawn = hitThing as Pawn;
             bool directPawnWasAlive = directPawn != null && !directPawn.Dead && !directPawn.Destroyed;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_CrownspikeRailBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {
@@ -205,7 +208,7 @@ namespace AbyssalProtocol
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            target.TakeDamage(damageInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, damageInfo, "Projectile_CrownspikeRailBolt");
         }
 
         private static void ApplyDenseResonance(Thing target, Thing instigator, Vector3 position, Map map, bool fromPierce)
@@ -222,7 +225,7 @@ namespace AbyssalProtocol
             }
 
             float empDamage = fromPierce ? DensePierceEmpDamage : DenseDirectEmpDamage;
-            target.TakeDamage(new DamageInfo(
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, new DamageInfo(
                 DamageDefOf.EMP,
                 empDamage,
                 0f,
@@ -230,12 +233,12 @@ namespace AbyssalProtocol
                 instigator,
                 null,
                 null,
-                DamageInfo.SourceCategory.ThingOrUnknown));
+                DamageInfo.SourceCategory.ThingOrUnknown), "Projectile_CrownspikeRailBolt");
 
             Building building = target as Building;
             if (building != null && building.def != null && building.def.useHitPoints)
             {
-                building.TakeDamage(new DamageInfo(
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
                     DamageDefOf.Bomb,
                     fromPierce ? DenseStructurePulseDamage * 0.55f : DenseStructurePulseDamage,
                     0.35f,
@@ -243,7 +246,7 @@ namespace AbyssalProtocol
                     instigator,
                     null,
                     null,
-                    DamageInfo.SourceCategory.ThingOrUnknown));
+                    DamageInfo.SourceCategory.ThingOrUnknown), "Projectile_CrownspikeRailBolt");
             }
 
             CrownspikeRailVfxUtility.SpawnDenseResonance(position, map, fromPierce);

@@ -95,7 +95,10 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             float phaseFactor = ABY_ReactorSaintProjectileVfxUtility.ResolvePhaseFactor(Launcher);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ReactorSaintBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null || !impactCell.IsValid)
             {
@@ -110,16 +113,19 @@ namespace AbyssalProtocol
 
             bool directPawnHit = hitThing is Pawn;
             ApplyStructureImpactBonus(hitThing, impactCell, impactMap, instigator, phaseFactor);
-            GenExplosion.DoExplosion(
-                impactCell,
-                impactMap,
-                SplashRadius * Mathf.Lerp(1f, 1.16f, phaseFactor - 1f),
-                DamageDefOf.Burn,
-                instigator,
-                Mathf.RoundToInt(SplashDamage * phaseFactor),
-                SplashArmorPenetration * phaseFactor,
-                doVisualEffects: !directPawnHit,
-                screenShakeFactor: directPawnHit ? 0f : 1f);
+            ABY_ProjectileImpactSafetyUtility.TryRunPostImpactAction(this, "Projectile_ReactorSaintBolt", "explosion", () =>
+            {
+                GenExplosion.DoExplosion(
+                                impactCell,
+                                impactMap,
+                                SplashRadius * Mathf.Lerp(1f, 1.16f, phaseFactor - 1f),
+                                DamageDefOf.Burn,
+                                instigator,
+                                Mathf.RoundToInt(SplashDamage * phaseFactor),
+                                SplashArmorPenetration * phaseFactor,
+                                doVisualEffects: !directPawnHit,
+                                screenShakeFactor: directPawnHit ? 0f : 1f);
+            });
         }
 
         private static void ApplyStructureImpactBonus(Thing hitThing, IntVec3 impactCell, Map map, Thing instigator, float phaseFactor)
@@ -127,7 +133,7 @@ namespace AbyssalProtocol
             Building directBuilding = hitThing as Building;
             if (IsValidStructureTarget(directBuilding))
             {
-                directBuilding.TakeDamage(new DamageInfo(
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(directBuilding, new DamageInfo(
                     DamageDefOf.Bomb,
                     Mathf.RoundToInt(DirectStructureDamage * phaseFactor),
                     DirectStructureArmorPenetration * phaseFactor,
@@ -135,7 +141,7 @@ namespace AbyssalProtocol
                     instigator,
                     null,
                     null,
-                    DamageInfo.SourceCategory.ThingOrUnknown));
+                    DamageInfo.SourceCategory.ThingOrUnknown), "Projectile_ReactorSaintBolt");
             }
 
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(impactCell, SplashRadius, true))
@@ -154,7 +160,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    building.TakeDamage(new DamageInfo(
+                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
                         DamageDefOf.Bomb,
                         Mathf.RoundToInt(SplashStructureDamage * phaseFactor),
                         SplashStructureArmorPenetration * phaseFactor,
@@ -162,7 +168,7 @@ namespace AbyssalProtocol
                         instigator,
                         null,
                         null,
-                        DamageInfo.SourceCategory.ThingOrUnknown));
+                        DamageInfo.SourceCategory.ThingOrUnknown), "Projectile_ReactorSaintBolt");
                 }
             }
         }

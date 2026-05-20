@@ -48,7 +48,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
 
             Thing instigator = Launcher;
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_AshenScatterShell", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null || !impactCell.IsValid)
             {
@@ -61,7 +64,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Bomb, instigator, ExplosionDamage, ExplosionArmorPenetration);
+            ABY_ProjectileImpactSafetyUtility.TryRunPostImpactAction(this, "Projectile_AshenScatterShell", "explosion", () =>
+            {
+                GenExplosion.DoExplosion(impactCell, impactMap, ExplosionRadius, DamageDefOf.Bomb, instigator, ExplosionDamage, ExplosionArmorPenetration);
+            });
         }
 
         private static void SpawnImpactVfx(IntVec3 impactCell, Vector3 impactPosition, Map map, bool blockedByShield)

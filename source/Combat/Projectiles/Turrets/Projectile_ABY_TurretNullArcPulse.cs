@@ -70,7 +70,10 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             Thing primaryTarget = ResolvePrimaryTarget(hitThing);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretNullArcPulse", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {
@@ -227,7 +230,7 @@ namespace AbyssalProtocol
                 null,
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
-            target.TakeDamage(empInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, empInfo, "Projectile_ABY_TurretNullArcPulse");
 
             Pawn pawn = target as Pawn;
             float adjustedThermal = thermalAmount;
@@ -260,7 +263,7 @@ namespace AbyssalProtocol
                 null,
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
-            target.TakeDamage(burnInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, burnInfo, "Projectile_ABY_TurretNullArcPulse");
         }
 
         private static bool HasActiveShield(Pawn pawn)

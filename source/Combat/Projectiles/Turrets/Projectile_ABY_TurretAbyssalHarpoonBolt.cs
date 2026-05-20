@@ -52,7 +52,10 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             Pawn targetPawn = ResolveTargetPawn(hitThing);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretAbyssalHarpoonBolt", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

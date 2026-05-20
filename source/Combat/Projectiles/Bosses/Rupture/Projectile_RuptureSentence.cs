@@ -42,7 +42,10 @@ namespace AbyssalProtocol
                     false);
             }
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_RuptureSentence", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
         }
 
         private static bool IsValidPawnTarget(Pawn caster, Pawn targetPawn)

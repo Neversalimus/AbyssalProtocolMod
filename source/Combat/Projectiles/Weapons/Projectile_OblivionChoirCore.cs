@@ -131,7 +131,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_OblivionChoirCore", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null || !impactCell.IsValid)
             {
@@ -148,7 +151,10 @@ namespace AbyssalProtocol
             ABY_SoundUtility.PlayAt("ABY_UltraPlasmaTail", impactCell, impactMap);
             DetonateResonanceAround(impactCell, impactPosition, impactMap, instigator);
             MapComponent_ABY_OblivionChoirScar.AddScar(impactMap, impactCell, instigator);
-            GenExplosion.DoExplosion(impactCell, impactMap, ImpactExplosionRadius, DamageDefOf.Burn, instigator, ImpactExplosionDamage, ImpactExplosionArmorPenetration);
+            ABY_ProjectileImpactSafetyUtility.TryRunPostImpactAction(this, "Projectile_OblivionChoirCore", "explosion", () =>
+            {
+                GenExplosion.DoExplosion(impactCell, impactMap, ImpactExplosionRadius, DamageDefOf.Burn, instigator, ImpactExplosionDamage, ImpactExplosionArmorPenetration);
+            });
         }
 
         private int PulseTargetsAlongSweptPath(Vector3 from, Vector3 to)
@@ -324,7 +330,7 @@ namespace AbyssalProtocol
                 def,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            thing.TakeDamage(damageInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(thing, damageInfo, "Projectile_OblivionChoirCore");
         }
 
         private void DetonateResonanceAround(IntVec3 impactCell, Vector3 impactPosition, Map map, Thing instigator)
@@ -364,7 +370,7 @@ namespace AbyssalProtocol
                     null,
                     def,
                     DamageInfo.SourceCategory.ThingOrUnknown);
-                pawn.TakeDamage(damageInfo);
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(pawn, damageInfo, "Projectile_OblivionChoirCore");
                 SpawnBranchBeam(map, impactPosition, pawn.TrueCenter(), pawn.thingIDNumber ^ 0x51F1, resonance);
                 FleckMaker.ThrowLightningGlow(pawn.TrueCenter(), map, 0.92f + resonance * 0.85f);
 

@@ -55,7 +55,10 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_UltraPlasmaBurst", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {

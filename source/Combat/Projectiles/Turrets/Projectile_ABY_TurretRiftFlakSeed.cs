@@ -58,7 +58,10 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             Thing primaryTarget = ResolvePrimaryTarget(hitThing);
 
-            base.Impact(hitThing, blockedByShield);
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretRiftFlakSeed", () => base.Impact(hitThing, blockedByShield)))
+            {
+                return;
+            }
 
             if (impactMap == null)
             {
@@ -135,7 +138,7 @@ namespace AbyssalProtocol
                     null,
                     null,
                     DamageInfo.SourceCategory.ThingOrUnknown);
-                pawn.TakeDamage(info);
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(pawn, info, "Projectile_ABY_TurretRiftFlakSeed");
 
                 if (visualImpacts < MaxVisualShardImpacts)
                 {

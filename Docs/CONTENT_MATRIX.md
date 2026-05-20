@@ -314,3 +314,9 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | --- | --- | --- | --- | --- | --- |
 | Hidden/passive utility structure filter | Implemented | `source/Encounters/AbyssalThreatPawnUtility.cs` | n/a | n/a | Filters hidden conduits/cables/wires/invisible passive utility buildings out of Abyssal monster, boss, and special structure-damage targeting while preserving walls, doors, barricades, barriers, and turrets as valid targets. |
 - Protocol Nexus decode now applies worker Intellectual-based speed through Building_ABY_ProtocolNexus.NotifyDecodeWorkTick(Pawn) and ABY_ProtocolResearchUtility.ResolveDecodeWorkPerTick(Pawn).
+
+## 2026-05-20 — Projectile safety integration note
+
+| System | Status | Source owner | XML/assets | UI exposure | Gating | Integration / regression note |
+| --- | --- | --- | --- | --- | --- | --- |
+| Projectile impact safety | Implemented / compatibility layer | `source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs`, `source/Combat/VFX/ABY_ProjectileProcUtility.cs`, custom projectile classes under `source/Combat/Projectiles/` | Projectile `ThingDef`s in `Defs/ThingDefs/`, VFX in `Defs/ThingDefs_Motes/`, sounds in `Defs/SoundDefs/` | none | weapon/turret/boss-specific | All custom projectile `Impact(...)` overrides that invoke vanilla impact/damage should use the shared safety utility, especially in weapon, turret, and boss projectile classes. |

@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -41,29 +43,46 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
-            if (hediff == null)
+            try
             {
-                hediff = HediffMaker.MakeHediff(hediffDef, pawn);
+                Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
                 if (hediff == null)
                 {
-                    return null;
+                    hediff = HediffMaker.MakeHediff(hediffDef, pawn);
+                    if (hediff == null)
+                    {
+                        return null;
+                    }
+                    pawn.health.AddHediff(hediff);
                 }
-                pawn.health.AddHediff(hediff);
+
+                if (severityGain != 0f)
+                {
+                    hediff.Severity = Mathf.Clamp(hediff.Severity + severityGain, minSeverity, maxSeverity);
+                }
+                else if (hediff.Severity < minSeverity)
+                {
+                    hediff.Severity = minSeverity;
+                }
+
+                ResetDisappearTicks(hediff, disappearsTicks);
+                pawn.health.hediffSet.DirtyCache();
+                return hediff;
+            }
+            catch (TargetInvocationException ex)
+            {
+                HandleProcException("hediff-" + hediffDef.defName, ex.InnerException ?? ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                HandleProcException("hediff-" + hediffDef.defName, ex);
+            }
+            catch (Exception ex)
+            {
+                HandleProcException("hediff-" + hediffDef.defName, ex);
             }
 
-            if (severityGain != 0f)
-            {
-                hediff.Severity = Mathf.Clamp(hediff.Severity + severityGain, minSeverity, maxSeverity);
-            }
-            else if (hediff.Severity < minSeverity)
-            {
-                hediff.Severity = minSeverity;
-            }
-
-            ResetDisappearTicks(hediff, disappearsTicks);
-            pawn.health.hediffSet.DirtyCache();
-            return hediff;
+            return null;
         }
 
         public static Hediff ApplyOrRefreshFixedHediff(Pawn pawn, string hediffDefName, float severity, int disappearsTicks = -1)
@@ -71,9 +90,17 @@ namespace AbyssalProtocol
             Hediff hediff = ApplyOrRefreshHediff(pawn, hediffDefName, 0f, Mathf.Max(0.001f, severity), 999f, disappearsTicks);
             if (hediff != null)
             {
-                hediff.Severity = Mathf.Max(hediff.Severity, severity);
-                ResetDisappearTicks(hediff, disappearsTicks);
-                pawn.health.hediffSet.DirtyCache();
+                try
+                {
+                    hediff.Severity = Mathf.Max(hediff.Severity, severity);
+                    ResetDisappearTicks(hediff, disappearsTicks);
+                    pawn.health.hediffSet.DirtyCache();
+                }
+                catch (Exception ex)
+                {
+                    HandleProcException("fixed-hediff-" + hediffDefName, ex);
+                    return null;
+                }
             }
             return hediff;
         }
@@ -85,9 +112,20 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (pawn.health.hediffSet.hediffs.Contains(hediff))
+            try
             {
-                pawn.health.RemoveHediff(hediff);
+                if (pawn.health.hediffSet.hediffs.Contains(hediff))
+                {
+                    pawn.health.RemoveHediff(hediff);
+                }
+            }
+            catch (TargetInvocationException ex)
+            {
+                HandleProcException("remove-hediff", ex.InnerException ?? ex);
+            }
+            catch (Exception ex)
+            {
+                HandleProcException("remove-hediff", ex);
             }
         }
 
@@ -114,7 +152,7 @@ namespace AbyssalProtocol
                 weaponDef,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            target.TakeDamage(damageInfo);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, damageInfo, "ABY_ProjectileProcUtility");
         }
 
         private static void ResetDisappearTicks(Hediff hediff, int disappearsTicks)
@@ -129,6 +167,14 @@ namespace AbyssalProtocol
             {
                 disappears.ticksToDisappear = disappearsTicks;
             }
+        }
+
+        private static void HandleProcException(string contextKey, Exception ex)
+        {
+            ABY_LogThrottleUtility.Warning(
+                "projectile-proc-safety-" + (contextKey ?? "unknown"),
+                "[Abyssal Protocol] Suppressed external combat-stack exception during projectile proc " + (contextKey ?? "unknown") + ": " + ex.GetType().Name + ": " + ex.Message,
+                2500);
         }
     }
 }
