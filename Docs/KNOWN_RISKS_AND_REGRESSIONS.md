@@ -153,6 +153,7 @@ Actual code and assets win over this document.
 | Too many VFX/ticks in Dominion | P1/P2 | performance | TPS/FPS drops in hell map | Keep ambient VFX restrained; avoid per-cell expensive ticks. |
 | Spawn presentation looks like generic portal | P2 | presentation | wrong fantasy feel | Prefer Dominion seam emergence where intended. |
 | Terrain too contrasty/noisy | P2 | visuals | unreadable pawns/items | Terrain should be low-contrast, tileable, and not fight silhouettes. |
+| Map.generatorDef reflection fallback | P3 | Dominion map detection/compatibility | Dominion slice detection relies only on site def/component if RimWorld renames the private field | Keep explicit sterile map component marking as the primary path; reflection is cached and warning-throttled fallback only. Test after RimWorld version bumps. |
 
 ## Forge / progression risks
 
@@ -164,6 +165,7 @@ Actual code and assets win over this document.
 | Selected Forge pattern panel clips content | P2 | Forge UI | long pattern descriptions, requirement lists, or research blockers are cut off | Keep the selected pattern body scrollable and leave the action/footer area fixed. |
 | Custom Forge material checks block bill creation | P1 | Forge UI/bills | player has or can obtain materials but Add Bill is disabled by Forge UI | Never gate Add Bill solely on custom material availability; let RimWorld vanilla bills resolve resources. Use material status only as informational UI. |
 | Sintering corpse recipe yield wrong | P1/P2 | Forge/recipes | always 1 residue or strange vanilla behavior | Verify custom recipe worker/building behavior in-game. |
+| New abyssal enemy missing sintering value | P2 | Forge/recipes/XML ownership | corpse cannot be processed for residue even though enemy is intended as a normal abyssal unit | Add `AbyssalProtocol.ABY_ResidueSinteringExtension` to the new non-boss `PawnKindDef`; do not expand the legacy C# fallback table unless maintaining old saves/old XML. |
 | Dev gizmo text missing/localization key shown | P2 | UI/localization | `ABY_*` key displayed | Add translation keys and test visible labels. |
 
 ## Summoning / sigil risks
@@ -472,11 +474,3 @@ In-game checks:
 - Test Choir Arc, Sepulcher Rail, Reactor Saint projectiles, Crownfire micro-rockets, Oblivion Choir, Rift Sapper spike, Ashen Scatter, and modular turret projectiles in a combat-heavy modpack.
 - Confirm impact VFX/sounds still play when base impact succeeds.
 - Confirm red `Exception ticking ABY_* projectile` spam does not recur when external combat hooks throw during damage resolution.
-
-## Fixed / watch: audit cleanup items — 2026-05-20
-
-- `ABY_ReactorSaintImpact` is now a real SoundDef. Keep this name available because Reactor Saint and apparel aegis extensions use it as their default break feedback sound.
-- Base faction icon paths should point to textures under `Textures/`, not `About/ModIcon`; `About/ModIcon` is for the mod list, not reliable in-game faction rendering.
-- Removed/or neutralized orphan DefInjected files for deleted defs instead of leaving stale translation keys that can confuse future audits.
-- When adding new custom UI strings, add both English and Russian Keyed entries at the same time; do not rely on fallback strings for player-facing turret grid, Dominion, protocol, or settings UI.
-

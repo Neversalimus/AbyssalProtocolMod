@@ -16,6 +16,12 @@
       <min>0</min>
       <max>0</max>
     </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
+        <residueValue>23</residueValue>
+      </li>
+    </modExtensions>
+
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -48,6 +54,9 @@
       <max>0</max>
     </weaponMoney>
     <modExtensions>
+      <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
+        <residueValue>23</residueValue>
+      </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>5</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>

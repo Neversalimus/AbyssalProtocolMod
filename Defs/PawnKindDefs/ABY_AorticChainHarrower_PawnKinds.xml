@@ -16,6 +16,12 @@
       <min>0</min>
       <max>0</max>
     </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
+        <residueValue>24</residueValue>
+      </li>
+    </modExtensions>
+
     <lifeStages>
       <li>
         <bodyGraphicData>

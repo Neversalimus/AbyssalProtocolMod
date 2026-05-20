@@ -105,14 +105,16 @@ Abyssal Forge progression, residue sintering, forge map components, forge recipe
 Typical content:
 
 - residue processing logic
+- XML-driven residue sintering values via `ABY_ResidueSinteringExtension` on `PawnKindDef`/race defs
 - forge progress utility
 - forge progression map component
 - custom recipe workers
 - forge-produced special things
 
-When adding new craftable abyssal content, also check:
+When adding new craftable abyssal content or abyssal enemies, also check:
 
 - `Defs/` for DefModExtensions and XML-driven unlocks
+- `Defs/PawnKindDefs/` for `ABY_ResidueSinteringExtension` when a non-boss abyssal enemy corpse should produce residue
 - `UI/Forge/` for pattern/reward presentation
 - `Progression/` for gates
 - relevant `ThingDefs`, `RecipeDefs`, `ResearchProjectDefs`, and localization keys

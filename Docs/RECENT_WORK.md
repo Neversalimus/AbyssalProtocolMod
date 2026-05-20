@@ -606,11 +606,11 @@ This is a large-modpack compatibility layer, not a gameplay rebalance. It is mea
 
 Validation after this pass: direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries succeeded. Runtime smoke testing in the target modpack is still required.
 
-## 2026-05-20 — Audit cleanup pass
+## 2026-05-20 — Residue sintering XML ownership and safe cache cleanup
 
-- Added the missing `ABY_ReactorSaintImpact` SoundDef used by Reactor Saint and apparel aegis break feedback.
-- Moved the base Abyssal faction icon path to the real in-game texture path `UI/Icons/ABY_FactionIcon`.
-- Neutralized an orphan Crownfire Rocket Choir DefInjected localization file that referenced a removed ThingDef.
-- Added missing EN/RU Keyed strings for Dominion pocket transfer failures, Dominion weather/music settings, Harrower animation toggles, implant fallback summaries, and modular turret grid/stat labels.
-- Cleaned several player-facing Russian technical leftovers in difficulty, protocol nexus, summoning rewards, diagnostics, and ritual preview text.
-
+- Added `ABY_ResidueSinteringExtension` as the XML-owned way to assign corpse-to-residue values for non-boss abyssal pawn kinds.
+- Updated current sinterable enemy `PawnKindDef` files to carry explicit residue values, including Aortic Chain Harrower and Halo Husk so future content audits do not depend on a hardcoded C# table.
+- Kept the old residue lookup table as a legacy fallback so existing saves and older XML remain safe.
+- Cached Forge, Residue, and Attunement def lookups in `AbyssalForgeProgressUtility` to avoid repeated DefDatabase calls in Forge UI/progression paths.
+- Cached and warning-throttled the Dominion `Map.generatorDef` reflection fallback; the sterile map component and world site def remain the primary safe detection paths.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.

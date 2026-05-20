@@ -9,6 +9,9 @@
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <modExtensions>
+      <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
+        <residueValue>14</residueValue>
+      </li>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>3</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>

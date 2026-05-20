@@ -7,7 +7,10 @@ namespace AbyssalProtocol
 {
     public static class ABY_ResidueSinteringUtility
     {
-        private static readonly Dictionary<string, int> ResidueBySafeRaceOrKind = new Dictionary<string, int>(StringComparer.Ordinal)
+        // Legacy fallback kept deliberately so existing saves and older XML remain stable.
+        // New abyssal enemies should define AbyssalProtocol.ABY_ResidueSinteringExtension
+        // on their PawnKindDef instead of requiring another C# edit here.
+        private static readonly Dictionary<string, int> LegacyResidueBySafeRaceOrKind = new Dictionary<string, int>(StringComparer.Ordinal)
         {
             { "ABY_RiftImp", 6 },
             { "ABY_EmberHound", 7 },
@@ -31,6 +34,7 @@ namespace AbyssalProtocol
             "ABY_WardenOfAsh",
             "ABY_ChoirEngine",
             "ABY_ArchonBeast",
+            "ABY_ReliquaryArchonBeast",
             "ABY_ArchonOfRupture",
             "ABY_ReactorSaint",
             "ABY_DominionSaint",
@@ -106,12 +110,32 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!raceDefName.NullOrEmpty() && ResidueBySafeRaceOrKind.TryGetValue(raceDefName, out residueAmount))
+            if (TryGetExtensionResidue(innerPawn.kindDef, out residueAmount, out bool explicitKindBlock))
             {
                 return true;
             }
 
-            if (!kindDefName.NullOrEmpty() && ResidueBySafeRaceOrKind.TryGetValue(kindDefName, out residueAmount))
+            if (explicitKindBlock)
+            {
+                return false;
+            }
+
+            if (TryGetExtensionResidue(innerPawn.def, out residueAmount, out bool explicitRaceBlock))
+            {
+                return true;
+            }
+
+            if (explicitRaceBlock)
+            {
+                return false;
+            }
+
+            if (!kindDefName.NullOrEmpty() && LegacyResidueBySafeRaceOrKind.TryGetValue(kindDefName, out residueAmount))
+            {
+                return true;
+            }
+
+            if (!raceDefName.NullOrEmpty() && LegacyResidueBySafeRaceOrKind.TryGetValue(raceDefName, out residueAmount))
             {
                 return true;
             }
@@ -142,6 +166,27 @@ namespace AbyssalProtocol
             }
 
             return count;
+        }
+
+        private static bool TryGetExtensionResidue(Def def, out int residueAmount, out bool explicitBlock)
+        {
+            residueAmount = 0;
+            explicitBlock = false;
+
+            ABY_ResidueSinteringExtension extension = def?.GetModExtension<ABY_ResidueSinteringExtension>();
+            if (extension == null)
+            {
+                return false;
+            }
+
+            if (!extension.allowSintering || extension.residueValue < 1)
+            {
+                explicitBlock = true;
+                return false;
+            }
+
+            residueAmount = Math.Max(1, extension.residueValue);
+            return true;
         }
 
         private static bool IsForbiddenBossOrMinibossName(string defName)

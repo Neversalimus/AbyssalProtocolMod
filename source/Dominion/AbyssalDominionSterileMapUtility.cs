@@ -13,6 +13,8 @@ namespace AbyssalProtocol
     /// </summary>
     public static class AbyssalDominionSterileMapUtility
     {
+        private static readonly FieldInfo GeneratorDefField = typeof(Map).GetField("generatorDef", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
         public static bool IsDominionSliceMap(Map map)
         {
             if (map == null)
@@ -37,16 +39,32 @@ namespace AbyssalProtocol
 
         private static string ResolveGeneratorDefName(Map map)
         {
+            if (map == null || GeneratorDefField == null)
+            {
+                if (GeneratorDefField == null)
+                {
+                    ABY_LogThrottleUtility.Warning(
+                        "DominionGeneratorDefReflectionMissing",
+                        "[Abyssal Protocol] Could not resolve Map.generatorDef by reflection; Dominion map detection will rely on sterile map components and world site defs only.",
+                        60000);
+                }
+
+                return string.Empty;
+            }
+
             try
             {
-                FieldInfo field = typeof(Map).GetField("generatorDef", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (field != null && field.GetValue(map) is Def def)
+                if (GeneratorDefField.GetValue(map) is Def def)
                 {
                     return def.defName ?? string.Empty;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                ABY_LogThrottleUtility.Warning(
+                    "DominionGeneratorDefReflectionFailed",
+                    "[Abyssal Protocol] Could not read Map.generatorDef by reflection; Dominion map detection will rely on sterile map components and world site defs only. " + ex.Message,
+                    60000);
             }
 
             return string.Empty;
