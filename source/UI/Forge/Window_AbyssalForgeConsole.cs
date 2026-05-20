@@ -2285,11 +2285,17 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Color tierColor = GetForgeTierColor(AbyssalForgeProgressUtility.GetForgeTierBand(recipe), unlocked, decoded);
-            Rect railRect = new Rect(cardRect.x + 3f, cardRect.y + 5f, 4f, Mathf.Max(4f, cardRect.height - 10f));
-            AbyssalForgeConsoleArt.Fill(railRect, tierColor);
-            AbyssalForgeConsoleArt.DrawOutline(new Rect(railRect.x - 1f, railRect.y, railRect.width + 2f, railRect.height), new Color(tierColor.r, tierColor.g, tierColor.b, decoded ? 0.58f : 0.36f));
-            TooltipHandler.TipRegion(railRect.ExpandedBy(4f), AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
+            AbyssalForgeProgressUtility.ForgeTierBand tier = AbyssalForgeProgressUtility.GetForgeTierBand(recipe);
+            Color tierColor = GetForgeTierColor(tier, unlocked, decoded);
+            Color hotColor = GetForgeTierHotColor(tier, unlocked, decoded);
+            Rect railRect = new Rect(cardRect.x + 3f, cardRect.y + 5f, 5f, Mathf.Max(4f, cardRect.height - 10f));
+
+            DrawForgeTierGlow(railRect, hotColor, decoded ? 0.34f : 0.18f, unlocked ? 1f : 0.72f);
+            AbyssalForgeConsoleArt.Fill(railRect, new Color(tierColor.r * 0.48f, tierColor.g * 0.38f, tierColor.b * 0.34f, decoded ? 0.76f : 0.52f));
+            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 1f, railRect.y + 1f, 3f, railRect.height - 2f), tierColor);
+            AbyssalForgeConsoleArt.Fill(new Rect(railRect.x + 2f, railRect.y + 2f, 1f, railRect.height - 4f), Color.Lerp(hotColor, Color.white, decoded ? 0.32f : 0.10f));
+            AbyssalForgeConsoleArt.DrawOutline(new Rect(railRect.x - 1f, railRect.y, railRect.width + 2f, railRect.height), new Color(hotColor.r, hotColor.g, hotColor.b, decoded ? 0.76f : 0.42f));
+            TooltipHandler.TipRegion(railRect.ExpandedBy(6f), AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
         }
 
         private static void DrawForgeTierBadge(Rect rect, RecipeDef recipe, bool compact)
@@ -2301,24 +2307,41 @@ namespace AbyssalProtocol
 
             AbyssalForgeProgressUtility.ForgeTierBand tier = AbyssalForgeProgressUtility.GetForgeTierBand(recipe);
             Color tierColor = GetForgeTierColor(tier, true, true);
-            Color fill = new Color(tierColor.r * 0.18f, tierColor.g * 0.13f, tierColor.b * 0.10f, 0.93f);
-            Color outline = new Color(tierColor.r, tierColor.g, tierColor.b, compact ? 0.70f : 0.82f);
+            Color hotColor = GetForgeTierHotColor(tier, true, true);
+            Color fill = new Color(tierColor.r * 0.15f, tierColor.g * 0.10f, tierColor.b * 0.11f, compact ? 0.90f : 0.94f);
+            Color outline = new Color(hotColor.r, hotColor.g, hotColor.b, compact ? 0.88f : 0.96f);
 
+            DrawForgeTierGlow(rect, hotColor, compact ? 0.16f : 0.24f, 0.86f);
             AbyssalForgeConsoleArt.Fill(rect, fill);
+            AbyssalForgeConsoleArt.Fill(new Rect(rect.x + 1f, rect.y + 1f, 3f, Mathf.Max(1f, rect.height - 2f)), new Color(hotColor.r, hotColor.g, hotColor.b, compact ? 0.86f : 0.96f));
             AbyssalForgeConsoleArt.DrawOutline(rect, outline);
+            AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(1f), new Color(tierColor.r, tierColor.g, tierColor.b, compact ? 0.28f : 0.38f));
 
             GameFont oldFont = Text.Font;
             TextAnchor oldAnchor = Text.Anchor;
             Color oldColor = GUI.color;
             Text.Font = GameFont.Tiny;
             Text.Anchor = TextAnchor.MiddleCenter;
-            GUI.color = Color.Lerp(tierColor, Color.white, compact ? 0.46f : 0.56f);
-            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), AbyssalForgeProgressUtility.GetForgeTierLabel(tier));
+            GUI.color = Color.Lerp(hotColor, Color.white, compact ? 0.54f : 0.64f);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 4f, rect.y, rect.width - 5f, rect.height).ContractedBy(2f), AbyssalForgeProgressUtility.GetForgeTierLabel(tier));
             Text.Font = oldFont;
             Text.Anchor = oldAnchor;
             GUI.color = oldColor;
 
-            TooltipHandler.TipRegion(rect, AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
+            TooltipHandler.TipRegion(rect.ExpandedBy(2f), AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
+        }
+
+        private static void DrawForgeTierGlow(Rect rect, Color color, float intensity, float stateMultiplier)
+        {
+            if (intensity <= 0f || stateMultiplier <= 0f)
+            {
+                return;
+            }
+
+            float alpha = Mathf.Clamp01(color.a * intensity * stateMultiplier);
+            AbyssalForgeConsoleArt.Fill(rect.ExpandedBy(7f), new Color(color.r, color.g, color.b, alpha * 0.16f));
+            AbyssalForgeConsoleArt.Fill(rect.ExpandedBy(4f), new Color(color.r, color.g, color.b, alpha * 0.24f));
+            AbyssalForgeConsoleArt.Fill(rect.ExpandedBy(2f), new Color(color.r, color.g, color.b, alpha * 0.32f));
         }
 
         private static Color GetForgeTierColor(AbyssalForgeProgressUtility.ForgeTierBand tier, bool unlocked, bool decoded)
@@ -2327,35 +2350,72 @@ namespace AbyssalProtocol
             switch (tier)
             {
                 case AbyssalForgeProgressUtility.ForgeTierBand.Signal:
-                    color = new Color(0.72f, 0.30f, 0.16f, 0.92f);
+                    color = new Color(0.95f, 0.42f, 0.16f, 0.96f);
                     break;
                 case AbyssalForgeProgressUtility.ForgeTierBand.Breach:
-                    color = new Color(0.88f, 0.48f, 0.18f, 0.94f);
+                    color = new Color(1.00f, 0.16f, 0.07f, 0.97f);
                     break;
                 case AbyssalForgeProgressUtility.ForgeTierBand.Archon:
-                    color = new Color(0.88f, 0.16f, 0.12f, 0.95f);
+                    color = new Color(0.78f, 0.04f, 0.27f, 0.97f);
                     break;
                 case AbyssalForgeProgressUtility.ForgeTierBand.Reactor:
-                    color = new Color(1.00f, 0.82f, 0.42f, 0.96f);
+                    color = new Color(1.00f, 0.80f, 0.25f, 0.98f);
                     break;
                 case AbyssalForgeProgressUtility.ForgeTierBand.Dominion:
-                    color = new Color(0.62f, 0.22f, 0.86f, 0.94f);
+                    color = new Color(0.44f, 0.24f, 1.00f, 0.97f);
                     break;
                 default:
-                    color = new Color(0.98f, 0.86f, 0.55f, 0.98f);
+                    color = new Color(0.92f, 0.90f, 0.68f, 0.99f);
                     break;
             }
 
             if (!decoded)
             {
-                color = Color.Lerp(color, new Color(0.38f, 0.30f, 0.26f, color.a), 0.44f);
+                color = Color.Lerp(color, new Color(0.34f, 0.31f, 0.30f, color.a), 0.50f);
             }
             else if (!unlocked)
             {
-                color = Color.Lerp(color, new Color(0.44f, 0.28f, 0.24f, color.a), 0.28f);
+                color = Color.Lerp(color, new Color(0.43f, 0.31f, 0.27f, color.a), 0.24f);
             }
 
             return color;
+        }
+
+        private static Color GetForgeTierHotColor(AbyssalForgeProgressUtility.ForgeTierBand tier, bool unlocked, bool decoded)
+        {
+            Color hot;
+            switch (tier)
+            {
+                case AbyssalForgeProgressUtility.ForgeTierBand.Signal:
+                    hot = new Color(1.00f, 0.58f, 0.24f, 0.98f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Breach:
+                    hot = new Color(1.00f, 0.32f, 0.16f, 0.98f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Archon:
+                    hot = new Color(1.00f, 0.10f, 0.38f, 0.98f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Reactor:
+                    hot = new Color(1.00f, 0.94f, 0.55f, 0.99f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Dominion:
+                    hot = new Color(0.66f, 0.44f, 1.00f, 0.98f);
+                    break;
+                default:
+                    hot = new Color(1.00f, 0.98f, 0.78f, 0.99f);
+                    break;
+            }
+
+            if (!decoded)
+            {
+                hot = Color.Lerp(hot, new Color(0.42f, 0.38f, 0.36f, hot.a), 0.52f);
+            }
+            else if (!unlocked)
+            {
+                hot = Color.Lerp(hot, new Color(0.50f, 0.36f, 0.31f, hot.a), 0.26f);
+            }
+
+            return hot;
         }
 
         private static void DrawProductPreviewIcon(Rect rect, ThingDef product, float alpha = 0.96f)
