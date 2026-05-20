@@ -420,23 +420,7 @@ namespace AbyssalProtocol
 
         private Faction ResolveAbyssalFaction()
         {
-            List<Faction> factions = Find.FactionManager?.AllFactionsListForReading;
-            if (factions == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < factions.Count; i++)
-            {
-                Faction faction = factions[i];
-                string defName = faction?.def?.defName ?? string.Empty;
-                if (defName == "ABY_AbyssalHost" || defName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase) || defName.IndexOf("Abyssal", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return faction;
-                }
-            }
-
-            return null;
+            return ABY_LargeModpackHotfixBUtility.ResolveAbyssalFaction();
         }
 
         private bool TryFindSafeCellNearCircle(Thing circle, out IntVec3 result)

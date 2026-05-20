@@ -587,3 +587,4 @@ It is opened from Abyssal Protocol mod settings via the diagnostics/performance 
 - Breach directive target selection now uses the shared hostile building validator instead of accepting all player-home unfactioned structures.
 - Reactor Saint melee structure-crush and several structure splash bonus paths now ignore hidden/invisible/conduit/cable/wire utility buildings.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke test still needs in-game validation.
+- Fixed Rupture phase HP polling to use a 10-tick cache, localized Rupture Sentence player messages, made Protocol Nexus decode speed scale with Intellectual skill, cached Abyssal faction resolution for large modpacks, and added guarded impact handling for Choir Arc / Sepulcher Rail projectiles when external combat stacks throw during damage resolution.

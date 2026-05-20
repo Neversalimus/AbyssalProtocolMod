@@ -450,3 +450,4 @@ In-game checks:
 
 - Spawn Breach Brutes/Chain Zealots near hidden cables and visible walls/doors. They should choose walls, doors, turrets, barricades, colonists, or other real targets, not hidden cables.
 - Spawn Reactor Saint / Rift Sappers / Siege Idols near hidden cables and player defenses. Their bonus structure damage should not repeatedly target hidden utility objects.
+- Large combat mod stacks can throw inside damage/downed/job reactions after Abyssal projectiles call vanilla Bullet.Impact. Keep custom high-impact projectile classes wrapped with ABY_ProjectileImpactSafetyUtility when they are known to trigger external TargetInvocationException/NullReferenceException paths.

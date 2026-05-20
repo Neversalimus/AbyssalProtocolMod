@@ -60,6 +60,8 @@ namespace AbyssalProtocol
 
     public class HediffComp_RuptureCoreController : HediffComp
     {
+        private const int PhaseHealthRefreshIntervalTicks = 10;
+
         private int currentPhase = 1;
         private int spawnTick = -1;
         private int lastDashTick = -999999;
@@ -68,6 +70,8 @@ namespace AbyssalProtocol
         private bool rebirthUsed;
         private bool deathVfxTriggered;
         private bool finalFrenzyTriggered;
+        private int lastPhaseHealthRefreshTick = -999999;
+        private float cachedPhaseHealthPct = 1f;
 
         public HediffCompProperties_RuptureCoreController Props => (HediffCompProperties_RuptureCoreController)props;
 
@@ -185,7 +189,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float hpPct = ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
+            float hpPct = ResolveCachedPhaseHealthPercent(pawn);
             if (hpPct <= Props.finalFrenzyHealthPct)
             {
                 currentPhase = 3;
@@ -219,6 +223,23 @@ namespace AbyssalProtocol
                     TriggerPortalVolley(Props.phase3TransitionImps);
                 }
             }
+        }
+
+        private float ResolveCachedPhaseHealthPercent(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return cachedPhaseHealthPct;
+            }
+
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (lastPhaseHealthRefreshTick < 0 || now - lastPhaseHealthRefreshTick >= PhaseHealthRefreshIntervalTicks)
+            {
+                cachedPhaseHealthPct = ABY_BossTrueDeathUtility.ResolveBossHealthPercentForPhase(pawn);
+                lastPhaseHealthRefreshTick = now;
+            }
+
+            return Mathf.Clamp01(cachedPhaseHealthPct);
         }
 
         private bool ShouldTriggerRecurringPortals()

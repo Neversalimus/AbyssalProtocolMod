@@ -34,7 +34,7 @@ namespace AbyssalProtocol
                 }
 
                 pawn.skills?.Learn(SkillDefOf.Intellectual, 0.08f);
-                nexus.NotifyDecodeWorkTick();
+                nexus.NotifyDecodeWorkTick(pawn);
                 if (!nexus.HasActiveDecode)
                 {
                     ReadyForNextToil();

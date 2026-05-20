@@ -136,6 +136,23 @@ namespace AbyssalProtocol
             return Math.Max(300, project.decodeWorkTicks);
         }
 
+        public static float ResolveDecodeWorkPerTick(Pawn worker)
+        {
+            if (worker?.skills == null)
+            {
+                return 1f;
+            }
+
+            SkillRecord intellectual = worker.skills.GetSkill(SkillDefOf.Intellectual);
+            if (intellectual == null)
+            {
+                return 1f;
+            }
+
+            float normalizedLevel = Math.Max(0f, Math.Min(1f, intellectual.Level / 20f));
+            return Math.Max(0.5f, Math.Min(1.5f, 0.75f + normalizedLevel * 0.60f));
+        }
+
         public static bool CanStartDecode(ABY_ProtocolResearchDef project, out string reason)
         {
             reason = null;

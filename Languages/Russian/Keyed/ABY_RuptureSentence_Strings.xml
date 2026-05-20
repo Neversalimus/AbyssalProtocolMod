@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_RuptureSentence_NoTargets>В радиусе Разрыва нет враждебных или нейтральных неколониальных пешек.</ABY_RuptureSentence_NoTargets>
+  <ABY_RuptureSentence_CollapsedTargets>Приговор Разрыва схлопнул целей: {0}.</ABY_RuptureSentence_CollapsedTargets>
+</LanguageData>

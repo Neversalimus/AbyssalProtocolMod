@@ -47,7 +47,7 @@ namespace AbyssalProtocol
                 if (caster.Faction == Faction.OfPlayer)
                 {
                     Messages.Message(
-                        "No hostile or neutral non-colony pawns are within rupture radius.",
+                        "ABY_RuptureSentence_NoTargets".Translate(),
                         caster,
                         MessageTypeDefOf.RejectInput,
                         false);
@@ -66,7 +66,7 @@ namespace AbyssalProtocol
             if (caster.Faction == Faction.OfPlayer)
             {
                 Messages.Message(
-                    "Rupture Verdict collapsed " + affectedCount + " target(s).",
+                    "ABY_RuptureSentence_CollapsedTargets".Translate(affectedCount),
                     new LookTargets(caster),
                     MessageTypeDefOf.NeutralEvent,
                     false);

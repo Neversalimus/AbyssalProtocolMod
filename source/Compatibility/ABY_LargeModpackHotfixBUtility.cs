@@ -17,6 +17,8 @@ namespace AbyssalProtocol
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const int HordeQueueStaleGraceTicks = 900;
         private static List<string> cachedHostileAbyssalPortalDefNames;
+        private static Faction cachedAbyssalFaction;
+        private static int cachedAbyssalFactionCount = -1;
 
         public static bool IsAbyssalPawn(Pawn pawn)
         {
@@ -418,15 +420,34 @@ namespace AbyssalProtocol
         {
             try
             {
-                FactionDef def = DefDatabase<FactionDef>.GetNamedSilentFail(AbyssalFactionDefName);
-                if (def == null || Find.FactionManager == null)
+                FactionManager manager = Find.FactionManager;
+                List<Faction> factions = manager?.AllFactionsListForReading;
+                int factionCount = factions?.Count ?? -1;
+
+                if (cachedAbyssalFaction != null
+                    && cachedAbyssalFaction.def != null
+                    && cachedAbyssalFaction.def.defName == AbyssalFactionDefName
+                    && factions != null
+                    && factions.Contains(cachedAbyssalFaction)
+                    && cachedAbyssalFactionCount == factionCount)
                 {
+                    ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(cachedAbyssalFaction, Faction.OfPlayer);
+                    return cachedAbyssalFaction;
+                }
+
+                FactionDef def = DefDatabase<FactionDef>.GetNamedSilentFail(AbyssalFactionDefName);
+                if (def == null || manager == null)
+                {
+                    cachedAbyssalFaction = null;
+                    cachedAbyssalFactionCount = -1;
                     return null;
                 }
 
-                Faction faction = Find.FactionManager.FirstFactionOfDef(def);
+                Faction faction = manager.FirstFactionOfDef(def);
                 if (faction != null)
                 {
+                    cachedAbyssalFaction = faction;
+                    cachedAbyssalFactionCount = factionCount;
                     ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(faction, Faction.OfPlayer);
                     return faction;
                 }
@@ -434,10 +455,13 @@ namespace AbyssalProtocol
                 Faction generated = FactionGenerator.NewGeneratedFaction(new FactionGeneratorParms(def));
                 if (generated != null)
                 {
-                    if (!Find.FactionManager.AllFactionsListForReading.Contains(generated))
+                    if (factions == null || !factions.Contains(generated))
                     {
-                        Find.FactionManager.Add(generated);
+                        manager.Add(generated);
                     }
+
+                    cachedAbyssalFaction = generated;
+                    cachedAbyssalFactionCount = manager.AllFactionsListForReading?.Count ?? -1;
                     ABY_FactionHostilityUtility.EnsureHostileRelationIfAbyssalPair(generated, Faction.OfPlayer);
                     return generated;
                 }

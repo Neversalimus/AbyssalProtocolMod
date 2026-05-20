@@ -313,3 +313,4 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | System | Status | Source owner | XML/assets | UI exposure | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Hidden/passive utility structure filter | Implemented | `source/Encounters/AbyssalThreatPawnUtility.cs` | n/a | n/a | Filters hidden conduits/cables/wires/invisible passive utility buildings out of Abyssal monster, boss, and special structure-damage targeting while preserving walls, doors, barricades, barriers, and turrets as valid targets. |
+- Protocol Nexus decode now applies worker Intellectual-based speed through Building_ABY_ProtocolNexus.NotifyDecodeWorkTick(Pawn) and ABY_ProtocolResearchUtility.ResolveDecodeWorkPerTick(Pawn).

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_RuptureSentence_NoTargets>No hostile or neutral non-colony pawns are within rupture radius.</ABY_RuptureSentence_NoTargets>
+  <ABY_RuptureSentence_CollapsedTargets>Rupture Verdict collapsed {0} target(s).</ABY_RuptureSentence_CollapsedTargets>
+</LanguageData>

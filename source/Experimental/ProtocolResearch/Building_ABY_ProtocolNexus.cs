@@ -18,6 +18,7 @@ namespace AbyssalProtocol
         private string activeDecodeProjectDefName;
         private int activeDecodeTicksRemaining;
         private int activeDecodeTicksTotal;
+        private float activeDecodeWorkBuffer;
 
         public string ActiveDecodeProjectDefName => activeDecodeProjectDefName;
         public int ActiveDecodeTicksRemaining => activeDecodeTicksRemaining;
@@ -33,6 +34,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref activeDecodeProjectDefName, "activeDecodeProjectDefName");
             Scribe_Values.Look(ref activeDecodeTicksRemaining, "activeDecodeTicksRemaining", 0);
             Scribe_Values.Look(ref activeDecodeTicksTotal, "activeDecodeTicksTotal", 0);
+            Scribe_Values.Look(ref activeDecodeWorkBuffer, "activeDecodeWorkBuffer", 0f);
         }
 
         public bool BeginDecode(ABY_ProtocolResearchDef project, bool force = false)
@@ -55,6 +57,7 @@ namespace AbyssalProtocol
             activeDecodeProjectDefName = project.defName;
             activeDecodeTicksTotal = ABY_ProtocolResearchUtility.ResolveDecodeWorkTicks(project);
             activeDecodeTicksRemaining = activeDecodeTicksTotal;
+            activeDecodeWorkBuffer = 0f;
             return true;
         }
 
@@ -68,17 +71,27 @@ namespace AbyssalProtocol
             return DefDatabase<ABY_ProtocolResearchDef>.GetNamedSilentFail(activeDecodeProjectDefName);
         }
 
-        public void NotifyDecodeWorkTick()
+        public void NotifyDecodeWorkTick(Pawn worker = null)
         {
             if (!HasActiveDecode)
             {
                 return;
             }
 
-            activeDecodeTicksRemaining = Mathf.Max(0, activeDecodeTicksRemaining - 1);
+            float workAmount = Mathf.Max(0.1f, ABY_ProtocolResearchUtility.ResolveDecodeWorkPerTick(worker));
+            activeDecodeWorkBuffer += workAmount;
+
+            int wholeTicks = Mathf.FloorToInt(activeDecodeWorkBuffer);
+            if (wholeTicks <= 0)
+            {
+                return;
+            }
+
+            activeDecodeWorkBuffer -= wholeTicks;
+            activeDecodeTicksRemaining = Mathf.Max(0, activeDecodeTicksRemaining - wholeTicks);
             if (activeDecodeTicksRemaining <= 0)
             {
-                CompleteActiveDecode(null);
+                CompleteActiveDecode(worker);
             }
         }
 
@@ -94,6 +107,7 @@ namespace AbyssalProtocol
             activeDecodeProjectDefName = null;
             activeDecodeTicksRemaining = 0;
             activeDecodeTicksTotal = 0;
+            activeDecodeWorkBuffer = 0f;
 
             if (Spawned)
             {
@@ -106,6 +120,7 @@ namespace AbyssalProtocol
             activeDecodeProjectDefName = null;
             activeDecodeTicksRemaining = 0;
             activeDecodeTicksTotal = 0;
+            activeDecodeWorkBuffer = 0f;
         }
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)

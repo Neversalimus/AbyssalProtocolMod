@@ -243,3 +243,4 @@ Start here when Abyssal pawns choose immortal/passive structures such as hidden 
 - structure-bonus projectile files under `source/Combat/Projectiles/`
 
 Rule: use `AbyssalThreatPawnUtility.IsValidHostileBuildingTarget(...)` for target assignment and `ShouldIgnoreAsHostileBuildingTarget(...)` before special structure damage. Do not target hidden/invisible/conduit/cable/wire structures unless they are explicit combat turrets.
+- Projectile impact compatibility: source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs and individual projectile classes under source/Combat/Projectiles/Weapons or Turrets. Use this for external combat-stack exceptions thrown during base Bullet.Impact.

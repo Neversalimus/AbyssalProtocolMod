@@ -463,36 +463,7 @@ namespace AbyssalProtocol
 
         private static Faction ResolveAbyssalFaction()
         {
-            FactionDef def = DefDatabase<FactionDef>.GetNamedSilentFail(AbyssalFactionDefName);
-            if (def == null || Find.FactionManager == null)
-            {
-                return null;
-            }
-
-            Faction faction = Find.FactionManager.FirstFactionOfDef(def);
-            if (faction != null)
-            {
-                return faction;
-            }
-
-            List<Faction> factions = Find.FactionManager.AllFactionsListForReading;
-            if (factions == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < factions.Count; i++)
-            {
-                Faction candidate = factions[i];
-                string factionDefName = candidate?.def?.defName ?? string.Empty;
-                if (factionDefName.StartsWith(AbyssalPrefix, StringComparison.OrdinalIgnoreCase)
-                    || factionDefName.IndexOf("Abyssal", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return candidate;
-                }
-            }
-
-            return null;
+            return ABY_LargeModpackHotfixBUtility.ResolveAbyssalFaction();
         }
 
         private static string SafePawnLabel(Pawn pawn)
