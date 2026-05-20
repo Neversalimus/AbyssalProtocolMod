@@ -11,15 +11,6 @@ namespace AbyssalProtocol
         private static readonly System.Reflection.FieldInfo HealthTrackerPawnField = AccessTools.Field(typeof(Pawn_HealthTracker), "pawn");
         private static readonly System.Reflection.FieldInfo HediffSetPawnField = AccessTools.Field(typeof(HediffSet), "pawn");
 
-        private static readonly HashSet<string> ConstructPawnDefNames = new HashSet<string>
-        {
-            "ABY_ReactorSaint",
-            "ABY_SiegeIdol",
-            "ABY_SiegeIdolEscort",
-            "ABY_HaloHusk",
-            "ABY_ChoirEngine"
-        };
-
         public static Pawn GetPawn(Pawn_HealthTracker tracker)
         {
             if (tracker == null || HealthTrackerPawnField == null)
@@ -56,39 +47,7 @@ namespace AbyssalProtocol
 
         public static bool IsConstructPhysiologyPawn(Pawn pawn)
         {
-            if (pawn == null || pawn.Destroyed || pawn.Corpse != null)
-            {
-                return false;
-            }
-
-            string thingDefName = pawn.def?.defName;
-            if (!string.IsNullOrEmpty(thingDefName) && ConstructPawnDefNames.Contains(thingDefName))
-            {
-                return true;
-            }
-
-            string kindDefName = pawn.kindDef?.defName;
-            if (!string.IsNullOrEmpty(kindDefName) && ConstructPawnDefNames.Contains(kindDefName))
-            {
-                return true;
-            }
-
-            if (pawn.TryGetComp<CompABY_ReactorSaintShooter>() != null)
-            {
-                return true;
-            }
-
-            if (pawn.TryGetComp<CompABY_SiegeIdolSiegeShooter>() != null)
-            {
-                return true;
-            }
-
-            if (pawn.TryGetComp<CompABY_ChoirEngineAura>() != null || pawn.TryGetComp<CompABY_ChoirEngineRelay>() != null)
-            {
-                return true;
-            }
-
-            return false;
+            return ABY_AbyssalPawnClassificationUtility.IsConstructPhysiologyPawn(pawn);
         }
 
         public static bool IsBloodLoss(HediffDef hediffDef)
@@ -113,12 +72,12 @@ namespace AbyssalProtocol
 
         public static bool ShouldBlockBloodLoss(Pawn pawn, HediffDef hediffDef)
         {
-            return IsConstructPhysiologyPawn(pawn) && IsBloodLoss(hediffDef);
+            return ABY_AbyssalPawnClassificationUtility.ShouldBlockBloodLoss(pawn) && IsBloodLoss(hediffDef);
         }
 
         public static bool ShouldBlockBloodLoss(Pawn pawn, Hediff hediff)
         {
-            return IsConstructPhysiologyPawn(pawn) && IsBloodLoss(hediff);
+            return ABY_AbyssalPawnClassificationUtility.ShouldBlockBloodLoss(pawn) && IsBloodLoss(hediff);
         }
 
         public static bool TryBlockBloodLossAdd(Pawn pawn, HediffDef hediffDef)

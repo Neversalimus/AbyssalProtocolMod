@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ReactorSaint</defName>
     <label>infernal reactor saint</label>
@@ -24,8 +23,13 @@
           <li>boss_main</li>
         </encounterPools>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <isBoss>true</isBoss>
+        <constructPhysiology>true</constructPhysiology>
+        <blockBloodLoss>true</blockBloodLoss>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -40,5 +44,4 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-
 </Defs>

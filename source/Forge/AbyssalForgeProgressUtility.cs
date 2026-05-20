@@ -60,13 +60,9 @@ namespace AbyssalProtocol
 
         public static IEnumerable<string> Categories => CategoryOrder;
 
-        private static ThingDef cachedForgeDef;
-        private static ThingDef cachedResidueDef;
-        private static HediffDef cachedAttunementHediffDef;
-
-        public static ThingDef ForgeDef => cachedForgeDef ?? (cachedForgeDef = DefDatabase<ThingDef>.GetNamedSilentFail(ForgeDefName));
-        public static ThingDef ResidueDef => cachedResidueDef ?? (cachedResidueDef = DefDatabase<ThingDef>.GetNamedSilentFail(ResidueDefName));
-        public static HediffDef AttunementHediffDef => cachedAttunementHediffDef ?? (cachedAttunementHediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(AttunementHediffDefName));
+        public static ThingDef ForgeDef => ABY_DefCache.ThingDefNamed(ForgeDefName);
+        public static ThingDef ResidueDef => ABY_DefCache.ThingDefNamed(ResidueDefName);
+        public static HediffDef AttunementHediffDef => ABY_DefCache.HediffDefNamed(AttunementHediffDefName);
 
         private static string TranslateOrFallback(string key, string fallback)
         {

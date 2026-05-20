@@ -154,8 +154,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            TerrainDef baseTerrain = DefDatabase<TerrainDef>.GetNamedSilentFail("ABY_DominionAshMetal")
-                ?? DefDatabase<TerrainDef>.GetNamedSilentFail("ABY_DominionScorchedPlate")
+            TerrainDef baseTerrain = ABY_DefCache.TerrainDefNamed("ABY_DominionAshMetal")
+                ?? ABY_DefCache.TerrainDefNamed("ABY_DominionScorchedPlate")
                 ?? TerrainDefOf.Concrete;
 
             CellRect whole = new CellRect(0, 0, map.Size.x, map.Size.z);

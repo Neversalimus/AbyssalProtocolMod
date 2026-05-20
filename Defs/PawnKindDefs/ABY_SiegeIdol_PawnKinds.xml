@@ -20,8 +20,12 @@
       <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
         <residueValue>23</residueValue>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <constructPhysiology>true</constructPhysiology>
+        <blockBloodLoss>true</blockBloodLoss>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -36,7 +40,6 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_SiegeIdolEscort</defName>
     <label>siege idol escort</label>
@@ -68,6 +71,11 @@
         <encounterPools>
           <li>dominion_gate_support</li>
         </encounterPools>
+      </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <constructPhysiology>true</constructPhysiology>
+        <blockBloodLoss>true</blockBloodLoss>
       </li>
     </modExtensions>
     <lifeStages>

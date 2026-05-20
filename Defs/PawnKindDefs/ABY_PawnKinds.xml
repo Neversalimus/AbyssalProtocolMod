@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ArchonBeast</defName>
     <label>archon beast</label>
@@ -9,7 +8,6 @@
     <combatPower>900</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>4</contentTier>
@@ -23,8 +21,11 @@
           <li>boss_main</li>
         </encounterPools>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <isBoss>true</isBoss>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -39,7 +40,6 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ReliquaryArchonBeast</defName>
     <label>reliquary archon beast</label>
@@ -48,7 +48,6 @@
     <combatPower>1250</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>4</contentTier>
@@ -62,8 +61,11 @@
           <li>boss_main</li>
         </encounterPools>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <isBoss>true</isBoss>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -78,7 +80,6 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_ArchonOfRupture</defName>
     <label>archon of rupture</label>
@@ -87,7 +88,6 @@
     <combatPower>9000</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
         <contentTier>6</contentTier>
@@ -101,8 +101,11 @@
           <li>boss_main</li>
         </encounterPools>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <isBoss>true</isBoss>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -117,5 +120,4 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-
 </Defs>

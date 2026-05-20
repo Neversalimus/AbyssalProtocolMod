@@ -474,3 +474,34 @@ In-game checks:
 - Test Choir Arc, Sepulcher Rail, Reactor Saint projectiles, Crownfire micro-rockets, Oblivion Choir, Rift Sapper spike, Ashen Scatter, and modular turret projectiles in a combat-heavy modpack.
 - Confirm impact VFX/sounds still play when base impact succeeds.
 - Confirm red `Exception ticking ABY_* projectile` spam does not recur when external combat hooks throw during damage resolution.
+
+## 2026-05-20 — Abyssal pawn classification ownership rule
+
+Abyssal pawn role, construct physiology, residue-sintering eligibility, and boss/miniboss protection should not be reintroduced as scattered local C# `HashSet<string>` lists.
+
+Rules:
+
+- New non-boss abyssal enemies that should be processed by the Sintering Crucible must carry `AbyssalProtocol.ABY_ResidueSinteringExtension` on their `PawnKindDef` with a positive `residueValue`.
+- New bosses or minibosses should carry `AbyssalProtocol.ABY_AbyssalPawnClassificationExtension` with `isBoss` or `isMiniBoss` so generic corpse/reward/Harvester logic protects them.
+- New mechanical, semi-mechanical, or construct-like abyssal pawns should carry the same classification extension with `constructPhysiology` and `blockBloodLoss` so the construct physiology helper suppresses vanilla BloodLoss safely.
+- Gameplay systems should prefer `ABY_AbyssalPawnClassificationUtility` instead of local `defName` checks when asking whether a pawn is abyssal, protected, boss-like, or construct-like.
+- Legacy hardcoded fallbacks may remain for old saves and older XML, but they should not be the primary source of truth for new content.
+
+In-game checks:
+
+- Spawn each construct-like pawn type and verify it does not accumulate vanilla BloodLoss while still taking normal injuries/damage.
+- Kill non-boss abyssal enemies and verify the Sintering Crucible sees/processes their corpses for the expected residue values.
+- Kill boss/miniboss pawns and verify generic sintering/Harvester corpse logic does not consume or treat them as normal enemy corpses.
+
+## 2026-05-20 — Legacy spawn-composition hardcoded lists remain by design
+
+Some early/T1/Dominion/fallback wave systems still contain explicit pawn-kind names for encounter composition. These lists are not the same risk class as residue/physiology membership because they affect balance, pacing, and encounter identity, not only classification.
+
+Rules:
+
+- Do not mass-replace legacy wave composition with generic auto-pools without an in-game balance pass.
+- When adding new enemies, first decide whether they belong in `ABY_EncounterTemplateDef` / `DefModExtension_AbyssalDifficultyScaling` pools, a special scripted wave, or both.
+- Use the encounter director for scalable/new content where possible, but preserve deliberately authored T1/fallback compositions until they are playtested.
+- If a new enemy should appear in older hardcoded T1/Dominion waves, update those wave builders explicitly and test pacing.
+
+This is an intentional remaining architecture item, not a load/compile bug.

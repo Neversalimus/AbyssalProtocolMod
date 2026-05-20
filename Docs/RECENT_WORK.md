@@ -614,3 +614,14 @@ Validation after this pass: direct local Roslyn compile against bundled RimWorld
 - Cached Forge, Residue, and Attunement def lookups in `AbyssalForgeProgressUtility` to avoid repeated DefDatabase calls in Forge UI/progression paths.
 - Cached and warning-throttled the Dominion `Map.generatorDef` reflection fallback; the sterile map component and world site def remain the primary safe detection paths.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-20 — Abyssal pawn classification and physiology centralization
+
+- Added `ABY_AbyssalPawnClassificationExtension` so `PawnKindDef`/race XML can mark abyssal pawns, bosses, minibosses, Dominion entities, and construct-physiology pawns without spreading new hardcoded C# lists through gameplay systems.
+- Added `ABY_AbyssalPawnClassificationUtility` as the shared runtime helper for abyssal pawn checks, boss/miniboss protection, construct physiology, and BloodLoss blocking.
+- Routed residue sintering boss protection, construct physiology checks, and Harvester corpse eligibility through the shared classification helper while keeping legacy name/component fallbacks for save and compatibility safety.
+- Extended `ABY_DefCache` with typed negative caches for PawnKindDef, SoundDef, ResearchProjectDef, RecipeDef, FactionDef, TerrainDef, and MapGeneratorDef in addition to the existing Hediff/Thing/Song caches.
+- Marked current non-boss abyssal enemies, bosses/minibosses, and construct-like enemies with explicit classification extensions in `Defs/PawnKindDefs/`.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+Note: this pass deliberately did not mass-migrate authored T1/Dominion/fallback wave compositions to generic auto-pools. Those hardcoded spawn lists affect balance and encounter pacing and should be migrated through a separate encounter-template/playtest pass rather than hidden inside a low-risk classification cleanup.

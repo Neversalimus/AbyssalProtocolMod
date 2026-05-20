@@ -20,8 +20,10 @@
       <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
         <residueValue>24</residueValue>
       </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+      </li>
     </modExtensions>
-
     <lifeStages>
       <li>
         <bodyGraphicData>

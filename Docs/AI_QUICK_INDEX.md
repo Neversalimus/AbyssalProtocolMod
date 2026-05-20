@@ -32,13 +32,14 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | --- | --- | --- |
 | Forge UI, Forge console, pattern browser, clipped text | `source/UI/Forge/` | `source/UI/Shared/`, `source/Forge/`, `Defs/RecipeDefs/`, `Defs/ThingDefs/`, `Languages/` |
 | Forge progression, residue, attunement, unlocks | `source/Forge/`, `source/Progression/` | `source/UI/Forge/`, `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Languages/` |
+| Pawn classification, boss/miniboss protection, construct physiology, residue eligibility | `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `source/Defs/Common/ABY_AbyssalPawnClassificationExtension.cs`, `source/Defs/Common/ABY_ResidueSinteringExtension.cs` | `source/Forge/ABY_ResidueSinteringUtility.cs`, `source/Hediffs/ABY_AbyssalConstructPhysiologyUtility.cs`, `Defs/PawnKindDefs/` |
 | Summoning Circle UI / Summoning Console | `source/UI/Summoning/` | `source/Summoning/`, `source/UI/Shared/`, `Defs/ThingDefs/`, `Defs/JobDefs/`, `Languages/` |
 | Sigil use, ritual activation, circle modules/capacitors | `source/Summoning/` | `source/Defs/Summoning/`, `source/UI/Summoning/`, `Defs/ThingDefs/`, `Defs/RecipeDefs/` |
 | Protocol Nexus / custom research ring | `source/Experimental/ProtocolResearch/` | `Defs/Experimental/ProtocolResearch/`, `Textures/UI/ABY/ProtocolResearch/`, `source/Progression/` |
 | Boss bar, boss phase text, Aegis bar/chains | `source/UI/BossBar/` | `source/Bosses/Shared/`, `source/Bosses/ReactorSaint/`, `Defs/Misc/`, `Textures/UI/ABY/BossBar/` |
 | Archon Beast / Archon of Rupture behavior | `source/Bosses/Archon/` | `source/Bosses/Shared/`, `source/Pawns/`, `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `source/UI/BossBar/` |
 | Reactor Saint behavior, AI, cocoon, Aegis | `source/Bosses/ReactorSaint/` | `source/Bosses/Shared/`, `source/UI/BossBar/`, `source/Combat/`, `Defs/ThingDefs/`, `Defs/PawnKindDefs/` |
-| Rupture-specific crown/halo/secret boss logic | `source/Bosses/Rupture/` | `source/Bosses/Archon/`, `source/Bosses/Shared/`, `source/UI/BossBar/`, `Languages/*/Keyed/ABY_RuptureSentence_Strings.xml` |
+| Rupture-specific crown/halo/secret boss logic | `source/Bosses/Rupture/` | `source/Bosses/Archon/`, `source/Bosses/Shared/`, `source/UI/BossBar/` |
 | Dominion pocket/slice/hell dimension | `source/Dominion/` | `source/World/`, `Defs/MapGeneratorDefs/`, `Defs/TerrainDefs/`, `Defs/ThingDefs/`, `Textures/Terrain/`, `Textures/Things/Building/DominionSlice/` |
 | Dominion visuals, atmosphere, collapse, flow, void edge | `source/Dominion/VFX/`, `source/Dominion/MapComponents/` | `Defs/ThingDefs_Motes/`, `Textures/Effects/`, `Textures/Things/Building/DominionSlice/` |
 | Modular turret behavior, modules, sockets, targeting | `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Defs/Turrets/` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml` |
@@ -258,4 +259,3 @@ source/Combat/Projectiles/Bosses/
 ```
 
 Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.
-| Harvester / Aortic Chain combat comps | `source/Comps/CompABY_HarvesterEssence.cs`, `source/Comps/CompABY_AorticChainLash.cs` | `source/Core/Runtime/ABY_RuntimeTargetCache.cs`, `source/Combat/Projectiles/ABY_ProjectileImpactSafetyUtility.cs` |

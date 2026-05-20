@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <PawnKindDef ParentName="AnimalKindBase">
     <defName>ABY_GateWarden</defName>
@@ -35,6 +35,9 @@
           <li>reactor_saint_escort</li>
           <li>dominion_gate_support</li>
         </encounterPools>
+      </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
       </li>
     </modExtensions>
     <lifeStages>

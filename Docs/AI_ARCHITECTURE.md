@@ -57,7 +57,13 @@ Typical content:
 - custom `Def` classes
 - `DefModExtension` classes
 - XML-driven profiles
-- config containers for turrets, summoning, Dominion, boss bar, apparel, and common systems
+- config containers for turrets, summoning, Dominion, boss bar, apparel, pawn classification, residue sintering, and common systems
+
+Pawn classification ownership rule:
+
+- Use `source/Defs/Common/ABY_AbyssalPawnClassificationExtension.cs` on `PawnKindDef`/race defs for abyssal pawn identity, boss/miniboss protection, Dominion identity, and construct physiology.
+- Use `source/Defs/Common/ABY_ResidueSinteringExtension.cs` on non-boss abyssal `PawnKindDef`s that should produce residue in the Sintering Crucible.
+- Shared C# checks should go through `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs` instead of adding new local hardcoded `defName` lists.
 
 When adding XML fields that need C# support, first check whether an existing DefModExtension fits.
 

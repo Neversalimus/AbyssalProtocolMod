@@ -13,8 +13,6 @@ namespace AbyssalProtocol
 
         private HashSet<int> registeredCorpseIds = new HashSet<int>();
         private HashSet<int> registeredDeathPawnIds = new HashSet<int>();
-        private List<int> registeredCorpseIdOrder = new List<int>();
-        private List<int> registeredDeathPawnIdOrder = new List<int>();
         private int currentHarvestCorpseId = -1;
         private int harvestWarmupTicksRemaining;
         private int essenceStacks;
@@ -30,8 +28,6 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref essenceStacks, "essenceStacks", 0);
             Scribe_Collections.Look(ref registeredCorpseIds, "registeredCorpseIds", LookMode.Value);
             Scribe_Collections.Look(ref registeredDeathPawnIds, "registeredDeathPawnIds", LookMode.Value);
-            Scribe_Collections.Look(ref registeredCorpseIdOrder, "registeredCorpseIdOrder", LookMode.Value);
-            Scribe_Collections.Look(ref registeredDeathPawnIdOrder, "registeredDeathPawnIdOrder", LookMode.Value);
             if (registeredCorpseIds == null)
             {
                 registeredCorpseIds = new HashSet<int>();
@@ -41,20 +37,6 @@ namespace AbyssalProtocol
             {
                 registeredDeathPawnIds = new HashSet<int>();
             }
-
-            if (registeredCorpseIdOrder == null)
-            {
-                registeredCorpseIdOrder = new List<int>();
-            }
-
-            if (registeredDeathPawnIdOrder == null)
-            {
-                registeredDeathPawnIdOrder = new List<int>();
-            }
-
-            BackfillTrackedOrderIfNeeded(registeredCorpseIds, registeredCorpseIdOrder);
-            BackfillTrackedOrderIfNeeded(registeredDeathPawnIds, registeredDeathPawnIdOrder);
-            TrimTrackedSetsIfNeeded();
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
@@ -103,11 +85,11 @@ namespace AbyssalProtocol
             TrimTrackedSetsIfNeeded();
 
             int deadPawnId = deadPawn.thingIDNumber;
-            if (deadPawnId >= 0 && !TrackDeathPawnId(deadPawnId))
+            if (deadPawnId >= 0 && !registeredDeathPawnIds.Add(deadPawnId))
             {
                 if (corpseThingId >= 0)
                 {
-                    TrackCorpseId(corpseThingId);
+                    registeredCorpseIds.Add(corpseThingId);
                 }
 
                 return false;
@@ -115,7 +97,7 @@ namespace AbyssalProtocol
 
             if (corpseThingId >= 0)
             {
-                TrackCorpseId(corpseThingId);
+                registeredCorpseIds.Add(corpseThingId);
             }
 
             GainEssence(pawn, Math.Max(0, Props.stackGainPerDeath), focusCell, false);
@@ -148,13 +130,13 @@ namespace AbyssalProtocol
                     bool alreadyRegisteredByDeathEvent = innerPawnId >= 0 && registeredDeathPawnIds.Contains(innerPawnId);
                     if (alreadyRegisteredByDeathEvent)
                     {
-                        TrackCorpseId(corpse.thingIDNumber);
+                        registeredCorpseIds.Add(corpse.thingIDNumber);
                     }
-                    else if (TrackCorpseId(corpse.thingIDNumber))
+                    else if (registeredCorpseIds.Add(corpse.thingIDNumber))
                     {
                         if (innerPawnId >= 0)
                         {
-                            TrackDeathPawnId(innerPawnId);
+                            registeredDeathPawnIds.Add(innerPawnId);
                         }
 
                         GainEssence(pawn, Math.Max(0, Props.stackGainPerDeath), corpse.PositionHeld, false);
@@ -225,11 +207,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            TrackCorpseId(corpse.thingIDNumber);
+            registeredCorpseIds.Add(corpse.thingIDNumber);
             int innerPawnId = corpse.InnerPawn?.thingIDNumber ?? -1;
             if (innerPawnId >= 0)
             {
-                TrackDeathPawnId(innerPawnId);
+                registeredDeathPawnIds.Add(innerPawnId);
             }
 
             IntVec3 corpseCell = corpse.PositionHeld;
@@ -309,125 +291,16 @@ namespace AbyssalProtocol
             harvestWarmupTicksRemaining = 0;
         }
 
-        private bool TrackCorpseId(int corpseId)
-        {
-            return TrackId(registeredCorpseIds, registeredCorpseIdOrder, corpseId, MaxTrackedCorpseIds);
-        }
-
-        private bool TrackDeathPawnId(int pawnId)
-        {
-            return TrackId(registeredDeathPawnIds, registeredDeathPawnIdOrder, pawnId, MaxTrackedDeathPawnIds);
-        }
-
-        private static bool TrackId(HashSet<int> ids, List<int> order, int id, int maxTracked)
-        {
-            if (ids == null || order == null || id < 0)
-            {
-                return false;
-            }
-
-            if (!ids.Add(id))
-            {
-                return false;
-            }
-
-            order.Add(id);
-            TrimTrackedSet(ids, order, maxTracked);
-            return true;
-        }
-
         private void TrimTrackedSetsIfNeeded()
         {
-            TrimTrackedSet(registeredCorpseIds, registeredCorpseIdOrder, MaxTrackedCorpseIds);
-            TrimTrackedSet(registeredDeathPawnIds, registeredDeathPawnIdOrder, MaxTrackedDeathPawnIds);
-        }
-
-        private static void BackfillTrackedOrderIfNeeded(HashSet<int> ids, List<int> order)
-        {
-            if (ids == null || order == null || order.Count > 0 || ids.Count == 0)
+            if (registeredCorpseIds.Count > MaxTrackedCorpseIds)
             {
-                return;
+                registeredCorpseIds.Clear();
             }
 
-            foreach (int id in ids)
+            if (registeredDeathPawnIds.Count > MaxTrackedDeathPawnIds)
             {
-                if (id >= 0)
-                {
-                    order.Add(id);
-                }
-            }
-        }
-
-        private static void TrimTrackedSet(HashSet<int> ids, List<int> order, int maxTracked)
-        {
-            if (ids == null || order == null || ids.Count <= maxTracked)
-            {
-                return;
-            }
-
-            if (order.Count == 0)
-            {
-                BackfillTrackedOrderIfNeeded(ids, order);
-            }
-
-            int targetCount = Math.Max(1, maxTracked / 2);
-            int removeBudget = Math.Max(0, ids.Count - targetCount);
-            int writeIndex = 0;
-
-            for (int i = 0; i < order.Count; i++)
-            {
-                int id = order[i];
-                if (id < 0 || !ids.Contains(id))
-                {
-                    continue;
-                }
-
-                if (removeBudget > 0)
-                {
-                    ids.Remove(id);
-                    removeBudget--;
-                    continue;
-                }
-
-                order[writeIndex++] = id;
-            }
-
-            if (writeIndex < order.Count)
-            {
-                order.RemoveRange(writeIndex, order.Count - writeIndex);
-            }
-
-            if (ids.Count <= maxTracked)
-            {
-                return;
-            }
-
-            // Fallback for old saves where the historical order list could not represent every set entry.
-            // Remove only the surplus, not the whole cache, so recent corpse/death memory remains intact.
-            int fallbackRemoveBudget = ids.Count - targetCount;
-            List<int> fallbackRemove = new List<int>(fallbackRemoveBudget);
-            foreach (int id in ids)
-            {
-                if (fallbackRemove.Count >= fallbackRemoveBudget)
-                {
-                    break;
-                }
-
-                fallbackRemove.Add(id);
-            }
-
-            for (int i = 0; i < fallbackRemove.Count; i++)
-            {
-                ids.Remove(fallbackRemove[i]);
-            }
-
-            order.Clear();
-            foreach (int id in ids)
-            {
-                if (id >= 0)
-                {
-                    order.Add(id);
-                }
+                registeredDeathPawnIds.Clear();
             }
         }
 
@@ -512,34 +385,12 @@ namespace AbyssalProtocol
 
         private static bool IsAbyssalPawn(Pawn pawn)
         {
-            if (pawn == null)
-            {
-                return false;
-            }
-
-            if (pawn.TryGetComp<CompAbyssalPawnController>() != null)
-            {
-                return true;
-            }
-
-            string defName = pawn.def?.defName;
-            return !string.IsNullOrEmpty(defName) && defName.StartsWith("ABY_", StringComparison.OrdinalIgnoreCase);
+            return ABY_AbyssalPawnClassificationUtility.IsAbyssalPawn(pawn);
         }
 
         private static bool IsProtectedBossCorpse(Pawn pawn)
         {
-            DefModExtension_AbyssalDifficultyScaling extension = pawn.kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
-            if (extension != null && string.Equals(extension.role ?? string.Empty, "boss", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            string defName = pawn.def?.defName ?? string.Empty;
-            return string.Equals(defName, "ABY_WardenOfAsh", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(defName, "ABY_ChoirEngine", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(defName, "ABY_ArchonBeast", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(defName, "ABY_ArchonOfRupture", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(defName, "ABY_ReactorSaint", StringComparison.OrdinalIgnoreCase);
+            return ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(pawn);
         }
 
         private static bool HasAdjacentHostileThreat(Pawn pawn, float radius)

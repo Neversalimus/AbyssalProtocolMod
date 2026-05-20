@@ -29,30 +29,6 @@ namespace AbyssalProtocol
             { "ABY_SiegeIdolEscort", 23 }
         };
 
-        private static readonly HashSet<string> ExplicitlyForbiddenBossOrMinibossNames = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "ABY_WardenOfAsh",
-            "ABY_ChoirEngine",
-            "ABY_ArchonBeast",
-            "ABY_ReliquaryArchonBeast",
-            "ABY_ArchonOfRupture",
-            "ABY_ReactorSaint",
-            "ABY_DominionSaint",
-            "ABY_DominionHeart",
-            "ABY_CrownedGate",
-            "ABY_TheCrownedGate"
-        };
-
-        private static readonly string[] ForbiddenNameFragments =
-        {
-            "WardenOfAsh",
-            "ChoirEngine",
-            "Archon",
-            "ReactorSaint",
-            "Dominion",
-            "CrownedGate",
-            "Boss"
-        };
 
         public static bool IsSinterableAbyssalCorpse(Thing thing)
         {
@@ -105,7 +81,7 @@ namespace AbyssalProtocol
             string raceDefName = innerPawn.def?.defName;
             string kindDefName = innerPawn.kindDef?.defName;
 
-            if (IsForbiddenBossOrMinibossName(raceDefName) || IsForbiddenBossOrMinibossName(kindDefName))
+            if (ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(innerPawn))
             {
                 return false;
             }
@@ -189,27 +165,5 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private static bool IsForbiddenBossOrMinibossName(string defName)
-        {
-            if (defName.NullOrEmpty())
-            {
-                return false;
-            }
-
-            if (ExplicitlyForbiddenBossOrMinibossNames.Contains(defName))
-            {
-                return true;
-            }
-
-            for (int i = 0; i < ForbiddenNameFragments.Length; i++)
-            {
-                if (defName.IndexOf(ForbiddenNameFragments[i], StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }
