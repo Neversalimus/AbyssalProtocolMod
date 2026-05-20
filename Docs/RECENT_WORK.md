@@ -675,3 +675,13 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - This is intended to prevent heavy modpack UI overlays from leaving RimWorld's mouse-position scroll stack unbalanced after returning from Dominion pocket maps.
 - Also hardened Abyssal settings/diagnostics/performance scroll views with try/finally EndScrollView guards.
 - Gameplay flow is intended to remain unchanged: the same action still runs, only outside the current IMGUI draw frame.
+
+## 2026-05-20 — Forge tier rail and badge readability pass
+
+- Added lightweight code-drawn tier rails to Forge pattern cards so large pattern lists can communicate progression tier without adding new texture assets or another filter row.
+- Added compact tier badges to selected pattern details and upcoming-pattern rows.
+- Tier labels are derived from existing Forge residue thresholds: Signal, Breach, Archon, Reactor, Dominion, and Crown.
+- Added EN/RU Forge tier localization keys and tooltip text.
+- This is a UI readability pass only: no recipes, unlock thresholds, residue economy, crafting behavior, assets, or gameplay balance were changed.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+

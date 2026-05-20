@@ -75,7 +75,7 @@ Treat this as a first-class system, not temporary overlay code.
 Subareas:
 
 - `UI/Shared/` — reusable styled widgets, layout helpers, colors, textures, buttons, text utilities, and the shared procedural Abyssal scroll view/scrollbar wrapper.
-- `UI/Forge/` — Abyssal Forge compact tab and full Forge/Communion UI support.
+- `UI/Forge/` — Abyssal Forge compact tab and full Forge/Communion UI support, including procedural Forge tier rails/badges for Signal/Breach/Archon/Reactor/Dominion/Crown pattern readability.
 - `UI/Summoning/` — Summoning Circle compact tab and full Summoning Console support.
 - `UI/BossBar/` — boss bar renderer, boss bar profile defs, phase entries, Aegis overlay renderer.
 - `UI/Bestiary/` — bestiary/codex UI and reward presentation.
@@ -112,7 +112,7 @@ Typical content:
 
 - residue processing logic
 - XML-driven residue sintering values via `ABY_ResidueSinteringExtension` on `PawnKindDef`/race defs
-- forge progress utility
+- forge progress utility, including residue-derived Forge tier bands used by the Forge UI
 - forge progression map component
 - custom recipe workers
 - forge-produced special things

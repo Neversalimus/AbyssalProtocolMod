@@ -51,6 +51,14 @@
   <ABY_ForgePatternSummary_Ritual>Ritual support pattern</ABY_ForgePatternSummary_Ritual>
   <ABY_ForgePatternSummary_Herald>Herald pattern</ABY_ForgePatternSummary_Herald>
   <ABY_ForgePatternSummary_Generic>Forge pattern</ABY_ForgePatternSummary_Generic>
+  <ABY_ForgeTier_Signal>Signal</ABY_ForgeTier_Signal>
+  <ABY_ForgeTier_Breach>Breach</ABY_ForgeTier_Breach>
+  <ABY_ForgeTier_Archon>Archon</ABY_ForgeTier_Archon>
+  <ABY_ForgeTier_Reactor>Reactor</ABY_ForgeTier_Reactor>
+  <ABY_ForgeTier_Dominion>Dominion</ABY_ForgeTier_Dominion>
+  <ABY_ForgeTier_Crown>Crown</ABY_ForgeTier_Crown>
+  <ABY_ForgeTierDisplayLine>Tier: {0}</ABY_ForgeTierDisplayLine>
+  <ABY_ForgeTierTooltip>Pattern tier: {0}. Derived from its forge residue threshold.</ABY_ForgeTierTooltip>
   <ABY_ForgePatternOpenInfo>Open item info</ABY_ForgePatternOpenInfo>
   <ABY_ForgeNoUnlockedRecipes>No unlocked patterns are available.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Clipboard actions are unavailable while no valid bill can be copied here.</ABY_ForgeClipboardLocked>

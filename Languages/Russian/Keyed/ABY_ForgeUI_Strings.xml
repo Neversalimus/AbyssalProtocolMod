@@ -51,6 +51,14 @@
   <ABY_ForgePatternSummary_Ritual>Шаблон ритуальной поддержки</ABY_ForgePatternSummary_Ritual>
   <ABY_ForgePatternSummary_Herald>Вестник-шаблон</ABY_ForgePatternSummary_Herald>
   <ABY_ForgePatternSummary_Generic>Шаблон кузницы</ABY_ForgePatternSummary_Generic>
+  <ABY_ForgeTier_Signal>Сигнал</ABY_ForgeTier_Signal>
+  <ABY_ForgeTier_Breach>Прорыв</ABY_ForgeTier_Breach>
+  <ABY_ForgeTier_Archon>Архонт</ABY_ForgeTier_Archon>
+  <ABY_ForgeTier_Reactor>Реактор</ABY_ForgeTier_Reactor>
+  <ABY_ForgeTier_Dominion>Доминион</ABY_ForgeTier_Dominion>
+  <ABY_ForgeTier_Crown>Корона</ABY_ForgeTier_Crown>
+  <ABY_ForgeTierDisplayLine>Тир: {0}</ABY_ForgeTierDisplayLine>
+  <ABY_ForgeTierTooltip>Тир шаблона: {0}. Определяется порогом остатка для кузницы.</ABY_ForgeTierTooltip>
   <ABY_ForgePatternOpenInfo>Открыть информацию о предмете</ABY_ForgePatternOpenInfo>
   <ABY_ForgeNoUnlockedRecipes>Нет доступных открытых шаблонов.</ABY_ForgeNoUnlockedRecipes>
   <ABY_ForgeClipboardLocked>Буфер недоступен, пока сюда нельзя корректно вставить заказ.</ABY_ForgeClipboardLocked>

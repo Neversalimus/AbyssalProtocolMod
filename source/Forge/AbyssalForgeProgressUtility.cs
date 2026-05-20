@@ -25,6 +25,22 @@ namespace AbyssalProtocol
         public const string HeraldCategory = "Herald";
         public const string TurretSystemsCategory = ABY_ModularTurretUtility.ForgeCategory;
 
+        public const int ForgeTierSignalMaxResidue = 150;
+        public const int ForgeTierBreachMaxResidue = 500;
+        public const int ForgeTierArchonMaxResidue = 1000;
+        public const int ForgeTierReactorMaxResidue = 2000;
+        public const int ForgeTierDominionMaxResidue = 5000;
+
+        public enum ForgeTierBand
+        {
+            Signal,
+            Breach,
+            Archon,
+            Reactor,
+            Dominion,
+            Crown
+        }
+
         public class IngredientAvailabilityEntry
         {
             public string label;
@@ -282,6 +298,75 @@ namespace AbyssalProtocol
         public static int GetRequiredResidue(RecipeDef recipe)
         {
             return GetUnlockExtension(recipe)?.requiredResidue ?? 0;
+        }
+
+        public static ForgeTierBand GetForgeTierBand(RecipeDef recipe)
+        {
+            return GetForgeTierBand(GetRequiredResidue(recipe));
+        }
+
+        public static ForgeTierBand GetForgeTierBand(int requiredResidue)
+        {
+            if (requiredResidue <= ForgeTierSignalMaxResidue)
+            {
+                return ForgeTierBand.Signal;
+            }
+
+            if (requiredResidue <= ForgeTierBreachMaxResidue)
+            {
+                return ForgeTierBand.Breach;
+            }
+
+            if (requiredResidue <= ForgeTierArchonMaxResidue)
+            {
+                return ForgeTierBand.Archon;
+            }
+
+            if (requiredResidue <= ForgeTierReactorMaxResidue)
+            {
+                return ForgeTierBand.Reactor;
+            }
+
+            if (requiredResidue <= ForgeTierDominionMaxResidue)
+            {
+                return ForgeTierBand.Dominion;
+            }
+
+            return ForgeTierBand.Crown;
+        }
+
+        public static string GetForgeTierLabel(RecipeDef recipe)
+        {
+            return GetForgeTierLabel(GetForgeTierBand(recipe));
+        }
+
+        public static string GetForgeTierLabel(ForgeTierBand tier)
+        {
+            switch (tier)
+            {
+                case ForgeTierBand.Signal:
+                    return TranslateOrFallback("ABY_ForgeTier_Signal", "Signal");
+                case ForgeTierBand.Breach:
+                    return TranslateOrFallback("ABY_ForgeTier_Breach", "Breach");
+                case ForgeTierBand.Archon:
+                    return TranslateOrFallback("ABY_ForgeTier_Archon", "Archon");
+                case ForgeTierBand.Reactor:
+                    return TranslateOrFallback("ABY_ForgeTier_Reactor", "Reactor");
+                case ForgeTierBand.Dominion:
+                    return TranslateOrFallback("ABY_ForgeTier_Dominion", "Dominion");
+                default:
+                    return TranslateOrFallback("ABY_ForgeTier_Crown", "Crown");
+            }
+        }
+
+        public static string GetForgeTierDisplayLine(RecipeDef recipe)
+        {
+            return TranslateOrFallback("ABY_ForgeTierDisplayLine", "Tier: {0}", GetForgeTierLabel(recipe));
+        }
+
+        public static string GetForgeTierTooltip(RecipeDef recipe)
+        {
+            return TranslateOrFallback("ABY_ForgeTierTooltip", "Pattern tier: {0}. Derived from its forge residue threshold.", GetForgeTierLabel(recipe));
         }
 
         public static string GetCategory(RecipeDef recipe)

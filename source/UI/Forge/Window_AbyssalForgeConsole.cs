@@ -410,14 +410,18 @@ namespace AbyssalProtocol
                 for (int i = 0; i < locked.Count; i++)
                 {
                     RecipeDef recipe = locked[i];
-                    string line = "• " + AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe);
-                    float height = ABY_UIPolishUtility.WrappedHeight(line, rightRect.width, GameFont.Tiny, 24f, 8f);
+                    const float badgeWidth = 62f;
+                    const float badgeGap = 6f;
+                    string line = AbyssalForgeProgressUtility.GetRequiredResidue(recipe) + " — " + ABY_ProtocolResearchGateUtility.GetForgeDisplayLabel(recipe);
+                    float lineWidth = Mathf.Max(40f, rightRect.width - badgeWidth - badgeGap);
+                    float height = Mathf.Max(18f, ABY_UIPolishUtility.WrappedHeight(line, lineWidth, GameFont.Tiny, 24f, 8f));
                     if (rightY + height > rightRect.yMax - 30f)
                     {
                         break;
                     }
 
-                    ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x, rightY, rightRect.width, height), line, 0f, 3f);
+                    DrawForgeTierBadge(new Rect(rightRect.x, rightY + 1f, badgeWidth, 17f), recipe, true);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rightRect.x + badgeWidth + badgeGap, rightY, lineWidth, height), line, 0f, 3f);
                     rightY += height + 4f;
                 }
             }
@@ -2274,6 +2278,86 @@ namespace AbyssalProtocol
         }
 
 
+        private static void DrawForgeTierRail(Rect cardRect, RecipeDef recipe, bool unlocked, bool decoded)
+        {
+            if (recipe == null)
+            {
+                return;
+            }
+
+            Color tierColor = GetForgeTierColor(AbyssalForgeProgressUtility.GetForgeTierBand(recipe), unlocked, decoded);
+            Rect railRect = new Rect(cardRect.x + 3f, cardRect.y + 5f, 4f, Mathf.Max(4f, cardRect.height - 10f));
+            AbyssalForgeConsoleArt.Fill(railRect, tierColor);
+            AbyssalForgeConsoleArt.DrawOutline(new Rect(railRect.x - 1f, railRect.y, railRect.width + 2f, railRect.height), new Color(tierColor.r, tierColor.g, tierColor.b, decoded ? 0.58f : 0.36f));
+            TooltipHandler.TipRegion(railRect.ExpandedBy(4f), AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
+        }
+
+        private static void DrawForgeTierBadge(Rect rect, RecipeDef recipe, bool compact)
+        {
+            if (recipe == null)
+            {
+                return;
+            }
+
+            AbyssalForgeProgressUtility.ForgeTierBand tier = AbyssalForgeProgressUtility.GetForgeTierBand(recipe);
+            Color tierColor = GetForgeTierColor(tier, true, true);
+            Color fill = new Color(tierColor.r * 0.18f, tierColor.g * 0.13f, tierColor.b * 0.10f, 0.93f);
+            Color outline = new Color(tierColor.r, tierColor.g, tierColor.b, compact ? 0.70f : 0.82f);
+
+            AbyssalForgeConsoleArt.Fill(rect, fill);
+            AbyssalForgeConsoleArt.DrawOutline(rect, outline);
+
+            GameFont oldFont = Text.Font;
+            TextAnchor oldAnchor = Text.Anchor;
+            Color oldColor = GUI.color;
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            GUI.color = Color.Lerp(tierColor, Color.white, compact ? 0.46f : 0.56f);
+            ABY_UIPolishUtility.SafeLabel(rect.ContractedBy(2f), AbyssalForgeProgressUtility.GetForgeTierLabel(tier));
+            Text.Font = oldFont;
+            Text.Anchor = oldAnchor;
+            GUI.color = oldColor;
+
+            TooltipHandler.TipRegion(rect, AbyssalForgeProgressUtility.GetForgeTierTooltip(recipe));
+        }
+
+        private static Color GetForgeTierColor(AbyssalForgeProgressUtility.ForgeTierBand tier, bool unlocked, bool decoded)
+        {
+            Color color;
+            switch (tier)
+            {
+                case AbyssalForgeProgressUtility.ForgeTierBand.Signal:
+                    color = new Color(0.72f, 0.30f, 0.16f, 0.92f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Breach:
+                    color = new Color(0.88f, 0.48f, 0.18f, 0.94f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Archon:
+                    color = new Color(0.88f, 0.16f, 0.12f, 0.95f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Reactor:
+                    color = new Color(1.00f, 0.82f, 0.42f, 0.96f);
+                    break;
+                case AbyssalForgeProgressUtility.ForgeTierBand.Dominion:
+                    color = new Color(0.62f, 0.22f, 0.86f, 0.94f);
+                    break;
+                default:
+                    color = new Color(0.98f, 0.86f, 0.55f, 0.98f);
+                    break;
+            }
+
+            if (!decoded)
+            {
+                color = Color.Lerp(color, new Color(0.38f, 0.30f, 0.26f, color.a), 0.44f);
+            }
+            else if (!unlocked)
+            {
+                color = Color.Lerp(color, new Color(0.44f, 0.28f, 0.24f, color.a), 0.28f);
+            }
+
+            return color;
+        }
+
         private static void DrawProductPreviewIcon(Rect rect, ThingDef product, float alpha = 0.96f)
         {
             if (product?.uiIcon == null)
@@ -2303,6 +2387,7 @@ namespace AbyssalProtocol
                 AbyssalForgeConsoleArt.DrawOutline(rect.ContractedBy(3f), new Color(0.92f, 0.28f, 0.10f, 0.42f));
             }
 
+            DrawForgeTierRail(rect, recipe, false, true);
             string category = AbyssalForgeProgressUtility.GetCategory(recipe);
 
             Rect tagRect = new Rect(rect.xMax - 86f, rect.y + 10f, 76f, 18f);
@@ -2346,6 +2431,7 @@ namespace AbyssalProtocol
 
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
+            DrawForgeTierRail(rect, recipe, unlocked, true);
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             ABY_TurretModuleDef module = ABY_ModularTurretUtility.GetModuleForThingDef(product);
@@ -2552,6 +2638,8 @@ namespace AbyssalProtocol
                 tooltipLines.Add(AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe));
             }
 
+            tooltipLines.Add(AbyssalForgeProgressUtility.GetForgeTierDisplayLine(recipe));
+
             string costBlock = AbyssalForgeProgressUtility.GetRecipeIngredientTooltip(recipe);
             if (!costBlock.NullOrEmpty())
             {
@@ -2590,6 +2678,7 @@ namespace AbyssalProtocol
 
             AbyssalForgeConsoleArt.DrawPanel(rect, unlocked);
             AbyssalForgeConsoleArt.DrawPatternCardPulse(rect, unlocked, freshlyUnlocked);
+            DrawForgeTierRail(rect, recipe, unlocked, true);
 
             ThingDef product = AbyssalForgeProgressUtility.GetPrimaryProduct(recipe);
             Rect productIconRect = new Rect(rect.x + 12f, rect.y + 12f, 42f, 42f);
@@ -2696,7 +2785,8 @@ namespace AbyssalProtocol
 
             List<string> tooltipLines = new List<string>
             {
-                AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe)
+                AbyssalForgeProgressUtility.GetPatternBrowserSummary(recipe),
+                AbyssalForgeProgressUtility.GetForgeTierDisplayLine(recipe)
             };
 
             string patternDetails = AbyssalForgeProgressUtility.GetPatternBrowserDetails(recipe);
@@ -2889,7 +2979,9 @@ namespace AbyssalProtocol
             {
                 categoryLine += " • " + GetSubfilterLabel(selectedCategory, subfilter);
             }
-            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f, y + 22f, contentWidth - 94f, 18f), categoryLine);
+            const float selectedTierBadgeWidth = 76f;
+            DrawForgeTierBadge(new Rect(iconRect.xMax + 10f, y + 22f, selectedTierBadgeWidth, 17f), recipe, false);
+            ABY_UIPolishUtility.SafeLabel(new Rect(iconRect.xMax + 10f + selectedTierBadgeWidth + 8f, y + 22f, Mathf.Max(40f, contentWidth - 102f - selectedTierBadgeWidth), 18f), categoryLine);
 
             string lockLine = unlocked
                 ? "ABY_ForgePatternUnlockedAt".Translate(AbyssalForgeProgressUtility.GetRequiredResidue(recipe)).ToString()
