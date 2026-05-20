@@ -251,4 +251,13 @@
   <ABY_TurretStatsPowerDrawBreakdown>Power draw: chassis {0} W + modules {1} W</ABY_TurretStatsPowerDrawBreakdown>
   <ABY_TurretStatsRange>Main range: {0}</ABY_TurretStatsRange>
   <ABY_TurretStatsTargeting>Targeting: ignores downed/dead targets and cancels burst if the target falls, leaves range, or loses line of sight.</ABY_TurretStatsTargeting>
+
+  <ABY_TurretInspectAegis>Aegis {0}/{1}</ABY_TurretInspectAegis>
+  <ABY_TurretModulePassiveShieldStats>Aegis {0} · recharge {1}/s · power {2}</ABY_TurretModulePassiveShieldStats>
+  <ABY_TurretInfo_ShieldCapacity>Aegis capacity</ABY_TurretInfo_ShieldCapacity>
+  <ABY_TurretInfo_ShieldCapacityDesc>Damage absorbed by the turret's passive aegis field before hits reach the chassis.</ABY_TurretInfo_ShieldCapacityDesc>
+  <ABY_TurretInfo_ShieldRecharge>Aegis recharge</ABY_TurretInfo_ShieldRecharge>
+  <ABY_TurretInfo_ShieldRechargeDesc>How quickly the passive aegis recovers after its recharge delay ends.</ABY_TurretInfo_ShieldRechargeDesc>
+  <ABY_TurretStat_ShieldCapacity>Aegis capacity: {0}</ABY_TurretStat_ShieldCapacity>
+  <ABY_TurretStat_ShieldRecharge>Aegis recharge: {0}/s after {1}</ABY_TurretStat_ShieldRecharge>
 </LanguageData>

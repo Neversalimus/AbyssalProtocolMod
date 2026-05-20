@@ -251,4 +251,13 @@
   <ABY_TurretStatsPowerDrawBreakdown>Потребление: шасси {0} Вт + модули {1} Вт</ABY_TurretStatsPowerDrawBreakdown>
   <ABY_TurretStatsRange>Дальность основного оружия: {0}</ABY_TurretStatsRange>
   <ABY_TurretStatsTargeting>Наведение: игнорирует сбитые/мёртвые цели и отменяет очередь, если цель упала, вышла из дальности или потеряла линию видимости.</ABY_TurretStatsTargeting>
+
+  <ABY_TurretInspectAegis>Эгис {0}/{1}</ABY_TurretInspectAegis>
+  <ABY_TurretModulePassiveShieldStats>Эгис {0} · восстановление {1}/с · энергия {2}</ABY_TurretModulePassiveShieldStats>
+  <ABY_TurretInfo_ShieldCapacity>Ёмкость эгиса</ABY_TurretInfo_ShieldCapacity>
+  <ABY_TurretInfo_ShieldCapacityDesc>Урон, который пассивное эгис-поле турели поглощает до попадания в корпус.</ABY_TurretInfo_ShieldCapacityDesc>
+  <ABY_TurretInfo_ShieldRecharge>Восстановление эгиса</ABY_TurretInfo_ShieldRecharge>
+  <ABY_TurretInfo_ShieldRechargeDesc>Скорость восстановления пассивного эгиса после задержки перезарядки.</ABY_TurretInfo_ShieldRechargeDesc>
+  <ABY_TurretStat_ShieldCapacity>Ёмкость эгиса: {0}</ABY_TurretStat_ShieldCapacity>
+  <ABY_TurretStat_ShieldRecharge>Восстановление эгиса: {0}/с после {1}</ABY_TurretStat_ShieldRecharge>
 </LanguageData>

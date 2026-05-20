@@ -584,3 +584,8 @@ Regression guard:
 - Passive target-priority modules must keep using the existing throttled turret target scan and cached combat pawn list. Do not add per-tick global pawn scans for prioritizer/scanner modules.
 - When adding passive module effects, expose them in both item info cards and the turret ITab. Otherwise the module may work but look like an unexplained black-box stat change.
 - Final integrated turret module item icons must be true alpha PNGs under `Textures/Things/Item/TurretModules/`; green chromakey belongs only to source sheets, not runtime textures.
+
+## 2026-05-20 — Modular turret passive aegis shield risk
+- Passive turret shield modules use a custom shield pool inside `CompAbyssalModularTurret`; future damage-related changes must preserve `PostPreApplyDamage` absorption order, save/load fields and recharge clamping.
+- Do not represent shield modules only as incoming damage multipliers: players need a visible, rechargeable aegis pool to understand why the module is different from armor/stabilizer passives.
+- Turret module item icons should stay optimized for UI use; avoid reintroducing 512x512+ inventory icons unless a module needs large overlay art.

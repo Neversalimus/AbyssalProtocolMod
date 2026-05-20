@@ -33,6 +33,10 @@ namespace AbyssalProtocol
         public float extraPowerDraw;
         public float idleCooldownRecoveryPerTick;
         public float incomingDamageMultiplier = 1f;
+        public float turretShieldMax;
+        public float turretShieldRechargePerTick;
+        public int turretShieldRechargeDelayTicks = 420;
+
 
         // Optional passive target scoring hints. These are intentionally additive and only evaluated during
         // the existing throttled target scan, so passive targeting modules do not add per-tick map scans.

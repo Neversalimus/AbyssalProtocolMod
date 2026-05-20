@@ -329,3 +329,8 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | Area | Status | Source / XML | Assets | UI exposure | Notes |
 | --- | --- | --- | --- | --- | --- |
 | 12 passive turret module set | Implemented | `source/Defs/Turrets/ABY_TurretModuleDef.cs`, `source/Comps/CompAbyssalModularTurret.cs`, `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml` | `Textures/Things/Item/TurretModules/ABY_TurretModule_*.png` | Forge Turret Systems cards, turret ITab, item info cards | Passive module tiers are module-owned, not chassis-owned. The current chassis stays a platform; installed passive modules modify runtime stats and targeting behavior. |
+
+## Passive turret aegis modules — 2026-05-20
+| System | Status | Source | Defs/assets | UI exposure | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Passive turret aegis modules | Implemented / needs smoke test | `source/Comps/CompAbyssalModularTurret.cs`, `source/Defs/Turrets/ABY_TurretModuleDef.cs`, `source/UI/Turrets/ITab_AbyssalTurretModules.cs`, `source/Comps/CompABY_TurretModuleInfoCard.cs` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`, `Textures/Things/Item/TurretModules/` | turret inspect string, ITab stat text, module info card | Shield modules add `turretShieldMax`, recharge-per-tick and recharge-delay fields. They absorb incoming damage before damage multipliers and recharge only while operational. |

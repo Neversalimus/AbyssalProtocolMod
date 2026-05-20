@@ -672,4 +672,61 @@
       </li>
     </modExtensions>
   </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_BreachAegisRelay</defName>
+    <label>breach aegis relay</label>
+    <description>A compact relay that wraps an abyssal turret chassis in a shallow sacrificial aegis field. It is not a wall; it is a delay bought with power and residue charge.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_BreachAegisRelay</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>310</MarketValue>
+      <Mass>2.0</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CrownAegisMatrix</defName>
+    <label>crown aegis matrix</label>
+    <description>A crown-tier aegis lattice that forces incoming punishment to spend itself against a pale-gold verdict field before the turret body can be reached.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CrownAegisMatrix</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1180</MarketValue>
+      <Mass>3.8</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1250</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
 </Defs>

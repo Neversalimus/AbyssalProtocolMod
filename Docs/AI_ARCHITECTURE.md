@@ -506,3 +506,6 @@ Shared ownership:
 - Breach, boss, projectile splash, and monster AI code should call the shared utility before assigning an attack job or applying special anti-structure damage.
 
 Valid structure targets include combat turrets, Abyssal modular turrets with main weapons, doors, real walls, barricades, sandbags, barriers, and other visible/destroyable tactical blockers. Hidden/invisible/conduit/cable/wire utility structures are filtered out unless explicitly combat-capable.
+
+## Modular turret passive aegis extension — 2026-05-20
+Passive turret modules can now contribute a real chassis-level aegis pool through `ABY_TurretModuleDef` fields (`turretShieldMax`, `turretShieldRechargePerTick`, `turretShieldRechargeDelayTicks`). `CompAbyssalModularTurret` owns the runtime shield points, save/load, absorption and recharge. Future passive shield work should extend these fields rather than adding a parallel comp.

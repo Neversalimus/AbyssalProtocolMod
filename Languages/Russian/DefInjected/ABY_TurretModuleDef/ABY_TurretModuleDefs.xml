@@ -100,4 +100,13 @@
   <ABY_TMD_VesperLanceArray.effectSummary>Проецирует очищенное копьё-приговор: дальше и жёстче плазмы по броне, но заметно быстрее склепового рельса.</ABY_TMD_VesperLanceArray.effectSummary>
   <ABY_TMD_VesperLanceArray.label>массив Веспер-копья</ABY_TMD_VesperLanceArray.label>
   <ABY_TMD_VesperLanceArray.role>точечный приговор</ABY_TMD_VesperLanceArray.role>
+
+  <ABY_TMD_BreachAegisRelay.label>Релейный узел разломного эгиса</ABY_TMD_BreachAegisRelay.label>
+  <ABY_TMD_BreachAegisRelay.description>Компактный релейный узел, дающий модульной турели неглубокое жертвенное эгис-поле. Он покупает время против налёта, но не заменяет стены, ремонт и грамотную оборону.</ABY_TMD_BreachAegisRelay.description>
+  <ABY_TMD_BreachAegisRelay.effectSummary>Добавляет корпусу турели умеренный восстанавливаемый запас эгиса. Щит первым принимает входящий урон, затем ждёт паузу после попаданий перед восстановлением.</ABY_TMD_BreachAegisRelay.effectSummary>
+  <ABY_TMD_BreachAegisRelay.role>разломный эгис-буфер</ABY_TMD_BreachAegisRelay.role>
+  <ABY_TMD_CrownAegisMatrix.label>Коронная матрица эгиса</ABY_TMD_CrownAegisMatrix.label>
+  <ABY_TMD_CrownAegisMatrix.description>Коронная матрица, заставляющая урон разбиваться о бледно-золотое поле приговора до того, как он достигнет корпуса турели.</ABY_TMD_CrownAegisMatrix.description>
+  <ABY_TMD_CrownAegisMatrix.effectSummary>Добавляет корпусу турели большой восстанавливаемый запас эгиса: больше ёмкости и быстрее восстановление, чем у разломного реле, но с тяжёлой нагрузкой на сеть.</ABY_TMD_CrownAegisMatrix.effectSummary>
+  <ABY_TMD_CrownAegisMatrix.role>коронный эгис-щит</ABY_TMD_CrownAegisMatrix.role>
 </LanguageData>

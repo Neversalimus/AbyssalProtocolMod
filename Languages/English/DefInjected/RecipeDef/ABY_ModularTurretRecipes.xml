@@ -27,4 +27,11 @@
   <ABY_CraftTurretModule_ShieldBurnCapacitor.description>Assemble a shield-burn capacitor for abyssal modular turret chassis.</ABY_CraftTurretModule_ShieldBurnCapacitor.description>
   <ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>Forging shield-burn capacitor.</ABY_CraftTurretModule_ShieldBurnCapacitor.jobString>
   <ABY_CraftTurretModule_ShieldBurnCapacitor.label>forge shield-burn capacitor</ABY_CraftTurretModule_ShieldBurnCapacitor.label>
+
+  <ABY_CraftTurretModule_BreachAegisRelay.label>forge breach aegis relay</ABY_CraftTurretModule_BreachAegisRelay.label>
+  <ABY_CraftTurretModule_BreachAegisRelay.description>Assemble a passive breach-tier aegis relay for abyssal modular turret chassis.</ABY_CraftTurretModule_BreachAegisRelay.description>
+  <ABY_CraftTurretModule_BreachAegisRelay.jobString>Forging breach aegis relay.</ABY_CraftTurretModule_BreachAegisRelay.jobString>
+  <ABY_CraftTurretModule_CrownAegisMatrix.label>forge crown aegis matrix</ABY_CraftTurretModule_CrownAegisMatrix.label>
+  <ABY_CraftTurretModule_CrownAegisMatrix.description>Assemble a crown-tier aegis matrix for abyssal modular turret chassis.</ABY_CraftTurretModule_CrownAegisMatrix.description>
+  <ABY_CraftTurretModule_CrownAegisMatrix.jobString>Forging crown aegis matrix.</ABY_CraftTurretModule_CrownAegisMatrix.jobString>
 </LanguageData>

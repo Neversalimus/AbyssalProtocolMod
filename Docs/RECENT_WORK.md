@@ -710,3 +710,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Extended `ABY_TurretModuleDef` and `CompAbyssalModularTurret` so these passives are real mechanics rather than fake descriptions: negative module power draw can reduce total chassis draw, minimum range offsets affect main/aux weapons, passive target-priority hints are evaluated during the existing throttled target scan, cluster targeting uses the cached combat pawn list, incoming damage multipliers can harden the chassis, and cooldown recovery supports fractional per-tick heat dump behavior.
 - Updated turret module info cards and ITab stat text so new passive effects and negative/positive power deltas are player-readable.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required, especially Forge > Turret Systems and installed passive module stat summaries.
+
+## 2026-05-20 — Passive turret aegis modules and icon optimization
+- Added two passive shield modules for modular turrets: Breach Aegis Relay (tier 2) and Crown Aegis Matrix (tier 4).
+- Passive aegis modules add a real turret shield pool, recharge delay, recharge rate and inspect/ITab/stat-card exposure instead of using only incoming damage reduction.
+- The generated passive turret module icons were reduced from 512x512 to optimized 256x256 PNGs for UI/item use.
+- Runtime smoke test still required in-game: install shield modules, damage a powered chassis, verify aegis absorption/recharge and UI display.

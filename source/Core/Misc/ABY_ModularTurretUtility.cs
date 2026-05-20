@@ -365,6 +365,16 @@ namespace AbyssalProtocol
                     Mathf.Max(1, module.burstShotCount));
             }
 
+            if (module.turretShieldMax > 0.01f)
+            {
+                return TranslateOrFallback(
+                    "ABY_TurretModulePassiveShieldStats",
+                    "Aegis {0} · recharge {1}/s · power {2}",
+                    module.turretShieldMax.ToString("0"),
+                    (module.turretShieldRechargePerTick * 60f).ToString("0.0"),
+                    FormatPowerDelta(module.extraPowerDraw));
+            }
+
             return TranslateOrFallback(
                 "ABY_TurretModulePassiveStats",
                 "Range {0} · main cooldown {1} · power {2}",

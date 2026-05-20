@@ -100,4 +100,13 @@
   <ABY_TMD_VesperLanceArray.effectSummary>Projects a saint-clean lance with better reach and armor pressure than plasma while firing far faster than a sepulcher rail.</ABY_TMD_VesperLanceArray.effectSummary>
   <ABY_TMD_VesperLanceArray.label>Vesper Lance Array</ABY_TMD_VesperLanceArray.label>
   <ABY_TMD_VesperLanceArray.role>precision sanction lance</ABY_TMD_VesperLanceArray.role>
+
+  <ABY_TMD_BreachAegisRelay.label>Breach Aegis Relay</ABY_TMD_BreachAegisRelay.label>
+  <ABY_TMD_BreachAegisRelay.description>A compact relay that gives a modular turret a shallow sacrificial aegis field. It buys time against raids without replacing walls, repairs or proper killbox discipline.</ABY_TMD_BreachAegisRelay.description>
+  <ABY_TMD_BreachAegisRelay.effectSummary>Adds a modest rechargeable aegis pool to the turret chassis. The shield absorbs incoming damage first, then waits after hits before rebuilding.</ABY_TMD_BreachAegisRelay.effectSummary>
+  <ABY_TMD_BreachAegisRelay.role>breach aegis buffer</ABY_TMD_BreachAegisRelay.role>
+  <ABY_TMD_CrownAegisMatrix.label>Crown Aegis Matrix</ABY_TMD_CrownAegisMatrix.label>
+  <ABY_TMD_CrownAegisMatrix.description>A crown-tier matrix that forces damage to break against a pale-gold verdict field before it reaches the turret chassis.</ABY_TMD_CrownAegisMatrix.description>
+  <ABY_TMD_CrownAegisMatrix.effectSummary>Adds a large rechargeable aegis pool to the turret chassis, with stronger capacity and faster recovery than the breach relay at a severe power cost.</ABY_TMD_CrownAegisMatrix.effectSummary>
+  <ABY_TMD_CrownAegisMatrix.role>crown aegis shield</ABY_TMD_CrownAegisMatrix.role>
 </LanguageData>

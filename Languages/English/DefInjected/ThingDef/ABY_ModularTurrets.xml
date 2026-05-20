@@ -49,4 +49,9 @@
   <ABY_TurretModule_VesperLanceArray.description>A saint-clean lance array built for deliberate punishment: more precise than plasma, less ponderous than a sepulcher rail.</ABY_TurretModule_VesperLanceArray.description>
   <ABY_TurretModule_VesperLanceArray.label>Vesper Lance Array</ABY_TurretModule_VesperLanceArray.label>
   <ABY_TurretPlasmaLanceBolt.label>turret plasma bolt</ABY_TurretPlasmaLanceBolt.label>
+
+  <ABY_TurretModule_BreachAegisRelay.label>Breach Aegis Relay</ABY_TurretModule_BreachAegisRelay.label>
+  <ABY_TurretModule_BreachAegisRelay.description>A compact relay that wraps an abyssal turret chassis in a shallow sacrificial aegis field. It is not a wall; it is a delay bought with power and residue charge.</ABY_TurretModule_BreachAegisRelay.description>
+  <ABY_TurretModule_CrownAegisMatrix.label>Crown Aegis Matrix</ABY_TurretModule_CrownAegisMatrix.label>
+  <ABY_TurretModule_CrownAegisMatrix.description>A crown-tier aegis lattice that forces incoming punishment to spend itself against a pale-gold verdict field before the turret body can be reached.</ABY_TurretModule_CrownAegisMatrix.description>
 </LanguageData>

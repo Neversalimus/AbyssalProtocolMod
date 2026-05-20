@@ -622,4 +622,41 @@
     <idleCooldownRecoveryPerTick>0.35</idleCooldownRecoveryPerTick>
     <extraPowerDraw>420</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_BreachAegisRelay</defName>
+    <label>Breach Aegis Relay</label>
+    <description>A compact relay that gives a modular turret a shallow sacrificial aegis field. It buys time against raids without replacing walls, repairs or proper killbox discipline.</description>
+    <effectSummary>Adds a modest rechargeable aegis pool to the turret chassis. The shield absorbs incoming damage first, then waits after hits before rebuilding.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_BreachAegisRelay</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>breach aegis buffer</role>
+    <tier>2</tier>
+    <turretShieldMax>85</turretShieldMax>
+    <turretShieldRechargePerTick>0.10</turretShieldRechargePerTick>
+    <turretShieldRechargeDelayTicks>540</turretShieldRechargeDelayTicks>
+    <cooldownMultiplier>1.04</cooldownMultiplier>
+    <extraPowerDraw>220</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CrownAegisMatrix</defName>
+    <label>Crown Aegis Matrix</label>
+    <description>A crown-tier matrix that forces damage to break against a pale-gold verdict field before it reaches the turret chassis.</description>
+    <effectSummary>Adds a large rechargeable aegis pool to the turret chassis, with stronger capacity and faster recovery than the breach relay at a severe power cost.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_CrownAegisMatrix</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>crown aegis shield</role>
+    <tier>4</tier>
+    <turretShieldMax>190</turretShieldMax>
+    <turretShieldRechargePerTick>0.20</turretShieldRechargePerTick>
+    <turretShieldRechargeDelayTicks>420</turretShieldRechargeDelayTicks>
+    <cooldownMultiplier>1.06</cooldownMultiplier>
+    <extraPowerDraw>620</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
 </Defs>

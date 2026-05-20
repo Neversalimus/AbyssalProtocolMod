@@ -51,4 +51,9 @@
   <ABY_TurretModule_VesperLanceArray.description>Очищенный массив копья-приговора: точнее плазмы, легче склепового рельса и достаточно жесток для элитной брони.</ABY_TurretModule_VesperLanceArray.description>
   <ABY_TurretModule_VesperLanceArray.label>массив Веспер-копья</ABY_TurretModule_VesperLanceArray.label>
   <ABY_TurretPlasmaLanceBolt.label>плазменный болт турели</ABY_TurretPlasmaLanceBolt.label>
+
+  <ABY_TurretModule_BreachAegisRelay.label>релейный узел разломного эгиса</ABY_TurretModule_BreachAegisRelay.label>
+  <ABY_TurretModule_BreachAegisRelay.description>Компактный релейный узел, оборачивающий модульную турель неглубоким жертвенным эгис-полем. Это не стена, а отсрочка, купленная энергией и зарядом осадка.</ABY_TurretModule_BreachAegisRelay.description>
+  <ABY_TurretModule_CrownAegisMatrix.label>коронная матрица эгиса</ABY_TurretModule_CrownAegisMatrix.label>
+  <ABY_TurretModule_CrownAegisMatrix.description>Коронная эгис-решётка, заставляющая входящий удар истощиться о бледно-золотое поле приговора до того, как он достигнет корпуса турели.</ABY_TurretModule_CrownAegisMatrix.description>
 </LanguageData>

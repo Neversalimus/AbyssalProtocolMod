@@ -1384,4 +1384,63 @@
       </li>
     </modExtensions>
   </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_BreachAegisRelay</defName>
+    <label>forge breach aegis relay</label>
+    <description>Assemble a passive breach-tier aegis relay for abyssal modular turret chassis.</description>
+    <jobString>Forging breach aegis relay.</jobString>
+    <workAmount>2050</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Surgery</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
+    <ingredients>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>80</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>28</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>3</count></li>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>32</count></li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_BreachAegisRelay>1</ABY_TurretModule_BreachAegisRelay>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>280</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>ABY_CraftTurretModule_CrownAegisMatrix</defName>
+    <label>forge crown aegis matrix</label>
+    <description>Assemble a crown-tier aegis matrix for abyssal modular turret chassis.</description>
+    <jobString>Forging crown aegis matrix.</jobString>
+    <workAmount>4600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Surgery</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
+    <ingredients>
+      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>145</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>70</count></li>
+      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>4</count></li>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>110</count></li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_CrownAegisMatrix>1</ABY_TurretModule_CrownAegisMatrix>
+    </products>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1250</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
 </Defs>

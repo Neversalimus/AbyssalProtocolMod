@@ -72,4 +72,11 @@
   <ABY_CraftTurretModule_VesperLanceArray.description>Связать камеру святого приговора и сжимающийся лучевой хребет в точное копьё турели.</ABY_CraftTurretModule_VesperLanceArray.description>
   <ABY_CraftTurretModule_VesperLanceArray.jobString>Ковка массива Веспер-копья.</ABY_CraftTurretModule_VesperLanceArray.jobString>
   <ABY_CraftTurretModule_VesperLanceArray.label>выковать массив Веспер-копья</ABY_CraftTurretModule_VesperLanceArray.label>
+
+  <ABY_CraftTurretModule_BreachAegisRelay.label>выковать релейный узел разломного эгиса</ABY_CraftTurretModule_BreachAegisRelay.label>
+  <ABY_CraftTurretModule_BreachAegisRelay.description>Собрать пассивный разломный эгис-релей для модульного корпуса турели.</ABY_CraftTurretModule_BreachAegisRelay.description>
+  <ABY_CraftTurretModule_BreachAegisRelay.jobString>Ковка релейного узла разломного эгиса.</ABY_CraftTurretModule_BreachAegisRelay.jobString>
+  <ABY_CraftTurretModule_CrownAegisMatrix.label>выковать коронную матрицу эгиса</ABY_CraftTurretModule_CrownAegisMatrix.label>
+  <ABY_CraftTurretModule_CrownAegisMatrix.description>Собрать коронную эгис-матрицу для модульного корпуса турели.</ABY_CraftTurretModule_CrownAegisMatrix.description>
+  <ABY_CraftTurretModule_CrownAegisMatrix.jobString>Ковка коронной матрицы эгиса.</ABY_CraftTurretModule_CrownAegisMatrix.jobString>
 </LanguageData>

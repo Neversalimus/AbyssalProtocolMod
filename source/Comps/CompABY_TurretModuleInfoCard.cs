@@ -207,6 +207,18 @@ namespace AbyssalProtocol
                     "ABY_TurretInfo_DamageMultiplierDesc", "Multiplier applied to incoming damage before it reaches the modular turret chassis.");
             }
 
+            if (module.turretShieldMax > 0.01f)
+            {
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_ShieldCapacity", "Aegis capacity",
+                    module.turretShieldMax.ToString("0"),
+                    "ABY_TurretInfo_ShieldCapacityDesc", "Damage absorbed by the turret's passive aegis field before hits reach the chassis.");
+                AddEntry(result, category, ref order,
+                    "ABY_TurretInfo_ShieldRecharge", "Aegis recharge",
+                    (module.turretShieldRechargePerTick * 60f).ToString("0.0") + "/s after " + ABY_ModularTurretUtility.FormatTicksAsSeconds(module.turretShieldRechargeDelayTicks),
+                    "ABY_TurretInfo_ShieldRechargeDesc", "How quickly the passive aegis recovers after its recharge delay ends.");
+            }
+
             if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
             {
                 AddEntry(result, category, ref order,

@@ -42,6 +42,8 @@ namespace AbyssalProtocol
         private int mainMuzzleOverlayShotIndex = -1;
         private int mainLaunchTubeIndex;
         private float passiveCooldownRecoveryRemainder;
+        private float passiveShieldPoints;
+        private int passiveShieldLastDamagedTick = -999999;
 
         private float mainAimAngle;
         private float auxiliaryAimAngle;
@@ -145,6 +147,34 @@ namespace AbyssalProtocol
         public float ExtraPowerDraw => SumPassive(module => module.extraPowerDraw) + (auxiliaryModule?.extraPowerDraw ?? 0f) + (mainModule?.extraPowerDraw ?? 0f);
         public float ResolvedModulePowerDraw => FeatureEnabled ? ExtraPowerDraw : 0f;
         public float ResolvedTotalPowerDraw => Mathf.Max(0f, ResolvedBasePowerDraw + ResolvedModulePowerDraw);
+        public float ResolvedPassiveShieldMax => Mathf.Max(0f, SumPassive(module => Mathf.Max(0f, module.turretShieldMax)));
+        public float PassiveShieldPoints => Mathf.Clamp(passiveShieldPoints, 0f, ResolvedPassiveShieldMax);
+        public bool HasPassiveShield => ResolvedPassiveShieldMax > 0.01f;
+        public float ResolvedPassiveShieldRechargePerTick => Mathf.Max(0f, SumPassive(module => Mathf.Max(0f, module.turretShieldRechargePerTick)));
+
+        public int ResolvedPassiveShieldRechargeDelayTicks
+        {
+            get
+            {
+                int delay = 0;
+                if (passiveModules == null)
+                {
+                    return 0;
+                }
+
+                for (int i = 0; i < passiveModules.Count; i++)
+                {
+                    ABY_TurretModuleDef module = passiveModules[i];
+                    if (module != null && module.turretShieldMax > 0.01f)
+                    {
+                        int moduleDelay = Mathf.Max(60, module.turretShieldRechargeDelayTicks);
+                        delay = delay <= 0 ? moduleDelay : Mathf.Min(delay, moduleDelay);
+                    }
+                }
+
+                return delay;
+            }
+        }
 
         public override void Initialize(CompProperties props)
         {
@@ -183,6 +213,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref mainMuzzleOverlayShotIndex, "mainMuzzleOverlayShotIndex", -1);
             Scribe_Values.Look(ref mainLaunchTubeIndex, "mainLaunchTubeIndex", 0);
             Scribe_Values.Look(ref passiveCooldownRecoveryRemainder, "passiveCooldownRecoveryRemainder", 0f);
+            Scribe_Values.Look(ref passiveShieldPoints, "passiveShieldPoints", 0f);
+            Scribe_Values.Look(ref passiveShieldLastDamagedTick, "passiveShieldLastDamagedTick", -999999);
             Scribe_Values.Look(ref mainAimAngle, "mainAimAngle", 0f);
             Scribe_Values.Look(ref auxiliaryAimAngle, "auxiliaryAimAngle", 0f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -197,6 +229,12 @@ namespace AbyssalProtocol
             absorbed = false;
 
             if (passiveModules == null || passiveModules.Count == 0)
+            {
+                return;
+            }
+
+            TryAbsorbPassiveShield(ref dinfo, out absorbed);
+            if (absorbed)
             {
                 return;
             }
@@ -228,6 +266,7 @@ namespace AbyssalProtocol
             }
 
             TickTimedVisualOverlays();
+            TickPassiveShieldRecharge();
 
             if (mainCooldownTicks > 0)
             {
@@ -519,6 +558,7 @@ namespace AbyssalProtocol
             }
 
             passiveModules.RemoveAt(index);
+            RefreshPassiveShieldAfterModuleChange(false);
             ApplyPowerDraw();
             message = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretRemovedMessage", "Removed {0}.", module.LocalizedLabelCap);
             return true;
@@ -556,6 +596,10 @@ namespace AbyssalProtocol
             if (HasMainWeapon)
             {
                 lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectStats", "Range {0} · cooldown {1} · power {2} W", ResolvedRange.ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(ResolvedMainCooldownTicks), ResolvedTotalPowerDraw.ToString("0")));
+                if (HasPassiveShield)
+                {
+                    lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretInspectAegis", "Aegis {0}/{1}", PassiveShieldPoints.ToString("0"), ResolvedPassiveShieldMax.ToString("0")));
+                }
             }
             else
             {
@@ -899,6 +943,7 @@ namespace AbyssalProtocol
                     break;
                 case ABY_TurretModuleSlot.Passive:
                     passiveModules.Add(module);
+                    RefreshPassiveShieldAfterModuleChange(true);
                     break;
             }
         }
@@ -1684,6 +1729,8 @@ namespace AbyssalProtocol
             mainMuzzleOverlayShotIndex = Mathf.Max(-1, mainMuzzleOverlayShotIndex);
             mainLaunchTubeIndex = Mathf.Max(0, mainLaunchTubeIndex);
             passiveCooldownRecoveryRemainder = Mathf.Clamp(passiveCooldownRecoveryRemainder, 0f, 2f);
+            passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, ResolvedPassiveShieldMax);
+            passiveShieldLastDamagedTick = Mathf.Min(passiveShieldLastDamagedTick, Find.TickManager != null ? Find.TickManager.TicksGame : passiveShieldLastDamagedTick);
             if (burstShotsRemaining <= 0 || currentBurstTarget == null || currentBurstTarget.Destroyed)
             {
                 HaltBurst();
@@ -1759,6 +1806,85 @@ namespace AbyssalProtocol
 
             passiveCooldownRecoveryRemainder -= wholeTicks;
             mainCooldownTicks = Mathf.Max(0, mainCooldownTicks - wholeTicks);
+        }
+
+
+        private void TryAbsorbPassiveShield(ref DamageInfo dinfo, out bool absorbed)
+        {
+            absorbed = false;
+            if (!HasPassiveShield || dinfo.Amount <= 0.001f)
+            {
+                return;
+            }
+
+            passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, ResolvedPassiveShieldMax);
+            if (passiveShieldPoints <= 0.001f)
+            {
+                return;
+            }
+
+            float absorbedAmount = Mathf.Min(passiveShieldPoints, dinfo.Amount);
+            passiveShieldPoints = Mathf.Max(0f, passiveShieldPoints - absorbedAmount);
+            passiveShieldLastDamagedTick = Find.TickManager != null ? Find.TickManager.TicksGame : passiveShieldLastDamagedTick;
+
+            float remaining = Mathf.Max(0f, dinfo.Amount - absorbedAmount);
+            if (remaining <= 0.05f)
+            {
+                absorbed = true;
+                return;
+            }
+
+            dinfo.SetAmount(remaining);
+        }
+
+        private void TickPassiveShieldRecharge()
+        {
+            float maxShield = ResolvedPassiveShieldMax;
+            if (maxShield <= 0.01f)
+            {
+                passiveShieldPoints = 0f;
+                return;
+            }
+
+            passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, maxShield);
+            if (passiveShieldPoints >= maxShield - 0.001f)
+            {
+                return;
+            }
+
+            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int delay = Mathf.Max(60, ResolvedPassiveShieldRechargeDelayTicks);
+            if (ticks - passiveShieldLastDamagedTick < delay)
+            {
+                return;
+            }
+
+            float recharge = ResolvedPassiveShieldRechargePerTick;
+            if (recharge <= 0.001f)
+            {
+                return;
+            }
+
+            passiveShieldPoints = Mathf.Min(maxShield, passiveShieldPoints + recharge);
+        }
+
+        private void RefreshPassiveShieldAfterModuleChange(bool fillNewShield)
+        {
+            float maxShield = ResolvedPassiveShieldMax;
+            if (maxShield <= 0.01f)
+            {
+                passiveShieldPoints = 0f;
+                return;
+            }
+
+            if (fillNewShield && passiveShieldPoints <= 0.001f)
+            {
+                passiveShieldPoints = Mathf.Min(maxShield, maxShield * 0.35f);
+            }
+            else
+            {
+                passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, maxShield);
+            }
         }
 
         private float PassiveIncomingDamageMultiplier()
