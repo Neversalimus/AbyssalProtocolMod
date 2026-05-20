@@ -505,3 +505,15 @@ Rules:
 - If a new enemy should appear in older hardcoded T1/Dominion waves, update those wave builders explicitly and test pacing.
 
 This is an intentional remaining architecture item, not a load/compile bug.
+
+## 2026-05-20 — Encounter validator / shadow-mode safety boundary
+
+A diagnostic-only layer now exists for future migration toward more data-driven encounter composition.
+
+Important rules:
+
+- `ABY_EncounterValidationUtility` may validate XML/Def consistency and log warnings, but it must not rewrite defs, change runtime state, or block a summon by itself.
+- `ABY_EncounterShadowPlannerUtility` may compare an authored/legacy pack against a directed plan when `enableEncounterShadowPlanning` is enabled, but the real spawned wave must remain the authored pack.
+- Shadow-mode logs are for balance comparison only. Do not treat shadow output as proof that the directed planner is ready to replace a ritual.
+- Any migration from authored wave composition to directed templates must be done ritual-by-ritual with in-game playtests, save/load checks, and reward pacing review.
+- If validator warnings appear after adding content, fix the XML ownership first: pool ids, role names, difficulty refs, budget costs, boss profile refs, and template coverage.

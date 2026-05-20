@@ -35,8 +35,11 @@ namespace AbyssalProtocol
             lines.Add("UI polish: " + UIPolishEnabled);
             lines.Add("Repeated warning throttle: " + (AbyssalProtocolMod.Settings?.suppressRepeatedWarnings ?? true));
             lines.Add("Weapon charge sounds: " + (AbyssalProtocolMod.Settings?.enableWeaponChargeSounds ?? false));
+            lines.Add("Encounter data validation: " + (AbyssalProtocolMod.Settings?.enableEncounterDataValidation ?? true));
+            lines.Add("Encounter shadow planning: " + (AbyssalProtocolMod.Settings?.enableEncounterShadowPlanning ?? false));
             lines.Add("Maps loaded: " + (Find.Maps != null ? Find.Maps.Count.ToString() : "0"));
 
+            AppendEncounterValidationLines(lines);
             AppendBossLines(lines);
             AppendDashLines(lines);
             return lines;
@@ -94,6 +97,22 @@ namespace AbyssalProtocol
             catch
             {
                 return "pawn";
+            }
+        }
+
+        private static void AppendEncounterValidationLines(List<string> lines)
+        {
+            try
+            {
+                List<string> validationLines = ABY_EncounterValidationUtility.BuildStatusLines(false, 12);
+                for (int i = 0; i < validationLines.Count; i++)
+                {
+                    lines.Add(validationLines[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                lines.Add("Encounter validation diagnostics failed: " + ex.GetType().Name + ": " + ex.Message);
             }
         }
 

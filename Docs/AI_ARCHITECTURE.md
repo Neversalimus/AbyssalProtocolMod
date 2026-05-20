@@ -270,8 +270,14 @@ Use this only for runtime audio logic. Audio assets and SoundDefs live outside s
 
 ### `source/Encounters/`
 
-Encounter director, threat pawn helper logic, and telemetry components.
+Encounter director, threat pawn helper logic, telemetry components, encounter data validation, and shadow-planning diagnostics.
 Use this for encounter-level orchestration that is not owned by a specific boss, summon ritual, or Dominion system.
+
+Current safety rule:
+
+- `ABY_EncounterValidationUtility` validates templates, doctrines, pawn pools, role counts, budget fields, difficulty refs, and boss-escalation refs. It is diagnostic-only and must never change real spawns.
+- `ABY_EncounterShadowPlannerUtility` compares legacy/authored packs against the directed encounter planner when explicitly enabled in settings. It logs comparison data only and must not replace the spawned wave.
+- Do not convert authored T1/Dominion/boss escort compositions to fully data-driven selection without a separate playtest/balance pass.
 
 ### `source/Compatibility/`
 

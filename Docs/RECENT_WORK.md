@@ -625,3 +625,29 @@ Validation after this pass: direct local Roslyn compile against bundled RimWorld
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
 
 Note: this pass deliberately did not mass-migrate authored T1/Dominion/fallback wave compositions to generic auto-pools. Those hardcoded spawn lists affect balance and encounter pacing and should be migrated through a separate encounter-template/playtest pass rather than hidden inside a low-risk classification cleanup.
+
+## 2026-05-20 — Encounter validation and shadow-planning diagnostics
+
+A low-risk encounter architecture preparation pass added a validator/shadow-mode layer without changing live encounter composition.
+
+Changed behavior:
+
+```text
+- Encounter data validation can run at startup and from the diagnostics/settings UI.
+- Validation checks templates, doctrines, pawn pools, role counts, budget values, difficulty refs, boss profile refs, and escalation package refs.
+- Shadow planning can be enabled manually to log legacy/authored pack vs directed-plan comparisons.
+- Shadow planning is diagnostic-only; actual spawned waves remain unchanged.
+```
+
+Key files:
+
+```text
+source/Encounters/ABY_EncounterValidationUtility.cs
+source/Encounters/ABY_EncounterShadowPlannerUtility.cs
+source/Core/Bootstrap/AbyssalProtocolModSettings.cs
+source/Core/Bootstrap/AbyssalProtocolMod.cs
+source/Diagnostics/ABY_StabilityDiagnosticsUtility.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+```
+
+Do not use shadow-mode output as automatic authorization to migrate T1, Dominion, or boss escort waves. It is a comparison tool for future playtest-driven encounter migration.

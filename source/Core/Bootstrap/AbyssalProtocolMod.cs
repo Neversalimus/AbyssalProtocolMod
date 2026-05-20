@@ -30,6 +30,7 @@ namespace AbyssalProtocol
             settings = GetSettings<AbyssalProtocolModSettings>();
             settings.ClampValues();
             LongEventHandler.ExecuteWhenFinished(ABY_WeaponChargeSoundUtility.ApplyCurrentSettings);
+            LongEventHandler.ExecuteWhenFinished(ABY_EncounterValidationUtility.LogStartupValidationIfEnabled);
         }
 
         public static void SaveNow()
@@ -47,7 +48,7 @@ namespace AbyssalProtocol
             AbyssalProtocolModSettings s = Settings;
             s.ClampValues();
 
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1540f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1620f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
             Listing_Standard list = new Listing_Standard();
             list.Begin(viewRect);
@@ -211,6 +212,8 @@ namespace AbyssalProtocol
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_HarmonyReport", "Log Harmony patch report on load"), ref settingsData.showHarmonyPatchReportOnLoad, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_HarmonyReportDesc", "Writes a compact count of Abyssal-owned Harmony patches after startup."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_DebugInspect", "Show debug inspect strings"), ref settingsData.showDebugInspectStrings, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_DebugInspectDesc", "Shows extra inspect text such as boss true HP. Intended for testing only."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_Verbose", "Verbose diagnostics"), ref settingsData.verboseDiagnostics, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_VerboseDesc", "Adds throttled messages for AI recovery and periodic snapshots. Use only while debugging."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_EncounterValidation_Enable", "Validate encounter data on startup"), ref settingsData.enableEncounterDataValidation, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_EncounterValidation_EnableDesc", "Checks encounter templates, doctrines, pawn pools, roles, and budgets at startup. It logs warnings only and never changes spawns."));
+            list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_EncounterShadow_Enable", "Enable encounter shadow planning logs"), ref settingsData.enableEncounterShadowPlanning, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_EncounterShadow_EnableDesc", "Diagnostic-only mode: compares selected legacy packs against the directed encounter planner without changing the real spawned wave."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_UIPolish", "Enable Abyssal UI text polish"), ref settingsData.enableUIPolish, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_UIPolishDesc", "Adds small padding and clipping guards to Abyssal custom labels/buttons."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarnings", "Throttle repeated Abyssal warnings"), ref settingsData.suppressRepeatedWarnings, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_ThrottleWarningsDesc", "Prevents repeated compatibility warnings from spamming the log."));
             list.CheckboxLabeled(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_ScreenEffects", "Enable boss screen presentation effects"), ref settingsData.enableBossScreenEffects, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_BossPresentation_ScreenEffectsDesc", "Draws smooth boss-specific fullscreen vignette, bloom, and instability noise without rectangular overlay blocks."));
@@ -241,10 +244,11 @@ namespace AbyssalProtocol
 
             Rect row = list.GetRect(32f);
             float buttonGap = 8f;
-            float buttonWidth = (row.width - buttonGap * 2f) / 3f;
+            float buttonWidth = (row.width - buttonGap * 3f) / 4f;
             Rect openRect = new Rect(row.x, row.y, buttonWidth, 32f);
             Rect logRect = new Rect(openRect.xMax + buttonGap, row.y, buttonWidth, 32f);
-            Rect perfRect = new Rect(logRect.xMax + buttonGap, row.y, buttonWidth, 32f);
+            Rect validateRect = new Rect(logRect.xMax + buttonGap, row.y, buttonWidth, 32f);
+            Rect perfRect = new Rect(validateRect.xMax + buttonGap, row.y, buttonWidth, 32f);
             if (AbyssalStyledWidgets.TextButton(openRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_OpenWindow", "Open diagnostics")))
             {
                 Window_ABY_Diagnostics.OpenWindow();
@@ -252,6 +256,10 @@ namespace AbyssalProtocol
             if (AbyssalStyledWidgets.TextButton(logRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Diagnostics_LogNow", "Log snapshot now")))
             {
                 ABY_StabilityDiagnosticsUtility.LogSnapshot(true);
+            }
+            if (AbyssalStyledWidgets.TextButton(validateRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_EncounterValidation_LogNow", "Validate encounters")))
+            {
+                ABY_EncounterValidationUtility.LogValidationSnapshot(true);
             }
             if (settingsData.enableDevPerformanceAuditWindow && AbyssalStyledWidgets.TextButton(perfRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_Performance_OpenAudit", "Performance audit")))
             {

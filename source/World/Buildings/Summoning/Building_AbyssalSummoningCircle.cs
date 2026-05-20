@@ -1906,9 +1906,18 @@ namespace AbyssalProtocol
                 return;
             }
 
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = BuildPendingHostilePackEntries();
+            ABY_EncounterShadowPlannerUtility.TryLogShadowPlanForLegacyPack(
+                "SummoningCircle." + (pendingRitualId ?? "hostile_pack"),
+                ResolveEncounterShadowPoolId(),
+                ResolveEncounterShadowBudget(entries),
+                ResolveEncounterShadowContentTier(),
+                Map,
+                entries);
+
             if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
                     Map,
-                    BuildPendingHostilePackEntries(),
+                    entries,
                     pendingFaction,
                     pendingSpawnCell,
                     pendingBossLabel,
@@ -2359,6 +2368,14 @@ namespace AbyssalProtocol
                 return;
             }
 
+            ABY_EncounterShadowPlannerUtility.TryLogShadowPlanForLegacyPack(
+                "SummoningCircle." + (pendingRitualId ?? "support_pack") + ".support",
+                ResolveEncounterShadowPoolId(),
+                ResolveEncounterShadowBudget(entries),
+                ResolveEncounterShadowContentTier(),
+                Map,
+                entries);
+
             if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
                     Map,
                     entries,
@@ -2394,6 +2411,59 @@ namespace AbyssalProtocol
                     return 980f;
                 default:
                     return 720f;
+            }
+        }
+
+        private string ResolveEncounterShadowPoolId()
+        {
+            switch ((pendingRitualId ?? string.Empty).ToLowerInvariant())
+            {
+                case "unstable_breach":
+                    return "unstable_breach_portal";
+                case "ember_hunt":
+                    return "ember_hunt_pack";
+                case "choir_engine":
+                    return "choir_escort";
+                case "warden_of_ash":
+                    return "warden_boss_escort";
+                case "archon_beast":
+                    return "archon_boss_escort";
+                case "reactor_saint":
+                    return "reactor_saint_escort";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private float ResolveEncounterShadowBudget(List<AbyssalHostileSummonUtility.HostilePackEntry> entries)
+        {
+            if (pendingScaledThreatBudget > 0)
+            {
+                return pendingScaledThreatBudget;
+            }
+
+            float estimated = ABY_EncounterShadowPlannerUtility.EstimateLegacyBudget(entries);
+            return estimated > 0f ? estimated : GetPendingEscortFallbackBudget();
+        }
+
+        private int ResolveEncounterShadowContentTier()
+        {
+            if (pendingThreatTier > 0)
+            {
+                return Mathf.Clamp(pendingThreatTier, 1, 12);
+            }
+
+            switch ((pendingRitualId ?? string.Empty).ToLowerInvariant())
+            {
+                case "choir_engine":
+                    return 2;
+                case "archon_beast":
+                case "warden_of_ash":
+                    return 2;
+                case "reactor_saint":
+                    return 3;
+                default:
+                    return 1;
             }
         }
 

@@ -10,6 +10,11 @@
   <ABY_Diagnostics_DebugInspectDesc>Shows extra inspect text such as boss true HP. Intended for testing only.</ABY_Diagnostics_DebugInspectDesc>
   <ABY_Diagnostics_Verbose>Verbose diagnostics</ABY_Diagnostics_Verbose>
   <ABY_Diagnostics_VerboseDesc>Adds throttled messages for AI recovery and periodic snapshots. Use only while debugging.</ABY_Diagnostics_VerboseDesc>
+  <ABY_EncounterValidation_Enable>Validate encounter data on startup</ABY_EncounterValidation_Enable>
+  <ABY_EncounterValidation_EnableDesc>Checks encounter templates, doctrines, pawn pools, roles, and budgets at startup. It logs warnings only and never changes spawns.</ABY_EncounterValidation_EnableDesc>
+  <ABY_EncounterShadow_Enable>Enable encounter shadow planning logs</ABY_EncounterShadow_Enable>
+  <ABY_EncounterShadow_EnableDesc>Diagnostic-only mode: compares selected legacy packs against the directed encounter planner without changing the real spawned wave.</ABY_EncounterShadow_EnableDesc>
+  <ABY_EncounterValidation_LogNow>Validate encounters</ABY_EncounterValidation_LogNow>
   <ABY_Diagnostics_UIPolish>Enable Abyssal UI text polish</ABY_Diagnostics_UIPolish>
   <ABY_Diagnostics_UIPolishDesc>Adds small padding and clipping guards to Abyssal custom labels/buttons.</ABY_Diagnostics_UIPolishDesc>
   <ABY_Diagnostics_ThrottleWarnings>Throttle repeated Abyssal warnings</ABY_Diagnostics_ThrottleWarnings>

@@ -10,6 +10,11 @@
   <ABY_Diagnostics_DebugInspectDesc>Показывает дополнительные инспект-строки, например истинные ОЗ боссов. Только для тестов.</ABY_Diagnostics_DebugInspectDesc>
   <ABY_Diagnostics_Verbose>Подробная диагностика</ABY_Diagnostics_Verbose>
   <ABY_Diagnostics_VerboseDesc>Добавляет ограниченные по частоте сообщения восстановления ИИ и периодические снимки состояния. Использовать только при отладке.</ABY_Diagnostics_VerboseDesc>
+  <ABY_EncounterValidation_Enable>Проверять данные столкновений при запуске</ABY_EncounterValidation_Enable>
+  <ABY_EncounterValidation_EnableDesc>Проверяет шаблоны столкновений, доктрины, пулы пешек, роли и бюджеты при запуске. Только пишет предупреждения в лог и никогда не меняет спавн.</ABY_EncounterValidation_EnableDesc>
+  <ABY_EncounterShadow_Enable>Включить shadow-логи планировщика столкновений</ABY_EncounterShadow_Enable>
+  <ABY_EncounterShadow_EnableDesc>Только диагностика: сравнивает выбранные legacy-отряды с направленным планировщиком столкновений, не меняя реальную волну.</ABY_EncounterShadow_EnableDesc>
+  <ABY_EncounterValidation_LogNow>Проверить столкновения</ABY_EncounterValidation_LogNow>
   <ABY_Diagnostics_UIPolish>Включить полировку текста интерфейса Бездны</ABY_Diagnostics_UIPolish>
   <ABY_Diagnostics_UIPolishDesc>Добавляет небольшой отступ и защиту от обрезания для бездненных надписей и кнопок.</ABY_Diagnostics_UIPolishDesc>
   <ABY_Diagnostics_ThrottleWarnings>Ограничивать повторяющиеся предупреждения</ABY_Diagnostics_ThrottleWarnings>

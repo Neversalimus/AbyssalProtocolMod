@@ -48,6 +48,8 @@ namespace AbyssalProtocol
         public ABY_VisualIntensity visualIntensity = ABY_VisualIntensity.Full;
         public bool enableDominionAmbientVfx = true;
         public bool enableDevPerformanceAuditWindow = true;
+        public bool enableEncounterDataValidation = true;
+        public bool enableEncounterShadowPlanning = false;
 
         public override void ExposeData()
         {
@@ -93,6 +95,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref visualIntensity, "visualIntensity", ABY_VisualIntensity.Full);
             Scribe_Values.Look(ref enableDominionAmbientVfx, "enableDominionAmbientVfx", true);
             Scribe_Values.Look(ref enableDevPerformanceAuditWindow, "enableDevPerformanceAuditWindow", true);
+            Scribe_Values.Look(ref enableEncounterDataValidation, "enableEncounterDataValidation", true);
+            Scribe_Values.Look(ref enableEncounterShadowPlanning, "enableEncounterShadowPlanning", false);
             ClampValues();
         }
 
@@ -152,6 +156,8 @@ namespace AbyssalProtocol
             visualIntensity = ABY_VisualIntensity.Full;
             enableDominionAmbientVfx = true;
             enableDevPerformanceAuditWindow = true;
+            enableEncounterDataValidation = true;
+            enableEncounterShadowPlanning = false;
         }
 
         public float ResolveDominionWeatherIntensity()
