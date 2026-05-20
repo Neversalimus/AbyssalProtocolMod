@@ -56,4 +56,6 @@
   <ABY_TurretModule_BreachAegisRelay.description>Компактный релейный узел, оборачивающий модульную турель неглубоким жертвенным эгис-полем. Это не стена, а отсрочка, купленная энергией и зарядом осадка.</ABY_TurretModule_BreachAegisRelay.description>
   <ABY_TurretModule_CrownAegisMatrix.label>коронная матрица эгиса</ABY_TurretModule_CrownAegisMatrix.label>
   <ABY_TurretModule_CrownAegisMatrix.description>Коронная эгис-решётка, заставляющая входящий удар истощиться о бледно-золотое поле приговора до того, как он достигнет корпуса турели.</ABY_TurretModule_CrownAegisMatrix.description>
+  <ABY_TurretModule_ExecutionLogicCore.label>ядро логики казни</ABY_TurretModule_ExecutionLogicCore.label>
+  <ABY_TurretModule_ExecutionLogicCore.description>Процессор приговора, позволяющий модульной турели распознавать повреждённые враждебные тела как цели, уже близкие к краху.</ABY_TurretModule_ExecutionLogicCore.description>
 </LanguageData>

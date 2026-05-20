@@ -1291,6 +1291,11 @@ namespace AbyssalProtocol
                 score += module.targetPriorityShieldedBonus;
             }
 
+            if (module.targetPriorityWoundedBonus > 0.001f)
+            {
+                score += ComputeWoundedTargetBonus(candidate, module);
+            }
+
             if (module.preferLineTargets)
             {
                 int extraTargets = CountPotentialLineTargets(candidate, module, requireLineOfSight);
@@ -1350,6 +1355,30 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private static float ComputeWoundedTargetBonus(Pawn pawn, ABY_TurretModuleDef module)
+        {
+            if (pawn?.health?.summaryHealth == null || module == null || module.targetPriorityWoundedBonus <= 0.001f)
+            {
+                return 0f;
+            }
+
+            float threshold = Mathf.Clamp(module.targetPriorityWoundedHealthThreshold, 0.05f, 0.98f);
+            float healthFraction = Mathf.Clamp01(pawn.health.summaryHealth.SummaryHealthPercent);
+            if (healthFraction >= threshold)
+            {
+                return 0f;
+            }
+
+            float woundFactor = Mathf.Clamp01((threshold - healthFraction) / threshold);
+            float bonus = module.targetPriorityWoundedBonus * woundFactor;
+            if (healthFraction < 0.28f)
+            {
+                bonus += module.targetPriorityWoundedBonus * 0.35f;
+            }
+
+            return bonus;
         }
 
         private int CountPotentialLineTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)

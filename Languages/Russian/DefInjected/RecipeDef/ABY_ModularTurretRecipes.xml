@@ -79,4 +79,7 @@
   <ABY_CraftTurretModule_CrownAegisMatrix.label>выковать коронную матрицу эгиса</ABY_CraftTurretModule_CrownAegisMatrix.label>
   <ABY_CraftTurretModule_CrownAegisMatrix.description>Собрать коронную эгис-матрицу для модульного корпуса турели.</ABY_CraftTurretModule_CrownAegisMatrix.description>
   <ABY_CraftTurretModule_CrownAegisMatrix.jobString>Ковка коронной матрицы эгиса.</ABY_CraftTurretModule_CrownAegisMatrix.jobString>
+  <ABY_CraftTurretModule_ExecutionLogicCore.label>выковать ядро логики казни</ABY_CraftTurretModule_ExecutionLogicCore.label>
+  <ABY_CraftTurretModule_ExecutionLogicCore.description>Выковать пассивный процессор приговора, обучающий модульную турель добивать раненые враждебные тела до того, как они восстановятся или продолжат давить линию обороны.</ABY_CraftTurretModule_ExecutionLogicCore.description>
+  <ABY_CraftTurretModule_ExecutionLogicCore.jobString>куёт ядро логики казни.</ABY_CraftTurretModule_ExecutionLogicCore.jobString>
 </LanguageData>

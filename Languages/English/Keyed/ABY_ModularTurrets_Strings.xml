@@ -260,4 +260,7 @@
   <ABY_TurretInfo_ShieldRechargeDesc>How quickly the passive aegis recovers after its recharge delay ends.</ABY_TurretInfo_ShieldRechargeDesc>
   <ABY_TurretStat_ShieldCapacity>Aegis capacity: {0}</ABY_TurretStat_ShieldCapacity>
   <ABY_TurretStat_ShieldRecharge>Aegis recharge: {0}/s after {1}</ABY_TurretStat_ShieldRecharge>
+  <ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>Execution Logic Core</ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>
+  <ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>wounded target execution</ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>Biases target scans toward wounded hostile pawns, especially critically damaged targets, without adding a new per-tick global scan.</ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>
 </LanguageData>

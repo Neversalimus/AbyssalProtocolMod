@@ -589,6 +589,35 @@
     </modExtensions>
   </ThingDef>
   <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_ExecutionLogicCore</defName>
+    <label>execution logic core</label>
+    <description>A verdict processor that lets a modular turret recognize damaged hostile bodies as targets already close to collapse.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_ExecutionLogicCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>520</MarketValue>
+      <Mass>2.2</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>620</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ShieldBurnCapacitor</defName>
     <label>shield-burn capacitor</label>
     <description>A crown-fed capacitor that locks turret attention onto shields, machines and construct bodies before their protection can dominate the field.</description>

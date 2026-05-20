@@ -1,3 +1,18 @@
+
+## 2026-05-21 — Execution Logic Core passive turret module
+
+Added a Tier III passive turret targeting module that biases existing modular turret target scans toward wounded hostile pawns. The implementation uses additive scoring during the existing throttled scan path, not a new per-tick map scan.
+
+Touched areas:
+- `source/Defs/Turrets/ABY_TurretModuleDef.cs`
+- `source/Comps/CompAbyssalModularTurret.cs`
+- `Defs/Misc/ABY_TurretModuleDefs.xml`
+- `Defs/ThingDefs/ABY_TurretModules.xml`
+- `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`
+- turret module localization and item icon assets
+
+Follow-up smoke test: verify Forge visibility, installation into passive slots, and that wounded-but-still-valid hostile pawns are preferred without causing scan spikes.
+
 # Abyssal Protocol — Recent Work Notes
 
 ## 2026-05-20 — Emergency rebuild for residue sintering extension load errors

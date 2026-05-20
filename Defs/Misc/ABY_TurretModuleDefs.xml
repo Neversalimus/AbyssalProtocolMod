@@ -573,6 +573,24 @@
     <extraPowerDraw>170</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
   <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_ExecutionLogicCore</defName>
+    <label>Execution Logic Core</label>
+    <description>A verdict processor that marks already-broken bodies as solved targets, teaching the chassis to finish wounded threats before they can recover, flee or keep pressure on the firing line.</description>
+    <effectSummary>Biases target scans toward wounded hostile pawns, especially critically damaged targets, without adding a new per-tick global scan.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_ExecutionLogicCore</thingDef>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <role>wounded target execution</role>
+    <tier>3</tier>
+    <targetPriorityWoundedBonus>3200</targetPriorityWoundedBonus>
+    <targetPriorityWoundedHealthThreshold>0.68</targetPriorityWoundedHealthThreshold>
+    <cooldownMultiplier>1.02</cooldownMultiplier>
+    <extraPowerDraw>190</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+
+  <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_ShieldBurnCapacitor</defName>
     <label>Shield-Burn Capacitor</label>
     <description>A crown-fed capacitor that locks turret attention onto shields, machines and construct bodies before their protection can dominate the field.</description>

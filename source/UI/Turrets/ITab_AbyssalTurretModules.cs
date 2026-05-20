@@ -718,7 +718,7 @@ namespace AbyssalProtocol
                     lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_ShieldRecharge", "Aegis recharge: {0}/s after {1}", (module.turretShieldRechargePerTick * 60f).ToString("0.0"), ABY_ModularTurretUtility.FormatTicksAsSeconds(module.turretShieldRechargeDelayTicks)));
                 }
 
-                if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
+                if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.targetPriorityWoundedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
                 {
                     lines.Add(ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretStat_TargetingLogic", "Targeting logic: enhanced"));
                 }

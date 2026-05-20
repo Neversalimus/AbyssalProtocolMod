@@ -1198,6 +1198,50 @@
     </modExtensions>
   </RecipeDef>
   <RecipeDef>
+    <defName>ABY_CraftTurretModule_ExecutionLogicCore</defName>
+    <label>forge execution logic core</label>
+    <description>Forge a passive verdict processor that teaches a modular turret to finish wounded hostile bodies before they recover or keep pressure on the line.</description>
+    <jobString>forging execution logic core.</jobString>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <workAmount>3600</workAmount>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+    </ingredients>
+    <products>
+      <ABY_TurretModule_ExecutionLogicCore>1</ABY_TurretModule_ExecutionLogicCore>
+    </products>
+    <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
+  </RecipeDef>
+
+  <RecipeDef>
     <defName>ABY_CraftTurretModule_ShieldBurnCapacitor</defName>
     <label>forge shield-burn capacitor</label>
     <description>Assemble a shield-burn capacitor for abyssal modular turret chassis.</description>

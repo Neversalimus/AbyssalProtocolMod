@@ -260,4 +260,7 @@
   <ABY_TurretInfo_ShieldRechargeDesc>Скорость восстановления пассивного эгиса после задержки перезарядки.</ABY_TurretInfo_ShieldRechargeDesc>
   <ABY_TurretStat_ShieldCapacity>Ёмкость эгиса: {0}</ABY_TurretStat_ShieldCapacity>
   <ABY_TurretStat_ShieldRecharge>Восстановление эгиса: {0}/с после {1}</ABY_TurretStat_ShieldRecharge>
+  <ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>Ядро логики казни</ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>
+  <ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>добивание раненых целей</ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>
+  <ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>Смещает выбор цели к раненым враждебным пешкам, особенно критически повреждённым, без нового глобального сканирования каждый тик.</ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>
 </LanguageData>

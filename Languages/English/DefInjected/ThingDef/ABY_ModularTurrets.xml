@@ -54,4 +54,6 @@
   <ABY_TurretModule_BreachAegisRelay.description>A compact relay that wraps an abyssal turret chassis in a shallow sacrificial aegis field. It is not a wall; it is a delay bought with power and residue charge.</ABY_TurretModule_BreachAegisRelay.description>
   <ABY_TurretModule_CrownAegisMatrix.label>Crown Aegis Matrix</ABY_TurretModule_CrownAegisMatrix.label>
   <ABY_TurretModule_CrownAegisMatrix.description>A crown-tier aegis lattice that forces incoming punishment to spend itself against a pale-gold verdict field before the turret body can be reached.</ABY_TurretModule_CrownAegisMatrix.description>
+  <ABY_TurretModule_ExecutionLogicCore.label>execution logic core</ABY_TurretModule_ExecutionLogicCore.label>
+  <ABY_TurretModule_ExecutionLogicCore.description>A verdict processor that lets a modular turret recognize damaged hostile bodies as targets already close to collapse.</ABY_TurretModule_ExecutionLogicCore.description>
 </LanguageData>

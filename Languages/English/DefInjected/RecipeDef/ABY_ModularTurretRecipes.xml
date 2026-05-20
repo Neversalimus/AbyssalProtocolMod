@@ -34,4 +34,7 @@
   <ABY_CraftTurretModule_CrownAegisMatrix.label>forge crown aegis matrix</ABY_CraftTurretModule_CrownAegisMatrix.label>
   <ABY_CraftTurretModule_CrownAegisMatrix.description>Assemble a crown-tier aegis matrix for abyssal modular turret chassis.</ABY_CraftTurretModule_CrownAegisMatrix.description>
   <ABY_CraftTurretModule_CrownAegisMatrix.jobString>Forging crown aegis matrix.</ABY_CraftTurretModule_CrownAegisMatrix.jobString>
+  <ABY_CraftTurretModule_ExecutionLogicCore.label>forge execution logic core</ABY_CraftTurretModule_ExecutionLogicCore.label>
+  <ABY_CraftTurretModule_ExecutionLogicCore.description>Forge a passive verdict processor that teaches a modular turret to finish wounded hostile bodies before they recover or keep pressure on the line.</ABY_CraftTurretModule_ExecutionLogicCore.description>
+  <ABY_CraftTurretModule_ExecutionLogicCore.jobString>forging execution logic core.</ABY_CraftTurretModule_ExecutionLogicCore.jobString>
 </LanguageData>

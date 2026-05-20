@@ -219,7 +219,7 @@ namespace AbyssalProtocol
                     "ABY_TurretInfo_ShieldRechargeDesc", "How quickly the passive aegis recovers after its recharge delay ends.");
             }
 
-            if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
+            if (module.targetPriorityCombatPowerScale > 0.001f || module.targetPriorityBossBonus > 0.001f || module.targetPriorityConstructBonus > 0.001f || module.targetPriorityMechanoidBonus > 0.001f || module.targetPriorityShieldedBonus > 0.001f || module.targetPriorityWoundedBonus > 0.001f || module.preferClusteredTargets || module.preferLineTargets)
             {
                 AddEntry(result, category, ref order,
                     "ABY_TurretInfo_TargetingLogic", "Targeting logic",

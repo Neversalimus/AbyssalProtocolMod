@@ -45,6 +45,8 @@ namespace AbyssalProtocol
         public float targetPriorityConstructBonus;
         public float targetPriorityMechanoidBonus;
         public float targetPriorityShieldedBonus;
+        public float targetPriorityWoundedBonus;
+        public float targetPriorityWoundedHealthThreshold = 0.62f;
         public bool preferClusteredTargets;
         public float clusterTargetScanRadius = 4f;
         public int clusterTargetMaxBonusCount = 5;

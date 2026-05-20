@@ -109,4 +109,7 @@
   <ABY_TMD_CrownAegisMatrix.description>A crown-tier matrix that forces damage to break against a pale-gold verdict field before it reaches the turret chassis.</ABY_TMD_CrownAegisMatrix.description>
   <ABY_TMD_CrownAegisMatrix.effectSummary>Adds a large rechargeable aegis pool to the turret chassis, with stronger capacity and faster recovery than the breach relay at a severe power cost.</ABY_TMD_CrownAegisMatrix.effectSummary>
   <ABY_TMD_CrownAegisMatrix.role>crown aegis shield</ABY_TMD_CrownAegisMatrix.role>
+  <ABY_TMD_ExecutionLogicCore.label>Execution Logic Core</ABY_TMD_ExecutionLogicCore.label>
+  <ABY_TMD_ExecutionLogicCore.description>A verdict processor that marks already-broken bodies as solved targets, teaching the chassis to finish wounded threats before they can recover, flee or keep pressure on the firing line.</ABY_TMD_ExecutionLogicCore.description>
+  <ABY_TMD_ExecutionLogicCore.effectSummary>Biases target scans toward wounded hostile pawns, especially critically damaged targets, without adding a new per-tick global scan.</ABY_TMD_ExecutionLogicCore.effectSummary>
 </LanguageData>

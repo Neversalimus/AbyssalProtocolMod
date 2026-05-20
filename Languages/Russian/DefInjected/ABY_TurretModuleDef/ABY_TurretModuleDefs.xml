@@ -109,4 +109,7 @@
   <ABY_TMD_CrownAegisMatrix.description>Коронная матрица, заставляющая урон разбиваться о бледно-золотое поле приговора до того, как он достигнет корпуса турели.</ABY_TMD_CrownAegisMatrix.description>
   <ABY_TMD_CrownAegisMatrix.effectSummary>Добавляет корпусу турели большой восстанавливаемый запас эгиса: больше ёмкости и быстрее восстановление, чем у разломного реле, но с тяжёлой нагрузкой на сеть.</ABY_TMD_CrownAegisMatrix.effectSummary>
   <ABY_TMD_CrownAegisMatrix.role>коронный эгис-щит</ABY_TMD_CrownAegisMatrix.role>
+  <ABY_TMD_ExecutionLogicCore.label>Ядро логики казни</ABY_TMD_ExecutionLogicCore.label>
+  <ABY_TMD_ExecutionLogicCore.description>Процессор приговора, помечающий уже сломанные тела как решённые цели и обучающий шасси добивать раненые угрозы до того, как они восстановятся, отступят или продолжат давить огневую линию.</ABY_TMD_ExecutionLogicCore.description>
+  <ABY_TMD_ExecutionLogicCore.effectSummary>Смещает выбор цели к раненым враждебным пешкам, особенно критически повреждённым, без нового глобального сканирования каждый тик.</ABY_TMD_ExecutionLogicCore.effectSummary>
 </LanguageData>

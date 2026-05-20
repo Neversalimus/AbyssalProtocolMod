@@ -1,3 +1,8 @@
+
+## Modular turret passive target scoring must stay on throttled scans
+
+When adding passive modules that alter target choice, keep the logic inside the existing modular turret target scoring path. Do not add per-tick map-wide pawn scans for passive targeting modules. Execution-style wounded targeting, cluster targeting and shield/mech prioritization should remain additive scoring hints evaluated only during the existing target scan interval.
+
 # Abyssal Protocol — Known Risks and Regressions
 
 This document tracks recurring technical, visual, UI, runtime, and workflow risks in Abyssal Protocol.
