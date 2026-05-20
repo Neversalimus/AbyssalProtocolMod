@@ -74,13 +74,12 @@ For modular turret localization specifically, also inspect:
 
 ```text
 Defs/Misc/ABY_TurretModuleDefs.xml
-Languages/English/DefInjected/ABY_TurretModuleDef/
-Languages/Russian/DefInjected/ABY_TurretModuleDef/
+Languages/<Lang>/Keyed/ABY_ModularTurrets_Strings.xml
 Languages/<Lang>/DefInjected/ThingDef/ABY_ModularTurrets.xml
 Languages/<Lang>/DefInjected/RecipeDef/ABY_ModularTurretRecipes.xml
 ```
 
-Do not leave tactical role/effect summaries as raw English in Russian Forge cards.
+Do not create `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/`; RimWorld treats that unqualified custom-def folder as an unknown def type. Keep module label/role/effect strings in Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*`, and `ABY_TurretModuleEffect_*` entries. Do not leave tactical role/effect summaries as raw English in Russian Forge cards.
 
 Do not machine-translate item names directly from English. Use the glossary for canonical forms such as `Рифт-клинок`, `Рифт-карабин`, `Хор Забвения`, `Панцирь святого носителя Эгиды`, `Сигила угольных гончих`, and Russian plural forms for requirement counts.
 

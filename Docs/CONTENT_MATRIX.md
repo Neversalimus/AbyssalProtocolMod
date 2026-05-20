@@ -91,7 +91,7 @@ Use these statuses in future updates:
 | Enemy pawn framework | Implemented | `source/Pawns/`, `source/Pawns/Comps/`, `source/Pawns/DeathActions/`, `source/Pawns/MapComponents/` | `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `Defs/HediffDefs/` | pawn directional textures | Bestiary / inspect / combat UI | encounter templates and pawn pools | AI loop guard, anti-tame/animal workflow, hostile auto behavior need careful testing. |
 | Generic comps / combat comps | Implemented | `source/Comps/`, `source/Comps/Properties/`, `source/Combat/Comps/` | `Defs/ThingDefs/`, `Defs/HediffDefs/` | mixed | inspect/UI when relevant | system-specific | Avoid expanding monolithic `source/Comps/` when a narrower module owns the new comp. |
 | Weapon projectiles | Implemented | `source/Combat/Projectiles/Weapons/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/Projectiles/Bosses/`, `source/Combat/VFX/`, `source/Combat/Verbs/` | `Defs/ThingDefs/`, `Defs/ThingDefs_Motes/`, `Defs/DamageDefs/`, `Defs/SoundDefs/` | projectile/mote/VFX/audio | combat feedback | weapon recipes/forge unlocks | Class names in XML must match compiled DLL. Rebuild required for new projectile C#. |
-| Modular turrets | Implemented / Expanding | `source/Defs/Turrets/`, `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/VFX/`, `source/Core/Misc/ABY_ModularTurretUtility.cs`, `source/UI/Gizmos/Gizmo_ABY_AegisStatus.cs` | `Defs/ThingDefs/`, `Defs/Misc/*TurretModuleDef.xml`, `Defs/RecipeDefs/` | `Textures/Things/Item/TurretModules/`, turret overlay/projectile/VFX textures, sounds | turret ITab/module UI + Aegis status gizmo + Forge recipes | forge/residue/gating | Large growth area; each new module must wire item, module def, recipe, texture, localization, and UI stat exposure. Weapon modules may also require projectile/VFX/audio. Passive modules can use signed power draw, range/min-range, cooldown, damage, Aegis shield fields/gizmo status, and throttled target-priority fields. |
+| Modular turrets | Implemented / Expanding | `source/Defs/Turrets/`, `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/VFX/`, `source/Core/Misc/ABY_ModularTurretUtility.cs` | `Defs/ThingDefs/`, `Defs/Misc/*TurretModuleDef.xml`, `Defs/RecipeDefs/` | `Textures/Things/Item/TurretModules/`, turret overlay/projectile/VFX textures, sounds | turret ITab/module UI + Forge recipes | forge/residue/gating | Large growth area; each new module must wire item, module def, recipe, texture, localization, and UI stat exposure. Weapon modules may also require projectile/VFX/audio. Passive modules can use signed power draw, range/min-range, cooldown, damage, and throttled target-priority fields. |
 | Apparel / armor / Aegis | Implemented / Fragile | `source/Apparel/`, `source/Apparel/Comps/`, `source/Apparel/Stats/` | `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Defs/HediffDefs/`, `Patches/ABY_ApparelAegis_*` | `Textures/Apparel/` | apparel info cards, gizmo/status | Forge recipes/unlocks | Directional overlay/body type restrictions are easy to break. Include all body types/directions when required. |
 | Implants / hediffs / abilities | Implemented / Partial | `source/Hediffs/`, `source/Hediffs/Comps/`, `source/Bosses/Rupture/Comps/`, `source/Progression/` | `Defs/HediffDefs/`, `Defs/AbilityDefs/`, `Defs/RecipeDefs/` | implant/item icons | info cards, ability UI | Forge/research/boss drop gates | Need accurate stat/part efficiency presentation and surgery/recipe wiring. |
 | Bestiary / lore codex | Implemented / Partial | `source/UI/Bestiary/` | `Defs/ThingDefs/`, `Defs/PawnKindDefs/`, `Languages/` | UI textures | Bestiary window | encounter/progression rewards | Use lore/codex docs as tone source, but implemented state must be checked in files. |
@@ -257,14 +257,17 @@ Do not update it for isolated balance or typo changes unless the matrix would be
 
 ## Modular turret localization ownership
 
-Custom turret module definitions in `Defs/Misc/ABY_TurretModuleDefs.xml` are not standard ThingDefs. Their player-facing fields must be localized through:
+Custom turret module definitions in `Defs/Misc/ABY_TurretModuleDefs.xml` are custom namespaced defs (`AbyssalProtocol.ABY_TurretModuleDef`). Do not localize them through `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/`: RimWorld treats that unqualified folder as an unknown def type and reports a language load error.
+
+Localize module display text through Keyed entries instead:
 
 ```text
-Languages/English/DefInjected/ABY_TurretModuleDef/
-Languages/Russian/DefInjected/ABY_TurretModuleDef/
+ABY_TurretModuleLabel_<defName>
+ABY_TurretModuleRole_<defName>
+ABY_TurretModuleEffect_<defName>
 ```
 
-Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/ThingDef/`, and crafting text belongs to `Languages/<Lang>/DefInjected/RecipeDef/`. Keep all three layers synchronized so Forge cards, item info, and recipe bills do not drift.
+Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/ThingDef/`, and crafting text belongs to `Languages/<Lang>/DefInjected/RecipeDef/`. Keep the Keyed module strings, item info, and recipe bills synchronized so Forge cards, item info, and recipe bills do not drift.
 
 
 ## Optimization and release tooling
@@ -333,4 +336,4 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 ## Passive turret aegis modules — 2026-05-20
 | System | Status | Source | Defs/assets | UI exposure | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Passive turret aegis modules | Implemented / needs smoke test | `source/Comps/CompAbyssalModularTurret.cs`, `source/Defs/Turrets/ABY_TurretModuleDef.cs`, `source/UI/Turrets/ITab_AbyssalTurretModules.cs`, `source/Comps/CompABY_TurretModuleInfoCard.cs`, `source/UI/Gizmos/Gizmo_ABY_AegisStatus.cs` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`, `Textures/Things/Item/TurretModules/` | turret inspect string, ITab stat text, module info card, selected-turret Aegis gizmo | Shield modules add `turretShieldMax`, recharge-per-tick and recharge-delay fields. They absorb incoming damage before damage multipliers, recharge only while operational, and show charge/state through the shared styled Aegis gizmo when a player turret is selected. |
+| Passive turret aegis modules | Implemented / needs smoke test | `source/Comps/CompAbyssalModularTurret.cs`, `source/Defs/Turrets/ABY_TurretModuleDef.cs`, `source/UI/Turrets/ITab_AbyssalTurretModules.cs`, `source/Comps/CompABY_TurretModuleInfoCard.cs` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`, `Textures/Things/Item/TurretModules/` | turret inspect string, ITab stat text, module info card | Shield modules add `turretShieldMax`, recharge-per-tick and recharge-delay fields. They absorb incoming damage before damage multipliers and recharge only while operational. |

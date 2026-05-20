@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-  <ABY_BreakCrown_Start>The hidden crown anchors wake beneath the rupture.</ABY_BreakCrown_Start>
-  <ABY_BreakCrown_Unlocked>The broken crown opens a forbidden rupture path.</ABY_BreakCrown_Unlocked>
+  <ABY_BreakCrown_Start>The crown shudders, but no voice answers.</ABY_BreakCrown_Start>
+  <ABY_BreakCrown_Unlocked>A sealed fracture opens in the crown lattice.</ABY_BreakCrown_Unlocked>
   <ABY_BreakCrown_Failed>The crown anchors collapse.</ABY_BreakCrown_Failed>
 </LanguageData>

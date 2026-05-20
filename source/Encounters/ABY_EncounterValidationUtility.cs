@@ -182,7 +182,7 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
-                ABY_LogThrottleUtility.Warning("encounter-validation-failed", "[Abyssal Protocol] Encounter validation failed: " + ex.GetType().Name + ": " + ex.Message, StartupThrottleTicks);
+                SafeVerbose("encounter-validation-failed", "Encounter validation startup diagnostic skipped: " + ex.GetType().Name + ": " + ex.Message);
             }
         }
 
@@ -213,8 +213,8 @@ namespace AbyssalProtocol
             HashSet<string> knownPools = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             HashSet<string> knownRoles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            RunValidationStage(report, "known pool index", () => knownPools = BuildKnownPoolSet() ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
-            RunValidationStage(report, "known role index", () => knownRoles = BuildKnownRoleSet() ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            RunValidationStage(report, "known pool discovery", () => knownPools = BuildKnownPoolSet(report) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            RunValidationStage(report, "known role discovery", () => knownRoles = BuildKnownRoleSet(report) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
             RunValidationStage(report, "pawn kind scaling", () => ValidatePawnKindScaling(report, knownPools));
             RunValidationStage(report, "encounter templates", () => ValidateTemplates(report, knownPools, knownRoles));
             RunValidationStage(report, "threat doctrines", () => ValidateDoctrines(report, knownPools, knownRoles));
@@ -229,10 +229,10 @@ namespace AbyssalProtocol
             return report;
         }
 
-        private static HashSet<string> BuildKnownPoolSet()
+        private static HashSet<string> BuildKnownPoolSet(ABY_EncounterValidationReport report)
         {
             HashSet<string> pools = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
+            List<ABY_EncounterTemplateDef> templates = SafeDefList<ABY_EncounterTemplateDef>(report, "EncounterTemplateDef");
             for (int i = 0; i < templates.Count; i++)
             {
                 string poolId = templates[i]?.poolId;
@@ -242,7 +242,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
+            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -261,7 +261,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            List<ABY_ThreatDoctrineDef> doctrines = SafeAllDefs<ABY_ThreatDoctrineDef>();
+            List<ABY_ThreatDoctrineDef> doctrines = SafeDefList<ABY_ThreatDoctrineDef>(report, "ThreatDoctrineDef");
             for (int i = 0; i < doctrines.Count; i++)
             {
                 if (doctrines[i]?.poolIds == null)
@@ -282,10 +282,10 @@ namespace AbyssalProtocol
             return pools;
         }
 
-        private static HashSet<string> BuildKnownRoleSet()
+        private static HashSet<string> BuildKnownRoleSet(ABY_EncounterValidationReport report)
         {
             HashSet<string> roles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
+            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -307,7 +307,7 @@ namespace AbyssalProtocol
 
         private static void ValidatePawnKindScaling(ABY_EncounterValidationReport report, HashSet<string> knownPools)
         {
-            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
+            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
                 PawnKindDef pawn = pawns[i];
@@ -371,7 +371,7 @@ namespace AbyssalProtocol
 
         private static void ValidateTemplates(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
+            List<ABY_EncounterTemplateDef> templates = SafeDefList<ABY_EncounterTemplateDef>(report, "EncounterTemplateDef");
             for (int i = 0; i < templates.Count; i++)
             {
                 ABY_EncounterTemplateDef template = templates[i];
@@ -424,7 +424,7 @@ namespace AbyssalProtocol
 
         private static void ValidateDoctrines(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_ThreatDoctrineDef> doctrines = SafeAllDefs<ABY_ThreatDoctrineDef>();
+            List<ABY_ThreatDoctrineDef> doctrines = SafeDefList<ABY_ThreatDoctrineDef>(report, "ThreatDoctrineDef");
             for (int i = 0; i < doctrines.Count; i++)
             {
                 ABY_ThreatDoctrineDef doctrine = doctrines[i];
@@ -483,7 +483,7 @@ namespace AbyssalProtocol
 
         private static void ValidateEscalationPackages(ABY_EncounterValidationReport report, HashSet<string> knownPools, HashSet<string> knownRoles)
         {
-            List<ABY_BossEscalationPackageDef> packages = SafeAllDefs<ABY_BossEscalationPackageDef>();
+            List<ABY_BossEscalationPackageDef> packages = SafeDefList<ABY_BossEscalationPackageDef>(report, "BossEscalationPackageDef");
             for (int i = 0; i < packages.Count; i++)
             {
                 ABY_BossEscalationPackageDef package = packages[i];
@@ -642,7 +642,7 @@ namespace AbyssalProtocol
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "contains an empty boss profile reference.");
                 }
-                else if (DefDatabase<ABY_BossDifficultyProfileDef>.GetNamedSilentFail(defName) == null)
+                else if (SafeGetNamed<ABY_BossDifficultyProfileDef>(defName) == null)
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "references missing boss profile '" + defName + "'.");
                 }
@@ -663,7 +663,7 @@ namespace AbyssalProtocol
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, fieldName + " contains an empty doctrine reference.");
                 }
-                else if (DefDatabase<ABY_ThreatDoctrineDef>.GetNamedSilentFail(defName) == null)
+                else if (SafeGetNamed<ABY_ThreatDoctrineDef>(defName) == null)
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, fieldName + " references missing doctrine '" + defName + "'.");
                 }
@@ -677,7 +677,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            return DefDatabase<ABY_DifficultyProfileDef>.GetNamedSilentFail(defName) != null;
+            return SafeGetNamed<ABY_DifficultyProfileDef>(defName) != null;
         }
 
         private static bool PoolHasTemplate(string poolId)
@@ -687,7 +687,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<ABY_EncounterTemplateDef> templates = SafeAllDefs<ABY_EncounterTemplateDef>();
+            List<ABY_EncounterTemplateDef> templates = SafeDefList<ABY_EncounterTemplateDef>(null, "EncounterTemplateDef");
             for (int i = 0; i < templates.Count; i++)
             {
                 ABY_EncounterTemplateDef template = templates[i];
@@ -707,7 +707,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            List<PawnKindDef> pawns = SafeAllDefs<PawnKindDef>();
+            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(null, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
                 DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
@@ -728,7 +728,6 @@ namespace AbyssalProtocol
             return false;
         }
 
-
         private static void RunValidationStage(ABY_EncounterValidationReport report, string stageName, Action action)
         {
             if (action == null)
@@ -742,11 +741,12 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
-                Add(report, ABY_EncounterValidationSeverity.Warning, "EncounterValidation", "Skipped " + (stageName ?? "unknown stage") + " after " + ex.GetType().Name + ": " + ex.Message);
+                Add(report, ABY_EncounterValidationSeverity.Info, "EncounterValidation", "Skipped " + (stageName ?? "validation stage") + " after " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
+                SafeVerbose("encounter-validation-stage-" + (stageName ?? "unknown"), "Encounter validation stage skipped: " + (stageName ?? "unknown") + " — " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
             }
         }
 
-        private static List<T> SafeAllDefs<T>() where T : Def
+        private static List<T> SafeDefList<T>(ABY_EncounterValidationReport report, string sourceLabel) where T : Def
         {
             try
             {
@@ -754,8 +754,38 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
-                ABY_StabilityDiagnosticsUtility.Verbose("encounter-validation-defdb-" + typeof(T).Name, "Encounter validation could not read DefDatabase<" + typeof(T).Name + ">: " + ex.GetType().Name + ": " + ex.Message, StartupThrottleTicks);
+                Add(report, ABY_EncounterValidationSeverity.Info, "EncounterValidation", "Could not read " + (sourceLabel ?? typeof(T).Name) + " definitions during validation: " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
+                SafeVerbose("encounter-validation-deflist-" + typeof(T).Name, "Encounter validation def list skipped for " + typeof(T).Name + ": " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
                 return new List<T>();
+            }
+        }
+
+        private static T SafeGetNamed<T>(string defName) where T : Def
+        {
+            if (defName.NullOrEmpty())
+            {
+                return null;
+            }
+
+            try
+            {
+                return DefDatabase<T>.GetNamedSilentFail(defName);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static void SafeVerbose(string key, string message)
+        {
+            try
+            {
+                ABY_StabilityDiagnosticsUtility.Verbose(key ?? "encounter-validation", message ?? string.Empty, StartupThrottleTicks);
+            }
+            catch
+            {
+                // Validation diagnostics must never create a startup warning of their own.
             }
         }
 

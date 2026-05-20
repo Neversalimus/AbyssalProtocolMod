@@ -579,170 +579,6 @@ namespace AbyssalProtocol
             TryRemovePassiveModule(index, out _);
         }
 
-
-        public override IEnumerable<Gizmo> CompGetGizmosExtra()
-        {
-            foreach (Gizmo gizmo in base.CompGetGizmosExtra())
-            {
-                yield return gizmo;
-            }
-
-            if (!FeatureEnabled || !HasPassiveShield || parent == null || parent.Destroyed || parent.Faction != Faction.OfPlayer)
-            {
-                yield break;
-            }
-
-            float maxShield = ResolvedPassiveShieldMax;
-            if (maxShield <= 0.01f)
-            {
-                yield break;
-            }
-
-            passiveShieldPoints = Mathf.Clamp(passiveShieldPoints, 0f, maxShield);
-            if (parent.Spawned && IsPowered)
-            {
-                TickPassiveShieldRecharge();
-            }
-
-            bool suppressed = !IsPowered;
-            bool collapsed = !suppressed && passiveShieldPoints <= 0.001f;
-            string label = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Label", "Turret Aegis");
-            string subtitle = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Subtitle", "Passive shield lattice");
-            string state = ResolvePassiveShieldGizmoState(suppressed, collapsed, maxShield);
-            string points = ABY_ApparelAegisUtility.FormatPoints(passiveShieldPoints, maxShield);
-            string detail = BuildPassiveShieldGizmoDetail(suppressed, collapsed, maxShield);
-            string tooltip = BuildPassiveShieldGizmoTooltip(state, maxShield);
-            Texture2D icon = ResolvePassiveShieldGizmoIcon();
-
-            yield return new Gizmo_ABY_AegisStatus(
-                label,
-                subtitle,
-                state,
-                points,
-                detail,
-                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Tag", "TURRET"),
-                tooltip,
-                "Aegis",
-                passiveShieldPoints,
-                maxShield,
-                suppressed,
-                collapsed,
-                icon);
-        }
-
-        private string ResolvePassiveShieldGizmoState(bool suppressed, bool collapsed, float maxShield)
-        {
-            if (suppressed)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateUnpowered", "unpowered");
-            }
-
-            if (collapsed)
-            {
-                int remaining = RemainingPassiveShieldDelayTicks();
-                if (remaining > 0)
-                {
-                    return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateRestart", "restart in {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remaining));
-                }
-
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateReforming", "reforming");
-            }
-
-            if (passiveShieldPoints >= maxShield - 0.001f)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateStable", "stable");
-            }
-
-            int delay = RemainingPassiveShieldDelayTicks();
-            if (delay > 0)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateStabilizing", "stabilizing");
-            }
-
-            return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_StateRecharging", "recharging");
-        }
-
-        private string BuildPassiveShieldGizmoDetail(bool suppressed, bool collapsed, float maxShield)
-        {
-            if (suppressed)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailUnpowered", "Power lost");
-            }
-
-            int remaining = RemainingPassiveShieldDelayTicks();
-            if (remaining > 0)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailDelay", "Restart delay {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remaining));
-            }
-
-            float rechargePerSecond = ResolvedPassiveShieldRechargePerTick * 60f;
-            if (passiveShieldPoints >= maxShield - 0.001f)
-            {
-                return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailFull", "Peak integrity");
-            }
-
-            return ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_DetailRecharge", "Recharge +{0}/s", rechargePerSecond.ToString("0.#"));
-        }
-
-        private string BuildPassiveShieldGizmoTooltip(string state, float maxShield)
-        {
-            string text = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_Tooltip", "A passive module-generated aegis field that absorbs incoming turret damage before the chassis is harmed.");
-            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipState", "State") + ": " + state;
-            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipCharge", "Charge") + ": " + ABY_ApparelAegisUtility.FormatPoints(passiveShieldPoints, maxShield);
-            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipRecharge", "Recharge") + ": +" + (ResolvedPassiveShieldRechargePerTick * 60f).ToString("0.#") + "/s";
-            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmo_TooltipDelay", "Restart delay") + ": " + ABY_ApparelAegisUtility.SecondsFromTicks(ResolvedPassiveShieldRechargeDelayTicks);
-            return text;
-        }
-
-        private int RemainingPassiveShieldDelayTicks()
-        {
-            int ticks = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
-            int elapsed = ticks - passiveShieldLastDamagedTick;
-            return Mathf.Max(0, Mathf.Max(60, ResolvedPassiveShieldRechargeDelayTicks) - elapsed);
-        }
-
-        private Texture2D ResolvePassiveShieldGizmoIcon()
-        {
-            ABY_TurretModuleDef shieldModule = FirstPassiveShieldModule();
-            if (shieldModule?.thingDef?.uiIcon != null)
-            {
-                return shieldModule.thingDef.uiIcon;
-            }
-
-            if (parent?.def?.uiIcon != null)
-            {
-                return parent.def.uiIcon;
-            }
-
-            try
-            {
-                return ContentFinder<Texture2D>.Get("UI/Gizmos/ABY_AegisGeneric", false);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        private ABY_TurretModuleDef FirstPassiveShieldModule()
-        {
-            if (passiveModules == null)
-            {
-                return null;
-            }
-
-            for (int i = 0; i < passiveModules.Count; i++)
-            {
-                ABY_TurretModuleDef module = passiveModules[i];
-                if (module != null && module.turretShieldMax > 0.01f)
-                {
-                    return module;
-                }
-            }
-
-            return null;
-        }
-
         public override string CompInspectStringExtra()
         {
             List<string> lines = new List<string>();
@@ -771,6 +607,143 @@ namespace AbyssalProtocol
             }
 
             return string.Join("\n", lines);
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            IEnumerable<Gizmo> baseGizmos = base.CompGetGizmosExtra();
+            if (baseGizmos != null)
+            {
+                foreach (Gizmo gizmo in baseGizmos)
+                {
+                    yield return gizmo;
+                }
+            }
+
+            if (!FeatureEnabled || parent == null || parent.Faction != Faction.OfPlayer || !HasPassiveShield)
+            {
+                yield break;
+            }
+
+            yield return BuildPassiveShieldGizmo();
+        }
+
+        private Gizmo BuildPassiveShieldGizmo()
+        {
+            float max = ResolvedPassiveShieldMax;
+            float current = PassiveShieldPoints;
+            bool offline = !Operational;
+            bool collapsed = current <= 0.01f;
+            int now = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int delay = ResolvedPassiveShieldRechargeDelayTicks;
+            int remainingDelay = Mathf.Max(0, delay - Mathf.Max(0, now - passiveShieldLastDamagedTick));
+            float rechargePerSecond = ResolvedPassiveShieldRechargePerTick * 60f;
+            bool crownTheme = HasPassiveShieldModuleNamed("Crown");
+            string theme = crownTheme ? "crown" : "turret";
+            string headerTag = crownTheme
+                ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoTagCrown", "CROWN")
+                : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoTag", "TURRET");
+
+            string state;
+            string detail;
+            if (offline)
+            {
+                state = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoOffline", "offline");
+                detail = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoOfflineDetail", "Chassis unpowered or disabled");
+            }
+            else if (collapsed)
+            {
+                state = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoCollapsed", "collapsed");
+                detail = remainingDelay > 0
+                    ? ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRestartIn", "Restart in {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelay))
+                    : ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoReforming", "Reforming lattice");
+            }
+            else if (remainingDelay > 0)
+            {
+                state = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoStabilizing", "stabilizing");
+                detail = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRestartIn", "Restart in {0}", ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelay));
+            }
+            else if (current >= max - 0.5f)
+            {
+                state = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoStable", "stable");
+                detail = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoPeak", "Peak integrity");
+            }
+            else
+            {
+                state = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRecharging", "recharging");
+                detail = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRecharge", "Recharge +{0}/s", rechargePerSecond.ToString("0.#"));
+            }
+
+            string tooltip = BuildPassiveShieldGizmoTooltip(state, detail, rechargePerSecond, remainingDelay, offline);
+            return new Gizmo_ABY_AegisStatus(
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoLabel", "Turret Aegis"),
+                ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoSubtitle", "Passive shield matrix"),
+                state,
+                ABY_ApparelAegisUtility.FormatPoints(current, max),
+                detail,
+                headerTag,
+                tooltip,
+                theme,
+                current,
+                max,
+                offline,
+                collapsed,
+                ResolvePassiveShieldGizmoIcon(crownTheme));
+        }
+
+        private string BuildPassiveShieldGizmoTooltip(string state, string detail, float rechargePerSecond, int remainingDelay, bool offline)
+        {
+            string text = ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoTooltip", "A passive turret module projects a sacrificial aegis field around this chassis. Incoming damage drains the field before it reaches the turret.");
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoState", "State") + ": " + state;
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoCharge", "Charge") + ": " + ABY_ApparelAegisUtility.FormatPoints(PassiveShieldPoints, ResolvedPassiveShieldMax);
+            text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRechargeRate", "Recharge") + ": +" + rechargePerSecond.ToString("0.#") + "/s";
+            if (remainingDelay > 0)
+            {
+                text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoRechargeDelay", "Recharge delay") + ": " + ABY_ApparelAegisUtility.SecondsFromTicks(remainingDelay);
+            }
+            if (offline)
+            {
+                text += "\n" + ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretAegisGizmoOfflineHint", "The aegis only recharges while the chassis is powered, spawned, enabled and owned by the colony.");
+            }
+            if (!detail.NullOrEmpty())
+            {
+                text += "\n" + detail;
+            }
+
+            return text;
+        }
+
+        private bool HasPassiveShieldModuleNamed(string namePart)
+        {
+            if (namePart.NullOrEmpty() || passiveModules == null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < passiveModules.Count; i++)
+            {
+                ABY_TurretModuleDef module = passiveModules[i];
+                string defName = module?.defName;
+                if (!defName.NullOrEmpty() && defName.IndexOf(namePart, StringComparison.OrdinalIgnoreCase) >= 0 && module.turretShieldMax > 0.01f)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static Texture2D ResolvePassiveShieldGizmoIcon(bool crownTheme)
+        {
+            string path = crownTheme ? "UI/Gizmos/ABY_AegisCrown" : "UI/Gizmos/ABY_AegisGeneric";
+            try
+            {
+                return ContentFinder<Texture2D>.Get(path, false);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void DrawMainRangeRings(float minRange, float maxRange)

@@ -263,22 +263,24 @@
   <ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>Ядро логики казни</ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>добивание раненых целей</ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>Смещает выбор цели к раненым враждебным пешкам, особенно критически повреждённым, без нового глобального сканирования каждый тик.</ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>
-  <ABY_TurretAegisGizmo_Label>Эгида турели</ABY_TurretAegisGizmo_Label>
-  <ABY_TurretAegisGizmo_Subtitle>Пассивная решётка щита</ABY_TurretAegisGizmo_Subtitle>
-  <ABY_TurretAegisGizmo_Tag>ТУРЕЛЬ</ABY_TurretAegisGizmo_Tag>
-  <ABY_TurretAegisGizmo_StateStable>стабильна</ABY_TurretAegisGizmo_StateStable>
-  <ABY_TurretAegisGizmo_StateStabilizing>стабилизируется</ABY_TurretAegisGizmo_StateStabilizing>
-  <ABY_TurretAegisGizmo_StateRecharging>восстанавливается</ABY_TurretAegisGizmo_StateRecharging>
-  <ABY_TurretAegisGizmo_StateReforming>пересобирается</ABY_TurretAegisGizmo_StateReforming>
-  <ABY_TurretAegisGizmo_StateRestart>перезапуск через {0}</ABY_TurretAegisGizmo_StateRestart>
-  <ABY_TurretAegisGizmo_StateUnpowered>нет питания</ABY_TurretAegisGizmo_StateUnpowered>
-  <ABY_TurretAegisGizmo_DetailFull>Пиковая целостность</ABY_TurretAegisGizmo_DetailFull>
-  <ABY_TurretAegisGizmo_DetailRecharge>Восстановление +{0}/с</ABY_TurretAegisGizmo_DetailRecharge>
-  <ABY_TurretAegisGizmo_DetailDelay>Задержка перезапуска {0}</ABY_TurretAegisGizmo_DetailDelay>
-  <ABY_TurretAegisGizmo_DetailUnpowered>Питание потеряно</ABY_TurretAegisGizmo_DetailUnpowered>
-  <ABY_TurretAegisGizmo_Tooltip>Пассивное эгис-поле от модулей принимает входящий урон до того, как удар достигнет корпуса турели.</ABY_TurretAegisGizmo_Tooltip>
-  <ABY_TurretAegisGizmo_TooltipState>Состояние</ABY_TurretAegisGizmo_TooltipState>
-  <ABY_TurretAegisGizmo_TooltipCharge>Заряд</ABY_TurretAegisGizmo_TooltipCharge>
-  <ABY_TurretAegisGizmo_TooltipRecharge>Восстановление</ABY_TurretAegisGizmo_TooltipRecharge>
-  <ABY_TurretAegisGizmo_TooltipDelay>Задержка перезапуска</ABY_TurretAegisGizmo_TooltipDelay>
+  <ABY_TurretAegisGizmoLabel>Эгида турели</ABY_TurretAegisGizmoLabel>
+  <ABY_TurretAegisGizmoSubtitle>Пассивная щитовая матрица</ABY_TurretAegisGizmoSubtitle>
+  <ABY_TurretAegisGizmoTag>ТУРЕЛЬ</ABY_TurretAegisGizmoTag>
+  <ABY_TurretAegisGizmoTagCrown>КОРОНА</ABY_TurretAegisGizmoTagCrown>
+  <ABY_TurretAegisGizmoOffline>неактивна</ABY_TurretAegisGizmoOffline>
+  <ABY_TurretAegisGizmoOfflineDetail>Шасси обесточено или отключено</ABY_TurretAegisGizmoOfflineDetail>
+  <ABY_TurretAegisGizmoCollapsed>разрушена</ABY_TurretAegisGizmoCollapsed>
+  <ABY_TurretAegisGizmoStabilizing>стабилизация</ABY_TurretAegisGizmoStabilizing>
+  <ABY_TurretAegisGizmoStable>стабильна</ABY_TurretAegisGizmoStable>
+  <ABY_TurretAegisGizmoRecharging>восстановление</ABY_TurretAegisGizmoRecharging>
+  <ABY_TurretAegisGizmoRestartIn>Перезапуск через {0}</ABY_TurretAegisGizmoRestartIn>
+  <ABY_TurretAegisGizmoReforming>Решётка восстанавливается</ABY_TurretAegisGizmoReforming>
+  <ABY_TurretAegisGizmoPeak>Полная целостность</ABY_TurretAegisGizmoPeak>
+  <ABY_TurretAegisGizmoRecharge>Восстановление +{0}/с</ABY_TurretAegisGizmoRecharge>
+  <ABY_TurretAegisGizmoTooltip>Пассивный модуль турели проецирует жертвенное поле Эгиды вокруг шасси. Входящий урон сначала истощает поле, и только потом достигает турели.</ABY_TurretAegisGizmoTooltip>
+  <ABY_TurretAegisGizmoState>Состояние</ABY_TurretAegisGizmoState>
+  <ABY_TurretAegisGizmoCharge>Заряд</ABY_TurretAegisGizmoCharge>
+  <ABY_TurretAegisGizmoRechargeRate>Восстановление</ABY_TurretAegisGizmoRechargeRate>
+  <ABY_TurretAegisGizmoRechargeDelay>Задержка восстановления</ABY_TurretAegisGizmoRechargeDelay>
+  <ABY_TurretAegisGizmoOfflineHint>Эгида восстанавливается только когда шасси установлено, включено, запитано и принадлежит колонии.</ABY_TurretAegisGizmoOfflineHint>
 </LanguageData>

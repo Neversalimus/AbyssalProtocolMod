@@ -263,22 +263,24 @@
   <ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>Execution Logic Core</ABY_TurretModuleLabel_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>wounded target execution</ABY_TurretModuleRole_ABY_TMD_ExecutionLogicCore>
   <ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>Biases target scans toward wounded hostile pawns, especially critically damaged targets, without adding a new per-tick global scan.</ABY_TurretModuleEffect_ABY_TMD_ExecutionLogicCore>
-  <ABY_TurretAegisGizmo_Label>Turret Aegis</ABY_TurretAegisGizmo_Label>
-  <ABY_TurretAegisGizmo_Subtitle>Passive shield lattice</ABY_TurretAegisGizmo_Subtitle>
-  <ABY_TurretAegisGizmo_Tag>TURRET</ABY_TurretAegisGizmo_Tag>
-  <ABY_TurretAegisGizmo_StateStable>stable</ABY_TurretAegisGizmo_StateStable>
-  <ABY_TurretAegisGizmo_StateStabilizing>stabilizing</ABY_TurretAegisGizmo_StateStabilizing>
-  <ABY_TurretAegisGizmo_StateRecharging>recharging</ABY_TurretAegisGizmo_StateRecharging>
-  <ABY_TurretAegisGizmo_StateReforming>reforming</ABY_TurretAegisGizmo_StateReforming>
-  <ABY_TurretAegisGizmo_StateRestart>restart in {0}</ABY_TurretAegisGizmo_StateRestart>
-  <ABY_TurretAegisGizmo_StateUnpowered>unpowered</ABY_TurretAegisGizmo_StateUnpowered>
-  <ABY_TurretAegisGizmo_DetailFull>Peak integrity</ABY_TurretAegisGizmo_DetailFull>
-  <ABY_TurretAegisGizmo_DetailRecharge>Recharge +{0}/s</ABY_TurretAegisGizmo_DetailRecharge>
-  <ABY_TurretAegisGizmo_DetailDelay>Restart delay {0}</ABY_TurretAegisGizmo_DetailDelay>
-  <ABY_TurretAegisGizmo_DetailUnpowered>Power lost</ABY_TurretAegisGizmo_DetailUnpowered>
-  <ABY_TurretAegisGizmo_Tooltip>A passive module-generated aegis field that absorbs incoming turret damage before the chassis is harmed.</ABY_TurretAegisGizmo_Tooltip>
-  <ABY_TurretAegisGizmo_TooltipState>State</ABY_TurretAegisGizmo_TooltipState>
-  <ABY_TurretAegisGizmo_TooltipCharge>Charge</ABY_TurretAegisGizmo_TooltipCharge>
-  <ABY_TurretAegisGizmo_TooltipRecharge>Recharge</ABY_TurretAegisGizmo_TooltipRecharge>
-  <ABY_TurretAegisGizmo_TooltipDelay>Restart delay</ABY_TurretAegisGizmo_TooltipDelay>
+  <ABY_TurretAegisGizmoLabel>Turret Aegis</ABY_TurretAegisGizmoLabel>
+  <ABY_TurretAegisGizmoSubtitle>Passive shield matrix</ABY_TurretAegisGizmoSubtitle>
+  <ABY_TurretAegisGizmoTag>TURRET</ABY_TurretAegisGizmoTag>
+  <ABY_TurretAegisGizmoTagCrown>CROWN</ABY_TurretAegisGizmoTagCrown>
+  <ABY_TurretAegisGizmoOffline>offline</ABY_TurretAegisGizmoOffline>
+  <ABY_TurretAegisGizmoOfflineDetail>Chassis unpowered or disabled</ABY_TurretAegisGizmoOfflineDetail>
+  <ABY_TurretAegisGizmoCollapsed>collapsed</ABY_TurretAegisGizmoCollapsed>
+  <ABY_TurretAegisGizmoStabilizing>stabilizing</ABY_TurretAegisGizmoStabilizing>
+  <ABY_TurretAegisGizmoStable>stable</ABY_TurretAegisGizmoStable>
+  <ABY_TurretAegisGizmoRecharging>recharging</ABY_TurretAegisGizmoRecharging>
+  <ABY_TurretAegisGizmoRestartIn>Restart in {0}</ABY_TurretAegisGizmoRestartIn>
+  <ABY_TurretAegisGizmoReforming>Reforming lattice</ABY_TurretAegisGizmoReforming>
+  <ABY_TurretAegisGizmoPeak>Peak integrity</ABY_TurretAegisGizmoPeak>
+  <ABY_TurretAegisGizmoRecharge>Recharge +{0}/s</ABY_TurretAegisGizmoRecharge>
+  <ABY_TurretAegisGizmoTooltip>A passive turret module projects a sacrificial aegis field around this chassis. Incoming damage drains the field before it reaches the turret.</ABY_TurretAegisGizmoTooltip>
+  <ABY_TurretAegisGizmoState>State</ABY_TurretAegisGizmoState>
+  <ABY_TurretAegisGizmoCharge>Charge</ABY_TurretAegisGizmoCharge>
+  <ABY_TurretAegisGizmoRechargeRate>Recharge</ABY_TurretAegisGizmoRechargeRate>
+  <ABY_TurretAegisGizmoRechargeDelay>Recharge delay</ABY_TurretAegisGizmoRechargeDelay>
+  <ABY_TurretAegisGizmoOfflineHint>The aegis only recharges while the chassis is powered, spawned, enabled and owned by the colony.</ABY_TurretAegisGizmoOfflineHint>
 </LanguageData>

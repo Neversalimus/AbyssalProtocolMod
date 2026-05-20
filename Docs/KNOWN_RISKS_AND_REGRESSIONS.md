@@ -45,9 +45,8 @@ Actual code and assets win over this document.
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
 | Technical implementation text in item/weapon descriptions | P2 | localization / DefInjected / XML descriptions | Players see lines about mods, runtime, defs, save/load, animated projectiles, projectile internals, or framework behavior | Descriptions should be weapon/lore-facing. Keep technical wording only in dev/debug settings or internal comments. Scan both English base defs and Russian localization before packaging. |
-| Custom turret module fields not localized | P2 | modular turrets / Forge UI | Forge cards show English `Slot`, `Role`, `Effect`, `Primary gun module`, or raw internal tactical roles in Russian mode | Localize `ABY_TurretModuleDef` fields through `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml`; also cover ThingDef/RecipeDef text for module items. |
+| Custom turret module fields not localized | P2 | modular turrets / Forge UI | Forge cards show English `Slot`, `Role`, `Effect`, `Primary gun module`, or raw internal tactical roles in Russian mode | Localize custom module display text through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*`, and `ABY_TurretModuleEffect_*` entries; do not add `DefInjected/ABY_TurretModuleDef` folders. Also cover ThingDef/RecipeDef text for module items. |
 | Long turret/Forge labels overflowing cards | P2 | Forge UI / turret modules | Pattern cards and selected panel clip or overlap text | Prefer short labels in tight cards and move long lore to descriptions/tooltips. Use glossary short forms where possible. |
-| Empty keyed translation entries | P1/P2 | localization / Keyed XML | RimWorld load shows `Translation data for language English has 1 errors` even though XML parses successfully | Do not leave intentionally silent keys as empty XML nodes. If code intentionally suppresses a message, either remove the unused key or give it a valid fallback string so language injection stays clean. |
 
 
 ## Large modpack compatibility risks
@@ -103,7 +102,6 @@ Actual code and assets win over this document.
 | Clipped text / cut lower letters | P1 | UI | Labels look broken, descenders clipped | Use existing UI safety/text helpers; test at target sizes. |
 | Scrollbar/content overlap | P1 | Forge/Protocol/Summoning UI | Browser/card content under scrollbar | Reserve scrollbar space and test long lists. |
 | Button style regression | P1 | UI/Shared | Custom buttons revert to vanilla/unstyled or inconsistent states | Reuse `source/UI/Shared/` styling and existing button state assets. |
-| Passive turret Aegis hidden in inspect text only | P2 | modular turrets / gizmos | Player-owned Aegis turret modules work mechanically but shield charge is only visible in inspect text/ITab, making combat state easy to miss | Turrets with passive shield modules should expose the shared styled Aegis status gizmo from `CompAbyssalModularTurret.CompGetGizmosExtra()` without adding gameplay commands. |
 | Tab hover wash/white rectangle regression | P2 | UI/Shared / Forge categories | Category/tab hover shows a pale rectangular overlay that does not match Abyssal skins | Do not draw the generic `BaseContent.WhiteTex` hover wash over tab-style buttons; rely on tab hover textures and custom content tinting. |
 | Overloaded circular/ring UI | P1/P2 | Protocol Nexus/Summoning | Content does not fit, unreadable at scale | Prefer category/filter/detail panels over stuffing dozens of items into ring area. |
 | Static UI with large occupied area | P2 | Summoning circle UI/Protocol Nexus | Looks pretty but functionally weak | Add meaningful state, preview, requirement, and selection feedback. |
@@ -315,7 +313,7 @@ Do not update for isolated harmless edits unless the risk knowledge would be los
 
 ## Russian turret localization: custom Def fields can leak raw English
 
-Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear directly in Forge cards and turret tooltips if missing localization data. Keep both `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` custom-field translations and mirrored `ABY_TurretModuleRole_<defName>` / `ABY_TurretModuleEffect_<defName>` Keyed entries in sync. A future C# hardening pass may route these accessors through keyed lookup, but this patch intentionally leaves runtime code unchanged.
+Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear directly in Forge cards and turret tooltips if missing localization data. Keep `ABY_TurretModuleLabel_<defName>`, `ABY_TurretModuleRole_<defName>` and `ABY_TurretModuleEffect_<defName>` Keyed entries in sync with module defs. Do not create `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` folders: RimWorld treats the unqualified folder as an unknown def type and emits language load errors.
 
 Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
 
@@ -597,12 +595,9 @@ Regression guard:
 - Do not represent shield modules only as incoming damage multipliers: players need a visible, rechargeable aegis pool to understand why the module is different from armor/stabilizer passives.
 - Turret module item icons should stay optimized for UI use; avoid reintroducing 512x512+ inventory icons unless a module needs large overlay art.
 
-## 2026-05-21 — Runtime safety hardening from audit
 
-Regression guards added after the Choir Scar / encounter planner / Dominion victory audit:
+## 2026-05-20 — Invalid custom DefInjected folder regression
 
-- Oblivion Choir scar effects must remain capped and faction-aware. Do not remove `MaxActiveScars`, fallback faction/abyssal serialization, or `ABY_RuntimeTargetCache.TryFindThingById` instigator lookup unless replacing them with an equally bounded cache path. A missing instigator must fail closed or use serialized faction context; it must not damage all pawns indiscriminately.
-- Encounter candidate planning should not rescan every `PawnKindDef` for each plan in large modpacks. Keep candidate caching keyed by pool, base tier, allowed tier, and difficulty profile; invalidate or expand the key if future settings add candidate-affecting dimensions.
-- Runtime relocation helpers must not `DeSpawn` a thing and then perform an unguarded `GenSpawn.Spawn`. Keep rollback logic for sigil/portal moves so a spawn exception does not permanently delete the thing.
-- Dominion pocket victory must not become an infinite active session. Preserve the victory grace window plus safe auto-return/orphan-finalization path; do not convert a recorded victory into failure just because pawns are temporarily hidden/despawned during a modded transfer.
-- Direct protocol research decode checks should fail closed for empty def names, while recipe-level forge checks may still treat missing requirements as ungated.
+RimWorld rejects `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` with `dir ABY_TurretModuleDef doesn't correspond to any def type` because the actual custom def XML type is namespaced as `AbyssalProtocol.ABY_TurretModuleDef`. Turret module labels, roles and effect summaries must stay in Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*` and `ABY_TurretModuleEffect_*` entries instead. If this folder exists in a local install, delete it; extracting a delta zip over the mod folder will not remove stale directories automatically.
+
+Encounter startup validation must be diagnostic-only. Any validation stage that hits a bad/missing external def should be isolated and skipped without surfacing a generic `[Abyssal Protocol] Encounter validation failed: NullReferenceException` startup warning.

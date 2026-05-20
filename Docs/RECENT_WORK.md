@@ -1,61 +1,3 @@
-## 2026-05-21 — Encounter validation hardening and turret Aegis gizmo
-
-Fixed a load-time encounter validation warning path and added a read-only Aegis status gizmo for player modular turrets that have passive shield modules installed.
-
-Changed behavior:
-- `ABY_EncounterValidationUtility` now runs startup validation in isolated stages and uses guarded DefDatabase access, so a null or temporarily unavailable validation input reports a scoped warning instead of collapsing into the generic `Encounter validation failed: NullReferenceException` message.
-- English/Russian `ABY_BreakCrown_*` keyed entries no longer contain empty translation values, removing a likely English translation-data error while preserving the secret mechanic being silent in code.
-- `CompAbyssalModularTurret` now exposes a styled read-only `Gizmo_ABY_AegisStatus` card for player-owned turrets with passive Aegis modules, showing charge, state, restart delay and recharge tooltip.
-- Added localized English/Russian turret Aegis gizmo strings.
-
-Changed areas:
-
-```text
-Assemblies/AbyssalProtocol.dll
-source/Encounters/ABY_EncounterValidationUtility.cs
-source/Comps/CompAbyssalModularTurret.cs
-Languages/English/Keyed/ABY_BreakCrown_Strings.xml
-Languages/Russian/Keyed/ABY_BreakCrown_Strings.xml
-Languages/English/Keyed/ABY_ModularTurrets_Strings.xml
-Languages/Russian/Keyed/ABY_ModularTurrets_Strings.xml
-Docs/CONTENT_MATRIX.md
-Docs/KNOWN_RISKS_AND_REGRESSIONS.md
-Docs/RECENT_WORK.md
-```
-
-Build verified with direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries. Runtime smoke testing in RimWorld is still required.
-
-
-## 2026-05-21 — Runtime safety and large-modpack performance hardening
-
-Applied a focused C# hardening pass for audit-reported runtime risks without changing content balance, XML defs, textures, or UI layout.
-
-Changed behavior:
-- `MapComponent_ABY_OblivionChoirScar` now caps active scars at 24, prunes expired scars before adding a new one, resolves saved instigators through `ABY_RuntimeTargetCache`, and stores faction/abyssal fallback data so lingering scars do not become factionless friendly-fire zones after the source pawn dies.
-- `AbyssalEncounterDirectorUtility.GetCandidates` now caches candidate lists by encounter pool, base tier, allowed tier, and current difficulty profile, avoiding repeated full `PawnKindDef` scans in large modpacks. The case-insensitive list helper no longer allocates lowercase copies inside the comparison loop.
-- `MapComponent_AbyssalProgressionHotfix.MoveThingSafely` now wraps despawn/spawn relocation in rollback logic so sigils or fogged portals are not lost if `GenSpawn.Spawn` throws after `DeSpawn`.
-- Direct `ABY_ProtocolResearchGateUtility.IsDecoded("")` now fails closed while `IsDecodedForForge` still treats recipes with no protocol requirement as ungated.
-- Dominion pocket victory sessions now track `victoryAchievedTick`; after a grace window, runtime maintenance attempts a safe auto-return for stuck pawns or finalizes reward/cleanup for orphaned victory pockets instead of extending extraction forever.
-
-Changed areas:
-
-```text
-Assemblies/AbyssalProtocol.dll
-source/Core/GameComponents/MapComponent_ABY_OblivionChoirScar.cs
-source/Encounters/AbyssalEncounterDirectorUtility.cs
-source/Compatibility/MapComponent_AbyssalProgressionHotfix.cs
-source/Progression/ABY_ProtocolResearchGateUtility.cs
-source/Dominion/ABY_DominionPocketSession.cs
-source/Dominion/ABY_DominionPocketRuntimeGameComponent.cs
-source/Dominion/AbyssalDominionPocketUtility.cs
-source/Dominion/AbyssalDominionPocketSafeUtility.cs
-source/Dominion/MapComponents/MapComponent_DominionSliceEncounter.cs
-Docs/KNOWN_RISKS_AND_REGRESSIONS.md
-Docs/RECENT_WORK.md
-```
-
-Build verified with direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries. The rebuilt assembly references `mscorlib` / `System.Core`, not .NET 9 reference assemblies. Runtime smoke testing in RimWorld is still required.
-
 
 ## 2026-05-21 — Execution Logic Core passive turret module
 
@@ -165,7 +107,7 @@ A follow-up localization pass removed remaining English turret module text from 
 Important details:
 
 ```text
-- Custom turret module fields are localized through Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml.
+- Custom turret module fields are localized through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*` and `ABY_TurretModuleEffect_*` entries; do not use `DefInjected/ABY_TurretModuleDef` folders.
 - Modular turret ThingDef and RecipeDef localization now uses diegetic weapon/module descriptions instead of Slot/Role/Effect boilerplate in item descriptions.
 - Oblivion Choir and Breach Cannon descriptions were cleaned so they no longer mention animated projectiles, mod implementation, reload internals, or technical projectile behavior.
 - English base descriptions were also cleaned to avoid reintroducing technical text through fallback language data.
@@ -574,7 +516,7 @@ A follow-up pass made turret module localization robust against raw custom-def f
 Important details:
 
 ```text
-- Turret module `ABY_TurretModuleDef` DefInjected fields and mirrored Keyed role/effect entries were refreshed so existing Forge/tooltips have localized data without changing C# runtime code in this patch.
+- Turret module `ABY_TurretModuleDef` display strings use mirrored Keyed label/role/effect entries so Forge/tooltips have localized data without relying on invalid custom DefInjected folders.
 - Forge turret cards no longer need raw Slot:/Role: prefixes and should stay compact for Abyssal Forge layout.
 - Turret tooltips no longer expose projectile def names as player-facing implementation details.
 - Russian turret badge labels are intentionally short: ОСН., ВСП., ПАСС., КОРПУС, СИСТ.
@@ -789,3 +731,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Passive aegis modules add a real turret shield pool, recharge delay, recharge rate and inspect/ITab/stat-card exposure instead of using only incoming damage reduction.
 - The generated passive turret module icons were reduced from 512x512 to optimized 256x256 PNGs for UI/item use.
 - Runtime smoke test still required in-game: install shield modules, damage a powered chassis, verify aegis absorption/recharge and UI display.
+
+## 2026-05-20 — Startup validation and turret module localization cleanup
+
+- Removed invalid `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` usage from the working tree and documentation. RimWorld reports this folder as an unknown def type because the real custom def class is namespaced.
+- Turret module custom display fields should remain localized through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*`, and `ABY_TurretModuleEffect_*` entries.
+- Hardened encounter startup validation so diagnostic scans run in isolated stages and cannot surface a generic startup `NullReferenceException` warning.
+- Deletion-based localization fixes require removing stale folders from existing local installs; a delta zip overwrite alone cannot delete old directories.
