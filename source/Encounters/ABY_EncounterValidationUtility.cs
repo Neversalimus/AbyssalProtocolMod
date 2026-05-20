@@ -182,7 +182,7 @@ namespace AbyssalProtocol
             }
             catch (Exception ex)
             {
-                SafeVerbose("encounter-validation-failed", "Encounter validation startup diagnostic skipped: " + ex.GetType().Name + ": " + ex.Message);
+                SafeVerbose("encounter-validation-startup-failed", "Encounter validation startup diagnostic skipped: " + FormatException(ex));
             }
         }
 
@@ -213,13 +213,14 @@ namespace AbyssalProtocol
             HashSet<string> knownPools = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             HashSet<string> knownRoles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            RunValidationStage(report, "known pool discovery", () => knownPools = BuildKnownPoolSet(report) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
-            RunValidationStage(report, "known role discovery", () => knownRoles = BuildKnownRoleSet(report) ?? new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+            RunValidationStage(report, "known pool discovery", () => knownPools = BuildKnownPoolSet(report));
+            RunValidationStage(report, "known role discovery", () => knownRoles = BuildKnownRoleSet(report));
             RunValidationStage(report, "pawn kind scaling", () => ValidatePawnKindScaling(report, knownPools));
             RunValidationStage(report, "encounter templates", () => ValidateTemplates(report, knownPools, knownRoles));
             RunValidationStage(report, "threat doctrines", () => ValidateDoctrines(report, knownPools, knownRoles));
             RunValidationStage(report, "boss escalation packages", () => ValidateEscalationPackages(report, knownPools, knownRoles));
             RunValidationStage(report, "pool coverage", () => ValidatePoolCoverage(report, knownPools));
+            RunValidationStage(report, "modular turret modules", () => ValidateTurretModules(report));
 
             if (report.Issues.Count == 0)
             {
@@ -245,7 +246,7 @@ namespace AbyssalProtocol
             List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
-                DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+                DefModExtension_AbyssalDifficultyScaling ext = SafeScalingExtension(pawns[i], report);
                 if (ext?.encounterPools == null)
                 {
                     continue;
@@ -288,7 +289,7 @@ namespace AbyssalProtocol
             List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
-                DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+                DefModExtension_AbyssalDifficultyScaling ext = SafeScalingExtension(pawns[i], report);
                 if (ext != null && !ext.role.NullOrEmpty())
                 {
                     roles.Add(ext.role);
@@ -411,7 +412,7 @@ namespace AbyssalProtocol
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "difficultyFloorDefName references missing difficulty profile '" + template.difficultyFloorDefName + "'.");
                 }
 
-                if (!template.poolId.NullOrEmpty() && !PoolHasPawnCandidates(template.poolId))
+                if (!template.poolId.NullOrEmpty() && !PoolHasPawnCandidates(report, template.poolId))
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "pool '" + template.poolId + "' has no PawnKindDef candidates with DefModExtension_AbyssalDifficultyScaling.");
                 }
@@ -551,8 +552,8 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                bool hasTemplate = PoolHasTemplate(poolId);
-                bool hasCandidate = PoolHasPawnCandidates(poolId);
+                bool hasTemplate = PoolHasTemplate(report, poolId);
+                bool hasCandidate = PoolHasPawnCandidates(report, poolId);
                 if (hasTemplate && !hasCandidate)
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, "EncounterPool " + poolId, "has templates but no pawn candidates.");
@@ -642,7 +643,7 @@ namespace AbyssalProtocol
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "contains an empty boss profile reference.");
                 }
-                else if (SafeGetNamed<ABY_BossDifficultyProfileDef>(defName) == null)
+                else if (!SafeDefExists<ABY_BossDifficultyProfileDef>(defName))
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, "references missing boss profile '" + defName + "'.");
                 }
@@ -663,7 +664,7 @@ namespace AbyssalProtocol
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, fieldName + " contains an empty doctrine reference.");
                 }
-                else if (SafeGetNamed<ABY_ThreatDoctrineDef>(defName) == null)
+                else if (!SafeDefExists<ABY_ThreatDoctrineDef>(defName))
                 {
                     Add(report, ABY_EncounterValidationSeverity.Warning, source, fieldName + " references missing doctrine '" + defName + "'.");
                 }
@@ -672,22 +673,17 @@ namespace AbyssalProtocol
 
         private static bool DifficultyProfileExists(string defName)
         {
-            if (defName.NullOrEmpty())
-            {
-                return false;
-            }
-
-            return SafeGetNamed<ABY_DifficultyProfileDef>(defName) != null;
+            return SafeDefExists<ABY_DifficultyProfileDef>(defName);
         }
 
-        private static bool PoolHasTemplate(string poolId)
+        private static bool PoolHasTemplate(ABY_EncounterValidationReport report, string poolId)
         {
             if (poolId.NullOrEmpty())
             {
                 return false;
             }
 
-            List<ABY_EncounterTemplateDef> templates = SafeDefList<ABY_EncounterTemplateDef>(null, "EncounterTemplateDef");
+            List<ABY_EncounterTemplateDef> templates = SafeDefList<ABY_EncounterTemplateDef>(report, "EncounterTemplateDef");
             for (int i = 0; i < templates.Count; i++)
             {
                 ABY_EncounterTemplateDef template = templates[i];
@@ -700,17 +696,17 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private static bool PoolHasPawnCandidates(string poolId)
+        private static bool PoolHasPawnCandidates(ABY_EncounterValidationReport report, string poolId)
         {
             if (poolId.NullOrEmpty())
             {
                 return false;
             }
 
-            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(null, "PawnKindDef");
+            List<PawnKindDef> pawns = SafeDefList<PawnKindDef>(report, "PawnKindDef");
             for (int i = 0; i < pawns.Count; i++)
             {
-                DefModExtension_AbyssalDifficultyScaling ext = pawns[i]?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+                DefModExtension_AbyssalDifficultyScaling ext = SafeScalingExtension(pawns[i], report);
                 if (ext?.encounterPools == null)
                 {
                     continue;
@@ -728,64 +724,272 @@ namespace AbyssalProtocol
             return false;
         }
 
-        private static void RunValidationStage(ABY_EncounterValidationReport report, string stageName, Action action)
+        private static void ValidateTurretModules(ABY_EncounterValidationReport report)
         {
-            if (action == null)
+            List<ABY_TurretModuleDef> modules = SafeDefList<ABY_TurretModuleDef>(report, "TurretModuleDef");
+            for (int i = 0; i < modules.Count; i++)
+            {
+                ABY_TurretModuleDef module = modules[i];
+                if (module == null)
+                {
+                    Add(report, ABY_EncounterValidationSeverity.Warning, "TurretModuleDef", "contains a null module entry.");
+                    continue;
+                }
+
+                string source = "TurretModuleDef " + SafeDefName(module);
+                if (module.thingDef == null)
+                {
+                    Add(report, ABY_EncounterValidationSeverity.Warning, source, "thingDef is missing; the module cannot be installed or consumed as a loose item.");
+                }
+
+                if (module.tier < 1)
+                {
+                    Add(report, ABY_EncounterValidationSeverity.Warning, source, "tier is below 1; forge and UI tier display may behave unexpectedly.");
+                }
+
+                if (module.cooldownMultiplier <= 0f)
+                {
+                    Add(report, ABY_EncounterValidationSeverity.Warning, source, "cooldownMultiplier must be greater than 0.");
+                }
+
+                if (module.incomingDamageMultiplier < 0f)
+                {
+                    Add(report, ABY_EncounterValidationSeverity.Warning, source, "incomingDamageMultiplier is negative; damage handling will clamp but XML should be explicit.");
+                }
+
+                if (module.slot == ABY_TurretModuleSlot.Passive)
+                {
+                    ValidatePassiveTurretModule(report, module, source);
+                }
+                else
+                {
+                    ValidateWeaponTurretModule(report, module, source);
+                }
+
+                if (module.compatibleChassisTags != null)
+                {
+                    for (int c = 0; c < module.compatibleChassisTags.Count; c++)
+                    {
+                        if (module.compatibleChassisTags[c].NullOrEmpty())
+                        {
+                            Add(report, ABY_EncounterValidationSeverity.Warning, source, "compatibleChassisTags contains an empty entry.");
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ValidatePassiveTurretModule(ABY_EncounterValidationReport report, ABY_TurretModuleDef module, string source)
+        {
+            if (module == null)
             {
                 return;
             }
 
-            try
+            if (module.projectileDef != null)
             {
-                action();
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "is Passive but has projectileDef; passive modules should not fire directly.");
             }
-            catch (Exception ex)
+
+            if (module.turretShieldMax < 0f)
             {
-                Add(report, ABY_EncounterValidationSeverity.Info, "EncounterValidation", "Skipped " + (stageName ?? "validation stage") + " after " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
-                SafeVerbose("encounter-validation-stage-" + (stageName ?? "unknown"), "Encounter validation stage skipped: " + (stageName ?? "unknown") + " — " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "turretShieldMax is negative.");
+            }
+
+            if (module.turretShieldRechargePerTick < 0f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "turretShieldRechargePerTick is negative.");
+            }
+
+            if (module.turretShieldMax > 0f && module.turretShieldRechargePerTick <= 0f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "adds a turret shield but has no positive recharge rate.");
+            }
+
+            if (module.turretShieldRechargeDelayTicks < 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "turretShieldRechargeDelayTicks is negative.");
+            }
+
+            if (module.targetPriorityWoundedHealthThreshold < 0f || module.targetPriorityWoundedHealthThreshold > 1f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "targetPriorityWoundedHealthThreshold should be between 0 and 1.");
+            }
+
+            if (module.clusterTargetScanRadius < 0f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "clusterTargetScanRadius is negative.");
+            }
+
+            if (module.clusterTargetMaxBonusCount < 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "clusterTargetMaxBonusCount is negative.");
             }
         }
 
-        private static List<T> SafeDefList<T>(ABY_EncounterValidationReport report, string sourceLabel) where T : Def
+        private static void ValidateWeaponTurretModule(ABY_EncounterValidationReport report, ABY_TurretModuleDef module, string source)
+        {
+            if (module == null)
+            {
+                return;
+            }
+
+            if (module.projectileDef == null)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "is weapon-like but has no projectileDef.");
+            }
+
+            if (module.range <= 0f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "range must be greater than 0.");
+            }
+
+            if (module.minRange < 0f)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "minRange is negative.");
+            }
+
+            if (module.minRange > module.range)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "minRange is greater than range.");
+            }
+
+            if (module.cooldownTicks <= 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "cooldownTicks should be greater than 0.");
+            }
+
+            if (module.chargeTicks < 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "chargeTicks is negative.");
+            }
+
+            if (module.burstShotCount <= 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "burstShotCount should be greater than 0.");
+            }
+
+            if (module.ticksBetweenBurstShots < 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, "ticksBetweenBurstShots is negative.");
+            }
+
+            ValidateOverlayFrameData(report, source, "chargeOverlay", module.chargeOverlayFramePathPrefix, module.chargeOverlayFrameCount, module.chargeOverlayTicksPerFrame);
+            ValidateOverlayFrameData(report, source, "dischargeOverlay", module.dischargeOverlayFramePathPrefix, module.dischargeOverlayFrameCount, module.dischargeOverlayTicksPerFrame);
+            ValidateOverlayFrameData(report, source, "muzzleOverlay", module.muzzleOverlayFramePathPrefix, module.muzzleOverlayFrameCount, module.muzzleOverlayLifetimeTicks);
+            ValidateOverlayFrameData(report, source, "residualOverlay", module.residualOverlayFramePathPrefix, module.residualOverlayFrameCount, module.residualOverlayTicksPerFrame);
+        }
+
+        private static void ValidateOverlayFrameData(ABY_EncounterValidationReport report, string source, string label, string prefix, int frameCount, int ticksPerFrame)
+        {
+            if (prefix.NullOrEmpty())
+            {
+                return;
+            }
+
+            if (frameCount <= 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, label + " has a frame path prefix but frameCount is <= 0.");
+            }
+
+            if (ticksPerFrame <= 0)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, source, label + " has a frame path prefix but ticks/lifetime is <= 0.");
+            }
+        }
+
+        private static void RunValidationStage(ABY_EncounterValidationReport report, string stageName, Action action)
         {
             try
             {
-                return DefDatabase<T>.AllDefsListForReading ?? new List<T>();
+                action?.Invoke();
             }
             catch (Exception ex)
             {
-                Add(report, ABY_EncounterValidationSeverity.Info, "EncounterValidation", "Could not read " + (sourceLabel ?? typeof(T).Name) + " definitions during validation: " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
-                SafeVerbose("encounter-validation-deflist-" + typeof(T).Name, "Encounter validation def list skipped for " + typeof(T).Name + ": " + ex.GetType().Name + ": " + (ex.Message ?? string.Empty));
+                Add(report, ABY_EncounterValidationSeverity.Info, "EncounterValidation " + (stageName ?? "unknown stage"), "Diagnostic stage skipped after " + FormatException(ex) + ". This is a validator hardening note, not a gameplay failure.");
+                SafeVerbose("encounter-validation-stage-" + (stageName ?? "unknown"), "Encounter validation stage '" + (stageName ?? "unknown") + "' skipped: " + FormatException(ex));
+            }
+        }
+
+        private static List<T> SafeDefList<T>(ABY_EncounterValidationReport report, string label) where T : Def
+        {
+            try
+            {
+                List<T> defs = DefDatabase<T>.AllDefsListForReading;
+                return defs ?? new List<T>();
+            }
+            catch (Exception ex)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Info, label ?? typeof(T).Name, "DefDatabase list unavailable during diagnostics: " + FormatException(ex));
                 return new List<T>();
             }
         }
 
-        private static T SafeGetNamed<T>(string defName) where T : Def
+        private static DefModExtension_AbyssalDifficultyScaling SafeScalingExtension(PawnKindDef pawn, ABY_EncounterValidationReport report)
         {
-            if (defName.NullOrEmpty())
+            if (pawn == null)
             {
                 return null;
             }
 
             try
             {
-                return DefDatabase<T>.GetNamedSilentFail(defName);
+                return pawn.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+            }
+            catch (Exception ex)
+            {
+                Add(report, ABY_EncounterValidationSeverity.Warning, "PawnKindDef " + SafeDefName(pawn), "could not inspect DefModExtension_AbyssalDifficultyScaling: " + FormatException(ex));
+                return null;
+            }
+        }
+
+        private static bool SafeDefExists<T>(string defName) where T : Def
+        {
+            if (defName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            try
+            {
+                return DefDatabase<T>.GetNamedSilentFail(defName) != null;
             }
             catch
             {
-                return null;
+                return false;
             }
+        }
+
+        private static string SafeDefName(Def def)
+        {
+            try
+            {
+                return def?.defName ?? "<null>";
+            }
+            catch
+            {
+                return "<def>";
+            }
+        }
+
+        private static string FormatException(Exception ex)
+        {
+            if (ex == null)
+            {
+                return "unknown exception";
+            }
+
+            return ex.GetType().Name + ": " + (ex.Message ?? string.Empty);
         }
 
         private static void SafeVerbose(string key, string message)
         {
             try
             {
-                ABY_StabilityDiagnosticsUtility.Verbose(key ?? "encounter-validation", message ?? string.Empty, StartupThrottleTicks);
+                ABY_StabilityDiagnosticsUtility.Verbose(key, message, StartupThrottleTicks);
             }
             catch
             {
-                // Validation diagnostics must never create a startup warning of their own.
             }
         }
 

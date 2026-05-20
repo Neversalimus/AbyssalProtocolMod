@@ -107,7 +107,7 @@ A follow-up localization pass removed remaining English turret module text from 
 Important details:
 
 ```text
-- Custom turret module fields are localized through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*` and `ABY_TurretModuleEffect_*` entries; do not use `DefInjected/ABY_TurretModuleDef` folders.
+- Custom turret module fields are localized through Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml.
 - Modular turret ThingDef and RecipeDef localization now uses diegetic weapon/module descriptions instead of Slot/Role/Effect boilerplate in item descriptions.
 - Oblivion Choir and Breach Cannon descriptions were cleaned so they no longer mention animated projectiles, mod implementation, reload internals, or technical projectile behavior.
 - English base descriptions were also cleaned to avoid reintroducing technical text through fallback language data.
@@ -516,7 +516,7 @@ A follow-up pass made turret module localization robust against raw custom-def f
 Important details:
 
 ```text
-- Turret module `ABY_TurretModuleDef` display strings use mirrored Keyed label/role/effect entries so Forge/tooltips have localized data without relying on invalid custom DefInjected folders.
+- Turret module `ABY_TurretModuleDef` DefInjected fields and mirrored Keyed role/effect entries were refreshed so existing Forge/tooltips have localized data without changing C# runtime code in this patch.
 - Forge turret cards no longer need raw Slot:/Role: prefixes and should stay compact for Abyssal Forge layout.
 - Turret tooltips no longer expose projectile def names as player-facing implementation details.
 - Russian turret badge labels are intentionally short: ОСН., ВСП., ПАСС., КОРПУС, СИСТ.
@@ -732,9 +732,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - The generated passive turret module icons were reduced from 512x512 to optimized 256x256 PNGs for UI/item use.
 - Runtime smoke test still required in-game: install shield modules, damage a powered chassis, verify aegis absorption/recharge and UI display.
 
-## 2026-05-20 — Startup validation and turret module localization cleanup
+## 2026-05-21 — Encounter validator root hardening and turret module diagnostics
 
-- Removed invalid `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` usage from the working tree and documentation. RimWorld reports this folder as an unknown def type because the real custom def class is namespaced.
-- Turret module custom display fields should remain localized through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*`, and `ABY_TurretModuleEffect_*` entries.
-- Hardened encounter startup validation so diagnostic scans run in isolated stages and cannot surface a generic startup `NullReferenceException` warning.
-- Deletion-based localization fixes require removing stale folders from existing local installs; a delta zip overwrite alone cannot delete old directories.
+- Reworked `ABY_EncounterValidationUtility` from one monolithic startup scan into staged diagnostic validation so individual pool, pawn-kind, doctrine, escalation or turret-module scan failures cannot collapse the whole report into a generic `NullReferenceException`.
+- Added safe DefDatabase access, safe pawn scaling extension inspection, safe def-name formatting and verbose-only fallback logging for unexpected diagnostic-stage exceptions.
+- Added explicit `ABY_TurretModuleDef` validation because the recent passive/aegis turret module expansion increased the chance that malformed module XML could surface only during startup diagnostics.
+- The validator remains diagnostic-only: it reports concrete data issues but does not rewrite defs, block encounters, alter turret mechanics or hide gameplay failures.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.

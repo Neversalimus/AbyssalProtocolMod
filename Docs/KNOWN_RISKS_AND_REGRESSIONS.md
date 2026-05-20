@@ -45,7 +45,7 @@ Actual code and assets win over this document.
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
 | Technical implementation text in item/weapon descriptions | P2 | localization / DefInjected / XML descriptions | Players see lines about mods, runtime, defs, save/load, animated projectiles, projectile internals, or framework behavior | Descriptions should be weapon/lore-facing. Keep technical wording only in dev/debug settings or internal comments. Scan both English base defs and Russian localization before packaging. |
-| Custom turret module fields not localized | P2 | modular turrets / Forge UI | Forge cards show English `Slot`, `Role`, `Effect`, `Primary gun module`, or raw internal tactical roles in Russian mode | Localize custom module display text through Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*`, and `ABY_TurretModuleEffect_*` entries; do not add `DefInjected/ABY_TurretModuleDef` folders. Also cover ThingDef/RecipeDef text for module items. |
+| Custom turret module fields not localized | P2 | modular turrets / Forge UI | Forge cards show English `Slot`, `Role`, `Effect`, `Primary gun module`, or raw internal tactical roles in Russian mode | Localize `ABY_TurretModuleDef` fields through `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/ABY_TurretModuleDefs.xml`; also cover ThingDef/RecipeDef text for module items. |
 | Long turret/Forge labels overflowing cards | P2 | Forge UI / turret modules | Pattern cards and selected panel clip or overlap text | Prefer short labels in tight cards and move long lore to descriptions/tooltips. Use glossary short forms where possible. |
 
 
@@ -313,7 +313,7 @@ Do not update for isolated harmless edits unless the risk knowledge would be los
 
 ## Russian turret localization: custom Def fields can leak raw English
 
-Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear directly in Forge cards and turret tooltips if missing localization data. Keep `ABY_TurretModuleLabel_<defName>`, `ABY_TurretModuleRole_<defName>` and `ABY_TurretModuleEffect_<defName>` Keyed entries in sync with module defs. Do not create `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` folders: RimWorld treats the unqualified folder as an unknown def type and emits language load errors.
+Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear directly in Forge cards and turret tooltips if missing localization data. Keep both `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` custom-field translations and mirrored `ABY_TurretModuleRole_<defName>` / `ABY_TurretModuleEffect_<defName>` Keyed entries in sync. A future C# hardening pass may route these accessors through keyed lookup, but this patch intentionally leaves runtime code unchanged.
 
 Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
 
@@ -595,9 +595,20 @@ Regression guard:
 - Do not represent shield modules only as incoming damage multipliers: players need a visible, rechargeable aegis pool to understand why the module is different from armor/stabilizer passives.
 - Turret module item icons should stay optimized for UI use; avoid reintroducing 512x512+ inventory icons unless a module needs large overlay art.
 
+## 2026-05-21 — Encounter validator must fail soft but stay actionable
 
-## 2026-05-20 — Invalid custom DefInjected folder regression
+Observed behavior: a diagnostic startup scan in `ABY_EncounterValidationUtility` could throw a generic `NullReferenceException` and log `[Abyssal Protocol] Encounter validation failed...` without identifying the bad data or stage. This is especially easy to misread after unrelated content additions such as passive turret modules.
 
-RimWorld rejects `Languages/<Lang>/DefInjected/ABY_TurretModuleDef/` with `dir ABY_TurretModuleDef doesn't correspond to any def type` because the actual custom def XML type is namespaced as `AbyssalProtocol.ABY_TurretModuleDef`. Turret module labels, roles and effect summaries must stay in Keyed `ABY_TurretModuleLabel_*`, `ABY_TurretModuleRole_*` and `ABY_TurretModuleEffect_*` entries instead. If this folder exists in a local install, delete it; extracting a delta zip over the mod folder will not remove stale directories automatically.
+Regression rules:
 
-Encounter startup validation must be diagnostic-only. Any validation stage that hits a bad/missing external def should be isolated and skipped without surfacing a generic `[Abyssal Protocol] Encounter validation failed: NullReferenceException` startup warning.
+- Do not wrap the whole validator in a single user-facing warning catch again.
+- Keep validation split into named stages and keep per-def access null-safe.
+- Unexpected diagnostic-stage exceptions should become actionable report notes/verbose diagnostics, not generic startup warning stacks.
+- New content families that can affect startup/data integrity, such as `ABY_TurretModuleDef`, should have explicit validation rather than relying on unrelated encounter scans to fail.
+- The validator must remain diagnostic-only and must never change encounter composition, turret module behavior, saved data, or player rewards.
+
+In-game checks:
+
+- Load with encounter data validation enabled and confirm there is no generic `Encounter validation failed: NullReferenceException` warning.
+- Use the diagnostics window or "Validate encounters" button to confirm concrete warnings/notes are visible if data is malformed.
+- Install passive/aegis turret modules and verify their gameplay behavior is unchanged by the validator.
