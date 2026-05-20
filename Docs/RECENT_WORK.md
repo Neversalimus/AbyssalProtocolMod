@@ -668,10 +668,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - This is a log-noise and compatibility hardening pass only: successful projectile impacts, damage, VFX, sounds, and post-impact logic are unchanged.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
 
-## 2026-05-20 — Dominion pocket combat/turret runtime hardening
+## 2026-05-20 — Deferred Dominion UI action guard
 
-- Added a large-modpack Lord.Notify_PawnLost finalizer guard for abyssal pawns to prevent stale Lord state from producing red "Error while killing ... during phase 5" logs during mass Dominion/projectile deaths.
-- Hardened modular turret targeting after Dominion pocket transitions by invalidating runtime target caches on pawn map transfer and pocket collapse.
-- Allowed the runtime target cache and modular turret target validation to recover abyssal pawns whose hostile faction is temporarily missing after unusual map-transfer/save-load paths.
-- Hardened mod settings and diagnostic scroll views with try/finally EndScrollView guards so UI exceptions cannot leave RimWorld's mouse-position stack unbalanced.
-- Build verified with direct local Roslyn compile.
+- Added a deferred UI action game component and Dominion pocket UI action helper.
+- Dominion pocket enter/jump/return commands from gizmos, compact tab and Summoning Console now queue the actual map-transfer/collapse work by one Unity frame instead of executing directly inside the IMGUI click event.
+- This is intended to prevent heavy modpack UI overlays from leaving RimWorld's mouse-position scroll stack unbalanced after returning from Dominion pocket maps.
+- Also hardened Abyssal settings/diagnostics/performance scroll views with try/finally EndScrollView guards.
+- Gameplay flow is intended to remain unchanged: the same action still runs, only outside the current IMGUI draw frame.

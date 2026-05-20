@@ -42,7 +42,7 @@ namespace AbyssalProtocol
                     icon = ExtractCommandIcon,
                     action = delegate
                     {
-                        if (!AbyssalDominionPocketSafeUtility.TryReturnPocketStrikeTeamFromGate(gate, out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueSafeReturnFromGate(gate, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }
@@ -60,7 +60,7 @@ namespace AbyssalProtocol
                     icon = JumpCommandIcon,
                     action = delegate
                     {
-                        if (!AbyssalDominionPocketSafeUtility.TryOpenPocketSliceFromGate(gate, out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueSafeOpenFromGate(gate, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }

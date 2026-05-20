@@ -353,11 +353,7 @@ namespace AbyssalProtocol
                             }
 
                             List<Pawn> pawns = AbyssalDominionPocketUtility.GetSelectedColonistsForPocketEntry(Map);
-                            if (AbyssalDominionPocketUtility.TryOpenPocketSlice(gate, pawns, out _, out string failReason))
-                            {
-                                Messages.Message("Dominion slice runtime opened.", MessageTypeDefOf.PositiveEvent, false);
-                            }
-                            else if (!failReason.NullOrEmpty())
+                            if (!ABY_DominionPocketUIActionUtility.QueueOpenLegacy(gate, pawns, out string failReason) && !failReason.NullOrEmpty())
                             {
                                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                             }
@@ -374,7 +370,7 @@ namespace AbyssalProtocol
                         defaultDesc = "Jump to the active temporary dominion slice linked to this colony map.",
                         action = delegate
                         {
-                            if (!AbyssalDominionPocketUtility.TryJumpToPocketSlice(activePocketSession, out string failReason) && !failReason.NullOrEmpty())
+                            if (!ABY_DominionPocketUIActionUtility.QueueJumpSession(activePocketSession, out string failReason) && !failReason.NullOrEmpty())
                             {
                                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                             }
@@ -387,7 +383,7 @@ namespace AbyssalProtocol
                         defaultDesc = "Return all player pawns from the active temporary dominion slice and collapse it.",
                         action = delegate
                         {
-                            if (!AbyssalDominionPocketUtility.TryReturnPocketSlice(activePocketSession, true, out string failReason) && !failReason.NullOrEmpty())
+                            if (!ABY_DominionPocketUIActionUtility.QueueReturnSession(activePocketSession, true, out string failReason) && !failReason.NullOrEmpty())
                             {
                                 Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                             }

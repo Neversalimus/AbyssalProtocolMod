@@ -1157,7 +1157,7 @@ namespace AbyssalProtocol
             MapComponent_DominionCrisis crisis = GetDominionCrisis(circle);
             if (crisis != null && crisis.HasActivePocketSession())
             {
-                return crisis.TryJumpToPocketSlice(out failReason);
+                return ABY_DominionPocketUIActionUtility.QueueJumpFromCrisis(crisis, out failReason);
             }
 
             Thing target = crisis?.GetPrimaryObjectiveThing();
@@ -1205,15 +1205,15 @@ namespace AbyssalProtocol
 
             if (crisis.IsPocketExtractionReady())
             {
-                return crisis.TryReturnPocketStrikeTeam(out failReason);
+                return ABY_DominionPocketUIActionUtility.QueueReturnFromCrisis(crisis, out failReason);
             }
 
             if (crisis.HasActivePocketSession())
             {
-                return crisis.TryJumpToPocketSlice(out failReason);
+                return ABY_DominionPocketUIActionUtility.QueueJumpFromCrisis(crisis, out failReason);
             }
 
-            return crisis.TryOpenPocketSliceFromPlayerFlow(out failReason);
+            return ABY_DominionPocketUIActionUtility.QueueOpenFromCrisis(crisis, out failReason);
         }
 
         public static int CountAvailableOperators(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)

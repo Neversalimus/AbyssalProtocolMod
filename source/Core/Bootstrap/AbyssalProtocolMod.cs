@@ -50,14 +50,12 @@ namespace AbyssalProtocol
 
             Rect viewRect = new Rect(0f, 0f, inRect.width - 18f, 1620f);
             Widgets.BeginScrollView(inRect, ref settingsScroll, viewRect);
-            Listing_Standard list = new Listing_Standard();
-            bool listingBegun = false;
             try
             {
+                Listing_Standard list = new Listing_Standard();
                 list.Begin(viewRect);
-                listingBegun = true;
 
-                list.Gap(4f);
+            list.Gap(4f);
             DrawDifficultySection(list, s);
             list.GapLine();
             DrawUIStyleSection(list, s);
@@ -118,17 +116,13 @@ namespace AbyssalProtocol
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
+                list.End();
             }
             finally
             {
-                if (listingBegun)
-                {
-                    list.End();
-                }
-
                 Widgets.EndScrollView();
-                s.ClampValues();
             }
+            s.ClampValues();
         }
 
         public override void WriteSettings()

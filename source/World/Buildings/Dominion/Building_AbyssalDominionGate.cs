@@ -188,7 +188,7 @@ namespace AbyssalProtocol
                     icon = JumpCommandIcon,
                     action = delegate
                     {
-                        if (!crisis.TryJumpToPocketSlice(out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueJumpFromCrisis(crisis, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }
@@ -202,7 +202,7 @@ namespace AbyssalProtocol
                     icon = ExtractCommandIcon,
                     action = delegate
                     {
-                        if (!crisis.TryReturnPocketStrikeTeam(out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueReturnFromCrisis(crisis, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }
@@ -220,7 +220,7 @@ namespace AbyssalProtocol
                     icon = JumpCommandIcon,
                     action = delegate
                     {
-                        if (!crisis.TryOpenPocketSliceFromPlayerFlow(out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueOpenFromCrisis(crisis, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }

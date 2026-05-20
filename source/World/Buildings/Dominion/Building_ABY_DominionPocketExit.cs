@@ -86,7 +86,7 @@ namespace AbyssalProtocol
                     ABY_DominionPocketRuntimeGameComponent runtime = ABY_DominionPocketRuntimeGameComponent.Get();
                     if (runtime != null && runtime.TryGetSessionById(sessionId, out ABY_DominionPocketSession session))
                     {
-                        if (!AbyssalDominionPocketUtility.TryReturnPocketSlice(session, true, out string failReason) && !failReason.NullOrEmpty())
+                        if (!ABY_DominionPocketUIActionUtility.QueueReturnSession(session, true, out string failReason) && !failReason.NullOrEmpty())
                         {
                             Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
                         }
