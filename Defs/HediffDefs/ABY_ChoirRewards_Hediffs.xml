@@ -48,7 +48,7 @@
         <statOffsets>
           <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
           <AimingDelayFactor>-0.04</AimingDelayFactor>
-          <MeleeHitChance>0.01</MeleeHitChance>
+          <MeleeHitChance>0.10</MeleeHitChance>
         </statOffsets>
       </li>
     </stages>

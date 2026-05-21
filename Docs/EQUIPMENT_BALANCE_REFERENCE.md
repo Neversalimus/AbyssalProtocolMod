@@ -405,3 +405,55 @@ Surgery recipes should also have explicit medicine/skill expectations when the i
 | Implants | `Defs/ThingDefs/*Implant*.xml`, `Defs/HediffDefs/*Implant*.xml`, `Defs/RecipeDefs/*Implant*.xml`, `source/UI/Health/` if card display is involved |
 | Turret modules | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `source/Comps/CompAbyssalModularTurret.cs`, `source/Defs/Turrets/` |
 | Balance reference maintenance | `Docs/EQUIPMENT_BALANCE_REFERENCE.md`, `Docs/CONTENT_MATRIX.md`, `Docs/AI_QUICK_INDEX.md`, `Docs/RECENT_WORK.md` |
+
+
+## Implant slot coverage expansion — 2026-05-21
+
+This pass completes the current implant grid for the introduced T1-T5 range of the future 9-tier progression model.
+
+Canonical implant slot grid used by the project:
+
+- Brain
+- Eye
+- Spine
+- Heart
+- Lung
+- Kidney
+- Liver
+- Stomach
+- Arm
+- Leg
+- Torso
+- Jaw
+- Neck
+
+Rules preserved by this pass:
+
+- T1 is kept around vanilla endgame / early abyssal baseline.
+- T2-T5 increase by role and slot without making every slot a pure DPS upgrade.
+- Positive `ShootingAccuracyPawn`, `MeleeHitChance`, and `MeleeDodgeChance` entries must be at least `0.10` so RimWorld stat cards do not show misleading `0.0` values.
+- Brain, Torso and Neck entries are treated as auxiliary implants where possible; major organs and limbs use added body part behavior.
+- New implants use existing Forge unlock infrastructure under category `Implants`.
+- New craftable implant items must have matching `HediffDef`, surgery `RecipeDef`, `spawnThingOnRemoved`, `CompProperties_ABY_ImplantInfoCard`, and a real `Textures/Things/Implant/*.png` asset.
+
+New coverage added:
+
+| Tier | Added missing slots |
+|---|---|
+| T1 Signal | Spine, Heart, Kidney, Stomach, Arm, Leg, Torso, Neck |
+| T2 Breach | Heart, Lung, Liver, Stomach, Leg, Jaw, Neck |
+| T3 Archon | Eye, Spine, Lung, Liver, Stomach, Torso, Jaw |
+| T4 Reactor | Brain, Eye, Spine, Heart, Lung, Kidney, Liver, Stomach, Arm, Leg, Torso, Jaw, Neck |
+| T5 Dominion | Eye, Lung, Kidney, Liver, Stomach, Arm, Leg, Jaw, Neck |
+
+New ownership files:
+
+- `Defs/ThingDefs/ABY_ImplantTierExpansion.xml`
+- `Defs/HediffDefs/ABY_ImplantTierExpansion_Hediffs.xml`
+- `Defs/RecipeDefs/ABY_ImplantTierExpansion_Recipes.xml`
+- `Textures/Things/Implant/ABY_*.png` for each added implant.
+
+Existing safety fixes included:
+
+- Raised player-facing positive `MeleeHitChance` implant entries below `0.10` to `0.10`.
+- Added missing `spawnThingOnRemoved` entries to the Ashen implant hediffs so removed implants return their body-part item consistently.

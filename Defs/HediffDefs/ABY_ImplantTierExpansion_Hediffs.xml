@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_AshenTendonSpine_Implant</defName>
+    <label>ashen tendon spine</label>
+    <description>A disciplined ash-core spinal brace that steadies movement and load-bearing without fully surrendering the host frame.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_AshenTendonSpine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.08</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.04</MoveSpeed>
+          <CarryingCapacity>6</CarryingCapacity>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_EmberPulseHeart_Implant</defName>
+    <label>ember pulse heart</label>
+    <description>A low-tier infernal circulatory pump that keeps the body moving under pain and heat pressure.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_EmberPulseHeart</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.16</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <PainShockThreshold>0.06</PainShockThreshold>
+          <ArmorRating_Heat>0.06</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_AshenSinkKidney_Implant</defName>
+    <label>ashen sink kidney</label>
+    <description>A compact renal heat-sink grown around a stable ash core, improving filtration and fever discipline.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_AshenSinkKidney</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.18</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.05</ImmunityGainSpeed>
+          <ArmorRating_Heat>0.05</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_CinderStomachCrucible_Implant</defName>
+    <label>cinder stomach crucible</label>
+    <description>A restrained digestive crucible that burns nutrient flow cleaner while slightly increasing metabolic strain.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_CinderStomachCrucible</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Metabolism</capacity>
+            <offset>0.14</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <WorkSpeedGlobal>0.03</WorkSpeedGlobal>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.03</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_AshenServoArm_Implant</defName>
+    <label>ashen servo arm</label>
+    <description>A simple abyssal servo-arm that reinforces manipulation and close-quarters commitment.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_AshenServoArm</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.08</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <PainShockThreshold>0.03</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_EmberTendonLeg_Implant</defName>
+    <label>ember tendon leg</label>
+    <description>A low-tier tendon leg woven with ember conduits for controlled breach movement.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.08</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_EmberTendonLeg</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.08</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.05</MoveSpeed>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_AshskinMesh_Implant</defName>
+    <label>ashskin mesh</label>
+    <description>A first-contact subdermal mesh that spreads heat and sharp trauma through a crude ash lattice.</description>
+    <spawnThingOnRemoved>ABY_AshskinMesh</spawnThingOnRemoved>
+    <tags>
+      <li>ArmorGland</li>
+    </tags>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.08</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.1</ArmorRating_Heat>
+          <PawnBeauty>-0.2</PawnBeauty>
+        </statOffsets>
+        <totalBleedFactor>0.96</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_CinderThroatCollar_Implant</defName>
+    <label>cinder throat collar</label>
+    <description>A cinder-sealed throat collar that damps panic and pain cascade during early abyssal contact.</description>
+    <spawnThingOnRemoved>ABY_CinderThroatCollar</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <MentalBreakThreshold>0.06</MentalBreakThreshold>
+          <PainShockThreshold>0.08</PainShockThreshold>
+          <PsychicSensitivity>-0.04</PsychicSensitivity>
+          <PawnBeauty>-0.1</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_BreachPulseHeart_Implant</defName>
+    <label>breach pulse heart</label>
+    <description>A breach-pattern heart that locks circulation to the rhythm of controlled incursions.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_BreachPulseHeart</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.22</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.04</MoveSpeed>
+          <PainShockThreshold>0.08</PainShockThreshold>
+          <ArmorRating_Heat>0.08</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_RiftLungArray_Implant</defName>
+    <label>rift lung array</label>
+    <description>A rift-cooled lung array that increases oxygen throughput while venting heat through resonance veins.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_RiftLungArray</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>0.24</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.07</MoveSpeed>
+          <ArmorRating_Heat>0.08</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_NullLiverFilter_Implant</defName>
+    <label>null liver filter</label>
+    <description>A null-coil hepatic filter that improves immune discipline and reduces psychic overexposure.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_NullLiverFilter</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.24</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.08</ImmunityGainSpeed>
+          <PsychicSensitivity>-0.04</PsychicSensitivity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_BreachStomachEngine_Implant</defName>
+    <label>breach stomach engine</label>
+    <description>A reinforced digestive engine that converts abyssal strain into steadier labor throughput.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_BreachStomachEngine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Metabolism</capacity>
+            <offset>0.2</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <WorkSpeedGlobal>0.04</WorkSpeedGlobal>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.04</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_RiftstepLegActuator_Implant</defName>
+    <label>riftstep leg actuator</label>
+    <description>A breach-step locomotor actuator that improves battlefield movement and evasive footwork.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_RiftstepLegActuator</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.14</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.09</MoveSpeed>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_NullMandibleClamp_Implant</defName>
+    <label>null mandible clamp</label>
+    <description>A null-sealed mandible clamp that hardens pain tolerance and close-combat targeting at social cost.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.12</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_NullMandibleClamp</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <PainShockThreshold>0.12</PainShockThreshold>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <SocialImpact>-0.08</SocialImpact>
+          <PawnBeauty>-0.2</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_NullSignalCollar_Implant</defName>
+    <label>null signal collar</label>
+    <description>A damped collar that filters panic and hostile signal feedback without fully muting the wearer.</description>
+    <spawnThingOnRemoved>ABY_NullSignalCollar</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <MentalBreakThreshold>0.1</MentalBreakThreshold>
+          <PainShockThreshold>0.08</PainShockThreshold>
+          <PsychicSensitivity>-0.1</PsychicSensitivity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ArchonPredatorEye_Implant</defName>
+    <label>archon predator eye</label>
+    <description>A predatory archon optic that turns target acquisition into an act of ritual pursuit.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ArchonPredatorEye</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>0.28</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <AimingDelayFactor>-0.06</AimingDelayFactor>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_BreachlordSpine_Implant</defName>
+    <label>breachlord spine</label>
+    <description>A heavy archon spinal lattice built for committed assault movement and recoil-stable posture.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_BreachlordSpine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.16</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.11</MoveSpeed>
+          <CarryingCapacity>15</CarryingCapacity>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+          <PainShockThreshold>0.05</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ChoirLungResonator_Implant</defName>
+    <label>choir lung resonator</label>
+    <description>A choir-bound lung resonator that turns breath into controlled thermal cadence.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ChoirLungResonator</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>0.3</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ArmorRating_Heat>0.12</ArmorRating_Heat>
+          <PainShockThreshold>0.04</PainShockThreshold>
+          <MoveSpeed>0.05</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_HordeLiverCrucible_Implant</defName>
+    <label>horde liver crucible</label>
+    <description>An archon-grade liver crucible that metabolizes battlefield toxins and bleeding shock into usable resilience.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_HordeLiverCrucible</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.3</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.1</ImmunityGainSpeed>
+          <PainShockThreshold>0.04</PainShockThreshold>
+        </statOffsets>
+        <totalBleedFactor>0.88</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ArchonStomachFurnace_Implant</defName>
+    <label>archon stomach furnace</label>
+    <description>A furnace-stomach that stabilizes violent metabolism into sustained work and combat output.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ArchonStomachFurnace</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Metabolism</capacity>
+            <offset>0.26</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <WorkSpeedGlobal>0.06</WorkSpeedGlobal>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.05</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_BreachCarapaceMesh_Implant</defName>
+    <label>breach carapace mesh</label>
+    <description>A thicker subdermal breach mesh that spreads force through armored ritual knots.</description>
+    <spawnThingOnRemoved>ABY_BreachCarapaceMesh</spawnThingOnRemoved>
+    <tags>
+      <li>ArmorGland</li>
+    </tags>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.18</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.1</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.2</ArmorRating_Heat>
+          <MoveSpeed>-0.02</MoveSpeed>
+          <PawnBeauty>-0.35</PawnBeauty>
+        </statOffsets>
+        <totalBleedFactor>0.86</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_HordeMandibleCrown_Implant</defName>
+    <label>horde mandible crown</label>
+    <description>A crowned mandible brace that makes speech harsher, pain quieter, and melee commitment cleaner.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.16</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_HordeMandibleCrown</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <PainShockThreshold>0.16</PainShockThreshold>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <SocialImpact>0.1</SocialImpact>
+          <PawnBeauty>-0.25</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_ReactorHaloSubcore_Implant</defName>
+    <label>reactor halo subcore</label>
+    <description>A reactor-saint subcore that burns ordered cognition through a white-gold halo interface.</description>
+    <spawnThingOnRemoved>ABY_ReactorHaloSubcore</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.12</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ResearchSpeed>0.22</ResearchSpeed>
+          <GlobalLearningFactor>0.12</GlobalLearningFactor>
+          <AimingDelayFactor>-0.06</AimingDelayFactor>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.07</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_JudgementOpticHalo_Implant</defName>
+    <label>judgement optic halo</label>
+    <description>A haloed reactor optic calibrated for verdict-grade aim discipline.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_JudgementOpticHalo</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>0.34</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.08</AimingDelayFactor>
+          <MeleeHitChance>0.1</MeleeHitChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_VesperTendonSpine_Implant</defName>
+    <label>vesper tendon spine</label>
+    <description>A saint-pattern spinal harness that stabilizes heavy movement under reactor pressure.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_VesperTendonSpine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.2</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.14</MoveSpeed>
+          <CarryingCapacity>22</CarryingCapacity>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+          <PainShockThreshold>0.06</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ReactorVotiveHeart_Implant</defName>
+    <label>reactor votive heart</label>
+    <description>A votive reactor heart that holds circulation, heat and consciousness inside a disciplined saint-cycle.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ReactorVotiveHeart</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodPumping</capacity>
+            <offset>0.34</offset>
+          </li>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>0.08</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.05</MoveSpeed>
+          <PainShockThreshold>0.12</PainShockThreshold>
+          <ArmorRating_Heat>0.14</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_SaintBellowsLung_Implant</defName>
+    <label>saint bellows lung</label>
+    <description>A white-hot bellows lung that vents reactor pressure through sanctified breathing channels.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_SaintBellowsLung</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>0.34</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ArmorRating_Heat>0.18</ArmorRating_Heat>
+          <MoveSpeed>0.08</MoveSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ReactorSinkKidney_Implant</defName>
+    <label>reactor sink kidney</label>
+    <description>A reactor-grade renal sink that filters blood and heat through compact aegis vanes.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ReactorSinkKidney</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.36</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.14</ImmunityGainSpeed>
+          <ArmorRating_Heat>0.18</ArmorRating_Heat>
+        </statOffsets>
+        <totalBleedFactor>0.84</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_SaintLiverCenser_Implant</defName>
+    <label>saint liver censer</label>
+    <description>A censer-liver that purifies blood under reactor chant and sustained combat strain.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_SaintLiverCenser</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.34</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.14</ImmunityGainSpeed>
+          <PainShockThreshold>0.05</PainShockThreshold>
+          <ArmorRating_Heat>0.08</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_ReactorStomachCrucible_Implant</defName>
+    <label>reactor stomach crucible</label>
+    <description>A reactor crucible seated in the gut, converting thermal strain into stable labor cadence.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_ReactorStomachCrucible</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Metabolism</capacity>
+            <offset>0.3</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <WorkSpeedGlobal>0.08</WorkSpeedGlobal>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.06</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_VesperExecutionArm_Implant</defName>
+    <label>vesper execution arm</label>
+    <description>An execution-grade reactor armature tuned for weapon handling and decisive close control.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_VesperExecutionArm</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.18</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <AimingDelayFactor>-0.1</AimingDelayFactor>
+          <MeleeHitChance>0.1</MeleeHitChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_HaloLocomotorLeg_Implant</defName>
+    <label>halo locomotor leg</label>
+    <description>A halo-driven leg actuator that carries reactor weight through controlled battlefield speed.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_HaloLocomotorLeg</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.2</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.14</MoveSpeed>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_AegisCarapaceMesh_Implant</defName>
+    <label>aegis carapace mesh</label>
+    <description>A saint-class subdermal aegis mesh that spreads sharp trauma, blunt force and heat through white-gold knots.</description>
+    <spawnThingOnRemoved>ABY_AegisCarapaceMesh</spawnThingOnRemoved>
+    <tags>
+      <li>ArmorGland</li>
+    </tags>
+    <stages>
+      <li>
+        <statOffsets>
+          <ArmorRating_Sharp>0.24</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.15</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.28</ArmorRating_Heat>
+          <PainShockThreshold>0.06</PainShockThreshold>
+          <MoveSpeed>-0.03</MoveSpeed>
+          <PawnBeauty>-0.45</PawnBeauty>
+        </statOffsets>
+        <totalBleedFactor>0.8</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_VerdictMandibleSeal_Implant</defName>
+    <label>verdict mandible seal</label>
+    <description>A verdict-seal mandible that turns pain, threat display and strike discipline into one controlled signal.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.22</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_VerdictMandibleSeal</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <PainShockThreshold>0.18</PainShockThreshold>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <SocialImpact>0.12</SocialImpact>
+          <PsychicSensitivity>-0.06</PsychicSensitivity>
+          <PawnBeauty>-0.2</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_HaloChoirCollar_Implant</defName>
+    <label>halo choir collar</label>
+    <description>A halo choir collar that damps terror while reinforcing ordered cognition under reactor pressure.</description>
+    <spawnThingOnRemoved>ABY_HaloChoirCollar</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <MentalBreakThreshold>0.14</MentalBreakThreshold>
+          <PainShockThreshold>0.16</PainShockThreshold>
+          <PsychicSensitivity>-0.1</PsychicSensitivity>
+          <ResearchSpeed>0.08</ResearchSpeed>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionSightCrown_Implant</defName>
+    <label>dominion sight crown</label>
+    <description>A crown-fed optic that lets the wearer sight along imposed dominion vectors.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionSightCrown</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>0.42</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <AimingDelayFactor>-0.1</AimingDelayFactor>
+          <PsychicSensitivity>0.1</PsychicSensitivity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionLungThrone_Implant</defName>
+    <label>dominion lung throne</label>
+    <description>A throne-like lung array that forces breath to obey crown-pressure and void heat.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionLungThrone</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Breathing</capacity>
+            <offset>0.42</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ArmorRating_Heat>0.24</ArmorRating_Heat>
+          <MoveSpeed>0.1</MoveSpeed>
+          <PainShockThreshold>0.05</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionAegisKidney_Implant</defName>
+    <label>dominion aegis kidney</label>
+    <description>A dominion renal aegis that filters blood as though it were oath-bound material.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionAegisKidney</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.42</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.18</ImmunityGainSpeed>
+          <ArmorRating_Heat>0.24</ArmorRating_Heat>
+          <PainShockThreshold>0.08</PainShockThreshold>
+        </statOffsets>
+        <totalBleedFactor>0.78</totalBleedFactor>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionLiverScripture_Implant</defName>
+    <label>dominion liver scripture</label>
+    <description>A liver-scripture etched in crown alloy, converting poison, fever and panic into enforceable order.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionLiverScripture</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <offset>0.42</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ImmunityGainSpeed>0.18</ImmunityGainSpeed>
+          <MentalBreakThreshold>0.08</MentalBreakThreshold>
+          <PainShockThreshold>0.04</PainShockThreshold>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionStomachEngine_Implant</defName>
+    <label>dominion stomach engine</label>
+    <description>A dominion digestive engine that makes metabolism serve production and combat law.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionStomachEngine</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Metabolism</capacity>
+            <offset>0.36</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <WorkSpeedGlobal>0.1</WorkSpeedGlobal>
+        </statOffsets>
+        <statFactors>
+          <RestFallRateFactor>1.07</RestFallRateFactor>
+        </statFactors>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionServoArm_Implant</defName>
+    <label>dominion servo arm</label>
+    <description>A crown-bound servo armature that turns aim, grip and melee commitment into imposed command.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionServoArm</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>0.22</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <ShootingAccuracyPawn>0.1</ShootingAccuracyPawn>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <AimingDelayFactor>-0.12</AimingDelayFactor>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_DominionTendonLeg_Implant</defName>
+    <label>dominion tendon leg</label>
+    <description>A dominion tendon leg that carries the body according to crown geometry rather than muscle hesitation.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_DominionTendonLeg</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>0.24</offset>
+          </li>
+        </capMods>
+        <statOffsets>
+          <MoveSpeed>0.18</MoveSpeed>
+          <MeleeDodgeChance>0.1</MeleeDodgeChance>
+          <CarryingCapacity>18</CarryingCapacity>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="AddedBodyPartBase">
+    <defName>ABY_CrownMandibleAuthority_Implant</defName>
+    <label>crown mandible authority</label>
+    <description>A crown mandible that turns speech and pain into a visible instrument of dominion authority.</description>
+    <hediffClass>Hediff_AddedPart</hediffClass>
+    <addedPartProps>
+      <solid>true</solid>
+      <betterThanNatural>true</betterThanNatural>
+      <partEfficiency>1.28</partEfficiency>
+    </addedPartProps>
+    <spawnThingOnRemoved>ABY_CrownMandibleAuthority</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <PainShockThreshold>0.22</PainShockThreshold>
+          <MeleeHitChance>0.1</MeleeHitChance>
+          <SocialImpact>0.18</SocialImpact>
+          <PsychicSensitivity>0.1</PsychicSensitivity>
+          <PawnBeauty>-0.25</PawnBeauty>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef ParentName="ImplantHediffBase">
+    <defName>ABY_CrownNullCollar_Implant</defName>
+    <label>crown null collar</label>
+    <description>A crown-null collar that filters panic without freeing the wearer from the law behind the signal.</description>
+    <spawnThingOnRemoved>ABY_CrownNullCollar</spawnThingOnRemoved>
+    <stages>
+      <li>
+        <statOffsets>
+          <MentalBreakThreshold>0.18</MentalBreakThreshold>
+          <PainShockThreshold>0.18</PainShockThreshold>
+          <PsychicSensitivity>-0.12</PsychicSensitivity>
+          <GlobalLearningFactor>0.06</GlobalLearningFactor>
+        </statOffsets>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

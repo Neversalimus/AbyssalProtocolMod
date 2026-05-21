@@ -661,8 +661,9 @@ In-game checks:
 - Repeat with Warden of Ash to verify smaller miniboss placement still reads correctly.
 - Confirm the full boss HUD remains unchanged for Archon/Reactor-class bosses.
 
+## Implant grid expansion risks — 2026-05-21
 
-## 2026-05-21 — Apparel stat-card rounding and balance risks
-- Positive `ShootingAccuracyPawn`, `MeleeHitChance`, and `MeleeDodgeChance` apparel offsets should stay at `0.10` or higher when shown on player gear. Smaller positive values may round/display as `0.0` in item cards and look like a broken stat.
-- Armor-aegis apparel should be validated in-game after XML changes: equip Saint Aegis Carapace and Crowned Core Plate, verify the Aegis info card, status gizmo, absorption, recharge, EMP drain and external shield suppression.
-- Hover armor speed should be tested while drafted and undrafted; avoid passive values near +3.0 unless the mechanic is converted into an active burst/dash with cooldown.
+- Positive `ShootingAccuracyPawn`, `MeleeHitChance`, and `MeleeDodgeChance` values below `0.10` render as `0.0` in stat cards and look broken. Keep visible positive entries at `0.10` or higher.
+- Craftable implant ThingDefs need matching surgery RecipeDefs and installed HediffDefs; missing one of the three silently creates reward items that cannot be installed or hediffs that cannot be recovered.
+- Added body part hediffs must include `spawnThingOnRemoved` so extracted/replaced implants return the correct item.
+- New implant ThingDefs must use real `Textures/Things/Implant/*.png` assets, not missing texPaths or duplicated placeholder art.

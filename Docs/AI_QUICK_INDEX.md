@@ -31,7 +31,6 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | User task / symptom | Start here | Also check |
 | --- | --- | --- |
 | Forge UI, Forge console, pattern browser, clipped text | `source/UI/Forge/` | `source/UI/Shared/`, `source/Forge/`, `Defs/RecipeDefs/`, `Defs/ThingDefs/`, `Languages/` |
-| Equipment/apparel/implant/turret balance reference | `Docs/EQUIPMENT_BALANCE_REFERENCE.md` | `Defs/ThingDefs/`, `Defs/HediffDefs/`, `Defs/RecipeDefs/`, `Defs/Misc/ABY_TurretModuleDefs.xml`, `source/Forge/`, `source/UI/Forge/` |
 | Forge progression, residue, attunement, unlocks | `source/Forge/`, `source/Progression/` | `source/UI/Forge/`, `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Languages/` |
 | Pawn classification, boss/miniboss protection, construct physiology, residue eligibility | `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `source/Defs/Common/ABY_AbyssalPawnClassificationExtension.cs`, `source/Defs/Common/ABY_ResidueSinteringExtension.cs` | `source/Forge/ABY_ResidueSinteringUtility.cs`, `source/Hediffs/ABY_AbyssalConstructPhysiologyUtility.cs`, `Defs/PawnKindDefs/` |
 | Encounter validation, turret module data diagnostics, directed planner diagnostics, shadow-mode comparison | `source/Encounters/ABY_EncounterValidationUtility.cs`, `source/Encounters/ABY_EncounterShadowPlannerUtility.cs`, `source/Encounters/AbyssalEncounterDirectorUtility.cs` | `Defs/Misc/ABY_EncounterTemplates.xml`, `Defs/Misc/ABY_ThreatDoctrines.xml`, `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/PawnKindDefs/`, `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` |
@@ -46,7 +45,6 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Dominion visuals, atmosphere, collapse, flow, void edge | `source/Dominion/VFX/`, `source/Dominion/MapComponents/` | `Defs/ThingDefs_Motes/`, `Textures/Effects/`, `Textures/Things/Building/DominionSlice/` |
 | Modular turret behavior, modules, sockets, targeting | `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Defs/Turrets/` | `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/ThingDefs/ABY_TurretModules.xml`, `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml` |
 | Turret projectile or weapon module VFX | `source/Combat/VFX/`, `source/Combat/Projectiles/` | `Defs/ThingDefs/ABY_ModularTurret_Projectiles.xml`, `Defs/ThingDefs_Motes/`, `Textures/Things/Projectile/`, `Textures/Effects/` |
-| Special weapon hidden/C# damage display | `source/Combat/Utilities/ABY_SpecialWeaponDamageInfoUtility.cs`, `source/Combat/Comps/CompABY_SpecialWeaponDamageInfo.cs` | weapon `ThingDef` comps, custom projectile/effect constants, `source/Forge/AbyssalForgeProgressUtility.cs`, `Languages/*/Keyed/ABY_SpecialWeaponDamageInfo_Strings.xml` |
 | Pawn AI, hostile behavior, pathing, anti-tame/animal workflow | `source/Pawns/`, `source/Patches/` | `source/Comps/`, `Defs/PawnKindDefs/`, `Defs/ThingDefs/` |
 | Pawn death drops / true death / no downed state | `source/Pawns/DeathActions/`, `source/Bosses/Shared/` | `Defs/ThingDefs/`, `Defs/PawnKindDefs/`, `source/UI/BossBar/` |
 | Apparel, armor Aegis, hover armor, body type restrictions | `source/Apparel/` | `source/Defs/Apparel/`, `Defs/ThingDefs/`, `Textures/Things/Apparel/`, `Languages/` |
@@ -262,3 +260,16 @@ source/Combat/Projectiles/Bosses/
 ```
 
 Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.
+
+## Implant expansion routing — 2026-05-21
+
+For implant work, check these files first:
+
+- Balance source: `Docs/EQUIPMENT_BALANCE_REFERENCE.md`
+- Current expansion grid: `Defs/ThingDefs/ABY_ImplantTierExpansion.xml`
+- Expansion hediffs: `Defs/HediffDefs/ABY_ImplantTierExpansion_Hediffs.xml`
+- Expansion surgery recipes: `Defs/RecipeDefs/ABY_ImplantTierExpansion_Recipes.xml`
+- Original implant families: `ABY_AshenImplants`, `ABY_ChoirRewards`, `ABY_HeraldImplants`, `ABY_HordeImplants`, `ABY_ReactorSaint_Implants`, `ABY_DominionImplants`
+- Icons: `Textures/Things/Implant/`
+
+Do not add a new implant without all four pieces: craftable item, installed hediff, surgery recipe, and a real texture.

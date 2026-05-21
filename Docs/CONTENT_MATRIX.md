@@ -68,7 +68,6 @@ Use these statuses in future updates:
 
 | System / content area | Status | Primary source paths | Primary XML / defs | Assets / audio | UI exposure | Progression / gating | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Equipment and implant balance reference | Implemented | `Docs/EQUIPMENT_BALANCE_REFERENCE.md` | `Defs/ThingDefs/`, `Defs/HediffDefs/`, `Defs/RecipeDefs/`, `Defs/Misc/ABY_TurretModuleDefs.xml` | n/a | Forge UI, InfoCards | residue, recipes, boss drops, turret module tiers | Central source for weapon/apparel/implant/turret balance budgets, tier targets, role ranges and stat-card visibility rules. Update when equipment balance policy changes. |
 | Build and source layout | Implemented | `source/AbyssalProtocol.csproj`, `source/<module>/` | n/a | `Assemblies/AbyssalProtocol.dll` when build verified | n/a | n/a | Lowercase `source/`; no root `.cs`. SDK-style recursive compile is expected. |
 | Core bootstrap/settings/utilities | Implemented | `source/Core/Bootstrap/`, `source/Core/Utilities/`, `source/Core/GameComponents/`, `source/Core/Misc/` | mixed | n/a | n/a | shared | Keep feature-specific code out of Core unless genuinely shared. |
 | XML Def bridge / custom Defs | Implemented | `source/Defs/` | `Defs/**` | n/a | depends on system | depends on system | Add new Def/DefModExtension C# here only when XML needs new fields. |
@@ -92,7 +91,6 @@ Use these statuses in future updates:
 | Enemy pawn framework | Implemented | `source/Pawns/`, `source/Pawns/Comps/`, `source/Pawns/DeathActions/`, `source/Pawns/MapComponents/` | `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `Defs/HediffDefs/` | pawn directional textures | Bestiary / inspect / combat UI | encounter templates and pawn pools | AI loop guard, anti-tame/animal workflow, hostile auto behavior need careful testing. |
 | Generic comps / combat comps | Implemented | `source/Comps/`, `source/Comps/Properties/`, `source/Combat/Comps/` | `Defs/ThingDefs/`, `Defs/HediffDefs/` | mixed | inspect/UI when relevant | system-specific | Avoid expanding monolithic `source/Comps/` when a narrower module owns the new comp. |
 | Weapon projectiles | Implemented | `source/Combat/Projectiles/Weapons/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/Projectiles/Bosses/`, `source/Combat/VFX/`, `source/Combat/Verbs/` | `Defs/ThingDefs/`, `Defs/ThingDefs_Motes/`, `Defs/DamageDefs/`, `Defs/SoundDefs/` | projectile/mote/VFX/audio | combat feedback | weapon recipes/forge unlocks | Class names in XML must match compiled DLL. Rebuild required for new projectile C#. |
-| Special weapon damage profiles | Implemented | `source/Combat/Utilities/ABY_SpecialWeaponDamageInfoUtility.cs`, `source/Combat/Comps/CompABY_SpecialWeaponDamageInfo.cs`, relevant custom projectile/effect classes | weapon `ThingDef` comps, `Languages/*/Keyed/ABY_SpecialWeaponDamageInfo_Strings.xml` | n/a | vanilla InfoCard + Forge pattern details/tooltips | weapon recipes/forge unlocks | Use this when XML damage under-represents C# damage layers such as tether, storm-field, resonance, branching arcs, or collapse explosions. Keep UI numbers synchronized with runtime constants. |
 | Modular turrets | Implemented / Expanding | `source/Defs/Turrets/`, `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/VFX/`, `source/Core/Misc/ABY_ModularTurretUtility.cs` | `Defs/ThingDefs/`, `Defs/Misc/*TurretModuleDef.xml`, `Defs/RecipeDefs/` | `Textures/Things/Item/TurretModules/`, turret overlay/projectile/VFX textures, sounds | turret ITab/module UI + Forge recipes | forge/residue/gating | Large growth area; each new module must wire item, module def, recipe, texture, localization, and UI stat exposure. Weapon modules may also require projectile/VFX/audio. Passive modules can use signed power draw, range/min-range, cooldown, damage, and throttled target-priority fields. |
 | Apparel / armor / Aegis | Implemented / Fragile | `source/Apparel/`, `source/Apparel/Comps/`, `source/Apparel/Stats/` | `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Defs/HediffDefs/`, `Patches/ABY_ApparelAegis_*` | `Textures/Apparel/` | apparel info cards, gizmo/status | Forge recipes/unlocks | Directional overlay/body type restrictions are easy to break. Include all body types/directions when required. |
 | Implants / hediffs / abilities | Implemented / Partial | `source/Hediffs/`, `source/Hediffs/Comps/`, `source/Bosses/Rupture/Comps/`, `source/Progression/` | `Defs/HediffDefs/`, `Defs/AbilityDefs/`, `Defs/RecipeDefs/` | implant/item icons | info cards, ability UI | Forge/research/boss drop gates | Need accurate stat/part efficiency presentation and surgery/recipe wiring. |
@@ -344,3 +342,15 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Localization owner: `Languages/*/Keyed/ABY_ModularTurrets_Strings.xml`.
 - Integration rule: only one Aegis/passive shield module is allowed per turret; the status gizmo is read-only and uses the shared `Gizmo_ABY_AegisStatus` presentation.
 
+## Implant tier expansion ownership — 2026-05-21
+
+The introduced T1-T5 implant grid is now complete across the canonical slots: Brain, Eye, Spine, Heart, Lung, Kidney, Liver, Stomach, Arm, Leg, Torso, Jaw and Neck.
+
+Primary expansion files:
+
+- `Defs/ThingDefs/ABY_ImplantTierExpansion.xml`
+- `Defs/HediffDefs/ABY_ImplantTierExpansion_Hediffs.xml`
+- `Defs/RecipeDefs/ABY_ImplantTierExpansion_Recipes.xml`
+- `Textures/Things/Implant/`
+
+Existing family files still own their original reward implants. Future implant balance must check `Docs/EQUIPMENT_BALANCE_REFERENCE.md` first, then inspect both the original family files and the expansion files.

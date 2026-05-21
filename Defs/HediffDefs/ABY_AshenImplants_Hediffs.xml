@@ -6,6 +6,7 @@
     <label>ashen liver lattice</label>
     <description>An infernal hepatic lattice built around a disciplined ash core.</description>
     <hediffClass>Hediff_AddedPart</hediffClass>
+    <spawnThingOnRemoved>ABY_AshenLiverLattice</spawnThingOnRemoved>
     <addedPartProps>
       <solid>true</solid>
     </addedPartProps>
@@ -29,6 +30,7 @@
     <label>cinder mandible seal</label>
     <description>An infernal jaw brace that suppresses pain cascade and stabilizes aggressive bite-line targeting.</description>
     <hediffClass>Hediff_AddedPart</hediffClass>
+    <spawnThingOnRemoved>ABY_CinderMandibleSeal</spawnThingOnRemoved>
     <addedPartProps>
       <solid>true</solid>
     </addedPartProps>
@@ -36,7 +38,7 @@
       <li>
         <statOffsets>
           <PainShockThreshold>0.15</PainShockThreshold>
-          <MeleeHitChance>0.05</MeleeHitChance>
+          <MeleeHitChance>0.10</MeleeHitChance>
           <SocialImpact>-0.10</SocialImpact>
           <Beauty>-0.30</Beauty>
         </statOffsets>
@@ -49,6 +51,7 @@
     <label>ember lung array</label>
     <description>An ash-core respirator array that increases breathing throughput and combat tempo while taxing the body's energy budget.</description>
     <hediffClass>Hediff_AddedPart</hediffClass>
+    <spawnThingOnRemoved>ABY_EmberLungArray</spawnThingOnRemoved>
     <addedPartProps>
       <solid>true</solid>
     </addedPartProps>
@@ -72,6 +75,7 @@
     <label>ashen anchor node</label>
     <description>An auxiliary ash-core cognition module seated against the brain instead of replacing it outright.</description>
     <hediffClass>Hediff_AddedPart</hediffClass>
+    <spawnThingOnRemoved>ABY_AshenAnchorNode</spawnThingOnRemoved>
     <addedPartProps>
       <solid>true</solid>
     </addedPartProps>

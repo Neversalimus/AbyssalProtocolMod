@@ -1,20 +1,5 @@
 # Abyssal Protocol — Recent Work Notes
 
-## 2026-05-21 — Add equipment and implant balance reference document
-- Added `Docs/EQUIPMENT_BALANCE_REFERENCE.md` as the central source for future weapon, apparel, implant, turret module and Forge reward balance work.
-- Captured the 9-tier philosophy, current T1-T5 scope, vanilla-endgame T1 baseline, ranged role bands, melee/apparel/implant budgets, stat-card visibility rules, and current source ownership tables.
-- Updated quick index and content matrix so future AI-assisted patches route equipment balance work through the new reference before editing XML/C#.
-- Docs only; no XML, C#, assets or assemblies changed. Build not required.
-
-Changed areas:
-
-```text
-Docs/EQUIPMENT_BALANCE_REFERENCE.md
-Docs/AI_QUICK_INDEX.md
-Docs/CONTENT_MATRIX.md
-Docs/RECENT_WORK.md
-```
-
 ## 2026-05-21 — Fix miniboss classification for overhead HP bars
 - Fixed `ABY_AbyssalPawnClassificationUtility.IsMajorBoss` so explicit `ABY_AbyssalPawnClassificationExtension.isMiniBoss=true` wins over legacy difficulty-scaling `role=boss` values.
 - This specifically unblocks Warden of Ash and Choir Engine from the compact overhead HP-bar renderer: they still use boss-family encounter plumbing, but UI systems no longer filter them out as major bosses.
@@ -825,10 +810,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced the large-pawn vertical offset clamp so Choir Engine's oversized graphic does not push the bar excessively far away from the sprite.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required on the user's save/video scenario.
 
-## 2026-05-21 — Special weapon damage profile UI
+## 2026-05-21 — Complete introduced implant slot grid T1-T5
 
-- Added `CompABY_SpecialWeaponDamageInfo` and `ABY_SpecialWeaponDamageInfoUtility` so weapons whose real output comes from C# effects can expose those damage layers in the vanilla InfoCard.
-- Wired Specter Lash Projector, Crownshard Stormcaster, and Oblivion Choir to show base impact plus tether, storm-node, branch/resonance, and collapse damage profiles instead of relying on low XML projectile damage alone.
-- Added the same combat-profile details to Forge pattern details/tooltips through `AbyssalForgeProgressUtility.GetPatternBrowserDetails`, and expanded selected-pattern detail height so long special profiles remain readable.
-- Added EN/RU keyed localization for the special weapon damage profile block.
-- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required.
+- Added 44 new craftable/installable implants to fill the introduced T1-T5 grid across Brain, Eye, Spine, Heart, Lung, Kidney, Liver, Stomach, Arm, Leg, Torso, Jaw, and Neck.
+- Added matching ThingDef, HediffDef, surgery RecipeDef and transparent PNG implant icons for all new entries.
+- Preserved the stat-card visibility rule: positive ShootingAccuracyPawn, MeleeHitChance and MeleeDodgeChance entries must be at least +0.10.
+- Added missing spawnThingOnRemoved for early Ashen implants and corrected existing sub-0.10 positive MeleeHitChance implant values.
+- No C# or assembly changes were required; this is an XML/asset/docs expansion.

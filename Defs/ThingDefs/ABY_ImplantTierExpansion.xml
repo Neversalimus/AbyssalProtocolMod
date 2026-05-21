@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AshenTendonSpine</defName>
+    <label>ashen tendon spine</label>
+    <description>A disciplined ash-core spinal brace that steadies movement and load-bearing without fully surrendering the host frame.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AshenTendonSpine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>20000</WorkToMake>
+      <MarketValue>940</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_EmberPulseHeart</defName>
+    <label>ember pulse heart</label>
+    <description>A low-tier infernal circulatory pump that keeps the body moving under pain and heat pressure.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_EmberPulseHeart</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>21000</WorkToMake>
+      <MarketValue>980</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>9</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AshenSinkKidney</defName>
+    <label>ashen sink kidney</label>
+    <description>A compact renal heat-sink grown around a stable ash core, improving filtration and fever discipline.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AshenSinkKidney</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>18000</WorkToMake>
+      <MarketValue>860</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CinderStomachCrucible</defName>
+    <label>cinder stomach crucible</label>
+    <description>A restrained digestive crucible that burns nutrient flow cleaner while slightly increasing metabolic strain.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CinderStomachCrucible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>19000</WorkToMake>
+      <MarketValue>900</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AshenServoArm</defName>
+    <label>ashen servo arm</label>
+    <description>A simple abyssal servo-arm that reinforces manipulation and close-quarters commitment.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AshenServoArm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>19500</WorkToMake>
+      <MarketValue>930</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_EmberTendonLeg</defName>
+    <label>ember tendon leg</label>
+    <description>A low-tier tendon leg woven with ember conduits for controlled breach movement.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_EmberTendonLeg</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>19500</WorkToMake>
+      <MarketValue>930</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AshskinMesh</defName>
+    <label>ashskin mesh</label>
+    <description>A first-contact subdermal mesh that spreads heat and sharp trauma through a crude ash lattice.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AshskinMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>20500</WorkToMake>
+      <MarketValue>990</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CinderThroatCollar</defName>
+    <label>cinder throat collar</label>
+    <description>A cinder-sealed throat collar that damps panic and pain cascade during early abyssal contact.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CinderThroatCollar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>17500</WorkToMake>
+      <MarketValue>840</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_AshenCore>1</ABY_AshenCore>
+      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
+      <Steel>18</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>150</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BreachPulseHeart</defName>
+    <label>breach pulse heart</label>
+    <description>A breach-pattern heart that locks circulation to the rhythm of controlled incursions.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BreachPulseHeart</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>33000</WorkToMake>
+      <MarketValue>1640</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>15</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_RiftLungArray</defName>
+    <label>rift lung array</label>
+    <description>A rift-cooled lung array that increases oxygen throughput while venting heat through resonance veins.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_RiftLungArray</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>32000</WorkToMake>
+      <MarketValue>1580</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_NullLiverFilter</defName>
+    <label>null liver filter</label>
+    <description>A null-coil hepatic filter that improves immune discipline and reduces psychic overexposure.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_NullLiverFilter</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>31000</WorkToMake>
+      <MarketValue>1520</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BreachStomachEngine</defName>
+    <label>breach stomach engine</label>
+    <description>A reinforced digestive engine that converts abyssal strain into steadier labor throughput.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BreachStomachEngine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>32000</WorkToMake>
+      <MarketValue>1560</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_RiftstepLegActuator</defName>
+    <label>riftstep leg actuator</label>
+    <description>A breach-step locomotor actuator that improves battlefield movement and evasive footwork.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_RiftstepLegActuator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>32500</WorkToMake>
+      <MarketValue>1600</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>15</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_NullMandibleClamp</defName>
+    <label>null mandible clamp</label>
+    <description>A null-sealed mandible clamp that hardens pain tolerance and close-combat targeting at social cost.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_NullMandibleClamp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>30000</WorkToMake>
+      <MarketValue>1480</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>13</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_NullSignalCollar</defName>
+    <label>null signal collar</label>
+    <description>A damped collar that filters panic and hostile signal feedback without fully muting the wearer.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_NullSignalCollar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>30500</WorkToMake>
+      <MarketValue>1500</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>9</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
+      <ABY_AbyssalResidue>13</ABY_AbyssalResidue>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>400</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ArchonPredatorEye</defName>
+    <label>archon predator eye</label>
+    <description>A predatory archon optic that turns target acquisition into an act of ritual pursuit.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ArchonPredatorEye</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>40000</WorkToMake>
+      <MarketValue>2360</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BreachlordSpine</defName>
+    <label>breachlord spine</label>
+    <description>A heavy archon spinal lattice built for committed assault movement and recoil-stable posture.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BreachlordSpine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>41000</WorkToMake>
+      <MarketValue>2420</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ChoirLungResonator</defName>
+    <label>choir lung resonator</label>
+    <description>A choir-bound lung resonator that turns breath into controlled thermal cadence.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ChoirLungResonator</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>39000</WorkToMake>
+      <MarketValue>2260</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HordeLiverCrucible</defName>
+    <label>horde liver crucible</label>
+    <description>An archon-grade liver crucible that metabolizes battlefield toxins and bleeding shock into usable resilience.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HordeLiverCrucible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>39000</WorkToMake>
+      <MarketValue>2260</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ArchonStomachFurnace</defName>
+    <label>archon stomach furnace</label>
+    <description>A furnace-stomach that stabilizes violent metabolism into sustained work and combat output.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ArchonStomachFurnace</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>39500</WorkToMake>
+      <MarketValue>2300</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_BreachCarapaceMesh</defName>
+    <label>breach carapace mesh</label>
+    <description>A thicker subdermal breach mesh that spreads force through armored ritual knots.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_BreachCarapaceMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>42000</WorkToMake>
+      <MarketValue>2480</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>23</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HordeMandibleCrown</defName>
+    <label>horde mandible crown</label>
+    <description>A crowned mandible brace that makes speech harsher, pain quieter, and melee commitment cleaner.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HordeMandibleCrown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>37500</WorkToMake>
+      <MarketValue>2200</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>10</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>19</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1000</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ReactorHaloSubcore</defName>
+    <label>reactor halo subcore</label>
+    <description>A reactor-saint subcore that burns ordered cognition through a white-gold halo interface.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ReactorHaloSubcore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>47000</WorkToMake>
+      <MarketValue>2960</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_JudgementOpticHalo</defName>
+    <label>judgement optic halo</label>
+    <description>A haloed reactor optic calibrated for verdict-grade aim discipline.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_JudgementOpticHalo</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>45500</WorkToMake>
+      <MarketValue>2860</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_VesperTendonSpine</defName>
+    <label>vesper tendon spine</label>
+    <description>A saint-pattern spinal harness that stabilizes heavy movement under reactor pressure.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_VesperTendonSpine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>47000</WorkToMake>
+      <MarketValue>2940</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ReactorVotiveHeart</defName>
+    <label>reactor votive heart</label>
+    <description>A votive reactor heart that holds circulation, heat and consciousness inside a disciplined saint-cycle.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ReactorVotiveHeart</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>48500</WorkToMake>
+      <MarketValue>3040</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>29</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_SaintBellowsLung</defName>
+    <label>saint bellows lung</label>
+    <description>A white-hot bellows lung that vents reactor pressure through sanctified breathing channels.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_SaintBellowsLung</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>45500</WorkToMake>
+      <MarketValue>2820</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ReactorSinkKidney</defName>
+    <label>reactor sink kidney</label>
+    <description>A reactor-grade renal sink that filters blood and heat through compact aegis vanes.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ReactorSinkKidney</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>45000</WorkToMake>
+      <MarketValue>2780</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_SaintLiverCenser</defName>
+    <label>saint liver censer</label>
+    <description>A censer-liver that purifies blood under reactor chant and sustained combat strain.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_SaintLiverCenser</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>45500</WorkToMake>
+      <MarketValue>2820</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_ReactorStomachCrucible</defName>
+    <label>reactor stomach crucible</label>
+    <description>A reactor crucible seated in the gut, converting thermal strain into stable labor cadence.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_ReactorStomachCrucible</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>45500</WorkToMake>
+      <MarketValue>2800</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_VesperExecutionArm</defName>
+    <label>vesper execution arm</label>
+    <description>An execution-grade reactor armature tuned for weapon handling and decisive close control.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_VesperExecutionArm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>47000</WorkToMake>
+      <MarketValue>2940</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HaloLocomotorLeg</defName>
+    <label>halo locomotor leg</label>
+    <description>A halo-driven leg actuator that carries reactor weight through controlled battlefield speed.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HaloLocomotorLeg</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>47000</WorkToMake>
+      <MarketValue>2920</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_AegisCarapaceMesh</defName>
+    <label>aegis carapace mesh</label>
+    <description>A saint-class subdermal aegis mesh that spreads sharp trauma, blunt force and heat through white-gold knots.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_AegisCarapaceMesh</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>49000</WorkToMake>
+      <MarketValue>3120</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_VerdictMandibleSeal</defName>
+    <label>verdict mandible seal</label>
+    <description>A verdict-seal mandible that turns pain, threat display and strike discipline into one controlled signal.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_VerdictMandibleSeal</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>43500</WorkToMake>
+      <MarketValue>2700</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_HaloChoirCollar</defName>
+    <label>halo choir collar</label>
+    <description>A halo choir collar that damps terror while reinforcing ordered cognition under reactor pressure.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_HaloChoirCollar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>43500</WorkToMake>
+      <MarketValue>2720</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>12</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>1800</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionSightCrown</defName>
+    <label>dominion sight crown</label>
+    <description>A crown-fed optic that lets the wearer sight along imposed dominion vectors.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionSightCrown</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>56000</WorkToMake>
+      <MarketValue>3660</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionLungThrone</defName>
+    <label>dominion lung throne</label>
+    <description>A throne-like lung array that forces breath to obey crown-pressure and void heat.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionLungThrone</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>55500</WorkToMake>
+      <MarketValue>3600</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionAegisKidney</defName>
+    <label>dominion aegis kidney</label>
+    <description>A dominion renal aegis that filters blood as though it were oath-bound material.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionAegisKidney</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>55000</WorkToMake>
+      <MarketValue>3560</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionLiverScripture</defName>
+    <label>dominion liver scripture</label>
+    <description>A liver-scripture etched in crown alloy, converting poison, fever and panic into enforceable order.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionLiverScripture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>55000</WorkToMake>
+      <MarketValue>3560</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionStomachEngine</defName>
+    <label>dominion stomach engine</label>
+    <description>A dominion digestive engine that makes metabolism serve production and combat law.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionStomachEngine</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>55500</WorkToMake>
+      <MarketValue>3600</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionServoArm</defName>
+    <label>dominion servo arm</label>
+    <description>A crown-bound servo armature that turns aim, grip and melee commitment into imposed command.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionServoArm</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>56500</WorkToMake>
+      <MarketValue>3700</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_DominionTendonLeg</defName>
+    <label>dominion tendon leg</label>
+    <description>A dominion tendon leg that carries the body according to crown geometry rather than muscle hesitation.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_DominionTendonLeg</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>56500</WorkToMake>
+      <MarketValue>3680</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CrownMandibleAuthority</defName>
+    <label>crown mandible authority</label>
+    <description>A crown mandible that turns speech and pain into a visible instrument of dominion authority.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CrownMandibleAuthority</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>54000</WorkToMake>
+      <MarketValue>3480</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BodyPartBionicBase">
+    <defName>ABY_CrownNullCollar</defName>
+    <label>crown null collar</label>
+    <description>A crown-null collar that filters panic without freeing the wearer from the law behind the signal.</description>
+    <graphicData>
+      <texPath>Things/Implant/ABY_CrownNullCollar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>1</stackLimit>
+    <thingSetMakerTags>
+      <li>RewardStandardMidFreq</li>
+    </thingSetMakerTags>
+    <tradeability>Sellable</tradeability>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MaxHitPoints>24</MaxHitPoints>
+      <Mass>0.16</Mass>
+      <WorkToMake>54000</WorkToMake>
+      <MarketValue>3500</MarketValue>
+      <Flammability>0</Flammability>
+      <Beauty>-1</Beauty>
+    </statBases>
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
+    </recipeMaker>
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Uranium>14</Uranium>
+      <Gold>12</Gold>
+    </costList>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3500</requiredResidue>
+        <category>Implants</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

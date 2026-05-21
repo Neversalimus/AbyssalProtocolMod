@@ -50,7 +50,7 @@
           </li>
         </capMods>
         <statOffsets>
-          <MeleeHitChance>0.06</MeleeHitChance>
+          <MeleeHitChance>0.10</MeleeHitChance>
           <MeleeDodgeChance>0.10</MeleeDodgeChance>
           <PainShockThreshold>0.04</PainShockThreshold>
           <PawnBeauty>-0.30</PawnBeauty>
