@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+            ABY_RuntimeTargetCache.ClearAll();
             if (AbyssalProtocolMod.Settings?.showHarmonyPatchReportOnLoad ?? true)
             {
                 ABY_HarmonyPatchReportUtility.LogReport(false);

@@ -613,15 +613,8 @@ In-game checks:
 - Use the diagnostics window or "Validate encounters" button to confirm concrete warnings/notes are visible if data is malformed.
 - Install passive/aegis turret modules and verify their gameplay behavior is unchanged by the validator.
 
-## Modular turret Aegis modules
-
-- Aegis passive modules must not stack on the same turret. Shield capacity/recharge and passive stat effects should resolve from one installed Aegis module only.
-- The read-only Aegis status gizmo should appear whenever a player/factionless selected turret has an installed passive shield module, even if the turret is offline or lacks a main weapon core.
-- Do not gate the Aegis gizmo on main weapon presence; the shield module is a passive chassis system.
-## Apparel / implant stat-card rounding
-
-- Do not add nonzero `ShootingAccuracyPawn` or `MeleeDodgeChance` values with absolute magnitude below `0.10` to player-facing apparel or implant hediffs.
-- RimWorld item/hediff cards can round tiny values such as `0.02`, `0.03`, or `-0.01` to `0.0` / `-0.0`, which makes bonuses and penalties look broken or meaningless.
-- For player-facing equipment and implants, either omit a negligible stat entirely or use at least `0.10` / `-0.10` so the card communicates the effect clearly.
-- This rule does not automatically apply to internal enemy scaling hediffs, boss-only effects, attunement tier ladders, or temporary debuffs unless those entries are directly player-facing in item/implant cards.
-
+## 2026-05-21 — Cross-save runtime target cache hardening
+- Hardened `ABY_RuntimeTargetCache` against map `uniqueID` reuse across save switches by binding each cache entry to the actual `Map` instance, not just the numeric ID.
+- Startup diagnostics now clears runtime target caches on game finalization so stale pawns/buildings from a previously loaded save cannot be reused by turrets or combat helpers.
+- Modular turret runtime burst targets are no longer restored from saves; turrets reacquire targets after load instead of carrying serialized pawn references that may be stale or partially initialized.
+- This addresses reports of modular turrets firing at empty cells and killing an apparently invisible `ABY_EmberHound` after switching to a different save.

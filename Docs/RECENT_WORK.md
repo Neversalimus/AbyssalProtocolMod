@@ -1,10 +1,3 @@
-## 2026-05-21 — Apparel and implant stat-card readability pass
-
-- Audited player-facing apparel and implant hediff defs for `ShootingAccuracyPawn` and `MeleeDodgeChance` values that were below the 0.10 display threshold.
-- Raised nonzero sub-0.10 shooting accuracy and dodge values on apparel/implants to `0.10` or `-0.10` while preserving the original sign.
-- Left enemy/boss/internal scaling hediffs, attunement tiers and temporary combat debuffs untouched.
-- No C# changes were required; this is an XML balance/readability pass.
-
 
 ## 2026-05-21 — Execution Logic Core passive turret module
 
@@ -747,9 +740,8 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - The validator remains diagnostic-only: it reports concrete data issues but does not rewrite defs, block encounters, alter turret mechanics or hide gameplay failures.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
 
-## 2026-05-21 — Turret Aegis gizmo and single-Aegis enforcement
-
-- Restored modular turret Aegis status exposure by resolving the installed Aegis module explicitly instead of relying only on summed passive shield values.
-- Enforced one Aegis passive shield module per turret chassis through install validation and runtime sanitization.
-- Legacy duplicate Aegis stacks are non-stacking at runtime: only the strongest/highest-tier Aegis module contributes shield capacity/recharge or passive stat effects.
-
+## 2026-05-21 — Cross-save runtime target cache hardening
+- Hardened `ABY_RuntimeTargetCache` against map `uniqueID` reuse across save switches by binding each cache entry to the actual `Map` instance, not just the numeric ID.
+- Startup diagnostics now clears runtime target caches on game finalization so stale pawns/buildings from a previously loaded save cannot be reused by turrets or combat helpers.
+- Modular turret runtime burst targets are no longer restored from saves; turrets reacquire targets after load instead of carrying serialized pawn references that may be stale or partially initialized.
+- This addresses reports of modular turrets firing at empty cells and killing an apparently invisible `ABY_EmberHound` after switching to a different save.

@@ -23,6 +23,7 @@ namespace AbyssalProtocol
 
         private sealed class MapCache
         {
+            public Map map;
             public int nextPawnRefreshTick = -1;
             public int nextThingIdRefreshTick = -1;
             public int lastSeenTick;
@@ -142,6 +143,11 @@ namespace AbyssalProtocol
             CachesByMapId.Remove(map.uniqueID);
         }
 
+        public static void ClearAll()
+        {
+            CachesByMapId.Clear();
+        }
+
         private static MapCache ResolveCache(Map map)
         {
             if (map == null)
@@ -153,9 +159,12 @@ namespace AbyssalProtocol
             CleanupDeadMapCaches(now);
 
             int id = map.uniqueID;
-            if (!CachesByMapId.TryGetValue(id, out MapCache cache))
+            if (!CachesByMapId.TryGetValue(id, out MapCache cache) || cache == null || cache.map != map)
             {
-                cache = new MapCache();
+                cache = new MapCache
+                {
+                    map = map
+                };
                 CachesByMapId[id] = cache;
             }
 
@@ -273,7 +282,7 @@ namespace AbyssalProtocol
             List<int> remove = null;
             foreach (KeyValuePair<int, MapCache> pair in CachesByMapId)
             {
-                if (now - pair.Value.lastSeenTick > FullCleanupIntervalTicks * 2)
+                if (pair.Value == null || pair.Value.map == null || now - pair.Value.lastSeenTick > FullCleanupIntervalTicks * 2)
                 {
                     if (remove == null)
                     {
