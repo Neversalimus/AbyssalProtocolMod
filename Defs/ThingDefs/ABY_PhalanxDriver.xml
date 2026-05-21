@@ -1,26 +1,21 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_PhalanxDriver</defName>
     <label>phalanx driver</label>
     <description>A disciplined horde-pattern spike rifle built from war-lattice fragments. Instead of flooding the field with fire, it drives a short sequence of infernal penetrators through the target line, excelling at cracking dense frontliners and punishing static cover fights.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_PhalanxDriver</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.60,0.42)</drawSize>
     </graphicData>
-
     <soundInteract>Interact_ChargeRifle</soundInteract>
-
     <weaponTags>
       <li>Gun</li>
       <li>RangedHeavy</li>
       <li>SpacerGun</li>
     </weaponTags>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>9</Crafting>
@@ -29,16 +24,14 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
-      <ABY_HordeFragment>8</ABY_HordeFragment>
+      <ABY_HordeFragment>4</ABY_HordeFragment>
       <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
       <Steel>70</Steel>
       <Plasteel>38</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
-
     <statBases>
       <WorkToMake>42000</WorkToMake>
       <Mass>5.1</Mass>
@@ -49,7 +42,6 @@
       <AccuracyLong>0.58</AccuracyLong>
       <RangedWeapon_Cooldown>2.60</RangedWeapon_Cooldown>
     </statBases>
-
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
@@ -65,7 +57,6 @@
         <muzzleFlashScale>11.6</muzzleFlashScale>
       </li>
     </verbs>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>
@@ -73,7 +64,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>ABY_PhalanxSpikeProjectile</defName>
     <label>phalanx spike</label>
@@ -91,5 +81,4 @@
       <soundImpactAnticipate>ABY_PhalanxDriverImpact</soundImpactAnticipate>
     </projectile>
   </ThingDef>
-
 </Defs>

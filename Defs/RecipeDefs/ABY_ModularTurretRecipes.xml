@@ -403,7 +403,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>90</count>
+        <count>125</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_DominionCrownShard</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -411,7 +419,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>65</count>
+        <count>75</count>
       </li>
       <li>
         <filter>
@@ -419,7 +427,7 @@
             <li>Uranium</li>
           </thingDefs>
         </filter>
-        <count>35</count>
+        <count>40</count>
       </li>
       <li>
         <filter>
@@ -855,7 +863,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>104</count>
+        <count>120</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownedCoreFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -871,7 +887,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>62</count>
+        <count>70</count>
       </li>
       <li>
         <filter>
@@ -879,7 +895,7 @@
             <li>Uranium</li>
           </thingDefs>
         </filter>
-        <count>30</count>
+        <count>32</count>
       </li>
       <li>
         <filter>
@@ -887,7 +903,7 @@
             <li>ComponentSpacer</li>
           </thingDefs>
         </filter>
-        <count>3</count>
+        <count>4</count>
       </li>
     </ingredients>
     <products>
@@ -1602,7 +1618,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>70</count>
+        <count>80</count>
       </li>
       <li>
         <filter>
@@ -1618,7 +1634,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>110</count>
+        <count>130</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_DominionCrownShard</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
       </li>
     </ingredients>
     <products>

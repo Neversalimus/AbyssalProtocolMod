@@ -33,6 +33,7 @@
       <Plasteel>20</Plasteel>
       <Gold>8</Gold>
       <Silver>30</Silver>
+      <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -77,6 +78,7 @@
       <Plasteel>24</Plasteel>
       <Steel>28</Steel>
       <Uranium>10</Uranium>
+      <ABY_AbyssalResidue>32</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -115,10 +117,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
       <ComponentIndustrial>2</ComponentIndustrial>
-      <Plasteel>20</Plasteel>
-      <Steel>32</Steel>
+      <Plasteel>28</Plasteel>
+      <Steel>36</Steel>
       <Uranium>8</Uranium>
       <Silver>20</Silver>
     </costList>
@@ -159,10 +161,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
+      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
       <ComponentIndustrial>2</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
-      <Plasteel>16</Plasteel>
+      <Plasteel>24</Plasteel>
       <Gold>10</Gold>
       <Silver>40</Silver>
     </costList>

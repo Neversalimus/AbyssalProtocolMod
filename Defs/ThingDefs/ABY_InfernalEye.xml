@@ -17,7 +17,11 @@
       <MarketValue>920</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
-    <recipeMaker Inherit="False" />
+    <recipeMaker Inherit="False">
+      <skillRequirements>
+        <Crafting>7</Crafting>
+      </skillRequirements>
+    </recipeMaker>
     <costList>
       <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
       <Steel>20</Steel>

@@ -28,7 +28,7 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
       <Plasteel>24</Plasteel>
@@ -72,12 +72,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Plasteel>18</Plasteel>
-      <Steel>20</Steel>
+      <Plasteel>28</Plasteel>
+      <Steel>24</Steel>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -116,13 +115,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Plasteel>24</Plasteel>
-      <Steel>18</Steel>
-      <Gold>4</Gold>
+      <Plasteel>34</Plasteel>
+      <Steel>24</Steel>
+      <Gold>6</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -162,7 +160,7 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
+      <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
       <Plasteel>18</Plasteel>

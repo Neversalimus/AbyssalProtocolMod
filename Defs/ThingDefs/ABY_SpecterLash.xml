@@ -34,6 +34,7 @@
       <Plasteel>65</Plasteel>
       <Steel>80</Steel>
       <ComponentSpacer>4</ComponentSpacer>
+      <ABY_CrownedCoreFragment>1</ABY_CrownedCoreFragment>
     </costList>
     <weaponTags>
       <li>SpacerGun</li>
@@ -65,7 +66,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo"/>
+      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo" />
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">

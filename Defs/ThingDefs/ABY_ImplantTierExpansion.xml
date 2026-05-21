@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenTendonSpine</defName>
     <label>ashen tendon spine</label>
@@ -33,10 +32,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Steel>25</Steel>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -48,7 +47,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_EmberPulseHeart</defName>
     <label>ember pulse heart</label>
@@ -81,10 +79,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>9</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
+      <Steel>26</Steel>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -96,7 +94,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenSinkKidney</defName>
     <label>ashen sink kidney</label>
@@ -129,10 +126,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <Steel>24</Steel>
+      <Plasteel>8</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -144,7 +141,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CinderStomachCrucible</defName>
     <label>cinder stomach crucible</label>
@@ -177,10 +173,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Steel>25</Steel>
+      <Plasteel>10</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -192,7 +188,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshenServoArm</defName>
     <label>ashen servo arm</label>
@@ -225,10 +220,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>19</ABY_AbyssalResidue>
+      <Steel>28</Steel>
+      <Plasteel>14</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -240,7 +235,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_EmberTendonLeg</defName>
     <label>ember tendon leg</label>
@@ -273,10 +267,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
+      <Steel>26</Steel>
+      <Plasteel>12</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -288,7 +282,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AshskinMesh</defName>
     <label>ashskin mesh</label>
@@ -321,10 +314,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
+      <Steel>28</Steel>
+      <Plasteel>16</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -336,7 +329,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CinderThroatCollar</defName>
     <label>cinder throat collar</label>
@@ -369,10 +361,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_AshenCore>1</ABY_AshenCore>
-      <ABY_AbyssalResidue>7</ABY_AbyssalResidue>
-      <Steel>18</Steel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <Steel>22</Steel>
+      <Plasteel>8</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -384,7 +376,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BreachPulseHeart</defName>
     <label>breach pulse heart</label>
@@ -417,10 +408,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>15</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>32</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -432,7 +423,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_RiftLungArray</defName>
     <label>rift lung array</label>
@@ -465,10 +455,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>28</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -480,7 +469,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_NullLiverFilter</defName>
     <label>null liver filter</label>
@@ -513,10 +501,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>28</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -528,7 +515,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BreachStomachEngine</defName>
     <label>breach stomach engine</label>
@@ -561,10 +547,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
+      <Plasteel>28</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -576,7 +561,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_RiftstepLegActuator</defName>
     <label>riftstep leg actuator</label>
@@ -609,10 +593,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>15</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <Steel>20</Steel>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -624,7 +608,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_NullMandibleClamp</defName>
     <label>null mandible clamp</label>
@@ -657,10 +640,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>13</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -672,7 +655,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_NullSignalCollar</defName>
     <label>null signal collar</label>
@@ -705,10 +687,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>13</ABY_AbyssalResidue>
-      <Plasteel>18</Plasteel>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <Plasteel>24</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
+      <Silver>30</Silver>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -720,7 +702,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ArchonPredatorEye</defName>
     <label>archon predator eye</label>
@@ -753,10 +734,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
+      <Plasteel>34</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -769,7 +749,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BreachlordSpine</defName>
     <label>breachlord spine</label>
@@ -803,9 +782,9 @@
     </recipeMaker>
     <costList>
       <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>22</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>32</ABY_AbyssalResidue>
+      <Plasteel>32</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -818,7 +797,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ChoirLungResonator</defName>
     <label>choir lung resonator</label>
@@ -851,10 +829,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>34</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -867,7 +844,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HordeLiverCrucible</defName>
     <label>horde liver crucible</label>
@@ -900,10 +876,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>34</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -916,7 +891,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ArchonStomachFurnace</defName>
     <label>archon stomach furnace</label>
@@ -949,10 +923,9 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>20</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>34</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -965,7 +938,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_BreachCarapaceMesh</defName>
     <label>breach carapace mesh</label>
@@ -999,9 +971,9 @@
     </recipeMaker>
     <costList>
       <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>23</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
+      <Plasteel>34</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
     </costList>
     <comps>
@@ -1014,7 +986,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HordeMandibleCrown</defName>
     <label>horde mandible crown</label>
@@ -1047,11 +1018,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_HordeFragment>1</ABY_HordeFragment>
-      <ABY_AbyssalResidue>19</ABY_AbyssalResidue>
-      <Plasteel>24</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
+      <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
+      <Plasteel>30</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>
+      <Gold>10</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1063,7 +1034,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ReactorHaloSubcore</defName>
     <label>reactor halo subcore</label>
@@ -1097,11 +1067,11 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
+      <Plasteel>38</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1113,7 +1083,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_JudgementOpticHalo</defName>
     <label>judgement optic halo</label>
@@ -1146,12 +1115,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1163,7 +1131,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_VesperTendonSpine</defName>
     <label>vesper tendon spine</label>
@@ -1196,12 +1163,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1213,7 +1179,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ReactorVotiveHeart</defName>
     <label>reactor votive heart</label>
@@ -1247,11 +1212,11 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>29</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
+      <Plasteel>38</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1263,7 +1228,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_SaintBellowsLung</defName>
     <label>saint bellows lung</label>
@@ -1296,12 +1260,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1313,7 +1276,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ReactorSinkKidney</defName>
     <label>reactor sink kidney</label>
@@ -1346,12 +1308,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1363,7 +1324,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_SaintLiverCenser</defName>
     <label>saint liver censer</label>
@@ -1396,12 +1356,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1413,7 +1372,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_ReactorStomachCrucible</defName>
     <label>reactor stomach crucible</label>
@@ -1446,12 +1404,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1463,7 +1420,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_VesperExecutionArm</defName>
     <label>vesper execution arm</label>
@@ -1497,11 +1453,11 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
+      <Plasteel>38</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1513,7 +1469,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HaloLocomotorLeg</defName>
     <label>halo locomotor leg</label>
@@ -1546,12 +1501,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1563,7 +1517,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_AegisCarapaceMesh</defName>
     <label>aegis carapace mesh</label>
@@ -1597,11 +1550,11 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>30</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>42</ABY_AbyssalResidue>
+      <Plasteel>42</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1613,7 +1566,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_VerdictMandibleSeal</defName>
     <label>verdict mandible seal</label>
@@ -1646,12 +1598,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1663,7 +1614,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_HaloChoirCollar</defName>
     <label>halo choir collar</label>
@@ -1696,12 +1646,11 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
-      <Plasteel>30</Plasteel>
+      <ABY_AbyssalResidue>44</ABY_AbyssalResidue>
+      <Plasteel>40</Plasteel>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
-      <Gold>6</Gold>
+      <Gold>8</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1713,7 +1662,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionSightCrown</defName>
     <label>dominion sight crown</label>
@@ -1746,13 +1694,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1764,7 +1711,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionLungThrone</defName>
     <label>dominion lung throne</label>
@@ -1797,13 +1743,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1815,7 +1760,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionAegisKidney</defName>
     <label>dominion aegis kidney</label>
@@ -1848,13 +1792,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1866,7 +1809,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionLiverScripture</defName>
     <label>dominion liver scripture</label>
@@ -1899,13 +1841,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1917,7 +1858,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionStomachEngine</defName>
     <label>dominion stomach engine</label>
@@ -1950,13 +1890,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -1968,7 +1907,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionServoArm</defName>
     <label>dominion servo arm</label>
@@ -2001,13 +1939,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>70</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -2019,7 +1956,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_DominionTendonLeg</defName>
     <label>dominion tendon leg</label>
@@ -2052,13 +1988,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>70</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -2070,7 +2005,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CrownMandibleAuthority</defName>
     <label>crown mandible authority</label>
@@ -2103,13 +2037,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -2121,7 +2054,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="BodyPartBionicBase">
     <defName>ABY_CrownNullCollar</defName>
     <label>crown null collar</label>
@@ -2154,13 +2086,12 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
-      <ABY_AbyssalResidue>36</ABY_AbyssalResidue>
-      <Plasteel>42</Plasteel>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <ComponentSpacer>2</ComponentSpacer>
-      <Uranium>14</Uranium>
-      <Gold>12</Gold>
+      <ABY_AbyssalResidue>66</ABY_AbyssalResidue>
+      <Plasteel>55</Plasteel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <ComponentSpacer>3</ComponentSpacer>
+      <Uranium>18</Uranium>
+      <Gold>16</Gold>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -2172,5 +2103,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

@@ -816,3 +816,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - The new modules fill T5 passive build roles without adding additional Aegis stacking: target adjudication, overpressure firing cadence, and chassis survival/recovery.
 - The patch also keeps the turret module tier rebalance self-contained when applied over older archives: T5 now includes Crowncoil Gauss Minigun, Sepulcher Rail Core, Crownfire Rocket Choir, Crown Aegis Matrix, and the three new passive modules.
 - XML/assets/docs only; no C# or assembly rebuild required.
+
+## 2026-05-22 — Crafting requirement economy pass
+
+- Rebalanced craft requirements so player-facing craftables consistently require Abyssal Residue plus vanilla resources.
+- Reduced boss-drop pressure across implant grids: boss drops now gate signature weapons, brain/heart/spine/torso/arm pieces, Aegis/shield modules, and apex turret/weapon rewards instead of every ordinary slot.
+- Added missing residue costs to high-tier Dominion/Horde implants and added Crafting skill gates to Rift Blade and Rift Carbine.
+- Lowered excessive HordeFragment usage on Litany Grinder, Cohort Halberd, and Phalanx Driver.
+- Added light CrownedCore/DominionShard gates to high-end turret modules and special late weapons without making every T5 passive consume multiple crown shards.

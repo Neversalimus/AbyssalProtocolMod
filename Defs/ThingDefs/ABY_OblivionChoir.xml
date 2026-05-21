@@ -34,6 +34,7 @@
       <Uranium>60</Uranium>
       <ComponentIndustrial>8</ComponentIndustrial>
       <ComponentSpacer>4</ComponentSpacer>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
     </costList>
     <weaponTags>
       <li>SpacerGun</li>
@@ -73,7 +74,7 @@
       </li>
     </tools>
     <comps>
-      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo"/>
+      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo" />
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">

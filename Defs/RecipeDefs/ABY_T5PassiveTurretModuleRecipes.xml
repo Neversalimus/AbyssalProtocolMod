@@ -31,7 +31,7 @@
             <li>ABY_DominionCrownShard</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -91,15 +91,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>145</count>
+        <count>155</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>ABY_DominionCrownShard</li>
+            <li>ABY_CrownedCoreFragment</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -115,7 +115,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>75</count>
+        <count>85</count>
       </li>
       <li>
         <filter>
@@ -159,15 +159,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>150</count>
+        <count>160</count>
       </li>
       <li>
         <filter>
           <thingDefs>
-            <li>ABY_DominionCrownShard</li>
+            <li>ABY_CrownedCoreFragment</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -183,7 +183,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>110</count>
+        <count>120</count>
       </li>
       <li>
         <filter>

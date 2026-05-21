@@ -23,7 +23,15 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>96</count>
+        <count>120</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_CrownedCoreFragment</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
       </li>
       <li>
         <filter>
@@ -39,7 +47,7 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>72</count>
+        <count>78</count>
       </li>
       <li>
         <filter>

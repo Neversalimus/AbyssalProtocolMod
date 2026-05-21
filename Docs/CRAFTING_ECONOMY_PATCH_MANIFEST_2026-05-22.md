@@ -1,0 +1,157 @@
+# Abyssal Protocol — Crafting Economy Balance Patch Manifest (2026-05-22)
+
+This patch normalizes crafting requirements so player-facing Abyssal gear requires Abyssal Residue plus vanilla resources, while boss-drop resources gate signature upper-tier rewards instead of taxing every slot.
+
+The provided user archive was missing several recently generated equipment/module/implant files, so this package is cumulative and includes those prior generated files where needed for consistency.
+
+## Verification
+
+- XML parse passed for Defs, Patches and Languages.
+- Audited ThingDef recipeMaker/costList craftables: no missing Abyssal Residue, no missing vanilla resource, no missing Crafting skill gate.
+- Audited product RecipeDefs: no missing Abyssal Residue, no missing vanilla resource, no missing Crafting skill gate.
+- C# was not changed by the crafting economy pass. The included DLL/source files are cumulative from the prior special weapon damage UI patch because the uploaded archive did not contain them.
+
+## Changed files
+
+- `Assemblies/AbyssalProtocol.dll`
+- `Defs/HediffDefs/ABY_AshenImplants_Hediffs.xml`
+- `Defs/HediffDefs/ABY_ChoirRewards_Hediffs.xml`
+- `Defs/HediffDefs/ABY_HordeImplants_Hediffs.xml`
+- `Defs/HediffDefs/ABY_ImplantTierExpansion_Hediffs.xml`
+- `Defs/HediffDefs/ABY_Implants.xml`
+- `Defs/HediffDefs/ABY_ReactorSaint_Implants_Hediffs.xml`
+- `Defs/Misc/ABY_CrownfireRocketChoir_TurretModuleDef.xml`
+- `Defs/Misc/ABY_T5PassiveTurretModuleDefs.xml`
+- `Defs/Misc/ABY_TurretModuleDefs.xml`
+- `Defs/RecipeDefs/ABY_BackpackApparel_Recipes.xml`
+- `Defs/RecipeDefs/ABY_Boots_Recipes.xml`
+- `Defs/RecipeDefs/ABY_CircleCapacitorRecipes.xml`
+- `Defs/RecipeDefs/ABY_CircleModuleRecipes.xml`
+- `Defs/RecipeDefs/ABY_CrownedCoreArmor_Recipes.xml`
+- `Defs/RecipeDefs/ABY_CrownfireRocketChoir_Recipes.xml`
+- `Defs/RecipeDefs/ABY_GatebreakerArmor_Recipes.xml`
+- `Defs/RecipeDefs/ABY_Gloves_Recipes.xml`
+- `Defs/RecipeDefs/ABY_ImplantTierExpansion_Recipes.xml`
+- `Defs/RecipeDefs/ABY_InfernalCombatFrame_Recipes.xml`
+- `Defs/RecipeDefs/ABY_ModularTurretRecipes.xml`
+- `Defs/RecipeDefs/ABY_NullAcolyteApparel_Recipes.xml`
+- `Defs/RecipeDefs/ABY_ReactorSaint_Armor_Recipes.xml`
+- `Defs/RecipeDefs/ABY_RiftHelm_Recipes.xml`
+- `Defs/RecipeDefs/ABY_SaintCondensationCell_Recipes.xml`
+- `Defs/RecipeDefs/ABY_SetAccessoryApparel_Recipes.xml`
+- `Defs/RecipeDefs/ABY_T5PassiveTurretModuleRecipes.xml`
+- `Defs/RecipeDefs/ABY_Vambraces_Recipes.xml`
+- `Defs/ThingDefs/ABY_AbyssalGravplatePrototype_Placeholder.xml`
+- `Defs/ThingDefs/ABY_AnchorSpiker.xml`
+- `Defs/ThingDefs/ABY_AshChoirLauncher.xml`
+- `Defs/ThingDefs/ABY_AshenPike.xml`
+- `Defs/ThingDefs/ABY_AshenScattergun.xml`
+- `Defs/ThingDefs/ABY_BackpackApparel.xml`
+- `Defs/ThingDefs/ABY_Boots.xml`
+- `Defs/ThingDefs/ABY_BreachCannon.xml`
+- `Defs/ThingDefs/ABY_ChoirRewards.xml`
+- `Defs/ThingDefs/ABY_CohortHalberd.xml`
+- `Defs/ThingDefs/ABY_CrownedCoreArmor.xml`
+- `Defs/ThingDefs/ABY_CrownfireRocketChoir.xml`
+- `Defs/ThingDefs/ABY_CrownshardStormcaster.xml`
+- `Defs/ThingDefs/ABY_CrownspikeRail.xml`
+- `Defs/ThingDefs/ABY_DominionImplants.xml`
+- `Defs/ThingDefs/ABY_GatebreakerArmor.xml`
+- `Defs/ThingDefs/ABY_GatebreakerMaul.xml`
+- `Defs/ThingDefs/ABY_GatebreakerSpiker.xml`
+- `Defs/ThingDefs/ABY_Gloves.xml`
+- `Defs/ThingDefs/ABY_HexPistol.xml`
+- `Defs/ThingDefs/ABY_HordeImplants.xml`
+- `Defs/ThingDefs/ABY_ImplantTierExpansion.xml`
+- `Defs/ThingDefs/ABY_InfernalCombatFrame.xml`
+- `Defs/ThingDefs/ABY_InfernalEye.xml`
+- `Defs/ThingDefs/ABY_LitanyGrinder.xml`
+- `Defs/ThingDefs/ABY_NullAcolyteApparel.xml`
+- `Defs/ThingDefs/ABY_NullCantor.xml`
+- `Defs/ThingDefs/ABY_NullDisruptor.xml`
+- `Defs/ThingDefs/ABY_NullMarksmanRifle.xml`
+- `Defs/ThingDefs/ABY_NullbrandGlaive.xml`
+- `Defs/ThingDefs/ABY_OblivionChoir.xml`
+- `Defs/ThingDefs/ABY_PhalanxDriver.xml`
+- `Defs/ThingDefs/ABY_ReactorSaint_Armor.xml`
+- `Defs/ThingDefs/ABY_ReactorSaint_Implants.xml`
+- `Defs/ThingDefs/ABY_RiftCarbineProjectile.xml`
+- `Defs/ThingDefs/ABY_RiftDagger.xml`
+- `Defs/ThingDefs/ABY_RiftHelm.xml`
+- `Defs/ThingDefs/ABY_RiftNeedler.xml`
+- `Defs/ThingDefs/ABY_SetAccessoryApparel.xml`
+- `Defs/ThingDefs/ABY_SigilRepeater.xml`
+- `Defs/ThingDefs/ABY_SpecterLash.xml`
+- `Defs/ThingDefs/ABY_T5PassiveTurretModules.xml`
+- `Defs/ThingDefs/ABY_TurretModules.xml`
+- `Defs/ThingDefs/ABY_UltraPlasmaRifle.xml`
+- `Defs/ThingDefs/ABY_Vambraces.xml`
+- `Defs/ThingDefs/ABY_VesperLance.xml`
+- `Defs/ThingDefs/ABY_Weapons.xml`
+- `Docs/AI_ARCHITECTURE.md`
+- `Docs/AI_QUICK_INDEX.md`
+- `Docs/CONTENT_MATRIX.md`
+- `Docs/EQUIPMENT_BALANCE_REFERENCE.md`
+- `Docs/KNOWN_RISKS_AND_REGRESSIONS.md`
+- `Docs/RECENT_WORK.md`
+- `Languages/English/DefInjected/RecipeDef/ABY_T5PassiveTurretModuleRecipes.xml`
+- `Languages/English/DefInjected/ThingDef/ABY_T5PassiveTurretModules.xml`
+- `Languages/English/Keyed/ABY_SpecialWeaponDamageInfo_Strings.xml`
+- `Languages/Russian/DefInjected/RecipeDef/ABY_T5PassiveTurretModuleRecipes.xml`
+- `Languages/Russian/DefInjected/ThingDef/ABY_T5PassiveTurretModules.xml`
+- `Languages/Russian/Keyed/ABY_SpecialWeaponDamageInfo_Strings.xml`
+- `Patches/ABY_ApparelAegis_ArmorPatches.xml`
+- `Textures/Things/Implant/ABY_AegisCarapaceMesh.png`
+- `Textures/Things/Implant/ABY_ArchonPredatorEye.png`
+- `Textures/Things/Implant/ABY_ArchonStomachFurnace.png`
+- `Textures/Things/Implant/ABY_AshenServoArm.png`
+- `Textures/Things/Implant/ABY_AshenSinkKidney.png`
+- `Textures/Things/Implant/ABY_AshenTendonSpine.png`
+- `Textures/Things/Implant/ABY_AshskinMesh.png`
+- `Textures/Things/Implant/ABY_BreachCarapaceMesh.png`
+- `Textures/Things/Implant/ABY_BreachPulseHeart.png`
+- `Textures/Things/Implant/ABY_BreachStomachEngine.png`
+- `Textures/Things/Implant/ABY_BreachlordSpine.png`
+- `Textures/Things/Implant/ABY_ChoirLungResonator.png`
+- `Textures/Things/Implant/ABY_CinderStomachCrucible.png`
+- `Textures/Things/Implant/ABY_CinderThroatCollar.png`
+- `Textures/Things/Implant/ABY_CrownMandibleAuthority.png`
+- `Textures/Things/Implant/ABY_CrownNullCollar.png`
+- `Textures/Things/Implant/ABY_DominionAegisKidney.png`
+- `Textures/Things/Implant/ABY_DominionLiverScripture.png`
+- `Textures/Things/Implant/ABY_DominionLungThrone.png`
+- `Textures/Things/Implant/ABY_DominionServoArm.png`
+- `Textures/Things/Implant/ABY_DominionSightCrown.png`
+- `Textures/Things/Implant/ABY_DominionStomachEngine.png`
+- `Textures/Things/Implant/ABY_DominionTendonLeg.png`
+- `Textures/Things/Implant/ABY_EmberPulseHeart.png`
+- `Textures/Things/Implant/ABY_EmberTendonLeg.png`
+- `Textures/Things/Implant/ABY_HaloChoirCollar.png`
+- `Textures/Things/Implant/ABY_HaloLocomotorLeg.png`
+- `Textures/Things/Implant/ABY_HordeLiverCrucible.png`
+- `Textures/Things/Implant/ABY_HordeMandibleCrown.png`
+- `Textures/Things/Implant/ABY_JudgementOpticHalo.png`
+- `Textures/Things/Implant/ABY_NullLiverFilter.png`
+- `Textures/Things/Implant/ABY_NullMandibleClamp.png`
+- `Textures/Things/Implant/ABY_NullSignalCollar.png`
+- `Textures/Things/Implant/ABY_ReactorHaloSubcore.png`
+- `Textures/Things/Implant/ABY_ReactorSinkKidney.png`
+- `Textures/Things/Implant/ABY_ReactorStomachCrucible.png`
+- `Textures/Things/Implant/ABY_ReactorVotiveHeart.png`
+- `Textures/Things/Implant/ABY_RiftLungArray.png`
+- `Textures/Things/Implant/ABY_RiftstepLegActuator.png`
+- `Textures/Things/Implant/ABY_SaintBellowsLung.png`
+- `Textures/Things/Implant/ABY_SaintLiverCenser.png`
+- `Textures/Things/Implant/ABY_VerdictMandibleSeal.png`
+- `Textures/Things/Implant/ABY_VesperExecutionArm.png`
+- `Textures/Things/Implant/ABY_VesperTendonSpine.png`
+- `Textures/Things/Item/TurretModules/ABY_TurretModule_CrownOverpressureChoir.png`
+- `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`
+- `Textures/Things/Item/TurretModules/ABY_TurretModule_SepulcherFailSafeMantle.png`
+- `source/Combat/Comps/CompABY_SpecialWeaponDamageInfo.cs`
+- `source/Combat/MapComponents/SpecterLashStreamGameComponent.cs`
+- `source/Combat/Projectiles/Weapons/Projectile_OblivionChoirCore.cs`
+- `source/Combat/Utilities/ABY_SpecialWeaponDamageInfoUtility.cs`
+- `source/Combat/VFX/Thing_CrownshardStormNode.cs`
+- `source/Forge/AbyssalForgeProgressUtility.cs`
+- `source/UI/Forge/Window_AbyssalForgeConsole.cs`

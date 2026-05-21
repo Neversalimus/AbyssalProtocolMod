@@ -349,3 +349,7 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Files: `Defs/Misc/ABY_T5PassiveTurretModuleDefs.xml`, `Defs/ThingDefs/ABY_T5PassiveTurretModules.xml`, `Defs/RecipeDefs/ABY_T5PassiveTurretModuleRecipes.xml`.
 - Assets: `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`, `ABY_TurretModule_CrownOverpressureChoir.png`, `ABY_TurretModule_SepulcherFailSafeMantle.png`.
 - Role coverage: T5 passive targeting, firing cadence, and chassis survival. These are intentionally not Aegis modules because Aegis stacking is blocked by the turret runtime.
+
+## Crafting requirement ownership
+
+Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList + recipeMaker` items. Future economy audits must inspect both paths; many weapons and implants are generated from ThingDef recipeMaker rather than standalone RecipeDefs.

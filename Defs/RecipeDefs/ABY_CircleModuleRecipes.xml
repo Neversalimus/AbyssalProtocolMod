@@ -8,6 +8,9 @@
     <workAmount>1600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <researchPrerequisite>ABY_CircleStabilizerFrames</researchPrerequisite>
@@ -58,6 +61,9 @@
     <workAmount>2400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <researchPrerequisite>ABY_ResonantLatticeStabilization</researchPrerequisite>
@@ -116,6 +122,9 @@
     <workAmount>3400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <researchPrerequisite>ABY_CrownContainmentArchitecture</researchPrerequisite>

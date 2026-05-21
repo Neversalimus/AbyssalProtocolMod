@@ -176,11 +176,10 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
-      <ABY_ChoirResonanceCore>1</ABY_ChoirResonanceCore>
-      <ABY_AbyssalResidue>11</ABY_AbyssalResidue>
-      <ComponentIndustrial>2</ComponentIndustrial>
-      <Plasteel>14</Plasteel>
-      <Steel>16</Steel>
+      <ABY_AbyssalResidue>26</ABY_AbyssalResidue>
+      <ComponentIndustrial>3</ComponentIndustrial>
+      <Plasteel>24</Plasteel>
+      <Steel>20</Steel>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />

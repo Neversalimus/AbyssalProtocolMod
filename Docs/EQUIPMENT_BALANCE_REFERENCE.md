@@ -12,3 +12,7 @@ T5 turret modules should include several passive roles, not only Crown Aegis Mat
 | Sepulcher Fail-Safe Mantle | Passive | 5 | chassis survival/recovery | 0.76 incoming damage, +0.28 idle cooldown recovery, -2 min range, 1.07 cooldown, +700 W |
 
 Do not add a second T5 Aegis passive unless the turret runtime is intentionally changed; current turret safety rules enforce one shield module and prevent Aegis stacking.
+
+## Crafting economy rule — residue, vanilla resources, and boss drops
+
+All player-facing craftable Abyssal gear should require both Abyssal Residue and vanilla resources. T1 should be slightly more expensive than vanilla endgame because the player enters the mod with a mature colony economy. Boss-drop resources should be used as progression gates for upper-tier signature items: major weapons, brain/heart/spine/torso implants, Aegis/shield modules, apex turret modules, and role-defining rewards. Ordinary filler slots should usually use higher residue plus vanilla resources instead of one boss-drop each.

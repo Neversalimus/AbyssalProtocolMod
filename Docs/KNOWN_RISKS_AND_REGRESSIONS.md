@@ -667,3 +667,7 @@ In-game checks:
 - Craftable implant ThingDefs need matching surgery RecipeDefs and installed HediffDefs; missing one of the three silently creates reward items that cannot be installed or hediffs that cannot be recovered.
 - Added body part hediffs must include `spawnThingOnRemoved` so extracted/replaced implants return the correct item.
 - New implant ThingDefs must use real `Textures/Things/Implant/*.png` assets, not missing texPaths or duplicated placeholder art.
+
+## Crafting economy risk — boss drops must not tax every slot
+
+When adding new gear, every craftable reward should normally require Abyssal Residue plus vanilla resources. Boss-drop resources should gate signature or upper-tier pieces, not every implant slot or passive module. Avoid making complete pawn loadouts require one boss drop per organ; this discourages experimentation and makes multi-pawn gearing feel punitive.

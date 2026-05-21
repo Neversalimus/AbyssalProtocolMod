@@ -1,20 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
     <defName>ABY_CohortHalberd</defName>
     <label>cohort halberd</label>
     <description>A disciplined war-lattice halberd forged from horde fragments. Built for breach-line fighters, it trades agility for armor pressure, punishing hooks and brutal holding power once the fight collapses into close quarters.</description>
     <techLevel>Spacer</techLevel>
-
     <graphicData>
       <texPath>Things/Weapon/ABY_CohortHalberd</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1.88,0.60)</drawSize>
     </graphicData>
-
     <soundInteract>ABY_CohortHalberdEquip</soundInteract>
-
     <recipeMaker>
       <skillRequirements>
         <Crafting>10</Crafting>
@@ -23,15 +19,13 @@
         <li>ABY_AbyssalForge</li>
       </recipeUsers>
     </recipeMaker>
-
     <costList>
-      <ABY_HordeFragment>6</ABY_HordeFragment>
+      <ABY_HordeFragment>3</ABY_HordeFragment>
       <ABY_AbyssalResidue>18</ABY_AbyssalResidue>
       <Steel>55</Steel>
       <Plasteel>26</Plasteel>
       <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
-
     <tools>
       <li>
         <label>hook blade</label>
@@ -66,13 +60,11 @@
         <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>
     </tools>
-
     <statBases>
       <WorkToMake>36000</WorkToMake>
       <Mass>4.4</Mass>
       <MarketValue>2350</MarketValue>
     </statBases>
-
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
@@ -80,5 +72,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

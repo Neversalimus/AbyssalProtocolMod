@@ -31,6 +31,7 @@
       <Plasteel>30</Plasteel>
       <ComponentSpacer>2</ComponentSpacer>
       <Gold>20</Gold>
+      <ABY_AbyssalResidue>60</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -74,6 +75,7 @@
       <ComponentIndustrial>2</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
       <Uranium>14</Uranium>
+      <ABY_AbyssalResidue>64</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -118,6 +120,7 @@
       <ComponentSpacer>1</ComponentSpacer>
       <Uranium>18</Uranium>
       <Silver>40</Silver>
+      <ABY_AbyssalResidue>62</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
@@ -161,6 +164,7 @@
       <ComponentSpacer>2</ComponentSpacer>
       <Uranium>20</Uranium>
       <Gold>14</Gold>
+      <ABY_AbyssalResidue>68</ABY_AbyssalResidue>
     </costList>
     <comps>
       <li Class="AbyssalProtocol.CompProperties_ABY_ImplantInfoCard" />
