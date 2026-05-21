@@ -1,3 +1,24 @@
+# Abyssal Protocol — Recent Work Notes
+
+## 2026-05-21 — Add lightweight miniboss custom-HP bars
+- Added a compact overhead health bar path for abyssal minibosses that use `CompABY_BossTrueDeath` custom HP but should not occupy the full cinematic boss bar.
+- Warden of Ash and Choir Engine are detected through the shared abyssal pawn classification helper and keep their separate custom HP readable in combat.
+- Added a mod setting toggle for miniboss health bars; the bars also respect the global boss-bar enable switch and health-number visibility setting.
+- Updated EN/RU localization and documentation so future UI work treats miniboss HP bars as part of the existing BossBar UI surface, not a separate parallel HUD.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/UI/BossBar/
+source/Core/Bootstrap/
+source/Core/Utilities/
+Languages/English/Keyed/ABY_BossBar_Strings.xml
+Languages/Russian/Keyed/ABY_BossBar_Strings.xml
+Docs/
+```
+
+Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
 
 ## 2026-05-21 — Execution Logic Core passive turret module
 
@@ -12,8 +33,6 @@ Touched areas:
 - turret module localization and item icon assets
 
 Follow-up smoke test: verify Forge visibility, installation into passive slots, and that wounded-but-still-valid hostile pawns are preferred without causing scan spikes.
-
-# Abyssal Protocol — Recent Work Notes
 
 ## 2026-05-20 — Emergency rebuild for residue sintering extension load errors
 - Rebuilt `Assemblies/AbyssalProtocol.dll` from the current `source/` tree after runtime logs showed repeated XML load failures for pawn kind defs referencing `AbyssalProtocol.ABY_ResidueSinteringExtension`.
@@ -751,11 +770,4 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Replaced Dominion slice encounter per-tick `RemoveAll` lambdas with reverse `for` cleanup loops to avoid closure allocation during active encounters.
 - Throttled Dominion slice `RestoreReferencesFromMap` fallback scans so full `AllThings` recovery runs on load/forced recovery or short fallback intervals instead of every tick while references are incomplete.
 - Added deterministic armor Aegis selection tie-breaking so equal-capacity Aegis apparel chooses by recharge quality and stable def name instead of worn-list order.
-- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
-
-## 2026-05-21 — Projectile impact cross-map defensive pass
-- Added projectile base-impact guards that reject destroyed, unspawned or cross-map `hitThing` references before calling vanilla/external `base.Impact(...)`.
-- Updated custom Abyssal projectile classes to pass their impact target into `ABY_ProjectileImpactSafetyUtility` so stale/cross-save projectile targets are detected before damage is applied.
-- Added map-aware secondary damage overloads and routed projectile secondary AoE/chain damage through the expected current map where available.
-- Hardened `Thing_CrownshardStormNode` with a saved fallback source faction and map-aware damage checks so storm pulses do not default to player faction after launcher loss or hit stale targets.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.

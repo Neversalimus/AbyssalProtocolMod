@@ -16,6 +16,7 @@ namespace AbyssalProtocol
         public float offsetY = 44f;
         public float safeMargin = 18f;
         public bool showHealthNumbers = true;
+        public bool enableMiniBossHealthBars = true;
         public bool showPhaseMarkers = true;
         public bool showPhaseLabel = true;
         public bool showSecondaryBars = true;
@@ -65,6 +66,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref offsetY, "offsetY", 44f);
             Scribe_Values.Look(ref safeMargin, "safeMargin", 18f);
             Scribe_Values.Look(ref showHealthNumbers, "showHealthNumbers", true);
+            Scribe_Values.Look(ref enableMiniBossHealthBars, "enableMiniBossHealthBars", true);
             Scribe_Values.Look(ref showPhaseMarkers, "showPhaseMarkers", true);
             Scribe_Values.Look(ref showPhaseLabel, "showPhaseLabel", true);
             Scribe_Values.Look(ref showSecondaryBars, "showSecondaryBars", true);
@@ -126,6 +128,7 @@ namespace AbyssalProtocol
             offsetY = 44f;
             safeMargin = 18f;
             showHealthNumbers = true;
+            enableMiniBossHealthBars = true;
             showPhaseMarkers = true;
             showPhaseLabel = true;
             showSecondaryBars = true;

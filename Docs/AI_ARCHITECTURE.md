@@ -77,7 +77,7 @@ Subareas:
 - `UI/Shared/` — reusable styled widgets, layout helpers, colors, textures, buttons, text utilities, and the shared procedural Abyssal scroll view/scrollbar wrapper.
 - `UI/Forge/` — Abyssal Forge compact tab and full Forge/Communion UI support, including procedural Forge tier rails/badges for Signal/Breach/Archon/Reactor/Dominion/Crown pattern readability.
 - `UI/Summoning/` — Summoning Circle compact tab and full Summoning Console support.
-- `UI/BossBar/` — boss bar renderer, boss bar profile defs, phase entries, Aegis overlay renderer.
+- `UI/BossBar/` — boss bar renderer, boss bar profile defs, phase entries, Aegis overlay renderer, and lightweight overhead miniboss custom-HP bars.
 - `UI/Bestiary/` — bestiary/codex UI and reward presentation.
 - `UI/Turrets/` — modular turret UI, ITabs, module socket windows.
 - `UI/Gizmos/` — custom command/gizmo rendering and presentation helpers.

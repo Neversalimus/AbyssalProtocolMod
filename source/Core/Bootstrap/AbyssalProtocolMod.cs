@@ -78,6 +78,7 @@ namespace AbyssalProtocol
 
             list.CheckboxLabeled("ABY_BossBar_Enable".Translate(), ref s.enableBossBars, "ABY_BossBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowHealthNumbers".Translate(), ref s.showHealthNumbers, "ABY_BossBar_ShowHealthNumbersDesc".Translate());
+            list.CheckboxLabeled("ABY_MiniBossHealthBar_Enable".Translate(), ref s.enableMiniBossHealthBars, "ABY_MiniBossHealthBar_EnableDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowPhaseMarkers".Translate(), ref s.showPhaseMarkers, "ABY_BossBar_ShowPhaseMarkersDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowPhaseLabel".Translate(), ref s.showPhaseLabel, "ABY_BossBar_ShowPhaseLabelDesc".Translate());
             list.CheckboxLabeled("ABY_BossBar_ShowSecondaryBars".Translate(), ref s.showSecondaryBars, "ABY_BossBar_ShowSecondaryBarsDesc".Translate());

@@ -5,6 +5,8 @@
   <ABY_BossBar_EnableDesc>Shows the custom Abyssal Protocol boss HUD for supported active bosses.</ABY_BossBar_EnableDesc>
   <ABY_BossBar_ShowHealthNumbers>Show health numbers</ABY_BossBar_ShowHealthNumbers>
   <ABY_BossBar_ShowHealthNumbersDesc>Displays current and maximum health values on the boss bar.</ABY_BossBar_ShowHealthNumbersDesc>
+  <ABY_MiniBossHealthBar_Enable>Show miniboss health bars</ABY_MiniBossHealthBar_Enable>
+  <ABY_MiniBossHealthBar_EnableDesc>Shows compact overhead custom-HP bars for abyssal minibosses that use separate Abyssal Protocol health instead of vanilla pawn health.</ABY_MiniBossHealthBar_EnableDesc>
   <ABY_BossBar_ShowPhaseMarkers>Show phase markers</ABY_BossBar_ShowPhaseMarkers>
   <ABY_BossBar_ShowPhaseMarkersDesc>Displays threshold markers for supported boss phase transitions.</ABY_BossBar_ShowPhaseMarkersDesc>
   <ABY_BossBar_ShowPhaseLabel>Show current phase label</ABY_BossBar_ShowPhaseLabel>

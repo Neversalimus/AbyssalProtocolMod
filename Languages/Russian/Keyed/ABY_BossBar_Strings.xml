@@ -5,6 +5,8 @@
   <ABY_BossBar_EnableDesc>Показывает интерфейс босса Протокола Бездны для поддерживаемых активных боссов.</ABY_BossBar_EnableDesc>
   <ABY_BossBar_ShowHealthNumbers>Показывать числа здоровья</ABY_BossBar_ShowHealthNumbers>
   <ABY_BossBar_ShowHealthNumbersDesc>Показывает текущее и максимальное здоровье на полосе босса.</ABY_BossBar_ShowHealthNumbersDesc>
+  <ABY_MiniBossHealthBar_Enable>Показывать полосы здоровья мини-боссов</ABY_MiniBossHealthBar_Enable>
+  <ABY_MiniBossHealthBar_EnableDesc>Показывает компактные полосы отдельного здоровья над мини-боссами Бездны, у которых используется отдельное здоровье Протокола вместо ванильного здоровья пешки.</ABY_MiniBossHealthBar_EnableDesc>
   <ABY_BossBar_ShowPhaseMarkers>Показывать маркеры фаз</ABY_BossBar_ShowPhaseMarkers>
   <ABY_BossBar_ShowPhaseMarkersDesc>Показывает пороги переходов фаз у поддерживаемых боссов.</ABY_BossBar_ShowPhaseMarkersDesc>
   <ABY_BossBar_ShowPhaseLabel>Показывать текущую фазу</ABY_BossBar_ShowPhaseLabel>

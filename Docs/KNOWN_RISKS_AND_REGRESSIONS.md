@@ -66,6 +66,7 @@ Actual code and assets win over this document.
 | Claiming build success without actual build | P0 | workflow | False confidence, broken mod package | Only state Build verified after real `dotnet build` success. |
 | Compiling `AbyssalProtocol.dll` against .NET Core/.NET 9 reference assemblies | P0 | build/runtime | RimWorld load shows `ReflectionTypeLoadException`, then many `Could not find type named AbyssalProtocol...` XML errors | For emergency Roslyn builds, use bundled .NET Framework-style references: `mscorlib.dll`, `System.dll`, `System.Core.dll`, RimWorld `Assembly-CSharp.dll`, Unity modules, and Harmony. Verify assembly refs do not include `System.Runtime, Version=9.0.0.0`. |
 | Including `source/bin/` or `source/obj/` in delta zips | P2 | packaging | Dirty archives, confusing generated code | Exclude build artifacts from user-facing zips. |
+| Routing miniboss custom HP through the full boss HUD by default | P2 | UI/combat readability | Miniboss fights feel like major boss encounters, or custom HP remains unreadable if no full boss profile exists | Keep minibosses on compact overhead bars unless they are intentionally promoted to major boss status; continue reading HP from `CompABY_BossTrueDeath`. |
 | Ignoring local archive priority when user says it is current | P1 | workflow | Work based on stale GitHub state | Use local archive first when explicitly current/up to date. |
 | Using docs as authority over actual code | P1 | workflow | Wrong path or stale assumption | Docs are maps; actual archive files win. |
 | Forgetting commit summary | P2 | workflow | Harder continuation/history | Always include commit title + description after file changes. |
@@ -640,19 +641,3 @@ Regression rules:
 - Use reverse `for` loops instead of `RemoveAll` lambdas that capture `map`.
 - Do not call full `RestoreReferencesFromMap()` every tick while the encounter is active; throttle fallback scans and force them only on load or explicit recovery/spawn paths.
 - If new Dominion actors are added, register references directly at spawn time whenever possible instead of relying on global map scans.
-
-## 2026-05-21 — Projectile impact targets must stay on the current map
-
-A reproduced cross-save regression showed that a projectile fired before switching saves could interact with a stale invisible Abyssal pawn if runtime combat state survived into another loaded save. Runtime target caches were hardened separately, but custom projectile classes should also defensively reject stale impact targets.
-
-Regression rules:
-
-- Custom Abyssal projectiles that wrap `base.Impact(...)` must pass `hitThing` into `ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(...)` so the utility can verify target/map state first.
-- Projectile secondary damage should use the map-aware `TryApplyDamage(projectile, ...)` or `TryApplyDamage(map, ...)` overload when the expected map is known.
-- Lingering projectile-spawned things that can outlive their launcher should store a fallback source faction instead of defaulting to `Faction.OfPlayer` after save/load or launcher destruction.
-- Never store projectile combat targets in static state. If a projectile effect needs delayed targeting, rebuild targets from the current map or fail closed after load.
-
-In-game checks:
-
-- Fire a custom Abyssal projectile, switch to a different save while it is in flight, and confirm no invisible Abyssal pawn/ghost target appears.
-- Test chain/AoE weapons such as Choir Arc, Crownfire, Crownspike Rail, turret Null Arc, Rift Flak and Crownshard Storm for normal damage/VFX after the guard pass.

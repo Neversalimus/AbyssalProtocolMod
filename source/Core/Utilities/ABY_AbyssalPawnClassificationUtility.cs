@@ -11,6 +11,12 @@ namespace AbyssalProtocol
     /// </summary>
     public static class ABY_AbyssalPawnClassificationUtility
     {
+        private static readonly HashSet<string> LegacyMiniBossNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "ABY_WardenOfAsh",
+            "ABY_ChoirEngine"
+        };
+
         private static readonly HashSet<string> LegacyProtectedBossOrMiniBossNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "ABY_WardenOfAsh",
@@ -23,6 +29,12 @@ namespace AbyssalProtocol
             "ABY_DominionHeart",
             "ABY_CrownedGate",
             "ABY_TheCrownedGate"
+        };
+
+        private static readonly string[] LegacyMiniBossNameFragments =
+        {
+            "WardenOfAsh",
+            "ChoirEngine"
         };
 
         private static readonly string[] LegacyProtectedNameFragments =
@@ -68,6 +80,52 @@ namespace AbyssalProtocol
             }
 
             return IsAbyssalDefName(pawn.def?.defName) || IsAbyssalDefName(pawn.kindDef?.defName);
+        }
+
+
+        public static bool IsMiniBoss(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            if (HasClassificationExtension(pawn, extension => extension.isMiniBoss))
+            {
+                return true;
+            }
+
+            DefModExtension_AbyssalDifficultyScaling scaling = pawn.kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+            if (IsMiniBossRole(scaling?.role))
+            {
+                return true;
+            }
+
+            return IsLegacyMiniBossName(pawn.def?.defName) || IsLegacyMiniBossName(pawn.kindDef?.defName);
+        }
+
+        public static bool IsMajorBoss(Pawn pawn)
+        {
+            if (pawn == null)
+            {
+                return false;
+            }
+
+            if (HasClassificationExtension(pawn, extension => extension.isBoss))
+            {
+                return true;
+            }
+
+            DefModExtension_AbyssalDifficultyScaling scaling = pawn.kindDef?.GetModExtension<DefModExtension_AbyssalDifficultyScaling>();
+            if (IsMajorBossRole(scaling?.role))
+            {
+                return true;
+            }
+
+            string thingDefName = pawn.def?.defName;
+            string pawnKindDefName = pawn.kindDef?.defName;
+            return IsLegacyProtectedBossOrMiniBossName(thingDefName) && !IsLegacyMiniBossName(thingDefName)
+                || IsLegacyProtectedBossOrMiniBossName(pawnKindDefName) && !IsLegacyMiniBossName(pawnKindDefName);
         }
 
         public static bool IsBossOrMiniBoss(Pawn pawn)
@@ -180,6 +238,55 @@ namespace AbyssalProtocol
                 || string.Equals(role, "miniboss", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(role, "miniBoss", StringComparison.OrdinalIgnoreCase)
                 || role.IndexOf("boss", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+
+        private static bool IsMiniBossRole(string role)
+        {
+            if (role.NullOrEmpty())
+            {
+                return false;
+            }
+
+            return string.Equals(role, "miniboss", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(role, "miniBoss", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(role, "mini_boss", StringComparison.OrdinalIgnoreCase)
+                || role.IndexOf("miniboss", StringComparison.OrdinalIgnoreCase) >= 0
+                || role.IndexOf("miniBoss", StringComparison.OrdinalIgnoreCase) >= 0
+                || role.IndexOf("mini_boss", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static bool IsMajorBossRole(string role)
+        {
+            if (role.NullOrEmpty())
+            {
+                return false;
+            }
+
+            return IsBossRole(role) && !IsMiniBossRole(role);
+        }
+
+        private static bool IsLegacyMiniBossName(string defName)
+        {
+            if (defName.NullOrEmpty())
+            {
+                return false;
+            }
+
+            if (LegacyMiniBossNames.Contains(defName))
+            {
+                return true;
+            }
+
+            for (int i = 0; i < LegacyMiniBossNameFragments.Length; i++)
+            {
+                if (defName.IndexOf(LegacyMiniBossNameFragments[i], StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private static bool IsLegacyProtectedBossOrMiniBossName(string defName)
