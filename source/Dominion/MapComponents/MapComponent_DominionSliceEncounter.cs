@@ -30,6 +30,7 @@ namespace AbyssalProtocol
         private const int HeartGuardianCount = 3;
         private const int HeartGuardianInitialSpawnDelayTicks = 150;
         private const int HeartGuardianSpawnRetryDelayTicks = 180;
+        private const int ReferenceRestoreFallbackIntervalTicks = 300;
 
         private string sessionId;
         private SlicePhase phase = SlicePhase.Dormant;
@@ -43,6 +44,7 @@ namespace AbyssalProtocol
         private int nextHeartGuardianSpawnRetryTick;
         private int scheduledHeartGuardianSpawnTick;
         private int heartGuardianSpawnAttempts;
+        private int nextReferenceRestoreTick;
         private string lastWaveLabel;
         private string lastWaveSummary;
         private Building_ABY_DominionSliceHeart heart;
@@ -114,7 +116,7 @@ namespace AbyssalProtocol
             get
             {
                 CleanupReferences();
-                RestoreReferencesFromMap();
+                RestoreReferencesFromMapThrottled(Find.TickManager != null ? Find.TickManager.TicksGame : 0, heart == null);
                 return heart;
             }
         }
@@ -177,7 +179,7 @@ namespace AbyssalProtocol
             {
                 anchors ??= new List<Building_ABY_DominionSliceAnchor>();
                 heartGuardians ??= new List<Pawn>();
-                RestoreReferencesFromMap();
+                RestoreReferencesFromMap(true);
                 if (IsActiveEncounter && !heartGuardiansSpawned && GetLiveHeartGuardianCount() < HeartGuardianCount)
                 {
                     ScheduleHeartGuardianSpawn(HeartGuardianInitialSpawnDelayTicks);
@@ -213,9 +215,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            CleanupReferences();
-            RestoreReferencesFromMap();
             int now = Find.TickManager.TicksGame;
+            CleanupReferences();
+            RestoreReferencesFromMapThrottled(now);
             TryRunScheduledHeartGuardianSpawn(now);
 
             if (phase == SlicePhase.Breach)
@@ -541,7 +543,7 @@ namespace AbyssalProtocol
             }
 
             CleanupReferences();
-            RestoreReferencesFromMap();
+            RestoreReferencesFromMapThrottled(Find.TickManager != null ? Find.TickManager.TicksGame : 0);
             if (anchors == null || anchors.Count == 0)
             {
                 return;
@@ -912,7 +914,7 @@ namespace AbyssalProtocol
             }
 
             CleanupReferences();
-            RestoreReferencesFromMap();
+            RestoreReferencesFromMap(true);
 
             int liveCount = GetLiveHeartGuardianCount();
             if (heartGuardiansSpawned && liveCount >= HeartGuardianCount)
@@ -1210,15 +1212,32 @@ namespace AbyssalProtocol
             {
                 anchors = new List<Building_ABY_DominionSliceAnchor>();
             }
+            else
+            {
+                for (int i = anchors.Count - 1; i >= 0; i--)
+                {
+                    Building_ABY_DominionSliceAnchor anchor = anchors[i];
+                    if (anchor == null || anchor.Destroyed || anchor.Map != map)
+                    {
+                        anchors.RemoveAt(i);
+                    }
+                }
+            }
 
-            anchors.RemoveAll(anchor => anchor == null || anchor.Destroyed || anchor.Map != map);
             if (heartGuardians == null)
             {
                 heartGuardians = new List<Pawn>();
             }
             else
             {
-                heartGuardians.RemoveAll(guardian => guardian == null || guardian.Destroyed || guardian.Dead || guardian.Map != map || guardian.kindDef == null || guardian.kindDef.defName != HeartGuardianPawnKindDefName);
+                for (int i = heartGuardians.Count - 1; i >= 0; i--)
+                {
+                    Pawn guardian = heartGuardians[i];
+                    if (guardian == null || guardian.Destroyed || guardian.Dead || guardian.Map != map || guardian.kindDef == null || guardian.kindDef.defName != HeartGuardianPawnKindDefName)
+                    {
+                        heartGuardians.RemoveAt(i);
+                    }
+                }
             }
 
             if (heart != null && (heart.Destroyed || heart.Map != map))
@@ -1227,7 +1246,31 @@ namespace AbyssalProtocol
             }
         }
 
-        private void RestoreReferencesFromMap()
+        private void RestoreReferencesFromMapThrottled(int now, bool force = false)
+        {
+            if (!force && HasCompleteEncounterReferences())
+            {
+                return;
+            }
+
+            if (!force && now < nextReferenceRestoreTick)
+            {
+                return;
+            }
+
+            RestoreReferencesFromMap(force);
+            nextReferenceRestoreTick = now + ReferenceRestoreFallbackIntervalTicks;
+        }
+
+        private bool HasCompleteEncounterReferences()
+        {
+            return anchors != null
+                && anchors.Count >= 3
+                && heart != null
+                && (heartGuardiansSpawned || heartGuardians != null && heartGuardians.Count >= HeartGuardianCount);
+        }
+
+        private void RestoreReferencesFromMap(bool force = false)
         {
             if (map?.listerThings?.AllThings == null)
             {
@@ -1236,7 +1279,7 @@ namespace AbyssalProtocol
 
             anchors ??= new List<Building_ABY_DominionSliceAnchor>();
             heartGuardians ??= new List<Pawn>();
-            if (anchors.Count >= 3 && heart != null && (heartGuardiansSpawned || heartGuardians.Count >= HeartGuardianCount))
+            if (!force && HasCompleteEncounterReferences())
             {
                 return;
             }

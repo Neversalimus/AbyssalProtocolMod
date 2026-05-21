@@ -275,7 +275,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (candidateExt.MaxShieldPointsSafe > bestMax)
+                if (IsBetterAegisCandidate(apparel, candidateExt, best, bestExt))
                 {
                     best = apparel;
                     bestExt = candidateExt;
@@ -285,6 +285,56 @@ namespace AbyssalProtocol
 
             ext = bestExt;
             return best;
+        }
+
+        private static bool IsBetterAegisCandidate(Apparel candidate, DefModExtension_ABY_ApparelAegis candidateExt, Apparel currentBest, DefModExtension_ABY_ApparelAegis currentBestExt)
+        {
+            if (candidate == null || candidateExt == null)
+            {
+                return false;
+            }
+
+            if (currentBest == null || currentBestExt == null)
+            {
+                return true;
+            }
+
+            int compare = CompareFloat(candidateExt.MaxShieldPointsSafe, currentBestExt.MaxShieldPointsSafe);
+            if (compare != 0)
+            {
+                return compare > 0;
+            }
+
+            compare = CompareFloat(candidateExt.RechargePerIntervalSafe, currentBestExt.RechargePerIntervalSafe);
+            if (compare != 0)
+            {
+                return compare > 0;
+            }
+
+            if (candidateExt.RechargeDelayTicksSafe != currentBestExt.RechargeDelayTicksSafe)
+            {
+                return candidateExt.RechargeDelayTicksSafe < currentBestExt.RechargeDelayTicksSafe;
+            }
+
+            if (candidateExt.RechargeIntervalTicksSafe != currentBestExt.RechargeIntervalTicksSafe)
+            {
+                return candidateExt.RechargeIntervalTicksSafe < currentBestExt.RechargeIntervalTicksSafe;
+            }
+
+            string candidateDef = candidate.def?.defName ?? string.Empty;
+            string bestDef = currentBest.def?.defName ?? string.Empty;
+            return string.CompareOrdinal(candidateDef, bestDef) < 0;
+        }
+
+        private static int CompareFloat(float left, float right)
+        {
+            const float Epsilon = 0.001f;
+            if (Mathf.Abs(left - right) <= Epsilon)
+            {
+                return 0;
+            }
+
+            return left > right ? 1 : -1;
         }
 
         private static bool IsSuppressedByExternalShield(Pawn pawn, Apparel aegisArmor, DefModExtension_ABY_ApparelAegis ext)

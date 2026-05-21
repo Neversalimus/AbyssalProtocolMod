@@ -618,3 +618,25 @@ In-game checks:
 - Startup diagnostics now clears runtime target caches on game finalization so stale pawns/buildings from a previously loaded save cannot be reused by turrets or combat helpers.
 - Modular turret runtime burst targets are no longer restored from saves; turrets reacquire targets after load instead of carrying serialized pawn references that may be stale or partially initialized.
 - This addresses reports of modular turrets firing at empty cells and killing an apparently invisible `ABY_EmberHound` after switching to a different save.
+
+## 2026-05-21 — Static per-map runtime state must be cleared on game load
+
+Observed audit risk: `ABY_VfxBudget` stored per-map budget windows in a static dictionary keyed only by `map.uniqueID`. Like combat target caches, this can survive switching saves inside the same RimWorld process and can reuse state if a new save has a map with the same numeric id or a lower game tick.
+
+Regression rules:
+
+- Static per-map dictionaries must bind entries to the actual `Map` instance, not only `map.uniqueID`.
+- Runtime-only static state should expose `ClearAll()` and be cleared from `ABY_StabilityDiagnosticsGameComponent.FinalizeInit()` when a new game/save finalizes.
+- Tick-window state must reset if `TicksGame` moves backwards after a save switch.
+- Gameplay must not depend on VFX budget state; budget failures may skip optional visuals only.
+
+## 2026-05-21 — Dominion slice reference recovery must not scan AllThings every tick
+
+Dominion slice reference recovery may need a full `map.listerThings.AllThings` scan after save/load or after older save migrations, but this should remain a fallback path.
+
+Regression rules:
+
+- Keep `CleanupReferences()` allocation-free in active tick/update paths.
+- Use reverse `for` loops instead of `RemoveAll` lambdas that capture `map`.
+- Do not call full `RestoreReferencesFromMap()` every tick while the encounter is active; throttle fallback scans and force them only on load or explicit recovery/spawn paths.
+- If new Dominion actors are added, register references directly at spawn time whenever possible instead of relying on global map scans.

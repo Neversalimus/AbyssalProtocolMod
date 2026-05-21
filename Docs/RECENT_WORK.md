@@ -745,3 +745,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Startup diagnostics now clears runtime target caches on game finalization so stale pawns/buildings from a previously loaded save cannot be reused by turrets or combat helpers.
 - Modular turret runtime burst targets are no longer restored from saves; turrets reacquire targets after load instead of carrying serialized pawn references that may be stale or partially initialized.
 - This addresses reports of modular turrets firing at empty cells and killing an apparently invisible `ABY_EmberHound` after switching to a different save.
+
+## 2026-05-21 — VFX budget and Dominion reference hygiene hardening
+- Hardened `ABY_VfxBudget` against cross-save map `uniqueID` reuse by binding budget entries to actual `Map` instances, resetting windows when game ticks move backwards, and clearing all VFX budget state during game finalization.
+- Replaced Dominion slice encounter per-tick `RemoveAll` lambdas with reverse `for` cleanup loops to avoid closure allocation during active encounters.
+- Throttled Dominion slice `RestoreReferencesFromMap` fallback scans so full `AllThings` recovery runs on load/forced recovery or short fallback intervals instead of every tick while references are incomplete.
+- Added deterministic armor Aegis selection tie-breaking so equal-capacity Aegis apparel chooses by recharge quality and stable def name instead of worn-list order.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.

@@ -14,6 +14,7 @@ namespace AbyssalProtocol
         {
             base.FinalizeInit();
             ABY_RuntimeTargetCache.ClearAll();
+            ABY_VfxBudget.ClearAll();
             if (AbyssalProtocolMod.Settings?.showHarmonyPatchReportOnLoad ?? true)
             {
                 ABY_HarmonyPatchReportUtility.LogReport(false);

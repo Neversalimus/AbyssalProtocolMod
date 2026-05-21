@@ -24,6 +24,7 @@ namespace AbyssalProtocol
 
         private sealed class MapBudgetState
         {
+            public Map map;
             public int windowStartTick = -1;
             public int combatLightSpent;
             public int combatHeavySpent;
@@ -101,24 +102,39 @@ namespace AbyssalProtocol
         private static MapBudgetState ResolveState(Map map, int now)
         {
             int id = map.uniqueID;
-            if (!StateByMapId.TryGetValue(id, out MapBudgetState state))
+            if (!StateByMapId.TryGetValue(id, out MapBudgetState state) || state == null || state.map != map)
             {
-                state = new MapBudgetState();
+                state = new MapBudgetState { map = map };
                 StateByMapId[id] = state;
             }
 
             state.lastSeenTick = now;
-            if (state.windowStartTick < 0 || now - state.windowStartTick >= WindowTicks)
+            if (state.windowStartTick < 0 || now < state.windowStartTick || now - state.windowStartTick >= WindowTicks)
             {
-                state.windowStartTick = now;
-                state.combatLightSpent = 0;
-                state.combatHeavySpent = 0;
-                state.dominionAmbientSpent = 0;
-                state.decorativeSpent = 0;
+                ResetWindow(state, now);
             }
 
             CleanupOldStates(now);
             return state;
+        }
+
+        public static void ClearAll()
+        {
+            StateByMapId.Clear();
+        }
+
+        private static void ResetWindow(MapBudgetState state, int now)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            state.windowStartTick = now;
+            state.combatLightSpent = 0;
+            state.combatHeavySpent = 0;
+            state.dominionAmbientSpent = 0;
+            state.decorativeSpent = 0;
         }
 
         private static int ResolveCap(ABY_VfxBudgetCategory category)
@@ -147,7 +163,8 @@ namespace AbyssalProtocol
             List<int> remove = null;
             foreach (KeyValuePair<int, MapBudgetState> pair in StateByMapId)
             {
-                if (now - pair.Value.lastSeenTick > 3600)
+                MapBudgetState state = pair.Value;
+                if (state == null || state.map == null || now < state.lastSeenTick || now - state.lastSeenTick > 3600)
                 {
                     if (remove == null)
                     {
