@@ -817,3 +817,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Preserved the stat-card visibility rule: positive ShootingAccuracyPawn, MeleeHitChance and MeleeDodgeChance entries must be at least +0.10.
 - Added missing spawnThingOnRemoved for early Ashen implants and corrected existing sub-0.10 positive MeleeHitChance implant values.
 - No C# or assembly changes were required; this is an XML/asset/docs expansion.
+
+## 2026-05-22 — Turret module tier rebalance
+
+- Rebalanced existing turret modules into a complete T1–T5 spread without adding new module content.
+- Moved Crowncoil Gauss Minigun, Sepulcher Rail Core, Crownfire Rocket Choir and Crown Aegis Matrix to T5 Dominion.
+- Moved Vesper Lance Array, Sanctified Prism Emitter, Null-Arc Discharger and Abyssal Threat Prioritizer to T4 Reactor.
+- Kept Archon T3 focused on control, anti-swarm and execution modules.
+- Added/normalized Forge residue gates and Crafting skill requirements for all turret module recipes; fixed Execution Logic Core missing Forge unlock data/workSkill.
+- XML/docs only; no C# or Assemblies changes. Runtime Forge/Turret UI smoke test still required.

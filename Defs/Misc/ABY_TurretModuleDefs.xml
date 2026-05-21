@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_RiftNeedlerCore</defName>
@@ -167,7 +167,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>anti-elite rail shot</role>
-    <tier>4</tier>
+    <tier>5</tier>
     <projectileDef>ABY_TurretSepulcherRailSpike</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
     <soundCast>ABY_SepulcherRailFire</soundCast>
@@ -243,7 +243,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>EMP suppression</role>
-    <tier>3</tier>
+    <tier>4</tier>
     <projectileDef>ABY_TurretNullArcPulse</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
     <soundCharge>ABY_VesperLanceAim</soundCharge>
@@ -302,7 +302,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>precision sanction lance</role>
-    <tier>3</tier>
+    <tier>4</tier>
     <projectileDef>ABY_TurretVesperLanceBolt</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
     <soundCharge>ABY_VesperLanceAim</soundCharge>
@@ -368,7 +368,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>line-control refraction</role>
-    <tier>3</tier>
+    <tier>4</tier>
     <projectileDef>ABY_TurretSanctifiedPrismBolt</projectileDef>
     <soundCast>ABY_VesperLanceFire</soundCast>
     <soundCharge>ABY_VesperLanceAim</soundCharge>
@@ -419,7 +419,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>crowncoil suppression</role>
-    <tier>4</tier>
+    <tier>5</tier>
     <projectileDef>ABY_TurretCrowncoilGaussSlug</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
     <soundCast>ABY_RiftNeedlerFire</soundCast>
@@ -547,7 +547,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>elite target scoring</role>
-    <tier>3</tier>
+    <tier>4</tier>
     <targetPriorityCombatPowerScale>45</targetPriorityCombatPowerScale>
     <targetPriorityBossBonus>3500</targetPriorityBossBonus>
     <targetPriorityConstructBonus>1200</targetPriorityConstructBonus>
@@ -589,7 +589,6 @@
     <cooldownMultiplier>1.02</cooldownMultiplier>
     <extraPowerDraw>190</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_ShieldBurnCapacitor</defName>
     <label>Shield-Burn Capacitor</label>
@@ -640,7 +639,6 @@
     <idleCooldownRecoveryPerTick>0.35</idleCooldownRecoveryPerTick>
     <extraPowerDraw>420</extraPowerDraw>
   </AbyssalProtocol.ABY_TurretModuleDef>
-
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_BreachAegisRelay</defName>
     <label>Breach Aegis Relay</label>
@@ -670,7 +668,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>crown aegis shield</role>
-    <tier>4</tier>
+    <tier>5</tier>
     <turretShieldMax>190</turretShieldMax>
     <turretShieldRechargePerTick>0.20</turretShieldRechargePerTick>
     <turretShieldRechargeDelayTicks>420</turretShieldRechargeDelayTicks>

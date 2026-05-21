@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <RecipeDef>
     <defName>ABY_CraftTurretModule_RiftNeedlerCore</defName>
@@ -42,6 +42,9 @@
     <products>
       <ABY_TurretModule_RiftNeedlerCore>1</ABY_TurretModule_RiftNeedlerCore>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>80</requiredResidue>
@@ -91,6 +94,9 @@
     <products>
       <ABY_TurretModule_PlasmaLanceCore>1</ABY_TurretModule_PlasmaLanceCore>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>190</requiredResidue>
@@ -156,6 +162,9 @@
     <products>
       <ABY_TurretModule_AshChoirRepeaterCore>1</ABY_TurretModule_AshChoirRepeaterCore>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>320</requiredResidue>
@@ -205,6 +214,9 @@
     <products>
       <ABY_TurretModule_ChoirArcEmitter>1</ABY_TurretModule_ChoirArcEmitter>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>260</requiredResidue>
@@ -254,6 +266,9 @@
     <products>
       <ABY_TurretModule_CoolingLattice>1</ABY_TurretModule_CoolingLattice>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>110</requiredResidue>
@@ -303,6 +318,9 @@
     <products>
       <ABY_TurretModule_TargetingSigil>1</ABY_TurretModule_TargetingSigil>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>140</requiredResidue>
@@ -352,6 +370,9 @@
     <products>
       <ABY_TurretModule_ResidueCapacitor>1</ABY_TurretModule_ResidueCapacitor>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>170</requiredResidue>
@@ -409,9 +430,12 @@
     <products>
       <ABY_TurretModule_SepulcherRailCore>1</ABY_TurretModule_SepulcherRailCore>
     </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1500</requiredResidue>
+        <requiredResidue>2800</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -474,6 +498,9 @@
     <products>
       <ABY_TurretModule_CinderMortarCore>1</ABY_TurretModule_CinderMortarCore>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>820</requiredResidue>
@@ -539,9 +566,12 @@
     <products>
       <ABY_TurretModule_NullArcDischarger>1</ABY_TurretModule_NullArcDischarger>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>960</requiredResidue>
+        <requiredResidue>1150</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -604,9 +634,12 @@
     <products>
       <ABY_TurretModule_AbyssalHarpoonProjector>1</ABY_TurretModule_AbyssalHarpoonProjector>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1040</requiredResidue>
+        <requiredResidue>880</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -661,9 +694,12 @@
     <products>
       <ABY_TurretModule_VesperLanceArray>1</ABY_TurretModule_VesperLanceArray>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>680</requiredResidue>
+        <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -718,6 +754,9 @@
     <products>
       <ABY_TurretModule_RiftFlakBloom>1</ABY_TurretModule_RiftFlakBloom>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>920</requiredResidue>
@@ -783,9 +822,12 @@
     <products>
       <ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1120</requiredResidue>
+        <requiredResidue>1350</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -848,9 +890,12 @@
     <products>
       <ABY_TurretModule_CrowncoilGaussMinigun>1</ABY_TurretModule_CrowncoilGaussMinigun>
     </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1280</requiredResidue>
+        <requiredResidue>2400</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -897,6 +942,9 @@
     <products>
       <ABY_TurretModule_BlackoutPowerRegulator>1</ABY_TurretModule_BlackoutPowerRegulator>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>130</requiredResidue>
@@ -954,6 +1002,9 @@
     <products>
       <ABY_TurretModule_OverpressureCycleGovernor>1</ABY_TurretModule_OverpressureCycleGovernor>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>240</requiredResidue>
@@ -1019,6 +1070,9 @@
     <products>
       <ABY_TurretModule_LongChoirLens>1</ABY_TurretModule_LongChoirLens>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>280</requiredResidue>
@@ -1076,9 +1130,12 @@
     <products>
       <ABY_TurretModule_CloseQuartersInterlock>1</ABY_TurretModule_CloseQuartersInterlock>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>460</requiredResidue>
+        <requiredResidue>620</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1133,9 +1190,12 @@
     <products>
       <ABY_TurretModule_AbyssalThreatPrioritizer>1</ABY_TurretModule_AbyssalThreatPrioritizer>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>620</requiredResidue>
+        <requiredResidue>1500</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1190,9 +1250,12 @@
     <products>
       <ABY_TurretModule_AntiSwarmPatternScanner>1</ABY_TurretModule_AntiSwarmPatternScanner>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>580</requiredResidue>
+        <requiredResidue>700</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1203,6 +1266,7 @@
     <description>Forge a passive verdict processor that teaches a modular turret to finish wounded hostile bodies before they recover or keep pressure on the line.</description>
     <jobString>forging execution logic core.</jobString>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <workAmount>3600</workAmount>
@@ -1238,9 +1302,17 @@
     <products>
       <ABY_TurretModule_ExecutionLogicCore>1</ABY_TurretModule_ExecutionLogicCore>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>760</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_ShieldBurnCapacitor</defName>
     <label>forge shield-burn capacitor</label>
@@ -1299,9 +1371,12 @@
     <products>
       <ABY_TurretModule_ShieldBurnCapacitor>1</ABY_TurretModule_ShieldBurnCapacitor>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1200</requiredResidue>
+        <requiredResidue>1300</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1364,9 +1439,12 @@
     <products>
       <ABY_TurretModule_SanctifiedStabilizerPlate>1</ABY_TurretModule_SanctifiedStabilizerPlate>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1150</requiredResidue>
+        <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1421,14 +1499,16 @@
     <products>
       <ABY_TurretModule_EmergencyHeatDump>1</ABY_TurretModule_EmergencyHeatDump>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1250</requiredResidue>
+        <requiredResidue>1450</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_BreachAegisRelay</defName>
     <label>forge breach aegis relay</label>
@@ -1436,6 +1516,7 @@
     <jobString>Forging breach aegis relay.</jobString>
     <workAmount>2050</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Surgery</soundWorking>
     <recipeUsers>
@@ -1443,17 +1524,48 @@
     </recipeUsers>
     <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <ingredients>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>80</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>28</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>3</count></li>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>32</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>28</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
     </ingredients>
     <products>
       <ABY_TurretModule_BreachAegisRelay>1</ABY_TurretModule_BreachAegisRelay>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>280</requiredResidue>
+        <requiredResidue>420</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -1465,6 +1577,7 @@
     <jobString>Forging crown aegis matrix.</jobString>
     <workAmount>4600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Surgery</soundWorking>
     <recipeUsers>
@@ -1472,17 +1585,48 @@
     </recipeUsers>
     <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <ingredients>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>145</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>70</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>4</count></li>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>110</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>145</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>70</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>110</count>
+      </li>
     </ingredients>
     <products>
       <ABY_TurretModule_CrownAegisMatrix>1</ABY_TurretModule_CrownAegisMatrix>
     </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1250</requiredResidue>
+        <requiredResidue>2600</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>

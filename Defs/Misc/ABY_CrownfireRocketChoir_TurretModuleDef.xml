@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <AbyssalProtocol.ABY_TurretModuleDef>
     <defName>ABY_TMD_CrownfireRocketChoir</defName>
@@ -11,7 +11,7 @@
       <li>Medium</li>
     </compatibleChassisTags>
     <role>guided rocket saturation</role>
-    <tier>4</tier>
+    <tier>5</tier>
     <projectileDef>ABY_CrownfireCarrierRocket</projectileDef>
     <soundCharge>ABY_SepulcherRailCharge</soundCharge>
     <soundCast>ABY_RuptureImpact</soundCast>

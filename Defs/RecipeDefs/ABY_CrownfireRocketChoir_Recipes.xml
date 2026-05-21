@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftTurretModule_CrownfireRocketChoir</defName>
     <label>forge crownfire rocket choir</label>
@@ -11,18 +10,78 @@
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <recipeUsers><li>ABY_AbyssalForge</li></recipeUsers>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>96</count></li>
-      <li><filter><thingDefs><li>Steel</li></thingDefs></filter><count>120</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>72</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>32</count></li>
-      <li><filter><thingDefs><li>Chemfuel</li></thingDefs></filter><count>80</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>24</count></li>
-      <li><filter><thingDefs><li>ComponentSpacer</li></thingDefs></filter><count>4</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>96</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </filter>
+        <count>120</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>72</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>32</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Chemfuel</li>
+          </thingDefs>
+        </filter>
+        <count>80</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>24</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
     </ingredients>
-    <products><ABY_TurretModule_CrownfireRocketChoir>1</ABY_TurretModule_CrownfireRocketChoir></products>
-    <modExtensions><li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock"><requiredResidue>1500</requiredResidue><category>TurretSystems</category></li></modExtensions>
+    <products>
+      <ABY_TurretModule_CrownfireRocketChoir>1</ABY_TurretModule_CrownfireRocketChoir>
+    </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3200</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
   </RecipeDef>
-
 </Defs>

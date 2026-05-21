@@ -286,33 +286,33 @@ Turret modules are equipment-like progression and should obey tier readability t
 | Module def | Tier | Slot | Role | Range | Min range | Cooldown ticks | Burst | Extra power | ThingDef | Source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | ABY_TMD_RiftNeedlerCore | 1 | MainWeapon | anti-light burst fire | 28.5 |  | 150 | 3 |  | ABY_TurretModule_RiftNeedlerCore | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_BlackoutPowerRegulator | 1 | Passive | grid load governor |  |  |  |  | -180 | ABY_TurretModule_BlackoutPowerRegulator | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_CoolingLattice | 1 | Passive | cadence stabilizer |  |  |  |  | 70 | ABY_TurretModule_CoolingLattice | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_BlackoutPowerRegulator | 1 | Passive | grid load governor |  |  |  |  | -180 | ABY_TurretModule_BlackoutPowerRegulator | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_TargetingSigil | 1 | Passive | range and tracking |  |  |  |  | 80 | ABY_TurretModule_TargetingSigil | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_ChoirArcEmitter | 2 | Auxiliary | crowd pressure | 30 |  | 420 | 1 | 130 | ABY_TurretModule_ChoirArcEmitter | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_AshChoirRepeaterCore | 2 | MainWeapon | anti-swarm ash repeater | 30.5 |  | 210 | 5 | 180 | ABY_TurretModule_AshChoirRepeaterCore | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_PlasmaLanceCore | 2 | MainWeapon | anti-armor lance | 33.5 |  | 260 | 1 | 120 | ABY_TurretModule_PlasmaLanceCore | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_BreachAegisRelay | 2 | Passive | breach aegis buffer |  |  |  |  | 220 | ABY_TurretModule_BreachAegisRelay | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_LongChoirLens | 2 | Passive | long-range sighting |  |  |  |  | 150 | ABY_TurretModule_LongChoirLens | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_OverpressureCycleGovernor | 2 | Passive | cycle overpressure |  |  |  |  | 220 | ABY_TurretModule_OverpressureCycleGovernor | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_AshChoirRepeaterCore | 2 | MainWeapon | anti-swarm ash repeater | 30.5 |  | 210 | 5 | 180 | ABY_TurretModule_AshChoirRepeaterCore | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_ChoirArcEmitter | 2 | Auxiliary | crowd pressure | 30 |  | 420 | 1 | 130 | ABY_TurretModule_ChoirArcEmitter | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_ResidueCapacitor | 2 | Passive | charge buffer |  |  |  |  | 120 | ABY_TurretModule_ResidueCapacitor | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_AbyssalHarpoonProjector | 3 | MainWeapon | elite lockdown | 32 | 4 | 420 | 1 | 340 | ABY_TurretModule_AbyssalHarpoonProjector | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_OverpressureCycleGovernor | 2 | Passive | cycle overpressure |  |  |  |  | 220 | ABY_TurretModule_OverpressureCycleGovernor | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_LongChoirLens | 2 | Passive | long-range sighting |  |  |  |  | 150 | ABY_TurretModule_LongChoirLens | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_BreachAegisRelay | 2 | Passive | breach aegis buffer |  |  |  |  | 220 | ABY_TurretModule_BreachAegisRelay | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_CinderMortarCore | 3 | MainWeapon | indirect cinder fire | 40 | 8 | 336 | 1 | 320 | ABY_TurretModule_CinderMortarCore | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_NullArcDischarger | 3 | MainWeapon | EMP suppression | 36 | 0 | 348 | 1 | 380 | ABY_TurretModule_NullArcDischarger | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_AbyssalHarpoonProjector | 3 | MainWeapon | elite lockdown | 32 | 4 | 420 | 1 | 340 | ABY_TurretModule_AbyssalHarpoonProjector | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_RiftFlakBloom | 3 | MainWeapon | anti-cluster flak bloom | 31.5 | 3 | 288 | 1 | 350 | ABY_TurretModule_RiftFlakBloom | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_SanctifiedPrismEmitter | 3 | MainWeapon | line-control refraction | 37 | 0 | 360 | 1 | 420 | ABY_TurretModule_SanctifiedPrismEmitter | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_VesperLanceArray | 3 | MainWeapon | precision sanction lance | 40.5 | 0 | 312 | 1 | 260 | ABY_TurretModule_VesperLanceArray | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_AbyssalThreatPrioritizer | 3 | Passive | elite target scoring |  |  |  |  | 180 | ABY_TurretModule_AbyssalThreatPrioritizer | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_AntiSwarmPatternScanner | 3 | Passive | cluster target scoring |  |  |  |  | 170 | ABY_TurretModule_AntiSwarmPatternScanner | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_CloseQuartersInterlock | 3 | Passive | minimum range control |  |  |  |  | 120 | ABY_TurretModule_CloseQuartersInterlock | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_AntiSwarmPatternScanner | 3 | Passive | cluster target scoring |  |  |  |  | 170 | ABY_TurretModule_AntiSwarmPatternScanner | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_ExecutionLogicCore | 3 | Passive | wounded target execution |  |  |  |  | 190 | ABY_TurretModule_ExecutionLogicCore | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_CrowncoilGaussMinigun | 4 | MainWeapon | crowncoil suppression | 35 | 5 | 420 | 18 | 720 | ABY_TurretModule_CrowncoilGaussMinigun | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_CrownfireRocketChoir | 4 | MainWeapon | guided rocket saturation | 38 | 7 | 660 | 1 | 820 | ABY_TurretModule_CrownfireRocketChoir | Defs/Misc/ABY_CrownfireRocketChoir_TurretModuleDef.xml |
-| ABY_TMD_SepulcherRailCore | 4 | MainWeapon | anti-elite rail shot | 52 | 8 | 720 | 1 | 520 | ABY_TurretModule_SepulcherRailCore | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_CrownAegisMatrix | 4 | Passive | crown aegis shield |  |  |  |  | 620 | ABY_TurretModule_CrownAegisMatrix | Defs/Misc/ABY_TurretModuleDefs.xml |
-| ABY_TMD_EmergencyHeatDump | 4 | Passive | thermal recovery |  |  |  |  | 420 | ABY_TurretModule_EmergencyHeatDump | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_NullArcDischarger | 4 | MainWeapon | EMP suppression | 36 | 0 | 348 | 1 | 380 | ABY_TurretModule_NullArcDischarger | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_VesperLanceArray | 4 | MainWeapon | precision sanction lance | 40.5 | 0 | 312 | 1 | 260 | ABY_TurretModule_VesperLanceArray | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_SanctifiedPrismEmitter | 4 | MainWeapon | line-control refraction | 37 | 0 | 360 | 1 | 420 | ABY_TurretModule_SanctifiedPrismEmitter | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_SanctifiedStabilizerPlate | 4 | Passive | chassis hardening |  |  |  |  | 240 | ABY_TurretModule_SanctifiedStabilizerPlate | Defs/Misc/ABY_TurretModuleDefs.xml |
 | ABY_TMD_ShieldBurnCapacitor | 4 | Passive | anti-shield targeting |  |  |  |  | 360 | ABY_TurretModule_ShieldBurnCapacitor | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_EmergencyHeatDump | 4 | Passive | thermal recovery |  |  |  |  | 420 | ABY_TurretModule_EmergencyHeatDump | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_AbyssalThreatPrioritizer | 4 | Passive | elite target scoring |  |  |  |  | 180 | ABY_TurretModule_AbyssalThreatPrioritizer | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_CrowncoilGaussMinigun | 5 | MainWeapon | crowncoil suppression | 35 | 5 | 420 | 18 | 720 | ABY_TurretModule_CrowncoilGaussMinigun | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_SepulcherRailCore | 5 | MainWeapon | anti-elite rail shot | 52 | 8 | 720 | 1 | 520 | ABY_TurretModule_SepulcherRailCore | Defs/Misc/ABY_TurretModuleDefs.xml |
+| ABY_TMD_CrownfireRocketChoir | 5 | MainWeapon | guided rocket saturation | 38 | 7 | 660 | 1 | 820 | ABY_TurretModule_CrownfireRocketChoir | Defs/Misc/ABY_CrownfireRocketChoir_TurretModuleDef.xml |
+| ABY_TMD_CrownAegisMatrix | 5 | Passive | crown aegis shield |  |  |  |  | 620 | ABY_TurretModule_CrownAegisMatrix | Defs/Misc/ABY_TurretModuleDefs.xml |
 
 ## Other Forge reward and progression-controlled items
 
@@ -321,37 +321,37 @@ These are not weapons/apparel/implants, but still affect balance and progression
 | DefName | Forge category | Band | Residue | Label | Source |
 | --- | --- | --- | --- | --- | --- |
 | ABY_TurretModule_RiftNeedlerCore | TurretSystems | T1 Signal | 80 | rift needler core | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_AshboundCapacitorModule | Core | T1 Signal | 100 | ashbound capacitor module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
 | ABY_TurretModule_CoolingLattice | TurretSystems | T1 Signal | 110 | cooling lattice | Defs/ThingDefs/ABY_TurretModules.xml |
 | ABY_TurretModule_BlackoutPowerRegulator | TurretSystems | T1 Signal | 130 | blackout power regulator | Defs/ThingDefs/ABY_TurretModules.xml |
 | ABY_TurretModule_TargetingSigil | TurretSystems | T1 Signal | 140 | targeting sigil | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_ResidueCapacitor | TurretSystems | T2 Breach | 170 | residue capacitor | Defs/ThingDefs/ABY_TurretModules.xml |
 | ABY_TurretModule_PlasmaLanceCore | TurretSystems | T2 Breach | 190 | plasma lance core | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_OverpressureCycleGovernor | TurretSystems | T2 Breach | 240 | overpressure cycle governor | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_ChoirArcEmitter | TurretSystems | T2 Breach | 260 | choir arc emitter | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_BreachAegisRelay | TurretSystems | T2 Breach | 280 | breach aegis relay | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_LongChoirLens | TurretSystems | T2 Breach | 280 | long choir lens | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_RiftCapacitorModule | Core | T2 Breach | 300 | rift capacitor module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
 | ABY_TurretModule_AshChoirRepeaterCore | TurretSystems | T2 Breach | 320 | ash choir repeater core | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_CloseQuartersInterlock | TurretSystems | T2 Breach | 460 | close-quarters interlock | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_CrownCondenserModule | Core | T2 Breach | 500 | crown condenser module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
-| ABY_TurretModule_AntiSwarmPatternScanner | TurretSystems | T3 Archon | 580 | anti-swarm pattern scanner | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_SaintCondensationCell | Core | T3 Archon | 600 | saint condensation cell | Defs/ThingDefs/ABY_SaintCondensationCell.xml |
-| ABY_TurretModule_AbyssalThreatPrioritizer | TurretSystems | T3 Archon | 620 | abyssal threat prioritizer | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_ExecutionLogicCore | TurretSystems | T3 Archon | 620 | execution logic core | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_VesperLanceArray | TurretSystems | T3 Archon | 680 | vesper lance array | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_ChoirArcEmitter | TurretSystems | T2 Breach | 260 | choir arc emitter | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_ResidueCapacitor | TurretSystems | T2 Breach | 170 | residue capacitor | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_OverpressureCycleGovernor | TurretSystems | T2 Breach | 240 | overpressure cycle governor | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_LongChoirLens | TurretSystems | T2 Breach | 280 | long choir lens | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_BreachAegisRelay | TurretSystems | T2 Breach | 420 | breach aegis relay | Defs/ThingDefs/ABY_TurretModules.xml |
 | ABY_TurretModule_CinderMortarCore | TurretSystems | T3 Archon | 820 | cinder mortar core | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_AbyssalHarpoonProjector | TurretSystems | T3 Archon | 880 | abyssal harpoon projector | Defs/ThingDefs/ABY_TurretModules.xml |
 | ABY_TurretModule_RiftFlakBloom | TurretSystems | T3 Archon | 920 | rift flak bloom | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_NullArcDischarger | TurretSystems | T3 Archon | 960 | null-arc discharger | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_AbyssalHarpoonProjector | TurretSystems | T4 Reactor | 1040 | abyssal harpoon projector | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_SanctifiedPrismEmitter | TurretSystems | T4 Reactor | 1120 | sanctified prism emitter | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_SanctifiedStabilizerPlate | TurretSystems | T4 Reactor | 1150 | sanctified stabilizer plate | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_ShieldBurnCapacitor | TurretSystems | T4 Reactor | 1200 | shield-burn capacitor | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_CrownAegisMatrix | TurretSystems | T4 Reactor | 1250 | crown aegis matrix | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_EmergencyHeatDump | TurretSystems | T4 Reactor | 1250 | emergency heat dump | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_CrowncoilGaussMinigun | TurretSystems | T4 Reactor | 1280 | crowncoil gauss minigun | Defs/ThingDefs/ABY_TurretModules.xml |
-| ABY_TurretModule_CrownfireRocketChoir | TurretSystems | T4 Reactor | 1500 | crownfire rocket choir | Defs/ThingDefs/ABY_CrownfireRocketChoir.xml |
-| ABY_TurretModule_SepulcherRailCore | TurretSystems | T4 Reactor | 1500 | sepulcher rail core | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_CloseQuartersInterlock | TurretSystems | T3 Archon | 620 | close-quarters interlock | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_AntiSwarmPatternScanner | TurretSystems | T3 Archon | 700 | anti-swarm pattern scanner | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_ExecutionLogicCore | TurretSystems | T3 Archon | 760 | execution logic core | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_NullArcDischarger | TurretSystems | T4 Reactor | 1150 | null-arc discharger | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_VesperLanceArray | TurretSystems | T4 Reactor | 1250 | vesper lance array | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_SanctifiedPrismEmitter | TurretSystems | T4 Reactor | 1350 | sanctified prism emitter | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_SanctifiedStabilizerPlate | TurretSystems | T4 Reactor | 1250 | sanctified stabilizer plate | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_ShieldBurnCapacitor | TurretSystems | T4 Reactor | 1300 | shield-burn capacitor | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_EmergencyHeatDump | TurretSystems | T4 Reactor | 1450 | emergency heat dump | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_AbyssalThreatPrioritizer | TurretSystems | T4 Reactor | 1500 | abyssal threat prioritizer | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_CrowncoilGaussMinigun | TurretSystems | T5 Dominion | 2400 | crowncoil gauss minigun | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_SepulcherRailCore | TurretSystems | T5 Dominion | 2800 | sepulcher rail core | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_TurretModule_CrownfireRocketChoir | TurretSystems | T5 Dominion | 3200 | crownfire rocket choir | Defs/ThingDefs/ABY_TurretModules.xml / Defs/ThingDefs/ABY_CrownfireRocketChoir.xml |
+| ABY_TurretModule_CrownAegisMatrix | TurretSystems | T5 Dominion | 2600 | crown aegis matrix | Defs/ThingDefs/ABY_TurretModules.xml |
+| ABY_AshboundCapacitorModule | Core | T1 Signal | 100 | ashbound capacitor module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
+| ABY_RiftCapacitorModule | Core | T2 Breach | 300 | rift capacitor module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
+| ABY_CrownCondenserModule | Core | T2 Breach | 500 | crown condenser module | Defs/ThingDefs/ABY_CircleCapacitors.xml |
+| ABY_SaintCondensationCell | Core | T3 Archon | 600 | saint condensation cell | Defs/ThingDefs/ABY_SaintCondensationCell.xml |
 | ABY_OblivionChoirCell | Herald | T6+ reserved / preview | 10000 | choir cell | Defs/ThingDefs/ABY_OblivionChoir.xml |
 
 ## Special C# damage visibility policy
