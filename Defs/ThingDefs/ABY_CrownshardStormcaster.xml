@@ -81,6 +81,9 @@
       </li>
     </tools>
 
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo"/>
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>

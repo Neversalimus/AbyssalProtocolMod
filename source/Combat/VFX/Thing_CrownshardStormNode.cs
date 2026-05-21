@@ -7,14 +7,16 @@ namespace AbyssalProtocol
 {
     public class Thing_CrownshardStormNode : Thing
     {
-        private const int DefaultDurationTicks = 230;
-        private const int ShieldDampenedDurationTicks = 160;
-        private const int PulseIntervalTicks = 20;
-        private const int MaxTargetsPerPulse = 3;
-        private const float Radius = 3.35f;
-        private const float PulseDamage = 7.0f;
-        private const float PulseArmorPenetration = 0.48f;
-        private const float MechOrBuildingDamageMultiplier = 1.30f;
+        internal const int DefaultDurationTicks = 230;
+        internal const int ShieldDampenedDurationTicks = 160;
+        internal const int PulseIntervalTicks = 20;
+        internal const int MaxTargetsPerPulse = 3;
+        internal const float Radius = 3.35f;
+        internal const float PulseDamage = 7.0f;
+        internal const float PulseArmorPenetration = 0.48f;
+        internal const float MechOrBuildingDamageMultiplier = 1.30f;
+        internal const int DefaultPulseCount = 12;
+        internal const int ShieldDampenedPulseCount = 8;
 
         private Thing launcher;
         private Faction sourceFaction;

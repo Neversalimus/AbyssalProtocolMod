@@ -9,10 +9,10 @@ namespace AbyssalProtocol
     {
         private const int TrailIntervalTicks = 1;
         private const int CorePulseIntervalTicks = 2;
-        private const int ArcIntervalTicks = 3;
+        internal const int ArcIntervalTicks = 3;
         private const int ArcRetargetCooldownTicks = 16;
         private const int BranchBeamLifetimeTicks = 8;
-        private const int MaxArcTargetsPerPulse = 5;
+        internal const int MaxArcTargetsPerPulse = 5;
         private const int MaxSweepSamples = 16;
 
         private const float TrailGlowSize = 0.38f;
@@ -23,15 +23,15 @@ namespace AbyssalProtocol
         private const float ImpactGlowSize = 2.95f;
         private const float ArcRadius = 6.0f;
         private const float SweepSampleSpacing = 0.64f;
-        private const float ArcDamage = 3.75f;
-        private const float ArcArmorPenetration = 0.36f;
+        internal const float ArcDamage = 3.75f;
+        internal const float ArcArmorPenetration = 0.36f;
         private const float ResonanceSeverityGain = 0.18f;
         private const float ResonanceMaxSeverity = 1.00f;
         private const int ResonanceDisappearTicks = 420;
-        private const float ResonanceImpactRadius = 7.2f;
-        private const float ImpactExplosionRadius = 4.8f;
-        private const int ImpactExplosionDamage = 60;
-        private const float ImpactExplosionArmorPenetration = 1.22f;
+        internal const float ResonanceImpactRadius = 7.2f;
+        internal const float ImpactExplosionRadius = 4.8f;
+        internal const int ImpactExplosionDamage = 60;
+        internal const float ImpactExplosionArmorPenetration = 1.22f;
         private const string ResonanceHediffDefName = "ABY_ChoirResonance";
 
         private const string BodyTexturePath = "Things/Projectile/ABY_OblivionChoirCore";

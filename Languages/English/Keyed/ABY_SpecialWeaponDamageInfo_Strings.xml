@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_SpecialWeaponDamage_Profile>Abyssal damage profile</ABY_SpecialWeaponDamage_Profile>
+  <ABY_SpecialWeaponDamage_ProfileDesc>Custom damage layers that are not represented by the vanilla projectile damage line alone.</ABY_SpecialWeaponDamage_ProfileDesc>
+  <ABY_SpecialWeaponDamage_Impact>Base impact</ABY_SpecialWeaponDamage_Impact>
+  <ABY_SpecialWeaponDamage_ImpactDesc>The ordinary projectile hit shown by the vanilla weapon card.</ABY_SpecialWeaponDamage_ImpactDesc>
+  <ABY_SpecialWeaponDamage_Special>Special damage layer</ABY_SpecialWeaponDamage_Special>
+  <ABY_SpecialWeaponDamage_SpecialDesc>Additional C#-driven damage applied by this weapon when its special conditions are met.</ABY_SpecialWeaponDamage_SpecialDesc>
+  <ABY_SpecialWeaponDamage_Package>Full package</ABY_SpecialWeaponDamage_Package>
+  <ABY_SpecialWeaponDamage_PackageDesc>Approximate maximum damage package before armor. Conditional effects may end early or miss targets.</ABY_SpecialWeaponDamage_PackageDesc>
+  <ABY_SpecialWeaponDamage_Limits>Limits</ABY_SpecialWeaponDamage_Limits>
+  <ABY_SpecialWeaponDamage_LimitsDesc>Conditions that can prevent the full damage package from being delivered.</ABY_SpecialWeaponDamage_LimitsDesc>
+
+  <ABY_SpecialWeaponDamage_Specter_ProfileValue>Tether lock / single-target burn</ABY_SpecialWeaponDamage_Specter_ProfileValue>
+  <ABY_SpecialWeaponDamage_Specter_ImpactValue>26 Burn, 90% AP</ABY_SpecialWeaponDamage_Specter_ImpactValue>
+  <ABY_SpecialWeaponDamage_Specter_SpecialValue>up to {0} x {1} Burn, {2}% AP</ABY_SpecialWeaponDamage_Specter_SpecialValue>
+  <ABY_SpecialWeaponDamage_Specter_PackageValue>up to {0} raw Burn before armor</ABY_SpecialWeaponDamage_Specter_PackageValue>
+  <ABY_SpecialWeaponDamage_Specter_LimitsValue>requires maintained range and line of sight; the stream ends if the shooter is interrupted or the target breaks lock</ABY_SpecialWeaponDamage_Specter_LimitsValue>
+  <ABY_SpecialWeaponDamage_Specter_ForgeDetails>Combat profile: 26 Burn impact, then a maintained tether can add up to 10 x 16 Burn at 24% AP. Full held lock: up to 186 raw Burn before armor. Requires line of sight and range to hold.</ABY_SpecialWeaponDamage_Specter_ForgeDetails>
+
+  <ABY_SpecialWeaponDamage_Stormcaster_ProfileValue>Storm field / area denial</ABY_SpecialWeaponDamage_Stormcaster_ProfileValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_ImpactValue>12 Burn, 45% AP</ABY_SpecialWeaponDamage_Stormcaster_ImpactValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_SpecialValue>{0} Cut, {1}% AP every {2} ticks, up to {3} targets</ABY_SpecialWeaponDamage_Stormcaster_SpecialValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_PackageValue>up to {0} raw damage per target; {1} vs mechanoids/buildings</ABY_SpecialWeaponDamage_Stormcaster_PackageValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_LimitsValue>{0} pulses normally or {1} after shield damping; radius {2}; ignores downed pawns</ABY_SpecialWeaponDamage_Stormcaster_LimitsValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_ForgeDetails>Combat profile: 12 Burn seed impact, then a storm node pulses 7 Cut at 48% AP every 20 ticks in radius 3.35, up to 3 targets per pulse. Full field: up to 12 pulses, or 8 after shield damping. Dense targets take x1.3 pulse damage.</ABY_SpecialWeaponDamage_Stormcaster_ForgeDetails>
+
+  <ABY_SpecialWeaponDamage_Oblivion_ProfileValue>Branching resonance / collapse weapon</ABY_SpecialWeaponDamage_Oblivion_ProfileValue>
+  <ABY_SpecialWeaponDamage_Oblivion_ImpactValue>34 Burn, 96% AP + 60 Burn explosion, 122% AP</ABY_SpecialWeaponDamage_Oblivion_ImpactValue>
+  <ABY_SpecialWeaponDamage_Oblivion_SpecialValue>{0} Burn, {1}% AP every {2} ticks, up to {3} branch targets</ABY_SpecialWeaponDamage_Oblivion_SpecialValue>
+  <ABY_SpecialWeaponDamage_Oblivion_PackageValue>resonance marks detonate for 5-18 Burn at 54-86% AP in radius {0}</ABY_SpecialWeaponDamage_Oblivion_PackageValue>
+  <ABY_SpecialWeaponDamage_Oblivion_LimitsValue>branch count depends on travel path, hostile targets near the core, and accumulated resonance severity</ABY_SpecialWeaponDamage_Oblivion_LimitsValue>
+  <ABY_SpecialWeaponDamage_Oblivion_ForgeDetails>Combat profile: 34 Burn core impact plus 60 Burn collapse explosion at 122% AP. While travelling, the core branches every 3 ticks for 3.75 Burn at 36% AP, up to 5 targets per branch pulse. Branch hits build resonance; marked targets within 7.2 cells detonate for 5-18 Burn at 54-86% AP.</ABY_SpecialWeaponDamage_Oblivion_ForgeDetails>
+
+</LanguageData>

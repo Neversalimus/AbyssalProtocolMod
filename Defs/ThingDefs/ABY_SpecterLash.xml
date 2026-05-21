@@ -64,6 +64,9 @@
         <cooldownTime>2.1</cooldownTime>
       </li>
     </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo"/>
+    </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3000</requiredResidue>

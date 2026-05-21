@@ -448,12 +448,17 @@ namespace AbyssalProtocol
                 return ABY_ModularTurretUtility.GetChassisDetailedTooltip(product);
             }
 
-            if (product != null && !product.description.NullOrEmpty())
+            string baseDetails = product != null && !product.description.NullOrEmpty()
+                ? product.description
+                : recipe?.description ?? string.Empty;
+
+            string specialDamageDetails = ABY_SpecialWeaponDamageInfoUtility.GetForgeDetails(product);
+            if (!specialDamageDetails.NullOrEmpty())
             {
-                return product.description;
+                return baseDetails.NullOrEmpty() ? specialDamageDetails : baseDetails + "\n\n" + specialDamageDetails;
             }
 
-            return recipe?.description ?? string.Empty;
+            return baseDetails;
         }
 
         public static string GetRecipeDisplayLabel(RecipeDef recipe)

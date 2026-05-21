@@ -3011,7 +3011,7 @@ namespace AbyssalProtocol
                 ? AbyssalForgeProgressUtility.GetIngredientAvailabilityEntries(forge.Map, recipe)
                 : new List<AbyssalForgeProgressUtility.IngredientAvailabilityEntry>();
             float requirementsHeight = 22f + Mathf.Max(20f, entries.Count * 17f + (entries.Count > 0 ? 0f : 2f));
-            float contentHeight = Mathf.Max(scrollOutRect.height, 94f + Mathf.Clamp(summaryHeight, 34f, 120f) + (details.NullOrEmpty() ? 0f : Mathf.Clamp(detailHeight, 34f, 130f) + 8f) + requirementsHeight + 18f);
+            float contentHeight = Mathf.Max(scrollOutRect.height, 94f + Mathf.Clamp(summaryHeight, 34f, 120f) + (details.NullOrEmpty() ? 0f : Mathf.Clamp(detailHeight, 34f, 220f) + 8f) + requirementsHeight + 18f);
             Rect viewRect = new Rect(0f, 0f, contentWidth, contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect);
@@ -3069,7 +3069,7 @@ namespace AbyssalProtocol
             if (!details.NullOrEmpty())
             {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
-                float clampedDetailHeight = Mathf.Clamp(Text.CalcHeight(details, contentWidth), 34f, 130f);
+                float clampedDetailHeight = Mathf.Clamp(Text.CalcHeight(details, contentWidth), 34f, 220f);
                 ABY_UIPolishUtility.SafeLabel(new Rect(0f, y, contentWidth, clampedDetailHeight), details);
                 y += clampedDetailHeight + 10f;
             }

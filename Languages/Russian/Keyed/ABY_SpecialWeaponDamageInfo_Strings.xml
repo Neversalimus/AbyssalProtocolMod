@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_SpecialWeaponDamage_Profile>Боевой профиль Бездны</ABY_SpecialWeaponDamage_Profile>
+  <ABY_SpecialWeaponDamage_ProfileDesc>Дополнительные слои урона, которые не видны только по обычной строке урона снаряда.</ABY_SpecialWeaponDamage_ProfileDesc>
+  <ABY_SpecialWeaponDamage_Impact>Базовое попадание</ABY_SpecialWeaponDamage_Impact>
+  <ABY_SpecialWeaponDamage_ImpactDesc>Обычное попадание снаряда, которое показывает стандартная карточка оружия.</ABY_SpecialWeaponDamage_ImpactDesc>
+  <ABY_SpecialWeaponDamage_Special>Особый слой урона</ABY_SpecialWeaponDamage_Special>
+  <ABY_SpecialWeaponDamage_SpecialDesc>Дополнительный C#-урон оружия, который применяется при выполнении его особых условий.</ABY_SpecialWeaponDamage_SpecialDesc>
+  <ABY_SpecialWeaponDamage_Package>Полный пакет</ABY_SpecialWeaponDamage_Package>
+  <ABY_SpecialWeaponDamage_PackageDesc>Примерный максимальный пакет урона до брони. Условные эффекты могут оборваться раньше или не найти цель.</ABY_SpecialWeaponDamage_PackageDesc>
+  <ABY_SpecialWeaponDamage_Limits>Ограничения</ABY_SpecialWeaponDamage_Limits>
+  <ABY_SpecialWeaponDamage_LimitsDesc>Условия, которые могут помешать оружию выдать полный пакет урона.</ABY_SpecialWeaponDamage_LimitsDesc>
+
+  <ABY_SpecialWeaponDamage_Specter_ProfileValue>Удержание плетью / одиночное выжигание</ABY_SpecialWeaponDamage_Specter_ProfileValue>
+  <ABY_SpecialWeaponDamage_Specter_ImpactValue>26 ожога, 90% БП</ABY_SpecialWeaponDamage_Specter_ImpactValue>
+  <ABY_SpecialWeaponDamage_Specter_SpecialValue>до {0} x {1} ожога, {2}% БП</ABY_SpecialWeaponDamage_Specter_SpecialValue>
+  <ABY_SpecialWeaponDamage_Specter_PackageValue>до {0} сырого ожога до брони</ABY_SpecialWeaponDamage_Specter_PackageValue>
+  <ABY_SpecialWeaponDamage_Specter_LimitsValue>требует удержания дистанции и линии видимости; поток обрывается, если стрелок прерван или цель срывает захват</ABY_SpecialWeaponDamage_Specter_LimitsValue>
+  <ABY_SpecialWeaponDamage_Specter_ForgeDetails>Боевой профиль: 26 ожога при попадании, затем удержанная плеть может добавить до 10 x 16 ожога с 24% БП. Полный удержанный захват: до 186 сырого ожога до брони. Требует линии видимости и сохранения дистанции.</ABY_SpecialWeaponDamage_Specter_ForgeDetails>
+
+  <ABY_SpecialWeaponDamage_Stormcaster_ProfileValue>Штормовое поле / контроль зоны</ABY_SpecialWeaponDamage_Stormcaster_ProfileValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_ImpactValue>12 ожога, 45% БП</ABY_SpecialWeaponDamage_Stormcaster_ImpactValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_SpecialValue>{0} режущего урона, {1}% БП каждые {2} тиков, до {3} целей</ABY_SpecialWeaponDamage_Stormcaster_SpecialValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_PackageValue>до {0} сырого урона по цели; {1} против механоидов/построек</ABY_SpecialWeaponDamage_Stormcaster_PackageValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_LimitsValue>{0} импульсов обычно или {1} после гашения щитом; радиус {2}; игнорирует лежащих пешек</ABY_SpecialWeaponDamage_Stormcaster_LimitsValue>
+  <ABY_SpecialWeaponDamage_Stormcaster_ForgeDetails>Боевой профиль: 12 ожога от штормового зерна, затем штормовой узел наносит 7 режущего урона с 48% БП каждые 20 тиков в радиусе 3.35, до 3 целей за импульс. Полное поле: до 12 импульсов, или 8 после гашения щитом. Плотные цели получают x1.3 урона импульсов.</ABY_SpecialWeaponDamage_Stormcaster_ForgeDetails>
+
+  <ABY_SpecialWeaponDamage_Oblivion_ProfileValue>Ветвящийся резонанс / оружие коллапса</ABY_SpecialWeaponDamage_Oblivion_ProfileValue>
+  <ABY_SpecialWeaponDamage_Oblivion_ImpactValue>34 ожога, 96% БП + взрыв 60 ожога, 122% БП</ABY_SpecialWeaponDamage_Oblivion_ImpactValue>
+  <ABY_SpecialWeaponDamage_Oblivion_SpecialValue>{0} ожога, {1}% БП каждые {2} тика, до {3} целей ветвления</ABY_SpecialWeaponDamage_Oblivion_SpecialValue>
+  <ABY_SpecialWeaponDamage_Oblivion_PackageValue>резонансные метки детонируют на 5-18 ожога с 54-86% БП в радиусе {0}</ABY_SpecialWeaponDamage_Oblivion_PackageValue>
+  <ABY_SpecialWeaponDamage_Oblivion_LimitsValue>число ветвей зависит от траектории полёта, враждебных целей рядом с ядром и накопленной тяжести резонанса</ABY_SpecialWeaponDamage_Oblivion_LimitsValue>
+  <ABY_SpecialWeaponDamage_Oblivion_ForgeDetails>Боевой профиль: 34 ожога от ядра плюс взрыв коллапса на 60 ожога с 122% БП. Во время полёта ядро ветвится каждые 3 тика на 3.75 ожога с 36% БП, до 5 целей за импульс ветвления. Попадания ветвей накапливают резонанс; помеченные цели в радиусе 7.2 клетки детонируют на 5-18 ожога с 54-86% БП.</ABY_SpecialWeaponDamage_Oblivion_ForgeDetails>
+
+</LanguageData>

@@ -211,10 +211,11 @@ Subareas:
 - `Combat/Verbs/` — custom verb behavior.
 - `Combat/DamageWorkers/` — custom damage behavior.
 - `Combat/VFX/` — combat visual feedback helpers.
-- `Combat/Comps/` — combat-related thing comps.
+- `Combat/Comps/` — combat-related thing comps, including special weapon info-card exposure such as `CompABY_SpecialWeaponDamageInfo`.
+- `Combat/Utilities/` — shared combat presentation/helpers such as `ABY_SpecialWeaponDamageInfoUtility` for C# damage profiles shown in weapon InfoCards and Forge details.
 - `Combat/MapComponents/` / `Combat/GameComponents/` — combat runtime state trackers.
 
-When adding a weapon/turret/projectile, also check XML projectile defs, weapon defs, sound defs, texture paths, and Forge integration.
+When adding a weapon/turret/projectile, also check XML projectile defs, weapon defs, sound defs, texture paths, Forge integration, and whether any C#-driven damage needs an explicit player-facing combat profile instead of being hidden behind low XML projectile damage.
 
 ### `source/Apparel/`
 

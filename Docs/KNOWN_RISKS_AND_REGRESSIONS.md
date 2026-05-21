@@ -320,6 +320,8 @@ Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear di
 
 Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
 
+Special weapons with major C# damage layers must expose those layers through `CompABY_SpecialWeaponDamageInfo` / `ABY_SpecialWeaponDamageInfoUtility` rather than burying balance-critical damage only in projectile code or lore descriptions. When changing Specter Lash tether pulses, Crownshard Stormcaster storm-node pulses, Oblivion Choir resonance/arcs/collapse, or future similar weapons, update the runtime constants and the player-facing special damage profile together.
+
 
 ## Static constructor logging must be startup-safe
 

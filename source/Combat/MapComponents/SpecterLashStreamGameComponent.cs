@@ -18,17 +18,18 @@ namespace AbyssalProtocol
         private const string BeamCoreTexturePath = "Things/VFX/SpecterLash/ABY_SpecterLash_StreamCore";
 
         private const int VisualIntervalTicks = 1;
-        private const int DamageIntervalTicks = 10;
-        private const int PawnStreamDurationTicks = 88;
+        internal const int DamageIntervalTicks = 10;
+        internal const int PawnStreamDurationTicks = 88;
         private const int PointStreamDurationTicks = 18;
         private const int BeamSegmentLifetimeTicks = 4;
-        private const float PulseDamage = 16f;
-        private const float PulseArmorPenetration = 0.24f;
+        internal const float PulseDamage = 16f;
+        internal const float PulseArmorPenetration = 0.24f;
         private const float MaxStreamRange = 28.9f;
         private const float EndpointInset = 0.34f;
         private const float BaseAmplitude = 0.18f;
         private const float MaxAmplitude = 0.54f;
         private const float SourceBreakPadding = 1.8f;
+        internal const int MaximumPawnPulseCount = 10;
 
         private ThingDef beamHaloDef;
         private ThingDef beamCoreDef;
