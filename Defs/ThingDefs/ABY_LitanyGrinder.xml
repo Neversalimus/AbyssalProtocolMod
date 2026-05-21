@@ -46,7 +46,7 @@
       <AccuracyShort>0.74</AccuracyShort>
       <AccuracyMedium>0.56</AccuracyMedium>
       <AccuracyLong>0.28</AccuracyLong>
-      <RangedWeapon_Cooldown>5.10</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>4.80</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -83,8 +83,8 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>6</damageAmountBase>
-      <armorPenetrationBase>0.16</armorPenetrationBase>
+      <damageAmountBase>7</damageAmountBase>
+      <armorPenetrationBase>0.24</armorPenetrationBase>
       <stoppingPower>0.55</stoppingPower>
       <speed>64</speed>
       <soundImpactAnticipate>ABY_LitanyGrinderImpact</soundImpactAnticipate>

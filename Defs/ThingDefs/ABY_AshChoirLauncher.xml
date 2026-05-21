@@ -39,14 +39,14 @@
       <AccuracyShort>0.69</AccuracyShort>
       <AccuracyMedium>0.66</AccuracyMedium>
       <AccuracyLong>0.37</AccuracyLong>
-      <RangedWeapon_Cooldown>3.55</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>3.15</RangedWeapon_Cooldown>
     </statBases>
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AshChoirChargeProjectile</defaultProjectile>
-        <warmupTime>1.85</warmupTime>
+        <warmupTime>1.55</warmupTime>
         <range>26.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
@@ -82,8 +82,8 @@
     </graphicData>
     <projectile>
       <damageDef>Bomb</damageDef>
-      <damageAmountBase>22</damageAmountBase>
-      <armorPenetrationBase>0.24</armorPenetrationBase>
+      <damageAmountBase>36</damageAmountBase>
+      <armorPenetrationBase>0.45</armorPenetrationBase>
       <explosionRadius>1.55</explosionRadius>
       <stoppingPower>1.15</stoppingPower>
       <speed>34</speed>

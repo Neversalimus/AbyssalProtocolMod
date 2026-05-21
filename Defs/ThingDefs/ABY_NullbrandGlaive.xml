@@ -36,9 +36,9 @@
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>33</power>
-        <cooldownTime>1.82</cooldownTime>
-        <armorPenetration>0.54</armorPenetration>
+        <power>30</power>
+        <cooldownTime>1.85</cooldownTime>
+        <armorPenetration>0.58</armorPenetration>
         <extraMeleeDamages>
           <li>
             <def>ABY_NullbrandFractureDamage</def>

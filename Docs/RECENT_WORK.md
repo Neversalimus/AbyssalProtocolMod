@@ -1,5 +1,12 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-21 — XML-only weapon baseline balance pass
+
+Applied a weapon balance pass for the currently introduced T1–T5 spread while intentionally ignoring custom C# proc damage as a balancing input. T1 remains anchored around vanilla endgame power, with early melee normalized down and weak early ranged/support weapons brought up. T2–T4 ranged, heavy, and melee weapons were adjusted so later unlocks no longer look weaker than early Rift weapons on their vanilla/XML stat cards. T5 received XML-base improvements for Ultra Plasma Rifle and Crownspike Rail only; Specter Lash Projector and Crownshard Stormcaster were deliberately left unchanged because their practical role depends on special C# behavior. Breach Cannon was improved as a T5+ heavy anti-armor weapon; Oblivion Choir was deliberately left untouched.
+
+Changed XML combat stats only. No C# files, recipes, textures, sounds, or Assemblies were changed. Build not required and not run.
+
+
 ## 2026-05-21 — Fix miniboss classification for overhead HP bars
 - Fixed `ABY_AbyssalPawnClassificationUtility.IsMajorBoss` so explicit `ABY_AbyssalPawnClassificationExtension.isMiniBoss=true` wins over legacy difficulty-scaling `role=boss` values.
 - This specifically unblocks Warden of Ash and Choir Engine from the compact overhead HP-bar renderer: they still use boss-family encounter plumbing, but UI systems no longer filter them out as major bosses.

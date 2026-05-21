@@ -265,8 +265,8 @@
     </graphicData>
     <projectile>
       <damageDef>Blunt</damageDef>
-      <damageAmountBase>18</damageAmountBase>
-      <armorPenetrationBase>0.26</armorPenetrationBase>
+      <damageAmountBase>20</damageAmountBase>
+      <armorPenetrationBase>0.38</armorPenetrationBase>
       <stoppingPower>2.60</stoppingPower>
       <speed>78</speed>
       <soundImpactAnticipate>ABY_CanticleDriverImpact</soundImpactAnticipate>

@@ -39,14 +39,14 @@
       <AccuracyShort>0.55</AccuracyShort>
       <AccuracyMedium>0.73</AccuracyMedium>
       <AccuracyLong>0.67</AccuracyLong>
-      <RangedWeapon_Cooldown>5.05</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>4.65</RangedWeapon_Cooldown>
     </statBases>
     <verbs>
       <li>
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_BreachCannonBolt</defaultProjectile>
-        <warmupTime>2.85</warmupTime>
+        <warmupTime>2.65</warmupTime>
         <range>38.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>16</ticksBetweenBurstShots>
@@ -93,9 +93,9 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>84</damageAmountBase>
-      <armorPenetrationBase>1.18</armorPenetrationBase>
-      <stoppingPower>4.35</stoppingPower>
+      <damageAmountBase>96</damageAmountBase>
+      <armorPenetrationBase>1.30</armorPenetrationBase>
+      <stoppingPower>4.75</stoppingPower>
       <speed>56</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
     </projectile>

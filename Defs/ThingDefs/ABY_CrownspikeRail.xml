@@ -50,7 +50,7 @@
       <AccuracyShort>0.88</AccuracyShort>
       <AccuracyMedium>0.95</AccuracyMedium>
       <AccuracyLong>0.99</AccuracyLong>
-      <RangedWeapon_Cooldown>3.65</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>3.45</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -58,7 +58,7 @@
         <verbClass>AbyssalProtocol.Verb_ShootCrownspikeRail</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_CrownspikeBolt</defaultProjectile>
-        <warmupTime>2.90</warmupTime>
+        <warmupTime>2.70</warmupTime>
         <range>60.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
@@ -100,9 +100,9 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>62</damageAmountBase>
-      <armorPenetrationBase>1.45</armorPenetrationBase>
-      <stoppingPower>3.20</stoppingPower>
+      <damageAmountBase>72</damageAmountBase>
+      <armorPenetrationBase>1.55</armorPenetrationBase>
+      <stoppingPower>3.45</stoppingPower>
       <speed>900</speed>
       <soundImpactAnticipate>ABY_CrownspikeRailImpact</soundImpactAnticipate>
       <extraDamages>

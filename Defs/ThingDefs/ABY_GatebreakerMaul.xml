@@ -37,9 +37,9 @@
         <capacities>
           <li>Blunt</li>
         </capacities>
-        <power>37</power>
-        <cooldownTime>3.45</cooldownTime>
-        <armorPenetration>0.38</armorPenetration>
+        <power>48</power>
+        <cooldownTime>2.65</cooldownTime>
+        <armorPenetration>0.72</armorPenetration>
       </li>
       <li>
         <label>breaching spike</label>

@@ -94,9 +94,9 @@
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>26</power>
-        <cooldownTime>1.50</cooldownTime>
-        <armorPenetration>0.62</armorPenetration>
+        <power>24</power>
+        <cooldownTime>1.65</cooldownTime>
+        <armorPenetration>0.58</armorPenetration>
       </li>
     </tools>
 

@@ -47,7 +47,7 @@
       <AccuracyShort>0.84</AccuracyShort>
       <AccuracyMedium>0.79</AccuracyMedium>
       <AccuracyLong>0.58</AccuracyLong>
-      <RangedWeapon_Cooldown>2.85</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.60</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -84,8 +84,8 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>15</damageAmountBase>
-      <armorPenetrationBase>0.68</armorPenetrationBase>
+      <damageAmountBase>18</damageAmountBase>
+      <armorPenetrationBase>0.78</armorPenetrationBase>
       <stoppingPower>1.35</stoppingPower>
       <speed>68</speed>
       <soundImpactAnticipate>ABY_PhalanxDriverImpact</soundImpactAnticipate>

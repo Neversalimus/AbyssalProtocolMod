@@ -38,9 +38,9 @@
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>29</power>
-        <cooldownTime>2.45</cooldownTime>
-        <armorPenetration>0.54</armorPenetration>
+        <power>34</power>
+        <cooldownTime>2.05</cooldownTime>
+        <armorPenetration>0.68</armorPenetration>
         <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
         <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>
@@ -49,9 +49,9 @@
         <capacities>
           <li>Poke</li>
         </capacities>
-        <power>24</power>
-        <cooldownTime>1.95</cooldownTime>
-        <armorPenetration>0.72</armorPenetration>
+        <power>30</power>
+        <cooldownTime>1.85</cooldownTime>
+        <armorPenetration>0.82</armorPenetration>
         <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
         <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
       </li>

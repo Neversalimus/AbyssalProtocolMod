@@ -103,8 +103,8 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>26</damageAmountBase>
-      <armorPenetrationBase>0.32</armorPenetrationBase>
+      <damageAmountBase>44</damageAmountBase>
+      <armorPenetrationBase>0.38</armorPenetrationBase>
       <stoppingPower>2.85</stoppingPower>
       <speed>42</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

@@ -39,7 +39,7 @@
       <AccuracyShort>0.81</AccuracyShort>
       <AccuracyMedium>0.77</AccuracyMedium>
       <AccuracyLong>0.51</AccuracyLong>
-      <RangedWeapon_Cooldown>2.95</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.65</RangedWeapon_Cooldown>
     </statBases>
     <verbs>
       <li>
@@ -82,8 +82,8 @@
     </graphicData>
     <projectile>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>23</damageAmountBase>
-      <armorPenetrationBase>0.72</armorPenetrationBase>
+      <damageAmountBase>30</damageAmountBase>
+      <armorPenetrationBase>0.82</armorPenetrationBase>
       <stoppingPower>1.90</stoppingPower>
       <speed>66</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

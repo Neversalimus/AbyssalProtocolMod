@@ -48,7 +48,7 @@
       <AccuracyShort>0.95</AccuracyShort>
       <AccuracyMedium>0.97</AccuracyMedium>
       <AccuracyLong>0.93</AccuracyLong>
-      <RangedWeapon_Cooldown>2.55</RangedWeapon_Cooldown>
+      <RangedWeapon_Cooldown>2.35</RangedWeapon_Cooldown>
     </statBases>
 
     <verbs>
@@ -56,7 +56,7 @@
         <verbClass>Verb_Shoot</verbClass>
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_VesperLanceBeam</defaultProjectile>
-        <warmupTime>0.95</warmupTime>
+        <warmupTime>1.25</warmupTime>
         <range>34.9</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
@@ -98,8 +98,8 @@
     </graphicData>
     <projectile>
       <damageDef>Burn</damageDef>
-      <damageAmountBase>18</damageAmountBase>
-      <armorPenetrationBase>1.05</armorPenetrationBase>
+      <damageAmountBase>34</damageAmountBase>
+      <armorPenetrationBase>1.15</armorPenetrationBase>
       <stoppingPower>2.0</stoppingPower>
       <speed>52</speed>
       <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>

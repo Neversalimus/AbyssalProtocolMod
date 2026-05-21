@@ -36,18 +36,18 @@
         <capacities>
           <li>Cut</li>
         </capacities>
-        <power>17</power>
-        <cooldownTime>0.88</cooldownTime>
-        <armorPenetration>0.46</armorPenetration>
+        <power>14</power>
+        <cooldownTime>1.00</cooldownTime>
+        <armorPenetration>0.42</armorPenetration>
       </li>
       <li>
         <label>piercing tip</label>
         <capacities>
           <li>Poke</li>
         </capacities>
-        <power>13</power>
-        <cooldownTime>0.96</cooldownTime>
-        <armorPenetration>0.54</armorPenetration>
+        <power>12</power>
+        <cooldownTime>1.05</cooldownTime>
+        <armorPenetration>0.48</armorPenetration>
       </li>
       <li>
         <label>pommel</label>
