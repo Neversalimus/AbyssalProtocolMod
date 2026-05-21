@@ -7,18 +7,42 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class ABY_MiniBossHealthBarRenderer
     {
-        private const float BaseWidth = 138f;
-        private const float BaseHeight = 11f;
-        private const float LabelHeight = 16f;
+        private const int CacheRefreshIntervalTicks = 12;
+        private const float BaseWidth = 164f;
+        private const float BaseHeight = 13f;
+        private const float LabelHeight = 17f;
         private const float BorderThickness = 1f;
 
-        private static readonly Color BackColor = new Color(0.035f, 0.022f, 0.018f, 0.88f);
-        private static readonly Color BorderColor = new Color(0.62f, 0.32f, 0.16f, 0.92f);
-        private static readonly Color TrailColor = new Color(0.75f, 0.28f, 0.16f, 0.48f);
-        private static readonly Color FillColor = new Color(0.92f, 0.18f, 0.11f, 0.95f);
-        private static readonly Color CriticalFillColor = new Color(1f, 0.58f, 0.18f, 0.98f);
-        private static readonly Color TextColor = new Color(0.92f, 0.84f, 0.76f, 0.96f);
-        private static readonly Color ShadowColor = new Color(0f, 0f, 0f, 0.74f);
+        private static readonly List<Pawn> CachedMiniBosses = new List<Pawn>();
+        private static Map cachedMap;
+        private static int nextCacheRefreshTick = -1;
+
+        private static readonly Color BackColor = new Color(0.030f, 0.018f, 0.014f, 0.94f);
+        private static readonly Color BorderColor = new Color(0.78f, 0.36f, 0.15f, 0.98f);
+        private static readonly Color TrailColor = new Color(0.72f, 0.24f, 0.12f, 0.62f);
+        private static readonly Color FillColor = new Color(0.96f, 0.20f, 0.10f, 0.98f);
+        private static readonly Color CriticalFillColor = new Color(1f, 0.58f, 0.16f, 0.98f);
+        private static readonly Color TextColor = new Color(0.96f, 0.88f, 0.78f, 0.98f);
+        private static readonly Color ShadowColor = new Color(0f, 0f, 0f, 0.82f);
+        private static readonly Color OuterGlowColor = new Color(0.72f, 0.18f, 0.06f, 0.28f);
+
+        public static void DrawForCurrentMap(AbyssalProtocolModSettings settings)
+        {
+            if (!ShouldDraw(settings))
+            {
+                return;
+            }
+
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                ClearCache();
+                return;
+            }
+
+            EnsureCache(map);
+            Draw(CachedMiniBosses, settings);
+        }
 
         public static void Draw(List<Pawn> miniBosses, AbyssalProtocolModSettings settings)
         {
@@ -58,6 +82,105 @@ namespace AbyssalProtocol
             }
         }
 
+        private static bool ShouldDraw(AbyssalProtocolModSettings settings)
+        {
+            if (Current.ProgramState != ProgramState.Playing)
+            {
+                return false;
+            }
+
+            if (settings == null || !settings.enableBossBars || !settings.enableMiniBossHealthBars)
+            {
+                return false;
+            }
+
+            Event currentEvent = Event.current;
+            return currentEvent != null && currentEvent.type == EventType.Repaint;
+        }
+
+        private static void EnsureCache(Map map)
+        {
+            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            if (map == cachedMap && ticksGame < nextCacheRefreshTick)
+            {
+                return;
+            }
+
+            cachedMap = map;
+            nextCacheRefreshTick = ticksGame + CacheRefreshIntervalTicks;
+            CachedMiniBosses.Clear();
+
+            if (map?.mapPawns == null)
+            {
+                return;
+            }
+
+            IEnumerable<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            if (pawns == null)
+            {
+                return;
+            }
+
+            foreach (Pawn pawn in pawns)
+            {
+                if (ShouldTrackMiniBoss(pawn, map))
+                {
+                    CachedMiniBosses.Add(pawn);
+                }
+            }
+        }
+
+        private static bool ShouldTrackMiniBoss(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null || pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld != map)
+            {
+                return false;
+            }
+
+            if (!ABY_AbyssalPawnClassificationUtility.IsMiniBoss(pawn))
+            {
+                return false;
+            }
+
+            if (ABY_AbyssalPawnClassificationUtility.IsMajorBoss(pawn))
+            {
+                return false;
+            }
+
+            float current;
+            float max;
+            float pct;
+            if (!ABY_BossTrueDeathUtility.TryGetBossHp(pawn, out current, out max, out pct))
+            {
+                return false;
+            }
+
+            if (max <= 0.001f || current <= 0f)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (pawn.PositionHeld.Fogged(map))
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+            }
+
+            return true;
+        }
+
+        private static void ClearCache()
+        {
+            CachedMiniBosses.Clear();
+            cachedMap = null;
+            nextCacheRefreshTick = -1;
+        }
+
         private static void DrawOne(Pawn pawn, Camera camera, AbyssalProtocolModSettings settings)
         {
             if (pawn == null || pawn.Destroyed || pawn.Dead || !pawn.Spawned || pawn.MapHeld != Find.CurrentMap)
@@ -82,8 +205,12 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Rect labelRect = new Rect(barRect.x - 8f, barRect.y - LabelHeight + 1f, barRect.width + 16f, LabelHeight);
-            Rect backingRect = new Rect(barRect.x - 3f, barRect.y - 1f, barRect.width + 6f, barRect.height + 3f);
+            Rect labelRect = new Rect(barRect.x - 10f, barRect.y - LabelHeight + 1f, barRect.width + 20f, LabelHeight);
+            Rect backingRect = new Rect(barRect.x - 4f, barRect.y - 2f, barRect.width + 8f, barRect.height + 4f);
+            Rect glowRect = backingRect.ExpandedBy(3f);
+
+            GUI.color = OuterGlowColor;
+            GUI.DrawTexture(glowRect, BaseContent.WhiteTex);
 
             GUI.color = ShadowColor;
             GUI.DrawTexture(labelRect, BaseContent.WhiteTex);
@@ -110,7 +237,7 @@ namespace AbyssalProtocol
             GUI.DrawTexture(new Rect(barRect.x, barRect.y, BorderThickness, barRect.height), BaseContent.WhiteTex);
             GUI.DrawTexture(new Rect(barRect.xMax - BorderThickness, barRect.y, BorderThickness, barRect.height), BaseContent.WhiteTex);
 
-            TooltipHandler.TipRegion(backingRect.ExpandedBy(3f), ResolveTooltip(pawn, current, max, pct));
+            TooltipHandler.TipRegion(backingRect.ExpandedBy(5f), ResolveTooltip(pawn, current, max, pct));
             GUI.color = Color.white;
         }
 
@@ -122,20 +249,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            float drawSizeY = 1f;
-            try
-            {
-                if (pawn.def?.graphicData != null)
-                {
-                    drawSizeY = Mathf.Max(1f, pawn.def.graphicData.drawSize.y);
-                }
-            }
-            catch
-            {
-                drawSizeY = Mathf.Max(1f, pawn.BodySize);
-            }
-
-            float yOffsetCells = Mathf.Clamp(drawSizeY * 0.48f + 0.24f, 0.85f, 5.25f);
+            float drawSizeY = ResolvePawnDrawSizeY(pawn);
+            float yOffsetCells = Mathf.Clamp(drawSizeY * 0.56f + 0.50f, 1.12f, 7.35f);
             Vector3 worldPos = pawn.DrawPos + new Vector3(0f, 0f, yOffsetCells);
             Vector3 screen = camera.WorldToScreenPoint(worldPos);
             if (screen.z < 0f)
@@ -148,11 +263,55 @@ namespace AbyssalProtocol
             Vector2 guiPoint = new Vector2(screen.x, screenHeight - screen.y);
 
             float zoomScale = ResolveZoomScale(camera);
-            float width = Mathf.Clamp(BaseWidth * zoomScale, 92f, 164f);
-            float height = Mathf.Clamp(BaseHeight * zoomScale, 8f, 13f);
+            float width = Mathf.Clamp(BaseWidth * zoomScale, 118f, 190f);
+            float height = Mathf.Clamp(BaseHeight * zoomScale, 10f, 15f);
             rect = new Rect(guiPoint.x - width * 0.5f, guiPoint.y - height * 0.5f, width, height);
 
-            return rect.xMax >= -32f && rect.x <= screenWidth + 32f && rect.yMax >= -32f && rect.y <= screenHeight + 32f;
+            return rect.xMax >= -48f && rect.x <= screenWidth + 48f && rect.yMax >= -48f && rect.y <= screenHeight + 48f;
+        }
+
+        private static float ResolvePawnDrawSizeY(Pawn pawn)
+        {
+            float result = 1f;
+            try
+            {
+                result = Mathf.Max(result, pawn != null ? pawn.BodySize : 1f);
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                if (pawn?.def?.graphicData != null)
+                {
+                    result = Mathf.Max(result, pawn.def.graphicData.drawSize.y);
+                }
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                List<PawnKindLifeStage> stages = pawn?.kindDef?.lifeStages;
+                if (stages != null)
+                {
+                    for (int i = 0; i < stages.Count; i++)
+                    {
+                        GraphicData data = stages[i]?.bodyGraphicData;
+                        if (data != null)
+                        {
+                            result = Mathf.Max(result, data.drawSize.y);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+
+            return Mathf.Clamp(result, 1f, 12f);
         }
 
         private static float ResolveZoomScale(Camera camera)
@@ -162,8 +321,8 @@ namespace AbyssalProtocol
                 return 1f;
             }
 
-            // Keep the bar readable at distance without letting it become huge when zoomed in.
-            return Mathf.Clamp(12.5f / Mathf.Max(8f, camera.orthographicSize), 0.78f, 1.10f);
+            // Keep the bar readable at combat zoom without letting it become a full boss HUD.
+            return Mathf.Clamp(13.0f / Mathf.Max(8f, camera.orthographicSize), 0.84f, 1.16f);
         }
 
         private static string ResolveDisplayLabel(Pawn pawn, AbyssalProtocolModSettings settings, float current, float max)

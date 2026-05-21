@@ -1,5 +1,21 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-21 — Fix miniboss HP bars on existing saves
+- Moved the active miniboss HP-bar draw call into the long-lived `AbyssalBossScreenFXGameComponent` OnGUI path so saves created before the new miniboss GameComponent still display bars after a DLL update.
+- Kept `GameComponent_ABY_MiniBossHealthBars` as a save-compatibility fallback shell only; it does not double-draw when the main boss UI component exists.
+- Improved miniboss overhead bar contrast and placement by reading `PawnKindDef.lifeStages.bodyGraphicData.drawSize` for large sprites such as Choir Engine.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Bosses/Shared/AbyssalBossScreenFXGameComponent.cs
+source/UI/BossBar/ABY_MiniBossHealthBarRenderer.cs
+source/UI/BossBar/GameComponent_ABY_MiniBossHealthBars.cs
+Docs/
+```
+
 ## 2026-05-21 — Add lightweight miniboss custom-HP bars
 - Added a compact overhead health bar path for abyssal minibosses that use `CompABY_BossTrueDeath` custom HP but should not occupy the full cinematic boss bar.
 - Warden of Ash and Choir Engine are detected through the shared abyssal pawn classification helper and keep their separate custom HP readable in combat.

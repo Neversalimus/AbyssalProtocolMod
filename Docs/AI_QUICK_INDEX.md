@@ -37,7 +37,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Summoning Circle UI / Summoning Console | `source/UI/Summoning/` | `source/Summoning/`, `source/UI/Shared/`, `Defs/ThingDefs/`, `Defs/JobDefs/`, `Languages/` |
 | Sigil use, ritual activation, circle modules/capacitors | `source/Summoning/` | `source/Defs/Summoning/`, `source/UI/Summoning/`, `Defs/ThingDefs/`, `Defs/RecipeDefs/` |
 | Protocol Nexus / custom research ring | `source/Experimental/ProtocolResearch/` | `Defs/Experimental/ProtocolResearch/`, `Textures/UI/ABY/ProtocolResearch/`, `source/Progression/` |
-| Boss bar, boss phase text, Aegis bar/chains, miniboss overhead HP bars | `source/UI/BossBar/` | `source/Bosses/Shared/`, `source/Bosses/ReactorSaint/`, `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `Defs/Misc/`, `Textures/UI/ABY/BossBar/` |
+| Boss bar, boss phase text, Aegis bar/chains, miniboss overhead HP bars | `source/UI/BossBar/`, `source/Bosses/Shared/AbyssalBossScreenFXGameComponent.cs` | `source/Bosses/Shared/`, `source/Bosses/ReactorSaint/`, `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `Defs/Misc/`, `Textures/UI/ABY/BossBar/` |
 | Archon Beast / Archon of Rupture behavior | `source/Bosses/Archon/` | `source/Bosses/Shared/`, `source/Pawns/`, `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `source/UI/BossBar/` |
 | Reactor Saint behavior, AI, cocoon, Aegis | `source/Bosses/ReactorSaint/` | `source/Bosses/Shared/`, `source/UI/BossBar/`, `source/Combat/`, `Defs/ThingDefs/`, `Defs/PawnKindDefs/` |
 | Rupture-specific crown/halo/secret boss logic | `source/Bosses/Rupture/` | `source/Bosses/Archon/`, `source/Bosses/Shared/`, `source/UI/BossBar/` |

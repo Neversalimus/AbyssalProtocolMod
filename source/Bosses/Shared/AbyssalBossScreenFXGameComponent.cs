@@ -498,6 +498,11 @@ namespace AbyssalProtocol
             HandleBossMusicRealtime();
             DrawOverlay();
 
+            // Miniboss HP bars are driven from this long-lived boss UI component instead of
+            // relying on a newly added GameComponent. Existing saves already contain this
+            // component, so the bars appear immediately after a DLL update.
+            ABY_MiniBossHealthBarRenderer.DrawForCurrentMap(AbyssalProtocolMod.Settings);
+
             if (TryGetActiveBossBarState(out ABY_BossBarState state))
             {
                 AbyssalBossBarRenderer.Draw(state);
