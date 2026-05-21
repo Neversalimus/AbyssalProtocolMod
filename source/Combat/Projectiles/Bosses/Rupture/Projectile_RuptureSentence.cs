@@ -42,7 +42,7 @@ namespace AbyssalProtocol
                     false);
             }
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_RuptureSentence", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_RuptureSentence", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }

@@ -48,7 +48,7 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
 
             Thing instigator = Launcher;
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_AshenScatterShell", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_AshenScatterShell", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }

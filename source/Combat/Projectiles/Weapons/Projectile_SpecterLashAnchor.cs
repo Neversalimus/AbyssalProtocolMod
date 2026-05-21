@@ -18,7 +18,7 @@ namespace AbyssalProtocol
             Pawn launcherPawn = Launcher as Pawn;
             Thing impactTarget = ResolveImpactThing(hitThing, launcherPawn, impactPosition, TargetSnapRadius);
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_SpecterLashAnchor", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_SpecterLashAnchor", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }

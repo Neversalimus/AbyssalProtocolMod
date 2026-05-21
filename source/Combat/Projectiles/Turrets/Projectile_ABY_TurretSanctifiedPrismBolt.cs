@@ -77,7 +77,7 @@ namespace AbyssalProtocol
             Thing primaryTarget = ResolvePrimaryTarget(hitThing);
             Vector3 direction = ResolveFlightDirection(impactPosition);
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretSanctifiedPrismBolt", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_ABY_TurretSanctifiedPrismBolt", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -192,7 +192,7 @@ namespace AbyssalProtocol
                     null,
                     null,
                     DamageInfo.SourceCategory.ThingOrUnknown);
-                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(pawn, info, "Projectile_ABY_TurretSanctifiedPrismBolt");
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, pawn, info, "Projectile_ABY_TurretSanctifiedPrismBolt");
                 beamSource = targetPos;
             }
 

@@ -8,8 +8,19 @@ namespace AbyssalProtocol
     {
         public static bool TryRunBaseImpact(Projectile projectile, string contextKey, Action baseImpact)
         {
+            return TryRunBaseImpact(projectile, null, contextKey, baseImpact);
+        }
+
+        public static bool TryRunBaseImpact(Projectile projectile, Thing hitThing, string contextKey, Action baseImpact)
+        {
             if (!IsProjectileReadyForBaseImpact(projectile, contextKey))
             {
+                return false;
+            }
+
+            if (!IsHitThingValidForBaseImpact(projectile, hitThing, contextKey))
+            {
+                TryDestroyProjectile(projectile);
                 return false;
             }
 
@@ -23,7 +34,36 @@ namespace AbyssalProtocol
 
         public static bool TryApplyDamage(Thing target, DamageInfo damageInfo, string contextKey)
         {
-            if (target == null || target.Destroyed)
+            return TryApplyDamageOnMap(null, target, damageInfo, contextKey);
+        }
+
+        public static bool TryApplyDamage(Projectile sourceProjectile, Thing target, DamageInfo damageInfo, string contextKey)
+        {
+            Map expectedMap = null;
+            try
+            {
+                expectedMap = sourceProjectile?.Map;
+            }
+            catch
+            {
+            }
+
+            return TryApplyDamageOnMap(expectedMap, target, damageInfo, contextKey);
+        }
+
+        public static bool TryApplyDamage(Map expectedMap, Thing target, DamageInfo damageInfo, string contextKey)
+        {
+            return TryApplyDamageOnMap(expectedMap, target, damageInfo, contextKey);
+        }
+
+        public static bool TryRunCombatAction(string contextKey, string stageKey, Action action)
+        {
+            return TryRunImpactAction(null, contextKey, stageKey, action, destroyProjectileOnFailure: false);
+        }
+
+        private static bool TryApplyDamageOnMap(Map expectedMap, Thing target, DamageInfo damageInfo, string contextKey)
+        {
+            if (!IsDamageTargetValid(expectedMap, target, contextKey))
             {
                 return false;
             }
@@ -48,11 +88,6 @@ namespace AbyssalProtocol
                 HandleCombatException(contextKey, "direct damage", ex, null, destroyProjectileOnFailure: false);
                 return false;
             }
-        }
-
-        public static bool TryRunCombatAction(string contextKey, string stageKey, Action action)
-        {
-            return TryRunImpactAction(null, contextKey, stageKey, action, destroyProjectileOnFailure: false);
         }
 
         private static bool TryRunImpactAction(Projectile projectile, string contextKey, string stageKey, Action action, bool destroyProjectileOnFailure)
@@ -106,6 +141,99 @@ namespace AbyssalProtocol
                 ABY_LogThrottleUtility.Message(
                     "projectile-impact-safety-invalid-projectile-check-" + SafeContext(contextKey),
                     "[Abyssal Protocol] Skipped projectile base impact because projectile state could not be read safely. Context: " + SafeContext(contextKey) + ", exception=" + ex.GetType().Name,
+                    15000);
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsHitThingValidForBaseImpact(Projectile projectile, Thing hitThing, string contextKey)
+        {
+            if (hitThing == null)
+            {
+                return true;
+            }
+
+            try
+            {
+                if (hitThing.Destroyed)
+                {
+                    ABY_LogThrottleUtility.Message(
+                        "projectile-impact-safety-destroyed-hitthing-" + SafeContext(contextKey),
+                        "[Abyssal Protocol] Skipped projectile base impact because the hit target was already destroyed. Context: " + SafeContext(contextKey) + ", projectile=" + SafeProjectileDef(projectile) + ", target=" + SafeThingLabel(hitThing),
+                        15000);
+                    return false;
+                }
+
+                Map projectileMap = projectile?.Map;
+                Map targetMap = hitThing.MapHeld;
+                if (targetMap != null && projectileMap != null && targetMap != projectileMap)
+                {
+                    ABY_LogThrottleUtility.Warning(
+                        "projectile-impact-safety-cross-map-hitthing-" + SafeContext(contextKey),
+                        "[Abyssal Protocol] Skipped projectile base impact because the hit target belonged to a different map. This prevents stale cross-save/projectile target references. Context: " + SafeContext(contextKey) + ", projectile=" + SafeProjectileDef(projectile) + ", target=" + SafeThingLabel(hitThing),
+                        15000);
+                    return false;
+                }
+
+                if (!hitThing.Spawned && targetMap == null)
+                {
+                    ABY_LogThrottleUtility.Message(
+                        "projectile-impact-safety-unspawned-hitthing-" + SafeContext(contextKey),
+                        "[Abyssal Protocol] Skipped projectile base impact because the hit target was no longer spawned on any map. Context: " + SafeContext(contextKey) + ", projectile=" + SafeProjectileDef(projectile) + ", target=" + SafeThingLabel(hitThing),
+                        15000);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Message(
+                    "projectile-impact-safety-hitthing-check-failed-" + SafeContext(contextKey),
+                    "[Abyssal Protocol] Skipped projectile base impact because hit target state could not be read safely. Context: " + SafeContext(contextKey) + ", projectile=" + SafeProjectileDef(projectile) + ", exception=" + ex.GetType().Name,
+                    15000);
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsDamageTargetValid(Map expectedMap, Thing target, string contextKey)
+        {
+            if (target == null || target.Destroyed)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (expectedMap != null)
+                {
+                    Map targetMap = target.MapHeld;
+                    if (targetMap != null && targetMap != expectedMap)
+                    {
+                        ABY_LogThrottleUtility.Warning(
+                            "projectile-impact-safety-cross-map-damage-" + SafeContext(contextKey),
+                            "[Abyssal Protocol] Skipped projectile secondary damage because the target belonged to a different map. Context: " + SafeContext(contextKey) + ", target=" + SafeThingLabel(target),
+                            15000);
+                        return false;
+                    }
+
+                    if (!target.Spawned && targetMap == null)
+                    {
+                        ABY_LogThrottleUtility.Message(
+                            "projectile-impact-safety-unspawned-damage-" + SafeContext(contextKey),
+                            "[Abyssal Protocol] Skipped projectile secondary damage because the target was no longer spawned on any map. Context: " + SafeContext(contextKey) + ", target=" + SafeThingLabel(target),
+                            15000);
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ABY_LogThrottleUtility.Message(
+                    "projectile-impact-safety-damage-target-check-failed-" + SafeContext(contextKey),
+                    "[Abyssal Protocol] Skipped projectile secondary damage because target state could not be read safely. Context: " + SafeContext(contextKey) + ", exception=" + ex.GetType().Name,
                     15000);
                 return false;
             }
@@ -197,6 +325,18 @@ namespace AbyssalProtocol
             try
             {
                 return projectile?.Launcher?.def?.defName ?? "null";
+            }
+            catch
+            {
+                return "unknown";
+            }
+        }
+
+        private static string SafeThingLabel(Thing thing)
+        {
+            try
+            {
+                return thing?.LabelShortCap ?? thing?.def?.defName ?? "null";
             }
             catch
             {

@@ -17,6 +17,7 @@ namespace AbyssalProtocol
         private const float MechOrBuildingDamageMultiplier = 1.30f;
 
         private Thing launcher;
+        private Faction sourceFaction;
         private ThingDef weaponDef;
         private int ageTicks;
         private int durationTicks = DefaultDurationTicks;
@@ -51,6 +52,7 @@ namespace AbyssalProtocol
         public void Initialize(Thing newLauncher, ThingDef newWeaponDef, bool newShieldDampened)
         {
             launcher = newLauncher;
+            sourceFaction = newLauncher?.Faction;
             weaponDef = newWeaponDef;
             shieldDampened = newShieldDampened;
             durationTicks = shieldDampened ? ShieldDampenedDurationTicks : DefaultDurationTicks;
@@ -61,6 +63,7 @@ namespace AbyssalProtocol
         {
             base.ExposeData();
             Scribe_References.Look(ref launcher, "launcher");
+            Scribe_References.Look(ref sourceFaction, "sourceFaction");
             Scribe_Defs.Look(ref weaponDef, "weaponDef");
             Scribe_Values.Look(ref ageTicks, "ageTicks", 0);
             Scribe_Values.Look(ref durationTicks, "durationTicks", DefaultDurationTicks);
@@ -166,13 +169,24 @@ namespace AbyssalProtocol
 
         private bool IsHostileToLauncher(Thing thing)
         {
-            Faction sourceFaction = launcher != null ? launcher.Faction : null;
-            if (sourceFaction == null)
+            Faction resolvedSourceFaction = ResolveSourceFaction();
+            return thing.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(thing.Faction, resolvedSourceFaction);
+        }
+
+
+        private Faction ResolveSourceFaction()
+        {
+            if (launcher != null && launcher.Faction != null)
             {
-                sourceFaction = Faction.OfPlayer;
+                return launcher.Faction;
             }
 
-            return thing.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(thing.Faction, sourceFaction);
+            if (sourceFaction != null)
+            {
+                return sourceFaction;
+            }
+
+            return Faction.OfPlayer;
         }
 
         private int ScoreTarget(Thing thing)
@@ -226,8 +240,15 @@ namespace AbyssalProtocol
                 weaponDef,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            target.TakeDamage(damageInfo);
-            CrownshardStormVfxUtility.SpawnShardImpact(Position, target, denseTarget);
+            if (!ABY_ProjectileImpactSafetyUtility.TryApplyDamage(Map, target, damageInfo, "Thing_CrownshardStormNode"))
+            {
+                return;
+            }
+
+            if (target.MapHeld == Map)
+            {
+                CrownshardStormVfxUtility.SpawnShardImpact(Position, target, denseTarget);
+            }
 
             if ((!wasDestroyed && target.Destroyed) || (pawn != null && wasAlivePawn && pawn.Dead))
             {

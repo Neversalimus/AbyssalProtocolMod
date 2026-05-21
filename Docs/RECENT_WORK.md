@@ -752,3 +752,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Throttled Dominion slice `RestoreReferencesFromMap` fallback scans so full `AllThings` recovery runs on load/forced recovery or short fallback intervals instead of every tick while references are incomplete.
 - Added deterministic armor Aegis selection tie-breaking so equal-capacity Aegis apparel chooses by recharge quality and stable def name instead of worn-list order.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-21 — Projectile impact cross-map defensive pass
+- Added projectile base-impact guards that reject destroyed, unspawned or cross-map `hitThing` references before calling vanilla/external `base.Impact(...)`.
+- Updated custom Abyssal projectile classes to pass their impact target into `ABY_ProjectileImpactSafetyUtility` so stale/cross-save projectile targets are detected before damage is applied.
+- Added map-aware secondary damage overloads and routed projectile secondary AoE/chain damage through the expected current map where available.
+- Hardened `Thing_CrownshardStormNode` with a saved fallback source faction and map-aware damage checks so storm pulses do not default to player faction after launcher loss or hit stale targets.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.

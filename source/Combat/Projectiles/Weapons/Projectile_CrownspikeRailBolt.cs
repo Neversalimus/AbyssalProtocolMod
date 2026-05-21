@@ -50,7 +50,7 @@ namespace AbyssalProtocol
             Pawn directPawn = hitThing as Pawn;
             bool directPawnWasAlive = directPawn != null && !directPawn.Dead && !directPawn.Destroyed;
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_CrownspikeRailBolt", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_CrownspikeRailBolt", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -208,7 +208,7 @@ namespace AbyssalProtocol
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, damageInfo, "Projectile_CrownspikeRailBolt");
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(this, target, damageInfo, "Projectile_CrownspikeRailBolt");
         }
 
         private static void ApplyDenseResonance(Thing target, Thing instigator, Vector3 position, Map map, bool fromPierce)
@@ -225,7 +225,7 @@ namespace AbyssalProtocol
             }
 
             float empDamage = fromPierce ? DensePierceEmpDamage : DenseDirectEmpDamage;
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, new DamageInfo(
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, target, new DamageInfo(
                 DamageDefOf.EMP,
                 empDamage,
                 0f,
@@ -238,7 +238,7 @@ namespace AbyssalProtocol
             Building building = target as Building;
             if (building != null && building.def != null && building.def.useHitPoints)
             {
-                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, building, new DamageInfo(
                     DamageDefOf.Bomb,
                     fromPierce ? DenseStructurePulseDamage * 0.55f : DenseStructurePulseDamage,
                     0.35f,

@@ -50,7 +50,7 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_RiftSapperSpike", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_RiftSapperSpike", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -111,7 +111,7 @@ namespace AbyssalProtocol
                         damage += CoverBonusDamage;
                     }
 
-                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
+                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, building, new DamageInfo(
                         DamageDefOf.Bomb,
                         damage,
                         StructureArmorPenetration,

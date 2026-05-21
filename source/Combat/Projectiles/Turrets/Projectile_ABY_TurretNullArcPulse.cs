@@ -70,7 +70,7 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             Thing primaryTarget = ResolvePrimaryTarget(hitThing);
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretNullArcPulse", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_ABY_TurretNullArcPulse", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -84,7 +84,7 @@ namespace AbyssalProtocol
 
             if (primaryTarget != null && !primaryTarget.Destroyed)
             {
-                ApplyNullArcPayload(primaryTarget, instigator, PrimaryEmpAmount, PrimaryThermalDamage, primary: true);
+                ApplyNullArcPayload(primaryTarget, impactMap, instigator, PrimaryEmpAmount, PrimaryThermalDamage, primary: true);
             }
 
             ChainFromImpact(impactPosition, primaryTarget, impactMap, instigator);
@@ -137,7 +137,7 @@ namespace AbyssalProtocol
                 float falloff = Mathf.Clamp01(1f - i * 0.23f);
                 NullArcDischargerVfxUtility.SpawnBeam(source, targetPos, map, chained: true);
                 NullArcDischargerVfxUtility.SpawnImpact(targetPos, map, blockedByShield: false, chained: true);
-                ApplyNullArcPayload(target, instigator, ChainEmpAmount * falloff, ChainThermalDamage * falloff, primary: false);
+                ApplyNullArcPayload(target, map, instigator, ChainEmpAmount * falloff, ChainThermalDamage * falloff, primary: false);
                 source = targetPos;
             }
         }
@@ -214,7 +214,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private static void ApplyNullArcPayload(Thing target, Thing instigator, float empAmount, float thermalAmount, bool primary)
+        private static void ApplyNullArcPayload(Thing target, Map map, Thing instigator, float empAmount, float thermalAmount, bool primary)
         {
             if (target == null || target.Destroyed)
             {
@@ -230,7 +230,7 @@ namespace AbyssalProtocol
                 null,
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, empInfo, "Projectile_ABY_TurretNullArcPulse");
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, target, empInfo, "Projectile_ABY_TurretNullArcPulse");
 
             Pawn pawn = target as Pawn;
             float adjustedThermal = thermalAmount;
@@ -263,7 +263,7 @@ namespace AbyssalProtocol
                 null,
                 null,
                 DamageInfo.SourceCategory.ThingOrUnknown);
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(target, burnInfo, "Projectile_ABY_TurretNullArcPulse");
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, target, burnInfo, "Projectile_ABY_TurretNullArcPulse");
         }
 
         private static bool HasActiveShield(Pawn pawn)

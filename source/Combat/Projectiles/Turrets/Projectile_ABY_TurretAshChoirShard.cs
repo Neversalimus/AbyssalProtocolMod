@@ -59,7 +59,7 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Vector3 impactDirection = lastDrawDirection;
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ABY_TurretAshChoirShard", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_ABY_TurretAshChoirShard", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }

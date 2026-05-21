@@ -46,7 +46,7 @@ namespace AbyssalProtocol
         {
             Map impactMap = Map;
             Vector3 impactPosition = ExactPosition;
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_AshenPikeSpike", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_AshenPikeSpike", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }

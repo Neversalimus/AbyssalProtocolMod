@@ -131,7 +131,7 @@ namespace AbyssalProtocol
             Vector3 impactPosition = ExactPosition;
             Thing instigator = Launcher;
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_OblivionChoirCore", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_OblivionChoirCore", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -330,7 +330,7 @@ namespace AbyssalProtocol
                 def,
                 DamageInfo.SourceCategory.ThingOrUnknown);
 
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(thing, damageInfo, "Projectile_OblivionChoirCore");
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(this, thing, damageInfo, "Projectile_OblivionChoirCore");
         }
 
         private void DetonateResonanceAround(IntVec3 impactCell, Vector3 impactPosition, Map map, Thing instigator)
@@ -370,7 +370,7 @@ namespace AbyssalProtocol
                     null,
                     def,
                     DamageInfo.SourceCategory.ThingOrUnknown);
-                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(pawn, damageInfo, "Projectile_OblivionChoirCore");
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(this, pawn, damageInfo, "Projectile_OblivionChoirCore");
                 SpawnBranchBeam(map, impactPosition, pawn.TrueCenter(), pawn.thingIDNumber ^ 0x51F1, resonance);
                 FleckMaker.ThrowLightningGlow(pawn.TrueCenter(), map, 0.92f + resonance * 0.85f);
 

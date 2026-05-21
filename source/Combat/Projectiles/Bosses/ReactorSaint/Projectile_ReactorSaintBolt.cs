@@ -95,7 +95,7 @@ namespace AbyssalProtocol
             Thing instigator = Launcher;
             float phaseFactor = ABY_ReactorSaintProjectileVfxUtility.ResolvePhaseFactor(Launcher);
 
-            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, "Projectile_ReactorSaintBolt", () => base.Impact(hitThing, blockedByShield)))
+            if (!ABY_ProjectileImpactSafetyUtility.TryRunBaseImpact(this, hitThing, "Projectile_ReactorSaintBolt", () => base.Impact(hitThing, blockedByShield)))
             {
                 return;
             }
@@ -133,7 +133,7 @@ namespace AbyssalProtocol
             Building directBuilding = hitThing as Building;
             if (IsValidStructureTarget(directBuilding))
             {
-                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(directBuilding, new DamageInfo(
+                ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, directBuilding, new DamageInfo(
                     DamageDefOf.Bomb,
                     Mathf.RoundToInt(DirectStructureDamage * phaseFactor),
                     DirectStructureArmorPenetration * phaseFactor,
@@ -160,7 +160,7 @@ namespace AbyssalProtocol
                         continue;
                     }
 
-                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(building, new DamageInfo(
+                    ABY_ProjectileImpactSafetyUtility.TryApplyDamage(map, building, new DamageInfo(
                         DamageDefOf.Bomb,
                         Mathf.RoundToInt(SplashStructureDamage * phaseFactor),
                         SplashStructureArmorPenetration * phaseFactor,
