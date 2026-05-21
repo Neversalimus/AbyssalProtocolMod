@@ -250,17 +250,30 @@ namespace AbyssalProtocol
             }
 
             float drawSizeY = ResolvePawnDrawSizeY(pawn);
-            float yOffsetCells = Mathf.Clamp(drawSizeY * 0.56f + 0.50f, 1.12f, 7.35f);
-            Vector3 worldPos = pawn.DrawPos + new Vector3(0f, 0f, yOffsetCells);
-            Vector3 screen = camera.WorldToScreenPoint(worldPos);
-            if (screen.z < 0f)
+            float yOffsetCells = Mathf.Clamp(drawSizeY * 0.46f + 0.34f, 1.05f, 5.40f);
+
+            // Use RimWorld's own map-label projection instead of Camera.WorldToScreenPoint.
+            // The raw Unity screen projection is pixel-based and does not follow RimWorld's
+            // scaled IMGUI/map-interface coordinate space reliably, especially while the camera
+            // pans or when UI scale is not exactly 1.0. LabelDrawPosFor is the same projection
+            // family vanilla uses for overhead map labels, so the bar stays attached to the pawn
+            // instead of drifting toward a fixed screen/map point.
+            Vector2 guiPoint;
+            try
+            {
+                guiPoint = GenMapUI.LabelDrawPosFor(pawn, yOffsetCells);
+            }
+            catch
             {
                 return false;
             }
 
             float screenHeight = UI.screenHeight > 0 ? UI.screenHeight : Screen.height;
             float screenWidth = UI.screenWidth > 0 ? UI.screenWidth : Screen.width;
-            Vector2 guiPoint = new Vector2(screen.x, screenHeight - screen.y);
+            if (float.IsNaN(guiPoint.x) || float.IsNaN(guiPoint.y) || float.IsInfinity(guiPoint.x) || float.IsInfinity(guiPoint.y))
+            {
+                return false;
+            }
 
             float zoomScale = ResolveZoomScale(camera);
             float width = Mathf.Clamp(BaseWidth * zoomScale, 118f, 190f);

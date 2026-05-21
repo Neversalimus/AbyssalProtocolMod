@@ -643,3 +643,20 @@ Regression rules:
 - Use reverse `for` loops instead of `RemoveAll` lambdas that capture `map`.
 - Do not call full `RestoreReferencesFromMap()` every tick while the encounter is active; throttle fallback scans and force them only on load or explicit recovery/spawn paths.
 - If new Dominion actors are added, register references directly at spawn time whenever possible instead of relying on global map scans.
+
+## 2026-05-21 — Miniboss overhead HP bars must use RimWorld map-label projection
+
+Observed behavior: the first visible miniboss HP bar implementation appeared to drift or stay anchored around a fixed map/screen point instead of remaining attached to Choir Engine while the camera panned. The cause was using raw Unity `Camera.WorldToScreenPoint` inside RimWorld IMGUI/map UI drawing.
+
+Regression rules:
+
+- Do not use raw `Camera.WorldToScreenPoint` for RimWorld overhead IMGUI labels or bars unless the result is explicitly converted and tested against RimWorld UI scaling.
+- Miniboss HP bars should use `GenMapUI.LabelDrawPosFor(pawn, offset)` so they share vanilla map-label projection behavior.
+- Large sprite offsets for Choir Engine and other oversized minibosses should remain conservative; do not let drawSize alone push the bar many cells away from the visible sprite.
+- Re-test miniboss bars while panning, zooming, and using non-default UI scale before considering future overhead UI changes stable.
+
+In-game checks:
+
+- Spawn or summon Choir Engine and pan the camera across it; the bar should follow the pawn/sprite rather than staying near the map center or screen edge.
+- Repeat with Warden of Ash to verify smaller miniboss placement still reads correctly.
+- Confirm the full boss HUD remains unchanged for Archon/Reactor-class bosses.

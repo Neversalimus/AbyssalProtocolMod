@@ -803,3 +803,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Throttled Dominion slice `RestoreReferencesFromMap` fallback scans so full `AllThings` recovery runs on load/forced recovery or short fallback intervals instead of every tick while references are incomplete.
 - Added deterministic armor Aegis selection tie-breaking so equal-capacity Aegis apparel chooses by recharge quality and stable def name instead of worn-list order.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+
+## 2026-05-21 — Miniboss HP bar map projection fix
+- Replaced the lightweight miniboss HP bar's raw `Camera.WorldToScreenPoint` projection with RimWorld's `GenMapUI.LabelDrawPosFor` projection.
+- This fixes the bar drifting toward a fixed screen/map position while the camera pans or UI scale changes; the overhead bar should now stay attached to the visible miniboss map label position.
+- Reduced the large-pawn vertical offset clamp so Choir Engine's oversized graphic does not push the bar excessively far away from the sprite.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required on the user's save/video scenario.
