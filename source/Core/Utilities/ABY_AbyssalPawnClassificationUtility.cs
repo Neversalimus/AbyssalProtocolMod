@@ -111,7 +111,18 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (HasClassificationExtension(pawn, extension => extension.isBoss))
+            bool explicitMiniBoss = HasClassificationExtension(pawn, extension => extension.isMiniBoss);
+            bool explicitBoss = HasClassificationExtension(pawn, extension => extension.isBoss);
+
+            // Explicit XML miniboss classification must win over older difficulty-scaling roles.
+            // Warden of Ash and Choir Engine intentionally still use some boss-family encounter
+            // plumbing, but they should not be treated as major bosses by UI systems.
+            if (explicitMiniBoss && !explicitBoss)
+            {
+                return false;
+            }
+
+            if (explicitBoss)
             {
                 return true;
             }

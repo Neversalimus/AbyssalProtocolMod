@@ -1,5 +1,21 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-21 — Fix miniboss classification for overhead HP bars
+- Fixed `ABY_AbyssalPawnClassificationUtility.IsMajorBoss` so explicit `ABY_AbyssalPawnClassificationExtension.isMiniBoss=true` wins over legacy difficulty-scaling `role=boss` values.
+- This specifically unblocks Warden of Ash and Choir Engine from the compact overhead HP-bar renderer: they still use boss-family encounter plumbing, but UI systems no longer filter them out as major bosses.
+- No XML role changes were made, avoiding encounter-template/pool side effects.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-21 — Fix miniboss HP bars on existing saves
 - Moved the active miniboss HP-bar draw call into the long-lived `AbyssalBossScreenFXGameComponent` OnGUI path so saves created before the new miniboss GameComponent still display bars after a DLL update.
 - Kept `GameComponent_ABY_MiniBossHealthBars` as a save-compatibility fallback shell only; it does not double-draw when the main boss UI component exists.
