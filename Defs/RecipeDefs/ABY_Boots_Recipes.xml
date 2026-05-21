@@ -5,7 +5,7 @@
     <label>forge ashbound tread boots</label>
     <description>Assemble early abyssal tread boots from steel sole plates, residue shock pads and crude ember stabilizers.</description>
     <jobString>Forging ashbound tread boots.</jobString>
-    <workAmount>950</workAmount>
+    <workAmount>3800</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -42,6 +42,9 @@
     <products>
       <ABY_AshboundTreadBoots>1</ABY_AshboundTreadBoots>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
@@ -54,7 +57,7 @@
     <label>forge riftstep greaves</label>
     <description>Build riftstep greaves around plasteel calf braces, stabilized heel conduits and phase-anchor soles.</description>
     <jobString>Forging riftstep greaves.</jobString>
-    <workAmount>1750</workAmount>
+    <workAmount>7000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -99,6 +102,9 @@
     <products>
       <ABY_RiftstepGreaves>1</ABY_RiftstepGreaves>
     </products>
+    <skillRequirements>
+      <Crafting>9</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
@@ -111,7 +117,7 @@
     <label>forge crownpath sabatons</label>
     <description>Fold late-line sabatons around a crownpath lattice, spacer-grade anchors and a crowned core fragment.</description>
     <jobString>Forging crownpath sabatons.</jobString>
-    <workAmount>3200</workAmount>
+    <workAmount>14000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -164,6 +170,9 @@
     <products>
       <ABY_CrownpathSabatons>1</ABY_CrownpathSabatons>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>

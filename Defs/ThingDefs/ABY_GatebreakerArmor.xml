@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_GatebreakerCarapace</defName>
     <thingClass>Apparel</thingClass>
@@ -68,7 +67,7 @@
         <groundWakeBackOffset>0.12</groundWakeBackOffset>
         <groundWakeSideOffset>0.060</groundWakeSideOffset>
         <groundWakeAltitudeOffset>0.024</groundWakeAltitudeOffset>
-        <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
+        <draftedMoveSpeedBonus>0.65</draftedMoveSpeedBonus>
         <sparkIntervalTicks>18</sparkIntervalTicks>
         <sparkLifetimeTicks>14</sparkLifetimeTicks>
         <sparkScale>0.13</sparkScale>
@@ -96,16 +95,15 @@
       <PsychicSensitivity>-0.06</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>6600</WorkToMake>
-      <MaxHitPoints>520</MaxHitPoints>
-      <Mass>6.8</Mass>
-      <MarketValue>5600</MarketValue>
+      <WorkToMake>46000</WorkToMake>
+      <MaxHitPoints>540</MaxHitPoints>
+      <Mass>7.2</Mass>
+      <MarketValue>6800</MarketValue>
       <ArmorRating_Sharp>1.18</ArmorRating_Sharp>
       <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
       <ArmorRating_Heat>1.10</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_GatebreakerHelm</defName>
     <thingClass>Apparel</thingClass>
@@ -139,14 +137,13 @@
       <PsychicSensitivity>-0.05</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>3000</WorkToMake>
-      <MaxHitPoints>285</MaxHitPoints>
-      <Mass>2.25</Mass>
-      <MarketValue>2650</MarketValue>
-      <ArmorRating_Sharp>0.98</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.50</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.88</ArmorRating_Heat>
+      <WorkToMake>20000</WorkToMake>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Mass>2.35</Mass>
+      <MarketValue>3100</MarketValue>
+      <ArmorRating_Sharp>1.08</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.54</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.94</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

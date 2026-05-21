@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftInfernalCombatFrame</defName>
     <label>forge infernal combat frame</label>
     <description>Assemble the torso frame of the first infernal combat line from residue-lined plating, reinforced plasteel ribs and a sealed chest-core lattice. Heavier than the helm, but still cut for active combat instead of ceremonial bulk.</description>
     <jobString>Forging infernal combat frame.</jobString>
-    <workAmount>3200</workAmount>
+    <workAmount>20000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -59,6 +58,9 @@
     <products>
       <ABY_InfernalCombatFrame>1</ABY_InfernalCombatFrame>
     </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>100</requiredResidue>
@@ -66,5 +68,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

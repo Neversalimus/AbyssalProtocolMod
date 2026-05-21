@@ -5,7 +5,7 @@
     <label>forge ashen vambraces</label>
     <description>Assemble early abyssal forearm braces from dark steel plates, residue-lined hinge bands and crude ember conduits.</description>
     <jobString>Forging ashen vambraces.</jobString>
-    <workAmount>1050</workAmount>
+    <workAmount>4200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -42,6 +42,9 @@
     <products>
       <ABY_AshenVambraces>1</ABY_AshenVambraces>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
@@ -54,7 +57,7 @@
     <label>forge rift vector vambraces</label>
     <description>Build forearm braces around plasteel supports and paired rift-vector conduits.</description>
     <jobString>Forging rift vector vambraces.</jobString>
-    <workAmount>1850</workAmount>
+    <workAmount>7400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -99,6 +102,9 @@
     <products>
       <ABY_RiftVectorVambraces>1</ABY_RiftVectorVambraces>
     </products>
+    <skillRequirements>
+      <Crafting>9</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
@@ -111,7 +117,7 @@
     <label>forge crown authority vambraces</label>
     <description>Construct late-line crown-authority vambraces around a compact command lattice and crowned core fragment.</description>
     <jobString>Forging crown authority vambraces.</jobString>
-    <workAmount>3350</workAmount>
+    <workAmount>15000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -164,6 +170,9 @@
     <products>
       <ABY_CrownAuthorityVambraces>1</ABY_CrownAuthorityVambraces>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>

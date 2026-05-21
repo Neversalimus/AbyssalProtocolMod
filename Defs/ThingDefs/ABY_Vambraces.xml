@@ -27,10 +27,10 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.03</GeneralLaborSpeed>
-      <MeleeHitChance>0.02</MeleeHitChance>
+      <MeleeHitChance>0.10</MeleeHitChance>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1050</WorkToMake>
+      <WorkToMake>4200</WorkToMake>
       <MaxHitPoints>145</MaxHitPoints>
       <Mass>0.85</Mass>
       <MarketValue>360</MarketValue>
@@ -68,11 +68,11 @@
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.04</GeneralLaborSpeed>
       <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
-      <MeleeHitChance>0.03</MeleeHitChance>
+      <MeleeHitChance>0.10</MeleeHitChance>
       <PsychicSensitivity>0.03</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1850</WorkToMake>
+      <WorkToMake>7400</WorkToMake>
       <MaxHitPoints>205</MaxHitPoints>
       <Mass>1.15</Mass>
       <MarketValue>1020</MarketValue>
@@ -111,12 +111,12 @@
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.06</GeneralLaborSpeed>
       <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
-      <MeleeHitChance>0.04</MeleeHitChance>
+      <MeleeHitChance>0.10</MeleeHitChance>
       <MeleeDodgeChance>0.10</MeleeDodgeChance>
       <PsychicSensitivity>0.06</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>3350</WorkToMake>
+      <WorkToMake>15000</WorkToMake>
       <MaxHitPoints>285</MaxHitPoints>
       <Mass>1.45</Mass>
       <MarketValue>2450</MarketValue>

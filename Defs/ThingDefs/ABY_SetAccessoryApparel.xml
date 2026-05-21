@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_GatebreakerAnchorHarness</defName>
     <thingClass>Apparel</thingClass>
@@ -34,7 +33,7 @@
       <MoveSpeed>-0.02</MoveSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>2600</WorkToMake>
+      <WorkToMake>12000</WorkToMake>
       <MaxHitPoints>220</MaxHitPoints>
       <Mass>1.8</Mass>
       <MarketValue>1450</MarketValue>
@@ -49,7 +48,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_NullCantorFocusSling</defName>
     <thingClass>Apparel</thingClass>
@@ -83,7 +81,7 @@
       <PsychicSensitivity>-0.03</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1800</WorkToMake>
+      <WorkToMake>5200</WorkToMake>
       <MaxHitPoints>150</MaxHitPoints>
       <Mass>0.9</Mass>
       <MarketValue>850</MarketValue>
@@ -98,7 +96,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_NullProcessionVeil</defName>
     <thingClass>Apparel</thingClass>
@@ -132,7 +129,7 @@
       <ShootingAccuracyPawn>-0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1200</WorkToMake>
+      <WorkToMake>4200</WorkToMake>
       <MaxHitPoints>95</MaxHitPoints>
       <Mass>0.25</Mass>
       <MarketValue>700</MarketValue>
@@ -147,5 +144,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>

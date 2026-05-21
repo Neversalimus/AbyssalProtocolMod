@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftSaintAegisCarapace</defName>
     <label>forge saint aegis carapace</label>
     <description>Rebuilds a wearable torso shell from a saint reactor core, scorched saint plating and refined abyssal materials. This is not just improved infernal armor; it is salvaged boss shell re-authored for a human frame.</description>
     <jobString>Forging saint aegis carapace.</jobString>
-    <workAmount>5800</workAmount>
+    <workAmount>36000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -68,6 +67,9 @@
     <products>
       <ABY_SaintAegisCarapace>1</ABY_SaintAegisCarapace>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>600</requiredResidue>
@@ -75,13 +77,12 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftVesperHaloHelm</defName>
     <label>forge vesper halo helm</label>
     <description>Refashions saint-grade cranial plating, halo braces and dense ultratech materials into a sealed reactor-line helm. Lighter than the full carapace, but unmistakably cut from the same boss shell lineage.</description>
     <jobString>Forging vesper halo helm.</jobString>
-    <workAmount>2200</workAmount>
+    <workAmount>16000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -135,6 +136,9 @@
     <products>
       <ABY_VesperHaloHelm>1</ABY_VesperHaloHelm>
     </products>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>600</requiredResidue>
@@ -142,5 +146,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

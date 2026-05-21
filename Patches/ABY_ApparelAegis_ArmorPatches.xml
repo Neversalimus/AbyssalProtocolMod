@@ -1,24 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Patch>
   <Operation Class="PatchOperationSequence">
     <success>Always</success>
     <operations>
-      <!-- Saint Aegis Carapace: use the working apparel-level interception path. -->
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/thingClass</xpath>
         <value>
           <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
         </value>
       </li>
-
-      <!-- Saint Aegis Carapace: larger shield, slower recharge. -->
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace" and not(modExtensions)]</xpath>
         <value>
           <modExtensions />
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis"])]</xpath>
         <value>
@@ -28,10 +24,10 @@
             <gizmoTheme>Saint</gizmoTheme>
             <gizmoTagKey>ABY_ApparelAegis_TagSaint</gizmoTagKey>
             <gizmoIconTexPath>UI/Gizmos/ABY_AegisSaint</gizmoIconTexPath>
-            <maxShieldPoints>240</maxShieldPoints>
-            <rechargeDelayTicks>600</rechargeDelayTicks>
+            <maxShieldPoints>160</maxShieldPoints>
+            <rechargeDelayTicks>540</rechargeDelayTicks>
             <rechargeIntervalTicks>30</rechargeIntervalTicks>
-            <rechargePerInterval>1.2</rechargePerInterval>
+            <rechargePerInterval>1.5</rechargePerInterval>
             <absorbRanged>true</absorbRanged>
             <absorbExplosive>true</absorbExplosive>
             <absorbMelee>false</absorbMelee>
@@ -39,48 +35,41 @@
             <empDrainMultiplier>2.4</empDrainMultiplier>
             <suppressWhenExternalShieldWorn>true</suppressWhenExternalShieldWorn>
             <hitFlashScale>0.85</hitFlashScale>
-            <breakFlashScale>1.65</breakFlashScale>
+            <breakFlashScale>1.55</breakFlashScale>
             <restoreFlashScale>1.10</restoreFlashScale>
             <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
             <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
             <collapseTextKey>ABY_ApparelAegis_SaintTextCollapse</collapseTextKey>
             <restoreTextKey>ABY_ApparelAegis_SaintTextRestore</restoreTextKey>
-            <collapsePulseStrength>0.46</collapsePulseStrength>
-            <restorePulseStrength>0.26</restorePulseStrength>
+            <collapsePulseStrength>0.42</collapsePulseStrength>
+            <restorePulseStrength>0.24</restorePulseStrength>
           </li>
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace" and not(comps)]</xpath>
         <value>
           <comps />
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_SaintAegisCarapace"]/comps[not(li[@Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo"])]</xpath>
         <value>
           <li Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo" />
         </value>
       </li>
-
-      <!-- Crowned Core Plate: use the working apparel-level interception path. -->
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/thingClass</xpath>
         <value>
           <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
         </value>
       </li>
-
-      <!-- Crowned Core Plate: smaller shield, much faster recovery. -->
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate" and not(modExtensions)]</xpath>
         <value>
           <modExtensions />
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/modExtensions[not(li[@Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis"])]</xpath>
         <value>
@@ -112,14 +101,12 @@
           </li>
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate" and not(comps)]</xpath>
         <value>
           <comps />
         </value>
       </li>
-
       <li Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="ABY_CrownedCorePlate"]/comps[not(li[@Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo"])]</xpath>
         <value>

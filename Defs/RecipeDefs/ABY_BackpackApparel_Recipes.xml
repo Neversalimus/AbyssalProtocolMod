@@ -5,7 +5,7 @@
     <label>forge ashbound field pack</label>
     <description>Assemble a compact field pack from steel bracing, residue canisters and a restrained harness frame.</description>
     <jobString>Forging ashbound field pack.</jobString>
-    <workAmount>1400</workAmount>
+    <workAmount>5600</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -42,6 +42,9 @@
     <products>
       <ABY_AshboundFieldPack>1</ABY_AshboundFieldPack>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
@@ -54,7 +57,7 @@
     <label>forge rift relay pack</label>
     <description>Forge a relay-grade abyssal pack around a compact rift conduit and reinforced load frame.</description>
     <jobString>Forging rift relay pack.</jobString>
-    <workAmount>2400</workAmount>
+    <workAmount>9000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -99,6 +102,9 @@
     <products>
       <ABY_RiftRelayPack>1</ABY_RiftRelayPack>
     </products>
+    <skillRequirements>
+      <Crafting>9</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
@@ -111,7 +117,7 @@
     <label>forge crown conduit pack</label>
     <description>Construct a conduit pack around a crowned core fragment, plated relay spine and late-line canister lattice.</description>
     <jobString>Forging crown conduit pack.</jobString>
-    <workAmount>4200</workAmount>
+    <workAmount>18000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -164,6 +170,9 @@
     <products>
       <ABY_CrownConduitPack>1</ABY_CrownConduitPack>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>

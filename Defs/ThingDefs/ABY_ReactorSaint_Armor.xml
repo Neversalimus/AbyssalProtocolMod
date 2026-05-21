@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_SaintAegisCarapace</defName>
-    <thingClass>Apparel</thingClass>
+    <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
     <label>saint aegis carapace</label>
     <description>A rebuilt torso shell forged from salvaged Infernal Reactor Saint plating, reactor housings and scorched containment ribs. It still looks like it belonged on a walking artillery-saint first and a human body second. The result is heavy, unnervingly clean, and markedly better at surviving heat and high-energy punishment than the first infernal combat line.</description>
     <techLevel>Spacer</techLevel>
@@ -37,13 +36,13 @@
       <MoveSpeed>-0.08</MoveSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>5800</WorkToMake>
-      <MaxHitPoints>455</MaxHitPoints>
-      <Mass>6.2</Mass>
-      <MarketValue>4150</MarketValue>
-      <ArmorRating_Sharp>1.04</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.54</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.92</ArmorRating_Heat>
+      <WorkToMake>36000</WorkToMake>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Mass>6.8</Mass>
+      <MarketValue>5600</MarketValue>
+      <ArmorRating_Sharp>1.12</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.58</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.00</ArmorRating_Heat>
     </statBases>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
@@ -53,9 +52,37 @@
           <li>Thin</li>
         </allowedBodyTypes>
       </li>
+      <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis">
+        <labelKey>ABY_ApparelAegis_SaintLabel</labelKey>
+        <gizmoSubtitleKey>ABY_ApparelAegis_SaintGizmoSubtitle</gizmoSubtitleKey>
+        <gizmoTheme>Saint</gizmoTheme>
+        <gizmoTagKey>ABY_ApparelAegis_TagSaint</gizmoTagKey>
+        <gizmoIconTexPath>UI/Gizmos/ABY_AegisSaint</gizmoIconTexPath>
+        <maxShieldPoints>160</maxShieldPoints>
+        <rechargeDelayTicks>540</rechargeDelayTicks>
+        <rechargeIntervalTicks>30</rechargeIntervalTicks>
+        <rechargePerInterval>1.5</rechargePerInterval>
+        <absorbRanged>true</absorbRanged>
+        <absorbExplosive>true</absorbExplosive>
+        <absorbMelee>false</absorbMelee>
+        <empDrainsShield>true</empDrainsShield>
+        <empDrainMultiplier>2.4</empDrainMultiplier>
+        <suppressWhenExternalShieldWorn>true</suppressWhenExternalShieldWorn>
+        <hitFlashScale>0.85</hitFlashScale>
+        <breakFlashScale>1.55</breakFlashScale>
+        <restoreFlashScale>1.10</restoreFlashScale>
+        <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
+        <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
+        <collapseTextKey>ABY_ApparelAegis_SaintTextCollapse</collapseTextKey>
+        <restoreTextKey>ABY_ApparelAegis_SaintTextRestore</restoreTextKey>
+        <collapsePulseStrength>0.42</collapsePulseStrength>
+        <restorePulseStrength>0.24</restorePulseStrength>
+      </li>
     </modExtensions>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo" />
+    </comps>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_VesperHaloHelm</defName>
     <thingClass>Apparel</thingClass>
@@ -88,14 +115,13 @@
       <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>2200</WorkToMake>
-      <MaxHitPoints>245</MaxHitPoints>
-      <Mass>2.1</Mass>
-      <MarketValue>1780</MarketValue>
-      <ArmorRating_Sharp>0.86</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.44</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.74</ArmorRating_Heat>
+      <WorkToMake>16000</WorkToMake>
+      <MaxHitPoints>275</MaxHitPoints>
+      <Mass>2.25</Mass>
+      <MarketValue>2450</MarketValue>
+      <ArmorRating_Sharp>1.00</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.50</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.82</ArmorRating_Heat>
     </statBases>
   </ThingDef>
-
 </Defs>

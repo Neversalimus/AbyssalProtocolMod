@@ -30,7 +30,7 @@
       <CarryingCapacity>8</CarryingCapacity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>950</WorkToMake>
+      <WorkToMake>3800</WorkToMake>
       <MaxHitPoints>135</MaxHitPoints>
       <Mass>0.95</Mass>
       <MarketValue>320</MarketValue>
@@ -71,7 +71,7 @@
       <PsychicSensitivity>0.03</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1750</WorkToMake>
+      <WorkToMake>7000</WorkToMake>
       <MaxHitPoints>190</MaxHitPoints>
       <Mass>1.35</Mass>
       <MarketValue>920</MarketValue>
@@ -113,7 +113,7 @@
       <PsychicSensitivity>0.06</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>3200</WorkToMake>
+      <WorkToMake>14000</WorkToMake>
       <MaxHitPoints>270</MaxHitPoints>
       <Mass>1.75</Mass>
       <MarketValue>2100</MarketValue>

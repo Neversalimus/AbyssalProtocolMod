@@ -5,7 +5,7 @@
     <label>forge ashen grip gloves</label>
     <description>Assemble early abyssal work-gauntlets from steel knuckle plates, residue grip pads and crude ember conduits.</description>
     <jobString>Forging ashen grip gloves.</jobString>
-    <workAmount>850</workAmount>
+    <workAmount>3400</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -42,6 +42,9 @@
     <products>
       <ABY_AshenGripGloves>1</ABY_AshenGripGloves>
     </products>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
@@ -54,7 +57,7 @@
     <label>forge rift conduit gloves</label>
     <description>Build conduit gloves around plasteel hand plates and a stabilized rift feedback lattice.</description>
     <jobString>Forging rift conduit gloves.</jobString>
-    <workAmount>1550</workAmount>
+    <workAmount>6200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -99,6 +102,9 @@
     <products>
       <ABY_RiftConduitGloves>1</ABY_RiftConduitGloves>
     </products>
+    <skillRequirements>
+      <Crafting>9</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
@@ -111,7 +117,7 @@
     <label>forge crownseal gauntlets</label>
     <description>Fold late-line gauntlets around a crown-seal lattice, spacer components and a crowned core fragment.</description>
     <jobString>Forging crownseal gauntlets.</jobString>
-    <workAmount>2850</workAmount>
+    <workAmount>12000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -164,6 +170,9 @@
     <products>
       <ABY_CrownsealGauntlets>1</ABY_CrownsealGauntlets>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>

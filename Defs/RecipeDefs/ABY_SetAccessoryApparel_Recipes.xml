@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftGatebreakerAnchorHarness</defName>
     <label>forge gatebreaker anchor harness</label>
     <description>Assemble a visible recoil-anchor rig for Gatebreaker armor, binding plasteel straps, uranium pressure blocks and residue logic into a compact anti-breach stabilizer.</description>
     <jobString>Forging gatebreaker anchor harness.</jobString>
-    <workAmount>2600</workAmount>
+    <workAmount>12000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -16,11 +15,46 @@
     </recipeUsers>
     <researchPrerequisite>ABY_DominionGateBootstrapping</researchPrerequisite>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>45</count></li>
-      <li><filter><thingDefs><li>Uranium</li></thingDefs></filter><count>12</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>3</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>4</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>45</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>4</count>
+      </li>
     </ingredients>
     <products>
       <ABY_GatebreakerAnchorHarness>1</ABY_GatebreakerAnchorHarness>
@@ -35,13 +69,12 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftNullCantorFocusSling</defName>
     <label>forge null cantor focus sling</label>
     <description>Build a diagonal ritual focus sling with a small sigil coil, dark cloth conductor and Null Cantor stabilization keys.</description>
     <jobString>Forging null cantor focus sling.</jobString>
-    <workAmount>1800</workAmount>
+    <workAmount>5200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -50,11 +83,46 @@
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>10</count></li>
-      <li><filter><thingDefs><li>DevilstrandCloth</li></thingDefs></filter><count>18</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>12</count></li>
-      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>3</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>DevilstrandCloth</li>
+          </thingDefs>
+        </filter>
+        <count>18</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>12</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>3</count>
+      </li>
     </ingredients>
     <products>
       <ABY_NullCantorFocusSling>1</ABY_NullCantorFocusSling>
@@ -69,13 +137,12 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftNullProcessionVeil</defName>
     <label>forge null procession veil</label>
     <description>Forge a compact null-procession half-mask from sigil cloth, plasteel baffles and a small gold logic seal.</description>
     <jobString>Forging null procession veil.</jobString>
-    <workAmount>1200</workAmount>
+    <workAmount>4200</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -84,10 +151,38 @@
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
     <ingredients>
-      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>8</count></li>
-      <li><filter><thingDefs><li>DevilstrandCloth</li></thingDefs></filter><count>10</count></li>
-      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>8</count></li>
-      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>2</count></li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ABY_AbyssalResidue</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>DevilstrandCloth</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>8</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Gold</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
     </ingredients>
     <products>
       <ABY_NullProcessionVeil>1</ABY_NullProcessionVeil>
@@ -102,5 +197,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

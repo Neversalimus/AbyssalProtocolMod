@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftCrownedCorePlate</defName>
     <label>forge crowned core plate</label>
     <description>Bind a crowned core fragment into a dominion-grade torso shell. This pattern consumes one hell-slice fragment and rewrites it into wearable breach authority rather than another inert trophy.</description>
     <jobString>Forging crowned core plate.</jobString>
-    <workAmount>7200</workAmount>
+    <workAmount>62000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -68,6 +67,9 @@
     <products>
       <ABY_CrownedCorePlate>1</ABY_CrownedCorePlate>
     </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
@@ -75,13 +77,12 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftCrownedCoreHelm</defName>
     <label>forge crowned core helm</label>
     <description>Cut a crowned core fragment into a sealed dominion helm with reinforced halo braces and a crown-logic visor. The result is a late reward pattern for colonies that survived the hell slice and came back with proof.</description>
     <jobString>Forging crowned core helm.</jobString>
-    <workAmount>3100</workAmount>
+    <workAmount>26000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -143,6 +144,9 @@
     <products>
       <ABY_CrownedCoreHelm>1</ABY_CrownedCoreHelm>
     </products>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
@@ -150,5 +154,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

@@ -320,8 +320,6 @@ Custom `ABY_TurretModuleDef` fields such as `role` and `effectSummary` appear di
 
 Player-facing descriptions must describe the weapon or lore. Do not mention implementation terms such as runtime streams, save/load storage, projectile animation, prototype plumbing, def names, or feature kill-switches in item descriptions or Forge tooltips.
 
-Special weapons with major C# damage layers must expose those layers through `CompABY_SpecialWeaponDamageInfo` / `ABY_SpecialWeaponDamageInfoUtility` rather than burying balance-critical damage only in projectile code or lore descriptions. When changing Specter Lash tether pulses, Crownshard Stormcaster storm-node pulses, Oblivion Choir resonance/arcs/collapse, or future similar weapons, update the runtime constants and the player-facing special damage profile together.
-
 
 ## Static constructor logging must be startup-safe
 
@@ -662,3 +660,9 @@ In-game checks:
 - Spawn or summon Choir Engine and pan the camera across it; the bar should follow the pawn/sprite rather than staying near the map center or screen edge.
 - Repeat with Warden of Ash to verify smaller miniboss placement still reads correctly.
 - Confirm the full boss HUD remains unchanged for Archon/Reactor-class bosses.
+
+
+## 2026-05-21 — Apparel stat-card rounding and balance risks
+- Positive `ShootingAccuracyPawn`, `MeleeHitChance`, and `MeleeDodgeChance` apparel offsets should stay at `0.10` or higher when shown on player gear. Smaller positive values may round/display as `0.0` in item cards and look like a broken stat.
+- Armor-aegis apparel should be validated in-game after XML changes: equip Saint Aegis Carapace and Crowned Core Plate, verify the Aegis info card, status gizmo, absorption, recharge, EMP drain and external shield suppression.
+- Hover armor speed should be tested while drafted and undrafted; avoid passive values near +3.0 unless the mechanic is converted into an active burst/dash with cooldown.

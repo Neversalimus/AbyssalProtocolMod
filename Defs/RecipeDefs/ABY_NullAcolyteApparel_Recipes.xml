@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <RecipeDef>
+    <defName>ABY_CraftNullAcolyteVestment</defName>
+    <label>forge null acolyte vestment</label>
+    <description>Bind a Null Acolyte vestment from devilstrand conductor cloth, plasteel baffles and dampened residue channels.</description>
+    <jobString>Forging null acolyte vestment.</jobString>
+    <workAmount>10000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>18</count></li>
+      <li><filter><thingDefs><li>DevilstrandCloth</li></thingDefs></filter><count>45</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>25</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>2</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>3</count></li>
+    </ingredients>
+    <products>
+      <ABY_NullAcolyteVestment>1</ABY_NullAcolyteVestment>
+    </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>350</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>ABY_CraftNullAcolyteCowl</defName>
+    <label>forge null acolyte cowl</label>
+    <description>Assemble a Null Acolyte cowl from plasteel baffles, sigil cloth and a restrained gold logic seal.</description>
+    <jobString>Forging null acolyte cowl.</jobString>
+    <workAmount>6000</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Smith</soundWorking>
+    <recipeUsers>
+      <li>ABY_AbyssalForge</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>ABY_AbyssalResidue</li></thingDefs></filter><count>12</count></li>
+      <li><filter><thingDefs><li>DevilstrandCloth</li></thingDefs></filter><count>20</count></li>
+      <li><filter><thingDefs><li>Plasteel</li></thingDefs></filter><count>12</count></li>
+      <li><filter><thingDefs><li>ComponentIndustrial</li></thingDefs></filter><count>1</count></li>
+      <li><filter><thingDefs><li>Gold</li></thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <products>
+      <ABY_NullAcolyteCowl>1</ABY_NullAcolyteCowl>
+    </products>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>300</requiredResidue>
+        <category>Armor</category>
+      </li>
+    </modExtensions>
+  </RecipeDef>
+
+</Defs>

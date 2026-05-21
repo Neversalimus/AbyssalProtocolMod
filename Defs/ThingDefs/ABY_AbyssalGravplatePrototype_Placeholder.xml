@@ -17,6 +17,7 @@
         <li>Shoulders</li>
         <li>Arms</li>
         <li>Neck</li>
+        <li>Legs</li>
       </bodyPartGroups>
       <layers>
         <li>Shell</li>
@@ -66,7 +67,7 @@
         <groundWakeBackOffset>0.13</groundWakeBackOffset>
         <groundWakeSideOffset>0.070</groundWakeSideOffset>
         <groundWakeAltitudeOffset>0.026</groundWakeAltitudeOffset>
-        <draftedMoveSpeedBonus>3.0</draftedMoveSpeedBonus>
+        <draftedMoveSpeedBonus>0.90</draftedMoveSpeedBonus>
         <sparkIntervalTicks>16</sparkIntervalTicks>
         <sparkLifetimeTicks>16</sparkLifetimeTicks>
         <sparkScale>0.15</sparkScale>
@@ -92,10 +93,10 @@
       <MoveSpeed>-0.04</MoveSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>6000</WorkToMake>
-      <MaxHitPoints>520</MaxHitPoints>
-      <Mass>6.8</Mass>
-      <MarketValue>5600</MarketValue>
+      <WorkToMake>52000</WorkToMake>
+      <MaxHitPoints>540</MaxHitPoints>
+      <Mass>7.0</Mass>
+      <MarketValue>7200</MarketValue>
       <ArmorRating_Sharp>1.18</ArmorRating_Sharp>
       <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
       <ArmorRating_Heat>1.02</ArmorRating_Heat>
@@ -132,10 +133,10 @@
       <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>2800</WorkToMake>
-      <MaxHitPoints>285</MaxHitPoints>
-      <Mass>2.2</Mass>
-      <MarketValue>2450</MarketValue>
+      <WorkToMake>24000</WorkToMake>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Mass>2.35</Mass>
+      <MarketValue>3200</MarketValue>
       <ArmorRating_Sharp>1.00</ArmorRating_Sharp>
       <ArmorRating_Blunt>0.52</ArmorRating_Blunt>
       <ArmorRating_Heat>0.90</ArmorRating_Heat>

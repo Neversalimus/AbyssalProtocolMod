@@ -810,17 +810,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced the large-pawn vertical offset clamp so Choir Engine's oversized graphic does not push the bar excessively far away from the sprite.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required on the user's save/video scenario.
 
-## 2026-05-21 — Special weapon damage profile UI
 
-- Added `CompABY_SpecialWeaponDamageInfo` and `ABY_SpecialWeaponDamageInfoUtility` so weapons whose real output comes from C# effects can expose those damage layers in the vanilla InfoCard.
-- Wired Specter Lash Projector, Crownshard Stormcaster, and Oblivion Choir to show base impact plus tether, storm-node, branch/resonance, and collapse damage profiles instead of relying on low XML projectile damage alone.
-- Added the same combat-profile details to Forge pattern details/tooltips through `AbyssalForgeProgressUtility.GetPatternBrowserDetails`, and expanded selected-pattern detail height so long special profiles remain readable.
-- Added EN/RU keyed localization for the special weapon damage profile block.
-- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required.
-
-## 2026-05-21 — Player weapon range role pass
-
-- Applied a ranged-weapon role identity pass across the currently introduced player-facing weapon spread.
-- Moved player weapon ranges into a clearer 30–52 cell band by role: sidearms/scatter/suppression at 30–32, carbines/repeaters at 33–36, main/heavy rifles at 37–40, marksman/lance/spikers at 41–45, and siege/apex tools at 47–52.
-- Kept the pass XML-only: no projectile C# behavior, special damage profile UI, recipes, costs, unlock thresholds, enemy weapons, or assemblies were changed.
-- Runtime smoke testing in-game is still required to validate encounter spacing, kiting pressure, and turret/cover interactions after the range increase.
+## 2026-05-21 — Apparel balance and crafting gate pass
+- Rebalanced the current apparel spread so T1 combat armor now sits near vanilla endgame armor expectations while later armor retains room for the future 9-tier progression.
+- Added direct armor-aegis wiring to Saint Aegis Carapace and Crowned Core Plate ThingDefs while keeping patch fallback compatibility.
+- Reduced passive hover armor drafted speed bonuses from broken +3.0 values to controlled role bonuses.
+- Added missing Null Acolyte Vestment/Cowl Forge recipes and added Crafting skill/work gates across apparel recipes.
+- Preserved the stat-card rounding rule: ShootingAccuracyPawn, MeleeHitChance and MeleeDodgeChance positive offsets should not be tuned below 0.10, because smaller values can display as 0.0 and look broken in item cards.
+- XML/docs only; build not required. Runtime smoke test still required for armor-aegis, recipe visibility and hover speed behavior.

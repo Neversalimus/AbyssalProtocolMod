@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <RecipeDef>
     <defName>ABY_CraftGatebreakerCarapace</defName>
     <label>forge gatebreaker carapace</label>
     <description>Rebuild a saint-grade core shell into a black abyssal assault carapace meant for the next gate, not the last battle. This pattern sacrifices reactor remnant geometry for heavier anti-breach plating and a more openly hostile battlefield profile.</description>
     <jobString>Forging gatebreaker carapace.</jobString>
-    <workAmount>6600</workAmount>
+    <workAmount>46000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -68,6 +67,9 @@
     <products>
       <ABY_GatebreakerCarapace>1</ABY_GatebreakerCarapace>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
@@ -75,13 +77,12 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
   <RecipeDef>
     <defName>ABY_CraftGatebreakerHelm</defName>
     <label>forge gatebreaker helm</label>
     <description>Condense saint-class field hardware and black plasteel into a sealed predatory gate helm. The result is less ceremonial than crowned gear and more direct: an execution visor for controlled breaches that are expected to fight back.</description>
     <jobString>Forging gatebreaker helm.</jobString>
-    <workAmount>3000</workAmount>
+    <workAmount>20000</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -143,6 +144,9 @@
     <products>
       <ABY_GatebreakerHelm>1</ABY_GatebreakerHelm>
     </products>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
@@ -150,5 +154,4 @@
       </li>
     </modExtensions>
   </RecipeDef>
-
 </Defs>

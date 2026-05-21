@@ -34,7 +34,7 @@
       <MeleeDodgeChance>-0.10</MeleeDodgeChance>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1400</WorkToMake>
+      <WorkToMake>5600</WorkToMake>
       <MaxHitPoints>180</MaxHitPoints>
       <Mass>4.0</Mass>
       <MarketValue>450</MarketValue>
@@ -78,7 +78,7 @@
       <PsychicSensitivity>0.05</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>2400</WorkToMake>
+      <WorkToMake>9000</WorkToMake>
       <MaxHitPoints>240</MaxHitPoints>
       <Mass>6.0</Mass>
       <MarketValue>1100</MarketValue>
@@ -123,7 +123,7 @@
       <PsychicSensitivity>0.10</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>4200</WorkToMake>
+      <WorkToMake>18000</WorkToMake>
       <MaxHitPoints>320</MaxHitPoints>
       <Mass>8.5</Mass>
       <MarketValue>2600</MarketValue>

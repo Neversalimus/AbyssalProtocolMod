@@ -17,6 +17,7 @@
         <li>Shoulders</li>
         <li>Arms</li>
         <li>Neck</li>
+        <li>Legs</li>
       </bodyPartGroups>
       <layers>
         <li>Shell</li>
@@ -31,16 +32,16 @@
       <ComponentIndustrial>2</ComponentIndustrial>
     </smeltProducts>
     <equippedStatOffsets>
-      <MoveSpeed>-0.03</MoveSpeed>
+      <MoveSpeed>-0.16</MoveSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>3200</WorkToMake>
-      <MaxHitPoints>340</MaxHitPoints>
-      <Mass>4.5</Mass>
-      <MarketValue>2350</MarketValue>
-      <ArmorRating_Sharp>0.70</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.36</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.54</ArmorRating_Heat>
+      <WorkToMake>20000</WorkToMake>
+      <MaxHitPoints>420</MaxHitPoints>
+      <Mass>7.0</Mass>
+      <MarketValue>5200</MarketValue>
+      <ArmorRating_Sharp>1.04</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.44</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.58</ArmorRating_Heat>
     </statBases>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">

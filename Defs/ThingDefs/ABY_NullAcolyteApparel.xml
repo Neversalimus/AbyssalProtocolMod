@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_NullAcolyteVestment</defName>
     <thingClass>Apparel</thingClass>
@@ -52,13 +51,13 @@
       <ResearchSpeed>0.05</ResearchSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>4200</WorkToMake>
-      <MaxHitPoints>260</MaxHitPoints>
-      <Mass>2.6</Mass>
-      <MarketValue>1850</MarketValue>
-      <ArmorRating_Sharp>0.46</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.22</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.68</ArmorRating_Heat>
+      <WorkToMake>10000</WorkToMake>
+      <MaxHitPoints>285</MaxHitPoints>
+      <Mass>3.0</Mass>
+      <MarketValue>2400</MarketValue>
+      <ArmorRating_Sharp>0.58</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.78</ArmorRating_Heat>
     </statBases>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
@@ -74,7 +73,6 @@
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_NullAcolyteCowl</defName>
     <thingClass>Apparel</thingClass>
@@ -122,13 +120,13 @@
       <ResearchSpeed>0.03</ResearchSpeed>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>1900</WorkToMake>
-      <MaxHitPoints>170</MaxHitPoints>
-      <Mass>1.25</Mass>
-      <MarketValue>1050</MarketValue>
-      <ArmorRating_Sharp>0.48</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.22</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.58</ArmorRating_Heat>
+      <WorkToMake>6000</WorkToMake>
+      <MaxHitPoints>190</MaxHitPoints>
+      <Mass>1.45</Mass>
+      <MarketValue>1450</MarketValue>
+      <ArmorRating_Sharp>0.60</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.66</ArmorRating_Heat>
     </statBases>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
@@ -137,5 +135,4 @@
       </li>
     </modExtensions>
   </ThingDef>
-
 </Defs>
