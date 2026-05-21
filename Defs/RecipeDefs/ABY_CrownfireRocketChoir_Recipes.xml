@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
   <RecipeDef>
     <defName>ABY_CraftTurretModule_CrownfireRocketChoir</defName>
@@ -6,6 +6,9 @@
     <description>Bind a sealed vertical-launch carrier chamber, eightfold micro-warhead cassettes, and crownfire targeting reliquaries into the apex explosive main weapon module for medium modular turret chassis.</description>
     <jobString>Forging crownfire rocket choir.</jobString>
     <workAmount>6200</workAmount>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -74,9 +77,6 @@
     <products>
       <ABY_TurretModule_CrownfireRocketChoir>1</ABY_TurretModule_CrownfireRocketChoir>
     </products>
-    <skillRequirements>
-      <Crafting>14</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3200</requiredResidue>

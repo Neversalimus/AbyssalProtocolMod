@@ -261,15 +261,4 @@ source/Combat/Projectiles/Bosses/
 
 Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.
 
-## Implant expansion routing — 2026-05-21
-
-For implant work, check these files first:
-
-- Balance source: `Docs/EQUIPMENT_BALANCE_REFERENCE.md`
-- Current expansion grid: `Defs/ThingDefs/ABY_ImplantTierExpansion.xml`
-- Expansion hediffs: `Defs/HediffDefs/ABY_ImplantTierExpansion_Hediffs.xml`
-- Expansion surgery recipes: `Defs/RecipeDefs/ABY_ImplantTierExpansion_Recipes.xml`
-- Original implant families: `ABY_AshenImplants`, `ABY_ChoirRewards`, `ABY_HeraldImplants`, `ABY_HordeImplants`, `ABY_ReactorSaint_Implants`, `ABY_DominionImplants`
-- Icons: `Textures/Things/Implant/`
-
-Do not add a new implant without all four pieces: craftable item, installed hediff, surgery recipe, and a real texture.
+- T5 passive turret modules: start with `Defs/Misc/ABY_T5PassiveTurretModuleDefs.xml`, `Defs/ThingDefs/ABY_T5PassiveTurretModules.xml`, and `Defs/RecipeDefs/ABY_T5PassiveTurretModuleRecipes.xml`. Icons live under `Textures/Things/Item/TurretModules/`. These modules use existing passive fields only; no C# is required unless adding a new passive behavior type.

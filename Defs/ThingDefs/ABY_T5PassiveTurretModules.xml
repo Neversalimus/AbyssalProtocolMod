@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_DominionVerdictLens</defName>
+    <label>dominion verdict lens</label>
+    <description>A pale verdict lens that teaches a modular turret to recognize authority, mass and shielded command bodies before lesser targets can steal its attention.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1600</MarketValue>
+      <Mass>2.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3000</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_CrownOverpressureChoir</defName>
+    <label>crown overpressure choir</label>
+    <description>A crown-fed pressure choir that drives the weapon path into a harsher rhythm, burning power and stability for a faster verdict cycle.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_CrownOverpressureChoir</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1750</MarketValue>
+      <Mass>2.7</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3400</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_TurretModule_SepulcherFailSafeMantle</defName>
+    <label>sepulcher fail-safe mantle</label>
+    <description>A sepulcher mantle of dead-brass clamps and black failsafe relays. It keeps a turret body standing when the shield has already spent itself.</description>
+    <graphicData>
+      <texPath>Things/Item/TurretModules/ABY_TurretModule_SepulcherFailSafeMantle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1850</MarketValue>
+      <Mass>3.4</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_TurretModuleInfoCard" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3600</requiredResidue>
+        <category>TurretSystems</category>
+      </li>
+    </modExtensions>
+  </ThingDef>
+</Defs>

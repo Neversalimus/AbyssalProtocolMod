@@ -810,19 +810,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced the large-pawn vertical offset clamp so Choir Engine's oversized graphic does not push the bar excessively far away from the sprite.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required on the user's save/video scenario.
 
-## 2026-05-21 — Complete introduced implant slot grid T1-T5
+## 2026-05-22 — T5 passive turret module expansion
 
-- Added 44 new craftable/installable implants to fill the introduced T1-T5 grid across Brain, Eye, Spine, Heart, Lung, Kidney, Liver, Stomach, Arm, Leg, Torso, Jaw, and Neck.
-- Added matching ThingDef, HediffDef, surgery RecipeDef and transparent PNG implant icons for all new entries.
-- Preserved the stat-card visibility rule: positive ShootingAccuracyPawn, MeleeHitChance and MeleeDodgeChance entries must be at least +0.10.
-- Added missing spawnThingOnRemoved for early Ashen implants and corrected existing sub-0.10 positive MeleeHitChance implant values.
-- No C# or assembly changes were required; this is an XML/asset/docs expansion.
-
-## 2026-05-22 — Turret module tier rebalance
-
-- Rebalanced existing turret modules into a complete T1–T5 spread without adding new module content.
-- Moved Crowncoil Gauss Minigun, Sepulcher Rail Core, Crownfire Rocket Choir and Crown Aegis Matrix to T5 Dominion.
-- Moved Vesper Lance Array, Sanctified Prism Emitter, Null-Arc Discharger and Abyssal Threat Prioritizer to T4 Reactor.
-- Kept Archon T3 focused on control, anti-swarm and execution modules.
-- Added/normalized Forge residue gates and Crafting skill requirements for all turret module recipes; fixed Execution Logic Core missing Forge unlock data/workSkill.
-- XML/docs only; no C# or Assemblies changes. Runtime Forge/Turret UI smoke test still required.
+- Added three Dominion-tier passive turret modules: Dominion Verdict Lens, Crown Overpressure Choir, and Sepulcher Fail-Safe Mantle.
+- The new modules fill T5 passive build roles without adding additional Aegis stacking: target adjudication, overpressure firing cadence, and chassis survival/recovery.
+- The patch also keeps the turret module tier rebalance self-contained when applied over older archives: T5 now includes Crowncoil Gauss Minigun, Sepulcher Rail Core, Crownfire Rocket Choir, Crown Aegis Matrix, and the three new passive modules.
+- XML/assets/docs only; no C# or assembly rebuild required.

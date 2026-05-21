@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Defs>
   <RecipeDef>
     <defName>ABY_CraftTurretModule_RiftNeedlerCore</defName>
@@ -6,6 +6,9 @@
     <description>Bind a repeating rift-needle lattice into a turret-compatible main weapon core.</description>
     <jobString>Forging rift needler core.</jobString>
     <workAmount>1600</workAmount>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -42,9 +45,6 @@
     <products>
       <ABY_TurretModule_RiftNeedlerCore>1</ABY_TurretModule_RiftNeedlerCore>
     </products>
-    <skillRequirements>
-      <Crafting>7</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>80</requiredResidue>
@@ -58,6 +58,9 @@
     <description>Bind a sealed ultra-plasma feed into a turret-compatible armor-breaking main weapon core.</description>
     <jobString>Forging plasma lance core.</jobString>
     <workAmount>2300</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -94,9 +97,6 @@
     <products>
       <ABY_TurretModule_PlasmaLanceCore>1</ABY_TurretModule_PlasmaLanceCore>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>190</requiredResidue>
@@ -110,6 +110,9 @@
     <description>Bind a cycling ash-canticle feed into a turret-compatible suppression main weapon core.</description>
     <jobString>Forging ash choir repeater core.</jobString>
     <workAmount>2850</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -162,9 +165,6 @@
     <products>
       <ABY_TurretModule_AshChoirRepeaterCore>1</ABY_TurretModule_AshChoirRepeaterCore>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>320</requiredResidue>
@@ -178,6 +178,9 @@
     <description>Assemble a secondary canticle-wave emitter for abyssal turret frames.</description>
     <jobString>Forging choir arc emitter.</jobString>
     <workAmount>2100</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -214,9 +217,6 @@
     <products>
       <ABY_TurretModule_ChoirArcEmitter>1</ABY_TurretModule_ChoirArcEmitter>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>260</requiredResidue>
@@ -230,6 +230,9 @@
     <description>Assemble a passive heat-sink lattice for modular turret chassis.</description>
     <jobString>Forging cooling lattice.</jobString>
     <workAmount>1150</workAmount>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -266,9 +269,6 @@
     <products>
       <ABY_TurretModule_CoolingLattice>1</ABY_TurretModule_CoolingLattice>
     </products>
-    <skillRequirements>
-      <Crafting>7</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>110</requiredResidue>
@@ -282,6 +282,9 @@
     <description>Etch a passive targeting matrix for modular turret chassis.</description>
     <jobString>Forging targeting sigil.</jobString>
     <workAmount>1200</workAmount>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -318,9 +321,6 @@
     <products>
       <ABY_TurretModule_TargetingSigil>1</ABY_TurretModule_TargetingSigil>
     </products>
-    <skillRequirements>
-      <Crafting>7</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>140</requiredResidue>
@@ -334,6 +334,9 @@
     <description>Build a passive residue-buffer capacitor for modular turret chassis.</description>
     <jobString>Forging residue capacitor.</jobString>
     <workAmount>1450</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -370,9 +373,6 @@
     <products>
       <ABY_TurretModule_ResidueCapacitor>1</ABY_TurretModule_ResidueCapacitor>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>170</requiredResidue>
@@ -386,6 +386,9 @@
     <description>Bind a twin-plank gauss accelerator and rear injection chamber into a turret-compatible Sepulcher Rail Core.</description>
     <jobString>Forging sepulcher rail core.</jobString>
     <workAmount>5200</workAmount>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -430,9 +433,6 @@
     <products>
       <ABY_TurretModule_SepulcherRailCore>1</ABY_TurretModule_SepulcherRailCore>
     </products>
-    <skillRequirements>
-      <Crafting>14</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2800</requiredResidue>
@@ -446,6 +446,9 @@
     <description>Bind a furnace-throat mortar chamber and slag-shell loader into a turret-compatible Cinder Mortar Core.</description>
     <jobString>Forging cinder mortar core.</jobString>
     <workAmount>3900</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -498,9 +501,6 @@
     <products>
       <ABY_TurretModule_CinderMortarCore>1</ABY_TurretModule_CinderMortarCore>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>820</requiredResidue>
@@ -514,6 +514,9 @@
     <description>Bind a cracked null capacitor cage and sanctified discharge prongs into a turret-compatible EMP suppression main weapon core.</description>
     <jobString>Forging null-arc discharger.</jobString>
     <workAmount>4200</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -566,9 +569,6 @@
     <products>
       <ABY_TurretModule_NullArcDischarger>1</ABY_TurretModule_NullArcDischarger>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1150</requiredResidue>
@@ -582,6 +582,9 @@
     <description>Bind a chained anchor-spike launcher and tether winch core into a turret-compatible anti-breach lockdown module.</description>
     <jobString>Forging abyssal harpoon projector.</jobString>
     <workAmount>4400</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -634,9 +637,6 @@
     <products>
       <ABY_TurretModule_AbyssalHarpoonProjector>1</ABY_TurretModule_AbyssalHarpoonProjector>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>880</requiredResidue>
@@ -650,6 +650,9 @@
     <description>Bind a saint-clean sanction chamber and collapsing beam spine into a turret-compatible precision lance core.</description>
     <jobString>Forging vesper lance array.</jobString>
     <workAmount>3600</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -694,9 +697,6 @@
     <products>
       <ABY_TurretModule_VesperLanceArray>1</ABY_TurretModule_VesperLanceArray>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
@@ -710,6 +710,9 @@
     <description>Bind a cracked rift canister splitter and shard-feed housings into a turret-compatible anti-cluster flak bloom module.</description>
     <jobString>Forging rift flak bloom.</jobString>
     <workAmount>4100</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -754,9 +757,6 @@
     <products>
       <ABY_TurretModule_RiftFlakBloom>1</ABY_TurretModule_RiftFlakBloom>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>920</requiredResidue>
@@ -770,6 +770,9 @@
     <description>Bind a crown-splinter prism, pale restraint bands, and a guillotine focusing aperture into a turret-compatible lane-control emitter.</description>
     <jobString>Forging sanctified prism emitter.</jobString>
     <workAmount>4500</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -822,9 +825,6 @@
     <products>
       <ABY_TurretModule_SanctifiedPrismEmitter>1</ABY_TurretModule_SanctifiedPrismEmitter>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1350</requiredResidue>
@@ -838,6 +838,9 @@
     <description>Bind a six-lane crowncoil accelerator, abyssal phase distributor, and reinforced rotary feed geometry into a turret-compatible apex sustained-fire module.</description>
     <jobString>Forging crowncoil gauss minigun.</jobString>
     <workAmount>5600</workAmount>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -890,9 +893,6 @@
     <products>
       <ABY_TurretModule_CrowncoilGaussMinigun>1</ABY_TurretModule_CrowncoilGaussMinigun>
     </products>
-    <skillRequirements>
-      <Crafting>14</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2400</requiredResidue>
@@ -906,6 +906,9 @@
     <description>Assemble a blackout power regulator for abyssal modular turret chassis.</description>
     <jobString>Forging blackout power regulator.</jobString>
     <workAmount>1200</workAmount>
+    <skillRequirements>
+      <Crafting>7</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -942,9 +945,6 @@
     <products>
       <ABY_TurretModule_BlackoutPowerRegulator>1</ABY_TurretModule_BlackoutPowerRegulator>
     </products>
-    <skillRequirements>
-      <Crafting>7</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>130</requiredResidue>
@@ -958,6 +958,9 @@
     <description>Assemble an overpressure cycle governor for abyssal modular turret chassis.</description>
     <jobString>Forging overpressure cycle governor.</jobString>
     <workAmount>1750</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1002,9 +1005,6 @@
     <products>
       <ABY_TurretModule_OverpressureCycleGovernor>1</ABY_TurretModule_OverpressureCycleGovernor>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>240</requiredResidue>
@@ -1018,6 +1018,9 @@
     <description>Assemble a long choir lens for abyssal modular turret chassis.</description>
     <jobString>Forging long choir lens.</jobString>
     <workAmount>1900</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1070,9 +1073,6 @@
     <products>
       <ABY_TurretModule_LongChoirLens>1</ABY_TurretModule_LongChoirLens>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>280</requiredResidue>
@@ -1086,6 +1086,9 @@
     <description>Assemble a close-quarters interlock for abyssal modular turret chassis.</description>
     <jobString>Forging close-quarters interlock.</jobString>
     <workAmount>2600</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1130,9 +1133,6 @@
     <products>
       <ABY_TurretModule_CloseQuartersInterlock>1</ABY_TurretModule_CloseQuartersInterlock>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>620</requiredResidue>
@@ -1146,6 +1146,9 @@
     <description>Assemble an abyssal threat prioritizer for abyssal modular turret chassis.</description>
     <jobString>Forging abyssal threat prioritizer.</jobString>
     <workAmount>3000</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1190,9 +1193,6 @@
     <products>
       <ABY_TurretModule_AbyssalThreatPrioritizer>1</ABY_TurretModule_AbyssalThreatPrioritizer>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>
@@ -1206,6 +1206,9 @@
     <description>Assemble an anti-swarm pattern scanner for abyssal modular turret chassis.</description>
     <jobString>Forging anti-swarm pattern scanner.</jobString>
     <workAmount>2900</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1250,9 +1253,6 @@
     <products>
       <ABY_TurretModule_AntiSwarmPatternScanner>1</ABY_TurretModule_AntiSwarmPatternScanner>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>700</requiredResidue>
@@ -1270,6 +1270,9 @@
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
     <workAmount>3600</workAmount>
+    <skillRequirements>
+      <Crafting>10</Crafting>
+    </skillRequirements>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -1302,9 +1305,6 @@
     <products>
       <ABY_TurretModule_ExecutionLogicCore>1</ABY_TurretModule_ExecutionLogicCore>
     </products>
-    <skillRequirements>
-      <Crafting>10</Crafting>
-    </skillRequirements>
     <researchPrerequisite>ABY_AbyssalSignalTheory</researchPrerequisite>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
@@ -1319,6 +1319,9 @@
     <description>Assemble a shield-burn capacitor for abyssal modular turret chassis.</description>
     <jobString>Forging shield-burn capacitor.</jobString>
     <workAmount>4100</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1371,9 +1374,6 @@
     <products>
       <ABY_TurretModule_ShieldBurnCapacitor>1</ABY_TurretModule_ShieldBurnCapacitor>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1300</requiredResidue>
@@ -1387,6 +1387,9 @@
     <description>Assemble a sanctified stabilizer plate for abyssal modular turret chassis.</description>
     <jobString>Forging sanctified stabilizer plate.</jobString>
     <workAmount>3950</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1439,9 +1442,6 @@
     <products>
       <ABY_TurretModule_SanctifiedStabilizerPlate>1</ABY_TurretModule_SanctifiedStabilizerPlate>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
@@ -1455,6 +1455,9 @@
     <description>Assemble an emergency heat dump for abyssal modular turret chassis.</description>
     <jobString>Forging emergency heat dump.</jobString>
     <workAmount>4250</workAmount>
+    <skillRequirements>
+      <Crafting>12</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1499,9 +1502,6 @@
     <products>
       <ABY_TurretModule_EmergencyHeatDump>1</ABY_TurretModule_EmergencyHeatDump>
     </products>
-    <skillRequirements>
-      <Crafting>12</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1450</requiredResidue>
@@ -1515,6 +1515,9 @@
     <description>Assemble a passive breach-tier aegis relay for abyssal modular turret chassis.</description>
     <jobString>Forging breach aegis relay.</jobString>
     <workAmount>2050</workAmount>
+    <skillRequirements>
+      <Crafting>8</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1560,9 +1563,6 @@
     <products>
       <ABY_TurretModule_BreachAegisRelay>1</ABY_TurretModule_BreachAegisRelay>
     </products>
-    <skillRequirements>
-      <Crafting>8</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>420</requiredResidue>
@@ -1576,6 +1576,9 @@
     <description>Assemble a crown-tier aegis matrix for abyssal modular turret chassis.</description>
     <jobString>Forging crown aegis matrix.</jobString>
     <workAmount>4600</workAmount>
+    <skillRequirements>
+      <Crafting>14</Crafting>
+    </skillRequirements>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
@@ -1621,9 +1624,6 @@
     <products>
       <ABY_TurretModule_CrownAegisMatrix>1</ABY_TurretModule_CrownAegisMatrix>
     </products>
-    <skillRequirements>
-      <Crafting>14</Crafting>
-    </skillRequirements>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2600</requiredResidue>

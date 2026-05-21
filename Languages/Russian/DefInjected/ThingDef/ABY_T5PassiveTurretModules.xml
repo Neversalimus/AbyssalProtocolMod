@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_TurretModule_DominionVerdictLens.label>линза Приговора Доминиона</ABY_TurretModule_DominionVerdictLens.label>
+  <ABY_TurretModule_DominionVerdictLens.description>Бледная линза приговора, обучающая модульную турель распознавать власть, массу и защищённые командные тела прежде, чем меньшие цели смогут отвлечь её внимание.</ABY_TurretModule_DominionVerdictLens.description>
+  <ABY_TurretModule_CrownOverpressureChoir.label>Хор Коронного Перегруза</ABY_TurretModule_CrownOverpressureChoir.label>
+  <ABY_TurretModule_CrownOverpressureChoir.description>Коронно-питаемый хор давления, вгоняющий оружейный тракт в более жестокий ритм и сжигающий питание со стабильностью ради ускоренного цикла приговора.</ABY_TurretModule_CrownOverpressureChoir.description>
+  <ABY_TurretModule_SepulcherFailSafeMantle.label>гробничная мантия аварийной защиты</ABY_TurretModule_SepulcherFailSafeMantle.label>
+  <ABY_TurretModule_SepulcherFailSafeMantle.description>Гробничная мантия из мёртвой латуни и чёрных аварийных реле. Она удерживает корпус турели, когда щит уже истратил себя.</ABY_TurretModule_SepulcherFailSafeMantle.description>
+</LanguageData>

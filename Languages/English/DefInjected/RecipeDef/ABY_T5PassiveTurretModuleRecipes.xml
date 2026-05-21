@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_CraftTurretModule_DominionVerdictLens.label>forge dominion verdict lens</ABY_CraftTurretModule_DominionVerdictLens.label>
+  <ABY_CraftTurretModule_DominionVerdictLens.description>Assemble dominion verdict lens as a T5 passive module for abyssal modular turret chassis.</ABY_CraftTurretModule_DominionVerdictLens.description>
+  <ABY_CraftTurretModule_DominionVerdictLens.jobString>Forging dominion verdict lens.</ABY_CraftTurretModule_DominionVerdictLens.jobString>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.label>forge crown overpressure choir</ABY_CraftTurretModule_CrownOverpressureChoir.label>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.description>Assemble crown overpressure choir as a T5 passive module for abyssal modular turret chassis.</ABY_CraftTurretModule_CrownOverpressureChoir.description>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.jobString>Forging crown overpressure choir.</ABY_CraftTurretModule_CrownOverpressureChoir.jobString>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.label>forge sepulcher fail-safe mantle</ABY_CraftTurretModule_SepulcherFailSafeMantle.label>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.description>Assemble sepulcher fail-safe mantle as a T5 passive module for abyssal modular turret chassis.</ABY_CraftTurretModule_SepulcherFailSafeMantle.description>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.jobString>Forging sepulcher fail-safe mantle.</ABY_CraftTurretModule_SepulcherFailSafeMantle.jobString>
+</LanguageData>

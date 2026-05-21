@@ -23,7 +23,7 @@
     </tradeTags>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1500</requiredResidue>
+        <requiredResidue>3200</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>

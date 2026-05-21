@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Defs>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_DominionVerdictLens</defName>
+    <label>Dominion Verdict Lens</label>
+    <description>A pale verdict lens that teaches a modular turret to recognize authority, mass and shielded command bodies before lesser targets can steal its attention.</description>
+    <effectSummary>Extends range and tightens tracking while strongly prioritizing bosses, constructs, mechanoids and shielded targets. Slightly slows the weapon cycle.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_DominionVerdictLens</thingDef>
+    <role>apex target adjudication</role>
+    <tier>5</tier>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <rangeOffset>6</rangeOffset>
+    <missRadiusOffset>-0.35</missRadiusOffset>
+    <targetPriorityCombatPowerScale>70</targetPriorityCombatPowerScale>
+    <targetPriorityBossBonus>5000</targetPriorityBossBonus>
+    <targetPriorityConstructBonus>1800</targetPriorityConstructBonus>
+    <targetPriorityShieldedBonus>1600</targetPriorityShieldedBonus>
+    <targetPriorityMechanoidBonus>1400</targetPriorityMechanoidBonus>
+    <cooldownMultiplier>1.05</cooldownMultiplier>
+    <extraPowerDraw>520</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_CrownOverpressureChoir</defName>
+    <label>Crown Overpressure Choir</label>
+    <description>A crown-fed pressure choir that drives the weapon path into a harsher rhythm, burning power and stability for a faster verdict cycle.</description>
+    <effectSummary>Greatly tightens the firing cycle, but shortens reach, slightly worsens miss geometry, increases incoming damage taken and draws heavy power.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_CrownOverpressureChoir</thingDef>
+    <role>crown cycle overpressure</role>
+    <tier>5</tier>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <cooldownMultiplier>0.86</cooldownMultiplier>
+    <rangeOffset>-2.5</rangeOffset>
+    <missRadiusOffset>0.15</missRadiusOffset>
+    <incomingDamageMultiplier>1.06</incomingDamageMultiplier>
+    <extraPowerDraw>760</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+  <AbyssalProtocol.ABY_TurretModuleDef>
+    <defName>ABY_TMD_SepulcherFailSafeMantle</defName>
+    <label>Sepulcher Fail-Safe Mantle</label>
+    <description>A sepulcher mantle of dead-brass clamps and black failsafe relays. It keeps a turret body standing when the shield has already spent itself.</description>
+    <effectSummary>Reduces incoming damage and improves idle cooldown recovery for long siege cycles, but slows firing and narrows close-range safety geometry.</effectSummary>
+    <slot>Passive</slot>
+    <thingDef>ABY_TurretModule_SepulcherFailSafeMantle</thingDef>
+    <role>dominion chassis survival</role>
+    <tier>5</tier>
+    <compatibleChassisTags>
+      <li>Medium</li>
+    </compatibleChassisTags>
+    <incomingDamageMultiplier>0.76</incomingDamageMultiplier>
+    <idleCooldownRecoveryPerTick>0.28</idleCooldownRecoveryPerTick>
+    <minRangeOffset>-2</minRangeOffset>
+    <cooldownMultiplier>1.07</cooldownMultiplier>
+    <extraPowerDraw>700</extraPowerDraw>
+  </AbyssalProtocol.ABY_TurretModuleDef>
+</Defs>

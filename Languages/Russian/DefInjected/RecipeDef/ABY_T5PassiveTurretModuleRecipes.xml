@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_CraftTurretModule_DominionVerdictLens.label>выковать линзу Приговора Доминиона</ABY_CraftTurretModule_DominionVerdictLens.label>
+  <ABY_CraftTurretModule_DominionVerdictLens.description>Собрать линза Приговора Доминиона как пассивный модуль T5 для бездненных модульных турельных корпусов.</ABY_CraftTurretModule_DominionVerdictLens.description>
+  <ABY_CraftTurretModule_DominionVerdictLens.jobString>Ковка линзы Приговора Доминиона.</ABY_CraftTurretModule_DominionVerdictLens.jobString>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.label>выковать Хор Коронного Перегруза</ABY_CraftTurretModule_CrownOverpressureChoir.label>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.description>Собрать Хор Коронного Перегруза как пассивный модуль T5 для бездненных модульных турельных корпусов.</ABY_CraftTurretModule_CrownOverpressureChoir.description>
+  <ABY_CraftTurretModule_CrownOverpressureChoir.jobString>Ковка Хора Коронного Перегруза.</ABY_CraftTurretModule_CrownOverpressureChoir.jobString>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.label>выковать гробничную мантию аварийной защиты</ABY_CraftTurretModule_SepulcherFailSafeMantle.label>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.description>Собрать гробничная мантия аварийной защиты как пассивный модуль T5 для бездненных модульных турельных корпусов.</ABY_CraftTurretModule_SepulcherFailSafeMantle.description>
+  <ABY_CraftTurretModule_SepulcherFailSafeMantle.jobString>Ковка гробничной мантии аварийной защиты.</ABY_CraftTurretModule_SepulcherFailSafeMantle.jobString>
+</LanguageData>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_TurretModule_DominionVerdictLens.label>dominion verdict lens</ABY_TurretModule_DominionVerdictLens.label>
+  <ABY_TurretModule_DominionVerdictLens.description>A pale verdict lens that teaches a modular turret to recognize authority, mass and shielded command bodies before lesser targets can steal its attention.</ABY_TurretModule_DominionVerdictLens.description>
+  <ABY_TurretModule_CrownOverpressureChoir.label>crown overpressure choir</ABY_TurretModule_CrownOverpressureChoir.label>
+  <ABY_TurretModule_CrownOverpressureChoir.description>A crown-fed pressure choir that drives the weapon path into a harsher rhythm, burning power and stability for a faster verdict cycle.</ABY_TurretModule_CrownOverpressureChoir.description>
+  <ABY_TurretModule_SepulcherFailSafeMantle.label>sepulcher fail-safe mantle</ABY_TurretModule_SepulcherFailSafeMantle.label>
+  <ABY_TurretModule_SepulcherFailSafeMantle.description>A sepulcher mantle of dead-brass clamps and black failsafe relays. It keeps a turret body standing when the shield has already spent itself.</ABY_TurretModule_SepulcherFailSafeMantle.description>
+</LanguageData>

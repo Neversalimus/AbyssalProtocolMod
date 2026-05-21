@@ -219,7 +219,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1500</requiredResidue>
+        <requiredResidue>2800</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -275,7 +275,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>960</requiredResidue>
+        <requiredResidue>1150</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -303,7 +303,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1040</requiredResidue>
+        <requiredResidue>880</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -331,7 +331,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>680</requiredResidue>
+        <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -387,7 +387,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1120</requiredResidue>
+        <requiredResidue>1350</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -415,7 +415,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1280</requiredResidue>
+        <requiredResidue>2400</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -527,7 +527,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>460</requiredResidue>
+        <requiredResidue>620</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -555,7 +555,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>620</requiredResidue>
+        <requiredResidue>1500</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -583,7 +583,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>580</requiredResidue>
+        <requiredResidue>700</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -611,12 +611,11 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>620</requiredResidue>
+        <requiredResidue>760</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_ShieldBurnCapacitor</defName>
     <label>shield-burn capacitor</label>
@@ -640,7 +639,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1200</requiredResidue>
+        <requiredResidue>1300</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -668,7 +667,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1150</requiredResidue>
+        <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -696,12 +695,11 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1250</requiredResidue>
+        <requiredResidue>1450</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
   </ThingDef>
-
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_TurretModule_BreachAegisRelay</defName>
     <label>breach aegis relay</label>
@@ -725,7 +723,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>280</requiredResidue>
+        <requiredResidue>420</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
@@ -753,7 +751,7 @@
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>1250</requiredResidue>
+        <requiredResidue>2600</requiredResidue>
         <category>TurretSystems</category>
       </li>
     </modExtensions>
