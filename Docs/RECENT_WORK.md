@@ -1,5 +1,22 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-22 — Fix Forge implant subfilter placement
+- Corrected Forge implant subfilter routing so `Cohort Sync Subnode` appears under Brain, optic/sight implants appear under Eyes, and stomach implants appear under Organs instead of falling back to Body.
+- Added explicit identity overrides before broad text matching to avoid description/summary keywords misclassifying implant recipes.
+- Restored Forge craftability for `ABY_InfernalEye` by adding the Abyssal Forge recipe user and bionic unfinished-item definition to its `recipeMaker`.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/UI/Forge/Window_AbyssalForgeConsole.cs
+Defs/ThingDefs/ABY_InfernalEye.xml
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-21 — Fix miniboss classification for overhead HP bars
 - Fixed `ABY_AbyssalPawnClassificationUtility.IsMajorBoss` so explicit `ABY_AbyssalPawnClassificationExtension.isMiniBoss=true` wins over legacy difficulty-scaling `role=boss` values.
 - This specifically unblocks Warden of Ash and Choir Engine from the compact overhead HP-bar renderer: they still use boss-family encounter plumbing, but UI systems no longer filter them out as major bosses.

@@ -1024,15 +1024,17 @@ namespace AbyssalProtocol
         {
             string text = BuildRecipeSearchText(recipe);
             if (RecipeIdentityContains(recipe, "herald carapace mesh", "harmonic mesh", "lawwoven carapace mesh")) return ImplantsFilterBody;
+            if (RecipeIdentityContains(recipe, "cohort sync subnode")) return ImplantsFilterBrain;
+            if (RecipeIdentityContains(recipe, "judgement optic halo", "dominion sight crown")) return ImplantsFilterEyes;
             if (RecipeIdentityContains(recipe, "archon tendon spine", "verdict tendon spine")) return ImplantsFilterSpine;
             if (RecipeIdentityContains(recipe, "cinder mandible seal")) return ImplantsFilterOrgans;
             if (RecipeIdentityContains(recipe, "null chorus collar")) return ImplantsFilterNeck;
             if (RecipeIdentityContains(recipe, "breach tendon weave")) return ImplantsFilterLegs;
-            if (text.Contains("eye")) return ImplantsFilterEyes;
-            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("brain")) return ImplantsFilterBrain;
+            if (text.Contains("eye") || text.Contains("optic")) return ImplantsFilterEyes;
+            if (text.Contains("cortex") || text.Contains("subcore") || text.Contains("subnode") || text.Contains("brain")) return ImplantsFilterBrain;
             if (text.Contains("collar") || text.Contains("neck")) return ImplantsFilterNeck;
             if (text.Contains("spine")) return ImplantsFilterSpine;
-            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung") || text.Contains("mandible")) return ImplantsFilterOrgans;
+            if (text.Contains("heart") || text.Contains("kidney") || text.Contains("liver") || text.Contains("lung") || text.Contains("stomach") || text.Contains("mandible")) return ImplantsFilterOrgans;
             if (text.Contains("leg") || text.Contains("tendon")) return ImplantsFilterLegs;
             if (text.Contains("carapace mesh") || text.Contains("mesh")) return ImplantsFilterBody;
             if (text.Contains("arm") || text.Contains("claw") || text.Contains("servo") || text.Contains("hand")) return ImplantsFilterArms;
