@@ -1,5 +1,20 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-21 — Add equipment and implant balance reference document
+- Added `Docs/EQUIPMENT_BALANCE_REFERENCE.md` as the central source for future weapon, apparel, implant, turret module and Forge reward balance work.
+- Captured the 9-tier philosophy, current T1-T5 scope, vanilla-endgame T1 baseline, ranged role bands, melee/apparel/implant budgets, stat-card visibility rules, and current source ownership tables.
+- Updated quick index and content matrix so future AI-assisted patches route equipment balance work through the new reference before editing XML/C#.
+- Docs only; no XML, C#, assets or assemblies changed. Build not required.
+
+Changed areas:
+
+```text
+Docs/EQUIPMENT_BALANCE_REFERENCE.md
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-21 — Fix miniboss classification for overhead HP bars
 - Fixed `ABY_AbyssalPawnClassificationUtility.IsMajorBoss` so explicit `ABY_AbyssalPawnClassificationExtension.isMiniBoss=true` wins over legacy difficulty-scaling `role=boss` values.
 - This specifically unblocks Warden of Ash and Choir Engine from the compact overhead HP-bar renderer: they still use boss-family encounter plumbing, but UI systems no longer filter them out as major bosses.
@@ -810,11 +825,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced the large-pawn vertical offset clamp so Choir Engine's oversized graphic does not push the bar excessively far away from the sprite.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required on the user's save/video scenario.
 
+## 2026-05-21 — Special weapon damage profile UI
 
-## 2026-05-21 — Apparel balance and crafting gate pass
-- Rebalanced the current apparel spread so T1 combat armor now sits near vanilla endgame armor expectations while later armor retains room for the future 9-tier progression.
-- Added direct armor-aegis wiring to Saint Aegis Carapace and Crowned Core Plate ThingDefs while keeping patch fallback compatibility.
-- Reduced passive hover armor drafted speed bonuses from broken +3.0 values to controlled role bonuses.
-- Added missing Null Acolyte Vestment/Cowl Forge recipes and added Crafting skill/work gates across apparel recipes.
-- Preserved the stat-card rounding rule: ShootingAccuracyPawn, MeleeHitChance and MeleeDodgeChance positive offsets should not be tuned below 0.10, because smaller values can display as 0.0 and look broken in item cards.
-- XML/docs only; build not required. Runtime smoke test still required for armor-aegis, recipe visibility and hover speed behavior.
+- Added `CompABY_SpecialWeaponDamageInfo` and `ABY_SpecialWeaponDamageInfoUtility` so weapons whose real output comes from C# effects can expose those damage layers in the vanilla InfoCard.
+- Wired Specter Lash Projector, Crownshard Stormcaster, and Oblivion Choir to show base impact plus tether, storm-node, branch/resonance, and collapse damage profiles instead of relying on low XML projectile damage alone.
+- Added the same combat-profile details to Forge pattern details/tooltips through `AbyssalForgeProgressUtility.GetPatternBrowserDetails`, and expanded selected-pattern detail height so long special profiles remain readable.
+- Added EN/RU keyed localization for the special weapon damage profile block.
+- Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required.
