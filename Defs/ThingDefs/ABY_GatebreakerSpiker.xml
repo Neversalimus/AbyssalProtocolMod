@@ -58,7 +58,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_GatebreakerSpikeBolt</defaultProjectile>
         <warmupTime>1.65</warmupTime>
-        <range>34.5</range>
+        <range>42.0</range>
         <burstShotCount>3</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundAiming>ABY_VesperLanceAim</soundAiming>

@@ -817,3 +817,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added the same combat-profile details to Forge pattern details/tooltips through `AbyssalForgeProgressUtility.GetPatternBrowserDetails`, and expanded selected-pattern detail height so long special profiles remain readable.
 - Added EN/RU keyed localization for the special weapon damage profile block.
 - Build verified with direct local Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` is still not verified in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in-game is still required.
+
+## 2026-05-21 — Player weapon range role pass
+
+- Applied a ranged-weapon role identity pass across the currently introduced player-facing weapon spread.
+- Moved player weapon ranges into a clearer 30–52 cell band by role: sidearms/scatter/suppression at 30–32, carbines/repeaters at 33–36, main/heavy rifles at 37–40, marksman/lance/spikers at 41–45, and siege/apex tools at 47–52.
+- Kept the pass XML-only: no projectile C# behavior, special damage profile UI, recipes, costs, unlock thresholds, enemy weapons, or assemblies were changed.
+- Runtime smoke testing in-game is still required to validate encounter spacing, kiting pressure, and turret/cover interactions after the range increase.

@@ -52,7 +52,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_SigilNeedleProjectile</defaultProjectile>
         <warmupTime>0.70</warmupTime>
-        <range>24.9</range>
+        <range>31.0</range>
         <burstShotCount>6</burstShotCount>
         <ticksBetweenBurstShots>5</ticksBetweenBurstShots>
         <soundCast>ABY_SigilRepeaterFire</soundCast>

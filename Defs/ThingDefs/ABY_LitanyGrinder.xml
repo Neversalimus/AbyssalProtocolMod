@@ -55,7 +55,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_LitanyRoundProjectile</defaultProjectile>
         <warmupTime>2.05</warmupTime>
-        <range>25.9</range>
+        <range>32.0</range>
         <burstShotCount>16</burstShotCount>
         <ticksBetweenBurstShots>4</ticksBetweenBurstShots>
         <soundAiming>ABY_LitanyGrinderAim</soundAiming>

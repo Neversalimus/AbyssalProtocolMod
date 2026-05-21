@@ -47,7 +47,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AshChoirChargeProjectile</defaultProjectile>
         <warmupTime>1.55</warmupTime>
-        <range>26.9</range>
+        <range>38.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
         <soundCast>Shot_ChargeRifle</soundCast>

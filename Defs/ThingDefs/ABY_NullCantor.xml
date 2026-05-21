@@ -56,7 +56,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_NullCantorPulse</defaultProjectile>
         <warmupTime>0.85</warmupTime>
-        <range>27.9</range>
+        <range>34.0</range>
         <burstShotCount>2</burstShotCount>
         <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
         <soundCast>Shot_ChargeRifle</soundCast>

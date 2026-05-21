@@ -47,7 +47,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_BreachCannonBolt</defaultProjectile>
         <warmupTime>2.65</warmupTime>
-        <range>38.9</range>
+        <range>47.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>16</ticksBetweenBurstShots>
         <soundAiming>ABY_UltraPlasmaCharge</soundAiming>

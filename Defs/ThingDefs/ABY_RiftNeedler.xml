@@ -44,7 +44,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_RiftNeedleProjectile</defaultProjectile>
         <warmupTime>0.82</warmupTime>
-        <range>27.9</range>
+        <range>33.0</range>
         <burstShotCount>4</burstShotCount>
         <ticksBetweenBurstShots>7</ticksBetweenBurstShots>
         <soundCast>ABY_SigilRepeaterFire</soundCast>

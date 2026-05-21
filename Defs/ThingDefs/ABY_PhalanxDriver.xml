@@ -56,7 +56,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_PhalanxSpikeProjectile</defaultProjectile>
         <warmupTime>1.25</warmupTime>
-        <range>30.9</range>
+        <range>39.0</range>
         <burstShotCount>3</burstShotCount>
         <ticksBetweenBurstShots>7</ticksBetweenBurstShots>
         <soundAiming>ABY_PhalanxDriverAim</soundAiming>

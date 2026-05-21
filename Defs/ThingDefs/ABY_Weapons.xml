@@ -49,7 +49,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_RiftCarbineBeamBurst</defaultProjectile>
         <warmupTime>1.10</warmupTime>
-        <range>28.9</range>
+        <range>35.0</range>
         <burstShotCount>3</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundCast>Shot_ChargeRifle</soundCast>

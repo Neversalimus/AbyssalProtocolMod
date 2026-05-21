@@ -47,7 +47,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AnchorSpikeProjectile</defaultProjectile>
         <warmupTime>1.35</warmupTime>
-        <range>29.9</range>
+        <range>35.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundCast>Shot_ChargeRifle</soundCast>

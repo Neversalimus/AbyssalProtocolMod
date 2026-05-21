@@ -59,7 +59,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_CrownspikeBolt</defaultProjectile>
         <warmupTime>2.70</warmupTime>
-        <range>60.0</range>
+        <range>52.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundAiming>ABY_CrownspikeRailCharge</soundAiming>

@@ -54,7 +54,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_AshenPikeSpike</defaultProjectile>
         <warmupTime>1.35</warmupTime>
-        <range>29.9</range>
+        <range>36.0</range>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundCast>ABY_AshenPikeFire</soundCast>
