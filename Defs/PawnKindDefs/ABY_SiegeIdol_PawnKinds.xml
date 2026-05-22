@@ -5,7 +5,7 @@
     <label>siege idol</label>
     <race>ABY_SiegeIdol</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>600</combatPower>
+    <combatPower>680</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -45,7 +45,7 @@
     <label>siege idol escort</label>
     <race>ABY_SiegeIdol</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>540</combatPower>
+    <combatPower>680</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -64,7 +64,7 @@
         <contentTier>5</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>540</budgetCost>
+        <budgetCost>680</budgetCost>
         <selectionWeight>0.14</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

@@ -5,7 +5,7 @@
     <label>halo husk</label>
     <race>ABY_HaloHusk</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>380</combatPower>
+    <combatPower>560</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -24,8 +24,8 @@
         <contentTier>4</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>520</budgetCost>
-        <selectionWeight>0.01</selectionWeight>
+        <budgetCost>560</budgetCost>
+        <selectionWeight>0.12</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>false</allowFutureAutoEscalation>
         <encounterPools>

@@ -13,6 +13,7 @@
     <statBases>
       <WorkToMake>160000</WorkToMake>
       <Mass>11.8</Mass>
+      <MarketValue>9600</MarketValue>
       <AccuracyTouch>0.42</AccuracyTouch>
       <AccuracyShort>0.61</AccuracyShort>
       <AccuracyMedium>0.66</AccuracyMedium>

@@ -5,7 +5,7 @@
     <label>rift sniper</label>
     <race>ABY_RiftSniper</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>450</combatPower>
+    <combatPower>520</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <modExtensions>
@@ -16,7 +16,7 @@
         <contentTier>3</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>450</budgetCost>
+        <budgetCost>520</budgetCost>
         <selectionWeight>0.68</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

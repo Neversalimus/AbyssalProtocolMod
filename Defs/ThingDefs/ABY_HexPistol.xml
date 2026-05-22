@@ -30,8 +30,8 @@
     </recipeMaker>
 
     <costList>
-      <ABY_AbyssalResidue>8</ABY_AbyssalResidue>
-      <Plasteel>22</Plasteel>
+      <ABY_AbyssalResidue>10</ABY_AbyssalResidue>
+      <Plasteel>28</Plasteel>
       <Steel>18</Steel>
       <ComponentIndustrial>2</ComponentIndustrial>
     </costList>
@@ -39,7 +39,7 @@
     <statBases>
       <WorkToMake>9000</WorkToMake>
       <Mass>1.25</Mass>
-      <MarketValue>780</MarketValue>
+      <MarketValue>980</MarketValue>
       <AccuracyTouch>0.86</AccuracyTouch>
       <AccuracyShort>0.78</AccuracyShort>
       <AccuracyMedium>0.55</AccuracyMedium>
@@ -53,7 +53,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_HexPistolBolt</defaultProjectile>
         <warmupTime>0.65</warmupTime>
-        <range>30.0</range>
+        <range>26.0</range>
         <burstShotCount>2</burstShotCount>
         <ticksBetweenBurstShots>8</ticksBetweenBurstShots>
         <soundCast>Shot_ChargeRifle</soundCast>

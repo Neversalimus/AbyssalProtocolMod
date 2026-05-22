@@ -14,6 +14,7 @@
     <statBases>
       <WorkToMake>90000</WorkToMake>
       <Mass>6.5</Mass>
+      <MarketValue>8500</MarketValue>
       <AccuracyTouch>0.54</AccuracyTouch>
       <AccuracyShort>0.68</AccuracyShort>
       <AccuracyMedium>0.60</AccuracyMedium>
@@ -30,10 +31,12 @@
     </recipeMaker>
     <costList>
       <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
-      <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
-      <Plasteel>500</Plasteel>
-      <ComponentSpacer>12</ComponentSpacer>
-      <Steel>750</Steel>
+      <ABY_AbyssalResidue>75</ABY_AbyssalResidue>
+      <Plasteel>220</Plasteel>
+      <Uranium>45</Uranium>
+      <Gold>35</Gold>
+      <ComponentSpacer>16</ComponentSpacer>
+      <Steel>220</Steel>
     </costList>
     <weaponTags>
       <li>SpacerGun</li>

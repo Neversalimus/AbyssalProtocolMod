@@ -1,24 +1,16 @@
+## 2026-05-22 — Enemy budget and player value balance pass
+
+- Applied an XML-only balance/value pass after the enemy range role pass.
+- Updated combatPower/budgetCost for non-boss ranged and elite hostile roles only: Hexgun Thrall, Rift Sapper, Null Priest, Rift Sniper, Halo Husk, and Siege Idol/Siege Idol Escort.
+- Deliberately did not use budgetCost as a boss/miniboss balance lever for Reactor Saint, Archon Beast, Warden of Ash, or Rift Butcher; those should remain balanced through summon costs, escorts, phase logic, shields/HP, cooldowns, rewards, and runtime encounter design.
+- Added or raised MarketValue/economy pressure for high-impact player weapons: Ultra Plasma Rifle, Oblivion Choir, Crownspike Rail, Vesper Lance, Gatebreaker Spiker, Null Marksman Rifle, Rift Carbine, and Hex Pistol.
+- Reworked Ultra Plasma Rifle cost away from excessive bulk steel/plasteel and toward a more appropriate post-Saint mix of residue, spacer components, uranium, gold, and reduced bulk materials.
+- Shortened Hex Pistol range to keep it as a sidearm instead of a cheap universal 30-cell weapon.
+- Raised Saint Aegis Carapace MarketValue to better reflect its armor and Aegis shield utility.
+- Abyssal Attunement was intentionally left unchanged because its levels are expensive and residue-earned; future tuning should only happen after real progression tests, not as a blind nerf.
+- C# build not required; XML parse should be checked when packaging.
+
 # Abyssal Protocol — Recent Work Notes
-
-## 2026-05-22 — Apply enemy range role pass
-- Raised hostile ranged-role distances after the player weapon range pass so enemies keep distinct tactical pressure instead of collapsing into the same mid-range band.
-- Updated Hexgun Thrall, Rift Sapper, Null Priest, Halo Husk, Rift Sniper, Siege Idol, Reactor Saint, and Rift Butcher XML tuning only.
-- Added or tightened preferred/minimum spacing where supported by existing shooter comps, with the largest increases reserved for sniper, siege, and boss artillery roles.
-- C# build not required; XML parsing verified, but RimWorld runtime balance testing is still required.
-
-Changed areas:
-
-```text
-Defs/ThingDefs/ABY_HexgunThrall_Content.xml
-Defs/ThingDefs/ABY_RiftSapper_Content.xml
-Defs/ThingDefs/ABY_NullPriest_Content.xml
-Defs/ThingDefs/ABY_HaloHusk_Content.xml
-Defs/ThingDefs/ABY_RiftSniper_Content.xml
-Defs/ThingDefs/ABY_SiegeIdol_Content.xml
-Defs/ThingDefs/ABY_ReactorSaint_Content.xml
-Defs/ThingDefs/ABY_RiftButcher_Content.xml
-Docs/RECENT_WORK.md
-```
 
 ## 2026-05-22 — Complete current monster Bestiary coverage
 - Added missing Bestiary tracking entries for `ABY_HaloHusk`, `ABY_RiftButcher`, and `ABY_ArchonOfRupture` so all current hostile PawnKind races resolve into the threat codex through kind or race fallback.

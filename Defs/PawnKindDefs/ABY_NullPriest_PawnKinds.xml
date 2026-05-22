@@ -5,7 +5,7 @@
     <label>null priest</label>
     <race>ABY_NullPriest</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>360</combatPower>
+    <combatPower>390</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <modExtensions>
@@ -16,7 +16,7 @@
         <contentTier>3</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
         <role>support</role>
-        <budgetCost>360</budgetCost>
+        <budgetCost>390</budgetCost>
         <selectionWeight>0.80</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

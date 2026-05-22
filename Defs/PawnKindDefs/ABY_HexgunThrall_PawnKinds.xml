@@ -5,7 +5,7 @@
     <label>hexgun thrall</label>
     <race>ABY_HexgunThrall</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>210</combatPower>
+    <combatPower>235</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -24,7 +24,7 @@
         <contentTier>2</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
         <role>support</role>
-        <budgetCost>210</budgetCost>
+        <budgetCost>235</budgetCost>
         <selectionWeight>0.95</selectionWeight>
         <maxPlanCount>3</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

@@ -24,14 +24,14 @@
       </recipeUsers>
     </recipeMaker>
     <costList>
-      <ABY_AbyssalResidue>12</ABY_AbyssalResidue>
-      <Plasteel>35</Plasteel>
-      <ComponentIndustrial>3</ComponentIndustrial>
+      <ABY_AbyssalResidue>16</ABY_AbyssalResidue>
+      <Plasteel>45</Plasteel>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <statBases>
       <WorkToMake>18000</WorkToMake>
       <Mass>2.8</Mass>
-      <MarketValue>1850</MarketValue>
+      <MarketValue>2300</MarketValue>
       <AccuracyTouch>0.84</AccuracyTouch>
       <AccuracyShort>0.78</AccuracyShort>
       <AccuracyMedium>0.66</AccuracyMedium>
