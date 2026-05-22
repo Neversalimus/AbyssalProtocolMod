@@ -1796,7 +1796,22 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            Thing thing = GenSpawn.Spawn(manifestationDef, spawnCell, Map, WipeMode.Vanish);
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(
+                manifestationDef,
+                spawnCell,
+                Map,
+                out Thing thing,
+                null,
+                Rot4.North,
+                WipeMode.Vanish,
+                false,
+                false,
+                "boss arrival manifestation"))
+            {
+                failReason = "ABY_CircleFail_NoBossArrival".Translate();
+                return false;
+            }
+
             if (thing is Building_ABY_ReactorSaintManifestation reactorManifestation)
             {
                 reactorManifestation.Initialize(

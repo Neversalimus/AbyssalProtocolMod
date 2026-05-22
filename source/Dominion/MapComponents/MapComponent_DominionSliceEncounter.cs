@@ -169,6 +169,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextHeartGuardianSpawnRetryTick, "nextHeartGuardianSpawnRetryTick", 0);
             Scribe_Values.Look(ref scheduledHeartGuardianSpawnTick, "scheduledHeartGuardianSpawnTick", 0);
             Scribe_Values.Look(ref heartGuardianSpawnAttempts, "heartGuardianSpawnAttempts", 0);
+            Scribe_Values.Look(ref nextReferenceRestoreTick, "nextReferenceRestoreTick", 0);
             Scribe_Values.Look(ref lastWaveLabel, "lastWaveLabel");
             Scribe_Values.Look(ref lastWaveSummary, "lastWaveSummary");
             Scribe_References.Look(ref heart, "heart");

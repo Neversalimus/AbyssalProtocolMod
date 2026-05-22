@@ -7,9 +7,9 @@ namespace AbyssalProtocol
 {
     /// <summary>
     /// Shared defensive spawn helpers for large-modpack hardening.
-    /// Package 4 intentionally only adds this foundation class; no existing system calls it yet.
-    /// Later packages can adopt it one subsystem at a time, so Reactor Saint, Dominion map generation,
-    /// horde portals and boss arrivals are not changed by this package.
+    /// Use this for Abyssal runtime systems that spawn or transfer pawns/buildings near active combat,
+    /// portals, Dominion maps, power grids, or player infrastructure. The helper deliberately fails closed
+    /// instead of falling back to unsafe map-center spawns.
     /// </summary>
     public static class ABY_SafeSpawnUtility
     {
@@ -222,7 +222,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            Map originalMap = pawn.MapHeld;
+            IntVec3 originalCell = pawn.PositionHeld;
+            Rot4 originalRotation = pawn.Rotation;
+            bool wasSpawned = pawn.Spawned;
             bool wasDrafted = preserveDrafted && pawn.drafter != null && pawn.drafter.Drafted;
+
             if (!TryFindStandableCellNear(nearCell, targetMap, out IntVec3 spawnCell, 8))
             {
                 Log.Warning("[Abyssal Protocol] " + BuildFailure("Cannot transfer pawn; no safe destination cell found near " + (nearCell.IsValid ? nearCell.ToString() : "<invalid>") + ": " + SafeThingLabel(pawn), context));
@@ -247,6 +252,11 @@ namespace AbyssalProtocol
             Pawn spawnedPawn;
             if (!TrySpawnPawnSafe(pawn, spawnCell, targetMap, out spawnedPawn, Rot4.Random, WipeMode.Vanish, false, false, context))
             {
+                if (wasSpawned)
+                {
+                    TryRollbackPawnTransfer(pawn, originalMap, originalCell, originalRotation, wasDrafted, preserveDrafted, context);
+                }
+
                 return false;
             }
 
@@ -267,6 +277,42 @@ namespace AbyssalProtocol
             catch (Exception ex)
             {
                 Log.Warning("[Abyssal Protocol] " + BuildFailure("Transfer post-spawn notification failed for " + SafeThingLabel(spawnedPawn) + ": " + ex.GetType().Name + ": " + ex.Message, context) + "\n" + ex);
+            }
+
+            return true;
+        }
+
+        private static bool TryRollbackPawnTransfer(
+            Pawn pawn,
+            Map originalMap,
+            IntVec3 originalCell,
+            Rot4 originalRotation,
+            bool wasDrafted,
+            bool preserveDrafted,
+            string context)
+        {
+            if (pawn == null || pawn.Destroyed || pawn.Dead || originalMap == null || pawn.Spawned)
+            {
+                return false;
+            }
+
+            IntVec3 rollbackCell;
+            if (!TryFindStandableCellNear(originalCell, originalMap, out rollbackCell, 8))
+            {
+                Log.Error("[Abyssal Protocol] " + BuildFailure("Transfer rollback failed: no safe origin cell for " + SafeThingLabel(pawn) + ".", context));
+                return false;
+            }
+
+            Pawn restoredPawn;
+            if (!TrySpawnPawnSafe(pawn, rollbackCell, originalMap, out restoredPawn, originalRotation, WipeMode.Vanish, false, false, context))
+            {
+                Log.Error("[Abyssal Protocol] " + BuildFailure("Transfer rollback failed to respawn " + SafeThingLabel(pawn) + ".", context));
+                return false;
+            }
+
+            if (preserveDrafted && restoredPawn.drafter != null)
+            {
+                restoredPawn.drafter.Drafted = wasDrafted;
             }
 
             return true;

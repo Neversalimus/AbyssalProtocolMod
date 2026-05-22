@@ -223,12 +223,10 @@ namespace AbyssalProtocol
             }
 
             IntVec3 returnCell = session.sourceReturnCell.IsValid ? session.sourceReturnCell : sourceMap.Center;
-            if (!returnCell.InBounds(sourceMap) || !returnCell.Standable(sourceMap))
+            if (!ABY_SafeSpawnUtility.TryFindStandableCellNear(returnCell, sourceMap, out returnCell, 10))
             {
-                if (!CellFinder.TryFindRandomCellNear(sourceMap.Center, sourceMap, 8, c => c.Standable(sourceMap), out returnCell))
-                {
-                    returnCell = sourceMap.Center;
-                }
+                failReason = TranslateOrFallback("ABY_DominionPocketRuntimeFail_NoEntryCell", "No safe return cell could be found on the source map.");
+                return false;
             }
 
             int transferred = TransferStrikeTeamFaultTolerant(pawns, pocketMap, sourceMap, returnCell);
@@ -367,10 +365,15 @@ namespace AbyssalProtocol
                     pawn.DeSpawn();
                 }
 
-                GenSpawn.Spawn(pawn, spawnCell, targetMap, Rot4.Random, WipeMode.Vanish, true, false);
-                usedCells?.Add(spawnCell);
-                PostTransferPawnCleanup(pawn, wasDrafted);
-                return pawn.Spawned && pawn.MapHeld == targetMap;
+                if (!ABY_SafeSpawnUtility.TrySpawnPawnSafe(pawn, spawnCell, targetMap, out Pawn spawnedPawn, Rot4.Random, WipeMode.Vanish, true, false, "dominion strike-team transfer"))
+                {
+                    TryRestorePawnAfterFailedTransfer(pawn, originalMap, originalCell, wasDrafted);
+                    return false;
+                }
+
+                usedCells?.Add(spawnedPawn.PositionHeld);
+                PostTransferPawnCleanup(spawnedPawn, wasDrafted);
+                return spawnedPawn.Spawned && spawnedPawn.MapHeld == targetMap;
             }
             catch (Exception ex)
             {
@@ -421,23 +424,19 @@ namespace AbyssalProtocol
                 return;
             }
 
-            IntVec3 restoreCell = originalCell;
-            if (!restoreCell.IsValid || !restoreCell.InBounds(originalMap) || !restoreCell.Standable(originalMap))
+            if (!ABY_SafeSpawnUtility.TryFindStandableCellNear(originalCell, originalMap, out IntVec3 restoreCell, 10))
             {
-                if (!CellFinder.TryFindRandomCellNear(originalMap.Center, originalMap, 10, c => c.Standable(originalMap), out restoreCell))
-                {
-                    restoreCell = originalMap.Center;
-                }
+                Log.Error("[Abyssal Protocol] Failed to restore pawn after dominion transfer failure: no safe origin cell for " + pawn.ToStringSafe());
+                return;
             }
 
-            try
+            if (ABY_SafeSpawnUtility.TrySpawnPawnSafe(pawn, restoreCell, originalMap, out Pawn restoredPawn, Rot4.Random, WipeMode.Vanish, true, false, "dominion transfer rollback"))
             {
-                GenSpawn.Spawn(pawn, restoreCell, originalMap, Rot4.Random, WipeMode.Vanish, true, false);
-                PostTransferPawnCleanup(pawn, wasDrafted);
+                PostTransferPawnCleanup(restoredPawn, wasDrafted);
             }
-            catch (Exception ex)
+            else
             {
-                Log.Error("[Abyssal Protocol] Failed to restore pawn after dominion transfer failure: " + pawn.ToStringSafe() + " | " + ex);
+                Log.Error("[Abyssal Protocol] Failed to restore pawn after dominion transfer failure: " + pawn.ToStringSafe());
             }
         }
 
@@ -478,13 +477,8 @@ namespace AbyssalProtocol
 
         private static bool IsValidTransferCell(IntVec3 cell, Map map, HashSet<IntVec3> usedCells)
         {
-            return cell.IsValid
-                && cell.InBounds(map)
-                && cell.Standable(map)
-                && !cell.Fogged(map)
-                && cell.GetFirstPawn(map) == null
-                && cell.GetEdifice(map) == null
-                && (usedCells == null || !usedCells.Contains(cell));
+            return (usedCells == null || !usedCells.Contains(cell))
+                && ABY_SafeSpawnUtility.IsCellSpawnable(cell, map);
         }
 
         private static List<Pawn> GetPocketPlayerPawns(Map map)
@@ -920,8 +914,12 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Thing thing = ThingMaker.MakeThing(def);
-            GenSpawn.Spawn(thing, cell, pocketMap, Rot4.North, WipeMode.Vanish, false, false);
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(def, cell, pocketMap, out Thing thing, null, Rot4.North, WipeMode.Vanish, false, false, "dominion pocket fallback exit"))
+            {
+                failReason = "ABY_DominionPocketRuntimeFail_NoEntryCell".Translate();
+                return false;
+            }
+
             if (thing is Building_ABY_DominionPocketExit exit)
             {
                 exit.BindSession(session.sessionId);

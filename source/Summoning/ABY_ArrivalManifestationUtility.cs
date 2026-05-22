@@ -217,7 +217,21 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            Thing thing = GenSpawn.Spawn(manifestationDef, spawnCell, map, WipeMode.Vanish);
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(
+                manifestationDef,
+                spawnCell,
+                map,
+                out Thing thing,
+                null,
+                Rot4.North,
+                WipeMode.Vanish,
+                false,
+                false,
+                "arrival manifestation spawn"))
+            {
+                failReason = "Could not safely spawn manifestation building at " + spawnCell + ".";
+                return false;
+            }
 
             switch (manifestationType)
             {
@@ -347,9 +361,26 @@ namespace AbyssalProtocol
             for (int i = 0; i < generated.Count; i++)
             {
                 Pawn pawn = generated[i];
-                IntVec3 spawnCell = FindSpawnCellNear(arrivalCell, map, i);
-                GenSpawn.Spawn(pawn, spawnCell, map, Rot4.Random);
-                spawned.Add(pawn);
+                if (!TryFindSpawnCellNear(arrivalCell, map, i, out IntVec3 spawnCell))
+                {
+                    pawn.Destroy(DestroyMode.Vanish);
+                    continue;
+                }
+
+                if (ABY_SafeSpawnUtility.TrySpawnPawnSafe(pawn, spawnCell, map, out Pawn spawnedPawn, Rot4.Random, WipeMode.Vanish, false, false, "manifested hostile spawn"))
+                {
+                    spawned.Add(spawnedPawn);
+                }
+                else
+                {
+                    pawn.Destroy(DestroyMode.Vanish);
+                }
+            }
+
+            if (spawned.Count <= 0)
+            {
+                failReason = "No manifested hostile pawns could be safely spawned.";
+                return false;
             }
 
             LordJob lordJob = new LordJob_AssaultColony(
@@ -534,20 +565,34 @@ namespace AbyssalProtocol
             }
         }
 
-        private static IntVec3 FindSpawnCellNear(IntVec3 root, Map map, int index)
+        private static bool TryFindSpawnCellNear(IntVec3 root, Map map, int index, out IntVec3 cell)
         {
-            int radius = 2 + Mathf.Min(index, 3);
-
-            for (int i = 0; i < 30; i++)
+            cell = IntVec3.Invalid;
+            if (map == null)
             {
-                IntVec3 candidate = root + GenRadial.RadialPattern[Rand.Range(0, Mathf.Min(GenRadial.NumCellsInRadius(radius), GenRadial.RadialPattern.Length))];
+                return false;
+            }
+
+            int radius = 2 + Mathf.Min(index, 5);
+            IntVec3 origin = root.IsValid && root.InBounds(map) ? root : map.Center;
+            if (IsUsableManifestCell(origin, map))
+            {
+                cell = origin;
+                return true;
+            }
+
+            int maxPattern = Mathf.Min(GenRadial.NumCellsInRadius(radius), GenRadial.RadialPattern.Length);
+            for (int i = 0; i < maxPattern; i++)
+            {
+                IntVec3 candidate = origin + GenRadial.RadialPattern[i];
                 if (IsUsableManifestCell(candidate, map))
                 {
-                    return candidate;
+                    cell = candidate;
+                    return true;
                 }
             }
 
-            return root;
+            return ABY_SafeSpawnUtility.TryFindStandableCellNear(origin, map, out cell, Mathf.Max(4, radius + 2));
         }
 
         private static bool TryResolveManifestationCell(Map map, IntVec3 requestedCell, out IntVec3 cell)
@@ -642,21 +687,7 @@ namespace AbyssalProtocol
 
         private static bool IsUsableManifestCell(IntVec3 cell, Map map)
         {
-            if (!cell.IsValid || map == null || !cell.InBounds(map) || !cell.Standable(map) || cell.Fogged(map))
-            {
-                return false;
-            }
-
-            List<Thing> things = cell.GetThingList(map);
-            for (int i = 0; i < things.Count; i++)
-            {
-                if (things[i] is Pawn)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return ABY_SafeSpawnUtility.IsCellSpawnable(cell, map);
         }
 
         private static string GetDefName(ABY_ArrivalManifestationType manifestationType)

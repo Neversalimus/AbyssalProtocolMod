@@ -154,7 +154,21 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Thing spawned = GenSpawn.Spawn(manifestationDef, spawnCell, pawn.MapHeld, WipeMode.Vanish);
+            if (!ABY_SafeSpawnUtility.TrySpawnThingDefSafe(
+                manifestationDef,
+                spawnCell,
+                pawn.MapHeld,
+                out Thing spawned,
+                null,
+                Rot4.North,
+                WipeMode.Vanish,
+                false,
+                false,
+                "breach arrival manifestation"))
+            {
+                return;
+            }
+
             if (spawned is Building_ABY_BreachBruteArrivalManifestation breachManifestation)
             {
                 breachManifestation.Initialize(Mathf.Max(30, Props.manifestationWarmupTicks), side);
@@ -174,22 +188,17 @@ namespace AbyssalProtocol
 
             int offset = Mathf.Clamp(Props.manifestationOffsetCells, 0, 2);
             IntVec3 preferred = pawn.Position + (side.FacingCell * offset);
-            if (preferred.IsValid && preferred.InBounds(pawn.MapHeld) && preferred.Walkable(pawn.MapHeld))
+            if (ABY_SafeSpawnUtility.IsCellSpawnable(preferred, pawn.MapHeld))
             {
                 return preferred;
             }
 
-            if (CellFinder.TryFindRandomCellNear(
-                pawn.Position,
-                pawn.MapHeld,
-                2,
-                c => c.InBounds(pawn.MapHeld) && c.Walkable(pawn.MapHeld),
-                out IntVec3 fallback))
+            if (ABY_SafeSpawnUtility.TryFindStandableCellNear(pawn.Position, pawn.MapHeld, out IntVec3 fallback, 3))
             {
                 return fallback;
             }
 
-            return pawn.Position;
+            return IntVec3.Invalid;
         }
 
         private Rot4 ResolveApproachSide(Pawn pawn)

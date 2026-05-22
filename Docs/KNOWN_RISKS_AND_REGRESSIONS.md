@@ -728,3 +728,20 @@ In-game checks:
 - Portal spawn counts must not be consumed merely because the portal perimeter is temporarily full. Blocked spawn attempts should retry with a short cadence and expand search radius after repeated failures.
 - Runtime static caches/throttles must be cleared or protected against tick rollback/map-ID reuse on game load/switch. `ABY_StabilityDiagnosticsGameComponent.FinalizeInit()` now clears runtime target, power-net recovery and material helper state.
 - Delayed recovery state scheduled by map components should be exposed through `Scribe_Values` when losing that delay could weaken a save-recovery fix.
+
+## Manifestation spawn and Dominion transfer safety risks — 2026-05-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Manifestation buildings wiping infrastructure | P1 | summoning/arrival/spawn safety | Hidden conduits, blueprints, frames, or pass-through utility buildings disappear when an arrival VFX building spawns on an apparently standable cell | Spawn arrival manifestation buildings through `ABY_SafeSpawnUtility` or use the same cell predicate: no pawns, buildings, blueprints, frames, or building-category blockers. |
+| Breach arrival fallback on pawn position | P1 | enemy spawn presentation | A breach arrival visual tries to spawn on the pawn itself when nearby cells are blocked | `CompABY_BreachArrival` must fail closed when no safe cell exists; do not return `pawn.Position` as a fallback. |
+| Manifested hostile pack root fallback | P2 | hostile pack spawning | Pawns spawn on the manifestation root or fail unpredictably when nearby cells are crowded | `TryFindSpawnCellNear` must return failure instead of returning the root cell; failed individual pawn spawns should be destroyed safely or retried by the caller. |
+| Dominion transfer loses pawns on spawn failure | P1/P2 | Dominion pocket/save safety | A colonist is despawned from the source map and cannot be placed on the target map after a third-party spawn exception or blocked target cell | Transfer paths must pre-resolve safe cells and attempt rollback to the origin map if target spawn fails. |
+| OGG files contain non-audio streams | P1/P2 | audio/import | Unity/RimWorld may fail to import or play a song/ambience file that includes Theora cover/video streams in an OGG container | Keep RimWorld sound/song assets as audio-only WAV/OGG. Recheck with `ffprobe` when adding externally generated OGG files. |
+
+In-game checks:
+
+- Spawn each arrival manifestation type near dense player infrastructure and confirm no conduits, blueprints, frames, or utility buildings are wiped.
+- Spawn Breach Brutes in a crowded area and confirm no errors or forced manifestation spawn on occupied pawn cells.
+- Enter and return from Dominion Slice with multiple drafted colonists, including one test where destination cells are crowded; confirm no pawn is lost.
+- Start the two Sigil songs and confirm RimWorld loads/plays them without AudioClip/import warnings.

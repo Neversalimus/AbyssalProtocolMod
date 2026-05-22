@@ -904,3 +904,13 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Made delayed horde power-net recovery state save/load-safe and cleared power/material runtime caches during game finalization.
 - Fixed null-safe Oblivion Choir scar load cleanup and translated the Russian Rift Butcher label.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` still fails in sandbox because .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in RimWorld is still required.
+
+## 2026-05-22 — Manifestation and Dominion transfer safety follow-up
+
+- Hardened hostile arrival manifestations so temporary manifestation buildings are spawned through `ABY_SafeSpawnUtility` and can no longer wipe buildings, blueprints, frames, pawns, or other building-category infrastructure on otherwise standable cells.
+- Hardened `CompABY_BreachArrival` so blocked arrival VFX no longer falls back to spawning on the pawn's own position; if no safe cell exists, the visual manifestation is skipped instead of forcing an unsafe spawn.
+- Hardened manifested hostile pack spawning so individual pawns require safe cells and no longer fall back to the requested root cell when the area is blocked.
+- Hardened Dominion pocket transfer/return fallback paths to use safe spawn predicates and rollback-safe restore attempts instead of direct `GenSpawn.Spawn(..., WipeMode.Vanish)` on minimally checked cells.
+- Made Dominion slice reference-restore throttle state save/load-aware by scribing `nextReferenceRestoreTick`.
+- Re-encoded the two Sigil song OGG files as pure Vorbis audio-only streams, removing embedded Theora cover/video streams that could confuse Unity/RimWorld audio import.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
