@@ -953,3 +953,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Made Dominion slice reference-restore throttle state save/load-aware by scribing `nextReferenceRestoreTick`.
 - Re-encoded the two Sigil song OGG files as pure Vorbis audio-only streams, removing embedded Theora cover/video streams that could confuse Unity/RimWorld audio import.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in-game is still required.
+## 2026-05-22 — Reward and implant gate consistency balance pass
+
+- Removed the duplicate Hexgun Thrall butcher residue route so it no longer pays both killed leavings and butcher-product residue.
+- Raised the Ember Hound sigil residue ingredient to reduce early residue-positive summon farming while keeping the encounter rewarding.
+- Added light trophy-material gates to strong Horde/Archon/Choir/Reactor/Dominion implant lines that previously relied only on residue and vanilla materials.
+- Raised Dominion-tier implant market values so late-body stacking is reflected more honestly in colony wealth and reward valuation.
+- Raised the Vesper Lance forge unlock residue threshold so the post-Saint precision weapon remains a premium reward rather than an immediate universal answer.
+- XML/docs only; no C# or assembly rebuild required.
+

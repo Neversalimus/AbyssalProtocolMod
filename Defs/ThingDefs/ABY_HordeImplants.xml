@@ -117,6 +117,7 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
       <ABY_AbyssalResidue>28</ABY_AbyssalResidue>
       <ComponentIndustrial>2</ComponentIndustrial>
       <Plasteel>28</Plasteel>
@@ -161,6 +162,7 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
       <ABY_AbyssalResidue>24</ABY_AbyssalResidue>
       <ComponentIndustrial>2</ComponentIndustrial>
       <ComponentSpacer>1</ComponentSpacer>

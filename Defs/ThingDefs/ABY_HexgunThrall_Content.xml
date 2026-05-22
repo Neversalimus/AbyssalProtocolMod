@@ -75,9 +75,6 @@
         <armorPenetration>0.08</armorPenetration>
       </li>
     </tools>
-    <butcherProducts>
-      <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
-    </butcherProducts>
     <killedLeavings Inherit="False">
       <ABY_AbyssalResidue>6</ABY_AbyssalResidue>
     </killedLeavings>

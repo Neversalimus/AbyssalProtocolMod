@@ -59,7 +59,7 @@
     <statBases>
       <Mass>0.22</Mass>
       <WorkToMake>36000</WorkToMake>
-      <MarketValue>2350</MarketValue>
+      <MarketValue>3400</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
@@ -72,6 +72,7 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
       <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>
@@ -102,7 +103,7 @@
     <statBases>
       <Mass>0.42</Mass>
       <WorkToMake>40000</WorkToMake>
-      <MarketValue>2550</MarketValue>
+      <MarketValue>3600</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
@@ -115,6 +116,7 @@
       <unfinishedThingDef>UnfinishedHealthItemBionic</unfinishedThingDef>
     </recipeMaker>
     <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
       <ABY_AbyssalResidue>38</ABY_AbyssalResidue>
       <ComponentIndustrial>3</ComponentIndustrial>
       <ComponentSpacer>2</ComponentSpacer>

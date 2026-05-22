@@ -81,7 +81,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>600</requiredResidue>
+        <requiredResidue>1200</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>

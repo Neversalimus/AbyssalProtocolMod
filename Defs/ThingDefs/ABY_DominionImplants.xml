@@ -14,7 +14,7 @@
     <statBases>
       <Mass>0.18</Mass>
       <WorkToMake>52000</WorkToMake>
-      <MarketValue>3520</MarketValue>
+      <MarketValue>6500</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
@@ -57,7 +57,7 @@
     <statBases>
       <Mass>0.40</Mass>
       <WorkToMake>56000</WorkToMake>
-      <MarketValue>3740</MarketValue>
+      <MarketValue>6800</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
@@ -101,7 +101,7 @@
     <statBases>
       <Mass>0.44</Mass>
       <WorkToMake>54000</WorkToMake>
-      <MarketValue>3460</MarketValue>
+      <MarketValue>6400</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>
@@ -146,7 +146,7 @@
     <statBases>
       <Mass>0.28</Mass>
       <WorkToMake>58000</WorkToMake>
-      <MarketValue>3680</MarketValue>
+      <MarketValue>6700</MarketValue>
       <Flammability>0</Flammability>
     </statBases>
     <recipeMaker>

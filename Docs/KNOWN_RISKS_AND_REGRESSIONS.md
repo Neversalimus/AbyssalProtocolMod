@@ -746,3 +746,13 @@ In-game checks:
 - Spawn Breach Brutes in a crowded area and confirm no errors or forced manifestation spawn on occupied pawn cells.
 - Enter and return from Dominion Slice with multiple drafted colonists, including one test where destination cells are crowded; confirm no pawn is lost.
 - Start the two Sigil songs and confirm RimWorld loads/plays them without AudioClip/import warnings.
+
+## Reward loop and implant gate consistency risks — 2026-05-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Duplicate enemy reward routes | P1 | drops/economy | One hostile gives residue through both `killedLeavings` and `butcherProducts`, making a specific summon disproportionately farmable | Standard hostile residue payouts should normally use killed leavings only; corpse/crucible recovery should remain the secondary route. |
+| Cheap early summon becomes residue-positive | P1 | summoning/economy | A low-cost sigil can be repeatedly farmed once the player has a safe killbox | Compare sigil residue cost against guaranteed death drops plus corpse recovery; keep early summons rewarding but not nearly free. |
+| High-tier implants lose trophy pressure | P1 | forge/progression | Late implants can be mass-produced after one unlock using only residue and vanilla resources | Signature T3/T4/T5 organs should keep light Horde/Herald/Choir/Reactor/Crowned/Dominion material gates; avoid putting rare boss drops on every minor slot. |
+| Dominion implant wealth is understated | P2 | wealth/balance | Colonists gain multiple Dominion-tier organs without colony wealth reflecting their real power | Dominion-tier body parts should keep market values in the high late-game range unless deliberately marked as a special non-wealth reward. |
+
