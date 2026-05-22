@@ -510,3 +510,15 @@ Valid structure targets include combat turrets, Abyssal modular turrets with mai
 
 ## Modular turret passive aegis extension — 2026-05-20
 Passive turret modules can now contribute a real chassis-level aegis pool through `ABY_TurretModuleDef` fields (`turretShieldMax`, `turretShieldRechargePerTick`, `turretShieldRechargeDelayTicks`). `CompAbyssalModularTurret` owns the runtime shield points, save/load, absorption and recharge. Future passive shield work should extend these fields rather than adding a parallel comp.
+
+## Rift Butcher post-horde miniboss gate — 2026-05-22
+
+Rift Butcher is the implemented progression bridge between the first contained Horde Gate and Dominion Gate access. The system is intentionally split by ownership:
+
+- Pawn combat mechanics: `source/Comps/CompABY_RiftButcherCombat.cs` owns hook snare, rift dash, severance sweep, startup carapace, low-health execution focus, and threshold reinforcements.
+- Progression gate state: `source/Progression/ABY_HordeAndButcherProgressionGameComponent.cs` records first Horde Gate containment and first Rift Butcher kill.
+- Summoning exposure and gating: `source/UI/Summoning/AbyssalSummoningConsoleUtility.cs` lists `rift_butcher` after `horde_gate` and before `dominion_gate`; Dominion routing is locked until the first Rift Butcher kill.
+- Capacitor requirements: `source/Summoning/AbyssalCircleCapacitorRitualUtility.cs` owns the `rift_butcher` ritual profile.
+- Hover presentation: the existing `ABY_HoverArmorExtension` renderer now also supports pawn ThingDefs, so Rift Butcher hover visuals do not require a parallel pawn draw stack.
+
+Future work that changes post-horde progression, Dominion access, or Rift Butcher rewards must inspect both the summoning UI and the progression game component.

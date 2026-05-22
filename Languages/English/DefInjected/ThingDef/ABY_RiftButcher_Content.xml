@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_RiftButcher.label>rift butcher</ABY_RiftButcher.label>
+  <ABY_RiftButcher.description>A hovering Dominion-severance execution frame built to cut battle lines apart after the colony survives army-scale horde pressure. Its hook snare and surgical cleaver force defenders to move instead of hiding behind one static firing lane.</ABY_RiftButcher.description>
+  <ABY_RiftButcher.tools.0.label>severance cleaver</ABY_RiftButcher.tools.0.label>
+  <ABY_RiftButcher.tools.1.label>chain hook</ABY_RiftButcher.tools.1.label>
+  <ABY_RiftButcherSigil.label>rift butcher sigil</ABY_RiftButcherSigil.label>
+  <ABY_RiftButcherSigil.description>A severance wafer keyed to the first post-horde line-breaker. Carry it to an abyssal summoning circle after containing a horde gate to route the Rift Butcher into the colony's defensive perimeter.</ABY_RiftButcherSigil.description>
+  <ABY_RiftButcherSeveranceCore.label>severance core</ABY_RiftButcherSeveranceCore.label>
+  <ABY_RiftButcherSeveranceCore.description>A ribbed Dominion wound-core torn from the Rift Butcher. It is not just a trophy; it is a routing proof that the colony survived a surgical line-breaker and may risk deeper dominion access.</ABY_RiftButcherSeveranceCore.description>
+</LanguageData>

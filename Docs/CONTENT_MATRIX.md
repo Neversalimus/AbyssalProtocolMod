@@ -353,3 +353,9 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 ## Crafting requirement ownership
 
 Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList + recipeMaker` items. Future economy audits must inspect both paths; many weapons and implants are generated from ThingDef recipeMaker rather than standalone RecipeDefs.
+
+## Rift Butcher post-horde miniboss — 2026-05-22
+
+| System | Status | Source | Defs/assets | UI exposure | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Rift Butcher miniboss gate | Implemented / needs runtime smoke test | `source/Comps/CompABY_RiftButcherCombat.cs`, `source/Progression/ABY_HordeAndButcherProgressionGameComponent.cs`, `source/UI/Summoning/AbyssalSummoningConsoleUtility.cs`, `source/Summoning/AbyssalCircleCapacitorRitualUtility.cs` | `Defs/ThingDefs/ABY_RiftButcher_Content.xml`, `Defs/PawnKindDefs/ABY_RiftButcher_PawnKinds.xml`, `Defs/HediffDefs/ABY_RiftButcher_Hediffs.xml`, `Defs/RecipeDefs/ABY_RiftButcher_Recipes.xml`, `Textures/Pawn/RiftButcher/`, `Textures/Things/Item/ABY_RiftButcher*` | Summoning Console ritual list, compact miniboss overhead HP bar via `CompABY_BossTrueDeath`, Sigil Vault staging | Sits after first Horde Gate clear and before Dominion Gate. Dominion Sigil crafting now requires `ABY_RiftButcherSeveranceCore` so the encounter cannot be skipped through residue alone. |

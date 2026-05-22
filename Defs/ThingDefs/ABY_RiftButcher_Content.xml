@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_RiftButcher</defName>
+    <label>rift butcher</label>
+    <description>A hovering Dominion-severance execution frame built to cut battle lines apart after the colony survives army-scale horde pressure. Its hook snare and surgical cleaver force defenders to move instead of hiding behind one static firing lane.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.60</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
+    <graphicData>
+      <texPath>Pawn/RiftButcher/ABY_RiftButcher</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(4.05,4.05)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Animal</thinkTreeMain>
+      <thinkTreeConstant>AnimalConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>1.62</baseBodySize>
+      <baseHealthScale>2.85</baseHealthScale>
+      <baseHungerRate>0.55</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>260</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>3200</MaxHitPoints>
+      <MoveSpeed>4.65</MoveSpeed>
+      <MeleeHitChance>0.94</MeleeHitChance>
+      <MeleeDodgeChance>0.12</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.62</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.42</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.85</ArmorRating_Heat>
+      <PsychicSensitivity>0</PsychicSensitivity>
+      <ComfyTemperatureMin>-35</ComfyTemperatureMin>
+      <ComfyTemperatureMax>210</ComfyTemperatureMax>
+      <Mass>1.70</Mass>
+      <MarketValue>1900</MarketValue>
+      <Flammability>0.00</Flammability>
+      <PainShockThreshold>999</PainShockThreshold>
+    </statBases>
+    <tools>
+      <li>
+        <label>severance cleaver</label>
+        <capacities>
+          <li>Stab</li>
+          <li>Blunt</li>
+        </capacities>
+        <power>38</power>
+        <cooldownTime>1.95</cooldownTime>
+        <chanceFactor>1.10</chanceFactor>
+        <armorPenetration>0.46</armorPenetration>
+      </li>
+      <li>
+        <label>chain hook</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>18</power>
+        <cooldownTime>1.55</cooldownTime>
+        <chanceFactor>0.92</chanceFactor>
+        <armorPenetration>0.28</armorPenetration>
+      </li>
+    </tools>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>BossJuggernaut</archetype>
+        <minMeleeSkill>15</minMeleeSkill>
+        <spawnGraceTicks>30</spawnGraceTicks>
+        <lordRetryTicks>60</lordRetryTicks>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossNoDowned">
+        <bloodLossClamp>0.16</bloodLossClamp>
+        <heatstrokeClamp>0.18</heatstrokeClamp>
+        <healWorstInjuryAmount>34</healWorstInjuryAmount>
+        <maxHealPasses>5</maxHealPasses>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_BossTrueDeath">
+        <maxBossHitPoints>0</maxBossHitPoints>
+        <damageTakenFactor>1.0</damageTakenFactor>
+        <fallbackKillDamage>42</fallbackKillDamage>
+        <restoreMissingParts>true</restoreMissingParts>
+        <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
+        <forceLordReengage>true</forceLordReengage>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_RiftButcherCombat" />
+    </comps>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_HoverArmorExtension">
+        <draftedOnly>false</draftedOnly>
+        <enableUnderfootFx>true</enableUnderfootFx>
+        <enableMovingSparks>true</enableMovingSparks>
+        <enableGroundWakeFx>true</enableGroundWakeFx>
+        <enableVectorThrusterFx>false</enableVectorThrusterFx>
+        <ringTexPath>Effects/Hover/ABY_GravDistortion</ringTexPath>
+        <groundWakeTexPath>Effects/Hover/ABY_GravWake</groundWakeTexPath>
+        <sparkTexPath>Effects/ABY_HoverSpark</sparkTexPath>
+        <ringScale>1.18</ringScale>
+        <ringAlpha>0.34</ringAlpha>
+        <pulseAmplitude>0.055</pulseAmplitude>
+        <pawnLiftZ>0.16</pawnLiftZ>
+        <pawnLiftBobAmplitude>0.018</pawnLiftBobAmplitude>
+        <groundWakeScale>0.92</groundWakeScale>
+        <groundWakeLengthScale>1.18</groundWakeLengthScale>
+        <groundWakeWidthScale>0.62</groundWakeWidthScale>
+        <groundWakeAlpha>0.30</groundWakeAlpha>
+        <sparkIntervalTicks>20</sparkIntervalTicks>
+        <sparkLifetimeTicks>20</sparkLifetimeTicks>
+        <sparkScale>0.13</sparkScale>
+        <sparkAlpha>0.42</sparkAlpha>
+        <drawPriority>90</drawPriority>
+      </li>
+    </modExtensions>
+    <killedLeavings Inherit="False">
+      <ABY_RiftButcherSeveranceCore>1</ABY_RiftButcherSeveranceCore>
+      <ABY_AbyssalResidue>34</ABY_AbyssalResidue>
+      <ABY_HordeFragment>1</ABY_HordeFragment>
+    </killedLeavings>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_RiftButcherSigil</defName>
+    <label>rift butcher sigil</label>
+    <description>A severance wafer keyed to the first post-horde line-breaker. Carry it to an abyssal summoning circle after containing a horde gate to route the Rift Butcher into the colony's defensive perimeter.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_RiftButcherSigil</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>920</MarketValue>
+      <Mass>0.42</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Usable">
+        <useJob>ABY_CarrySigilToCircle</useJob>
+        <useLabel>route the butcher</useLabel>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
+        <ritualId>rift_butcher</ritualId>
+        <summonMode>Boss</summonMode>
+        <pawnKindDefName>ABY_RiftButcher</pawnKindDefName>
+        <bossLabel>Rift Butcher</bossLabel>
+        <spawnPoints>1760</spawnPoints>
+        <ritualWarmupTicks>210</ritualWarmupTicks>
+        <arrivalNearColony>true</arrivalNearColony>
+        <arrivalNearColonyMinDistance>15</arrivalNearColonyMinDistance>
+        <arrivalNearColonyMaxDistance>26</arrivalNearColonyMaxDistance>
+        <supportImpCount>2</supportImpCount>
+        <supportZealotCount>1</supportZealotCount>
+        <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
+        <rareEscortCount>1</rareEscortCount>
+        <rareEscortChance>0.05</rareEscortChance>
+        <completionLetterLabelKey>ABY_RiftButcherSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_RiftButcherSummonSuccessDesc</completionLetterDescKey>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>ABY_RiftButcherSeveranceCore</defName>
+    <label>severance core</label>
+    <description>A ribbed Dominion wound-core torn from the Rift Butcher. It is not just a trophy; it is a routing proof that the colony survived a surgical line-breaker and may risk deeper dominion access.</description>
+    <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
+    <drawerType>RealtimeOnly</drawerType>
+    <graphicData>
+      <texPath>Things/Item/ABY_RiftButcherSeveranceCore</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <stackLimit>10</stackLimit>
+    <thingCategories>
+      <li>Manufactured</li>
+    </thingCategories>
+    <tradeability>Sellable</tradeability>
+    <statBases>
+      <MarketValue>1150</MarketValue>
+      <Mass>0.24</Mass>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+</Defs>

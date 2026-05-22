@@ -2188,6 +2188,7 @@ namespace AbyssalProtocol
                 if (rewardCell.IsValid)
                 {
                     AbyssalHordeRewardUtility.SpawnClosureRewards(map, rewardCell, activeHordeRewardSnapshot);
+                    Current.Game?.GetComponent<ABY_HordeAndButcherProgressionGameComponent>()?.RecordHordeClear(map, rewardCell);
                 }
             }
 

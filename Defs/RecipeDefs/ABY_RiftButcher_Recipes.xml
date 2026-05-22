@@ -1,16 +1,16 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+
   <RecipeDef>
-    <defName>ABY_CraftDominionSigil</defName>
-    <label>forge dominion sigil</label>
-    <description>Condense a crown-marked invocation wafer for the Great Infernal Gate prelude. It is not a normal summon key; it arms the circle for a dominion breach the colony has only begun to understand.</description>
-    <jobString>Forging dominion sigil.</jobString>
-    <workAmount>3600</workAmount>
+    <defName>ABY_CraftRiftButcherSigil</defName>
+    <label>forge rift butcher sigil</label>
+    <description>Compresses horde fragments, residue, plasteel and spacer hardware into a severance-routing sigil. The result does not call another army; it calls the line-breaker that tests whether the colony can survive a surgical melee breach before Dominion access.</description>
+    <jobString>Forging rift butcher sigil.</jobString>
+    <workAmount>4300</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
     <workSkill>Crafting</workSkill>
     <effectWorking>Smith</effectWorking>
     <soundWorking>Recipe_Smith</soundWorking>
-    <researchPrerequisite>ABY_DominionGateBootstrapping</researchPrerequisite>
     <recipeUsers>
       <li>ABY_AbyssalForge</li>
     </recipeUsers>
@@ -18,10 +18,10 @@
       <li>
         <filter>
           <thingDefs>
-            <li>ABY_RiftButcherSeveranceCore</li>
+            <li>ABY_HordeFragment</li>
           </thingDefs>
         </filter>
-        <count>1</count>
+        <count>2</count>
       </li>
       <li>
         <filter>
@@ -29,7 +29,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>32</count>
+        <count>58</count>
       </li>
       <li>
         <filter>
@@ -37,7 +37,15 @@
             <li>Plasteel</li>
           </thingDefs>
         </filter>
-        <count>60</count>
+        <count>72</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Uranium</li>
+          </thingDefs>
+        </filter>
+        <count>35</count>
       </li>
       <li>
         <filter>
@@ -53,17 +61,18 @@
             <li>ComponentSpacer</li>
           </thingDefs>
         </filter>
-        <count>2</count>
+        <count>3</count>
       </li>
     </ingredients>
     <products>
-      <ABY_DominionSigil>1</ABY_DominionSigil>
+      <ABY_RiftButcherSigil>1</ABY_RiftButcherSigil>
     </products>
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>3500</requiredResidue>
+        <requiredResidue>1700</requiredResidue>
         <category>Ritual</category>
       </li>
     </modExtensions>
   </RecipeDef>
+
 </Defs>

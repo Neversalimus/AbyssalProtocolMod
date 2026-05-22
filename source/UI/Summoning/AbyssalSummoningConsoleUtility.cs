@@ -158,6 +158,22 @@ namespace AbyssalProtocol
             },
             new RitualDefinition
             {
+                Id = "rift_butcher",
+                LabelKey = "ABY_CircleRitual_RiftButcher_Label",
+                SubtitleKey = "ABY_CircleRitual_RiftButcher_Subtitle",
+                DescriptionKey = "ABY_CircleRitual_RiftButcher_Desc",
+                BossLabel = "Rift Butcher",
+                SigilThingDefName = "ABY_RiftButcherSigil",
+                PawnKindDefName = "ABY_RiftButcher",
+                RewardHintKey = "ABY_CircleRitual_RiftButcher_Rewards",
+                SideEffectHintKey = "ABY_CircleRitual_RiftButcher_SideEffects",
+                BaseRisk = 0.84f,
+                InstabilityGain = 0.25f,
+                ContaminationGain = 0.12f,
+                SpawnPoints = 1760
+            },
+            new RitualDefinition
+            {
                 Id = "dominion_gate",
                 LabelKey = "ABY_CircleRitual_Dominion_Label",
                 SubtitleKey = "ABY_CircleRitual_Dominion_Subtitle",
@@ -236,6 +252,18 @@ namespace AbyssalProtocol
             if (AbyssalHordeSigilUtility.IsSupportedRitual(ritualId) && !AbyssalDifficultyUtility.HasRecordedReactorSaintKill())
             {
                 failReason = TranslateOrFallback("ABY_CircleFail_HordeLocked", "The horde gate remains dormant until the first Reactor Saint kill is recorded on this save.");
+                return false;
+            }
+
+            if (string.Equals(ritualId, "rift_butcher", StringComparison.OrdinalIgnoreCase) && !AbyssalDifficultyUtility.HasRecordedHordeClear())
+            {
+                failReason = TranslateOrFallback("ABY_CircleFail_RiftButcherLocked", "The Rift Butcher cannot be routed until the first horde gate has been contained on this save.");
+                return false;
+            }
+
+            if (string.Equals(ritualId, "dominion_gate", StringComparison.OrdinalIgnoreCase) && !AbyssalDifficultyUtility.HasRecordedRiftButcherKill())
+            {
+                failReason = TranslateOrFallback("ABY_CircleFail_DominionButcherLocked", "The dominion gate remains sealed until the Rift Butcher has been defeated on this save.");
                 return false;
             }
 
@@ -493,6 +521,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.LabelKey, "Invoke Archon Beast");
             }
 
+            if (ritual.Id == "rift_butcher")
+            {
+                return TranslateOrFallback(ritual.LabelKey, "Route the Rift Butcher");
+            }
+
             if (ritual.Id == "dominion_gate")
             {
                 return TranslateOrFallback(ritual.LabelKey, "Open dominion gate");
@@ -528,6 +561,11 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SubtitleKey, "First boss breach pattern");
             }
 
+            if (ritual.Id == "rift_butcher")
+            {
+                return TranslateOrFallback(ritual.SubtitleKey, "Post-horde severance mini-boss");
+            }
+
             if (ritual.Id == "dominion_gate")
             {
                 return TranslateOrFallback(ritual.SubtitleKey, "Endgame crisis bootstrap");
@@ -561,6 +599,11 @@ namespace AbyssalProtocol
             if (ritual.Id == "archon_beast")
             {
                 return TranslateOrFallback(ritual.DescriptionKey, "Consumes one prepared archon sigil, routes a colonist to the circle, charges the breach, and calls the first hostile techno-demonic boss encounter.");
+            }
+
+            if (ritual.Id == "rift_butcher")
+            {
+                return TranslateOrFallback(ritual.DescriptionKey, "Consumes one Rift Butcher sigil and calls a hovering Dominion-severance mini-boss after the colony has proven it can contain an army-scale horde gate. The Butcher breaks static firing lines with hook snares, short rift dashes, close severance sweeps, and small threshold reinforcements.");
             }
 
             if (ritual.Id == "dominion_gate")
@@ -606,6 +649,13 @@ namespace AbyssalProtocol
 • Early abyssal loot and boss-side material gating");
             }
 
+            if (ritual.Id == "rift_butcher")
+            {
+                return TranslateOrFallback(ritual.RewardHintKey, @"• Guaranteed Severance Core from the post-horde mini-boss
+• Bridge reward between Horde Fragment economy and Dominion access
+• Melee/implant-facing material hook without skipping into full Dominion Slice");
+            }
+
             if (ritual.Id == "dominion_gate")
             {
                 return TranslateOrFallback(ritual.RewardHintKey, @"• Initializes the endgame crisis framework in-world
@@ -649,6 +699,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback(ritual.SideEffectHintKey, @"• Opens a hostile breach on the current map
 • Can trigger escalation pressure if the colony is underprepared
 • Ritual phases intensify visuals, sound, and encounter pressure");
+            }
+
+            if (ritual.Id == "rift_butcher")
+            {
+                return TranslateOrFallback(ritual.SideEffectHintKey, @"• Spawns a hostile hovering melee mini-boss rather than another horde
+• Hook snares and dash follow-ups punish static backlines
+• Severance sweeps punish dense melee piles and door-block clusters");
             }
 
             if (ritual.Id == "dominion_gate")
@@ -699,6 +756,10 @@ namespace AbyssalProtocol
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_PerimeterOverload", "perimeter overload"));
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_MultiFront", "multi-front"));
                     break;
+                case "rift_butcher":
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_Severance", "severance"));
+                    tags.Add(TranslateOrFallback("ABY_CircleRoleTag_SkirmishBreaker", "skirmish breaker"));
+                    break;
                 case "dominion_gate":
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_ObjectiveEncounter", "objective encounter"));
                     tags.Add(TranslateOrFallback("ABY_CircleRoleTag_WavePressure", "wave pressure"));
@@ -731,6 +792,8 @@ namespace AbyssalProtocol
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Reactor", "Guaranteed: 1 Reactor Saint Core, residue, and spacer-grade salvage.");
                 case "horde_gate":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Horde", "Guaranteed: a breach-closure cache with high residue, horde fragments, and salvage routed out of the army-scale lattice. Command node kills spill an extra bonus when present.");
+                case "rift_butcher":
+                    return TranslateOrFallback("ABY_CircleRewardGuaranteed_RiftButcher", "Guaranteed: 1 Severance Core, a heavy residue payout, and horde-fragment continuity from the post-horde mini-boss gate.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardGuaranteed_Dominion", "Guaranteed: dominion outcome rewards, shards, and late-stage progression materials if the breach is contained.");
                 default:
@@ -761,6 +824,8 @@ namespace AbyssalProtocol
                     return TranslateOrFallback("ABY_CircleRewardProgression_Reactor", "Progression: feeds saint-class fabrication and pushes the colony toward late-game escalation.");
                 case "horde_gate":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Horde", "Progression: stress-tests multi-front late defense after Reactor Saint while feeding a distinct post-saint economy layer instead of boss-tier cores.");
+                case "rift_butcher":
+                    return TranslateOrFallback("ABY_CircleRewardProgression_RiftButcher", "Progression: proves the colony can survive a surgical line-breaker before Dominion Slice access is allowed.");
                 case "dominion_gate":
                     return TranslateOrFallback("ABY_CircleRewardProgression_Dominion", "Progression: arms the full dominion crisis ladder and outcome routing.");
                 default:

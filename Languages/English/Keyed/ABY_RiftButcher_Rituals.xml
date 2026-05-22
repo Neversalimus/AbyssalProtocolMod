@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CircleRitual_RiftButcher_Label>Route the Rift Butcher</ABY_CircleRitual_RiftButcher_Label>
+  <ABY_CircleRitual_RiftButcher_Subtitle>Post-horde severance mini-boss</ABY_CircleRitual_RiftButcher_Subtitle>
+  <ABY_CircleRitual_RiftButcher_Desc>Consumes one Rift Butcher sigil and calls a hovering Dominion-severance mini-boss after the colony has proven it can contain an army-scale horde gate. The Butcher breaks static firing lines with hook snares, short rift dashes, close severance sweeps, and small threshold reinforcements.</ABY_CircleRitual_RiftButcher_Desc>
+  <ABY_CircleRitual_RiftButcher_Rewards>• Guaranteed Severance Core from the post-horde mini-boss
+• Bridge reward between Horde Fragment economy and Dominion access
+• Melee/implant-facing material hook without skipping into full Dominion Slice</ABY_CircleRitual_RiftButcher_Rewards>
+  <ABY_CircleRitual_RiftButcher_SideEffects>• Spawns a hostile hovering melee mini-boss rather than another horde
+• Hook snares and dash follow-ups punish static backlines
+• Severance sweeps punish dense melee piles and door-block clusters</ABY_CircleRitual_RiftButcher_SideEffects>
+
+  <ABY_CircleRewardGuaranteed_RiftButcher>Guaranteed: 1 Severance Core, a heavy residue payout, and horde-fragment continuity from the post-horde mini-boss gate.</ABY_CircleRewardGuaranteed_RiftButcher>
+  <ABY_CircleRewardProgression_RiftButcher>Progression: proves the colony can survive a surgical line-breaker before Dominion Slice access is allowed.</ABY_CircleRewardProgression_RiftButcher>
+  <ABY_CircleRoleTag_Severance>severance</ABY_CircleRoleTag_Severance>
+  <ABY_CircleRoleTag_SkirmishBreaker>skirmish breaker</ABY_CircleRoleTag_SkirmishBreaker>
+
+  <ABY_CircleFail_RiftButcherLocked>The Rift Butcher cannot be routed until the first horde gate has been contained on this save.</ABY_CircleFail_RiftButcherLocked>
+  <ABY_CircleFail_DominionButcherLocked>The dominion gate remains sealed until the Rift Butcher has been defeated on this save.</ABY_CircleFail_DominionButcherLocked>
+
+  <ABY_FirstHordeClearLabel>Horde gate contained</ABY_FirstHordeClearLabel>
+  <ABY_FirstHordeClearDesc>The first army-scale horde gate has collapsed under colony fire. Its closure pattern can now be compressed into a severance routing key for the Rift Butcher.</ABY_FirstHordeClearDesc>
+  <ABY_RiftButcherSummonSuccessLabel>Rift Butcher routed</ABY_RiftButcherSummonSuccessLabel>
+  <ABY_RiftButcherSummonSuccessDesc>The circle has pulled a Dominion-severance line-breaker into the map. Do not let it settle into your firing line: it will hook, dash, and cut defensive formations apart.</ABY_RiftButcherSummonSuccessDesc>
+  <ABY_RiftButcherKillLabel>Rift Butcher defeated</ABY_RiftButcherKillLabel>
+  <ABY_RiftButcherKillDesc>The Rift Butcher's severance frame has collapsed. Its core proves the colony can survive a surgical Dominion prelude, and the Dominion gate may now be armed.</ABY_RiftButcherKillDesc>
+
+  <ABY_RiftButcherInspect_Priming>Severance protocol: hook {0}, dash {1}, sweep {2}.</ABY_RiftButcherInspect_Priming>
+  <ABY_RiftButcherInspect_Frenzy>Severance protocol: execution focus active.</ABY_RiftButcherInspect_Frenzy>
+</LanguageData>

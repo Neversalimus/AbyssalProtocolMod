@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_RiftButcher</defName>
+    <label>rift butcher</label>
+    <race>ABY_RiftButcher</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>1150</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
+        <role>boss</role>
+        <budgetCost>1150</budgetCost>
+        <selectionWeight>0.85</selectionWeight>
+        <maxPlanCount>1</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>boss_main</li>
+          <li>dominion_prelude</li>
+        </encounterPools>
+      </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+        <isMiniBoss>true</isMiniBoss>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/RiftButcher/ABY_RiftButcher</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(4.05,4.05)</drawSize>
+          <shadowData>
+            <volume>(1.45, 1.05, 1.45)</volume>
+            <offset>(0, 0, -0.32)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

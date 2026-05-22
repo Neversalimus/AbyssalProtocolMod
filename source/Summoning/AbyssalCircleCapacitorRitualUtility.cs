@@ -91,6 +91,15 @@ namespace AbyssalProtocol
             MaxRiskReduction = 0.13f
         };
 
+        private static readonly RitualProfile RiftButcherProfile = new RitualProfile
+        {
+            RitualId = "rift_butcher",
+            StartupChargeRequired = 52f,
+            TotalChargeRequired = 112f,
+            ThroughputRequired = 38f,
+            MaxRiskReduction = 0.14f
+        };
+
         private static readonly RitualProfile DominionGateProfile = new RitualProfile
         {
             RitualId = "dominion_gate",
@@ -159,6 +168,11 @@ namespace AbyssalProtocol
             if (string.Equals(ritualId, HordeGateProfile.RitualId, StringComparison.OrdinalIgnoreCase))
             {
                 return HordeGateProfile;
+            }
+
+            if (string.Equals(ritualId, RiftButcherProfile.RitualId, StringComparison.OrdinalIgnoreCase))
+            {
+                return RiftButcherProfile;
             }
 
             if (string.Equals(ritualId, DominionGateProfile.RitualId, StringComparison.OrdinalIgnoreCase))

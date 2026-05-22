@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CraftRiftButcherSigil.label>выковать сигил Rift Butcher</ABY_CraftRiftButcherSigil.label>
+  <ABY_CraftRiftButcherSigil.description>Сжимает horde fragments, residue, пласталь и spacer-компоненты в сигил маршрутизации рассечения. Он вызывает не очередную армию, а разрушителя строя, проверяющего, переживёт ли колония хирургический ближний пробой перед доступом к Dominion.</ABY_CraftRiftButcherSigil.description>
+  <ABY_CraftRiftButcherSigil.jobString>Ковка сигила Rift Butcher.</ABY_CraftRiftButcherSigil.jobString>
+</LanguageData>

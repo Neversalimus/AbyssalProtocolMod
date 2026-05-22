@@ -77,6 +77,13 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            ABY_HoverArmorExtension pawnExtension = pawn.def?.GetModExtension<ABY_HoverArmorExtension>();
+            if (pawnExtension != null && (!pawnExtension.draftedOnly || pawn.Drafted))
+            {
+                extension = pawnExtension;
+                return true;
+            }
+
             if (pawn.apparel == null)
             {
                 return false;
@@ -84,7 +91,7 @@ namespace AbyssalProtocol
 
             if (!pawn.Drafted)
             {
-                // Current hover armor mode is intentionally drafted-only for both visuals and speed.
+                // Current hover armor mode is intentionally drafted-only for worn apparel.
                 return false;
             }
 

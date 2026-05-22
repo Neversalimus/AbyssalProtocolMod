@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_RiftButcherCarapace.label>карапакс рассечения</ABY_RiftButcherCarapace.label>
+  <ABY_RiftButcherCarapace.description>Rift Butcher входит через временную оболочку рассечения, выдерживая первый залп достаточно долго, чтобы навязать настоящий бой.</ABY_RiftButcherCarapace.description>
+  <ABY_RiftButcherHookSnare.label>зацеплен крюком</ABY_RiftButcherHookSnare.label>
+  <ABY_RiftButcherHookSnare.description>Рифтовый крюк вошёл в швы брони и втянул движение жертвы в ритм Butcher.</ABY_RiftButcherHookSnare.description>
+  <ABY_RiftButcherSeveredLine.label>рассечённая линия</ABY_RiftButcherSeveredLine.label>
+  <ABY_RiftButcherSeveredLine.description>Стойка и прицел жертвы на короткое время разделены доминионным разрезом, замедляя перестроение после sweep или рывка Butcher.</ABY_RiftButcherSeveredLine.description>
+  <ABY_RiftButcherExecutionFocus.label>фокус казни</ABY_RiftButcherExecutionFocus.label>
+  <ABY_RiftButcherExecutionFocus.description>Повреждённый каркас Butcher сбрасывает ограничения и направляет больше силы в преследование, тайминг крюка и ближнее давление.</ABY_RiftButcherExecutionFocus.description>
+</LanguageData>

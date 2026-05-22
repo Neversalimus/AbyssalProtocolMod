@@ -110,6 +110,16 @@ namespace AbyssalProtocol
             return Current.Game != null && Current.Game.GetComponent<ABY_ReactorSaintProgressionGameComponent>()?.FirstReactorSaintKillRecorded == true;
         }
 
+        public static bool HasRecordedHordeClear()
+        {
+            return Current.Game != null && Current.Game.GetComponent<ABY_HordeAndButcherProgressionGameComponent>()?.FirstHordeClearRecorded == true;
+        }
+
+        public static bool HasRecordedRiftButcherKill()
+        {
+            return Current.Game != null && Current.Game.GetComponent<ABY_HordeAndButcherProgressionGameComponent>()?.FirstRiftButcherKillRecorded == true;
+        }
+
         public static int GetProgressionStage(Map map = null)
         {
             int stage = 0;

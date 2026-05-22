@@ -841,3 +841,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added missing residue costs to high-tier Dominion/Horde implants and added Crafting skill gates to Rift Blade and Rift Carbine.
 - Lowered excessive HordeFragment usage on Litany Grinder, Cohort Halberd, and Phalanx Driver.
 - Added light CrownedCore/DominionShard gates to high-end turret modules and special late weapons without making every T5 passive consume multiple crown shards.
+
+## 2026-05-22 — Rift Butcher post-horde miniboss integration
+
+- Added Rift Butcher as the post-Horde / pre-Dominion miniboss gate with real pawn defs, pawn kind, transparent directional textures, sigil, reward core, hediffs, summoning console exposure, capacitor profile, sigil vault support, and progression tracking.
+- Rift Butcher mechanics are C#-owned by `CompABY_RiftButcherCombat`: startup carapace, hook snare, short rift dash, severance sweep, low-health execution focus, and small threshold reinforcements.
+- First Horde Gate containment is now recorded by `ABY_HordeAndButcherProgressionGameComponent`; Rift Butcher routing requires that recorded horde clear, and Dominion Gate routing requires the first Rift Butcher kill plus the new Severance Core crafting ingredient.
+- The pawn uses the existing hover-apparel presentation path extended to support pawn-level `ABY_HoverArmorExtension`, keeping the hover/tether VFX centralized rather than adding a parallel pawn draw system.
+- Build verification status is recorded in the patch handoff response.

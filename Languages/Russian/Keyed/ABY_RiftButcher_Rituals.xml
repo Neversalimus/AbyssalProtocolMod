@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CircleRitual_RiftButcher_Label>Направить Rift Butcher</ABY_CircleRitual_RiftButcher_Label>
+  <ABY_CircleRitual_RiftButcher_Subtitle>Мини-босс рассечения после орды</ABY_CircleRitual_RiftButcher_Subtitle>
+  <ABY_CircleRitual_RiftButcher_Desc>Поглощает сигил Rift Butcher и вызывает парящего мини-босса доминионного рассечения после того, как колония доказала способность сдержать армейский Horde Gate. Butcher ломает статичные линии огня крюками, короткими рывками, круговыми ударами рассечения и малыми подкреплениями на порогах здоровья.</ABY_CircleRitual_RiftButcher_Desc>
+  <ABY_CircleRitual_RiftButcher_Rewards>• Гарантированное Severance Core с пост-ордынского мини-босса
+• Мост между экономикой Horde Fragment и доступом к Dominion
+• Материал для ближнего боя/имплантов без прямого скачка в Dominion Slice</ABY_CircleRitual_RiftButcher_Rewards>
+  <ABY_CircleRitual_RiftButcher_SideEffects>• Вызывает враждебного парящего мили-минибосса вместо очередной орды
+• Крюки и рывки наказывают статичные задние линии
+• Severance Sweep наказывает плотные мили-кучи и удержание дверей</ABY_CircleRitual_RiftButcher_SideEffects>
+
+  <ABY_CircleRewardGuaranteed_RiftButcher>Гарантировано: 1 Severance Core, крупная выплата residue и продолжение horde-fragment экономики через пост-ордынский мини-босс-гейт.</ABY_CircleRewardGuaranteed_RiftButcher>
+  <ABY_CircleRewardProgression_RiftButcher>Прогрессия: доказывает, что колония переживает хирургического разрушителя строя перед допуском к Dominion Slice.</ABY_CircleRewardProgression_RiftButcher>
+  <ABY_CircleRoleTag_Severance>рассечение</ABY_CircleRoleTag_Severance>
+  <ABY_CircleRoleTag_SkirmishBreaker>ломает строй</ABY_CircleRoleTag_SkirmishBreaker>
+
+  <ABY_CircleFail_RiftButcherLocked>Rift Butcher нельзя направить, пока в этом сохранении не был сдержан первый Horde Gate.</ABY_CircleFail_RiftButcherLocked>
+  <ABY_CircleFail_DominionButcherLocked>Dominion Gate остаётся запечатанным, пока в этом сохранении не побеждён Rift Butcher.</ABY_CircleFail_DominionButcherLocked>
+
+  <ABY_FirstHordeClearLabel>Horde Gate сдержан</ABY_FirstHordeClearLabel>
+  <ABY_FirstHordeClearDesc>Первый армейский Horde Gate рухнул под огнём колонии. Его паттерн закрытия теперь можно сжать в ключ рассечения для Rift Butcher.</ABY_FirstHordeClearDesc>
+  <ABY_RiftButcherSummonSuccessLabel>Rift Butcher направлен</ABY_RiftButcherSummonSuccessLabel>
+  <ABY_RiftButcherSummonSuccessDesc>Круг втянул на карту доминионного разрушителя строя. Не давайте ему закрепиться в линии огня: он будет цеплять, рывком входить в позицию и резать оборонительный строй.</ABY_RiftButcherSummonSuccessDesc>
+  <ABY_RiftButcherKillLabel>Rift Butcher побеждён</ABY_RiftButcherKillLabel>
+  <ABY_RiftButcherKillDesc>Каркас рассечения Rift Butcher рухнул. Его ядро доказывает, что колония пережила доминионную прелюдию, и Dominion Gate теперь может быть вооружён.</ABY_RiftButcherKillDesc>
+
+  <ABY_RiftButcherInspect_Priming>Протокол рассечения: крюк {0}, рывок {1}, sweep {2}.</ABY_RiftButcherInspect_Priming>
+  <ABY_RiftButcherInspect_Frenzy>Протокол рассечения: execution focus активен.</ABY_RiftButcherInspect_Frenzy>
+</LanguageData>

@@ -14,8 +14,10 @@ namespace AbyssalProtocol
         private const string EmberHuntRitualId = "ember_hunt";
         private const string WardenOfAshRitualId = "warden_of_ash";
         private const string ChoirEngineRitualId = "choir_engine";
+        private const string RiftButcherRitualId = "rift_butcher";
         private const string WardenOfAshPawnKindDefName = "ABY_WardenOfAsh";
         private const string ChoirEnginePawnKindDefName = "ABY_ChoirEngine";
+        private const string RiftButcherPawnKindDefName = "ABY_RiftButcher";
 
         public static bool IsReservedSigilSongDefName(string defName)
         {
@@ -80,7 +82,8 @@ namespace AbyssalProtocol
             }
 
             if (string.Equals(pawnKindDefName, WardenOfAshPawnKindDefName, StringComparison.OrdinalIgnoreCase)
-                || string.Equals(pawnKindDefName, ChoirEnginePawnKindDefName, StringComparison.OrdinalIgnoreCase))
+                || string.Equals(pawnKindDefName, ChoirEnginePawnKindDefName, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(pawnKindDefName, RiftButcherPawnKindDefName, StringComparison.OrdinalIgnoreCase))
             {
                 return MiniBossSigilSongDefName;
             }
@@ -117,7 +120,8 @@ namespace AbyssalProtocol
             }
 
             if (string.Equals(ritualId, WardenOfAshRitualId, StringComparison.OrdinalIgnoreCase)
-                || string.Equals(ritualId, ChoirEngineRitualId, StringComparison.OrdinalIgnoreCase))
+                || string.Equals(ritualId, ChoirEngineRitualId, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(ritualId, RiftButcherRitualId, StringComparison.OrdinalIgnoreCase))
             {
                 return MiniBossSigilSongDefName;
             }

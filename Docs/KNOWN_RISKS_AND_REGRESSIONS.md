@@ -672,3 +672,12 @@ In-game checks:
 ## Crafting economy risk — boss drops must not tax every slot
 
 When adding new gear, every craftable reward should normally require Abyssal Residue plus vanilla resources. Boss-drop resources should gate signature or upper-tier pieces, not every implant slot or passive module. Avoid making complete pawn loadouts require one boss drop per organ; this discourages experimentation and makes multi-pawn gearing feel punitive.
+
+## Rift Butcher / post-horde progression gate risks — 2026-05-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Forgetting to record first Horde Gate containment | P1 | progression/summoning | Rift Butcher ritual stays locked even after the horde encounter is won | `MapComponent_AbyssalPortalWave.ResetWave()` must call `ABY_HordeAndButcherProgressionGameComponent.RecordHordeClear(...)` when `activeHordeWave && closureRewardPending` rewards are granted. |
+| Allowing Dominion Gate before Rift Butcher | P1 | progression/summoning | Player skips the post-horde line-breaker gate and enters Dominion Slice directly | `AbyssalSummoningConsoleUtility.IsRitualUnlocked("dominion_gate")` should require `HasRecordedRiftButcherKill()`, and `ABY_CraftDominionSigil` should keep the `ABY_RiftButcherSeveranceCore` ingredient. |
+| Adding hover pawns through a parallel draw patch | P2 | visuals/performance | Duplicate hover offsets, overdraw, or inconsistent hover behavior between apparel and minibosses | Reuse `ABY_HoverArmorExtension` on the pawn ThingDef and the existing `source/Apparel/` hover renderer. |
+| Over-scaling Rift Butcher drawSize | P2 | asset/readability | Miniboss reads as a full boss or overlaps its compact HP bar | Keep drawSize near the integrated value and test the compact miniboss bar at multiple UI scales. |

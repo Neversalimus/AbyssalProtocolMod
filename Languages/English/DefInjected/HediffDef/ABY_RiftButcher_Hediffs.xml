@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_RiftButcherCarapace.label>severance carapace</ABY_RiftButcherCarapace.label>
+  <ABY_RiftButcherCarapace.description>The Rift Butcher enters through a temporary severance shell, shrugging off the first volley long enough to force a real engagement.</ABY_RiftButcherCarapace.description>
+  <ABY_RiftButcherHookSnare.label>hook-snarled</ABY_RiftButcherHookSnare.label>
+  <ABY_RiftButcherHookSnare.description>A rift hook has bitten into armor seams and dragged the victim's movement into the Butcher's cadence.</ABY_RiftButcherHookSnare.description>
+  <ABY_RiftButcherSeveredLine.label>severed line</ABY_RiftButcherSeveredLine.label>
+  <ABY_RiftButcherSeveredLine.description>The victim's stance and aim are briefly split by a Dominion cut, leaving them slow to reposition after the Butcher's sweep or dash.</ABY_RiftButcherSeveredLine.description>
+  <ABY_RiftButcherExecutionFocus.label>execution focus</ABY_RiftButcherExecutionFocus.label>
+  <ABY_RiftButcherExecutionFocus.description>The Butcher's failing frame sheds restraint and routes more power into pursuit, hook timing and close-range killing pressure.</ABY_RiftButcherExecutionFocus.description>
+</LanguageData>
