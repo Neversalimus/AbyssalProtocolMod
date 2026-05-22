@@ -87,7 +87,7 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>RangedSkirmisher</archetype>
         <minShootingSkill>11</minShootingSkill>
-        <preferredMinRange>8.8</preferredMinRange>
+        <preferredMinRange>10.5</preferredMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
@@ -101,7 +101,7 @@
         <markDurationTicks>600</markDurationTicks>
         <scanIntervalTicks>45</scanIntervalTicks>
         <minTargetRange>7.5</minTargetRange>
-        <maxTargetRange>24.5</maxTargetRange>
+        <maxTargetRange>30.0</maxTargetRange>
         <preferRangedTargets>true</preferRangedTargets>
         <markHediffDefName>ABY_HaloJudgmentMarked</markHediffDefName>
         <soundDefName>ABY_RuptureVerdict</soundDefName>
@@ -132,13 +132,14 @@
         <projectileDefName>ABY_HaloLanceBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
-        <range>26.5</range>
+        <range>32.0</range>
         <warmupTicks>72</warmupTicks>
         <cooldownTicks>138</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <scanIntervalTicks>45</scanIntervalTicks>
-        <preferredMinRange>8.8</preferredMinRange>
+        <preferredMinRange>10.5</preferredMinRange>
+        <targetMinRange>8.0</targetMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>

@@ -86,7 +86,7 @@
         <archetype>RangedSkirmisher</archetype>
         <forcedPrimaryDefName>ABY_Hexgun</forcedPrimaryDefName>
         <minShootingSkill>10</minShootingSkill>
-        <preferredMinRange>7.5</preferredMinRange>
+        <preferredMinRange>8.0</preferredMinRange>
         <retreatSearchRadius>9</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
       </li>
@@ -95,12 +95,15 @@
         <projectileDefName>ABY_HexgunBolt</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
-        <range>27.9</range>
+        <range>30.0</range>
         <warmupTicks>57</warmupTicks>
         <cooldownTicks>99</cooldownTicks>
         <burstShotCount>3</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <scanIntervalTicks>45</scanIntervalTicks>
+        <preferredMinRange>8.0</preferredMinRange>
+        <targetMinRange>5.5</targetMinRange>
+        <panicMeleeRange>2.3</panicMeleeRange>
       </li>
     </comps>
   </ThingDef>
@@ -144,7 +147,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <defaultProjectile>ABY_HexgunBolt</defaultProjectile>
         <warmupTime>0.95</warmupTime>
-        <range>27.9</range>
+        <range>30.0</range>
         <burstShotCount>3</burstShotCount>
         <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
         <soundAiming>ABY_RiftCarbineCharge</soundAiming>

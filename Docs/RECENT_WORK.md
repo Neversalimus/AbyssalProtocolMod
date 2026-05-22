@@ -1,5 +1,25 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-22 — Apply enemy range role pass
+- Raised hostile ranged-role distances after the player weapon range pass so enemies keep distinct tactical pressure instead of collapsing into the same mid-range band.
+- Updated Hexgun Thrall, Rift Sapper, Null Priest, Halo Husk, Rift Sniper, Siege Idol, Reactor Saint, and Rift Butcher XML tuning only.
+- Added or tightened preferred/minimum spacing where supported by existing shooter comps, with the largest increases reserved for sniper, siege, and boss artillery roles.
+- C# build not required; XML parsing verified, but RimWorld runtime balance testing is still required.
+
+Changed areas:
+
+```text
+Defs/ThingDefs/ABY_HexgunThrall_Content.xml
+Defs/ThingDefs/ABY_RiftSapper_Content.xml
+Defs/ThingDefs/ABY_NullPriest_Content.xml
+Defs/ThingDefs/ABY_HaloHusk_Content.xml
+Defs/ThingDefs/ABY_RiftSniper_Content.xml
+Defs/ThingDefs/ABY_SiegeIdol_Content.xml
+Defs/ThingDefs/ABY_ReactorSaint_Content.xml
+Defs/ThingDefs/ABY_RiftButcher_Content.xml
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-22 — Complete current monster Bestiary coverage
 - Added missing Bestiary tracking entries for `ABY_HaloHusk`, `ABY_RiftButcher`, and `ABY_ArchonOfRupture` so all current hostile PawnKind races resolve into the threat codex through kind or race fallback.
 - Added English and Russian Bestiary localization for Halo Husk, Rift Butcher, Reliquary Archon Beast, and Archon of Rupture.

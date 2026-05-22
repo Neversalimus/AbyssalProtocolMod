@@ -107,7 +107,10 @@
         <stabilizeOnEveryDamage>true</stabilizeOnEveryDamage>
         <forceLordReengage>true</forceLordReengage>
       </li>
-      <li Class="AbyssalProtocol.CompProperties_ABY_RiftButcherCombat" />
+      <li Class="AbyssalProtocol.CompProperties_ABY_RiftButcherCombat">
+        <hookRange>12.5</hookRange>
+        <dashRange>15.0</dashRange>
+      </li>
     </comps>
     <modExtensions>
       <li Class="AbyssalProtocol.ABY_HoverArmorExtension">

@@ -83,7 +83,7 @@
       <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
         <archetype>SupportCaster</archetype>
         <minShootingSkill>11</minShootingSkill>
-        <preferredMinRange>8.8</preferredMinRange>
+        <preferredMinRange>9.5</preferredMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
@@ -93,13 +93,14 @@
         <projectileDefName>ABY_NullBoltProjectile</projectileDefName>
         <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
         <castSoundDefName>ABY_RiftCarbineFire</castSoundDefName>
-        <range>18.9</range>
+        <range>24.0</range>
         <warmupTicks>54</warmupTicks>
         <cooldownTicks>240</cooldownTicks>
         <burstShotCount>1</burstShotCount>
         <ticksBetweenBurstShots>1</ticksBetweenBurstShots>
         <scanIntervalTicks>45</scanIntervalTicks>
-        <preferredMinRange>8.8</preferredMinRange>
+        <preferredMinRange>9.5</preferredMinRange>
+        <targetMinRange>7.0</targetMinRange>
         <retreatSearchRadius>10</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
@@ -114,7 +115,7 @@
         <breachIntervalTicks>900</breachIntervalTicks>
         <breachIntervalVariance>180</breachIntervalVariance>
         <minTargetRange>6.0</minTargetRange>
-        <maxTargetRange>20.5</maxTargetRange>
+        <maxTargetRange>25.5</maxTargetRange>
         <maxActiveManifestations>2</maxActiveManifestations>
         <maxLifetimeSummons>3</maxLifetimeSummons>
         <seamBreachChance>0.58</seamBreachChance>

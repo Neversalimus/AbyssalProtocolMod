@@ -83,11 +83,11 @@
         <minShootingSkill>11</minShootingSkill>
         <spawnGraceTicks>48</spawnGraceTicks>
         <lordRetryTicks>60</lordRetryTicks>
-        <preferredMinRange>10.8</preferredMinRange>
+        <preferredMinRange>13.0</preferredMinRange>
         <retreatSearchRadius>12</retreatSearchRadius>
         <preferRangedTargets>true</preferRangedTargets>
         <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
-        <targetMinRange>8.6</targetMinRange>
+        <targetMinRange>10.5</targetMinRange>
       </li>
       <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
       <li Class="AbyssalProtocol.CompProperties_ABY_SiegeIdolSiegeShooter">
@@ -97,16 +97,16 @@
         <breachProjectileDefName>ABY_SiegeIdolBreachShell</breachProjectileDefName>
         <breachAimSoundDefName>ABY_UltraPlasmaCharge</breachAimSoundDefName>
         <breachCastSoundDefName>ABY_UltraPlasmaFire</breachCastSoundDefName>
-        <range>31.9</range>
+        <range>40.5</range>
         <warmupTicks>92</warmupTicks>
         <cooldownTicks>180</cooldownTicks>
         <scanIntervalTicks>45</scanIntervalTicks>
         <deployTicks>42</deployTicks>
         <telegraphIntervalTicks>12</telegraphIntervalTicks>
         <anchoredIdleReleaseTicks>150</anchoredIdleReleaseTicks>
-        <preferredMinRange>10.8</preferredMinRange>
-        <targetMinRange>8.6</targetMinRange>
-        <anchorMinRange>12.4</anchorMinRange>
+        <preferredMinRange>13.0</preferredMinRange>
+        <targetMinRange>10.5</targetMinRange>
+        <anchorMinRange>15.0</anchorMinRange>
         <retreatSearchRadius>12</retreatSearchRadius>
         <panicMeleeRange>4.2</panicMeleeRange>
         <preferRangedTargets>true</preferRangedTargets>
@@ -117,7 +117,7 @@
         <breachWarmupTicks>138</breachWarmupTicks>
         <breachCooldownTicks>560</breachCooldownTicks>
         <breachTelegraphIntervalTicks>9</breachTelegraphIntervalTicks>
-        <breachMinRange>15.2</breachMinRange>
+        <breachMinRange>18.0</breachMinRange>
         <breachRequiresBuildingTarget>true</breachRequiresBuildingTarget>
       </li>
     </comps>
