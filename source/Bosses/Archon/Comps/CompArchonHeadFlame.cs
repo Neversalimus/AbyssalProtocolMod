@@ -276,7 +276,7 @@ namespace AbyssalProtocol
             for (int i = 0; i < frameCount; i++)
             {
                 string texPath = baseTexPath + "_" + i;
-                materials[i] = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight);
+                materials[i] = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.TransparentPostLight);
             }
 
             MaterialCache[baseTexPath] = materials;

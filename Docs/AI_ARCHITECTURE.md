@@ -522,3 +522,10 @@ Rift Butcher is the implemented progression bridge between the first contained H
 - Hover presentation: the existing `ABY_HoverArmorExtension` renderer now also supports pawn ThingDefs, so Rift Butcher hover visuals do not require a parallel pawn draw stack.
 
 Future work that changes post-horde progression, Dominion access, or Rift Butcher rewards must inspect both the summoning UI and the progression game component.
+
+## 2026-05-22 — Shared draw/spawn/runtime hardening utilities
+
+- `source/Core/Utilities/ABY_MaterialCacheUtility.cs` is now the preferred material creation route for Abyssal draw/VFX code. It wraps RimWorld `MaterialPool.MatFrom(...)` with quantized color keys so animated alpha/color pulses do not create excessive material variants.
+- New or modified `DrawAt`, projectile draw, apparel hover, building overlay, portal, manifestation, boss presentation, and Dominion VFX code should use `ABY_MaterialCacheUtility.MatFrom(...)` instead of direct `MaterialPool.MatFrom(...)` when a `Color` argument is involved.
+- `source/Core/Utilities/ABY_SafeSpawnUtility.cs` is the shared defensive spawn/transfer helper. It must fail safely when no spawn cell is found; do not reintroduce `map.Center` fallback with `WipeMode.Vanish` for pawns, portals, bosses, Dominion transfers, or horde encounters.
+- `ABY_StabilityDiagnosticsGameComponent.FinalizeInit()` clears runtime target, VFX, power-net recovery, and material helper caches on game finalization to avoid cross-save stale state.

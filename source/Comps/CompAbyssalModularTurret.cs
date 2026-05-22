@@ -985,7 +985,7 @@ namespace AbyssalProtocol
 
             try
             {
-                material = MaterialPool.MatFrom(texturePath, ShaderDatabase.MoteGlow);
+                material = ABY_MaterialCacheUtility.MatFrom(texturePath, ShaderDatabase.MoteGlow);
                 AnimatedOverlayMaterialCache[texturePath] = material;
                 return material;
             }

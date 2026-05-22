@@ -58,6 +58,7 @@ namespace AbyssalProtocol
             Scribe_Collections.Look(ref scars, "oblivionChoirScars", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
+                scars ??= new List<ChoirScar>();
                 scars.RemoveAll(s => s == null);
             }
         }

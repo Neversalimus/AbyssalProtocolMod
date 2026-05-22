@@ -541,7 +541,7 @@ namespace AbyssalProtocol
 
             try
             {
-                Material material = MaterialPool.MatFrom(texPath, shader, Color.white);
+                Material material = ABY_MaterialCacheUtility.MatFrom(texPath, shader, Color.white);
                 MaterialPropertyBlock block = Alpha(alpha);
                 Matrix4x4 matrix = Matrix4x4.identity;
                 matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(width, 1f, depth));

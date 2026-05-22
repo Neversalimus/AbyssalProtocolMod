@@ -161,7 +161,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            Material material = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, quantizedAlpha));
+            Material material = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, quantizedAlpha));
             MaterialCache[key] = material;
             return material;
         }

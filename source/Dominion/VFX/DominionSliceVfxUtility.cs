@@ -31,20 +31,20 @@ namespace AbyssalProtocol
         private const string ShieldBlockMoteDefName = "ABY_Mote_DominionSliceShieldBlock";
         private const int LinkSeverBurstDurationTicks = 62;
 
-        private static readonly Material LinkBeamMaterial = MaterialPool.MatFrom(LinkBeamTexPath, ShaderDatabase.MoteGlow);
-        private static readonly Material LinkCoreMaterial = MaterialPool.MatFrom(LinkCoreTexPath, ShaderDatabase.MoteGlow);
-        private static readonly Material LinkEntryBloomMaterial = MaterialPool.MatFrom(LinkEntryBloomTexPath, ShaderDatabase.MoteGlow);
-        private static readonly Material HeartShieldMaterial = MaterialPool.MatFrom(HeartShieldTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material LinkBeamMaterial = ABY_MaterialCacheUtility.MatFrom(LinkBeamTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material LinkCoreMaterial = ABY_MaterialCacheUtility.MatFrom(LinkCoreTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material LinkEntryBloomMaterial = ABY_MaterialCacheUtility.MatFrom(LinkEntryBloomTexPath, ShaderDatabase.MoteGlow);
+        private static readonly Material HeartShieldMaterial = ABY_MaterialCacheUtility.MatFrom(HeartShieldTexPath, ShaderDatabase.MoteGlow);
 
-        private static readonly Material TetherGlowMaterial = MaterialPool.MatFrom(TetherGlowTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.62f));
-        private static readonly Material TetherCoreMaterial = MaterialPool.MatFrom(TetherCoreTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.92f));
-        private static readonly Material TetherChainSparseMaterial = MaterialPool.MatFrom(TetherChainSparseTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.88f));
-        private static readonly Material TetherChainHeavyMaterial = MaterialPool.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.34f));
-        private static readonly Material TetherSnapAnchorMaterial = MaterialPool.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
-        private static readonly Material TetherSnapHeartMaterial = MaterialPool.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
-        private static readonly Material HeartGuardianSnapMaterial = MaterialPool.MatFrom(HeartGuardianSnapTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.96f));
-        private static readonly Material HeartGuardianImpactMaterial = MaterialPool.MatFrom(HeartGuardianImpactTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.86f));
-        private static readonly Material HeartGuardianResidualMaterial = MaterialPool.MatFrom(HeartGuardianResidualTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.74f));
+        private static readonly Material TetherGlowMaterial = ABY_MaterialCacheUtility.MatFrom(TetherGlowTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.62f));
+        private static readonly Material TetherCoreMaterial = ABY_MaterialCacheUtility.MatFrom(TetherCoreTexPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, 0.92f));
+        private static readonly Material TetherChainSparseMaterial = ABY_MaterialCacheUtility.MatFrom(TetherChainSparseTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.88f));
+        private static readonly Material TetherChainHeavyMaterial = ABY_MaterialCacheUtility.MatFrom(TetherChainHeavyTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.34f));
+        private static readonly Material TetherSnapAnchorMaterial = ABY_MaterialCacheUtility.MatFrom(TetherSnapAnchorTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
+        private static readonly Material TetherSnapHeartMaterial = ABY_MaterialCacheUtility.MatFrom(TetherSnapHeartTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.94f));
+        private static readonly Material HeartGuardianSnapMaterial = ABY_MaterialCacheUtility.MatFrom(HeartGuardianSnapTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.96f));
+        private static readonly Material HeartGuardianImpactMaterial = ABY_MaterialCacheUtility.MatFrom(HeartGuardianImpactTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.86f));
+        private static readonly Material HeartGuardianResidualMaterial = ABY_MaterialCacheUtility.MatFrom(HeartGuardianResidualTexPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, 0.74f));
 
         private static ThingDef anchorBreakMoteDef;
         private static ThingDef heartExposeMoteDef;

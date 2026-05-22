@@ -70,8 +70,8 @@ namespace AbyssalProtocol
             ?? DefaultCommandIcon;
         private static readonly Texture2D EjectAllCommandIcon = ContentFinder<Texture2D>.Get("UI/ABY/Commands/ABY_SigilVault_EjectAll", false)
             ?? DefaultCommandIcon;
-        private static readonly Material LinkedOverlayMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkedOverlay", ShaderDatabase.Cutout);
-        private static readonly Material LinkedPulseMaterial = MaterialPool.MatFrom("Things/Building/ABY_SigilVault_LinkPulse", ShaderDatabase.Cutout);
+        private static readonly Material LinkedOverlayMaterial = ABY_MaterialCacheUtility.MatFrom("Things/Building/ABY_SigilVault_LinkedOverlay", ShaderDatabase.Cutout);
+        private static readonly Material LinkedPulseMaterial = ABY_MaterialCacheUtility.MatFrom("Things/Building/ABY_SigilVault_LinkPulse", ShaderDatabase.Cutout);
         private static List<ThingDef> cachedAcceptedSigilDefs;
 
         private ThingOwner<Thing> innerContainer;
@@ -1047,7 +1047,7 @@ namespace AbyssalProtocol
 
             if (!OverlayMaterialCache.TryGetValue(texPath, out Material material))
             {
-                material = MaterialPool.MatFrom(texPath, ShaderDatabase.Cutout);
+                material = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.Cutout);
                 OverlayMaterialCache[texPath] = material;
             }
 

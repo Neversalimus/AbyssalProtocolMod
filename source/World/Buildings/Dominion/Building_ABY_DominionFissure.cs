@@ -112,7 +112,7 @@ namespace AbyssalProtocol
             }
 
             Shader shader = extension.usePostLightShader ? ShaderDatabase.TransparentPostLight : ShaderDatabase.Transparent;
-            material = MaterialPool.MatFrom(extension.sheetTexPath, shader, extension.DrawColor);
+            material = ABY_MaterialCacheUtility.MatFrom(extension.sheetTexPath, shader, extension.DrawColor);
             MaterialCache[key] = material;
             return material;
         }

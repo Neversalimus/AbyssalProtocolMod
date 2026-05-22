@@ -76,7 +76,7 @@ namespace AbyssalProtocol
                 if (material == null)
                 {
                     string path = framePathPrefix + (frameIndex + 1).ToString("00");
-                    material = MaterialPool.MatFrom(path, ShaderDatabase.MoteGlow);
+                    material = ABY_MaterialCacheUtility.MatFrom(path, ShaderDatabase.MoteGlow);
                     cachedMaterials[frameIndex] = material;
                 }
 

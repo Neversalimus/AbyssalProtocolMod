@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -77,7 +78,8 @@ namespace AbyssalProtocol
             {
                 if (!TryFindStandableCellNear(cell.IsValid ? cell : map.Center, map, out spawnCell, 8))
                 {
-                    spawnCell = map.Center;
+                    Log.Warning("[Abyssal Protocol] " + BuildFailure("No safe spawn cell found for " + SafeThingLabel(thing) + " near " + (cell.IsValid ? cell.ToString() : "<invalid>") + ".", context));
+                    return false;
                 }
             }
 
@@ -221,7 +223,11 @@ namespace AbyssalProtocol
             }
 
             bool wasDrafted = preserveDrafted && pawn.drafter != null && pawn.drafter.Drafted;
-            IntVec3 spawnCell = ResolveSpawnCell(nearCell, targetMap, 8);
+            if (!TryFindStandableCellNear(nearCell, targetMap, out IntVec3 spawnCell, 8))
+            {
+                Log.Warning("[Abyssal Protocol] " + BuildFailure("Cannot transfer pawn; no safe destination cell found near " + (nearCell.IsValid ? nearCell.ToString() : "<invalid>") + ": " + SafeThingLabel(pawn), context));
+                return false;
+            }
 
             try
             {
@@ -311,16 +317,43 @@ namespace AbyssalProtocol
                 return cell;
             }
 
-            return map.Center;
+            return IntVec3.Invalid;
         }
 
         public static bool IsCellSpawnable(IntVec3 cell, Map map)
         {
-            return cell.IsValid
-                && map != null
-                && cell.InBounds(map)
-                && cell.Standable(map)
-                && !cell.Fogged(map);
+            if (!cell.IsValid || map == null || !cell.InBounds(map) || !cell.Standable(map) || cell.Fogged(map))
+            {
+                return false;
+            }
+
+            List<Thing> things = cell.GetThingList(map);
+            if (things == null)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed)
+                {
+                    continue;
+                }
+
+                if (thing is Pawn || thing is Building || thing is Blueprint || thing is Frame)
+                {
+                    return false;
+                }
+
+                ThingDef def = thing.def;
+                if (def != null && def.category == ThingCategory.Building)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static string BuildFailure(string message, string context)

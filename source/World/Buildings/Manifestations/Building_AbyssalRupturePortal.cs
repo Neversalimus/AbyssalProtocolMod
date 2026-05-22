@@ -15,8 +15,10 @@ namespace AbyssalProtocol
         private const int BossSpawnRetryTicks = 60;
         private const int BossSpawnExtendedRetryTicks = 120;
         private const int ExtendedSpawnSearchAttempts = 3;
+        private const int EmergencySpawnSearchAttempts = 8;
         private const float PrimarySpawnRadius = 3.9f;
         private const float ExtendedSpawnRadius = 7.9f;
+        private const float EmergencySpawnRadius = 12.9f;
 
         private Faction portalFaction;
         private PawnKindDef bossKindDef;
@@ -242,7 +244,29 @@ namespace AbyssalProtocol
                 return;
             }
 
-            GenSpawn.Spawn(boss, spawnCell, Map, Rot4.Random);
+            if (!ABY_SafeSpawnUtility.TrySpawnPawnSafe(
+                    boss,
+                    spawnCell,
+                    Map,
+                    out Pawn spawnedBoss,
+                    Rot4.Random,
+                    WipeMode.Vanish,
+                    false,
+                    false,
+                    "rupture portal boss spawn"))
+            {
+                if (boss != null && !boss.Destroyed && !boss.Spawned)
+                {
+                    boss.Destroy(DestroyMode.Vanish);
+                }
+
+                blockedBossSpawnAttempts++;
+                nextBossSpawnRetryTick = ticksActive + BossSpawnRetryTicks;
+                return;
+            }
+
+            boss = spawnedBoss;
+            spawnCell = spawnedBoss.PositionHeld;
             ArchonInfernalVFXUtility.DoSummonVFX(Map, spawnCell);
             ABY_SoundUtility.PlayAt("ABY_RuptureArrive", spawnCell, Map);
             FleckMaker.ThrowLightningGlow(spawnCell.ToVector3Shifted(), Map, 2.35f);
@@ -296,6 +320,11 @@ namespace AbyssalProtocol
                 return true;
             }
 
+            if (blockedBossSpawnAttempts >= EmergencySpawnSearchAttempts && TryFindSpawnCellWithinRadius(EmergencySpawnRadius, out cell))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -304,12 +333,7 @@ namespace AbyssalProtocol
             cell = IntVec3.Invalid;
             foreach (IntVec3 candidate in GenRadial.RadialCellsAround(Position, radius, true))
             {
-                if (!candidate.InBounds(Map) || !candidate.Standable(Map))
-                {
-                    continue;
-                }
-
-                if (candidate.GetFirstPawn(Map) != null)
+                if (!ABY_SafeSpawnUtility.IsCellSpawnable(candidate, Map))
                 {
                     continue;
                 }
@@ -388,7 +412,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight, color);
+            Material material = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.TransparentPostLight, color);
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(scale, 1f, scale));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

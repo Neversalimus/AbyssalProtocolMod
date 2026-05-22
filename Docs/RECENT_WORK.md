@@ -892,3 +892,15 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Changed `AbyssalBossNoDownedUtility` to batch injury/clamp changes and call health cache/state refresh at most once per recovery pass plus one fallback refresh, instead of per-heal-pass.
 - Added Harmony priorities to boss true-death health/death patches so boss suppression runs early for death/downed prefixes and late for `ShouldBeDead`/`ShouldBeDowned` postfix result correction.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries.
+
+## 2026-05-22 — Full runtime hardening audit pass
+
+- Added `ABY_MaterialCacheUtility` and routed Abyssal material creation through a quantized shared cache so pulse-driven draw colors no longer create unbounded `MaterialPool` variants in VFX/building/projectile/apparel draw paths.
+- Hardened `ABY_SafeSpawnUtility`: safe spawns no longer fall back to `map.Center` with `WipeMode.Vanish`; spawn cells now reject pawns, buildings, blueprints, frames and other building-category blockers before spawning.
+- Hardened pawn transfer so a missing safe destination aborts before the pawn is despawned from the source map.
+- Reworked `CompABY_BreachDirective` target acquisition to scan colonist buildings instead of `map.listerThings.AllThings` in horde/breach hot paths.
+- Reworked `Projectile_SpecterLashAnchor` impact target fallback to scan radial cells around impact instead of every thing on the map.
+- Hardened imp and rupture portals against blocked spawn cells: blocked imp spawns retry instead of consuming wave count, and rupture boss spawning uses safe spawn checks plus wider fallback radius.
+- Made delayed horde power-net recovery state save/load-safe and cleared power/material runtime caches during game finalization.
+- Fixed null-safe Oblivion Choir scar load cleanup and translated the Russian Rift Butcher label.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` still fails in sandbox because .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in RimWorld is still required.

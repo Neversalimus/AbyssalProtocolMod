@@ -132,7 +132,7 @@ namespace AbyssalProtocol
             Material[] materials = new Material[frameCount];
             for (int i = 0; i < frameCount; i++)
             {
-                materials[i] = MaterialPool.MatFrom(baseTexPath + "_" + i, ShaderDatabase.Cutout);
+                materials[i] = ABY_MaterialCacheUtility.MatFrom(baseTexPath + "_" + i, ShaderDatabase.Cutout);
             }
 
             MaterialCache[baseTexPath] = materials;

@@ -193,7 +193,7 @@ namespace AbyssalProtocol
             float angle = Mathf.Sin(ticks * 0.006f) * 0.9f;
             Vector3 loc = new Vector3(drawLoc.x, drawLoc.y + OverlayAltitude, drawLoc.z);
             Color color = new Color(1f, 0.52f, 0.24f, alpha);
-            Material material = MaterialPool.MatFrom(ActiveOverlayTexPath, ShaderDatabase.TransparentPostLight, color);
+            Material material = ABY_MaterialCacheUtility.MatFrom(ActiveOverlayTexPath, ShaderDatabase.TransparentPostLight, color);
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(OverlaySize.x, 1f, OverlaySize.y));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

@@ -263,3 +263,10 @@ source/Combat/Projectiles/Bosses/
 Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` through `TryRunBaseImpact(...)`; direct post-impact damage through `TryApplyDamage(...)` or `ABY_ProjectileProcUtility.ApplyDamage(...)`; and high-risk explosion/post-impact stages through `TryRunPostImpactAction(...)`.
 
 - T5 passive turret modules: start with `Defs/Misc/ABY_T5PassiveTurretModuleDefs.xml`, `Defs/ThingDefs/ABY_T5PassiveTurretModules.xml`, and `Defs/RecipeDefs/ABY_T5PassiveTurretModuleRecipes.xml`. Icons live under `Textures/Things/Item/TurretModules/`. These modules use existing passive fields only; no C# is required unless adding a new passive behavior type.
+
+## Runtime hardening routes — 2026-05-22
+
+- Dynamic material/VFX draw issues: start with `source/Core/Utilities/ABY_MaterialCacheUtility.cs`, then inspect the local `DrawPlane`/`DrawAt` caller.
+- Unsafe spawn/transfer or `WipeMode.Vanish` issues: start with `source/Core/Utilities/ABY_SafeSpawnUtility.cs` and the caller's cell predicate.
+- Horde/breach target scan performance: start with `source/Comps/CompABY_BreachDirective.cs`, `source/Core/Runtime/ABY_RuntimeTargetCache.cs`, and `source/Encounters/AbyssalThreatPawnUtility.cs`.
+- Power-net horde recovery: start with `source/Core/Utilities/ABY_PowerNetRecoveryUtility.cs`, `source/Core/GameComponents/MapComponent_AbyssalPortalWave.cs`, and the Summoning Circle dev gizmo.

@@ -68,10 +68,49 @@ namespace AbyssalProtocol
                 }
             }
 
-            return SelectBestDamageableThing(Map.listerThings != null ? Map.listerThings.AllThings : null, launcherPawn, impactPosition, searchRadius);
+            return SelectBestDamageableThingNearCell(Position, Map, launcherPawn, impactPosition, searchRadius);
+        }
+
+        private static Thing SelectBestDamageableThingNearCell(IntVec3 center, Map map, Pawn launcherPawn, Vector3 impactPosition, float searchRadius)
+        {
+            if (map == null || !center.IsValid || !center.InBounds(map))
+            {
+                return null;
+            }
+
+            Thing bestThing = null;
+            float bestScore = searchRadius * searchRadius + 2f;
+            int cellRadius = Mathf.CeilToInt(Mathf.Max(0.5f, searchRadius));
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, cellRadius, true))
+            {
+                if (!cell.InBounds(map))
+                {
+                    continue;
+                }
+
+                Thing candidate = SelectBestDamageableThing(cell.GetThingList(map), launcherPawn, impactPosition, searchRadius, bestScore);
+                if (candidate == null)
+                {
+                    continue;
+                }
+
+                float score = ScoreDamageableThing(candidate, impactPosition, searchRadius);
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestThing = candidate;
+                }
+            }
+
+            return bestThing;
         }
 
         private static Thing SelectBestDamageableThing(List<Thing> things, Pawn launcherPawn, Vector3 impactPosition, float searchRadius)
+        {
+            return SelectBestDamageableThing(things, launcherPawn, impactPosition, searchRadius, searchRadius * searchRadius + 2f);
+        }
+
+        private static Thing SelectBestDamageableThing(List<Thing> things, Pawn launcherPawn, Vector3 impactPosition, float searchRadius, float initialBestScore)
         {
             if (things == null)
             {
@@ -79,8 +118,7 @@ namespace AbyssalProtocol
             }
 
             Thing bestThing = null;
-            float bestScore = searchRadius * searchRadius + 2f;
-            Vector2 impactFlat = new Vector2(impactPosition.x, impactPosition.z);
+            float bestScore = initialBestScore;
 
             for (int i = 0; i < things.Count; i++)
             {
@@ -90,28 +128,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                Vector3 drawPos = thing.DrawPos;
-                float distSq = (new Vector2(drawPos.x, drawPos.z) - impactFlat).sqrMagnitude;
-                if (distSq > searchRadius * searchRadius)
-                {
-                    continue;
-                }
-
-                float priorityBias = 0.7f;
-                if (thing is Pawn)
-                {
-                    priorityBias = 0f;
-                }
-                else if (thing.def != null && thing.def.category == ThingCategory.Building)
-                {
-                    priorityBias = 0.12f;
-                }
-                else if (thing.def != null && thing.def.mineable)
-                {
-                    priorityBias = 0.24f;
-                }
-
-                float score = distSq + priorityBias;
+                float score = ScoreDamageableThing(thing, impactPosition, searchRadius);
                 if (score < bestScore)
                 {
                     bestScore = score;
@@ -120,6 +137,38 @@ namespace AbyssalProtocol
             }
 
             return bestThing;
+        }
+
+        private static float ScoreDamageableThing(Thing thing, Vector3 impactPosition, float searchRadius)
+        {
+            if (thing == null)
+            {
+                return float.MaxValue;
+            }
+
+            Vector2 impactFlat = new Vector2(impactPosition.x, impactPosition.z);
+            Vector3 drawPos = thing.DrawPos;
+            float distSq = (new Vector2(drawPos.x, drawPos.z) - impactFlat).sqrMagnitude;
+            if (distSq > searchRadius * searchRadius)
+            {
+                return float.MaxValue;
+            }
+
+            float priorityBias = 0.7f;
+            if (thing is Pawn)
+            {
+                priorityBias = 0f;
+            }
+            else if (thing.def != null && thing.def.category == ThingCategory.Building)
+            {
+                priorityBias = 0.12f;
+            }
+            else if (thing.def != null && thing.def.mineable)
+            {
+                priorityBias = 0.24f;
+            }
+
+            return distSq + priorityBias;
         }
 
         private static bool IsDamageableTarget(Thing thing, Pawn launcherPawn)

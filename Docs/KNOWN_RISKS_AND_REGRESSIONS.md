@@ -718,3 +718,13 @@ In-game checks:
 - Summon Archon/Rupture through a portal while surrounding the release area with pawns; confirm TPS does not degrade from per-tick radial scans and the boss appears once a valid cell is available.
 - Damage a protected boss into a temporary downed state and confirm recovery happens without repeated health-cache churn every tick.
 - Load an older save containing a rupture portal/boss label and confirm Russian/localized label resolution where applicable.
+
+## 2026-05-22 — Full runtime hardening audit follow-up
+
+- Avoid calling `MaterialPool.MatFrom(...)` directly in pulse-driven draw loops with continuously changing `Color`/alpha values. Use `ABY_MaterialCacheUtility.MatFrom(...)`, which quantizes colors and centralizes material lookup for Abyssal VFX/draw code.
+- Do not let shared spawn helpers silently fall back to `map.Center` with `WipeMode.Vanish`. If a safe cell cannot be found, return failure and retry or abort before despawning/transferring critical pawns.
+- Horde/breach AI target acquisition must not scan `map.listerThings.AllThings` per pawn cadence. Prefer `map.listerBuildings.allBuildingsColonist`, `ABY_RuntimeTargetCache`, or bounded radial cell scans depending on the target type.
+- Projectile impact fallback logic must not scan every thing on the map for each impact. Use `GenRadial.RadialCellsAround(...)` around the impact cell and inspect per-cell thing lists.
+- Portal spawn counts must not be consumed merely because the portal perimeter is temporarily full. Blocked spawn attempts should retry with a short cadence and expand search radius after repeated failures.
+- Runtime static caches/throttles must be cleared or protected against tick rollback/map-ID reuse on game load/switch. `ABY_StabilityDiagnosticsGameComponent.FinalizeInit()` now clears runtime target, power-net recovery and material helper state.
+- Delayed recovery state scheduled by map components should be exposed through `Scribe_Values` when losing that delay could weaken a save-recovery fix.

@@ -178,7 +178,7 @@ namespace AbyssalProtocol
             {
                 if (cachedBodyMaterial == null)
                 {
-                    cachedBodyMaterial = MaterialPool.MatFrom(MicroRocketVisualTexturePath, ShaderDatabase.MoteGlow);
+                    cachedBodyMaterial = ABY_MaterialCacheUtility.MatFrom(MicroRocketVisualTexturePath, ShaderDatabase.MoteGlow);
                 }
 
                 return cachedBodyMaterial;

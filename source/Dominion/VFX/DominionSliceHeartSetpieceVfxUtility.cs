@@ -144,7 +144,7 @@ namespace AbyssalProtocol
             {
                 if (heartOverlayPulseExposedMaterial == null)
                 {
-                    heartOverlayPulseExposedMaterial = MaterialPool.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayExposedColor);
+                    heartOverlayPulseExposedMaterial = ABY_MaterialCacheUtility.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayExposedColor);
                 }
 
                 return heartOverlayPulseExposedMaterial;
@@ -154,7 +154,7 @@ namespace AbyssalProtocol
             {
                 if (heartOverlayPulseActiveMaterial == null)
                 {
-                    heartOverlayPulseActiveMaterial = MaterialPool.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayActiveColor);
+                    heartOverlayPulseActiveMaterial = ABY_MaterialCacheUtility.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayActiveColor);
                 }
 
                 return heartOverlayPulseActiveMaterial;
@@ -162,7 +162,7 @@ namespace AbyssalProtocol
 
             if (heartOverlayPulseInactiveMaterial == null)
             {
-                heartOverlayPulseInactiveMaterial = MaterialPool.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayInactiveColor);
+                heartOverlayPulseInactiveMaterial = ABY_MaterialCacheUtility.MatFrom(HeartOverlayPulseSheetPath, ShaderDatabase.TransparentPostLight, HeartOverlayInactiveColor);
             }
 
             return heartOverlayPulseInactiveMaterial;

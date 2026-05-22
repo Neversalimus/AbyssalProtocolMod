@@ -112,12 +112,18 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref commandRewardGranted, "commandRewardGranted", false);
             Scribe_Values.Look(ref lastOpenedPortalCell, "lastOpenedPortalCell", IntVec3.Invalid);
             Scribe_Deep.Look(ref activeHordeRewardSnapshot, "activeHordeRewardSnapshot");
+            Scribe_Values.Look(ref pendingSoftPowerNetRecoveryTick, "pendingSoftPowerNetRecoveryTick", -1);
+            Scribe_Values.Look(ref pendingSoftPowerNetRecoveryReason, "pendingSoftPowerNetRecoveryReason");
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 queuedPortals ??= new List<PortalWaveRequest>();
                 usedPortalCells ??= new List<IntVec3>();
                 frontAnchorCells ??= new List<IntVec3>();
+                if (pendingSoftPowerNetRecoveryTick < -1)
+                {
+                    pendingSoftPowerNetRecoveryTick = -1;
+                }
             }
         }
 

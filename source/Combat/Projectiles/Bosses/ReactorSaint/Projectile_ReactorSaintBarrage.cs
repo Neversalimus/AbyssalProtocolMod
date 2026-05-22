@@ -189,7 +189,7 @@ namespace AbyssalProtocol
             {
                 if (cachedHaloMaterial == null)
                 {
-                    cachedHaloMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageHaloTexturePath, ShaderDatabase.MoteGlow);
+                    cachedHaloMaterial = ABY_MaterialCacheUtility.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageHaloTexturePath, ShaderDatabase.MoteGlow);
                 }
                 return cachedHaloMaterial;
             }
@@ -201,7 +201,7 @@ namespace AbyssalProtocol
             {
                 if (cachedCoreMaterial == null)
                 {
-                    cachedCoreMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageCoreTexturePath, ShaderDatabase.MoteGlow);
+                    cachedCoreMaterial = ABY_MaterialCacheUtility.MatFrom(ABY_ReactorSaintProjectileVfxUtility.BarrageCoreTexturePath, ShaderDatabase.MoteGlow);
                 }
                 return cachedCoreMaterial;
             }

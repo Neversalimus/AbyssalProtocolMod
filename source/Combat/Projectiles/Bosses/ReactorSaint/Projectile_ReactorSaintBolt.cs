@@ -201,7 +201,7 @@ namespace AbyssalProtocol
             {
                 if (cachedHaloMaterial == null)
                 {
-                    cachedHaloMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceHaloTexturePath, ShaderDatabase.MoteGlow);
+                    cachedHaloMaterial = ABY_MaterialCacheUtility.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceHaloTexturePath, ShaderDatabase.MoteGlow);
                 }
                 return cachedHaloMaterial;
             }
@@ -213,7 +213,7 @@ namespace AbyssalProtocol
             {
                 if (cachedCoreMaterial == null)
                 {
-                    cachedCoreMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceCoreTexturePath, ShaderDatabase.MoteGlow);
+                    cachedCoreMaterial = ABY_MaterialCacheUtility.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceCoreTexturePath, ShaderDatabase.MoteGlow);
                 }
                 return cachedCoreMaterial;
             }
@@ -225,7 +225,7 @@ namespace AbyssalProtocol
             {
                 if (cachedNeedleMaterial == null)
                 {
-                    cachedNeedleMaterial = MaterialPool.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceNeedleTexturePath, ShaderDatabase.MoteGlow);
+                    cachedNeedleMaterial = ABY_MaterialCacheUtility.MatFrom(ABY_ReactorSaintProjectileVfxUtility.LanceNeedleTexturePath, ShaderDatabase.MoteGlow);
                 }
                 return cachedNeedleMaterial;
             }

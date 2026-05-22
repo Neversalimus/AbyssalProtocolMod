@@ -270,7 +270,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(BodyTexPath, BodyShader, Color.white);
+            Material material = ABY_MaterialCacheUtility.MatFrom(BodyTexPath, BodyShader, Color.white);
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.identity, new Vector3(scaleX, 1f, scaleZ));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
@@ -283,7 +283,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material shadowMat = MaterialPool.MatFrom(ShadowTexPath, ShadowShader, new Color(1f, 1f, 1f, alpha));
+            Material shadowMat = ABY_MaterialCacheUtility.MatFrom(ShadowTexPath, ShadowShader, new Color(1f, 1f, 1f, alpha));
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.identity, new Vector3(scale, 1f, scale));
             Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMat, 0);

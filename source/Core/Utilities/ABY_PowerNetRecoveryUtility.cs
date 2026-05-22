@@ -30,9 +30,17 @@ namespace AbyssalProtocol
 
             int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
             int mapId = map.uniqueID;
-            if (!ignoreThrottle && LastRefreshTickByMap.TryGetValue(mapId, out int lastTick) && ticksGame - lastTick < DefaultThrottleTicks)
+            PruneInvalidThrottleEntries(ticksGame, mapId);
+            if (LastRefreshTickByMap.TryGetValue(mapId, out int lastTick))
             {
-                return false;
+                if (lastTick > ticksGame)
+                {
+                    LastRefreshTickByMap.Remove(mapId);
+                }
+                else if (!ignoreThrottle && ticksGame - lastTick < DefaultThrottleTicks)
+                {
+                    return false;
+                }
             }
 
             LastRefreshTickByMap[mapId] = ticksGame;
@@ -81,6 +89,53 @@ namespace AbyssalProtocol
         public static bool TryRebuildPowerNetsForThing(Thing thing, string reason = null, bool showMessage = false, bool ignoreThrottle = false, bool deepReconnect = false)
         {
             return TryRebuildPowerNetsNow(thing?.MapHeld, reason, showMessage, ignoreThrottle, deepReconnect);
+        }
+
+        public static void ClearThrottleState()
+        {
+            LastRefreshTickByMap.Clear();
+        }
+
+        private static void PruneInvalidThrottleEntries(int ticksGame, int activeMapId)
+        {
+            if (LastRefreshTickByMap.Count == 0)
+            {
+                return;
+            }
+
+            if (ticksGame % 1800 != 0)
+            {
+                return;
+            }
+
+            List<int> remove = null;
+            foreach (KeyValuePair<int, int> pair in LastRefreshTickByMap)
+            {
+                if (pair.Key == activeMapId)
+                {
+                    continue;
+                }
+
+                if (pair.Value > ticksGame || ticksGame - pair.Value > 60000)
+                {
+                    if (remove == null)
+                    {
+                        remove = new List<int>();
+                    }
+
+                    remove.Add(pair.Key);
+                }
+            }
+
+            if (remove == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < remove.Count; i++)
+            {
+                LastRefreshTickByMap.Remove(remove[i]);
+            }
         }
 
         private static void RunDeepReconnectPass(Map map, ref int powerCompCount, ref int transmitterCount, ref int manualReconnectCount)

@@ -29,7 +29,7 @@ namespace AbyssalProtocol
             {
                 if (cachedMaterial == null && !Props.texPath.NullOrEmpty())
                 {
-                    cachedMaterial = MaterialPool.MatFrom(Props.texPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, Mathf.Clamp01(Props.alpha)));
+                    cachedMaterial = ABY_MaterialCacheUtility.MatFrom(Props.texPath, ShaderDatabase.MoteGlow, new Color(1f, 1f, 1f, Mathf.Clamp01(Props.alpha)));
                 }
 
                 return cachedMaterial;

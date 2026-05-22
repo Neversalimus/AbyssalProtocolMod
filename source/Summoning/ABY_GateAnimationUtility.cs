@@ -63,7 +63,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
+            Material material = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.TransparentPostLight, new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.identity, new Vector3(scale, 1f, scale));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

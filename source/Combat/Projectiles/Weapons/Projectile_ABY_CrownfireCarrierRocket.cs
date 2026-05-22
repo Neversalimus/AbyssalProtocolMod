@@ -405,7 +405,7 @@ namespace AbyssalProtocol
             {
                 if (cachedCarrierMaterial == null)
                 {
-                    cachedCarrierMaterial = MaterialPool.MatFrom(CarrierVisualTexturePath, ShaderDatabase.MoteGlow);
+                    cachedCarrierMaterial = ABY_MaterialCacheUtility.MatFrom(CarrierVisualTexturePath, ShaderDatabase.MoteGlow);
                 }
 
                 return cachedCarrierMaterial;

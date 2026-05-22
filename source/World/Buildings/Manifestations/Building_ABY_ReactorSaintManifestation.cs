@@ -305,7 +305,7 @@ namespace AbyssalProtocol
 
         private static void DrawCocoonBody(Vector3 loc, float scaleX, float scaleZ, float angle, float alpha)
         {
-            Material material = MaterialPool.MatFrom(CocoonPath, ShaderDatabase.Cutout, new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
+            Material material = ABY_MaterialCacheUtility.MatFrom(CocoonPath, ShaderDatabase.Cutout, new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(scaleX, 1f, scaleZ));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

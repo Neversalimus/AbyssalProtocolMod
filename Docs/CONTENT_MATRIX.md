@@ -359,3 +359,12 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 | System | Status | Source | Defs/assets | UI exposure | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Rift Butcher miniboss gate | Implemented / needs runtime smoke test | `source/Comps/CompABY_RiftButcherCombat.cs`, `source/Progression/ABY_HordeAndButcherProgressionGameComponent.cs`, `source/UI/Summoning/AbyssalSummoningConsoleUtility.cs`, `source/Summoning/AbyssalCircleCapacitorRitualUtility.cs` | `Defs/ThingDefs/ABY_RiftButcher_Content.xml`, `Defs/PawnKindDefs/ABY_RiftButcher_PawnKinds.xml`, `Defs/HediffDefs/ABY_RiftButcher_Hediffs.xml`, `Defs/RecipeDefs/ABY_RiftButcher_Recipes.xml`, `Textures/Pawn/RiftButcher/`, `Textures/Things/Item/ABY_RiftButcher*` | Summoning Console ritual list, compact miniboss overhead HP bar via `CompABY_BossTrueDeath`, Sigil Vault staging | Sits after first Horde Gate clear and before Dominion Gate. Dominion Sigil crafting now requires `ABY_RiftButcherSeveranceCore` so the encounter cannot be skipped through residue alone. |
+
+## Runtime hardening matrix — 2026-05-22
+
+| System | Status | Source ownership | Asset/Def impact | UI exposure | Gating/progression | Notes |
+|---|---|---|---|---|---|---|
+| Quantized material helper | Implemented | `source/Core/Utilities/ABY_MaterialCacheUtility.cs` | none | none | none | Use for pulse-driven draw/VFX material creation instead of direct `MaterialPool.MatFrom` calls with changing colors. |
+| Safe spawn/transfer helper | Implemented / hardened | `source/Core/Utilities/ABY_SafeSpawnUtility.cs` | none | none | encounter/runtime safety | No `map.Center` fallback with `WipeMode.Vanish`; callers must handle failure/retry. |
+| Horde/breach target-scan hardening | Implemented | `source/Comps/CompABY_BreachDirective.cs`, `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | none | none | horde/encounter runtime | Avoid per-pawn `AllThings` scans; prefer bounded or cached target lists. |
+| Specter Lash impact fallback | Implemented | `source/Combat/Projectiles/Weapons/Projectile_SpecterLashAnchor.cs` | existing projectile defs unchanged | combat VFX stream | weapon runtime | Impact fallback now scans radial cells rather than whole map thing lists. |

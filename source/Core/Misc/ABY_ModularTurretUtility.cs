@@ -122,7 +122,7 @@ namespace AbyssalProtocol
 
             try
             {
-                material = MaterialPool.MatFrom(texturePath, ShaderDatabase.Cutout);
+                material = ABY_MaterialCacheUtility.MatFrom(texturePath, ShaderDatabase.Cutout);
                 overlayMaterialCache[texturePath] = material;
                 return material;
             }

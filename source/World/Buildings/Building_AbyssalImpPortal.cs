@@ -10,6 +10,10 @@ namespace AbyssalProtocol
         private const string PortalRingPath = "Things/VFX/ImpPortal/ABY_ImpPortal_Ring";
         private const string PortalGlowPath = "Things/VFX/ImpPortal/ABY_ImpPortal_Glow";
         private const string PortalEmbersPath = "Things/VFX/ImpPortal/ABY_ImpPortal_Embers";
+        private const int BlockedSpawnRetryTicks = 18;
+        private const int ExtendedSpawnSearchAttempts = 4;
+        private const float PrimarySpawnRadius = 2.9f;
+        private const float ExtendedSpawnRadius = 5.9f;
 
         private Faction portalFaction;
         private PawnKindDef impKindDef;
@@ -20,6 +24,7 @@ namespace AbyssalProtocol
         private int impsRemaining;
         private int nextImpSpawnTick = 45;
         private int finalDespawnTick = -1;
+        private int blockedImpSpawnAttempts;
         private int seed;
 
         public void Initialize(Faction faction, PawnKindDef impPawnKind, int impCount, int warmup, int interval, int linger)
@@ -32,6 +37,7 @@ namespace AbyssalProtocol
             lingerTicks = Mathf.Max(60, linger);
             nextImpSpawnTick = warmupTicks;
             finalDespawnTick = -1;
+            blockedImpSpawnAttempts = 0;
             ticksActive = 0;
             seed = thingIDNumber >= 0 ? thingIDNumber : Rand.Range(0, 1000000);
         }
@@ -48,6 +54,7 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref impsRemaining, "impsRemaining", 0);
             Scribe_Values.Look(ref nextImpSpawnTick, "nextImpSpawnTick", 45);
             Scribe_Values.Look(ref finalDespawnTick, "finalDespawnTick", -1);
+            Scribe_Values.Look(ref blockedImpSpawnAttempts, "blockedImpSpawnAttempts", 0);
             Scribe_Values.Look(ref seed, "seed", 0);
         }
 
@@ -113,9 +120,12 @@ namespace AbyssalProtocol
 
             if (!TryFindSpawnCell(out IntVec3 spawnCell))
             {
-                impsRemaining--;
+                blockedImpSpawnAttempts++;
+                nextImpSpawnTick = ticksActive + BlockedSpawnRetryTicks;
                 return;
             }
+
+            blockedImpSpawnAttempts = 0;
 
             Pawn imp;
             try
@@ -148,7 +158,8 @@ namespace AbyssalProtocol
                 {
                     imp.Destroy(DestroyMode.Vanish);
                 }
-                impsRemaining--;
+                blockedImpSpawnAttempts++;
+                nextImpSpawnTick = ticksActive + BlockedSpawnRetryTicks;
                 return;
             }
 
@@ -166,15 +177,25 @@ namespace AbyssalProtocol
 
         private bool TryFindSpawnCell(out IntVec3 cell)
         {
-            cell = IntVec3.Invalid;
-            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(Position, 2.9f, true))
+            if (TryFindSpawnCellWithinRadius(PrimarySpawnRadius, out cell))
             {
-                if (!candidate.InBounds(Map) || !candidate.Standable(Map))
-                {
-                    continue;
-                }
+                return true;
+            }
 
-                if (candidate.GetFirstPawn(Map) != null)
+            if (blockedImpSpawnAttempts >= ExtendedSpawnSearchAttempts && TryFindSpawnCellWithinRadius(ExtendedSpawnRadius, out cell))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryFindSpawnCellWithinRadius(float radius, out IntVec3 cell)
+        {
+            cell = IntVec3.Invalid;
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(Position, radius, true))
+            {
+                if (!ABY_SafeSpawnUtility.IsCellSpawnable(candidate, Map))
                 {
                     continue;
                 }
@@ -193,7 +214,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Material material = MaterialPool.MatFrom(texPath, ShaderDatabase.TransparentPostLight, color);
+            Material material = ABY_MaterialCacheUtility.MatFrom(texPath, ShaderDatabase.TransparentPostLight, color);
             Matrix4x4 matrix = Matrix4x4.identity;
             matrix.SetTRS(loc, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(scale, 1f, scale));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);

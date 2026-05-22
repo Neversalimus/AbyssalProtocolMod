@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -222,13 +223,17 @@ namespace AbyssalProtocol
             float bestScore = float.MinValue;
             float maxDistance = Mathf.Max(8f, Props.searchRadius);
 
-            foreach (Thing thing in map.listerThings.AllThings)
+            // Avoid map.listerThings.AllThings in horde hot paths. Breach targets are player structures,
+            // so the colonist building lister is both smaller and semantically safer.
+            List<Building> buildings = map.listerBuildings?.allBuildingsColonist;
+            if (buildings == null || buildings.Count == 0)
             {
-                if (!(thing is Building building))
-                {
-                    continue;
-                }
+                return null;
+            }
 
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                Building building = buildings[i];
                 if (!IsValidBreachBuildingTarget(pawn, building, maxDistance))
                 {
                     continue;
