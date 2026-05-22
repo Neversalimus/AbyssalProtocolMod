@@ -866,3 +866,19 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - First Horde Gate containment is now recorded by `ABY_HordeAndButcherProgressionGameComponent`; Rift Butcher routing requires that recorded horde clear, and Dominion Gate routing requires the first Rift Butcher kill plus the new Severance Core crafting ingredient.
 - The pawn uses the existing hover-apparel presentation path extended to support pawn-level `ABY_HoverArmorExtension`, keeping the hover/tether VFX centralized rather than adding a parallel pawn draw system.
 - Build verification status is recorded in the patch handoff response.
+
+## 2026-05-22 — Horde power-net recovery hardening
+
+- Added `ABY_PowerNetRecoveryUtility` to force vanilla `PowerNetManager` to rebuild a map's power graph from the actual spawned power comps after rare horde/portal desyncs.
+- Horde and ember portal waves now nudge a throttled power-net rebuild when a wave starts, when portals/command gates are opened or destroyed, and when the wave resets.
+- Added a Summoning Circle dev gizmo, `DEV: rebuild power nets`, for save recovery when visible conduits remain connected but RimWorld behaves as if the map has two stale power networks.
+- Choir Engine relay pulses and death bursts no longer EMP ordinary generators, batteries, conduits or other non-combat power utilities; suppression remains focused on turrets and hostile mechanoids.
+- Build verification status is recorded in the patch handoff response. Runtime smoke testing should check the isolated Harmony+DLC horde save where one power net showed deficit while another showed large excess.
+
+## 2026-05-22 — Safer horde power-net recovery compatibility pass
+
+- Softened `ABY_PowerNetRecoveryUtility` for public modpack compatibility: automatic horde recovery now performs only a vanilla `PowerNetManager` graph rebuild and overlay refresh.
+- Moved the intrusive global `CompPower.TryManualReconnect(false)` pass behind the Summoning Circle dev-only manual recovery gizmo instead of running it automatically during portal waves.
+- Removed automatic recovery from every individual portal-open and command-gate-spawn event; horde/ember waves now queue a delayed soft recovery at wave start and wave reset/collapse points only.
+- This keeps the emergency tool for affected saves while reducing the chance of resetting intentional disconnect/reconnect states from other power-system mods.
+- Build verification status is recorded in the patch handoff response. Runtime smoke testing should still include the isolated Harmony+DLC horde save and at least one large modpack with power-related mods before workshop release.

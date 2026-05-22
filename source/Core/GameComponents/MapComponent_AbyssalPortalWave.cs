@@ -85,6 +85,8 @@ namespace AbyssalProtocol
         private bool commandRewardGranted;
         private IntVec3 lastOpenedPortalCell = IntVec3.Invalid;
         private AbyssalHordeRewardUtility.RewardSnapshot activeHordeRewardSnapshot;
+        private int pendingSoftPowerNetRecoveryTick = -1;
+        private string pendingSoftPowerNetRecoveryReason;
 
         public MapComponent_AbyssalPortalWave(Map map) : base(map)
         {
@@ -123,6 +125,8 @@ namespace AbyssalProtocol
         {
             base.MapComponentTick();
 
+            TryRunPendingSoftPowerNetRecovery();
+
             if (!IsWaveActive || map == null || Find.TickManager == null)
             {
                 return;
@@ -151,6 +155,45 @@ namespace AbyssalProtocol
             {
                 nextPortalOpenTick = Find.TickManager.TicksGame + RetryCadenceTicks;
             }
+        }
+
+        private void QueueSoftPowerNetRecovery(string reason, int delayTicks = 90)
+        {
+            if (map == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            int scheduledTick = Find.TickManager.TicksGame + Mathf.Max(1, delayTicks);
+            if (pendingSoftPowerNetRecoveryTick >= 0 && pendingSoftPowerNetRecoveryTick <= scheduledTick)
+            {
+                if (!reason.NullOrEmpty() && pendingSoftPowerNetRecoveryReason.NullOrEmpty())
+                {
+                    pendingSoftPowerNetRecoveryReason = reason;
+                }
+                return;
+            }
+
+            pendingSoftPowerNetRecoveryTick = scheduledTick;
+            pendingSoftPowerNetRecoveryReason = reason;
+        }
+
+        private void TryRunPendingSoftPowerNetRecovery()
+        {
+            if (pendingSoftPowerNetRecoveryTick < 0 || map == null || Find.TickManager == null)
+            {
+                return;
+            }
+
+            if (Find.TickManager.TicksGame < pendingSoftPowerNetRecoveryTick)
+            {
+                return;
+            }
+
+            string reason = pendingSoftPowerNetRecoveryReason;
+            pendingSoftPowerNetRecoveryTick = -1;
+            pendingSoftPowerNetRecoveryReason = null;
+            ABY_PowerNetRecoveryUtility.TryRebuildPowerNetsNow(map, reason, false, false, false);
         }
 
         public bool TryBeginEmberPortalWave(
@@ -226,6 +269,7 @@ namespace AbyssalProtocol
             }
 
             nextPortalOpenTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + Mathf.Max(8, initialDelay);
+            QueueSoftPowerNetRecovery("ember portal wave start", 90);
             Messages.Message(
                 "ABY_CircleEmberHoundLetterDesc".Translate(),
                 new TargetInfo(firstPortalCell, map),
@@ -315,6 +359,7 @@ namespace AbyssalProtocol
             }
 
             nextPortalOpenTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + Mathf.Max(8, initialDelay);
+            QueueSoftPowerNetRecovery("horde portal wave start", 90);
             Messages.Message(
                 AbyssalSummoningConsoleUtility.TranslateOrFallback(
                     "ABY_HordeOperation_Begin",
@@ -2166,6 +2211,7 @@ namespace AbyssalProtocol
                     MessageTypeDefOf.PositiveEvent);
             }
 
+            QueueSoftPowerNetRecovery("horde command gate destroyed", 60);
             TryForceCompleteStaleHorde(true, "command gate collapsed with no active portals or combat-capable abyssal pawns");
         }
 
@@ -2286,6 +2332,7 @@ namespace AbyssalProtocol
             commandRewardGranted = false;
             lastOpenedPortalCell = IntVec3.Invalid;
             activeHordeRewardSnapshot = null;
+            QueueSoftPowerNetRecovery("portal wave reset", 90);
         }
 
         private static void Shuffle(List<PortalWaveRequest> requests)

@@ -332,12 +332,10 @@ namespace AbyssalProtocol
                 return mech.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner.Faction, mech.Faction);
             }
 
-            if (thing is Building building)
-            {
-                bool powered = building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null;
-                return powered && building.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(owner.Faction, building.Faction);
-            }
-
+            // Do not EMP ordinary power-network infrastructure here. In large horde tests, repeated
+            // EMP hits on generators/batteries can look like a broken or split power grid even when
+            // the conduits are still physically connected. Choir suppression remains focused on
+            // combat targets: turrets and hostile mechanoids.
             return false;
         }
 

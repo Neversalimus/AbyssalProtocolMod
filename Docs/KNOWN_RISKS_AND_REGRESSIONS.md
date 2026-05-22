@@ -682,3 +682,24 @@ When adding new gear, every craftable reward should normally require Abyssal Res
 | Allowing Dominion Gate before Rift Butcher | P1 | progression/summoning | Player skips the post-horde line-breaker gate and enters Dominion Slice directly | `AbyssalSummoningConsoleUtility.IsRitualUnlocked("dominion_gate")` should require `HasRecordedRiftButcherKill()`, and `ABY_CraftDominionSigil` should keep the `ABY_RiftButcherSeveranceCore` ingredient. |
 | Adding hover pawns through a parallel draw patch | P2 | visuals/performance | Duplicate hover offsets, overdraw, or inconsistent hover behavior between apparel and minibosses | Reuse `ABY_HoverArmorExtension` on the pawn ThingDef and the existing `source/Apparel/` hover renderer. |
 | Over-scaling Rift Butcher drawSize | P2 | asset/readability | Miniboss reads as a full boss or overlaps its compact HP bar | Keep drawSize near the integrated value and test the compact miniboss bar at multiple UI scales. |
+
+## Horde encounter power-net desync risk — 2026-05-22
+
+Observed behavior: after a horde summon, visible conduits could remain physically connected while RimWorld behaved as if the colony had two separate power networks: one network showed a large deficit and another showed large grid excess. Dev-mode power toggles could appear to work for only a moment because the stale network graph still controlled consumer shutdown.
+
+Regression rules:
+
+- Do not spawn horde portals, command gates, skyfallers, or temporary encounter buildings on power-network transmitters, hidden conduits, frames, blueprints, or other building-category utility cells.
+- After horde/portal operations that place or remove temporary buildings near colony infrastructure, queue only a delayed soft `ABY_PowerNetRecoveryUtility.TryRebuildPowerNetsNow(..., deepReconnect: false)` pass. Do not rebuild after every individual portal open, and do not run global `CompPower.TryManualReconnect(false)` automatically.
+- Do not apply repeated EMP directly to ordinary generators, batteries, conduits, solar/wind/watermill objects, or other non-combat power utilities as part of Choir suppression. Turrets and hostile mechanoids remain valid EMP targets.
+- If a save already has this stale state, select the Abyssal Summoning Circle in dev mode and use `DEV: rebuild power nets`; this is the only path that should run the deeper manual reconnect nudge across map `CompPower` instances.
+
+In-game checks:
+
+- Run a horde summon in an isolated mod list with only Harmony, DLC and Abyssal Protocol.
+- After the horde damages nearby infrastructure, confirm that connected batteries charge from connected generators and that the power inspect pane no longer reports contradictory disconnected networks when conduits are visibly continuous.
+- Test the manual dev gizmo on a loaded affected save and confirm it logs the before/after power-net count.
+
+Additional compatibility rule after the v3 safety pass:
+
+- Automatic power-net recovery must remain conservative for public modpack use. Keep deep reconnect/manual reconnect behavior restricted to explicit dev/manual commands so power-overhaul mods, wireless-power mods, and intentional disconnect states are not reset during normal encounter flow.

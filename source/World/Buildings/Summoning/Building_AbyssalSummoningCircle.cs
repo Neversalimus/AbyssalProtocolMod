@@ -283,6 +283,20 @@ namespace AbyssalProtocol
             {
                 yield return new Command_Action
                 {
+                    defaultLabel = "DEV: rebuild power nets",
+                    defaultDesc = "Runs a deep manual recovery pass for stale power networks: rebuilds vanilla PowerNetManager from actual spawned power buildings and nudges CompPower reconnect state. Use only in dev mode after a horde test if visible conduits are still present but the map behaves like it has two separate power networks.",
+                    action = delegate
+                    {
+                        if (!ABY_PowerNetRecoveryUtility.TryRebuildPowerNetsNow(Map, "manual dev command from summoning circle", true, true, true))
+                        {
+                            Messages.Message("Abyssal power-net recovery did not run.", MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                };
+
+
+                yield return new Command_Action
+                {
                     defaultLabel = "DEV: start dominion crisis",
                     defaultDesc = "Begin the dominion crisis core directly on this map without consuming a sigil.",
                     action = delegate

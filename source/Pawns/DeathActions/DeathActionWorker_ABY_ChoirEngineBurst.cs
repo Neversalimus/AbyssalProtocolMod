@@ -9,7 +9,6 @@ namespace AbyssalProtocol
     {
         private const float BurstRadius = 7.2f;
         private const float TurretEmpDamage = 6.0f;
-        private const float BuildingEmpDamage = 4.0f;
         private const float MechEmpDamage = 6.5f;
 
         public override void PawnDied(Corpse corpse, Lord prevLord)
@@ -42,10 +41,9 @@ namespace AbyssalProtocol
                 {
                     mech.TakeDamage(new DamageInfo(DamageDefOf.EMP, MechEmpDamage, 0f, -1f, pawn));
                 }
-                else if (thing is Building building && (building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null) && building.Faction != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileTo(pawn.Faction, building.Faction))
-                {
-                    building.TakeDamage(new DamageInfo(DamageDefOf.EMP, BuildingEmpDamage, 0f, -1f, pawn));
-                }
+                // Avoid applying death-burst EMP directly to ordinary power buildings. Turrets and
+                // hostile mechanoids are still affected above, but generators/batteries/conduits should
+                // not be transiently stunned or forced into misleading power-grid states.
             }
         }
     }
