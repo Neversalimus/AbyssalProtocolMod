@@ -521,6 +521,22 @@ namespace AbyssalProtocol
             },
             new ABY_BestiaryEntryDefinition
             {
+                EntryId = "ABY_HaloHusk",
+                Category = ABY_BestiaryCategory.Support,
+                PortraitPath = "Pawn/HaloHusk/ABY_HaloHusk_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_HaloHusk_Label",
+                LabelFallback = @"Halo Husk",
+                TagKey = "ABY_Bestiary_Entry_ABY_HaloHusk_Tag",
+                TagFallback = @"Silent lance-bearer outside the normal host.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_HaloHusk_Summary",
+                SummaryFallback = @"A rare angelic wreck-form dragged into abyssal service, built around disciplined lance fire, judgment marks and sudden displacement rather than swarm pressure.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_HaloHusk_Tactical",
+                TacticalFallback = @"Do not treat a Halo Husk as ordinary ranged infantry. Break sightlines, respect its mark-and-lance cadence and expect it to step away when pinned in close quarters.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_HaloHusk_Deep",
+                DeepFallback = @"The codex marks Halo Husks as evidence that the abyss can conscript wreckage from rival sacred architectures, forcing alien judgment machinery to serve rupture doctrine."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
                 EntryId = "ABY_AorticChainHarrower",
                 Category = ABY_BestiaryCategory.Elite,
                 PortraitPath = "Pawn/AorticChainHarrower/ABY_AorticChainHarrower_east",
@@ -569,6 +585,22 @@ namespace AbyssalProtocol
             },
             new ABY_BestiaryEntryDefinition
             {
+                EntryId = "ABY_RiftButcher",
+                Category = ABY_BestiaryCategory.Boss,
+                PortraitPath = "Pawn/RiftButcher/ABY_RiftButcher_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_RiftButcher_Label",
+                LabelFallback = @"Rift Butcher",
+                TagKey = "ABY_Bestiary_Entry_ABY_RiftButcher_Tag",
+                TagFallback = @"Post-horde line-breaker and execution frame.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_RiftButcher_Summary",
+                SummaryFallback = @"A hovering Dominion-severance miniboss routed after horde pressure, using hooks, cleaver sweeps and temporary carapace protection to cut static battle lines apart.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_RiftButcher_Tactical",
+                TacticalFallback = @"The Butcher punishes one-lane defense. Spread enough to avoid sweep value, keep mobile reserves ready for hooked pawns, and burn through the opening carapace before it controls the engagement.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_RiftButcher_Deep",
+                DeepFallback = @"Archive classification: surgical Dominion severance made mobile. The Butcher does not merely kill bodies; it tries to cut the colony's defensive geometry into isolated pieces."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
                 EntryId = "ABY_ReactorSaint",
                 Category = ABY_BestiaryCategory.Boss,
                 PortraitPath = "Pawn/ReactorSaint/ABY_ReactorSaint_east",
@@ -614,6 +646,22 @@ namespace AbyssalProtocol
                 TacticalFallback = @"Expect a harder first-boss check. The reliquary form trades speed for armor, endurance, heavier strikes, and a slightly stronger escort release.",
                 DeepKey = "ABY_Bestiary_Entry_ABY_ReliquaryArchonBeast_Deep",
                 DeepFallback = @"Archive classification: the same first gate authority expressed as a heavier mobile reliquary, implying the abyss adjusts even its early administrators to the colony's chosen protocol severity."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
+                EntryId = "ABY_ArchonOfRupture",
+                Category = ABY_BestiaryCategory.Boss,
+                PortraitPath = "Pawn/ArchonOfRupture/ArchonOfRupture_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_ArchonOfRupture_Label",
+                LabelFallback = @"Archon of Rupture",
+                TagKey = "ABY_Bestiary_Entry_ABY_ArchonOfRupture_Tag",
+                TagFallback = @"True rupture executor behind the beast.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_ArchonOfRupture_Summary",
+                SummaryFallback = @"A secret archon-class manifestation that emerges when the first heraldic beast is destroyed before its ritual pattern can unfold, exposing the authority behind the proxy body.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_ArchonOfRupture_Tactical",
+                TacticalFallback = @"This is not a normal first-boss victory state. Expect extreme melee pressure, heavy armor and no safe assumption that the earlier Archon Beast rhythm still applies.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_ArchonOfRupture_Deep",
+                DeepFallback = @"The archive treats the Archon of Rupture as the revealed administrator behind the first gate. Killing the beast too early does not cancel the domain; it strips away the mask."
             },
             new ABY_BestiaryEntryDefinition
             {

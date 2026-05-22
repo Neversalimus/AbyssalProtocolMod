@@ -1,5 +1,22 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-22 — Complete current monster Bestiary coverage
+- Added missing Bestiary tracking entries for `ABY_HaloHusk`, `ABY_RiftButcher`, and `ABY_ArchonOfRupture` so all current hostile PawnKind races resolve into the threat codex through kind or race fallback.
+- Added English and Russian Bestiary localization for Halo Husk, Rift Butcher, Reliquary Archon Beast, and Archon of Rupture.
+- Escort PawnKinds such as `ABY_BreachBruteEscort` and `ABY_SiegeIdolEscort` remain intentionally resolved through their tracked race entries instead of separate duplicate codex cards.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/UI/Bestiary/ABY_BestiaryGameComponent.cs
+Languages/English/Keyed/ABY_Bestiary_Strings.xml
+Languages/Russian/Keyed/ABY_Bestiary_Strings.xml
+Docs/CONTENT_MATRIX.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-22 — Harden horde portal placement around power grids
 - Added horde/portal placement guards so imp portals and command gate nodes no longer spawn on hidden conduits, power buildings, blueprints, frames, or other building-category things that can be vanished by `WipeMode.Vanish`.
 - Broadened horde perimeter building checks to treat neutral/unfactioned power-network utilities as sensitive map infrastructure, not empty ground.
