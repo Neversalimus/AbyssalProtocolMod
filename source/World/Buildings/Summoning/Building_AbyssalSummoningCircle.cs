@@ -2427,13 +2427,15 @@ namespace AbyssalProtocol
             switch ((pendingRitualId ?? string.Empty).ToLowerInvariant())
             {
                 case "warden_of_ash":
-                    return 420f;
+                    return 520f;
                 case "archon_beast":
-                    return 620f;
+                    return 720f;
+                case "archon_of_rupture":
+                    return 850f;
                 case "choir_engine":
                     return 760f;
                 case "reactor_saint":
-                    return 980f;
+                    return 1100f;
                 default:
                     return 720f;
             }

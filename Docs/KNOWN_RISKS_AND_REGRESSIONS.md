@@ -756,3 +756,16 @@ In-game checks:
 | High-tier implants lose trophy pressure | P1 | forge/progression | Late implants can be mass-produced after one unlock using only residue and vanilla resources | Signature T3/T4/T5 organs should keep light Horde/Herald/Choir/Reactor/Crowned/Dominion material gates; avoid putting rare boss drops on every minor slot. |
 | Dominion implant wealth is understated | P2 | wealth/balance | Colonists gain multiple Dominion-tier organs without colony wealth reflecting their real power | Dominion-tier body parts should keep market values in the high late-game range unless deliberately marked as a special non-wealth reward. |
 
+
+## C# / XML balance constant drift — 2026-05-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| XML balance pass leaves stale hardcoded C# fallback budgets | P1 | summoning/boss escorts | Boss escort XML looks correct, but direct summon, portal release, manifestation, preview, or fallback routes still use older smaller budgets | After changing `fallbackEscortBudget`, pawn `budgetCost`, or T1 enemy budget values, search `source/` for duplicated constants and update Summoning Circle, boss utility, portal/manifestation, and T1 scaling code together. |
+| T1 summon forecast drifts from actual encounter planner | P2 | summoning UI/telemetry | Ritual preview, pending scaled threat, or shadow budget understates the real danger after pawn budget changes | Keep `AbyssalT1SummonScalingUtility` threat constants aligned with the current PawnKind budget values for supported T1/T2 enemies. |
+| Reliquary Archon stops feeling heavier than normal Archon | P2 | Archon variants | Reliquary variant uses the same escort budget as the regular Archon after normal Archon budget increases | Keep `AbyssalArchonVariantUtility.ResolveArchonEscortFallbackBudget` above the normal Archon fallback whenever normal Archon escort budget is raised. |
+
+In-game checks:
+
+- Start Warden, Archon Beast, Reactor Saint, and Archon/Rupture portal routes and confirm escort counts match the raised XML-era budgets rather than the old `420/620/760/980` values.
+- Check Summoning Console ritual preview/shadow threat text for T1/T2 rituals after enemy budget changes to make sure it no longer understates Thrall/Sapper/Zealot/Priest/Sniper threat.

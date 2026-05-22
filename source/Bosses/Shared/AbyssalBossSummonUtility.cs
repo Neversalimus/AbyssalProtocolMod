@@ -426,7 +426,7 @@ namespace AbyssalProtocol
                         ReactorSaintRitualId,
                         bossKindDefName,
                         portalCell,
-                        980f,
+                        1100f,
                         bossLabel,
                         out failReason))
                 {
@@ -445,7 +445,7 @@ namespace AbyssalProtocol
                     faction,
                     ReactorSaintRitualId,
                     bossPawn,
-                    980f,
+                    1100f,
                     bossLabel,
                     out localEscortFailReason))
             {

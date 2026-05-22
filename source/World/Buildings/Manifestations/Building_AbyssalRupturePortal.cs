@@ -287,7 +287,7 @@ namespace AbyssalProtocol
                 ritualId,
                 bossKindDef?.defName,
                 Position,
-                string.Equals(ritualId, "archon_of_rupture", System.StringComparison.OrdinalIgnoreCase) ? 760f : 620f,
+                string.Equals(ritualId, "archon_of_rupture", System.StringComparison.OrdinalIgnoreCase) ? 850f : 720f,
                 bossLabel,
                 out string escortFailReason);
 

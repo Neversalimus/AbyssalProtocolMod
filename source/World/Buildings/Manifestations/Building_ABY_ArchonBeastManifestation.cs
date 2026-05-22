@@ -276,7 +276,7 @@ namespace AbyssalProtocol
                 completionLetterLabelKey,
                 completionLetterDescKey);
 
-            float escortBudget = AbyssalArchonVariantUtility.ResolveArchonEscortFallbackBudget(bossKindDef, 620f);
+            float escortBudget = AbyssalArchonVariantUtility.ResolveArchonEscortFallbackBudget(bossKindDef, 720f);
             if (!AbyssalBossOrchestrationUtility.TrySpawnEscortPackNearBoss(
                     Map,
                     manifestationFaction,

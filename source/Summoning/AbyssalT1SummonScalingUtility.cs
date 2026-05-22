@@ -14,11 +14,11 @@ namespace AbyssalProtocol
 
         private const int ImpThreatValue = 85;
         private const int HoundThreatValue = 190;
-        private const int ThrallThreatValue = 160;
-        private const int SapperThreatValue = 285;
-        private const int ZealotThreatValue = 235;
-        private const int PriestThreatValue = 340;
-        private const int SniperThreatValue = 420;
+        private const int ThrallThreatValue = 235;
+        private const int SapperThreatValue = 325;
+        private const int ZealotThreatValue = 280;
+        private const int PriestThreatValue = 390;
+        private const int SniperThreatValue = 520;
 
         public sealed class ThreatPlan
         {

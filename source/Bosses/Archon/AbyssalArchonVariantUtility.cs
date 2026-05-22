@@ -80,7 +80,7 @@ namespace AbyssalProtocol
         {
             if (bossKindDef != null && IsReliquaryArchonBeastDefName(bossKindDef.defName))
             {
-                return Math.Max(normalBudget, 720f);
+                return Math.Max(normalBudget, 820f);
             }
 
             return normalBudget;

@@ -962,3 +962,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Raised the Vesper Lance forge unlock residue threshold so the post-Saint precision weapon remains a premium reward rather than an immediate universal answer.
 - XML/docs only; no C# or assembly rebuild required.
 
+
+## 2026-05-22 — C# balance constant sync
+
+- Synchronized hardcoded C# encounter fallback budgets with the recent XML enemy range/budget and escort balance passes.
+- Updated Summoning Circle pending escort fallback values for Warden of Ash, Archon Beast, Archon of Rupture, and Reactor Saint so ritual previews/shadow escort budgets no longer fall back to stale lower values.
+- Updated Reactor Saint, Archon Beast manifestation/portal, and Rupture Portal escort calls to use the same post-pass escort budgets as XML.
+- Updated Reliquary Archon escort fallback to remain heavier than the normal Archon escort after the normal fallback was raised.
+- Updated T1 summon threat constants for Thrall, Sapper, Zealot, Priest, and Sniper so forecast/shadow threat math matches the revised pawn budget values.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` still requires the .NET Framework 4.7.2 targeting pack in this sandbox.
