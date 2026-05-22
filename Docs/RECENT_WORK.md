@@ -882,3 +882,13 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Removed automatic recovery from every individual portal-open and command-gate-spawn event; horde/ember waves now queue a delayed soft recovery at wave start and wave reset/collapse points only.
 - This keeps the emergency tool for affected saves while reducing the chance of resetting intentional disconnect/reconnect states from other power-system mods.
 - Build verification status is recorded in the patch handoff response. Runtime smoke testing should still include the isolated Harmony+DLC horde save and at least one large modpack with power-related mods before workshop release.
+
+## 2026-05-22 — Boss portal retry and no-downed hot-path hardening
+
+- Confirmed the horde power-grid safety and safe power-net recovery fixes are present in the supplied local archive before applying this patch.
+- Added throttled retry state to `Building_AbyssalRupturePortal` so a blocked boss release no longer scans radial cells every tick while enemies occupy the portal perimeter. After repeated blocked attempts it expands the search radius and retries less often instead of busy-looping.
+- Added save-safe label migration for rupture portal boss labels: legacy hardcoded `Archon of Rupture` labels are resolved through the localized `ABY_BossName` key on load.
+- Hardened `CompABY_BossNoDowned` so damage and tick callbacks cannot run duplicate no-downed recovery in the same tick, and so persistent downed states retry on a short cadence rather than dirtying health caches every tick.
+- Changed `AbyssalBossNoDownedUtility` to batch injury/clamp changes and call health cache/state refresh at most once per recovery pass plus one fallback refresh, instead of per-heal-pass.
+- Added Harmony priorities to boss true-death health/death patches so boss suppression runs early for death/downed prefixes and late for `ShouldBeDead`/`ShouldBeDowned` postfix result correction.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries.

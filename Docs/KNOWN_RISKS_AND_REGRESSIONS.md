@@ -703,3 +703,18 @@ In-game checks:
 Additional compatibility rule after the v3 safety pass:
 
 - Automatic power-net recovery must remain conservative for public modpack use. Keep deep reconnect/manual reconnect behavior restricted to explicit dev/manual commands so power-overhaul mods, wireless-power mods, and intentional disconnect states are not reset during normal encounter flow.
+
+## Rupture portal spawn retry and boss no-downed hot-path risks — 2026-05-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Rupture portal boss release blocked by dense pawns | P1 | boss/portal performance | After warmup, the portal repeatedly scans nearby cells every tick while enemies fill the release radius | Keep `Building_AbyssalRupturePortal` retry-throttled with `nextBossSpawnRetryTick`; do not call `TryFindSpawnCell` every tick while blocked. |
+| Persistent boss downed state dirtying health caches every tick | P1 | boss health/TPS | TPS dips during boss damage bursts or while a boss briefly remains downed because `DirtyCache()` and `CheckForStateChange()` repeat every tick | Keep no-downed recovery gated by same-tick and retry guards in `CompABY_BossNoDowned`; batch health-cache refreshes inside `AbyssalBossNoDownedUtility`. |
+| Hardcoded boss labels persisting across old saves | P3 | localization/save migration | Old saves can keep English `Archon of Rupture` labels even under Russian localization | Preserve the `bossLabelKey` migration path and resolve legacy hardcoded labels through localized keys on load. |
+| Boss true-death suppression bypassed by aggressive third-party death patches | P3 | Harmony compatibility | A mod that rewrites `Pawn.Kill`/health-state flow may bypass expected boss death/downed suppression | Keep boss true-death prefixes high priority and health-state postfix correction late, but document that total death-pipeline replacements remain a compatibility risk. |
+
+In-game checks:
+
+- Summon Archon/Rupture through a portal while surrounding the release area with pawns; confirm TPS does not degrade from per-tick radial scans and the boss appears once a valid cell is available.
+- Damage a protected boss into a temporary downed state and confirm recovery happens without repeated health-cache churn every tick.
+- Load an older save containing a rupture portal/boss label and confirm Russian/localized label resolution where applicable.

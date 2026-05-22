@@ -12,6 +12,11 @@ namespace AbyssalProtocol
         private const string PortalEmbersPath = "Things/VFX/RupturePortal/ABY_RupturePortal_Embers";
 
         private const int DefaultReleaseHoldTicks = 24;
+        private const int BossSpawnRetryTicks = 60;
+        private const int BossSpawnExtendedRetryTicks = 120;
+        private const int ExtendedSpawnSearchAttempts = 3;
+        private const float PrimarySpawnRadius = 3.9f;
+        private const float ExtendedSpawnRadius = 7.9f;
 
         private Faction portalFaction;
         private PawnKindDef bossKindDef;
@@ -23,6 +28,9 @@ namespace AbyssalProtocol
         private bool bossSpawned;
         private int seed;
         private string bossLabel = "Archon of Rupture";
+        private string bossLabelKey;
+        private int nextBossSpawnRetryTick;
+        private int blockedBossSpawnAttempts;
         private bool stageOnePulseTriggered;
         private bool stageTwoPulseTriggered;
         private bool releaseWarmupTriggered;
@@ -39,10 +47,13 @@ namespace AbyssalProtocol
             warmupTicks = Mathf.Max(45, warmup);
             lingerTicks = Mathf.Max(120, linger);
             releaseHoldTicks = Mathf.Max(0, releaseHold);
-            bossLabel = label.NullOrEmpty() ? "Archon of Rupture" : label;
+            bossLabelKey = ResolveBossLabelKey(kindDef);
+            bossLabel = ResolveBossLabel(label, kindDef, bossLabelKey);
             ticksActive = 0;
             finalDespawnTick = -1;
             bossSpawned = false;
+            nextBossSpawnRetryTick = 0;
+            blockedBossSpawnAttempts = 0;
             seed = thingIDNumber >= 0 ? thingIDNumber : Rand.Range(0, 1000000);
             stageOnePulseTriggered = false;
             stageTwoPulseTriggered = false;
@@ -62,9 +73,25 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref bossSpawned, "bossSpawned", false);
             Scribe_Values.Look(ref seed, "seed", 0);
             Scribe_Values.Look(ref bossLabel, "bossLabel", "Archon of Rupture");
+            Scribe_Values.Look(ref bossLabelKey, "bossLabelKey");
+            Scribe_Values.Look(ref nextBossSpawnRetryTick, "nextBossSpawnRetryTick", 0);
+            Scribe_Values.Look(ref blockedBossSpawnAttempts, "blockedBossSpawnAttempts", 0);
             Scribe_Values.Look(ref stageOnePulseTriggered, "stageOnePulseTriggered", false);
             Scribe_Values.Look(ref stageTwoPulseTriggered, "stageTwoPulseTriggered", false);
             Scribe_Values.Look(ref releaseWarmupTriggered, "releaseWarmupTriggered", false);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (bossLabelKey.NullOrEmpty())
+                {
+                    bossLabelKey = ResolveBossLabelKey(bossKindDef);
+                }
+
+                if (bossLabel.NullOrEmpty() || IsLegacyHardcodedBossLabel(bossLabel))
+                {
+                    bossLabel = ResolveBossLabel(null, bossKindDef, bossLabelKey);
+                }
+            }
         }
 
         protected override void Tick()
@@ -76,7 +103,7 @@ namespace AbyssalProtocol
             {
                 TickArrivalEffects();
 
-                if (ticksActive >= warmupTicks + releaseHoldTicks)
+                if (ticksActive >= warmupTicks + releaseHoldTicks && ticksActive >= nextBossSpawnRetryTick)
                 {
                     TrySpawnBoss();
                 }
@@ -195,8 +222,18 @@ namespace AbyssalProtocol
 
             if (!TryFindSpawnCell(out IntVec3 spawnCell))
             {
+                blockedBossSpawnAttempts++;
+                nextBossSpawnRetryTick = ticksActive + (blockedBossSpawnAttempts >= ExtendedSpawnSearchAttempts ? BossSpawnExtendedRetryTicks : BossSpawnRetryTicks);
+
+                if (blockedBossSpawnAttempts % 10 == 0)
+                {
+                    Log.Warning("[Abyssal Protocol] Rupture portal is still waiting for a free boss spawn cell near " + Position + " on " + Map + ". Attempts: " + blockedBossSpawnAttempts + ".");
+                }
                 return;
             }
+
+            blockedBossSpawnAttempts = 0;
+            nextBossSpawnRetryTick = 0;
 
             if (!AbyssalBossSummonUtility.TryGenerateBoss(Map, bossKindDef, portalFaction ?? AbyssalBossSummonUtility.ResolveHostileFaction(), bossLabel, out Pawn boss, out string _))
             {
@@ -249,8 +286,23 @@ namespace AbyssalProtocol
 
         private bool TryFindSpawnCell(out IntVec3 cell)
         {
+            if (TryFindSpawnCellWithinRadius(PrimarySpawnRadius, out cell))
+            {
+                return true;
+            }
+
+            if (blockedBossSpawnAttempts >= ExtendedSpawnSearchAttempts && TryFindSpawnCellWithinRadius(ExtendedSpawnRadius, out cell))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool TryFindSpawnCellWithinRadius(float radius, out IntVec3 cell)
+        {
             cell = IntVec3.Invalid;
-            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(Position, 3.9f, true))
+            foreach (IntVec3 candidate in GenRadial.RadialCellsAround(Position, radius, true))
             {
                 if (!candidate.InBounds(Map) || !candidate.Standable(Map))
                 {
@@ -292,6 +344,41 @@ namespace AbyssalProtocol
                     spawned++;
                 }
             }
+        }
+
+        private static string ResolveBossLabel(string requestedLabel, PawnKindDef kindDef, string labelKey)
+        {
+            if (!requestedLabel.NullOrEmpty() && !IsLegacyHardcodedBossLabel(requestedLabel))
+            {
+                return requestedLabel;
+            }
+
+            if (!labelKey.NullOrEmpty())
+            {
+                return labelKey.Translate();
+            }
+
+            if (kindDef != null)
+            {
+                return kindDef.LabelCap.ToString();
+            }
+
+            return "ABY_BossName".Translate();
+        }
+
+        private static string ResolveBossLabelKey(PawnKindDef kindDef)
+        {
+            if (kindDef != null && string.Equals(kindDef.defName, "ABY_ArchonOfRupture", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return "ABY_BossName";
+            }
+
+            return null;
+        }
+
+        private static bool IsLegacyHardcodedBossLabel(string label)
+        {
+            return string.Equals(label, "Archon of Rupture", System.StringComparison.OrdinalIgnoreCase);
         }
 
         private static void DrawPlane(string texPath, Vector3 loc, float scale, float angle, Color color)

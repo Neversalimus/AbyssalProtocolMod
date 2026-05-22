@@ -7,63 +7,67 @@ namespace AbyssalProtocol
 {
     public static class AbyssalBossNoDownedUtility
     {
-        public static void TryPreventDowned(Pawn pawn, float bloodLossClamp, float heatstrokeClamp, float healWorstInjuryAmount, int maxHealPasses, bool forceLordReengage)
+        public static bool TryPreventDowned(Pawn pawn, float bloodLossClamp, float heatstrokeClamp, float healWorstInjuryAmount, int maxHealPasses, bool forceLordReengage)
         {
             if (pawn == null || pawn.Dead || pawn.health == null)
             {
-                return;
+                return false;
             }
 
             if (!pawn.Downed)
             {
-                return;
+                return false;
             }
 
-            ClampHediffSeverity(pawn, HediffDefOf.BloodLoss, bloodLossClamp);
-            ClampHediffSeverity(pawn, HediffDefOf.Heatstroke, heatstrokeClamp);
+            bool changed = false;
+            changed |= ClampHediffSeverity(pawn, HediffDefOf.BloodLoss, bloodLossClamp);
+            changed |= ClampHediffSeverity(pawn, HediffDefOf.Heatstroke, heatstrokeClamp);
 
             int passes = Mathf.Max(1, maxHealPasses);
             for (int i = 0; i < passes; i++)
             {
-                if (!pawn.Downed)
-                {
-                    break;
-                }
-
                 if (!HealWorstVisibleInjury(pawn, healWorstInjuryAmount))
                 {
                     break;
                 }
 
-                pawn.health.hediffSet?.DirtyCache();
-                pawn.health.CheckForStateChange(null, null);
+                changed = true;
             }
 
-            if (pawn.Downed)
+            if (changed)
             {
-                HealRandomNonPermanentInjury(pawn, healWorstInjuryAmount * 0.75f);
-                pawn.health.hediffSet?.DirtyCache();
-                pawn.health.CheckForStateChange(null, null);
+                RefreshHealthState(pawn);
+            }
+
+            if (pawn.Downed && HealRandomNonPermanentInjury(pawn, healWorstInjuryAmount * 0.75f))
+            {
+                changed = true;
+                RefreshHealthState(pawn);
             }
 
             if (!pawn.Downed && forceLordReengage && pawn.Spawned && pawn.MapHeld != null && pawn.Faction != null && ABY_FactionHostilityUtility.SafeHostileToPlayer(pawn))
             {
                 AbyssalLordUtility.EnsureAssaultLord(pawn, sappers: true);
             }
+
+            return changed;
         }
 
-        private static void ClampHediffSeverity(Pawn pawn, HediffDef def, float maxSeverity)
+        private static bool ClampHediffSeverity(Pawn pawn, HediffDef def, float maxSeverity)
         {
             if (pawn?.health?.hediffSet == null || def == null)
             {
-                return;
+                return false;
             }
 
             Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(def);
             if (hediff != null && hediff.Severity > maxSeverity)
             {
                 hediff.Severity = maxSeverity;
+                return true;
             }
+
+            return false;
         }
 
         private static bool HealWorstVisibleInjury(Pawn pawn, float amount)
@@ -101,11 +105,11 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private static void HealRandomNonPermanentInjury(Pawn pawn, float amount)
+        private static bool HealRandomNonPermanentInjury(Pawn pawn, float amount)
         {
             if (pawn?.health?.hediffSet?.hediffs == null || amount <= 0f)
             {
-                return;
+                return false;
             }
 
             List<Hediff_Injury> injuries = new List<Hediff_Injury>();
@@ -120,10 +124,29 @@ namespace AbyssalProtocol
 
             if (injuries.Count == 0)
             {
-                return;
+                return false;
             }
 
             injuries.RandomElement().Heal(amount);
+            return true;
+        }
+
+        private static void RefreshHealthState(Pawn pawn)
+        {
+            if (pawn?.health == null)
+            {
+                return;
+            }
+
+            try
+            {
+                pawn.health.hediffSet?.DirtyCache();
+                pawn.health.CheckForStateChange(null, null);
+            }
+            catch
+            {
+                // Health recovery is defensive; an unexpected modded hediff state should not cascade.
+            }
         }
     }
 }

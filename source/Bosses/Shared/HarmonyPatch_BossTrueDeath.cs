@@ -7,6 +7,7 @@ namespace AbyssalProtocol
     [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
     public static class HarmonyPatch_BossTrueDeath_PawnKill
     {
+        [HarmonyPriority(Priority.First)]
         private static bool Prefix(Pawn __instance, DamageInfo? dinfo, Hediff exactCulprit)
         {
             if (ABY_BossTrueDeathUtility.TrySuppressPawnKill(__instance, dinfo, exactCulprit))
@@ -26,6 +27,7 @@ namespace AbyssalProtocol
             return AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.ShouldBeDead));
         }
 
+        [HarmonyPriority(Priority.Last)]
         private static void Postfix(Pawn_HealthTracker __instance, ref bool __result)
         {
             if (__result && ABY_BossTrueDeathUtility.ShouldSuppressVanillaHealthState(ABY_BossTrueDeathUtility.GetPawn(__instance)))
@@ -43,6 +45,7 @@ namespace AbyssalProtocol
             return AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.ShouldBeDowned));
         }
 
+        [HarmonyPriority(Priority.Last)]
         private static void Postfix(Pawn_HealthTracker __instance, ref bool __result)
         {
             if (__result && ABY_BossTrueDeathUtility.ShouldSuppressVanillaHealthState(ABY_BossTrueDeathUtility.GetPawn(__instance)))
@@ -60,6 +63,7 @@ namespace AbyssalProtocol
             return AccessTools.Method(typeof(Pawn_HealthTracker), "MakeDowned", new[] { typeof(DamageInfo?), typeof(Hediff) });
         }
 
+        [HarmonyPriority(Priority.First)]
         private static bool Prefix(Pawn_HealthTracker __instance, DamageInfo? dinfo, Hediff hediff)
         {
             Pawn pawn = ABY_BossTrueDeathUtility.GetPawn(__instance);
@@ -81,6 +85,7 @@ namespace AbyssalProtocol
             return AccessTools.Method(typeof(Pawn_HealthTracker), nameof(Pawn_HealthTracker.SetDead));
         }
 
+        [HarmonyPriority(Priority.First)]
         private static bool Prefix(Pawn_HealthTracker __instance)
         {
             Pawn pawn = ABY_BossTrueDeathUtility.GetPawn(__instance);
