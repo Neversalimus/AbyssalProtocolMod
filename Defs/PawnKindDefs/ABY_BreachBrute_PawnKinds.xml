@@ -5,7 +5,7 @@
     <label>breach brute</label>
     <race>ABY_BreachBrute</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>560</combatPower>
+    <combatPower>610</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -24,7 +24,7 @@
         <contentTier>5</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>560</budgetCost>
+        <budgetCost>610</budgetCost>
         <selectionWeight>0.72</selectionWeight>
         <maxPlanCount>2</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
@@ -56,7 +56,7 @@
     <label>breach brute escort</label>
     <race>ABY_BreachBrute</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>520</combatPower>
+    <combatPower>570</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -75,7 +75,7 @@
         <contentTier>5</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>520</budgetCost>
+        <budgetCost>570</budgetCost>
         <selectionWeight>0.28</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

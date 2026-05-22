@@ -205,6 +205,7 @@ Actual code and assets win over this document.
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
 | Apparel body type missing | P1 | apparel textures | invisible/wrong armor on body type | Check Male/Female/Thin/Fat/Hulk where relevant. |
+| Accessory slot bonuses become universal stat soup | P2 | apparel/progression balance | backpack + boots + gloves + vambraces stack too much move speed, carrying, work speed, shooting and melee at once | Keep slot identities separated: packs = carry, boots = movement, gloves = labor/melee, vambraces = ranged/labor. Avoid reintroducing full universal bonuses on every accessory slot. |
 | Apparel direction holes | P1 | apparel sprites | gaps or wrong orientation east/west/north/south | Inspect all directional overlays in-game. |
 | Realistic humanoid proportions from generated assets | P2 | assets | looks unlike RimWorld pawn | Use simplified RimWorld pawn proportions for humanoids. |
 | Green chromakey left in final asset | P1 | assets | green background in-game | Remove chromakey and export true alpha PNG. |

@@ -11,7 +11,7 @@
     </bossPawnKindDefNames>
     <escortPoolId>warden_boss_escort</escortPoolId>
     <escortBaseContentTier>2</escortBaseContentTier>
-    <fallbackEscortBudget>420</fallbackEscortBudget>
+    <fallbackEscortBudget>520</fallbackEscortBudget>
     <escortBudgetMultiplier>1.00</escortBudgetMultiplier>
     <preferredDoctrineDefNames>
       <li>ABY_Doctrine_AshenBulwark</li>
@@ -32,7 +32,7 @@
     </bossPawnKindDefNames>
     <escortPoolId>archon_boss_escort</escortPoolId>
     <escortBaseContentTier>4</escortBaseContentTier>
-    <fallbackEscortBudget>620</fallbackEscortBudget>
+    <fallbackEscortBudget>720</fallbackEscortBudget>
     <escortBudgetMultiplier>1.00</escortBudgetMultiplier>
     <preferredDoctrineDefNames>
       <li>ABY_Doctrine_RupturePursuit</li>
@@ -82,7 +82,7 @@
     <minProgressionStage>1</minProgressionStage>
     <escortPoolId>reactor_saint_escort</escortPoolId>
     <escortBaseContentTier>5</escortBaseContentTier>
-    <fallbackEscortBudget>980</fallbackEscortBudget>
+    <fallbackEscortBudget>1100</fallbackEscortBudget>
     <escortBudgetMultiplier>1.05</escortBudgetMultiplier>
     <preferredDoctrineDefNames>
       <li>ABY_Doctrine_ReactorGunline</li>
@@ -109,7 +109,7 @@
     </bossPawnKindDefNames>
     <escortPoolId>archon_boss_escort</escortPoolId>
     <escortBaseContentTier>5</escortBaseContentTier>
-    <fallbackEscortBudget>760</fallbackEscortBudget>
+    <fallbackEscortBudget>850</fallbackEscortBudget>
     <escortBudgetMultiplier>1.10</escortBudgetMultiplier>
     <preferredDoctrineDefNames>
       <li>ABY_Doctrine_RupturePursuit</li>

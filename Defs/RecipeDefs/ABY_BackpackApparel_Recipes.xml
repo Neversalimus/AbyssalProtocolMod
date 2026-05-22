@@ -20,7 +20,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>8</count>
+        <count>10</count>
       </li>
       <li>
         <filter>
@@ -72,7 +72,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>20</count>
+        <count>26</count>
       </li>
       <li>
         <filter>
@@ -132,7 +132,7 @@
             <li>ABY_AbyssalResidue</li>
           </thingDefs>
         </filter>
-        <count>40</count>
+        <count>54</count>
       </li>
       <li>
         <filter>

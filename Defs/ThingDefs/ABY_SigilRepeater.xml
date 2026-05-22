@@ -38,7 +38,7 @@
     <statBases>
       <WorkToMake>13500</WorkToMake>
       <Mass>2.10</Mass>
-      <MarketValue>1180</MarketValue>
+      <MarketValue>1550</MarketValue>
       <AccuracyTouch>0.86</AccuracyTouch>
       <AccuracyShort>0.82</AccuracyShort>
       <AccuracyMedium>0.69</AccuracyMedium>
@@ -63,7 +63,7 @@
 
     <modExtensions>
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
-        <requiredResidue>50</requiredResidue>
+        <requiredResidue>150</requiredResidue>
         <category>Weapons</category>
       </li>
     </modExtensions>

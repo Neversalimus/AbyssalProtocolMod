@@ -1,3 +1,13 @@
+## 2026-05-22 — Accessory stacking and encounter routing balance pass
+
+- Connected `ABY_HaloHusk` to late encounter routing as an intentionally rare Final Gate easter-egg elite: it can appear in Reactor Saint escort / Dominion support / Dominion wave pools, but keeps `maxPlanCount` 1, `allowFutureAutoEscalation` false, and an extremely low selection weight.
+- Raised boss escort fallback budgets without changing boss/miniboss `budgetCost`: Warden, Archon Beast, Reactor Saint, and Archon of Rupture now have slightly more room for corrected escort units after the enemy range/value passes.
+- Rebalanced backpack, boot, glove, and vambrace stat offsets so accessory slots no longer stack full movement, hauling, work, shooting, and melee bonuses all at once.
+- Raised accessory residue recipe costs moderately to slow colony-wide mass stacking while preserving each piece as earned Forge progression.
+- Softened early/mid weapon outliers: Rift Carbine now has slightly slower cadence and a higher Forge unlock threshold, Sigil Repeater has a higher unlock/value, and Phalanx Driver has a higher MarketValue.
+- Adjusted non-boss frontline budget values for Ember Hound, Breach Brute, and Gate Warden.
+- XML-only change; C# build not required.
+
 ## 2026-05-22 — Enemy budget and player value balance pass
 
 - Applied an XML-only balance/value pass after the enemy range role pass.

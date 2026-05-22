@@ -27,7 +27,7 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.04</GeneralLaborSpeed>
-      <MeleeHitChance>0.10</MeleeHitChance>
+      <MeleeHitChance>0.08</MeleeHitChance>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>3400</WorkToMake>
@@ -67,8 +67,8 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.05</GeneralLaborSpeed>
-      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
-      <MeleeHitChance>0.10</MeleeHitChance>
+      <ShootingAccuracyPawn>0.04</ShootingAccuracyPawn>
+      <MeleeHitChance>0.08</MeleeHitChance>
     </equippedStatOffsets>
     <statBases>
       <WorkToMake>6200</WorkToMake>
@@ -109,7 +109,7 @@
     </smeltProducts>
     <equippedStatOffsets>
       <GeneralLaborSpeed>0.07</GeneralLaborSpeed>
-      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.05</ShootingAccuracyPawn>
       <MeleeHitChance>0.10</MeleeHitChance>
     </equippedStatOffsets>
     <statBases>

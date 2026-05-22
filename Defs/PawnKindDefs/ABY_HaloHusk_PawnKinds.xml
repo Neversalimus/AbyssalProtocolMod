@@ -25,10 +25,13 @@
         <difficultyFloorDefName>ABY_Difficulty_FinalGate</difficultyFloorDefName>
         <role>elite</role>
         <budgetCost>560</budgetCost>
-        <selectionWeight>0.12</selectionWeight>
+        <selectionWeight>0.015</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>false</allowFutureAutoEscalation>
         <encounterPools>
+          <li>reactor_saint_escort</li>
+          <li>dominion_gate_support</li>
+          <li>dominion_wave</li>
         </encounterPools>
       </li>
       <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">

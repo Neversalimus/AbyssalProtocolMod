@@ -16,7 +16,7 @@
         <contentTier>1</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Normal</difficultyFloorDefName>
         <role>assault</role>
-        <budgetCost>160</budgetCost>
+        <budgetCost>190</budgetCost>
         <selectionWeight>0.95</selectionWeight>
         <maxPlanCount>5</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>

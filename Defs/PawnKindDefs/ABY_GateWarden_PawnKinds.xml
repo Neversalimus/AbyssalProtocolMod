@@ -5,7 +5,7 @@
     <label>gate warden</label>
     <race>ABY_GateWarden</race>
     <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
-    <combatPower>430</combatPower>
+    <combatPower>510</combatPower>
     <ecoSystemWeight>0</ecoSystemWeight>
     <canArriveManhunter>false</canArriveManhunter>
     <apparelMoney Inherit="False">
@@ -24,7 +24,7 @@
         <contentTier>4</contentTier>
         <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
         <role>elite</role>
-        <budgetCost>430</budgetCost>
+        <budgetCost>510</budgetCost>
         <selectionWeight>0.62</selectionWeight>
         <maxPlanCount>1</maxPlanCount>
         <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
