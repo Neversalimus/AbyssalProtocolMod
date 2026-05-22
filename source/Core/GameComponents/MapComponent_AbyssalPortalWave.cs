@@ -1753,6 +1753,11 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (HasSpawnBlockingBuildingOnCell(candidate))
+            {
+                return false;
+            }
+
             if (preferPerimeter && GetDistanceToEdge(candidate) > HordePerimeterBand + 8f)
             {
                 return false;
@@ -1826,6 +1831,82 @@ namespace AbyssalProtocol
             return false;
         }
 
+        private bool HasSpawnBlockingBuildingOnCell(IntVec3 cell)
+        {
+            if (map == null || !cell.IsValid || !cell.InBounds(map))
+            {
+                return true;
+            }
+
+            List<Thing> things = cell.GetThingList(map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || thing.def == null)
+                {
+                    continue;
+                }
+
+                if (thing.def.category == ThingCategory.Building || thing is Blueprint || thing is Frame)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsPlayerOrSensitiveUtilityBuilding(Thing thing)
+        {
+            if (thing == null || thing.Destroyed || thing.def == null || thing.def.category != ThingCategory.Building)
+            {
+                return false;
+            }
+
+            if (thing.Faction == Faction.OfPlayer)
+            {
+                return true;
+            }
+
+            return IsPowerNetworkUtilityThing(thing);
+        }
+
+        private static bool IsPowerNetworkUtilityThing(Thing thing)
+        {
+            if (!(thing is ThingWithComps thingWithComps) || thing.def == null)
+            {
+                return false;
+            }
+
+            if (thingWithComps.GetComp<CompPowerTrader>() != null || thingWithComps.GetComp<CompPowerBattery>() != null)
+            {
+                return true;
+            }
+
+            string defName = thing.def.defName ?? string.Empty;
+            string label = thing.def.label ?? string.Empty;
+            return ContainsPowerNetworkToken(defName) || ContainsPowerNetworkToken(label);
+        }
+
+        private static bool ContainsPowerNetworkToken(string text)
+        {
+            if (text.NullOrEmpty())
+            {
+                return false;
+            }
+
+            return text.IndexOf("conduit", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("cable", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("wire", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("generator", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("battery", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("power", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("geothermal", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("solar", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("wind", StringComparison.OrdinalIgnoreCase) >= 0
+                || text.IndexOf("watermill", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
         private bool HasPlayerBuildingNearby(IntVec3 center, float radius)
         {
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, radius, true))
@@ -1839,15 +1920,12 @@ namespace AbyssalProtocol
                 for (int i = 0; i < things.Count; i++)
                 {
                     Thing thing = things[i];
-                    if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
+                    if (!IsPlayerOrSensitiveUtilityBuilding(thing))
                     {
                         continue;
                     }
 
-                    if (thing.def != null && thing.def.category == ThingCategory.Building)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -1887,12 +1965,7 @@ namespace AbyssalProtocol
                 for (int i = 0; i < things.Count; i++)
                 {
                     Thing thing = things[i];
-                    if (thing == null || thing.Destroyed || thing.Faction != Faction.OfPlayer)
-                    {
-                        continue;
-                    }
-
-                    if (thing.def != null && thing.def.category == ThingCategory.Building)
+                    if (IsPlayerOrSensitiveUtilityBuilding(thing))
                     {
                         count++;
                     }

@@ -1,5 +1,22 @@
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-22 — Harden horde portal placement around power grids
+- Added horde/portal placement guards so imp portals and command gate nodes no longer spawn on hidden conduits, power buildings, blueprints, frames, or other building-category things that can be vanished by `WipeMode.Vanish`.
+- Broadened horde perimeter building checks to treat neutral/unfactioned power-network utilities as sensitive map infrastructure, not empty ground.
+- Updated abyssal hostile building targeting so custom abyssal breach logic ignores non-combat power utilities such as generators, batteries, conduits, solar, wind and watermill power while still allowing turrets, doors, barriers and walls as tactical targets.
+- This prevents future horde encounters from silently cutting hard-to-see power grids or intentionally selecting generators as custom breach targets. Existing saves with already-missing conduits still need the broken power-net segment rebuilt manually.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Core/GameComponents/MapComponent_AbyssalPortalWave.cs
+source/Encounters/AbyssalThreatPawnUtility.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-22 — Fix Forge implant subfilter placement
 - Corrected Forge implant subfilter routing so `Cohort Sync Subnode` appears under Brain, optic/sight implants appear under Eyes, and stomach implants appear under Organs instead of falling back to Body.
 - Added explicit identity overrides before broad text matching to avoid description/summary keywords misclassifying implant recipes.

@@ -185,6 +185,7 @@ Actual code and assets win over this document.
 | Beam/VFX offset from circle center | P1/P2 | VFX | activation beam appears above/beside circle | Test in-game with actual circle footprint and overlay coordinates. |
 | Old animation not removed | P2 | VFX/assets/XML | obsolete VFX still plays alongside new effect | Search old mote/texture/def references and remove/wire correctly. |
 | Horde composition includes bosses/minibosses when not intended | P1 | encounter templates | horde contains invalid units | Keep horde pools separate from boss/miniboss pools unless explicitly designed. |
+| Horde portals or custom breach targeting cut power grids | P1 | horde placement / hostile building targeting | after horde, generators show excess power but batteries/consumers are on another net; hidden conduits or generators were vanished/destroyed | Do not spawn portals/command gates on building-category things, frames, blueprints, or hidden/unfactioned power utilities; custom abyssal breach targeting should ignore non-combat power utilities while still allowing turrets, doors, barriers and walls. |
 | Summoning Console duplicate descriptions | P2 | UI text | repeated ritual preview/consequence blocks | Keep preview concise and avoid duplicated sections. |
 | Instability effects unclear | P2 | UI/gameplay | player cannot tell risk/cause | Expose instability state and consequences in Summoning UI. |
 

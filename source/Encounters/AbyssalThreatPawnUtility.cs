@@ -699,6 +699,11 @@ namespace AbyssalProtocol
                 return true;
             }
 
+            if (IsNonCombatPowerUtilityBuilding(building))
+            {
+                return true;
+            }
+
             bool hiddenUtilityLike = ContainsTargetingToken(defName, "hidden")
                 || ContainsTargetingToken(defName, "invisible")
                 || ContainsTargetingToken(label, "hidden")
@@ -715,6 +720,41 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        private static bool IsNonCombatPowerUtilityBuilding(Building building)
+        {
+            if (building?.def == null)
+            {
+                return false;
+            }
+
+            if (IsCombatTurretLikeBuilding(building) || building is Building_Door || IsBarrierLikeBuilding(building))
+            {
+                return false;
+            }
+
+            if (building.GetComp<CompPowerTrader>() != null || building.GetComp<CompPowerBattery>() != null)
+            {
+                return true;
+            }
+
+            string defName = building.def.defName ?? string.Empty;
+            string label = building.def.label ?? string.Empty;
+            return ContainsTargetingToken(defName, "generator")
+                || ContainsTargetingToken(defName, "battery")
+                || ContainsTargetingToken(defName, "power")
+                || ContainsTargetingToken(defName, "geothermal")
+                || ContainsTargetingToken(defName, "solar")
+                || ContainsTargetingToken(defName, "wind")
+                || ContainsTargetingToken(defName, "watermill")
+                || ContainsTargetingToken(label, "generator")
+                || ContainsTargetingToken(label, "battery")
+                || ContainsTargetingToken(label, "power")
+                || ContainsTargetingToken(label, "geothermal")
+                || ContainsTargetingToken(label, "solar")
+                || ContainsTargetingToken(label, "wind")
+                || ContainsTargetingToken(label, "watermill");
         }
 
         public static bool IsBreachableUnfactionedPlayerStructure(Building building)
