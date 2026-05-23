@@ -1,3 +1,21 @@
+## 2026-05-23 — Fix Crown Reactor Multilance beam rendering
+
+- Fixed `Thing_CrownReactorBeamSequence` startup warning by marking the beam sequence type for `StaticConstructorOnStartup` so Verse no longer reports cached `Material` fields as missing the asset-loading attribute.
+- Re-routed `ABY_CrownReactorBeamSequence` through `MoteBase`/real-time drawing instead of `MapMeshOnly`, preventing the beam segment texture from being drawn as a horizontal map-mesh sprite on or near the target pawn.
+- Increased Crown Reactor beam visual width slightly so the sequential beams read as heavy reactor discharges after the map-mesh artifact was removed.
+- Rebuilt the main `AbyssalProtocol.dll` from the current uploaded archive with the fix included. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
+Defs/ThingDefs/ABY_CrownReactorMultilance.xml
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Add Crown Reactor Multilance main-DLL integration
 
 - Added the T5 `ABY_CrownReactorMultilance` as a post-Saint / Crown-Reactor heavy weapon with Forge recipe, Protocol Nexus gate, EN/RU localization, weapon texture, and stretchable beam segment texture.

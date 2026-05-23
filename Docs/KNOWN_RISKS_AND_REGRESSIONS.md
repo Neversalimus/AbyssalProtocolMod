@@ -1,3 +1,7 @@
+## Crown Reactor / custom beam VFX must not use MapMeshOnly
+
+When a custom beam `Thing` overrides `DrawAt` and handles its own `Graphics.DrawMesh` call, do not define it as a normal `MapMeshOnly` thing with a visible `graphicData`. That causes RimWorld to also draw the raw beam texture as a horizontal map-mesh sprite at the spawned cell, often on or near the target pawn. Use a mote-style real-time def such as `ParentName="MoteBase"`, keep the custom `DrawAt` renderer as the only visible beam path, and mark any type with static `Material` fields using `StaticConstructorOnStartup` or avoid static material fields entirely.
+
 ## 2026-05-23 — Protocol Nexus live-gate routing rules
 
 - Current playable Forge content must not be gated by `futureReserve` Protocol Research projects. Reserve nodes such as `ABY_PR_ApexWeaponry` and `ABY_PR_CrownfireSepulcherCalibration` should stay visible as roadmap/codex targets until the matching Final Gate content is actually playable and decodable.

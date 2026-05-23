@@ -14,6 +14,7 @@ namespace AbyssalProtocol
     /// - four single damage applications, one per rail discharge;
     /// - cached/quantized beam materials through the shared Abyssal material cache.
     /// </summary>
+    [StaticConstructorOnStartup]
     public class Thing_CrownReactorBeamSequence : Thing
     {
         private const string BeamTexturePath = "Things/Projectile/ABY_CrownReactorBeamSegment";
@@ -23,8 +24,8 @@ namespace AbyssalProtocol
         private const int BeamHoldTicks = 20;
         private const int BeamGapTicks = 4;
         private const int FadeTicks = 12;
-        private const float MainBeamWidth = 0.34f;
-        private const float ChargeBeamWidth = 0.16f;
+        private const float MainBeamWidth = 0.48f;
+        private const float ChargeBeamWidth = 0.22f;
         private const float ChargeLength = 1.45f;
 
         private static readonly float[] RailOffsets = { 0.27f, 0.09f, -0.09f, -0.27f };
