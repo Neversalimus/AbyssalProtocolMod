@@ -1,9 +1,9 @@
-## 2026-05-23 — Fix MaterialCache static startup crash
+## 2026-05-23 — Protocol Nexus authority pass 2A and Saint Aegis Engineering
 
-- Fixed a P0 load-time regression where `ABY_MaterialCacheUtility.MaybeCleanup()` accessed `Find.TickManager` during `StaticConstructorOnStartup` before a game/tick manager exists.
-- The crash surfaced through static material initialization in `DominionSliceVfxUtility` and `Building_ABY_SigilVault`, but the root cause was the shared material cache helper.
-- Replaced direct `Find.TickManager` access in cache cleanup/reset with a defensive `Current.Game?.tickManager`-style lookup wrapped by a safe helper, so startup material requests can run before an active game is loaded.
-- No gameplay XML, balance, UI layout, textures, or progression gates were changed.
+- Added the active Protocol Nexus project `ABY_PR_SaintAegisEngineering` for Reactor Saint reward engineering, Saint Aegis protection, condensation cells, Saint-core implants, Vesper/Ultra Plasma weapons, and reactor-grade Forge patterns.
+- Re-routed current Forge unlock extensions through explicit Protocol Nexus gates instead of residue/name inference, including the previous authority baseline for all current Forge unlocks.
+- Refined T4/T5 routing: implemented turret modules remain on active `ABY_PR_ModularTurretInterface`, `ABY_PR_BreachLockdownSystems`, or Dominion material authority where appropriate; current playable content still avoids futureReserve nodes such as `ABY_PR_ApexWeaponry` and `ABY_PR_CrownfireSepulcherCalibration`.
+- Included the material-cache static-startup fix because the supplied archive did not contain it; `ABY_MaterialCacheUtility` no longer touches `Find.TickManager` during static constructor material creation.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
 
 Changed areas:
@@ -12,6 +12,10 @@ Changed areas:
 Assemblies/AbyssalProtocol.dll
 Assemblies/AbyssalProtocol.pdb
 source/Core/Utilities/ABY_MaterialCacheUtility.cs
+Defs/Experimental/ProtocolResearch/ABY_ProtocolResearchProjects.xml
+Defs/RecipeDefs/
+Defs/ThingDefs/
+Docs/CONTENT_MATRIX.md
 Docs/KNOWN_RISKS_AND_REGRESSIONS.md
 Docs/RECENT_WORK.md
 ```

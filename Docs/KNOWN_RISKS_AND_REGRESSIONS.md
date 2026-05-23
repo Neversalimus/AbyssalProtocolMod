@@ -1,3 +1,10 @@
+## 2026-05-23 — Protocol Nexus live-gate routing rules
+
+- Current playable Forge content must not be gated by `futureReserve` Protocol Research projects. Reserve nodes such as `ABY_PR_ApexWeaponry` and `ABY_PR_CrownfireSepulcherCalibration` should stay visible as roadmap/codex targets until the matching Final Gate content is actually playable and decodable.
+- Reactor Saint reward gear should route through `ABY_PR_SaintAegisEngineering` rather than falling back to generic Crown/Heavy Infernal inference. This keeps Saint-core armor, implants, condensation cells, Vesper/Ultra Plasma weapons, and Aegis-related rewards grouped under one player-visible authority node.
+- T4/T5 turret module routing should use active nodes only: early modules on `ABY_PR_ModularTurretInterface`, implemented lockdown/combat modules on `ABY_PR_BreachLockdownSystems`, and Dominion/Crowned material modules on active Dominion authority where appropriate.
+- Do not reintroduce direct `Find.TickManager` access inside static-startup material helpers. Material creation can occur during `StaticConstructorOnStartup` before `Current.Game.tickManager` exists.
+
 
 ## Modular turret passive target scoring must stay on throttled scans
 
@@ -66,7 +73,6 @@ Actual code and assets win over this document.
 | Shipping DLL without matching source | P0 | patch packaging | Future development loses source parity | Any C# change must include full changed `.cs` files and DLL only if build verified. |
 | Claiming build success without actual build | P0 | workflow | False confidence, broken mod package | Only state Build verified after real `dotnet build` success. |
 | Compiling `AbyssalProtocol.dll` against .NET Core/.NET 9 reference assemblies | P0 | build/runtime | RimWorld load shows `ReflectionTypeLoadException`, then many `Could not find type named AbyssalProtocol...` XML errors | For emergency Roslyn builds, use bundled .NET Framework-style references: `mscorlib.dll`, `System.dll`, `System.Core.dll`, RimWorld `Assembly-CSharp.dll`, Unity modules, and Harmony. Verify assembly refs do not include `System.Runtime, Version=9.0.0.0`. |
-| Accessing `Find.TickManager` from static material/cache constructors | P0 | startup/runtime / StaticConstructorOnStartup | Load-time `TypeInitializationException` in VFX/building classes that create materials during startup, often pointing at `ABY_MaterialCacheUtility.MaybeCleanup()` | Shared startup-safe utilities must not call `Find.TickManager` before `Current.Game` exists. Use a defensive tick lookup based on `Current.Game?.tickManager` or a try/catch helper, and allow material creation during static startup without cleanup requiring game state. |
 | Including `source/bin/` or `source/obj/` in delta zips | P2 | packaging | Dirty archives, confusing generated code | Exclude build artifacts from user-facing zips. |
 | Routing miniboss custom HP through the full boss HUD by default | P2 | UI/combat readability | Miniboss fights feel like major boss encounters, or custom HP remains unreadable if no full boss profile exists | Keep minibosses on compact overhead bars unless they are intentionally promoted to major boss status; continue reading HP from `CompABY_BossTrueDeath`. |
 | Adding miniboss HP bars only through a new `GameComponent` | P1 | UI/save compatibility | Existing saves do not display the new bars because the new component was never instantiated for that save | Route the live draw call through an existing long-lived component such as `AbyssalBossScreenFXGameComponent`; keep new components as fallback shells unless save migration is implemented. |

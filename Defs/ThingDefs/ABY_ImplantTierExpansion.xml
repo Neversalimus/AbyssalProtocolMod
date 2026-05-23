@@ -1107,7 +1107,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1157,7 +1157,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1207,7 +1207,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1257,7 +1257,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1306,7 +1306,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1355,7 +1355,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1404,7 +1404,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1453,7 +1453,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1503,7 +1503,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1553,7 +1553,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1603,7 +1603,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1701,7 +1701,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
-        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

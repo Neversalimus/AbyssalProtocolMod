@@ -79,7 +79,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>7000</requiredResidue>
         <category>Weapons</category>
-        <requiredProtocolResearchDefName>ABY_PR_HeavyInfernalSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

@@ -170,7 +170,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>140</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_PrimitiveBreachProtocols</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -228,7 +228,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2800</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -344,7 +344,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -431,7 +431,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2400</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -779,7 +779,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2600</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

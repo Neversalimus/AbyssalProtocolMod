@@ -25,7 +25,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3000</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownedCoreExtraction</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -54,7 +54,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3400</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -83,7 +83,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3600</requiredResidue>
         <category>TurretSystems</category>
-        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

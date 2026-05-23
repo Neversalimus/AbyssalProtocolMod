@@ -493,6 +493,36 @@
   </AbyssalProtocol.ABY_ProtocolResearchDef>
 
   <AbyssalProtocol.ABY_ProtocolResearchDef>
+    <defName>ABY_PR_SaintAegisEngineering</defName>
+    <label>saint aegis engineering</label>
+    <description>Reactor Saint engineering that translates saint-class Aegis logic, condensation cells, reactor organs and judgment weapons into usable Forge doctrine.</description>
+    <category>ABY_PR_Category_Forge</category>
+    <tierLabel>Tier IV — Crown Threshold</tierLabel>
+    <displayOrder>425</displayOrder>
+    <previewState>Available</previewState>
+    <requiredResearchProjects><li>ABY_AbyssalSignalTheory</li></requiredResearchProjects>
+    <decodeWorkTicks>4800</decodeWorkTicks>
+    <requirements>
+      <li>Reactor Saint combat evidence.</li>
+      <li>Major Boss Invocation.</li>
+      <li>Recovered saint core or Aegis telemetry.</li>
+    </requirements>
+    <reveals>
+      <li>Saint Aegis armor and reactor-protection families.</li>
+      <li>Saint condensation cell and boss-grade capacitor doctrine.</li>
+      <li>Reactor Saint organs, Vesper weapon frames and Saint-core fabrication gates.</li>
+    </reveals>
+    <loreRecord>The Reactor Saint does not leave ordinary salvage. Its body is a verdict engine: shield, heat, rhythm and punishment arranged as doctrine. Saint Aegis Engineering teaches the Forge to read those remnants as disciplined protection rather than scrap, and to rebuild a fraction of that judgment around human bodies and weapons.</loreRecord>
+    <unlocks>
+      <li>Classifies Reactor Saint core, Aegis, Vesper and saint-condensation Forge patterns.</li>
+      <li>Separates Reactor-tier rewards from generic Crown or heavy-infernal patterns.</li>
+    </unlocks>
+    <notes>
+      <li>Real decode project for current Reactor Saint reward gear.</li>
+    </notes>
+  </AbyssalProtocol.ABY_ProtocolResearchDef>
+
+  <AbyssalProtocol.ABY_ProtocolResearchDef>
     <defName>ABY_PR_CrownLogicDecoding</defName>
     <label>crown logic decoding</label>
     <description>Decoding of Crown Shards, authority fragments and late Forge rights as a protocol of command rather than rarity.</description>
