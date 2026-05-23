@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_RiftDagger</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(0.74,0.74)</drawSize>
+      <drawSize>(0.74,0.83)</drawSize>
     </graphicData>
+    <uiIconScale>1.22</uiIconScale>
 
     <recipeMaker>
       <skillRequirements>

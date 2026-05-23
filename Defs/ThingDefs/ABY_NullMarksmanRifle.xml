@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_NullMarksmanRifle</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.84,0.46)</drawSize>
+      <drawSize>(1.84,0.45)</drawSize>
     </graphicData>
+    <uiIconScale>1.60</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 

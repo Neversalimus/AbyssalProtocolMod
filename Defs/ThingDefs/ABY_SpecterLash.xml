@@ -8,8 +8,9 @@
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/ABY_SpecterLashProjector</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.36,0.46)</drawSize>
+      <drawSize>(1.36,0.52)</drawSize>
     </graphicData>
+    <uiIconScale>1.50</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <statBases>
       <WorkToMake>48000</WorkToMake>

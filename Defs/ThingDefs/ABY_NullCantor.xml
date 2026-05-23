@@ -12,8 +12,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_NullCantor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.42,0.46)</drawSize>
+      <drawSize>(1.42,0.56)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 

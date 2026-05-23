@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_AshenPike</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.46,0.31)</drawSize>
+      <drawSize>(1.46,0.40)</drawSize>
     </graphicData>
+    <uiIconScale>1.60</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 

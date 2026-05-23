@@ -8,7 +8,9 @@
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/ABY_OblivionChoir</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.68,0.56)</drawSize>
     </graphicData>
+    <uiIconScale>1.50</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <statBases>
       <WorkToMake>160000</WorkToMake>

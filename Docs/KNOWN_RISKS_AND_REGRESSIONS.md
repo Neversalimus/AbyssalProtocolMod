@@ -214,6 +214,14 @@ Actual code and assets win over this document.
 | Turret module UI not updated for new module | P2 | UI | module works but player cannot understand/install it | Check `source/UI/Turrets/` and Forge recipe exposure. |
 | Texture sizes too large | P2 | optimization | VRAM bloat | Downsize only when readability is preserved; prefer lossless optimization first. |
 
+## Weapon and item visual risks
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Weapon UI icon collapses into a tiny silhouette | P2 | weapon XML/assets | Equipped weapon gizmos, inventory icons, or vanilla info-card headers show a barely visible gun/blade, especially for long thin textures | For each weapon ThingDef, set an explicit `uiIconScale` and keep the final runtime PNG tightly bounded with true alpha padding. Do not rely on large transparent canvases for weapon icons. |
+| Weapon ground sprite is stretched or flattened | P2 | weapon XML/assets | Dropped weapons look unnaturally long, paper-thin, or distorted compared with the source sprite | Keep the runtime PNG canvas aspect and `graphicData.drawSize` aspect aligned. After trimming or re-padding a weapon texture, recalibrate `drawSize`; avoid changing draw-size-sensitive custom VFX weapons without retuning their VFX offsets. |
+| Re-padding weapon PNGs breaks custom VFX alignment | P1/P2 | weapon VFX/assets | Muzzle flashes, beams, charge dots, or custom-drawn sequences no longer line up with the barrel/rail | Before changing texture bounds or `drawSize`, search for weapon-specific VFX utilities and risk notes. `ABY_CrownReactorMultilance` is draw-size sensitive; keep its draw size stable unless retuning `Thing_CrownReactorBeamSequence`. |
+
 ## Apparel / pawn graphics risks
 
 | Risk | Severity | Area | Symptoms | Prevention / check |

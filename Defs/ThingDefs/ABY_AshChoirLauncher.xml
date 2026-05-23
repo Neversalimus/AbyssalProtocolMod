@@ -8,8 +8,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_AshChoirLauncher</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.78,0.68)</drawSize>
+      <drawSize>(1.78,0.77)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <weaponTags>
       <li>Gun</li>

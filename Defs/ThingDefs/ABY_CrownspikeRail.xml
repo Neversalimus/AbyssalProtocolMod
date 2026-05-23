@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/ABY_CrownspikeRail</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.72,0.44)</drawSize>
+      <drawSize>(1.72,0.54)</drawSize>
     </graphicData>
+    <uiIconScale>1.50</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <weaponTags>
       <li>Gun</li>

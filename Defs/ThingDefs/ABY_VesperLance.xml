@@ -12,8 +12,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_VesperLance</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.46,0.40)</drawSize>
+      <drawSize>(1.46,0.48)</drawSize>
     </graphicData>
+    <uiIconScale>1.50</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 

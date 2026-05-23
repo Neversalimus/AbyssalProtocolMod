@@ -1,3 +1,20 @@
+## 2026-05-23 — Weapon icon and ground footprint normalization
+
+- Normalized all current Abyssal weapon presentation assets that use weapon/item equipment textures: transparent PNG bounds were trimmed/re-padded so the visible weapon fills the texture predictably without green/chromakey or fake transparency.
+- Added explicit `uiIconScale` values to 31 weapon ThingDefs so equipped-weapon gizmos, vanilla info cards, and inventory/gear icons no longer collapse into tiny thin silhouettes.
+- Recalibrated weapon `graphicData.drawSize` values against the normalized texture canvases for ground sprites, fixing flattened or over-stretched weapons while keeping `ABY_CrownReactorMultilance` draw size unchanged because its beam alignment is draw-size sensitive.
+- This was XML + texture work only; no C# files or assemblies were changed. XML parse validation passed; RimWorld runtime visual smoke testing is still required.
+
+Changed areas:
+
+```text
+Defs/ThingDefs/ABY_*.xml weapon defs
+Textures/Things/Weapon/*.png weapon assets
+Textures/Things/Item/Equipment/WeaponRanged/*.png weapon assets
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Reactor Choir Minigun integration
 
 - Added the T5 `ABY_ReactorChoirMinigun` as a Saint-engineering heavy plasma suppression weapon with Abyssal Forge craftability, Protocol Nexus gate `ABY_PR_SaintAegisEngineering`, Horde Fragment/Reactor Saint Core material gating, and EN/RU DefInjected text.

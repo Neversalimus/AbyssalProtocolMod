@@ -8,8 +8,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_CohortHalberd</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.88,0.60)</drawSize>
+      <drawSize>(1.88,0.47)</drawSize>
     </graphicData>
+    <uiIconScale>1.60</uiIconScale>
     <soundInteract>ABY_CohortHalberdEquip</soundInteract>
     <recipeMaker>
       <skillRequirements>

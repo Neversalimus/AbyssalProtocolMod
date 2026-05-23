@@ -8,8 +8,9 @@
     <graphicData>
       <texPath>Things/Item/Equipment/WeaponRanged/PlasmaRifle_UHT</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.36,0.47)</drawSize>
+      <drawSize>(1.36,0.55)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <statBases>
       <WorkToMake>90000</WorkToMake>

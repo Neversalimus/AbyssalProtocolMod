@@ -12,8 +12,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_CrownshardStormcaster</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.72,0.62)</drawSize>
+      <drawSize>(1.72,0.80)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 

@@ -7,8 +7,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_RiftCarbine</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.36,0.47)</drawSize>
+      <drawSize>(1.36,0.55)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <techLevel>Spacer</techLevel>
     <weaponTags>
@@ -68,6 +69,7 @@
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(0.96,0.96)</drawSize>
     </graphicData>
+    <uiIconScale>1.22</uiIconScale>
     <recipeMaker>
       <skillRequirements>
         <Crafting>7</Crafting>

@@ -112,7 +112,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_Hexgun</texPath>
       <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.05,0.95)</drawSize>
     </graphicData>
+    <uiIconScale>1.22</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <techLevel>Spacer</techLevel>
     <destroyOnDrop>true</destroyOnDrop>

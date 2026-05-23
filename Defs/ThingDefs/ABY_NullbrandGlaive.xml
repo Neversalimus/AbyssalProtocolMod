@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_NullbrandGlaive</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.36,1.36)</drawSize>
+      <drawSize>(1.36,1.49)</drawSize>
     </graphicData>
+    <uiIconScale>1.22</uiIconScale>
 
     <recipeMaker>
       <skillRequirements>

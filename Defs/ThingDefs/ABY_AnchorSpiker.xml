@@ -8,8 +8,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_AnchorSpiker</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.98,0.74)</drawSize>
+      <drawSize>(1.98,0.81)</drawSize>
     </graphicData>
+    <uiIconScale>1.38</uiIconScale>
     <soundInteract>Interact_ChargeRifle</soundInteract>
     <weaponTags>
       <li>Gun</li>

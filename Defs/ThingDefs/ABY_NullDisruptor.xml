@@ -10,8 +10,9 @@
     <graphicData>
       <texPath>Things/Weapon/ABY_NullDisruptor</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(1.44,0.36)</drawSize>
+      <drawSize>(1.44,0.55)</drawSize>
     </graphicData>
+    <uiIconScale>1.50</uiIconScale>
 
     <soundInteract>Interact_ChargeRifle</soundInteract>
 
