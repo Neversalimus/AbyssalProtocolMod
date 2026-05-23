@@ -1,3 +1,23 @@
+## 2026-05-23 — Summoning Console redesign visual hotfix
+
+- Tightened the full Summoning Console redesign after in-game screenshot review.
+- Fixed the player-facing console title so the Summoning Circle no longer displays the Forge-style “infernal communion console” title in English/Russian.
+- Simplified threat archetype tabs to single-line labels with counts moved into tooltips to avoid clipped lower text at normal UI scale.
+- Replaced vanilla checkbox glyphs in the invocation control panel with compact styled On/Off buttons so reduced effects, overchannel, and emergency dump no longer render as oversized red/green marks.
+- Reclassified Rift Butcher under Node Entities instead of Archon-Class to match its miniboss role.
+- XML validation passed and C# build was verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony references. RimWorld runtime smoke testing is still required.
+
+Touched files:
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+Languages/English/Keyed/ABY_Strings.xml
+Languages/Russian/Keyed/ABY_Strings.xml
+Languages/English/Keyed/ABY_SummoningConsoleRedesign_Strings.xml
+Languages/Russian/Keyed/ABY_SummoningConsoleRedesign_Strings.xml
+Docs/AI_ARCHITECTURE.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 ## 2026-05-23 — Summon threat rehearsal dev gizmo
 
 - Added a dev-only `DEV: threat rehearsal` Summoning Circle gizmo that opens a FloatMenu for summon rehearsal and force-start testing.

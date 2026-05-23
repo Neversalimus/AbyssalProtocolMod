@@ -87,7 +87,7 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_SigilPlacementFailed>The sigil could not find a valid summoning circle.</ABY_SigilPlacementFailed>
 
   <ABY_CircleTab_Label>console</ABY_CircleTab_Label>
-  <ABY_CircleConsoleTitle>infernal communion console</ABY_CircleConsoleTitle>
+  <ABY_CircleConsoleTitle>abyssal summoning console</ABY_CircleConsoleTitle>
   <ABY_CircleConsoleSubtitle>Threat-calibrated breach routing. Arm a prepared sigil, validate the circle, then let a colonist perform the invocation sequence.</ABY_CircleConsoleSubtitle>
   <ABY_CircleConsoleSubtitleActive>Ritual active. Current phase: {0}.</ABY_CircleConsoleSubtitleActive>
   <ABY_CircleTab_Subtitle>Compact ritual status and direct console access.</ABY_CircleTab_Subtitle>

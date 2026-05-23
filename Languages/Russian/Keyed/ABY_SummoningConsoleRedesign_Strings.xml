@@ -10,8 +10,10 @@
   <ABY_CircleCategory_Empty>Нет открытых паттернов</ABY_CircleCategory_Empty>
   <ABY_CircleCategory_LesserBreaches_Tooltip>Быстрые ритуалы прорыва, ранние вызовы давления и малые стаи.</ABY_CircleCategory_LesserBreaches_Tooltip>
   <ABY_CircleCategory_NodeEntities_Tooltip>Специализированные одиночные вызовы, вокруг которых строится бой с одной опасной враждебной сущностью.</ABY_CircleCategory_NodeEntities_Tooltip>
-  <ABY_CircleCategory_ArchonClass_Tooltip>Крупные ритуалы угроз, развёртывания минибоссов и полноценные боссовые столкновения.</ABY_CircleCategory_ArchonClass_Tooltip>
+  <ABY_CircleCategory_ArchonClass_Tooltip>Крупные ритуалы угроз и полноценные боссовые столкновения со стадийной логикой проявления.</ABY_CircleCategory_ArchonClass_Tooltip>
   <ABY_CircleCategory_MassIncursions_Tooltip>Крупномасштабные периметровые прорывы и многофронтовые штурмовые сценарии.</ABY_CircleCategory_MassIncursions_Tooltip>
   <ABY_CircleCategory_DominionProtocols_Tooltip>События врат Доминиона, кризисная подготовка и доступ к более глубоким инфернальным протоколам.</ABY_CircleCategory_DominionProtocols_Tooltip>
   <ABY_CircleCommand_JumpToSigil>Перейти к подготовленной сигиле</ABY_CircleCommand_JumpToSigil>
+  <ABY_CircleToggle_On>Вкл.</ABY_CircleToggle_On>
+  <ABY_CircleToggle_Off>Выкл.</ABY_CircleToggle_Off>
 </LanguageData>

@@ -77,7 +77,7 @@
   <ABY_SigilActivationStarted>Активация сигила началась.</ABY_SigilActivationStarted>
   <ABY_SigilPlacementFailed>Сигил не смог найти подходящий круг призыва.</ABY_SigilPlacementFailed>
   <ABY_CircleTab_Label>консоль</ABY_CircleTab_Label>
-  <ABY_CircleConsoleTitle>инфернальное сопряжение</ABY_CircleConsoleTitle>
+  <ABY_CircleConsoleTitle>консоль призыва Бездны</ABY_CircleConsoleTitle>
   <ABY_CircleConsoleSubtitle>Управление разломом и ритуалом. Подготовь сигил, проверь круг и запусти призыв.</ABY_CircleConsoleSubtitle>
   <ABY_CircleConsoleSubtitleActive>Ритуал активен. Текущая фаза: {0}.</ABY_CircleConsoleSubtitleActive>
   <ABY_CircleTab_Subtitle>Краткий статус ритуала и доступ к консоли.</ABY_CircleTab_Subtitle>

@@ -10,8 +10,10 @@
   <ABY_CircleCategory_Empty>No unlocked patterns</ABY_CircleCategory_Empty>
   <ABY_CircleCategory_LesserBreaches_Tooltip>Fast breach rituals, early pressure summons, and low-tier packs.</ABY_CircleCategory_LesserBreaches_Tooltip>
   <ABY_CircleCategory_NodeEntities_Tooltip>Specialized single-entity summons that anchor the fight around one dangerous hostile presence.</ABY_CircleCategory_NodeEntities_Tooltip>
-  <ABY_CircleCategory_ArchonClass_Tooltip>Major threat rituals, miniboss deployments, and boss-grade encounters.</ABY_CircleCategory_ArchonClass_Tooltip>
+  <ABY_CircleCategory_ArchonClass_Tooltip>Major threat rituals and boss-grade encounters with staged manifestation logic.</ABY_CircleCategory_ArchonClass_Tooltip>
   <ABY_CircleCategory_MassIncursions_Tooltip>Large-scale perimeter breaches and multi-front mass assault patterns.</ABY_CircleCategory_MassIncursions_Tooltip>
   <ABY_CircleCategory_DominionProtocols_Tooltip>Dominion-side gate events, crisis staging, and deeper infernal protocol access.</ABY_CircleCategory_DominionProtocols_Tooltip>
   <ABY_CircleCommand_JumpToSigil>Jump to prepared sigil</ABY_CircleCommand_JumpToSigil>
+  <ABY_CircleToggle_On>On</ABY_CircleToggle_On>
+  <ABY_CircleToggle_Off>Off</ABY_CircleToggle_Off>
 </LanguageData>

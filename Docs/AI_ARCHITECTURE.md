@@ -76,7 +76,7 @@ Subareas:
 
 - `UI/Shared/` — reusable styled widgets, layout helpers, colors, textures, buttons, text utilities, and the shared procedural Abyssal scroll view/scrollbar wrapper.
 - `UI/Forge/` — Abyssal Forge compact tab and full Forge/Communion UI support, including procedural Forge tier rails/badges for Signal/Breach/Archon/Reactor/Dominion/Crown pattern readability.
-- `UI/Summoning/` — Summoning Circle compact tab and full Summoning Console support.
+- `UI/Summoning/` — Summoning Circle compact tab and full Summoning Console support. The full console uses a category-tab redesign: threat archetypes across the top, ritual list + invocation control + preview in the main row, and readiness/capacitor/stabilizer diagnostics in the lower row. Keep category labels short, put counts/details into tooltips, and avoid vanilla checkbox glyphs in this surface.
 - `UI/BossBar/` — boss bar renderer, boss bar profile defs, phase entries, Aegis overlay renderer, and lightweight overhead miniboss custom-HP bars. Miniboss bars are actively invoked from `Bosses/Shared/AbyssalBossScreenFXGameComponent.cs` for existing-save compatibility; do not move the live draw path into a newly added GameComponent unless save migration is handled.
 - `UI/Bestiary/` — bestiary/codex UI and reward presentation.
 - `UI/Turrets/` — modular turret UI, ITabs, module socket windows.

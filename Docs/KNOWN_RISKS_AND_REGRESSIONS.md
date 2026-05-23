@@ -136,6 +136,7 @@ Actual code and assets win over this document.
 | --- | --- | --- | --- | --- |
 | Treating custom UI as temporary overlay | P1 | Forge/Summoning/Protocol/BossBar | New content hidden in vanilla-only gizmos or inspect text | Check whether content belongs in custom console first. |
 | Clipped text / cut lower letters | P1 | UI | Labels look broken, descenders clipped | Use existing UI safety/text helpers; test at target sizes. |
+| Summoning Console redesign overcrowding | P1 | Summoning UI | Archetype tabs or invocation controls look cramped; vanilla checkbox glyphs produce oversized red/green marks; preview/system panels fight for attention | Keep archetype tabs single-line, move counts/details into tooltips, use styled text buttons for toggles, and test at normal UI scale before accepting the layout. |
 | Scrollbar/content overlap | P1 | Forge/Protocol/Summoning UI | Browser/card content under scrollbar | Reserve scrollbar space and test long lists. |
 | Button style regression | P1 | UI/Shared | Custom buttons revert to vanilla/unstyled or inconsistent states | Reuse `source/UI/Shared/` styling and existing button state assets. |
 | Tab hover wash/white rectangle regression | P2 | UI/Shared / Forge categories | Category/tab hover shows a pale rectangular overlay that does not match Abyssal skins | Do not draw the generic `BaseContent.WhiteTex` hover wash over tab-style buttons; rely on tab hover textures and custom content tinting. |

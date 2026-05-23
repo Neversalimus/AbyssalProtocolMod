@@ -191,10 +191,10 @@ namespace AbyssalProtocol
                     return RitualCategory.LesserBreaches;
                 case "warden_of_ash":
                 case "choir_engine":
+                case "rift_butcher":
                     return RitualCategory.NodeEntities;
                 case "archon_beast":
                 case "reactor_saint":
-                case "rift_butcher":
                     return RitualCategory.ArchonClass;
                 case "horde_gate":
                     return RitualCategory.MassIncursions;
@@ -233,7 +233,7 @@ namespace AbyssalProtocol
                 case RitualCategory.NodeEntities:
                     return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_NodeEntities_Tooltip", "Specialized single-entity summons that anchor a fight around one dangerous hostile presence.");
                 case RitualCategory.ArchonClass:
-                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_ArchonClass_Tooltip", "Major threat rituals, miniboss deployments, and boss-grade encounters.");
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_ArchonClass_Tooltip", "Major threat rituals and boss-grade encounters with staged manifestation logic.");
                 case RitualCategory.MassIncursions:
                     return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_MassIncursions_Tooltip", "Large-scale perimeter breaches and multi-front mass assault patterns.");
                 case RitualCategory.DominionProtocols:
@@ -285,16 +285,15 @@ namespace AbyssalProtocol
                 ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_Count", "{0} patterns", count)
                 : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_Empty", "No unlocked patterns");
 
+            Text.Anchor = TextAnchor.MiddleCenter;
             GUI.color = enabled ? Color.white : new Color(0.78f, 0.66f, 0.62f, 0.75f);
             Text.Font = GameFont.Small;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 6f, rect.width - 20f, 20f), label);
-            GUI.color = enabled ? AbyssalSummoningConsoleArt.TextDimColor : new Color(0.76f, 0.62f, 0.56f, 0.72f);
-            Text.Font = GameFont.Tiny;
-            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 26f, rect.width - 20f, rect.height - 30f), countLabel);
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 8f, rect.y + 5f, rect.width - 16f, rect.height - 10f), label);
+            Text.Anchor = TextAnchor.UpperLeft;
             GUI.color = Color.white;
             Text.Font = GameFont.Small;
 
-            TooltipHandler.TipRegion(rect, GetCategoryTooltip(category));
+            TooltipHandler.TipRegion(rect, GetCategoryTooltip(category) + "\n" + countLabel);
             if (enabled && Widgets.ButtonInvisible(rect))
             {
                 selectedCategory = category;
@@ -648,18 +647,22 @@ namespace AbyssalProtocol
 
         private void DrawBooleanControlRow(Rect rect, string label, string tooltip, bool state, System.Action<bool> setter)
         {
-            Rect labelRect = new Rect(rect.x, rect.y + 4f, rect.width - 42f, rect.height - 8f);
-            Rect checkboxRect = new Rect(rect.xMax - 24f, rect.y + Mathf.Max(0f, (rect.height - 24f) * 0.5f), 24f, 24f);
+            Rect labelRect = new Rect(rect.x, rect.y + 4f, rect.width - 84f, rect.height - 8f);
+            Rect toggleRect = new Rect(rect.xMax - 76f, rect.y + 2f, 76f, rect.height - 4f);
 
             GUI.color = state ? Color.white : AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
             ABY_UIPolishUtility.SafeLabel(labelRect, label);
             GUI.color = Color.white;
+            Text.Font = GameFont.Small;
 
-            bool newState = state;
-            Widgets.CheckboxLabeled(new Rect(checkboxRect.x, checkboxRect.y, 24f, 24f), string.Empty, ref newState, false, null, null, false);
-            if (newState != state)
+            string toggleLabel = state
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleToggle_On", "On")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleToggle_Off", "Off");
+
+            if (AbyssalStyledWidgets.TextButton(toggleRect, toggleLabel, true, state))
             {
-                setter(newState);
+                setter(!state);
             }
 
             if (!tooltip.NullOrEmpty())
