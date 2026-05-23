@@ -356,6 +356,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 | --- | --- | --- | --- | --- | --- | --- |
 | Reactor Choir Minigun | Implemented / needs runtime smoke test | `source/Combat/Projectiles/Weapons/Projectile_ReactorChoirPlasmaSlug.cs`, `source/Combat/VFX/ReactorChoirMinigunVfxUtility.cs` | `Defs/ThingDefs/ABY_ReactorChoirMinigun.xml`, `Defs/HediffDefs/ABY_ReactorChoirMinigun_Hediffs.xml`, `Defs/ThingDefs_Motes/ABY_ReactorChoirMinigun_Motes.xml`, `Defs/SoundDefs/ABY_ReactorChoirMinigun_Sounds.xml`, `Textures/Things/Weapon/ABY_ReactorChoirMinigun.png`, `Textures/Things/Projectile/ABY_ReactorChoirPlasmaSlug.png`, `Textures/Things/VFX/ReactorChoirMinigun/` | Forge weapon pattern through existing Abyssal Forge UI | `ABY_PR_SaintAegisEngineering`, 5400 Forge residue, Reactor Saint Core, Horde Fragments | Heavy T5 sustained plasma weapon. Projectile uses budgeted muzzle/impact VFX and stacking thermal saturation; no map-wide scans or per-tick beam damage. Existing Ultra Plasma clips are reused through new SoundDefs until bespoke SFX are produced. |
 
+## Dominion Gravplate T5 armor — 2026-05-23
+
+| System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Dominion Gravplate shell + helm | Implemented / needs runtime smoke test | Existing `source/Apparel/` hover + armor Aegis systems; no new C# | `Defs/ThingDefs/ABY_AbyssalGravplatePrototype_Placeholder.xml`, `Defs/RecipeDefs/ABY_AbyssalGravplatePrototype_Recipes.xml`, existing textures under `Textures/Things/Apparel/` and `Textures/Things/Item/Apparel/` | Abyssal Forge armor pattern, apparel info cards, worn Aegis gizmo/status, hover VFX while drafted | `ABY_DominionGateBootstrapping`, `ABY_PR_DominionSurvivalFrames`, 4200 Forge residue, Crowned Core Fragment / Dominion Crown Shard material gates | Reuses existing hover-apparel and armor Aegis runtime. The shell is intended as mobile T5 Dominion assault armor: lower Aegis capacity than Crowned Core plate, faster recharge, strong drafted mobility, and no external shield stacking. |
+
 ## Crafting requirement ownership
 
 Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList + recipeMaker` items. Future economy audits must inspect both paths; many weapons and implants are generated from ThingDef recipeMaker rather than standalone RecipeDefs.

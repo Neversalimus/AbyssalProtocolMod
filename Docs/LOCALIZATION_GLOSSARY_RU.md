@@ -354,8 +354,8 @@ Notes: Treat as a named abyssal weapon, not as an enemy, faction, or unit.
 | Null Acolyte Cowl | капюшон нулевого аколита | |
 | Null Acolyte Vestment | облачение нулевого аколита | |
 | Null Procession Veil | вуаль Нулевой Процессии | |
-| Abyssal Gravplate Shell | бездненный гравипластинчатый панцирь | Prototype/armor shell. |
-| Abyssal Gravplate Helm | бездненный гравипластинчатый шлем | |
+| Dominion Gravplate Shell | гравипанцирь Доминиона | T5 grav-hover armor shell; keep compact for UI. |
+| Dominion Gravplate Helm | гравишлем Доминиона | Matching T5 gravplate helm. |
 | Lawwoven Carapace Mesh | панцирная сеть, сплетённая законом | For compact label: `законоплетёная панцирная сеть` if needed. |
 
 ## Circle modules, capacitors, stabilizers

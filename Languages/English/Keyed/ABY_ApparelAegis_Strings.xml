@@ -54,4 +54,9 @@
   <ABY_ApparelAegis_SaintTextRestore>SAINT AEGIS ONLINE</ABY_ApparelAegis_SaintTextRestore>
   <ABY_ApparelAegis_CrownTextCollapse>CROWN AEGIS COLLAPSE</ABY_ApparelAegis_CrownTextCollapse>
   <ABY_ApparelAegis_CrownTextRestore>CROWN AEGIS ONLINE</ABY_ApparelAegis_CrownTextRestore>
+  <ABY_ApparelAegis_GravplateLabel>Gravplate Aegis</ABY_ApparelAegis_GravplateLabel>
+  <ABY_ApparelAegis_GravplateGizmoSubtitle>Fast vector shield</ABY_ApparelAegis_GravplateGizmoSubtitle>
+  <ABY_ApparelAegis_TagGravplate>GRAVPLATE</ABY_ApparelAegis_TagGravplate>
+  <ABY_ApparelAegis_GravplateTextCollapse>GRAVPLATE AEGIS COLLAPSE</ABY_ApparelAegis_GravplateTextCollapse>
+  <ABY_ApparelAegis_GravplateTextRestore>GRAVPLATE AEGIS ONLINE</ABY_ApparelAegis_GravplateTextRestore>
 </LanguageData>

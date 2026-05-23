@@ -49,4 +49,9 @@
   <ABY_ApparelAegis_SaintTextRestore>ЭГИДА СВЯТОГО ВОССТАНОВЛЕНА</ABY_ApparelAegis_SaintTextRestore>
   <ABY_ApparelAegis_CrownTextCollapse>КОРОННАЯ ЭГИДА ПРОБИТА</ABY_ApparelAegis_CrownTextCollapse>
   <ABY_ApparelAegis_CrownTextRestore>КОРОННАЯ ЭГИДА ВОССТАНОВЛЕНА</ABY_ApparelAegis_CrownTextRestore>
+  <ABY_ApparelAegis_GravplateLabel>Гравиплитная эгида</ABY_ApparelAegis_GravplateLabel>
+  <ABY_ApparelAegis_GravplateGizmoSubtitle>Быстрый векторный щит</ABY_ApparelAegis_GravplateGizmoSubtitle>
+  <ABY_ApparelAegis_TagGravplate>ГРАВИПЛИТА</ABY_ApparelAegis_TagGravplate>
+  <ABY_ApparelAegis_GravplateTextCollapse>ГРАВИПЛИТНАЯ ЭГИДА ПРОБИТА</ABY_ApparelAegis_GravplateTextCollapse>
+  <ABY_ApparelAegis_GravplateTextRestore>ГРАВИПЛИТНАЯ ЭГИДА ВОССТАНОВЛЕНА</ABY_ApparelAegis_GravplateTextRestore>
 </LanguageData>

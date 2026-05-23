@@ -1,3 +1,28 @@
+## 2026-05-23 — Dominion Gravplate T5 armor reprototype
+
+- Reworked the unused `ABY_AbyssalGravplatePrototype` armor line into a playable Tier V Dominion Gravplate shell + helm with Abyssal Forge recipes, active `ABY_PR_DominionSurvivalFrames` Protocol Nexus gating, EN/RU DefInjected text, and updated glossary terms.
+- The shell now uses the existing armor Aegis runtime (`Apparel_ABY_ArmorAegis`) in addition to the existing hover presentation path: lower capacity than Crowned Core plate, faster recharge, no outgoing-fire block, no shield stacking with external shield belts, and EMP drain vulnerability.
+- Balance intent: mobile late-Dominion assault/survival armor. It sits beside Crowned Core plate rather than replacing it: less raw/capacity-focused than Crowned Core, but much faster while drafted through the gravplate hover lattice.
+- C# build not required: the patch only reuses already compiled apparel Aegis/hover systems and changes XML/localization/docs. XML parse validation passed; RimWorld runtime smoke testing is still required.
+
+Changed areas:
+
+```text
+Defs/ThingDefs/ABY_AbyssalGravplatePrototype_Placeholder.xml
+Defs/RecipeDefs/ABY_AbyssalGravplatePrototype_Recipes.xml
+Defs/Experimental/ProtocolResearch/ABY_ProtocolResearchProjects.xml
+Languages/English/DefInjected/ThingDef/ABY_AbyssalGravplatePrototype.xml
+Languages/English/DefInjected/RecipeDef/ABY_AbyssalGravplatePrototype_Recipes.xml
+Languages/English/Keyed/ABY_ApparelAegis_Strings.xml
+Languages/Russian/DefInjected/ThingDef/ABY_AbyssalGravplatePrototype.xml
+Languages/Russian/DefInjected/ThingDef/ABY_RU_Audit_Missing_ThingDef.xml
+Languages/Russian/DefInjected/RecipeDef/ABY_AbyssalGravplatePrototype_Recipes.xml
+Languages/Russian/Keyed/ABY_ApparelAegis_Strings.xml
+Docs/CONTENT_MATRIX.md
+Docs/LOCALIZATION_GLOSSARY_RU.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Weapon icon and ground footprint normalization
 
 - Normalized all current Abyssal weapon presentation assets that use weapon/item equipment textures: transparent PNG bounds were trimmed/re-padded so the visible weapon fills the texture predictably without green/chromakey or fake transparency.

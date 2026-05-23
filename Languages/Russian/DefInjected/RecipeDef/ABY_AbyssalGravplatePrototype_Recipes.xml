@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_CraftAbyssalGravplatePrototype.label>выковать гравипанцирь Доминиона</ABY_CraftAbyssalGravplatePrototype.label>
+  <ABY_CraftAbyssalGravplatePrototype.description>Связать давление коронного ядра, осколки короны Доминиона и плотную решётку гравиподвеса в человекоразмерный панцирь выживания. Итогом становится не более тяжёлая броня, а рама пролома для бойцов, которым предстоит пересекать враждебную землю под огнём.</ABY_CraftAbyssalGravplatePrototype.description>
+  <ABY_CraftAbyssalGravplatePrototype.jobString>Куется гравипанцирь Доминиона.</ABY_CraftAbyssalGravplatePrototype.jobString>
+  <ABY_CraftAbyssalGravplateHelmPrototype.label>выковать гравишлем Доминиона</ABY_CraftAbyssalGravplateHelmPrototype.label>
+  <ABY_CraftAbyssalGravplateHelmPrototype.description>Встроить осколок короны Доминиона в запечатанный командный шлем, настроенный под векторное управление гравипанцирем. Его оптика считывает углы пролома и давление зон поражения, а не просто делает зрение ярче.</ABY_CraftAbyssalGravplateHelmPrototype.description>
+  <ABY_CraftAbyssalGravplateHelmPrototype.jobString>Куется гравишлем Доминиона.</ABY_CraftAbyssalGravplateHelmPrototype.jobString>
+</LanguageData>

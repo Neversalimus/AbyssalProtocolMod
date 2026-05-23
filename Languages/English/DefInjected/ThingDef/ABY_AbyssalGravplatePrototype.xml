@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_AbyssalGravplatePrototype.label>dominion gravplate shell</ABY_AbyssalGravplatePrototype.label>
+  <ABY_AbyssalGravplatePrototype.description>A dominion survival frame that turns crown pressure into battlefield motion. The shell does not simply protect the wearer; it suspends their mass on a hostile vector lattice, sheds incoming fire through a fast internal aegis, and lets breach-line fighters cross kill zones before the ground can fully claim them.</ABY_AbyssalGravplatePrototype.description>
+  <ABY_AbyssalGravplateHelmPrototype.label>dominion gravplate helm</ABY_AbyssalGravplateHelmPrototype.label>
+  <ABY_AbyssalGravplateHelmPrototype.description>A sealed command helm for the dominion gravplate line. Its horned faceplate and violet crown lenses translate hostile terrain, incoming fire and unstable breach vectors into a usable combat picture, letting the wearer aim while the shell beneath them refuses ordinary gravity.</ABY_AbyssalGravplateHelmPrototype.description>
+</LanguageData>

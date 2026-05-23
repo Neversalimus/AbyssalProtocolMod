@@ -2,9 +2,9 @@
 <Defs>
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplatePrototype</defName>
-    <thingClass>Apparel</thingClass>
-    <label>abyssal gravplate shell</label>
-    <description>A dormant dominion-grade grav-suspension shell sealed behind incomplete access law. Black crown-plating, red fracture channels and violet node lenses hint at an armor lineage meant for operators who have learned to hover at the edge of the gate rather than merely survive it.</description>
+    <thingClass>AbyssalProtocol.Apparel_ABY_ArmorAegis</thingClass>
+    <label>dominion gravplate shell</label>
+    <description>A dominion survival frame that turns crown pressure into battlefield motion. The shell does not simply protect the wearer; it suspends their mass on a hostile vector lattice, sheds incoming fire through a fast internal aegis, and lets breach-line fighters cross kill zones before the ground can fully claim them.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_AbyssalGravplatePrototype</texPath>
@@ -37,42 +37,68 @@
         <groundWakeTexPath>Effects/Hover/ABY_GravWake</groundWakeTexPath>
         <groundDistortionTexPath>Effects/Hover/ABY_GravDistortion</groundDistortionTexPath>
         <hoverFxIntensity>Subtle</hoverFxIntensity>
-        <ringScale>0.78</ringScale>
-        <movingRingScaleBonus>0.08</movingRingScaleBonus>
-        <ringAlpha>0.28</ringAlpha>
-        <pulseAmplitude>0.055</pulseAmplitude>
-        <vectorThrusterBurstScale>0.36</vectorThrusterBurstScale>
-        <vectorThrusterGlowScale>0.50</vectorThrusterGlowScale>
-        <vectorThrusterAlpha>0.76</vectorThrusterAlpha>
-        <vectorThrusterGlowAlpha>0.34</vectorThrusterGlowAlpha>
-        <vectorThrusterPulseScale>0.050</vectorThrusterPulseScale>
-        <vectorThrusterPulseAlpha>0.20</vectorThrusterPulseAlpha>
-        <vectorThrusterMotionAlphaBonus>0.24</vectorThrusterMotionAlphaBonus>
-        <vectorThrusterMotionScaleBonus>0.060</vectorThrusterMotionScaleBonus>
-        <vectorThrusterBackOffset>0.19</vectorThrusterBackOffset>
-        <vectorThrusterSideOffset>0.205</vectorThrusterSideOffset>
-        <vectorThrusterLowerBackOffset>0.340</vectorThrusterLowerBackOffset>
-        <vectorThrusterLowerSideOffset>0.120</vectorThrusterLowerSideOffset>
-        <vectorThrusterShoulderScale>0.92</vectorThrusterShoulderScale>
-        <vectorThrusterHipScale>1.10</vectorThrusterHipScale>
-        <vectorThrusterAltitudeOffset>0.028</vectorThrusterAltitudeOffset>
-        <groundWakeScale>0.62</groundWakeScale>
-        <groundWakeLengthScale>1.10</groundWakeLengthScale>
-        <groundWakeWidthScale>0.46</groundWakeWidthScale>
-        <groundWakeAlpha>0.28</groundWakeAlpha>
-        <groundWakeMotionAlphaBonus>0.14</groundWakeMotionAlphaBonus>
-        <groundWakeMotionLengthBonus>0.18</groundWakeMotionLengthBonus>
-        <groundWakePulseScale>0.050</groundWakePulseScale>
-        <groundWakePulseAlpha>0.060</groundWakePulseAlpha>
-        <groundWakeBackOffset>0.13</groundWakeBackOffset>
-        <groundWakeSideOffset>0.070</groundWakeSideOffset>
-        <groundWakeAltitudeOffset>0.026</groundWakeAltitudeOffset>
-        <draftedMoveSpeedBonus>0.90</draftedMoveSpeedBonus>
-        <sparkIntervalTicks>16</sparkIntervalTicks>
+        <ringScale>0.82</ringScale>
+        <movingRingScaleBonus>0.10</movingRingScaleBonus>
+        <ringAlpha>0.32</ringAlpha>
+        <pulseAmplitude>0.060</pulseAmplitude>
+        <vectorThrusterBurstScale>0.40</vectorThrusterBurstScale>
+        <vectorThrusterGlowScale>0.54</vectorThrusterGlowScale>
+        <vectorThrusterAlpha>0.82</vectorThrusterAlpha>
+        <vectorThrusterGlowAlpha>0.38</vectorThrusterGlowAlpha>
+        <vectorThrusterPulseScale>0.060</vectorThrusterPulseScale>
+        <vectorThrusterPulseAlpha>0.24</vectorThrusterPulseAlpha>
+        <vectorThrusterMotionAlphaBonus>0.28</vectorThrusterMotionAlphaBonus>
+        <vectorThrusterMotionScaleBonus>0.070</vectorThrusterMotionScaleBonus>
+        <vectorThrusterBackOffset>0.20</vectorThrusterBackOffset>
+        <vectorThrusterSideOffset>0.215</vectorThrusterSideOffset>
+        <vectorThrusterLowerBackOffset>0.360</vectorThrusterLowerBackOffset>
+        <vectorThrusterLowerSideOffset>0.130</vectorThrusterLowerSideOffset>
+        <vectorThrusterShoulderScale>0.96</vectorThrusterShoulderScale>
+        <vectorThrusterHipScale>1.14</vectorThrusterHipScale>
+        <vectorThrusterAltitudeOffset>0.030</vectorThrusterAltitudeOffset>
+        <groundWakeScale>0.66</groundWakeScale>
+        <groundWakeLengthScale>1.16</groundWakeLengthScale>
+        <groundWakeWidthScale>0.48</groundWakeWidthScale>
+        <groundWakeAlpha>0.31</groundWakeAlpha>
+        <groundWakeMotionAlphaBonus>0.16</groundWakeMotionAlphaBonus>
+        <groundWakeMotionLengthBonus>0.22</groundWakeMotionLengthBonus>
+        <groundWakePulseScale>0.060</groundWakePulseScale>
+        <groundWakePulseAlpha>0.070</groundWakePulseAlpha>
+        <groundWakeBackOffset>0.14</groundWakeBackOffset>
+        <groundWakeSideOffset>0.075</groundWakeSideOffset>
+        <groundWakeAltitudeOffset>0.028</groundWakeAltitudeOffset>
+        <draftedMoveSpeedBonus>1.05</draftedMoveSpeedBonus>
+        <sparkIntervalTicks>14</sparkIntervalTicks>
         <sparkLifetimeTicks>16</sparkLifetimeTicks>
         <sparkScale>0.15</sparkScale>
-        <sparkAlpha>0.46</sparkAlpha>
+        <sparkAlpha>0.48</sparkAlpha>
         <drawPriority>20</drawPriority>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelAegis">
+        <labelKey>ABY_ApparelAegis_GravplateLabel</labelKey>
+        <gizmoSubtitleKey>ABY_ApparelAegis_GravplateGizmoSubtitle</gizmoSubtitleKey>
+        <gizmoTheme>Crown</gizmoTheme>
+        <gizmoTagKey>ABY_ApparelAegis_TagGravplate</gizmoTagKey>
+        <gizmoIconTexPath>UI/Gizmos/ABY_AegisCrown</gizmoIconTexPath>
+        <maxShieldPoints>110</maxShieldPoints>
+        <rechargeDelayTicks>120</rechargeDelayTicks>
+        <rechargeIntervalTicks>24</rechargeIntervalTicks>
+        <rechargePerInterval>4.5</rechargePerInterval>
+        <absorbRanged>true</absorbRanged>
+        <absorbExplosive>true</absorbExplosive>
+        <absorbMelee>false</absorbMelee>
+        <empDrainsShield>true</empDrainsShield>
+        <empDrainMultiplier>2.8</empDrainMultiplier>
+        <suppressWhenExternalShieldWorn>true</suppressWhenExternalShieldWorn>
+        <hitFlashScale>0.66</hitFlashScale>
+        <breakFlashScale>1.24</breakFlashScale>
+        <restoreFlashScale>1.18</restoreFlashScale>
+        <breakSoundDefName>ABY_ReactorSaintImpact</breakSoundDefName>
+        <restoreSoundDefName>ABY_ReactorSaintCharge</restoreSoundDefName>
+        <collapseTextKey>ABY_ApparelAegis_GravplateTextCollapse</collapseTextKey>
+        <restoreTextKey>ABY_ApparelAegis_GravplateTextRestore</restoreTextKey>
+        <collapsePulseStrength>0.30</collapsePulseStrength>
+        <restorePulseStrength>0.30</restorePulseStrength>
       </li>
       <li Class="AbyssalProtocol.DefModExtension_ABY_ApparelBodyTypeRestriction">
         <allowedBodyTypes>
@@ -82,31 +108,37 @@
         </allowedBodyTypes>
       </li>
     </modExtensions>
-    <tradeability>None</tradeability>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_ApparelAegisInfo" />
+    </comps>
+    <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
-      <Plasteel>40</Plasteel>
-      <Uranium>12</Uranium>
-      <ComponentSpacer>1</ComponentSpacer>
+      <Plasteel>56</Plasteel>
+      <Uranium>18</Uranium>
+      <ComponentSpacer>2</ComponentSpacer>
+      <Gold>6</Gold>
     </smeltProducts>
     <equippedStatOffsets>
-      <MoveSpeed>-0.04</MoveSpeed>
+      <MoveSpeed>-0.02</MoveSpeed>
+      <MeleeDodgeChance>0.08</MeleeDodgeChance>
+      <PsychicSensitivity>-0.04</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>52000</WorkToMake>
-      <MaxHitPoints>540</MaxHitPoints>
-      <Mass>7.0</Mass>
-      <MarketValue>7200</MarketValue>
-      <ArmorRating_Sharp>1.18</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.62</ArmorRating_Blunt>
-      <ArmorRating_Heat>1.02</ArmorRating_Heat>
+      <WorkToMake>68000</WorkToMake>
+      <MaxHitPoints>600</MaxHitPoints>
+      <Mass>6.6</Mass>
+      <MarketValue>9300</MarketValue>
+      <ArmorRating_Sharp>1.30</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.68</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.28</ArmorRating_Heat>
     </statBases>
   </ThingDef>
   <ThingDef ParentName="ApparelBase">
     <defName>ABY_AbyssalGravplateHelmPrototype</defName>
     <thingClass>Apparel</thingClass>
-    <label>abyssal gravplate helm</label>
-    <description>A sealed helm from a dormant gravplate line. Its compact horned faceplate, violet lenses and red crown-core venting make it feel less like protective equipment and more like a permission mask for forbidden motion.</description>
+    <label>dominion gravplate helm</label>
+    <description>A sealed command helm for the dominion gravplate line. Its horned faceplate and violet crown lenses translate hostile terrain, incoming fire and unstable breach vectors into a usable combat picture, letting the wearer aim while the shell beneath them refuses ordinary gravity.</description>
     <techLevel>Ultra</techLevel>
     <graphicData>
       <texPath>Things/Item/Apparel/ABY_AbyssalGravplateHelmPrototype</texPath>
@@ -122,24 +154,27 @@
       </layers>
       <wornGraphicPath>Things/Apparel/ABY_AbyssalGravplateHelmPrototype</wornGraphicPath>
     </apparel>
-    <tradeability>None</tradeability>
+    <tradeability>Sellable</tradeability>
     <smeltable>true</smeltable>
     <smeltProducts>
-      <Plasteel>16</Plasteel>
-      <Uranium>4</Uranium>
+      <Plasteel>20</Plasteel>
+      <Uranium>6</Uranium>
       <ComponentIndustrial>1</ComponentIndustrial>
+      <Gold>3</Gold>
     </smeltProducts>
     <equippedStatOffsets>
-      <ShootingAccuracyPawn>0.10</ShootingAccuracyPawn>
+      <ShootingAccuracyPawn>0.12</ShootingAccuracyPawn>
+      <MoveSpeed>0.03</MoveSpeed>
+      <PsychicSensitivity>-0.06</PsychicSensitivity>
     </equippedStatOffsets>
     <statBases>
-      <WorkToMake>24000</WorkToMake>
-      <MaxHitPoints>300</MaxHitPoints>
-      <Mass>2.35</Mass>
-      <MarketValue>3200</MarketValue>
-      <ArmorRating_Sharp>1.00</ArmorRating_Sharp>
-      <ArmorRating_Blunt>0.52</ArmorRating_Blunt>
-      <ArmorRating_Heat>0.90</ArmorRating_Heat>
+      <WorkToMake>28000</WorkToMake>
+      <MaxHitPoints>340</MaxHitPoints>
+      <Mass>2.20</Mass>
+      <MarketValue>3900</MarketValue>
+      <ArmorRating_Sharp>1.15</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.60</ArmorRating_Blunt>
+      <ArmorRating_Heat>1.08</ArmorRating_Heat>
     </statBases>
   </ThingDef>
 </Defs>

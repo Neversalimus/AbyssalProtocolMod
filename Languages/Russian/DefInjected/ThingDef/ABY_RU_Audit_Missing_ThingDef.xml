@@ -1,10 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <LanguageData>
   <ABY_AbyssalForge.label>бездненная кузница</ABY_AbyssalForge.label>
-  <ABY_AbyssalGravplateHelmPrototype.description>Запечатанный шлем из спящей линии гравиплит. Компактная рогатая маска, фиолетовые линзы и красное коронное вентилирование делают его скорее разрешением на запретное движение, чем обычной защитой.</ABY_AbyssalGravplateHelmPrototype.description>
-  <ABY_AbyssalGravplateHelmPrototype.label>бездненный гравишлем</ABY_AbyssalGravplateHelmPrototype.label>
-  <ABY_AbyssalGravplatePrototype.description>Элемент Протокола Бездны: бездненный гравипанцирь. Несёт отпечаток ритуально-индустриальной инфраструктуры и доменных законов Протокола.</ABY_AbyssalGravplatePrototype.description>
-  <ABY_AbyssalGravplatePrototype.label>бездненный гравипанцирь</ABY_AbyssalGravplatePrototype.label>
   <ABY_AbyssalResidue.label>бездненный остаток</ABY_AbyssalResidue.label>
   <ABY_AnchorSpikeProjectile.label>якорный шип</ABY_AnchorSpikeProjectile.label>
   <ABY_AnchorSpiker.description>Техно-инфернальная гарпунная винтовка вокруг запертой рифт-камеры и грубой сборки якорного шипа. Каждый выстрел вбивает стабилизированный пробой в броню и придавливает цель тяжестью чужой геометрии.</ABY_AnchorSpiker.description>

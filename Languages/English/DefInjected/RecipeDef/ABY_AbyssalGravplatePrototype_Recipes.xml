@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<LanguageData>
+  <ABY_CraftAbyssalGravplatePrototype.label>forge dominion gravplate shell</ABY_CraftAbyssalGravplatePrototype.label>
+  <ABY_CraftAbyssalGravplatePrototype.description>Bind crowned-core pressure, dominion crown shards and a dense grav-suspension lattice into a human-scale survival shell. The result is not a heavier carapace; it is a breach frame for fighters expected to cross hostile ground under fire.</ABY_CraftAbyssalGravplatePrototype.description>
+  <ABY_CraftAbyssalGravplatePrototype.jobString>Forging dominion gravplate shell.</ABY_CraftAbyssalGravplatePrototype.jobString>
+  <ABY_CraftAbyssalGravplateHelmPrototype.label>forge dominion gravplate helm</ABY_CraftAbyssalGravplateHelmPrototype.label>
+  <ABY_CraftAbyssalGravplateHelmPrototype.description>Set a dominion crown shard into a sealed command helm tuned for gravplate vector control. The optics are built to read breach angles and kill-zone pressure rather than simply brighten the wearer's sight.</ABY_CraftAbyssalGravplateHelmPrototype.description>
+  <ABY_CraftAbyssalGravplateHelmPrototype.jobString>Forging dominion gravplate helm.</ABY_CraftAbyssalGravplateHelmPrototype.jobString>
+</LanguageData>
