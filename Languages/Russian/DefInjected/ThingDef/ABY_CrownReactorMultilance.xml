@@ -2,7 +2,7 @@
 <LanguageData>
 
   <ABY_CrownReactorMultilance.label>коронная реакторная мульти-пика</ABY_CrownReactorMultilance.label>
-  <ABY_CrownReactorMultilance.description>Коронно-реакторное оружие, собранное из геометрии святого сдерживания и доминионных рельсовых решёток. Его четыре параллельных излучателя стреляют не как стволы, а как синхронизированный приговор: каждый разряд последовательно пробуждает рельсы, а затем выпускает четыре длинных реакторных луча, разрывающих броню, нервы и протокольную защиту.</ABY_CrownReactorMultilance.description>
+  <ABY_CrownReactorMultilance.description>Коронно-реакторное оружие, собранное из геометрии святого сдерживания и доминионных рельсовых решёток. Его четыре излучателя не просто стреляют: они выносят поэтапный приговор — сначала фиксируют цель, затем срезают её системы, прорезают линию позади неё и завершают разряд коронным ударом по всему, что всё ещё стоит.</ABY_CrownReactorMultilance.description>
 
   <ABY_CrownReactorMultilanceBeamPayload.label>коронный реакторный луч</ABY_CrownReactorMultilanceBeamPayload.label>
   <ABY_CrownReactorBeamSequence.label>последовательность коронных реакторных лучей</ABY_CrownReactorBeamSequence.label>

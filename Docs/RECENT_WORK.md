@@ -1,9 +1,10 @@
-## 2026-05-23 — Crown Reactor Multilance dot-charge timing pass
+## 2026-05-23 — Crown Reactor Multilance Four-Rail Verdict pass
 
-- Changed Crown Reactor Multilance warmup presentation from short oversized rail bars to compact moving charge dots so any residual muzzle alignment mismatch is less visible in live combat.
-- Accelerated the post-warmup charge/discharge sequence by about 1.6x: rail charge step, pre-discharge delay, beam hold, beam gap, and fade timings were all reduced while keeping the weapon cooldown and four-pulse damage model intact.
-- Narrowed the sustained beam visual again so each discharge reads closer to one barrel lane instead of a broad slab.
-- Added `Textures/Things/Projectile/ABY_CrownReactorChargeDot.png` as a small transparent charge-dot VFX asset.
+- Reworked `Thing_CrownReactorBeamSequence` from four identical damage pulses into the Four-Rail Verdict sequence: acquisition/lock, shield-system shear, short overline penetration, and capped crown-verdict execution.
+- Preserved the faster dot-based charge presentation and invisible sequence-controller fallback so the weapon no longer holds visible alignment artifacts on-screen.
+- Added bounded smart retargeting when the original target dies mid-sequence, limited to nearby hostile targets around the original impact cell.
+- Added a short overline secondary hit path behind the target and a small one-time final rupture pulse for wasted final shots; both are bounded and do not use map-wide scans or per-tick damage.
+- Added `ABY_CrownReactorChargeDot.png` as a compact transparent charge-dot texture.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
 
 Changed areas:
@@ -12,9 +13,14 @@ Changed areas:
 Assemblies/AbyssalProtocol.dll
 Assemblies/AbyssalProtocol.pdb
 source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
+Defs/ThingDefs/ABY_CrownReactorMultilance.xml
 Textures/Things/Projectile/ABY_CrownReactorChargeDot.png
-Docs/RECENT_WORK.md
+Textures/Things/Projectile/ABY_CrownReactorBeamSequence_Invisible.png
+Languages/English/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
+Languages/Russian/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
+Docs/CROWN_REACTOR_MULTILANCE.md
 Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
 ```
 
 ## 2026-05-23 — Protocol Nexus authority pass 2A and Saint Aegis Engineering

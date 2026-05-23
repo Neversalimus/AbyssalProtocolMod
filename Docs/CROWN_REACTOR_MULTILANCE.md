@@ -12,6 +12,8 @@ source/Combat/Verbs/Verb_CrownReactorMultilance.cs
 source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
 Textures/Things/Weapon/ABY_CrownReactorMultilance.png
 Textures/Things/Projectile/ABY_CrownReactorBeamSegment.png
+Textures/Things/Projectile/ABY_CrownReactorChargeDot.png
+Textures/Things/Projectile/ABY_CrownReactorBeamSequence_Invisible.png
 Languages/English/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
 Languages/Russian/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
 Assemblies/AbyssalProtocol.dll
@@ -23,16 +25,19 @@ T5 post-Saint / Crown-Reactor heavy weapon. The weapon is intentionally slower t
 
 ## Runtime design
 
-`Verb_CrownReactorMultilance` spawns one transient `Thing_CrownReactorBeamSequence` after warmup. The sequence:
+`Verb_CrownReactorMultilance` spawns one transient `Thing_CrownReactorBeamSequence` after warmup. The sequence uses the Four-Rail Verdict pattern:
 
-- charges four rails in order;
-- emits four long visual beams in order;
-- applies four controlled damage pulses, one per rail;
+- dot-charges four rails in order with compact charge markers;
+- rail 1 performs the acquisition/lock hit;
+- rail 2 performs shield/system shear with extra pressure against shields, mechanoids, Aegis-like targets, and structures;
+- rail 3 performs a short bounded overline penetration check behind the main target;
+- rail 4 performs a capped crown-verdict finisher if the locked target survives, or a small one-time rupture pulse if the final shot would otherwise be wasted;
+- retargets only within a small bounded radius if the original target dies mid-sequence;
 - does not deal per-tick beam damage;
 - does not perform map-wide scans;
 - uses cached/quantized materials through `ABY_MaterialCacheUtility`.
 
-This keeps the weapon presentation-heavy while respecting the recent runtime hot-path safety passes.
+This keeps the weapon presentation-heavy and mechanically distinct while respecting the recent runtime hot-path safety passes.
 
 ## Progression and Forge exposure
 

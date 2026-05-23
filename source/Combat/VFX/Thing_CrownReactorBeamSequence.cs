@@ -11,7 +11,8 @@ namespace AbyssalProtocol
     /// Runtime budget notes:
     /// - no map-wide scans;
     /// - no per-tick damage;
-    /// - four single damage applications, one per rail discharge;
+    /// - four single primary damage applications, one per rail discharge;
+    /// - short line/retarget checks are tightly bounded;
     /// - cached/quantized beam materials through the shared Abyssal material cache.
     /// </summary>
     [StaticConstructorOnStartup]
@@ -20,6 +21,8 @@ namespace AbyssalProtocol
         private const string BeamTexturePath = "Things/Projectile/ABY_CrownReactorBeamSegment";
         private const string ChargeDotTexturePath = "Things/Projectile/ABY_CrownReactorChargeDot";
         private const int RailCount = 4;
+
+        // Intentionally fast post-warmup presentation: about 1.6x faster than the first pass.
         private const int RailChargeStepTicks = 6;
         private const int PreDischargeDelayTicks = 8;
         private const int BeamHoldTicks = 12;
@@ -41,14 +44,28 @@ namespace AbyssalProtocol
         private const float MaxOuterRailOffset = 0.16f;
         private const float MinInnerRailOffset = 0.04f;
         private const float MaxInnerRailOffset = 0.065f;
-        private const float ChargeDotSizeRatio = 0.16f;
-        private const float MainBeamWidthRatio = 0.105f;
-        private const float MinChargeDotSize = 0.075f;
-        private const float MaxChargeDotSize = 0.105f;
-        private const float MinMainBeamWidth = 0.058f;
-        private const float MaxMainBeamWidth = 0.078f;
+        private const float MainBeamWidthRatio = 0.13f;
+        private const float MinMainBeamWidth = 0.068f;
+        private const float MaxMainBeamWidth = 0.09f;
+        private const float ChargeDotSize = 0.105f;
+        private const float CompletedChargeDotSize = 0.075f;
 
-        private static readonly Color ChargeDotColor = new Color(0.82f, 1f, 1f, 0.86f);
+        // Four-Rail Verdict tuning. Values are deliberately modest because this is a high-tier weapon
+        // that already fires four reliable damage pulses.
+        private const float ShieldShearSystemMultiplier = 1.32f;
+        private const float ShieldShearEmpDamage = 10f;
+        private const float OverlineDamageMultiplier = 0.45f;
+        private const float OverlineArmorMultiplier = 0.70f;
+        private const int OverlineCells = 8;
+        private const int OverlineMaxHits = 3;
+        private const float CrownVerdictMultiplier = 1.42f;
+        private const float CrownVerdictBossMultiplier = 1.18f;
+        private const float RupturePulseDamageMultiplier = 0.35f;
+        private const float RupturePulseArmorMultiplier = 0.55f;
+        private const int RetargetRadius = 5;
+        private const int RetargetCheckIntervalTicks = 4;
+
+        private static readonly Color ChargeDotColor = new Color(0.82f, 1f, 1f, 0.82f);
         private static readonly Color FadeColor = new Color(1f, 1f, 1f, 0.72f);
 
         private static Material cachedBeamMaterial;
@@ -58,6 +75,8 @@ namespace AbyssalProtocol
         private Thing launcher;
         private Thing equipment;
         private Thing targetThing;
+        private Thing retargetThing;
+        private Thing lockedThing;
         private ThingDef payloadProjectileDef;
         private IntVec3 targetCell;
         private Vector3 muzzleBase;
@@ -66,6 +85,8 @@ namespace AbyssalProtocol
         private Vector3 shotPerpendicular;
         private Vector3 fixedTarget;
         private int ageTicks;
+        private int nextRetargetCheckTick;
+        private bool rupturePulseApplied;
         private readonly bool[] damageApplied = new bool[RailCount];
 
         private int ChargeTicks => RailChargeStepTicks * RailCount;
@@ -119,6 +140,10 @@ namespace AbyssalProtocol
             this.payloadProjectileDef = payloadProjectileDef;
             targetThing = targetInfo.Thing;
             targetCell = targetInfo.Cell;
+            retargetThing = null;
+            lockedThing = null;
+            rupturePulseApplied = false;
+            nextRetargetCheckTick = 0;
 
             Vector3 launcherPos = launcher?.DrawPos ?? Position.ToVector3Shifted();
             fixedTarget = ResolveInitialTargetPosition(targetInfo);
@@ -146,6 +171,8 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref launcher, "launcher");
             Scribe_References.Look(ref equipment, "equipment");
             Scribe_References.Look(ref targetThing, "targetThing");
+            Scribe_References.Look(ref retargetThing, "retargetThing");
+            Scribe_References.Look(ref lockedThing, "lockedThing");
             Scribe_Defs.Look(ref payloadProjectileDef, "payloadProjectileDef");
             Scribe_Values.Look(ref targetCell, "targetCell");
             Scribe_Values.Look(ref muzzleBase, "muzzleBase");
@@ -154,6 +181,8 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref shotPerpendicular, "shotPerpendicular");
             Scribe_Values.Look(ref fixedTarget, "fixedTarget");
             Scribe_Values.Look(ref ageTicks, "ageTicks", 0);
+            Scribe_Values.Look(ref nextRetargetCheckTick, "nextRetargetCheckTick", 0);
+            Scribe_Values.Look(ref rupturePulseApplied, "rupturePulseApplied", false);
 
             if (Scribe.mode == LoadSaveMode.Saving)
             {
@@ -224,11 +253,9 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float chargeDotSize = ResolveChargeDotSize(equipment);
-            float mainBeamWidth = ResolveMainBeamWidth(equipment);
             if (ageTicks < BeamStartTick)
             {
-                DrawChargeDots(ChargeDotMaterial ?? material, chargeDotSize);
+                DrawChargeDots();
                 return;
             }
 
@@ -249,8 +276,35 @@ namespace AbyssalProtocol
                 }
 
                 beamDirection /= distance;
-                Material activeMaterial = (activeRailTick < 3 || activeRailTick > BeamHoldTicks - 5) ? (BeamFadeMaterial ?? material) : material;
-                DrawBeamSegment(activeMaterial, railMuzzle, beamDirection, distance, mainBeamWidth);
+                Material activeMaterial = (activeRailTick < 2 || activeRailTick > BeamHoldTicks - 4) ? (BeamFadeMaterial ?? material) : material;
+                DrawBeamSegment(activeMaterial, railMuzzle, beamDirection, distance, ResolveMainBeamWidth(equipment));
+            }
+        }
+
+        private void DrawChargeDots()
+        {
+            Material chargeMaterial = ChargeDotMaterial;
+            if (chargeMaterial == null)
+            {
+                return;
+            }
+
+            for (int rail = 0; rail < RailCount; rail++)
+            {
+                int railStartTick = rail * RailChargeStepTicks;
+                if (ageTicks < railStartTick)
+                {
+                    continue;
+                }
+
+                int railAge = Mathf.Max(0, ageTicks - railStartTick);
+                float t = Mathf.Clamp01(railAge / (float)RailChargeStepTicks);
+                Vector3 start = RailChargeStart(rail);
+                Vector3 muzzle = RailMuzzle(rail);
+                Vector3 dotPos = Vector3.Lerp(start, muzzle, 0.18f + 0.82f * t);
+                float pulse = 0.82f + Mathf.Sin(t * Mathf.PI) * 0.36f;
+                float size = (railAge < RailChargeStepTicks) ? ChargeDotSize * pulse : CompletedChargeDotSize;
+                DrawBillboardDot(chargeMaterial, dotPos, size);
             }
         }
 
@@ -267,14 +321,31 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Thing hitThing = ResolveHitThing();
+            Thing hitThing = ResolveHitThingForRail(rail);
             if (hitThing == null || hitThing.Destroyed)
             {
+                if (rail == RailCount - 1 && !rupturePulseApplied)
+                {
+                    ApplyRupturePulse(ResolveCurrentTargetCell());
+                    rupturePulseApplied = true;
+                }
                 return;
             }
 
+            if (rail == 0 && lockedThing == null)
+            {
+                lockedThing = hitThing;
+            }
+
+            ProjectileProperties projectile = payloadProjectileDef.projectile;
+            DamageDef damageDef = projectile.damageDef ?? DamageDefOf.Burn;
+            float baseDamageAmount = Mathf.Max(1f, projectile.GetDamageAmount(launcher, null));
+            float armorPenetration = Mathf.Max(0f, projectile.GetArmorPenetration(launcher, null));
+            float damageMultiplier = ResolveRailDamageMultiplier(rail, hitThing);
+            float damageAmount = baseDamageAmount * damageMultiplier;
+
             Vector3 railMuzzle = RailMuzzle(Mathf.Clamp(rail, 0, RailCount - 1));
-            Vector3 targetPosition = ResolveCurrentTargetPosition();
+            Vector3 targetPosition = hitThing.DrawPos;
             Vector3 hitDirection = targetPosition - railMuzzle;
             hitDirection.y = 0f;
             if (hitDirection.sqrMagnitude < 0.001f)
@@ -282,12 +353,7 @@ namespace AbyssalProtocol
                 hitDirection = shotDirection;
             }
 
-            ProjectileProperties projectile = payloadProjectileDef.projectile;
-            DamageDef damageDef = projectile.damageDef ?? DamageDefOf.Burn;
-            float damageAmount = Mathf.Max(1f, projectile.GetDamageAmount(launcher, null));
-            float armorPenetration = Mathf.Max(0f, projectile.GetArmorPenetration(launcher, null));
             float angle = hitDirection.AngleFlat();
-
             DamageInfo damageInfo = new DamageInfo(
                 damageDef,
                 damageAmount,
@@ -299,31 +365,233 @@ namespace AbyssalProtocol
                 DamageInfo.SourceCategory.ThingOrUnknown,
                 hitThing);
 
-            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(Map, hitThing, damageInfo, "Thing_CrownReactorBeamSequence");
+            bool applied = ABY_ProjectileImpactSafetyUtility.TryApplyDamage(Map, hitThing, damageInfo, "Thing_CrownReactorBeamSequence");
+            if (!applied)
+            {
+                return;
+            }
+
+            if (rail == 1 && IsSystemTarget(hitThing))
+            {
+                ApplyEmpShear(hitThing, angle, ShieldShearEmpDamage);
+            }
+
+            if (rail == 2)
+            {
+                ApplyOverlineSecondaryHits(railMuzzle, targetPosition, hitThing, baseDamageAmount, armorPenetration);
+            }
+
+            if (rail == RailCount - 1 && !rupturePulseApplied && (hitThing.Destroyed || (hitThing is Pawn pawn && pawn.Dead)))
+            {
+                ApplyRupturePulse(hitThing.PositionHeld.IsValid ? hitThing.PositionHeld : ResolveCurrentTargetCell());
+                rupturePulseApplied = true;
+            }
         }
 
-        private Thing ResolveHitThing()
+        private float ResolveRailDamageMultiplier(int rail, Thing hitThing)
         {
-            if (targetThing != null && !targetThing.Destroyed && targetThing.MapHeld == Map)
+            switch (Mathf.Clamp(rail, 0, RailCount - 1))
             {
-                return targetThing;
+                case 1:
+                    return IsSystemTarget(hitThing) ? ShieldShearSystemMultiplier : 1f;
+                case 3:
+                    if (lockedThing != null && !lockedThing.Destroyed && ReferenceEquals(lockedThing, hitThing))
+                    {
+                        Pawn pawn = hitThing as Pawn;
+                        return pawn != null && ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(pawn)
+                            ? CrownVerdictBossMultiplier
+                            : CrownVerdictMultiplier;
+                    }
+                    return 1f;
+                default:
+                    return 1f;
+            }
+        }
+
+        private void ApplyEmpShear(Thing hitThing, float angle, float amount)
+        {
+            if (hitThing == null || hitThing.Destroyed || amount <= 0.1f)
+            {
+                return;
             }
 
-            if (!targetCell.IsValid || Map == null || !targetCell.InBounds(Map))
+            DamageInfo empInfo = new DamageInfo(
+                DamageDefOf.EMP,
+                amount,
+                999f,
+                angle,
+                launcher,
+                null,
+                equipment?.def,
+                DamageInfo.SourceCategory.ThingOrUnknown,
+                hitThing);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(Map, hitThing, empInfo, "Thing_CrownReactorBeamSequence-emp-shear");
+        }
+
+        private void ApplyOverlineSecondaryHits(Vector3 railMuzzle, Vector3 primaryTargetPosition, Thing primaryHit, float baseDamageAmount, float baseArmorPenetration)
+        {
+            if (Map == null || primaryTargetPosition == default(Vector3))
             {
-                return null;
+                return;
             }
 
-            List<Thing> things = targetCell.GetThingList(Map);
-            for (int i = 0; i < things.Count; i++)
+            HashSet<Thing> alreadyHit = new HashSet<Thing>();
+            if (primaryHit != null)
             {
-                Thing candidate = things[i];
-                if (candidate == null || candidate.Destroyed)
+                alreadyHit.Add(primaryHit);
+            }
+
+            int hits = 0;
+            IntVec3 lastCell = IntVec3.Invalid;
+            for (int step = 1; step <= OverlineCells && hits < OverlineMaxHits; step++)
+            {
+                Vector3 sample = primaryTargetPosition + shotDirection * step;
+                IntVec3 cell = IntVec3.FromVector3(sample);
+                if (!cell.IsValid || cell == lastCell || !cell.InBounds(Map))
                 {
                     continue;
                 }
 
-                if (candidate is Pawn || candidate.def.category == ThingCategory.Building)
+                lastCell = cell;
+                Thing secondary = ResolveSecondaryThingInCell(cell, alreadyHit);
+                if (secondary == null)
+                {
+                    continue;
+                }
+
+                alreadyHit.Add(secondary);
+                hits++;
+                ApplySecondaryLineDamage(secondary, railMuzzle, baseDamageAmount * OverlineDamageMultiplier, baseArmorPenetration * OverlineArmorMultiplier, "overline");
+            }
+        }
+
+        private void ApplyRupturePulse(IntVec3 center)
+        {
+            if (!center.IsValid || Map == null || !center.InBounds(Map) || payloadProjectileDef?.projectile == null)
+            {
+                return;
+            }
+
+            ProjectileProperties projectile = payloadProjectileDef.projectile;
+            float baseDamageAmount = Mathf.Max(1f, projectile.GetDamageAmount(launcher, null));
+            float armorPenetration = Mathf.Max(0f, projectile.GetArmorPenetration(launcher, null));
+            float pulseDamage = Mathf.Max(4f, baseDamageAmount * RupturePulseDamageMultiplier);
+            float pulseArmor = armorPenetration * RupturePulseArmorMultiplier;
+            int applied = 0;
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, 1.45f, true))
+            {
+                if (!cell.InBounds(Map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(Map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing candidate = things[i];
+                    if (!IsValidSecondaryDamageTarget(candidate, null))
+                    {
+                        continue;
+                    }
+
+                    ApplySecondaryLineDamage(candidate, muzzleBase, pulseDamage, pulseArmor, "rupture-pulse");
+                    applied++;
+                    if (applied >= 4)
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
+        private Thing ResolveHitThingForRail(int rail)
+        {
+            Thing direct = ResolveDirectTargetThing();
+            if (direct != null)
+            {
+                return direct;
+            }
+
+            if (ageTicks >= nextRetargetCheckTick)
+            {
+                nextRetargetCheckTick = ageTicks + RetargetCheckIntervalTicks;
+                retargetThing = FindNearbyHostileRetarget();
+            }
+
+            if (IsValidPrimaryTarget(retargetThing))
+            {
+                return retargetThing;
+            }
+
+            return ResolveHitThingInCell(targetCell);
+        }
+
+        private Thing ResolveDirectTargetThing()
+        {
+            if (IsValidPrimaryTarget(targetThing))
+            {
+                return targetThing;
+            }
+
+            return null;
+        }
+
+        private Thing FindNearbyHostileRetarget()
+        {
+            if (Map == null)
+            {
+                return null;
+            }
+
+            IntVec3 center = ResolveCurrentTargetCell();
+            if (!center.IsValid || !center.InBounds(Map))
+            {
+                return null;
+            }
+
+            Thing best = null;
+            float bestDistance = float.MaxValue;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, RetargetRadius, true))
+            {
+                if (!cell.InBounds(Map))
+                {
+                    continue;
+                }
+
+                List<Thing> things = cell.GetThingList(Map);
+                for (int i = 0; i < things.Count; i++)
+                {
+                    Thing candidate = things[i];
+                    if (!IsValidPrimaryTarget(candidate) || !IsHostileOrValidCombatStructure(candidate))
+                    {
+                        continue;
+                    }
+
+                    float dist = candidate.PositionHeld.DistanceToSquared(center);
+                    if (dist < bestDistance)
+                    {
+                        best = candidate;
+                        bestDistance = dist;
+                    }
+                }
+            }
+
+            return best;
+        }
+
+        private Thing ResolveHitThingInCell(IntVec3 cell)
+        {
+            if (!cell.IsValid || Map == null || !cell.InBounds(Map))
+            {
+                return null;
+            }
+
+            List<Thing> things = cell.GetThingList(Map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing candidate = things[i];
+                if (IsValidPrimaryTarget(candidate) && IsHostileOrValidCombatStructure(candidate))
                 {
                     return candidate;
                 }
@@ -332,11 +600,188 @@ namespace AbyssalProtocol
             return null;
         }
 
+        private Thing ResolveSecondaryThingInCell(IntVec3 cell, HashSet<Thing> alreadyHit)
+        {
+            if (!cell.IsValid || Map == null || !cell.InBounds(Map))
+            {
+                return null;
+            }
+
+            List<Thing> things = cell.GetThingList(Map);
+            for (int i = 0; i < things.Count; i++)
+            {
+                Thing candidate = things[i];
+                if (IsValidSecondaryDamageTarget(candidate, alreadyHit))
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
+        }
+
+        private void ApplySecondaryLineDamage(Thing target, Vector3 origin, float damageAmount, float armorPenetration, string stage)
+        {
+            if (target == null || target.Destroyed || damageAmount <= 0.1f)
+            {
+                return;
+            }
+
+            Vector3 hitDirection = target.DrawPos - origin;
+            hitDirection.y = 0f;
+            if (hitDirection.sqrMagnitude < 0.001f)
+            {
+                hitDirection = shotDirection;
+            }
+
+            DamageInfo damageInfo = new DamageInfo(
+                payloadProjectileDef?.projectile?.damageDef ?? DamageDefOf.Burn,
+                damageAmount,
+                Mathf.Max(0f, armorPenetration),
+                hitDirection.AngleFlat(),
+                launcher,
+                null,
+                equipment?.def,
+                DamageInfo.SourceCategory.ThingOrUnknown,
+                target);
+            ABY_ProjectileImpactSafetyUtility.TryApplyDamage(Map, target, damageInfo, "Thing_CrownReactorBeamSequence-" + stage);
+        }
+
+        private bool IsValidPrimaryTarget(Thing thing)
+        {
+            if (thing == null || thing.Destroyed)
+            {
+                return false;
+            }
+
+            if (thing.MapHeld != null && Map != null && thing.MapHeld != Map)
+            {
+                return false;
+            }
+
+            if (!thing.Spawned && thing.MapHeld == null)
+            {
+                return false;
+            }
+
+            return thing is Pawn || thing.def.category == ThingCategory.Building;
+        }
+
+        private bool IsValidSecondaryDamageTarget(Thing thing, HashSet<Thing> alreadyHit)
+        {
+            if (!IsValidPrimaryTarget(thing))
+            {
+                return false;
+            }
+
+            if (alreadyHit != null && alreadyHit.Contains(thing))
+            {
+                return false;
+            }
+
+            if (thing == launcher || ReferenceEquals(thing, equipment))
+            {
+                return false;
+            }
+
+            if (thing is Pawn pawn)
+            {
+                if (pawn.Dead || pawn.Downed && !IsHostileOrValidCombatStructure(pawn))
+                {
+                    return false;
+                }
+
+                return IsHostileOrValidCombatStructure(pawn);
+            }
+
+            return IsHostileOrValidCombatStructure(thing);
+        }
+
+        private bool IsHostileOrValidCombatStructure(Thing thing)
+        {
+            if (thing == null)
+            {
+                return false;
+            }
+
+            if (launcher != null && thing.HostileTo(launcher))
+            {
+                return true;
+            }
+
+            if (thing.def.category == ThingCategory.Building)
+            {
+                if (thing.Faction == null)
+                {
+                    return true;
+                }
+
+                return launcher == null || thing.Faction != launcher.Faction;
+            }
+
+            return false;
+        }
+
+        private bool IsSystemTarget(Thing hitThing)
+        {
+            if (hitThing == null)
+            {
+                return false;
+            }
+
+            Pawn pawn = hitThing as Pawn;
+            if (pawn != null)
+            {
+                if (pawn.RaceProps?.IsMechanoid == true)
+                {
+                    return true;
+                }
+
+                if (HasActiveShield(pawn))
+                {
+                    return true;
+                }
+
+                if (pawn.TryGetComp<CompABY_ReactorAegis>()?.AegisActive == true)
+                {
+                    return true;
+                }
+            }
+
+            return hitThing.def.category == ThingCategory.Building;
+        }
+
+        private static bool HasActiveShield(Pawn pawn)
+        {
+            if (pawn?.apparel?.WornApparel == null)
+            {
+                return false;
+            }
+
+            List<Apparel> apparel = pawn.apparel.WornApparel;
+            for (int i = 0; i < apparel.Count; i++)
+            {
+                CompShield shield = apparel[i]?.GetComp<CompShield>();
+                if (shield != null && shield.ShieldState == ShieldState.Active)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private Vector3 ResolveCurrentTargetPosition()
         {
-            if (targetThing != null && !targetThing.Destroyed)
+            Thing direct = ResolveDirectTargetThing();
+            if (direct != null)
             {
-                return targetThing.DrawPos;
+                return direct.DrawPos;
+            }
+
+            if (IsValidPrimaryTarget(retargetThing))
+            {
+                return retargetThing.DrawPos;
             }
 
             if (targetCell.IsValid)
@@ -345,6 +790,27 @@ namespace AbyssalProtocol
             }
 
             return fixedTarget;
+        }
+
+        private IntVec3 ResolveCurrentTargetCell()
+        {
+            Thing direct = ResolveDirectTargetThing();
+            if (direct != null && direct.PositionHeld.IsValid)
+            {
+                return direct.PositionHeld;
+            }
+
+            if (IsValidPrimaryTarget(retargetThing) && retargetThing.PositionHeld.IsValid)
+            {
+                return retargetThing.PositionHeld;
+            }
+
+            if (targetCell.IsValid)
+            {
+                return targetCell;
+            }
+
+            return IntVec3.FromVector3(fixedTarget);
         }
 
         private Vector3 RailMuzzle(int rail)
@@ -379,36 +845,6 @@ namespace AbyssalProtocol
             return Mathf.Clamp(weaponLength * BarrelStartForwardRatio, MinBarrelStartForwardOffset, MaxBarrelStartForwardOffset);
         }
 
-        private static float ResolveChargeLength(Thing equipment)
-        {
-            return Mathf.Max(0.32f, ResolveMuzzleForwardOffset(equipment) - ResolveBarrelStartForwardOffset(equipment));
-        }
-
-        private void DrawChargeDots(Material material, float dotSize)
-        {
-            if (material == null)
-            {
-                return;
-            }
-
-            int completedRails = Mathf.Clamp(ageTicks / RailChargeStepTicks, 0, RailCount);
-            for (int rail = 0; rail < completedRails; rail++)
-            {
-                DrawDot(material, RailMuzzle(rail), dotSize * 0.88f);
-            }
-
-            if (completedRails >= RailCount)
-            {
-                return;
-            }
-
-            float railProgress = (ageTicks % RailChargeStepTicks) / (float)Mathf.Max(1, RailChargeStepTicks - 1);
-            railProgress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(railProgress));
-            Vector3 dotPosition = Vector3.Lerp(RailChargeStart(completedRails), RailMuzzle(completedRails), railProgress);
-            float pulse = 0.92f + Mathf.Sin(ageTicks * 0.9f) * 0.10f;
-            DrawDot(material, dotPosition, dotSize * pulse);
-        }
-
         private static float ResolveRailOffset(int rail, Thing equipment)
         {
             float weaponHeight = ResolveWeaponHeight(equipment);
@@ -425,12 +861,6 @@ namespace AbyssalProtocol
                 default:
                     return -outer;
             }
-        }
-
-        private static float ResolveChargeDotSize(Thing equipment)
-        {
-            float weaponHeight = ResolveWeaponHeight(equipment);
-            return Mathf.Clamp(weaponHeight * ChargeDotSizeRatio, MinChargeDotSize, MaxChargeDotSize);
         }
 
         private static float ResolveMainBeamWidth(Thing equipment)
@@ -457,21 +887,6 @@ namespace AbyssalProtocol
             }
 
             return MinimumWeaponHeight;
-        }
-
-        private static void DrawDot(Material material, Vector3 position, float size)
-        {
-            if (material == null || size <= 0.01f)
-            {
-                return;
-            }
-
-            position.y = AltitudeLayer.MoteOverhead.AltitudeFor();
-            Matrix4x4 matrix = Matrix4x4.TRS(
-                position,
-                Quaternion.identity,
-                new Vector3(size, 1f, size));
-            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
 
         private static void DrawBeamSegment(Material material, Vector3 start, Vector3 direction, float length, float width)
@@ -509,6 +924,18 @@ namespace AbyssalProtocol
                 center,
                 Quaternion.AngleAxis(angle, Vector3.up),
                 new Vector3(resolvedLength, 1f, Mathf.Max(0.02f, width)));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
+        }
+
+        private static void DrawBillboardDot(Material material, Vector3 center, float size)
+        {
+            if (material == null || size <= 0.01f)
+            {
+                return;
+            }
+
+            center.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            Matrix4x4 matrix = Matrix4x4.TRS(center, Quaternion.identity, new Vector3(size, 1f, size));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
     }

@@ -1,8 +1,9 @@
-## 2026-05-23 — Crown Reactor Multilance VFX controller and timing rules
+## 2026-05-23 — Crown Reactor Multilance Four-Rail Verdict safety rules
 
-- `ABY_CrownReactorBeamSequence` must stay visually invisible as a ThingDef controller. Do not point its `graphicData.texPath` back to the beam strip or use map-mesh rendering for the controller, or RimWorld may draw a raw horizontal beam sprite on the pawn/target.
-- The charge phase should remain dot-based rather than rail-strip based until exact muzzle offsets are proven across directions. Dot charge hides small alignment errors better than long charge bars.
-- Keep the visual sequence fast enough that any residual per-direction muzzle offset mismatch is not held on-screen for long; current post-warmup sequence timing is intentionally about 1.6x faster than the first implementation.
+- `Thing_CrownReactorBeamSequence` is intentionally a bounded sequence controller, not a normal projectile spammer. Keep damage as discrete rail events; do not convert it into per-tick beam damage.
+- The smart retarget step must stay limited to a small radius around the original target cell and should not scan the whole map.
+- The overline penetration pass must stay a short sampled line behind the target with a small maximum hit count. Do not turn it into a cone or full-map line sweep.
+- The sequence controller must stay visually invisible through XML fallback graphics; the actual beam and charge dot rendering belongs in `DrawAt` only.
 
 ## 2026-05-23 — Protocol Nexus live-gate routing rules
 

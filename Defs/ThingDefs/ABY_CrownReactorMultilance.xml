@@ -4,7 +4,7 @@
   <ThingDef ParentName="BaseHumanMakeableGun">
     <defName>ABY_CrownReactorMultilance</defName>
     <label>crown reactor multilance</label>
-    <description>A crown-reactor weapon assembled from Saint-grade containment geometry and dominion rail lattices. Its four parallel emitters do not fire as barrels, but as a synchronized verdict: each discharge wakes the rails in sequence, then releases four long reactor beams that carve armor, nerve and protocol shielding apart.</description>
+    <description>A crown-reactor weapon assembled from Saint-grade containment geometry and dominion rail lattices. Its four emitters do not simply fire; they pronounce a staged verdict, first fixing the target, then shearing its systems, cutting through the line behind it, and ending with a crowned discharge that punishes anything still standing.</description>
     <techLevel>Ultra</techLevel>
     <tradeability>None</tradeability>
     <generateCommonality>0</generateCommonality>
