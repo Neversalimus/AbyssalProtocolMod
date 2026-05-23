@@ -91,6 +91,30 @@ namespace AbyssalProtocol
             return CachedDefNamed(defName, MapGeneratorDefsByName, MissingMapGeneratorDefs);
         }
 
+        public static void ClearAll()
+        {
+            HediffDefsByName.Clear();
+            MissingHediffDefs.Clear();
+            ThingDefsByName.Clear();
+            MissingThingDefs.Clear();
+            PawnKindDefsByName.Clear();
+            MissingPawnKindDefs.Clear();
+            SoundDefsByName.Clear();
+            MissingSoundDefs.Clear();
+            SongDefsByName.Clear();
+            MissingSongDefs.Clear();
+            ResearchProjectDefsByName.Clear();
+            MissingResearchProjectDefs.Clear();
+            RecipeDefsByName.Clear();
+            MissingRecipeDefs.Clear();
+            FactionDefsByName.Clear();
+            MissingFactionDefs.Clear();
+            TerrainDefsByName.Clear();
+            MissingTerrainDefs.Clear();
+            MapGeneratorDefsByName.Clear();
+            MissingMapGeneratorDefs.Clear();
+        }
+
         private static T CachedDefNamed<T>(string defName, Dictionary<string, T> cache, HashSet<string> missing) where T : Def
         {
             if (defName.NullOrEmpty())

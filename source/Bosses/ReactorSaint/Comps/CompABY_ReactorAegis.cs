@@ -126,11 +126,11 @@ namespace AbyssalProtocol
 
         public override string CompInspectStringExtra()
         {
-            string text = "Reactor Aegis: " + Mathf.RoundToInt(CurrentAegisPoints) + " / " + Mathf.RoundToInt(MaxAegisPoints);
+            string text = "ABY_ReactorSaint_InspectAegis".Translate(Mathf.RoundToInt(CurrentAegisPoints), Mathf.RoundToInt(MaxAegisPoints));
             if (CollapseWindowActive && Find.TickManager != null)
             {
                 int ticksRemaining = Math.Max(0, collapseWindowUntilTick - Find.TickManager.TicksGame);
-                text += "\nCore destabilized: " + (ticksRemaining / 60f).ToString("0.0") + "s";
+                text += "\n" + "ABY_ReactorSaint_InspectCoreDestabilized".Translate((ticksRemaining / 60f).ToString("0.0"));
             }
 
             return text;

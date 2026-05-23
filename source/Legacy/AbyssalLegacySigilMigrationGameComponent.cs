@@ -7,7 +7,10 @@ namespace AbyssalProtocol
 {
     public class AbyssalLegacySigilMigrationGameComponent : GameComponent
     {
+        private const int CurrentMigrationVersion = 1;
+
         private bool migrated;
+        private int migrationVersion;
 
         public AbyssalLegacySigilMigrationGameComponent(Game game)
         {
@@ -23,11 +26,17 @@ namespace AbyssalProtocol
         {
             base.ExposeData();
             Scribe_Values.Look(ref migrated, "abyLegacySigilsMigrated", false);
+            Scribe_Values.Look(ref migrationVersion, "abyLegacySigilMigrationVersion", 0);
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && migrated && migrationVersion < CurrentMigrationVersion)
+            {
+                migrationVersion = CurrentMigrationVersion;
+            }
         }
 
         private void TryMigrate()
         {
-            if (migrated)
+            if (migrationVersion >= CurrentMigrationVersion)
             {
                 return;
             }
@@ -36,7 +45,7 @@ namespace AbyssalProtocol
             ThingDef toDef = DefDatabase<ThingDef>.GetNamedSilentFail("ABY_EmberHoundSigil");
             if (fromDef == null || toDef == null)
             {
-                migrated = true;
+                MarkCurrentMigrationComplete();
                 return;
             }
 
@@ -80,7 +89,7 @@ namespace AbyssalProtocol
                 }
             }
 
-            migrated = true;
+            MarkCurrentMigrationComplete();
             if (converted > 0)
             {
                 Messages.Message(
@@ -91,6 +100,12 @@ namespace AbyssalProtocol
                     MessageTypeDefOf.PositiveEvent,
                     false);
             }
+        }
+
+        private void MarkCurrentMigrationComplete()
+        {
+            migrated = true;
+            migrationVersion = CurrentMigrationVersion;
         }
 
         private static void SpawnReplacementStacks(Map map, IntVec3 cell, ThingDef def, int count)

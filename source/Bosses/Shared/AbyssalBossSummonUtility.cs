@@ -1447,6 +1447,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            TryCleanupStaleEncounterBeforeSummon(map, "nearest circle pre-summon active encounter check");
+
             if (HasActiveAbyssalEncounter(map))
             {
                 failReason = "ABY_BossSummonFail_EncounterActive".Translate();
@@ -1532,14 +1534,18 @@ namespace AbyssalProtocol
             return true;
         }
 
+        /// <summary>
+        /// Pure active-encounter query. Keep stale-wave cleanup out of this method so UI,
+        /// incidents and validators can safely ask about encounter state without changing it.
+        /// Pre-summon code paths that intentionally want cleanup should call
+        /// TryCleanupStaleEncounterBeforeSummon before this query.
+        /// </summary>
         public static bool HasActiveAbyssalEncounter(Map map)
         {
             if (map == null)
             {
                 return false;
             }
-
-            map.GetComponent<MapComponent_AbyssalPortalWave>()?.TryForceCompleteStaleHorde(true, "pre-summon active encounter check");
 
             MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
             if (dominionCrisis != null && dominionCrisis.IsActive)
@@ -1553,19 +1559,18 @@ namespace AbyssalProtocol
                 return true;
             }
 
-            if (map.mapPawns != null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
             {
-                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                Pawn pawn = pawns[i];
+                if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.Downed)
                 {
-                    if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.Downed)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (IsActiveEncounterPawn(pawn.def?.defName) && ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawn))
-                    {
-                        return true;
-                    }
+                if (IsActiveEncounterPawn(pawn.def?.defName) && ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawn))
+                {
+                    return true;
                 }
             }
 
@@ -1580,6 +1585,17 @@ namespace AbyssalProtocol
             }
 
             return false;
+        }
+
+        public static bool TryCleanupStaleEncounterBeforeSummon(Map map, string reason)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
+            return portalWave != null && portalWave.TryForceCompleteStaleHorde(true, reason ?? "pre-summon active encounter check");
         }
 
         private static bool IsActiveEncounterPawn(string defName)

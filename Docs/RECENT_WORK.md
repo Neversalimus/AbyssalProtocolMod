@@ -1017,3 +1017,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Updated Reliquary Archon escort fallback to remain heavier than the normal Archon escort after the normal fallback was raised.
 - Updated T1 summon threat constants for Thrall, Sapper, Zealot, Priest, and Sniper so forecast/shadow threat math matches the revised pawn budget values.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` still requires the .NET Framework 4.7.2 targeting pack in this sandbox.
+## 2026-05-23 — Encounter query purity and localization cleanup
+
+- Split stale horde cleanup out of `AbyssalBossSummonUtility.HasActiveAbyssalEncounter`; use `TryCleanupStaleEncounterBeforeSummon` only on intentional pre-summon paths.
+- Localized Reactor Saint inspect strings and Rupture Crown command label/description.
+- Moved Reactor Saint overheat pulses onto `ABY_RuntimeTargetCache` and added explicit `ABY_DefCache.ClearAll()` reset on game finalize init.
+- Versioned the legacy sigil migration save flag while keeping the old bool key for compatibility.
+

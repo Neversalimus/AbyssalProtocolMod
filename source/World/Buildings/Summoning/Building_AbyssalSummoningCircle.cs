@@ -465,6 +465,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            AbyssalBossSummonUtility.TryCleanupStaleEncounterBeforeSummon(Map, "circle sequence pre-summon active encounter check");
+
             if (!IsReadyForSigil(out failReason))
             {
                 return false;

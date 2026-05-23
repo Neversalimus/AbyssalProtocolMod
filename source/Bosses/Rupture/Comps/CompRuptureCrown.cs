@@ -253,6 +253,8 @@ namespace AbyssalProtocol
         public int rechargeTicks = GenDate.TicksPerDay;
         public float effectRadius = RuptureCrownUtility.DefaultVerdictRadius;
         public int markTicks = RuptureCrownUtility.DefaultMarkTicks;
+        public string commandLabelKey = "ABY_RuptureCrown_CommandLabel";
+        public string commandDescKey = "ABY_RuptureCrown_CommandDesc";
         public string commandLabel = "Rupture Verdict";
         public string commandDesc = "Discharge the crown in a silent rupture wave.\nAll hostile and neutral non-colony pawns within range are marked without provoking aggression.";
 
@@ -324,10 +326,13 @@ namespace AbyssalProtocol
                 yield break;
             }
 
+            string commandLabel = ResolveCommandLabel();
+            string commandDesc = ResolveCommandDesc();
+
             Command_Action command = new Command_Action
             {
-                defaultLabel = Props.commandLabel,
-                defaultDesc = Props.commandDesc + "\n\n" + "ABY_RuptureCrown_CommandRadius".Translate(Mathf.RoundToInt(Props.effectRadius)),
+                defaultLabel = commandLabel,
+                defaultDesc = commandDesc + "\n\n" + "ABY_RuptureCrown_CommandRadius".Translate(Mathf.RoundToInt(Props.effectRadius)),
                 icon = RuptureCrownUtility.CommandIcon,
                 iconDrawScale = 1f,
                 defaultIconColor = Color.white,
@@ -347,6 +352,26 @@ namespace AbyssalProtocol
             }
 
             yield return command;
+        }
+
+        private string ResolveCommandLabel()
+        {
+            if (!Props.commandLabelKey.NullOrEmpty())
+            {
+                return Props.commandLabelKey.Translate();
+            }
+
+            return Props.commandLabel;
+        }
+
+        private string ResolveCommandDesc()
+        {
+            if (!Props.commandDescKey.NullOrEmpty())
+            {
+                return Props.commandDescKey.Translate();
+            }
+
+            return Props.commandDesc;
         }
 
         public bool TryDischargeVerdict(Pawn wearer)

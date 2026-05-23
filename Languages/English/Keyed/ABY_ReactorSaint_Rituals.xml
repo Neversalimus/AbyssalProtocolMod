@@ -7,4 +7,8 @@
   <ABY_CircleRitual_ReactorSaint_SideEffects>• Arrives as a real falling cocoon instead of an instant pop-in&#10;• Impacts near the colony with a breach explosion before opening&#10;• Stays on the field after release, then burns back into the sky</ABY_CircleRitual_ReactorSaint_SideEffects>
   <ABY_ReactorSaintSummonSuccessLabel>Reactor saint released</ABY_ReactorSaintSummonSuccessLabel>
   <ABY_ReactorSaintSummonSuccessDesc>The sealed cocoon has broken open. The Infernal Reactor Saint has stepped out of the breach and is now fully active.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaint_InspectAegis>Reactor Aegis: {0} / {1}</ABY_ReactorSaint_InspectAegis>
+  <ABY_ReactorSaint_InspectCoreDestabilized>Core destabilized: {0}s</ABY_ReactorSaint_InspectCoreDestabilized>
+  <ABY_ReactorSaint_InspectPhase>Reactor Phase: {0}</ABY_ReactorSaint_InspectPhase>
+  <ABY_ReactorSaint_InspectReactorDestabilized>Reactor destabilized: {0}s</ABY_ReactorSaint_InspectReactorDestabilized>
 </LanguageData>

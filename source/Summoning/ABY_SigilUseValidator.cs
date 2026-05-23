@@ -56,6 +56,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            AbyssalBossSummonUtility.TryCleanupStaleEncounterBeforeSummon(map, "sigil use pre-summon active encounter check");
+
             Building_AbyssalSummoningCircle circle = ResolveCircle(pawn, map, preferredCircle, out failReason);
             if (circle == null)
             {

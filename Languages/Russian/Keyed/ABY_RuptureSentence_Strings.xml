@@ -7,4 +7,6 @@
   <ABY_RuptureCrown_InspectReady>Заряд Разрыва: готов</ABY_RuptureCrown_InspectReady>
   <ABY_RuptureCrown_InspectRecharging>Заряд Разрыва восстанавливается: {0}</ABY_RuptureCrown_InspectRecharging>
   <ABY_RuptureCrown_CommandRadius>Радиус: {0} клеток.</ABY_RuptureCrown_CommandRadius>
+  <ABY_RuptureCrown_CommandLabel>Приговор Разрыва</ABY_RuptureCrown_CommandLabel>
+  <ABY_RuptureCrown_CommandDesc>Разрядить корону бесшумной волной разрыва.&#10;Все враждебные и нейтральные пешки вне колонии в радиусе будут помечены без провокации агрессии.</ABY_RuptureCrown_CommandDesc>
 </LanguageData>

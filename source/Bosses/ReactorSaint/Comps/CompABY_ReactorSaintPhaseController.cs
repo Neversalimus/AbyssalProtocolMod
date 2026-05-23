@@ -51,7 +51,7 @@ namespace AbyssalProtocol
 
         public override string CompInspectStringExtra()
         {
-            return "Reactor Phase: " + ResolvePhaseLabel(currentPhase < 1 ? 1 : currentPhase);
+            return "ABY_ReactorSaint_InspectPhase".Translate(ResolvePhaseLabel(currentPhase < 1 ? 1 : currentPhase));
         }
 
         private void UpdatePhase(bool force)

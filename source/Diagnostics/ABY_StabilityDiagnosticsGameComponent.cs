@@ -13,6 +13,7 @@ namespace AbyssalProtocol
         public override void FinalizeInit()
         {
             base.FinalizeInit();
+            ABY_DefCache.ClearAll();
             ABY_RuntimeTargetCache.ClearAll();
             ABY_PowerNetRecoveryUtility.ClearThrottleState();
             ABY_MaterialCacheUtility.Clear();

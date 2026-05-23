@@ -408,7 +408,7 @@ namespace AbyssalProtocol
             }
 
             int ticksRemaining = Math.Max(0, collapseWindowUntilTick - Find.TickManager.TicksGame);
-            return "Reactor destabilized: " + (ticksRemaining / 60f).ToString("0.0") + "s";
+            return "ABY_ReactorSaint_InspectReactorDestabilized".Translate((ticksRemaining / 60f).ToString("0.0"));
         }
 
         private bool CanOperate(Pawn pawn)

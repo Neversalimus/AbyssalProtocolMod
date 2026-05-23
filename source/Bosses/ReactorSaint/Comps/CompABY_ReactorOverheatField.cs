@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -44,8 +45,8 @@ namespace AbyssalProtocol
                 return;
             }
 
-            var pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(pawn.MapHeld);
+            if (pawns.Count <= 0)
             {
                 return;
             }

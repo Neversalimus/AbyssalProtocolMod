@@ -776,3 +776,8 @@ In-game checks:
 
 - Start Warden, Archon Beast, Reactor Saint, and Archon/Rupture portal routes and confirm escort counts match the raised XML-era budgets rather than the old `420/620/760/980` values.
 - Check Summoning Console ritual preview/shadow threat text for T1/T2 rituals after enemy budget changes to make sure it no longer understates Thrall/Sapper/Zealot/Priest/Sniper threat.
+## Encounter state queries
+
+- `HasActive*`/`IsActive*` helpers must remain query-only. If a stale wave or runtime state needs cleanup before a summon, call an explicit cleanup method such as `AbyssalBossSummonUtility.TryCleanupStaleEncounterBeforeSummon` from the command/start path instead of hiding mutation inside a readiness check.
+- Player-facing inspect strings and gizmo labels/descriptions should use keyed localization even for boss-only debug-adjacent components; Reactor Saint and Rupture Crown UI previously regressed through hardcoded English labels.
+
