@@ -1,17 +1,17 @@
-## 2026-05-23 — Protocol Nexus authority pass
+## 2026-05-23 — Fix MaterialCache static startup crash
 
-- Added explicit `requiredProtocolResearchDefName` links to every current Forge unlock extension in `Defs/RecipeDefs/` and `Defs/ThingDefs/`, covering 208 Forge pattern/product gates.
-- Routed current implemented weapons, armor, implants, ritual sigils, circle modules, core materials, and turret modules to active Protocol Nexus projects instead of relying on residue/name auto-inference.
-- Kept current playable Forge content away from `futureReserve` Protocol nodes so enabling Protocol Nexus gating does not silently lock implemented recipes behind non-decodable reserve projects.
-- Preserved existing vanilla research prerequisites, material costs, residue thresholds, boss-drop ingredients, Summoning kill-gates, and C# behavior.
-- XML/docs-only change; C# build not required. XML parse validated locally. Runtime Forge/Protocol Nexus smoke testing is still required.
+- Fixed a P0 load-time regression where `ABY_MaterialCacheUtility.MaybeCleanup()` accessed `Find.TickManager` during `StaticConstructorOnStartup` before a game/tick manager exists.
+- The crash surfaced through static material initialization in `DominionSliceVfxUtility` and `Building_ABY_SigilVault`, but the root cause was the shared material cache helper.
+- Replaced direct `Find.TickManager` access in cache cleanup/reset with a defensive `Current.Game?.tickManager`-style lookup wrapped by a safe helper, so startup material requests can run before an active game is loaded.
+- No gameplay XML, balance, UI layout, textures, or progression gates were changed.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
 
 Changed areas:
 
 ```text
-Defs/RecipeDefs/
-Defs/ThingDefs/
-Docs/CONTENT_MATRIX.md
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Core/Utilities/ABY_MaterialCacheUtility.cs
 Docs/KNOWN_RISKS_AND_REGRESSIONS.md
 Docs/RECENT_WORK.md
 ```

@@ -50,7 +50,7 @@ namespace AbyssalProtocol
         public static void Clear()
         {
             Cache.Clear();
-            lastCleanupTick = Find.TickManager != null ? Find.TickManager.TicksGame : -1;
+            lastCleanupTick = TryGetTicksGame(out int ticksGame) ? ticksGame : -1;
         }
 
         private static Color QuantizeColor(Color color)
@@ -70,7 +70,7 @@ namespace AbyssalProtocol
 
         private static void MaybeCleanup()
         {
-            int ticksGame = Find.TickManager != null ? Find.TickManager.TicksGame : 0;
+            int ticksGame = TryGetTicksGame(out int resolvedTicksGame) ? resolvedTicksGame : 0;
             if (lastCleanupTick >= 0 && ticksGame >= lastCleanupTick && ticksGame - lastCleanupTick < CleanupIntervalTicks && Cache.Count < MaxCachedMaterials)
             {
                 return;
@@ -84,6 +84,26 @@ namespace AbyssalProtocol
 
             // MaterialPool owns the actual material instances; this cache only removes local lookup keys.
             Cache.Clear();
+        }
+
+        private static bool TryGetTicksGame(out int ticksGame)
+        {
+            ticksGame = 0;
+            try
+            {
+                if (Current.Game == null || Current.Game.tickManager == null)
+                {
+                    return false;
+                }
+
+                ticksGame = Current.Game.tickManager.TicksGame;
+                return true;
+            }
+            catch
+            {
+                ticksGame = 0;
+                return false;
+            }
         }
 
         private struct MaterialKey : IEquatable<MaterialKey>
