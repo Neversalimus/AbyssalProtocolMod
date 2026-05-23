@@ -76,6 +76,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>90</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalArms</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

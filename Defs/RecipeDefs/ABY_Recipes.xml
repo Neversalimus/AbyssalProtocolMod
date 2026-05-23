@@ -151,6 +151,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>10</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_PrimitiveBreachProtocols</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -200,6 +201,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_EliteSummoningPatterns</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -249,6 +251,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_ArchonSigilHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

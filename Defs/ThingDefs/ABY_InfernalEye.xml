@@ -38,6 +38,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>100</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

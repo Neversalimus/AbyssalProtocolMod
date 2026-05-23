@@ -75,6 +75,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Herald</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

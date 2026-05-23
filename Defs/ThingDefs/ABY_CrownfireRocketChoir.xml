@@ -25,6 +25,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3200</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

@@ -55,6 +55,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>350</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_RiftBallistics</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -105,6 +106,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalArms</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

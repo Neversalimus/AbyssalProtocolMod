@@ -49,6 +49,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>80</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -101,6 +102,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>190</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -169,6 +171,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>320</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -221,6 +224,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>260</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -273,6 +277,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>110</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -325,6 +330,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>140</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -377,6 +383,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>170</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -445,6 +452,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2800</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -513,6 +521,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>820</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -581,6 +590,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1150</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -649,6 +659,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>880</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -709,6 +720,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -769,6 +781,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>920</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -837,6 +850,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1350</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -913,6 +927,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2400</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -965,6 +980,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>130</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_ModularTurretInterface</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1025,6 +1041,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>240</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1093,6 +1110,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>280</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1153,6 +1171,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>620</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1213,6 +1232,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1273,6 +1293,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>700</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1326,6 +1347,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>760</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1394,6 +1416,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1300</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1462,6 +1485,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1250</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1522,6 +1546,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1450</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1583,6 +1608,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>420</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -1652,6 +1678,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>2600</requiredResidue>
         <category>TurretSystems</category>
+        <requiredProtocolResearchDefName>ABY_PR_BreachLockdownSystems</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

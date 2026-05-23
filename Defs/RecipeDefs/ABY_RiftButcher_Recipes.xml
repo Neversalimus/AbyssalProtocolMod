@@ -71,6 +71,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1700</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionGateBootstrapping</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

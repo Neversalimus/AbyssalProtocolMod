@@ -31,6 +31,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>350</requiredResidue>
         <category>Armor</category>
+        <requiredProtocolResearchDefName>ABY_PR_NullGeometryHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -65,6 +66,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
         <category>Armor</category>
+        <requiredProtocolResearchDefName>ABY_PR_NullGeometryHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

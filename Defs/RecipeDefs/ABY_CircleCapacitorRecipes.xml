@@ -50,6 +50,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>100</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_AshboundCapacitance</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -111,6 +112,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>300</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_AshboundCapacitance</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -172,6 +174,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>500</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

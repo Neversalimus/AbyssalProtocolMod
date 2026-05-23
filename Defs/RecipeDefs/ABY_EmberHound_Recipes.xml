@@ -47,6 +47,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>50</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_PrimitiveBreachProtocols</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

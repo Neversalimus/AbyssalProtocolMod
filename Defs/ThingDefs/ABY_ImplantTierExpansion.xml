@@ -44,6 +44,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -91,6 +92,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -138,6 +140,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -185,6 +188,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -232,6 +236,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -279,6 +284,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -326,6 +332,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -373,6 +380,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>150</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_BasicAbyssalImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -420,6 +428,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -466,6 +475,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -512,6 +522,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -558,6 +569,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -605,6 +617,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -652,6 +665,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -699,6 +713,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -747,6 +762,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -795,6 +811,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -843,6 +860,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -891,6 +909,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -939,6 +958,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -987,6 +1007,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1036,6 +1057,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1085,6 +1107,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1134,6 +1157,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1183,6 +1207,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1232,6 +1257,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1280,6 +1306,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1328,6 +1355,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1376,6 +1404,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1424,6 +1453,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1473,6 +1503,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1522,6 +1553,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1571,6 +1603,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1619,6 +1652,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1667,6 +1701,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1717,6 +1752,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1767,6 +1803,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1817,6 +1854,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1867,6 +1905,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1917,6 +1956,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -1967,6 +2007,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -2017,6 +2058,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -2067,6 +2109,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -2117,6 +2160,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>3500</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionBiology</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

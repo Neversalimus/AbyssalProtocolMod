@@ -69,6 +69,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>425</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_RiftBallistics</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

@@ -55,6 +55,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_EliteSummoningPatterns</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

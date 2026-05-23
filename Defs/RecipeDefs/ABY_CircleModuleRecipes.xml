@@ -50,6 +50,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>100</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_CircleStabilizerFrames</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -111,6 +112,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>500</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_CircleStabilizerFrames</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -180,6 +182,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1500</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

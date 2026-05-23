@@ -1,3 +1,21 @@
+## 2026-05-23 — Protocol Nexus authority pass
+
+- Added explicit `requiredProtocolResearchDefName` links to every current Forge unlock extension in `Defs/RecipeDefs/` and `Defs/ThingDefs/`, covering 208 Forge pattern/product gates.
+- Routed current implemented weapons, armor, implants, ritual sigils, circle modules, core materials, and turret modules to active Protocol Nexus projects instead of relying on residue/name auto-inference.
+- Kept current playable Forge content away from `futureReserve` Protocol nodes so enabling Protocol Nexus gating does not silently lock implemented recipes behind non-decodable reserve projects.
+- Preserved existing vanilla research prerequisites, material costs, residue thresholds, boss-drop ingredients, Summoning kill-gates, and C# behavior.
+- XML/docs-only change; C# build not required. XML parse validated locally. Runtime Forge/Protocol Nexus smoke testing is still required.
+
+Changed areas:
+
+```text
+Defs/RecipeDefs/
+Defs/ThingDefs/
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-22 — Accessory stacking and encounter routing balance pass
 
 - Connected `ABY_HaloHusk` to late encounter routing as an intentionally rare Final Gate easter-egg elite: it can appear in Reactor Saint escort / Dominion support / Dominion wave pools, but keeps `maxPlanCount` 1, `allowFutureAutoEscalation` false, and an extremely low selection weight.

@@ -66,6 +66,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1800</requiredResidue>
         <category>Armor</category>
+        <requiredProtocolResearchDefName>ABY_PR_GatebreakerCarapaceLogic</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -134,6 +135,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>350</requiredResidue>
         <category>Armor</category>
+        <requiredProtocolResearchDefName>ABY_PR_NullGeometryHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>
@@ -194,6 +196,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>325</requiredResidue>
         <category>Armor</category>
+        <requiredProtocolResearchDefName>ABY_PR_NullGeometryHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

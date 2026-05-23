@@ -74,6 +74,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>600</requiredResidue>
         <category>Core</category>
+        <requiredProtocolResearchDefName>ABY_PR_CoreIntegration</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

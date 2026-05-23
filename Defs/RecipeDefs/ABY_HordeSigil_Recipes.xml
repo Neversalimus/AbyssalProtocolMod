@@ -63,6 +63,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>1000</requiredResidue>
         <category>Ritual</category>
+        <requiredProtocolResearchDefName>ABY_PR_MajorBossInvocation</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </RecipeDef>

@@ -97,6 +97,7 @@ Actual code and assets win over this document.
 | SoundDef `clipPath` with multiple/broken assets | P1 | audio/XML | AudioClip load errors or wrong sound | Ensure only intended valid final file exists for a clipPath. |
 | Patch operation targeting old path | P1 | Patches | Patch failure or silent no-op | Check current XML structure before patching. |
 | Research/status docs claiming implemented when only planned | P2 | docs/design | Confusing future work | Separate Implemented / Partial / Planned in docs and responses. |
+| Pointing current Forge content at `futureReserve` Protocol Research projects | P1 | Protocol Nexus / Forge gating | Enabling Protocol Nexus gating makes implemented recipes appear as unknown or permanently non-decodable because their required Protocol project is reserve-only | Current playable Forge patterns should use active decodable projects via explicit `requiredProtocolResearchDefName`; reserve nodes are only for intentionally unreleased/future content. |
 
 ## UI risks
 

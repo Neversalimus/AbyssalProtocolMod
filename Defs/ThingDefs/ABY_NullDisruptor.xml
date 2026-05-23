@@ -86,6 +86,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_NullGeometryHandling</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>

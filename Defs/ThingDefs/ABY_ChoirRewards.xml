@@ -59,6 +59,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -103,6 +104,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -146,6 +148,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -188,6 +191,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Implants</category>
+        <requiredProtocolResearchDefName>ABY_PR_AdvancedImplants</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
@@ -251,6 +255,7 @@
       <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
         <requiredResidue>400</requiredResidue>
         <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_RiftBallistics</requiredProtocolResearchDefName>
       </li>
     </modExtensions>
   </ThingDef>
