@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CrownlessAdjudicator.label>crownless adjudicator</ABY_CrownlessAdjudicator.label>
+  <ABY_CrownlessAdjudicator.description>A crown-broken tribunal infantry pattern used when the abyss needs disciplined judgment without committing a true halo wreck. Crownless adjudicators keep behind the main breach line, acquire exposed operators through narrow sight lanes, and fire paired edict lances that punish colonies which let one position remain safe for too long.</ABY_CrownlessAdjudicator.description>
+  <ABY_CrownlessAdjudicator.tools.0.label>tribunal stock</ABY_CrownlessAdjudicator.tools.0.label>
+  <ABY_CrownlessAdjudicator.tools.1.label>broken crown spur</ABY_CrownlessAdjudicator.tools.1.label>
+  <ABY_EdictLance.label>edict lance</ABY_EdictLance.label>
+  <ABY_EdictLance.description>A crownless tribunal projector grown around a narrow verdict chamber. It does not spray fire like a thrall weapon; it waits, locks a lane, and releases paired abyssal edicts into whatever the host has judged exposed.</ABY_EdictLance.description>
+  <ABY_EdictLanceBolt.label>edict lance bolt</ABY_EdictLanceBolt.label>
+</LanguageData>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="AnimalThingBase">
+    <defName>ABY_CrownlessAdjudicator</defName>
+    <label>crownless adjudicator</label>
+    <description>A crown-broken tribunal infantry pattern used when the abyss needs disciplined judgment without committing a true halo wreck. Crownless adjudicators keep behind the main breach line, acquire exposed operators through narrow sight lanes, and fire paired edict lances that punish colonies which let one position remain safe for too long.</description>
+    <thingClass>Pawn</thingClass>
+    <category>Pawn</category>
+    <drawerType>RealtimeOnly</drawerType>
+    <uiIconScale>0.76</uiIconScale>
+    <uiIconOffset>(0,0)</uiIconOffset>
+    <graphicData>
+      <texPath>Pawn/CrownlessAdjudicator/ABY_CrownlessAdjudicator</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.82,2.82)</drawSize>
+    </graphicData>
+    <race>
+      <renderTree>Animal</renderTree>
+      <thinkTreeMain>Humanlike</thinkTreeMain>
+      <thinkTreeConstant>HumanlikeConstant</thinkTreeConstant>
+      <hasGenders>false</hasGenders>
+      <trainability>None</trainability>
+      <bloodDef>Filth_Blood</bloodDef>
+      <bloodSmearDef>Filth_BloodSmear</bloodSmearDef>
+      <canBecomeShambler>false</canBecomeShambler>
+      <hediffGiverSets>
+        <li>OrganicStandard</li>
+      </hediffGiverSets>
+      <body>Human</body>
+      <baseBodySize>0.98</baseBodySize>
+      <baseHealthScale>1.46</baseHealthScale>
+      <baseHungerRate>0.46</baseHungerRate>
+      <fleshType>Normal</fleshType>
+      <intelligence>ToolUser</intelligence>
+      <manhunterOnDamageChance>0</manhunterOnDamageChance>
+      <manhunterOnTameFailChance>0</manhunterOnTameFailChance>
+      <gestationPeriodDays>18</gestationPeriodDays>
+      <lifeExpectancy>150</lifeExpectancy>
+      <foodType>OmnivoreHuman</foodType>
+      <useMeatFrom>Human</useMeatFrom>
+      <lifeStageAges Inherit="False">
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0</minAge>
+        </li>
+      </lifeStageAges>
+    </race>
+    <statBases>
+      <MaxHitPoints>720</MaxHitPoints>
+      <MoveSpeed>4.42</MoveSpeed>
+      <MeleeHitChance>0.68</MeleeHitChance>
+      <MeleeDPS>5.8</MeleeDPS>
+      <MeleeDodgeChance>0.10</MeleeDodgeChance>
+      <ArmorRating_Sharp>0.34</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.22</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.62</ArmorRating_Heat>
+      <ComfyTemperatureMin>-18</ComfyTemperatureMin>
+      <ComfyTemperatureMax>205</ComfyTemperatureMax>
+      <Flammability>0.01</Flammability>
+      <PainShockThreshold>1.08</PainShockThreshold>
+      <ShootingAccuracyPawn>1.20</ShootingAccuracyPawn>
+      <MarketValue>1120</MarketValue>
+      <Mass>0.92</Mass>
+    </statBases>
+    <tools>
+      <li>
+        <label>tribunal stock</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2.05</cooldownTime>
+        <chanceFactor>0.92</chanceFactor>
+        <armorPenetration>0.12</armorPenetration>
+      </li>
+      <li>
+        <label>broken crown spur</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>8</power>
+        <cooldownTime>1.72</cooldownTime>
+        <chanceFactor>0.70</chanceFactor>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+    <killedLeavings Inherit="False">
+      <ABY_AbyssalResidue>14</ABY_AbyssalResidue>
+    </killedLeavings>
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalPawnController">
+        <archetype>RangedSkirmisher</archetype>
+        <forcedPrimaryDefName>ABY_EdictLance</forcedPrimaryDefName>
+        <minMeleeSkill>9</minMeleeSkill>
+        <minShootingSkill>13</minShootingSkill>
+        <preferredMinRange>10.0</preferredMinRange>
+        <retreatSearchRadius>11</retreatSearchRadius>
+        <preferRangedTargets>true</preferRangedTargets>
+        <targetMinRange>7.0</targetMinRange>
+        <targetMaxRange>33.0</targetMaxRange>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_AbyssalAutoHostile" />
+      <li Class="AbyssalProtocol.CompProperties_HexgunThrallShooter">
+        <projectileDefName>ABY_EdictLanceBolt</projectileDefName>
+        <aimSoundDefName>ABY_RiftCarbineCharge</aimSoundDefName>
+        <castSoundDefName>ABY_VesperLanceFire</castSoundDefName>
+        <range>33.0</range>
+        <warmupTicks>72</warmupTicks>
+        <cooldownTicks>158</cooldownTicks>
+        <burstShotCount>2</burstShotCount>
+        <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
+        <scanIntervalTicks>45</scanIntervalTicks>
+        <preferredMinRange>10.0</preferredMinRange>
+        <targetMinRange>7.0</targetMinRange>
+        <retreatSearchRadius>11</retreatSearchRadius>
+        <panicMeleeRange>2.4</panicMeleeRange>
+        <panicMeleeJobExpiryTicks>150</panicMeleeJobExpiryTicks>
+        <preferRangedTargets>true</preferRangedTargets>
+        <holdPositionWhenTargeting>true</holdPositionWhenTargeting>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_EdictLance</defName>
+    <label>edict lance</label>
+    <description>A crownless tribunal projector grown around a narrow verdict chamber. It does not spray fire like a thrall weapon; it waits, locks a lane, and releases paired abyssal edicts into whatever the host has judged exposed.</description>
+    <graphicData>
+      <texPath>Things/Weapon/ABY_EdictLance</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.58,0.58)</drawSize>
+    </graphicData>
+    <uiIconScale>1.46</uiIconScale>
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <techLevel>Spacer</techLevel>
+    <destroyOnDrop>true</destroyOnDrop>
+    <tradeability>None</tradeability>
+    <weaponTags>
+      <li>ABY_EdictLanceWeapon</li>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+    </weaponTags>
+    <costList>
+      <Steel>45</Steel>
+      <Plasteel>18</Plasteel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <smeltProducts>
+      <Steel>18</Steel>
+      <Plasteel>6</Plasteel>
+    </smeltProducts>
+    <statBases>
+      <Mass>3.25</Mass>
+      <MarketValue>980</MarketValue>
+      <AccuracyTouch>0.72</AccuracyTouch>
+      <AccuracyShort>0.78</AccuracyShort>
+      <AccuracyMedium>0.70</AccuracyMedium>
+      <AccuracyLong>0.52</AccuracyLong>
+      <RangedWeapon_Cooldown>2.85</RangedWeapon_Cooldown>
+    </statBases>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_EdictLanceBolt</defaultProjectile>
+        <warmupTime>1.20</warmupTime>
+        <range>33.0</range>
+        <burstShotCount>2</burstShotCount>
+        <ticksBetweenBurstShots>12</ticksBetweenBurstShots>
+        <soundAiming>ABY_RiftCarbineCharge</soundAiming>
+        <soundCast>ABY_VesperLanceFire</soundCast>
+        <soundCastTail>ABY_VesperLanceTail</soundCastTail>
+        <muzzleFlashScale>8</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_EdictLanceBolt</defName>
+    <label>edict lance bolt</label>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_EdictLanceBolt</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.26,1.22)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>14</damageAmountBase>
+      <armorPenetrationBase>0.30</armorPenetrationBase>
+      <stoppingPower>0.92</stoppingPower>
+      <speed>78</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+</Defs>

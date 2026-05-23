@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <ABY_CrownlessAdjudicator.label>бескоронный судия</ABY_CrownlessAdjudicator.label>
+  <ABY_CrownlessAdjudicator.description>Сломанная трибунальная пехотная форма, которую Бездна применяет, когда ей нужен дисциплинированный приговор без траты настоящего ореольного обломка. Бескоронные судии держатся позади основной линии прорыва, выхватывают открытых операторов в узких секторах обзора и выпускают парные эдикт-копья по позициям, которые колония слишком долго считает безопасными.</ABY_CrownlessAdjudicator.description>
+  <ABY_CrownlessAdjudicator.tools.0.label>трибунальный приклад</ABY_CrownlessAdjudicator.tools.0.label>
+  <ABY_CrownlessAdjudicator.tools.1.label>шпора сломанной короны</ABY_CrownlessAdjudicator.tools.1.label>
+  <ABY_EdictLance.label>эдикт-копьё</ABY_EdictLance.label>
+  <ABY_EdictLance.description>Бескоронный трибунальный проектор, выращенный вокруг узкой камеры приговора. Он не поливает огнём, как оружие трэллов: он ждёт, фиксирует линию и выпускает парные эдикты Бездны в цель, которую воинство признало открытой.</ABY_EdictLance.description>
+  <ABY_EdictLanceBolt.label>заряд эдикт-копья</ABY_EdictLanceBolt.label>
+</LanguageData>

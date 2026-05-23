@@ -505,6 +505,22 @@ namespace AbyssalProtocol
             },
             new ABY_BestiaryEntryDefinition
             {
+                EntryId = "ABY_CrownlessAdjudicator",
+                Category = ABY_BestiaryCategory.Support,
+                PortraitPath = "Pawn/CrownlessAdjudicator/ABY_CrownlessAdjudicator_east",
+                LabelKey = "ABY_Bestiary_Entry_ABY_CrownlessAdjudicator_Label",
+                LabelFallback = @"Crownless Adjudicator",
+                TagKey = "ABY_Bestiary_Entry_ABY_CrownlessAdjudicator_Tag",
+                TagFallback = @"T4 tribunal marksman for exposed operators.",
+                SummaryKey = "ABY_Bestiary_Entry_ABY_CrownlessAdjudicator_Summary",
+                SummaryFallback = @"A crown-broken tribunal infantry pattern that adds disciplined lane punishment to severe-tier breach groups without consuming a boss or rare halo slot.",
+                TacticalKey = "ABY_Bestiary_Entry_ABY_CrownlessAdjudicator_Tactical",
+                TacticalFallback = @"Adjudicators are not raw damage turrets. They lock narrow lanes, prefer exposed ranged targets, and punish colonies that leave one operator safe for too long.",
+                DeepKey = "ABY_Bestiary_Entry_ABY_CrownlessAdjudicator_Deep",
+                DeepFallback = @"The codex marks crownless adjudicators as borrowed judgment stripped of true authority: a lower tribunal form used when the abyss wants verdict pressure without spending a halo wreck or archon-class asset."
+            },
+            new ABY_BestiaryEntryDefinition
+            {
                 EntryId = "ABY_GateWarden",
                 Category = ABY_BestiaryCategory.Elite,
                 PortraitPath = "Pawn/GateWarden/ABY_GateWarden_east",

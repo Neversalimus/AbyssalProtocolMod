@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>ABY_CrownlessAdjudicator</defName>
+    <label>crownless adjudicator</label>
+    <race>ABY_CrownlessAdjudicator</race>
+    <defaultFactionType>ABY_AbyssalHost</defaultFactionType>
+    <combatPower>455</combatPower>
+    <ecoSystemWeight>0</ecoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
+    <apparelMoney Inherit="False">
+      <min>-10</min>
+      <max>-10</max>
+    </apparelMoney>
+    <weaponMoney Inherit="False">
+      <min>0</min>
+      <max>0</max>
+    </weaponMoney>
+    <modExtensions>
+      <li Class="AbyssalProtocol.ABY_ResidueSinteringExtension">
+        <residueValue>18</residueValue>
+      </li>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalDifficultyScaling">
+        <contentTier>4</contentTier>
+        <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+        <role>support</role>
+        <budgetCost>455</budgetCost>
+        <selectionWeight>0.54</selectionWeight>
+        <maxPlanCount>2</maxPlanCount>
+        <allowFutureAutoEscalation>true</allowFutureAutoEscalation>
+        <encounterPools>
+          <li>archon_boss_escort</li>
+          <li>reactor_saint_escort</li>
+          <li>dominion_wave</li>
+          <li>dominion_gate_support</li>
+          <li>horde_sigil_wave</li>
+        </encounterPools>
+      </li>
+      <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
+        <isAbyssal>true</isAbyssal>
+      </li>
+    </modExtensions>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Pawn/CrownlessAdjudicator/ABY_CrownlessAdjudicator</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>(2.82,2.82)</drawSize>
+          <shadowData>
+            <volume>(0.82, 1.02, 0.82)</volume>
+            <offset>(0, 0, -0.21)</offset>
+          </shadowData>
+        </bodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

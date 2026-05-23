@@ -158,6 +158,35 @@ Docs/RECENT_WORK.md
 
 # Abyssal Protocol — Recent Work Notes
 
+## 2026-05-23 — Add Crownless Adjudicator T4 hostile prototype
+
+- Added `ABY_CrownlessAdjudicator` as a common T4 ordinary support/marksman monster to thicken the previously thin severe-tier roster without touching boss/miniboss balance.
+- Added XML-only enemy race/PawnKind content plus an enemy-only `ABY_EdictLance` and `ABY_EdictLanceBolt` using existing abyssal ranged AI/shooter comps, so no new combat framework was introduced.
+- Routed the unit into severe/late pools: Archon escort, Reactor Saint escort, Dominion wave, Dominion gate support, and Horde Sigil wave.
+- Added south/east/north pawn textures only, weapon/projectile icons, EN/RU localization, and a Bestiary entry.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/UI/Bestiary/ABY_BestiaryGameComponent.cs
+Defs/ThingDefs/ABY_CrownlessAdjudicator_Content.xml
+Defs/PawnKindDefs/ABY_CrownlessAdjudicator_PawnKinds.xml
+Textures/Pawn/CrownlessAdjudicator/
+Textures/Things/Weapon/ABY_EdictLance.png
+Textures/Things/Projectile/ABY_EdictLanceBolt.png
+Languages/English/DefInjected/ThingDef/ABY_CrownlessAdjudicator_Content.xml
+Languages/Russian/DefInjected/ThingDef/ABY_CrownlessAdjudicator_Content.xml
+Languages/English/DefInjected/PawnKindDef/ABY_CrownlessAdjudicator_PawnKinds.xml
+Languages/Russian/DefInjected/PawnKindDef/ABY_CrownlessAdjudicator_PawnKinds.xml
+Languages/English/Keyed/ABY_Bestiary_Strings.xml
+Languages/Russian/Keyed/ABY_Bestiary_Strings.xml
+Docs/CONTENT_MATRIX.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-22 — Complete current monster Bestiary coverage
 - Added missing Bestiary tracking entries for `ABY_HaloHusk`, `ABY_RiftButcher`, and `ABY_ArchonOfRupture` so all current hostile PawnKind races resolve into the threat codex through kind or race fallback.
 - Added English and Russian Bestiary localization for Halo Husk, Rift Butcher, Reliquary Archon Beast, and Archon of Rupture.

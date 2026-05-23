@@ -88,7 +88,7 @@ Use these statuses in future updates:
 | Dominion pocket / Dominion slice | Implemented / Fragile | `source/Dominion/`, `source/Dominion/Generation/`, `source/Dominion/MapComponents/`, `source/Dominion/WorldObjects/`, `source/World/Buildings/Dominion/` | `Defs/MapGeneratorDefs/`, `Defs/TerrainDefs/`, `Defs/WorldObjectDefs/`, `Defs/ThingDefs/` | `Textures/Things/Building/DominionSlice/`, terrain/VFX textures | usually not direct UI; may have console links later | Dominion/late-game/hell dimension | High save/load and cleanup risk. Verify map transfer, pocket cleanup, collapse, heart/anchor graphics. |
 | Dominion visuals/atmosphere/collapse | Implemented / Partial | `source/Dominion/VFX/`, `source/Dominion/MapComponents/` | `Defs/ThingDefs_Motes/`, `Defs/ThingDefs/` | terrain, weather, VFX, heart/anchor/platform art | n/a | Dominion presentation | Platforms must be underlays; heart/anchors must not be visually replaced by platform art. |
 | Abyssal pawn classification / physiology | Implemented | `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `source/Hediffs/ABY_AbyssalConstructPhysiologyUtility.cs`, `source/Defs/Common/ABY_AbyssalPawnClassificationExtension.cs` | `Defs/PawnKindDefs/` | pawn directional textures | Bestiary / combat UI where relevant | encounter roles, boss protection, construct bleeding rules, residue eligibility | New enemies should carry XML classification instead of adding fresh local C# name lists. Construct-like pawns should set `constructPhysiology` and `blockBloodLoss`. |
-| Enemy pawn framework | Implemented | `source/Pawns/`, `source/Pawns/Comps/`, `source/Pawns/DeathActions/`, `source/Pawns/MapComponents/` | `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `Defs/HediffDefs/` | pawn directional textures | Bestiary / inspect / combat UI | encounter templates and pawn pools | AI loop guard, anti-tame/animal workflow, hostile auto behavior need careful testing. |
+| Enemy pawn framework | Implemented | `source/Pawns/`, `source/Pawns/Comps/`, `source/Pawns/DeathActions/`, `source/Pawns/MapComponents/` | `Defs/PawnKindDefs/`, `Defs/ThingDefs/`, `Defs/HediffDefs/` | pawn directional textures | Bestiary / inspect / combat UI | encounter templates and pawn pools | AI loop guard, anti-tame/animal workflow, hostile auto behavior need careful testing. Current ordinary roster includes `ABY_CrownlessAdjudicator` as the common T4 severe-tier lane-punisher between Gate Warden/Halo Husk and T5 heavy units. |
 | Generic comps / combat comps | Implemented | `source/Comps/`, `source/Comps/Properties/`, `source/Combat/Comps/` | `Defs/ThingDefs/`, `Defs/HediffDefs/` | mixed | inspect/UI when relevant | system-specific | Avoid expanding monolithic `source/Comps/` when a narrower module owns the new comp. |
 | Weapon projectiles | Implemented | `source/Combat/Projectiles/Weapons/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/Projectiles/Bosses/`, `source/Combat/VFX/`, `source/Combat/Verbs/` | `Defs/ThingDefs/`, `Defs/ThingDefs_Motes/`, `Defs/DamageDefs/`, `Defs/SoundDefs/` | projectile/mote/VFX/audio | combat feedback | weapon recipes/forge unlocks | Class names in XML must match compiled DLL. Rebuild required for new projectile C#. |
 | Modular turrets | Implemented / Expanding | `source/Defs/Turrets/`, `source/Comps/CompAbyssalModularTurret.cs`, `source/UI/Turrets/`, `source/Combat/Projectiles/Turrets/`, `source/Combat/VFX/`, `source/Core/Misc/ABY_ModularTurretUtility.cs` | `Defs/ThingDefs/`, `Defs/Misc/*TurretModuleDef.xml`, `Defs/RecipeDefs/` | `Textures/Things/Item/TurretModules/`, turret overlay/projectile/VFX textures, sounds | turret ITab/module UI + Forge recipes | forge/residue/gating | Large growth area; each new module must wire item, module def, recipe, texture, localization, and UI stat exposure. Weapon modules may also require projectile/VFX/audio. Passive modules can use signed power draw, range/min-range, cooldown, damage, and throttled target-priority fields. |
@@ -168,6 +168,20 @@ Languages/                    module/item/projectile/recipe text
 Forge UI                      recipe/unlock visibility
 Turret ITab                   module socket behavior
 Docs                           update if module framework changes
+```
+
+### New ordinary hostile pawn
+
+```text
+Defs/PawnKindDefs/            PawnKind with difficulty scaling, residue sintering, classification, encounter pools
+Defs/ThingDefs/               race/body/stats/tools plus enemy-only weapon/projectile if needed
+source/UI/Bestiary/           add entry when the race should get its own codex card
+Textures/Pawn/<Enemy>/        south/east/north only; west is mirrored from east
+Textures/Things/Weapon/       enemy-only weapon texture if forcedPrimaryDefName points to a new gun
+Textures/Things/Projectile/   projectile texture if a new projectile Def is added
+Languages/                    EN/RU DefInjected + Bestiary keyed text
+Assemblies/                   include DLL only if Bestiary/source changed and build is verified
+Docs                          update recent work/content matrix for substantial roster additions
 ```
 
 ### New boss or miniboss
