@@ -540,4 +540,9 @@ The Summoning Console redesign keeps the main window focused on archetype select
 
 The full Abyssal Summoning Console now uses a two-column primary layout: ritual pattern selection on the left and a selected-ritual action card on the right. The action card owns the selected ritual summary, risk bar, blocker state, reduced-effects/overchannel/emergency-dump toggles, dossier/codex/jump actions, and Begin Invocation.
 
-Dense ritual details belong in the separate ritual dossier window. Circle technical infrastructure uses the lower tabbed drawer with Readiness, Capacitors, and Stabilizers tabs. Future Summoning UI work should not reintroduce a narrow center control column for major actions because it previously caused button overlap and visual clutter.
+Dense ritual details belong in the separate ritual dossier window. Circle technical infrastructure now opens through the selected-ritual action card's Circle Infrastructure route rather than a permanent lower drawer. Future Summoning UI work should not reintroduce a narrow center control column for major actions or always-visible capacitor/stabilizer tables on the main console because both patterns previously caused overlap and visual clutter.
+
+
+## 2026-05-24 — Summoning Console circle infrastructure window
+
+The Summoning Console now keeps capacitor and stabilizer slot management out of the primary ritual selection screen. `source/UI/Summoning/Window_AbyssalSummoningConsole.cs` owns a compact Circle Infrastructure callout on the selected-ritual card and a nested `Window_AbyssalCircleInfrastructure` detail window. The infrastructure window owns Readiness, Capacitors, and Stabilizers tabs and reuses the existing slot install/remove panel methods. Future circle module/capacitor UI changes should route through this infrastructure window instead of adding lower permanent panels back into the main console.

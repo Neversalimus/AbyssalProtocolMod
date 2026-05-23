@@ -29,4 +29,10 @@
   <ABY_CircleSelected_Host>Host</ABY_CircleSelected_Host>
   <ABY_CircleSelected_Sigils>Sigils</ABY_CircleSelected_Sigils>
   <ABY_CircleSelected_Budget>Budget</ABY_CircleSelected_Budget>
+  <ABY_CircleInfrastructureCallout_Title>Circle infrastructure</ABY_CircleInfrastructureCallout_Title>
+  <ABY_CircleInfrastructureCallout_Summary>Capacitors {0}/{1} • Stabilizers {2}/{3} • {4} • {5}</ABY_CircleInfrastructureCallout_Summary>
+  <ABY_CircleCommand_OpenInfrastructure>Open circle slots</ABY_CircleCommand_OpenInfrastructure>
+  <ABY_CircleInfrastructureWindow_Title>circle infrastructure</ABY_CircleInfrastructureWindow_Title>
+  <ABY_CircleInfrastructureWindow_Subtitle>Manage capacitor lattice, stabilizer ring, and full circle readiness outside the main invocation flow.</ABY_CircleInfrastructureWindow_Subtitle>
+  <ABY_CircleInfrastructureWindow_Close>Close infrastructure</ABY_CircleInfrastructureWindow_Close>
 </LanguageData>

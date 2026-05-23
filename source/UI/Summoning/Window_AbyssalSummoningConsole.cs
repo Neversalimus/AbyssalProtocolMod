@@ -93,8 +93,7 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
             Rect categoryRect = new Rect(inRect.x, stripRect.yMax + 10f, inRect.width, 64f);
-            Rect mainRect = new Rect(inRect.x, categoryRect.yMax + 10f, inRect.width, 410f);
-            Rect lowerRect = new Rect(inRect.x, mainRect.yMax + 10f, inRect.width, inRect.yMax - (mainRect.yMax + 10f));
+            Rect mainRect = new Rect(inRect.x, categoryRect.yMax + 10f, inRect.width, inRect.yMax - (categoryRect.yMax + 10f));
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
@@ -108,7 +107,6 @@ namespace AbyssalProtocol
             DrawCategoryTabs(categoryRect);
             DrawRitualBrowser(ritualsRect, ritual);
             DrawSelectedRitualPanel(selectedRect, ritual);
-            DrawInfrastructurePanel(lowerRect, ritual);
         
         }
 
@@ -563,16 +561,77 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Tiny;
             GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
             string description = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
-            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, descriptionTop, inner.width, 54f), description);
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, descriptionTop, inner.width, 72f), description);
             GUI.color = Color.white;
 
             float lowerTop = inner.yMax - 112f;
+            Rect infrastructureRect = new Rect(inner.x, lowerTop - 70f, inner.width, 58f);
+            DrawCircleInfrastructureCallout(infrastructureRect, ritual);
+
             Rect togglesRect = new Rect(inner.x, lowerTop, inner.width * 0.42f, 104f);
             Rect buttonsRect = new Rect(togglesRect.xMax + 12f, lowerTop, inner.width - togglesRect.width - 12f, 104f);
             DrawSelectedRitualToggles(togglesRect);
             DrawSelectedRitualActions(buttonsRect, ritual, dominionCrisis, dominionUiMode);
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
+        }
+
+        private void DrawCircleInfrastructureCallout(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(8f);
+            float buttonWidth = 220f;
+            Rect buttonRect = new Rect(inner.xMax - buttonWidth, inner.y + 8f, buttonWidth, inner.height - 16f);
+            Rect textRect = new Rect(inner.x + 8f, inner.y + 4f, inner.width - buttonWidth - 18f, inner.height - 8f);
+
+            string title = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureCallout_Title", "Circle infrastructure");
+            string summary = GetCircleInfrastructureSummary(ritual);
+
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            ABY_UIPolishUtility.SafeLabel(new Rect(textRect.x, textRect.y, textRect.width, 20f), title);
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(new Rect(textRect.x, textRect.y + 22f, textRect.width, textRect.height - 22f), summary);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            if (AbyssalStyledWidgets.TextButton(buttonRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_OpenInfrastructure", "Open circle slots"), true, false))
+            {
+                OpenCircleInfrastructure(ritual);
+            }
+            TooltipHandler.TipRegion(rect, summary);
+        }
+
+        private string GetCircleInfrastructureSummary(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            int installedCapacitors = 0;
+            int totalCapacitorSlots = 0;
+            foreach (AbyssalCircleCapacitorBay bay in AbyssalCircleCapacitorUtility.GetOrderedBays())
+            {
+                totalCapacitorSlots++;
+                AbyssalCircleCapacitorSlot slot = circle.GetCapacitorSlot(bay);
+                if (slot != null && slot.InstalledThingDef != null)
+                {
+                    installedCapacitors++;
+                }
+            }
+
+            int installedStabilizers = circle.InstalledStabilizerCount;
+            int totalStabilizerSlots = circle.ModuleSlots != null ? circle.ModuleSlots.Count : 0;
+            AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport report = AbyssalCircleCapacitorRitualUtility.CreateReadinessReport(circle, ritual);
+            string capacitorState = AbyssalCircleCapacitorRitualUtility.GetSupportStateLabel(report);
+            string stabilizerPattern = AbyssalSummoningConsoleUtility.GetStabilizerPatternSummary(circle);
+
+            return AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_CircleInfrastructureCallout_Summary",
+                "Capacitors {0}/{1} • Stabilizers {2}/{3} • {4} • {5}",
+                installedCapacitors,
+                totalCapacitorSlots,
+                installedStabilizers,
+                totalStabilizerSlots,
+                capacitorState,
+                stabilizerPattern);
         }
 
         private void DrawCompactFact(Rect rect, string label, string value, bool good, float offset)
@@ -1654,6 +1713,12 @@ namespace AbyssalProtocol
             SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
         }
 
+        private void OpenCircleInfrastructure(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            Find.WindowStack.Add(new Window_AbyssalCircleInfrastructure(this, ritual));
+            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+        }
+
         private void OpenThreatCodex()
         {
             Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
@@ -1726,6 +1791,116 @@ namespace AbyssalProtocol
             }));
         }
 
+
+        private sealed class Window_AbyssalCircleInfrastructure : Window
+        {
+            private readonly Window_AbyssalSummoningConsole parent;
+            private readonly AbyssalSummoningConsoleUtility.RitualDefinition ritual;
+            private InfrastructureTab selectedTab = InfrastructureTab.Capacitors;
+
+            public Window_AbyssalCircleInfrastructure(Window_AbyssalSummoningConsole parent, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+            {
+                this.parent = parent;
+                this.ritual = ritual;
+                absorbInputAroundWindow = true;
+                closeOnClickedOutside = false;
+                doCloseX = true;
+                draggable = true;
+                forcePause = false;
+                preventCameraMotion = false;
+                onlyOneOfTypeAllowed = false;
+                resizeable = false;
+            }
+
+            public override Vector2 InitialSize => new Vector2(980f, 690f);
+
+            public override void DoWindowContents(Rect inRect)
+            {
+                try
+                {
+                    DoWindowContentsSafe(inRect);
+                }
+                catch (System.Exception ex)
+                {
+                    ABY_UISafetyUtility.DrawWindowFallback(inRect, "Abyssal Circle Infrastructure", ex);
+                }
+            }
+
+            private void DoWindowContentsSafe(Rect inRect)
+            {
+                if (parent == null || parent.circle == null || parent.circle.Destroyed || parent.circle.Map == null)
+                {
+                    Close();
+                    return;
+                }
+
+                AbyssalSummoningConsoleArt.ReducedEffects = parent.circle.ReducedConsoleEffects;
+                AbyssalSummoningConsoleArt.DrawBackground(inRect);
+
+                Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 70f);
+                string title = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureWindow_Title", "circle infrastructure");
+                string subtitle = AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureWindow_Subtitle", "Manage capacitor lattice, stabilizer ring, and full circle readiness outside the main invocation flow.");
+                AbyssalSummoningConsoleArt.DrawHeader(headerRect, title, subtitle, parent.circle.RitualActive);
+
+                Rect bodyRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, inRect.height - headerRect.height - 10f);
+                AbyssalSummoningConsoleArt.DrawPanel(bodyRect, false);
+                Rect inner = bodyRect.ContractedBy(12f);
+
+                float tabHeight = 32f;
+                float gap = 8f;
+                float tabWidth = (inner.width - gap * 2f) / 3f;
+                DrawInfrastructureWindowTab(new Rect(inner.x, inner.y, tabWidth, tabHeight), InfrastructureTab.Readiness, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Readiness", "Readiness"));
+                DrawInfrastructureWindowTab(new Rect(inner.x + tabWidth + gap, inner.y, tabWidth, tabHeight), InfrastructureTab.Capacitors, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Capacitors", "Capacitors"));
+                DrawInfrastructureWindowTab(new Rect(inner.x + (tabWidth + gap) * 2f, inner.y, tabWidth, tabHeight), InfrastructureTab.Stabilizers, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Stabilizers", "Stabilizers"));
+
+                Rect summaryRect = new Rect(inner.x, inner.y + tabHeight + 8f, inner.width, 46f);
+                parent.DrawCircleInfrastructureWindowSummary(summaryRect, ritual);
+
+                Rect contentRect = new Rect(inner.x, summaryRect.yMax + 10f, inner.width, inner.yMax - summaryRect.yMax - 54f);
+                switch (selectedTab)
+                {
+                    case InfrastructureTab.Readiness:
+                        parent.DrawStatusPanel(contentRect, ritual);
+                        break;
+                    case InfrastructureTab.Capacitors:
+                        parent.DrawScrollableCapacitorPanel(contentRect, ritual);
+                        break;
+                    case InfrastructureTab.Stabilizers:
+                        parent.DrawScrollableModulePanel(contentRect);
+                        break;
+                }
+
+                Rect closeRect = new Rect(inner.x, inner.yMax - 36f, inner.width, 30f);
+                if (AbyssalStyledWidgets.TextButton(closeRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureWindow_Close", "Close infrastructure")))
+                {
+                    Close();
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+
+            private void DrawInfrastructureWindowTab(Rect rect, InfrastructureTab tab, string label)
+            {
+                if (AbyssalStyledWidgets.TextButton(rect, label, true, selectedTab == tab))
+                {
+                    selectedTab = tab;
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+        }
+
+        private void DrawCircleInfrastructureWindowSummary(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(8f);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y, inner.width, 18f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureCallout_Title", "Circle infrastructure"));
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 20f, inner.width, inner.height - 20f), GetCircleInfrastructureSummary(ritual));
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+        }
 
         private sealed class Window_AbyssalSummoningRitualDossier : Window
         {

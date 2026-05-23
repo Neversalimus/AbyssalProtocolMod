@@ -845,4 +845,9 @@ When adding text-heavy ritual, horde, Dominion, reward, or readiness information
 - The first full Summoning Console redesign used a narrow standalone Invocation control column between the ritual list and preview panel.
 - Adding the ritual dossier button into that column caused obvious overlap and made the panel feel crowded.
 - Future Summoning Console work should avoid adding new buttons into narrow middle columns. Keep the primary action controls inside the selected-ritual card, and route dense text/data to the separate ritual dossier window or the lower infrastructure drawer.
-- The lower readiness/capacitor/stabilizer panels should remain tabbed unless there is a strong reason to show all three simultaneously.
+- Capacitor/stabilizer management should stay behind the explicit Circle Infrastructure button/window, not return as always-visible lower panels. The main console should remain ritual selection + selected-ritual action only.
+
+
+## Summoning Console infrastructure discoverability guard
+
+The lower tabbed infrastructure drawer was cleaner than three permanent panels, but it made capacitor and stabilizer slot management feel hidden. The current route is an explicit Circle Infrastructure callout in the selected ritual card that opens a dedicated slot-management window. Future UI passes should keep this button visible near invocation controls and avoid hiding slot management only in small tabs or secondary diagnostics.

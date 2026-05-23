@@ -29,4 +29,10 @@
   <ABY_CircleSelected_Host>Носитель</ABY_CircleSelected_Host>
   <ABY_CircleSelected_Sigils>Сигилы</ABY_CircleSelected_Sigils>
   <ABY_CircleSelected_Budget>Бюджет</ABY_CircleSelected_Budget>
+  <ABY_CircleInfrastructureCallout_Title>Инфраструктура круга</ABY_CircleInfrastructureCallout_Title>
+  <ABY_CircleInfrastructureCallout_Summary>Конденсаторы {0}/{1} • Стабилизаторы {2}/{3} • {4} • {5}</ABY_CircleInfrastructureCallout_Summary>
+  <ABY_CircleCommand_OpenInfrastructure>Открыть слоты круга</ABY_CircleCommand_OpenInfrastructure>
+  <ABY_CircleInfrastructureWindow_Title>инфраструктура круга</ABY_CircleInfrastructureWindow_Title>
+  <ABY_CircleInfrastructureWindow_Subtitle>Управление конденсаторной решёткой, кольцом стабилизаторов и полной готовностью круга вне основного экрана вызова.</ABY_CircleInfrastructureWindow_Subtitle>
+  <ABY_CircleInfrastructureWindow_Close>Закрыть инфраструктуру</ABY_CircleInfrastructureWindow_Close>
 </LanguageData>
