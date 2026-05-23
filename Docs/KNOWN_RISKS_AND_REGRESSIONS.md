@@ -789,3 +789,15 @@ In-game checks:
 
 - Draft a pawn with `ABY_CrownReactorMultilance` and fire east/west/north/south plus diagonals; confirm warmup bars sit directly over the four barrels and each beam starts from a matching barrel lane.
 - Check the weapon at normal gameplay zoom and high zoom to make sure the narrowed beams stay readable without bloating back into a single oversized stripe.
+
+
+## Crown Reactor beam sequence raw sprite regression — 2026-05-23
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Transient beam controller uses a visible projectile texture as its Thing graphic | P1 | weapon VFX/XML | A horizontal beam segment appears stuck on the shooter/target while the real custom beam also draws separately | Keep `ABY_CrownReactorBeamSequence` as `ParentName="MoteBase"` and point its `graphicData.texPath` to the transparent `ABY_CrownReactorBeamSequence_Invisible` safety texture. The visible beam texture should only be used by `Thing_CrownReactorBeamSequence.DrawAt` through `BeamTexturePath`. |
+| Reintroducing `drawerType=MapMeshOnly` on the sequence def | P1 | weapon VFX/XML | RimWorld draws the sequence thing as a normal map sprite, recreating the old horizontal-on-pawn artifact | Do not use `MapMeshOnly` for custom-drawn beam sequence controllers. Use mote-style defs or invisible fallback graphics for transient VFX controllers. |
+
+In-game check:
+
+- Fire `ABY_CrownReactorMultilance` at a target and confirm no static horizontal cyan beam segment remains attached to the shooter or target before/after the real custom beam sequence.

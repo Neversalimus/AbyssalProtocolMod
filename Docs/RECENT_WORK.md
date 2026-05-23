@@ -1002,3 +1002,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced charge and discharge beam widths substantially and compressed the four lane offsets so both the warmup rails and the fired beams track the actual four barrels much more closely instead of rendering oversized cyan slabs.
 - Kept the damage/runtime model unchanged: four discrete damage pulses, no per-tick beam damage, no map-wide scans.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+
+
+## 2026-05-23 — Fix Crown Reactor raw sequence sprite regression
+
+- Fixed `ABY_CrownReactorBeamSequence` XML so the transient beam controller uses a `MoteBase`-style def instead of a standalone map-mesh thing.
+- Replaced the sequence def's visible beam texture with a 1x1 transparent safety texture so any fallback/raw Thing graphic draw is invisible and cannot render as a horizontal beam sprite on the pawn or target.
+- Kept the custom `Thing_CrownReactorBeamSequence.DrawAt` beam rendering and four-pulse damage logic unchanged.
+- XML/asset-only fix; C# build not required. Runtime smoke testing in RimWorld is still required.

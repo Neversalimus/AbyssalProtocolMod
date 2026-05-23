@@ -114,23 +114,26 @@
     </projectile>
   </ThingDef>
 
-  <ThingDef>
+  <ThingDef ParentName="MoteBase">
     <defName>ABY_CrownReactorBeamSequence</defName>
     <label>crown reactor beam sequence</label>
     <thingClass>AbyssalProtocol.Thing_CrownReactorBeamSequence</thingClass>
-    <category>Ethereal</category>
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <tickerType>Normal</tickerType>
     <selectable>false</selectable>
-    <drawerType>MapMeshOnly</drawerType>
-    <useHitPoints>false</useHitPoints>
     <drawOffscreen>true</drawOffscreen>
     <graphicData>
-      <texPath>Things/Projectile/ABY_CrownReactorBeamSegment</texPath>
+      <texPath>Things/Projectile/ABY_CrownReactorBeamSequence_Invisible</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>MoteGlow</shaderType>
-      <drawSize>(1,1)</drawSize>
+      <drawSize>(0.01,0.01)</drawSize>
     </graphicData>
+    <mote>
+      <fadeInTime>0</fadeInTime>
+      <solidTime>0.01</solidTime>
+      <fadeOutTime>0.01</fadeOutTime>
+      <growthRate>0</growthRate>
+    </mote>
   </ThingDef>
 
 </Defs>
