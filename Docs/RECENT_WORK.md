@@ -1,3 +1,27 @@
+## 2026-05-23 — Add Crown Reactor Multilance main-DLL integration
+
+- Added the T5 `ABY_CrownReactorMultilance` as a post-Saint / Crown-Reactor heavy weapon with Forge recipe, Protocol Nexus gate, EN/RU localization, weapon texture, and stretchable beam segment texture.
+- Implemented `Verb_CrownReactorMultilance` and `Thing_CrownReactorBeamSequence` in the main `source/` tree and rebuilt the primary `Assemblies/AbyssalProtocol.dll` instead of shipping an auxiliary weapon DLL.
+- The weapon presents sequential rail charging and four long reactor beams, but applies only four controlled damage pulses and performs no map-wide scans or per-tick beam damage.
+- Final PNG assets use real alpha transparency and optimized PNG compression.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+Defs/ThingDefs/ABY_CrownReactorMultilance.xml
+source/Combat/Verbs/Verb_CrownReactorMultilance.cs
+source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
+Textures/Things/Weapon/ABY_CrownReactorMultilance.png
+Textures/Things/Projectile/ABY_CrownReactorBeamSegment.png
+Languages/English/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
+Languages/Russian/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
+Docs/CROWN_REACTOR_MULTILANCE.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Protocol Nexus authority pass 2A and Saint Aegis Engineering
 
 - Added the active Protocol Nexus project `ABY_PR_SaintAegisEngineering` for Reactor Saint reward engineering, Saint Aegis protection, condensation cells, Saint-core implants, Vesper/Ultra Plasma weapons, and reactor-grade Forge patterns.

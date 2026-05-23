@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_CrownReactorMultilance</defName>
+    <label>crown reactor multilance</label>
+    <description>A crown-reactor weapon assembled from Saint-grade containment geometry and dominion rail lattices. Its four parallel emitters do not fire as barrels, but as a synchronized verdict: each discharge wakes the rails in sequence, then releases four long reactor beams that carve armor, nerve and protocol shielding apart.</description>
+    <techLevel>Ultra</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CrownReactorMultilance</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.95,0.62)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>210</ABY_AbyssalResidue>
+      <Plasteel>180</Plasteel>
+      <Uranium>60</Uranium>
+      <Gold>45</Gold>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentSpacer>10</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>185000</WorkToMake>
+      <Mass>7.8</Mass>
+      <MarketValue>9200</MarketValue>
+      <AccuracyTouch>0.38</AccuracyTouch>
+      <AccuracyShort>0.66</AccuracyShort>
+      <AccuracyMedium>0.88</AccuracyMedium>
+      <AccuracyLong>0.82</AccuracyLong>
+      <RangedWeapon_Cooldown>5.10</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>AbyssalProtocol.Verb_CrownReactorMultilance</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_CrownReactorMultilanceBeamPayload</defaultProjectile>
+        <warmupTime>2.10</warmupTime>
+        <range>45.0</range>
+        <burstShotCount>1</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundAiming>ABY_UltraPlasmaCharge</soundAiming>
+        <soundCast>ABY_VesperLanceFire</soundCast>
+        <soundCastTail>ABY_VesperLanceTail</soundCastTail>
+        <muzzleFlashScale>12</muzzleFlashScale>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>crown-reactor frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>2.4</cooldownTime>
+      </li>
+    </tools>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_SpecialWeaponDamageInfo" />
+    </comps>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>5200</requiredResidue>
+        <category>Herald</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_CrownReactorMultilanceBeamPayload</defName>
+    <label>crown reactor beam</label>
+    <thingClass>Bullet</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownReactorBeamSegment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,2.75)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>26</damageAmountBase>
+      <armorPenetrationBase>1.15</armorPenetrationBase>
+      <stoppingPower>1.55</stoppingPower>
+      <speed>90</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef>
+    <defName>ABY_CrownReactorBeamSequence</defName>
+    <label>crown reactor beam sequence</label>
+    <thingClass>AbyssalProtocol.Thing_CrownReactorBeamSequence</thingClass>
+    <category>Ethereal</category>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <tickerType>Normal</tickerType>
+    <selectable>false</selectable>
+    <drawerType>MapMeshOnly</drawerType>
+    <useHitPoints>false</useHitPoints>
+    <drawOffscreen>true</drawOffscreen>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_CrownReactorBeamSegment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>MoteGlow</shaderType>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+  </ThingDef>
+
+</Defs>

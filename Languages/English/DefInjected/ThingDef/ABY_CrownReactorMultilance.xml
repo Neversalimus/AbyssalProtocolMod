@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownReactorMultilance.label>crown reactor multilance</ABY_CrownReactorMultilance.label>
+  <ABY_CrownReactorMultilance.description>A crown-reactor weapon assembled from Saint-grade containment geometry and dominion rail lattices. Its four parallel emitters do not fire as barrels, but as a synchronized verdict: each discharge wakes the rails in sequence, then releases four long reactor beams that carve armor, nerve and protocol shielding apart.</ABY_CrownReactorMultilance.description>
+
+  <ABY_CrownReactorMultilanceBeamPayload.label>crown reactor beam</ABY_CrownReactorMultilanceBeamPayload.label>
+  <ABY_CrownReactorBeamSequence.label>crown reactor beam sequence</ABY_CrownReactorBeamSequence.label>
+
+</LanguageData>
