@@ -31,8 +31,15 @@
   <ABY_CircleSelected_Budget>Бюджет</ABY_CircleSelected_Budget>
   <ABY_CircleInfrastructureCallout_Title>Инфраструктура круга</ABY_CircleInfrastructureCallout_Title>
   <ABY_CircleInfrastructureCallout_Summary>Конденсаторы {0}/{1} • Стабилизаторы {2}/{3} • {4} • {5}</ABY_CircleInfrastructureCallout_Summary>
-  <ABY_CircleCommand_OpenInfrastructure>Открыть слоты круга</ABY_CircleCommand_OpenInfrastructure>
+  <ABY_CircleCommand_OpenInfrastructure>Настроить слоты круга</ABY_CircleCommand_OpenInfrastructure>
   <ABY_CircleInfrastructureWindow_Title>инфраструктура круга</ABY_CircleInfrastructureWindow_Title>
-  <ABY_CircleInfrastructureWindow_Subtitle>Управление конденсаторной решёткой, кольцом стабилизаторов и полной готовностью круга вне основного экрана вызова.</ABY_CircleInfrastructureWindow_Subtitle>
-  <ABY_CircleInfrastructureWindow_Close>Закрыть инфраструктуру</ABY_CircleInfrastructureWindow_Close>
+  <ABY_CircleInfrastructureWindow_Subtitle>Настройка конденсаторной решётки и кольца стабилизаторов круга.</ABY_CircleInfrastructureWindow_Subtitle>
+  <ABY_CircleInfrastructureWindow_Close>Закрыть</ABY_CircleInfrastructureWindow_Close>
+  <ABY_CircleInfrastructure_CapacitorLattice>Конденсаторная решётка</ABY_CircleInfrastructure_CapacitorLattice>
+  <ABY_CircleInfrastructure_StabilizerRing>Кольцо стабилизаторов</ABY_CircleInfrastructure_StabilizerRing>
+  <ABY_CircleInfrastructure_StabilizerCount>Стабилизаторы {0}/{1}</ABY_CircleInfrastructure_StabilizerCount>
+  <ABY_CircleInfrastructure_EffectSummary>Сводка эффектов</ABY_CircleInfrastructure_EffectSummary>
+  <ABY_CircleInfrastructure_EffectCapacitors>Конденсаторы: {0}</ABY_CircleInfrastructure_EffectCapacitors>
+  <ABY_CircleInfrastructure_EffectStabilizers>Кольцо: {0}</ABY_CircleInfrastructure_EffectStabilizers>
+  <ABY_CircleInfrastructure_EffectContainment>Удержание {0} • Тепло {1} • Осадок {2} • Аномалии {3}</ABY_CircleInfrastructure_EffectContainment>
 </LanguageData>

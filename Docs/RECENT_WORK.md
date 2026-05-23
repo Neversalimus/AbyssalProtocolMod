@@ -1244,3 +1244,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added a dedicated Circle Infrastructure window for Readiness, Capacitor lattice, and Stabilizer ring management, reusing the existing slot install/remove panels.
 - Main Summoning Console is now focused on ritual selection and action; ritual dossier remains the long-form ritual data route; infrastructure window owns circle slot management.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+
+
+## 2026-05-24 — Simplify Summoning Circle infrastructure window
+
+- Simplified the dedicated Circle Infrastructure window into a compact one-screen slot manager.
+- Removed the Readiness / Capacitors / Stabilizers tab strip from that window; readiness remains available through the main console and ritual dossier routes.
+- The window now shows capacitor lattice rows, stabilizer ring rows, and a short effect summary with tooltip-backed details.
+- Kept the existing install/remove slot row logic so behavior stays consistent with the earlier implementation.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.

@@ -413,7 +413,7 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 - Primary file: `source/UI/Summoning/Window_AbyssalSummoningConsole.cs`.
 - Main screen ownership: threat archetype tabs, ritual card list, selected ritual action card, compact circle infrastructure callout, and invocation actions.
 - Long-form ritual information ownership: Summoning ritual dossier window nested in the same source file.
-- Circle slot management ownership: Circle Infrastructure window nested in `Window_AbyssalSummoningConsole.cs`, with Readiness / Capacitors / Stabilizers tabs.
+- Circle slot management ownership: Circle Infrastructure window nested in `Window_AbyssalSummoningConsole.cs`, simplified into one compact slot-manager screen with capacitor lattice, stabilizer ring, and effect summary sections.
 - Localization ownership: `Languages/English/Keyed/ABY_SummoningConsoleRedesign_Strings.xml` and `Languages/Russian/Keyed/ABY_SummoningConsoleRedesign_Strings.xml` for redesign-specific labels.
 - Safety note: keep selected-ritual actions inside the right action card and technical readiness/capacitor/stabilizer information inside the lower tabbed drawer.
 
@@ -422,4 +422,4 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 
 | System | Status | Source ownership | UI exposure | Notes |
 | --- | --- | --- | --- | --- |
-| Circle infrastructure window | Implemented / needs runtime smoke test | `source/UI/Summoning/Window_AbyssalSummoningConsole.cs` | Selected ritual card button: Circle Infrastructure / Open circle slots | Moves capacitor lattice and stabilizer ring management out of the main console lower area into an explicit slot-management window similar in intent to turret module management, while preserving existing install/remove slot methods. |
+| Circle infrastructure window | Implemented / needs runtime smoke test | `source/UI/Summoning/Window_AbyssalSummoningConsole.cs` | Selected ritual card button: Circle Infrastructure / Open circle slots | Moves capacitor lattice and stabilizer ring management out of the main console into an explicit compact slot-management window similar in intent to turret module management, while preserving existing install/remove slot methods. Readiness remains in the main console/dossier rather than becoming a tab in this window. |

@@ -276,5 +276,5 @@ Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` 
 - For Summoning Console layout work, start with `source/UI/Summoning/Window_AbyssalSummoningConsole.cs`.
 - The primary screen should remain two-column: ritual list on the left, selected-ritual action card on the right.
 - The ritual dossier window is the long-form details route.
-- Circle slot management lives in the selected-ritual card's Circle Infrastructure callout and the nested infrastructure window with Readiness / Capacitors / Stabilizers tabs.
+- Circle slot management lives in the selected-ritual card's Circle Infrastructure callout and the nested infrastructure window. The infrastructure window should stay as a compact one-screen slot manager: capacitor lattice, stabilizer ring, short effect summary.
 - Do not add major buttons back into a narrow middle control column or make capacitor/stabilizer tables permanently occupy the main console.

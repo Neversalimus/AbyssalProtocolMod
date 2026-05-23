@@ -851,3 +851,8 @@ When adding text-heavy ritual, horde, Dominion, reward, or readiness information
 ## Summoning Console infrastructure discoverability guard
 
 The lower tabbed infrastructure drawer was cleaner than three permanent panels, but it made capacitor and stabilizer slot management feel hidden. The current route is an explicit Circle Infrastructure callout in the selected ritual card that opens a dedicated slot-management window. Future UI passes should keep this button visible near invocation controls and avoid hiding slot management only in small tabs or secondary diagnostics.
+
+
+## Summoning Circle infrastructure window simplification guard
+
+The Circle Infrastructure window should stay focused on slot management. Do not re-add a full readiness tab, long capacitor diagnostics, or multiple nested tab layers unless the main console loses its separate readiness/dossier routes. The intended structure is: capacitor lattice rows, stabilizer ring rows, and a short effect summary with tooltips for deeper details.
