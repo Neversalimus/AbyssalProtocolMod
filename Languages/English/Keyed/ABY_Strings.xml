@@ -136,8 +136,8 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_CircleReducedEffectsDesc>Softens header sweeps, seal rotation, and other moving accents inside the summoning console.</ABY_CircleReducedEffectsDesc>
 
   <ABY_CircleFail_NoPortalSpawn>No valid breach point could be opened near the summoning circle.</ABY_CircleFail_NoPortalSpawn>
-  <ABY_CircleUnstableBreachLetterLabel>Unstable breach opened</ABY_CircleUnstableBreachLetterLabel>
-  <ABY_CircleUnstableBreachLetterDesc>The circle tears open a smaller hostile breach. Rift imps are spilling onto the map from the unstable portal, and larger colonies can draw a heavier wave.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleUnstableBreachLetterLabel>Unstable breach torn open</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>The circle has forced a crude wound into local space. Rift imps are spilling through the unstable portal in pulses; larger colonies can draw a heavier escort signature around the breach.</ABY_CircleUnstableBreachLetterDesc>
   <ABY_CircleRitual_Unstable_Label>Open unstable breach</ABY_CircleRitual_Unstable_Label>
   <ABY_CircleRitual_Unstable_Subtitle>Pre-boss hostile breach pattern</ABY_CircleRitual_Unstable_Subtitle>
   <ABY_CircleRitual_Unstable_Desc>Consumes one unstable breach sigil, routes a colonist to the circle, and tears open a smaller hostile rift that disgorges early abyssal attackers before the first boss tier.</ABY_CircleRitual_Unstable_Desc>
@@ -196,4 +196,6 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_CircleVentFail_Busy>The abyssal summoning circle is busy and cannot vent contamination right now.</ABY_CircleVentFail_Busy>
   <ABY_CircleVentFail_LowContamination>Residual contamination is too low to vent.</ABY_CircleVentFail_LowContamination>
   <ABY_CircleVentFail_Cooldown>Contamination venting is still on cooldown: {0}.</ABY_CircleVentFail_Cooldown>
+  <ABY_ArchonSummonSuccessLabel>Archon manifestation forming</ABY_ArchonSummonSuccessLabel>
+  <ABY_ArchonSummonSuccessDesc>The Archon sigil did not open a simple doorway. A predatory manifestation is condensing near the colony, and its companion hound portals will tear open before the Archon Beast fully crosses.</ABY_ArchonSummonSuccessDesc>
 </LanguageData>

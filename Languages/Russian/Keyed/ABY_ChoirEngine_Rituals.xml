@@ -9,6 +9,6 @@
   <ABY_CircleRitual_Choir_SideEffects>• Пока Хоровой Двигатель активен, его эскорт получает постоянные усиления
 • Близкие защитники и турели регулярно получают сигнальные помехи и ЕМП-подавление
 • Периодические хоровые импульсы усиливают весь прорыв вместо ставки на прямой урон босса</ABY_CircleRitual_Choir_SideEffects>
-  <ABY_ChoirSummonSuccessLabel>Хоровой прорыв маршрутизирован</ABY_ChoirSummonSuccessLabel>
-  <ABY_ChoirSummonSuccessDesc>Командная пластина сработала. Узел Хоровой Двигатель проходит в локальное пространство вместе с дисциплинированным эскортом.</ABY_ChoirSummonSuccessDesc>
+  <ABY_ChoirSummonSuccessLabel>Хоровой ретранслятор установлен</ABY_ChoirSummonSuccessLabel>
+  <ABY_ChoirSummonSuccessDesc>Командная пластина стала сигнальным органом. Хоровой Двигатель входит в локальное пространство, а его эскорт стянут прямо к узлу ретрансляции, готовому глушить турели, усиливать врагов и превращать чистые линии огня в шум.</ABY_ChoirSummonSuccessDesc>
 </LanguageData>

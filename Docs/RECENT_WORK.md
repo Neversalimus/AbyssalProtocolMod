@@ -1,3 +1,33 @@
+## 2026-05-23 — Sigil routing presentation and miniboss escort pass
+
+- Hid the retired `ABY_HexgunRelaySigil` from active sigil storage/use paths by making the legacy ThingDef inert and removing it from the Sigil Vault accepted list while preserving save migration into ember hound sigils.
+- Added a real `ABY_BossProfile_RiftButcher` with `rift_butcher_escort` encounter pool routing, doctrine/template coverage, and pool membership on existing abyssal warforms.
+- Reworked direct miniboss support spawning to prefer local boss-anchor escort placement with edge fallback, improving encounter cohesion for Choir Engine, Warden of Ash, and Rift Butcher without changing Archon/Reactor manifestation bosses.
+- Added ritual-specific arrival presentation pulses/VFX for unstable breach, ember hunt, Warden of Ash, Choir Engine, and Rift Butcher so lower-tier sigils no longer share one generic spawn feel.
+- Rewrote EN/RU lore letters for active sigil categories and added missing Archon/Dominion completion-key routing where needed.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. XML parse validation passed. RimWorld runtime smoke testing is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/World/Buildings/Summoning/Building_ABY_SigilVault.cs
+Defs/Misc/ABY_BossDifficultyProfiles.xml
+Defs/Misc/ABY_EncounterTemplates.xml
+Defs/Misc/ABY_ThreatDoctrines.xml
+Defs/PawnKindDefs/* abyssal escort pool memberships
+Defs/ThingDefs/ABY_HexgunThrall_Content.xml
+Defs/ThingDefs/ABY_Items.xml
+Defs/ThingDefs/ABY_DominionCrisis_Content.xml
+Languages/English/** sigil letter/localization keys
+Languages/Russian/** sigil letter/localization keys
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Static cache memory-retention hardening
 
 - Hardened `ABY_ResidueSinteringConsoleUtility` so Forge crucible status caching no longer uses `Map` as a static dictionary key. The cache now keys by `map.uniqueID`, validates cached focus crucibles against the live map, and periodically removes entries for maps no longer present in `Find.Maps`.

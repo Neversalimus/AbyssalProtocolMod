@@ -24,8 +24,8 @@
   <ABY_DominionCrisisConfirmAbort>Abort the Great Infernal Gate staging layer on this map? This ends the current staging window and marks the run as cancelled.</ABY_DominionCrisisConfirmAbort>
   <ABY_DominionCrisisAbortStarted>Dominion staging aborted.</ABY_DominionCrisisAbortStarted>
 
-  <ABY_DominionCrisisStartLabel>Great infernal gate armed</ABY_DominionCrisisStartLabel>
-  <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. The breach is unstable, but the Great Infernal Gate has not unfolded yet.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisStartLabel>Great Infernal Gate armed</ABY_DominionCrisisStartLabel>
+  <ABY_DominionCrisisStartDesc>{0} has entered first-stage dominion synchronization. This is not a raid call; it is a gate authorization layer, and the world is beginning to accept external anchors for the Great Infernal Gate.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Dominion anchors manifested</ABY_DominionCrisisAnchorfallLabel>
   <ABY_DominionCrisisAnchorfallDesc>{0} has progressed into a Dominion breach prelude. {1} external anchors have materialized to stabilize the gate-lock. They are not the main objective; the lattice will finish opening the Great Infernal Gate shortly.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Dominion core synchronized</ABY_DominionCrisisStandbyLabel>

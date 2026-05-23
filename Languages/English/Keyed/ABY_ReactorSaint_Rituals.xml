@@ -5,8 +5,8 @@
   <ABY_CircleRitual_ReactorSaint_Desc>Consumes one reactor saint sigil, routes a colonist to the circle, and calls down a sealed reactor cocoon near the colony. The cocoon crashes in with a violent breach impact, remains dormant for a prolonged cycle, then releases the Infernal Reactor Saint before burning upward into the sky.</ABY_CircleRitual_ReactorSaint_Desc>
   <ABY_CircleRitual_ReactorSaint_Rewards>• Second full boss tier after the first vertical slice&#10;• Drops a saint reactor core, spacer-grade salvage, and high-value residue&#10;• Forces anti-artillery spacing and sustained boss pressure management</ABY_CircleRitual_ReactorSaint_Rewards>
   <ABY_CircleRitual_ReactorSaint_SideEffects>• Arrives as a real falling cocoon instead of an instant pop-in&#10;• Impacts near the colony with a breach explosion before opening&#10;• Stays on the field after release, then burns back into the sky</ABY_CircleRitual_ReactorSaint_SideEffects>
-  <ABY_ReactorSaintSummonSuccessLabel>Reactor saint released</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>The sealed cocoon has broken open. The Infernal Reactor Saint has stepped out of the breach and is now fully active.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaintSummonSuccessLabel>Reactor Saint released</ABY_ReactorSaintSummonSuccessLabel>
+  <ABY_ReactorSaintSummonSuccessDesc>The sealed cocoon has broken. The Infernal Reactor Saint has stepped out under its own sacred-industrial pressure, and the breach is routing a close escort screen around the release site.</ABY_ReactorSaintSummonSuccessDesc>
   <ABY_ReactorSaint_InspectAegis>Reactor Aegis: {0} / {1}</ABY_ReactorSaint_InspectAegis>
   <ABY_ReactorSaint_InspectCoreDestabilized>Core destabilized: {0}s</ABY_ReactorSaint_InspectCoreDestabilized>
   <ABY_ReactorSaint_InspectPhase>Reactor Phase: {0}</ABY_ReactorSaint_InspectPhase>

@@ -26,8 +26,7 @@ namespace AbyssalProtocol
             "ABY_ArchonSigil",
             "ABY_WardenOfAshSigil",
             "ABY_UnstableBreachSigil",
-            "ABY_EmberHoundSigil",
-            "ABY_HexgunRelaySigil"
+            "ABY_EmberHoundSigil"
         };
 
         private static readonly Dictionary<string, int> AcceptedSigilPriority = new Dictionary<string, int>(StringComparer.Ordinal)
@@ -39,9 +38,8 @@ namespace AbyssalProtocol
             { "ABY_ChoirEngineSigil", 4 },
             { "ABY_ArchonSigil", 5 },
             { "ABY_WardenOfAshSigil", 6 },
-            { "ABY_HexgunRelaySigil", 7 },
-            { "ABY_EmberHoundSigil", 8 },
-            { "ABY_UnstableBreachSigil", 9 }
+            { "ABY_EmberHoundSigil", 7 },
+            { "ABY_UnstableBreachSigil", 8 }
         };
 
         private static readonly HashSet<string> AcceptedSigilDefNameSet = new HashSet<string>(AcceptedSigilDefNames, StringComparer.Ordinal);

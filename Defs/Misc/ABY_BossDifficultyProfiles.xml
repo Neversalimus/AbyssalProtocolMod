@@ -72,6 +72,27 @@
   </AbyssalProtocol.ABY_BossDifficultyProfileDef>
 
   <AbyssalProtocol.ABY_BossDifficultyProfileDef>
+    <defName>ABY_BossProfile_RiftButcher</defName>
+    <ritualIds>
+      <li>rift_butcher</li>
+    </ritualIds>
+    <bossPawnKindDefNames>
+      <li>ABY_RiftButcher</li>
+    </bossPawnKindDefNames>
+    <minProgressionStage>1</minProgressionStage>
+    <escortPoolId>rift_butcher_escort</escortPoolId>
+    <escortBaseContentTier>3</escortBaseContentTier>
+    <fallbackEscortBudget>780</fallbackEscortBudget>
+    <escortBudgetMultiplier>1.04</escortBudgetMultiplier>
+    <preferredDoctrineDefNames>
+      <li>ABY_Doctrine_SeverancePursuit</li>
+    </preferredDoctrineDefNames>
+    <secondaryDoctrineDefNames>
+      <li>ABY_Doctrine_HunterPressure</li>
+    </secondaryDoctrineDefNames>
+  </AbyssalProtocol.ABY_BossDifficultyProfileDef>
+
+  <AbyssalProtocol.ABY_BossDifficultyProfileDef>
     <defName>ABY_BossProfile_ReactorSaint</defName>
     <ritualIds>
       <li>reactor_saint</li>

@@ -60,6 +60,8 @@
         <arrivalNearColonyMinDistance>13</arrivalNearColonyMinDistance>
         <arrivalNearColonyMaxDistance>24</arrivalNearColonyMaxDistance>
         <arrivalSoundDefName>ABY_RuptureArrive</arrivalSoundDefName>
+        <completionLetterLabelKey>ABY_ArchonSummonSuccessLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_ArchonSummonSuccessDesc</completionLetterDescKey>
       
         <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
         <rareEscortCount>1</rareEscortCount>

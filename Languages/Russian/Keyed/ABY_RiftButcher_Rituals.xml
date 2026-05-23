@@ -20,8 +20,8 @@
 
   <ABY_FirstHordeClearLabel>Horde Gate сдержан</ABY_FirstHordeClearLabel>
   <ABY_FirstHordeClearDesc>Первый армейский Horde Gate рухнул под огнём колонии. Его паттерн закрытия теперь можно сжать в ключ рассечения для Rift Butcher.</ABY_FirstHordeClearDesc>
-  <ABY_RiftButcherSummonSuccessLabel>Rift Butcher направлен</ABY_RiftButcherSummonSuccessLabel>
-  <ABY_RiftButcherSummonSuccessDesc>Круг втянул на карту доминионного разрушителя строя. Не давайте ему закрепиться в линии огня: он будет цеплять, рывком входить в позицию и резать оборонительный строй.</ABY_RiftButcherSummonSuccessDesc>
+  <ABY_RiftButcherSummonSuccessLabel>Рифт-мясник маршрутизирован</ABY_RiftButcherSummonSuccessLabel>
+  <ABY_RiftButcherSummonSuccessDesc>Круг втянул на карту доминионного разрушителя строя и зажал его эскорт рядом с раной перехода. Не давайте Рифт-мяснику закрепиться в линии огня: он будет цеплять, рывком входить в позицию и резать оборонительные формации.</ABY_RiftButcherSummonSuccessDesc>
   <ABY_RiftButcherKillLabel>Rift Butcher побеждён</ABY_RiftButcherKillLabel>
   <ABY_RiftButcherKillDesc>Каркас рассечения Rift Butcher рухнул. Его ядро доказывает, что колония пережила доминионную прелюдию, и Dominion Gate теперь может быть вооружён.</ABY_RiftButcherKillDesc>
 

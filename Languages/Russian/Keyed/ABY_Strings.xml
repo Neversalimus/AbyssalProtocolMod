@@ -118,8 +118,8 @@
   <ABY_CircleControlToggles>Тумблеры управления</ABY_CircleControlToggles>
   <ABY_CircleReducedEffectsDesc>Ослабляет скользящие линии, вращение печати и другие движущиеся акценты внутри консоли призыва.</ABY_CircleReducedEffectsDesc>
   <ABY_CircleFail_NoPortalSpawn>Рядом с кругом не удалось открыть подходящую точку разлома.</ABY_CircleFail_NoPortalSpawn>
-  <ABY_CircleUnstableBreachLetterLabel>Нестабильный разлом открыт</ABY_CircleUnstableBreachLetterLabel>
-  <ABY_CircleUnstableBreachLetterDesc>Круг вскрыл малый враждебный разлом. Из портала выходят разлом бес, а богатые колонии притягивают более тяжёлую волну.</ABY_CircleUnstableBreachLetterDesc>
+  <ABY_CircleUnstableBreachLetterLabel>Нестабильный разлом разорван</ABY_CircleUnstableBreachLetterLabel>
+  <ABY_CircleUnstableBreachLetterDesc>Круг продавил грубую рану в локальном пространстве. Рифт-бесы выходят из нестабильного портала импульсами; крупная колония может притянуть более тяжёлый эскортный след вокруг разлома.</ABY_CircleUnstableBreachLetterDesc>
   <ABY_CircleRitual_Unstable_Label>Открыть нестабильный разлом</ABY_CircleRitual_Unstable_Label>
   <ABY_CircleRitual_Unstable_Subtitle>Тренировка до первого босса</ABY_CircleRitual_Unstable_Subtitle>
   <ABY_CircleRitual_Unstable_Desc>Тратит одну сигилу нестабильного разлома и открывает малый враждебный рифт. Это раннее столкновение до тира первого босса.</ABY_CircleRitual_Unstable_Desc>
@@ -171,4 +171,6 @@
   <ABY_CircleVentFail_Busy>Круг призыва занят и не может сбросить загрязнение прямо сейчас.</ABY_CircleVentFail_Busy>
   <ABY_CircleVentFail_LowContamination>Остаточное загрязнение слишком низкое для сброса.</ABY_CircleVentFail_LowContamination>
   <ABY_CircleVentFail_Cooldown>Сброс загрязнения ещё перезаряжается: {0}.</ABY_CircleVentFail_Cooldown>
+  <ABY_ArchonSummonSuccessLabel>Манифестация Архонта формируется</ABY_ArchonSummonSuccessLabel>
+  <ABY_ArchonSummonSuccessDesc>Сигила Архонта открыла не простую дверь. Рядом с колонией сгущается хищная манифестация, а её порталы гончих разорвутся раньше, чем Зверь-Архонт полностью перейдёт в мир.</ABY_ArchonSummonSuccessDesc>
 </LanguageData>

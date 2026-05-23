@@ -622,4 +622,74 @@
     </roleWeightMultipliers>
   </AbyssalProtocol.ABY_EncounterTemplateDef>
 
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_RiftButcherEscort_HoundBreak</defName>
+    <poolId>rift_butcher_escort</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Severe</difficultyFloorDefName>
+    <selectionWeight>1.00</selectionWeight>
+    <budgetMultiplier>1.02</budgetMultiplier>
+    <maxSameKindCount>4</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>assault</role><count>1</count></li>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>1.34</multiplier></li>
+      <li><role>elite</role><multiplier>1.12</multiplier></li>
+      <li><role>support</role><multiplier>0.76</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_RiftButcherEscort_ChainClamp</defName>
+    <poolId>rift_butcher_escort</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Rupture</difficultyFloorDefName>
+    <selectionWeight>0.78</selectionWeight>
+    <budgetMultiplier>0.98</budgetMultiplier>
+    <maxSameKindCount>3</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>elite</role><count>1</count></li>
+      <li><role>support</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>assault</role><count>2</count></li>
+      <li><role>support</role><count>2</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>1.04</multiplier></li>
+      <li><role>support</role><multiplier>1.10</multiplier></li>
+      <li><role>elite</role><multiplier>1.24</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
+  <AbyssalProtocol.ABY_EncounterTemplateDef>
+    <defName>ABY_EncounterTemplate_RiftButcherEscort_GateGuard</defName>
+    <poolId>rift_butcher_escort</poolId>
+    <difficultyFloorDefName>ABY_Difficulty_Dominion</difficultyFloorDefName>
+    <selectionWeight>0.46</selectionWeight>
+    <budgetMultiplier>0.94</budgetMultiplier>
+    <maxSameKindCount>2</maxSameKindCount>
+    <minimumRoleCounts>
+      <li><role>elite</role><count>1</count></li>
+    </minimumRoleCounts>
+    <maximumRoleCounts>
+      <li><role>assault</role><count>2</count></li>
+      <li><role>support</role><count>1</count></li>
+      <li><role>elite</role><count>2</count></li>
+      <li><role>boss</role><count>0</count></li>
+    </maximumRoleCounts>
+    <roleWeightMultipliers>
+      <li><role>assault</role><multiplier>0.88</multiplier></li>
+      <li><role>support</role><multiplier>0.92</multiplier></li>
+      <li><role>elite</role><multiplier>1.36</multiplier></li>
+    </roleWeightMultipliers>
+  </AbyssalProtocol.ABY_EncounterTemplateDef>
+
 </Defs>

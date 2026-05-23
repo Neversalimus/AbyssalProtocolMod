@@ -20,8 +20,8 @@
   <ABY_DominionCrisisAbortCommand>Оборвать стадию доминиона</ABY_DominionCrisisAbortCommand>
   <ABY_DominionCrisisConfirmAbort>Прервать внешний этап Великих инфернальных врат на этой карте? Это завершит текущее подготовительное окно и пометит запуск как отменённый.</ABY_DominionCrisisConfirmAbort>
   <ABY_DominionCrisisAbortStarted>Стадия доминиона прервана.</ABY_DominionCrisisAbortStarted>
-  <ABY_DominionCrisisStartLabel>Великие инфернальные врата вооружены</ABY_DominionCrisisStartLabel>
-  <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию синхронизации доминиона. Прорыв нестабилен, но Великие инфернальные врата ещё не развернулись полностью.</ABY_DominionCrisisStartDesc>
+  <ABY_DominionCrisisStartLabel>Великие Инфернальные Врата вооружены</ABY_DominionCrisisStartLabel>
+  <ABY_DominionCrisisStartDesc>{0} вошёл в первую стадию доминионной синхронизации. Это не вызов рейда, а слой допуска к вратам: мир начинает принимать внешние якоря Великих Инфернальных Врат.</ABY_DominionCrisisStartDesc>
   <ABY_DominionCrisisAnchorfallLabel>Якоря доминиона проявились</ABY_DominionCrisisAnchorfallLabel>
   <ABY_DominionCrisisAnchorfallDesc>{0} перешёл в короткую прелюдию прорыва доминиона. Проявилось {1} внешних якорей, стабилизирующих замок врат. Они больше не являются основной целью; решётка скоро закончит раскрытие Великих инфернальных врат.</ABY_DominionCrisisAnchorfallDesc>
   <ABY_DominionCrisisStandbyLabel>Ядро доминиона синхронизировано</ABY_DominionCrisisStandbyLabel>

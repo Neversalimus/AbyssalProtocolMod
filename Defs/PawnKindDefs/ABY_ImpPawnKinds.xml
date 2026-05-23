@@ -27,7 +27,8 @@
           <li>dominion_wave</li>
           <li>dominion_gate_support</li>
           <li>warden_boss_escort</li>
-        </encounterPools>
+                  <li>rift_butcher_escort</li>
+</encounterPools>
       </li>
       <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
         <isAbyssal>true</isAbyssal>

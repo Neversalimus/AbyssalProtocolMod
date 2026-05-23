@@ -159,8 +159,8 @@
 
   <ThingDef ParentName="ResourceBase">
     <defName>ABY_HexgunRelaySigil</defName>
-    <label>hexgun relay sigil</label>
-    <description>A retired infernal-tech relay whose access pattern has been superseded by safer circle geometry. Existing copies still carry a faint breach signature, but the modern circle no longer treats them as a frontline rite.</description>
+    <label>legacy hexgun relay sigil</label>
+    <description>A retired infernal-tech relay whose access pattern has been sealed out of the modern circle. Existing saved copies are migration-only remnants and should be converted into ember hound sigils on load.</description>
     <thingClass>AbyssalProtocol.Thing_AbyssalAnimatedItem</thingClass>
     <drawerType>RealtimeOnly</drawerType>
     <graphicData>
@@ -168,36 +168,12 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <stackLimit>10</stackLimit>
-    <thingCategories>
-      <li>Manufactured</li>
-    </thingCategories>
-    <tradeability>Sellable</tradeability>
+    <tradeability>None</tradeability>
     <statBases>
-      <MarketValue>265</MarketValue>
+      <MarketValue>0</MarketValue>
       <Mass>0.24</Mass>
       <Flammability>0</Flammability>
     </statBases>
-    <comps>
-      <li Class="CompProperties_Usable">
-        <useJob>ABY_CarrySigilToCircle</useJob>
-        <useLabel>retired relay</useLabel>
-      </li>
-      <li Class="AbyssalProtocol.CompProperties_UseEffectSummonBoss">
-        <ritualId>hexgun_thralls</ritualId>
-        <summonMode>HostilePack</summonMode>
-        <pawnKindDefName>ABY_HexgunThrall</pawnKindDefName>
-        <bossLabel>Hexgun Thrall fireteam</bossLabel>
-        <spawnPoints>340</spawnPoints>
-        <ritualWarmupTicks>170</ritualWarmupTicks>
-        <impCount>3</impCount>
-        <completionLetterLabelKey>ABY_CircleHexgunThrallLetterLabel</completionLetterLabelKey>
-        <completionLetterDescKey>ABY_CircleHexgunThrallLetterDesc</completionLetterDescKey>
-      
-        <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
-        <rareEscortCount>1</rareEscortCount>
-        <rareEscortChance>0.05</rareEscortChance>
-      </li>
-    </comps>
   </ThingDef>
 
   <ThingDef ParentName="BaseBullet">

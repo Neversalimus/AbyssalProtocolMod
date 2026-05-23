@@ -1,3 +1,9 @@
+## 2026-05-23 — Sigil routing and close-escort regression guards
+
+- `ABY_HexgunRelaySigil` is now a legacy/migration-only def. Do not add it back to `Building_ABY_SigilVault.AcceptedSigilDefNames`, loot, crafting, or active ritual UI unless the Hexgun Relay ritual is deliberately reimplemented as a real encounter again.
+- Direct miniboss summons should keep local boss-anchor escort spawning with edge fallback. Reverting Choir Engine, Warden of Ash, or Rift Butcher to pure edge support packs makes their support feel detached from the miniboss and weakens the intended encounter presentation.
+- Ritual-specific T1/T2 arrival presentation now lives in `Building_AbyssalSummoningCircle.DoRitualSpecificArrivalPresentation`. Preserve this central routing when adding new low/mid-tier sigils so future sigils do not silently fall back to generic charge pulses.
+
 ## 2026-05-23 — Static cache memory-retention hardening
 
 - Do not key long-lived static UI/runtime caches by `Map` unless the cache is explicitly cleared on map removal; static dictionaries with `Map` keys can keep removed maps and their thing graphs alive across Dominion/pocket-map cleanup or unusual modpack map lifecycles. Prefer `map.uniqueID` plus periodic `Find.Maps` pruning.

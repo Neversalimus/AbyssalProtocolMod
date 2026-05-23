@@ -26,7 +26,8 @@
           <li>dominion_gate_support</li>
           <li>archon_boss_escort</li>
           <li>reactor_saint_escort</li>
-        </encounterPools>
+                  <li>rift_butcher_escort</li>
+</encounterPools>
       </li>
       <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
         <isAbyssal>true</isAbyssal>

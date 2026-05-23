@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <ABY_CircleEmberHoundLetterLabel>Выпущены угольные гончие</ABY_CircleEmberHoundLetterLabel>
-  <ABY_CircleEmberHoundLetterDesc>Круг стравливает на карту разлом хищной стаи. Угольные гончие уже ищут открытых стрелков и слабые точки обороны.</ABY_CircleEmberHoundLetterDesc>
+  <ABY_CircleEmberHoundLetterLabel>Угольная охота выпущена</ABY_CircleEmberHoundLetterLabel>
+  <ABY_CircleEmberHoundLetterDesc>Круг выпустил не стройный рейд, а охотничий разлом. Угольные гончие входят быстрой фланговой стаей и уже ищут открытых стрелков, изолированных операторов и слабые двери тыла.</ABY_CircleEmberHoundLetterDesc>
   <ABY_CircleRitual_EmberHound_Label>Спустить угольные гончие</ABY_CircleRitual_EmberHound_Label>
   <ABY_CircleRitual_EmberHound_Subtitle>Быстрая фланговая атака стаи</ABY_CircleRitual_EmberHound_Subtitle>
   <ABY_CircleRitual_EmberHound_Desc>Тратит один сигилу угольной гончей, направляет колониста к кругу и вводит на карту масштабируемую под колонию враждебную охотничью стаю. Угольные гончие прыгают на стрелков, импы расширяют давление, а один Гексган-раб появляется только на верхнем уровне угрозы.</ABY_CircleRitual_EmberHound_Desc>

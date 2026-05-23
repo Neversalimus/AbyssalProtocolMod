@@ -11,8 +11,8 @@
 • Открывает сразу несколько фронтов разлома по периметру вместо одного локального спавна
 • Очень сильно масштабируется от колонии, богатства и протокола сложности
 • Даже огромная волна не выдаёт награды уровня босс/минибосс</ABY_CircleRitual_Horde_SideEffects>
-  <ABY_HordeGateSummonSuccessLabel>Врата Орды открыт</ABY_HordeGateSummonSuccessLabel>
-  <ABY_HordeGateSummonSuccessDesc>По периметру карты открываются множественные фронты разрыва. Обычные боевые формы Бездны входят волнами через повторяющиеся порталы.</ABY_HordeGateSummonSuccessDesc>
+  <ABY_HordeGateSummonSuccessLabel>Фронты Орды открываются</ABY_HordeGateSummonSuccessLabel>
+  <ABY_HordeGateSummonSuccessDesc>Сигила разрешила армейский прорыв. По периметру последовательно открываются несколько фронтов, каждый из которых пульсами вводит обычные боевые формы Бездны вместо одного именного босса.</ABY_HordeGateSummonSuccessDesc>
   <ABY_CircleRewardGuaranteed_Horde>Гарантированно: кэш схлопывания прорыва с высоким выходом остаток, осколками орды и трофейный лом-добычей. При наличии командные врата его уничтожение даёт отдельный бонус.</ABY_CircleRewardGuaranteed_Horde>
   <ABY_CircleRewardProgression_Horde>Допуск: проверяет позднюю многовекторную оборону после Реакторного Святого и питает отдельный экономический слой после Святого, а не очередной уровень босс-ядра.</ABY_CircleRewardProgression_Horde>
   <ABY_HordeRitualMeta>Сигил на карте: {0}   •   Доктрина: {1}   •   Фронты: {2}   •   Импульсы: {3}   •   Командные врата: {4}   •   Прогноз: {5}   •   Протокол: {6}</ABY_HordeRitualMeta>

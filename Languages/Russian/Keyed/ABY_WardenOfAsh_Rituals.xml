@@ -9,6 +9,6 @@
   <ABY_CircleRitual_Warden_SideEffects>• Вместо простой стаи появляется бронированный враждебный мини-босс
 • Даёт пепельные импульсы ближнего радиуса, наказывающие скученность и мили-рои
 • По мере потери здоровья открывает грудной портал и выпускает подкрепления импов</ABY_CircleRitual_Warden_SideEffects>
-  <ABY_WardenSummonSuccessLabel>Пепельный прорыв открыт</ABY_WardenSummonSuccessLabel>
-  <ABY_WardenSummonSuccessDesc>Сигила сработала. Сформирован дисциплинированный пепельный разлом, и Страж оф Пепел пересекает локальное пространство.</ABY_WardenSummonSuccessDesc>
+  <ABY_WardenSummonSuccessLabel>Пепельный прорыв Стража открыт</ABY_WardenSummonSuccessLabel>
+  <ABY_WardenSummonSuccessDesc>Сигила легла в пепельный командный шаблон. Страж Пепла переходит вместе с ближней инфернальной поддержкой, превращая разлом в первую дисциплинированную проверку мини-боссом.</ABY_WardenSummonSuccessDesc>
 </LanguageData>

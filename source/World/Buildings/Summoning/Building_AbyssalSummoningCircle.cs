@@ -1745,7 +1745,8 @@ namespace AbyssalProtocol
                 pendingArrivalSoundDefName,
                 pendingCompletionLetterLabelKey,
                 pendingCompletionLetterDescKey);
-            TrySpawnPendingSupportPack();
+            DoRitualSpecificArrivalPresentation(pendingRitualId, pendingSpawnCell, 1f);
+            TrySpawnPendingSupportPackNearBoss(pawn);
             ApplyRitualInstability();
             ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
         }
@@ -1961,10 +1962,7 @@ namespace AbyssalProtocol
 
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.16f);
-            if (arrivalCell.IsValid)
-            {
-                ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", arrivalCell, Map);
-            }
+            DoRitualSpecificArrivalPresentation(pendingRitualId, arrivalCell, 1f);
 
             ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
         }
@@ -2101,6 +2099,7 @@ namespace AbyssalProtocol
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
+            DoRitualSpecificArrivalPresentation(pendingRitualId, portal.Position, 1f);
             ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
             Find.LetterStack.ReceiveLetter(
                 GetCompletionLetterLabel(),
@@ -2316,6 +2315,79 @@ namespace AbyssalProtocol
             return kindDef != null && string.Equals(kindDef.defName, HaloHuskPawnKindDefName, System.StringComparison.OrdinalIgnoreCase);
         }
 
+        private void DoRitualSpecificArrivalPresentation(string ritualId, IntVec3 center, float intensity)
+        {
+            if (Map == null || !center.IsValid || !center.InBounds(Map))
+            {
+                return;
+            }
+
+            string safeRitualId = (ritualId ?? string.Empty).ToLowerInvariant();
+            AbyssalBossScreenFXGameComponent fxComp = Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>();
+            float safeIntensity = Mathf.Clamp(intensity, 0.45f, 1.75f);
+
+            switch (safeRitualId)
+            {
+                case "unstable_breach":
+                    fxComp?.RegisterRitualPulse(Map, 0.24f * safeIntensity);
+                    ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", center, Map);
+                    DoOffsetSummonVFX(center, 1, 0);
+                    DoOffsetSummonVFX(center, -1, 0);
+                    break;
+                case "ember_hunt":
+                    fxComp?.RegisterRitualPulse(Map, 0.20f * safeIntensity);
+                    ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", center, Map);
+                    DoOffsetSummonVFX(center, 2, 0);
+                    DoOffsetSummonVFX(center, -2, 0);
+                    DoOffsetSummonVFX(center, 0, 2);
+                    break;
+                case "choir_engine":
+                    fxComp?.RegisterRitualPulse(Map, 0.23f * safeIntensity);
+                    ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", center, Map);
+                    DoOffsetSummonVFX(center, 1, 1);
+                    DoOffsetSummonVFX(center, -1, 1);
+                    DoOffsetSummonVFX(center, 1, -1);
+                    DoOffsetSummonVFX(center, -1, -1);
+                    break;
+                case "rift_butcher":
+                    fxComp?.RegisterRitualPulse(Map, 0.27f * safeIntensity);
+                    ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", center, Map);
+                    DoOffsetSummonVFX(center, 1, 0);
+                    DoOffsetSummonVFX(center, 0, 1);
+                    DoOffsetSummonVFX(center, -1, 0);
+                    break;
+                case "warden_of_ash":
+                    fxComp?.RegisterRitualPulse(Map, 0.20f * safeIntensity);
+                    ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", center, Map);
+                    DoOffsetSummonVFX(center, 1, 1);
+                    DoOffsetSummonVFX(center, -1, -1);
+                    break;
+                default:
+                    fxComp?.RegisterRitualPulse(Map, 0.16f * safeIntensity);
+                    if (center.IsValid)
+                    {
+                        ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", center, Map);
+                    }
+                    break;
+            }
+        }
+
+        private void DoOffsetSummonVFX(IntVec3 center, int xOffset, int zOffset)
+        {
+            if (Map == null || !center.IsValid)
+            {
+                return;
+            }
+
+            IntVec3 cell = center + new IntVec3(xOffset, 0, zOffset);
+            if (!cell.IsValid || !cell.InBounds(Map) || !cell.Standable(Map))
+            {
+                return;
+            }
+
+            ArchonInfernalVFXUtility.DoSummonVFX(Map, cell);
+        }
+
         private void TrySpawnPendingSupportPack()
         {
             if (Map == null || pendingFaction == null)
@@ -2323,6 +2395,35 @@ namespace AbyssalProtocol
                 return;
             }
 
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = BuildPendingSupportPackEntries();
+            TrySpawnPendingSupportEntries(entries, IntVec3.Invalid, false, "scaled support pack");
+        }
+
+        private void TrySpawnPendingSupportPackNearBoss(Pawn bossPawn)
+        {
+            if (Map == null || pendingFaction == null)
+            {
+                return;
+            }
+
+            if (bossPawn == null || bossPawn.Dead || !bossPawn.Spawned)
+            {
+                TrySpawnPendingSupportPack();
+                return;
+            }
+
+            List<AbyssalHostileSummonUtility.HostilePackEntry> entries = BuildPendingSupportPackEntries();
+            IntVec3 anchorCell = ResolvePendingBossEscortAnchorCell(bossPawn);
+            if (TrySpawnPendingSupportEntries(entries, anchorCell, true, "local boss escort"))
+            {
+                return;
+            }
+
+            TrySpawnPendingSupportEntries(entries, IntVec3.Invalid, false, "fallback boss escort");
+        }
+
+        private List<AbyssalHostileSummonUtility.HostilePackEntry> BuildPendingSupportPackEntries()
+        {
             bool hasLegacyEntries = pendingSupportImpCount > 0
                 || pendingSupportThrallCount > 0
                 || pendingSupportSapperCount > 0
@@ -2385,14 +2486,17 @@ namespace AbyssalProtocol
                         Count = pendingSupportZealotCount
                     });
                 }
-
             }
 
             AddPendingRareEscortEntry(entries);
+            return entries;
+        }
 
+        private bool TrySpawnPendingSupportEntries(List<AbyssalHostileSummonUtility.HostilePackEntry> entries, IntVec3 requestedCell, bool localAnchor, string failureContext)
+        {
             if (entries == null || entries.Count <= 0)
             {
-                return;
+                return false;
             }
 
             ABY_EncounterShadowPlannerUtility.TryLogShadowPlanForLegacyPack(
@@ -2403,20 +2507,75 @@ namespace AbyssalProtocol
                 Map,
                 entries);
 
-            if (!AbyssalHostileSummonUtility.TrySpawnHostilePack(
+            bool spawned;
+            string failReason;
+            if (localAnchor && requestedCell.IsValid && requestedCell.InBounds(Map))
+            {
+                spawned = AbyssalHostileSummonUtility.TrySpawnHostilePackAroundAnchor(
                     Map,
                     entries,
                     pendingFaction,
-                    IntVec3.Invalid,
+                    requestedCell,
+                    pendingBossLabel,
+                    out failReason);
+                if (spawned)
+                {
+                    DoRitualSpecificArrivalPresentation(pendingRitualId, requestedCell, 0.75f);
+                    return true;
+                }
+            }
+            else
+            {
+                spawned = AbyssalHostileSummonUtility.TrySpawnHostilePack(
+                    Map,
+                    entries,
+                    pendingFaction,
+                    requestedCell,
                     pendingBossLabel,
                     null,
                     null,
                     false,
-                    out _,
-                    out string failReason))
-            {
-                Log.Warning("[Abyssal Protocol] Failed to spawn scaled support pack: " + failReason);
+                    out IntVec3 arrivalCell,
+                    out failReason);
+                if (spawned)
+                {
+                    DoRitualSpecificArrivalPresentation(pendingRitualId, arrivalCell, 0.65f);
+                    return true;
+                }
             }
+
+            if (!localAnchor)
+            {
+                Log.Warning("[Abyssal Protocol] Failed to spawn " + (failureContext ?? "support pack") + ": " + (failReason ?? "unknown failure"));
+            }
+
+            return false;
+        }
+
+        private IntVec3 ResolvePendingBossEscortAnchorCell(Pawn bossPawn)
+        {
+            if (bossPawn == null)
+            {
+                return IntVec3.Invalid;
+            }
+
+            CellRect rect = bossPawn.OccupiedRect();
+            if (!rect.IsEmpty)
+            {
+                IntVec3 center = rect.CenterCell;
+                if (center.IsValid && (Map == null || center.InBounds(Map)))
+                {
+                    return center;
+                }
+            }
+
+            IntVec3 fallback = bossPawn.PositionHeld;
+            if (fallback.IsValid && (Map == null || fallback.InBounds(Map)))
+            {
+                return fallback;
+            }
+
+            return IntVec3.Invalid;
         }
 
         private float GetPendingEscortFallbackBudget()
@@ -2436,6 +2595,8 @@ namespace AbyssalProtocol
                     return 850f;
                 case "choir_engine":
                     return 760f;
+                case "rift_butcher":
+                    return 780f;
                 case "reactor_saint":
                     return 1100f;
                 default:
@@ -2453,6 +2614,8 @@ namespace AbyssalProtocol
                     return "ember_hunt_pack";
                 case "choir_engine":
                     return "choir_escort";
+                case "rift_butcher":
+                    return "rift_butcher_escort";
                 case "warden_of_ash":
                     return "warden_boss_escort";
                 case "archon_beast":
@@ -2485,7 +2648,9 @@ namespace AbyssalProtocol
             switch ((pendingRitualId ?? string.Empty).ToLowerInvariant())
             {
                 case "choir_engine":
-                    return 2;
+                    return 3;
+                case "rift_butcher":
+                    return 3;
                 case "archon_beast":
                 case "warden_of_ash":
                     return 2;

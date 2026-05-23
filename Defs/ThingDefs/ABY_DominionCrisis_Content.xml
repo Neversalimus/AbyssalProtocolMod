@@ -32,6 +32,8 @@
         <bossLabel>Great Infernal Gate staging</bossLabel>
         <spawnPoints>1600</spawnPoints>
         <ritualWarmupTicks>210</ritualWarmupTicks>
+        <completionLetterLabelKey>ABY_DominionCrisisStartLabel</completionLetterLabelKey>
+        <completionLetterDescKey>ABY_DominionCrisisStartDesc</completionLetterDescKey>
       
         <rareEscortPawnKindDefName>ABY_HaloHusk</rareEscortPawnKindDefName>
         <rareEscortCount>1</rareEscortCount>

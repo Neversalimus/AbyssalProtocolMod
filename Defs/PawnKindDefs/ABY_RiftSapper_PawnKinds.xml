@@ -37,7 +37,8 @@
           <li>dominion_gate_support</li>
           <li>reactor_saint_escort</li>
           <li>horde_sigil_wave</li>
-        </encounterPools>
+                  <li>rift_butcher_escort</li>
+</encounterPools>
       </li>
       <li Class="AbyssalProtocol.ABY_AbyssalPawnClassificationExtension">
         <isAbyssal>true</isAbyssal>

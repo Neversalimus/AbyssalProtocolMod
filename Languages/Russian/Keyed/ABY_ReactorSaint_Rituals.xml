@@ -9,8 +9,8 @@
   <ABY_CircleRitual_ReactorSaint_SideEffects>• Входит как реальный падающий кокон, а не мгновенный спавн
 • Бьёт рядом с базой разломным взрывом перед раскрытием
 • После выпуска босса ещё остаётся на поле, а затем уходит обратно в небо</ABY_CircleRitual_ReactorSaint_SideEffects>
-  <ABY_ReactorSaintSummonSuccessLabel>Святой Реактор освобождён</ABY_ReactorSaintSummonSuccessLabel>
-  <ABY_ReactorSaintSummonSuccessDesc>Запечатанный кокон раскрылся. Инфернальный Реакторный Святой вышел из разлома и полностью вошёл в бой.</ABY_ReactorSaintSummonSuccessDesc>
+  <ABY_ReactorSaintSummonSuccessLabel>Реакторный Святой освобождён</ABY_ReactorSaintSummonSuccessLabel>
+  <ABY_ReactorSaintSummonSuccessDesc>Запечатанный кокон раскололся. Инфернальный Реакторный Святой вышел под собственным священно-индустриальным давлением, а разлом стягивает ближний эскорт вокруг места освобождения.</ABY_ReactorSaintSummonSuccessDesc>
   <ABY_ReactorSaint_InspectAegis>Эгида Реактора: {0} / {1}</ABY_ReactorSaint_InspectAegis>
   <ABY_ReactorSaint_InspectCoreDestabilized>Ядро дестабилизировано: {0} с</ABY_ReactorSaint_InspectCoreDestabilized>
   <ABY_ReactorSaint_InspectPhase>Фаза Реактора: {0}</ABY_ReactorSaint_InspectPhase>
