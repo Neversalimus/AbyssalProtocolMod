@@ -12,8 +12,11 @@ namespace AbyssalProtocol
         private const string SinterRecipeDefName = "ABY_SinterAbyssalRemains";
         private const string SignalResearchDefName = "ABY_AbyssalSignalTheory";
         private const int CacheIntervalTicks = 90;
+        private const int StaleCacheCleanupIntervalTicks = 2500;
+        private const int MaxFutureTickWindow = 250000;
 
-        private static readonly Dictionary<Map, CachedStatus> CachedStatuses = new Dictionary<Map, CachedStatus>();
+        private static readonly Dictionary<int, CachedStatus> CachedStatuses = new Dictionary<int, CachedStatus>();
+        private static int nextStaleCacheCleanupTick = int.MinValue;
 
         private struct CachedStatus
         {
@@ -90,18 +93,27 @@ namespace AbyssalProtocol
             }
 
             int ticksGame = Find.TickManager?.TicksGame ?? 0;
-            if (CachedStatuses.TryGetValue(map, out CachedStatus cached) && ticksGame - cached.Tick < CacheIntervalTicks)
+            int mapId = map.uniqueID;
+            PruneStaleCachedStatuses(ticksGame, false);
+
+            if (CachedStatuses.TryGetValue(mapId, out CachedStatus cached) && IsCacheFresh(cached, ticksGame) && IsSnapshotStillValidForMap(cached.Status, map))
             {
                 return cached.Status;
             }
 
             StatusSnapshot status = BuildStatusUncached(map);
-            CachedStatuses[map] = new CachedStatus
+            CachedStatuses[mapId] = new CachedStatus
             {
                 Tick = ticksGame,
                 Status = status
             };
             return status;
+        }
+
+        public static void ClearCachedStatuses()
+        {
+            CachedStatuses.Clear();
+            nextStaleCacheCleanupTick = int.MinValue;
         }
 
         public static StatusSnapshot BuildStatusUncached(Map map)
@@ -124,6 +136,111 @@ namespace AbyssalProtocol
             ScanSinterableCorpses(map, ref status);
             ScanCrucibles(map, crucibleDef, sinterRecipe, ref status);
             return status;
+        }
+
+
+        private static bool IsCacheFresh(CachedStatus cached, int ticksGame)
+        {
+            int age = ticksGame - cached.Tick;
+            return age >= 0 && age < CacheIntervalTicks;
+        }
+
+        private static bool IsSnapshotStillValidForMap(StatusSnapshot status, Map map)
+        {
+            Thing focusCrucible = status.FocusCrucible;
+            if (focusCrucible == null)
+            {
+                return true;
+            }
+
+            return !focusCrucible.Destroyed && focusCrucible.Spawned && focusCrucible.Map == map;
+        }
+
+        private static void PruneStaleCachedStatuses(int ticksGame, bool force)
+        {
+            if (CachedStatuses.Count == 0)
+            {
+                return;
+            }
+
+            if (!force && !IsStaleCacheCleanupDue(ticksGame))
+            {
+                return;
+            }
+
+            nextStaleCacheCleanupTick = SafeAddTicks(ticksGame, StaleCacheCleanupIntervalTicks);
+
+            List<Map> maps = null;
+            try
+            {
+                maps = Find.Maps;
+            }
+            catch
+            {
+                // Find.Maps can be unavailable during early load/teardown; keep cleanup best-effort.
+            }
+
+            if (maps == null || maps.Count == 0)
+            {
+                CachedStatuses.Clear();
+                return;
+            }
+
+            Dictionary<int, Map> liveMapsById = new Dictionary<int, Map>(maps.Count);
+            for (int i = 0; i < maps.Count; i++)
+            {
+                Map liveMap = maps[i];
+                if (liveMap != null)
+                {
+                    liveMapsById[liveMap.uniqueID] = liveMap;
+                }
+            }
+
+            List<int> staleMapIds = null;
+            foreach (KeyValuePair<int, CachedStatus> entry in CachedStatuses)
+            {
+                if (!liveMapsById.TryGetValue(entry.Key, out Map liveMap) || !IsSnapshotStillValidForMap(entry.Value.Status, liveMap))
+                {
+                    if (staleMapIds == null)
+                    {
+                        staleMapIds = new List<int>();
+                    }
+
+                    staleMapIds.Add(entry.Key);
+                }
+            }
+
+            if (staleMapIds == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < staleMapIds.Count; i++)
+            {
+                CachedStatuses.Remove(staleMapIds[i]);
+            }
+        }
+
+        private static bool IsStaleCacheCleanupDue(int ticksGame)
+        {
+            if (nextStaleCacheCleanupTick == int.MinValue)
+            {
+                return true;
+            }
+
+            long ticksUntilCleanup = (long)nextStaleCacheCleanupTick - ticksGame;
+            return ticksUntilCleanup <= 0L || ticksUntilCleanup > MaxFutureTickWindow;
+        }
+
+        private static int SafeAddTicks(int now, int delay)
+        {
+            long value = (long)now + Math.Max(1, delay);
+            if (value >= int.MaxValue)
+            {
+                return int.MaxValue;
+            }
+
+            return (int)value;
         }
 
         public static string BuildTierBreakdownLabel(StatusSnapshot status)

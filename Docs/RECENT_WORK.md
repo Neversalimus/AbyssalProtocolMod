@@ -1,3 +1,20 @@
+## 2026-05-23 — Static cache memory-retention hardening
+
+- Hardened `ABY_ResidueSinteringConsoleUtility` so Forge crucible status caching no longer uses `Map` as a static dictionary key. The cache now keys by `map.uniqueID`, validates cached focus crucibles against the live map, and periodically removes entries for maps no longer present in `Find.Maps`.
+- Hardened `ABY_LogThrottleUtility` with normalized bounded keys, expired/stale entry pruning, a maximum tracked-key cap, and a best-effort `Clear()` path so repeated compatibility/runtime warnings cannot grow an unbounded static dictionary during long modpack sessions.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. This is a memory-retention risk reduction pass, not a gameplay/content change. RimWorld runtime smoke testing is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Core/Utilities/ABY_LogThrottleUtility.cs
+source/UI/Forge/ABY_ResidueSinteringConsoleUtility.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Dominion Gravplate T5 armor reprototype
 
 - Reworked the unused `ABY_AbyssalGravplatePrototype` armor line into a playable Tier V Dominion Gravplate shell + helm with Abyssal Forge recipes, active `ABY_PR_DominionSurvivalFrames` Protocol Nexus gating, EN/RU DefInjected text, and updated glossary terms.

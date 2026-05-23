@@ -1,3 +1,9 @@
+## 2026-05-23 — Static cache memory-retention hardening
+
+- Do not key long-lived static UI/runtime caches by `Map` unless the cache is explicitly cleared on map removal; static dictionaries with `Map` keys can keep removed maps and their thing graphs alive across Dominion/pocket-map cleanup or unusual modpack map lifecycles. Prefer `map.uniqueID` plus periodic `Find.Maps` pruning.
+- Do not let warning/message throttle dictionaries grow without a cap. Log throttle keys can become dynamic in compatibility errors, projectile contexts, map IDs, pawn IDs, or texPath failures; keep keys normalized, bounded, and periodically prune expired/stale entries.
+- `ABY_ResidueSinteringConsoleUtility` and `ABY_LogThrottleUtility` were hardened for this pattern: preserve their cleanup/cap behavior when extending Forge UI status cards or adding new throttled diagnostics.
+
 ## 2026-05-23 — Crown Reactor Multilance Four-Rail Verdict safety rules
 
 - `Thing_CrownReactorBeamSequence` is intentionally a bounded sequence controller, not a normal projectile spammer. Keep damage as discrete rail events; do not convert it into per-tick beam damage.
