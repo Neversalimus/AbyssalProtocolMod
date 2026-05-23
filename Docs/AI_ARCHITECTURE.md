@@ -302,6 +302,8 @@ Dev tools, stability diagnostics, Harmony patch reports, test immortality logic,
 
 Diagnostics should not be required for normal gameplay progression unless explicitly designed as a debug-only system.
 
+The Summoning Circle exposes a dev-only `DEV: threat rehearsal` gizmo in Dev Mode. The menu is implemented by `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs` and should remain diagnostics-only: it logs predicted summon threat composition, arrival routing, escort profiles, horde summaries, Dominion notes, capacitor state, and can force-start rituals without consuming sigils for testing. Do not move this into player-facing progression UI unless it is redesigned as a readable Summoning Console forecast.
+
 ### `source/Legacy/`
 
 Migration and legacy cleanup only.

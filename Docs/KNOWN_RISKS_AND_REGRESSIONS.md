@@ -1,3 +1,9 @@
+## 2026-05-23 — Summon threat rehearsal dev-gizmo guard
+
+- `DEV: threat rehearsal` is diagnostics-only. Keep it behind `Prefs.DevMode`; it can force-start rituals without consuming sigils and bypasses progression/capacitor gates for testing.
+- Do not expose the force-start path through the player Summoning Console or normal gizmos. A future player-facing forecast should be read-only and localized, not a dev force-start command.
+- Rehearsal logs are predictions based on current map state; horde portal cells and Dominion wave details are still runtime-selected by their map components and should not be treated as exact deterministic spawn promises.
+
 ## 2026-05-23 — Sigil routing and close-escort regression guards
 
 - `ABY_HexgunRelaySigil` is now a legacy/migration-only def. Do not add it back to `Building_ABY_SigilVault.AcceptedSigilDefNames`, loot, crafting, or active ritual UI unless the Hexgun Relay ritual is deliberately reimplemented as a real encounter again.

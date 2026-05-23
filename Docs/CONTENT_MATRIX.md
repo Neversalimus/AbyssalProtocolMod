@@ -394,3 +394,10 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 | Safe spawn/transfer helper | Implemented / hardened | `source/Core/Utilities/ABY_SafeSpawnUtility.cs` | none | none | encounter/runtime safety | No `map.Center` fallback with `WipeMode.Vanish`; callers must handle failure/retry. |
 | Horde/breach target-scan hardening | Implemented | `source/Comps/CompABY_BreachDirective.cs`, `source/Core/Runtime/ABY_RuntimeTargetCache.cs` | none | none | horde/encounter runtime | Avoid per-pawn `AllThings` scans; prefer bounded or cached target lists. |
 | Specter Lash impact fallback | Implemented | `source/Combat/Projectiles/Weapons/Projectile_SpecterLashAnchor.cs` | existing projectile defs unchanged | combat VFX stream | weapon runtime | Impact fallback now scans radial cells rather than whole map thing lists. |
+
+
+## Summon threat rehearsal dev gizmo
+
+| System | Ownership / files | Runtime exposure | Notes |
+|---|---|---|---|
+| Summon threat rehearsal dev gizmo | `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs`, hooked from `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` | Dev Mode gizmo on Abyssal Summoning Circle only | Logs predicted summon mode, target cells, T1/T2 plans, boss escort profiles, horde plan summaries, Dominion runtime notes, capacitor status, and presentation routing. Force-start options consume no sigil and bypass progression/capacitor gates for diagnostics. |

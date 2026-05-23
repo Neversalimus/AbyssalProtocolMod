@@ -1,3 +1,14 @@
+## 2026-05-23 — Summon threat rehearsal dev gizmo
+
+- Added a dev-only `DEV: threat rehearsal` Summoning Circle gizmo that opens a FloatMenu for summon rehearsal and force-start testing.
+- Rehearsal logs ritual id, summon mode, resolved PawnKind, unlock/readiness/capacitor state, predicted arrival cell where available, T1/T2 scaling, boss escort profiles, horde plan summaries, Dominion runtime notes, and selected presentation route.
+- Force-start entries run the selected ritual without consuming a sigil and bypass progression/capacitor gates, while still requiring a usable spawned circle/map and normal encounter safety checks.
+- This is a diagnostics/testing aid only; no player-facing Summoning Console category UI was implemented in this pass.
+
+Touched files:
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs
+
 ## 2026-05-23 — Sigil routing presentation and miniboss escort pass
 
 - Hid the retired `ABY_HexgunRelaySigil` from active sigil storage/use paths by making the legacy ThingDef inert and removing it from the Sigil Vault accepted list while preserving save migration into ember hound sigils.

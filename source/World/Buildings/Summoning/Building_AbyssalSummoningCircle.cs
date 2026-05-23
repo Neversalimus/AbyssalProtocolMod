@@ -294,6 +294,15 @@ namespace AbyssalProtocol
                     }
                 };
 
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: threat rehearsal",
+                    defaultDesc = "Open a dev-only menu for summon threat rehearsals. Rehearsal logs predicted ritual mode, target cells, threat plans, escort profiles, horde/Dominion summaries, capacitor state, and presentation routing. Force-start entries run the selected ritual without consuming a sigil and bypass progression/capacitor gates, but still require the circle/map to be usable.",
+                    action = delegate
+                    {
+                        ABY_SummonThreatRehearsalUtility.OpenMenu(this);
+                    }
+                };
 
                 yield return new Command_Action
                 {
@@ -446,6 +455,16 @@ namespace AbyssalProtocol
 
         public bool TryStartSummonSequence(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, out string failReason)
         {
+            return TryStartSummonSequenceInternal(activator, summonProps, false, out failReason);
+        }
+
+        public bool TryStartDevSummonSequence(CompProperties_UseEffectSummonBoss summonProps, out string failReason)
+        {
+            return TryStartSummonSequenceInternal(null, summonProps, true, out failReason);
+        }
+
+        private bool TryStartSummonSequenceInternal(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, bool devBypassProgressionAndCapacitors, out string failReason)
+        {
             failReason = null;
 
             if (summonProps == null)
@@ -460,7 +479,7 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalSummoningConsoleUtility.IsRitualUnlocked(summonProps.ritualId, out failReason))
+            if (!devBypassProgressionAndCapacitors && !AbyssalSummoningConsoleUtility.IsRitualUnlocked(summonProps.ritualId, out failReason))
             {
                 return false;
             }
@@ -472,22 +491,27 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(this, summonProps, capacitorOverchannelEnabled, out AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport, out bool forcedStart, out failReason))
+            AbyssalCircleCapacitorRitualUtility.CapacitorReadinessReport capacitorReport = null;
+            bool forcedStart = false;
+            if (!devBypassProgressionAndCapacitors)
             {
-                return false;
+                if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(this, summonProps, capacitorOverchannelEnabled, out capacitorReport, out forcedStart, out failReason))
+                {
+                    return false;
+                }
             }
 
             pendingCapacitorForcedStart = forcedStart;
             pendingCapacitorEmergencyDumpUsed = false;
-            pendingCapacitorBacklashSeverity = forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelBacklashSeverity(capacitorReport) : 0f;
-            pendingCapacitorStartupCost = capacitorReport.Profile != null
+            pendingCapacitorBacklashSeverity = forcedStart && capacitorReport != null ? AbyssalCircleCapacitorRitualUtility.GetOverchannelBacklashSeverity(capacitorReport) : 0f;
+            pendingCapacitorStartupCost = capacitorReport?.Profile != null
                 ? (forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelStartupCost(capacitorReport) : capacitorReport.EffectiveStartupRequired)
                 : 0f;
-            pendingCapacitorReserveRequired = capacitorReport.Profile != null
+            pendingCapacitorReserveRequired = capacitorReport?.Profile != null
                 ? (forcedStart ? AbyssalCircleCapacitorRitualUtility.GetOverchannelReserveCommitment(capacitorReport) : capacitorReport.EffectiveTotalRequired)
                 : 0f;
-            pendingCapacitorThroughputRequired = capacitorReport.Profile != null ? capacitorReport.EffectiveThroughputRequired : 0f;
-            pendingCapacitorSustainDrainPerSecond = AbyssalCircleCapacitorRitualUtility.GetSustainDrainPerSecond(capacitorReport, forcedStart);
+            pendingCapacitorThroughputRequired = capacitorReport?.Profile != null ? capacitorReport.EffectiveThroughputRequired : 0f;
+            pendingCapacitorSustainDrainPerSecond = capacitorReport != null ? AbyssalCircleCapacitorRitualUtility.GetSustainDrainPerSecond(capacitorReport, forcedStart) : 0f;
 
             pendingRitualId = summonProps.ritualId;
             pendingSummonMode = summonProps.summonMode ?? "Boss";
