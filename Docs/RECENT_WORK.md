@@ -1153,3 +1153,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Replaced the sequence def's visible beam texture with a 1x1 transparent safety texture so any fallback/raw Thing graphic draw is invisible and cannot render as a horizontal beam sprite on the pawn or target.
 - Kept the custom `Thing_CrownReactorBeamSequence.DrawAt` beam rendering and four-pulse damage logic unchanged.
 - XML/asset-only fix; C# build not required. Runtime smoke testing in RimWorld is still required.
+
+## 2026-05-23 — Finalize Crownless Adjudicator pawn art and hide duplicated weapon draw
+
+- Replaced Crownless Adjudicator pawn sprites with the final chromakey-extracted transparent South/East/North art.
+- Kept the Edict Lance as the functional forced enemy weapon, but made its world/equipment graphic transparent because the finalized pawn art already contains the lance.
+- Bestiary continues to use the east-facing Crownless Adjudicator portrait through `Pawn/CrownlessAdjudicator/ABY_CrownlessAdjudicator_east`.
+- Build verified after the combined content + asset pass.
