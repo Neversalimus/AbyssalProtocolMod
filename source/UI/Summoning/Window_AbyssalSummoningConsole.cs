@@ -18,9 +18,17 @@ namespace AbyssalProtocol
             DominionProtocols
         }
 
+        private enum InfrastructureTab
+        {
+            Readiness,
+            Capacitors,
+            Stabilizers
+        }
+
         private readonly Building_AbyssalSummoningCircle circle;
         private string selectedRitualId;
         private RitualCategory selectedCategory;
+        private InfrastructureTab selectedInfrastructureTab = InfrastructureTab.Readiness;
         private Vector2 ritualScrollPosition = Vector2.zero;
         private Vector2 capacitorScrollPosition = Vector2.zero;
         private Vector2 stabilizerScrollPosition = Vector2.zero;
@@ -85,35 +93,22 @@ namespace AbyssalProtocol
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
             Rect categoryRect = new Rect(inRect.x, stripRect.yMax + 10f, inRect.width, 64f);
-            Rect mainRect = new Rect(inRect.x, categoryRect.yMax + 10f, inRect.width, 372f);
+            Rect mainRect = new Rect(inRect.x, categoryRect.yMax + 10f, inRect.width, 410f);
             Rect lowerRect = new Rect(inRect.x, mainRect.yMax + 10f, inRect.width, inRect.yMax - (mainRect.yMax + 10f));
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
-            float ritualsWidth = 454f;
-            float controlWidth = 316f;
+            float ritualsWidth = 470f;
             float mainGap = 10f;
             Rect ritualsRect = new Rect(mainRect.x, mainRect.y, ritualsWidth, mainRect.height);
-            Rect controlRect = new Rect(ritualsRect.xMax + mainGap, mainRect.y, controlWidth, mainRect.height);
-            Rect previewRect = new Rect(controlRect.xMax + mainGap, mainRect.y, mainRect.width - ritualsWidth - controlWidth - mainGap * 2f, mainRect.height);
-
-            float lowerGap = 10f;
-            float telemetryWidth = 340f;
-            float remainingLowerWidth = lowerRect.width - telemetryWidth - lowerGap * 2f;
-            float systemsColumnWidth = remainingLowerWidth * 0.5f;
-            Rect telemetryRect = new Rect(lowerRect.x, lowerRect.y, telemetryWidth, lowerRect.height);
-            Rect capacitorRect = new Rect(telemetryRect.xMax + lowerGap, lowerRect.y, systemsColumnWidth, lowerRect.height);
-            Rect moduleRect = new Rect(capacitorRect.xMax + lowerGap, lowerRect.y, lowerRect.width - telemetryWidth - systemsColumnWidth - lowerGap * 2f, lowerRect.height);
+            Rect selectedRect = new Rect(ritualsRect.xMax + mainGap, mainRect.y, mainRect.width - ritualsWidth - mainGap, mainRect.height);
 
             DrawHeader(headerRect, ritual);
             DrawReadinessStrip(stripRect, ritual);
             DrawCategoryTabs(categoryRect);
             DrawRitualBrowser(ritualsRect, ritual);
-            DrawControlPanel(controlRect, ritual);
-            DrawScrollableRitualPreviewPanel(previewRect, ritual);
-            DrawStatusPanel(telemetryRect, ritual);
-            DrawScrollableCapacitorPanel(capacitorRect, ritual);
-            DrawScrollableModulePanel(moduleRect);
+            DrawSelectedRitualPanel(selectedRect, ritual);
+            DrawInfrastructurePanel(lowerRect, ritual);
         
         }
 
@@ -502,6 +497,229 @@ namespace AbyssalProtocol
             string firstLine = string.Join("   •   ", parts.Take(firstLineCount).ToArray());
             string secondLine = string.Join("   •   ", parts.Skip(firstLineCount).ToArray());
             return secondLine.NullOrEmpty() ? firstLine : firstLine + "\n" + secondLine;
+        }
+
+        private void DrawSelectedRitualPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, true);
+            if (ritual == null)
+            {
+                return;
+            }
+
+            Rect inner = rect.ContractedBy(12f);
+            MapComponent_DominionCrisis dominionCrisis = circle.Map?.GetComponent<MapComponent_DominionCrisis>();
+            bool dominionUiMode = AbyssalSummoningConsoleUtility.IsDominionUiMode(circle, ritual);
+
+            Rect iconRect = new Rect(inner.x, inner.y + 4f, 46f, 46f);
+            ThingDef sigilDef = AbyssalSummoningConsoleUtility.GetSigilDef(ritual);
+            if (sigilDef != null && sigilDef.uiIcon != null)
+            {
+                GUI.color = Color.white;
+                GUI.DrawTexture(iconRect, sigilDef.uiIcon, ScaleMode.ScaleToFit, true);
+            }
+
+            Rect titleRect = new Rect(iconRect.xMax + 12f, inner.y + 2f, inner.width - 64f, 24f);
+            Rect tagRect = new Rect(iconRect.xMax + 12f, inner.y + 28f, inner.width - 64f, 18f);
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            ABY_UIPolishUtility.SafeLabel(titleRect, AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            ABY_UIPolishUtility.SafeLabel(tagRect, GetCategoryLabel(selectedCategory) + " • " + AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual));
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            AbyssalSummoningConsoleUtility.CircleRiskTier riskTier = AbyssalSummoningConsoleUtility.GetRiskTier(circle, ritual);
+            AbyssalSummoningConsoleArt.DrawRiskBar(new Rect(inner.x, inner.y + 58f, inner.width, 28f), AbyssalSummoningConsoleUtility.GetRiskFill(circle, ritual), AbyssalSummoningConsoleUtility.GetRiskLabel(riskTier), AbyssalSummoningConsoleUtility.GetRiskColor(riskTier), circle.RitualActive);
+
+            string statusLine = dominionCrisis != null && dominionCrisis.IsActive
+                ? dominionCrisis.GetStatusLine()
+                : circle.GetCurrentStatusLine();
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 96f, 136f, 18f), "ABY_CircleControlState".Translate());
+            GUI.color = Color.white;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x + 142f, inner.y + 96f, inner.width - 142f, 18f), statusLine);
+
+            string blockerLine = AbyssalSummoningConsoleUtility.IsInvocationPathClear(circle, ritual)
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandReady", "Invocation path clear. Prepared sigil, operator, and circle state are valid.")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandBlocked", "Current blocker: {0}", AbyssalSummoningConsoleUtility.GetPrimaryInvocationBlocker(circle, ritual));
+            GUI.color = AbyssalSummoningConsoleUtility.IsInvocationPathClear(circle, ritual)
+                ? new Color(0.72f, 1f, 0.74f, 1f)
+                : new Color(1f, 0.60f, 0.54f, 1f);
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 118f, inner.width, 32f), blockerLine);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            float factTop = inner.y + 158f;
+            float factGap = 6f;
+            float factWidth = (inner.width - factGap * 2f) / 3f;
+            DrawCompactFact(new Rect(inner.x, factTop, factWidth, 44f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected_Host", "Host"), ritual.BossLabel, true, 0.05f);
+            DrawCompactFact(new Rect(inner.x + factWidth + factGap, factTop, factWidth, 44f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected_Sigils", "Sigils"), AbyssalSummoningConsoleUtility.CountAvailableSigils(circle, ritual).ToString(), AbyssalSummoningConsoleUtility.CountAvailableSigils(circle, ritual) > 0, 0.23f);
+            DrawCompactFact(new Rect(inner.x + (factWidth + factGap) * 2f, factTop, factWidth, 44f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleSelected_Budget", "Budget"), ritual.SpawnPoints.ToString(), true, 0.41f);
+
+            float descriptionTop = factTop + 54f;
+            Text.Font = GameFont.Tiny;
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            string description = AbyssalSummoningConsoleUtility.GetRitualDescription(ritual);
+            ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, descriptionTop, inner.width, 54f), description);
+            GUI.color = Color.white;
+
+            float lowerTop = inner.yMax - 112f;
+            Rect togglesRect = new Rect(inner.x, lowerTop, inner.width * 0.42f, 104f);
+            Rect buttonsRect = new Rect(togglesRect.xMax + 12f, lowerTop, inner.width - togglesRect.width - 12f, 104f);
+            DrawSelectedRitualToggles(togglesRect);
+            DrawSelectedRitualActions(buttonsRect, ritual, dominionCrisis, dominionUiMode);
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+        }
+
+        private void DrawCompactFact(Rect rect, string label, string value, bool good, float offset)
+        {
+            string safeValue = value.NullOrEmpty() ? "-" : value;
+            if (safeValue.Length > 28)
+            {
+                safeValue = safeValue.Substring(0, 25) + "...";
+            }
+            AbyssalSummoningConsoleArt.DrawStripCell(rect, label, safeValue, good, offset);
+            TooltipHandler.TipRegion(rect, value ?? string.Empty);
+        }
+
+        private void DrawSelectedRitualToggles(Rect rect)
+        {
+            float rowHeight = 30f;
+            DrawBooleanControlRow(new Rect(rect.x, rect.y, rect.width, rowHeight),
+                "ABY_CircleReducedEffects".Translate(),
+                AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleReducedEffectsDesc", "Softens header sweeps, seal rotation, and other animated accents inside the summoning console."),
+                circle.ReducedConsoleEffects,
+                delegate(bool value)
+                {
+                    circle.SetReducedConsoleEffects(value);
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                });
+
+            DrawBooleanControlRow(new Rect(rect.x, rect.y + 36f, rect.width, rowHeight),
+                "ABY_CapacitorControl_Overchannel".Translate(),
+                "ABY_CapacitorControl_OverchannelDesc".Translate(),
+                circle.CapacitorOverchannelEnabled,
+                delegate(bool value)
+                {
+                    circle.SetCapacitorOverchannelEnabled(value);
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                });
+
+            DrawBooleanControlRow(new Rect(rect.x, rect.y + 72f, rect.width, rowHeight),
+                "ABY_CapacitorControl_Dump".Translate(),
+                "ABY_CapacitorControl_DumpDesc".Translate(),
+                circle.CapacitorEmergencyDumpEnabled,
+                delegate(bool value)
+                {
+                    circle.SetCapacitorEmergencyDumpEnabled(value);
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                });
+        }
+
+        private void DrawSelectedRitualActions(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual, MapComponent_DominionCrisis dominionCrisis, bool dominionUiMode)
+        {
+            float gap = 6f;
+            float halfWidth = (rect.width - gap) * 0.5f;
+            Rect detailsRect = new Rect(rect.x, rect.y, halfWidth, 28f);
+            Rect codexRect = new Rect(detailsRect.xMax + gap, rect.y, halfWidth, 28f);
+            if (AbyssalStyledWidgets.TextButton(detailsRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_RitualDetails", "Open ritual dossier"), true, false))
+            {
+                OpenRitualDetails(ritual);
+            }
+            if (AbyssalStyledWidgets.TextButton(codexRect, "ABY_Bestiary_OpenCodex".Translate(), true, false))
+            {
+                OpenThreatCodex();
+            }
+
+            Rect secondaryRect = new Rect(rect.x, rect.y + 34f, rect.width, 28f);
+            if (dominionUiMode)
+            {
+                bool pocketControls = AbyssalSummoningConsoleUtility.HasDominionPocketControls(circle);
+                if (pocketControls)
+                {
+                    Rect objectiveRect = new Rect(rect.x, rect.y + 34f, halfWidth, 28f);
+                    Rect gateRect = new Rect(objectiveRect.xMax + gap, objectiveRect.y, halfWidth, 28f);
+                    if (AbyssalStyledWidgets.TextButton(objectiveRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                    {
+                        JumpToDominionObjective();
+                    }
+                    if (AbyssalStyledWidgets.TextButton(gateRect, AbyssalSummoningConsoleUtility.GetDominionPocketPrimaryLabel(circle), true, true))
+                    {
+                        if (AbyssalSummoningConsoleUtility.TryExecuteDominionPocketPrimary(circle, out string failReason))
+                        {
+                            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                        }
+                        else if (!failReason.NullOrEmpty())
+                        {
+                            Messages.Message(failReason, MessageTypeDefOf.RejectInput, false);
+                        }
+                    }
+                }
+                else if (AbyssalStyledWidgets.TextButton(secondaryRect, AbyssalSummoningConsoleUtility.GetDominionObjectiveButtonLabel(circle), dominionCrisis != null, false))
+                {
+                    JumpToDominionObjective();
+                }
+            }
+            else if (AbyssalStyledWidgets.TextButton(secondaryRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Jump to prepared sigil"), !circle.RitualActive, false))
+            {
+                JumpToSigil(ritual);
+            }
+
+            bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;
+            string invokeLabel = dominionAbortMode
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_DominionCrisisAbortCommand", "Abort dominion staging")
+                : circle.CapacitorOverchannelEnabled && AbyssalCircleCapacitorRitualUtility.WouldForceStart(circle, ritual)
+                    ? "ABY_CapacitorCommand_ForceInvoke".Translate()
+                    : AbyssalSummoningConsoleUtility.GetAssignSigilLabel();
+            bool invokeEnabled = dominionAbortMode || !circle.RitualActive;
+            Rect invokeRect = new Rect(rect.x, rect.y + 70f, rect.width, 34f);
+            if (AbyssalStyledWidgets.TextButton(invokeRect, invokeLabel, invokeEnabled, true))
+            {
+                ConfirmAndAssign(ritual);
+            }
+        }
+
+        private void DrawInfrastructurePanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(10f);
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureHeader", "Circle infrastructure"));
+
+            float tabTop = inner.y + 28f;
+            float tabHeight = 30f;
+            float tabGap = 6f;
+            float tabWidth = 156f;
+            DrawInfrastructureTab(new Rect(inner.x, tabTop, tabWidth, tabHeight), InfrastructureTab.Readiness, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Readiness", "Readiness"));
+            DrawInfrastructureTab(new Rect(inner.x + tabWidth + tabGap, tabTop, tabWidth, tabHeight), InfrastructureTab.Capacitors, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Capacitors", "Capacitors"));
+            DrawInfrastructureTab(new Rect(inner.x + (tabWidth + tabGap) * 2f, tabTop, tabWidth, tabHeight), InfrastructureTab.Stabilizers, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructure_Stabilizers", "Stabilizers"));
+
+            Rect contentRect = new Rect(inner.x, tabTop + tabHeight + 8f, inner.width, inner.yMax - (tabTop + tabHeight + 8f));
+            switch (selectedInfrastructureTab)
+            {
+                case InfrastructureTab.Readiness:
+                    DrawStatusPanel(contentRect, ritual);
+                    break;
+                case InfrastructureTab.Capacitors:
+                    DrawScrollableCapacitorPanel(contentRect, ritual);
+                    break;
+                case InfrastructureTab.Stabilizers:
+                    DrawScrollableModulePanel(contentRect);
+                    break;
+            }
+        }
+
+        private void DrawInfrastructureTab(Rect rect, InfrastructureTab tab, string label)
+        {
+            bool selected = selectedInfrastructureTab == tab;
+            if (AbyssalStyledWidgets.TextButton(rect, label, true, selected))
+            {
+                selectedInfrastructureTab = tab;
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
         }
 
         private void DrawControlPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)

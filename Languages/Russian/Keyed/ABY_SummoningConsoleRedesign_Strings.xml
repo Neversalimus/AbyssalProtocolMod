@@ -22,4 +22,11 @@
   <ABY_CircleRitualDossier_Close>Закрыть досье</ABY_CircleRitualDossier_Close>
   <ABY_CircleRitualDossier_Forecast>Расширенный прогноз ритуала</ABY_CircleRitualDossier_Forecast>
   <ABY_CircleCommandReadyShort>Путь вызова свободен.</ABY_CircleCommandReadyShort>
+  <ABY_CircleInfrastructureHeader>Инфраструктура круга</ABY_CircleInfrastructureHeader>
+  <ABY_CircleInfrastructure_Readiness>Готовность</ABY_CircleInfrastructure_Readiness>
+  <ABY_CircleInfrastructure_Capacitors>Конденсаторы</ABY_CircleInfrastructure_Capacitors>
+  <ABY_CircleInfrastructure_Stabilizers>Стабилизаторы</ABY_CircleInfrastructure_Stabilizers>
+  <ABY_CircleSelected_Host>Носитель</ABY_CircleSelected_Host>
+  <ABY_CircleSelected_Sigils>Сигилы</ABY_CircleSelected_Sigils>
+  <ABY_CircleSelected_Budget>Бюджет</ABY_CircleSelected_Budget>
 </LanguageData>

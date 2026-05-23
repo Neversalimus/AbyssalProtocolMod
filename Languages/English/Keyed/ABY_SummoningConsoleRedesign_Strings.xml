@@ -22,4 +22,11 @@
   <ABY_CircleRitualDossier_Close>Close dossier</ABY_CircleRitualDossier_Close>
   <ABY_CircleRitualDossier_Forecast>Expanded ritual forecast</ABY_CircleRitualDossier_Forecast>
   <ABY_CircleCommandReadyShort>Invocation path clear.</ABY_CircleCommandReadyShort>
+  <ABY_CircleInfrastructureHeader>Circle infrastructure</ABY_CircleInfrastructureHeader>
+  <ABY_CircleInfrastructure_Readiness>Readiness</ABY_CircleInfrastructure_Readiness>
+  <ABY_CircleInfrastructure_Capacitors>Capacitors</ABY_CircleInfrastructure_Capacitors>
+  <ABY_CircleInfrastructure_Stabilizers>Stabilizers</ABY_CircleInfrastructure_Stabilizers>
+  <ABY_CircleSelected_Host>Host</ABY_CircleSelected_Host>
+  <ABY_CircleSelected_Sigils>Sigils</ABY_CircleSelected_Sigils>
+  <ABY_CircleSelected_Budget>Budget</ABY_CircleSelected_Budget>
 </LanguageData>

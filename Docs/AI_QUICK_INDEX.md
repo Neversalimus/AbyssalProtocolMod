@@ -51,7 +51,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Apparel, armor Aegis, hover armor, body type restrictions | `source/Apparel/` | `source/Defs/Apparel/`, `Defs/ThingDefs/`, `Textures/Things/Apparel/`, `Languages/` |
 | Implants, hediff comps, implant info cards | `source/Hediffs/` | `Defs/HediffDefs/`, `source/UI/Forge/`, `Languages/` |
 | Harmony patch issues | `source/Patches/`, feature-specific module | `source/Core/Bootstrap/`, latest build output |
-| Dev tools / diagnostics / stability reports, summon threat rehearsal | `source/Diagnostics/`, especially `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs` for Summoning Circle threat rehearsal | `source/Core/Utilities/`, `source/Legacy/`, `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs`, `source/Encounters/`, `source/Summoning/` |
+| Dev tools / diagnostics / stability reports | `source/Diagnostics/` | `source/Core/Utilities/`, `source/Legacy/` |
 | Legacy save migration / old cleanup | `source/Legacy/` | `source/Diagnostics/`, save/load behavior |
 | Sound/SFX issue | `source/Audio/`, `Defs/SoundDefs/`, `Sounds/ABY/` | Relevant weapon/projectile/incident XML and SFX pipeline rules |
 | Asset path or missing texture | Actual XML `texPath` first | `Textures/`, `SourceAssets/Generated/`, asset-generation rules |
@@ -270,3 +270,10 @@ Rule: custom projectile `Impact(...)` overrides should route `base.Impact(...)` 
 - Unsafe spawn/transfer or `WipeMode.Vanish` issues: start with `source/Core/Utilities/ABY_SafeSpawnUtility.cs` and the caller's cell predicate.
 - Horde/breach target scan performance: start with `source/Comps/CompABY_BreachDirective.cs`, `source/Core/Runtime/ABY_RuntimeTargetCache.cs`, and `source/Encounters/AbyssalThreatPawnUtility.cs`.
 - Power-net horde recovery: start with `source/Core/Utilities/ABY_PowerNetRecoveryUtility.cs`, `source/Core/GameComponents/MapComponent_AbyssalPortalWave.cs`, and the Summoning Circle dev gizmo.
+
+### Summoning Console layout cleanup note
+
+- For Summoning Console layout work, start with `source/UI/Summoning/Window_AbyssalSummoningConsole.cs`.
+- The primary screen should remain two-column: ritual list on the left, selected-ritual action card on the right.
+- The ritual dossier window is the long-form details route; the lower infrastructure drawer owns Readiness / Capacitors / Stabilizers.
+- Do not add major buttons back into a narrow middle control column.

@@ -407,3 +407,11 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 - Main Summoning Console: archetype tabs, ritual cards, compact preview, invocation controls, readiness/capacitor/module telemetry.
 - Ritual dossier: expanded forecast, readiness breakdown, reward routing, side effects, and long horde/Dominion telemetry.
 - New ritual or sigil categories should expose short combat identity on the main screen and detailed operational text through the dossier path.
+
+## Summoning Console UI ownership update
+
+- Primary file: `source/UI/Summoning/Window_AbyssalSummoningConsole.cs`.
+- Main screen ownership: threat archetype tabs, ritual card list, selected ritual action card, and lower infrastructure drawer.
+- Long-form ritual information ownership: Summoning ritual dossier window nested in the same source file.
+- Localization ownership: `Languages/English/Keyed/ABY_SummoningConsoleRedesign_Strings.xml` and `Languages/Russian/Keyed/ABY_SummoningConsoleRedesign_Strings.xml` for redesign-specific labels.
+- Safety note: keep selected-ritual actions inside the right action card and technical readiness/capacitor/stabilizer information inside the lower tabbed drawer.

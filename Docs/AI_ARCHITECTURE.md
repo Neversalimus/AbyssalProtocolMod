@@ -535,3 +535,9 @@ Future work that changes post-horde progression, Dominion access, or Rift Butche
 ### Summoning Console ritual dossier
 
 The Summoning Console redesign keeps the main window focused on archetype selection, ritual cards, concise preview, and invocation controls. Dense ritual information is now routed through an on-demand ritual dossier window from `Window_AbyssalSummoningConsole`, rather than being forced into the main layout. Future summoning UI work should preserve this split: main console for selection/action, dossier for expanded forecast/readiness/reward/telemetry data.
+
+## Summoning Console primary layout note
+
+The full Abyssal Summoning Console now uses a two-column primary layout: ritual pattern selection on the left and a selected-ritual action card on the right. The action card owns the selected ritual summary, risk bar, blocker state, reduced-effects/overchannel/emergency-dump toggles, dossier/codex/jump actions, and Begin Invocation.
+
+Dense ritual details belong in the separate ritual dossier window. Circle technical infrastructure uses the lower tabbed drawer with Readiness, Capacitors, and Stabilizers tabs. Future Summoning UI work should not reintroduce a narrow center control column for major actions because it previously caused button overlap and visual clutter.

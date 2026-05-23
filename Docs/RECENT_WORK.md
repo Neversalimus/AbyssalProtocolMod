@@ -1227,3 +1227,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added a dedicated Summoning Console ritual dossier window opened from the invocation control panel.
 - The main console now stays compact while the dossier exposes the expanded ritual forecast, reward routing, side effects, readiness breakdown, and active ritual telemetry in a separate scrollable window.
 - This follows the redesign rule that dense ritual data should be available on demand instead of permanently occupying the primary ritual selection screen.
+
+## 2026-05-24 — Summoning Console layout cleanup pass
+
+- Reworked the redesigned Summoning Console from a crowded three-column layout into a two-column primary layout: ritual selection on the left and a selected-ritual action card on the right.
+- Moved invocation controls, risk state, blocker text, dossier/codex/jump actions, and the main invocation button into the selected ritual card to avoid the previous narrow middle-column overlap.
+- Replaced the always-visible three-panel lower infrastructure area with a single tabbed infrastructure drawer: Readiness, Capacitors, and Stabilizers.
+- Kept the ritual dossier window as the long-form information route and kept the primary console focused on selection and action.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.

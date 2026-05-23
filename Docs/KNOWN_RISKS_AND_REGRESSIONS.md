@@ -839,3 +839,10 @@ In-game check:
 ## Summoning Console redesign detail-window regression guard
 
 When adding text-heavy ritual, horde, Dominion, reward, or readiness information, do not push it back into the main Summoning Console layout. Keep the primary screen compact and route dense information to the ritual dossier. This avoids the previous overloaded three-panel layout and prevents category/action panels from clipping at common UI scales.
+
+## Summoning Console density regression — middle-column overlap
+
+- The first full Summoning Console redesign used a narrow standalone Invocation control column between the ritual list and preview panel.
+- Adding the ritual dossier button into that column caused obvious overlap and made the panel feel crowded.
+- Future Summoning Console work should avoid adding new buttons into narrow middle columns. Keep the primary action controls inside the selected-ritual card, and route dense text/data to the separate ritual dossier window or the lower infrastructure drawer.
+- The lower readiness/capacitor/stabilizer panels should remain tabbed unless there is a strong reason to show all three simultaneously.
