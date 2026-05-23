@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SoundDef>
+    <defName>ABY_ReactorChoirMinigunSpinup</defName>
+    <context>MapOnly</context>
+    <sustain>true</sustain>
+    <sustainFadeoutTime>0.10</sustainFadeoutTime>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Charge</clipPath>
+          </li>
+        </grains>
+        <volumeRange>22~26</volumeRange>
+        <pitchRange>0.74~0.80</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorChoirMinigunFire</defName>
+    <context>MapOnly</context>
+    <maxVoices>8</maxVoices>
+    <maxSimultaneous>3</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Fire</clipPath>
+          </li>
+        </grains>
+        <volumeRange>20~24</volumeRange>
+        <pitchRange>0.82~0.90</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorChoirMinigunTail</defName>
+    <context>MapOnly</context>
+    <maxVoices>6</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>12~16</volumeRange>
+        <pitchRange>0.78~0.86</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>ABY_ReactorChoirMinigunVentBurst</defName>
+    <context>MapOnly</context>
+    <maxVoices>5</maxVoices>
+    <maxSimultaneous>2</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <onCamera>true</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>ABY/UltraPlasma_Tail</clipPath>
+          </li>
+        </grains>
+        <volumeRange>18~22</volumeRange>
+        <pitchRange>1.06~1.14</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_ReactorChoirMinigun.label>реакторный хоровой миниган</ABY_ReactorChoirMinigun.label>
+  <ABY_ReactorChoirMinigun.description>Роторное плазменное оружие святого класса, собранное из связанных хоровых регуляторов и запечатанных реакторных камер. Оно не осыпает цель пулями: оно продавливает через неё череду удержанных реакторных нот, пока плоть, броня и сама уверенность материи не начинают размягчаться одним и тем же жаром.</ABY_ReactorChoirMinigun.description>
+
+  <ABY_ReactorChoirPlasmaSlug.label>реакторный хоровой плазменный слаг</ABY_ReactorChoirPlasmaSlug.label>
+  <ABY_ReactorChoirPlasmaSlug.description>Удержанный плазменный слаг, выталкиваемый через роторный хоровой излучатель. Заряд живёт недолго, но остаётся настолько плотным и горячим, что материя после попадания хуже рассеивает следующий удар.</ABY_ReactorChoirPlasmaSlug.description>
+
+  <ABY_Mote_ReactorChoirMuzzleFlash.label>вспышка реакторного хора</ABY_Mote_ReactorChoirMuzzleFlash.label>
+  <ABY_Mote_ReactorChoirVentBurst.label>выброс реакторного хора</ABY_Mote_ReactorChoirVentBurst.label>
+
+</LanguageData>

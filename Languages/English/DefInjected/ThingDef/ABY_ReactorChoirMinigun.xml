@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_ReactorChoirMinigun.label>reactor choir minigun</ABY_ReactorChoirMinigun.label>
+  <ABY_ReactorChoirMinigun.description>A Saint-grade rotary plasma weapon built from chained choir regulators and sealed reactor chambers. It does not spray bullets; it forces a procession of contained reactor notes through the target until flesh, armor and certainty begin to soften under the same heat.</ABY_ReactorChoirMinigun.description>
+
+  <ABY_ReactorChoirPlasmaSlug.label>reactor choir plasma slug</ABY_ReactorChoirPlasmaSlug.label>
+  <ABY_ReactorChoirPlasmaSlug.description>A contained plasma slug driven through a rotary choir emitter. The charge is short-lived, dense and hot enough to leave matter briefly unable to shed the next impact.</ABY_ReactorChoirPlasmaSlug.description>
+
+  <ABY_Mote_ReactorChoirMuzzleFlash.label>reactor choir muzzle flash</ABY_Mote_ReactorChoirMuzzleFlash.label>
+  <ABY_Mote_ReactorChoirVentBurst.label>reactor choir vent burst</ABY_Mote_ReactorChoirVentBurst.label>
+
+</LanguageData>

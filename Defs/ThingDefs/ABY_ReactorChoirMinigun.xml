@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>ABY_ReactorChoirMinigun</defName>
+    <label>reactor choir minigun</label>
+    <description>A Saint-grade rotary plasma weapon built from chained choir regulators and sealed reactor chambers. It does not spray bullets; it forces a procession of contained reactor notes through the target until flesh, armor and certainty begin to soften under the same heat.</description>
+    <techLevel>Ultra</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_ReactorChoirMinigun</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.05,0.68)</drawSize>
+    </graphicData>
+
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+
+    <weaponTags>
+      <li>Gun</li>
+      <li>RangedHeavy</li>
+      <li>SpacerGun</li>
+    </weaponTags>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_HordeFragment>4</ABY_HordeFragment>
+      <ABY_AbyssalResidue>240</ABY_AbyssalResidue>
+      <Plasteel>240</Plasteel>
+      <Uranium>80</Uranium>
+      <Gold>35</Gold>
+      <ComponentIndustrial>8</ComponentIndustrial>
+      <ComponentSpacer>12</ComponentSpacer>
+    </costList>
+
+    <statBases>
+      <WorkToMake>210000</WorkToMake>
+      <Mass>10.8</Mass>
+      <MarketValue>10400</MarketValue>
+      <AccuracyTouch>0.62</AccuracyTouch>
+      <AccuracyShort>0.74</AccuracyShort>
+      <AccuracyMedium>0.58</AccuracyMedium>
+      <AccuracyLong>0.28</AccuracyLong>
+      <RangedWeapon_Cooldown>3.35</RangedWeapon_Cooldown>
+    </statBases>
+
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>ABY_ReactorChoirPlasmaSlug</defaultProjectile>
+        <warmupTime>1.85</warmupTime>
+        <range>34.0</range>
+        <burstShotCount>16</burstShotCount>
+        <ticksBetweenBurstShots>3</ticksBetweenBurstShots>
+        <soundAiming>ABY_ReactorChoirMinigunSpinup</soundAiming>
+        <soundCast>ABY_ReactorChoirMinigunFire</soundCast>
+        <soundCastTail>ABY_ReactorChoirMinigunTail</soundCastTail>
+      </li>
+    </verbs>
+
+    <tools>
+      <li>
+        <label>reactor frame</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.6</cooldownTime>
+        <armorPenetration>0.18</armorPenetration>
+      </li>
+    </tools>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>5400</requiredResidue>
+        <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_SaintAegisEngineering</requiredProtocolResearchDefName>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>ABY_ReactorChoirPlasmaSlug</defName>
+    <label>reactor choir plasma slug</label>
+    <thingClass>AbyssalProtocol.Projectile_ReactorChoirPlasmaSlug</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/ABY_ReactorChoirPlasmaSlug</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(0.34,1.28)</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>Burn</damageDef>
+      <damageAmountBase>9</damageAmountBase>
+      <armorPenetrationBase>0.62</armorPenetrationBase>
+      <stoppingPower>0.42</stoppingPower>
+      <speed>68</speed>
+      <soundImpactAnticipate>BulletImpact_Ground</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+</Defs>

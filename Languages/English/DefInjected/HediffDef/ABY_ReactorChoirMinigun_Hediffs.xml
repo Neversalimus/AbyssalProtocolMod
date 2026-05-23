@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_ReactorChoirThermalSaturation.label>reactor thermal saturation</ABY_ReactorChoirThermalSaturation.label>
+  <ABY_ReactorChoirThermalSaturation.description>Repeated reactor-choir plasma impacts are leaving matter unable to shed heat. Armor seams, tissue and synthetic layers briefly behave as if the next note has already been forced through them.</ABY_ReactorChoirThermalSaturation.description>
+  <ABY_ReactorChoirThermalSaturation.stages.0.label>heated</ABY_ReactorChoirThermalSaturation.stages.0.label>
+  <ABY_ReactorChoirThermalSaturation.stages.1.label>saturated</ABY_ReactorChoirThermalSaturation.stages.1.label>
+  <ABY_ReactorChoirThermalSaturation.stages.2.label>reactor-softened</ABY_ReactorChoirThermalSaturation.stages.2.label>
+
+</LanguageData>

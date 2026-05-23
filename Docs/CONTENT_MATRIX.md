@@ -350,6 +350,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Assets: `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`, `ABY_TurretModule_CrownOverpressureChoir.png`, `ABY_TurretModule_SepulcherFailSafeMantle.png`.
 - Role coverage: T5 passive targeting, firing cadence, and chassis survival. These are intentionally not Aegis modules because Aegis stacking is blocked by the turret runtime.
 
+## Reactor Choir Minigun — 2026-05-23
+
+| System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Reactor Choir Minigun | Implemented / needs runtime smoke test | `source/Combat/Projectiles/Weapons/Projectile_ReactorChoirPlasmaSlug.cs`, `source/Combat/VFX/ReactorChoirMinigunVfxUtility.cs` | `Defs/ThingDefs/ABY_ReactorChoirMinigun.xml`, `Defs/HediffDefs/ABY_ReactorChoirMinigun_Hediffs.xml`, `Defs/ThingDefs_Motes/ABY_ReactorChoirMinigun_Motes.xml`, `Defs/SoundDefs/ABY_ReactorChoirMinigun_Sounds.xml`, `Textures/Things/Weapon/ABY_ReactorChoirMinigun.png`, `Textures/Things/Projectile/ABY_ReactorChoirPlasmaSlug.png`, `Textures/Things/VFX/ReactorChoirMinigun/` | Forge weapon pattern through existing Abyssal Forge UI | `ABY_PR_SaintAegisEngineering`, 5400 Forge residue, Reactor Saint Core, Horde Fragments | Heavy T5 sustained plasma weapon. Projectile uses budgeted muzzle/impact VFX and stacking thermal saturation; no map-wide scans or per-tick beam damage. Existing Ultra Plasma clips are reused through new SoundDefs until bespoke SFX are produced. |
+
 ## Crafting requirement ownership
 
 Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList + recipeMaker` items. Future economy audits must inspect both paths; many weapons and implants are generated from ThingDef recipeMaker rather than standalone RecipeDefs.

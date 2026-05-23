@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_ReactorChoirThermalSaturation</defName>
+    <label>reactor thermal saturation</label>
+    <description>Repeated reactor-choir plasma impacts are leaving matter unable to shed heat. Armor seams, tissue and synthetic layers briefly behave as if the next note has already been forced through them.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <tendable>false</tendable>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <defaultLabelColor>(1.00, 0.34, 0.10)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>420</disappearsAfterTicks>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <minSeverity>0.01</minSeverity>
+        <label>heated</label>
+        <statOffsets>
+          <ArmorRating_Heat>-0.05</ArmorRating_Heat>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.45</minSeverity>
+        <label>saturated</label>
+        <statOffsets>
+          <ArmorRating_Heat>-0.10</ArmorRating_Heat>
+          <MoveSpeed>-0.04</MoveSpeed>
+        </statOffsets>
+      </li>
+      <li>
+        <minSeverity>0.80</minSeverity>
+        <label>reactor-softened</label>
+        <statOffsets>
+          <ArmorRating_Heat>-0.18</ArmorRating_Heat>
+          <MoveSpeed>-0.08</MoveSpeed>
+        </statOffsets>
+        <capMods>
+          <li>
+            <capacity>Manipulation</capacity>
+            <offset>-0.04</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+  </HediffDef>
+
+</Defs>

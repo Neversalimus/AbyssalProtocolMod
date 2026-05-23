@@ -1,3 +1,33 @@
+## 2026-05-23 — Reactor Choir Minigun integration
+
+- Added the T5 `ABY_ReactorChoirMinigun` as a Saint-engineering heavy plasma suppression weapon with Abyssal Forge craftability, Protocol Nexus gate `ABY_PR_SaintAegisEngineering`, Horde Fragment/Reactor Saint Core material gating, and EN/RU DefInjected text.
+- Added optimized transparent weapon, projectile, compact muzzle flash, and vent-burst textures extracted from chromakey sources; final mod PNGs are sized for RimWorld use and not shipped with green backgrounds.
+- Added `Projectile_ReactorChoirPlasmaSlug` and `ReactorChoirMinigunVfxUtility` so every slug spawns the compact muzzle flash, budgeted light travel/impact feedback, and a threshold thermal-saturation vent burst without per-tick beam damage or map-wide scans.
+- Added `ABY_ReactorChoirThermalSaturation` as the stacking heat-softening hediff and reused existing Ultra Plasma audio clips through new lower-volume Reactor Choir SoundDefs instead of adding unverified new SFX binaries.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Standard `dotnet build` still fails in this sandbox because the .NET Framework 4.7.2 targeting pack is unavailable. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+source/Combat/Projectiles/Weapons/Projectile_ReactorChoirPlasmaSlug.cs
+source/Combat/VFX/ReactorChoirMinigunVfxUtility.cs
+Defs/ThingDefs/ABY_ReactorChoirMinigun.xml
+Defs/HediffDefs/ABY_ReactorChoirMinigun_Hediffs.xml
+Defs/ThingDefs_Motes/ABY_ReactorChoirMinigun_Motes.xml
+Defs/SoundDefs/ABY_ReactorChoirMinigun_Sounds.xml
+Textures/Things/Weapon/ABY_ReactorChoirMinigun.png
+Textures/Things/Projectile/ABY_ReactorChoirPlasmaSlug.png
+Textures/Things/VFX/ReactorChoirMinigun/ABY_ReactorChoirMuzzleFlash_01.png
+Textures/Things/VFX/ReactorChoirMinigun/ABY_ReactorChoirVentBurst_01.png
+Languages/English/DefInjected/ThingDef/ABY_ReactorChoirMinigun.xml
+Languages/Russian/DefInjected/ThingDef/ABY_ReactorChoirMinigun.xml
+Languages/English/DefInjected/HediffDef/ABY_ReactorChoirMinigun_Hediffs.xml
+Languages/Russian/DefInjected/HediffDef/ABY_ReactorChoirMinigun_Hediffs.xml
+Docs/CONTENT_MATRIX.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-05-23 — Crown Reactor Multilance Four-Rail Verdict pass
 
 - Reworked `Thing_CrownReactorBeamSequence` from four identical damage pulses into the Four-Rail Verdict sequence: acquisition/lock, shield-system shear, short overline penetration, and capped crown-verdict execution.

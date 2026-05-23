@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_ReactorChoirThermalSaturation.label>реакторное тепловое насыщение</ABY_ReactorChoirThermalSaturation.label>
+  <ABY_ReactorChoirThermalSaturation.description>Повторные попадания плазмы реакторного хора оставляют материю неспособной быстро сбросить жар. Броневые швы, ткани и синтетические слои на короткое время ведут себя так, будто следующая нота уже была проведена сквозь них.</ABY_ReactorChoirThermalSaturation.description>
+  <ABY_ReactorChoirThermalSaturation.stages.0.label>нагрев</ABY_ReactorChoirThermalSaturation.stages.0.label>
+  <ABY_ReactorChoirThermalSaturation.stages.1.label>насыщение</ABY_ReactorChoirThermalSaturation.stages.1.label>
+  <ABY_ReactorChoirThermalSaturation.stages.2.label>реакторное размягчение</ABY_ReactorChoirThermalSaturation.stages.2.label>
+
+</LanguageData>
