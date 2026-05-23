@@ -9,8 +9,18 @@ namespace AbyssalProtocol
 {
     public class Window_AbyssalSummoningConsole : Window
     {
+        private enum RitualCategory
+        {
+            LesserBreaches,
+            NodeEntities,
+            ArchonClass,
+            MassIncursions,
+            DominionProtocols
+        }
+
         private readonly Building_AbyssalSummoningCircle circle;
         private string selectedRitualId;
+        private RitualCategory selectedCategory;
         private Vector2 ritualScrollPosition = Vector2.zero;
         private Vector2 capacitorScrollPosition = Vector2.zero;
         private Vector2 stabilizerScrollPosition = Vector2.zero;
@@ -35,6 +45,8 @@ namespace AbyssalProtocol
                     selectedRitualId = dominionRitual.Id;
                 }
             }
+
+            selectedCategory = GetCategoryForRitualId(selectedRitualId);
             absorbInputAroundWindow = true;
             closeOnClickedOutside = false;
             doCloseX = true;
@@ -72,35 +84,231 @@ namespace AbyssalProtocol
 
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 74f);
             Rect stripRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, 64f);
-            Rect ritualsRect = new Rect(inRect.x, stripRect.yMax + 10f, 556f, 420f);
-            Rect overviewRect = new Rect(ritualsRect.xMax + 10f, stripRect.yMax + 10f, inRect.width - ritualsRect.width - 10f, 420f);
-            Rect systemsRect = new Rect(inRect.x, ritualsRect.yMax + 10f, inRect.width, inRect.height - ritualsRect.yMax - 10f);
+            Rect categoryRect = new Rect(inRect.x, stripRect.yMax + 10f, inRect.width, 64f);
+            Rect mainRect = new Rect(inRect.x, categoryRect.yMax + 10f, inRect.width, 372f);
+            Rect lowerRect = new Rect(inRect.x, mainRect.yMax + 10f, inRect.width, inRect.yMax - (mainRect.yMax + 10f));
 
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = GetSelectedRitual();
 
-            float controlWidth = Mathf.Min(316f, overviewRect.width * 0.36f);
-            Rect controlRect = new Rect(overviewRect.x, overviewRect.y, controlWidth, overviewRect.height);
-            Rect previewRect = new Rect(controlRect.xMax + 10f, overviewRect.y, overviewRect.width - controlWidth - 10f, overviewRect.height);
+            float ritualsWidth = 454f;
+            float controlWidth = 316f;
+            float mainGap = 10f;
+            Rect ritualsRect = new Rect(mainRect.x, mainRect.y, ritualsWidth, mainRect.height);
+            Rect controlRect = new Rect(ritualsRect.xMax + mainGap, mainRect.y, controlWidth, mainRect.height);
+            Rect previewRect = new Rect(controlRect.xMax + mainGap, mainRect.y, mainRect.width - ritualsWidth - controlWidth - mainGap * 2f, mainRect.height);
+
+            float lowerGap = 10f;
+            float telemetryWidth = 340f;
+            float remainingLowerWidth = lowerRect.width - telemetryWidth - lowerGap * 2f;
+            float systemsColumnWidth = remainingLowerWidth * 0.5f;
+            Rect telemetryRect = new Rect(lowerRect.x, lowerRect.y, telemetryWidth, lowerRect.height);
+            Rect capacitorRect = new Rect(telemetryRect.xMax + lowerGap, lowerRect.y, systemsColumnWidth, lowerRect.height);
+            Rect moduleRect = new Rect(capacitorRect.xMax + lowerGap, lowerRect.y, lowerRect.width - telemetryWidth - systemsColumnWidth - lowerGap * 2f, lowerRect.height);
 
             DrawHeader(headerRect, ritual);
             DrawReadinessStrip(stripRect, ritual);
+            DrawCategoryTabs(categoryRect);
             DrawRitualBrowser(ritualsRect, ritual);
             DrawControlPanel(controlRect, ritual);
             DrawScrollableRitualPreviewPanel(previewRect, ritual);
-            DrawSystemsPanel(systemsRect, ritual);
+            DrawStatusPanel(telemetryRect, ritual);
+            DrawScrollableCapacitorPanel(capacitorRect, ritual);
+            DrawScrollableModulePanel(moduleRect);
         
         }
 
         private AbyssalSummoningConsoleUtility.RitualDefinition GetSelectedRitual()
         {
-            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetCachedRituals();
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetVisibleRituals();
             AbyssalSummoningConsoleUtility.RitualDefinition ritual = rituals.FirstOrDefault(r => r.Id == selectedRitualId);
             if (ritual == null)
             {
-                ritual = AbyssalSummoningConsoleUtility.GetSuggestedRitual(circle) ?? AbyssalSummoningConsoleUtility.GetDefaultRitual();
-                selectedRitualId = ritual.Id;
+                ritual = rituals.FirstOrDefault() ?? AbyssalSummoningConsoleUtility.GetSuggestedRitual(circle) ?? AbyssalSummoningConsoleUtility.GetDefaultRitual();
+                if (ritual != null)
+                {
+                    selectedRitualId = ritual.Id;
+                    selectedCategory = GetCategoryForRitual(ritual);
+                }
             }
             return ritual;
+        }
+
+        private List<AbyssalSummoningConsoleUtility.RitualDefinition> GetVisibleRituals()
+        {
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetCachedRituals();
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> filtered = rituals
+                .Where(ritual => ritual != null && GetCategoryForRitual(ritual) == selectedCategory)
+                .ToList();
+
+            if (filtered.Count == 0)
+            {
+                RitualCategory fallbackCategory = GetFallbackCategory(rituals);
+                if (fallbackCategory != selectedCategory)
+                {
+                    selectedCategory = fallbackCategory;
+                    filtered = rituals
+                        .Where(ritual => ritual != null && GetCategoryForRitual(ritual) == selectedCategory)
+                        .ToList();
+                }
+            }
+
+            return filtered.Count > 0 ? filtered : rituals;
+        }
+
+        private RitualCategory GetFallbackCategory(List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals)
+        {
+            RitualCategory[] categories = new[]
+            {
+                RitualCategory.LesserBreaches,
+                RitualCategory.NodeEntities,
+                RitualCategory.ArchonClass,
+                RitualCategory.MassIncursions,
+                RitualCategory.DominionProtocols
+            };
+
+            for (int i = 0; i < categories.Length; i++)
+            {
+                if (rituals.Any(ritual => ritual != null && GetCategoryForRitual(ritual) == categories[i]))
+                {
+                    return categories[i];
+                }
+            }
+
+            return RitualCategory.LesserBreaches;
+        }
+
+        private RitualCategory GetCategoryForRitual(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            return ritual == null ? RitualCategory.LesserBreaches : GetCategoryForRitualId(ritual.Id);
+        }
+
+        private RitualCategory GetCategoryForRitualId(string ritualId)
+        {
+            switch (ritualId)
+            {
+                case "unstable_breach":
+                case "ember_hunt":
+                    return RitualCategory.LesserBreaches;
+                case "warden_of_ash":
+                case "choir_engine":
+                    return RitualCategory.NodeEntities;
+                case "archon_beast":
+                case "reactor_saint":
+                case "rift_butcher":
+                    return RitualCategory.ArchonClass;
+                case "horde_gate":
+                    return RitualCategory.MassIncursions;
+                case "dominion_gate":
+                    return RitualCategory.DominionProtocols;
+                default:
+                    return RitualCategory.LesserBreaches;
+            }
+        }
+
+        private string GetCategoryLabel(RitualCategory category)
+        {
+            switch (category)
+            {
+                case RitualCategory.LesserBreaches:
+                    return "ABY_CircleCategory_LesserBreaches".Translate();
+                case RitualCategory.NodeEntities:
+                    return "ABY_CircleCategory_NodeEntities".Translate();
+                case RitualCategory.ArchonClass:
+                    return "ABY_CircleCategory_ArchonClass".Translate();
+                case RitualCategory.MassIncursions:
+                    return "ABY_CircleCategory_MassIncursions".Translate();
+                case RitualCategory.DominionProtocols:
+                    return "ABY_CircleCategory_DominionProtocols".Translate();
+                default:
+                    return category.ToString();
+            }
+        }
+
+        private string GetCategoryTooltip(RitualCategory category)
+        {
+            switch (category)
+            {
+                case RitualCategory.LesserBreaches:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_LesserBreaches_Tooltip", "Fast breach rituals, early pressure summons, and low-tier packs.");
+                case RitualCategory.NodeEntities:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_NodeEntities_Tooltip", "Specialized single-entity summons that anchor a fight around one dangerous hostile presence.");
+                case RitualCategory.ArchonClass:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_ArchonClass_Tooltip", "Major threat rituals, miniboss deployments, and boss-grade encounters.");
+                case RitualCategory.MassIncursions:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_MassIncursions_Tooltip", "Large-scale perimeter breaches and multi-front mass assault patterns.");
+                case RitualCategory.DominionProtocols:
+                    return AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_DominionProtocols_Tooltip", "Dominion-side gate events, crisis staging, and deeper infernal protocol access.");
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private void DrawCategoryTabs(Rect rect)
+        {
+            AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+            Rect inner = rect.ContractedBy(6f);
+            Rect titleRect = new Rect(inner.x, inner.y, 170f, 18f);
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(titleRect, "ABY_CircleCategoryHeader".Translate());
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            RitualCategory[] categories = new[]
+            {
+                RitualCategory.LesserBreaches,
+                RitualCategory.NodeEntities,
+                RitualCategory.ArchonClass,
+                RitualCategory.MassIncursions,
+                RitualCategory.DominionProtocols
+            };
+
+            float tabsTop = inner.y + 18f;
+            float gap = 6f;
+            float tabWidth = (inner.width - gap * (categories.Length - 1)) / categories.Length;
+            for (int i = 0; i < categories.Length; i++)
+            {
+                RitualCategory category = categories[i];
+                Rect tabRect = new Rect(inner.x + i * (tabWidth + gap), tabsTop, tabWidth, inner.height - 18f);
+                DrawCategoryTab(tabRect, category, selectedCategory == category);
+            }
+        }
+
+        private void DrawCategoryTab(Rect rect, RitualCategory category, bool selected)
+        {
+            int count = GetCachedRituals().Count(ritual => ritual != null && GetCategoryForRitual(ritual) == category);
+            bool enabled = count > 0;
+            AbyssalSummoningConsoleArt.DrawPanel(rect, selected && enabled);
+
+            string label = GetCategoryLabel(category);
+            string countLabel = enabled
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_Count", "{0} patterns", count)
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCategory_Empty", "No unlocked patterns");
+
+            GUI.color = enabled ? Color.white : new Color(0.78f, 0.66f, 0.62f, 0.75f);
+            Text.Font = GameFont.Small;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 6f, rect.width - 20f, 20f), label);
+            GUI.color = enabled ? AbyssalSummoningConsoleArt.TextDimColor : new Color(0.76f, 0.62f, 0.56f, 0.72f);
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(new Rect(rect.x + 10f, rect.y + 26f, rect.width - 20f, rect.height - 30f), countLabel);
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+
+            TooltipHandler.TipRegion(rect, GetCategoryTooltip(category));
+            if (enabled && Widgets.ButtonInvisible(rect))
+            {
+                selectedCategory = category;
+                List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetVisibleRituals();
+                if (!rituals.Any(ritual => ritual.Id == selectedRitualId))
+                {
+                    AbyssalSummoningConsoleUtility.RitualDefinition first = rituals.FirstOrDefault();
+                    if (first != null)
+                    {
+                        selectedRitualId = first.Id;
+                    }
+                }
+                SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+            }
         }
 
         private List<AbyssalSummoningConsoleUtility.RitualDefinition> GetCachedRituals()
@@ -211,9 +419,9 @@ namespace AbyssalProtocol
         {
             AbyssalSummoningConsoleArt.DrawPanel(rect, false);
             Rect inner = rect.ContractedBy(10f);
-            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CirclePatternsHeader".Translate());
+            AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), "ABY_CirclePatternsHeader".Translate() + ": " + GetCategoryLabel(selectedCategory));
 
-            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetCachedRituals();
+            List<AbyssalSummoningConsoleUtility.RitualDefinition> rituals = GetVisibleRituals();
             Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
             float cardHeight = 110f;
             float viewHeight = Mathf.Max(outRect.height, rituals.Count * (cardHeight + 8f));
@@ -224,7 +432,7 @@ namespace AbyssalProtocol
             {
                 AbyssalSummoningConsoleUtility.RitualDefinition ritual = rituals[i];
                 Rect cardRect = new Rect(0f, i * (cardHeight + 8f), viewRect.width, cardHeight);
-                DrawRitualCard(cardRect, ritual, ritual.Id == selected.Id);
+                DrawRitualCard(cardRect, ritual, selected != null && ritual.Id == selected.Id);
             }
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref ritualScrollPosition, viewRect);
         }
@@ -417,6 +625,12 @@ namespace AbyssalProtocol
                 {
                     OpenThreatCodex();
                 }
+            }
+
+            Rect jumpRect = new Rect(inner.x, inner.yMax - 116f, inner.width, 30f);
+            if (AbyssalStyledWidgets.TextButton(jumpRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Jump to prepared sigil"), !circle.RitualActive, false))
+            {
+                JumpToSigil(ritual);
             }
 
             bool dominionAbortMode = AbyssalSummoningConsoleUtility.IsDominionRitual(ritual) && dominionCrisis != null && dominionCrisis.IsActive;

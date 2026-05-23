@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleCategoryHeader>Архетипы угроз</ABY_CircleCategoryHeader>
+  <ABY_CircleCategory_LesserBreaches>Малые прорывы</ABY_CircleCategory_LesserBreaches>
+  <ABY_CircleCategory_NodeEntities>Узловые сущности</ABY_CircleCategory_NodeEntities>
+  <ABY_CircleCategory_ArchonClass>Архон-класс</ABY_CircleCategory_ArchonClass>
+  <ABY_CircleCategory_MassIncursions>Массовые вторжения</ABY_CircleCategory_MassIncursions>
+  <ABY_CircleCategory_DominionProtocols>Протоколы Доминиона</ABY_CircleCategory_DominionProtocols>
+  <ABY_CircleCategory_Count>Паттернов: {0}</ABY_CircleCategory_Count>
+  <ABY_CircleCategory_Empty>Нет открытых паттернов</ABY_CircleCategory_Empty>
+  <ABY_CircleCategory_LesserBreaches_Tooltip>Быстрые ритуалы прорыва, ранние вызовы давления и малые стаи.</ABY_CircleCategory_LesserBreaches_Tooltip>
+  <ABY_CircleCategory_NodeEntities_Tooltip>Специализированные одиночные вызовы, вокруг которых строится бой с одной опасной враждебной сущностью.</ABY_CircleCategory_NodeEntities_Tooltip>
+  <ABY_CircleCategory_ArchonClass_Tooltip>Крупные ритуалы угроз, развёртывания минибоссов и полноценные боссовые столкновения.</ABY_CircleCategory_ArchonClass_Tooltip>
+  <ABY_CircleCategory_MassIncursions_Tooltip>Крупномасштабные периметровые прорывы и многофронтовые штурмовые сценарии.</ABY_CircleCategory_MassIncursions_Tooltip>
+  <ABY_CircleCategory_DominionProtocols_Tooltip>События врат Доминиона, кризисная подготовка и доступ к более глубоким инфернальным протоколам.</ABY_CircleCategory_DominionProtocols_Tooltip>
+  <ABY_CircleCommand_JumpToSigil>Перейти к подготовленной сигиле</ABY_CircleCommand_JumpToSigil>
+</LanguageData>

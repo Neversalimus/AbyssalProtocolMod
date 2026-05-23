@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_CircleCategoryHeader>Threat archetypes</ABY_CircleCategoryHeader>
+  <ABY_CircleCategory_LesserBreaches>Lesser breaches</ABY_CircleCategory_LesserBreaches>
+  <ABY_CircleCategory_NodeEntities>Node entities</ABY_CircleCategory_NodeEntities>
+  <ABY_CircleCategory_ArchonClass>Archon-class</ABY_CircleCategory_ArchonClass>
+  <ABY_CircleCategory_MassIncursions>Mass incursions</ABY_CircleCategory_MassIncursions>
+  <ABY_CircleCategory_DominionProtocols>Dominion protocols</ABY_CircleCategory_DominionProtocols>
+  <ABY_CircleCategory_Count>{0} patterns</ABY_CircleCategory_Count>
+  <ABY_CircleCategory_Empty>No unlocked patterns</ABY_CircleCategory_Empty>
+  <ABY_CircleCategory_LesserBreaches_Tooltip>Fast breach rituals, early pressure summons, and low-tier packs.</ABY_CircleCategory_LesserBreaches_Tooltip>
+  <ABY_CircleCategory_NodeEntities_Tooltip>Specialized single-entity summons that anchor the fight around one dangerous hostile presence.</ABY_CircleCategory_NodeEntities_Tooltip>
+  <ABY_CircleCategory_ArchonClass_Tooltip>Major threat rituals, miniboss deployments, and boss-grade encounters.</ABY_CircleCategory_ArchonClass_Tooltip>
+  <ABY_CircleCategory_MassIncursions_Tooltip>Large-scale perimeter breaches and multi-front mass assault patterns.</ABY_CircleCategory_MassIncursions_Tooltip>
+  <ABY_CircleCategory_DominionProtocols_Tooltip>Dominion-side gate events, crisis staging, and deeper infernal protocol access.</ABY_CircleCategory_DominionProtocols_Tooltip>
+  <ABY_CircleCommand_JumpToSigil>Jump to prepared sigil</ABY_CircleCommand_JumpToSigil>
+</LanguageData>
