@@ -856,3 +856,9 @@ The lower tabbed infrastructure drawer was cleaner than three permanent panels, 
 ## Summoning Circle infrastructure window simplification guard
 
 The Circle Infrastructure window should stay focused on slot management. Do not re-add a full readiness tab, long capacitor diagnostics, or multiple nested tab layers unless the main console loses its separate readiness/dossier routes. The intended structure is: capacitor lattice rows, stabilizer ring rows, and a short effect summary with tooltips for deeper details.
+
+## Circle Infrastructure compact window overlap / tooltip regression guard
+
+- Do not place large full-width action buttons at the bottom of the compact Circle Infrastructure window unless vertical space is recalculated with the effect summary reserved above it. The standard close X is sufficient and avoids overlap.
+- Compact slot rows should use player-facing tooltips, not raw capacitor diagnostic tooltips. Technical values such as capacity, throughput, leakage, and surge tolerance belong in deeper diagnostics, not the compact slot manager.
+- The compact infrastructure window should remain a slot manager first: short summary, capacitor rows, stabilizer rows, effect summary. Avoid returning to long scrolling telemetry here.

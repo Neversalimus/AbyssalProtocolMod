@@ -42,4 +42,10 @@
   <ABY_CircleInfrastructure_EffectCapacitors>Конденсаторы: {0}</ABY_CircleInfrastructure_EffectCapacitors>
   <ABY_CircleInfrastructure_EffectStabilizers>Кольцо: {0}</ABY_CircleInfrastructure_EffectStabilizers>
   <ABY_CircleInfrastructure_EffectContainment>Удержание {0} • Тепло {1} • Осадок {2} • Аномалии {3}</ABY_CircleInfrastructure_EffectContainment>
+  <ABY_CircleInfrastructureSlot_Empty>Пусто</ABY_CircleInfrastructureSlot_Empty>
+  <ABY_CircleInfrastructureTooltip_CapacitorEmpty>Пустой отсек конденсатора. Установи конденсаторный модуль, чтобы поддерживать более сильные или стабильные ритуалы.</ABY_CircleInfrastructureTooltip_CapacitorEmpty>
+  <ABY_CircleInfrastructureTooltip_CapacitorFilled>Установлен конденсаторный модуль. Он поддерживает заряд ритуала и может быть снят, когда круг не активен.</ABY_CircleInfrastructureTooltip_CapacitorFilled>
+  <ABY_CircleInfrastructureTooltip_StabilizerEmpty>Пустое гнездо стабилизатора. Установи стабилизатор, чтобы улучшить удержание и снизить отдачу ритуала.</ABY_CircleInfrastructureTooltip_StabilizerEmpty>
+  <ABY_CircleInfrastructureTooltip_StabilizerFilled>Установлен стабилизатор. Он помогает удержанию, охлаждению, подавлению осадка и защите от аномалий.</ABY_CircleInfrastructureTooltip_StabilizerFilled>
+  <ABY_CircleInfrastructure_EffectTooltip>Конденсаторы поддерживают запуск ритуала и сглаживают питание. Стабилизаторы улучшают удержание и снижают отдачу. Заполняй или улучшай слоты, когда высокие ритуалы становятся нестабильными или заблокированными.</ABY_CircleInfrastructure_EffectTooltip>
 </LanguageData>

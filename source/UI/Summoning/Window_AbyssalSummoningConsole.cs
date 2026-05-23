@@ -1811,7 +1811,7 @@ namespace AbyssalProtocol
                 resizeable = false;
             }
 
-            public override Vector2 InitialSize => new Vector2(820f, 610f);
+            public override Vector2 InitialSize => new Vector2(820f, 570f);
 
             public override void DoWindowContents(Rect inRect)
             {
@@ -1846,22 +1846,15 @@ namespace AbyssalProtocol
                 Rect inner = bodyRect.ContractedBy(12f);
 
                 float gap = 8f;
-                Rect summaryRect = new Rect(inner.x, inner.y, inner.width, 52f);
+                Rect summaryRect = new Rect(inner.x, inner.y, inner.width, 50f);
                 Rect capacitorRect = new Rect(inner.x, summaryRect.yMax + gap, inner.width, 122f);
-                Rect stabilizerRect = new Rect(inner.x, capacitorRect.yMax + gap, inner.width, 188f);
-                Rect effectRect = new Rect(inner.x, stabilizerRect.yMax + gap, inner.width, 78f);
-                Rect closeRect = new Rect(inner.x, inner.yMax - 32f, inner.width, 30f);
+                Rect stabilizerRect = new Rect(inner.x, capacitorRect.yMax + gap, inner.width, 178f);
+                Rect effectRect = new Rect(inner.x, stabilizerRect.yMax + gap, inner.width, Mathf.Max(64f, inner.yMax - (stabilizerRect.yMax + gap)));
 
                 parent.DrawCircleInfrastructureWindowSummary(summaryRect, ritual);
                 parent.DrawCompactCapacitorSlotSection(capacitorRect);
                 parent.DrawCompactStabilizerSlotSection(stabilizerRect);
                 parent.DrawCompactInfrastructureEffectSection(effectRect, ritual);
-
-                if (AbyssalStyledWidgets.TextButton(closeRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureWindow_Close", "Close infrastructure")))
-                {
-                    Close();
-                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
-                }
             }
         }
 
@@ -1894,7 +1887,7 @@ namespace AbyssalProtocol
             foreach (AbyssalCircleCapacitorBay bay in AbyssalCircleCapacitorUtility.GetOrderedBays())
             {
                 Rect rowRect = new Rect(inner.x, y, inner.width, 30f);
-                DrawCapacitorSlotRow(rowRect, bay);
+                DrawCompactCapacitorSlotRow(rowRect, bay);
                 y += 34f;
             }
         }
@@ -1915,8 +1908,80 @@ namespace AbyssalProtocol
             foreach (AbyssalCircleModuleEdge edge in AbyssalCircleModuleUtility.GetOrderedEdges())
             {
                 Rect rowRect = new Rect(inner.x, y, inner.width, 30f);
-                DrawModuleSlotRow(rowRect, edge);
-                y += 34f;
+                DrawCompactModuleSlotRow(rowRect, edge);
+                y += 32f;
+            }
+        }
+
+        private void DrawCompactCapacitorSlotRow(Rect rect, AbyssalCircleCapacitorBay bay)
+        {
+            AbyssalCircleCapacitorSlot slot = circle.GetCapacitorSlot(bay);
+            ThingDef installedDef = slot?.InstalledThingDef;
+            Rect bayRect = new Rect(rect.x, rect.y + 4f, 118f, rect.height - 8f);
+            Rect labelRect = new Rect(bayRect.xMax + 8f, rect.y + 4f, rect.width - 118f - 8f - 118f, rect.height - 8f);
+            Rect actionRect = new Rect(rect.xMax - 112f, rect.y - 1f, 112f, rect.height + 2f);
+
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(bayRect, AbyssalCircleCapacitorUtility.GetBayLabel(bay));
+            Text.Font = GameFont.Small;
+            GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
+            ABY_UIPolishUtility.SafeLabel(labelRect, installedDef == null
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureSlot_Empty", "Empty")
+                : installedDef.LabelCap.ToString());
+            GUI.color = Color.white;
+
+            TooltipHandler.TipRegion(rect, installedDef == null
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureTooltip_CapacitorEmpty", "Empty capacitor bay. Install a capacitor module to support stronger or more stable rituals.")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureTooltip_CapacitorFilled", "Installed capacitor module. It contributes ritual charge support and can be removed when the circle is idle."));
+
+            if (installedDef == null)
+            {
+                if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CapacitorCommand_Install".Translate(), !circle.RitualActive, false))
+                {
+                    OpenCapacitorInstallMenu(bay);
+                }
+            }
+            else if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CapacitorCommand_Remove".Translate(), !circle.RitualActive, false))
+            {
+                TryAssignCapacitorRemove(bay);
+            }
+        }
+
+        private void DrawCompactModuleSlotRow(Rect rect, AbyssalCircleModuleEdge edge)
+        {
+            AbyssalCircleModuleSlot slot = circle.GetModuleSlot(edge);
+            ThingDef installedDef = slot?.InstalledThingDef;
+            string edgeLabel = AbyssalCircleModuleUtility.GetEdgeLabel(edge);
+            Rect edgeRect = new Rect(rect.x, rect.y + 4f, 118f, rect.height - 8f);
+            Rect labelRect = new Rect(edgeRect.xMax + 8f, rect.y + 4f, rect.width - 118f - 8f - 118f, rect.height - 8f);
+            Rect actionRect = new Rect(rect.xMax - 112f, rect.y - 1f, 112f, rect.height + 2f);
+
+            GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+            Text.Font = GameFont.Tiny;
+            ABY_UIPolishUtility.SafeLabel(edgeRect, edgeLabel);
+            Text.Font = GameFont.Small;
+            GUI.color = installedDef == null ? AbyssalSummoningConsoleArt.TextDimColor : Color.white;
+            string installedLabel = installedDef == null
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureSlot_Empty", "Empty")
+                : installedDef.LabelCap + " (" + AbyssalCircleModuleUtility.GetTierLabel(installedDef) + ")";
+            ABY_UIPolishUtility.SafeLabel(labelRect, installedLabel);
+            GUI.color = Color.white;
+
+            TooltipHandler.TipRegion(rect, installedDef == null
+                ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureTooltip_StabilizerEmpty", "Empty stabilizer socket. Install a stabilizer to improve containment and reduce ritual backlash.")
+                : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleInfrastructureTooltip_StabilizerFilled", "Installed stabilizer module. It contributes to containment, heat damping, residue control, and anomaly shielding."));
+
+            if (installedDef == null)
+            {
+                if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CircleModuleCommand_Install".Translate(), !circle.RitualActive, false))
+                {
+                    OpenInstallMenu(edge);
+                }
+            }
+            else if (AbyssalStyledWidgets.TextButton(actionRect, "ABY_CircleModuleCommand_Remove".Translate(), !circle.RitualActive, false))
+            {
+                TryAssignRemove(edge);
             }
         }
 
@@ -1945,7 +2010,9 @@ namespace AbyssalProtocol
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
 
-            string tooltip = AbyssalCircleCapacitorRitualUtility.GetSupportDetailText(report) + "\n\n" + AbyssalSummoningConsoleUtility.GetStabilizerPatternDetail(circle);
+            string tooltip = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                "ABY_CircleInfrastructure_EffectTooltip",
+                "Capacitors support ritual startup and power smoothing. Stabilizers improve containment and reduce backlash. Upgrade or fill empty slots when higher rituals become unstable or blocked.");
             TooltipHandler.TipRegion(rect, tooltip);
         }
 
