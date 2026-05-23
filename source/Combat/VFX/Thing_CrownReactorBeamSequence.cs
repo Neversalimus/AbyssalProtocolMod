@@ -6,7 +6,7 @@ using Verse;
 namespace AbyssalProtocol
 {
     /// <summary>
-    /// Transient beam presentation for the Crown Reactor Multilance.
+    /// Transient four-rail beam presentation for the Crown Reactor Multilance.
     ///
     /// Runtime budget notes:
     /// - no map-wide scans;
@@ -25,21 +25,28 @@ namespace AbyssalProtocol
         private const int BeamGapTicks = 4;
         private const int FadeTicks = 12;
 
-        // These values are intentionally visual-only. Damage remains four single pulses in Tick().
-        private const float MainBeamWidth = 0.48f;
-        private const float ChargeBeamWidth = 0.22f;
-        private const float ChargeLength = 1.04f;
+        // Visual profile tuning: keep the VFX tightly bound to the actual four barrel lanes.
+        private const float MinimumWeaponLength = 1.95f;
+        private const float MinimumWeaponHeight = 0.62f;
+        private const float MuzzleForwardRatio = 0.66f;
+        private const float BarrelStartForwardRatio = 0.31f;
+        private const float MinMuzzleForwardOffset = 1.16f;
+        private const float MaxMuzzleForwardOffset = 1.34f;
+        private const float MinBarrelStartForwardOffset = 0.56f;
+        private const float MaxBarrelStartForwardOffset = 0.72f;
+        private const float OuterRailOffsetRatio = 0.23f;
+        private const float InnerRailOffsetRatio = 0.075f;
+        private const float MinOuterRailOffset = 0.12f;
+        private const float MaxOuterRailOffset = 0.16f;
+        private const float MinInnerRailOffset = 0.04f;
+        private const float MaxInnerRailOffset = 0.065f;
+        private const float ChargeBeamWidthRatio = 0.11f;
+        private const float MainBeamWidthRatio = 0.14f;
+        private const float MinChargeBeamWidth = 0.055f;
+        private const float MaxChargeBeamWidth = 0.075f;
+        private const float MinMainBeamWidth = 0.072f;
+        private const float MaxMainBeamWidth = 0.095f;
 
-        // Muzzle/rail alignment is estimated from the actual weapon drawSize and shot direction.
-        // RimWorld does not expose a stable per-weapon muzzle transform for equipment graphics, so
-        // keep this deterministic, cheap, and tied to the fired direction instead of pawn rotation scans.
-        private const float MinimumMuzzleForwardOffset = 1.12f;
-        private const float MaximumMuzzleForwardOffset = 1.48f;
-        private const float MuzzleForwardInset = 0.16f;
-        private const float ChargeStartFallbackForwardOffset = 0.28f;
-
-        // Four barrel lanes from top to bottom, perpendicular to the shot direction.
-        private static readonly float[] RailOffsets = { 0.24f, 0.08f, -0.08f, -0.24f };
         private static readonly Color ChargeColor = new Color(0.82f, 1f, 1f, 0.58f);
         private static readonly Color FadeColor = new Color(1f, 1f, 1f, 0.72f);
 
@@ -127,11 +134,9 @@ namespace AbyssalProtocol
             shotPerpendicular = new Vector3(-shotDirection.z, 0f, shotDirection.x);
 
             float muzzleOffset = ResolveMuzzleForwardOffset(equipment);
+            float barrelStartOffset = ResolveBarrelStartForwardOffset(equipment);
             muzzleBase = launcherPos + shotDirection * muzzleOffset;
-
-            // Charge is drawn along the visible weapon rails, not in front of the muzzle.
-            float chargeStartForward = Mathf.Max(ChargeStartFallbackForwardOffset, muzzleOffset - ChargeLength + MuzzleForwardInset);
-            chargeBase = launcherPos + shotDirection * chargeStartForward;
+            chargeBase = launcherPos + shotDirection * barrelStartOffset;
         }
 
         public override void ExposeData()
@@ -213,23 +218,21 @@ namespace AbyssalProtocol
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             Material material = BeamMaterial;
-            if (material == null)
+            if (material == null || shotDirection.sqrMagnitude < 0.001f)
             {
                 return;
             }
 
-            if (shotDirection.sqrMagnitude < 0.001f)
-            {
-                return;
-            }
-
+            float chargeLength = ResolveChargeLength(equipment);
+            float chargeBeamWidth = ResolveChargeBeamWidth(equipment);
+            float mainBeamWidth = ResolveMainBeamWidth(equipment);
             int chargedRails = Mathf.Clamp(ageTicks / RailChargeStepTicks + 1, 0, RailCount);
             if (ageTicks < BeamStartTick)
             {
                 Material chargeMaterial = ChargeMaterial ?? material;
                 for (int rail = 0; rail < chargedRails; rail++)
                 {
-                    DrawBeamSegment(chargeMaterial, RailChargeStart(rail), shotDirection, ChargeLength, ChargeBeamWidth);
+                    DrawBeamSegment(chargeMaterial, RailChargeStart(rail), shotDirection, chargeLength, chargeBeamWidth);
                 }
                 return;
             }
@@ -251,9 +254,8 @@ namespace AbyssalProtocol
                 }
 
                 beamDirection /= distance;
-
                 Material activeMaterial = (activeRailTick < 3 || activeRailTick > BeamHoldTicks - 5) ? (BeamFadeMaterial ?? material) : material;
-                DrawBeamSegment(activeMaterial, railMuzzle, beamDirection, distance, MainBeamWidth);
+                DrawBeamSegment(activeMaterial, railMuzzle, beamDirection, distance, mainBeamWidth);
             }
         }
 
@@ -352,12 +354,12 @@ namespace AbyssalProtocol
 
         private Vector3 RailMuzzle(int rail)
         {
-            return muzzleBase + shotPerpendicular * RailOffsets[Mathf.Clamp(rail, 0, RailOffsets.Length - 1)];
+            return muzzleBase + shotPerpendicular * ResolveRailOffset(rail, equipment);
         }
 
         private Vector3 RailChargeStart(int rail)
         {
-            return chargeBase + shotPerpendicular * RailOffsets[Mathf.Clamp(rail, 0, RailOffsets.Length - 1)];
+            return chargeBase + shotPerpendicular * ResolveRailOffset(rail, equipment);
         }
 
         private static Vector3 ResolveInitialTargetPosition(LocalTargetInfo targetInfo)
@@ -372,13 +374,69 @@ namespace AbyssalProtocol
 
         private static float ResolveMuzzleForwardOffset(Thing equipment)
         {
-            float weaponLength = 1.95f;
+            float weaponLength = ResolveWeaponLength(equipment);
+            return Mathf.Clamp(weaponLength * MuzzleForwardRatio, MinMuzzleForwardOffset, MaxMuzzleForwardOffset);
+        }
+
+        private static float ResolveBarrelStartForwardOffset(Thing equipment)
+        {
+            float weaponLength = ResolveWeaponLength(equipment);
+            return Mathf.Clamp(weaponLength * BarrelStartForwardRatio, MinBarrelStartForwardOffset, MaxBarrelStartForwardOffset);
+        }
+
+        private static float ResolveChargeLength(Thing equipment)
+        {
+            return Mathf.Max(0.32f, ResolveMuzzleForwardOffset(equipment) - ResolveBarrelStartForwardOffset(equipment));
+        }
+
+        private static float ResolveRailOffset(int rail, Thing equipment)
+        {
+            float weaponHeight = ResolveWeaponHeight(equipment);
+            float outer = Mathf.Clamp(weaponHeight * OuterRailOffsetRatio, MinOuterRailOffset, MaxOuterRailOffset);
+            float inner = Mathf.Clamp(weaponHeight * InnerRailOffsetRatio, MinInnerRailOffset, MaxInnerRailOffset);
+            switch (Mathf.Clamp(rail, 0, RailCount - 1))
+            {
+                case 0:
+                    return outer;
+                case 1:
+                    return inner;
+                case 2:
+                    return -inner;
+                default:
+                    return -outer;
+            }
+        }
+
+        private static float ResolveChargeBeamWidth(Thing equipment)
+        {
+            float weaponHeight = ResolveWeaponHeight(equipment);
+            return Mathf.Clamp(weaponHeight * ChargeBeamWidthRatio, MinChargeBeamWidth, MaxChargeBeamWidth);
+        }
+
+        private static float ResolveMainBeamWidth(Thing equipment)
+        {
+            float weaponHeight = ResolveWeaponHeight(equipment);
+            return Mathf.Clamp(weaponHeight * MainBeamWidthRatio, MinMainBeamWidth, MaxMainBeamWidth);
+        }
+
+        private static float ResolveWeaponLength(Thing equipment)
+        {
             if (equipment?.def?.graphicData != null)
             {
-                weaponLength = Mathf.Max(weaponLength, equipment.def.graphicData.drawSize.x);
+                return Mathf.Max(MinimumWeaponLength, equipment.def.graphicData.drawSize.x);
             }
 
-            return Mathf.Clamp(weaponLength * 0.62f + MuzzleForwardInset, MinimumMuzzleForwardOffset, MaximumMuzzleForwardOffset);
+            return MinimumWeaponLength;
+        }
+
+        private static float ResolveWeaponHeight(Thing equipment)
+        {
+            if (equipment?.def?.graphicData != null)
+            {
+                return Mathf.Max(MinimumWeaponHeight, equipment.def.graphicData.drawSize.y);
+            }
+
+            return MinimumWeaponHeight;
         }
 
         private static void DrawBeamSegment(Material material, Vector3 start, Vector3 direction, float length, float width)
@@ -412,7 +470,10 @@ namespace AbyssalProtocol
 
             // Source beam texture is horizontal left-to-right. Align local X with the world-space target vector.
             float angle = Mathf.Atan2(delta.x, delta.z) * Mathf.Rad2Deg - 90f;
-            Matrix4x4 matrix = Matrix4x4.TRS(center, Quaternion.AngleAxis(angle, Vector3.up), new Vector3(resolvedLength, 1f, Mathf.Max(0.02f, width)));
+            Matrix4x4 matrix = Matrix4x4.TRS(
+                center,
+                Quaternion.AngleAxis(angle, Vector3.up),
+                new Vector3(resolvedLength, 1f, Mathf.Max(0.02f, width)));
             Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
     }

@@ -1,47 +1,3 @@
-## 2026-05-23 — Fix Crown Reactor Multilance muzzle alignment
-
-- Reworked `Thing_CrownReactorBeamSequence` so charge visuals are drawn along the weapon rails instead of projecting forward as short beam shots.
-- Moved discharge origins to estimated rail muzzle points derived from the equipped weapon draw size and initial shot direction, so beams start from the barrel cluster rather than the pawn center.
-- Added `StaticConstructorOnStartup` to the beam sequence type and switched the sequence ThingDef to `RealtimeOnly` rendering to avoid raw texture/map-mesh artifacts.
-- Kept the optimized runtime model: four controlled damage pulses, no per-tick beam damage, no full-map scans.
-- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
-
-Changed areas:
-
-```text
-Assemblies/AbyssalProtocol.dll
-Assemblies/AbyssalProtocol.pdb
-source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
-Defs/ThingDefs/ABY_CrownReactorMultilance.xml
-Docs/RECENT_WORK.md
-Docs/KNOWN_RISKS_AND_REGRESSIONS.md
-```
-
-
-## 2026-05-23 — Add Crown Reactor Multilance main-DLL integration
-
-- Added the T5 `ABY_CrownReactorMultilance` as a post-Saint / Crown-Reactor heavy weapon with Forge recipe, Protocol Nexus gate, EN/RU localization, weapon texture, and stretchable beam segment texture.
-- Implemented `Verb_CrownReactorMultilance` and `Thing_CrownReactorBeamSequence` in the main `source/` tree and rebuilt the primary `Assemblies/AbyssalProtocol.dll` instead of shipping an auxiliary weapon DLL.
-- The weapon presents sequential rail charging and four long reactor beams, but applies only four controlled damage pulses and performs no map-wide scans or per-tick beam damage.
-- Final PNG assets use real alpha transparency and optimized PNG compression.
-- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
-
-Changed areas:
-
-```text
-Assemblies/AbyssalProtocol.dll
-Assemblies/AbyssalProtocol.pdb
-Defs/ThingDefs/ABY_CrownReactorMultilance.xml
-source/Combat/Verbs/Verb_CrownReactorMultilance.cs
-source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
-Textures/Things/Weapon/ABY_CrownReactorMultilance.png
-Textures/Things/Projectile/ABY_CrownReactorBeamSegment.png
-Languages/English/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
-Languages/Russian/DefInjected/ThingDef/ABY_CrownReactorMultilance.xml
-Docs/CROWN_REACTOR_MULTILANCE.md
-Docs/RECENT_WORK.md
-```
-
 ## 2026-05-23 — Protocol Nexus authority pass 2A and Saint Aegis Engineering
 
 - Added the active Protocol Nexus project `ABY_PR_SaintAegisEngineering` for Reactor Saint reward engineering, Saint Aegis protection, condensation cells, Saint-core implants, Vesper/Ultra Plasma weapons, and reactor-grade Forge patterns.
@@ -1037,10 +993,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Updated Reliquary Archon escort fallback to remain heavier than the normal Archon escort after the normal fallback was raised.
 - Updated T1 summon threat constants for Thrall, Sapper, Zealot, Priest, and Sniper so forecast/shadow threat math matches the revised pawn budget values.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Standard `dotnet build` still requires the .NET Framework 4.7.2 targeting pack in this sandbox.
-## 2026-05-23 — Encounter query purity and localization cleanup
 
-- Split stale horde cleanup out of `AbyssalBossSummonUtility.HasActiveAbyssalEncounter`; use `TryCleanupStaleEncounterBeforeSummon` only on intentional pre-summon paths.
-- Localized Reactor Saint inspect strings and Rupture Crown command label/description.
-- Moved Reactor Saint overheat pulses onto `ABY_RuntimeTargetCache` and added explicit `ABY_DefCache.ClearAll()` reset on game finalize init.
-- Versioned the legacy sigil migration save flag while keeping the old bool key for compatibility.
 
+## 2026-05-23 — Crown Reactor Multilance barrel-locked VFX refinement
+
+- Reintroduced the T5 Crown Reactor Multilance weapon content into the current archive: ThingDef, beam-sequence ethereal thing, verb, texture, projectile beam segment, and EN/RU DefInjected text.
+- Tightened the multilance visual profile so charge bars now begin at the barrel bank rather than floating too far forward, and the firing origin is constrained closer to the barrel tips.
+- Reduced charge and discharge beam widths substantially and compressed the four lane offsets so both the warmup rails and the fired beams track the actual four barrels much more closely instead of rendering oversized cyan slabs.
+- Kept the damage/runtime model unchanged: four discrete damage pulses, no per-tick beam damage, no map-wide scans.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.

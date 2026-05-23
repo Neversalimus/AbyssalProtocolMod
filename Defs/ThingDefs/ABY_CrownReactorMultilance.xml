@@ -122,7 +122,7 @@
     <altitudeLayer>MoteOverhead</altitudeLayer>
     <tickerType>Normal</tickerType>
     <selectable>false</selectable>
-    <drawerType>RealtimeOnly</drawerType>
+    <drawerType>MapMeshOnly</drawerType>
     <useHitPoints>false</useHitPoints>
     <drawOffscreen>true</drawOffscreen>
     <graphicData>

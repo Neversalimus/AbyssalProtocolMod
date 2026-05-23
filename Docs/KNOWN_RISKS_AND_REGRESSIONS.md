@@ -1,11 +1,3 @@
-## 2026-05-23 — Crown Reactor beam muzzle alignment
-
-- `Thing_CrownReactorBeamSequence` must not draw charge beams from the final muzzle point outward; charge should run along the visible weapon rails, while discharge beams should start at per-rail muzzle points.
-- The sequence ThingDef should use realtime custom drawing, not `MapMeshOnly`, otherwise RimWorld can render the raw beam texture as a separate horizontal sprite.
-- Static cached `Material` fields require `[StaticConstructorOnStartup]` on the owning type to avoid Verse asset-loading warnings.
-- Do not replace the controlled four-pulse damage model with per-tick beam damage unless a separate performance pass explicitly validates it.
-
-
 ## 2026-05-23 — Protocol Nexus live-gate routing rules
 
 - Current playable Forge content must not be gated by `futureReserve` Protocol Research projects. Reserve nodes such as `ABY_PR_ApexWeaponry` and `ABY_PR_CrownfireSepulcherCalibration` should stay visible as roadmap/codex targets until the matching Final Gate content is actually playable and decodable.
@@ -784,8 +776,16 @@ In-game checks:
 
 - Start Warden, Archon Beast, Reactor Saint, and Archon/Rupture portal routes and confirm escort counts match the raised XML-era budgets rather than the old `420/620/760/980` values.
 - Check Summoning Console ritual preview/shadow threat text for T1/T2 rituals after enemy budget changes to make sure it no longer understates Thrall/Sapper/Zealot/Priest/Sniper threat.
-## Encounter state queries
 
-- `HasActive*`/`IsActive*` helpers must remain query-only. If a stale wave or runtime state needs cleanup before a summon, call an explicit cleanup method such as `AbyssalBossSummonUtility.TryCleanupStaleEncounterBeforeSummon` from the command/start path instead of hiding mutation inside a readiness check.
-- Player-facing inspect strings and gizmo labels/descriptions should use keyed localization even for boss-only debug-adjacent components; Reactor Saint and Rupture Crown UI previously regressed through hardcoded English labels.
 
+## Crown Reactor Multilance presentation risks — 2026-05-23
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Beam lanes drift off the visible barrel bank | P1 | weapon VFX | Charge bars or discharge beams appear wider than the four barrels or visibly offset from the weapon face in live combat | If `graphicData.drawSize` for `ABY_CrownReactorMultilance` changes, retune the forward ratios, rail offset ratios, and beam-width clamps in `Thing_CrownReactorBeamSequence` together. |
+| Future beam style pass makes lanes too thin to read | P2 | readability | Tight beam alignment looks accurate in close view but becomes hard to read at normal play zoom | If more readability is needed, raise width clamps slightly before increasing lane spacing; preserve one-beam-per-barrel discipline. |
+
+In-game checks:
+
+- Draft a pawn with `ABY_CrownReactorMultilance` and fire east/west/north/south plus diagonals; confirm warmup bars sit directly over the four barrels and each beam starts from a matching barrel lane.
+- Check the weapon at normal gameplay zoom and high zoom to make sure the narrowed beams stay readable without bloating back into a single oversized stripe.
