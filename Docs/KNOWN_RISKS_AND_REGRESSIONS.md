@@ -835,3 +835,7 @@ In-game checks:
 In-game check:
 
 - Fire `ABY_CrownReactorMultilance` at a target and confirm no static horizontal cyan beam segment remains attached to the shooter or target before/after the real custom beam sequence.
+
+## Summoning Console redesign detail-window regression guard
+
+When adding text-heavy ritual, horde, Dominion, reward, or readiness information, do not push it back into the main Summoning Console layout. Keep the primary screen compact and route dense information to the ritual dossier. This avoids the previous overloaded three-panel layout and prevents category/action panels from clipping at common UI scales.

@@ -16,4 +16,10 @@
   <ABY_CircleCommand_JumpToSigil>Перейти к подготовленной сигиле</ABY_CircleCommand_JumpToSigil>
   <ABY_CircleToggle_On>Вкл.</ABY_CircleToggle_On>
   <ABY_CircleToggle_Off>Выкл.</ABY_CircleToggle_Off>
+  <ABY_CircleCommand_RitualDetails>Открыть досье ритуала</ABY_CircleCommand_RitualDetails>
+  <ABY_CircleRitualDossier_Title>досье ритуала: {0}</ABY_CircleRitualDossier_Title>
+  <ABY_CircleRitualDossier_Subtitle>Полный прогноз вызова, состояние готовности, награды, побочные эффекты и активная телеметрия ритуала.</ABY_CircleRitualDossier_Subtitle>
+  <ABY_CircleRitualDossier_Close>Закрыть досье</ABY_CircleRitualDossier_Close>
+  <ABY_CircleRitualDossier_Forecast>Расширенный прогноз ритуала</ABY_CircleRitualDossier_Forecast>
+  <ABY_CircleCommandReadyShort>Путь вызова свободен.</ABY_CircleCommandReadyShort>
 </LanguageData>

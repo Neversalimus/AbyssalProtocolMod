@@ -531,3 +531,7 @@ Future work that changes post-horde progression, Dominion access, or Rift Butche
 - New or modified `DrawAt`, projectile draw, apparel hover, building overlay, portal, manifestation, boss presentation, and Dominion VFX code should use `ABY_MaterialCacheUtility.MatFrom(...)` instead of direct `MaterialPool.MatFrom(...)` when a `Color` argument is involved.
 - `source/Core/Utilities/ABY_SafeSpawnUtility.cs` is the shared defensive spawn/transfer helper. It must fail safely when no spawn cell is found; do not reintroduce `map.Center` fallback with `WipeMode.Vanish` for pawns, portals, bosses, Dominion transfers, or horde encounters.
 - `ABY_StabilityDiagnosticsGameComponent.FinalizeInit()` clears runtime target, VFX, power-net recovery, and material helper caches on game finalization to avoid cross-save stale state.
+
+### Summoning Console ritual dossier
+
+The Summoning Console redesign keeps the main window focused on archetype selection, ritual cards, concise preview, and invocation controls. Dense ritual information is now routed through an on-demand ritual dossier window from `Window_AbyssalSummoningConsole`, rather than being forced into the main layout. Future summoning UI work should preserve this split: main console for selection/action, dossier for expanded forecast/readiness/reward/telemetry data.

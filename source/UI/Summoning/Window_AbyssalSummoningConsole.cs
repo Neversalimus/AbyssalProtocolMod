@@ -626,6 +626,12 @@ namespace AbyssalProtocol
                 }
             }
 
+            Rect detailsRect = new Rect(inner.x, inner.yMax - 154f, inner.width, 30f);
+            if (AbyssalStyledWidgets.TextButton(detailsRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_RitualDetails", "Open ritual dossier"), true, false))
+            {
+                OpenRitualDetails(ritual);
+            }
+
             Rect jumpRect = new Rect(inner.x, inner.yMax - 116f, inner.width, 30f);
             if (AbyssalStyledWidgets.TextButton(jumpRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommand_JumpToSigil", "Jump to prepared sigil"), !circle.RitualActive, false))
             {
@@ -1419,6 +1425,17 @@ namespace AbyssalProtocol
             }
         }
 
+        private void OpenRitualDetails(AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+        {
+            if (ritual == null)
+            {
+                return;
+            }
+
+            Find.WindowStack.Add(new Window_AbyssalSummoningRitualDossier(this, ritual));
+            SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+        }
+
         private void OpenThreatCodex()
         {
             Find.WindowStack.Add(new Window_ABY_BestiaryCodex(circle));
@@ -1490,5 +1507,154 @@ namespace AbyssalProtocol
                 }
             }));
         }
+
+
+        private sealed class Window_AbyssalSummoningRitualDossier : Window
+        {
+            private readonly Window_AbyssalSummoningConsole parent;
+            private readonly AbyssalSummoningConsoleUtility.RitualDefinition ritual;
+            private Vector2 previewScrollPosition = Vector2.zero;
+            private Vector2 statusScrollPosition = Vector2.zero;
+
+            public Window_AbyssalSummoningRitualDossier(Window_AbyssalSummoningConsole parent, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
+            {
+                this.parent = parent;
+                this.ritual = ritual;
+                absorbInputAroundWindow = true;
+                closeOnClickedOutside = false;
+                doCloseX = true;
+                draggable = true;
+                forcePause = false;
+                preventCameraMotion = false;
+                onlyOneOfTypeAllowed = false;
+                resizeable = false;
+            }
+
+            public override Vector2 InitialSize => new Vector2(980f, 760f);
+
+            public override void DoWindowContents(Rect inRect)
+            {
+                try
+                {
+                    DoWindowContentsSafe(inRect);
+                }
+                catch (System.Exception ex)
+                {
+                    ABY_UISafetyUtility.DrawWindowFallback(inRect, "Abyssal Ritual Dossier", ex);
+                }
+            }
+
+            private void DoWindowContentsSafe(Rect inRect)
+            {
+                if (parent == null || parent.circle == null || parent.circle.Destroyed || parent.circle.Map == null || ritual == null)
+                {
+                    Close();
+                    return;
+                }
+
+                AbyssalSummoningConsoleArt.ReducedEffects = parent.circle.ReducedConsoleEffects;
+                AbyssalSummoningConsoleArt.DrawBackground(inRect);
+
+                Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 70f);
+                string title = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_CircleRitualDossier_Title",
+                    "ritual dossier: {0}",
+                    AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+                string subtitle = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_CircleRitualDossier_Subtitle",
+                    "Full invocation forecast, readiness state, rewards, side effects, and active ritual telemetry.");
+                AbyssalSummoningConsoleArt.DrawHeader(headerRect, title, subtitle, parent.circle.RitualActive);
+
+                Rect bodyRect = new Rect(inRect.x, headerRect.yMax + 10f, inRect.width, inRect.height - headerRect.height - 10f);
+                float gap = 10f;
+                float leftWidth = 300f;
+                Rect summaryRect = new Rect(bodyRect.x, bodyRect.y, leftWidth, bodyRect.height);
+                Rect previewRect = new Rect(summaryRect.xMax + gap, bodyRect.y, bodyRect.width - leftWidth - gap, bodyRect.height);
+
+                DrawSummaryPanel(summaryRect);
+                DrawExpandedPreviewPanel(previewRect);
+            }
+
+            private void DrawSummaryPanel(Rect rect)
+            {
+                AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+                Rect inner = rect.ContractedBy(12f);
+
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), AbyssalSummoningConsoleUtility.GetRitualLabel(ritual));
+                ThingDef sigilDef = AbyssalSummoningConsoleUtility.GetSigilDef(ritual);
+                Rect iconRect = new Rect(inner.x, inner.y + 32f, 58f, 58f);
+                if (sigilDef != null && sigilDef.uiIcon != null)
+                {
+                    GUI.color = Color.white;
+                    GUI.DrawTexture(iconRect, sigilDef.uiIcon, ScaleMode.ScaleToFit, true);
+                }
+
+                Rect metaRect = new Rect(iconRect.xMax + 10f, inner.y + 30f, inner.width - iconRect.width - 10f, 66f);
+                GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                Text.Font = GameFont.Tiny;
+                ABY_UIPolishUtility.SafeLabel(metaRect, AbyssalSummoningConsoleUtility.GetRoleTagLine(ritual) + "\n" + AbyssalSummoningConsoleUtility.GetRitualMetaText(parent.circle, ritual));
+                Text.Font = GameFont.Small;
+                GUI.color = Color.white;
+
+                AbyssalSummoningConsoleUtility.CircleRiskTier riskTier = AbyssalSummoningConsoleUtility.GetRiskTier(parent.circle, ritual);
+                AbyssalSummoningConsoleArt.DrawRiskBar(new Rect(inner.x, inner.y + 102f, inner.width, 28f), AbyssalSummoningConsoleUtility.GetRiskFill(parent.circle, ritual), AbyssalSummoningConsoleUtility.GetRiskLabel(riskTier), AbyssalSummoningConsoleUtility.GetRiskColor(riskTier), parent.circle.RitualActive);
+
+                string blockerLine = AbyssalSummoningConsoleUtility.IsInvocationPathClear(parent.circle, ritual)
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandReadyShort", "Invocation path clear.")
+                    : AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleCommandBlocked", "Current blocker: {0}", AbyssalSummoningConsoleUtility.GetPrimaryInvocationBlocker(parent.circle, ritual));
+
+                GUI.color = AbyssalSummoningConsoleUtility.IsInvocationPathClear(parent.circle, ritual)
+                    ? new Color(0.72f, 1f, 0.74f, 1f)
+                    : new Color(1f, 0.60f, 0.54f, 1f);
+                Text.Font = GameFont.Tiny;
+                ABY_UIPolishUtility.SafeLabel(new Rect(inner.x, inner.y + 138f, inner.width, 34f), blockerLine);
+                Text.Font = GameFont.Small;
+                GUI.color = Color.white;
+
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y + 184f, inner.width, 22f), "ABY_CircleStatusHeaderLong".Translate());
+                Rect outRect = new Rect(inner.x, inner.y + 212f, inner.width, inner.height - 264f);
+                List<AbyssalSummoningConsoleUtility.StatusEntry> entries = AbyssalSummoningConsoleUtility.GetStatusEntries(parent.circle, ritual);
+                Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, entries.Count * 36f + 6f));
+
+                AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    Rect rowRect = new Rect(0f, i * 36f, viewRect.width, 32f);
+                    GUI.color = new Color(0.12f, 0.07f, 0.075f, 0.74f);
+                    GUI.DrawTexture(rowRect, BaseContent.WhiteTex);
+                    GUI.color = AbyssalSummoningConsoleArt.TextDimColor;
+                    Text.Font = GameFont.Tiny;
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rowRect.x + 8f, rowRect.y + 3f, rowRect.width - 16f, 13f), entries[i].Label);
+                    GUI.color = entries[i].Satisfied ? new Color(0.72f, 1f, 0.74f, 1f) : new Color(1f, 0.60f, 0.54f, 1f);
+                    ABY_UIPolishUtility.SafeLabel(new Rect(rowRect.x + 8f, rowRect.y + 16f, rowRect.width - 16f, 14f), entries[i].Value);
+                    GUI.color = Color.white;
+                }
+                Text.Font = GameFont.Small;
+                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+
+                Rect closeRect = new Rect(inner.x, inner.yMax - 36f, inner.width, 30f);
+                if (AbyssalStyledWidgets.TextButton(closeRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualDossier_Close", "Close dossier")))
+                {
+                    Close();
+                    SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                }
+            }
+
+            private void DrawExpandedPreviewPanel(Rect rect)
+            {
+                AbyssalSummoningConsoleArt.DrawPanel(rect, false);
+                Rect inner = rect.ContractedBy(12f);
+                AbyssalSummoningConsoleArt.DrawSectionTitle(new Rect(inner.x, inner.y, inner.width, 22f), AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualDossier_Forecast", "Expanded ritual forecast"));
+
+                Rect outRect = new Rect(inner.x, inner.y + 30f, inner.width, inner.height - 30f);
+                float contentHeight = parent.GetRitualPreviewContentHeight(ritual, Mathf.Max(0f, outRect.width - 16f));
+                Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, contentHeight));
+
+                AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref previewScrollPosition, viewRect);
+                parent.DrawRitualPreviewPanel(new Rect(0f, 0f, viewRect.width, viewRect.height), ritual);
+                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref previewScrollPosition, viewRect);
+            }
+        }
+
     }
 }

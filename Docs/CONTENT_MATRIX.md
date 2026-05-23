@@ -401,3 +401,9 @@ Crafting requirement balance spans both `RecipeDef` files and `ThingDef.costList
 | System | Ownership / files | Runtime exposure | Notes |
 |---|---|---|---|
 | Summon threat rehearsal dev gizmo | `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs`, hooked from `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` | Dev Mode gizmo on Abyssal Summoning Circle only | Logs predicted summon mode, target cells, T1/T2 plans, boss escort profiles, horde plan summaries, Dominion runtime notes, capacitor status, and presentation routing. Force-start options consume no sigil and bypass progression/capacitor gates for diagnostics. |
+
+### Summoning Console detail routing
+
+- Main Summoning Console: archetype tabs, ritual cards, compact preview, invocation controls, readiness/capacitor/module telemetry.
+- Ritual dossier: expanded forecast, readiness breakdown, reward routing, side effects, and long horde/Dominion telemetry.
+- New ritual or sigil categories should expose short combat identity on the main screen and detailed operational text through the dossier path.

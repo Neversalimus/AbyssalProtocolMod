@@ -16,4 +16,10 @@
   <ABY_CircleCommand_JumpToSigil>Jump to prepared sigil</ABY_CircleCommand_JumpToSigil>
   <ABY_CircleToggle_On>On</ABY_CircleToggle_On>
   <ABY_CircleToggle_Off>Off</ABY_CircleToggle_Off>
+  <ABY_CircleCommand_RitualDetails>Open ritual dossier</ABY_CircleCommand_RitualDetails>
+  <ABY_CircleRitualDossier_Title>ritual dossier: {0}</ABY_CircleRitualDossier_Title>
+  <ABY_CircleRitualDossier_Subtitle>Full invocation forecast, readiness state, rewards, side effects, and active ritual telemetry.</ABY_CircleRitualDossier_Subtitle>
+  <ABY_CircleRitualDossier_Close>Close dossier</ABY_CircleRitualDossier_Close>
+  <ABY_CircleRitualDossier_Forecast>Expanded ritual forecast</ABY_CircleRitualDossier_Forecast>
+  <ABY_CircleCommandReadyShort>Invocation path clear.</ABY_CircleCommandReadyShort>
 </LanguageData>

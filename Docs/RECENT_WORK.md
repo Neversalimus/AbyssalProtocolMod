@@ -1221,3 +1221,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Kept the Edict Lance as the functional forced enemy weapon, but made its world/equipment graphic transparent because the finalized pawn art already contains the lance.
 - Bestiary continues to use the east-facing Crownless Adjudicator portrait through `Pawn/CrownlessAdjudicator/ABY_CrownlessAdjudicator_east`.
 - Build verified after the combined content + asset pass.
+
+## Summoning Console ritual dossier follow-up
+
+- Added a dedicated Summoning Console ritual dossier window opened from the invocation control panel.
+- The main console now stays compact while the dossier exposes the expanded ritual forecast, reward routing, side effects, readiness breakdown, and active ritual telemetry in a separate scrollable window.
+- This follows the redesign rule that dense ritual data should be available on demand instead of permanently occupying the primary ritual selection screen.
