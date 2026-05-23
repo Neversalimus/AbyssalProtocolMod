@@ -18,12 +18,13 @@ namespace AbyssalProtocol
     public class Thing_CrownReactorBeamSequence : Thing
     {
         private const string BeamTexturePath = "Things/Projectile/ABY_CrownReactorBeamSegment";
+        private const string ChargeDotTexturePath = "Things/Projectile/ABY_CrownReactorChargeDot";
         private const int RailCount = 4;
-        private const int RailChargeStepTicks = 10;
-        private const int PreDischargeDelayTicks = 12;
-        private const int BeamHoldTicks = 20;
-        private const int BeamGapTicks = 4;
-        private const int FadeTicks = 12;
+        private const int RailChargeStepTicks = 6;
+        private const int PreDischargeDelayTicks = 8;
+        private const int BeamHoldTicks = 12;
+        private const int BeamGapTicks = 3;
+        private const int FadeTicks = 8;
 
         // Visual profile tuning: keep the VFX tightly bound to the actual four barrel lanes.
         private const float MinimumWeaponLength = 1.95f;
@@ -40,18 +41,18 @@ namespace AbyssalProtocol
         private const float MaxOuterRailOffset = 0.16f;
         private const float MinInnerRailOffset = 0.04f;
         private const float MaxInnerRailOffset = 0.065f;
-        private const float ChargeBeamWidthRatio = 0.11f;
-        private const float MainBeamWidthRatio = 0.14f;
-        private const float MinChargeBeamWidth = 0.055f;
-        private const float MaxChargeBeamWidth = 0.075f;
-        private const float MinMainBeamWidth = 0.072f;
-        private const float MaxMainBeamWidth = 0.095f;
+        private const float ChargeDotSizeRatio = 0.16f;
+        private const float MainBeamWidthRatio = 0.105f;
+        private const float MinChargeDotSize = 0.075f;
+        private const float MaxChargeDotSize = 0.105f;
+        private const float MinMainBeamWidth = 0.058f;
+        private const float MaxMainBeamWidth = 0.078f;
 
-        private static readonly Color ChargeColor = new Color(0.82f, 1f, 1f, 0.58f);
+        private static readonly Color ChargeDotColor = new Color(0.82f, 1f, 1f, 0.86f);
         private static readonly Color FadeColor = new Color(1f, 1f, 1f, 0.72f);
 
         private static Material cachedBeamMaterial;
-        private static Material cachedChargeMaterial;
+        private static Material cachedChargeDotMaterial;
         private static Material cachedBeamFadeMaterial;
 
         private Thing launcher;
@@ -85,16 +86,16 @@ namespace AbyssalProtocol
             }
         }
 
-        private static Material ChargeMaterial
+        private static Material ChargeDotMaterial
         {
             get
             {
-                if (cachedChargeMaterial == null)
+                if (cachedChargeDotMaterial == null)
                 {
-                    cachedChargeMaterial = ABY_MaterialCacheUtility.MatFrom(BeamTexturePath, ShaderDatabase.MoteGlow, ChargeColor);
+                    cachedChargeDotMaterial = ABY_MaterialCacheUtility.MatFrom(ChargeDotTexturePath, ShaderDatabase.MoteGlow, ChargeDotColor);
                 }
 
-                return cachedChargeMaterial;
+                return cachedChargeDotMaterial;
             }
         }
 
@@ -223,17 +224,11 @@ namespace AbyssalProtocol
                 return;
             }
 
-            float chargeLength = ResolveChargeLength(equipment);
-            float chargeBeamWidth = ResolveChargeBeamWidth(equipment);
+            float chargeDotSize = ResolveChargeDotSize(equipment);
             float mainBeamWidth = ResolveMainBeamWidth(equipment);
-            int chargedRails = Mathf.Clamp(ageTicks / RailChargeStepTicks + 1, 0, RailCount);
             if (ageTicks < BeamStartTick)
             {
-                Material chargeMaterial = ChargeMaterial ?? material;
-                for (int rail = 0; rail < chargedRails; rail++)
-                {
-                    DrawBeamSegment(chargeMaterial, RailChargeStart(rail), shotDirection, chargeLength, chargeBeamWidth);
-                }
+                DrawChargeDots(ChargeDotMaterial ?? material, chargeDotSize);
                 return;
             }
 
@@ -389,6 +384,31 @@ namespace AbyssalProtocol
             return Mathf.Max(0.32f, ResolveMuzzleForwardOffset(equipment) - ResolveBarrelStartForwardOffset(equipment));
         }
 
+        private void DrawChargeDots(Material material, float dotSize)
+        {
+            if (material == null)
+            {
+                return;
+            }
+
+            int completedRails = Mathf.Clamp(ageTicks / RailChargeStepTicks, 0, RailCount);
+            for (int rail = 0; rail < completedRails; rail++)
+            {
+                DrawDot(material, RailMuzzle(rail), dotSize * 0.88f);
+            }
+
+            if (completedRails >= RailCount)
+            {
+                return;
+            }
+
+            float railProgress = (ageTicks % RailChargeStepTicks) / (float)Mathf.Max(1, RailChargeStepTicks - 1);
+            railProgress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(railProgress));
+            Vector3 dotPosition = Vector3.Lerp(RailChargeStart(completedRails), RailMuzzle(completedRails), railProgress);
+            float pulse = 0.92f + Mathf.Sin(ageTicks * 0.9f) * 0.10f;
+            DrawDot(material, dotPosition, dotSize * pulse);
+        }
+
         private static float ResolveRailOffset(int rail, Thing equipment)
         {
             float weaponHeight = ResolveWeaponHeight(equipment);
@@ -407,10 +427,10 @@ namespace AbyssalProtocol
             }
         }
 
-        private static float ResolveChargeBeamWidth(Thing equipment)
+        private static float ResolveChargeDotSize(Thing equipment)
         {
             float weaponHeight = ResolveWeaponHeight(equipment);
-            return Mathf.Clamp(weaponHeight * ChargeBeamWidthRatio, MinChargeBeamWidth, MaxChargeBeamWidth);
+            return Mathf.Clamp(weaponHeight * ChargeDotSizeRatio, MinChargeDotSize, MaxChargeDotSize);
         }
 
         private static float ResolveMainBeamWidth(Thing equipment)
@@ -437,6 +457,21 @@ namespace AbyssalProtocol
             }
 
             return MinimumWeaponHeight;
+        }
+
+        private static void DrawDot(Material material, Vector3 position, float size)
+        {
+            if (material == null || size <= 0.01f)
+            {
+                return;
+            }
+
+            position.y = AltitudeLayer.MoteOverhead.AltitudeFor();
+            Matrix4x4 matrix = Matrix4x4.TRS(
+                position,
+                Quaternion.identity,
+                new Vector3(size, 1f, size));
+            Graphics.DrawMesh(MeshPool.plane10, matrix, material, 0);
         }
 
         private static void DrawBeamSegment(Material material, Vector3 start, Vector3 direction, float length, float width)

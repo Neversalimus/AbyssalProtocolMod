@@ -1,3 +1,9 @@
+## 2026-05-23 — Crown Reactor Multilance VFX controller and timing rules
+
+- `ABY_CrownReactorBeamSequence` must stay visually invisible as a ThingDef controller. Do not point its `graphicData.texPath` back to the beam strip or use map-mesh rendering for the controller, or RimWorld may draw a raw horizontal beam sprite on the pawn/target.
+- The charge phase should remain dot-based rather than rail-strip based until exact muzzle offsets are proven across directions. Dot charge hides small alignment errors better than long charge bars.
+- Keep the visual sequence fast enough that any residual per-direction muzzle offset mismatch is not held on-screen for long; current post-warmup sequence timing is intentionally about 1.6x faster than the first implementation.
+
 ## 2026-05-23 — Protocol Nexus live-gate routing rules
 
 - Current playable Forge content must not be gated by `futureReserve` Protocol Research projects. Reserve nodes such as `ABY_PR_ApexWeaponry` and `ABY_PR_CrownfireSepulcherCalibration` should stay visible as roadmap/codex targets until the matching Final Gate content is actually playable and decodable.

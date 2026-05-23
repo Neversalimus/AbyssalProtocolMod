@@ -1,3 +1,22 @@
+## 2026-05-23 — Crown Reactor Multilance dot-charge timing pass
+
+- Changed Crown Reactor Multilance warmup presentation from short oversized rail bars to compact moving charge dots so any residual muzzle alignment mismatch is less visible in live combat.
+- Accelerated the post-warmup charge/discharge sequence by about 1.6x: rail charge step, pre-discharge delay, beam hold, beam gap, and fade timings were all reduced while keeping the weapon cooldown and four-pulse damage model intact.
+- Narrowed the sustained beam visual again so each discharge reads closer to one barrel lane instead of a broad slab.
+- Added `Textures/Things/Projectile/ABY_CrownReactorChargeDot.png` as a small transparent charge-dot VFX asset.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
+
+Changed areas:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
+Textures/Things/Projectile/ABY_CrownReactorChargeDot.png
+Docs/RECENT_WORK.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+```
+
 ## 2026-05-23 — Protocol Nexus authority pass 2A and Saint Aegis Engineering
 
 - Added the active Protocol Nexus project `ABY_PR_SaintAegisEngineering` for Reactor Saint reward engineering, Saint Aegis protection, condensation cells, Saint-core implants, Vesper/Ultra Plasma weapons, and reactor-grade Forge patterns.
