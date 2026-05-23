@@ -1,6 +1,10 @@
-## Crown Reactor / custom beam VFX must not use MapMeshOnly
+## 2026-05-23 — Crown Reactor beam muzzle alignment
 
-When a custom beam `Thing` overrides `DrawAt` and handles its own `Graphics.DrawMesh` call, do not define it as a normal `MapMeshOnly` thing with a visible `graphicData`. That causes RimWorld to also draw the raw beam texture as a horizontal map-mesh sprite at the spawned cell, often on or near the target pawn. Use a mote-style real-time def such as `ParentName="MoteBase"`, keep the custom `DrawAt` renderer as the only visible beam path, and mark any type with static `Material` fields using `StaticConstructorOnStartup` or avoid static material fields entirely.
+- `Thing_CrownReactorBeamSequence` must not draw charge beams from the final muzzle point outward; charge should run along the visible weapon rails, while discharge beams should start at per-rail muzzle points.
+- The sequence ThingDef should use realtime custom drawing, not `MapMeshOnly`, otherwise RimWorld can render the raw beam texture as a separate horizontal sprite.
+- Static cached `Material` fields require `[StaticConstructorOnStartup]` on the owning type to avoid Verse asset-loading warnings.
+- Do not replace the controlled four-pulse damage model with per-tick beam damage unless a separate performance pass explicitly validates it.
+
 
 ## 2026-05-23 — Protocol Nexus live-gate routing rules
 

@@ -24,11 +24,22 @@ namespace AbyssalProtocol
         private const int BeamHoldTicks = 20;
         private const int BeamGapTicks = 4;
         private const int FadeTicks = 12;
+
+        // These values are intentionally visual-only. Damage remains four single pulses in Tick().
         private const float MainBeamWidth = 0.48f;
         private const float ChargeBeamWidth = 0.22f;
-        private const float ChargeLength = 1.45f;
+        private const float ChargeLength = 1.04f;
 
-        private static readonly float[] RailOffsets = { 0.27f, 0.09f, -0.09f, -0.27f };
+        // Muzzle/rail alignment is estimated from the actual weapon drawSize and shot direction.
+        // RimWorld does not expose a stable per-weapon muzzle transform for equipment graphics, so
+        // keep this deterministic, cheap, and tied to the fired direction instead of pawn rotation scans.
+        private const float MinimumMuzzleForwardOffset = 1.12f;
+        private const float MaximumMuzzleForwardOffset = 1.48f;
+        private const float MuzzleForwardInset = 0.16f;
+        private const float ChargeStartFallbackForwardOffset = 0.28f;
+
+        // Four barrel lanes from top to bottom, perpendicular to the shot direction.
+        private static readonly float[] RailOffsets = { 0.24f, 0.08f, -0.08f, -0.24f };
         private static readonly Color ChargeColor = new Color(0.82f, 1f, 1f, 0.58f);
         private static readonly Color FadeColor = new Color(1f, 1f, 1f, 0.72f);
 
@@ -41,7 +52,10 @@ namespace AbyssalProtocol
         private Thing targetThing;
         private ThingDef payloadProjectileDef;
         private IntVec3 targetCell;
-        private Vector3 origin;
+        private Vector3 muzzleBase;
+        private Vector3 chargeBase;
+        private Vector3 shotDirection;
+        private Vector3 shotPerpendicular;
         private Vector3 fixedTarget;
         private int ageTicks;
         private readonly bool[] damageApplied = new bool[RailCount];
@@ -99,17 +113,25 @@ namespace AbyssalProtocol
             targetCell = targetInfo.Cell;
 
             Vector3 launcherPos = launcher?.DrawPos ?? Position.ToVector3Shifted();
-            Vector3 targetPos = ResolveInitialTargetPosition(targetInfo);
-            Vector3 direction = targetPos - launcherPos;
-            direction.y = 0f;
-            if (direction.sqrMagnitude < 0.001f)
+            fixedTarget = ResolveInitialTargetPosition(targetInfo);
+
+            Vector3 initialDirection = fixedTarget - launcherPos;
+            initialDirection.y = 0f;
+            if (initialDirection.sqrMagnitude < 0.001f)
             {
-                direction = Vector3.forward;
+                initialDirection = Vector3.forward;
             }
 
-            direction.Normalize();
-            origin = launcherPos + direction * 0.82f;
-            fixedTarget = targetPos;
+            initialDirection.Normalize();
+            shotDirection = initialDirection;
+            shotPerpendicular = new Vector3(-shotDirection.z, 0f, shotDirection.x);
+
+            float muzzleOffset = ResolveMuzzleForwardOffset(equipment);
+            muzzleBase = launcherPos + shotDirection * muzzleOffset;
+
+            // Charge is drawn along the visible weapon rails, not in front of the muzzle.
+            float chargeStartForward = Mathf.Max(ChargeStartFallbackForwardOffset, muzzleOffset - ChargeLength + MuzzleForwardInset);
+            chargeBase = launcherPos + shotDirection * chargeStartForward;
         }
 
         public override void ExposeData()
@@ -120,7 +142,10 @@ namespace AbyssalProtocol
             Scribe_References.Look(ref targetThing, "targetThing");
             Scribe_Defs.Look(ref payloadProjectileDef, "payloadProjectileDef");
             Scribe_Values.Look(ref targetCell, "targetCell");
-            Scribe_Values.Look(ref origin, "origin");
+            Scribe_Values.Look(ref muzzleBase, "muzzleBase");
+            Scribe_Values.Look(ref chargeBase, "chargeBase");
+            Scribe_Values.Look(ref shotDirection, "shotDirection");
+            Scribe_Values.Look(ref shotPerpendicular, "shotPerpendicular");
             Scribe_Values.Look(ref fixedTarget, "fixedTarget");
             Scribe_Values.Look(ref ageTicks, "ageTicks", 0);
 
@@ -142,6 +167,27 @@ namespace AbyssalProtocol
                     }
                 }
             }
+
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (shotDirection.sqrMagnitude < 0.001f)
+                {
+                    Vector3 launcherPos = launcher?.DrawPos ?? Position.ToVector3Shifted();
+                    Vector3 targetPos = fixedTarget == Vector3.zero ? targetCell.ToVector3Shifted() : fixedTarget;
+                    shotDirection = targetPos - launcherPos;
+                    shotDirection.y = 0f;
+                    if (shotDirection.sqrMagnitude < 0.001f)
+                    {
+                        shotDirection = Vector3.forward;
+                    }
+                    shotDirection.Normalize();
+                }
+
+                if (shotPerpendicular.sqrMagnitude < 0.001f)
+                {
+                    shotPerpendicular = new Vector3(-shotDirection.z, 0f, shotDirection.x);
+                }
+            }
         }
 
         protected override void Tick()
@@ -153,7 +199,7 @@ namespace AbyssalProtocol
             {
                 if (!damageApplied[rail] && IsRailDamageFrame(rail))
                 {
-                    ApplyRailDamage();
+                    ApplyRailDamage(rail);
                     damageApplied[rail] = true;
                 }
             }
@@ -172,17 +218,10 @@ namespace AbyssalProtocol
                 return;
             }
 
-            Vector3 beamTarget = ResolveCurrentTargetPosition();
-            Vector3 beamDirection = beamTarget - origin;
-            beamDirection.y = 0f;
-            float distance = beamDirection.magnitude;
-            if (distance < 0.1f)
+            if (shotDirection.sqrMagnitude < 0.001f)
             {
                 return;
             }
-
-            beamDirection /= distance;
-            Vector3 perpendicular = new Vector3(-beamDirection.z, 0f, beamDirection.x);
 
             int chargedRails = Mathf.Clamp(ageTicks / RailChargeStepTicks + 1, 0, RailCount);
             if (ageTicks < BeamStartTick)
@@ -190,7 +229,7 @@ namespace AbyssalProtocol
                 Material chargeMaterial = ChargeMaterial ?? material;
                 for (int rail = 0; rail < chargedRails; rail++)
                 {
-                    DrawBeamSegment(chargeMaterial, origin + perpendicular * RailOffsets[rail], beamDirection, ChargeLength, ChargeBeamWidth);
+                    DrawBeamSegment(chargeMaterial, RailChargeStart(rail), shotDirection, ChargeLength, ChargeBeamWidth);
                 }
                 return;
             }
@@ -200,8 +239,21 @@ namespace AbyssalProtocol
             int activeRailTick = localBeamAge % BeamCycleTicks;
             if (activeRail >= 0 && activeRail < RailCount && activeRailTick < BeamHoldTicks)
             {
+                Vector3 railMuzzle = RailMuzzle(activeRail);
+                Vector3 beamTarget = ResolveCurrentTargetPosition();
+
+                Vector3 beamDirection = beamTarget - railMuzzle;
+                beamDirection.y = 0f;
+                float distance = beamDirection.magnitude;
+                if (distance < 0.1f)
+                {
+                    return;
+                }
+
+                beamDirection /= distance;
+
                 Material activeMaterial = (activeRailTick < 3 || activeRailTick > BeamHoldTicks - 5) ? (BeamFadeMaterial ?? material) : material;
-                DrawBeamSegment(activeMaterial, origin + perpendicular * RailOffsets[activeRail], beamDirection, distance, MainBeamWidth);
+                DrawBeamSegment(activeMaterial, railMuzzle, beamDirection, distance, MainBeamWidth);
             }
         }
 
@@ -211,7 +263,7 @@ namespace AbyssalProtocol
             return localBeamAge >= 0 && localBeamAge == rail * BeamCycleTicks;
         }
 
-        private void ApplyRailDamage()
+        private void ApplyRailDamage(int rail)
         {
             if (Map == null || payloadProjectileDef?.projectile == null)
             {
@@ -224,11 +276,20 @@ namespace AbyssalProtocol
                 return;
             }
 
+            Vector3 railMuzzle = RailMuzzle(Mathf.Clamp(rail, 0, RailCount - 1));
+            Vector3 targetPosition = ResolveCurrentTargetPosition();
+            Vector3 hitDirection = targetPosition - railMuzzle;
+            hitDirection.y = 0f;
+            if (hitDirection.sqrMagnitude < 0.001f)
+            {
+                hitDirection = shotDirection;
+            }
+
             ProjectileProperties projectile = payloadProjectileDef.projectile;
             DamageDef damageDef = projectile.damageDef ?? DamageDefOf.Burn;
             float damageAmount = Mathf.Max(1f, projectile.GetDamageAmount(launcher, null));
             float armorPenetration = Mathf.Max(0f, projectile.GetArmorPenetration(launcher, null));
-            float angle = (ResolveCurrentTargetPosition() - origin).AngleFlat();
+            float angle = hitDirection.AngleFlat();
 
             DamageInfo damageInfo = new DamageInfo(
                 damageDef,
@@ -289,6 +350,16 @@ namespace AbyssalProtocol
             return fixedTarget;
         }
 
+        private Vector3 RailMuzzle(int rail)
+        {
+            return muzzleBase + shotPerpendicular * RailOffsets[Mathf.Clamp(rail, 0, RailOffsets.Length - 1)];
+        }
+
+        private Vector3 RailChargeStart(int rail)
+        {
+            return chargeBase + shotPerpendicular * RailOffsets[Mathf.Clamp(rail, 0, RailOffsets.Length - 1)];
+        }
+
         private static Vector3 ResolveInitialTargetPosition(LocalTargetInfo targetInfo)
         {
             if (targetInfo.HasThing && targetInfo.Thing != null)
@@ -299,12 +370,31 @@ namespace AbyssalProtocol
             return targetInfo.Cell.ToVector3Shifted();
         }
 
+        private static float ResolveMuzzleForwardOffset(Thing equipment)
+        {
+            float weaponLength = 1.95f;
+            if (equipment?.def?.graphicData != null)
+            {
+                weaponLength = Mathf.Max(weaponLength, equipment.def.graphicData.drawSize.x);
+            }
+
+            return Mathf.Clamp(weaponLength * 0.62f + MuzzleForwardInset, MinimumMuzzleForwardOffset, MaximumMuzzleForwardOffset);
+        }
+
         private static void DrawBeamSegment(Material material, Vector3 start, Vector3 direction, float length, float width)
         {
             if (material == null || length <= 0.01f)
             {
                 return;
             }
+
+            direction.y = 0f;
+            if (direction.sqrMagnitude < 0.001f)
+            {
+                return;
+            }
+
+            direction.Normalize();
 
             Vector3 end = start + direction * length;
             start.y = AltitudeLayer.MoteOverhead.AltitudeFor();

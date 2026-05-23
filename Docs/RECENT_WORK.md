@@ -1,9 +1,10 @@
-## 2026-05-23 — Fix Crown Reactor Multilance beam rendering
+## 2026-05-23 — Fix Crown Reactor Multilance muzzle alignment
 
-- Fixed `Thing_CrownReactorBeamSequence` startup warning by marking the beam sequence type for `StaticConstructorOnStartup` so Verse no longer reports cached `Material` fields as missing the asset-loading attribute.
-- Re-routed `ABY_CrownReactorBeamSequence` through `MoteBase`/real-time drawing instead of `MapMeshOnly`, preventing the beam segment texture from being drawn as a horizontal map-mesh sprite on or near the target pawn.
-- Increased Crown Reactor beam visual width slightly so the sequential beams read as heavy reactor discharges after the map-mesh artifact was removed.
-- Rebuilt the main `AbyssalProtocol.dll` from the current uploaded archive with the fix included. Runtime smoke testing in RimWorld is still required.
+- Reworked `Thing_CrownReactorBeamSequence` so charge visuals are drawn along the weapon rails instead of projecting forward as short beam shots.
+- Moved discharge origins to estimated rail muzzle points derived from the equipped weapon draw size and initial shot direction, so beams start from the barrel cluster rather than the pawn center.
+- Added `StaticConstructorOnStartup` to the beam sequence type and switched the sequence ThingDef to `RealtimeOnly` rendering to avoid raw texture/map-mesh artifacts.
+- Kept the optimized runtime model: four controlled damage pulses, no per-tick beam damage, no full-map scans.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. Runtime smoke testing in RimWorld is still required.
 
 Changed areas:
 
@@ -12,9 +13,10 @@ Assemblies/AbyssalProtocol.dll
 Assemblies/AbyssalProtocol.pdb
 source/Combat/VFX/Thing_CrownReactorBeamSequence.cs
 Defs/ThingDefs/ABY_CrownReactorMultilance.xml
-Docs/KNOWN_RISKS_AND_REGRESSIONS.md
 Docs/RECENT_WORK.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
 ```
+
 
 ## 2026-05-23 — Add Crown Reactor Multilance main-DLL integration
 
