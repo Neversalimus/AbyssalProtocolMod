@@ -28,6 +28,7 @@ namespace AbyssalProtocol
 
             activeDashes.Add(dash);
             activePawnIds.Add(dash.Pawn.thingIDNumber);
+            ABY_AbyssalDashRuntime.RegisterDashingPawn(dash.Pawn);
             ABY_AbyssalDashRuntime.SpawnTrailMote(map, dash.SourceCell, dash.TrailMoteDefName, dash.TrailMoteScale);
             ABY_SoundUtility.PlayAt(dash.SoundDefName, dash.SourceCell, map);
         }
@@ -72,6 +73,7 @@ namespace AbyssalProtocol
             if (dash?.Pawn != null)
             {
                 activePawnIds.Remove(dash.Pawn.thingIDNumber);
+                ABY_AbyssalDashRuntime.UnregisterDashingPawn(dash.Pawn);
             }
             activeDashes.RemoveAt(index);
         }

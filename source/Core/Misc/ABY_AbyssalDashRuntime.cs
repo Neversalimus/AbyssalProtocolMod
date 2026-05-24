@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -9,6 +10,8 @@ namespace AbyssalProtocol
     {
         public const string DefaultTrailMoteDefName = "ABY_Mote_ArchonDashTrail";
         public const string DefaultDashSoundDefName = "ABY_SigilChargePulse";
+
+        private static readonly HashSet<int> activeDashPawnIds = new HashSet<int>();
 
         public static bool TryStartDash(
             Pawn pawn,
@@ -77,14 +80,27 @@ namespace AbyssalProtocol
 
         public static bool IsDashing(Pawn pawn)
         {
-            Map map = pawn?.Map;
-            if (pawn == null || map == null)
-            {
-                return false;
-            }
+            return pawn != null
+                && !pawn.Destroyed
+                && !pawn.Dead
+                && pawn.Spawned
+                && activeDashPawnIds.Contains(pawn.thingIDNumber);
+        }
 
-            MapComponent_ABY_AbyssalDashRuntime component = map.GetComponent<MapComponent_ABY_AbyssalDashRuntime>();
-            return component != null && component.IsPawnDashing(pawn);
+        internal static void RegisterDashingPawn(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                activeDashPawnIds.Add(pawn.thingIDNumber);
+            }
+        }
+
+        internal static void UnregisterDashingPawn(Pawn pawn)
+        {
+            if (pawn != null)
+            {
+                activeDashPawnIds.Remove(pawn.thingIDNumber);
+            }
         }
 
         internal static bool ValidateLandingCell(Pawn pawn, Map map, IntVec3 cell)

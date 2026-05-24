@@ -501,7 +501,21 @@ namespace AbyssalProtocol
 
         public static bool HasAnyPlayerPawnsOnMap(Map map)
         {
-            return GetPocketPlayerPawns(map).Count > 0;
+            if (map?.mapPawns?.AllPawnsSpawned == null)
+            {
+                return false;
+            }
+
+            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (IsPocketPlayerPawn(pawns[i], map))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static string GetSourceMapLabel(ABY_DominionPocketSession session)
@@ -515,7 +529,22 @@ namespace AbyssalProtocol
 
         public static int GetPocketPlayerCount(Map pocketMap)
         {
-            return GetPocketPlayerPawns(pocketMap).Count;
+            if (pocketMap?.mapPawns?.AllPawnsSpawned == null)
+            {
+                return 0;
+            }
+
+            int count = 0;
+            IReadOnlyList<Pawn> pawns = pocketMap.mapPawns.AllPawnsSpawned;
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                if (IsPocketPlayerPawn(pawns[i], pocketMap))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
 
         public static string GetPocketSessionStatusValue(ABY_DominionPocketSession session, Map pocketMap)
@@ -1089,15 +1118,23 @@ namespace AbyssalProtocol
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn pawn = pawns[i];
-                if (pawn == null || pawn.Destroyed || pawn.Dead || pawn.Faction != Faction.OfPlayer)
+                if (IsPocketPlayerPawn(pawn, pocketMap))
                 {
-                    continue;
+                    result.Add(pawn);
                 }
-
-                result.Add(pawn);
             }
 
             return result;
+        }
+
+        private static bool IsPocketPlayerPawn(Pawn pawn, Map map)
+        {
+            return pawn != null
+                && !pawn.Destroyed
+                && !pawn.Dead
+                && pawn.Spawned
+                && pawn.MapHeld == map
+                && pawn.Faction == Faction.OfPlayer;
         }
 
         private static void SafeDestroyPocketMap(Map pocketMap, ABY_DominionPocketSession session)

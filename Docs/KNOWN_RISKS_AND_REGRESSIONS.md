@@ -861,3 +861,14 @@ The Circle Infrastructure window should stay focused on slot management. Do not 
 
 When adding compact custom UI windows, size the window for the largest expected installed-slot case and avoid placing action buttons at the bottom if the final content section also needs vertical room. Tooltips for player-facing slot managers should not expose raw format placeholders or low-level capacity/throughput/leakage fields unless the window is explicitly a diagnostics view.
 
+## Hot-path component lookup regression guard — 2026-05-24
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Calling `Map.GetComponent<T>()` from pawn tick Harmony guards | P1 | performance/pathing | Large maps or modpacks lose TPS because every pawn path/job tick repeatedly scans map components before checking a tiny runtime state | Keep `ABY_AbyssalDashRuntime.IsDashing` zero-allocation and independent of `Map.GetComponent<T>()`; maintain active dash pawn ids from `MapComponent_ABY_AbyssalDashRuntime.StartDash/RemoveDashAt` instead. |
+| Progression notification exceptions escape component ticks | P2 | progression/reliability | A first-time milestone is recorded but a broken/overridden `LetterStack` throws a red error through `GameComponentTick` | Wrap non-essential milestone letters after state mutation; progression state must win over notifications in heavy modpacks. |
+
+In-game checks:
+
+- Spawn several abyssal dash-capable enemies on a 50+ pawn map and confirm dash freeze behavior still works without pathing stutter or repeated component lookup profiling noise.
+- Kill the first Rift Butcher and confirm the progression unlock/letter still fires normally; simulate or inspect letter failure paths to ensure the recorded state is not rolled back.

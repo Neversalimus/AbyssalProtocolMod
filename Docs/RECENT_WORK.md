@@ -1,3 +1,19 @@
+## 2026-05-24 — Dash hot-path and progression notification hardening
+
+- Removed the per-`PatherTick` `Map.GetComponent<T>()` lookup from abyssal dash freeze checks by routing `ABY_AbyssalDashRuntime.IsDashing` through a static active-pawn id registry maintained by `MapComponent_ABY_AbyssalDashRuntime`.
+- Kept dash ownership and ticking in the map component, but made Harmony path/job guards read a zero-allocation `HashSet<int>` instead of scanning map components on every pawn path tick.
+- Hardened first Rift Butcher kill progression so letter-stack failures cannot propagate through `GameComponentTick`, while preserving the saved processed pawn id list and adding a runtime `HashSet<int>` lookup index.
+- Reduced Dominion pocket telemetry allocation pressure by making `HasAnyPlayerPawnsOnMap` and `GetPocketPlayerCount` scan pawns directly instead of creating temporary pawn lists.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. RimWorld runtime smoke testing is still required.
+
+Touched files:
+source/Core/Misc/ABY_AbyssalDashRuntime.cs
+source/Core/GameComponents/MapComponent_ABY_AbyssalDashRuntime.cs
+source/Progression/ABY_HordeAndButcherProgressionGameComponent.cs
+source/Dominion/AbyssalDominionPocketUtility.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 ## 2026-05-23 — Summoning Console redesign visual hotfix
 
 - Tightened the full Summoning Console redesign after in-game screenshot review.
