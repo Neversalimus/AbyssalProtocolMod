@@ -1254,10 +1254,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Kept the existing install/remove slot row logic so behavior stays consistent with the earlier implementation.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
 
-## 2026-05-24 — Polish compact Circle Infrastructure window
+## 2026-05-24 — Circle Infrastructure window fit polish
 
-- Removed the bottom Close button from the Circle Infrastructure window because it could visually overlap the effect summary at common UI scales; the standard window close X remains available.
-- Tightened the window body layout so summary, capacitor slots, stabilizer slots, and effect summary have fixed non-overlapping vertical space.
-- Replaced technical capacitor slot tooltips in the compact infrastructure window with player-facing explanations of what empty/filled capacitor and stabilizer slots do.
-- Kept detailed numerical capacitor diagnostics out of the compact slot manager; deeper ritual/readiness context remains in the main console and ritual dossier.
-- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+- Extended the compact Circle Infrastructure window and removed the bottom action area pressure so the stabilizer rows and Effect summary no longer clip at common UI scales.
+- Kept the window as a focused slot manager: capacitor lattice, stabilizer ring, and short effect summary only.
+- Replaced raw capacitor/stat tooltip output with player-facing explanatory text.
+

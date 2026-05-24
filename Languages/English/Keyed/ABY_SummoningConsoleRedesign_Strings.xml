@@ -42,10 +42,5 @@
   <ABY_CircleInfrastructure_EffectCapacitors>Capacitors: {0}</ABY_CircleInfrastructure_EffectCapacitors>
   <ABY_CircleInfrastructure_EffectStabilizers>Ring: {0}</ABY_CircleInfrastructure_EffectStabilizers>
   <ABY_CircleInfrastructure_EffectContainment>Containment {0} • Heat {1} • Residue {2} • Anomaly {3}</ABY_CircleInfrastructure_EffectContainment>
-  <ABY_CircleInfrastructureSlot_Empty>Empty</ABY_CircleInfrastructureSlot_Empty>
-  <ABY_CircleInfrastructureTooltip_CapacitorEmpty>Empty capacitor bay. Install a capacitor module to support stronger or more stable rituals.</ABY_CircleInfrastructureTooltip_CapacitorEmpty>
-  <ABY_CircleInfrastructureTooltip_CapacitorFilled>Installed capacitor module. It contributes ritual charge support and can be removed when the circle is idle.</ABY_CircleInfrastructureTooltip_CapacitorFilled>
-  <ABY_CircleInfrastructureTooltip_StabilizerEmpty>Empty stabilizer socket. Install a stabilizer to improve containment and reduce ritual backlash.</ABY_CircleInfrastructureTooltip_StabilizerEmpty>
-  <ABY_CircleInfrastructureTooltip_StabilizerFilled>Installed stabilizer module. It contributes containment, heat damping, residue control, and anomaly shielding.</ABY_CircleInfrastructureTooltip_StabilizerFilled>
-  <ABY_CircleInfrastructure_EffectTooltip>Capacitors support ritual startup and power smoothing. Stabilizers improve containment and reduce backlash. Upgrade or fill empty slots when higher rituals become unstable or blocked.</ABY_CircleInfrastructure_EffectTooltip>
+  <ABY_CircleInfrastructure_EffectTooltip>Shows how the installed capacitor lattice and stabilizer ring support the selected ritual. Use this window to install, replace, or remove circle slot modules.</ABY_CircleInfrastructure_EffectTooltip>
 </LanguageData>
