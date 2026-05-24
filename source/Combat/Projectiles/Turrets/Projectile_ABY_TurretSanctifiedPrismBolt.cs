@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -209,7 +208,9 @@ namespace AbyssalProtocol
         private static List<Pawn> FindRefractionTargets(Vector3 impactPosition, Vector3 direction, Map map, Faction launcherFaction, Thing primaryTarget)
         {
             List<Pawn> result = new List<Pawn>(MaxSecondaryTargets);
-            if (map?.mapPawns == null)
+            List<float> alongDistances = new List<float>(MaxSecondaryTargets);
+            List<float> perpendicularDistances = new List<float>(MaxSecondaryTargets);
+            if (map == null)
             {
                 return result;
             }
@@ -222,27 +223,64 @@ namespace AbyssalProtocol
             direction.Normalize();
 
             IntVec3 impactCell = impactPosition.ToIntVec3();
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            IEnumerable<Pawn> ordered = pawns
-                .Where(pawn => IsValidRefractionTarget(pawn, launcherFaction, primaryTarget, map))
-                .Select(pawn => new RefractionCandidate(pawn, ProjectAlongLine(impactPosition, direction, pawn.DrawPos)))
-                .Where(candidate => candidate.DistanceAlong > 0.35f && candidate.DistanceAlong <= RefractionLength)
-                .Where(candidate => candidate.PerpendicularDistance <= RefractionHalfWidth + Mathf.Min(0.22f, candidate.Pawn.BodySize * 0.08f))
-                .Where(candidate => HasLineOfSight(impactCell, candidate.Pawn.Position, map))
-                .OrderBy(candidate => candidate.DistanceAlong)
-                .ThenBy(candidate => candidate.PerpendicularDistance)
-                .Select(candidate => candidate.Pawn);
-
-            foreach (Pawn pawn in ordered)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
             {
-                result.Add(pawn);
-                if (result.Count >= MaxSecondaryTargets)
+                Pawn pawn = pawns[i];
+                if (!IsValidRefractionTarget(pawn, launcherFaction, primaryTarget, map))
                 {
+                    continue;
+                }
+
+                RefractionProjection projection = ProjectAlongLine(impactPosition, direction, pawn.DrawPos);
+                if (projection.DistanceAlong <= 0.35f || projection.DistanceAlong > RefractionLength)
+                {
+                    continue;
+                }
+
+                if (projection.PerpendicularDistance > RefractionHalfWidth + Mathf.Min(0.22f, pawn.BodySize * 0.08f))
+                {
+                    continue;
+                }
+
+                if (!HasLineOfSight(impactCell, pawn.Position, map))
+                {
+                    continue;
+                }
+
+                InsertRefractionCandidate(result, alongDistances, perpendicularDistances, pawn, projection.DistanceAlong, projection.PerpendicularDistance);
+            }
+
+            return result;
+        }
+
+        private static void InsertRefractionCandidate(List<Pawn> result, List<float> alongDistances, List<float> perpendicularDistances, Pawn pawn, float distanceAlong, float perpendicularDistance)
+        {
+            int insertIndex = result.Count;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (distanceAlong < alongDistances[i] || (Mathf.Abs(distanceAlong - alongDistances[i]) <= 0.001f && perpendicularDistance < perpendicularDistances[i]))
+                {
+                    insertIndex = i;
                     break;
                 }
             }
 
-            return result;
+            if (insertIndex >= MaxSecondaryTargets)
+            {
+                return;
+            }
+
+            result.Insert(insertIndex, pawn);
+            alongDistances.Insert(insertIndex, distanceAlong);
+            perpendicularDistances.Insert(insertIndex, perpendicularDistance);
+            if (result.Count > MaxSecondaryTargets)
+            {
+                int last = result.Count - 1;
+                result.RemoveAt(last);
+                alongDistances.RemoveAt(last);
+                perpendicularDistances.RemoveAt(last);
+            }
         }
 
         private static RefractionProjection ProjectAlongLine(Vector3 originPosition, Vector3 direction, Vector3 targetPosition)

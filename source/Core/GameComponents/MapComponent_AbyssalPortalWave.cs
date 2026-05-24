@@ -276,6 +276,7 @@ namespace AbyssalProtocol
 
             nextPortalOpenTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + Mathf.Max(8, initialDelay);
             QueueSoftPowerNetRecovery("ember portal wave start", 90);
+            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
             Messages.Message(
                 "ABY_CircleEmberHoundLetterDesc".Translate(),
                 new TargetInfo(firstPortalCell, map),
@@ -366,6 +367,7 @@ namespace AbyssalProtocol
 
             nextPortalOpenTick = (Find.TickManager != null ? Find.TickManager.TicksGame : 0) + Mathf.Max(8, initialDelay);
             QueueSoftPowerNetRecovery("horde portal wave start", 90);
+            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
             Messages.Message(
                 AbyssalSummoningConsoleUtility.TranslateOrFallback(
                     "ABY_HordeOperation_Begin",
@@ -2339,6 +2341,7 @@ namespace AbyssalProtocol
             lastOpenedPortalCell = IntVec3.Invalid;
             activeHordeRewardSnapshot = null;
             QueueSoftPowerNetRecovery("portal wave reset", 90);
+            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(map);
         }
 
         private static void Shuffle(List<PortalWaveRequest> requests)

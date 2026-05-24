@@ -1,3 +1,10 @@
+## 2026-05-24 — Combat projectile and support aura hot-path rules
+
+- Do not use LINQ `Where`/`Select`/`OrderBy` target pipelines inside projectile impact paths or turret shot resolution. Use bounded manual top-N selection so combat spikes do not allocate iterator/sort state during large raids.
+- Projectile and support-aura target scans should prefer `ABY_RuntimeTargetCache` lists, then validate faction/range/LOS locally. Avoid each projectile or aura comp independently touching `mapPawns.AllPawnsSpawned` unless it is a rare one-off action.
+- Dominion Slice buildings and VFX components should resolve `MapComponent_DominionSliceEncounter` through cached resolver fields instead of repeated `Map.GetComponent<T>()` calls in `Tick`, `DrawAt`, or inspect-string rendering.
+- Short TTL active-encounter caches must be invalidated on portal-wave start/reset and other encounter state transitions; otherwise Summoning readiness UI can briefly show stale active/inactive state.
+
 ## 2026-05-23 — Summon threat rehearsal dev-gizmo guard
 
 - `DEV: threat rehearsal` is diagnostics-only. Keep it behind `Prefs.DevMode`; it can force-start rituals without consuming sigils and bypasses progression/capacitor gates for testing.

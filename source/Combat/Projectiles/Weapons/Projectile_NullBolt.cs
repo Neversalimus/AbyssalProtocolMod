@@ -69,7 +69,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            HediffDef exposureDef = DefDatabase<HediffDef>.GetNamedSilentFail(NullExposureHediffDefName);
+            HediffDef exposureDef = ABY_DefCache.HediffDefNamed(NullExposureHediffDefName);
             if (exposureDef == null)
             {
                 return;
@@ -80,7 +80,7 @@ namespace AbyssalProtocol
 
         private static void ApplyExposureBurst(Map map, IntVec3 center, HediffDef exposureDef, Pawn launcherPawn, Pawn directPawn)
         {
-            HashSet<Pawn> affected = new HashSet<Pawn>();
+            List<Pawn> affected = new List<Pawn>(8);
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(center, SplashRadius, useCenter: true))
             {
                 if (!cell.InBounds(map))
@@ -91,11 +91,12 @@ namespace AbyssalProtocol
                 List<Thing> things = cell.GetThingList(map);
                 for (int i = 0; i < things.Count; i++)
                 {
-                    if (!(things[i] is Pawn pawn) || pawn.Dead || pawn.health == null || !affected.Add(pawn))
+                    if (!(things[i] is Pawn pawn) || pawn.Dead || pawn.health == null || affected.Contains(pawn))
                     {
                         continue;
                     }
 
+                    affected.Add(pawn);
                     if (launcherPawn != null && !ABY_FactionHostilityUtility.SafeHostileTo(launcherPawn, pawn))
                     {
                         continue;

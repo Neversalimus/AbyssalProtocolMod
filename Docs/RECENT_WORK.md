@@ -1,3 +1,25 @@
+## 2026-05-24 — Combat targeting and Dominion lookup cleanup
+
+- Replaced LINQ/order-by target selection in turret projectile impact paths with bounded manual top-N insertion for Null Arc, Rift Flak, and Sanctified Prism projectiles.
+- Routed those projectile target scans through `ABY_RuntimeTargetCache.CombatTargetPawnsFor` instead of direct `mapPawns.AllPawnsSpawned` enumeration on impact.
+- Reduced support-aura scan cost for Choir Engine and Null Priest by reading `ABY_RuntimeTargetCache.SpawnedLivingPawnsFor` instead of each comp independently touching `mapPawns.AllPawnsSpawned`.
+- Cached Dominion Slice encounter resolution in the anchor and heart buildings, matching the earlier VFX MapComponent resolver pass.
+- Added active-encounter cache invalidation when portal waves start/reset and replaced Null Bolt impact def lookup with `ABY_DefCache`.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. XML parse validation passed. RimWorld runtime smoke testing is still required.
+
+Touched files:
+source/Combat/Projectiles/Turrets/Projectile_ABY_TurretNullArcPulse.cs
+source/Combat/Projectiles/Turrets/Projectile_ABY_TurretRiftFlakSeed.cs
+source/Combat/Projectiles/Turrets/Projectile_ABY_TurretSanctifiedPrismBolt.cs
+source/Combat/Projectiles/Weapons/Projectile_NullBolt.cs
+source/Comps/CompABY_ChoirEngineAura.cs
+source/Comps/CompABY_NullPriestAura.cs
+source/World/Buildings/Dominion/Building_ABY_DominionSliceAnchor.cs
+source/World/Buildings/Dominion/Building_ABY_DominionSliceHeart.cs
+source/Core/GameComponents/MapComponent_AbyssalPortalWave.cs
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 ## 2026-05-24 — Dash hot-path and progression notification hardening
 
 - Removed the per-`PatherTick` `Map.GetComponent<T>()` lookup from abyssal dash freeze checks by routing `ABY_AbyssalDashRuntime.IsDashing` through a static active-pawn id registry maintained by `MapComponent_ABY_AbyssalDashRuntime`.

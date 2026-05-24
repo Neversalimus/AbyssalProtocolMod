@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -145,29 +144,62 @@ namespace AbyssalProtocol
         private static List<Thing> FindChainTargets(IntVec3 center, Map map, Faction launcherFaction, Thing primaryTarget)
         {
             List<Thing> result = new List<Thing>(MaxChainTargets);
-            if (map?.mapPawns == null || !center.IsValid)
+            List<float> priorities = new List<float>(MaxChainTargets);
+            List<float> distances = new List<float>(MaxChainTargets);
+            if (map == null || !center.IsValid)
             {
                 return result;
             }
 
             float radiusSquared = ChainRadius * ChainRadius;
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            IEnumerable<Pawn> ordered = pawns
-                .Where(pawn => IsValidChainTarget(pawn, launcherFaction, primaryTarget, map))
-                .Where(pawn => pawn.Position.DistanceToSquared(center) <= radiusSquared)
-                .OrderByDescending(ChainTargetPriority)
-                .ThenBy(pawn => pawn.Position.DistanceToSquared(center));
-
-            foreach (Pawn pawn in ordered)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
             {
-                result.Add(pawn);
-                if (result.Count >= MaxChainTargets)
+                Pawn pawn = pawns[i];
+                if (!IsValidChainTarget(pawn, launcherFaction, primaryTarget, map))
                 {
+                    continue;
+                }
+
+                float distanceSquared = pawn.Position.DistanceToSquared(center);
+                if (distanceSquared > radiusSquared)
+                {
+                    continue;
+                }
+
+                InsertChainCandidate(result, priorities, distances, pawn, ChainTargetPriority(pawn), distanceSquared);
+            }
+
+            return result;
+        }
+
+        private static void InsertChainCandidate(List<Thing> result, List<float> priorities, List<float> distances, Pawn pawn, float priority, float distanceSquared)
+        {
+            int insertIndex = result.Count;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (priority > priorities[i] + 0.001f || (Mathf.Abs(priority - priorities[i]) <= 0.001f && distanceSquared < distances[i]))
+                {
+                    insertIndex = i;
                     break;
                 }
             }
 
-            return result;
+            if (insertIndex >= MaxChainTargets)
+            {
+                return;
+            }
+
+            result.Insert(insertIndex, pawn);
+            priorities.Insert(insertIndex, priority);
+            distances.Insert(insertIndex, distanceSquared);
+            if (result.Count > MaxChainTargets)
+            {
+                int last = result.Count - 1;
+                result.RemoveAt(last);
+                priorities.RemoveAt(last);
+                distances.RemoveAt(last);
+            }
         }
 
         private static float ChainTargetPriority(Pawn pawn)

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -168,29 +167,63 @@ namespace AbyssalProtocol
         private static List<Pawn> FindShardTargets(IntVec3 center, Map map, Faction launcherFaction, Thing primaryTarget)
         {
             List<Pawn> result = new List<Pawn>(MaxShardTargets);
-            if (map?.mapPawns == null || !center.IsValid)
+            List<int> priorities = new List<int>(MaxShardTargets);
+            List<float> distances = new List<float>(MaxShardTargets);
+            if (map == null || !center.IsValid)
             {
                 return result;
             }
 
             float radiusSquared = BloomRadius * BloomRadius;
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            IEnumerable<Pawn> ordered = pawns
-                .Where(pawn => IsValidShardTarget(pawn, launcherFaction, map))
-                .Where(pawn => pawn.Position.DistanceToSquared(center) <= radiusSquared)
-                .OrderByDescending(pawn => pawn == primaryTarget ? 1 : 0)
-                .ThenBy(pawn => pawn.Position.DistanceToSquared(center));
-
-            foreach (Pawn pawn in ordered)
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+            Pawn primaryPawn = primaryTarget as Pawn;
+            for (int i = 0; i < pawns.Count; i++)
             {
-                result.Add(pawn);
-                if (result.Count >= MaxShardTargets)
+                Pawn pawn = pawns[i];
+                if (!IsValidShardTarget(pawn, launcherFaction, map))
                 {
+                    continue;
+                }
+
+                float distanceSquared = pawn.Position.DistanceToSquared(center);
+                if (distanceSquared > radiusSquared)
+                {
+                    continue;
+                }
+
+                InsertShardCandidate(result, priorities, distances, pawn, pawn == primaryPawn ? 1 : 0, distanceSquared);
+            }
+
+            return result;
+        }
+
+        private static void InsertShardCandidate(List<Pawn> result, List<int> priorities, List<float> distances, Pawn pawn, int priority, float distanceSquared)
+        {
+            int insertIndex = result.Count;
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (priority > priorities[i] || (priority == priorities[i] && distanceSquared < distances[i]))
+                {
+                    insertIndex = i;
                     break;
                 }
             }
 
-            return result;
+            if (insertIndex >= MaxShardTargets)
+            {
+                return;
+            }
+
+            result.Insert(insertIndex, pawn);
+            priorities.Insert(insertIndex, priority);
+            distances.Insert(insertIndex, distanceSquared);
+            if (result.Count > MaxShardTargets)
+            {
+                int last = result.Count - 1;
+                result.RemoveAt(last);
+                priorities.RemoveAt(last);
+                distances.RemoveAt(last);
+            }
         }
 
         private static bool IsValidShardTarget(Thing thing, Faction launcherFaction, Map map)

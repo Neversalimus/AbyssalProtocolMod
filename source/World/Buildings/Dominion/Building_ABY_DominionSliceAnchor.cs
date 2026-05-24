@@ -15,6 +15,8 @@ namespace AbyssalProtocol
         private static readonly Dictionary<string, Graphic> GlowGraphics = new Dictionary<string, Graphic>();
         private static readonly Dictionary<string, Graphic> PlatformUnderlayGraphics = new Dictionary<string, Graphic>();
         private int nextPulseTick = -1;
+        private MapComponent_DominionSliceEncounter cachedEncounter;
+        private int nextEncounterResolveTick;
 
         private DefModExtension_DominionSliceAnchor SliceExtension
         {
@@ -35,7 +37,9 @@ namespace AbyssalProtocol
                 nextPulseTick = Find.TickManager.TicksGame + Rand.RangeInclusive(90, 210);
             }
 
-            MapComponent_DominionSliceEncounter encounter = map != null ? map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            cachedEncounter = null;
+            nextEncounterResolveTick = 0;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter != null)
             {
                 encounter.RegisterAnchor(this);
@@ -66,7 +70,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter == null || !encounter.IsActiveEncounter || !encounter.IsAnchorfallActive)
             {
                 return;
@@ -92,7 +96,7 @@ namespace AbyssalProtocol
         {
             if (Map != null)
             {
-                MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
+                MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
                 if (encounter != null)
                 {
                     encounter.NotifyAnchorDestroyed(this);
@@ -107,7 +111,7 @@ namespace AbyssalProtocol
             DrawPlatformUnderlay(drawLoc);
             base.DrawAt(drawLoc, flip);
 
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             DominionSliceAnchorIdentityVfxUtility.DrawAnchorIdentityZone(
                 drawLoc,
                 Map,
@@ -166,7 +170,7 @@ namespace AbyssalProtocol
             sb.AppendLine();
             sb.Append(GetRoleEffectLabel());
 
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter != null)
             {
                 sb.AppendLine();
@@ -174,6 +178,12 @@ namespace AbyssalProtocol
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+
+        private MapComponent_DominionSliceEncounter ResolveEncounter()
+        {
+            return ABY_DominionSliceEncounterResolveUtility.Resolve(Map, ref cachedEncounter, ref nextEncounterResolveTick);
         }
 
         public string GetRoleLabel()

@@ -15,6 +15,8 @@ namespace AbyssalProtocol
 
         private int nextPulseTick = -1;
         private int lastBlockedMessageTick = -999999;
+        private MapComponent_DominionSliceEncounter cachedEncounter;
+        private int nextEncounterResolveTick;
 
         public override AcceptanceReport ClaimableBy(Faction by)
         {
@@ -35,7 +37,9 @@ namespace AbyssalProtocol
                 nextPulseTick = Find.TickManager.TicksGame + Rand.RangeInclusive(90, 180);
             }
 
-            MapComponent_DominionSliceEncounter encounter = map != null ? map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            cachedEncounter = null;
+            nextEncounterResolveTick = 0;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter != null)
             {
                 encounter.RegisterHeart(this);
@@ -57,7 +61,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter == null || !encounter.IsActiveEncounter)
             {
                 return;
@@ -88,7 +92,7 @@ namespace AbyssalProtocol
         {
             DrawHeartPlatformUnderlay(drawLoc);
             base.DrawAt(drawLoc, flip);
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter != null && encounter.ShouldDrawHeartShield)
             {
                 DominionSliceVfxUtility.DrawHeartShield(drawLoc, Map, encounter.LiveAnchorCount, thingIDNumber);
@@ -98,6 +102,12 @@ namespace AbyssalProtocol
             // This keeps the heart readable even before the encounter starts and avoids
             // the platform visually swallowing the interactable object.
             DominionSliceHeartSetpieceVfxUtility.DrawHeartSetpiece(drawLoc, Map, encounter, thingIDNumber);
+        }
+
+
+        private MapComponent_DominionSliceEncounter ResolveEncounter()
+        {
+            return ABY_DominionSliceEncounterResolveUtility.Resolve(Map, ref cachedEncounter, ref nextEncounterResolveTick);
         }
 
         private static void DrawHeartPlatformUnderlay(Vector3 drawLoc)
@@ -141,7 +151,7 @@ namespace AbyssalProtocol
         {
             if (Map != null)
             {
-                MapComponent_DominionSliceEncounter encounter = Map.GetComponent<MapComponent_DominionSliceEncounter>();
+                MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
                 if (encounter != null)
                 {
                     encounter.NotifyHeartDestroyed(this);
@@ -155,7 +165,7 @@ namespace AbyssalProtocol
         {
             string baseText = base.GetInspectString();
             string stateText = "ABY_DominionSliceHeart_InspectShielded".Translate();
-            MapComponent_DominionSliceEncounter encounter = Map != null ? Map.GetComponent<MapComponent_DominionSliceEncounter>() : null;
+            MapComponent_DominionSliceEncounter encounter = ResolveEncounter();
             if (encounter != null && encounter.IsHeartExposed)
             {
                 stateText = "ABY_DominionSliceHeart_InspectExposed".Translate(encounter.GetCollapseEta());

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 
@@ -44,7 +45,8 @@ namespace AbyssalProtocol
         private void ApplyAura(float allyRadius, float enemyRadius, float allySeverity, float enemySeverity)
         {
             Pawn pawn = PawnParent;
-            if (pawn?.MapHeld?.mapPawns?.AllPawnsSpawned == null)
+            Map map = pawn?.MapHeld;
+            if (map == null)
             {
                 return;
             }
@@ -52,10 +54,12 @@ namespace AbyssalProtocol
             float allyRadiusSq = allyRadius * allyRadius;
             float enemyRadiusSq = enemyRadius * enemyRadius;
             IntVec3 origin = pawn.PositionHeld;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
 
-            foreach (Pawn other in pawn.MapHeld.mapPawns.AllPawnsSpawned)
+            for (int i = 0; i < pawns.Count; i++)
             {
-                if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned)
+                Pawn other = pawns[i];
+                if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned || other.MapHeld != map)
                 {
                     continue;
                 }
