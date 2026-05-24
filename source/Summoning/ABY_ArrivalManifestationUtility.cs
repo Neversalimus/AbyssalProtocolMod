@@ -398,7 +398,7 @@ namespace AbyssalProtocol
                 string finalDesc = !string.IsNullOrEmpty(letterDesc)
                     ? letterDesc
                     : "Abyssal entities have completed their manifestation.";
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     finalLabel,
                     finalDesc,
                     LetterDefOf.ThreatSmall,

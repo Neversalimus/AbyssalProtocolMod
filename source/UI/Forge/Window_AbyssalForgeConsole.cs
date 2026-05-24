@@ -1623,6 +1623,8 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, contentWidth, viewHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref patternScrollPosition, viewRect);
+            try
+            {
             if (entries == null || entries.Count == 0)
             {
                 Rect emptyRect = new Rect(0f, 0f, contentWidth, 70f);
@@ -1662,7 +1664,11 @@ namespace AbyssalProtocol
                     }
                 }
             }
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref patternScrollPosition, viewRect);
+            }
         }
 
         private void BuildStatusCache(List<ForgePatternEntry> entries, MapComponent_AbyssalForgeProgress progress)
@@ -3017,6 +3023,8 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, contentWidth, contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect);
+            try
+            {
 
             Rect iconRect = new Rect(0f, y, 54f, 54f);
             if (product?.uiIcon != null)
@@ -3096,7 +3104,11 @@ namespace AbyssalProtocol
                 }
             }
 
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(scrollOutRect, ref selectedPatternScrollPosition, viewRect);
+            }
 
             if (!actionDetailLine.NullOrEmpty())
             {

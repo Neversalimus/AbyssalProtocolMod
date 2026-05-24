@@ -137,7 +137,7 @@ namespace AbyssalProtocol
 
             dominionHeartDestroyedLoreLetterSent = true;
             IntVec3 targetCell = focusCell.IsValid ? focusCell : map.Center;
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_DominionSliceEncounter_HeartDestroyedLoreTitle".Translate(),
                 "ABY_DominionSliceEncounter_HeartDestroyedLoreText".Translate(),
                 LetterDefOf.PositiveEvent,

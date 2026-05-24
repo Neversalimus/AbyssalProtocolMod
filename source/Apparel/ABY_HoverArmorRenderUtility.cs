@@ -8,6 +8,7 @@ namespace AbyssalProtocol
     [StaticConstructorOnStartup]
     public static class ABY_HoverArmorRenderUtility
     {
+        private static readonly MaterialPropertyBlock SharedAlphaBlock = new MaterialPropertyBlock();
         private const float DefaultFlightRigBackAltitudeOffset = -0.034f;
         private const float RingYOffset = 0.030f;
 
@@ -555,9 +556,9 @@ namespace AbyssalProtocol
 
         private static MaterialPropertyBlock Alpha(float alpha)
         {
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
-            block.SetColor("_Color", new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
-            return block;
+            SharedAlphaBlock.Clear();
+            SharedAlphaBlock.SetColor("_Color", new Color(1f, 1f, 1f, Mathf.Clamp01(alpha)));
+            return SharedAlphaBlock;
         }
     }
 }

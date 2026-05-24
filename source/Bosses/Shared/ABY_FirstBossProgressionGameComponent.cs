@@ -133,7 +133,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_FirstBossKillLabel".Translate(),
                     "ABY_FirstBossKillDesc".Translate(),
                     LetterDefOf.PositiveEvent,

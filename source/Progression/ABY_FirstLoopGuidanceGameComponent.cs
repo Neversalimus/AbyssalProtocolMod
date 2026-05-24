@@ -60,7 +60,7 @@ namespace AbyssalProtocol
             }
 
             signalTheoryLetterSent = true;
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_SignalTheoryGuidanceLabel".Translate(),
                 "ABY_SignalTheoryGuidanceDesc".Translate(),
                 LetterDefOf.PositiveEvent);
@@ -80,7 +80,7 @@ namespace AbyssalProtocol
 
             firstSigilLetterSent = true;
             LookTargets lookTargets = sigil != null ? new LookTargets(sigil) : LookTargets.Invalid;
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_FirstSigilGuidanceLabel".Translate(),
                 "ABY_FirstSigilGuidanceDesc".Translate(),
                 LetterDefOf.PositiveEvent,

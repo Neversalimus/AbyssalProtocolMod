@@ -51,6 +51,8 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 | Apparel, armor Aegis, hover armor, body type restrictions | `source/Apparel/` | `source/Defs/Apparel/`, `Defs/ThingDefs/`, `Textures/Things/Apparel/`, `Languages/` |
 | Implants, hediff comps, implant info cards | `source/Hediffs/` | `Defs/HediffDefs/`, `source/UI/Forge/`, `Languages/` |
 | Harmony patch issues | `source/Patches/`, feature-specific module | `source/Core/Bootstrap/`, latest build output |
+| Safe runtime letters / notification robustness | `source/Core/Misc/ABY_LetterUtility.cs` | runtime callers in `source/Dominion/`, `source/Summoning/`, `source/Progression/`, `source/Forge/`, boss progression components |
+| Safe custom UI scroll views / GUI stack protection | `source/UI/Shared/AbyssalStyledWidgets.cs` and the owning UI window | `source/UI/Forge/`, `source/UI/Summoning/`, `source/Experimental/ProtocolResearch/`, `source/UI/Bestiary/`, `source/UI/Turrets/`, `source/UI/BossBar/` |
 | Dev tools / diagnostics / stability reports | `source/Diagnostics/` | `source/Core/Utilities/`, `source/Legacy/` |
 | Legacy save migration / old cleanup | `source/Legacy/` | `source/Diagnostics/`, save/load behavior |
 | Sound/SFX issue | `source/Audio/`, `Defs/SoundDefs/`, `Sounds/ABY/` | Relevant weapon/projectile/incident XML and SFX pipeline rules |

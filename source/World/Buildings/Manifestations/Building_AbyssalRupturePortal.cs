@@ -298,7 +298,7 @@ namespace AbyssalProtocol
 
             AbyssalLordUtility.EnsureAssaultLord(boss, sappers: true);
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_BossSummonSuccessLabel".Translate(),
                 "ABY_BossSummonSuccessDesc".Translate(bossLabel),
                 LetterDefOf.ThreatBig,

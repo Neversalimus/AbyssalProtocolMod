@@ -44,7 +44,7 @@ namespace AbyssalProtocol
 
             if (Find.LetterStack != null && map != null && cell.IsValid)
             {
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_HeraldAnalysisCompleteLabel".Translate(),
                     "ABY_HeraldAnalysisCompleteDesc".Translate(weaponLabel, implantLabel),
                     LetterDefOf.PositiveEvent,

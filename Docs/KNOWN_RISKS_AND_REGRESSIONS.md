@@ -911,3 +911,11 @@ In-game checks:
 - Start a Dominion crisis and leave Gate/Anchor buildings active for several in-game minutes; confirm pulses, inspect strings, and destruction notifications still work.
 - Fire Ashen Scatter Shell repeatedly and confirm impact VFX still appears while no radial-list allocation pattern is reintroduced.
 - Spawn Gate Wardens near anchors and confirm they still leash/defend anchors after the anchor-def cache change.
+
+## UI ScrollView and letter delivery robustness — 2026-05-24
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Custom Abyssal UI scroll view begins but does not end after an exception | P2 | custom UI / OnGUI | RimWorld GUI stack imbalance, mouse-position stack errors, cascading UI failures after a draw exception | Always wrap `AbyssalStyledWidgets.BeginAbyssalScrollView` / `EndAbyssalScrollView` pairs in `try/finally`, especially in Forge, Summoning, Protocol Nexus, Bestiary, boss calibration, and turret ITabs. |
+| Runtime phase/progression code calls `Find.LetterStack.ReceiveLetter` directly | P2 | progression / Dominion / summoning / guidance | A broken letter/localization/target stack throws out of a state transition after the gameplay state has already changed | Use `ABY_LetterUtility.TryReceiveLetter` for runtime letters so notification failures are logged and suppressed instead of escaping progression or encounter code. |
+| Draw-path VFX allocates `MaterialPropertyBlock` per frame | P3 | apparel / VFX rendering | Small but persistent GC pressure when multiple pawns display hover/overlay effects | Reuse a static/shared property block when the draw call consumes it immediately. Avoid per-frame allocations in `DrawAt`/render helpers. |

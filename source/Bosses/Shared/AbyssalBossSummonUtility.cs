@@ -1399,7 +1399,7 @@ namespace AbyssalProtocol
             string letterDesc = completionLetterDescKey.NullOrEmpty()
                 ? "ABY_BossSummonSuccessDesc".Translate(bossLabel)
                 : completionLetterDescKey.Translate();
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 letterLabel,
                 letterDesc,
                 LetterDefOf.ThreatBig,

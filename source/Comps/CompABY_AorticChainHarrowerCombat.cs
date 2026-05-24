@@ -46,6 +46,8 @@ namespace AbyssalProtocol
         private int nextInterceptTick;
         private int nextCagePulseTick;
         private Thing cachedHeart;
+        private MapComponent_DominionSliceEncounter cachedEncounter;
+        private int nextEncounterResolveTick;
         private readonly List<Pawn> pulseTargets = new List<Pawn>();
 
         public CompProperties_ABY_AorticChainHarrowerCombat Props => (CompProperties_ABY_AorticChainHarrowerCombat)props;
@@ -162,12 +164,12 @@ namespace AbyssalProtocol
         private Pawn FindInterceptTarget(Pawn pawn, Thing heart)
         {
             Map map = pawn?.MapHeld;
-            if (map?.mapPawns?.AllPawnsSpawned == null || heart == null)
+            if (map == null || heart == null)
             {
                 return null;
             }
 
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
             Pawn best = null;
             float bestScore = float.MinValue;
             IntVec3 heartCell = heart.PositionHeld;
@@ -297,7 +299,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            MapComponent_DominionSliceEncounter encounter = map.GetComponent<MapComponent_DominionSliceEncounter>();
+            MapComponent_DominionSliceEncounter encounter = ABY_DominionSliceEncounterResolveUtility.Resolve(map, ref cachedEncounter, ref nextEncounterResolveTick);
             Thing heart = encounter?.HeartBuilding;
             if (IsValidHeart(pawn, heart))
             {
@@ -314,7 +316,7 @@ namespace AbyssalProtocol
                 return null;
             }
 
-            ThingDef heartDef = DefDatabase<ThingDef>.GetNamedSilentFail(Props.heartDefName);
+            ThingDef heartDef = ABY_DefCache.ThingDefNamed(Props.heartDefName);
             if (heartDef == null || map.listerThings == null)
             {
                 return null;

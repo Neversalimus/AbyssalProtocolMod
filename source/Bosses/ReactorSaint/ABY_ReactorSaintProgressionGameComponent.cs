@@ -134,7 +134,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_ReactorSaintKillLabel".Translate(),
                     "ABY_ReactorSaintKillDesc".Translate(),
                     LetterDefOf.PositiveEvent,

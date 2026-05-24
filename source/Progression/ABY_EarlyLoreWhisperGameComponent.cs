@@ -77,7 +77,7 @@ namespace AbyssalProtocol
             }
 
             loreWhisperLetterSent = true;
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_EarlyLoreWhisperLabel".Translate(),
                 "ABY_EarlyLoreWhisperDesc".Translate(),
                 LetterDefOf.NeutralEvent);

@@ -323,9 +323,15 @@ namespace AbyssalProtocol
                 float height = Mathf.Max(54f, Text.CalcHeight(lockedText, viewRect.width));
                 viewRect.height = height;
                 AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                try
+                {
                 GUI.color = AbyssalForgeConsoleArt.TextDimColor;
                 DrawWrappedText(new Rect(0f, 0f, viewRect.width, height), lockedText, GameFont.Tiny, AbyssalForgeConsoleArt.TextDimColor);
+                }
+                finally
+                {
                 AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                }
                 ResetTextState();
                 return;
             }
@@ -340,11 +346,17 @@ namespace AbyssalProtocol
                 float availableHeight = Text.CalcHeight(availableText, viewRect.width);
                 viewRect.height = Mathf.Max(outRect.height, emptyHeight + availableHeight + 46f);
                 AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                try
+                {
                 contentY = DrawInfoParagraph(new Rect(0f, 0f, viewRect.width, viewRect.height), contentY, emptyText, AbyssalForgeConsoleArt.TextSoftColor);
                 contentY += 6f;
                 DrawSectionLine(new Rect(0f, 0f, viewRect.width, viewRect.height), ref contentY, availableHeader);
                 DrawInfoParagraph(new Rect(0f, 0f, viewRect.width, viewRect.height), contentY, availableText, AbyssalForgeConsoleArt.TextDimColor);
+                }
+                finally
+                {
                 AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                }
                 ResetTextState();
                 return;
             }
@@ -358,6 +370,8 @@ namespace AbyssalProtocol
             viewRect.height = Mathf.Max(outRect.height, estimatedHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+            try
+            {
             Rect contentRect = new Rect(0f, 0f, viewRect.width, viewRect.height);
             DrawSectionLine(contentRect, ref contentY, module.LocalizedLabelCap);
             DrawInfoLine(contentRect, ref contentY, ABY_ModularTurretUtility.TranslateOrFallback("ABY_TurretModuleLine_Slot", "Slot: {0}", module.SlotLabel));
@@ -371,7 +385,11 @@ namespace AbyssalProtocol
             {
                 DrawInfoLine(contentRect, ref contentY, statLines[i]);
             }
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+            }
 
             ResetTextState();
         }

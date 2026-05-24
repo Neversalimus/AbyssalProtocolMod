@@ -137,7 +137,7 @@ namespace AbyssalProtocol
                 ? LetterDefOf.ThreatBig
                 : LetterDefOf.ThreatSmall;
 
-            Find.LetterStack.ReceiveLetter(letterLabel, letterText, letterDef, new TargetInfo(portalCells[0], map));
+            ABY_LetterUtility.TryReceiveLetter(letterLabel, letterText, letterDef, new TargetInfo(portalCells[0], map));
             return true;
         }
 

@@ -267,7 +267,7 @@ namespace AbyssalProtocol
 
             string unlockedLines = string.Join("\n", unlockedNow.Select(recipe => "• " + AbyssalForgeProgressUtility.GetRecipeDisplayLabel(recipe)).ToArray());
             string currentAttunement = "ABY_AttunementTier_" + GetCurrentAttunementTier(false);
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_ForgeUnlockLetterLabel".Translate(currentTotal),
                 "ABY_ForgeUnlockLetterDesc".Translate(currentTotal, currentAttunement.Translate(), unlockedLines),
                 LetterDefOf.PositiveEvent,

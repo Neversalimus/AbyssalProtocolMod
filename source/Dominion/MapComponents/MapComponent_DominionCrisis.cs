@@ -405,7 +405,7 @@ namespace AbyssalProtocol
                 ABY_SoundUtility.PlayAt("ABY_SigilSpawnImpulse", sourceCell, map);
             }
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_DominionCrisisStartLabel".Translate(),
                 "ABY_DominionCrisisStartDesc".Translate(circle.LabelCap),
                 LetterDefOf.ThreatSmall,
@@ -1279,7 +1279,7 @@ namespace AbyssalProtocol
 
             if (wavesTriggered == 1)
             {
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_DominionWavePulseLabel".Translate(),
                     "ABY_DominionWavePulseDesc".Translate(summary, GetNextWaveEtaValue()),
                     LetterDefOf.ThreatBig,
@@ -1315,7 +1315,7 @@ namespace AbyssalProtocol
             lastWaveSummary = null;
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.20f);
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_DominionCrisisAnchorfallLabel".Translate(),
                 "ABY_DominionCrisisAnchorfallDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle", initialAnchorCount),
                 LetterDefOf.ThreatBig,
@@ -1339,7 +1339,7 @@ namespace AbyssalProtocol
             nextWaveTick = 0;
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.26f);
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_DominionCrisisGateLabel".Translate(),
                 "ABY_DominionCrisisGateDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle"),
                 LetterDefOf.ThreatBig,
@@ -1357,7 +1357,7 @@ namespace AbyssalProtocol
             lastWaveTick = 0;
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(map, 0.12f);
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_DominionCrisisStandbyLabel".Translate(),
                 "ABY_DominionCrisisStandbyDesc".Translate(sourceCircle?.LabelCap ?? "summoning circle"),
                 LetterDefOf.PositiveEvent,
@@ -1863,7 +1863,7 @@ namespace AbyssalProtocol
 
             if (sendLetter)
             {
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     GetLetterLabel(terminalPhase),
                     GetLetterDescription(terminalPhase, reason),
                     terminalPhase == DominionCrisisPhase.Completed ? LetterDefOf.PositiveEvent : LetterDefOf.NegativeEvent,

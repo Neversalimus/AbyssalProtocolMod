@@ -2061,7 +2061,7 @@ namespace AbyssalProtocol
             }
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", letterCell, Map);
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 GetCompletionLetterLabel(),
                 GetCompletionLetterDesc(),
                 LetterDefOf.ThreatSmall,
@@ -2125,7 +2125,7 @@ namespace AbyssalProtocol
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
             DoRitualSpecificArrivalPresentation(pendingRitualId, portal.Position, 1f);
             ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 GetCompletionLetterLabel(),
                 GetCompletionLetterDesc(),
                 LetterDefOf.ThreatSmall,

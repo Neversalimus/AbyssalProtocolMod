@@ -1316,3 +1316,11 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Removed the `Projectile_AshenScatterShell` impact-time `.ToList()` allocation by iterating radial cells directly.
 - Cached Gate Warden escort anchor defs through `ABY_DefCache` so repeated escort scans no longer call `DefDatabase.GetNamedSilentFail` for the same anchor names.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+
+## 2026-05-24 — Harden UI scroll and letter delivery paths
+
+- Added `ABY_LetterUtility.TryReceiveLetter` and routed direct `Find.LetterStack.ReceiveLetter` calls through it so broken `LetterStack`, target data, or localization cannot escape runtime progression, Dominion, Forge, summoning, or guidance transitions.
+- Wrapped Abyssal custom scroll views in `try/finally` so `EndAbyssalScrollView` is called even if a card, tooltip, localization line, or third-party UI patch throws during draw.
+- Reduced hover armor draw-path allocation by reusing a `MaterialPropertyBlock` for alpha draws instead of allocating a new block for every VFX draw call.
+- Updated Aortic Chain Harrower combat scanning to use the cached Dominion Slice encounter resolver, `ABY_DefCache`, and runtime pawn cache instead of repeated `Map.GetComponent`, `DefDatabase`, and direct spawned-pawn scans.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.

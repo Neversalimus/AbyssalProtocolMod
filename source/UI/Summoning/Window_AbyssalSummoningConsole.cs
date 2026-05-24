@@ -420,13 +420,19 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, viewHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref ritualScrollPosition, viewRect);
+            try
+            {
             for (int i = 0; i < rituals.Count; i++)
             {
                 AbyssalSummoningConsoleUtility.RitualDefinition ritual = rituals[i];
                 Rect cardRect = new Rect(0f, i * (cardHeight + 8f), viewRect.width, cardHeight);
                 DrawRitualCard(cardRect, ritual, selected != null && ritual.Id == selected.Id);
             }
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref ritualScrollPosition, viewRect);
+            }
         }
 
 
@@ -971,6 +977,8 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+            try
+            {
             float y = 0f;
             if (dominionUiMode)
             {
@@ -1014,7 +1022,11 @@ namespace AbyssalProtocol
                 GUI.color = Color.white;
             }
 
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+            }
         }
 
         private void DrawSystemsPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -1042,8 +1054,14 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref capacitorScrollPosition, viewRect);
+            try
+            {
             DrawCapacitorPanel(new Rect(0f, 0f, viewRect.width, contentHeight), ritual);
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref capacitorScrollPosition, viewRect);
+            }
         }
 
         private void DrawCapacitorPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -1123,8 +1141,14 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref stabilizerScrollPosition, viewRect);
+            try
+            {
             DrawModulePanel(new Rect(0f, 0f, viewRect.width, contentHeight));
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref stabilizerScrollPosition, viewRect);
+            }
         }
 
         private void DrawModulePanel(Rect rect)
@@ -1169,8 +1193,14 @@ namespace AbyssalProtocol
             Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), contentHeight);
 
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref ritualPreviewScrollPosition, viewRect);
+            try
+            {
             DrawRitualPreviewPanel(new Rect(0f, 0f, viewRect.width, contentHeight), ritual);
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref ritualPreviewScrollPosition, viewRect);
+            }
         }
 
         private void DrawRitualPreviewPanel(Rect rect, AbyssalSummoningConsoleUtility.RitualDefinition ritual)
@@ -2052,6 +2082,8 @@ namespace AbyssalProtocol
                 Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, entries.Count * 36f + 6f));
 
                 AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+                try
+                {
                 for (int i = 0; i < entries.Count; i++)
                 {
                     Rect rowRect = new Rect(0f, i * 36f, viewRect.width, 32f);
@@ -2065,7 +2097,11 @@ namespace AbyssalProtocol
                     GUI.color = Color.white;
                 }
                 Text.Font = GameFont.Small;
+                }
+                finally
+                {
                 AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
+                }
 
                 Rect closeRect = new Rect(inner.x, inner.yMax - 36f, inner.width, 30f);
                 if (AbyssalStyledWidgets.TextButton(closeRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualDossier_Close", "Close dossier")))
@@ -2086,8 +2122,14 @@ namespace AbyssalProtocol
                 Rect viewRect = new Rect(0f, 0f, Mathf.Max(0f, outRect.width - 16f), Mathf.Max(outRect.height, contentHeight));
 
                 AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref previewScrollPosition, viewRect);
+                try
+                {
                 parent.DrawRitualPreviewPanel(new Rect(0f, 0f, viewRect.width, viewRect.height), ritual);
+                }
+                finally
+                {
                 AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref previewScrollPosition, viewRect);
+                }
             }
         }
 

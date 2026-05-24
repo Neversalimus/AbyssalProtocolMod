@@ -38,7 +38,7 @@ namespace AbyssalProtocol
             ArchonInfernalVFXUtility.DoSummonVFX(map, portalCell);
             ABY_SoundUtility.PlayAt("ABY_RupturePortalOpen", portalCell, map);
 
-            Find.LetterStack.ReceiveLetter(
+            ABY_LetterUtility.TryReceiveLetter(
                 "ABY_SecretBossRevealLabel".Translate(),
                 "ABY_SecretBossRevealDesc".Translate(),
                 LetterDefOf.ThreatBig,

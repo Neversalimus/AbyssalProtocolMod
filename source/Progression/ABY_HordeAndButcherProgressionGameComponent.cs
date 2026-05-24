@@ -77,7 +77,7 @@ namespace AbyssalProtocol
                     LookTargets targets = map != null && cell.IsValid
                         ? new LookTargets(new TargetInfo(cell, map))
                         : null;
-                    Find.LetterStack.ReceiveLetter(
+                    ABY_LetterUtility.TryReceiveLetter(
                         "ABY_FirstHordeClearLabel".Translate(),
                         "ABY_FirstHordeClearDesc".Translate(),
                         LetterDefOf.PositiveEvent,
@@ -174,7 +174,7 @@ namespace AbyssalProtocol
                     ? new LookTargets(new TargetInfo(corpse.PositionHeld, map))
                     : null;
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_RiftButcherKillLabel".Translate(),
                     "ABY_RiftButcherKillDesc".Translate(),
                     LetterDefOf.PositiveEvent,

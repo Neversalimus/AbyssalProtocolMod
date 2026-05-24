@@ -26,7 +26,7 @@ namespace AbyssalProtocol
                 int choirResidue = GetRecipeResidue(ChoirSigilRecipeDefName);
                 int reactorResidue = GetRecipeResidue(ReactorSigilRecipeDefName);
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_ProgressRecap_Archon_Label".Translate(),
                     "ABY_ProgressRecap_Archon_Desc".Translate(choirLabel, choirResidue, reactorLabel, reactorResidue),
                     LetterDefOf.PositiveEvent,
@@ -52,7 +52,7 @@ namespace AbyssalProtocol
                 string dominionResearchLabel = GetResearchLabel(DominionResearchDefName, "dominion gate bootstrapping");
                 int dominionResidue = GetRecipeResidue(DominionSigilRecipeDefName);
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     "ABY_ProgressRecap_Reactor_Label".Translate(),
                     "ABY_ProgressRecap_Reactor_Desc".Translate(vesperLabel, plasmaLabel, dominionResearchLabel, dominionResidue),
                     LetterDefOf.PositiveEvent,

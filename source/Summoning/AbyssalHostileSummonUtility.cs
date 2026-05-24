@@ -148,7 +148,7 @@ namespace AbyssalProtocol
                     ? "ABY_BossSummonSuccessDesc".Translate(fallbackLabel)
                     : letterDesc;
 
-                Find.LetterStack.ReceiveLetter(
+                ABY_LetterUtility.TryReceiveLetter(
                     finalLabel,
                     finalDesc,
                     LetterDefOf.ThreatSmall,

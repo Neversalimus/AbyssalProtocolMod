@@ -700,6 +700,8 @@ namespace AbyssalProtocol
             int projectCount = projects?.Count ?? 0;
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, Mathf.Max(outRect.height, projectCount * rowHeight + 8f));
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref projectListScroll, viewRect);
+            try
+            {
             if (projectCount == 0)
             {
                 Text.Font = GameFont.Tiny;
@@ -725,7 +727,11 @@ namespace AbyssalProtocol
                     }
                 }
             }
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref projectListScroll, viewRect);
+            }
         }
 
         private void DrawProjectListRow(Rect rect, ABY_ProtocolResearchDef project)
@@ -817,6 +823,8 @@ namespace AbyssalProtocol
             Rect outRect = new Rect(rect.x + 12f, headerRect.yMax + 10f, rect.width - 24f, rect.height - headerRect.height - 34f);
             Rect viewRect = new Rect(0f, 0f, outRect.width - 16f, detailViewHeight);
             AbyssalStyledWidgets.BeginAbyssalScrollView(outRect, ref detailsScroll, viewRect);
+            try
+            {
             float y = 0f;
 
             y = DrawDecodeControls(viewRect, y, project);
@@ -842,7 +850,11 @@ namespace AbyssalProtocol
             y = warningRect.yMax + 12f;
 
             detailViewHeight = Mathf.Max(outRect.height + 1f, y);
+            }
+            finally
+            {
             AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailsScroll, viewRect);
+            }
         }
 
 
