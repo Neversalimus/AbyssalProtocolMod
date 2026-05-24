@@ -142,12 +142,13 @@ namespace AbyssalProtocol
 
         private Pawn FindThreatNearAnchor(Pawn pawn, Thing anchor)
         {
-            if (pawn?.MapHeld?.mapPawns?.AllPawnsSpawned == null || anchor == null)
+            Map map = pawn?.MapHeld;
+            if (map == null || anchor == null)
             {
                 return null;
             }
 
-            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns.AllPawnsSpawned;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             Pawn best = null;
             float bestScore = float.MinValue;
             IntVec3 anchorCell = anchor.PositionHeld;

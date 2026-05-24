@@ -933,3 +933,17 @@ In-game checks:
 | Custom scroll wrapper reset can be bypassed if scrollbar drawing throws | P3 | custom UI | Text/color state may leak if custom scrollbar drawing fails after `Widgets.EndScrollView()` | Keep `AbyssalStyledWidgets.EndAbyssalScrollView` structured as `try { EndScrollView; draw custom scrollbar; } finally { ResetTextAndGUIState(); }`. |
 | GUI matrix restoration uses straight-line cleanup | P3 | rotated UI ornaments | A draw exception can leave `GUI.matrix` rotated/scaled for later UI | Store old `GUI.matrix`/`GUI.color` and restore both in `finally` around rotated draw helpers. |
 | Redundant `Find.LetterStack` checks hide safe-wrapper ownership | P4 | notification code hygiene | Future contributors may reintroduce direct `LetterStack` access because ownership is unclear | Route notification attempts through `ABY_LetterUtility.TryReceiveLetter`; keep direct `Find.LetterStack.ReceiveLetter` usage isolated inside the wrapper only. |
+
+## Support comp scan-pressure guard — 2026-05-24
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Support enemy comps reintroduce local full pawn scans | P3 | enemy AI / TPS polish | Large waves with several Choir Engines, Gate Wardens, Halo Step units, or Harvesters create small repeated scan spikes | Prefer `ABY_RuntimeTargetCache.CombatTargetPawnsFor` and still validate faction, map, dead/downed state, range, and role-specific conditions before acting. |
+| Infrastructure targeting builds temporary lists and sorts them every pulse | P3 | Choir Engine Relay | Relay pulses allocate turret/other lists and sort them just to pick the first/nearest target | Use single-pass best-target selection or bounded radial passes instead of `List` + `Sort` + `yield` for interval support abilities. |
+
+In-game checks:
+
+- Spawn multiple Choir Engines near turrets/mechanoids and confirm EMP suppression still prioritizes turrets while avoiding generator/battery spam.
+- Spawn Gate Wardens near Dominion anchors and confirm they still intercept nearby threats and leash back to anchors.
+- Spawn Halo Step units near hostiles and confirm they still blink/step when threatened.
+- Spawn Harvester units near corpses and hostiles and confirm hostile interference still pauses harvesting.

@@ -213,51 +213,59 @@ namespace AbyssalProtocol
 
         private void AffectInfrastructure(Pawn pawn, float radius, int maxTargets, float empDamage)
         {
-            Map map = pawn.MapHeld;
-            if (map == null)
+            int remaining = Math.Max(1, maxTargets);
+            remaining = ApplyInfrastructurePass(pawn, radius, empDamage, true, true, remaining);
+            if (remaining > 0)
             {
-                return;
+                ApplyInfrastructurePass(pawn, radius, empDamage, true, false, remaining);
+            }
+        }
+
+        private int ApplyInfrastructurePass(Pawn pawn, float radius, float empDamage, bool preferTurrets, bool turretPass, int remaining)
+        {
+            Map map = pawn?.MapHeld;
+            if (map == null || remaining <= 0)
+            {
+                return remaining;
             }
 
-            int affected = 0;
-            foreach (Thing target in GetNearbyInfrastructureTargets(pawn, radius, true))
+            foreach (Thing target in GenRadial.RadialDistinctThingsAround(pawn.PositionHeld, map, radius, true))
             {
-                if (target is Pawn mech && mech.RaceProps != null && mech.RaceProps.IsMechanoid)
-                {
-                    mech.TakeDamage(new DamageInfo(DamageDefOf.EMP, empDamage, 0f, -1f, pawn));
-                }
-                else
-                {
-                    target.TakeDamage(new DamageInfo(DamageDefOf.EMP, empDamage, 0f, -1f, pawn));
-                }
-
-                affected++;
-                if (affected >= Math.Max(1, maxTargets))
+                if (remaining <= 0)
                 {
                     break;
                 }
+
+                if (!IsValidInfrastructureTarget(pawn, target))
+                {
+                    continue;
+                }
+
+                bool isTurret = target is Building_Turret;
+                if (preferTurrets && isTurret != turretPass)
+                {
+                    continue;
+                }
+
+                ApplyEmpDamage(pawn, target, empDamage);
+                remaining--;
             }
+
+            return remaining;
         }
 
         private Thing FindBestInfrastructureTarget(Pawn pawn, float radius, bool preferTurrets)
         {
-            foreach (Thing target in GetNearbyInfrastructureTargets(pawn, radius, preferTurrets))
-            {
-                return target;
-            }
-
-            return null;
-        }
-
-        private IEnumerable<Thing> GetNearbyInfrastructureTargets(Pawn pawn, float radius, bool preferTurrets)
-        {
-            List<Thing> turrets = new List<Thing>();
-            List<Thing> other = new List<Thing>();
-            Map map = pawn.MapHeld;
+            Map map = pawn?.MapHeld;
             if (map == null)
             {
-                yield break;
+                return null;
             }
+
+            Thing bestTurret = null;
+            Thing bestOther = null;
+            float bestTurretDistance = float.MaxValue;
+            float bestOtherDistance = float.MaxValue;
 
             foreach (Thing thing in GenRadial.RadialDistinctThingsAround(pawn.PositionHeld, map, radius, true))
             {
@@ -266,47 +274,59 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                float distance = pawn.PositionHeld.DistanceToSquared(thing.PositionHeld);
                 if (thing is Building_Turret)
                 {
-                    turrets.Add(thing);
+                    if (distance < bestTurretDistance)
+                    {
+                        bestTurretDistance = distance;
+                        bestTurret = thing;
+                    }
                 }
-                else
+                else if (distance < bestOtherDistance)
                 {
-                    other.Add(thing);
+                    bestOtherDistance = distance;
+                    bestOther = thing;
                 }
             }
 
-            if (preferTurrets)
+            return preferTurrets ? bestTurret ?? bestOther : bestOther ?? bestTurret;
+        }
+
+        private static void ApplyEmpDamage(Pawn pawn, Thing target, float empDamage)
+        {
+            if (target == null)
             {
-                turrets.Sort((a, b) => pawn.PositionHeld.DistanceToSquared(a.PositionHeld).CompareTo(pawn.PositionHeld.DistanceToSquared(b.PositionHeld)));
-                other.Sort((a, b) => pawn.PositionHeld.DistanceToSquared(a.PositionHeld).CompareTo(pawn.PositionHeld.DistanceToSquared(b.PositionHeld)));
-                foreach (Thing t in turrets) yield return t;
-                foreach (Thing t in other) yield return t;
+                return;
             }
-            else
-            {
-                other.Sort((a, b) => pawn.PositionHeld.DistanceToSquared(a.PositionHeld).CompareTo(pawn.PositionHeld.DistanceToSquared(b.PositionHeld)));
-                turrets.Sort((a, b) => pawn.PositionHeld.DistanceToSquared(a.PositionHeld).CompareTo(pawn.PositionHeld.DistanceToSquared(b.PositionHeld)));
-                foreach (Thing t in other) yield return t;
-                foreach (Thing t in turrets) yield return t;
-            }
+
+            target.TakeDamage(new DamageInfo(DamageDefOf.EMP, empDamage, 0f, -1f, pawn));
         }
 
         private bool HasHostileTargetInRadius(Pawn pawn, float radius)
         {
-            if (pawn?.MapHeld?.mapPawns?.AllPawnsSpawned == null)
+            Map map = pawn?.MapHeld;
+            if (map == null)
             {
                 return false;
             }
 
-            foreach (Pawn other in pawn.MapHeld.mapPawns.AllPawnsSpawned)
+            float radiusSquared = radius * radius;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
             {
-                if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned)
+                Pawn other = pawns[i];
+                if (other == null || other == pawn || other.MapHeld != map)
                 {
                     continue;
                 }
 
-                if (ABY_FactionHostilityUtility.SafeHostileTo(pawn, other) && pawn.PositionHeld.DistanceTo(other.PositionHeld) <= radius)
+                if (!ABY_FactionHostilityUtility.SafeHostileTo(pawn, other))
+                {
+                    continue;
+                }
+
+                if (pawn.PositionHeld.DistanceToSquared(other.PositionHeld) <= radiusSquared)
                 {
                     return true;
                 }

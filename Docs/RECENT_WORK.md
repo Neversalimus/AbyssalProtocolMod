@@ -1338,3 +1338,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Wrapped remaining `GUI.matrix` rotation draw helpers in `try/finally` so matrix/color state cannot leak after draw exceptions.
 - Removed redundant `Find.LetterStack` pre-checks before `ABY_LetterUtility.TryReceiveLetter`; direct `Find.LetterStack.ReceiveLetter` usage remains isolated inside the safe wrapper.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+
+## 2026-05-24 — Reduce remaining support-comp scan pressure
+
+- Updated Choir Engine Relay infrastructure and proximity checks to avoid temporary turret/other target lists, sorting, and direct full pawn scans during relay pulses.
+- Routed Gate Warden escort threat selection, Halo Step proximity/hostile collection, and Harvester Essence interference checks through `ABY_RuntimeTargetCache.CombatTargetPawnsFor` while preserving per-call validation.
+- Switched Harvester Essence hediff lookup to `ABY_DefCache` for consistency with other runtime comp paths.
+- Build not verified in this environment; modified-file syntax was checked against the previous assembly and XML parse checks passed. Full DLL rebuild is still required before runtime testing.

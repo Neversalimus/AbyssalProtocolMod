@@ -259,7 +259,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            HediffDef hediffDef = DefDatabase<HediffDef>.GetNamedSilentFail(Props.essenceHediffDefName);
+            HediffDef hediffDef = ABY_DefCache.HediffDefNamed(Props.essenceHediffDefName);
             if (hediffDef == null)
             {
                 return;
@@ -395,17 +395,19 @@ namespace AbyssalProtocol
 
         private static bool HasAdjacentHostileThreat(Pawn pawn, float radius)
         {
-            if (pawn?.MapHeld?.mapPawns?.AllPawnsSpawned == null)
+            Map map = pawn?.MapHeld;
+            if (map == null)
             {
                 return false;
             }
 
-            float maxDistance = Math.Max(0.8f, radius);
-            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns.AllPawnsSpawned;
+            float maxDistanceSquared = Math.Max(0.8f, radius);
+            maxDistanceSquared *= maxDistanceSquared;
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];
-                if (other == null || other == pawn || other.Dead || other.Downed || !other.Spawned)
+                if (other == null || other == pawn || other.MapHeld != map)
                 {
                     continue;
                 }
@@ -415,7 +417,7 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (pawn.PositionHeld.DistanceTo(other.PositionHeld) <= maxDistance)
+                if (pawn.PositionHeld.DistanceToSquared(other.PositionHeld) <= maxDistanceSquared)
                 {
                     return true;
                 }

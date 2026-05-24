@@ -111,12 +111,13 @@ namespace AbyssalProtocol
 
         private bool HasNearbyThreat(Pawn pawn)
         {
-            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            Map map = pawn?.MapHeld;
+            if (map == null)
             {
                 return false;
             }
 
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];
@@ -204,12 +205,13 @@ namespace AbyssalProtocol
         private static List<Pawn> CollectHostilePawns(Pawn pawn)
         {
             List<Pawn> hostiles = new List<Pawn>();
-            IReadOnlyList<Pawn> pawns = pawn.MapHeld.mapPawns?.AllPawnsSpawned;
-            if (pawns == null)
+            Map map = pawn?.MapHeld;
+            if (map == null)
             {
                 return hostiles;
             }
 
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
                 Pawn other = pawns[i];
