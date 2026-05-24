@@ -764,29 +764,34 @@ namespace AbyssalProtocol
             Color oldColor = GUI.color;
             Matrix4x4 oldMatrix = GUI.matrix;
 
-            if (Mathf.Abs(rotationDegrees) > 0.01f)
+            try
             {
-                GUIUtility.RotateAroundPivot(rotationDegrees, rect.center);
-            }
+                if (Mathf.Abs(rotationDegrees) > 0.01f)
+                {
+                    GUIUtility.RotateAroundPivot(rotationDegrees, rect.center);
+                }
 
-            GUI.color = selected ? new Color(1f, 0.88f, 0.68f, 1f) : Color.white;
-            if (tex != null)
-            {
-                GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill, true);
-            }
-            else
-            {
-                DrawSolid(rect, StateColor(state) * 0.55f);
-                Widgets.DrawBox(rect);
-            }
+                GUI.color = selected ? new Color(1f, 0.88f, 0.68f, 1f) : Color.white;
+                if (tex != null)
+                {
+                    GUI.DrawTexture(rect, tex, ScaleMode.StretchToFill, true);
+                }
+                else
+                {
+                    DrawSolid(rect, StateColor(state) * 0.55f);
+                    Widgets.DrawBox(rect);
+                }
 
-            if (selected)
-            {
-                DrawOutline(rect.ExpandedBy(2f), new Color(1f, 0.72f, 0.36f, 0.95f));
+                if (selected)
+                {
+                    DrawOutline(rect.ExpandedBy(2f), new Color(1f, 0.72f, 0.36f, 0.95f));
+                }
             }
-
-            GUI.matrix = oldMatrix;
-            GUI.color = oldColor;
+            finally
+            {
+                GUI.matrix = oldMatrix;
+                GUI.color = oldColor;
+            }
 
             if (Mouse.IsOver(rect.ExpandedBy(6f)))
             {

@@ -72,17 +72,14 @@ namespace AbyssalProtocol
             firstHordeClearRecorded = true;
             try
             {
-                if (Find.LetterStack != null)
-                {
-                    LookTargets targets = map != null && cell.IsValid
-                        ? new LookTargets(new TargetInfo(cell, map))
-                        : null;
-                    ABY_LetterUtility.TryReceiveLetter(
-                        "ABY_FirstHordeClearLabel".Translate(),
-                        "ABY_FirstHordeClearDesc".Translate(),
-                        LetterDefOf.PositiveEvent,
-                        targets);
-                }
+                LookTargets targets = map != null && cell.IsValid
+                    ? new LookTargets(new TargetInfo(cell, map))
+                    : null;
+                ABY_LetterUtility.TryReceiveLetter(
+                    "ABY_FirstHordeClearLabel".Translate(),
+                    "ABY_FirstHordeClearDesc".Translate(),
+                    LetterDefOf.PositiveEvent,
+                    targets);
             }
             catch
             {
@@ -165,11 +162,6 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (Find.LetterStack == null)
-                {
-                    return;
-                }
-
                 LookTargets targets = corpse != null && map != null
                     ? new LookTargets(new TargetInfo(corpse.PositionHeld, map))
                     : null;

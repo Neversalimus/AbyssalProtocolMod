@@ -16,11 +16,6 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (Find.LetterStack == null)
-                {
-                    return;
-                }
-
                 string choirLabel = GetRecipeLabel(ChoirSigilRecipeDefName, "choir engine sigil");
                 string reactorLabel = GetRecipeLabel(ReactorSigilRecipeDefName, "reactor saint sigil");
                 int choirResidue = GetRecipeResidue(ChoirSigilRecipeDefName);
@@ -42,11 +37,6 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (Find.LetterStack == null)
-                {
-                    return;
-                }
-
                 string vesperLabel = GetThingLabel(VesperLanceThingDefName, "Vesper Lance");
                 string plasmaLabel = GetThingLabel(UltraPlasmaThingDefName, "Ultra Plasma Rifle");
                 string dominionResearchLabel = GetResearchLabel(DominionResearchDefName, "dominion gate bootstrapping");

@@ -179,13 +179,19 @@ namespace AbyssalProtocol
             }
 
             Matrix4x4 old = GUI.matrix;
-            Vector2 pivot = rect.center;
-            GUIUtility.RotateAroundPivot(angle, pivot);
             Color oldColor = GUI.color;
-            GUI.color = color;
-            GUI.DrawTexture(rect, texture, ScaleMode.StretchToFill, true);
-            GUI.color = oldColor;
-            GUI.matrix = old;
+            try
+            {
+                Vector2 pivot = rect.center;
+                GUIUtility.RotateAroundPivot(angle, pivot);
+                GUI.color = color;
+                GUI.DrawTexture(rect, texture, ScaleMode.StretchToFill, true);
+            }
+            finally
+            {
+                GUI.color = oldColor;
+                GUI.matrix = old;
+            }
         }
 
         private static float Pulse(float speed, float offset)

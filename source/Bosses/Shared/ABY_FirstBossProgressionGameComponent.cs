@@ -128,11 +128,6 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (Find.LetterStack == null)
-                {
-                    return;
-                }
-
                 ABY_LetterUtility.TryReceiveLetter(
                     "ABY_FirstBossKillLabel".Translate(),
                     "ABY_FirstBossKillDesc".Translate(),

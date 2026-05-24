@@ -288,13 +288,18 @@ namespace AbyssalProtocol
 
         public static void EndAbyssalScrollView(Rect outRect, ref Vector2 scrollPosition, Rect viewRect, bool drawVerticalScrollbar = true)
         {
-            Widgets.EndScrollView();
-            if (drawVerticalScrollbar)
+            try
             {
-                DrawAbyssalVerticalScrollbar(outRect, ref scrollPosition, viewRect);
+                Widgets.EndScrollView();
+                if (drawVerticalScrollbar)
+                {
+                    DrawAbyssalVerticalScrollbar(outRect, ref scrollPosition, viewRect);
+                }
             }
-
-            ABY_UISafetyUtility.ResetTextAndGUIState();
+            finally
+            {
+                ABY_UISafetyUtility.ResetTextAndGUIState();
+            }
         }
 
         public static void DrawAbyssalVerticalScrollbar(Rect outRect, ref Vector2 scrollPosition, Rect viewRect)

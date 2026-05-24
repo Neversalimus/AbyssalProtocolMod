@@ -71,6 +71,7 @@ namespace AbyssalProtocol
                 finally
                 {
                     Widgets.EndScrollView();
+                    ABY_UISafetyUtility.ResetTextAndGUIState();
                 }
             });
         }

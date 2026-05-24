@@ -129,11 +129,6 @@ namespace AbyssalProtocol
         {
             try
             {
-                if (Find.LetterStack == null)
-                {
-                    return;
-                }
-
                 ABY_LetterUtility.TryReceiveLetter(
                     "ABY_ReactorSaintKillLabel".Translate(),
                     "ABY_ReactorSaintKillDesc".Translate(),

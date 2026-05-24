@@ -6,6 +6,13 @@ namespace AbyssalProtocol
 {
     public static class ABY_UISafetyUtility
     {
+        public static void ResetTextAndGUIState()
+        {
+            GUI.color = Color.white;
+            Text.Font = GameFont.Small;
+            Text.Anchor = TextAnchor.UpperLeft;
+        }
+
         public static bool TryDo(string context, Action action)
         {
             if (action == null)
@@ -63,20 +70,6 @@ namespace AbyssalProtocol
             try
             {
                 Widgets.EnsureMousePositionStackEmpty();
-            }
-            catch
-            {
-            }
-        }
-
-
-        public static void ResetTextAndGUIState()
-        {
-            try
-            {
-                GUI.color = Color.white;
-                Text.Font = GameFont.Small;
-                Text.Anchor = TextAnchor.UpperLeft;
             }
             catch
             {

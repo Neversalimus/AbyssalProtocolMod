@@ -42,7 +42,7 @@ namespace AbyssalProtocol
             string implantLabel = GetProjectLabel(ImplantProjectDefName, "herald implant integration");
             string weaponLabel = GetProjectLabel(WeaponProjectDefName, "herald weapon integration");
 
-            if (Find.LetterStack != null && map != null && cell.IsValid)
+            if (map != null && cell.IsValid)
             {
                 ABY_LetterUtility.TryReceiveLetter(
                     "ABY_HeraldAnalysisCompleteLabel".Translate(),
