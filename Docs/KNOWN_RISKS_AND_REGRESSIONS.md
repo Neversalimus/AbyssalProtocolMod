@@ -895,3 +895,19 @@ In-game checks:
 - Kill the first Archon/Archon Beast and Reactor Saint with a normal UI stack and confirm milestone letters plus recap letters appear without duplicate unlocks.
 - Open the Summoning Console repeatedly during/after horde and boss encounters and confirm active encounter gating updates within a short delay without UI stutter.
 - Enter a Dominion Slice and watch ambient VFX across phases; confirm VFX continues while normal maps do not emit repeated missing-component lookup spam.
+
+## Modular turret and Dominion crisis lookup performance guards — 2026-05-24
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Reintroducing per-candidate full pawn scans in modular turret scoring | P2 | turret/TPS performance | Large horde fights with several modular turrets create acquisition spikes because every candidate target scans all pawns again for line/cluster bonuses | Keep `CompAbyssalModularTurret.FindTarget` using a single filtered candidate buffer and pass that buffer into bonus scoring helpers. Avoid `map.mapPawns.AllPawnsSpawned` inside per-candidate scoring. |
+| Unbounded LoS checks in line/cluster scoring | P2 | turret/TPS performance | Strong line/cluster modules on 100+ pawn maps produce frame hitches during target acquisition | Keep expensive bonus LoS checks bounded and geometry-filtered before calling `GenSight.LineOfSight`. |
+| Dominion crisis buildings repeatedly resolving MapComponent every tick | P2 | Dominion/TPS performance | Dominion Gate/Anchor tick or inspect paths repeatedly scan map components during active crisis phases | Resolve `MapComponent_DominionCrisis` through the cached resolver and retry missing components only at a low interval. |
+| Small combat impact allocations creep back into projectile VFX | P3 | projectile/GC | Frequent projectile impacts create unnecessary short-lived lists from radial-cell or target queries | Iterate `GenRadial.RadialCellsAround` directly for small impact VFX loops; avoid `.ToList()`/LINQ in combat impact paths unless the list is truly reused. |
+
+In-game checks:
+
+- Spawn a large horde and several modular turrets with line/cluster preference modules; confirm target acquisition remains responsive and turrets still prefer clustered/line-rich targets.
+- Start a Dominion crisis and leave Gate/Anchor buildings active for several in-game minutes; confirm pulses, inspect strings, and destruction notifications still work.
+- Fire Ashen Scatter Shell repeatedly and confirm impact VFX still appears while no radial-list allocation pattern is reintroduced.
+- Spawn Gate Wardens near anchors and confirm they still leash/defend anchors after the anchor-def cache change.

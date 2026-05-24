@@ -13,7 +13,10 @@ namespace AbyssalProtocol
         private static readonly Color AuxiliaryRangeColor = new Color(0.62f, 0.34f, 1f, 0.62f);
         private static readonly Color AuxiliaryMinRangeColor = new Color(0.82f, 0.46f, 1f, 0.48f);
         private static readonly Color MainMinRangeColor = new Color(1f, 0.55f, 0.28f, 0.50f);
+        private const int MaxBonusLineOfSightChecksPerCandidate = 24;
         private static readonly Dictionary<string, Material> AnimatedOverlayMaterialCache = new Dictionary<string, Material>();
+
+        private readonly List<Pawn> targetingCandidates = new List<Pawn>(96);
 
         private ABY_TurretModuleDef mainModule;
         private ABY_TurretModuleDef auxiliaryModule;
@@ -1286,6 +1289,7 @@ namespace AbyssalProtocol
             Thing bestTarget = null;
             float bestScore = -999999f;
 
+            targetingCandidates.Clear();
             IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
             for (int i = 0; i < pawns.Count; i++)
             {
@@ -1306,12 +1310,19 @@ namespace AbyssalProtocol
                     continue;
                 }
 
+                targetingCandidates.Add(pawn);
+            }
+
+            for (int i = 0; i < targetingCandidates.Count; i++)
+            {
+                Pawn pawn = targetingCandidates[i];
+                float distanceSquared = pawn.Position.DistanceToSquared(parent.Position);
                 float score = 10000f - distanceSquared;
                 if (module != null)
                 {
-                    score += ComputeModuleTargetingScoreBonus(module, pawn, distanceSquared, requireLineOfSight);
+                    score += ComputeModuleTargetingScoreBonus(module, pawn, distanceSquared, requireLineOfSight, targetingCandidates);
                 }
-                score += ComputePassiveTargetingScoreBonus(pawn, distanceSquared, requireLineOfSight);
+                score += ComputePassiveTargetingScoreBonus(pawn, distanceSquared, requireLineOfSight, targetingCandidates);
 
                 if (bestTarget == null || score > bestScore)
                 {
@@ -1385,7 +1396,7 @@ namespace AbyssalProtocol
             return true;
         }
 
-        private float ComputeModuleTargetingScoreBonus(ABY_TurretModuleDef module, Pawn candidate, float distanceSquared, bool requireLineOfSight)
+        private float ComputeModuleTargetingScoreBonus(ABY_TurretModuleDef module, Pawn candidate, float distanceSquared, bool requireLineOfSight, IReadOnlyList<Pawn> candidatePool)
         {
             if (module == null || candidate == null)
             {
@@ -1435,7 +1446,7 @@ namespace AbyssalProtocol
 
             if (module.preferLineTargets)
             {
-                int extraTargets = CountPotentialLineTargets(candidate, module, requireLineOfSight);
+                int extraTargets = CountPotentialLineTargets(candidate, module, requireLineOfSight, candidatePool);
                 if (extraTargets > 0)
                 {
                     score += extraTargets * Mathf.Max(0f, module.lineTargetBonusPerPawn);
@@ -1444,7 +1455,7 @@ namespace AbyssalProtocol
 
             if (module.preferClusteredTargets)
             {
-                int extraTargets = CountClusterTargets(candidate, module, requireLineOfSight);
+                int extraTargets = CountClusterTargets(candidate, module, requireLineOfSight, candidatePool);
                 if (extraTargets > 0)
                 {
                     score += extraTargets * Mathf.Max(0f, module.clusterTargetBonusPerPawn);
@@ -1454,7 +1465,7 @@ namespace AbyssalProtocol
             return score;
         }
 
-        private float ComputePassiveTargetingScoreBonus(Pawn candidate, float distanceSquared, bool requireLineOfSight)
+        private float ComputePassiveTargetingScoreBonus(Pawn candidate, float distanceSquared, bool requireLineOfSight, IReadOnlyList<Pawn> candidatePool)
         {
             if (candidate == null || passiveModules == null || passiveModules.Count == 0)
             {
@@ -1467,7 +1478,7 @@ namespace AbyssalProtocol
                 ABY_TurretModuleDef passive = passiveModules[i];
                 if (passive != null)
                 {
-                    score += ComputeModuleTargetingScoreBonus(passive, candidate, distanceSquared, requireLineOfSight);
+                    score += ComputeModuleTargetingScoreBonus(passive, candidate, distanceSquared, requireLineOfSight, candidatePool);
                 }
             }
 
@@ -1518,10 +1529,10 @@ namespace AbyssalProtocol
             return bonus;
         }
 
-        private int CountPotentialLineTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)
+        private int CountPotentialLineTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight, IReadOnlyList<Pawn> candidatePool)
         {
             Map map = parent.Map;
-            if (primaryTarget == null || module == null || map?.mapPawns == null)
+            if (primaryTarget == null || module == null || map == null || candidatePool == null)
             {
                 return 0;
             }
@@ -1537,10 +1548,10 @@ namespace AbyssalProtocol
             float maxDistance = Mathf.Max(0.5f, module.lineTargetScanLength);
             float halfWidth = Mathf.Max(0.05f, module.lineTargetHalfWidth);
             int count = 0;
-            IReadOnlyList<Pawn> pawns = map.mapPawns.AllPawnsSpawned;
-            for (int i = 0; i < pawns.Count; i++)
+            int lineOfSightChecks = 0;
+            for (int i = 0; i < candidatePool.Count; i++)
             {
-                Pawn pawn = pawns[i];
+                Pawn pawn = candidatePool[i];
                 if (pawn == primaryTarget || !ValidTarget(pawn))
                 {
                     continue;
@@ -1561,9 +1572,18 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (requireLineOfSight && !GenSight.LineOfSight(primaryTarget.Position, pawn.Position, map, true))
+                if (requireLineOfSight)
                 {
-                    continue;
+                    lineOfSightChecks++;
+                    if (lineOfSightChecks > MaxBonusLineOfSightChecksPerCandidate)
+                    {
+                        break;
+                    }
+
+                    if (!GenSight.LineOfSight(primaryTarget.Position, pawn.Position, map, true))
+                    {
+                        continue;
+                    }
                 }
 
                 count++;
@@ -1576,10 +1596,10 @@ namespace AbyssalProtocol
             return count;
         }
 
-        private int CountClusterTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight)
+        private int CountClusterTargets(Pawn primaryTarget, ABY_TurretModuleDef module, bool requireLineOfSight, IReadOnlyList<Pawn> candidatePool)
         {
             Map map = parent.Map;
-            if (primaryTarget == null || module == null || map == null)
+            if (primaryTarget == null || module == null || map == null || candidatePool == null)
             {
                 return 0;
             }
@@ -1588,10 +1608,10 @@ namespace AbyssalProtocol
             float radiusSquared = radius * radius;
             int maxBonusCount = Mathf.Max(1, module.clusterTargetMaxBonusCount);
             int count = 0;
-            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.CombatTargetPawnsFor(map);
-            for (int i = 0; i < pawns.Count; i++)
+            int lineOfSightChecks = 0;
+            for (int i = 0; i < candidatePool.Count; i++)
             {
-                Pawn pawn = pawns[i];
+                Pawn pawn = candidatePool[i];
                 if (pawn == null || pawn == primaryTarget || !ValidTarget(pawn))
                 {
                     continue;
@@ -1602,9 +1622,18 @@ namespace AbyssalProtocol
                     continue;
                 }
 
-                if (requireLineOfSight && !GenSight.LineOfSight(parent.Position, pawn.Position, map, true))
+                if (requireLineOfSight)
                 {
-                    continue;
+                    lineOfSightChecks++;
+                    if (lineOfSightChecks > MaxBonusLineOfSightChecksPerCandidate)
+                    {
+                        break;
+                    }
+
+                    if (!GenSight.LineOfSight(parent.Position, pawn.Position, map, true))
+                    {
+                        continue;
+                    }
                 }
 
                 count++;

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -84,10 +83,8 @@ namespace AbyssalProtocol
             FleckMaker.ThrowMicroSparks(impactPosition, map);
             FleckMaker.ThrowMicroSparks(impactPosition, map);
 
-            List<IntVec3> radialCells = GenRadial.RadialCellsAround(impactCell, 1.9f, true).ToList();
-            for (int i = 0; i < radialCells.Count; i++)
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(impactCell, 1.9f, true))
             {
-                IntVec3 cell = radialCells[i];
                 if (!cell.InBounds(map) || cell == impactCell)
                 {
                     continue;

@@ -11,6 +11,8 @@ namespace AbyssalProtocol
         private static readonly Dictionary<string, Graphic> GlowGraphics = new Dictionary<string, Graphic>();
 
         private int nextPulseTick = -1;
+        private MapComponent_DominionCrisis cachedCrisis;
+        private int nextCrisisResolveTick;
 
         private DefModExtension_DominionAnchor AnchorExtension => def?.GetModExtension<DefModExtension_DominionAnchor>();
 
@@ -27,7 +29,7 @@ namespace AbyssalProtocol
                 nextPulseTick = Find.TickManager.TicksGame + Rand.RangeInclusive(45, 150);
             }
 
-            map?.GetComponent<MapComponent_DominionCrisis>()?.RegisterAnchor(this);
+            ResolveCrisis(map)?.RegisterAnchor(this);
         }
 
         public override AcceptanceReport ClaimableBy(Faction by)
@@ -55,7 +57,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
+            MapComponent_DominionCrisis crisis = ResolveCrisis();
             if (crisis == null || !crisis.IsAnchorPhaseActive || !crisis.IsRegisteredAnchor(this))
             {
                 return;
@@ -79,7 +81,7 @@ namespace AbyssalProtocol
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            Map?.GetComponent<MapComponent_DominionCrisis>()?.NotifyAnchorDestroyed(this);
+            ResolveCrisis()?.NotifyAnchorDestroyed(this);
             base.Destroy(mode);
         }
 
@@ -103,7 +105,7 @@ namespace AbyssalProtocol
             string baseText = base.GetInspectString();
             string roleLabel = GetRoleLabel();
             string effectText = GetEffectSummary();
-            string crisisText = Map?.GetComponent<MapComponent_DominionCrisis>()?.GetAnchorStatusShort() ?? string.Empty;
+            string crisisText = ResolveCrisis()?.GetAnchorStatusShort() ?? string.Empty;
 
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             if (!baseText.NullOrEmpty())
@@ -133,7 +135,7 @@ namespace AbyssalProtocol
 
         public string GetEffectSummary()
         {
-            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            MapComponent_DominionCrisis crisis = ResolveCrisis();
             if (crisis != null && crisis.IsRegisteredAnchor(this))
             {
                 return "ABY_DominionAnchor_Effect_PreludeStabilizer".Translate();
@@ -150,6 +152,16 @@ namespace AbyssalProtocol
                 default:
                     return "ABY_DominionAnchor_Effect_Suppression".Translate();
             }
+        }
+
+        private MapComponent_DominionCrisis ResolveCrisis()
+        {
+            return ResolveCrisis(Map);
+        }
+
+        private MapComponent_DominionCrisis ResolveCrisis(Map map)
+        {
+            return ABY_DominionCrisisResolveUtility.Resolve(map, ref cachedCrisis, ref nextCrisisResolveTick);
         }
 
         private void ExecuteStabilizationPulse(MapComponent_DominionCrisis crisis)

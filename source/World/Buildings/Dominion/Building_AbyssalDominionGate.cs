@@ -57,6 +57,8 @@ namespace AbyssalProtocol
         private int nextIgnitionTick = -1;
         private int nextCallTick = -1;
         private int pulseSeed;
+        private MapComponent_DominionCrisis cachedCrisis;
+        private int nextCrisisResolveTick;
 
         public int TicksUntilNextPulse
         {
@@ -96,7 +98,7 @@ namespace AbyssalProtocol
                 nextCallTick = now + Rand.RangeInclusive(480, 720);
             }
 
-            map?.GetComponent<MapComponent_DominionCrisis>()?.RegisterGate(this);
+            ResolveCrisis(map)?.RegisterGate(this);
         }
 
         public override AcceptanceReport ClaimableBy(Faction by)
@@ -127,7 +129,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MapComponent_DominionCrisis crisis = Map.GetComponent<MapComponent_DominionCrisis>();
+            MapComponent_DominionCrisis crisis = ResolveCrisis();
             if (crisis == null || !(crisis.IsGatePhaseActive || crisis.IsStandbyPhaseActive) || !crisis.IsRegisteredGate(this))
             {
                 return;
@@ -173,7 +175,7 @@ namespace AbyssalProtocol
                 yield return gizmo;
             }
 
-            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            MapComponent_DominionCrisis crisis = ResolveCrisis();
             if (crisis == null)
             {
                 yield break;
@@ -238,7 +240,7 @@ namespace AbyssalProtocol
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            Map?.GetComponent<MapComponent_DominionCrisis>()?.NotifyGateDestroyed(this);
+            ResolveCrisis()?.NotifyGateDestroyed(this);
             base.Destroy(mode);
         }
 
@@ -263,7 +265,7 @@ namespace AbyssalProtocol
             }
 
             lines.Add("ABY_DominionGate_Inspect".Translate(GetStatusValue(), GetIntegrityValue(), GetNextPulseEtaValue()));
-            MapComponent_DominionCrisis crisis = Map?.GetComponent<MapComponent_DominionCrisis>();
+            MapComponent_DominionCrisis crisis = ResolveCrisis();
             if (crisis != null)
             {
                 lines.Add("ABY_DominionPocketGate_Inspect".Translate(crisis.GetPocketFlowStatusValue()));
@@ -332,8 +334,18 @@ namespace AbyssalProtocol
                     "ABY_DominionGate_Ability_Suppression".Translate(),
                     "ABY_DominionGate_Ability_Ignition".Translate(),
                     "ABY_DominionGate_Ability_Call".Translate()),
-                "ABY_DominionGate_ConsoleEntry".Translate(Map?.GetComponent<MapComponent_DominionCrisis>()?.GetPocketFlowStatusValue() ?? "ABY_DominionPocketFlowStatus_Locked".Translate())
+                "ABY_DominionGate_ConsoleEntry".Translate(ResolveCrisis()?.GetPocketFlowStatusValue() ?? "ABY_DominionPocketFlowStatus_Locked".Translate())
             };
+        }
+
+        private MapComponent_DominionCrisis ResolveCrisis()
+        {
+            return ResolveCrisis(Map);
+        }
+
+        private MapComponent_DominionCrisis ResolveCrisis(Map map)
+        {
+            return ABY_DominionCrisisResolveUtility.Resolve(map, ref cachedCrisis, ref nextCrisisResolveTick);
         }
 
         private int GetSuppressionInterval()

@@ -8,6 +8,9 @@ namespace AbyssalProtocol
 {
     public class CompABY_GateWardenEscort : ThingComp
     {
+        private readonly List<ThingDef> cachedAnchorDefs = new List<ThingDef>();
+        private int cachedAnchorDefNamesCount = -1;
+
         private Thing currentAnchor;
         private Pawn currentInterceptTarget;
         private bool hasAnchorThreat;
@@ -77,15 +80,10 @@ namespace AbyssalProtocol
             Thing bestAnchor = null;
             float bestDistance = float.MaxValue;
 
-            for (int i = 0; i < Props.anchorDefNames.Count; i++)
+            RebuildAnchorDefCacheIfNeeded();
+            for (int i = 0; i < cachedAnchorDefs.Count; i++)
             {
-                string defName = Props.anchorDefNames[i];
-                if (defName.NullOrEmpty())
-                {
-                    continue;
-                }
-
-                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+                ThingDef def = cachedAnchorDefs[i];
                 if (def == null)
                 {
                     continue;
@@ -115,6 +113,31 @@ namespace AbyssalProtocol
             }
 
             return bestAnchor;
+        }
+
+        private void RebuildAnchorDefCacheIfNeeded()
+        {
+            int count = Props.anchorDefNames != null ? Props.anchorDefNames.Count : 0;
+            if (cachedAnchorDefNamesCount == count)
+            {
+                return;
+            }
+
+            cachedAnchorDefNamesCount = count;
+            cachedAnchorDefs.Clear();
+            if (Props.anchorDefNames == null)
+            {
+                return;
+            }
+
+            for (int i = 0; i < Props.anchorDefNames.Count; i++)
+            {
+                ThingDef def = ABY_DefCache.ThingDefNamed(Props.anchorDefNames[i]);
+                if (def != null && !cachedAnchorDefs.Contains(def))
+                {
+                    cachedAnchorDefs.Add(def);
+                }
+            }
         }
 
         private Pawn FindThreatNearAnchor(Pawn pawn, Thing anchor)

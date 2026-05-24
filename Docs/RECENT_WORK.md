@@ -1307,3 +1307,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Added a short-lived active-encounter query cache and switched repeated portal def lookups to `ABY_DefCache` for Summoning Console/readiness paths.
 - Added a shared Dominion Slice encounter resolver so ambient VFX MapComponents avoid repeated per-tick `Map.GetComponent<MapComponent_DominionSliceEncounter>()` scans on maps without an active slice encounter.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+
+## 2026-05-24 — Optimize modular turret scoring and Dominion crisis lookups
+
+- Reduced modular turret targeting score pressure by building a single filtered candidate buffer per scan and reusing it for line/cluster priority scoring instead of rescanning all spawned pawns for every candidate.
+- Added bounded expensive line-of-sight checks for line/cluster targeting bonuses so large late-game waves cannot create unbounded targeting spikes during acquisition.
+- Added a cached Dominion crisis resolver and routed Dominion Gate/Anchor tick, inspect, console, and destruction paths through it instead of repeated direct `Map.GetComponent<MapComponent_DominionCrisis>()` calls.
+- Removed the `Projectile_AshenScatterShell` impact-time `.ToList()` allocation by iterating radial cells directly.
+- Cached Gate Warden escort anchor defs through `ABY_DefCache` so repeated escort scans no longer call `DefDatabase.GetNamedSilentFail` for the same anchor names.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
