@@ -1330,3 +1330,10 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Kept the safe-letter wrapper pattern, but removed the P1 stack-overflow risk introduced during UI/letter hardening.
 - Hardened turret module ITab scroll cleanup by resetting text/GUI state inside scroll `finally` paths.
 
+## 2026-05-24 — Centralize Abyssal scroll UI state cleanup
+
+- Added a shared UI state reset helper for `GUI.color`, `Text.Font`, and `Text.Anchor`.
+- Routed `AbyssalStyledWidgets.EndAbyssalScrollView` through the reset helper so every custom Abyssal scroll cleanup restores baseline UI state after closing the scroll view and drawing the custom scrollbar.
+- This complements the prior `try/finally` scroll-view hardening by preventing text/color state leakage after exceptions in Forge, Summoning, Protocol Nexus, Bestiary, boss calibration, and turret module UI.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+

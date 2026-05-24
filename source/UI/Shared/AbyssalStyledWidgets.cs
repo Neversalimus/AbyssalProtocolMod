@@ -293,6 +293,8 @@ namespace AbyssalProtocol
             {
                 DrawAbyssalVerticalScrollbar(outRect, ref scrollPosition, viewRect);
             }
+
+            ABY_UISafetyUtility.ResetTextAndGUIState();
         }
 
         public static void DrawAbyssalVerticalScrollbar(Rect outRect, ref Vector2 scrollPosition, Rect viewRect)

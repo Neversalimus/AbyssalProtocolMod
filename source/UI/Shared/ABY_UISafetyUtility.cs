@@ -69,6 +69,20 @@ namespace AbyssalProtocol
             }
         }
 
+
+        public static void ResetTextAndGUIState()
+        {
+            try
+            {
+                GUI.color = Color.white;
+                Text.Font = GameFont.Small;
+                Text.Anchor = TextAnchor.UpperLeft;
+            }
+            catch
+            {
+            }
+        }
+
         public static string SafeString(string value, string fallback)
         {
             return value.NullOrEmpty() ? (fallback ?? string.Empty) : value;
