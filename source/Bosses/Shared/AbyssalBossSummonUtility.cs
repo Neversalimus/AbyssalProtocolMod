@@ -22,6 +22,28 @@ namespace AbyssalProtocol
         private const string ReactorSaintRitualId = "reactor_saint";
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
+        private const int ActiveEncounterCacheTicks = 18;
+
+        private struct ActiveEncounterCacheEntry
+        {
+            public int checkedTick;
+            public bool result;
+        }
+
+        private static readonly Dictionary<int, ActiveEncounterCacheEntry> activeEncounterCacheByMapId = new Dictionary<int, ActiveEncounterCacheEntry>();
+
+        public static void ClearRuntimeState()
+        {
+            activeEncounterCacheByMapId.Clear();
+        }
+
+        public static void NotifyActiveEncounterStateMaybeChanged(Map map)
+        {
+            if (map != null)
+            {
+                activeEncounterCacheByMapId.Remove(map.uniqueID);
+            }
+        }
 
         public static Faction ResolveHostileFaction()
         {
@@ -1547,6 +1569,47 @@ namespace AbyssalProtocol
                 return false;
             }
 
+            if (Find.TickManager == null)
+            {
+                return HasActiveAbyssalEncounterUncached(map);
+            }
+
+            int now = Find.TickManager.TicksGame;
+            int mapId = map.uniqueID;
+            if (activeEncounterCacheByMapId.TryGetValue(mapId, out ActiveEncounterCacheEntry cached)
+                && now - cached.checkedTick >= 0
+                && now - cached.checkedTick <= ActiveEncounterCacheTicks)
+            {
+                return cached.result;
+            }
+
+            bool result = HasActiveAbyssalEncounterUncached(map);
+            activeEncounterCacheByMapId[mapId] = new ActiveEncounterCacheEntry
+            {
+                checkedTick = now,
+                result = result
+            };
+            return result;
+        }
+
+        public static bool TryCleanupStaleEncounterBeforeSummon(Map map, string reason)
+        {
+            if (map == null)
+            {
+                return false;
+            }
+
+            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
+            bool cleaned = portalWave != null && portalWave.TryForceCompleteStaleHorde(true, reason ?? "pre-summon active encounter check");
+            if (cleaned)
+            {
+                NotifyActiveEncounterStateMaybeChanged(map);
+            }
+            return cleaned;
+        }
+
+        private static bool HasActiveAbyssalEncounterUncached(Map map)
+        {
             MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
             if (dominionCrisis != null && dominionCrisis.IsActive)
             {
@@ -1587,17 +1650,6 @@ namespace AbyssalProtocol
             return false;
         }
 
-        public static bool TryCleanupStaleEncounterBeforeSummon(Map map, string reason)
-        {
-            if (map == null)
-            {
-                return false;
-            }
-
-            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
-            return portalWave != null && portalWave.TryForceCompleteStaleHorde(true, reason ?? "pre-summon active encounter check");
-        }
-
         private static bool IsActiveEncounterPawn(string defName)
         {
             return AbyssalArchonVariantUtility.IsArchonBeastFamilyDefName(defName)
@@ -1613,7 +1665,7 @@ namespace AbyssalProtocol
 
         private static bool HasActivePortalOfDef(Map map, string defName)
         {
-            ThingDef portalDef = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            ThingDef portalDef = ABY_DefCache.ThingDefNamed(defName);
             if (portalDef == null)
             {
                 return false;

@@ -872,3 +872,19 @@ In-game checks:
 
 - Spawn several abyssal dash-capable enemies on a 50+ pawn map and confirm dash freeze behavior still works without pathing stutter or repeated component lookup profiling noise.
 - Kill the first Rift Butcher and confirm the progression unlock/letter still fires normally; simulate or inspect letter failure paths to ensure the recorded state is not rolled back.
+
+## Runtime cache and milestone hardening guards — 2026-05-24
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Static runtime state survives save changes | P1 | runtime/pathing | A pawn can be treated as still dashing after returning to menu or loading another save in the same session | Any static gameplay-state cache, especially one consulted from Harmony tick guards, must have an explicit clear path from game initialization/load cleanup. |
+| Boss milestone letters escape `GameComponentTick` | P1 | progression/reliability | First boss or Reactor Saint kill state is set, but a third-party `LetterStack`/localization failure throws a red error during the corpse scan | Mutate progression state first, then send letters/recaps through protected notification wrappers. Notifications must never be required for milestone persistence. |
+| Repeated Dominion Slice VFX component lookup on normal maps | P2 | Dominion/VFX performance | Ambient slice VFX MapComponents repeatedly scan for `MapComponent_DominionSliceEncounter` on maps where no slice encounter is active | Resolve the encounter through the shared cached resolver and retry missing components only at a low interval. |
+| Active-encounter UI checks become heavy again | P2 | summoning/UI performance | Summoning Console readiness checks repeatedly scan pawns, portals, and defs every UI frame | Keep `AbyssalBossSummonUtility.HasActiveAbyssalEncounter` pure and short-cached; use explicit invalidation only for state-changing routes and cached `ABY_DefCache` lookups for portal defs. |
+
+In-game checks:
+
+- Load a save, trigger an abyssal dash, return to menu, load another save in the same game session, and confirm unrelated pawns are not frozen by stale dash ids.
+- Kill the first Archon/Archon Beast and Reactor Saint with a normal UI stack and confirm milestone letters plus recap letters appear without duplicate unlocks.
+- Open the Summoning Console repeatedly during/after horde and boss encounters and confirm active encounter gating updates within a short delay without UI stutter.
+- Enter a Dominion Slice and watch ambient VFX across phases; confirm VFX continues while normal maps do not emit repeated missing-component lookup spam.

@@ -1276,3 +1276,12 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Kept the window as a focused slot manager: capacitor lattice, stabilizer ring, and short effect summary only.
 - Replaced raw capacitor/stat tooltip output with player-facing explanatory text.
 
+
+## 2026-05-24 — Harden progression milestones and runtime caches
+
+- Added explicit runtime-state clearing for the static abyssal dash active-pawn id cache during game initialization to prevent stale dash state after returning to menu or loading another save in the same RimWorld session.
+- Hardened First Boss and Reactor Saint kill progression tracking to mirror the Rift Butcher fix: save-compatible processed pawn lists are preserved, runtime `HashSet` lookups are rebuilt after load, and milestone letters are isolated from `GameComponentTick` failures.
+- Wrapped progression recap letters so broken `LetterStack`/localization behavior cannot invalidate already-recorded boss milestone state.
+- Added a short-lived active-encounter query cache and switched repeated portal def lookups to `ABY_DefCache` for Summoning Console/readiness paths.
+- Added a shared Dominion Slice encounter resolver so ambient VFX MapComponents avoid repeated per-tick `Map.GetComponent<MapComponent_DominionSliceEncounter>()` scans on maps without an active slice encounter.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.

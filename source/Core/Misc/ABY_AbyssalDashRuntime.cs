@@ -103,6 +103,11 @@ namespace AbyssalProtocol
             }
         }
 
+        internal static void ClearRuntimeState()
+        {
+            activeDashPawnIds.Clear();
+        }
+
         internal static bool ValidateLandingCell(Pawn pawn, Map map, IntVec3 cell)
         {
             return pawn != null

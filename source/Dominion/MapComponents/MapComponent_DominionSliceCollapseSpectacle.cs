@@ -15,6 +15,9 @@ namespace AbyssalProtocol
         private int nextRewardGuideTick;
         private bool collapseStartBurstDone;
 
+        private MapComponent_DominionSliceEncounter cachedEncounter;
+        private int nextEncounterResolveTick;
+
         public MapComponent_DominionSliceCollapseSpectacle(Map map) : base(map)
         {
         }
@@ -41,7 +44,7 @@ namespace AbyssalProtocol
                 return;
             }
 
-            MapComponent_DominionSliceEncounter encounter = map.GetComponent<MapComponent_DominionSliceEncounter>();
+            MapComponent_DominionSliceEncounter encounter = ABY_DominionSliceEncounterResolveUtility.Resolve(map, ref cachedEncounter, ref nextEncounterResolveTick);
             if (encounter == null)
             {
                 return;

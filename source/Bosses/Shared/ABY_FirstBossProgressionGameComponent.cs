@@ -11,6 +11,7 @@ namespace AbyssalProtocol
         private bool firstBeastKillRecorded;
         private int nextScanTick;
         private List<int> processedArchonPawnIds = new List<int>();
+        private readonly HashSet<int> processedArchonPawnIdLookup = new HashSet<int>();
 
         public bool FirstBossKillRecorded => firstBeastKillRecorded;
 
@@ -25,9 +26,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextScanTick, "nextScanTick", 0);
             Scribe_Collections.Look(ref processedArchonPawnIds, "processedArchonPawnIds", LookMode.Value);
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && processedArchonPawnIds == null)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                processedArchonPawnIds = new List<int>();
+                RebuildProcessedArchonLookup();
             }
         }
 
@@ -81,23 +82,66 @@ namespace AbyssalProtocol
                     }
 
                     int pawnId = deadPawn.thingIDNumber;
-                    if (processedArchonPawnIds.Contains(pawnId))
+                    if (processedArchonPawnIdLookup.Contains(pawnId))
                     {
                         continue;
                     }
 
-                    processedArchonPawnIds.Add(pawnId);
+                    AddProcessedArchonPawnId(pawnId);
                     firstBeastKillRecorded = true;
 
-                    Find.LetterStack.ReceiveLetter(
-                        "ABY_FirstBossKillLabel".Translate(),
-                        "ABY_FirstBossKillDesc".Translate(),
-                        LetterDefOf.PositiveEvent,
-                        new LookTargets(new TargetInfo(corpse.PositionHeld, map)));
-
+                    TrySendFirstBossKillLetter(map, corpse.PositionHeld);
                     AbyssalProgressRecapUtility.SendFirstBossRecap(map, corpse.PositionHeld);
                     return;
                 }
+            }
+        }
+
+        private void AddProcessedArchonPawnId(int pawnId)
+        {
+            if (processedArchonPawnIds == null)
+            {
+                processedArchonPawnIds = new List<int>();
+            }
+
+            if (processedArchonPawnIdLookup.Add(pawnId))
+            {
+                processedArchonPawnIds.Add(pawnId);
+            }
+        }
+
+        private void RebuildProcessedArchonLookup()
+        {
+            if (processedArchonPawnIds == null)
+            {
+                processedArchonPawnIds = new List<int>();
+            }
+
+            processedArchonPawnIdLookup.Clear();
+            for (int i = 0; i < processedArchonPawnIds.Count; i++)
+            {
+                processedArchonPawnIdLookup.Add(processedArchonPawnIds[i]);
+            }
+        }
+
+        private static void TrySendFirstBossKillLetter(Map map, IntVec3 cell)
+        {
+            try
+            {
+                if (Find.LetterStack == null)
+                {
+                    return;
+                }
+
+                Find.LetterStack.ReceiveLetter(
+                    "ABY_FirstBossKillLabel".Translate(),
+                    "ABY_FirstBossKillDesc".Translate(),
+                    LetterDefOf.PositiveEvent,
+                    map != null && cell.IsValid ? new LookTargets(new TargetInfo(cell, map)) : null);
+            }
+            catch
+            {
+                // The progression flag is more important than a notification if a heavily-modded LetterStack fails.
             }
         }
     }

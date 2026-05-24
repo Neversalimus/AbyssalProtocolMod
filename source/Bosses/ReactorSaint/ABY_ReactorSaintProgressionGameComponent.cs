@@ -12,6 +12,7 @@ namespace AbyssalProtocol
         private bool firstReactorSaintKillRecorded;
         private int nextScanTick;
         private List<int> processedReactorSaintPawnIds = new List<int>();
+        private readonly HashSet<int> processedReactorSaintPawnIdLookup = new HashSet<int>();
 
         public bool FirstReactorSaintKillRecorded => firstReactorSaintKillRecorded;
 
@@ -26,9 +27,9 @@ namespace AbyssalProtocol
             Scribe_Values.Look(ref nextScanTick, "nextScanTick", 0);
             Scribe_Collections.Look(ref processedReactorSaintPawnIds, "processedReactorSaintPawnIds", LookMode.Value);
 
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && processedReactorSaintPawnIds == null)
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                processedReactorSaintPawnIds = new List<int>();
+                RebuildProcessedReactorSaintLookup();
             }
         }
 
@@ -82,23 +83,66 @@ namespace AbyssalProtocol
                     }
 
                     int pawnId = deadPawn.thingIDNumber;
-                    if (processedReactorSaintPawnIds.Contains(pawnId))
+                    if (processedReactorSaintPawnIdLookup.Contains(pawnId))
                     {
                         continue;
                     }
 
-                    processedReactorSaintPawnIds.Add(pawnId);
+                    AddProcessedReactorSaintPawnId(pawnId);
                     firstReactorSaintKillRecorded = true;
 
-                    Find.LetterStack.ReceiveLetter(
-                        "ABY_ReactorSaintKillLabel".Translate(),
-                        "ABY_ReactorSaintKillDesc".Translate(),
-                        LetterDefOf.PositiveEvent,
-                        new LookTargets(new TargetInfo(corpse.PositionHeld, map)));
-
+                    TrySendReactorSaintKillLetter(map, corpse.PositionHeld);
                     AbyssalProgressRecapUtility.SendReactorRecap(map, corpse.PositionHeld);
                     return;
                 }
+            }
+        }
+
+        private void AddProcessedReactorSaintPawnId(int pawnId)
+        {
+            if (processedReactorSaintPawnIds == null)
+            {
+                processedReactorSaintPawnIds = new List<int>();
+            }
+
+            if (processedReactorSaintPawnIdLookup.Add(pawnId))
+            {
+                processedReactorSaintPawnIds.Add(pawnId);
+            }
+        }
+
+        private void RebuildProcessedReactorSaintLookup()
+        {
+            if (processedReactorSaintPawnIds == null)
+            {
+                processedReactorSaintPawnIds = new List<int>();
+            }
+
+            processedReactorSaintPawnIdLookup.Clear();
+            for (int i = 0; i < processedReactorSaintPawnIds.Count; i++)
+            {
+                processedReactorSaintPawnIdLookup.Add(processedReactorSaintPawnIds[i]);
+            }
+        }
+
+        private static void TrySendReactorSaintKillLetter(Map map, IntVec3 cell)
+        {
+            try
+            {
+                if (Find.LetterStack == null)
+                {
+                    return;
+                }
+
+                Find.LetterStack.ReceiveLetter(
+                    "ABY_ReactorSaintKillLabel".Translate(),
+                    "ABY_ReactorSaintKillDesc".Translate(),
+                    LetterDefOf.PositiveEvent,
+                    map != null && cell.IsValid ? new LookTargets(new TargetInfo(cell, map)) : null);
+            }
+            catch
+            {
+                // The progression flag is more important than a notification if a heavily-modded LetterStack fails.
             }
         }
     }
