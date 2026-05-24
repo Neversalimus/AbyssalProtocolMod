@@ -919,3 +919,8 @@ In-game checks:
 | Custom Abyssal UI scroll view begins but does not end after an exception | P2 | custom UI / OnGUI | RimWorld GUI stack imbalance, mouse-position stack errors, cascading UI failures after a draw exception | Always wrap `AbyssalStyledWidgets.BeginAbyssalScrollView` / `EndAbyssalScrollView` pairs in `try/finally`, especially in Forge, Summoning, Protocol Nexus, Bestiary, boss calibration, and turret ITabs. |
 | Runtime phase/progression code calls `Find.LetterStack.ReceiveLetter` directly | P2 | progression / Dominion / summoning / guidance | A broken letter/localization/target stack throws out of a state transition after the gameplay state has already changed | Use `ABY_LetterUtility.TryReceiveLetter` for runtime letters so notification failures are logged and suppressed instead of escaping progression or encounter code. |
 | Draw-path VFX allocates `MaterialPropertyBlock` per frame | P3 | apparel / VFX rendering | Small but persistent GC pressure when multiple pawns display hover/overlay effects | Reuse a static/shared property block when the draw call consumes it immediately. Avoid per-frame allocations in `DrawAt`/render helpers. |
+## Fixed — Safe wrapper self-recursion risk
+
+- `ABY_LetterUtility.TryReceiveLetter` must never call itself internally; safe wrappers around `LetterStack`, spawn, destroy, transfer, draw, or tick paths should call the underlying unsafe API inside `try/catch`.
+- This was fixed after the UI/letter hardening pass because the first wrapper implementation recursively called itself and could stack-overflow on any letter delivery.
+

@@ -1324,3 +1324,9 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Reduced hover armor draw-path allocation by reusing a `MaterialPropertyBlock` for alpha draws instead of allocating a new block for every VFX draw call.
 - Updated Aortic Chain Harrower combat scanning to use the cached Dominion Slice encounter resolver, `ABY_DefCache`, and runtime pawn cache instead of repeated `Map.GetComponent`, `DefDatabase`, and direct spawned-pawn scans.
 - Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. Runtime smoke testing in RimWorld is still required.
+## 2026-05-24 — Letter utility recursion hotfix
+
+- Fixed `ABY_LetterUtility.TryReceiveLetter` so it calls `Find.LetterStack.ReceiveLetter` instead of recursively calling itself.
+- Kept the safe-letter wrapper pattern, but removed the P1 stack-overflow risk introduced during UI/letter hardening.
+- Hardened turret module ITab scroll cleanup by resetting text/GUI state inside scroll `finally` paths.
+

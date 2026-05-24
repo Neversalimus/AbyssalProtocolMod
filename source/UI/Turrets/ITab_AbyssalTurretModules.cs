@@ -330,7 +330,8 @@ namespace AbyssalProtocol
                 }
                 finally
                 {
-                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                    AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                    ResetTextState();
                 }
                 ResetTextState();
                 return;
@@ -355,7 +356,8 @@ namespace AbyssalProtocol
                 }
                 finally
                 {
-                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                    AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                    ResetTextState();
                 }
                 ResetTextState();
                 return;
@@ -388,7 +390,8 @@ namespace AbyssalProtocol
             }
             finally
             {
-            AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref detailScrollPosition, viewRect);
+                ResetTextState();
             }
 
             ResetTextState();

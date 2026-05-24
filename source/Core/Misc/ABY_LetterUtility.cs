@@ -15,7 +15,7 @@ namespace AbyssalProtocol
                     return false;
                 }
 
-                ABY_LetterUtility.TryReceiveLetter(label, text, letterDef, lookTargets);
+                Find.LetterStack.ReceiveLetter(label, text, letterDef, lookTargets);
                 return true;
             }
             catch (Exception ex)
