@@ -307,9 +307,9 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (AbyssalBossSummonUtility.HasActiveAbyssalEncounter(circle.Map))
+            if (AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(circle.Map, out string encounterBlocker))
             {
-                failReason = "ABY_BossSummonFail_EncounterActive".Translate();
+                failReason = encounterBlocker ?? "ABY_BossSummonFail_EncounterActive".Translate();
                 return false;
             }
 

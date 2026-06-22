@@ -173,4 +173,11 @@
   <ABY_CircleVentFail_Cooldown>Сброс загрязнения ещё перезаряжается: {0}.</ABY_CircleVentFail_Cooldown>
   <ABY_ArchonSummonSuccessLabel>Манифестация Архонта формируется</ABY_ArchonSummonSuccessLabel>
   <ABY_ArchonSummonSuccessDesc>Сигила Архонта открыла не простую дверь. Рядом с колонией сгущается хищная манифестация, а её порталы гончих разорвутся раньше, чем Зверь-Архонт полностью перейдёт в мир.</ABY_ArchonSummonSuccessDesc>
+  <ABY_BossSummonFail_CircleDiagnostics>Проверка кругов призыва: {0}</ABY_BossSummonFail_CircleDiagnostics>
+  <ABY_BossSummonFail_CircleDiagnosticEntry>круг в точке {0}, {1}: {2}</ABY_BossSummonFail_CircleDiagnosticEntry>
+  <ABY_BossSummonFail_CircleDiagnosticMore>ещё кругов: +{0}</ABY_BossSummonFail_CircleDiagnosticMore>
+  <ABY_EncounterBlocker_Dominion>На этой карте всё ещё активен кризис Доминиона.</ABY_EncounterBlocker_Dominion>
+  <ABY_EncounterBlocker_Horde>На этой карте всё ещё активно ординское вторжение.</ABY_EncounterBlocker_Horde>
+  <ABY_EncounterBlocker_Pawn>Всё ещё активна враждебная сущность Бездны: {0}.</ABY_EncounterBlocker_Pawn>
+  <ABY_EncounterBlocker_Portal>Остался активный портал Бездны: {0}.</ABY_EncounterBlocker_Portal>
 </LanguageData>

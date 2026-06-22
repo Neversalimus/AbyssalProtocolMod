@@ -198,4 +198,11 @@ then whatever stood beyond it has not even begun to speak.</ABY_ReactorSaintKill
   <ABY_CircleVentFail_Cooldown>Contamination venting is still on cooldown: {0}.</ABY_CircleVentFail_Cooldown>
   <ABY_ArchonSummonSuccessLabel>Archon manifestation forming</ABY_ArchonSummonSuccessLabel>
   <ABY_ArchonSummonSuccessDesc>The Archon sigil did not open a simple doorway. A predatory manifestation is condensing near the colony, and its companion hound portals will tear open before the Archon Beast fully crosses.</ABY_ArchonSummonSuccessDesc>
+  <ABY_BossSummonFail_CircleDiagnostics>Summoning circle validation: {0}</ABY_BossSummonFail_CircleDiagnostics>
+  <ABY_BossSummonFail_CircleDiagnosticEntry>circle at {0}, {1}: {2}</ABY_BossSummonFail_CircleDiagnosticEntry>
+  <ABY_BossSummonFail_CircleDiagnosticMore>+{0} more circles</ABY_BossSummonFail_CircleDiagnosticMore>
+  <ABY_EncounterBlocker_Dominion>A Dominion crisis is still active on this map.</ABY_EncounterBlocker_Dominion>
+  <ABY_EncounterBlocker_Horde>A horde breach is still active on this map.</ABY_EncounterBlocker_Horde>
+  <ABY_EncounterBlocker_Pawn>Hostile abyssal entity still active: {0}.</ABY_EncounterBlocker_Pawn>
+  <ABY_EncounterBlocker_Portal>Active abyssal portal remains: {0}.</ABY_EncounterBlocker_Portal>
 </LanguageData>

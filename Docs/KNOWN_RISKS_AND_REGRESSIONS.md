@@ -947,3 +947,17 @@ In-game checks:
 - Spawn Gate Wardens near Dominion anchors and confirm they still intercept nearby threats and leash back to anchors.
 - Spawn Halo Step units near hostiles and confirm they still blink/step when threatened.
 - Spawn Harvester units near corpses and hostiles and confirm hostile interference still pauses harvesting.
+
+## Summoning validation and stale-encounter recovery guard — 2026-06-22
+
+| Risk | Severity | Area | Symptoms | Prevention / check |
+| --- | --- | --- | --- | --- |
+| Generic “no valid summoning circle” failure hides the real blocker | P1 | summoning / player support | Players rebuild modules without discovering that access, focus, power, an active portal, a live hostile Abyssal pawn, horde state, or Dominion state is blocking the ritual | Keep `AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(...)` and detailed candidate-circle diagnostics routed through direct sigil use, the console readiness strip, the circle validator, and Dominion entry. |
+| Fixed-duration encounter timeout clears a real unresolved fight | P1 | encounter integrity / progression | A player can wait out a boss, escaped hostile, or active portal and start a second encounter; rewards, cleanup, and progression may overlap or be bypassed | Do not auto-complete encounters after an elapsed gameplay time. The horde watchdog may clear only runtime state that has no command gate, no hostile portal, and no live combat-capable Abyssal pawn. |
+
+In-game checks:
+
+- Attempt a sigil with a blocked interaction cell, a blocked focus cell, an unpowered circle, and a busy circle. Confirm direct sigil use names each blocking reason and includes affected circle coordinates when several circles fail for different reasons.
+- Leave one hostile Abyssal pawn or one active portal alive. Confirm the Summoning Console says exactly which entity/portal blocks a new invocation.
+- Start a horde, remove all portals and hostile Abyssal pawns through normal cleanup/dev cleanup, and confirm the existing horde watchdog clears the stale runtime state without waiting for a timer.
+- Leave a real boss or combat-capable hostile alive for more than two in-game days. Confirm summoning remains blocked; elapsed time must not erase a legitimate encounter.

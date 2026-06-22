@@ -1812,7 +1812,9 @@ namespace AbyssalProtocol
 
             bool interactionOk = circle.HasValidInteractionCell(out string interactionFail);
             bool focusOk = circle.HasClearRitualFocus(out string focusFail);
-            bool encounterClear = circle.Map != null && !AbyssalBossSummonUtility.HasActiveAbyssalEncounter(circle.Map);
+            string encounterBlocker = null;
+            bool encounterActive = circle.Map != null && AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(circle.Map, out encounterBlocker);
+            bool encounterClear = !encounterActive;
             int sigils = CountAvailableSigils(circle, ritual);
 
             entries.Add(new StatusEntry
@@ -1842,7 +1844,9 @@ namespace AbyssalProtocol
             entries.Add(new StatusEntry
             {
                 Label = TranslateOrFallback("ABY_CircleStatus_Encounter", "Encounter"),
-                Value = encounterClear ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : TranslateOrFallback("ABY_BossSummonFail_EncounterActive", "An abyssal encounter is already active on this map."),
+                Value = encounterClear
+                    ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear")
+                    : encounterBlocker ?? TranslateOrFallback("ABY_BossSummonFail_EncounterActive", "An abyssal encounter is already active on this map."),
                 Satisfied = encounterClear
             });
 

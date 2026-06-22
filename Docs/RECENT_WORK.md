@@ -1345,3 +1345,19 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Routed Gate Warden escort threat selection, Halo Step proximity/hostile collection, and Harvester Essence interference checks through `ABY_RuntimeTargetCache.CombatTargetPawnsFor` while preserving per-call validation.
 - Switched Harvester Essence hediff lookup to `ABY_DefCache` for consistency with other runtime comp paths.
 - Build not verified in this environment; modified-file syntax was checked against the previous assembly and XML parse checks passed. Full DLL rebuild is still required before runtime testing.
+
+## 2026-06-22 — Summoning validation diagnostics and safe encounter recovery
+
+- Replaced generic active-encounter feedback with a cached exact blocker path: Dominion crisis, horde breach, live hostile Abyssal entity, or remaining hostile portal.
+- Expanded nearest-circle validation so direct sigil use reports each unavailable circle’s concrete failure (busy, unpowered, interaction blocked, or ritual focus blocked), including map coordinates when several circles fail for different reasons.
+- Routed the same encounter blocker through circle readiness, the sigil carry job, Summoning Console readiness status, and Dominion preflight validation.
+- Confirmed the intended recovery model: no fixed two-day auto-complete. Existing horde watchdog recovery stays state-based and only completes a horde once no command gate, hostile portal, or live combat-capable Abyssal pawn remains.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. XML parse validation passed. RimWorld runtime smoke testing is still required.
+
+Changed ownership:
+
+- `source/Bosses/Shared/AbyssalBossSummonUtility.cs` — exact encounter blocker + per-circle validation diagnostics.
+- `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` — circle readiness surfaces the exact blocker.
+- `source/Summoning/Jobs/JobDriver_CarrySigilToAbyssalCircle.cs` — job-time revalidation surfaces the same blocker.
+- `source/UI/Summoning/AbyssalSummoningConsoleUtility.cs` — readiness telemetry shows exact encounter state.
+- `source/Dominion/MapComponents/MapComponent_DominionCrisis.cs` — Dominion preflight surfaces the same blocker.
