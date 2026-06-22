@@ -97,6 +97,8 @@ Typical content:
 - summoning VFX/audio helpers
 - summoning job drivers and comps
 
+Normal sigil invocation must carry the sigil to the actual Summoning Circle interaction cell and prime it while held. Do not require a temporary ground staging cell around the circle: large footprints, storage frameworks, collision/pathing mods, and crowded colony layouts can make a valid ritual fail for a reason unrelated to the circle itself. Console operator selection and the copied summon diagnostic report must distinguish forbidden sigils, manipulation incapacity, sigil reachability, circle-interaction reachability, and reservation failures rather than collapsing them into “no valid circle.”
+
 When changing summon behavior, also check:
 
 - `Defs/` for ritual/summon-related XML bindings
