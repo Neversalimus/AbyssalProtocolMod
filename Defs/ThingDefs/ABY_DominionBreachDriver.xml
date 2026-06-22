@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality">
+    <defName>ABY_DominionBreachDriver</defName>
+    <label>Dominion breach driver</label>
+    <description>A Dominion pressure engine reduced to something a colonist can carry. Its ram does not merely strike armor: repeated confirmed impacts force the same body to hold an accumulating structural verdict until its plating, flesh or borrowed geometry can no longer keep the shape it claims.</description>
+    <techLevel>Ultra</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_DominionBreachDriver</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.38,1.38)</drawSize>
+    </graphicData>
+    <uiIconScale>1.34</uiIconScale>
+
+    <soundInteract>ABY_CohortHalberdEquip</soundInteract>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_RiftButcherSeveranceCore>1</ABY_RiftButcherSeveranceCore>
+      <ABY_CrownedCoreFragment>2</ABY_CrownedCoreFragment>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>260</ABY_AbyssalResidue>
+      <Plasteel>190</Plasteel>
+      <Uranium>90</Uranium>
+      <Gold>25</Gold>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>10</ComponentSpacer>
+    </costList>
+
+    <tools>
+      <li>
+        <label>pressure ram</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>34</power>
+        <cooldownTime>2.05</cooldownTime>
+        <armorPenetration>0.76</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitBuilding</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_DominionBreachSequence</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>185000</WorkToMake>
+      <Mass>7.2</Mass>
+      <MarketValue>9600</MarketValue>
+    </statBases>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WeaponGlowOverlay">
+        <texPath>Things/Weapon/ABY_DominionBreachDriver_Glow</texPath>
+        <drawSizeX>1.38</drawSizeX>
+        <drawSizeZ>1.38</drawSizeZ>
+        <alpha>0.54</alpha>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_DominionBreachDriver">
+        <requiredHits>3</requiredHits>
+        <sequenceWindowTicks>420</sequenceWindowTicks>
+        <sentenceDamage>52</sentenceDamage>
+        <sentenceArmorPenetration>1.65</sentenceArmorPenetration>
+        <pressureVisualScale>0.48</pressureVisualScale>
+        <sentenceVisualScale>1.18</sentenceVisualScale>
+        <sentenceFlashScale>0.82</sentenceFlashScale>
+        <sentenceSoundDefName>ABY_RuptureVerdict</sentenceSoundDefName>
+      </li>
+    </comps>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>5200</requiredResidue>
+        <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_DominionSurvivalFrames</requiredProtocolResearchDefName>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

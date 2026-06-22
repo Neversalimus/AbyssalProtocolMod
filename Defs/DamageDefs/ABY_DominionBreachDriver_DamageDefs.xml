@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DamageDef>
+    <defName>ABY_DominionBreachSequence</defName>
+    <label>Dominion pressure sequence</label>
+    <workerClass>AbyssalProtocol.DamageWorker_ABY_DominionBreachSequence</workerClass>
+    <externalViolence>true</externalViolence>
+  </DamageDef>
+
+</Defs>

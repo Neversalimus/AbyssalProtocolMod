@@ -364,6 +364,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Assets: `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`, `ABY_TurretModule_CrownOverpressureChoir.png`, `ABY_TurretModule_SepulcherFailSafeMantle.png`.
 - Role coverage: T5 passive targeting, firing cadence, and chassis survival. These are intentionally not Aegis modules because Aegis stacking is blocked by the turret runtime.
 
+## Dominion Breach Driver T5 melee weapon — 2026-06-22
+
+| System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Dominion Breach Driver | Implemented / needs runtime smoke test | `source/Combat/Comps/CompABY_DominionBreachDriver.cs`, `source/Combat/DamageWorkers/DamageWorker_ABY_DominionBreachSequence.cs` | `Defs/ThingDefs/ABY_DominionBreachDriver.xml`, `Defs/DamageDefs/ABY_DominionBreachDriver_DamageDefs.xml`, `Textures/Things/Weapon/ABY_DominionBreachDriver*.png`, `WeaponTweakData/ABY_DominionBreachDriver_neversalimus.abyssalprotocol.json` | Existing Abyssal Forge weapon pattern and normal item InfoCard | `ABY_PR_DominionSurvivalFrames`, 5200 Forge residue, Rift Butcher Severance Core, Crowned Core fragments, Dominion Crown Shard | T5 single-target pressure weapon. A weapon-owned saved sequence records three confirmed hits on one living pawn within seven seconds, then applies a separate high-penetration Blunt verdict hit. No map scans, no static combat cache, and no sequence progression on buildings/corpses. |
+
 ## Reactor Choir Minigun — 2026-05-23
 
 | System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |

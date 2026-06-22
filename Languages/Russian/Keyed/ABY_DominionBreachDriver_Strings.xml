@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_DominionBreachDriver_Profile>Структурный вердикт</ABY_DominionBreachDriver_Profile>
+  <ABY_DominionBreachDriver_ProfileValue>Последовательность давления по одной цели</ABY_DominionBreachDriver_ProfileValue>
+  <ABY_DominionBreachDriver_ProfileDesc>Подтверждённые удары собирают последовательность давления на одной цели вместо добавления общего урона по толпе.</ABY_DominionBreachDriver_ProfileDesc>
+
+  <ABY_DominionBreachDriver_Sequence>Последовательность вердикта</ABY_DominionBreachDriver_Sequence>
+  <ABY_DominionBreachDriver_SequenceValue>{0} подтверждённых удара за {1} сек.</ABY_DominionBreachDriver_SequenceValue>
+  <ABY_DominionBreachDriver_SequenceDesc>Смена цели или слишком долгий разрыв контакта сбрасывают последовательность.</ABY_DominionBreachDriver_SequenceDesc>
+
+  <ABY_DominionBreachDriver_Sentence>Структурный приговор</ABY_DominionBreachDriver_Sentence>
+  <ABY_DominionBreachDriver_SentenceValue>{0} дробящего урона, {1}% бронепробития</ABY_DominionBreachDriver_SentenceValue>
+  <ABY_DominionBreachDriver_SentenceDesc>Третий подтверждённый удар наносит отдельный высокопроникающий удар той же живой пешке.</ABY_DominionBreachDriver_SentenceDesc>
+
+  <ABY_DominionBreachDriver_Limits>Ограничения захвата цели</ABY_DominionBreachDriver_Limits>
+  <ABY_DominionBreachDriver_LimitsValue>Только живые пешки; одна активная цель</ABY_DominionBreachDriver_LimitsValue>
+  <ABY_DominionBreachDriver_LimitsDesc>Проломщик не накапливает давление вердикта на зданиях, трупах или нескольких целях одновременно.</ABY_DominionBreachDriver_LimitsDesc>
+
+</LanguageData>

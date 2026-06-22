@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_DominionBreachDriver_Profile>Structural verdict</ABY_DominionBreachDriver_Profile>
+  <ABY_DominionBreachDriver_ProfileValue>Single-target pressure sequence</ABY_DominionBreachDriver_ProfileValue>
+  <ABY_DominionBreachDriver_ProfileDesc>Repeated confirmed blows force a target-specific pressure sequence instead of adding general crowd damage.</ABY_DominionBreachDriver_ProfileDesc>
+
+  <ABY_DominionBreachDriver_Sequence>Sentence sequence</ABY_DominionBreachDriver_Sequence>
+  <ABY_DominionBreachDriver_SequenceValue>{0} confirmed hits within {1} seconds</ABY_DominionBreachDriver_SequenceValue>
+  <ABY_DominionBreachDriver_SequenceDesc>Switching targets or losing contact for too long resets the sequence.</ABY_DominionBreachDriver_SequenceDesc>
+
+  <ABY_DominionBreachDriver_Sentence>Structural sentence</ABY_DominionBreachDriver_Sentence>
+  <ABY_DominionBreachDriver_SentenceValue>{0} Blunt, {1}% AP</ABY_DominionBreachDriver_SentenceValue>
+  <ABY_DominionBreachDriver_SentenceDesc>The third confirmed hit adds a separate high-penetration impact against the same living pawn.</ABY_DominionBreachDriver_SentenceDesc>
+
+  <ABY_DominionBreachDriver_Limits>Target lock limits</ABY_DominionBreachDriver_Limits>
+  <ABY_DominionBreachDriver_LimitsValue>Living pawns only; one active target</ABY_DominionBreachDriver_LimitsValue>
+  <ABY_DominionBreachDriver_LimitsDesc>The driver does not build verdict pressure on buildings, corpses, or multiple targets at once.</ABY_DominionBreachDriver_LimitsDesc>
+
+</LanguageData>

@@ -1,3 +1,36 @@
+## 2026-06-22 — Dominion Breach Driver T5 melee integration
+
+- Added `ABY_DominionBreachDriver`, a Tier V Dominion anti-elite/anti-boss melee pressure weapon, to the Abyssal Forge.
+- The weapon is deliberately distinct from `ABY_GatebreakerMaul`: Gatebreaker remains the heavy anti-structure maul, while the new driver tracks three confirmed impacts on one living pawn within seven seconds and then applies a separate 52 Blunt / 165% AP structural verdict.
+- Added a weapon-owned saved combat comp plus a custom zero-damage trigger DamageWorker. The sequence resets when the target changes, contact expires, the map context changes, or the game tick moves backwards after load; it performs no map scans and stores no global combat cache.
+- Added extracted transparent 512px base and glow textures from the approved chromakey asset, plus Melee Animation weapon tweak data. The final shipped texture has real alpha and no chromakey background.
+- Reused existing Abyssal melee and verdict sound assets for now; no unverified new audio binary was introduced.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. XML parse validation passed. RimWorld runtime smoke testing and Melee Animation Tweak Editor verification are still required.
+
+Touched files:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Combat/Comps/CompABY_DominionBreachDriver.cs
+source/Combat/DamageWorkers/DamageWorker_ABY_DominionBreachSequence.cs
+Defs/ThingDefs/ABY_DominionBreachDriver.xml
+Defs/DamageDefs/ABY_DominionBreachDriver_DamageDefs.xml
+Textures/Things/Weapon/ABY_DominionBreachDriver.png
+Textures/Things/Weapon/ABY_DominionBreachDriver_Glow.png
+WeaponTweakData/ABY_DominionBreachDriver_neversalimus.abyssalprotocol.json
+Languages/English/DefInjected/ThingDef/ABY_DominionBreachDriver.xml
+Languages/Russian/DefInjected/ThingDef/ABY_DominionBreachDriver.xml
+Languages/English/DefInjected/DamageDef/ABY_DominionBreachDriver_Damage.xml
+Languages/Russian/DefInjected/DamageDef/ABY_DominionBreachDriver_Damage.xml
+Languages/English/Keyed/ABY_DominionBreachDriver_Strings.xml
+Languages/Russian/Keyed/ABY_DominionBreachDriver_Strings.xml
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-06-22 — Threat rehearsal report clarity pass
 
 - Corrected Dev Mode threat rehearsal output so dynamic `ImpPortal`, `HostilePack`, horde-wave, and Dominion routes no longer present their XML PawnKind placeholders as boss identities.

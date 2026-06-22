@@ -1,3 +1,11 @@
+## 2026-06-22 — Stateful melee verdict weapon rules
+
+- Dominion Breach Driver pressure state belongs on the equipped weapon `ThingComp` and must be saved with the weapon. Do not move its target lock into an unbounded static dictionary keyed by pawn, map or Thing IDs.
+- The verdict sequence is intentionally single-target and pawn-only. Do not add building, corpse, multi-target, area or map-wide scan logic merely to make the weapon look stronger; Gatebreaker Maul already owns the anti-structure role.
+- The third-hit verdict must use `target.TakeDamage(...)` with the current target and current weapon context so custom boss health, true-death behavior and downstream damage hooks can process the hit. Do not mutate custom boss HP directly.
+- If the mechanic changes, keep the player-facing InfoCard entries synchronized with XML values for hit count, timing, damage and armor penetration.
+- Melee Animation data is required for every new melee ThingDef. Recheck the Tweak Editor offsets after any texture crop, draw-size or rotation change.
+
 ## 2026-05-24 — Combat projectile and support aura hot-path rules
 
 - Do not use LINQ `Where`/`Select`/`OrderBy` target pipelines inside projectile impact paths or turret shot resolution. Use bounded manual top-N selection so combat spikes do not allocate iterator/sort state during large raids.
