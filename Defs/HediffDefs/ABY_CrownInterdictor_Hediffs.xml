@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef>
+    <defName>ABY_CrownInterdicted</defName>
+    <label>crown interdicted</label>
+    <description>The target has been indexed by a Crown lockframe. Its motion is treated as a violation of the local geometry until the writ decays.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <tendable>false</tendable>
+    <defaultLabelColor>(0.82, 0.31, 0.10)</defaultLabelColor>
+    <stages>
+      <li>
+        <statOffsets>
+          <ShootingAccuracyPawn>-0.12</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.15</AimingDelayFactor>
+          <MeleeDodgeChance>-0.10</MeleeDodgeChance>
+        </statOffsets>
+        <statFactors>
+          <MoveSpeed>0.70</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>150</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_CrownInterdicted_Boss</defName>
+    <label>crown interdicted</label>
+    <description>A protected target has resisted the full edict. The lockframe can still disturb its movement and combat rhythm, but cannot turn its encounter logic into a stun loop.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <tendable>false</tendable>
+    <defaultLabelColor>(0.64, 0.24, 0.10)</defaultLabelColor>
+    <stages>
+      <li>
+        <statOffsets>
+          <ShootingAccuracyPawn>-0.04</ShootingAccuracyPawn>
+          <AimingDelayFactor>0.05</AimingDelayFactor>
+          <MeleeDodgeChance>-0.03</MeleeDodgeChance>
+        </statOffsets>
+        <statFactors>
+          <MoveSpeed>0.88</MoveSpeed>
+        </statFactors>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>90</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>ABY_CrownAuthorityScar</defName>
+    <label>authority scar</label>
+    <description>The target still carries the residue of an imposed Crown edict. A second lockframe cannot immediately write the same order into the same body.</description>
+    <hediffClass>HediffWithComps</hediffClass>
+    <isBad>true</isBad>
+    <scenarioCanAdd>false</scenarioCanAdd>
+    <tendable>false</tendable>
+    <defaultLabelColor>(0.44, 0.22, 0.13)</defaultLabelColor>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>300</disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownInterdictor_Profile>Коронный эдикт</ABY_CrownInterdictor_Profile>
+  <ABY_CrownInterdictor_ProfileValue>Ограничение приоритетной цели</ABY_CrownInterdictor_ProfileValue>
+  <ABY_CrownInterdictor_ProfileDesc>Два точных удара по одной живой враждебной пешке накладывают краткое ограничение движения и боя.</ABY_CrownInterdictor_ProfileDesc>
+
+  <ABY_CrownInterdictor_Sequence>Последовательность интердикта</ABY_CrownInterdictor_Sequence>
+  <ABY_CrownInterdictor_SequenceValue>{0} подтверждённых удара за {1} сек.</ABY_CrownInterdictor_SequenceValue>
+  <ABY_CrownInterdictor_SequenceDesc>Смена цели или истечение окна формулы начинает последовательность заново.</ABY_CrownInterdictor_SequenceDesc>
+
+  <ABY_CrownInterdictor_NormalLock>Коронный эдикт</ABY_CrownInterdictor_NormalLock>
+  <ABY_CrownInterdictor_NormalLockValue>{0} сек. на обычных целях</ABY_CrownInterdictor_NormalLockValue>
+  <ABY_CrownInterdictor_NormalLockDesc>После второго подтверждённого удара обычные живые враги теряют часть скорости, точности и уклонения.</ABY_CrownInterdictor_NormalLockDesc>
+
+  <ABY_CrownInterdictor_BossLock>Фиксация защищённой цели</ABY_CrownInterdictor_BossLock>
+  <ABY_CrownInterdictor_BossLockValue>Ослабленный эффект на {0} сек. для боссов и мини-боссов</ABY_CrownInterdictor_BossLockValue>
+  <ABY_CrownInterdictor_BossLockDesc>Боссы и мини-боссы получают только ослабленное ограничение; оружие не превращает их боевую логику в постоянный стан.</ABY_CrownInterdictor_BossLockDesc>
+
+  <ABY_CrownInterdictor_Scar>Шрам власти</ABY_CrownInterdictor_Scar>
+  <ABY_CrownInterdictor_ScarValue>Не даёт сразу повторить фиксацию в течение {0} сек.</ABY_CrownInterdictor_ScarValue>
+  <ABY_CrownInterdictor_ScarDesc>Цель под коронным эдиктом нельзя немедленно снова зафиксировать другим Интердиктором.</ABY_CrownInterdictor_ScarDesc>
+
+</LanguageData>

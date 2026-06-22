@@ -364,6 +364,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Assets: `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`, `ABY_TurretModule_CrownOverpressureChoir.png`, `ABY_TurretModule_SepulcherFailSafeMantle.png`.
 - Role coverage: T5 passive targeting, firing cadence, and chassis survival. These are intentionally not Aegis modules because Aegis stacking is blocked by the turret runtime.
 
+## Crown Interdictor T4 melee weapon — 2026-06-22
+
+| System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Crown Interdictor | Implemented / needs runtime smoke test | `source/Combat/Comps/CompABY_CrownInterdictor.cs`, `source/Combat/DamageWorkers/DamageWorker_ABY_CrownInterdictorTrigger.cs` | `Defs/ThingDefs/ABY_CrownInterdictor.xml`, `Defs/DamageDefs/ABY_CrownInterdictor_DamageDefs.xml`, `Defs/HediffDefs/ABY_CrownInterdictor_Hediffs.xml`, `Textures/Things/Weapon/ABY_CrownInterdictor*.png`, `WeaponTweakData/ABY_CrownInterdictor_neversalimus.abyssalprotocol.json` | Existing Abyssal Forge weapon pattern and normal item InfoCard | `ABY_PR_CrownLogicDecoding`, 3400 Forge residue, Dominion Crown Shard, Crowned Core Fragment | T4 priority-target interceptor. Weapon-owned saved state records a writ on the first confirmed hit and resolves an Edict Lock on the second hit against the same living hostile pawn within three seconds. Normal targets receive a short lock plus flinch; bosses/minibosses receive a reduced debuff only. A shared Authority Scar blocks immediate squad re-locking. |
+
 ## Crown Scission Array T5 fast melee weapon — 2026-06-22
 
 | System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |

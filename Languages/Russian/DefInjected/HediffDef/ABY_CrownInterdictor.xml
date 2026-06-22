@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownInterdicted.label>коронный запрет</ABY_CrownInterdicted.label>
+  <ABY_CrownInterdicted.description>Цель проиндексирована коронной фиксирующей рамой. Пока формула не распадётся, её движение считается нарушением локальной геометрии.</ABY_CrownInterdicted.description>
+
+  <ABY_CrownInterdicted_Boss.label>коронный запрет</ABY_CrownInterdicted_Boss.label>
+  <ABY_CrownInterdicted_Boss.description>Защищённая цель удержала полный эдикт. Фиксирующая рама всё ещё нарушает её движение и боевой ритм, но не превращает механику энкаунтера в бесконечный стан.</ABY_CrownInterdicted_Boss.description>
+
+  <ABY_CrownAuthorityScar.label>шрам власти</ABY_CrownAuthorityScar.label>
+  <ABY_CrownAuthorityScar.description>Цель ещё несёт след навязанного коронного эдикта. Другая фиксирующая рама не может сразу записать тот же приказ в то же тело.</ABY_CrownAuthorityScar.description>
+
+</LanguageData>

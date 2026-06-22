@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownInterdictor_Profile>Edict lock</ABY_CrownInterdictor_Profile>
+  <ABY_CrownInterdictor_ProfileValue>Priority-target restriction</ABY_CrownInterdictor_ProfileValue>
+  <ABY_CrownInterdictor_ProfileDesc>Two precise hits on the same living hostile target impose a short movement and combat restriction.</ABY_CrownInterdictor_ProfileDesc>
+
+  <ABY_CrownInterdictor_Sequence>Interdiction sequence</ABY_CrownInterdictor_Sequence>
+  <ABY_CrownInterdictor_SequenceValue>{0} confirmed hits within {1} seconds</ABY_CrownInterdictor_SequenceValue>
+  <ABY_CrownInterdictor_SequenceDesc>Changing targets or allowing the writ window to expire starts the sequence again.</ABY_CrownInterdictor_SequenceDesc>
+
+  <ABY_CrownInterdictor_NormalLock>Edict lock</ABY_CrownInterdictor_NormalLock>
+  <ABY_CrownInterdictor_NormalLockValue>{0} seconds on normal targets</ABY_CrownInterdictor_NormalLockValue>
+  <ABY_CrownInterdictor_NormalLockDesc>Normal living hostile targets lose movement, aim and dodge efficiency after the second confirmed hit.</ABY_CrownInterdictor_NormalLockDesc>
+
+  <ABY_CrownInterdictor_BossLock>Protected target lock</ABY_CrownInterdictor_BossLock>
+  <ABY_CrownInterdictor_BossLockValue>Reduced {0}-second effect on bosses and minibosses</ABY_CrownInterdictor_BossLockValue>
+  <ABY_CrownInterdictor_BossLockDesc>Bosses and minibosses receive only the reduced restriction; the weapon does not hard-stun their combat logic.</ABY_CrownInterdictor_BossLockDesc>
+
+  <ABY_CrownInterdictor_Scar>Authority scar</ABY_CrownInterdictor_Scar>
+  <ABY_CrownInterdictor_ScarValue>Prevents immediate re-locking for {0} seconds</ABY_CrownInterdictor_ScarValue>
+  <ABY_CrownInterdictor_ScarDesc>A target marked by an Edict Lock cannot be immediately locked again by another Interdictor.</ABY_CrownInterdictor_ScarDesc>
+
+</LanguageData>

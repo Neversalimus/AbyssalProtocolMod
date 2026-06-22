@@ -305,6 +305,7 @@ Use a hyphen for `Рифт-` equipment names. It reads better in Russian UI and 
 | Crownfire Rocket Choir | ракетный Хор Коронного Пламени | Turret weapon/module. |
 | Crownshard Stormcaster | буревестник осколков Короны | |
 | Crownspike Rail | рельсотрон Коронного Шипа | |
+| Crown Interdictor | Коронный интердиктор | T4 target-lock melee weapon. |
 | Abyssal Harpoon Projector | бездненный гарпунный проектор | |
 | Ash Choir Repeater Core | ядро повторителя Пепельного Хора | Turret module. |
 | Choir Arc Emitter | дуговой излучатель Хора | Turret module. |

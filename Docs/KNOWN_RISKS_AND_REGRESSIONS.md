@@ -1,3 +1,11 @@
+## 2026-06-22 — Crown Interdictor target-lock weapon rules
+
+- Crown Interdictor writ state belongs on the equipped weapon `ThingComp` and must remain save-safe. Do not move mark target IDs, mark ticks, or per-hit duplicate guards into a static pawn/map dictionary.
+- The two-hit sequence is pawn-only, target-specific, and local. It must reset on target change, expiry, invalid/dead/downed targets, or backward game ticks after load; never add map-wide target scans to make it “smarter.”
+- `ABY_CrownAuthorityScar` is deliberately shared between all Interdictors to prevent squad-based permanent lock loops. Do not bypass the scar for normal, miniboss, or boss targets without an explicit balance pass.
+- Boss/miniboss classification must use `ABY_AbyssalPawnClassificationUtility.IsBossOrMiniBoss(...)`. Protected targets receive only `ABY_CrownInterdicted_Boss`; they must not be hard-stunned or have custom boss encounter logic mutated.
+- If lock values change, keep XML duration values, Hediff duration components, InfoCard strings, boss-safe wording, and Melee Animation data synchronized. Recheck offsets after any texture crop, draw-size, or rotation change.
+
 ## 2026-06-22 — Crown Scission Array echo weapon rules
 
 - Crown Scission Array Echo charge state belongs on the equipped weapon `ThingComp` and must remain save-safe. Do not move charges, kill tracking or expiry into a static pawn/map dictionary.

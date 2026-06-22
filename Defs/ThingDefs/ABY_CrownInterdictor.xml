@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>ABY_CrownInterdictor</defName>
+    <label>Crown Interdictor</label>
+    <description>A compact lockframe blade built to turn repeated precise contact into a local prohibition. The first strike writes a target-specific writ. The second fixes the same hostile body inside a short Crown edict, slowing its movement and degrading the clean combat rhythm it thought it still possessed.</description>
+    <techLevel>Spacer</techLevel>
+    <tradeability>Sellable</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CrownInterdictor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.25,1.25)</drawSize>
+    </graphicData>
+    <uiIconScale>1.26</uiIconScale>
+
+    <soundInteract>ABY_CohortHalberdEquip</soundInteract>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>14</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_CrownedCoreFragment>1</ABY_CrownedCoreFragment>
+      <ABY_AbyssalResidue>140</ABY_AbyssalResidue>
+      <Plasteel>120</Plasteel>
+      <Uranium>30</Uranium>
+      <Gold>18</Gold>
+      <ComponentIndustrial>4</ComponentIndustrial>
+      <ComponentSpacer>5</ComponentSpacer>
+    </costList>
+
+    <tools>
+      <li>
+        <label>interdiction edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>26</power>
+        <cooldownTime>1.28</cooldownTime>
+        <armorPenetration>0.75</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_CrownInterdictorTrigger</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+      <li>
+        <label>retention notch</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>22</power>
+        <cooldownTime>1.15</cooldownTime>
+        <armorPenetration>0.88</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_CrownInterdictorTrigger</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>125000</WorkToMake>
+      <Mass>3.7</Mass>
+      <MarketValue>6400</MarketValue>
+    </statBases>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WeaponGlowOverlay">
+        <texPath>Things/Weapon/ABY_CrownInterdictor_Glow</texPath>
+        <drawSizeX>1.25</drawSizeX>
+        <drawSizeZ>1.25</drawSizeZ>
+        <alpha>0.46</alpha>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_CrownInterdictor">
+        <markWindowTicks>180</markWindowTicks>
+        <normalLockDurationTicks>150</normalLockDurationTicks>
+        <bossLockDurationTicks>90</bossLockDurationTicks>
+        <authorityScarDurationTicks>300</authorityScarDurationTicks>
+        <normalFlinchTicks>15</normalFlinchTicks>
+        <markVisualScale>0.26</markVisualScale>
+        <lockVisualScale>0.64</lockVisualScale>
+        <lockFlashScale>0.48</lockFlashScale>
+        <normalLockHediffDefName>ABY_CrownInterdicted</normalLockHediffDefName>
+        <bossLockHediffDefName>ABY_CrownInterdicted_Boss</bossLockHediffDefName>
+        <authorityScarHediffDefName>ABY_CrownAuthorityScar</authorityScarHediffDefName>
+        <lockSoundDefName>ABY_RuptureVerdict</lockSoundDefName>
+      </li>
+    </comps>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>3400</requiredResidue>
+        <category>Herald</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

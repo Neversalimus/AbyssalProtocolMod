@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DamageDef>
+    <defName>ABY_CrownInterdictorTrigger</defName>
+    <label>crown interdictor trigger</label>
+    <workerClass>AbyssalProtocol.DamageWorker_ABY_CrownInterdictorTrigger</workerClass>
+    <externalViolence>true</externalViolence>
+  </DamageDef>
+
+</Defs>

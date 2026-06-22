@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownInterdicted.label>crown interdicted</ABY_CrownInterdicted.label>
+  <ABY_CrownInterdicted.description>The target has been indexed by a Crown lockframe. Its motion is treated as a violation of the local geometry until the writ decays.</ABY_CrownInterdicted.description>
+
+  <ABY_CrownInterdicted_Boss.label>crown interdicted</ABY_CrownInterdicted_Boss.label>
+  <ABY_CrownInterdicted_Boss.description>A protected target has resisted the full edict. The lockframe can still disturb its movement and combat rhythm, but cannot turn its encounter logic into a stun loop.</ABY_CrownInterdicted_Boss.description>
+
+  <ABY_CrownAuthorityScar.label>authority scar</ABY_CrownAuthorityScar.label>
+  <ABY_CrownAuthorityScar.description>The target still carries the residue of an imposed Crown edict. A second lockframe cannot immediately write the same order into the same body.</ABY_CrownAuthorityScar.description>
+
+</LanguageData>

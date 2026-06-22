@@ -1,3 +1,40 @@
+## 2026-06-22 — Crown Interdictor T4 melee integration
+
+- Added `ABY_CrownInterdictor`, a Tier IV Crown/Dominion priority-target melee interceptor, to the Abyssal Forge. It fills the pre-T5 melee gap between Cohort Halberd/Gatebreaker roles and the distinct T5 Breach Driver / Crown Scission Array endpoints.
+- Added a weapon-owned saved `CompABY_CrownInterdictor` plus zero-damage `DamageWorker_ABY_CrownInterdictorTrigger`. The first confirmed direct hit writes a three-second writ on one living hostile pawn; a second confirmed hit on that exact target requests an Edict Lock.
+- Normal targets receive a short movement/aim/dodge restriction and a 15-tick flinch. Bosses and minibosses are detected through the shared classification utility and receive only a reduced timed debuff; the weapon never directly edits custom HP or boss encounter state.
+- Added a shared `ABY_CrownAuthorityScar` so an Interdictor squad cannot immediately re-lock the same target in a permanent control loop. The scar and lock effects use standard Hediff processing and expire automatically.
+- Added extracted transparent 512px base and restrained wound-core glow textures from the approved chromakey asset, plus Melee Animation tweak data and EN/RU localization. Shipped textures have real alpha and no chromakey background.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. XML and JSON validation passed. RimWorld runtime smoke testing and Melee Animation Tweak Editor verification are still required.
+
+Touched files:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Combat/Comps/CompABY_CrownInterdictor.cs
+source/Combat/DamageWorkers/DamageWorker_ABY_CrownInterdictorTrigger.cs
+Defs/ThingDefs/ABY_CrownInterdictor.xml
+Defs/DamageDefs/ABY_CrownInterdictor_DamageDefs.xml
+Defs/HediffDefs/ABY_CrownInterdictor_Hediffs.xml
+Textures/Things/Weapon/ABY_CrownInterdictor.png
+Textures/Things/Weapon/ABY_CrownInterdictor_Glow.png
+WeaponTweakData/ABY_CrownInterdictor_neversalimus.abyssalprotocol.json
+Languages/English/DefInjected/ThingDef/ABY_CrownInterdictor.xml
+Languages/Russian/DefInjected/ThingDef/ABY_CrownInterdictor.xml
+Languages/English/DefInjected/DamageDef/ABY_CrownInterdictor_Damage.xml
+Languages/Russian/DefInjected/DamageDef/ABY_CrownInterdictor_Damage.xml
+Languages/English/DefInjected/HediffDef/ABY_CrownInterdictor.xml
+Languages/Russian/DefInjected/HediffDef/ABY_CrownInterdictor.xml
+Languages/English/Keyed/ABY_CrownInterdictor_Strings.xml
+Languages/Russian/Keyed/ABY_CrownInterdictor_Strings.xml
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+Docs/LOCALIZATION_GLOSSARY_RU.md
+```
+
 ## 2026-06-22 — Crown Scission Array T5 fast melee integration
 
 - Added `ABY_CrownScissionArray`, a Tier V Crown/Dominion fast melee pack-reaper, to the Abyssal Forge. It deliberately complements `ABY_DominionBreachDriver`: Driver remains the slow single-target anti-elite/anti-boss press, while Scission Array rewards consecutive close-quarters kills in dense hostile packs.
