@@ -267,7 +267,7 @@ namespace AbyssalProtocol
             sb.AppendLine("== " + GetMenuLabel(entry) + " ==");
             sb.AppendLine("RitualId: " + ritualId + " | mode: " + summonMode + " | sigil: " + (entry.Def?.defName ?? "missing"));
             sb.AppendLine("Boss/pack label: " + (resolvedBossLabel ?? props.bossLabel ?? "none"));
-            sb.AppendLine("PawnKind: " + (pawnKindDef?.defName ?? resolvedPawnKindDefName ?? "none") + " | spawnPoints XML: " + props.spawnPoints);
+            AppendPayloadIdentityReport(sb, summonMode, pawnKindDef, resolvedPawnKindDefName, props.spawnPoints);
             sb.AppendLine("Retired: " + IsRetired(props));
 
             bool unlocked = AbyssalSummoningConsoleUtility.IsRitualUnlocked(ritualId, out string unlockFailReason);
@@ -337,7 +337,8 @@ namespace AbyssalProtocol
                 MapComponent_DominionCrisis crisis = map.GetComponent<MapComponent_DominionCrisis>();
                 string failReason = null;
                 bool canBegin = crisis != null && crisis.CanBegin(circle, out failReason);
-                sb.AppendLine("Arrival: Dominion runtime | CanBegin=" + canBegin + (canBegin ? string.Empty : " — " + (failReason ?? "no reason")));
+                sb.AppendLine("Dominion map-runtime readiness (ritual progression unlock is reported above): "
+                    + (canBegin ? "PASS" : "BLOCKED — " + (failReason ?? "no reason")));
                 return;
             }
 
@@ -387,13 +388,25 @@ namespace AbyssalProtocol
                 AbyssalT1SummonScalingUtility.ThreatPlan t1Plan = AbyssalT1SummonScalingUtility.GetThreatPlan(map, ritualId);
                 if (t1Plan != null)
                 {
-                    sb.AppendLine("T1/T2 scaling: tier=" + t1Plan.Tier + " | colonistTier=" + t1Plan.ColonistTier + " | wealthTier=" + t1Plan.WealthTier + " | budget=" + t1Plan.ThreatBudget);
+                    sb.AppendLine("T1/T2 scaling: tier=" + t1Plan.Tier
+                        + " | colonistTier=" + t1Plan.ColonistTier
+                        + " | wealthTier=" + t1Plan.WealthTier
+                        + " | estimatedCombatThreat=" + t1Plan.ThreatBudget);
                     sb.AppendLine("T1/T2 composition: " + SummarizeT1Plan(t1Plan));
                     if (t1Plan.DirectedPlan != null)
                     {
                         AppendDirectedPlan(sb, "Directed pool", t1Plan.DirectedPlan);
                     }
                 }
+            }
+
+            // These routes use dynamic portal/pack payloads.  A placeholder PawnKind in the
+            // sigil def is not a boss identity and must not fall through into a boss-escort
+            // profile report (for example, the Unstable Breach sigil's Archon placeholder).
+            if (IsNonBossPayloadMode(summonMode))
+            {
+                AppendAdditionalSigilSupportReport(sb, props);
+                return;
             }
 
             if (AbyssalHordeSigilUtility.IsSupportedRitual(ritualId))
@@ -428,7 +441,7 @@ namespace AbyssalProtocol
             }
             else if (HasLegacySupport(props))
             {
-                sb.AppendLine("Legacy support counts: imps=" + props.supportImpCount + " thralls=" + props.supportThrallCount + " zealots=" + props.supportZealotCount + " rare=" + props.rareEscortPawnKindDefName + " x" + props.rareEscortCount + " @" + props.rareEscortChance.ToString("0.##"));
+                AppendAdditionalSigilSupportReport(sb, props);
             }
             else
             {
@@ -473,6 +486,62 @@ namespace AbyssalProtocol
             sb.AppendLine("Presentation route: " + presentation);
         }
 
+        private static void AppendPayloadIdentityReport(
+            StringBuilder sb,
+            string summonMode,
+            PawnKindDef pawnKindDef,
+            string resolvedPawnKindDefName,
+            int xmlSpawnPoints)
+        {
+            if (string.Equals(summonMode, "ImpPortal", StringComparison.OrdinalIgnoreCase))
+            {
+                sb.AppendLine("Payload identity: dynamic imp portal; the T1/T2 composition below is authoritative. XML PawnKind hint is not a boss or escort identity.");
+                return;
+            }
+
+            if (string.Equals(summonMode, "PortalWave", StringComparison.OrdinalIgnoreCase))
+            {
+                sb.AppendLine("Payload identity: horde portal-wave runtime; the horde plan below is authoritative. XML PawnKind hint is not a boss identity.");
+                return;
+            }
+
+            if (string.Equals(summonMode, "DominionCrisis", StringComparison.OrdinalIgnoreCase))
+            {
+                sb.AppendLine("Payload identity: Dominion crisis runtime; phase waves are selected by the Dominion runtime. XML PawnKind hint is not a boss identity.");
+                return;
+            }
+
+            sb.AppendLine("PawnKind: " + (pawnKindDef?.defName ?? resolvedPawnKindDefName ?? "none") + " | spawnPoints XML: " + xmlSpawnPoints);
+        }
+
+        private static bool IsNonBossPayloadMode(string summonMode)
+        {
+            return string.Equals(summonMode, "ImpPortal", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(summonMode, "HostilePack", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static void AppendAdditionalSigilSupportReport(StringBuilder sb, CompProperties_UseEffectSummonBoss props)
+        {
+            if (!HasLegacySupport(props))
+            {
+                sb.AppendLine("Additional sigil support: none.");
+                return;
+            }
+
+            List<string> entries = new List<string>();
+            AddCount(entries, "rift imp", props.supportImpCount);
+            AddCount(entries, "hexgun thrall", props.supportThrallCount);
+            AddCount(entries, "chain zealot", props.supportZealotCount);
+            if (!props.rareEscortPawnKindDefName.NullOrEmpty() && props.rareEscortCount > 0)
+            {
+                entries.Add("rare " + props.rareEscortPawnKindDefName
+                    + " x" + props.rareEscortCount
+                    + " @" + props.rareEscortChance.ToString("0.##"));
+            }
+
+            sb.AppendLine("Additional sigil support: " + (entries.Count > 0 ? string.Join(", ", entries) : "none") + ".");
+        }
+
         private static void AppendDirectedPlan(StringBuilder sb, string label, AbyssalEncounterDirectorUtility.EncounterPlan plan)
         {
             if (plan == null || plan.TotalUnits <= 0)
@@ -481,12 +550,24 @@ namespace AbyssalProtocol
                 return;
             }
 
+            bool templateFallback = plan.TemplateDefName.NullOrEmpty();
+            bool doctrineFallback = plan.DoctrineDefName.NullOrEmpty();
+            string template = templateFallback ? "fallback" : plan.TemplateDefName;
+            string doctrine = doctrineFallback ? "fallback" : plan.DoctrineDefName;
+
             sb.AppendLine(label + ": pool=" + (plan.PoolId ?? "none")
-                + " | template=" + (plan.TemplateDefName ?? "none")
-                + " | doctrine=" + (plan.DoctrineDefName ?? "none")
+                + " | template=" + template
+                + " | doctrine=" + doctrine
                 + " | tier=" + plan.AllowedContentTier
-                + " | budget=" + plan.Budget.ToString("0")
+                + " | directorBudget=" + plan.Budget.ToString("0")
                 + " | units=" + plan.TotalUnits);
+            if (templateFallback || doctrineFallback)
+            {
+                sb.AppendLine(label + " planning mode: fallback composition (no authored "
+                    + (templateFallback && doctrineFallback ? "template or doctrine" : (templateFallback ? "template" : "doctrine"))
+                    + " selected for the current state).");
+            }
+
             sb.AppendLine(label + " composition: " + plan.GetSummary());
         }
 

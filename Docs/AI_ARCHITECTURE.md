@@ -565,4 +565,4 @@ Lifecycle contract:
 
 Player-support route: the ritual dossier's **Copy diagnostic report** action uses `AbyssalSummoningConsoleUtility.BuildSummonDiagnosticReport(...)`. Keep diagnostic export descriptive and non-mutating; it should remain safe to click repeatedly during an encounter.
 
-Dev route: `ABY_SummonThreatRehearsalUtility` contains the non-mutating preflight reliability pass. It validates that every active ritual produces a coherent report and logs the exact current blockers. It is not a player-facing progression feature.
+Dev route: `ABY_SummonThreatRehearsalUtility` contains the non-mutating preflight reliability pass. It validates that every active ritual produces a coherent report and logs the exact current blockers. Its threat-rehearsal output is mode-aware: dynamic portal/pack/horde/Dominion payloads report their actual planner route instead of treating XML PawnKind placeholders as boss identities, and fallback directed plans must be labeled as fallback compositions. It is not a player-facing progression feature.

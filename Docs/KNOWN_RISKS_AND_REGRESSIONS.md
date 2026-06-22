@@ -13,6 +13,9 @@
 - Portal-wave and Dominion map components remain single-instance systems. Do not extend the rehearsal bypass into duplicate horde waves or simultaneous Dominion crises without a dedicated multi-instance runtime design.
 - Do not expose the force-start path through the player Summoning Console or normal gizmos. A future player-facing forecast should be read-only and localized, not a dev force-start command.
 - Rehearsal logs are predictions based on current map state; horde portal cells and Dominion wave details are still runtime-selected by their map components and should not be treated as exact deterministic spawn promises.
+- Dynamic `ImpPortal`, `HostilePack`, PortalWave, and Dominion routes must not use placeholder XML PawnKind values to infer a boss profile in diagnostics. Keep their payload labels mode-aware and let the actual T1/horde/Dominion plan be authoritative.
+- Empty template/doctrine fields in a directed plan mean a fallback composition was selected. Report that explicitly rather than emitting blank values that look like a broken plan.
+- Keep progression unlock results separate from subsystem-only map-runtime readiness. Dominion `CanBegin` does not replace the ritual unlock gate.
 
 ## 2026-05-23 — Sigil routing and close-escort regression guards
 

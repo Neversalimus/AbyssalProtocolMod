@@ -1,3 +1,19 @@
+## 2026-06-22 — Threat rehearsal report clarity pass
+
+- Corrected Dev Mode threat rehearsal output so dynamic `ImpPortal`, `HostilePack`, horde-wave, and Dominion routes no longer present their XML PawnKind placeholders as boss identities.
+- Prevented non-boss portal/pack rehearsal entries from falling through into boss-escort profile reporting; this removes the false Archon Beast escort report for Unstable Breach.
+- Renamed T1/T2 threat output and director allocation output so their different budget meanings are explicit.
+- Replaced the misleading `Legacy support counts` label with `Additional sigil support`, including the rare Halo Husk roll where configured.
+- Marked plans with no authored template or doctrine as a fallback composition rather than printing blank fields.
+- Clarified that Dominion map-runtime readiness is separate from the ritual progression unlock printed above it.
+
+Touched files:
+source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs
+Docs/AI_ARCHITECTURE.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 
 ## 2026-06-22 — Dev rehearsal concurrent encounter confirmation
 
