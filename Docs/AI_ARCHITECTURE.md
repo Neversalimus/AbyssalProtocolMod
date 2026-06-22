@@ -546,3 +546,23 @@ Dense ritual details belong in the separate ritual dossier window. Circle techni
 ## 2026-05-24 — Summoning Console circle infrastructure window
 
 The Summoning Console keeps capacitor and stabilizer slot management out of the primary ritual selection screen. `source/UI/Summoning/Window_AbyssalSummoningConsole.cs` owns a compact Circle Infrastructure callout on the selected-ritual card and a nested `Window_AbyssalCircleInfrastructure` detail window. The infrastructure window is intentionally simplified into a slot manager: capacitor lattice rows, stabilizer ring rows, and a short effect summary on one screen. It should not grow back into a second full console with readiness tabs or long diagnostics. Future circle module/capacitor UI changes should route through this infrastructure window instead of adding lower permanent panels back into the main console.
+
+
+## 2026-06-22 — Summoning reliability foundation
+
+Summoning readiness and active-encounter ownership are now intentionally split into three layers:
+
+- `source/Summoning/ABY_SummonPreflightReport.cs` owns the **side-effect-free** preflight snapshot used by direct sigil use, the circle start path, the Summoning Console, dossier diagnostics, and the dev reliability pass. It may inspect state, but it must never reserve, consume a sigil, start a ritual, choose RNG-dependent arrival cells, or mutate encounter state.
+- `source/Summoning/MapComponents/MapComponent_ABY_SummonEncounterRuntime.cs` owns the **save-backed lifecycle record** for the one active Abyssal summon pipeline per map: preparation, activation, terminal state, owner circle, ritual identity, and a small watchdog.
+- `source/Bosses/Shared/AbyssalBossSummonUtility.cs` owns the **authoritative world query** for concrete blockers (Dominion, portal wave, live portal/manifestation structures, and live combat-capable Abyssal pawns). Its detailed result is short-cached for UI use and invalidated explicitly on state changes.
+
+Lifecycle contract:
+
+1. `Building_AbyssalSummoningCircle.TryStartSummonSequenceInternal` runs preflight first and begins a runtime `Preparing` record only after normal start gates pass.
+2. Every successful concrete spawn/begin route must call `MarkEncounterActivated()` only after the boss, manifestation, portal, horde, hostile pack, or Dominion crisis has actually begun.
+3. `ResetRitual()` aborts only a preparation record; it must not erase an already active encounter record.
+4. A runtime lifecycle record is never cleared because an arbitrary amount of game time elapsed. The watchdog may clear it only after there are no concrete encounter signals for its short grace window. This rule prevents time-based overlap exploits and keeps real bosses/portals authoritative.
+
+Player-support route: the ritual dossier's **Copy diagnostic report** action uses `AbyssalSummoningConsoleUtility.BuildSummonDiagnosticReport(...)`. Keep diagnostic export descriptive and non-mutating; it should remain safe to click repeatedly during an encounter.
+
+Dev route: `ABY_SummonThreatRehearsalUtility` contains the non-mutating preflight reliability pass. It validates that every active ritual produces a coherent report and logs the exact current blockers. It is not a player-facing progression feature.

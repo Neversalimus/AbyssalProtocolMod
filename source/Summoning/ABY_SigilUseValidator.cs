@@ -64,8 +64,16 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!circle.IsReadyForSigil(out failReason))
+            ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.Create(
+                circle,
+                props,
+                pawn,
+                resolvedSigil,
+                requireReachability,
+                true);
+            if (!preflight.CanStart)
             {
+                failReason = preflight.PrimaryBlocker ?? "The summon preflight did not authorize this invocation.";
                 return false;
             }
 

@@ -23,7 +23,6 @@ namespace AbyssalProtocol
         private const string RupturePortalDefName = "ABY_RupturePortal";
         private const string ImpPortalDefName = "ABY_ImpPortal";
         private const int ActiveEncounterCacheTicks = 18;
-        private const int MaxCircleDiagnosticEntries = 3;
 
         private struct ActiveEncounterCacheEntry
         {
@@ -1473,9 +1472,9 @@ namespace AbyssalProtocol
 
             TryCleanupStaleEncounterBeforeSummon(map, "nearest circle pre-summon active encounter check");
 
-            if (TryGetActiveAbyssalEncounterBlocker(map, out string encounterBlocker))
+            if (HasActiveAbyssalEncounter(map))
             {
-                failReason = encounterBlocker ?? "ABY_BossSummonFail_EncounterActive".Translate();
+                failReason = "ABY_BossSummonFail_EncounterActive".Translate();
                 return false;
             }
 
@@ -1493,8 +1492,6 @@ namespace AbyssalProtocol
             bool foundBusy = false;
             bool foundUnpowered = false;
             bool foundBlocked = false;
-            int unavailableCircleCount = 0;
-            List<string> circleDiagnostics = new List<string>();
 
             foreach (Thing thing in circles)
             {
@@ -1504,17 +1501,21 @@ namespace AbyssalProtocol
                 }
 
                 foundAny = true;
-                if (!TryGetCircleCandidateBlocker(candidate, out string candidateBlocker, out bool busy, out bool unpowered))
+                if (candidate.RitualActive)
                 {
-                    foundBusy |= busy;
-                    foundUnpowered |= unpowered;
-                    foundBlocked |= !busy && !unpowered;
-                    unavailableCircleCount++;
-                    if (circleDiagnostics.Count < MaxCircleDiagnosticEntries)
-                    {
-                        circleDiagnostics.Add(BuildCircleDiagnosticEntry(candidate, candidateBlocker));
-                    }
+                    foundBusy = true;
+                    continue;
+                }
 
+                if (!candidate.IsPoweredForRitual)
+                {
+                    foundUnpowered = true;
+                    continue;
+                }
+
+                if (!candidate.HasValidInteractionCell(out _) || !candidate.HasClearRitualFocus(out _))
+                {
+                    foundBlocked = true;
                     continue;
                 }
 
@@ -1528,7 +1529,27 @@ namespace AbyssalProtocol
 
             if (best == null)
             {
-                failReason = BuildUnavailableCircleReason(foundAny, foundBusy, foundUnpowered, foundBlocked, unavailableCircleCount, circleDiagnostics);
+                if (!foundAny)
+                {
+                    failReason = "ABY_BossSummonFail_NoCircle".Translate();
+                }
+                else if (foundBusy && !foundUnpowered && !foundBlocked)
+                {
+                    failReason = "ABY_BossSummonFail_AllBusy".Translate();
+                }
+                else if (foundUnpowered && !foundBusy && !foundBlocked)
+                {
+                    failReason = "ABY_BossSummonFail_AllUnpowered".Translate();
+                }
+                else if (foundBlocked && !foundBusy && !foundUnpowered)
+                {
+                    failReason = "ABY_BossSummonFail_AllBlocked".Translate();
+                }
+                else
+                {
+                    failReason = "ABY_BossSummonFail_NoCircleAvailable".Translate();
+                }
+
                 return false;
             }
 
@@ -1537,10 +1558,10 @@ namespace AbyssalProtocol
         }
 
         /// <summary>
-        /// Pure active-encounter query. Keep stale-wave cleanup out of this method so UI,
-        /// incidents and validators can safely ask about encounter state without changing it.
-        /// Pre-summon code paths that intentionally want cleanup should call
-        /// TryCleanupStaleEncounterBeforeSummon before this query.
+        /// Cached boolean query for routine UI and validator checks. The detailed query below
+        /// shares the same short cache so custom UI can show exact blockers without repeatedly
+        /// scanning every spawned pawn and encounter structure per draw frame.
+        /// Cleanup remains explicit in TryCleanupStaleEncounterBeforeSummon.
         /// </summary>
         public static bool HasActiveAbyssalEncounter(Map map)
         {
@@ -1548,8 +1569,10 @@ namespace AbyssalProtocol
         }
 
         /// <summary>
-        /// Returns the concrete runtime blocker for a summon attempt. This is intentionally
-        /// diagnostic-only: it never clears live pawns, portals, or active Dominion state.
+        /// Returns the first authoritative blocker in the summon pipeline. The save-backed runtime
+        /// lifecycle is checked first, followed by concrete map objects so stale runtime state can
+        /// never be the only thing that blocks a player forever. Results are short-cached because
+        /// this method is also used by the Summoning Console every OnGUI pass.
         /// </summary>
         public static bool TryGetActiveAbyssalEncounterBlocker(Map map, out string blocker)
         {
@@ -1584,6 +1607,74 @@ namespace AbyssalProtocol
             return result;
         }
 
+        private static bool TryGetActiveAbyssalEncounterBlockerUncached(Map map, out string blocker)
+        {
+            blocker = null;
+            MapComponent_ABY_SummonEncounterRuntime runtime = map.GetComponent<MapComponent_ABY_SummonEncounterRuntime>();
+            if (runtime != null && runtime.TryGetBlocker(out blocker))
+            {
+                return true;
+            }
+
+            return TryGetConcreteActiveAbyssalEncounterBlocker(map, out blocker);
+        }
+
+        /// <summary>
+        /// Concrete world-state query intentionally excludes the save-backed runtime lifecycle.
+        /// The runtime watchdog uses this method to prove that an old lifecycle record is stale.
+        /// </summary>
+        internal static bool TryGetConcreteActiveAbyssalEncounterBlocker(Map map, out string blocker)
+        {
+            blocker = null;
+            if (map == null)
+            {
+                return false;
+            }
+
+            MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
+            if (dominionCrisis != null && dominionCrisis.IsActive)
+            {
+                blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_SummonBlocker_Dominion",
+                    "A Dominion crisis is still active on this map.");
+                return true;
+            }
+
+            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
+            if (portalWave != null && portalWave.IsWaveActive)
+            {
+                blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_SummonBlocker_HordeWave",
+                    "A horde breach is still opening or maintaining portals.");
+                return true;
+            }
+
+            if (TryGetActiveEncounterStructure(map, out Thing structure))
+            {
+                blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_SummonBlocker_Structure",
+                    "An Abyssal encounter structure is still active: {0}.",
+                    structure.LabelCap);
+                return true;
+            }
+
+            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
+            for (int i = 0; i < pawns.Count; i++)
+            {
+                Pawn pawn = pawns[i];
+                if (ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawn))
+                {
+                    blocker = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_SummonBlocker_HostilePawn",
+                        "A hostile Abyssal entity is still combat-capable: {0}.",
+                        pawn.LabelCap);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool TryCleanupStaleEncounterBeforeSummon(Map map, string reason)
         {
             if (map == null)
@@ -1595,167 +1686,35 @@ namespace AbyssalProtocol
             bool cleaned = portalWave != null && portalWave.TryForceCompleteStaleHorde(true, reason ?? "pre-summon active encounter check");
             if (cleaned)
             {
+                map.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyWorldStateChanged();
                 NotifyActiveEncounterStateMaybeChanged(map);
             }
             return cleaned;
         }
 
-        private static bool TryGetActiveAbyssalEncounterBlockerUncached(Map map, out string blocker)
+        private static bool TryGetActiveEncounterStructure(Map map, out Thing structure)
         {
-            blocker = null;
-
-            MapComponent_DominionCrisis dominionCrisis = map.GetComponent<MapComponent_DominionCrisis>();
-            if (dominionCrisis != null && dominionCrisis.IsActive)
+            structure = null;
+            List<Thing> things = map?.listerThings?.AllThings;
+            if (things == null)
             {
-                blocker = "ABY_EncounterBlocker_Dominion".Translate();
-                return true;
+                return false;
             }
 
-            MapComponent_AbyssalPortalWave portalWave = map.GetComponent<MapComponent_AbyssalPortalWave>();
-            if (portalWave != null && portalWave.IsWaveActive)
+            for (int i = 0; i < things.Count; i++)
             {
-                blocker = "ABY_EncounterBlocker_Horde".Translate();
-                return true;
-            }
-
-            IReadOnlyList<Pawn> pawns = ABY_RuntimeTargetCache.SpawnedLivingPawnsFor(map);
-            for (int i = 0; i < pawns.Count; i++)
-            {
-                Pawn pawn = pawns[i];
-                if (ABY_AntiTameUtility.IsLiveCombatCapableAbyssalPawn(pawn))
+                Thing thing = things[i];
+                if (thing == null || thing.Destroyed || !thing.Spawned)
                 {
-                    blocker = "ABY_EncounterBlocker_Pawn".Translate(pawn.LabelShortCap);
-                    return true;
-                }
-            }
-
-            if (TryFindActivePortalOfDef(map, RupturePortalDefName, out Thing rupturePortal))
-            {
-                blocker = "ABY_EncounterBlocker_Portal".Translate(rupturePortal.LabelShortCap);
-                return true;
-            }
-
-            if (TryFindActivePortalOfDef(map, ImpPortalDefName, out Thing impPortal))
-            {
-                blocker = "ABY_EncounterBlocker_Portal".Translate(impPortal.LabelShortCap);
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool TryGetCircleCandidateBlocker(
-            Building_AbyssalSummoningCircle candidate,
-            out string blocker,
-            out bool busy,
-            out bool unpowered)
-        {
-            blocker = null;
-            busy = false;
-            unpowered = false;
-
-            if (candidate == null || candidate.Destroyed || !candidate.Spawned)
-            {
-                blocker = "ABY_CircleFail_NotPlaced".Translate();
-                return false;
-            }
-
-            if (candidate.RitualActive)
-            {
-                busy = true;
-                blocker = "ABY_CircleFail_Busy".Translate();
-                return false;
-            }
-
-            if (!candidate.IsPoweredForRitual)
-            {
-                unpowered = true;
-                blocker = "ABY_CircleFail_NoPower".Translate();
-                return false;
-            }
-
-            if (!candidate.HasValidInteractionCell(out blocker))
-            {
-                return false;
-            }
-
-            if (!candidate.HasClearRitualFocus(out blocker))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static string BuildUnavailableCircleReason(
-            bool foundAny,
-            bool foundBusy,
-            bool foundUnpowered,
-            bool foundBlocked,
-            int unavailableCircleCount,
-            List<string> circleDiagnostics)
-        {
-            if (!foundAny)
-            {
-                return "ABY_BossSummonFail_NoCircle".Translate();
-            }
-
-            if (circleDiagnostics != null && circleDiagnostics.Count > 0)
-            {
-                int omitted = Math.Max(0, unavailableCircleCount - circleDiagnostics.Count);
-                if (omitted > 0)
-                {
-                    circleDiagnostics.Add("ABY_BossSummonFail_CircleDiagnosticMore".Translate(omitted));
+                    continue;
                 }
 
-                return "ABY_BossSummonFail_CircleDiagnostics".Translate(string.Join("  |  ", circleDiagnostics));
-            }
-
-            if (foundBusy && !foundUnpowered && !foundBlocked)
-            {
-                return "ABY_BossSummonFail_AllBusy".Translate();
-            }
-
-            if (foundUnpowered && !foundBusy && !foundBlocked)
-            {
-                return "ABY_BossSummonFail_AllUnpowered".Translate();
-            }
-
-            if (foundBlocked && !foundBusy && !foundUnpowered)
-            {
-                return "ABY_BossSummonFail_AllBlocked".Translate();
-            }
-
-            return "ABY_BossSummonFail_NoCircleAvailable".Translate();
-        }
-
-        private static string BuildCircleDiagnosticEntry(Building_AbyssalSummoningCircle circle, string blocker)
-        {
-            IntVec3 position = circle?.Position ?? IntVec3.Invalid;
-            return "ABY_BossSummonFail_CircleDiagnosticEntry".Translate(position.x, position.z, blocker ?? "ABY_BossSummonFail_NoCircleAvailable".Translate());
-        }
-
-        private static bool TryFindActivePortalOfDef(Map map, string defName, out Thing activePortal)
-        {
-            activePortal = null;
-            ThingDef portalDef = ABY_DefCache.ThingDefNamed(defName);
-            if (portalDef == null)
-            {
-                return false;
-            }
-
-            List<Thing> portals = map.listerThings.ThingsOfDef(portalDef);
-            if (portals == null)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < portals.Count; i++)
-            {
-                Thing portal = portals[i];
-                if (portal != null && portal.Spawned && !portal.Destroyed)
+                if (thing is Building_ABY_HostileManifestationBase
+                    || thing is Building_AbyssalRupturePortal
+                    || thing is Building_AbyssalImpPortal
+                    || thing is Building_AbyssalHordeCommandGate)
                 {
-                    activePortal = portal;
+                    structure = thing;
                     return true;
                 }
             }

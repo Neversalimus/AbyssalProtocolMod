@@ -44,6 +44,10 @@ namespace AbyssalProtocol
                 new FloatMenuOption("Rehearse all active summon rituals", delegate
                 {
                     LogAll(circle, rituals);
+                }),
+                new FloatMenuOption("Run preflight reliability pass (all active rituals)", delegate
+                {
+                    RunPreflightReliabilityPass(circle, rituals);
                 })
             };
 
@@ -72,6 +76,51 @@ namespace AbyssalProtocol
             }
 
             Find.WindowStack.Add(new FloatMenu(options));
+        }
+
+        private static void RunPreflightReliabilityPass(Building_AbyssalSummoningCircle circle, List<RitualEntry> rituals)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("[Abyssal Protocol] DEV SUMMON PREFLIGHT RELIABILITY PASS");
+            sb.AppendLine("Map: " + GetMapLabel(circle?.Map));
+            sb.AppendLine("This pass is diagnostic-only. A BLOCKED result may be expected when the current colony lacks a sigil, unlock, power or modules.");
+            sb.AppendLine();
+
+            int coherentReports = 0;
+            int malformedReports = 0;
+            for (int i = 0; i < rituals.Count; i++)
+            {
+                RitualEntry entry = rituals[i];
+                if (entry?.Props == null || IsRetired(entry.Props))
+                {
+                    continue;
+                }
+
+                ABY_SummonPreflightReport report = ABY_SummonPreflightReport.Create(circle, entry.Props);
+                bool coherent = report.Entries != null && report.Entries.Count >= 7 && (report.CanStart || !report.PrimaryBlocker.NullOrEmpty());
+                if (coherent)
+                {
+                    coherentReports++;
+                }
+                else
+                {
+                    malformedReports++;
+                }
+
+                sb.AppendLine("== " + GetMenuLabel(entry) + " ==");
+                sb.AppendLine("Report coherence: " + (coherent ? "PASS" : "FAIL"));
+                report.AppendDiagnosticReport(sb);
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("Summary: coherent reports=" + coherentReports + " | malformed reports=" + malformedReports + ".");
+            Log.Message(sb.ToString());
+            Messages.Message(
+                malformedReports == 0
+                    ? "Summon preflight reliability pass logged."
+                    : "Summon preflight reliability pass found malformed reports. Check the player log.",
+                malformedReports == 0 ? MessageTypeDefOf.PositiveEvent : MessageTypeDefOf.RejectInput,
+                false);
         }
 
         private static void LogAll(Building_AbyssalSummoningCircle circle, List<RitualEntry> rituals)

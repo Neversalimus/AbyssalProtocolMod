@@ -2103,7 +2103,22 @@ namespace AbyssalProtocol
                 AbyssalStyledWidgets.EndAbyssalScrollView(outRect, ref statusScrollPosition, viewRect);
                 }
 
-                Rect closeRect = new Rect(inner.x, inner.yMax - 36f, inner.width, 30f);
+                float actionGap = 8f;
+                float actionWidth = (inner.width - actionGap) * 0.5f;
+                Rect copyReportRect = new Rect(inner.x, inner.yMax - 36f, actionWidth, 30f);
+                Rect closeRect = new Rect(copyReportRect.xMax + actionGap, inner.yMax - 36f, actionWidth, 30f);
+                if (AbyssalStyledWidgets.TextButton(copyReportRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_SummonDiagnostics_Copy", "Copy diagnostic report")))
+                {
+                    if (AbyssalSummoningConsoleUtility.TryCopySummonDiagnosticReport(parent.circle, ritual))
+                    {
+                        Messages.Message(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_SummonDiagnostics_Copied", "Summon diagnostic report copied to the clipboard."), MessageTypeDefOf.NeutralEvent, false);
+                        SoundDefOf.Tick_Tiny.PlayOneShotOnCamera(null);
+                    }
+                    else
+                    {
+                        Messages.Message(AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_SummonDiagnostics_CopyFailed", "Could not copy the summon diagnostic report. Check the player log."), MessageTypeDefOf.RejectInput, false);
+                    }
+                }
                 if (AbyssalStyledWidgets.TextButton(closeRect, AbyssalSummoningConsoleUtility.TranslateOrFallback("ABY_CircleRitualDossier_Close", "Close dossier")))
                 {
                     Close();

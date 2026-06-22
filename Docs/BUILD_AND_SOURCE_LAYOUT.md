@@ -67,7 +67,7 @@ At the time this document was added:
 
 ```text
 Root-level .cs files in source/: 0
-Real .cs files under source/ excluding bin/obj: 407
+Real .cs files under source/ excluding bin/obj: 447
 ```
 
 The project builds successfully with source files in subfolders because it is an SDK-style C# project and uses the default recursive compile include behavior.
@@ -255,3 +255,27 @@ UnityEngine.CoreModule
 
 Do not compile the mod DLL against `.NET 9` / `Microsoft.NETCore.App.Ref` reference assemblies. A DLL referencing `System.Runtime, Version=9.0.0.0` can load-fail in RimWorld/Mono with `ReflectionTypeLoadException`, which then cascades into many XML `Could not find type named AbyssalProtocol...` red errors.
 
+
+
+## 2026-06-22 — Summoning reliability source ownership
+
+The shared summon reliability layer uses these exact paths:
+
+```text
+source/Summoning/ABY_SummonPreflightReport.cs
+source/Summoning/MapComponents/MapComponent_ABY_SummonEncounterRuntime.cs
+source/Bosses/Shared/AbyssalBossSummonUtility.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/UI/Summoning/AbyssalSummoningConsoleUtility.cs
+source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs
+```
+
+Placement rules:
+
+- Put new **preflight/readiness/state-reporting** code in `source/Summoning/`; do not hide it inside a UI window or a boss class.
+- Put save-backed map lifecycle state in `source/Summoning/MapComponents/`.
+- Keep cross-encounter concrete-world checks in `source/Bosses/Shared/AbyssalBossSummonUtility.cs` so bosses, horde portals, Dominion and future encounters use one blocker authority.
+- A new summon completion route must notify `MapComponent_ABY_SummonEncounterRuntime` after concrete spawn/begin succeeds. Do not treat a time limit as authority to start a second encounter.
+- The player diagnostic export belongs in existing Summoning UI helpers/dossier, while automated non-mutating checks belong under `source/Diagnostics/`.
+
+Because these files are gameplay/runtime C#, any patch touching this layer must include the full changed sources under lowercase `source/` and a verified `Assemblies/AbyssalProtocol.dll` only after a successful compatible build.

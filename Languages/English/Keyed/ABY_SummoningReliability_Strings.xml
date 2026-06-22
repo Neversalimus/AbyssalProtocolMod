@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_SummonBlocker_RuntimePreparing>A previous invocation is still preparing at the summoning circle.</ABY_SummonBlocker_RuntimePreparing>
+  <ABY_SummonBlocker_RuntimeActive>A previous Abyssal encounter is still active on this map.</ABY_SummonBlocker_RuntimeActive>
+  <ABY_SummonBlocker_Dominion>A Dominion crisis is still active on this map.</ABY_SummonBlocker_Dominion>
+  <ABY_SummonBlocker_HordeWave>A horde breach is still opening or maintaining portals.</ABY_SummonBlocker_HordeWave>
+  <ABY_SummonBlocker_Structure>An Abyssal encounter structure is still active: {0}.</ABY_SummonBlocker_Structure>
+  <ABY_SummonBlocker_HostilePawn>A hostile Abyssal entity is still combat-capable: {0}.</ABY_SummonBlocker_HostilePawn>
+  <ABY_SummonDiagnostics_Copy>Copy diagnostic report</ABY_SummonDiagnostics_Copy>
+  <ABY_SummonDiagnostics_Copied>Summon diagnostic report copied to the clipboard.</ABY_SummonDiagnostics_Copied>
+  <ABY_SummonDiagnostics_CopyFailed>Could not copy the summon diagnostic report. Check the player log.</ABY_SummonDiagnostics_CopyFailed>
+</LanguageData>

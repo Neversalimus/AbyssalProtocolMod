@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <ABY_SummonBlocker_RuntimePreparing>Предыдущий призыв всё ещё готовится на круге призыва.</ABY_SummonBlocker_RuntimePreparing>
+  <ABY_SummonBlocker_RuntimeActive>На этой карте всё ещё активно предыдущее столкновение Бездны.</ABY_SummonBlocker_RuntimeActive>
+  <ABY_SummonBlocker_Dominion>На этой карте всё ещё активен кризис Доминиона.</ABY_SummonBlocker_Dominion>
+  <ABY_SummonBlocker_HordeWave>Прорыв орды всё ещё открывает или поддерживает порталы.</ABY_SummonBlocker_HordeWave>
+  <ABY_SummonBlocker_Structure>Структура столкновения Бездны всё ещё активна: {0}.</ABY_SummonBlocker_Structure>
+  <ABY_SummonBlocker_HostilePawn>Враждебная сущность Бездны всё ещё боеспособна: {0}.</ABY_SummonBlocker_HostilePawn>
+  <ABY_SummonDiagnostics_Copy>Скопировать диагностический отчёт</ABY_SummonDiagnostics_Copy>
+  <ABY_SummonDiagnostics_Copied>Диагностический отчёт призыва скопирован в буфер обмена.</ABY_SummonDiagnostics_Copied>
+  <ABY_SummonDiagnostics_CopyFailed>Не удалось скопировать диагностический отчёт призыва. Проверьте player log.</ABY_SummonDiagnostics_CopyFailed>
+</LanguageData>

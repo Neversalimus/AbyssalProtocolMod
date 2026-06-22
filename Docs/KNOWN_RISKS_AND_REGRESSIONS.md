@@ -948,16 +948,23 @@ In-game checks:
 - Spawn Halo Step units near hostiles and confirm they still blink/step when threatened.
 - Spawn Harvester units near corpses and hostiles and confirm hostile interference still pauses harvesting.
 
-## Summoning validation and stale-encounter recovery guard — 2026-06-22
+
+## Summoning lifecycle, diagnostics, and stale-state safeguards — 2026-06-22
 
 | Risk | Severity | Area | Symptoms | Prevention / check |
 | --- | --- | --- | --- | --- |
-| Generic “no valid summoning circle” failure hides the real blocker | P1 | summoning / player support | Players rebuild modules without discovering that access, focus, power, an active portal, a live hostile Abyssal pawn, horde state, or Dominion state is blocking the ritual | Keep `AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(...)` and detailed candidate-circle diagnostics routed through direct sigil use, the console readiness strip, the circle validator, and Dominion entry. |
-| Fixed-duration encounter timeout clears a real unresolved fight | P1 | encounter integrity / progression | A player can wait out a boss, escaped hostile, or active portal and start a second encounter; rewards, cleanup, and progression may overlap or be bypassed | Do not auto-complete encounters after an elapsed gameplay time. The horde watchdog may clear only runtime state that has no command gate, no hostile portal, and no live combat-capable Abyssal pawn. |
+| UI, direct sigil use, job validation, and circle start use different readiness rules | P1 | summoning / player progression | Console says ready but direct use fails, or a sigil is carried to a circle only to hit an unrelated blocker | Use `ABY_SummonPreflightReport` for every user-facing/readiness path. It must remain side-effect-free and return an exact primary blocker. |
+| Active encounter record is cleared by elapsed game time | P1 | encounter lifecycle / rewards | Player leaves a real boss or portal alive, waits out a timer, then starts a second encounter; may cause overlap, duplicate rewards, or cleanup corruption | Never authorize a new summon from elapsed time alone. `MapComponent_ABY_SummonEncounterRuntime` may clear only after concrete signals (crisis, wave, portals/manifestations/gate, live combat-capable Abyssal pawn) are absent for the short grace window. |
+| New spawn route does not activate the lifecycle record | P1 | summoning / future content | A successful new encounter route leaves the map apparently clear and permits a second summon while its enemy/event is active | After a concrete boss, manifestation, portal, horde, hostile pack, or Dominion route succeeds, call `Building_AbyssalSummoningCircle.MarkEncounterActivated()`. Never mark it before the actual spawn/begin succeeds. |
+| Ritual reset destroys active lifecycle state | P1 | summoning / cooldown | Normal circle cooldown after a successful spawn makes the system forget an active boss/portal | `ResetRitual()` may abort only `Preparing` records. Active records must remain until concrete state is gone or the watchdog proves they are stale. |
+| Detailed encounter lookup full-scans map every OnGUI frame | P2 | Summoning Console / TPS | Opening console during large horde causes UI stutter from repeated pawn/structure scans | Keep `TryGetActiveAbyssalEncounterBlocker` short-cached and explicitly invalidate via `NotifyActiveEncounterStateMaybeChanged` whenever encounter/lifecycle state changes. |
+| Diagnostic export mutates gameplay or consumes RNG | P2 | support UI / reproducibility | Player clicks report and changes arrival cells, consumes a sigil, reserves a target, or alters encounter state | `BuildSummonDiagnosticReport` and `ABY_SummonPreflightReport` are inspection-only. Do not resolve RNG-dependent arrival cells, reserve targets, consume sigils, or start cleanup from report/UI draw code. |
 
 In-game checks:
 
-- Attempt a sigil with a blocked interaction cell, a blocked focus cell, an unpowered circle, and a busy circle. Confirm direct sigil use names each blocking reason and includes affected circle coordinates when several circles fail for different reasons.
-- Leave one hostile Abyssal pawn or one active portal alive. Confirm the Summoning Console says exactly which entity/portal blocks a new invocation.
-- Start a horde, remove all portals and hostile Abyssal pawns through normal cleanup/dev cleanup, and confirm the existing horde watchdog clears the stale runtime state without waiting for a timer.
-- Leave a real boss or combat-capable hostile alive for more than two in-game days. Confirm summoning remains blocked; elapsed time must not erase a legitimate encounter.
+- Start each ritual category (boss manifestation/direct boss, imp portal, horde wave, hostile pack, Dominion) and verify another summon is blocked until the real encounter ends.
+- Save/load once during Charging or Surge and once after concrete encounter activation; confirm the active lifecycle remains correctly blocked and diagnostics name the blocker.
+- Interrupt a ritual before Breach (destroy circle or force/reset in Dev Mode) and confirm it becomes `Aborted`, does not consume a reward, and a new invocation is possible once normal state is clear.
+- Clear a horde after all portals/gate/pawns are gone; confirm the horde watchdog and runtime lifecycle remove the blocker without a time-based player exploit.
+- Open the ritual dossier during an active encounter, copy the report repeatedly, and confirm no sigil/capacitor/arrival state changes.
+- Run `DEV: threat rehearsal` → `Run preflight reliability pass` and confirm every active ritual reports `PASS` coherence, whether its current gameplay gates are actually ready or intentionally blocked.

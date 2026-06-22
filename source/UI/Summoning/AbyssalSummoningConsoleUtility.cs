@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -880,21 +881,13 @@ namespace AbyssalProtocol
                 return TranslateOrFallback("ABY_CircleConsoleFail_NoCircle", "No valid summoning circle is available for console control.");
             }
 
-            if (!IsRitualUnlocked(ritual, out string failReason))
+            ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.CreateForRitual(circle, ritual);
+            if (!preflight.CanStart)
             {
-                return failReason;
+                return preflight.PrimaryBlocker;
             }
 
-            if (!circle.IsReadyForSigil(out failReason))
-            {
-                return failReason;
-            }
-
-            if (!AbyssalCircleCapacitorRitualUtility.TryAuthorizeRitualStart(circle, ritual, circle.CapacitorOverchannelEnabled, out _, out _, out failReason))
-            {
-                return failReason;
-            }
-
+            string failReason = null;
             Thing sigil = FindBestSigil(circle, ritual, out failReason);
             if (sigil == null)
             {
@@ -957,6 +950,61 @@ namespace AbyssalProtocol
             });
 
             return entries;
+        }
+
+        public static string BuildSummonDiagnosticReport(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("[Abyssal Protocol] SUMMON DIAGNOSTIC REPORT");
+            sb.AppendLine("Map: " + (circle?.Map?.Parent?.LabelCap.ToString() ?? "none") + " | mapId=" + (circle?.Map?.uniqueID ?? 0));
+            sb.AppendLine("Circle: " + (circle != null && !circle.Destroyed ? circle.PositionHeld.ToString() : "none")
+                + " | thingId=" + (circle?.thingIDNumber ?? 0)
+                + " | powered=" + (circle?.IsPoweredForRitual ?? false)
+                + " | ritualActive=" + (circle?.RitualActive ?? false));
+            sb.AppendLine("Selected ritual: " + (ritual?.Id ?? "none") + " | sigil=" + (ritual?.SigilThingDefName ?? "none"));
+
+            ThingDef sigilDef = GetSigilDef(ritual);
+            CompProperties_UseEffectSummonBoss props = sigilDef?.GetCompProperties<CompProperties_UseEffectSummonBoss>();
+            ABY_SummonPreflightReport preflight = ABY_SummonPreflightReport.Create(circle, props);
+            preflight.AppendDiagnosticReport(sb);
+
+            if (circle?.Map != null)
+            {
+                MapComponent_ABY_SummonEncounterRuntime runtime = circle.Map.GetComponent<MapComponent_ABY_SummonEncounterRuntime>();
+                runtime?.AppendDiagnosticReport(sb);
+
+                if (AbyssalBossSummonUtility.TryGetConcreteActiveAbyssalEncounterBlocker(circle.Map, out string concreteBlocker))
+                {
+                    sb.AppendLine("Concrete encounter blocker: " + concreteBlocker);
+                }
+                else
+                {
+                    sb.AppendLine("Concrete encounter blocker: none");
+                }
+
+                MapComponent_AbyssalPortalWave portalWave = circle.Map.GetComponent<MapComponent_AbyssalPortalWave>();
+                sb.AppendLine("Portal wave active: " + (portalWave?.IsWaveActive ?? false));
+                MapComponent_DominionCrisis dominion = circle.Map.GetComponent<MapComponent_DominionCrisis>();
+                sb.AppendLine("Dominion active: " + (dominion?.IsActive ?? false) + " | phase=" + (dominion?.Phase.ToString() ?? "none"));
+                sb.AppendLine("Installed stabilizers: " + circle.InstalledStabilizerCount + "/" + (circle.ModuleSlots?.Count ?? 0));
+                sb.AppendLine("Capacitors: " + AbyssalCircleCapacitorUtility.GetInstalledSummary(circle));
+            }
+
+            return sb.ToString();
+        }
+
+        public static bool TryCopySummonDiagnosticReport(Building_AbyssalSummoningCircle circle, RitualDefinition ritual)
+        {
+            try
+            {
+                GUIUtility.systemCopyBuffer = BuildSummonDiagnosticReport(circle, ritual);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[Abyssal Protocol] Failed to copy summon diagnostic report: " + ex.GetType().Name + ": " + ex.Message);
+                return false;
+            }
         }
 
         private static string Shorten(string text, int maxLength)
@@ -1812,9 +1860,9 @@ namespace AbyssalProtocol
 
             bool interactionOk = circle.HasValidInteractionCell(out string interactionFail);
             bool focusOk = circle.HasClearRitualFocus(out string focusFail);
-            string encounterBlocker = null;
-            bool encounterActive = circle.Map != null && AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(circle.Map, out encounterBlocker);
-            bool encounterClear = !encounterActive;
+            string encounterReason = null;
+            bool encounterBlocked = circle.Map != null && AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(circle.Map, out encounterReason);
+            bool encounterClear = !encounterBlocked;
             int sigils = CountAvailableSigils(circle, ritual);
 
             entries.Add(new StatusEntry
@@ -1844,9 +1892,7 @@ namespace AbyssalProtocol
             entries.Add(new StatusEntry
             {
                 Label = TranslateOrFallback("ABY_CircleStatus_Encounter", "Encounter"),
-                Value = encounterClear
-                    ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear")
-                    : encounterBlocker ?? TranslateOrFallback("ABY_BossSummonFail_EncounterActive", "An abyssal encounter is already active on this map."),
+                Value = encounterClear ? TranslateOrFallback("ABY_CircleStatus_Clear", "clear") : encounterReason,
                 Satisfied = encounterClear
             });
 

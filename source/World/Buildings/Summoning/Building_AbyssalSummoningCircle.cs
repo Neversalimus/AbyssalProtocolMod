@@ -479,14 +479,19 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (!devBypassProgressionAndCapacitors && !AbyssalSummoningConsoleUtility.IsRitualUnlocked(summonProps.ritualId, out failReason))
-            {
-                return false;
-            }
-
             AbyssalBossSummonUtility.TryCleanupStaleEncounterBeforeSummon(Map, "circle sequence pre-summon active encounter check");
 
-            if (!IsReadyForSigil(out failReason))
+            ABY_SummonPreflightReport preflight = null;
+            if (!devBypassProgressionAndCapacitors)
+            {
+                preflight = ABY_SummonPreflightReport.Create(this, summonProps, activator);
+                if (!preflight.CanStart)
+                {
+                    failReason = preflight.PrimaryBlocker ?? "The summon preflight did not authorize this invocation.";
+                    return false;
+                }
+            }
+            else if (!IsReadyForSigil(out failReason))
             {
                 return false;
             }
@@ -648,6 +653,7 @@ namespace AbyssalProtocol
             }
 
             ClearSigilPrimingVisual();
+            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.BeginPreparation(this, summonProps);
             StartPhase(RitualPhase.Charging, GetPhaseDurationForPendingRitual(RitualPhase.Charging));
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.12f);
             // The legacy Archon dash/summon motes are intentionally not used here anymore.
@@ -1725,6 +1731,7 @@ namespace AbyssalProtocol
                     return;
                 }
 
+                MarkEncounterActivated();
                 ApplyRitualInstability();
                 Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.24f);
                 if (bossPortalCell.IsValid)
@@ -1736,6 +1743,7 @@ namespace AbyssalProtocol
 
             if (TrySpawnPendingBossManifestation(out failReason))
             {
+                MarkEncounterActivated();
                 ApplyRitualInstability();
                 Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.22f);
                 if (pendingSpawnCell.IsValid)
@@ -1771,6 +1779,7 @@ namespace AbyssalProtocol
                 pendingCompletionLetterDescKey);
             DoRitualSpecificArrivalPresentation(pendingRitualId, pendingSpawnCell, 1f);
             TrySpawnPendingSupportPackNearBoss(pawn);
+            MarkEncounterActivated();
             ApplyRitualInstability();
             ABY_SigilEncounterMusicUtility.TryStartForRitual(pendingRitualId, Map);
         }
@@ -1902,6 +1911,7 @@ namespace AbyssalProtocol
             }
 
             TrySpawnPendingDominionRareEscort();
+            MarkEncounterActivated();
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.20f);
             if (RitualFocusCell.IsValid)
@@ -1984,6 +1994,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            MarkEncounterActivated();
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.16f);
             DoRitualSpecificArrivalPresentation(pendingRitualId, arrivalCell, 1f);
@@ -2053,6 +2064,7 @@ namespace AbyssalProtocol
                 return;
             }
 
+            MarkEncounterActivated();
             IntVec3 letterCell = firstPortalCell.IsValid ? firstPortalCell : RitualFocusCell;
             ApplyRitualInstability();
             if (AbyssalHordeSigilUtility.IsSupportedRitual(pendingRitualId))
@@ -2120,6 +2132,7 @@ namespace AbyssalProtocol
             }
 
             TrySpawnPendingSupportPack();
+            MarkEncounterActivated();
             ApplyRitualInstability();
             Current.Game?.GetComponent<AbyssalBossScreenFXGameComponent>()?.RegisterRitualPulse(Map, 0.18f);
             ABY_SoundUtility.PlayAt("ABY_SigilChargePulse", portal.Position, Map);
@@ -2873,10 +2886,18 @@ namespace AbyssalProtocol
             ritualPhase = phase;
             phaseDuration = duration;
             phaseTicksRemaining = duration;
+            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyRitualPhase(this, phase.ToString());
+        }
+
+        private void MarkEncounterActivated()
+        {
+            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.Activate(this, pendingRitualId, pendingSummonMode);
+            AbyssalBossSummonUtility.NotifyActiveEncounterStateMaybeChanged(Map);
         }
 
         private void ResetRitual()
         {
+            Map?.GetComponent<MapComponent_ABY_SummonEncounterRuntime>()?.NotifyCircleRitualReset(this);
             ResolveCapacitorAftermath();
             BeginCapacitorRecovery();
             ritualPhase = RitualPhase.Idle;

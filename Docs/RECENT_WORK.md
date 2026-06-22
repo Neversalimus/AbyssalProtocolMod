@@ -617,7 +617,7 @@ Status as of the local archive inspected on 2026-05-18:
 C# source root: source/
 Project file: source/AbyssalProtocol.csproj
 Root-level .cs files in source/: 0
-Real .cs files under source/ excluding bin/obj: 407
+Real .cs files under source/ excluding bin/obj: 447
 Architecture docs present: yes
 Build docs present: yes
 ```
@@ -1346,18 +1346,36 @@ Do not use shadow-mode output as automatic authorization to migrate T1, Dominion
 - Switched Harvester Essence hediff lookup to `ABY_DefCache` for consistency with other runtime comp paths.
 - Build not verified in this environment; modified-file syntax was checked against the previous assembly and XML parse checks passed. Full DLL rebuild is still required before runtime testing.
 
-## 2026-06-22 — Summoning validation diagnostics and safe encounter recovery
 
-- Replaced generic active-encounter feedback with a cached exact blocker path: Dominion crisis, horde breach, live hostile Abyssal entity, or remaining hostile portal.
-- Expanded nearest-circle validation so direct sigil use reports each unavailable circle’s concrete failure (busy, unpowered, interaction blocked, or ritual focus blocked), including map coordinates when several circles fail for different reasons.
-- Routed the same encounter blocker through circle readiness, the sigil carry job, Summoning Console readiness status, and Dominion preflight validation.
-- Confirmed the intended recovery model: no fixed two-day auto-complete. Existing horde watchdog recovery stays state-based and only completes a horde once no command gate, hostile portal, or live combat-capable Abyssal pawn remains.
-- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony libraries. XML parse validation passed. RimWorld runtime smoke testing is still required.
+## 2026-06-22 — Summoning Reliability Foundation
 
-Changed ownership:
+- Added `ABY_SummonPreflightReport` as the single side-effect-free readiness authority shared by direct sigil validation, the circle start transaction, Summoning Console blocker text, ritual dossier diagnostics, and the dev reliability pass. The report provides exact gates for unlock, circle state, power, interaction/focus cells, active encounter, capacitor authorization, sigil/operator state, and deferred arrival routing.
+- Added `MapComponent_ABY_SummonEncounterRuntime`, a save-backed one-encounter-per-map lifecycle record with `Preparing`, `Active`, and terminal states. The circle begins preparation only after normal start gates pass and activates the record only after a concrete encounter route actually begins.
+- Consolidated player-facing active encounter blockers in `AbyssalBossSummonUtility`: runtime lifecycle, Dominion crisis, active horde wave, portal/manifestation/command structures, and any live combat-capable Abyssal pawn. The exact blocker is short-cached for custom UI so the console does not full-scan the map every OnGUI pass.
+- Added a state-based lifecycle watchdog. It can clear a blocked runtime record only after the map has no concrete Abyssal encounter signals for a short grace period. It does not permit a fresh summon after an arbitrary two-day timer, so a real boss, portal, horde or Dominion crisis remains authoritative.
+- Added a ritual-dossier **Copy diagnostic report** action and EN/RU localization. Reports include circle state, selected ritual, preflight entries, runtime lifecycle, concrete blocker, horde/Dominion state, and installed modules.
+- Extended the Dev Mode threat rehearsal gizmo with a non-mutating preflight reliability pass over all active rituals.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style libraries. XML parsing and RimWorld runtime smoke testing are tracked separately; runtime smoke testing is still required.
 
-- `source/Bosses/Shared/AbyssalBossSummonUtility.cs` — exact encounter blocker + per-circle validation diagnostics.
-- `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` — circle readiness surfaces the exact blocker.
-- `source/Summoning/Jobs/JobDriver_CarrySigilToAbyssalCircle.cs` — job-time revalidation surfaces the same blocker.
-- `source/UI/Summoning/AbyssalSummoningConsoleUtility.cs` — readiness telemetry shows exact encounter state.
-- `source/Dominion/MapComponents/MapComponent_DominionCrisis.cs` — Dominion preflight surfaces the same blocker.
+Touched files:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Bosses/Shared/AbyssalBossSummonUtility.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+source/Summoning/ABY_SigilUseValidator.cs
+source/Summoning/ABY_SummonPreflightReport.cs
+source/Summoning/MapComponents/MapComponent_ABY_SummonEncounterRuntime.cs
+source/UI/Summoning/AbyssalSummoningConsoleUtility.cs
+source/UI/Summoning/Window_AbyssalSummoningConsole.cs
+source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs
+Languages/English/Keyed/ABY_SummoningReliability_Strings.xml
+Languages/Russian/Keyed/ABY_SummoningReliability_Strings.xml
+Docs/AI_ARCHITECTURE.md
+Docs/BUILD_AND_SOURCE_LAYOUT.md
+Docs/AI_QUICK_INDEX.md
+Docs/RECENT_WORK.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+```
