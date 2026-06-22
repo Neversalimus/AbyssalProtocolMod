@@ -1,3 +1,22 @@
+
+## 2026-06-22 — Dev rehearsal concurrent encounter confirmation
+
+- Extended `DEV: threat rehearsal` so developers can deliberately queue another summon while a real Abyssal encounter is already active on the map.
+- Force-start now detects the authoritative encounter blocker and opens an explicit confirmation dialog before using the dev-only concurrent bypass.
+- The bypass ignores only the global map encounter lock. The selected Summoning Circle must still be spawned, idle, powered, and have valid interaction/focus cells.
+- Normal sigil use, jobs, console invocation, preflight, and player-facing behavior retain the one-encounter-at-a-time rule.
+- Portal-wave and Dominion internals remain singleton map systems; their own runtime restrictions still apply even in Dev Mode.
+
+Touched files:
+source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs
+source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs
+Languages/English/Keyed/ABY_SummoningReliability_Strings.xml
+Languages/Russian/Keyed/ABY_SummoningReliability_Strings.xml
+Docs/AI_ARCHITECTURE.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 ## 2026-05-24 — Combat targeting and Dominion lookup cleanup
 
 - Replaced LINQ/order-by target selection in turret projectile impact paths with bounded manual top-N insertion for Null Arc, Rift Flak, and Sanctified Prism projectiles.

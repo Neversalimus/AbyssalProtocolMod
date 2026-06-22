@@ -302,7 +302,7 @@ Dev tools, stability diagnostics, Harmony patch reports, test immortality logic,
 
 Diagnostics should not be required for normal gameplay progression unless explicitly designed as a debug-only system.
 
-The Summoning Circle exposes a dev-only `DEV: threat rehearsal` gizmo in Dev Mode. The menu is implemented by `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs` and should remain diagnostics-only: it logs predicted summon threat composition, arrival routing, escort profiles, horde summaries, Dominion notes, capacitor state, and can force-start rituals without consuming sigils for testing. Do not move this into player-facing progression UI unless it is redesigned as a readable Summoning Console forecast.
+The Summoning Circle exposes a dev-only `DEV: threat rehearsal` gizmo in Dev Mode. The menu is implemented by `source/Diagnostics/ABY_SummonThreatRehearsalUtility.cs` and should remain diagnostics-only: it logs predicted summon threat composition, arrival routing, escort profiles, horde summaries, Dominion notes, capacitor state, and can force-start rituals without consuming sigils for testing. When an Abyssal encounter is already active, force-start must display an explicit confirmation before the dev-only route bypasses the map-wide encounter lock. That bypass still requires an idle, powered, unobstructed selected circle and must never be exposed through normal sigil, job, gizmo, or player Console paths. Portal-wave and Dominion runtimes remain single-instance even during Dev rehearsal. Do not move this into player-facing progression UI unless it is redesigned as a readable Summoning Console forecast.
 
 ### `source/Legacy/`
 

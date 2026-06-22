@@ -171,9 +171,68 @@ namespace AbyssalProtocol
                 return;
             }
 
-            if (circle.TryStartDevSummonSequence(entry.Props, out string failReason))
+            // Do not show a concurrent-encounter confirmation for a request that cannot
+            // start on this specific circle anyway.  The dev bypass deliberately ignores
+            // only the global map lock, never the circle's own physical readiness.
+            if (circle.RitualActive)
             {
-                Messages.Message("DEV force-started ritual without consuming a sigil: " + GetMenuLabel(entry), MessageTypeDefOf.PositiveEvent, false);
+                Messages.Message("DEV force-start blocked: the selected Summoning Circle is already running a ritual.", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!circle.IsPoweredForRitual)
+            {
+                Messages.Message("DEV force-start blocked: the selected Summoning Circle is unpowered.", MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!circle.HasValidInteractionCell(out string interactionReason))
+            {
+                Messages.Message("DEV force-start blocked: " + (interactionReason ?? "The interaction cell is invalid."), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (!circle.HasClearRitualFocus(out string focusReason))
+            {
+                Messages.Message("DEV force-start blocked: " + (focusReason ?? "The ritual focus is obstructed."), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            if (AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(circle.Map, out string encounterBlocker))
+            {
+                string confirmation = AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                    "ABY_DevRehearsal_ConcurrentConfirm",
+                    "Another Abyssal encounter is already active:\n\n{0}\n\nStart {1} anyway? This DEV-only bypass permits overlapping encounters for testing. The selected circle must still be idle, powered, and unobstructed. Do not use this to validate normal player progression.",
+                    encounterBlocker ?? "Active encounter detected.",
+                    GetMenuLabel(entry));
+
+                Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(confirmation, delegate
+                {
+                    ForceStartInternal(circle, entry, true);
+                }));
+                return;
+            }
+
+            ForceStartInternal(circle, entry, false);
+        }
+
+        private static void ForceStartInternal(Building_AbyssalSummoningCircle circle, RitualEntry entry, bool allowConcurrentEncounter)
+        {
+            if (circle == null || entry?.Props == null)
+            {
+                return;
+            }
+
+            if (circle.TryStartDevSummonSequence(entry.Props, allowConcurrentEncounter, out string failReason))
+            {
+                string message = allowConcurrentEncounter
+                    ? AbyssalSummoningConsoleUtility.TranslateOrFallback(
+                        "ABY_DevRehearsal_ConcurrentStarted",
+                        "DEV concurrent force-started ritual without consuming a sigil: {0}",
+                        GetMenuLabel(entry))
+                    : "DEV force-started ritual without consuming a sigil: " + GetMenuLabel(entry);
+
+                Messages.Message(message, MessageTypeDefOf.PositiveEvent, false);
                 LogRehearsal(circle, entry);
                 return;
             }

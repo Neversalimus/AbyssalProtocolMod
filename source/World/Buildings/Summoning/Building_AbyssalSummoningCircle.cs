@@ -455,15 +455,34 @@ namespace AbyssalProtocol
 
         public bool TryStartSummonSequence(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, out string failReason)
         {
-            return TryStartSummonSequenceInternal(activator, summonProps, false, out failReason);
+            return TryStartSummonSequenceInternal(activator, summonProps, false, false, out failReason);
         }
 
         public bool TryStartDevSummonSequence(CompProperties_UseEffectSummonBoss summonProps, out string failReason)
         {
-            return TryStartSummonSequenceInternal(null, summonProps, true, out failReason);
+            return TryStartDevSummonSequence(summonProps, false, out failReason);
         }
 
-        private bool TryStartSummonSequenceInternal(Pawn activator, CompProperties_UseEffectSummonBoss summonProps, bool devBypassProgressionAndCapacitors, out string failReason)
+        /// <summary>
+        /// Dev-only force-start route.  A confirmed concurrent rehearsal bypasses only the
+        /// map-wide active-encounter lock; the selected circle must still be spawned, idle,
+        /// powered, reachable through its interaction cell and have a clear ritual focus.
+        /// This must never be used by a normal sigil or player-facing console path.
+        /// </summary>
+        public bool TryStartDevSummonSequence(
+            CompProperties_UseEffectSummonBoss summonProps,
+            bool allowConcurrentEncounter,
+            out string failReason)
+        {
+            return TryStartSummonSequenceInternal(null, summonProps, true, allowConcurrentEncounter, out failReason);
+        }
+
+        private bool TryStartSummonSequenceInternal(
+            Pawn activator,
+            CompProperties_UseEffectSummonBoss summonProps,
+            bool devBypassProgressionAndCapacitors,
+            bool devAllowConcurrentEncounter,
+            out string failReason)
         {
             failReason = null;
 
@@ -491,7 +510,7 @@ namespace AbyssalProtocol
                     return false;
                 }
             }
-            else if (!IsReadyForSigil(out failReason))
+            else if (!IsReadyForSummon(devAllowConcurrentEncounter, out failReason))
             {
                 return false;
             }
@@ -1457,6 +1476,16 @@ namespace AbyssalProtocol
 
         public bool IsReadyForSigil(out string failReason)
         {
+            return IsReadyForSummon(false, out failReason);
+        }
+
+        /// <summary>
+        /// Shared physical circle readiness gate.  Normal gameplay always passes
+        /// <c>false</c> and therefore preserves the one-encounter-at-a-time rule.
+        /// The only <c>true</c> caller is the explicitly confirmed Dev rehearsal route.
+        /// </summary>
+        private bool IsReadyForSummon(bool allowConcurrentEncounter, out string failReason)
+        {
             failReason = null;
 
             if (!Spawned || Destroyed || Map == null)
@@ -1487,7 +1516,8 @@ namespace AbyssalProtocol
                 return false;
             }
 
-            if (AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(Map, out string encounterBlocker))
+            if (!allowConcurrentEncounter
+                && AbyssalBossSummonUtility.TryGetActiveAbyssalEncounterBlocker(Map, out string encounterBlocker))
             {
                 failReason = encounterBlocker ?? "ABY_BossSummonFail_EncounterActive".Translate();
                 return false;

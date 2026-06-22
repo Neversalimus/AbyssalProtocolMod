@@ -9,4 +9,4 @@
   <ABY_SummonDiagnostics_Copy>Скопировать диагностический отчёт</ABY_SummonDiagnostics_Copy>
   <ABY_SummonDiagnostics_Copied>Диагностический отчёт призыва скопирован в буфер обмена.</ABY_SummonDiagnostics_Copied>
   <ABY_SummonDiagnostics_CopyFailed>Не удалось скопировать диагностический отчёт призыва. Проверьте player log.</ABY_SummonDiagnostics_CopyFailed>
-</LanguageData>
+  <ABY_DevRehearsal_ConcurrentConfirm>На карте уже активно другое столкновение Бездны:&#10;&#10;{0}&#10;&#10;Всё равно запустить {1}? Этот обход доступен только в Dev Mode и разрешает наложение столкновений для тестов. Выбранный круг всё равно должен быть свободен, запитан и не заблокирован. Не используйте этот режим для проверки обычной прогрессии игрока.</ABY_DevRehearsal_ConcurrentConfirm>&#10;  <ABY_DevRehearsal_ConcurrentStarted>DEV: ритуал принудительно запущен поверх активного столкновения без расхода сигилы: {0}</ABY_DevRehearsal_ConcurrentStarted>&#10;</LanguageData>

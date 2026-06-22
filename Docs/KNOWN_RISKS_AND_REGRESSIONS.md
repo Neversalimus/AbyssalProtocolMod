@@ -8,6 +8,9 @@
 ## 2026-05-23 — Summon threat rehearsal dev-gizmo guard
 
 - `DEV: threat rehearsal` is diagnostics-only. Keep it behind `Prefs.DevMode`; it can force-start rituals without consuming sigils and bypasses progression/capacitor gates for testing.
+- When a concrete or runtime Abyssal encounter is already active, the force-start menu must require an explicit confirmation before bypassing the map-wide encounter lock. This is the only allowed concurrent-summon route.
+- The concurrent rehearsal bypass must never be reachable from sigil use, jobs, normal gizmos, or the player Summoning Console. It may not bypass the selected circle's own busy, power, interaction-cell, or ritual-focus checks.
+- Portal-wave and Dominion map components remain single-instance systems. Do not extend the rehearsal bypass into duplicate horde waves or simultaneous Dominion crises without a dedicated multi-instance runtime design.
 - Do not expose the force-start path through the player Summoning Console or normal gizmos. A future player-facing forecast should be read-only and localized, not a dev force-start command.
 - Rehearsal logs are predictions based on current map state; horde portal cells and Dominion wave details are still runtime-selected by their map components and should not be treated as exact deterministic spawn promises.
 

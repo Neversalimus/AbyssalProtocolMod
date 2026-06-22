@@ -9,4 +9,4 @@
   <ABY_SummonDiagnostics_Copy>Copy diagnostic report</ABY_SummonDiagnostics_Copy>
   <ABY_SummonDiagnostics_Copied>Summon diagnostic report copied to the clipboard.</ABY_SummonDiagnostics_Copied>
   <ABY_SummonDiagnostics_CopyFailed>Could not copy the summon diagnostic report. Check the player log.</ABY_SummonDiagnostics_CopyFailed>
-</LanguageData>
+  <ABY_DevRehearsal_ConcurrentConfirm>Another Abyssal encounter is already active:&#10;&#10;{0}&#10;&#10;Start {1} anyway? This DEV-only bypass permits overlapping encounters for testing. The selected circle must still be idle, powered, and unobstructed. Do not use this to validate normal player progression.</ABY_DevRehearsal_ConcurrentConfirm>&#10;  <ABY_DevRehearsal_ConcurrentStarted>DEV concurrent force-started ritual without consuming a sigil: {0}</ABY_DevRehearsal_ConcurrentStarted>&#10;</LanguageData>
