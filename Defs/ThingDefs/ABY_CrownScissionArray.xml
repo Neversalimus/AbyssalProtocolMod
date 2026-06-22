@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>ABY_CrownScissionArray</defName>
+    <label>Crown Scission Array</label>
+    <description>A crown-engineered severance pincer built around a wound-core that remembers completed motion. Direct hostile kills leave a short-lived echo inside the array; the next confirmed cut can force that stored trajectory through one nearby enemy before the mechanism forgets what it was made to repeat.</description>
+    <techLevel>Ultra</techLevel>
+    <tradeability>None</tradeability>
+    <generateCommonality>0</generateCommonality>
+
+    <graphicData>
+      <texPath>Things/Weapon/ABY_CrownScissionArray</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.32,1.32)</drawSize>
+    </graphicData>
+    <uiIconScale>1.32</uiIconScale>
+
+    <soundInteract>ABY_CohortHalberdEquip</soundInteract>
+
+    <recipeMaker>
+      <skillRequirements>
+        <Crafting>15</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>ABY_AbyssalForge</li>
+      </recipeUsers>
+    </recipeMaker>
+
+    <costList>
+      <ABY_ReactorSaintCore>1</ABY_ReactorSaintCore>
+      <ABY_CrownedCoreFragment>2</ABY_CrownedCoreFragment>
+      <ABY_DominionCrownShard>1</ABY_DominionCrownShard>
+      <ABY_AbyssalResidue>250</ABY_AbyssalResidue>
+      <Plasteel>170</Plasteel>
+      <Uranium>55</Uranium>
+      <Gold>30</Gold>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <ComponentSpacer>10</ComponentSpacer>
+    </costList>
+
+    <tools>
+      <li>
+        <label>upper severance jaw</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>19</power>
+        <cooldownTime>0.72</cooldownTime>
+        <armorPenetration>0.70</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_CrownScissionEchoTrigger</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+      <li>
+        <label>lower severance jaw</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>14</power>
+        <cooldownTime>0.58</cooldownTime>
+        <armorPenetration>0.82</armorPenetration>
+        <soundMeleeHit>ABY_CohortHalberdHitSharp</soundMeleeHit>
+        <soundMeleeMiss>ABY_CohortHalberdMiss</soundMeleeMiss>
+        <extraMeleeDamages>
+          <li>
+            <def>ABY_CrownScissionEchoTrigger</def>
+            <amount>1</amount>
+            <armorPenetration>0</armorPenetration>
+          </li>
+        </extraMeleeDamages>
+      </li>
+    </tools>
+
+    <statBases>
+      <WorkToMake>175000</WorkToMake>
+      <Mass>3.1</Mass>
+      <MarketValue>9400</MarketValue>
+    </statBases>
+
+    <comps>
+      <li Class="AbyssalProtocol.CompProperties_ABY_WeaponGlowOverlay">
+        <texPath>Things/Weapon/ABY_CrownScissionArray_Glow</texPath>
+        <drawSizeX>1.32</drawSizeX>
+        <drawSizeZ>1.32</drawSizeZ>
+        <alpha>0.52</alpha>
+      </li>
+      <li Class="AbyssalProtocol.CompProperties_ABY_CrownScissionArray">
+        <maxEchoCharges>3</maxEchoCharges>
+        <chargeLifetimeTicks>240</chargeLifetimeTicks>
+        <echoDamage>13</echoDamage>
+        <echoArmorPenetration>0.65</echoArmorPenetration>
+        <echoRadius>2.2</echoRadius>
+        <chargeVisualScale>0.34</chargeVisualScale>
+        <echoVisualScale>0.58</echoVisualScale>
+        <echoFlashScale>0.46</echoFlashScale>
+        <echoSoundDefName>ABY_RuptureVerdict</echoSoundDefName>
+      </li>
+    </comps>
+
+    <modExtensions>
+      <li Class="AbyssalProtocol.DefModExtension_AbyssalForgeUnlock">
+        <requiredResidue>5400</requiredResidue>
+        <category>Weapons</category>
+        <requiredProtocolResearchDefName>ABY_PR_CrownLogicDecoding</requiredProtocolResearchDefName>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownScissionArray_Profile>Эхо-рассечение</ABY_CrownScissionArray_Profile>
+  <ABY_CrownScissionArray_ProfileValue>Быстрая последовательность зачистки групп</ABY_CrownScissionArray_ProfileValue>
+  <ABY_CrownScissionArray_ProfileDesc>Прямые убийства враждебных пешек сохраняют короткие режущие эхо для следующего подтверждённого удара.</ABY_CrownScissionArray_ProfileDesc>
+
+  <ABY_CrownScissionArray_Charges>Сохранённые эхо</ABY_CrownScissionArray_Charges>
+  <ABY_CrownScissionArray_ChargesValue>До {0} зарядов</ABY_CrownScissionArray_ChargesValue>
+  <ABY_CrownScissionArray_ChargesDesc>Прямое убийство враждебной пешки сохраняет одно эхо. Урон эха не может создать новое эхо.</ABY_CrownScissionArray_ChargesDesc>
+
+  <ABY_CrownScissionArray_Decay>Затухание эха</ABY_CrownScissionArray_Decay>
+  <ABY_CrownScissionArray_DecayValue>Исчезает через {0} сек. без нового убийства</ABY_CrownScissionArray_DecayValue>
+  <ABY_CrownScissionArray_DecayDesc>Все сохранённые эхо исчезают одновременно, когда массив перестаёт подтверждать прямые убийства враждебных пешек.</ABY_CrownScissionArray_DecayDesc>
+
+  <ABY_CrownScissionArray_Echo>Эхо-рассечение</ABY_CrownScissionArray_Echo>
+  <ABY_CrownScissionArray_EchoValue>{0} режущего урона, {1}% бронепробития по одному ближайшему врагу</ABY_CrownScissionArray_EchoValue>
+  <ABY_CrownScissionArray_EchoDesc>Следующий подтверждённый удар тратит одно сохранённое эхо на одну другую живую враждебную пешку в указанном локальном радиусе.</ABY_CrownScissionArray_EchoDesc>
+
+  <ABY_CrownScissionArray_Range>Радиус эха</ABY_CrownScissionArray_Range>
+  <ABY_CrownScissionArray_RangeValue>{0} клеток вокруг поражённой цели</ABY_CrownScissionArray_RangeValue>
+  <ABY_CrownScissionArray_RangeDesc>Массив проверяет только локальные радиальные клетки вокруг поражённой цели и не сканирует карту.</ABY_CrownScissionArray_RangeDesc>
+
+  <ABY_CrownScissionArray_Limits>Ограничения эха</ABY_CrownScissionArray_Limits>
+  <ABY_CrownScissionArray_LimitsValue>Только враждебные пешки; одно эхо на удар; без цепей</ABY_CrownScissionArray_LimitsValue>
+  <ABY_CrownScissionArray_LimitsDesc>Здания, трупы и основная цель удара не могут стать целью эха. Урон эха не может сохранить или запустить следующее эхо.</ABY_CrownScissionArray_LimitsDesc>
+
+</LanguageData>

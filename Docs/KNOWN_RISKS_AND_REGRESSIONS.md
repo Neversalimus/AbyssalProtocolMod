@@ -1,3 +1,11 @@
+## 2026-06-22 — Crown Scission Array echo weapon rules
+
+- Crown Scission Array Echo charge state belongs on the equipped weapon `ThingComp` and must remain save-safe. Do not move charges, kill tracking or expiry into a static pawn/map dictionary.
+- Echo charges are created only after a direct hostile pawn kill from the array's base melee hit. The zero-damage trigger worker may observe a dead primary victim after RimWorld resolves the normal tool damage; do not let echo damage create charges, recurse, or chain.
+- Secondary targeting must stay bounded to `GenRadial` cells around the struck target. Do not replace the local lookup with `mapPawns.AllPawnsSpawned`, LINQ pipelines, a map-wide search, or an area damage pass.
+- An echo may damage only one other living hostile pawn. It must exclude the wielder, the struck target, buildings, corpses, downed pawns and allied/neutral pawns. Keep the current safe Abyssal hostility helper for generated-faction compatibility.
+- If the mechanic changes, keep XML, InfoCard strings, max charges, expiry, radius, echo damage and armor penetration synchronized. Melee Animation tweak data is required and must be rechecked after texture crop, draw-size or rotation changes.
+
 ## 2026-06-22 — Stateful melee verdict weapon rules
 
 - Dominion Breach Driver pressure state belongs on the equipped weapon `ThingComp` and must be saved with the weapon. Do not move its target lock into an unbounded static dictionary keyed by pawn, map or Thing IDs.

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownScissionArray_Profile>Echo severance</ABY_CrownScissionArray_Profile>
+  <ABY_CrownScissionArray_ProfileValue>Rapid pack-reaper sequence</ABY_CrownScissionArray_ProfileValue>
+  <ABY_CrownScissionArray_ProfileDesc>Direct hostile kills store short-lived cutting echoes for the next confirmed melee hit.</ABY_CrownScissionArray_ProfileDesc>
+
+  <ABY_CrownScissionArray_Charges>Stored echoes</ABY_CrownScissionArray_Charges>
+  <ABY_CrownScissionArray_ChargesValue>Up to {0} charges</ABY_CrownScissionArray_ChargesValue>
+  <ABY_CrownScissionArray_ChargesDesc>A direct hostile kill stores one echo. Echo damage cannot create another echo.</ABY_CrownScissionArray_ChargesDesc>
+
+  <ABY_CrownScissionArray_Decay>Echo decay</ABY_CrownScissionArray_Decay>
+  <ABY_CrownScissionArray_DecayValue>Expires after {0} seconds without another kill</ABY_CrownScissionArray_DecayValue>
+  <ABY_CrownScissionArray_DecayDesc>All stored echoes expire together when the array stops confirming direct hostile kills.</ABY_CrownScissionArray_DecayDesc>
+
+  <ABY_CrownScissionArray_Echo>Echo severance</ABY_CrownScissionArray_Echo>
+  <ABY_CrownScissionArray_EchoValue>{0} Cut, {1}% AP to one nearby hostile</ABY_CrownScissionArray_EchoValue>
+  <ABY_CrownScissionArray_EchoDesc>The next confirmed melee hit spends one stored echo on one other living hostile pawn within the listed local range.</ABY_CrownScissionArray_EchoDesc>
+
+  <ABY_CrownScissionArray_Range>Echo range</ABY_CrownScissionArray_Range>
+  <ABY_CrownScissionArray_RangeValue>{0} tiles around the struck target</ABY_CrownScissionArray_RangeValue>
+  <ABY_CrownScissionArray_RangeDesc>The array checks only the local radial cells around the struck target; it does not scan the map.</ABY_CrownScissionArray_RangeDesc>
+
+  <ABY_CrownScissionArray_Limits>Echo limits</ABY_CrownScissionArray_Limits>
+  <ABY_CrownScissionArray_LimitsValue>Hostile pawns only; one echo per hit; no chaining</ABY_CrownScissionArray_LimitsValue>
+  <ABY_CrownScissionArray_LimitsDesc>Buildings, corpses and the primary target are never valid echo targets. Echo damage cannot store or trigger another echo.</ABY_CrownScissionArray_LimitsDesc>
+
+</LanguageData>

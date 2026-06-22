@@ -1,0 +1,19 @@
+{
+  "TextureModID": "neversalimus.abyssalprotocol",
+  "ItemDefName": "ABY_CrownScissionArray",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.19,
+  "OffY": 0.01,
+  "Rotation": 45.0,
+  "HandsMode": 1,
+  "BladeStart": 0.49,
+  "BladeEnd": 0.97,
+  "MeleeWeaponType": 48,
+  "TrailTint": {
+    "r": 0.94,
+    "g": 0.12,
+    "b": 0.05,
+    "a": 0.9
+  }
+}

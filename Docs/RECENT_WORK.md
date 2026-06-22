@@ -1,3 +1,36 @@
+## 2026-06-22 — Crown Scission Array T5 fast melee integration
+
+- Added `ABY_CrownScissionArray`, a Tier V Crown/Dominion fast melee pack-reaper, to the Abyssal Forge. It deliberately complements `ABY_DominionBreachDriver`: Driver remains the slow single-target anti-elite/anti-boss press, while Scission Array rewards consecutive close-quarters kills in dense hostile packs.
+- Added a weapon-owned saved `CompABY_CrownScissionArray` plus a zero-damage extra-melee trigger `DamageWorker_ABY_CrownScissionEcho`. A direct hostile kill stores up to three short-lived Echo charges; the next confirmed melee hit can spend exactly one charge on one other nearby living hostile pawn. Echo damage uses vanilla Cut, so it cannot recurse into new charges or chains.
+- The secondary-target lookup is bounded to local `GenRadial` cells around the struck target. It performs no map-wide pawn scan, excludes buildings/corpses/the struck target, uses the existing safe Abyssal hostility utility, and keeps state serialized on the equipped weapon rather than in a static cache.
+- Added extracted transparent 512px base and restrained core-glow textures from the approved chromakey asset, plus Melee Animation tweak data. The shipped textures have real alpha and no chromakey background.
+- Reused existing Abyssal melee, impact and verdict sound assets; no unverified new audio binary was introduced.
+- Build verified by direct Roslyn compile against bundled RimWorld/Unity/Harmony/.NET Framework-style references. XML parse validation passed. RimWorld runtime smoke testing and Melee Animation Tweak Editor verification are still required.
+
+Touched files:
+
+```text
+Assemblies/AbyssalProtocol.dll
+Assemblies/AbyssalProtocol.pdb
+source/Combat/Comps/CompABY_CrownScissionArray.cs
+source/Combat/DamageWorkers/DamageWorker_ABY_CrownScissionEcho.cs
+Defs/ThingDefs/ABY_CrownScissionArray.xml
+Defs/DamageDefs/ABY_CrownScissionArray_DamageDefs.xml
+Textures/Things/Weapon/ABY_CrownScissionArray.png
+Textures/Things/Weapon/ABY_CrownScissionArray_Glow.png
+WeaponTweakData/ABY_CrownScissionArray_neversalimus.abyssalprotocol.json
+Languages/English/DefInjected/ThingDef/ABY_CrownScissionArray.xml
+Languages/Russian/DefInjected/ThingDef/ABY_CrownScissionArray.xml
+Languages/English/DefInjected/DamageDef/ABY_CrownScissionArray_Damage.xml
+Languages/Russian/DefInjected/DamageDef/ABY_CrownScissionArray_Damage.xml
+Languages/English/Keyed/ABY_CrownScissionArray_Strings.xml
+Languages/Russian/Keyed/ABY_CrownScissionArray_Strings.xml
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+```
+
 ## 2026-06-22 — Dominion Breach Driver T5 melee integration
 
 - Added `ABY_DominionBreachDriver`, a Tier V Dominion anti-elite/anti-boss melee pressure weapon, to the Abyssal Forge.

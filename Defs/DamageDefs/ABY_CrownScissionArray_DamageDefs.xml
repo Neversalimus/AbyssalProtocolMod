@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DamageDef>
+    <defName>ABY_CrownScissionEchoTrigger</defName>
+    <label>crown scission echo trigger</label>
+    <workerClass>AbyssalProtocol.DamageWorker_ABY_CrownScissionEcho</workerClass>
+    <externalViolence>true</externalViolence>
+  </DamageDef>
+
+</Defs>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+  <ABY_CrownScissionArray.label>Коронный массив рассечения</ABY_CrownScissionArray.label>
+  <ABY_CrownScissionArray.description>Коронный захват-рассекатель с wound-core, запоминающим завершённое движение. Прямые убийства враждебных пешек оставляют в массиве короткое эхо; следующий подтверждённый удар может провести сохранённую траекторию через одного ближайшего врага, прежде чем механизм забудет, что именно он должен повторить.</ABY_CrownScissionArray.description>
+
+</LanguageData>

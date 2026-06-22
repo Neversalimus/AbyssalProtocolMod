@@ -364,6 +364,12 @@ Module item labels/descriptions still belong to `Languages/<Lang>/DefInjected/Th
 - Assets: `Textures/Things/Item/TurretModules/ABY_TurretModule_DominionVerdictLens.png`, `ABY_TurretModule_CrownOverpressureChoir.png`, `ABY_TurretModule_SepulcherFailSafeMantle.png`.
 - Role coverage: T5 passive targeting, firing cadence, and chassis survival. These are intentionally not Aegis modules because Aegis stacking is blocked by the turret runtime.
 
+## Crown Scission Array T5 fast melee weapon — 2026-06-22
+
+| System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| Crown Scission Array | Implemented / needs runtime smoke test | `source/Combat/Comps/CompABY_CrownScissionArray.cs`, `source/Combat/DamageWorkers/DamageWorker_ABY_CrownScissionEcho.cs` | `Defs/ThingDefs/ABY_CrownScissionArray.xml`, `Defs/DamageDefs/ABY_CrownScissionArray_DamageDefs.xml`, `Textures/Things/Weapon/ABY_CrownScissionArray*.png`, `WeaponTweakData/ABY_CrownScissionArray_neversalimus.abyssalprotocol.json` | Existing Abyssal Forge weapon pattern and normal item InfoCard | `ABY_PR_CrownLogicDecoding`, 5400 Forge residue, Reactor Saint Core, Crowned Core fragments, Dominion Crown Shard | T5 fast melee pack-reaper. A weapon-owned saved state stores up to three short-lived Echo charges after direct hostile kills. The next confirmed melee hit spends one charge on one other nearby living hostile pawn for a separate Cut hit. The target search is a bounded local radial lookup only; echoes cannot target the primary pawn, buildings or corpses, and cannot chain. |
+
 ## Dominion Breach Driver T5 melee weapon — 2026-06-22
 
 | System | Status | Source ownership | Defs/assets | UI exposure | Gating/progression | Notes |
