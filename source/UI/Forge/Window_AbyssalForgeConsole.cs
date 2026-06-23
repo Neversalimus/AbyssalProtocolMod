@@ -930,28 +930,56 @@ namespace AbyssalProtocol
 
         private static bool IsRangedWeaponRecipe(RecipeDef recipe)
         {
-            string text = BuildRecipeSearchText(recipe);
+            return IsRangedWeaponRecipe(recipe, AbyssalForgeProgressUtility.GetPrimaryProduct(recipe));
+        }
+
+        private static bool IsRangedWeaponRecipe(RecipeDef recipe, ThingDef product)
+        {
+            // The Forge category must follow the authoritative product definition first.
+            // Text heuristics are only a fallback for incomplete or legacy RecipeDefs.
+            if (product != null && product.IsRangedWeapon)
+            {
+                return true;
+            }
+
+            string text = BuildRecipeSearchText(recipe, product, AbyssalForgeProgressUtility.GetCategory(recipe));
             if (IsForcedRangedWeaponRecipe(text))
             {
                 return true;
             }
 
-            return !IsMeleeWeaponRecipe(recipe);
+            return !IsMeleeWeaponRecipe(recipe, product);
         }
 
         private static bool IsMeleeWeaponRecipe(RecipeDef recipe)
         {
-            string text = BuildRecipeSearchText(recipe);
+            return IsMeleeWeaponRecipe(recipe, AbyssalForgeProgressUtility.GetPrimaryProduct(recipe));
+        }
+
+        private static bool IsMeleeWeaponRecipe(RecipeDef recipe, ThingDef product)
+        {
+            // Parent weapon defs encode melee tools directly.  This catches melee weapons
+            // whose names do not contain legacy keywords such as blade, dagger, maul, or glaive.
+            if (product != null)
+            {
+                if (product.IsRangedWeapon)
+                {
+                    return false;
+                }
+
+                if (product.tools != null && product.tools.Count > 0)
+                {
+                    return true;
+                }
+            }
+
+            string text = BuildRecipeSearchText(recipe, product, AbyssalForgeProgressUtility.GetCategory(recipe));
             if (IsForcedRangedWeaponRecipe(text))
             {
                 return false;
             }
 
-            return text.Contains("blade")
-                || text.Contains("dagger")
-                || text.Contains("halberd")
-                || text.Contains("maul")
-                || text.Contains("glaive");
+            return IsMeleeWeaponText(text);
         }
 
         private static bool IsForcedRangedWeaponRecipe(string text)
@@ -1188,9 +1216,8 @@ namespace AbyssalProtocol
             string identity = BuildRecipeIdentityText(recipe, product);
             string search = BuildRecipeSearchText(recipe, product, category);
 
-            bool forcedRanged = IsForcedRangedWeaponRecipe(search);
-            bool melee = !forcedRanged && IsMeleeWeaponText(search);
-            bool ranged = forcedRanged || !melee;
+            bool melee = IsMeleeWeaponRecipe(recipe, product);
+            bool ranged = IsRangedWeaponRecipe(recipe, product);
             bool herald = category == AbyssalForgeProgressUtility.HeraldCategory || search.Contains("herald");
 
             string coreFilter = ResolveCoreFilterId(search);

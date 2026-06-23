@@ -30,7 +30,7 @@ Do not create uppercase `Source/`. Do not place `.cs` files directly under `sour
 
 | User task / symptom | Start here | Also check |
 | --- | --- | --- |
-| Forge UI, Forge console, pattern browser, clipped text | `source/UI/Forge/` | `source/UI/Shared/`, `source/Forge/`, `Defs/RecipeDefs/`, `Defs/ThingDefs/`, `Languages/` |
+| Forge UI, Forge console, pattern browser, clipped text, wrong Melee/Ranged subfilter | `source/UI/Forge/Window_AbyssalForgeConsole.cs` | `source/UI/Shared/`, `source/Forge/`, produced `ThingDef` metadata in `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Languages/`; classify weapon filters from `IsRangedWeapon`/melee tools before text fallback |
 | Forge progression, residue, attunement, unlocks | `source/Forge/`, `source/Progression/` | `source/UI/Forge/`, `Defs/ThingDefs/`, `Defs/RecipeDefs/`, `Languages/` |
 | Pawn classification, boss/miniboss protection, construct physiology, residue eligibility | `source/Core/Utilities/ABY_AbyssalPawnClassificationUtility.cs`, `source/Defs/Common/ABY_AbyssalPawnClassificationExtension.cs`, `source/Defs/Common/ABY_ResidueSinteringExtension.cs` | `source/Forge/ABY_ResidueSinteringUtility.cs`, `source/Hediffs/ABY_AbyssalConstructPhysiologyUtility.cs`, `Defs/PawnKindDefs/` |
 | Encounter validation, turret module data diagnostics, directed planner diagnostics, shadow-mode comparison | `source/Encounters/ABY_EncounterValidationUtility.cs`, `source/Encounters/ABY_EncounterShadowPlannerUtility.cs`, `source/Encounters/AbyssalEncounterDirectorUtility.cs` | `Defs/Misc/ABY_EncounterTemplates.xml`, `Defs/Misc/ABY_ThreatDoctrines.xml`, `Defs/Misc/ABY_TurretModuleDefs.xml`, `Defs/PawnKindDefs/`, `source/World/Buildings/Summoning/Building_AbyssalSummoningCircle.cs` |

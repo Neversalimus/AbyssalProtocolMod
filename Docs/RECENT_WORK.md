@@ -1,3 +1,19 @@
+## 2026-06-23 — Forge weapon subfilter authority fix
+
+- Fixed the Forge Console weapon subfilter classifier so it reads the produced `ThingDef` before relying on display-name and description keywords.
+- `ThingDef.IsRangedWeapon` now decides the ranged lane; a non-ranged weapon with inherited melee tools belongs in the melee lane.
+- Corrected the specific failure that placed `Dominion Breach Driver` and `Crown Scission Array` under Ranged even though both are melee `ThingDef`s.
+- Preserved text heuristics only as a fallback for incomplete or legacy recipe data.
+- Regression guard: Forge Melee/Ranged filtering must be tested with keyword-free melee names as well as obvious blade/maul/glaive names.
+
+Touched files:
+source/UI/Forge/Window_AbyssalForgeConsole.cs
+Docs/AI_ARCHITECTURE.md
+Docs/AI_QUICK_INDEX.md
+Docs/CONTENT_MATRIX.md
+Docs/KNOWN_RISKS_AND_REGRESSIONS.md
+Docs/RECENT_WORK.md
+
 ## 2026-06-23 — Complete direct gear classification for storage and repair compatibility
 
 - Added `Patches/ABY_ItemClassification_StorageAndRepairCompatibility.xml` to classify every concrete gear ThingDef in the supplied archive directly, not only through parent inheritance.
